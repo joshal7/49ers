@@ -153,7 +153,7 @@ a:hover {
   gap: 4px;
 }
 
-/* Full-Bleed Fixed Solid Header (Opaque, Zero Frost, Unobstructed Top Actions on iOS 26+ Safari & PWA) */
+/* Full-Bleed Fixed Solid Header (Subtle, Hairline Border, Contextual Home vs. Sub-Tab) */
 .top-header {
   position: fixed;
   top: 0;
@@ -165,14 +165,23 @@ a:hover {
   background-image: none;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border-bottom: 1px solid var(--gold-border);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.24);
-  padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 8px;
   transform: translateZ(0);
   isolation: isolate;
 }
 [data-theme="light"] .top-header {
-  box-shadow: 0 2px 10px rgba(20, 16, 8, 0.08);
+  box-shadow: 0 1px 2px rgba(20, 16, 8, 0.05);
+}
+
+.top-header:not([data-active-tab="home"]) .brand-home-only {
+  display: none;
+}
+
+.top-header:not([data-active-tab="home"]) .brand-name {
+  font-size: 16.5px;
+  letter-spacing: -0.025em;
 }
 
 body.sheet-open {
@@ -185,14 +194,15 @@ body.sheet-open {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
 }
 
 .brand-lockup {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   min-width: 0;
+  flex: 1 1 auto;
 }
 
 .brand-medallion-wrap {
@@ -204,21 +214,23 @@ body.sheet-open {
 }
 
 .brand-medallion {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 32px;
+  height: 19px;
   flex-shrink: 0;
-  border: 1px solid var(--gold);
-  box-shadow: 0 2px 10px rgba(170, 0, 0, 0.35);
+  display: block;
+  object-fit: contain;
+  opacity: 0.9;
 }
 
 .brand-titles {
   min-width: 0;
+  flex: 1 1 auto;
 }
 
 .brand-name {
   margin: 0;
   font-size: 15.5px;
+  line-height: 1.2;
   font-weight: 800;
   letter-spacing: -0.02em;
   display: flex;
@@ -229,39 +241,74 @@ body.sheet-open {
 
 .record-pill {
   font-size: 11px;
-  font-weight: 800;
-  padding: 1.5px 7px;
+  font-weight: 700;
+  line-height: 1.35;
+  padding: 1px 6.5px;
   border-radius: 999px;
-  background: linear-gradient(180deg, var(--scarlet-bright), var(--scarlet));
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #FFFFFF;
-  box-shadow: 0 2px 6px rgba(170, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.075);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  box-shadow: none;
+}
+[data-theme="light"] .record-pill {
+  background: rgba(20, 23, 28, 0.055);
+  border-color: rgba(20, 23, 28, 0.14);
+  color: var(--text-primary);
 }
 
 .brand-sub {
+  margin-top: 1px;
   font-size: 11px;
-  color: var(--text-secondary);
+  line-height: 1.25;
+  color: var(--text-muted);
   display: flex;
   align-items: center;
-  gap: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+#headerSubStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.header-standing-text {
+  color: var(--text-secondary);
+}
+
+.header-sub-sep {
+  opacity: 0.55;
+}
+
+.header-live-sync {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
 .live-pulse-dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--emerald);
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  opacity: 0.82;
+  box-shadow: none;
   flex-shrink: 0;
+}
+
+.live-pulse-dot.is-error {
+  background: var(--crimson);
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 2px;
   flex-shrink: 0;
 }
 
@@ -279,13 +326,30 @@ body.sheet-open {
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.16s ease, background 0.16s ease, transform 0.12s ease;
+  transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease, transform 0.12s ease;
 }
 .icon-btn:hover {
   border-color: var(--gold-border);
 }
 .icon-btn:active {
   transform: scale(0.97);
+}
+
+.icon-btn.header-icon-btn {
+  width: 34px;
+  height: 34px;
+  min-height: 34px;
+  padding: 0;
+  border-radius: 999px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--text-secondary);
+}
+.icon-btn.header-icon-btn:hover,
+.icon-btn.header-icon-btn:focus-visible {
+  background: var(--bg-card-alt);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
 }
 
 .icon-btn.active {
@@ -3996,21 +4060,32 @@ button.featured-player-chip:active {
    ============================================================================ */
 @media (max-width: 520px) {
   .top-header {
-    padding: calc(env(safe-area-inset-top, 0px) + 10px) 12px 10px;
+    padding: calc(env(safe-area-inset-top, 0px) + 8px) 12px 8px;
   }
   .brand-medallion {
-    width: 32px;
-    height: 32px;
-    border-radius: 9px;
+    width: 30px;
+    height: 18px;
   }
   .brand-name {
     font-size: 14.5px;
     gap: 6px;
   }
+  .top-header:not([data-active-tab="home"]) .brand-name {
+    font-size: 16px;
+  }
+  .brand-sub {
+    font-size: 10.5px;
+  }
   .icon-btn {
     min-height: 36px;
     padding: 0 10px;
     font-size: 11.5px;
+  }
+  .icon-btn.header-icon-btn {
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+    padding: 0;
   }
   .card.subnav-card.season-subnav-card {
     padding: 5px 6px;
@@ -4099,6 +4174,12 @@ button.featured-player-chip:active {
   }
 }
 
+@media (max-width: 372px) {
+  .header-sync-verb {
+    display: none;
+  }
+}
+
 /* ============================================================================
    Mobile Landscape Chrome Optimization (e.g. iPhone 16 Pro 874x402)
    Maximizes vertical & horizontal viewport space for dense Cap & Stats tables
@@ -4112,11 +4193,13 @@ button.featured-player-chip:active {
   }
   .brand-medallion {
     width: 26px;
-    height: 26px;
-    border-radius: 7px;
+    height: 15px;
   }
   .brand-name {
     font-size: 14px;
+  }
+  .top-header:not([data-active-tab="home"]) .brand-name {
+    font-size: 14.5px;
   }
   .brand-sub {
     font-size: 10px;
@@ -4125,6 +4208,12 @@ button.featured-player-chip:active {
     min-height: 28px;
     padding: 0 8px;
     font-size: 11px;
+  }
+  .icon-btn.header-icon-btn {
+    width: 28px;
+    height: 28px;
+    min-height: 28px;
+    padding: 0;
   }
   .main-view {
     padding: 8px max(10px, env(safe-area-inset-right, 0px)) 8px max(10px, env(safe-area-inset-left, 0px));

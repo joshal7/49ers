@@ -89,21 +89,21 @@ import {
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=85';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=87';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=88';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=90';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=48';
+} from './views/newsView.js?v=91';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=49';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=78';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=89';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=65';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=90';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=66';
 import {
   renderSettingsSheetHtml,
   renderUniversalSearchSheetHtml,
   renderUniversalSearchResultsHtml,
   renderUniversalSearchScopeBarHtml
-} from './views/settingsArchiveView.js?v=87';
+} from './views/settingsArchiveView.js?v=88';
 import {
   normalizeNewsSortMode,
   computeCatchUpState,
@@ -1063,16 +1063,59 @@ function syncLiveWireButtonsDom() {
     });
 }
 
+const TAB_HEADER_TITLES = {
+  home: '49ers Faithful',
+  news: 'News & Film',
+  season: 'Game & Season',
+  roster: 'Roster & Cap',
+  audio: 'Audio & AI'
+};
+
+function formatCompactHeaderStanding(rawSummary = '') {
+  const clean = String(rawSummary || '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!clean) return 'NFC West';
+  // Condense verbose standing strings ("1st in NFC West • #1 Seed in NFC" -> "1st NFC West · #1 Seed")
+  const parts = clean
+    .split(/\s*[•·]\s*/)
+    .map(part =>
+      part
+        .replace(/\bin\s+NFC\s+West\b/i, 'NFC West')
+        .replace(/\bWild\s*Card\s+in\s+NFC\b/i, 'Seed')
+        .replace(/\bSeed\s+in\s+NFC\b/i, 'Seed')
+        .replace(/\bin\s+NFC\b/i, 'NFC')
+        .trim()
+    )
+    .filter(p => p && !/^outside\s+playoffs$/i.test(p) && !/^eliminated$/i.test(p));
+  return parts.length > 0 ? parts.slice(0, 2).join(' · ') : 'NFC West';
+}
+
 function renderHeader() {
-  if (!state.appData) return;
+  const activeTab = state.activeNavTab || 'home';
+  const topHeaderEl = document.querySelector('.top-header');
+  if (topHeaderEl) {
+    topHeaderEl.setAttribute('data-active-tab', activeTab);
+  }
+  const titleEl = document.getElementById('headerTitleText');
+  if (titleEl) {
+    titleEl.textContent = TAB_HEADER_TITLES[activeTab] || '49ers Faithful';
+  }
+  if (!state.appData) {
+    syncTopHeaderHeight();
+    return;
+  }
   const m = state.appData.meta || {};
   const recPill = document.getElementById('headerRecordPill');
   const subStatus = document.getElementById('headerSubStatus');
   if (recPill) recPill.textContent = m.teamRecord || '—';
   if (subStatus) {
-    subStatus.textContent = `${m.standingSummary || 'NFC West'} • Synced ${formatRelativeAge(state.lastWireSyncAt || m.updatedAt)}`;
+    const compactStanding = formatCompactHeaderStanding(m.standingSummary || 'NFC West');
+    const syncAge = formatRelativeAge(state.lastWireSyncAt || m.updatedAt);
+    subStatus.innerHTML = `<span class="header-standing-text">${esc(compactStanding)}</span><span class="header-sub-sep" aria-hidden="true">·</span><span class="header-live-sync" title="Live data synced ${esc(syncAge)}"><span class="live-pulse-dot" aria-hidden="true"></span><span><span class="header-sync-verb">Synced </span>${esc(syncAge)}</span></span>`;
   }
   syncLiveWireButtonsDom();
+  syncTopHeaderHeight();
 }
 
 function renderNavTabs() {
@@ -1117,21 +1160,15 @@ function renderMain() {
         { baseYear: primaryCapYear }
       );
       const mcSimResult = getMonteCarloResult();
-      const { orderedBlocks, optionalBlocks } = resolveHomeDashboardState({
-        savedOrderIds: state.prefs.dashboardOrder,
-        hiddenBlockIds: state.prefs.hiddenHomeBlockIds,
-        pinnedBlockIds: state.prefs.pinnedHomeBlockIds
-      });
+      const { orderedBlocks } = resolveHomeDashboardState();
       mainEl.innerHTML = renderHomeDashboardHtml({
         orderedBlocks,
-        optionalBlocks,
         appData: state.appData,
         simCapResult: homeSimCapResult,
         mcSimResult,
         filteredRawItems,
         userPrefs: state.prefs,
         activeVideosSet: state.activeVideosSet,
-        isCustomizingLayout: state.isCustomizingLayout,
         sessionLastVisitedAt: state.sessionLastVisitedAt
       });
     } else if (tab === 'news') {
@@ -1839,6 +1876,14 @@ function bindEvents() {
 
   // Top Header triggers
   document.getElementById('brandHomeTrigger')?.addEventListener('click', () => {
+    if (state.activeNavTab === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if ((window.scrollY || 0) > 36) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     saveCurrentTabScroll();
     state.activeNavTab = 'home';
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -4107,9 +4152,9 @@ let bootFailureCount = 0;
 function renderFeedLoadErrorState(err, { isRetrying = false } = {}) {
   const subStatus = document.getElementById('headerSubStatus');
   if (subStatus) {
-    subStatus.textContent = isRetrying
-      ? 'Reconnecting to 49ers data feeds…'
-      : 'Connection interrupted • Tap Retry';
+    subStatus.innerHTML = isRetrying
+      ? '<span class="header-live-sync"><span class="live-pulse-dot" aria-hidden="true"></span><span>Reconnecting…</span></span>'
+      : '<span class="header-live-sync"><span class="live-pulse-dot is-error" aria-hidden="true"></span><span>Offline • Tap Retry</span></span>';
   }
   const mainEl = document.getElementById('mainView');
   if (!mainEl) return;

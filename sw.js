@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v127';
+const CACHE_NAME = '49ers-faithful-v129';
 const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-'];
 const NETWORK_TIMEOUT_MS = 7500;
 const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;
@@ -56,6 +56,7 @@ const CORE_ASSETS = [
   './data/beat-podcasts.json',
   './data/podcasts/index.json',
   './assets/app-icon.svg',
+  './assets/sf-crest.svg',
   './assets/apple-touch-icon.png',
   './apple-touch-icon.png'
 ];

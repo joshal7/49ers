@@ -356,13 +356,9 @@ function renderGeminiConnectionStatusCard(
                 data-gemini-guide-trigger
                 aria-expanded="${showGeminiKeyGuide ? 'true' : 'false'}">
           ${iconSvg('helpCircle', 14)}
-          <span>How to get &amp; save your free 1-time API key (60-sec guide)</span>
+          <span>How to get your free API key (60-sec guide)</span>
           ${iconSvg(showGeminiKeyGuide ? 'chevronUp' : 'chevronDown', 13)}
         </button>
-        <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="source-chip-link" style="flex-shrink:0">
-          <span>AI Studio Key</span>
-          ${iconSvg('externalLink', 10)}
-        </a>
       </div>
       ${showGeminiKeyGuide ? renderGeminiApiKeyStepByStepGuideHtml({ includeFocusButton: true }) : ''}
     </div>
@@ -371,7 +367,7 @@ function renderGeminiConnectionStatusCard(
       <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
         <span class="inline-icon-meta" style="font-weight:800;color:var(--gold-bright);font-size:12.5px">
           ${iconSvg('key', 14)}
-          <span>Connect API Key (1-Time Device Setup)</span>
+          <span>Connect API Key</span>
         </span>
         <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
           <span>Get Free Key</span>
@@ -381,8 +377,8 @@ function renderGeminiConnectionStatusCard(
       <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.4">
         ${
           hasSharedItemAbove
-            ? 'No API key is needed to listen to or read shared links above. Connect a key below only to generate new custom episodes (note: iOS keeps Home Screen app and Safari keys separate).'
-            : 'Saved privately on this device. Unlocks custom Auto Pod episodes and on-demand scouting &amp; cap reports.'
+            ? 'No API key needed to listen above. Add one below only to generate new custom episodes.'
+            : 'Saved privately on this device. Unlocks Auto Pod and on-demand AI Analysis.'
         }
       </div>
       <div class="gemini-key-row">
@@ -524,7 +520,7 @@ function renderPodcastEpisodeRowCard(ep, { showPodcastBadge = true } = {}) {
                 : `<span class="mono" style="font-size:11px;font-weight:700;color:var(--gold-bright)">${esc(dateLabel)}</span>`
             }
             <span class="mono" style="font-size:11px;color:var(--text-muted)">
-              ${showPodcastBadge && dateLabel ? `${esc(dateLabel)} • ` : ''}${relLabel ? `${esc(relLabel)} • ` : ''}${esc(ep.durationDisplay || 'Podcast')}
+              ${relLabel ? `${esc(relLabel)} • ` : dateLabel ? `${esc(dateLabel)} • ` : ''}${esc(ep.durationDisplay || 'Podcast')}
             </span>
           </div>
           <div class="beat-podcast-ep-title">${esc(ep.title)}</div>
@@ -946,7 +942,7 @@ function renderPodcastStudio({
 
       <button type="button" class="btn-primary" style="width:100%" data-action="generate-autopodcast" ${isPodBusy ? 'disabled' : ''}>
         ${isPodBusy ? iconSvg('loader', 15, 'btn-spin-icon') : iconSvg('mic', 15)}
-        <span>${isPodBusy ? `Creating ${podDurationMin}-Min Podcast…` : `Generate ${podDurationMin}-Min Audio Briefing`}</span>
+        <span>${isPodBusy ? `Creating ${podDurationMin}-Min Podcast…` : `Generate ${podDurationMin}-Min Podcast`}</span>
       </button>
     </section>
 
@@ -959,7 +955,7 @@ function renderPodcastStudio({
       ${
         allEpisodes.length === 0
           ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">
-               No saved podcasts in your library. Generate a custom episode above to listen anytime.
+               No saved episodes yet.
              </div>`
           : `<div style="display:flex;flex-direction:column;gap:8px">
               ${allEpisodes
@@ -1168,7 +1164,7 @@ function renderDeepAnalysisRunner({
       ${
         allAnalyses.length === 0
           ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">
-               No saved scouting or cap reports yet. Run a Deep Analysis above to save a report here.
+               No saved reports yet.
              </div>`
           : `<div style="display:flex;flex-direction:column;gap:10px">
               ${allAnalyses

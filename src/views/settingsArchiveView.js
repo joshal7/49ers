@@ -60,7 +60,7 @@ export function renderSettingsSheetHtml({
   return `
     <!-- Theme & Feed Preferences -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:10px">
-      <div class="sub-label">1. Display &amp; Feed Preferences</div>
+      <div class="sub-label">Display &amp; Feed</div>
 
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
         <div style="min-width:0;flex:1 1 170px">
@@ -120,7 +120,7 @@ export function renderSettingsSheetHtml({
     <!-- Quiet Opt-In Push Alerts (Zero Clickbait, Zero Score Spam) -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px" data-settings-push-alerts>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-        <div class="sub-label" style="margin:0">2. Quiet Alerts (Opt-In Only)</div>
+        <div class="sub-label" style="margin:0">Quiet Alerts</div>
         <span class="badge ${pushPrefs.enabled ? 'badge-positive' : 'badge-neutral'} mono" data-push-status-badge>${esc(pushStatusLabel)}</span>
       </div>
       <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.4">
@@ -175,7 +175,7 @@ export function renderSettingsSheetHtml({
 
     <!-- Podcast Preferences (Host Format & Default Duration) -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px" data-settings-podcast-prefs>
-      <div class="sub-label">3. Custom Podcast Preferences</div>
+      <div class="sub-label">Podcast Preferences</div>
       <div>
         <div style="font-size:11.5px;color:var(--text-secondary);margin-bottom:5px">Host Format</div>
         <div class="segmented-control compact-seg" role="group" aria-label="Podcast Host Format">
@@ -200,10 +200,10 @@ export function renderSettingsSheetHtml({
 
     <!-- Display Name, API Key & Cloud Sync -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px">
-      <div class="sub-label">4. Profile, API Key &amp; Cloud Sync</div>
+      <div class="sub-label">Account, AI Key &amp; Sync</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px">
         <div>
-          <label style="font-size:11px;color:var(--text-secondary)" for="prefAuthorInput">Your Display Name</label>
+          <label style="font-size:11px;color:var(--text-secondary)" for="prefAuthorInput">Display Name</label>
           <input type="text" id="prefAuthorInput" class="text-input" value="${esc(userPrefs.authorName || 'Josh')}" />
         </div>
         <div>
@@ -217,20 +217,20 @@ export function renderSettingsSheetHtml({
             ? `<details class="gemini-guide-banner" style="margin-bottom:6px">
                  <summary class="gemini-guide-link-btn" style="list-style:none">
                    ${iconSvg('helpCircle', 14)}
-                   <span>New here? Step-by-step instructions to get your free 1-time Gemini API key</span>
+                   <span>How to get your free Gemini API key (60-sec guide)</span>
                  </summary>
                  ${renderGeminiApiKeyStepByStepGuideHtml({ includeFocusButton: false })}
                </details>`
             : ''
         }
         <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
-          <label style="font-size:11px;color:var(--text-secondary)" for="prefGeminiKeyInput">Google Gemini API Key (Private on This Device • Unlocks Daily Briefs, Auto Pod &amp; AI Analysis)</label>
-          <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">Get Free AI Studio Key ${iconSvg('externalLink', 10)}</a>
+          <label style="font-size:11px;color:var(--text-secondary)" for="prefGeminiKeyInput">Gemini API Key (saved on device)</label>
+          <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">Get Free Key ${iconSvg('externalLink', 10)}</a>
         </div>
         <input type="password" id="prefGeminiKeyInput" class="text-input" placeholder="AIza..." autocomplete="off" value="${esc(userPrefs.geminiApiKey || '')}" />
       </div>
       <div>
-        <label style="font-size:11px;color:var(--text-secondary)" for="prefWorkerUrlInput">Cloudflare Worker URL (Optional Shared Group Cache)</label>
+        <label style="font-size:11px;color:var(--text-secondary)" for="prefWorkerUrlInput">Shared Worker URL (optional)</label>
         <input type="url" id="prefWorkerUrlInput" class="text-input" placeholder="https://49ers-worker.<subdomain>.workers.dev" value="${esc(userPrefs.workerBaseUrl || '')}" />
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -251,8 +251,8 @@ export function renderSettingsSheetHtml({
 
     <!-- Direct X Beat Lists (Synced Live with Enabled Reporters Below) -->
     <div id="settingsSourcesSection" class="subcard-panel" data-settings-x-beat-lists style="display:flex;flex-direction:column;gap:7px">
-      <div class="sub-label" style="margin:0">5. Direct X Beat Lists</div>
-      <div style="font-size:11.5px;color:var(--text-secondary)">Live X searches synced with your enabled beat voices below.</div>
+      <div class="sub-label" style="margin:0">Direct X Beat Lists</div>
+      <div style="font-size:11.5px;color:var(--text-secondary)">Live X searches synced with your enabled reporters below.</div>
       <div class="x-beat-launch-strip" aria-label="Live X Beat Search">
         <a href="${esc(buildXBeatListSearchUrl('trusted', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 49ers Beat Reporters, Columnists &amp; Official Team handles from Settings">
           <span>Trusted Beat</span>${iconSvg('externalLink', 10)}
@@ -271,7 +271,7 @@ export function renderSettingsSheetHtml({
 
     <!-- Outlet Toggles -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:7px">
-      <div class="sub-label">6. News Outlets &amp; Channels (${outlets.length})</div>
+      <div class="sub-label">Outlets &amp; Channels (${outlets.length})</div>
       <div class="settings-outlets-grid">
         ${outlets
           .map(o => {
@@ -291,7 +291,7 @@ export function renderSettingsSheetHtml({
     <!-- Individual Beat Reporters & Insiders -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:8px">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-        <div class="sub-label">7. Beat Reporters &amp; Analysts (${reporters.length})</div>
+        <div class="sub-label">Beat Reporters &amp; Analysts (${reporters.length})</div>
         <div style="display:flex;gap:6px">
           <button type="button" class="btn-ghost" data-action="enable-all-reporters">${iconSvg('check', 12)}<span>Enable All</span></button>
         </div>

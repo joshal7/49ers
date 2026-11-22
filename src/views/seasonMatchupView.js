@@ -1050,7 +1050,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
           ? `
             <details class="compact-details" style="margin-bottom:10px">
               <summary class="compact-details-summary">
-                <span>IR &amp; 4-Game Return Window Tracker (${oppIrList.length})</span>
+                <span>Injured Reserve (${oppIrList.length})</span>
               </summary>
               <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
                 ${oppIrList
@@ -1120,7 +1120,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
         <section class="card" id="coachingMatchupSection" data-coaching-matchup-card>
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;margin-bottom:6px">
             <div style="min-width:0;flex:1">
-              <div class="card-eyebrow">Coaching Matchup • Coordinator Tendencies</div>
+              <div class="card-eyebrow">Coaching Matchup</div>
               <h3 class="card-title">${escJargon(um.coachingMatchup?.headline, { maxTerms: 12, maxPlayers: 0, seenKeys: seenCoachJargon })}</h3>
             </div>
             ${aiDatePt ? `<span class="badge badge-gold mono" data-daily-ai-matchup-badge title="Refreshed daily (${esc(aiDatePt)} PT)">Daily AI Brief</span>` : ''}
@@ -1134,7 +1134,6 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
     })()}
 
     <section class="card" id="keyMatchupsSection" data-key-matchups-card>
-      <div class="card-eyebrow">1-on-1 &amp; Trench Battles</div>
       <h3 class="card-title" style="margin-bottom:8px">Key Matchups</h3>
       <div style="display:flex;flex-direction:column;gap:9px">
         ${(um.keyMatchupsMatrix || [])
@@ -1379,7 +1378,7 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
             <h3 class="card-title">Injury News (${injuryNewsEntries.length})</h3>
           </div>
         </div>
-        <span class="mono" style="font-size:11px;color:var(--text-muted)">Lowest → Highest Play %</span>
+        <span class="mono" style="font-size:11px;color:var(--text-muted)">By Play %</span>
       </div>
       ${
         injuryNewsEntries.length > 0
@@ -1575,8 +1574,8 @@ function renderTeamStatsAndPower(appData, userPrefs = null) {
               ? `
             <details class="stats-expand-details" data-stats-expander="${esc(u.id)}">
               <summary class="stats-expand-summary">
-                <span>Detailed ${esc(u.shortLabel)} Metrics (${expandedCount})</span>
-                <span class="mono stats-expand-hint">Expand</span>
+                <span>More ${esc(u.shortLabel)} Metrics (${expandedCount})</span>
+                <span class="mono stats-expand-hint">▾</span>
               </summary>
               <div class="stats-expand-body">
                 ${(u.expandedGroups || [])
@@ -1843,7 +1842,7 @@ function renderTradeWindow(appData) {
           <details class="subcard-panel" data-older-trades-collapsible${recentTrades.length === 0 ? ' open' : ''}>
             <summary style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:700;font-size:12.5px;color:var(--gold-bright)">
               <span>Earlier Completed Trades (${archivedTrades.length})</span>
-              <span class="mono" style="font-size:11px;color:var(--text-muted)">Tap to expand ▾</span>
+              <span class="mono" style="font-size:11px;color:var(--text-muted)">▾</span>
             </summary>
             <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
               ${archivedTrades.map(m => renderCompletedTradeCardHtml(m, { isOlder: true })).join('')}
@@ -2048,7 +2047,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
         <details class="subcard-panel rooting-week-card rooting-week-collapsible" data-rooting-week="${wk}" data-rooting-next-week${isOpen ? ' open' : ''}>
           <summary class="rooting-week-summary">
             <strong style="font-size:13px">Week ${wk}</strong>
-            <span class="mono" style="font-size:11px;color:var(--gold-bright)">${games.length} ${games.length === 1 ? 'game' : 'games'} • Tap to expand ▾</span>
+            <span class="mono" style="font-size:11px;color:var(--gold-bright)">${games.length} ${games.length === 1 ? 'game' : 'games'} ▾</span>
           </summary>
           <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
             ${rowsHtml}
@@ -2116,7 +2115,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
     <section class="card">
       <div class="card-header">
         <div class="card-title-group">
-          <div class="card-eyebrow">Tap team to lock winner</div>
+          <div class="card-eyebrow">Pick winners to simulate</div>
           <h3 class="card-title">Rooting Guide</h3>
         </div>
       </div>

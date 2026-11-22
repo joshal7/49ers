@@ -328,6 +328,32 @@ export function renderDailyTopNewsBriefHtml(
     }
   }
   const ageTiny = brief.generatedAt ? formatRelativeAge(brief.generatedAt) : 'now';
+  const formatBriefCycleTooltip = b => {
+    const ck = String(b?.cycleKey || '');
+    const genIso = String(b?.generatedAt || '');
+    let cycleLabel = '';
+    const postM = ck.match(/^(\d{4})-(\d{2})-(\d{2})@postgame-([a-z0-9_-]+)$/i);
+    const dailyM = ck.match(/^(\d{4})-(\d{2})-(\d{2})@(\d{1,2})PT$/i);
+    if (postM) {
+      const slug = postM[4].toUpperCase().replace(/^WK/, 'Week ');
+      cycleLabel = `Post-Game ${slug} cycle`;
+    } else if (dailyM) {
+      const dObj = new Date(Date.UTC(Number(dailyM[1]), Number(dailyM[2]) - 1, Number(dailyM[3]), 19, 0, 0));
+      const dayLbl = dObj.toLocaleDateString('en-US', {
+        timeZone: 'America/Los_Angeles',
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric'
+      });
+      const hr = Number(dailyM[4]);
+      const hr12 = hr % 12 || 12;
+      const ampm = hr >= 12 ? 'PM' : 'AM';
+      cycleLabel = `${dayLbl} ${hr12}:00 ${ampm} PT cycle`;
+    }
+    const genLabel = genIso ? `Generated ${genIso}` : '';
+    return [cycleLabel, genLabel].filter(Boolean).join(' • ');
+  };
+  const briefAgeTooltip = formatBriefCycleTooltip(brief);
   const tagName = asSubcard ? 'div' : 'section';
   const outerCls = asSubcard
     ? 'subcard-panel daily-news-brief-card daily-news-brief-subcard'
@@ -357,7 +383,7 @@ export function renderDailyTopNewsBriefHtml(
           <details class="compact-details daily-brief-sources" data-daily-brief-sources>
             <summary class="compact-details-summary" style="justify-content:space-between">
               <span>Sources (${safeSources.length})</span>
-              <span class="mono" style="font-size:10px;color:var(--text-muted)">All Sources ▾</span>
+              <span class="mono" style="font-size:10px;color:var(--text-muted)">▾</span>
             </summary>
             <div style="display:flex;flex-direction:column;gap:6px;margin-top:7px">
               ${safeSources
@@ -461,7 +487,7 @@ export function renderDailyTopNewsBriefHtml(
           <div class="card-eyebrow">Top News Brief</div>
           <h3 class="card-title daily-brief-headline">${escJargon(brief.headline || '49ers Daily Briefing', { maxTerms: 6, maxPlayers: 3, seenKeys: seenJargon })}</h3>
         </div>
-        <span class="mono daily-brief-age" data-daily-brief-age title="Generated ${esc(brief.generatedAt || '')}">${esc(ageTiny)}</span>
+        <span class="mono daily-brief-age" data-daily-brief-age title="${esc(briefAgeTooltip || `Generated ${brief.generatedAt || ''}`)}">${esc(ageTiny)}</span>
       </div>
       ${briefHeroHtml}
       <ul class="brief-bullets coaching-bullets daily-brief-bullets">
@@ -1373,12 +1399,12 @@ export function renderVideoEmbedOrFacade(
           <div class="video-thumb-overlay">
             <button type="button" class="video-play-pill" data-action="play-inline-video" data-vid-key="${esc(vidKey)}">
               ${iconSvg('play', 14)}
-              <span>Play Clip Inline</span>
+              <span>Play</span>
             </button>
           </div>
         </div>
         <div class="video-launch-bar" style="justify-content:flex-end">
-          <a href="${esc(safeOutUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">Open on ${esc(providerLabel)} ${iconSvg('externalLink', 12)}</a>
+          <a href="${esc(safeOutUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">${esc(providerLabel)} ${iconSvg('externalLink', 12)}</a>
         </div>
       </div>
     `;
@@ -1413,7 +1439,7 @@ export function renderVideoEmbedOrFacade(
               : `<div class="video-launch-bar">
                   <div style="min-width:0">
                     <div style="font-weight:700;font-size:12.5px;color:#E5CF96;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(label)}</div>
-                    <div style="font-size:11px;color:#A3AFBF">${esc(channel || 'YouTube')} • Opens directly on YouTube</div>
+                    <div style="font-size:11px;color:#A3AFBF">${esc(channel || 'YouTube')}</div>
                   </div>
                   <span class="source-chip-link"><span>YouTube</span>${iconSvg('externalLink', 11)}</span>
                 </div>`
@@ -1449,14 +1475,14 @@ export function renderVideoEmbedOrFacade(
         <div class="video-thumb-overlay">
           <button type="button" class="video-play-pill" data-action="play-inline-video" data-vid-key="${esc(vidKey)}">
             ${iconSvg('play', 14)}
-            <span>Play Clip Inline</span>
+            <span>Play</span>
           </button>
         </div>
       </div>
       ${
         compactFooter
           ? `<div class="video-launch-bar" style="justify-content:flex-end">
-              <a href="${esc(watchUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">Open on YouTube ${iconSvg('externalLink', 12)}</a>
+              <a href="${esc(watchUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">YouTube ${iconSvg('externalLink', 12)}</a>
             </div>`
           : `<div class="video-launch-bar">
               <div style="min-width:0">

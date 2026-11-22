@@ -643,12 +643,7 @@ async function main() {
 
     // Wait for live JSON feeds & dashboard cards to render
     await cdp.waitFor(
-      () => {
-        return (
-          document.querySelectorAll('[data-dashboard-block], .reorder-bar').length > 0 ||
-          document.getElementById('mainView')?.textContent?.includes('Customize Order')
-        );
-      },
+      () => document.querySelectorAll('[data-dashboard-block]').length >= 6,
       undefined,
       20000
     );
@@ -692,16 +687,36 @@ async function main() {
       assert(swReady, 'Service Worker failed to register');
     });
 
-    console.log('\n=== [2/9] Home Dashboard, Season State Machine & Persistent Drag/Tap Reordering ===');
+    console.log('\n=== [2/9] Home Dashboard, Subtle Contextual Header & Zero-Truncation Verification ===');
 
-    await runStep('Home Dashboard renders tighter 6-card default order, zero Archive button/banner, top tweets & articles, opponent health, and source links', async () => {
+    await runStep('Home Dashboard renders curated 6-card layout with zero Customize Order/reorder bar clutter, zero redundant header badges, and subtle contextual top header', async () => {
       await cdp.assertNoOverflow('Home Dashboard (iPhone 16 393x852)');
       const homeInfo = await cdp.eval(() => {
         const archiveBtnPresent = Boolean(document.getElementById('openArchiveBtn'));
         const bannerPresent = Boolean(document.getElementById('phaseBanner'));
-        const recordText = document.getElementById('headerRecordPill')?.textContent?.trim();
+        const headerEl = document.querySelector('.top-header');
+        const headerTabAttr = headerEl?.getAttribute('data-active-tab') || '';
+        const headerTitleText = document.getElementById('headerTitleText')?.textContent?.trim() || '';
+        const recordEl = document.getElementById('headerRecordPill');
+        const recordText = recordEl?.textContent?.trim();
+        const recordBg = recordEl ? getComputedStyle(recordEl).backgroundImage : '';
+        const recordColor = recordEl ? getComputedStyle(recordEl).color : '';
+        const crestImg = document.querySelector('.brand-medallion');
+        const crestSrc = crestImg?.getAttribute('src') || '';
+        const crestVisibleOnHome = Boolean(crestImg && crestImg.getClientRects().length > 0);
+        const settingsBtnText = document.getElementById('openSettingsBtn')?.textContent?.trim() || '';
+        const brandSub = document.getElementById('headerSubRow');
+        const subStatusText = document.getElementById('headerSubStatus')?.textContent?.trim() || '';
+        const subNoTruncation = Boolean(brandSub && brandSub.scrollWidth <= brandSub.clientWidth + 1);
+        const standingRect = document.querySelector('.header-standing-text')?.getBoundingClientRect();
+        const liveDotEl = document.querySelector('.header-live-sync .live-pulse-dot');
+        const liveDotRect = liveDotEl?.getBoundingClientRect();
+        const liveDotNearSyncNotStanding = Boolean(
+          standingRect && liveDotRect && liveDotRect.left >= standingRect.right - 2
+        );
         const customizeBtn = document.querySelector('[data-action="toggle-customize-layout"]');
-        const reorderBarText = document.querySelector('.reorder-bar')?.textContent || '';
+        const reorderBar = document.querySelector('.reorder-bar');
+        const homeHeaderNeutralBadges = document.querySelectorAll('[data-dashboard-block] > .card-header .badge-neutral').length;
         const navSvgCount = document.querySelectorAll('.bottom-nav svg.ui-icon').length;
         const cardBadgeSvgCount = document.querySelectorAll('.card-icon-badge svg.ui-icon').length;
         const blockOrder = Array.from(document.querySelectorAll('[data-dashboard-block]')).map(el =>
@@ -718,9 +733,20 @@ async function main() {
         return {
           archiveBtnPresent,
           bannerPresent,
+          headerTabAttr,
+          headerTitleText,
           recordText,
+          recordBg,
+          recordColor,
+          crestSrc,
+          crestVisibleOnHome,
+          settingsBtnText,
+          subStatusText,
+          subNoTruncation,
+          liveDotNearSyncNotStanding,
           hasCustomize: Boolean(customizeBtn),
-          reorderBarText,
+          hasReorderBar: Boolean(reorderBar),
+          homeHeaderNeutralBadges,
           navSvgCount,
           cardBadgeSvgCount,
           blockOrder,
@@ -741,12 +767,17 @@ async function main() {
         homeInfo.recordText === homeInfo.expectedRecord,
         `Expected header record ${homeInfo.expectedRecord}, got ${homeInfo.recordText}`
       );
+      assert(homeInfo.headerTabAttr === 'home' && homeInfo.headerTitleText === '49ers Faithful', `Unexpected Home header state: ${JSON.stringify(homeInfo)}`);
+      assert(homeInfo.crestSrc.includes('sf-crest.svg') && homeInfo.crestVisibleOnHome, `Expected clean transparent SF crest on Home, got ${homeInfo.crestSrc}`);
+      assert(homeInfo.recordBg === 'none', `Header record pill must not use loud gradient fill: got ${homeInfo.recordBg}`);
+      assert(homeInfo.settingsBtnText === '', `Expected subtle icon-only settings button (no "Tune" label), got "${homeInfo.settingsBtnText}"`);
+      assert(homeInfo.subNoTruncation, `Header subtitle truncated on 393px iPhone 16: "${homeInfo.subStatusText}"`);
+      assert(homeInfo.liveDotNearSyncNotStanding, `Green live dot must be placed beside Synced timestamp, not before standing: "${homeInfo.subStatusText}"`);
       assert(homeInfo.archiveBtnPresent === false, 'Archive button must be removed from header');
       assert(homeInfo.bannerPresent === false, 'Phase banner must be removed from DOM');
-      assert(!homeInfo.reorderBarText.includes('Archive'), 'Home reorder bar must not reference Archive');
+      assert(homeInfo.hasCustomize === false && homeInfo.hasReorderBar === false, 'Reorder bar & Customize Order must be removed from Home');
+      assert(homeInfo.homeHeaderNeutralBadges === 0, `Expected 0 redundant neutral badges in Home card headers, got ${homeInfo.homeHeaderNeutralBadges}`);
       assert(homeInfo.matchupPlayerAvatars === 0, `Expected 0 player avatars in Home Upcoming Matchup box, got ${homeInfo.matchupPlayerAvatars}`);
-      assert(homeInfo.hasCustomize, 'Missing Customize Order button');
-      assert(homeInfo.reorderBarText.includes('active modules'), 'Missing active modules summary');
       assert(homeInfo.navSvgCount === 5, `Expected 5 SVG icons in bottom nav, got ${homeInfo.navSvgCount}`);
       assert(homeInfo.cardBadgeSvgCount === 6, `Expected tighter 6 SVG card icon badges on Home Dashboard, got ${homeInfo.cardBadgeSvgCount}`);
       const expectedDefaultHomeBlocks = [
@@ -769,105 +800,69 @@ async function main() {
       assert(homeInfo.hasOpponentHealthPreview, 'Missing Opposing Team Health preview on Home Upcoming Matchup card');
     });
 
-    await runStep('Customizing Dashboard card order + Hide/Add modules via Up/Down + HTML5 Drag/Drop persists across reload & resets cleanly', async () => {
-      const initialOrder = await cdp.eval(() => {
-        document.querySelector('[data-action="toggle-customize-layout"]').click();
-        return Array.from(document.querySelectorAll('[data-action="move-block-up"]')).map(b =>
-          b.getAttribute('data-block-id')
+    await runStep('Contextual Top Header shifts to clean section titles on sub-tabs (logo/record/subtitle Home-only), zero subtitle truncation at 360px/375px/393px, and stale localStorage layout prefs self-heal', async () => {
+      // 1. Verify Home subtitle fits cleanly at 360px (narrow Android), 375px (iPhone SE), and 393px (iPhone 16)
+      for (const vp of [
+        { w: 360, h: 780, label: '360px' },
+        { w: 375, h: 667, label: '375px' },
+        { w: 393, h: 852, label: '393px' }
+      ]) {
+        await cdp.setViewport(vp.w, vp.h, true, 3);
+        const fitCheck = await cdp.eval(() => {
+          const brandSub = document.getElementById('headerSubRow');
+          return {
+            scrollW: brandSub?.scrollWidth || 0,
+            clientW: brandSub?.clientWidth || 0,
+            text: document.getElementById('headerSubStatus')?.textContent?.trim() || ''
+          };
+        });
+        assert(
+          fitCheck.scrollW <= fitCheck.clientW + 1,
+          `Header subtitle truncated at ${vp.label}: ${JSON.stringify(fitCheck)}`
         );
-      });
-      assert(initialOrder.length === 6, `Expected 6 default blocks, got ${initialOrder.length}`);
+      }
 
-      // Check boundary buttons disabled properly
-      const boundaryState = await cdp.eval(() => {
-        const ups = document.querySelectorAll('[data-action="move-block-up"]');
-        const downs = document.querySelectorAll('[data-action="move-block-down"]');
-        const optionalCount = document.querySelectorAll('[data-optional-home-modules] [data-action="show-home-block"]').length;
-        return {
-          firstUpDisabled: ups[0]?.disabled,
-          lastDownDisabled: downs[downs.length - 1]?.disabled,
-          optionalCount
-        };
-      });
-      assert(boundaryState.firstUpDisabled === true, 'First block Up button must be disabled');
-      assert(boundaryState.lastDownDisabled === true, 'Last block Down button must be disabled');
-      assert(boundaryState.optionalCount === 6, `Expected 6 optional Home modules in Customize tray, got ${boundaryState.optionalCount}`);
-
-      // Move 2nd block up to 1st position
-      const secondBlockId = initialOrder[1];
-      await cdp.eval(id => {
-        document.querySelector(`[data-action="move-block-up"][data-block-id="${id}"]`).click();
-      }, secondBlockId);
-
-      const afterMoveUp = await cdp.eval(() =>
-        Array.from(document.querySelectorAll('[data-action="move-block-up"]')).map(b =>
-          b.getAttribute('data-block-id')
-        )
-      );
-      assert(afterMoveUp[0] === secondBlockId, 'Moving 2nd block up did not place it at index 0');
-
-      // Also test HTML5 Drag-and-Drop reordering + hiding a card + pinning Playoff Odds onto Home
-      const thirdBlockId = afterMoveUp[2];
-      await cdp.eval(
-        ({ dragId, dropId }) => {
-          const srcCard = document.querySelector(`[data-dashboard-block="${dragId}"]`);
-          const dstCard = document.querySelector(`[data-dashboard-block="${dropId}"]`);
-          if (srcCard && dstCard) {
-            srcCard.dispatchEvent(new Event('dragstart', { bubbles: true }));
-            dstCard.dispatchEvent(new Event('dragover', { bubbles: true, cancelable: true }));
-            dstCard.dispatchEvent(new Event('drop', { bubbles: true, cancelable: true }));
-            srcCard.dispatchEvent(new Event('dragend', { bubbles: true }));
-          }
-          document.querySelector('[data-action="hide-home-block"][data-block-id="autopodcast_ai"]')?.click();
-          document.querySelector('[data-action="show-home-block"][data-block-id="playoff_picture"]')?.click();
-        },
-        { dragId: thirdBlockId, dropId: secondBlockId }
-      );
-
-      const afterDragDrop = await cdp.eval(() =>
-        Array.from(document.querySelectorAll('[data-action="move-block-up"]')).map(b =>
-          b.getAttribute('data-block-id')
-        )
-      );
-      assert(
-        afterDragDrop[0] === thirdBlockId &&
-          !afterDragDrop.includes('autopodcast_ai') &&
-          afterDragDrop.includes('playoff_picture'),
-        `Customize Drag/Hide/Add failed: ${JSON.stringify(afterDragDrop)}`
-      );
-
-      // Reload page and confirm custom order + pinned/hidden blocks persisted in localStorage
-      await cdp.send('Page.reload');
-      await cdp.waitFor(() => document.querySelector('[data-action="toggle-customize-layout"]'));
-
-      const persistedState = await cdp.eval(() => {
-        document.querySelector('[data-action="toggle-customize-layout"]').click();
-        return Array.from(document.querySelectorAll('[data-action="move-block-up"]')).map(b =>
-          b.getAttribute('data-block-id')
+      // 2. Verify secondary tabs hide logo/record/subtitle and render clean section titles
+      const expectedSubTabs = [
+        { tab: 'news', title: 'News & Film' },
+        { tab: 'season', title: 'Game & Season' },
+        { tab: 'roster', title: 'Roster & Cap' },
+        { tab: 'audio', title: 'Audio & AI' }
+      ];
+      for (const spec of expectedSubTabs) {
+        const tabHeader = await cdp.eval(t => {
+          document.querySelector(`[data-nav-tab="${t}"]`)?.click();
+          const h = document.querySelector('.top-header');
+          return {
+            activeTab: h?.getAttribute('data-active-tab') || '',
+            title: document.getElementById('headerTitleText')?.textContent?.trim() || '',
+            crestVisible: (document.querySelector('.brand-medallion')?.getClientRects()?.length || 0) > 0,
+            recordVisible: (document.getElementById('headerRecordPill')?.getClientRects()?.length || 0) > 0,
+            subVisible: (document.getElementById('headerSubRow')?.getClientRects()?.length || 0) > 0
+          };
+        }, spec.tab);
+        assert(
+          tabHeader.activeTab === spec.tab &&
+            tabHeader.title === spec.title &&
+            !tabHeader.crestVisible &&
+            !tabHeader.recordVisible &&
+            !tabHeader.subVisible,
+          `Sub-tab header for ${spec.tab} must be a clean section title without Home brand/record/subtitle: ${JSON.stringify(tabHeader)}`
         );
-      });
-      assert(
-        persistedState[0] === thirdBlockId &&
-          !persistedState.includes('autopodcast_ai') &&
-          persistedState.includes('playoff_picture'),
-        `Custom dashboard state did not persist across reload: ${JSON.stringify(persistedState)}`
-      );
+      }
 
-      // Test Reset to Default
+      // 3. Return to Home and verify stale localStorage hiddenHomeBlockIds/dashboardOrder never hide curated 6 modules
       await cdp.eval(() => {
-        document.querySelector('[data-action="reset-dashboard-order"]').click();
+        const raw = JSON.parse(window.localStorage.getItem('joshal_49ers_hq_prefs_v1') || '{}');
+        raw.hiddenHomeBlockIds = ['salary_cap', 'autopodcast_ai'];
+        raw.dashboardOrder = ['team_health'];
+        window.localStorage.setItem('joshal_49ers_hq_prefs_v1', JSON.stringify(raw));
+        document.querySelector('[data-nav-tab="home"]')?.click();
       });
-      const restoredOrder = await cdp.eval(() => {
-        const list = Array.from(document.querySelectorAll('[data-action="move-block-up"]')).map(b =>
-          b.getAttribute('data-block-id')
-        );
-        document.querySelector('[data-action="toggle-customize-layout"]').click(); // Exit customize mode
-        return list;
-      });
-      assert(
-        JSON.stringify(restoredOrder) === JSON.stringify(initialOrder),
-        `Reset Default did not restore original 6-card set: ${JSON.stringify(restoredOrder)}`
-      );
+      await cdp.send('Page.reload');
+      await cdp.waitFor(() => document.querySelectorAll('[data-dashboard-block]').length >= 6);
+      const healedCount = await cdp.eval(() => document.querySelectorAll('[data-dashboard-block]').length);
+      assert(healedCount === 6, `Expected self-healed 6 curated Home modules despite stale prefs, got ${healedCount}`);
     });
 
     console.log('\n=== [3/9] Team News, Source Links, Verified Video Embeds & Deep Dive AI Jump ===');
@@ -3919,7 +3914,7 @@ async function main() {
         window.localStorage.setItem('joshal_49ers_hq_prefs_v1', '{corrupted_json_payload!!!');
       });
       await cdp.send('Page.reload');
-      await cdp.waitFor(() => document.querySelector('[data-action="toggle-customize-layout"]'));
+      await cdp.waitFor(() => document.querySelectorAll('[data-dashboard-block]').length >= 6);
       const healthyAfterCorrupt = await cdp.eval(portNum => {
         const rec = document.getElementById('headerRecordPill')?.textContent?.trim();
         // Restore mock v1beta connection so subsequent Deep Analysis XSS test exercises real LLM Markdown rendering
@@ -4245,7 +4240,7 @@ async function main() {
           oppStarterRowsInTable,
           scorecardVals,
           hasPracticeParticipation: oppSecText.includes('Practice Participation'),
-          has4GameTracker: oppSecText.includes('4-Game Return Window Tracker')
+          has4GameTracker: oppSecText.includes('Injured Reserve')
         };
         const oppHasParity =
           oppParityDebug.hasAvailIdx &&
@@ -5083,7 +5078,7 @@ async function main() {
           excessPhrases,
           hasSettingsHostFormat,
           hasSettingsDurationSlider,
-          sheetHasPodcastSection: sheetTxt.includes('Custom Podcast Preferences'),
+          sheetHasPodcastSection: sheetTxt.includes('Podcast Preferences'),
           homeSheetOpen,
           homeExpectedCount,
           homeActualCount: homeSheetLinks.length,
@@ -5263,13 +5258,7 @@ async function main() {
         const homeDeadCapOpened = Boolean(pop && !pop.hidden && pop.textContent.includes('Dead Money'));
         document.querySelector('[data-action="close-jargon-popover"]')?.click();
         const homeScoreboardLinks = document.querySelectorAll('[data-dashboard-block="upcoming_matchup"] a.sb-team-col').length;
-        // Temporarily pin optional Schedule card via Customize Order to verify its 4-game KPI links & anchor cleanliness
-        document.querySelector('[data-action="toggle-customize-layout"]')?.click();
-        document.querySelector('[data-action="show-home-block"][data-block-id="schedule_overview"]')?.click();
-        scanCurrentDom('home:with_schedule');
-        const homeSchedGameLinks = document.querySelectorAll('[data-dashboard-block="schedule_overview"] a.kpi-box').length;
-        document.querySelector('[data-action="reset-dashboard-order"]')?.click();
-        document.querySelector('[data-action="toggle-customize-layout"]')?.click();
+        const homeSchedGameLinks = document.querySelectorAll('[data-dashboard-block="upcoming_matchup"] a.source-chip-link').length;
 
         // 2. News: Inline prose player link opens Player Dossier & zero nested anchors across Daily Brief + Wire
         document.querySelector('[data-nav-tab="news"]')?.click();

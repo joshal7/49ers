@@ -78,7 +78,6 @@ import {
 
 export function renderHomeDashboardHtml({
   orderedBlocks,
-  optionalBlocks = [],
   appData,
   simCapResult,
   mcSimResult,
@@ -86,36 +85,10 @@ export function renderHomeDashboardHtml({
   filteredRawItems,
   userPrefs = null,
   activeVideosSet = new Set(),
-  isCustomizingLayout,
   sessionLastVisitedAt = null,
   nowMs = Date.now()
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
-  const customizeBar = `
-    <div class="reorder-bar">
-      <div class="reorder-bar-status">
-        <span class="reorder-status-dot ${isCustomizingLayout ? 'customizing' : ''}" aria-hidden="true"></span>
-        <span>
-          ${
-            isCustomizingLayout
-              ? '<strong>Layout Mode Active:</strong> Drag cards, tap arrows, or add/hide modules.'
-              : `Showing <strong>${orderedBlocks.length} active modules</strong>`
-          }
-        </span>
-      </div>
-      <div class="reorder-controls">
-        ${
-          isCustomizingLayout
-            ? `<button type="button" class="btn-ghost" data-action="reset-dashboard-order">${iconSvg('reset', 13)}<span>Default</span></button>`
-            : ''
-        }
-        <button type="button" class="icon-btn ${isCustomizingLayout ? 'active' : ''}" data-action="toggle-customize-layout">
-          ${iconSvg(isCustomizingLayout ? 'check' : 'customize', 14)}
-          <span>${isCustomizingLayout ? 'Done' : 'Customize Order'}</span>
-        </button>
-      </div>
-    </div>
-  `;
 
   const cardsHtml = orderedBlocks
     .map((block, idx) =>
@@ -130,41 +103,32 @@ export function renderHomeDashboardHtml({
         filteredRawItems,
         userPrefs,
         activeVideosSet,
-        isCustomizingLayout,
         sessionLastVisitedAt,
         nowMs
       })
     )
     .join('');
 
-  const optionalTrayHtml =
-    isCustomizingLayout && Array.isArray(optionalBlocks) && optionalBlocks.length > 0
-      ? `
-        <div class="subcard-panel" data-optional-home-modules style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
-          <div class="sub-label" style="margin:0">Add Modules to Home (${optionalBlocks.length})</div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px">
-            ${optionalBlocks
-              .map(
-                b => `
-                  <button type="button" class="pill-btn" data-action="show-home-block" data-block-id="${esc(b.id)}" aria-label="Add ${esc(b.title)} to Home">
-                    ${iconSvg('plus', 12)}
-                    <span>${esc(b.shortTitle)}</span>
-                  </button>
-                `
-              )
-              .join('')}
-          </div>
-        </div>
-      `
-      : '';
-
-  return `${customizeBar}<div class="dashboard-grid">${cardsHtml}</div>${optionalTrayHtml}`;
+  return `<div class="dashboard-grid">${cardsHtml}</div>`;
 }
+
+const HOME_CARD_CTA_LABELS = {
+  news_briefs: 'All News',
+  upcoming_matchup: 'Full Matchup',
+  team_health: 'Full Health',
+  team_stats: 'Full Stats',
+  salary_cap: 'Cap Simulator',
+  autopodcast_ai: 'Audio & AI',
+  schedule_overview: 'Full Schedule',
+  trade_deadline: 'Trade Window',
+  playoff_picture: 'Playoff Odds',
+  draft_prep: 'Draft Board',
+  draft_live_udfa: 'Draft Recap',
+  roster_depth: 'Full Roster'
+};
 
 function renderSingleDashboardCard({
   block,
-  idx,
-  total,
   appData,
   simCapResult,
   mcSimResult,
@@ -172,26 +136,9 @@ function renderSingleDashboardCard({
   filteredRawItems,
   userPrefs = null,
   activeVideosSet = new Set(),
-  isCustomizingLayout,
   sessionLastVisitedAt = null,
   nowMs = Date.now()
 }) {
-  const reorderControlsHtml = isCustomizingLayout
-    ? `
-      <div class="reorder-controls" aria-label="Reorder ${esc(block.title)}">
-        <button type="button" class="reorder-btn" data-action="move-block-up" data-block-id="${esc(block.id)}" ${
-        idx === 0 ? 'disabled' : ''
-      } aria-label="Move ${esc(block.shortTitle)} up">${iconSvg('arrowUp', 14)}</button>
-        <button type="button" class="reorder-btn" data-action="move-block-down" data-block-id="${esc(block.id)}" ${
-        idx === total - 1 ? 'disabled' : ''
-      } aria-label="Move ${esc(block.shortTitle)} down">${iconSvg('arrowDown', 14)}</button>
-        <button type="button" class="reorder-btn" data-action="hide-home-block" data-block-id="${esc(block.id)}" ${
-        total <= 1 ? 'disabled' : ''
-      } title="Hide ${esc(block.shortTitle)} from Home" aria-label="Hide ${esc(block.shortTitle)} from Home">${iconSvg('close', 13)}</button>
-      </div>
-    `
-    : `<span class="badge badge-neutral">${esc(block.badgeLabel)}</span>`;
-
   let bodyHtml = '';
   let deepDiveAttr = '';
   let externalHeaderLink = '';
@@ -1068,11 +1015,11 @@ function renderSingleDashboardCard({
   }
 
   const iconName = blockIconName(block.id);
+  const ctaLabel = HOME_CARD_CTA_LABELS[block.id] || `Open ${block.shortTitle}`;
 
   return `
     <article class="card"
-             data-dashboard-block="${esc(block.id)}"
-             ${isCustomizingLayout ? 'draggable="true"' : ''}>
+             data-dashboard-block="${esc(block.id)}">
       <div class="card-header">
         <div class="card-header-left" style="cursor:pointer" ${deepDiveAttr}>
           <div class="card-icon-badge" aria-hidden="true">
@@ -1082,13 +1029,12 @@ function renderSingleDashboardCard({
             <h2 class="card-title">${esc(block.title)}</h2>
           </div>
         </div>
-        ${reorderControlsHtml}
       </div>
       ${bodyHtml}
       <div class="card-footer-row">
         ${externalHeaderLink || '<span></span>'}
         <button type="button" class="btn-secondary card-cta-btn" ${deepDiveAttr}>
-          <span>Open ${esc(block.shortTitle)}</span>
+          <span>${esc(ctaLabel)}</span>
           ${iconSvg('arrowRight', 14)}
         </button>
       </div>

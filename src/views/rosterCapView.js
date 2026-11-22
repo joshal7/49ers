@@ -283,7 +283,7 @@ function renderRosterExplorer({
       </div>
 
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-bottom:8px">
-        <span><strong>${filtered.length}</strong> players — ${jargonTerm('EPA', 'epa')}, ${jargonTerm('RAS', 'ras')} &amp; Contracts</span>
+        <span><strong>${filtered.length}</strong> players</span>
         <div class="source-link-strip">
           <a href="https://www.espn.com/nfl/team/roster/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Roster</span>${iconSvg('externalLink', 10)}</a>
           <a href="https://www.49ers.com/team/players-roster/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>49ers.com</span>${iconSvg('externalLink', 10)}</a>
@@ -409,14 +409,7 @@ function renderDualDepthChart({ appData, depthMode }) {
 
   const headerCard = `
     <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-        <span style="font-size:11.5px;color:var(--text-muted)">Tap underlined alignments for scheme notes, or any player for dossier</span>
-        <div class="source-link-strip">
-          <a href="https://www.espn.com/nfl/team/depth/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Depth</span>${iconSvg('externalLink', 10)}</a>
-          <a href="https://www.ourlads.com/nfldepthcharts/depthchart/SF" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Ourlads</span>${iconSvg('externalLink', 10)}</a>
-        </div>
-      </div>
-      <div class="segmented-control compact-seg" role="tablist" aria-label="Depth Chart Mode" style="margin-bottom:0">
+      <div class="segmented-control compact-seg" role="tablist" aria-label="Depth Chart Mode" style="margin-bottom:8px">
         <button type="button" role="tab" aria-selected="${depthMode === 'projected' ? 'true' : 'false'}" class="pill-btn seg-btn ${depthMode === 'projected' ? 'active' : ''}" data-action="set-depth-mode" data-depth-mode="projected">
           ${iconSvg('bolt', 13)}
           <span>${depthWk ? `Wk ${depthWk} ` : ''}Active (Injury-Adj.)</span>
@@ -425,6 +418,10 @@ function renderDualDepthChart({ appData, depthMode }) {
           ${iconSvg('layers', 13)}
           <span>Full Hierarchy</span>
         </button>
+      </div>
+      <div class="source-link-strip" style="justify-content:flex-end">
+        <a href="https://www.espn.com/nfl/team/depth/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Depth</span>${iconSvg('externalLink', 10)}</a>
+        <a href="https://www.ourlads.com/nfldepthcharts/depthchart/SF" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Ourlads</span>${iconSvg('externalLink', 10)}</a>
       </div>
     </div>
   `;
@@ -900,9 +897,6 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
 
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
         <div class="sub-label" style="margin:0">Active Contracts (${simPlayers.length})</div>
-        <span style="font-size:11.5px;color:var(--text-muted)">
-          Select a move to model CBA cap impact.
-        </span>
       </div>
 
       <div class="table-scroll">
