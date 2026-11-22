@@ -1,18 +1,284 @@
 {
-  "updatedAt": "2026-11-22T22:38:44.432Z",
+  "updatedAt": "2026-11-22T23:42:58.272Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T21:00:00Z",
-    "deadlineDisplay": "Nov 10, 2026 4:00 PM ET",
+    "deadlineDisplay": "Tuesday, Nov 10, 2026 • 4:00 PM ET",
     "availableGrossCap": 32851310,
     "projected2027CapSpace": 62075008,
     "capSourceUrl": "https://overthecap.com/salary-cap/detroit-lions",
     "transactionsUrl": "https://www.detroitlions.com/team/transactions/",
-    "purchasingPower": "$32.85M live 2026 cap space",
-    "completed2026Moves": [],
-    "topNeeds": [],
-    "realisticTargets": [],
-    "pitfallsToAvoid": [],
-    "tieredRumors": []
+    "purchasingPower": [
+      {
+        "metric": "2026 Salary Cap Space",
+        "figure": "$32.85M Gross (#5 NFL)",
+        "strategicImpact": "#3 in NFC. With the 2026 deadline passed, unused cap rolls over 1-for-1 under CBA Article 13 into 2027."
+      },
+      {
+        "metric": "2027 Projected Cap Horizon",
+        "figure": "+$62.08M (#9 NFL)",
+        "strategicImpact": "Healthy 2027 cap cushion lets DET absorb multi-year starter contracts or extend key homegrown players without restructuring traps."
+      },
+      {
+        "metric": "2027 Draft Pick Inventory",
+        "figure": "8 Picks (Rd 1, Rd 2, Rd 3, Rd 4, Rd 5, Rd 6, Rd 7-LAC, Rd 7)",
+        "strategicImpact": "Full Day 1–2 pick control gives DET flexibility to package Day-3 selections or stay aggressive in 2027 offseason talks."
+      }
+    ],
+    "completed2026Moves": [
+      {
+        "player": "Andre Cisco",
+        "playerId": "4361939",
+        "direction": "incoming",
+        "jersey": 28,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361939.png",
+        "position": "S",
+        "acquiredFrom": "NYJ",
+        "acquiredFromLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png",
+        "tradeDateIso": "2026-11-09T16:00:00Z",
+        "timing": "Trade Deadline Deal (Nov 9, 2026)",
+        "costSummary": "2028 sixth-round draft pick",
+        "schemeGrade": "A-",
+        "sourceUrl": "https://overthecap.com/player/andre-cisco/9529/",
+        "analysis": "Lions acquired S Andre Cisco from New York Jets (18 tackles, 1.0 sacks, 1 PD • 33% 2026 snap share • $745K 2026 cap hit). Expiring 2026 deal ($0 2027 cap commitment)."
+      },
+      {
+        "player": "Juice Scruggs",
+        "playerId": "4361425",
+        "direction": "incoming",
+        "jersey": 70,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361425.png",
+        "position": "G",
+        "acquiredFrom": "HOU",
+        "acquiredFromLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/hou.png",
+        "tradeDateIso": "2026-03-11T16:00:00Z",
+        "timing": "Offseason Trade (Mar 11, 2026)",
+        "costSummary": "David Montgomery",
+        "schemeGrade": "A-",
+        "sourceUrl": "https://overthecap.com/player/juice-scruggs/10886/",
+        "analysis": "Lions acquired G Juice Scruggs from Houston Texans (83% 2026 snap share • $1.58M 2026 cap hit). DET also received 2026 4th-Round Pick + 2027 7th-Round Pick. Expiring 2026 deal ($0 2027 cap commitment)."
+      }
+    ],
+    "topNeeds": [
+      {
+        "rank": 1,
+        "positionGroup": "Off-Ball Linebacker (Run Fit & Coverage)",
+        "urgency": "High",
+        "epaContext": "Active attrition: Jack Campbell (IR), Damone Clark (IR), Jimmy Rolder (IR), Devin White (IR) sidelined. Points Allowed ranks #15 (22.0/g). 2027 impending UFA exposure: DJ Wonnum."
+      },
+      {
+        "rank": 2,
+        "positionGroup": "Cornerback (Outside & Nickel Coverage)",
+        "urgency": "Moderate-High",
+        "epaContext": "Active attrition: Avonte Maddox (IR), Keith Abney II (Out), Ennis Rakestraw Jr. (Out), D.J. Reed (Out) sidelined. Points Allowed ranks #15 (22.0/g). 2027 impending UFA exposure: Roger McCreary, Rock Ya-Sin."
+      },
+      {
+        "rank": 3,
+        "positionGroup": "Interior Offensive Line (Guard & Center)",
+        "urgency": "Moderate",
+        "epaContext": "Active attrition: Ben Bartch (IR), Cade Mays (IR) sidelined. 2027 impending UFA exposure: Juice Scruggs."
+      },
+      {
+        "rank": 4,
+        "positionGroup": "Edge Rusher (4-Man Pass Rush)",
+        "urgency": "Opportunistic",
+        "epaContext": "Active attrition: Aidan Hutchinson (IR), Payton Turner (IR) sidelined."
+      }
+    ],
+    "realisticTargets": [
+      {
+        "name": "Cedric Gray",
+        "jersey": 33,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pelxtefda4adhi7fsbar",
+        "teamAbbr": "TEN",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
+        "currentTeam": "TEN (1-9 Seller)",
+        "position": "LB",
+        "prorated2026CapCharge": 1190000,
+        "offseason2027CapCharge": 1190000,
+        "cap2027Impact": "$1.19M Rookie Scale",
+        "sellerIncentive": "1-9 Titans are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 3rd-Round Pick (#94) or Day-2 Package",
+        "fitScore": 94,
+        "sourceUrl": "https://overthecap.com/player/cedric-gray/11714/",
+        "fitBreakdown": "Age 24 LB posting 30 tackles, 3 TFL, 0.5 sacks, 2 PD (52% snaps in 9g). Addresses Lions' #1 need; $1.19M projected 2027 acquiring cap charge fits easily inside DET's $62.08M 2027 cap space."
+      },
+      {
+        "name": "Nolan Smith",
+        "jersey": 3,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/mutic3dzmrlfruwqlgcb",
+        "teamAbbr": "PHI",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png",
+        "currentTeam": "PHI (3-7 Seller)",
+        "position": "LB",
+        "prorated2026CapCharge": 2604203,
+        "offseason2027CapCharge": 2604203,
+        "cap2027Impact": "$2.60M Rookie Scale",
+        "sellerIncentive": "3-7 Eagles are in retooling territory; controlled through 2027 while PHI collects future draft capital.",
+        "projectedPickCost": "2027 3rd-Round Pick (#94) or Day-2 Package",
+        "fitScore": 94,
+        "sourceUrl": "https://overthecap.com/player/nolan-smith/10854/",
+        "fitBreakdown": "Age 25 LB posting 12 tackles, 7 TFL, 6.0 sacks, 1 PD (66% snaps in 9g). Addresses Lions' #1 need; $2.60M projected 2027 acquiring cap charge fits easily inside DET's $62.08M 2027 cap space."
+      },
+      {
+        "name": "Tarheeb Still",
+        "jersey": 4,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/q1y35mhd4laqikbiuq5e",
+        "teamAbbr": "LAC",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
+        "currentTeam": "LAC (1-8 Seller)",
+        "position": "CB",
+        "prorated2026CapCharge": 1190000,
+        "offseason2027CapCharge": 1190000,
+        "cap2027Impact": "$1.19M Rookie Scale",
+        "sellerIncentive": "1-8 Chargers are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 3rd-Round Pick (#94) or Day-2 Package",
+        "fitScore": 92,
+        "sourceUrl": "https://overthecap.com/player/tarheeb-still/11745/",
+        "fitBreakdown": "Age 24 CB posting 20 tackles, 5 PD, 1 INT (95% snaps in 9g). Addresses Lions' #2 need; $1.19M projected 2027 acquiring cap charge fits easily inside DET's $62.08M 2027 cap space."
+      },
+      {
+        "name": "Cam Hart",
+        "jersey": 20,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/khd8lmp7idmluahgvk3u",
+        "teamAbbr": "LAC",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
+        "currentTeam": "LAC (1-8 Seller)",
+        "position": "CB",
+        "prorated2026CapCharge": 1190000,
+        "offseason2027CapCharge": 1190000,
+        "cap2027Impact": "$1.19M Rookie Scale",
+        "sellerIncentive": "1-8 Chargers are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 3rd-Round Pick (#94) or Day-2 Package",
+        "fitScore": 92,
+        "sourceUrl": "https://overthecap.com/player/cam-hart/11748/",
+        "fitBreakdown": "Age 25 CB posting 23 tackles, 8 PD, 2 INT (86% snaps in 9g). Addresses Lions' #2 need; $1.19M projected 2027 acquiring cap charge fits easily inside DET's $62.08M 2027 cap space."
+      },
+      {
+        "name": "Isaiah Adams",
+        "jersey": 74,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ule1nyboygcfxxc0qz8l",
+        "teamAbbr": "ARI",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png",
+        "currentTeam": "ARI (3-8 Seller)",
+        "position": "G",
+        "prorated2026CapCharge": 1609743,
+        "offseason2027CapCharge": 1609743,
+        "cap2027Impact": "$1.61M Rookie Scale",
+        "sellerIncentive": "3-8 Cardinals are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 3rd-Round Pick (#94) or Day-2 Package",
+        "fitScore": 89,
+        "sourceUrl": "https://overthecap.com/player/isaiah-adams/11679/",
+        "fitBreakdown": "Age 26 G posting 88% offensive snaps (253 snaps across 4g). Addresses Lions' #3 need; $1.61M projected 2027 acquiring cap charge fits easily inside DET's $62.08M 2027 cap space."
+      },
+      {
+        "name": "Matt Goncalves",
+        "jersey": 71,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/re7h2acu4gbzqpsrzbss",
+        "teamAbbr": "IND",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ind.png",
+        "currentTeam": "IND (3-8 Seller)",
+        "position": "G",
+        "prorated2026CapCharge": 1591233,
+        "offseason2027CapCharge": 1591233,
+        "cap2027Impact": "$1.59M Rookie Scale",
+        "sellerIncentive": "3-8 Colts are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 3rd-Round Pick (#94) or Day-2 Package",
+        "fitScore": 89,
+        "sourceUrl": "https://overthecap.com/player/matt-goncalves/11687/",
+        "fitBreakdown": "Age 25 G posting 99% offensive snaps (697 snaps across 2g). Addresses Lions' #3 need; $1.59M projected 2027 acquiring cap charge fits easily inside DET's $62.08M 2027 cap space."
+      },
+      {
+        "name": "Brandon Dorlus",
+        "jersey": 54,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/yjyai4c0os0sgis3nrua",
+        "teamAbbr": "ATL",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
+        "currentTeam": "ATL (3-7 Seller)",
+        "position": "DE",
+        "prorated2026CapCharge": 1190000,
+        "offseason2027CapCharge": 1190000,
+        "cap2027Impact": "$1.19M Rookie Scale",
+        "sellerIncentive": "3-7 Falcons are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 3rd-Round Pick (#94) or Day-2 Package",
+        "fitScore": 86,
+        "sourceUrl": "https://overthecap.com/player/brandon-dorlus/11717/",
+        "fitBreakdown": "Age 25 DE posting 1.5 sacks, 9 QB hits, 4 TFL (55% snaps in 10g). Addresses Lions' #4 need; $1.19M projected 2027 acquiring cap charge fits easily inside DET's $62.08M 2027 cap space."
+      }
+    ],
+    "pitfallsToAvoid": [
+      {
+        "trap": "Overpaying for Bloated Multi-Year Veteran Guarantees",
+        "examples": "Ahmad Gardner (IND CB — $24.95M 2027 Gtd), Jonathan Greenard (PHI LB — $24.76M 2027 Gtd), Garrett Wilson (NYJ WR — $24.50M 2027 Gtd)",
+        "exampleLinks": [
+          {
+            "label": "Ahmad Gardner (IND CB)",
+            "url": "https://overthecap.com/player/ahmad-gardner/10049/"
+          },
+          {
+            "label": "Jonathan Greenard (PHI LB)",
+            "url": "https://overthecap.com/player/jonathan-greenard/8830/"
+          },
+          {
+            "label": "Garrett Wilson (NYJ WR)",
+            "url": "https://overthecap.com/player/garrett-wilson/10055/"
+          }
+        ],
+        "whyAvoid": "Even with $62.08M in projected 2027 cap space, surrendering draft picks to absorb $24.95M+ guaranteed veteran deals crowds out upcoming homegrown extensions."
+      },
+      {
+        "trap": "Paying Draft Capital for Aging Name-Value Veterans",
+        "examples": "Calvin Ridley (TEN WR, Age 31), Harrison Phillips (NYJ DT, Age 30)",
+        "exampleLinks": [
+          {
+            "label": "Calvin Ridley (TEN WR, Age 31)",
+            "url": "https://overthecap.com/player/calvin-ridley/6911/"
+          },
+          {
+            "label": "Harrison Phillips (NYJ DT, Age 30)",
+            "url": "https://overthecap.com/player/harrison-phillips/6981/"
+          }
+        ],
+        "whyAvoid": "Veterans past age 30 with declining 2026 snap/efficiency metrics (11 rec, 159 yds, 1 TD, +9.0 EPA in 7g) rarely deliver postseason surplus over younger rookie-scale options."
+      },
+      {
+        "trap": "Mortgaging 2027 Day 1–2 Picks (#30, #94)",
+        "examples": "Dan Moore Jr. (TEN OT), Calvin Ridley (TEN WR)",
+        "exampleLinks": [
+          {
+            "label": "Dan Moore Jr. (TEN OT)",
+            "url": "https://overthecap.com/player/dan-moore-jr/9592/"
+          },
+          {
+            "label": "Calvin Ridley (TEN WR)",
+            "url": "https://overthecap.com/player/calvin-ridley/6911/"
+          }
+        ],
+        "whyAvoid": "DET currently holds 8 picks in 2027; trading away top-100 selections removes cost-controlled 4-year starters essential for sustaining roster depth and cap flexibility."
+      }
+    ],
+    "tieredRumors": [
+      {
+        "tier": "Tier 1 • Verified Beat & Official Wire",
+        "sources": "Detroit Lions Official",
+        "sourceUrl": "https://www.detroitlions.com/team/transactions/#tx-9d2a36009286",
+        "summary": "Lions roster move: Acquired DB Andre Cisco from the New York Jets for a 2028 sixth-round draft pick. Waived TE Jackson Meeks.",
+        "credibilityPct": 96
+      },
+      {
+        "tier": "Tier 2 • Cap & CBA Article 13 Intel",
+        "sources": "OverTheCap Live Ledger",
+        "sourceUrl": "https://overthecap.com/salary-cap/detroit-lions",
+        "summary": "Lions carry $32.85M in live 2026 cap space and $62.08M projected for 2027, giving the front office flexibility to absorb veteran salaries or front-load extensions without sacrificing core picks.",
+        "credibilityPct": 95
+      },
+      {
+        "tier": "Tier 2 • Draft Capital & Horizon",
+        "sources": "Tankathon Lions",
+        "sourceUrl": "https://www.tankathon.com/nfl/lions",
+        "summary": "With the 2026 in-season trade deadline passed, Lions hold 8 projected 2027 draft picks to target Off-Ball Linebacker & Cornerback via March trade talks or the 2027 NFL Draft.",
+        "credibilityPct": 92
+      }
+    ]
   },
   "playoffPicture": {
     "sources": [
@@ -4113,28 +4379,83 @@
         "url": "https://www.nflmockdraftdatabase.com/nfl-teams/2027/detroit-lions"
       }
     ],
-    "tradedPicksNote": "Live 2027 Detroit Lions draft order & 3-Lens 250+ Prospect Big Board.",
+    "tradedPicksNote": "Live 2027 Detroit Lions Tankathon draft ledger (8 projected picks) & 3-Lens 250+ Prospect Big Board.",
     "pickInventory": [
       {
         "round": 1,
-        "projectedOverall": 29,
+        "projectedOverall": 30,
         "origin": "Own Pick",
-        "notes": "DET 1st Round"
+        "notes": "DET Own Round 1 (#30 projected)"
       },
       {
         "round": 2,
         "projectedOverall": 61,
         "origin": "Own Pick",
-        "notes": "DET 2nd Round"
+        "notes": "DET Own Round 2 (#61 projected)"
       },
       {
         "round": 3,
-        "projectedOverall": 93,
+        "projectedOverall": 94,
         "origin": "Own Pick",
-        "notes": "DET 3rd Round"
+        "notes": "DET Own Round 3 (#94 projected)"
+      },
+      {
+        "round": 4,
+        "projectedOverall": 130,
+        "origin": "Own Pick",
+        "notes": "DET Own Round 4 (#130 projected)"
+      },
+      {
+        "round": 5,
+        "projectedOverall": 167,
+        "origin": "Own Pick",
+        "notes": "DET Own Round 5 (#167 projected)"
+      },
+      {
+        "round": 6,
+        "projectedOverall": 208,
+        "origin": "Own Pick",
+        "notes": "DET Own Round 6 (#208 projected)"
+      },
+      {
+        "round": 7,
+        "projectedOverall": 224,
+        "origin": "Via LAC",
+        "notes": "Acquired from LAC (#224 projected)"
+      },
+      {
+        "round": 7,
+        "projectedOverall": 251,
+        "origin": "Own Pick",
+        "notes": "DET Own Round 7 (#251 projected)"
       }
     ],
-    "topNeeds2027": [],
+    "topNeeds2027": [
+      {
+        "rank": 1,
+        "position": "Off-Ball Linebacker (Run Fit & Coverage)",
+        "priority": "High",
+        "rationale": "Active attrition: Jack Campbell (IR), Damone Clark (IR), Jimmy Rolder (IR), Devin White (IR) sidelined. Points Allowed ranks #15 (22.0/g). 2027 impending UFA exposure: DJ Wonnum."
+      },
+      {
+        "rank": 2,
+        "position": "Cornerback (Outside & Nickel Coverage)",
+        "priority": "Moderate-High",
+        "rationale": "Active attrition: Avonte Maddox (IR), Keith Abney II (Out), Ennis Rakestraw Jr. (Out), D.J. Reed (Out) sidelined. Points Allowed ranks #15 (22.0/g). 2027 impending UFA exposure: Roger McCreary, Rock Ya-Sin."
+      },
+      {
+        "rank": 3,
+        "position": "Interior Offensive Line (Guard & Center)",
+        "priority": "Moderate",
+        "rationale": "Active attrition: Ben Bartch (IR), Cade Mays (IR) sidelined. 2027 impending UFA exposure: Juice Scruggs."
+      },
+      {
+        "rank": 4,
+        "position": "Edge Rusher (4-Man Pass Rush)",
+        "priority": "Opportunistic",
+        "rationale": "Active attrition: Aidan Hutchinson (IR), Payton Turner (IR) sidelined."
+      }
+    ],
     "firstPickMockDatabase": [],
     "consensusBigBoard": [
       {

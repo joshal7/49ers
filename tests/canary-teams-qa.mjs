@@ -58,6 +58,12 @@ import {
   resolveReporterFromNameOrHandle
 } from '../src/engine/beatAttributionEngine.js';
 import { isPaywalledPublisher } from '../src/engine/linkIntegrity.js';
+import {
+  buildTeamTradeWindow,
+  parseClubTransactionsTradesHtml,
+  parseNflverseTradesCsv,
+  parseTradeSentenceForTeam
+} from '../scripts/lib/teamTradeIntelligence.mjs';
 import canaryWorker from '../worker/canary-worker.js';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -1132,6 +1138,144 @@ test('Cross-team native player dossiers work symmetrically for all 32 teams (inc
       `${slug} Matchup opponent players must not link directly to ESPN player pages`
     );
   }
+});
+
+await test('Multi-Team Trade Window: unit parsers + live Lions & Bills completed trades, needs, targets, pitfalls, rumors & rendered HTML', () => {
+  // 1. Unit parser assertions
+  const bufTeam = getTeamByAbbr('BUF');
+  const detTeam = getTeamByAbbr('DET');
+  const parsedIn = parseTradeSentenceForTeam(
+    'Acquired DB Amani Hooker and a 2027 fifth-round draft pick from Tennessee for a 2027 second-round draft pick. Released DB A.J. Woods.',
+    bufTeam,
+    '2026-11-10T08:00:00Z'
+  );
+  assert.equal(parsedIn.direction, 'incoming');
+  assert.equal(parsedIn.player, 'Amani Hooker');
+  assert.equal(parsedIn.partnerAbbr, 'TEN');
+  assert.match(parsedIn.costSummary, /2027 second-round/i);
+
+  const parsedOut = parseTradeSentenceForTeam(
+    'Traded center Sedrick Van Pran-Granger and a 2027 seventh-round pick (BUF) to the Indianapolis Colts for a 2027 sixth-round pick (IND).',
+    bufTeam,
+    '2026-08-30T16:00:00Z'
+  );
+  assert.equal(parsedOut.direction, 'outgoing');
+  assert.equal(parsedOut.player, 'Sedrick Van Pran-Granger');
+  assert.equal(parsedOut.partnerAbbr, 'IND');
+  assert.match(parsedOut.costSummary, /2027 sixth-round/i);
+
+  const clubRows = parseClubTransactionsTradesHtml(
+    '<div>2026</div><div>November</div><div>11/09</div><div>The Detroit Lions acquire S Andre Cisco via trade with the New York Jets and waive TE Jackson Meeks.</div>',
+    detTeam,
+    2026
+  );
+  assert.equal(clubRows.length, 1);
+  assert.equal(clubRows[0].dateIso, '2026-11-09T16:00:00Z');
+
+  const csvDeals = parseNflverseTradesCsv(
+    'trade_id,season,trade_date,gave,received,pick_season,pick_round,pick_number,conditional,pfr_id,pfr_name\n' +
+      '2042,2026,2026-03-02,HOU,DET,,,,,ScruJu00,Juice Scruggs\n' +
+      '2042,2026,2026-03-02,DET,HOU,,,,,MontDa01,David Montgomery\n',
+    2026
+  );
+  assert.equal(csvDeals.length, 1);
+  assert.equal(csvDeals[0].legs.length, 2);
+
+  // Cost-preservation guard: never overwrite known cost ("David Montgomery") with "Undisclosed Draft Compensation"
+  const mergedTest = buildTeamTradeWindow({
+    team: detTeam,
+    seasonYear: 2026,
+    currentWeek: 12,
+    nowIso: '2026-11-22T20:00:00Z',
+    cap26: { teamCapSpace: 32_851_310 },
+    cap27: { teamCapSpace: 62_075_008 },
+    players: [{ id: '4361425', name: 'Juice Scruggs', position: 'G', jersey: 70, rosterBucket: 'active', primarySnapPct: 83, contractsByYear: {} }],
+    clubTransactionsHtml: '<div>2026</div><div>March</div><div>03/11</div><div>The Detroit Lions acquire OL Juice Scruggs via trade with the Houston Texans.</div>',
+    leagueTradeCtx: {
+      leagueTrades: csvDeals,
+      capRankingsByYear: { 2026: new Map(), 2027: new Map() },
+      sellerCandidates: [],
+      sellerTraps: [],
+      nflPlayersByNorm: new Map(),
+      nflPlayersByPfr: new Map(),
+      statsByGsis: new Map(),
+      statsByNorm: new Map()
+    }
+  });
+  const scruggsTest = mergedTest.tradeWarRoom.completed2026Moves.find(m => m.player === 'Juice Scruggs');
+  assert.ok(scruggsTest, 'Juice Scruggs must appear in merged completed moves');
+  assert.match(scruggsTest.costSummary, /David Montgomery/i, 'Known trade cost must never be overwritten by Undisclosed');
+
+  // 2. Live DET & BUF dataset + rendered Trade HTML verification
+  for (const slug of ['lions', 'bills']) {
+    const dir = path.join(ROOT, 'data', 'teams', slug);
+    const meta = JSON.parse(fs.readFileSync(path.join(dir, 'meta.json'), 'utf8'));
+    const roster = JSON.parse(fs.readFileSync(path.join(dir, 'roster.json'), 'utf8'));
+    const seasonal = JSON.parse(fs.readFileSync(path.join(dir, 'seasonal.json'), 'utf8'));
+    const team = getTeamBySlug(slug);
+    const tw = seasonal.tradeWarRoom || {};
+    const validIds = new Set((roster.players || []).map(p => String(p.id)));
+    const rosterNames = new Set((roster.players || []).map(p => p.name.toLowerCase()));
+
+    assert.ok(Array.isArray(tw.purchasingPower) && tw.purchasingPower.length === 3, `${slug} purchasingPower must have 3 cards`);
+    assert.ok(Array.isArray(tw.completed2026Moves) && tw.completed2026Moves.length >= 2, `${slug} completed2026Moves must have >= 2 real 2026 trades`);
+    assert.ok(Array.isArray(tw.topNeeds) && tw.topNeeds.length === 4, `${slug} topNeeds must have 4 ranked needs`);
+    assert.ok(Array.isArray(tw.realisticTargets) && tw.realisticTargets.length >= 5, `${slug} realisticTargets must have >= 5 live seller targets`);
+    assert.ok(Array.isArray(tw.pitfallsToAvoid) && tw.pitfallsToAvoid.length >= 2, `${slug} pitfallsToAvoid must have >= 2 traps`);
+    assert.ok(Array.isArray(tw.tieredRumors) && tw.tieredRumors.length >= 3, `${slug} tieredRumors must have >= 3 grounded intel cards`);
+
+    // Verify specific real 2026 trades
+    if (slug === 'lions') {
+      const cisco = tw.completed2026Moves.find(m => /Andre Cisco/i.test(m.player));
+      const scruggs = tw.completed2026Moves.find(m => /Juice Scruggs/i.test(m.player));
+      assert.ok(cisco && cisco.acquiredFrom === 'NYJ' && validIds.has(String(cisco.playerId)), 'Lions must include clickable Andre Cisco trade from NYJ');
+      assert.ok(scruggs && scruggs.acquiredFrom === 'HOU' && /David Montgomery/i.test(scruggs.costSummary), 'Lions must include Juice Scruggs trade from HOU for David Montgomery');
+    } else {
+      const hooker = tw.completed2026Moves.find(m => /Amani Hooker/i.test(m.player));
+      const moore = tw.completed2026Moves.find(m => /DJ Moore/i.test(m.player));
+      const taron = tw.completed2026Moves.find(m => /Taron Johnson/i.test(m.player));
+      assert.ok(hooker && hooker.acquiredFrom === 'TEN' && validIds.has(String(hooker.playerId)), 'Bills must include clickable Amani Hooker trade from TEN');
+      assert.ok(moore && moore.acquiredFrom === 'CHI' && validIds.has(String(moore.playerId)), 'Bills must include clickable DJ Moore trade from CHI');
+      assert.ok(taron && taron.direction === 'outgoing' && taron.acquiredFrom === 'LV', 'Bills must include outgoing Taron Johnson trade to LV');
+    }
+
+    for (const m of tw.completed2026Moves) {
+      if (m.playerId) assert.ok(validIds.has(String(m.playerId)), `${slug} trade ${m.player} playerId must exist on roster`);
+      assert.ok(String(m.sourceUrl || '').startsWith('https://'), `${slug} trade ${m.player} missing https sourceUrl`);
+    }
+    for (const t of tw.realisticTargets) {
+      assert.notEqual(t.teamAbbr, team.abbr, `${slug} target ${t.name} must not already be on ${team.abbr}`);
+      assert.ok(!rosterNames.has(t.name.toLowerCase()), `${slug} target ${t.name} must not already be on active roster`);
+      assert.ok(String(t.sourceUrl || '').startsWith('https://overthecap.com/player/'), `${slug} target ${t.name} must link to OverTheCap`);
+      assert.ok(!new RegExp(`via\\s+${team.abbr}\\b`, 'i').test(t.projectedPickCost), `${slug} own pick cost must not say "via ${team.abbr}"`);
+    }
+    for (const pf of tw.pitfallsToAvoid) {
+      assert.ok(Array.isArray(pf.exampleLinks) && pf.exampleLinks.length > 0, `${slug} pitfall missing exampleLinks`);
+      for (const el of pf.exampleLinks) {
+        assert.ok(String(el.url || '').startsWith('https://overthecap.com/player/'), `${slug} pitfall link must point to OverTheCap`);
+      }
+    }
+    for (const r of tw.tieredRumors) {
+      assert.ok(!/\bmock draft\b/i.test(r.summary), `${slug} trade intel must not include unrelated mock draft headlines`);
+    }
+
+    // Verify rendered Trade UI HTML
+    setActiveTeamConfig(team.abbr);
+    const html = renderSeasonMatchupViewHtml({
+      appData: { meta, roster, seasonal, scheduleMatchup: {}, health: {}, cap: {}, news: { rawStream: [] } },
+      seasonSub: 'trade'
+    });
+    assert.ok(html.includes('Cap &amp; Draft Constraints'), `${slug} Trade UI missing Cap & Draft Constraints`);
+    assert.ok(html.includes('Earlier Completed Trades'), `${slug} Trade UI missing inline Earlier Completed Trades collapsible`);
+    assert.ok(!html.includes('No completed '), `${slug} Trade UI must not render empty completed-trades message`);
+    assert.ok(html.includes('Targets to Avoid'), `${slug} Trade UI missing Targets to Avoid`);
+    assert.ok(html.includes('Trade Intel &amp; Rumors'), `${slug} Trade UI missing Trade Intel & Rumors`);
+    if (slug === 'bills') {
+      assert.ok(html.includes('→') && html.includes('Return:'), 'Bills outgoing trade cards must render → and Return:');
+    }
+    assert.equal(hasCrossTeam49ersLeak(html, team), false, `${slug} rendered Trade UI must have zero 49ers leaks`);
+  }
+  setActiveTeamConfig('SF');
 });
 
 // Restore default SF active team singleton

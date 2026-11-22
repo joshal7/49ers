@@ -1809,6 +1809,9 @@ function renderTeamStatsAndPower(appData, userPrefs = null) {
 }
 
 function renderCompletedTradeCardHtml(m, { isOlder = false } = {}) {
+  const isOutgoing = m.direction === 'outgoing';
+  const dirArrow = isOutgoing ? '→' : '←';
+  const costLabel = isOutgoing ? 'Return' : 'Cost';
   return `
     <div class="subcard-panel" style="border-color:${isOlder ? 'var(--border-strong)' : 'var(--gold-border)'}">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
@@ -1823,7 +1826,7 @@ function renderCompletedTradeCardHtml(m, { isOlder = false } = {}) {
                   ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(m.playerId)}">${esc(m.player)} (${esc(m.position)})</span>`
                   : `<strong>${esc(m.player)} (${esc(m.position)})</strong>`
               }
-              <span style="color:var(--text-muted)">←</span>
+              <span style="color:var(--text-muted)">${dirArrow}</span>
               ${
                 m.acquiredFrom
                   ? `<a href="${esc(buildEspnNflTeamUrl(m.acquiredFrom))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="display:inline-flex;align-items:center;gap:4px;color:inherit">${renderTeamLogoHtml(m.acquiredFrom, m.acquiredFromLogoUrl, 18)}<strong>${esc(m.acquiredFrom)}</strong></a>`
@@ -1835,7 +1838,7 @@ function renderCompletedTradeCardHtml(m, { isOlder = false } = {}) {
                   : ''
               }
             </div>
-            <div style="font-size:11.5px;color:var(--gold-bright)">${esc(m.timing)} • Cost: ${esc(m.costSummary)}</div>
+            <div style="font-size:11.5px;color:var(--gold-bright)">${esc(m.timing)} • ${costLabel}: ${esc(m.costSummary)}</div>
           </div>
         </div>
         <span class="badge ${isOlder ? 'badge-neutral' : 'badge-positive'} mono">Grade ${esc(m.schemeGrade)}</span>
@@ -1930,26 +1933,36 @@ function renderTradeWindow(appData) {
 
       <div class="sub-label" style="margin-bottom:6px">Team Needs</div>
       <div style="display:flex;flex-direction:column;gap:7px">
-        ${(tw.topNeeds || [])
-          .map(
-            n => `
+        ${
+          (tw.topNeeds || []).length > 0
+            ? (tw.topNeeds || [])
+                .map(
+                  n => `
           <div class="subcard-panel">
             <strong>#${n.rank} ${esc(n.positionGroup)}</strong> <span class="badge badge-warning">${esc(n.urgency)}</span>
             <div style="font-size:12px;color:var(--text-secondary);margin-top:3px">${escJargon(n.epaContext)}</div>
           </div>
         `
-          )
-          .join('')}
+                )
+                .join('')
+            : `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">Positional need rankings will update on the next live data refresh.</div>`
+        }
       </div>
     </section>
 
     <section class="card">
-      <div class="card-eyebrow">${Math.max(1, Math.min(18, 18 - (Number(appData?.meta?.currentWeek) || 9)))}/18ths Prorated Cap • ${jargonTerm('Rich Hill', 'rich_hill')} Pick Value</div>
+      <div class="card-eyebrow">${
+        tradeStatus.isPostDeadlinePause
+          ? `Offseason Trade Horizon • ${jargonTerm('Rich Hill', 'rich_hill')} Pick Value`
+          : `${Math.max(1, Math.min(18, 18 - (Number(appData?.meta?.currentWeek) || 9)))}/18ths Prorated Cap • ${jargonTerm('Rich Hill', 'rich_hill')} Pick Value`
+      }</div>
       <h3 class="card-title" style="margin-bottom:8px">Trade Targets</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
-        ${(tw.realisticTargets || [])
-          .map(
-            t => `
+        ${
+          (tw.realisticTargets || []).length > 0
+            ? (tw.realisticTargets || [])
+                .map(
+                  t => `
           <div class="subcard-panel">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
               <div style="display:flex;align-items:center;gap:9px;min-width:0">
@@ -1974,7 +1987,11 @@ function renderTradeWindow(appData) {
                 </div>
               </div>
               <div style="min-width:128px;text-align:right">
-                <span class="badge badge-gold mono">Fit ${t.fitScore}/100 • Cap ${formatCompactDollars(t.prorated2026CapCharge)}</span>
+                <span class="badge badge-gold mono">Fit ${t.fitScore}/100 • ${
+                  tradeStatus.isPostDeadlinePause && t.offseason2027CapCharge != null
+                    ? `2027 Cap ${formatCompactDollars(t.offseason2027CapCharge)}`
+                    : `Cap ${formatCompactDollars(t.prorated2026CapCharge)}`
+                }</span>
                 ${renderMiniMeterHtml(t.fitScore, 'gold')}
               </div>
             </div>
@@ -1982,8 +1999,10 @@ function renderTradeWindow(appData) {
             <div style="font-size:12.5px;color:var(--text-secondary);margin-top:4px">${escJargon(t.fitBreakdown)}</div>
           </div>
         `
-          )
-          .join('')}
+                )
+                .join('')
+            : `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">No external trade targets loaded yet for this cycle.</div>`
+        }
       </div>
     </section>
 
@@ -2029,9 +2048,11 @@ function renderTradeWindow(appData) {
     <section class="card">
       <h3 class="card-title" style="margin-bottom:8px">Trade Intel &amp; Rumors</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
-        ${(tw.tieredRumors || [])
-          .map(
-            r => `
+        ${
+          (tw.tieredRumors || []).length > 0
+            ? (tw.tieredRumors || [])
+                .map(
+                  r => `
           <div class="subcard-panel">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
               <span class="badge ${r.tier.includes('Tier 1') ? 'badge-positive' : 'badge-gold'}">${esc(r.tier)}</span>
@@ -2040,8 +2061,10 @@ function renderTradeWindow(appData) {
             <div style="font-size:12.5px">${escJargon(r.summary)}</div>
           </div>
         `
-          )
-          .join('')}
+                )
+                .join('')
+            : `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">No verified trade wire notes recorded yet this cycle.</div>`
+        }
       </div>
     </section>
   `;

@@ -1,18 +1,316 @@
 {
-  "updatedAt": "2026-11-22T22:38:47.984Z",
+  "updatedAt": "2026-11-22T23:43:04.124Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T21:00:00Z",
-    "deadlineDisplay": "Nov 10, 2026 4:00 PM ET",
+    "deadlineDisplay": "Tuesday, Nov 10, 2026 • 4:00 PM ET",
     "availableGrossCap": 4198213,
     "projected2027CapSpace": -48857631,
     "capSourceUrl": "https://overthecap.com/salary-cap/buffalo-bills",
     "transactionsUrl": "https://www.buffalobills.com/team/transactions/",
-    "purchasingPower": "$4.20M live 2026 cap space",
-    "completed2026Moves": [],
-    "topNeeds": [],
-    "realisticTargets": [],
-    "pitfallsToAvoid": [],
-    "tieredRumors": []
+    "purchasingPower": [
+      {
+        "metric": "2026 Salary Cap Space",
+        "figure": "$4.20M Gross (#27 NFL)",
+        "strategicImpact": "#14 in AFC. With the 2026 deadline passed, unused cap rolls over 1-for-1 under CBA Article 13 into 2027."
+      },
+      {
+        "metric": "2027 Projected Cap Horizon",
+        "figure": "-$48.86M (#32 NFL)",
+        "strategicImpact": "Projected 2027 deficit makes CBA Article 13 rollover, cheap rookie deals, and non-guaranteed options essential over heavy multi-year guarantees."
+      },
+      {
+        "metric": "2027 Draft Pick Inventory",
+        "figure": "8 Picks (Rd 1, Rd 3, Rd 4, Rd 5-TEN, Rd 5, Rd 6-IND, Rd 6, Rd 7-LV)",
+        "strategicImpact": "Missing Rd 2 from prior deals; protecting remaining Day 1–2 capital is critical for rookie-scale starters."
+      }
+    ],
+    "completed2026Moves": [
+      {
+        "player": "Amani Hooker",
+        "playerId": "4036134",
+        "direction": "incoming",
+        "jersey": 22,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036134.png",
+        "position": "S",
+        "acquiredFrom": "TEN",
+        "acquiredFromLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
+        "tradeDateIso": "2026-11-10T16:00:00Z",
+        "timing": "Trade Deadline Deal (Nov 10, 2026)",
+        "costSummary": "2027 second-round draft pick",
+        "schemeGrade": "A-",
+        "sourceUrl": "https://overthecap.com/player/amani-hooker/7907/",
+        "analysis": "Bills acquired S Amani Hooker from Tennessee Titans (39 tackles, 8 PD, 5 INT • 99% 2026 snap share • $4.44M 2026 cap hit). BUF also received 2027 fifth-round pick. Under contract through 2027 ($10.28M cap hit)."
+      },
+      {
+        "player": "Sedrick Van Pran-Granger",
+        "playerId": null,
+        "direction": "outgoing",
+        "jersey": 63,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/o6ayso1ks19s4n2te2n9",
+        "position": "C",
+        "acquiredFrom": "IND",
+        "acquiredFromLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ind.png",
+        "tradeDateIso": "2026-08-30T16:00:00Z",
+        "timing": "Roster Cutdown Trade (Aug 30, 2026)",
+        "costSummary": "2027 sixth-round pick (IND)",
+        "schemeGrade": "B",
+        "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
+        "analysis": "Bills traded C Sedrick Van Pran-Granger to Indianapolis Colts in exchange for 2027 sixth-round pick (IND). BUF also included 2027 seventh-round pick (BUF). Recoups draft capital while preserving 2027 roster and cap flexibility."
+      },
+      {
+        "player": "DJ Moore",
+        "playerId": "3915416",
+        "direction": "incoming",
+        "jersey": 2,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3915416.png",
+        "position": "WR",
+        "acquiredFrom": "CHI",
+        "acquiredFromLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/chi.png",
+        "tradeDateIso": "2026-03-11T16:00:00Z",
+        "timing": "Offseason Trade (Mar 11, 2026)",
+        "costSummary": "2nd round pick (60th overall)",
+        "schemeGrade": "A-",
+        "sourceUrl": "https://overthecap.com/player/d-j-moore/6909/",
+        "analysis": "Bills acquired WR DJ Moore from Chicago Bears (31 rec, 466 yds, 4 TD • 56% 2026 snap share • $6.75M 2026 cap hit). BUF also received 2026 5th-Round Pick. Under contract through 2027 ($28.94M cap hit)."
+      },
+      {
+        "player": "Taron Johnson",
+        "playerId": null,
+        "direction": "outgoing",
+        "jersey": 3,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/ga88tpaiiaafgcecjboi",
+        "position": "CB",
+        "acquiredFrom": "LV",
+        "acquiredFromLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lv.png",
+        "tradeDateIso": "2026-03-11T16:00:00Z",
+        "timing": "Offseason Trade (Mar 11, 2026)",
+        "costSummary": "6th round pick (182)",
+        "schemeGrade": "B",
+        "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
+        "analysis": "Bills traded CB Taron Johnson to Las Vegas Raiders in exchange for 6th round pick (182). BUF also included 2026 7th-Round Pick. Recoups draft capital while preserving 2027 roster and cap flexibility."
+      }
+    ],
+    "topNeeds": [
+      {
+        "rank": 1,
+        "positionGroup": "Cornerback (Outside & Nickel Coverage)",
+        "urgency": "High",
+        "epaContext": "Active attrition: Dorian Strong (IR), Christian Benford (Out) sidelined. Turnover Differential ranks #17 (0)."
+      },
+      {
+        "rank": 2,
+        "positionGroup": "Interior Defensive Line (DT / 3-Tech)",
+        "urgency": "Moderate-High",
+        "epaContext": "Active attrition: Zane Durant (IR), T.J. Sanders (Out) sidelined. Defensive Sacks/Game ranks #13 (2.33)."
+      },
+      {
+        "rank": 3,
+        "positionGroup": "Wide Receiver (Perimeter & Slot Separation)",
+        "urgency": "Moderate",
+        "epaContext": "Active attrition: Joshua Palmer (IR), Skyler Bell (Out) sidelined."
+      },
+      {
+        "rank": 4,
+        "positionGroup": "Off-Ball Linebacker (Run Fit & Coverage)",
+        "urgency": "Opportunistic",
+        "epaContext": "Active attrition: Dorian Williams (Out) sidelined. 2027 impending UFA exposure: Dorian Williams."
+      }
+    ],
+    "realisticTargets": [
+      {
+        "name": "Tarheeb Still",
+        "jersey": 4,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/q1y35mhd4laqikbiuq5e",
+        "teamAbbr": "LAC",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
+        "currentTeam": "LAC (1-8 Seller)",
+        "position": "CB",
+        "prorated2026CapCharge": 1190000,
+        "offseason2027CapCharge": 1190000,
+        "cap2027Impact": "$1.19M Rookie Scale",
+        "sellerIncentive": "1-8 Chargers are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 3rd-Round Pick (#96) or Day-2 Package",
+        "fitScore": 94,
+        "sourceUrl": "https://overthecap.com/player/tarheeb-still/11745/",
+        "fitBreakdown": "Age 24 CB posting 20 tackles, 5 PD, 1 INT (95% snaps in 9g). Addresses Bills' #1 need; $1.19M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
+      },
+      {
+        "name": "Cam Hart",
+        "jersey": 20,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/khd8lmp7idmluahgvk3u",
+        "teamAbbr": "LAC",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
+        "currentTeam": "LAC (1-8 Seller)",
+        "position": "CB",
+        "prorated2026CapCharge": 1190000,
+        "offseason2027CapCharge": 1190000,
+        "cap2027Impact": "$1.19M Rookie Scale",
+        "sellerIncentive": "1-8 Chargers are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 3rd-Round Pick (#96) or Day-2 Package",
+        "fitScore": 94,
+        "sourceUrl": "https://overthecap.com/player/cam-hart/11748/",
+        "fitBreakdown": "Age 25 CB posting 23 tackles, 8 PD, 2 INT (86% snaps in 9g). Addresses Bills' #1 need; $1.19M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
+      },
+      {
+        "name": "Maason Smith",
+        "jersey": 92,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/fqrsn0bixymtacuazry3",
+        "teamAbbr": "ATL",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
+        "currentTeam": "ATL (3-7 Seller)",
+        "position": "DT",
+        "prorated2026CapCharge": 1888446,
+        "offseason2027CapCharge": 1888446,
+        "cap2027Impact": "$1.89M Rookie Scale",
+        "sellerIncentive": "3-7 Falcons are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 4th-Round Pick (#133)",
+        "fitScore": 89,
+        "sourceUrl": "https://overthecap.com/player/maason-smith/11656/",
+        "fitBreakdown": "Age 24 DT posting 1.0 sacks, 4 QB hits, 4 TFL (55% snaps in 10g). Addresses Bills' #2 need; $1.89M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
+      },
+      {
+        "name": "Malik Washington",
+        "jersey": 6,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/uainpdjrwkwk9zjdxpem",
+        "teamAbbr": "MIA",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
+        "currentTeam": "MIA (1-9 Seller)",
+        "position": "WR",
+        "prorated2026CapCharge": 1190000,
+        "offseason2027CapCharge": 1190000,
+        "cap2027Impact": "$1.19M Rookie Scale",
+        "sellerIncentive": "1-9 Dolphins are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 3rd-Round Pick (#96) or Day-2 Package",
+        "fitScore": 89,
+        "sourceUrl": "https://overthecap.com/player/malik-washington/11792/",
+        "fitBreakdown": "Age 26 WR posting 39 rec, 430 yds, 1 TD, +9.4 EPA in 10g. Addresses Bills' #3 need; $1.19M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
+      },
+      {
+        "name": "Darius Cooper",
+        "jersey": 80,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pe71oe4eoyyfnq80fkxc",
+        "teamAbbr": "PHI",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png",
+        "currentTeam": "PHI (3-7 Seller)",
+        "position": "WR",
+        "prorated2026CapCharge": 1120000,
+        "offseason2027CapCharge": 1120000,
+        "cap2027Impact": "$1.12M Non-Gtd (2027 Option)",
+        "sellerIncentive": "3-7 Eagles are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 3rd-Round Pick (#96) or Day-2 Package",
+        "fitScore": 88,
+        "sourceUrl": "https://overthecap.com/player/darius-cooper/12984/",
+        "fitBreakdown": "Age 24 WR posting 17 rec, 259 yds, 4 TD, +6.9 EPA in 10g. Addresses Bills' #3 need; $1.12M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
+      },
+      {
+        "name": "Zeek Biggers",
+        "jersey": 93,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/suxeeie7m0bmqjrgwsmv",
+        "teamAbbr": "MIA",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
+        "currentTeam": "MIA (1-9 Seller)",
+        "position": "DT",
+        "prorated2026CapCharge": 1120000,
+        "offseason2027CapCharge": 1120000,
+        "cap2027Impact": "$1.12M Rookie Scale",
+        "sellerIncentive": "1-9 Dolphins are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 4th-Round Pick (#133)",
+        "fitScore": 86,
+        "sourceUrl": "https://overthecap.com/player/zeek-biggers/12613/",
+        "fitBreakdown": "Age 23 DT posting 1.0 sacks, 4 QB hits, 1 TFL (55% snaps in 9g). Addresses Bills' #2 need; $1.12M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
+      },
+      {
+        "name": "Cedric Gray",
+        "jersey": 33,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pelxtefda4adhi7fsbar",
+        "teamAbbr": "TEN",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
+        "currentTeam": "TEN (1-9 Seller)",
+        "position": "LB",
+        "prorated2026CapCharge": 1190000,
+        "offseason2027CapCharge": 1190000,
+        "cap2027Impact": "$1.19M Rookie Scale",
+        "sellerIncentive": "1-9 Titans are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 3rd-Round Pick (#96) or Day-2 Package",
+        "fitScore": 86,
+        "sourceUrl": "https://overthecap.com/player/cedric-gray/11714/",
+        "fitBreakdown": "Age 24 LB posting 30 tackles, 3 TFL, 0.5 sacks, 2 PD (52% snaps in 9g). Addresses Bills' #4 need; $1.19M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
+      }
+    ],
+    "pitfallsToAvoid": [
+      {
+        "trap": "Absorbing Heavy 2027 Guaranteed Cap Charges",
+        "examples": "Ahmad Gardner (IND CB — $24.95M 2027 Gtd), Jonathan Greenard (PHI LB — $24.76M 2027 Gtd), Garrett Wilson (NYJ WR — $24.50M 2027 Gtd)",
+        "exampleLinks": [
+          {
+            "label": "Ahmad Gardner (IND CB)",
+            "url": "https://overthecap.com/player/ahmad-gardner/10049/"
+          },
+          {
+            "label": "Jonathan Greenard (PHI LB)",
+            "url": "https://overthecap.com/player/jonathan-greenard/8830/"
+          },
+          {
+            "label": "Garrett Wilson (NYJ WR)",
+            "url": "https://overthecap.com/player/garrett-wilson/10055/"
+          }
+        ],
+        "whyAvoid": "Bills project at -$48.86M on the 2027 cap. Taking on $24.95M+ in guaranteed veteran money would force painful restructures or core-starter cuts."
+      },
+      {
+        "trap": "Paying Draft Capital for Aging Name-Value Veterans",
+        "examples": "Calvin Ridley (TEN WR, Age 31), Harrison Phillips (NYJ DT, Age 30)",
+        "exampleLinks": [
+          {
+            "label": "Calvin Ridley (TEN WR, Age 31)",
+            "url": "https://overthecap.com/player/calvin-ridley/6911/"
+          },
+          {
+            "label": "Harrison Phillips (NYJ DT, Age 30)",
+            "url": "https://overthecap.com/player/harrison-phillips/6981/"
+          }
+        ],
+        "whyAvoid": "Veterans past age 30 with declining 2026 snap/efficiency metrics (11 rec, 159 yds, 1 TD, +9.0 EPA in 7g) rarely deliver postseason surplus over younger rookie-scale options."
+      },
+      {
+        "trap": "Mortgaging 2027 Day 1–2 Picks (#32, #96)",
+        "examples": "Dan Moore Jr. (TEN OT), Calvin Ridley (TEN WR)",
+        "exampleLinks": [
+          {
+            "label": "Dan Moore Jr. (TEN OT)",
+            "url": "https://overthecap.com/player/dan-moore-jr/9592/"
+          },
+          {
+            "label": "Calvin Ridley (TEN WR)",
+            "url": "https://overthecap.com/player/calvin-ridley/6911/"
+          }
+        ],
+        "whyAvoid": "BUF already dealt its 2027 2nd-round pick; trading away top-100 selections removes cost-controlled 4-year starters essential for sustaining roster depth and cap flexibility."
+      }
+    ],
+    "tieredRumors": [
+      {
+        "tier": "Tier 1 • Verified Beat & Official Wire",
+        "sources": "Buffalo Bills Official",
+        "sourceUrl": "https://www.buffalobills.com/team/transactions/#tx-bb3cae296ade",
+        "summary": "Bills roster move: Acquired DB Amani Hooker and a 2027 fifth-round draft pick from Tennessee for a 2027 second-round draft pick. Released DB A.J. Woods from the practice squad.",
+        "credibilityPct": 96
+      },
+      {
+        "tier": "Tier 2 • Cap & CBA Article 13 Intel",
+        "sources": "OverTheCap Live Ledger",
+        "sourceUrl": "https://overthecap.com/salary-cap/buffalo-bills",
+        "summary": "With $4.20M in 2026 space and -$48.86M projected for 2027, unused 2026 cap rolls over 1-for-1 under CBA Article 13 — putting a premium on rookie-scale contracts and non-guaranteed deals entering the 2027 offseason.",
+        "credibilityPct": 95
+      },
+      {
+        "tier": "Tier 2 • Draft Capital & Horizon",
+        "sources": "Tankathon Bills",
+        "sourceUrl": "https://www.tankathon.com/nfl/bills",
+        "summary": "With the 2026 in-season trade deadline passed, Bills hold 8 projected 2027 draft picks to target Cornerback & Interior Defensive Line via March trade talks or the 2027 NFL Draft.",
+        "credibilityPct": 92
+      }
+    ]
   },
   "playoffPicture": {
     "sources": [
@@ -4113,28 +4411,83 @@
         "url": "https://www.nflmockdraftdatabase.com/nfl-teams/2027/buffalo-bills"
       }
     ],
-    "tradedPicksNote": "Live 2027 Buffalo Bills draft order & 3-Lens 250+ Prospect Big Board.",
+    "tradedPicksNote": "Live 2027 Buffalo Bills Tankathon draft ledger (8 projected picks) & 3-Lens 250+ Prospect Big Board.",
     "pickInventory": [
       {
         "round": 1,
-        "projectedOverall": 31,
+        "projectedOverall": 32,
         "origin": "Own Pick",
-        "notes": "BUF 1st Round"
-      },
-      {
-        "round": 2,
-        "projectedOverall": 63,
-        "origin": "Own Pick",
-        "notes": "BUF 2nd Round"
+        "notes": "BUF Own Round 1 (#32 projected)"
       },
       {
         "round": 3,
-        "projectedOverall": 95,
+        "projectedOverall": 96,
         "origin": "Own Pick",
-        "notes": "BUF 3rd Round"
+        "notes": "BUF Own Round 3 (#96 projected)"
+      },
+      {
+        "round": 4,
+        "projectedOverall": 133,
+        "origin": "Own Pick",
+        "notes": "BUF Own Round 4 (#133 projected)"
+      },
+      {
+        "round": 5,
+        "projectedOverall": 138,
+        "origin": "Via TEN",
+        "notes": "Acquired from TEN (#138 projected)"
+      },
+      {
+        "round": 5,
+        "projectedOverall": 169,
+        "origin": "Own Pick",
+        "notes": "BUF Own Round 5 (#169 projected)"
+      },
+      {
+        "round": 6,
+        "projectedOverall": 185,
+        "origin": "Via IND",
+        "notes": "Acquired from IND (#185 projected)"
+      },
+      {
+        "round": 6,
+        "projectedOverall": 211,
+        "origin": "Own Pick",
+        "notes": "BUF Own Round 6 (#211 projected)"
+      },
+      {
+        "round": 7,
+        "projectedOverall": 235,
+        "origin": "Via LV",
+        "notes": "Acquired from LV (#235 projected)"
       }
     ],
-    "topNeeds2027": [],
+    "topNeeds2027": [
+      {
+        "rank": 1,
+        "position": "Cornerback (Outside & Nickel Coverage)",
+        "priority": "High",
+        "rationale": "Active attrition: Dorian Strong (IR), Christian Benford (Out) sidelined. Turnover Differential ranks #17 (0)."
+      },
+      {
+        "rank": 2,
+        "position": "Interior Defensive Line (DT / 3-Tech)",
+        "priority": "Moderate-High",
+        "rationale": "Active attrition: Zane Durant (IR), T.J. Sanders (Out) sidelined. Defensive Sacks/Game ranks #13 (2.33)."
+      },
+      {
+        "rank": 3,
+        "position": "Wide Receiver (Perimeter & Slot Separation)",
+        "priority": "Moderate",
+        "rationale": "Active attrition: Joshua Palmer (IR), Skyler Bell (Out) sidelined."
+      },
+      {
+        "rank": 4,
+        "position": "Off-Ball Linebacker (Run Fit & Coverage)",
+        "priority": "Opportunistic",
+        "rationale": "Active attrition: Dorian Williams (Out) sidelined. 2027 impending UFA exposure: Dorian Williams."
+      }
+    ],
     "firstPickMockDatabase": [],
     "consensusBigBoard": [
       {

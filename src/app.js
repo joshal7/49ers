@@ -131,7 +131,7 @@ import {
 } from './views/newsView.js?v=93';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=49';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=80';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=93';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=94';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=67';
 import {
   renderSettingsSheetHtml,

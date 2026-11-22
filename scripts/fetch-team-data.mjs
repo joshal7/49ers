@@ -47,6 +47,11 @@ import {
   normPlayerName
 } from './lib/nflversePlayerContext.mjs';
 import { fetchLivePowerRankings } from './lib/powerRankingsFetcher.mjs';
+import { parseTankathonTeamPicksHtml } from './lib/aiSynthesisEngine.mjs';
+import {
+  buildTeamTradeWindow,
+  loadSharedLeagueTradeContext
+} from './lib/teamTradeIntelligence.mjs';
 import {
   computeCalibratedTeamPowerRating,
   computeRootingGuideLeverage,
@@ -315,6 +320,13 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     }
   }
 
+  const leagueTradeCtx = await loadSharedLeagueTradeContext({
+    seasonYear,
+    standingsByAbbr,
+    otcSpaceHtml,
+    nflverse
+  });
+
   // Persist compact shared league meta to `data/league/meta.json`
   const leagueDir = path.join(ROOT, 'data', 'league');
   fs.mkdirSync(leagueDir, { recursive: true });
@@ -326,7 +338,9 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
         seasonYear,
         standingsCount: standingsByAbbr.size,
         completedLeagueGames: liveScoreboardCompleted.size,
-        remainingLeagueGames: liveScoreboardRemaining.size
+        remainingLeagueGames: liveScoreboardRemaining.size,
+        leagueTradesCount: leagueTradeCtx.leagueTrades.length,
+        sellerTradeCandidates: leagueTradeCtx.sellerCandidates.length
       },
       null,
       2
@@ -339,6 +353,7 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     otcSpaceHtml,
     rotowireXml,
     nflverse,
+    leagueTradeCtx,
     completedGames: [...liveScoreboardCompleted.values()],
     remainingGames: [...liveScoreboardRemaining.values()],
     baseTeamStatsTemplate: sfMatchup?.teamStats || null,
@@ -833,6 +848,8 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     otcHtml,
     clubRosterHtml,
     clubInjuryHtml,
+    clubTransactionsHtml,
+    tankathonHtml,
     clubNewsRssXml,
     clubVideoRssXml,
     cbsInjHtml,
@@ -844,10 +861,12 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${team.espnId}/schedule`),
     fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${team.espnId}`),
     fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${team.espnId}&limit=25`),
-    fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/transactions?team=${team.espnId}&limit=150`),
+    fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/transactions?team=${team.espnId}&limit=200`),
     fetchTextSafe(`https://overthecap.com/salary-cap/${team.otcSlug}`, 14000),
     fetchTextSafe(team.clubRosterUrl, 12000),
     fetchTextSafe(team.clubInjuryUrl, 12000),
+    fetchTextSafe(`https://www.${team.clubDomain}/team/transactions/`, 10000),
+    fetchTextSafe(`https://www.tankathon.com/nfl/${team.slug}`, 10000),
     fetchTextSafe(team.clubRssUrls[0], 10000),
     fetchTextSafe(team.clubRssUrls[1] || `https://www.${team.clubDomain}/rss/videos`, 10000),
     fetchTextSafe(buildCbsTeamInjuriesUrl(team.abbr, team.fullName), 10000),
@@ -2416,22 +2435,44 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       spiderProfile: p.spiderProfile
     }));
 
+  const tankathonPicks = parseTankathonTeamPicksHtml(tankathonHtml || '');
+  const tradeIntel = buildTeamTradeWindow({
+    team,
+    seasonYear,
+    currentWeek,
+    nowIso,
+    cap26,
+    cap27,
+    players,
+    health: { practiceReport, irAndReserveTracker },
+    teamStatRankings,
+    espnTransactions: espnTxRaw?.transactions || [],
+    clubTransactionsHtml: clubTransactionsHtml || '',
+    tankathonPicks,
+    rawStream,
+    leagueTradeCtx: leagueCtx.leagueTradeCtx || null
+  });
+
+  const livePickInventory =
+    tankathonPicks.length > 0
+      ? tankathonPicks.map(p => ({
+          round: p.round,
+          projectedOverall: p.projectedOverall,
+          origin: p.fromTeam && p.fromTeam !== team.abbr ? `Via ${p.fromTeam}` : 'Own Pick',
+          notes:
+            p.fromTeam && p.fromTeam !== team.abbr
+              ? `Acquired from ${p.fromTeam} (#${p.projectedOverall} projected)`
+              : `${team.abbr} Own Round ${p.round} (#${p.projectedOverall} projected)`
+        }))
+      : [
+          { round: 1, projectedOverall: Math.max(1, 33 - Math.max(1, teamStanding.seed * 2)), origin: 'Own Pick', notes: `${team.abbr} 1st Round` },
+          { round: 2, projectedOverall: 32 + Math.max(1, 33 - Math.max(1, teamStanding.seed * 2)), origin: 'Own Pick', notes: `${team.abbr} 2nd Round` },
+          { round: 3, projectedOverall: 64 + Math.max(1, 33 - Math.max(1, teamStanding.seed * 2)), origin: 'Own Pick', notes: `${team.abbr} 3rd Round` }
+        ];
+
   const seasonalJson = {
     updatedAt: nowIso,
-    tradeWarRoom: {
-      deadlineIso: `${seasonYear}-11-10T21:00:00Z`,
-      deadlineDisplay: `Nov 10, ${seasonYear} 4:00 PM ET`,
-      availableGrossCap: Number(cap26.teamCapSpace || 0),
-      projected2027CapSpace: Number(cap27.teamCapSpace || 0),
-      capSourceUrl: `https://overthecap.com/salary-cap/${team.otcSlug}`,
-      transactionsUrl: `https://www.${team.clubDomain}/team/transactions/`,
-      purchasingPower: `$${(Number(cap26.teamCapSpace || 0) / 1e6).toFixed(2)}M live ${seasonYear} cap space`,
-      completed2026Moves: [],
-      topNeeds: [],
-      realisticTargets: [],
-      pitfallsToAvoid: [],
-      tieredRumors: []
-    },
+    tradeWarRoom: tradeIntel.tradeWarRoom,
     playoffPicture,
     draftPrep2027: {
       draftYear: seasonYear + 1,
@@ -2442,13 +2483,12 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         { label: `Tankathon ${team.nickname}`, url: `https://www.tankathon.com/nfl/${team.slug}` },
         { label: 'NFL Mock Draft Database', url: `https://www.nflmockdraftdatabase.com/nfl-teams/${seasonYear + 1}/${team.otcSlug}` }
       ],
-      tradedPicksNote: `Live ${seasonYear + 1} ${team.fullName} draft order & 3-Lens 250+ Prospect Big Board.`,
-      pickInventory: [
-        { round: 1, projectedOverall: Math.max(1, 33 - Math.max(1, teamStanding.seed * 2)), origin: 'Own Pick', notes: `${team.abbr} 1st Round` },
-        { round: 2, projectedOverall: 32 + Math.max(1, 33 - Math.max(1, teamStanding.seed * 2)), origin: 'Own Pick', notes: `${team.abbr} 2nd Round` },
-        { round: 3, projectedOverall: 64 + Math.max(1, 33 - Math.max(1, teamStanding.seed * 2)), origin: 'Own Pick', notes: `${team.abbr} 3rd Round` }
-      ],
-      topNeeds2027: [],
+      tradedPicksNote:
+        tankathonPicks.length > 0
+          ? `Live ${seasonYear + 1} ${team.fullName} Tankathon draft ledger (${tankathonPicks.length} projected picks) & 3-Lens 250+ Prospect Big Board.`
+          : `Live ${seasonYear + 1} ${team.fullName} draft order & 3-Lens 250+ Prospect Big Board.`,
+      pickInventory: livePickInventory,
+      topNeeds2027: tradeIntel.topNeeds2027 || [],
       firstPickMockDatabase: [],
       consensusBigBoard: (leagueCtx.sharedBigBoard || []).map(p => {
         if (team.abbr === 'SF' || !p?.archetypeNote) return p;
