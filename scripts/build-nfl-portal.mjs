@@ -28,7 +28,7 @@ const CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
 
 export const PORTAL_CONFERENCES = ['NFC', 'AFC'];
 export const PORTAL_DIVISIONS = ['North', 'South', 'East', 'West'];
-const ASSET_VER = '3';
+const ASSET_VER = '4';
 
 const NFL_MONOGRAM_PATHS = {
   N: 'M -124,-48 L -95,-48 L -68,7 L -68,-34 L -74,-34 L -74,-48 L -42,-48 L -42,-34 L -48,-34 L -48,48 L -71,48 L -98,-7 L -98,34 L -92,34 L -92,48 L -124,48 L -124,34 L -118,34 L -118,-34 L -124,-34 Z',
@@ -82,85 +82,89 @@ export function getGroupedPortalTeams() {
 
 export function buildNflCrestSvg() {
   const starCoords = [
-    [98, 92], [126, 76], [154, 65], [182, 59],
-    [278, 59], [306, 65], [334, 76], [362, 92]
+    [102, 91], [129, 76], [156, 66], [184, 60],
+    [276, 60], [304, 66], [331, 76], [358, 91]
   ];
   const starsMarkup = starCoords
-    .map(([x, y]) => `<path d="${buildStarPath(x, y, 11.2, 4.7)}" fill="#FFFFFF"/>`)
+    .map(([x, y]) => `<path d="${buildStarPath(x, y, 9.8, 4.1)}" fill="#FFFFFF" opacity="0.9"/>`)
     .join('\n      ');
 
-  const stripeFills = [
-    'url(#crestRed)', 'url(#crestWhite)', 'url(#crestRed)', 'url(#crestWhite)',
-    'url(#crestRed)', 'url(#crestWhite)', 'url(#crestRed)', 'url(#crestWhite)', 'url(#crestRed)'
-  ];
-  const stripes = stripeFills
-    .map((fill, i) => {
-      const x = (44 + i * 41.34).toFixed(2);
-      return `<rect x="${x}" y="102" width="42" height="150" fill="${fill}"/>`;
-    })
-    .join('\n      ');
+  // 7 calm, balanced vertical stripes: muted satin crimson alternating with dimmed cool silver-white
+  const stripeCount = 7;
+  const xStart = 42;
+  const stripeWidth = 376 / stripeCount;
+  const stripes = Array.from({ length: stripeCount }, (_, i) => {
+    const x = (xStart + i * stripeWidth).toFixed(2);
+    const fill = i % 2 === 0 ? 'url(#crestRed)' : 'url(#crestMist)';
+    return `<rect x="${x}" y="102" width="${(stripeWidth + 0.6).toFixed(2)}" height="150" fill="${fill}"/>`;
+  }).join('\n      ');
 
   const lettersPath = `${NFL_MONOGRAM_PATHS.N} ${NFL_MONOGRAM_PATHS.F} ${NFL_MONOGRAM_PATHS.L}`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 272" width="460" height="272">
   <defs>
     <linearGradient id="crestSilver" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#F8FAFC"/>
-      <stop offset="48%" stop-color="#CBD5E1"/>
-      <stop offset="100%" stop-color="#7E8FA6"/>
+      <stop offset="0%" stop-color="#F1F5F9"/>
+      <stop offset="52%" stop-color="#B8C4D4"/>
+      <stop offset="100%" stop-color="#6F8096"/>
     </linearGradient>
     <linearGradient id="crestNavy" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0B46A0"/>
-      <stop offset="55%" stop-color="#013369"/>
-      <stop offset="100%" stop-color="#011E44"/>
+      <stop offset="0%" stop-color="#0B3A84"/>
+      <stop offset="58%" stop-color="#062559"/>
+      <stop offset="100%" stop-color="#04193E"/>
+    </linearGradient>
+    <linearGradient id="crestStripeBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#171E30"/>
+      <stop offset="100%" stop-color="#0C111E"/>
     </linearGradient>
     <linearGradient id="crestRed" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#E11D2E"/>
-      <stop offset="55%" stop-color="#C8102E"/>
-      <stop offset="100%" stop-color="#8F0A1D"/>
+      <stop offset="0%" stop-color="#A3162B"/>
+      <stop offset="58%" stop-color="#871022"/>
+      <stop offset="100%" stop-color="#5E0A17"/>
     </linearGradient>
-    <linearGradient id="crestWhite" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="crestMist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#CBD5E1" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#64748B" stop-opacity="0.24"/>
+    </linearGradient>
+    <linearGradient id="crestLetter" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="100%" stop-color="#DCE4F0"/>
-    </linearGradient>
-    <linearGradient id="crestHorizon" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#94A3B8"/>
-      <stop offset="50%" stop-color="#FFFFFF"/>
-      <stop offset="100%" stop-color="#94A3B8"/>
+      <stop offset="100%" stop-color="#EBF1F8"/>
     </linearGradient>
     <linearGradient id="crestEdgeShade" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#020814" stop-opacity="0.28"/>
-      <stop offset="18%" stop-color="#020814" stop-opacity="0"/>
-      <stop offset="82%" stop-color="#020814" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#020814" stop-opacity="0.28"/>
+      <stop offset="0%" stop-color="#030816" stop-opacity="0.36"/>
+      <stop offset="20%" stop-color="#030816" stop-opacity="0"/>
+      <stop offset="80%" stop-color="#030816" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#030816" stop-opacity="0.36"/>
     </linearGradient>
+    <filter id="crestTextShadow" x="-16%" y="-16%" width="132%" height="145%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#020816" flood-opacity="0.78"/>
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.6" flood-color="#020816" flood-opacity="0.54"/>
+    </filter>
     <clipPath id="crestInnerClip">
-      <ellipse cx="230" cy="136" rx="184" ry="107"/>
+      <ellipse cx="230" cy="136" rx="188" ry="110"/>
     </clipPath>
   </defs>
-  <ellipse cx="230" cy="136" rx="228" ry="134" fill="#FFFFFF" stroke="#94A3B8" stroke-opacity="0.32" stroke-width="2"/>
-  <ellipse cx="230" cy="136" rx="219" ry="125" fill="#071122"/>
-  <ellipse cx="230" cy="136" rx="201" ry="117" fill="url(#crestSilver)"/>
-  <ellipse cx="230" cy="136" rx="187" ry="109" fill="#061022"/>
+  <ellipse cx="230" cy="136" rx="228" ry="134" fill="#FFFFFF" stroke="#94A3B8" stroke-opacity="0.28" stroke-width="2"/>
+  <ellipse cx="230" cy="136" rx="219" ry="126" fill="#081121"/>
+  <ellipse cx="230" cy="136" rx="202" ry="118" fill="url(#crestSilver)"/>
   <g clip-path="url(#crestInnerClip)">
+    <rect x="40" y="100" width="380" height="154" fill="url(#crestStripeBase)"/>
     <g>
       ${stripes}
     </g>
-    <path d="M 40,115 Q 230,101 420,115 L 420,24 L 40,24 Z" fill="url(#crestNavy)"/>
-    <path d="M 40,118 Q 230,104 420,118" fill="none" stroke="#011532" stroke-width="6"/>
-    <path d="M 40,115 Q 230,101 420,115" fill="none" stroke="url(#crestHorizon)" stroke-width="4.5"/>
+    <path d="M 40,113 Q 230,101 420,113 L 420,24 L 40,24 Z" fill="url(#crestNavy)"/>
+    <path d="M 40,113 Q 230,101 420,113" fill="none" stroke="#E2E8F0" stroke-opacity="0.38" stroke-width="2.2"/>
     <g>
       ${starsMarkup}
     </g>
-    <path d="${buildFootballPath(230, 62, 27, 14.5)}" fill="#FFFFFF"/>
-    <line x1="215" y1="62" x2="245" y2="62" stroke="#012554" stroke-width="3.6" stroke-linecap="round"/>
-    <line x1="222" y1="56" x2="222" y2="68" stroke="#012554" stroke-width="3.2" stroke-linecap="round"/>
-    <line x1="230" y1="55.5" x2="230" y2="68.5" stroke="#012554" stroke-width="3.2" stroke-linecap="round"/>
-    <line x1="238" y1="56" x2="238" y2="68" stroke="#012554" stroke-width="3.2" stroke-linecap="round"/>
-    <rect x="44" y="26" width="372" height="220" fill="url(#crestEdgeShade)"/>
-    <g transform="translate(230, 158) scale(0.97, 0.91)">
-      <path d="${lettersPath}" transform="translate(4, 5)" fill="#01132E" stroke="#01132E" stroke-width="18" stroke-linejoin="round"/>
-      <path d="${lettersPath}" fill="#FFFFFF" stroke="#011D47" stroke-width="17" stroke-linejoin="round" paint-order="stroke fill"/>
+    <path d="${buildFootballPath(230, 62, 25, 13.5)}" fill="#FFFFFF" opacity="0.95"/>
+    <line x1="217" y1="62" x2="243" y2="62" stroke="#041A3B" stroke-width="3.2" stroke-linecap="round"/>
+    <line x1="223" y1="56.5" x2="223" y2="67.5" stroke="#041A3B" stroke-width="2.8" stroke-linecap="round"/>
+    <line x1="230" y1="56" x2="230" y2="68" stroke="#041A3B" stroke-width="2.8" stroke-linecap="round"/>
+    <line x1="237" y1="56.5" x2="237" y2="67.5" stroke="#041A3B" stroke-width="2.8" stroke-linecap="round"/>
+    <rect x="40" y="24" width="380" height="226" fill="url(#crestEdgeShade)"/>
+    <g transform="translate(230, 162) scale(0.98, 0.92)" filter="url(#crestTextShadow)">
+      <path d="${lettersPath}" fill="url(#crestLetter)"/>
     </g>
   </g>
 </svg>`;
@@ -168,45 +172,43 @@ export function buildNflCrestSvg() {
 
 export function buildNflPortalIconSvg({ fullBleedSquare = false } = {}) {
   const starCoords = [
-    [144, 178], [168, 164], [193, 155], [218, 150],
-    [294, 150], [319, 155], [344, 164], [368, 178]
+    [146, 177], [169, 164], [193, 155], [218, 150],
+    [294, 150], [319, 155], [343, 164], [366, 177]
   ];
   const starsMarkup = starCoords
-    .map(([x, y]) => `<path d="${buildStarPath(x, y, 8.8, 3.7)}" fill="url(#starFace)" stroke="#011A40" stroke-width="1.2" paint-order="stroke fill"/>`)
+    .map(([x, y]) => `<path d="${buildStarPath(x, y, 8.2, 3.45)}" fill="url(#starFace)" opacity="0.92"/>`)
     .join('\n        ');
 
-  // 9 crisp vertical stripes inside the inner oval (x = 98..414, 316px -> 9 stripes of ~35.2px)
-  const stripeColors = [
-    'url(#ovalRed)', 'url(#ovalWhite)', 'url(#ovalRed)', 'url(#ovalWhite)',
-    'url(#ovalRed)', 'url(#ovalWhite)', 'url(#ovalRed)', 'url(#ovalWhite)', 'url(#ovalRed)'
-  ];
-  const stripesMarkup = stripeColors
-    .map((fill, i) => {
-      const x = (98 + i * 35.12).toFixed(2);
-      return `<rect x="${x}" y="192" width="35.6" height="122" fill="${fill}"/>`;
-    })
-    .join('\n        ');
+  // 7 calm, dimensional vertical stripes inside the inner oval (matching header crest rhythm)
+  const stripeCount = 7;
+  const xStart = 98;
+  const stripeWidth = 316 / stripeCount;
+  const stripesMarkup = Array.from({ length: stripeCount }, (_, i) => {
+    const x = (xStart + i * stripeWidth).toFixed(2);
+    const fill = i % 2 === 0 ? 'url(#ovalRed)' : 'url(#ovalMist)';
+    return `<rect x="${x}" y="191" width="${(stripeWidth + 0.6).toFixed(2)}" height="124" fill="${fill}"/>`;
+  }).join('\n        ');
 
   const lettersPath = `${NFL_MONOGRAM_PATHS.N} ${NFL_MONOGRAM_PATHS.F} ${NFL_MONOGRAM_PATHS.L}`;
-  const ballPath = buildFootballPath(256, 152, 23.5, 13);
+  const ballPath = buildFootballPath(256, 152, 22.5, 12.2);
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
     <!-- Deep Studio NFL Navy Base matching JOSHAL Icon Family -->
     <linearGradient id="bgBase" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#113478"/>
-      <stop offset="46%" stop-color="#091D47"/>
-      <stop offset="84%" stop-color="#051029"/>
+      <stop offset="0%" stop-color="#103272"/>
+      <stop offset="46%" stop-color="#091C44"/>
+      <stop offset="84%" stop-color="#050F27"/>
       <stop offset="100%" stop-color="#030816"/>
     </linearGradient>
     <radialGradient id="spotlight" cx="50%" cy="38%" r="58%">
-      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.34"/>
-      <stop offset="52%" stop-color="#1D4ED8" stop-opacity="0.12"/>
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.32"/>
+      <stop offset="52%" stop-color="#1D4ED8" stop-opacity="0.11"/>
       <stop offset="100%" stop-color="#030816" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="afcGlow" cx="84%" cy="80%" r="54%">
-      <stop offset="0%" stop-color="#DC2626" stop-opacity="0.28"/>
-      <stop offset="60%" stop-color="#991B1B" stop-opacity="0.08"/>
+      <stop offset="0%" stop-color="#DC2626" stop-opacity="0.24"/>
+      <stop offset="60%" stop-color="#991B1B" stop-opacity="0.07"/>
       <stop offset="100%" stop-color="#030816" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="vignette" cx="50%" cy="50%" r="72%">
@@ -221,47 +223,51 @@ export function buildNflPortalIconSvg({ fullBleedSquare = false } = {}) {
 
     <!-- Multi-Stop Brushed Platinum Chrome Bezel -->
     <linearGradient id="chromeBezel" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="28%" stop-color="#E2E8F0"/>
-      <stop offset="55%" stop-color="#A8B5C7"/>
-      <stop offset="82%" stop-color="#64748B"/>
-      <stop offset="100%" stop-color="#94A3B8"/>
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="30%" stop-color="#DCE4EE"/>
+      <stop offset="58%" stop-color="#9EB0C5"/>
+      <stop offset="85%" stop-color="#607289"/>
+      <stop offset="100%" stop-color="#8B9DB3"/>
     </linearGradient>
     <linearGradient id="chromeInnerPin" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.88"/>
-      <stop offset="50%" stop-color="#CBD5E1" stop-opacity="0.22"/>
-      <stop offset="100%" stop-color="#F8FAFC" stop-opacity="0.65"/>
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.82"/>
+      <stop offset="50%" stop-color="#CBD5E1" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#F8FAFC" stop-opacity="0.58"/>
     </linearGradient>
 
-    <!-- Oval Interior: Deep Starfield Canton + Dimensional Stripes -->
+    <!-- Oval Interior: Velvety Starfield Canton + Dimmed Satin Stripes -->
     <radialGradient id="cantonNavy" cx="50%" cy="22%" r="68%">
-      <stop offset="0%" stop-color="#1759C4"/>
-      <stop offset="52%" stop-color="#013369"/>
-      <stop offset="100%" stop-color="#011B3D"/>
+      <stop offset="0%" stop-color="#144EB0"/>
+      <stop offset="54%" stop-color="#062961"/>
+      <stop offset="100%" stop-color="#031636"/>
     </radialGradient>
-    <linearGradient id="ovalRed" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#E5192D"/>
-      <stop offset="50%" stop-color="#C8102E"/>
-      <stop offset="100%" stop-color="#87081B"/>
+    <linearGradient id="ovalStripeBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#171E30"/>
+      <stop offset="100%" stop-color="#0B101D"/>
     </linearGradient>
-    <linearGradient id="ovalWhite" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="68%" stop-color="#EDF2F8"/>
-      <stop offset="100%" stop-color="#CBD5E1"/>
+    <linearGradient id="ovalRed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A6172D"/>
+      <stop offset="55%" stop-color="#871022"/>
+      <stop offset="100%" stop-color="#580A16"/>
+    </linearGradient>
+    <linearGradient id="ovalMist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D1DAE6" stop-opacity="0.39"/>
+      <stop offset="68%" stop-color="#94A3B8" stop-opacity="0.29"/>
+      <stop offset="100%" stop-color="#64748B" stop-opacity="0.20"/>
     </linearGradient>
     <linearGradient id="cylShade" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#010918" stop-opacity="0.42"/>
-      <stop offset="18%" stop-color="#010918" stop-opacity="0.06"/>
-      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.09"/>
-      <stop offset="82%" stop-color="#010918" stop-opacity="0.06"/>
-      <stop offset="100%" stop-color="#010918" stop-opacity="0.42"/>
+      <stop offset="0%" stop-color="#020714" stop-opacity="0.46"/>
+      <stop offset="18%" stop-color="#020714" stop-opacity="0.08"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.07"/>
+      <stop offset="82%" stop-color="#020714" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#020714" stop-opacity="0.46"/>
     </linearGradient>
     <linearGradient id="horizonBar" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#64748B"/>
-      <stop offset="24%" stop-color="#E2E8F0"/>
-      <stop offset="50%" stop-color="#FFFFFF"/>
-      <stop offset="76%" stop-color="#E2E8F0"/>
-      <stop offset="100%" stop-color="#64748B"/>
+      <stop offset="0%" stop-color="#94A3B8" stop-opacity="0.18"/>
+      <stop offset="28%" stop-color="#E2E8F0" stop-opacity="0.52"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.70"/>
+      <stop offset="72%" stop-color="#E2E8F0" stop-opacity="0.52"/>
+      <stop offset="100%" stop-color="#94A3B8" stop-opacity="0.18"/>
     </linearGradient>
     <linearGradient id="starFace" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#FFFFFF"/>
@@ -270,16 +276,16 @@ export function buildNflPortalIconSvg({ fullBleedSquare = false } = {}) {
     <linearGradient id="ballBody" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#FFFFFF"/>
       <stop offset="65%" stop-color="#EEF3F9"/>
-      <stop offset="100%" stop-color="#B8C7DB"/>
+      <stop offset="100%" stop-color="#BCC9DB"/>
     </linearGradient>
     <linearGradient id="letterFace" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="65%" stop-color="#F1F5FA"/>
-      <stop offset="100%" stop-color="#CBD7E8"/>
+      <stop offset="66%" stop-color="#F5F8FC"/>
+      <stop offset="100%" stop-color="#DCE5F2"/>
     </linearGradient>
     <linearGradient id="ovalEnamel" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.22"/>
-      <stop offset="46%" stop-color="#FFFFFF" stop-opacity="0.03"/>
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.18"/>
+      <stop offset="46%" stop-color="#FFFFFF" stop-opacity="0.025"/>
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
     </linearGradient>
 
@@ -301,14 +307,18 @@ export function buildNflPortalIconSvg({ fullBleedSquare = false } = {}) {
       <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#020408" flood-opacity="0.72"/>
     </filter>
     <filter id="badgeLift" x="-12%" y="-12%" width="124%" height="132%">
-      <feDropShadow dx="0" dy="3.5" stdDeviation="3" flood-color="#010918" flood-opacity="0.65"/>
+      <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" flood-color="#010918" flood-opacity="0.52"/>
+    </filter>
+    <filter id="monogramShadow" x="-18%" y="-18%" width="136%" height="148%">
+      <feDropShadow dx="0" dy="5.5" stdDeviation="6" flood-color="#020714" flood-opacity="0.80"/>
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.6" flood-color="#020714" flood-opacity="0.54"/>
     </filter>
 
     <clipPath id="iconClip">
       <rect width="512" height="512" rx="${fullBleedSquare ? 0 : 112}"/>
     </clipPath>
     <clipPath id="ovalInnerClip">
-      <ellipse cx="256" cy="212" rx="154" ry="93"/>
+      <ellipse cx="256" cy="212" rx="156" ry="94"/>
     </clipPath>
     <clipPath id="ballClip">
       <path d="${ballPath}"/>
@@ -332,37 +342,33 @@ export function buildNflPortalIconSvg({ fullBleedSquare = false } = {}) {
     <ellipse cx="256" cy="-28" rx="340" ry="175" fill="url(#glassSheen)"/>
     <rect width="512" height="512" fill="url(#vignette)"/>
 
-    <!-- 2. Detailed Multi-Bezel NFL Oval Crest Medallion -->
+    <!-- 2. Detailed Multi-Bezel NFL Oval Crest Medallion (clean, balanced luxury studio finish) -->
     <g filter="url(#crestShadow)">
       <ellipse cx="256" cy="212" rx="188" ry="116" fill="#FFFFFF" opacity="0.97"/>
       <ellipse cx="256" cy="212" rx="180" ry="109" fill="#060B16"/>
-      <ellipse cx="256" cy="212" rx="168" ry="102" fill="url(#chromeBezel)"/>
-      <ellipse cx="256" cy="212" rx="166" ry="100.5" fill="none" stroke="url(#chromeInnerPin)" stroke-width="1.6"/>
-      <ellipse cx="256" cy="212" rx="157" ry="95" fill="#040B18"/>
+      <ellipse cx="256" cy="212" rx="167" ry="101" fill="url(#chromeBezel)"/>
+      <ellipse cx="256" cy="212" rx="165.5" ry="99.6" fill="none" stroke="url(#chromeInnerPin)" stroke-width="1.4"/>
 
       <g clip-path="url(#ovalInnerClip)">
-        <!-- Lower Dimensional Red & White Stripes -->
+        <!-- Dimmed Satin Crimson & Cool Silver-Mist Stripes -->
+        <rect x="96" y="188" width="320" height="128" fill="url(#ovalStripeBase)"/>
         <g>
           ${stripesMarkup}
         </g>
 
-        <!-- Upper Deep Navy Starfield Canton with Subtle Stadium Rays -->
-        <path d="M 96,196 Q 256,182 416,196 L 416,114 L 96,114 Z" fill="url(#cantonNavy)"/>
-        <g stroke="#93C5FD" stroke-opacity="0.14" stroke-width="1.2">
+        <!-- Upper Deep Navy Starfield Canton with Whisper-Soft Stadium Rays -->
+        <path d="M 96,195 Q 256,182 416,195 L 416,114 L 96,114 Z" fill="url(#cantonNavy)"/>
+        <g stroke="#93C5FD" stroke-opacity="0.10" stroke-width="1.1">
           <line x1="256" y1="152" x2="140" y2="112"/>
           <line x1="256" y1="152" x2="196" y2="110"/>
           <line x1="256" y1="152" x2="256" y2="108"/>
           <line x1="256" y1="152" x2="316" y2="110"/>
           <line x1="256" y1="152" x2="372" y2="112"/>
-          <line x1="256" y1="152" x2="116" y2="162"/>
-          <line x1="256" y1="152" x2="396" y2="162"/>
         </g>
-        <ellipse cx="256" cy="148" rx="92" ry="32" fill="#3B82F6" opacity="0.2"/>
+        <ellipse cx="256" cy="148" rx="90" ry="30" fill="#3B82F6" opacity="0.16"/>
 
-        <!-- Curved Brushed-Silver Horizon Divider -->
-        <path d="M 96,199 Q 256,185 416,199" fill="none" stroke="#01122C" stroke-width="5.5"/>
-        <path d="M 96,196 Q 256,182 416,196" fill="none" stroke="url(#horizonBar)" stroke-width="3.6"/>
-        <path d="M 96,194.6 Q 256,180.6 416,194.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.9"/>
+        <!-- Fine Brushed-Silver Curved Horizon Hairline -->
+        <path d="M 96,195 Q 256,182 416,195" fill="none" stroke="url(#horizonBar)" stroke-width="2.2"/>
 
         <!-- 8 Sculpted Conference Division Stars (4 NFC left, 4 AFC right) -->
         <g filter="url(#badgeLift)">
@@ -371,33 +377,31 @@ export function buildNflPortalIconSvg({ fullBleedSquare = false } = {}) {
 
         <!-- Detailed 3D Stitched Football -->
         <g filter="url(#badgeLift)">
-          <path d="${ballPath}" fill="url(#ballBody)" stroke="#011B40" stroke-width="1.4"/>
+          <path d="${ballPath}" fill="url(#ballBody)"/>
           <g clip-path="url(#ballClip)">
-            <rect x="237" y="136" width="4.2" height="32" fill="#013369" opacity="0.86"/>
-            <rect x="270.8" y="136" width="4.2" height="32" fill="#C8102E" opacity="0.88"/>
-            <ellipse cx="256" cy="144.5" rx="18" ry="5" fill="#FFFFFF" opacity="0.62"/>
-            <ellipse cx="256" cy="161" rx="22" ry="5" fill="#64748B" opacity="0.28"/>
+            <rect x="238" y="136" width="3.8" height="32" fill="#0B3E8C" opacity="0.72"/>
+            <rect x="270.2" y="136" width="3.8" height="32" fill="#B5162B" opacity="0.76"/>
+            <ellipse cx="256" cy="145" rx="17" ry="4.5" fill="#FFFFFF" opacity="0.6"/>
+            <ellipse cx="256" cy="160.5" rx="21" ry="4.5" fill="#64748B" opacity="0.25"/>
           </g>
-          <line x1="244.5" y1="152" x2="267.5" y2="152" stroke="#011E47" stroke-width="2.6" stroke-linecap="round"/>
-          <line x1="248" y1="147.2" x2="248" y2="156.8" stroke="#011E47" stroke-width="2.1" stroke-linecap="round"/>
-          <line x1="253.3" y1="146.5" x2="253.3" y2="157.5" stroke="#011E47" stroke-width="2.1" stroke-linecap="round"/>
-          <line x1="258.7" y1="146.5" x2="258.7" y2="157.5" stroke="#011E47" stroke-width="2.1" stroke-linecap="round"/>
-          <line x1="264" y1="147.2" x2="264" y2="156.8" stroke="#011E47" stroke-width="2.1" stroke-linecap="round"/>
+          <line x1="245" y1="152" x2="267" y2="152" stroke="#051E47" stroke-width="2.4" stroke-linecap="round"/>
+          <line x1="248.3" y1="147.6" x2="248.3" y2="156.4" stroke="#051E47" stroke-width="1.9" stroke-linecap="round"/>
+          <line x1="253.4" y1="147" x2="253.4" y2="157" stroke="#051E47" stroke-width="1.9" stroke-linecap="round"/>
+          <line x1="258.6" y1="147" x2="258.6" y2="157" stroke="#051E47" stroke-width="1.9" stroke-linecap="round"/>
+          <line x1="263.7" y1="147.6" x2="263.7" y2="156.4" stroke="#051E47" stroke-width="1.9" stroke-linecap="round"/>
         </g>
 
         <!-- Cylindrical 3D Depth Shading Across Oval -->
-        <rect x="98" y="116" width="316" height="194" fill="url(#cylShade)"/>
+        <rect x="96" y="114" width="320" height="198" fill="url(#cylShade)"/>
 
-        <!-- 3D-Extruded Athletic Slab-Serif NFL Monogram -->
-        <g transform="translate(256, 232) scale(0.82, 0.77)" filter="url(#badgeLift)">
-          <path d="${lettersPath}" transform="translate(5.4, 6.4)" fill="#010E22" stroke="#010E22" stroke-width="18.5" stroke-linejoin="round"/>
-          <path d="${lettersPath}" transform="translate(2.7, 3.2)" fill="#01183B" stroke="#01183B" stroke-width="18" stroke-linejoin="round"/>
-          <path d="${lettersPath}" fill="url(#letterFace)" stroke="#011D47" stroke-width="16.5" stroke-linejoin="round" paint-order="stroke fill"/>
-          <path d="${lettersPath}" fill="none" stroke="#FFFFFF" stroke-opacity="0.65" stroke-width="1.8"/>
+        <!-- Clean Floating Athletic Slab-Serif NFL Monogram (subtle bevel + soft drop shadow, zero heavy border) -->
+        <g transform="translate(256, 234) scale(0.84, 0.78)" filter="url(#monogramShadow)">
+          <path d="${lettersPath}" fill="url(#letterFace)" stroke="#05132B" stroke-opacity="0.32" stroke-width="2.2" stroke-linejoin="round" paint-order="stroke fill"/>
+          <path d="${lettersPath}" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="1.4"/>
         </g>
 
         <!-- Subtle Enamel Top Glass Gloss -->
-        <ellipse cx="256" cy="146" rx="154" ry="62" fill="url(#ovalEnamel)"/>
+        <ellipse cx="256" cy="146" rx="156" ry="60" fill="url(#ovalEnamel)"/>
       </g>
     </g>
 
