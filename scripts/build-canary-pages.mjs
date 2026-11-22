@@ -59,13 +59,22 @@ export function buildCanaryPagesDist() {
   const pagesWorkerSrc = workerSrc.replace(/from\s+['"]\.\.\/src\//g, "from './src/");
   fs.writeFileSync(path.join(DIST, '_worker.js'), pagesWorkerSrc, 'utf8');
 
-  // 5. `_routes.json` so static JS/CSS/images bypass Functions (unlimited free static CDN!)
+  // 5. `_routes.json` so static JS/CSS/images AND `/data/*` JSON bypass Functions (unlimited free static CDN!)
   const routesJson = {
     version: 1,
-    include: ['/', '/index.html', '/manifest.json', '/apple-touch-icon.png', '/api/*', '/data/*'],
+    include: ['/', '/index.html', '/manifest.json', '/apple-touch-icon.png', '/api/*'],
     exclude: []
   };
   fs.writeFileSync(path.join(DIST, '_routes.json'), JSON.stringify(routesJson, null, 2) + '\n', 'utf8');
+
+  // 6. `_headers` for fresh 60s JSON caching + CORS on `/data/*` with 0 Functions invocations
+  const headersTxt = [
+    '/data/*',
+    '  Cache-Control: public, max-age=60, stale-while-revalidate=300',
+    '  Access-Control-Allow-Origin: *',
+    ''
+  ].join('\n');
+  fs.writeFileSync(path.join(DIST, '_headers'), headersTxt, 'utf8');
 
   let fileCount = 0;
   let totalBytes = 0;

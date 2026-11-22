@@ -1,10 +1,11 @@
 # Cloudflare Pages Config for Canary Multi-Tenant Sites (`lions.joshal.com` & `bills.joshal.com`)
 #
-# OPTION 1 — ZERO GODADDY NAMESERVER CHANGE:
+# 100% FREE TIER — ZERO CREDIT CARD REQUIRED (NO R2):
 # - Keeps `joshal.com` DNS 100% on GoDaddy (`www.joshal.com` SmugMug, `joshal.com`,
 #   `whisky.joshal.com`, `whiskey.joshal.com`, `email`/MX, `49ers.joshal.com`, `workouts.joshal.com` untouched).
-# - Connects `lions.joshal.com` & `bills.joshal.com` via 2 plain GoDaddy CNAME records
-#   pointing to `nfl-hq-canary.pages.dev` (Free plan supports up to 100 custom subdomains).
+# - Uses ONLY Cloudflare Pages Free + Workers KV Free (hard free-tier caps; cannot auto-bill).
+# - Live team JSON feeds ship directly as Pages Static Assets (`dist-canary/data/teams/...`)
+#   with unlimited free static bandwidth and 0 Functions invocations.
 # - Isolated inside `worker/pages-canary/wrangler.toml` so `worker/wrangler.toml` (`49ers-worker`) is untouched.
 
 name = "nfl-hq-canary"
@@ -14,10 +15,6 @@ compatibility_date = "2026-11-01"
 [[kv_namespaces]]
 binding = "SHARED_CACHE"
 id = "REPLACE_WITH_NFL_SHARED_CACHE_KV_ID"
-
-[[r2_buckets]]
-binding = "DATA_BUCKET"
-bucket_name = "nfl-data-public"
 
 [vars]
 CANARY_TEAMS = "DET,BUF"

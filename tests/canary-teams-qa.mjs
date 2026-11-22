@@ -169,14 +169,18 @@ await test('wrangler.canary.toml explicitly binds ONLY lions.joshal.com & bills.
   assert.ok(pagesToml.includes('name = "nfl-hq-canary"'), 'Pages config must name nfl-hq-canary');
   assert.ok(pagesToml.includes('pages_build_output_dir = "../../dist-canary"'), 'Pages config must target dist-canary');
   assert.ok(!pagesToml.includes('[triggers]'), 'Pages config must NOT declare unsupported Workers cron triggers');
+  assert.ok(!pagesToml.includes('[[r2_buckets]]'), 'Card-free Pages config must NOT require paid/card-gated R2');
 });
 
-await test('Cloudflare Pages bundle (dist-canary/_worker.js + _routes.json) builds & executes cleanly', async () => {
+await test('Cloudflare Pages bundle (dist-canary/_worker.js + _routes.json + _headers) builds & executes cleanly', async () => {
   const { buildCanaryPagesDist } = await import('../scripts/build-canary-pages.mjs');
   const built = buildCanaryPagesDist();
   assert.ok(built.fileCount >= 60, `Expected >= 60 files in dist-canary/, got ${built.fileCount}`);
   const routes = JSON.parse(fs.readFileSync(path.join(built.distDir, '_routes.json'), 'utf8'));
-  assert.ok(routes.include.includes('/') && routes.include.includes('/api/*') && routes.include.includes('/data/*'));
+  assert.ok(routes.include.includes('/') && routes.include.includes('/api/*'));
+  assert.ok(!routes.include.includes('/data/*'), '/data/* should serve directly from free Pages static CDN (0 Functions calls)');
+  const headers = fs.readFileSync(path.join(built.distDir, '_headers'), 'utf8');
+  assert.ok(headers.includes('/data/*') && headers.includes('Access-Control-Allow-Origin: *'));
   assert.ok(!fs.existsSync(path.join(built.distDir, 'node_modules')), 'dist-canary must not include node_modules');
   assert.ok(!fs.existsSync(path.join(built.distDir, 'worker')), 'dist-canary must not include worker/');
 

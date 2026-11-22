@@ -1,24 +1,25 @@
-name: Refresh Canary NFL Teams (Lions One Pride & Bills Mafia -> R2)
+name: Refresh Canary NFL Teams (Lions One Pride & Bills Mafia -> Cloudflare Pages Free)
 
-# Strictly isolated canary workflow for `lions.joshal.com` and `bills.joshal.com`.
-# NEVER modifies `main` or `49ers.joshal.com`.
-# Uses dedicated `GEMINI_NFL_API_KEY` (`joshalbox@gmail.com`) -> 0 tokens from `joshal7@gmail.com`.
+# Isolated on `multi-team-canary` branch — NEVER touches `49ers.joshal.com`, `main`, or `data/*.json`.
+# 100% Card-Free ($0): Refreshes DET & BUF JSON every 2 hours (~360 deploys/mo < 500/mo Pages Free cap)
+# and deploys straight to Cloudflare Pages with ZERO Git history commits.
 
 on:
   schedule:
-    # Every 30 minutes across active NFL news, practice & game windows (15:00-06:59 UTC)
-    - cron: '7,37 15-23,0-6 * * *'
-    # Explicit 5:05 PM ET daily brief trigger (21:05 EDT / 22:05 EST)
-    - cron: '5 21,22 * * *'
+    - cron: '12 */2 * * *'
   workflow_dispatch:
+    inputs:
+      teams:
+        description: 'Comma-separated canary team abbrs/slugs (default DET,BUF)'
+        required: false
+        default: 'DET,BUF'
 
 concurrency:
   group: refresh-canary-nfl-teams
   cancel-in-progress: false
 
 jobs:
-  refresh-canary-teams:
-    name: Fetch Live Lions (DET) & Bills (BUF) Feeds & Upload to R2
+  refresh-canary:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -26,25 +27,28 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: multi-team-canary
-          fetch-depth: 2
 
-      - name: Setup Node.js 22
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
 
-      - name: Run Two-Stage Live Ingestion (Stage 1 League Once + Stage 2 DET & BUF)
+      - name: Fetch live 2026 data for Lions One Pride & Bills Mafia (Stage 1 + Stage 2)
         env:
           GEMINI_NFL_API_KEY: ${{ secrets.GEMINI_NFL_API_KEY }}
-        run: node scripts/fetch-team-data.mjs --teams=DET,BUF
+        run: |
+          TEAMS="${{ github.event.inputs.teams || 'DET,BUF' }}"
+          node scripts/fetch-team-data.mjs --teams="${TEAMS}"
 
-      - name: Validate Canary Team Data Integrity
+      - name: Run Canary Data & Isolation QA Guard
         run: node tests/canary-teams-qa.mjs
 
-      - name: Upload Live Canary JSON Feeds Directly to Cloudflare R2 (Zero Git Bloat)
+      - name: Build & Deploy Cloudflare Pages Bundle (Card-Free, Zero Git Commits)
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
         env:
-          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
-          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          R2_BUCKET_NAME: nfl-data-public
-        run: node scripts/upload-r2-data.mjs --teams=lions,bills
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          node scripts/build-canary-pages.mjs
+          cd worker/pages-canary
+          npx --yes wrangler@4 pages deploy ../../dist-canary --project-name=nfl-hq-canary --branch=multi-team-canary --commit-dirty=true

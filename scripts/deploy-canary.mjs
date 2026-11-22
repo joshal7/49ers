@@ -1,22 +1,21 @@
 #!/usr/bin/env node
 /**
- * Option 1 One-Command Automated Go-Live Script for Cloudflare Pages + GoDaddy External DNS
+ * 100% Card-Free Go-Live Script for Cloudflare Pages Free + GoDaddy External CNAMEs
  * (`lions.joshal.com` — Lions One Pride & `bills.joshal.com` — Bills Mafia).
  *
- * ZERO GODADDY NAMESERVER CHANGES:
+ * ZERO CREDIT CARD (NO R2) & ZERO GODADDY NAMESERVER CHANGES:
+ *   - Runs strictly on Cloudflare Pages Free + Workers KV Free (hard free-tier caps; never bills).
  *   - Keeps `www.joshal.com` (SmugMug), `joshal.com`, `whisky.joshal.com`, `whiskey.joshal.com`,
- *     `email`/MX, `49ers.joshal.com`, and `workouts.joshal.com` 100% untouched on GoDaddy DNS!
+ *     `email`/MX, `49ers.joshal.com`, and `workouts.joshal.com` 100% untouched on GoDaddy DNS.
  *
  * What this script automates end-to-end:
- *   1. Builds clean Cloudflare Pages bundle `dist-canary/` (`_worker.js` + `_routes.json` + assets)
+ *   1. Builds clean Cloudflare Pages bundle `dist-canary/` (`_worker.js`, `_routes.json`, `_headers`, live JSON)
  *   2. Checks / triggers Cloudflare OAuth login (`wrangler login`)
  *   3. Creates or reuses `NFL_SHARED_CACHE` KV namespace & auto-patches `worker/pages-canary/wrangler.toml`
- *   4. Creates or reuses `nfl-data-public` R2 bucket (Free Tier)
- *   5. Creates or verifies Cloudflare Pages project `nfl-hq-canary`
- *   6. Deploys `dist-canary/` to `https://nfl-hq-canary.pages.dev`
- *   7. Saves `GEMINI_NFL_API_KEY` encrypted secret on `nfl-hq-canary` (never written to disk)
- *   8. Uploads all 23 live 2026 JSON feeds for DET & BUF directly into R2 via wrangler OAuth
- *   9. Checks GoDaddy CNAMEs (`lions`, `bills`) + verifies live HTTPS on Lions, Bills, www, 49ers & workouts
+ *   4. Creates or verifies Cloudflare Pages project `nfl-hq-canary`
+ *   5. Deploys `dist-canary/` to `https://nfl-hq-canary.pages.dev`
+ *   6. Saves `GEMINI_NFL_API_KEY` encrypted secret on `nfl-hq-canary` (never written to disk)
+ *   7. Checks GoDaddy CNAMEs (`lions`, `bills`) + verifies live HTTPS on Lions, Bills, www, 49ers & workouts
  *
  * Usage:
  *   npm run deploy:canary
@@ -36,15 +35,13 @@ const PAGES_CONFIG_DIR = path.join(WORKER_DIR, 'pages-canary');
 const PAGES_TOML = path.join(PAGES_CONFIG_DIR, 'wrangler.toml');
 const PROJECT_NAME = 'nfl-hq-canary';
 const PAGES_TARGET_HOST = `${PROJECT_NAME}.pages.dev`;
-const R2_BUCKET = 'nfl-data-public';
 const KV_TITLE = 'NFL_SHARED_CACHE';
 
 const args = new Set(process.argv.slice(2));
 const DRY_RUN = args.has('--dry-run');
-const SKIP_R2_UPLOAD = args.has('--skip-r2-upload');
 
 function step(n, msg) {
-  console.log(`\n[${n}/9] ${msg}`);
+  console.log(`\n[${n}/7] ${msg}`);
 }
 
 function runWrangler(wranglerArgs, { cwd = WORKER_DIR, inherit = false, input = undefined, allowFail = false } = {}) {
@@ -77,17 +74,6 @@ function digCname(host) {
   }
 }
 
-function walkJsonFiles(dir) {
-  if (!fs.existsSync(dir)) return [];
-  const out = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const abs = path.join(dir, entry.name);
-    if (entry.isDirectory()) out.push(...walkJsonFiles(abs));
-    else if (entry.name.endsWith('.json')) out.push(abs);
-  }
-  return out;
-}
-
 function promptLine(question) {
   return new Promise(resolve => {
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
@@ -110,7 +96,7 @@ async function fetchStatusSafe(url, timeoutMs = 8000) {
 
 async function main() {
   console.log('========================================================================');
-  console.log('  NFL Canary Go-Live (Option 1: Cloudflare Pages + GoDaddy CNAMEs)');
+  console.log('  NFL Canary Go-Live (100% Free Tier — No R2 / No Credit Card)');
   console.log('  Target sites  : lions.joshal.com (Lions One Pride)');
   console.log('                  bills.joshal.com (Bills Mafia)');
   console.log('  100% Untouched: GoDaddy Nameservers, www.joshal.com (SmugMug),');
@@ -127,17 +113,15 @@ async function main() {
     if (!toml.includes(`name = "${PROJECT_NAME}"`) || !toml.includes('pages_build_output_dir')) {
       throw new Error('worker/pages-canary/wrangler.toml missing Pages config');
     }
-    const workerOut = path.join(built.distDir, '_worker.js');
-    const routesOut = path.join(built.distDir, '_routes.json');
-    if (!fs.existsSync(workerOut) || !fs.existsSync(routesOut)) {
-      throw new Error('Missing _worker.js or _routes.json in dist-canary/');
+    if (toml.includes('[[r2_buckets]]')) {
+      throw new Error('worker/pages-canary/wrangler.toml must not require R2 (card-free mode)');
     }
-    const jsonFiles = [
-      ...walkJsonFiles(path.join(ROOT, 'data', 'league')),
-      ...walkJsonFiles(path.join(ROOT, 'data', 'teams', 'lions')),
-      ...walkJsonFiles(path.join(ROOT, 'data', 'teams', 'bills'))
-    ];
-    console.log(`[dry-run] Verified Pages bundle, _worker.js, _routes.json, and ${jsonFiles.length} R2 JSON feeds.`);
+    for (const reqFile of ['_worker.js', '_routes.json', '_headers']) {
+      if (!fs.existsSync(path.join(built.distDir, reqFile))) {
+        throw new Error(`Missing ${reqFile} in dist-canary/`);
+      }
+    }
+    console.log('[dry-run] Verified card-free Cloudflare Pages bundle (_worker.js, _routes.json, _headers, live DET+BUF JSON).');
     return;
   }
 
@@ -152,7 +136,7 @@ async function main() {
   }
 
   // 3. Provision / reuse KV namespace `NFL_SHARED_CACHE` and auto-patch `worker/pages-canary/wrangler.toml`
-  step(3, `Provisioning / verifying KV namespace "${KV_TITLE}"...`);
+  step(3, `Provisioning / verifying Free KV namespace "${KV_TITLE}"...`);
   let kvId = '';
   const listRes = runWrangler(['kv', 'namespace', 'list'], { allowFail: true });
   if (listRes.status === 0) {
@@ -180,25 +164,8 @@ async function main() {
     console.log('  ✓ Auto-patched worker/pages-canary/wrangler.toml with real KV namespace ID.');
   }
 
-  // 4. Provision / reuse R2 bucket `nfl-data-public`
-  step(4, `Provisioning / verifying R2 bucket "${R2_BUCKET}"...`);
-  const r2Res = runWrangler(['r2', 'bucket', 'create', R2_BUCKET], { allowFail: true });
-  const r2Out = `${r2Res.stdout}\n${r2Res.stderr}`;
-  if (r2Res.status === 0) {
-    console.log(`  ✓ Created R2 bucket ${R2_BUCKET}.`);
-  } else if (/already exists/i.test(r2Out)) {
-    console.log(`  ✓ Reusing existing R2 bucket ${R2_BUCKET}.`);
-  } else if (/enable r2/i.test(r2Out)) {
-    console.error('\n  ONE-TIME CLICK NEEDED: Enable Cloudflare R2 (Free tier: 10 GB/mo free) once:');
-    console.error('    https://dash.cloudflare.com -> R2 Object Storage -> click "Get Started" / Enable');
-    console.error('  Then re-run `npm run deploy:canary`.');
-    process.exit(3);
-  } else {
-    throw new Error(`R2 bucket check failed:\n${r2Out}`);
-  }
-
-  // 5. Create or verify Cloudflare Pages project `nfl-hq-canary`
-  step(5, `Creating / verifying Cloudflare Pages project "${PROJECT_NAME}"...`);
+  // 4. Create or verify Cloudflare Pages project `nfl-hq-canary`
+  step(4, `Creating / verifying Cloudflare Pages project "${PROJECT_NAME}"...`);
   const projRes = runWrangler(
     ['pages', 'project', 'create', PROJECT_NAME, '--production-branch', 'multi-team-canary'],
     { allowFail: true }
@@ -212,8 +179,8 @@ async function main() {
     throw new Error(`Pages project creation failed:\n${projOut}`);
   }
 
-  // 6. Deploy `dist-canary/` to Cloudflare Pages
-  step(6, `Deploying dist-canary/ to Cloudflare Pages (${PAGES_TARGET_HOST})...`);
+  // 5. Deploy `dist-canary/` to Cloudflare Pages (includes all live DET & BUF JSON as unlimited free static assets)
+  step(5, `Deploying dist-canary/ to Cloudflare Pages (${PAGES_TARGET_HOST})...`);
   runWrangler(
     [
       'pages',
@@ -229,8 +196,8 @@ async function main() {
   );
   console.log(`  ✓ Deployed to https://${PAGES_TARGET_HOST}`);
 
-  // 7. Configure encrypted `GEMINI_NFL_API_KEY` secret on Cloudflare Pages
-  step(7, `Checking GEMINI_NFL_API_KEY secret on Pages project "${PROJECT_NAME}"...`);
+  // 6. Configure encrypted `GEMINI_NFL_API_KEY` secret on Cloudflare Pages
+  step(6, `Checking GEMINI_NFL_API_KEY secret on Pages project "${PROJECT_NAME}"...`);
   const secList = runWrangler(['pages', 'secret', 'list', '--project-name', PROJECT_NAME], { allowFail: true });
   const hasSecret = /GEMINI_NFL_API_KEY/.test(`${secList.stdout}\n${secList.stderr}`);
   if (hasSecret && !process.env.GEMINI_NFL_API_KEY) {
@@ -250,44 +217,14 @@ async function main() {
     }
   }
 
-  // 8. Upload live 2026 JSON feeds directly into R2 via Wrangler OAuth
-  step(8, `Uploading live 2026 JSON feeds to R2 bucket "${R2_BUCKET}"...`);
-  if (SKIP_R2_UPLOAD) {
-    console.log('  - Skipped R2 upload (--skip-r2-upload).');
-  } else {
-    const jsonFiles = [
-      ...walkJsonFiles(path.join(ROOT, 'data', 'league')),
-      ...walkJsonFiles(path.join(ROOT, 'data', 'teams', 'lions')),
-      ...walkJsonFiles(path.join(ROOT, 'data', 'teams', 'bills'))
-    ];
-    let uploaded = 0;
-    for (const abs of jsonFiles) {
-      const key = path.relative(ROOT, abs).replace(/\\/g, '/');
-      runWrangler([
-        'r2',
-        'object',
-        'put',
-        `${R2_BUCKET}/${key}`,
-        '--file',
-        abs,
-        '--content-type',
-        'application/json; charset=utf-8',
-        '--remote'
-      ]);
-      uploaded += 1;
-      process.stdout.write(`\r  Uploaded ${uploaded}/${jsonFiles.length} JSON files to R2...`);
-    }
-    console.log(`\n  ✓ Uploaded all ${uploaded} live JSON feeds to R2.`);
-  }
-
-  // 9. Check GoDaddy CNAMEs & verify live HTTPS sites (including untouched existing sites)
-  step(9, 'Checking GoDaddy CNAMEs & verifying live HTTPS endpoints...');
+  // 7. Check GoDaddy CNAMEs & verify live HTTPS sites (including untouched existing sites)
+  step(7, 'Checking GoDaddy CNAMEs & verifying live HTTPS endpoints...');
   const lionsCname = digCname('lions.joshal.com');
   const billsCname = digCname('bills.joshal.com');
   const lionsLinked = lionsCname.includes(PAGES_TARGET_HOST);
   const billsLinked = billsCname.includes(PAGES_TARGET_HOST);
 
-  const existingChecks = [
+  const checks = [
     { url: `https://${PAGES_TARGET_HOST}/api/health?team=lions`, expect: 'Lions One Pride' },
     { url: `https://${PAGES_TARGET_HOST}/api/health?team=bills`, expect: 'Bills Mafia' },
     { url: 'https://www.joshal.com/', expect: '' },
@@ -295,13 +232,13 @@ async function main() {
     { url: 'https://workouts.joshal.com/', expect: '' }
   ];
   if (lionsLinked) {
-    existingChecks.unshift({ url: 'https://lions.joshal.com/api/health', expect: 'Lions One Pride' });
+    checks.unshift({ url: 'https://lions.joshal.com/api/health', expect: 'Lions One Pride' });
   }
   if (billsLinked) {
-    existingChecks.unshift({ url: 'https://bills.joshal.com/api/health', expect: 'Bills Mafia' });
+    checks.unshift({ url: 'https://bills.joshal.com/api/health', expect: 'Bills Mafia' });
   }
 
-  for (const chk of existingChecks) {
+  for (const chk of checks) {
     const res = await fetchStatusSafe(chk.url);
     const okLabel = res.ok && (!chk.expect || res.text.includes(chk.expect)) ? '✓ LIVE' : '… PENDING';
     console.log(`  ${okLabel}  ${chk.url} (HTTP ${res.status})`);
@@ -309,8 +246,8 @@ async function main() {
 
   if (!lionsLinked || !billsLinked) {
     console.log('\n========================================================================');
-    console.log('  CLOUDFLARE PAGES IS LIVE! Final 2-minute step to connect domains:');
-    console.log('  (Your GoDaddy nameservers, SmugMug, whisky, email, 49ers & workouts stay untouched)');
+    console.log('  CLOUDFLARE PAGES IS LIVE ($0, NO CREDIT CARD)! Final 2-minute step:');
+    console.log('  (GoDaddy nameservers, SmugMug, whisky, email, 49ers & workouts untouched)');
     console.log('');
     console.log('  A) In GoDaddy -> joshal.com -> DNS -> Add 2 CNAME records:');
     if (!lionsLinked) console.log(`       Type: CNAME | Name: lions | Value: ${PAGES_TARGET_HOST} | TTL: 1 Hour`);
@@ -326,7 +263,7 @@ async function main() {
     console.log('========================================================================\n');
   } else {
     console.log('\n========================================================================');
-    console.log('  GO-LIVE COMPLETE!');
+    console.log('  GO-LIVE COMPLETE ($0 FREE TIER, ZERO CREDIT CARD)!');
     console.log('  - Lions One Pride : https://lions.joshal.com');
     console.log('  - Bills Mafia     : https://bills.joshal.com');
     console.log('  - SmugMug         : https://www.joshal.com (untouched)');
