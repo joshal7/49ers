@@ -6836,21 +6836,11 @@ a.raw-item-thumb.salient-thumb:hover {
   padding: 0 10px;
 }
 
-/* iOS Home Screen PWA (standalone only): clear Dynamic Island / status bar & iOS 26 top scroll-edge blur.
-   Regular iOS Safari & Chrome tabs already render browser chrome/status bar above the web viewport,
-   so they inherit the compact base calc(env(safe-area-inset-top, 0px) + 8px) padding with zero dead top space. */
-@supports (-webkit-touch-callout: none) {
-  @media (display-mode: standalone) {
-    .top-header {
-      padding-top: max(calc(env(safe-area-inset-top, 0px) + 28px), 84px);
-    }
-  }
-  @media (display-mode: standalone) and (orientation: landscape) and (max-height: 500px) {
-    .top-header {
-      padding-top: calc(env(safe-area-inset-top, 0px) + 6px);
-    }
-  }
-}
+/* Top header clearance across iOS Safari/Chrome tabs, modern `default`/`black` Home Screen PWAs
+   (where iOS places the status bar above y=0 so env(safe-area-inset-top) is 0px), and legacy
+   `black-translucent` Home Screen PWAs (where env(safe-area-inset-top) reports the exact notch/Dynamic
+   Island inset) is handled cleanly by the base `calc(env(safe-area-inset-top, 0px) + 8px)` rule
+   with zero hardcoded pixel floors that would create dead white space below the status bar. */
 
 @media (max-width: 350px) {
   .brand-name {
@@ -7382,20 +7372,9 @@ a.raw-item-thumb.salient-thumb:hover {
   }
 }
 
-/* iOS Home Screen PWA (standalone only): keep Search sheet clear of Dynamic Island / status bar.
-   Regular iOS Safari & Chrome tabs inherit the compact base env(safe-area-inset-top, 0px) padding. */
-@supports (-webkit-touch-callout: none) {
-  @media (max-width: 639px) and (display-mode: standalone) {
-    .sheet-backdrop[data-sheet-mode="search"] .bottom-sheet {
-      padding-top: max(calc(env(safe-area-inset-top, 0px) + 22px), 78px);
-    }
-  }
-  @media (display-mode: standalone) and (orientation: landscape) and (max-height: 500px) {
-    .sheet-backdrop[data-sheet-mode="search"] .bottom-sheet {
-      padding-top: calc(env(safe-area-inset-top, 0px) + 4px);
-    }
-  }
-}
+/* Mobile Search sheet top clearance inherits base `padding-top: env(safe-area-inset-top, 0px)`
+   so iOS Safari/Chrome tabs, `default`/`black` Home Screen PWAs, and legacy `black-translucent` PWAs
+   all sit cleanly below the status bar with zero hardcoded dead top space. */
 
 html.is-virtual-keyboard-open .sheet-backdrop[data-sheet-mode="search"] .sheet-header {
   padding: 6px 12px;
