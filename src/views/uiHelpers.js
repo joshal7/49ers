@@ -485,11 +485,11 @@ export function renderSalientThumbHtml(
   let innerHtml = '';
 
   if (visual.kind === 'editorial') {
-    innerHtml = `<img src="${esc(visual.src)}" ${visual.fallbackSrc ? `data-fallback-src="${esc(visual.fallbackSrc)}"` : ''} alt="${esc(visual.alt || '49ers photo')}" width="${dim}" height="${dim}" ${loadAttr} decoding="async" />`;
+    innerHtml = `<img src="${esc(visual.src)}" ${visual.fallbackSrc ? `data-fallback-src="${esc(visual.fallbackSrc)}"` : ''} alt="${esc(visual.alt || `${getActiveTeamConfig().nickname} photo`)}" width="${dim}" height="${dim}" ${loadAttr} decoding="async" />`;
   } else if (visual.kind === 'player') {
     const showJersey = size !== 'sm' && visual.jersey != null && visual.jersey !== '';
     innerHtml = `
-      <img class="salient-player-cutout" src="${esc(visual.src)}" ${visual.fallbackSrc ? `data-fallback-src="${esc(visual.fallbackSrc)}"` : ''} alt="${esc(visual.alt || visual.playerName || '49ers player')}" width="${dim}" height="${dim}" ${loadAttr} decoding="async" />
+      <img class="salient-player-cutout" src="${esc(visual.src)}" ${visual.fallbackSrc ? `data-fallback-src="${esc(visual.fallbackSrc)}"` : ''} alt="${esc(visual.alt || visual.playerName || `${getActiveTeamConfig().nickname} player`)}" width="${dim}" height="${dim}" ${loadAttr} decoding="async" />
       ${showJersey ? `<span class="salient-thumb-chip mono">#${esc(String(visual.jersey))}</span>` : ''}
     `;
   } else if (visual.kind === 'matchup') {
@@ -505,7 +505,7 @@ export function renderSalientThumbHtml(
   } else if (visual.kind === 'team') {
     const crestDim = size === 'sm' ? 24 : size === 'md' ? 30 : 38;
     innerHtml = `
-      <img class="salient-team-emblem" src="${esc(visual.sfLogoSrc)}" ${visual.sfLogoFallback ? `data-fallback-src="${esc(visual.sfLogoFallback)}"` : ''} alt="San Francisco 49ers" width="${crestDim}" height="${crestDim}" loading="lazy" decoding="async" />
+      <img class="salient-team-emblem" src="${esc(visual.sfLogoSrc)}" ${visual.sfLogoFallback ? `data-fallback-src="${esc(visual.sfLogoFallback)}"` : ''} alt="${esc(getActiveTeamConfig().fullName)}" width="${crestDim}" height="${crestDim}" loading="lazy" decoding="async" />
       ${size !== 'sm' && visual.tagLabel ? `<span class="salient-thumb-chip mono">${esc(visual.tagLabel)}</span>` : ''}
     `;
   } else {
@@ -542,7 +542,7 @@ export function renderSalientHeroBannerHtml(
   const wrapCls = `salient-hero-banner ${compact ? 'compact' : ''} ${extraClass}`.trim();
 
   const imgHtml = `
-    <img src="${esc(hero.src)}" ${hero.fallbackSrc ? `data-fallback-src="${esc(hero.fallbackSrc)}"` : ''} alt="${esc(hero.alt || '49ers editorial photo')}" class="salient-hero-img" width="640" height="${compact ? 290 : 360}" ${loadAttr} decoding="async" />
+    <img src="${esc(hero.src)}" ${hero.fallbackSrc ? `data-fallback-src="${esc(hero.fallbackSrc)}"` : ''} alt="${esc(hero.alt || `${getActiveTeamConfig().nickname} editorial photo`)}" class="salient-hero-img" width="640" height="${compact ? 290 : 360}" ${loadAttr} decoding="async" />
     <span class="salient-hero-scrim" aria-hidden="true"></span>
     ${
       badgeText || credit

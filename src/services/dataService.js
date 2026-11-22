@@ -95,6 +95,7 @@ import {
 } from '../engine/beatAttributionEngine.js';
 import { refreshLiveStandingsMetricsInTeamStats } from '../engine/statsLeaderboardEngine.js';
 import {
+  buildDeterministicCoachingMatchup,
   getActiveTeamConfig,
   resolveTeamConfig,
   resolveTeamDataBasePath
@@ -1011,10 +1012,11 @@ function applyCachedGameDayRostersOnBoot(appData) {
     if (!Array.isArray(appData.health._preGamePracticeReport) && Array.isArray(appData.health.practiceReport)) {
       appData.health._preGamePracticeReport = appData.health.practiceReport.map(r => ({ ...r }));
     }
+    const activeTeamBoot = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
     const baseSf = appData.health._preGamePracticeReport || appData.health.practiceReport || [];
     const sfModel = buildTeamGameDayRosterModel({
-      teamAbbr: 'SF',
-      teamName: 'San Francisco 49ers',
+      teamAbbr: activeTeamBoot.abbr,
+      teamName: activeTeamBoot.fullName,
       activeRosterPlayers: sfActivePlayers,
       injuryReport: baseSf,
       newsItems: appData.news?.rawStream || [],
@@ -1570,12 +1572,12 @@ function propagateLiveItemsToPlayerMentions(newItems = [], rosterPlayers = [], a
         isFullTweet: isTw ? tweetFmt.isFullTweet : undefined,
         summary: isTw ? it.externalTitle || '' : pSnippet || it.summary || it.externalDescription || '',
         playerSnippet: pSnippet || undefined,
-        author: it.author || it.reporterName || it.outletName || '49ers Beat',
+        author: it.author || it.reporterName || it.outletName || `${resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig()).nickname} Beat`,
         reporterId: it.reporterId || null,
         outletId: it.outletId || null,
         authorHandle: it.authorHandle || '',
         authorProfileUrl: it.authorProfileUrl || '',
-        outletName: it.outletName || '49ers Beat',
+        outletName: it.outletName || `${resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig()).nickname} Beat`,
         trustTier: it.trustTier || null,
         publishedAt: it.publishedAt,
         url: it.url,
@@ -3251,10 +3253,10 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '' } 
         externalTitle: safeRawExtUrl ? rawExtTitle : null,
         externalDescription: safeRawExtUrl ? rawExtDesc : null,
         outletId: raw.outletId || 'x_beat',
-        outletName: raw.outletName || '49ers Beat',
+        outletName: raw.outletName || `${activeTeam.nickname} Beat`,
         reporterId: raw.reporterId || null,
-        reporterName: raw.author || raw.outletName || '49ers Beat',
-        author: raw.author || raw.outletName || '49ers Beat',
+        reporterName: raw.author || raw.outletName || `${activeTeam.nickname} Beat`,
+        author: raw.author || raw.outletName || `${activeTeam.nickname} Beat`,
         authorHandle: raw.authorHandle || '',
         authorProfileUrl: raw.authorProfileUrl || null,
         trustTier: Number(raw.trustTier) || 1,
@@ -4047,11 +4049,14 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
       ]
     : [];
 
+  const activeTeamGd = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const teamBeatFallback = `${activeTeamGd.nickname} Beat`;
+
   // 1. Poll Official 32-Team Club `/rss/news` + Discovered Inactives Article (CORS `*`, zero tokens) + Opponent Player Wire in parallel!
   const [rssSfState, rssOppState] = await Promise.all([
     fetchClubOfficialRssInactivesIfDue(
-      'SF',
-      'San Francisco 49ers',
+      activeTeamGd.abbr,
+      activeTeamGd.fullName,
       [...sfActivePlayers, ...baseSfReport],
       windowState,
       appData.liveGameDay.sf,
@@ -4080,7 +4085,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
     appData.liveGameDay._lastWorkerInactMs = nowMs;
     try {
       const q = new URLSearchParams({
-        teams: `SF,${oppAbbr}`,
+        teams: `${activeTeamGd.abbr},${oppAbbr}`,
         seasonYear: String(appData.meta?.seasonYear || 2026),
         week: String(windowState.week || 1),
         oppName,
@@ -4132,7 +4137,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
       (oppAbbr && !hasAuthoritativeInactives(appData.liveGameDay.opp, GAME_DAY_SOURCE_RANK.espn_event_roster)))
   ) {
     const [espnSfState, espnOppState] = await Promise.all([
-      fetchEspnCoreEventRosterInactivesIfDue('SF', sfActivePlayers, windowState, appData.liveGameDay.sf, nowMs),
+      fetchEspnCoreEventRosterInactivesIfDue(activeTeamGd.abbr, sfActivePlayers, windowState, appData.liveGameDay.sf, nowMs),
       oppAbbr
         ? fetchEspnCoreEventRosterInactivesIfDue(oppAbbr, oppCandidatePool, windowState, appData.liveGameDay.opp, nowMs)
         : Promise.resolve(appData.liveGameDay.opp)
@@ -4154,7 +4159,6 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
     const sleeperMap = await fetchThrottledSleeperPlayersMap(nowMs);
     if (sleeperMap) {
       if (!appData.liveGameDay.sf?.officialPosted) {
-        const activeTeamGd = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
         const sfSl = extractSleeperGameDaySignals(sleeperMap, activeTeamGd.abbr, sfActivePlayers, baseSfReport);
         if (sfSl.officialPosted) {
           const sfNameByKey = new Map(sfActivePlayers.map(p => [normalizeLookupName(p.name), p.name]));
@@ -4213,7 +4217,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
           sourceRank: GAME_DAY_SOURCE_RANK.gemini_ai,
           inactives: aiRes.sfInactives,
           activeNames: aiRes.sfActives || [],
-          sourceUrl: 'https://www.49ers.com/news/',
+          sourceUrl: activeTeamGd.clubNewsUrl || 'https://www.49ers.com/news/',
           sourceLabel: 'Grounded NFL Wire'
         };
       }
@@ -4230,7 +4234,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
     }
   }
 
-  // 5. Build 49ers Model + Live In-Game Return Signals + Sync ALL 49ers Surfaces (Health Table, Roster, Player Sheet, Depth Chart)
+  // 5. Build Team Model + Live In-Game Return Signals + Sync ALL Team Surfaces (Health Table, Roster, Player Sheet, Depth Chart)
   if (appData.health) {
     if (Array.isArray(appData.health.practiceReport)) {
       appData.health._preGamePracticeReport = mergeNonDestructivePreGameRows(
@@ -4242,8 +4246,8 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
     const sfNews = appData.news?.rawStream || [];
 
     const sfModel = buildTeamGameDayRosterModel({
-      teamAbbr: 'SF',
-      teamName: 'San Francisco 49ers',
+      teamAbbr: activeTeamGd.abbr,
+      teamName: activeTeamGd.fullName,
       activeRosterPlayers: sfActivePlayers,
       injuryReport: cleanBaseSfReport,
       newsItems: sfNews,
@@ -4317,11 +4321,11 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
               fullText: item.fullText || item.title || reportMatch.beatComment,
               isFullTweet: true,
               summary: item.summary || '',
-              author: item.author || item.reporterName || '49ers Beat',
+              author: item.author || item.reporterName || teamBeatFallback,
               authorHandle: item.authorHandle || '',
-              outletName: item.outletName || '49ers Beat',
+              outletName: item.outletName || teamBeatFallback,
               publishedAt: item.publishedAt || new Date(nowMs).toISOString(),
-              url: item.url || 'https://www.49ers.com/team/injury-report/',
+              url: item.url || activeTeamGd.clubInjuryUrl || 'https://www.49ers.com/team/injury-report/',
               isBreaking: true,
               isInGameInjury: true,
               breakingBadge: 'LIVE INJURY UPDATE'
@@ -5100,7 +5104,7 @@ export async function hydrateLiveEspnOverlay(appData) {
             statusState: liveState,
             completed,
             homeAway: sfComp?.homeAway || 'home',
-            sfLogoUrl: 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png',
+            sfLogoUrl: buildEspnTeamLogoUrl(activeTeam.abbr),
             opponent: {
               abbr: isTbdOpp ? 'TBD' : oppAbbrRaw,
               name: oppComp?.team?.displayName || (isTbdOpp ? 'Opponent TBD' : oppAbbrRaw),
@@ -5109,8 +5113,8 @@ export async function hydrateLiveEspnOverlay(appData) {
               isTbd: isTbdOpp
             },
             venue: {
-              name: venueObj.fullName || (sfComp?.homeAway === 'home' ? "Levi's Stadium" : 'Venue TBD'),
-              city: venueObj.address?.city || (sfComp?.homeAway === 'home' ? 'Santa Clara' : ''),
+              name: venueObj.fullName || (sfComp?.homeAway === 'home' ? activeTeam.stadium : 'Venue TBD'),
+              city: venueObj.address?.city || (sfComp?.homeAway === 'home' ? activeTeam.city : ''),
               state: venueObj.address?.state || '',
               country: venueObj.address?.country || 'USA',
               isInternational: false,
@@ -5228,14 +5232,16 @@ export async function hydrateLiveEspnOverlay(appData) {
         : nextGame.opponent?.record || 'Matchup TBD';
       if (oppLiveRec) um.oppRecord = oppLiveRec;
       if (appData.meta.teamRecord) {
-        const divOrdPart = (appData.meta.standingSummary || '').split('•')[0]?.trim() || 'NFC West';
+        const divOrdPart = (appData.meta.standingSummary || '').split('•')[0]?.trim() || activeTeam.division || 'NFC West';
         um.sfRecord = `${appData.meta.teamRecord} (${divOrdPart})`;
       }
 
       if (weekAdvanced) {
         const dt = nextGame.dateIso ? new Date(nextGame.dateIso) : null;
+        const tz = activeTeam.timezone || 'America/Los_Angeles';
+        const tzShort = tz === 'America/Los_Angeles' ? 'PT' : tz === 'America/New_York' || tz === 'America/Detroit' ? 'ET' : tz === 'America/Chicago' ? 'CT' : tz === 'America/Denver' ? 'MT' : 'ET';
         const kickoffFmt = dt && !Number.isNaN(dt.getTime())
-          ? `${dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'America/Los_Angeles' })} • ${dt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Los_Angeles' })} PT (${nextGame.broadcast || 'NFL'})`
+          ? `${dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: tz })} • ${dt.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: tz })} ${tzShort} (${nextGame.broadcast || 'NFL'})`
           : nextGame.statusDetail || '';
 
         um.week = nextWk;
@@ -5250,16 +5256,24 @@ export async function hydrateLiveEspnOverlay(appData) {
         um.kickoffDisplay = kickoffFmt;
         um.venue = `${nextGame.venue?.name || ''}${nextGame.venue?.city ? ` (${nextGame.venue.city})` : ''} • ${nextGame.venue?.surface || 'Grass'}`;
         um.aiMatchupMeta = null;
-        um.coachingMatchup = {
-          headline: `Kyle Shanahan & DC Raheem Morris vs. ${nextGame.opponent?.coach || `${um.oppName} Staff`} (${nextGame.homeAway === 'home' ? "Levi's Stadium" : 'Road Test'})`,
-          summary: `Week ${nextWk} two-sided coordinator chess match pitting Kyle Shanahan's 21-personnel motion attack and DC Raheem Morris's split-safety defense against ${um.oppName} (${um.oppRecord})—testing both San Francisco's offensive efficiency and its defensive pass-rush and secondary consistency.`,
-          bullets: [
-            `Pass-Game Efficiency & Coverage Shell Delta: Shanahan uses condensed splits, jet motion, and orbit motion to diagnose ${um.oppName}'s single-high vs. two-high rotations pre-snap, while ${um.oppName}'s front and disguised coverage shells aim to disrupt timing windows and pressure intermediate reads.`,
-            `Trench Run-Fit & Two-Way Leverage: Raheem Morris leans on light-box run fits and disguised Quarters/Cover 6 rotations, while ${um.oppName}'s offense tests San Francisco's pass rush and perimeter coverage discipline on early downs and in the red zone.`
-          ]
-        };
+        um.coachingMatchup = buildDeterministicCoachingMatchup({
+          team: activeTeam,
+          metaCoaches: appData.meta?.coaches || null,
+          week: nextWk,
+          oppAbbr,
+          oppName: um.oppName,
+          oppRecord: um.oppRecord,
+          oppCoachName: nextGame.opponent?.coach || '',
+          homeAway: nextGame.homeAway || 'home'
+        });
+        um.keyMatchupsMatrix = [];
         if (um.franchiseHistory && !isTbdOpponent) {
-          um.franchiseHistory.pfrQueryUrl = buildPfrHeadToHeadUrl('SF', oppAbbr);
+          um.franchiseHistory.pfrQueryUrl = buildPfrHeadToHeadUrl(activeTeam.abbr, oppAbbr);
+          if (oppAbbr !== initialOppAbbr) {
+            um.franchiseHistory.allTimeRecord = `${activeTeam.nickname} vs. ${nextGame.opponent?.shortName || um.oppName}`;
+            um.franchiseHistory.recentRecord = '';
+            um.franchiseHistory.recentGames = [];
+          }
         }
         if (um.opponentHealth) {
           um.opponentHealth.teamAbbr = oppAbbr;
@@ -5548,17 +5562,20 @@ export async function hydrateLiveEspnOverlay(appData) {
 
           const vidFullText = `${headline} ${vid.description || ''}`;
           const mentioned = matchPlayersClient(vidFullText, rosterPlayers, 8);
-          const mentions49ersExplicitly =
-            /\b(49ers|niners|san francisco|purdy|mccaffrey|\bcmc\b|kittle|deebo|bosa|warner|lenoir|greenlaw|juszczyk|jennings|pearsall|pi[nñ]eiro)\b/i.test(
-              vidFullText
-            );
+          const teamVidRe = getTeamEntityRegex(appData);
+          const mentionsTeamExplicitly =
+            teamVidRe.test(vidFullText) ||
+            (activeTeam.abbr === 'SF' &&
+              /\b(purdy|mccaffrey|\bcmc\b|kittle|deebo|bosa|warner|lenoir|greenlaw|juszczyk|jennings|pearsall|pi[nñ]eiro)\b/i.test(
+                vidFullText
+              ));
           // Exclude opponent-TD celebration clips (e.g. "Dak Prescott lets it fly to George Pickens for a Cowboys TD")
           const isOpponentScoringClip =
             oppNick &&
             new RegExp(`\\bfor\\s+(?:a\\s+|their\\s+|an\\s+)?${escapeClientRegex(oppNick)}\\b`, 'i').test(headline) &&
-            !/\b(49ers|niners|san francisco)\b/i.test(headline) &&
+            !teamVidRe.test(headline) &&
             mentioned.length === 0;
-          if (isOpponentScoringClip || (!mentions49ersExplicitly && mentioned.length === 0)) continue;
+          if (isOpponentScoringClip || (!mentionsTeamExplicitly && mentioned.length === 0)) continue;
 
           const durNum = Number(vid.duration || 0);
           const durStr =

@@ -240,7 +240,7 @@ export const ALL_NFL_TEAMS = [
     timezone: 'America/Los_Angeles', clubDomain: '49ers.com',
     requiredNicknames: ['49ers', 'Niners'],
     searchAliases: ['49ers', 'Niners', 'San Francisco 49ers'],
-    coachesSeed: { hc: 'Kyle Shanahan', oc: 'Klay Kubiak', dc: 'Robert Saleh', gm: 'John Lynch' },
+    coachesSeed: { hc: 'Kyle Shanahan', oc: 'Klay Kubiak', dc: 'Raheem Morris', gm: 'John Lynch' },
     themes: buildThemeSpec({
       darkName: "Levi's Night Game", lightName: "'94 Throwback",
       darkBg: '#0B0D10', darkElevated: '#13171E', darkCardAlt: '#181E27',
@@ -1039,4 +1039,117 @@ export function isOfficialTeamHost(hostname = '') {
   const m = host.match(/^([a-z0-9-]+)\.joshal\.com$/);
   if (!m) return false;
   return m[1] === '49ers2' || Boolean(TEAM_BY_SLUG[m[1]]);
+}
+
+export const NFL_COACHES_SEED = {
+  ARI: { hc: 'Jonathan Gannon', oc: 'Drew Petzing', dc: 'Nick Rallis' },
+  ATL: { hc: 'Kevin Stefanski', oc: 'Tommy Rees', dc: 'Jeff Ulbrich' },
+  BAL: { hc: 'John Harbaugh', oc: 'Todd Monken', dc: 'Zach Orr' },
+  BUF: { hc: 'Joe Brady', oc: 'Pete Carmichael Jr.', dc: 'Jim Leonhard', gm: 'Brandon Beane' },
+  CAR: { hc: 'Dave Canales', oc: 'Brad Idzik', dc: 'Ejiro Evero' },
+  CHI: { hc: 'Ben Johnson', oc: 'Declan Doyle', dc: 'Dennis Allen' },
+  CIN: { hc: 'Zac Taylor', oc: 'Dan Pitcher', dc: 'Al Golden' },
+  CLE: { hc: 'Todd Monken', oc: 'Ken Dorsey', dc: 'Jim Schwartz' },
+  DAL: { hc: 'Brian Schottenheimer', oc: 'Klayton Adams', dc: 'Matt Eberflus' },
+  DEN: { hc: 'Sean Payton', oc: 'Joe Lombardi', dc: 'Vance Joseph' },
+  DET: { hc: 'Dan Campbell', oc: 'Drew Petzing', dc: 'Kelvin Sheppard', gm: 'Brad Holmes' },
+  GB: { hc: 'Matt LaFleur', oc: 'Adam Stenavich', dc: 'Jeff Hafley' },
+  HOU: { hc: 'DeMeco Ryans', oc: 'Nick Caley', dc: 'Matt Burke' },
+  IND: { hc: 'Shane Steichen', oc: 'Jim Bob Cooter', dc: 'Lou Anarumo' },
+  JAX: { hc: 'Liam Coen', oc: 'Grant Udinski', dc: 'Anthony Campanile' },
+  KC: { hc: 'Andy Reid', oc: 'Matt Nagy', dc: 'Steve Spagnuolo' },
+  LAC: { hc: 'Jim Harbaugh', oc: 'Greg Roman', dc: 'Jesse Minter' },
+  LAR: { hc: 'Sean McVay', oc: 'Mike LaFleur', dc: 'Chris Shula' },
+  LV: { hc: 'Klint Kubiak', oc: 'Andrew Janocko', dc: 'Patrick Graham' },
+  MIA: { hc: 'Mike McDaniel', oc: 'Frank Smith', dc: 'Anthony Weaver' },
+  MIN: { hc: "Kevin O'Connell", oc: 'Wes Phillips', dc: 'Brian Flores' },
+  NE: { hc: 'Mike Vrabel', oc: 'Josh McDaniels', dc: 'Terrell Williams' },
+  NO: { hc: 'Kellen Moore', oc: 'Doug Nussmeier', dc: 'Brandon Staley' },
+  NYG: { hc: 'Brian Daboll', oc: 'Mike Kafka', dc: 'Shane Bowen' },
+  NYJ: { hc: 'Aaron Glenn', oc: 'Tanner Engstrand', dc: 'Steve Wilks' },
+  PHI: { hc: 'Nick Sirianni', oc: 'Kevin Patullo', dc: 'Vic Fangio' },
+  PIT: { hc: 'Mike Tomlin', oc: 'Arthur Smith', dc: 'Teryl Austin' },
+  SEA: { hc: 'Mike Macdonald', oc: 'Klint Kubiak', dc: 'Aden Durde' },
+  SF: { hc: 'Kyle Shanahan', oc: 'Klay Kubiak', dc: 'Raheem Morris', gm: 'John Lynch' },
+  TB: { hc: 'Todd Bowles', oc: 'Josh Grizzard', dc: 'Larry Foote' },
+  TEN: { hc: 'Robert Saleh', oc: 'Nick Holz', dc: 'Dennard Wilson' },
+  WAS: { hc: 'Dan Quinn', oc: 'Kliff Kingsbury', dc: 'Joe Whitt Jr.' }
+};
+
+export function getTeamCoaches(teamOrAbbr = null, metaCoaches = null) {
+  const team = resolveTeamConfig(teamOrAbbr);
+  const seed = team?.coachesSeed || NFL_COACHES_SEED[team?.abbr] || {};
+  const live = metaCoaches && typeof metaCoaches === 'object' ? metaCoaches : {};
+  return {
+    hc: live.hc || seed.hc || `${team.nickname} Head Coach`,
+    oc: live.oc || seed.oc || 'Offensive Coordinator',
+    dc: live.dc || seed.dc || 'Defensive Coordinator',
+    gm: live.gm || seed.gm || 'General Manager'
+  };
+}
+
+export function buildDeterministicCoachingMatchup({
+  team = null,
+  metaCoaches = null,
+  week = '',
+  oppAbbr = '',
+  oppName = 'Opponent',
+  oppRecord = '',
+  oppCoachName = '',
+  homeAway = 'home'
+} = {}) {
+  const activeTeam = resolveTeamConfig(team || getActiveTeamConfig());
+  const coaches = getTeamCoaches(activeTeam, metaCoaches);
+  const cleanOppAbbr = String(oppAbbr || '').toUpperCase().trim();
+  const oppSeed = cleanOppAbbr && cleanOppAbbr !== 'TBD' && cleanOppAbbr !== 'BYE' ? NFL_COACHES_SEED[cleanOppAbbr] || null : null;
+  const oppStaffTitle = oppCoachName
+    ? oppCoachName
+    : oppSeed
+      ? [
+          oppSeed.hc ? `HC ${oppSeed.hc}` : '',
+          oppSeed.dc ? `DC ${oppSeed.dc}` : ''
+        ]
+          .filter(Boolean)
+          .join(' & ')
+      : `${oppName} Staff`;
+  const venueTag = homeAway === 'home' ? activeTeam.stadium : 'Road Test';
+  const oppRecTag = oppRecord && oppRecord !== '—' ? ` (${oppRecord})` : '';
+
+  if (activeTeam.abbr === 'SF') {
+    return {
+      headline: `${coaches.hc} & DC ${coaches.dc} vs. ${oppStaffTitle} (${venueTag})`,
+      summary: `Week ${week} two-sided coordinator chess match pitting ${coaches.hc}'s 21-personnel motion attack and DC ${coaches.dc}'s split-safety defense against ${oppName}${oppRecTag}—testing both ${activeTeam.city}'s offensive efficiency and its defensive pass-rush and secondary consistency.`,
+      bullets: [
+        `Pass-Game Efficiency & Coverage Shell Delta: ${coaches.hc} uses condensed splits, jet motion, and orbit motion to diagnose ${oppName}'s single-high vs. two-high rotations pre-snap, while ${oppName}'s front and disguised coverage shells aim to disrupt timing windows and pressure intermediate reads.`,
+        `Trench Run-Fit & Two-Way Leverage: ${coaches.dc} leans on light-box run fits and disguised Quarters/Cover 6 rotations, while ${oppName}'s offense tests ${activeTeam.city}'s pass rush and perimeter coverage discipline on early downs and in the red zone.`
+      ]
+    };
+  }
+
+  const ourLead = `${coaches.hc} & DC ${coaches.dc}`;
+  const ocLabel = coaches.oc && coaches.oc !== coaches.hc ? `OC ${coaches.oc}` : coaches.hc;
+  return {
+    headline: `${ourLead} vs. ${oppStaffTitle} (${venueTag})`,
+    summary: `Week ${week} two-sided coordinator chess match pitting ${activeTeam.fullName}'s staff (${coaches.hc}, ${ocLabel}, DC ${coaches.dc}) against ${oppName}${oppRecTag}—testing both ${activeTeam.city}'s offensive efficiency and its defensive pass-rush and coverage discipline.`,
+    bullets: [
+      `Pass-Game Efficiency & Coverage Shell Delta: ${coaches.hc} and ${ocLabel} look to stress ${oppName}'s single-high vs. two-high rotations with pre-snap motion, spacing, and play-action timing, while ${oppName}'s defensive front and coverage disguises aim to compress intermediate throwing windows.`,
+      `Trench Run-Fit & Two-Way Leverage: DC ${coaches.dc} balances pass-rush pressure with two-high/split-safety discipline on early downs, while ${oppName}'s offense tests ${activeTeam.city}'s edge containment, third-down execution, and red-zone stops.`
+    ]
+  };
+}
+
+/**
+ * Guardrail against cross-team 49ers contamination on non-SF team sites (e.g. Bills vs. Chiefs
+ * or Lions vs. Bears accidentally inheriting Kyle Shanahan / Raheem Morris / Levi's Stadium).
+ * Returns `false` when SF is either the active team or the opponent.
+ */
+export function hasCrossTeam49ersLeak(text = '', teamInput = null, oppAbbr = '') {
+  const activeTeam = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  const cleanOpp = String(oppAbbr || '').toUpperCase().trim();
+  if (activeTeam.abbr === 'SF' || cleanOpp === 'SF') return false;
+  const hay = String(text || '');
+  if (!hay) return false;
+  return /\b(?:kyle\s+shanahan|raheem\s+morris|klay\s+kubiak|levi['’]?s\s+stadium|san\s+francisco\s+49ers|49ers\s+faithful)\b/i.test(
+    hay
+  );
 }

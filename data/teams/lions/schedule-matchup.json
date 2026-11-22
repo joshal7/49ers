@@ -1036,7 +1036,7 @@
         "overall": {
           "key": "overall_offense_composite",
           "label": "Overall Offense Rank",
-          "unitTitle": "49ers Offense",
+          "unitTitle": "Lions Offense",
           "higherIsBetter": true,
           "rank": 6,
           "value": 71.9,
@@ -1242,7 +1242,7 @@
           {
             "key": "off_pts_game",
             "label": "Points / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Lions Offense",
             "higherIsBetter": true,
             "rank": 6,
             "value": 28.5556,
@@ -1447,7 +1447,7 @@
           {
             "key": "off_total_yds_game",
             "label": "Total Yards / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Lions Offense",
             "higherIsBetter": true,
             "rank": 3,
             "value": 392.4444,
@@ -1652,7 +1652,7 @@
           {
             "key": "total_off_epa_game",
             "label": "Offensive EPA / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Lions Offense",
             "higherIsBetter": true,
             "rank": 7,
             "value": 6.5006,
@@ -1857,7 +1857,7 @@
           {
             "key": "off_pass_yds_game",
             "label": "Passing Yards / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Lions Offense",
             "higherIsBetter": true,
             "rank": 5,
             "value": 257.6667,
@@ -2062,7 +2062,7 @@
           {
             "key": "passing_epa_game",
             "label": "Passing EPA / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Lions Offense",
             "higherIsBetter": true,
             "rank": 4,
             "value": 7.358,
@@ -2267,7 +2267,7 @@
           {
             "key": "rush_yds_game",
             "label": "Rushing Yards / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Lions Offense",
             "higherIsBetter": true,
             "rank": 6,
             "value": 134.7778,
@@ -2472,7 +2472,7 @@
           {
             "key": "rushing_epa_game",
             "label": "Rushing EPA / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Lions Offense",
             "higherIsBetter": true,
             "rank": 14,
             "value": -0.8574,
@@ -2682,7 +2682,7 @@
               {
                 "key": "yards_per_pass_att",
                 "label": "Net Yards / Pass Att",
-                "unitTitle": "49ers Offense • Passing Efficiency & Explosives",
+                "unitTitle": "Lions Offense • Passing Efficiency & Explosives",
                 "higherIsBetter": true,
                 "rank": 6,
                 "value": 7.0917,
@@ -2887,7 +2887,7 @@
               {
                 "key": "passing_cpoe",
                 "label": "Completion CPOE",
-                "unitTitle": "49ers Offense • Passing Efficiency & Explosives",
+                "unitTitle": "Lions Offense • Passing Efficiency & Explosives",
                 "higherIsBetter": true,
                 "rank": 11,
                 "value": 1.0021,
@@ -3092,7 +3092,7 @@
               {
                 "key": "off_explosive_pass_game",
                 "label": "Explosive Passes (20+ Yd) / Gm",
-                "unitTitle": "49ers Offense • Passing Efficiency & Explosives",
+                "unitTitle": "Lions Offense • Passing Efficiency & Explosives",
                 "higherIsBetter": true,
                 "rank": 16,
                 "value": 3,
@@ -3302,7 +3302,7 @@
               {
                 "key": "off_yds_per_carry",
                 "label": "Yards / Carry",
-                "unitTitle": "49ers Offense • Rushing Efficiency & Explosives",
+                "unitTitle": "Lions Offense • Rushing Efficiency & Explosives",
                 "higherIsBetter": true,
                 "rank": 8,
                 "value": 4.5947,
@@ -3507,7 +3507,7 @@
               {
                 "key": "off_rush_1d_rate",
                 "label": "Rush 1st-Down Rate",
-                "unitTitle": "49ers Offense • Rushing Efficiency & Explosives",
+                "unitTitle": "Lions Offense • Rushing Efficiency & Explosives",
                 "higherIsBetter": true,
                 "rank": 3,
                 "value": 29.5455,
@@ -3712,7 +3712,7 @@
               {
                 "key": "off_explosive_rush_game",
                 "label": "Explosive Runs (10+ Yd) / Gm",
-                "unitTitle": "49ers Offense • Rushing Efficiency & Explosives",
+                "unitTitle": "Lions Offense • Rushing Efficiency & Explosives",
                 "higherIsBetter": true,
                 "rank": 2,
                 "value": 4.2222,
@@ -3922,7 +3922,7 @@
               {
                 "key": "explosive_plays_game",
                 "label": "Explosive Plays / Game",
-                "unitTitle": "49ers Offense • Trenches & Situational",
+                "unitTitle": "Lions Offense • Trenches & Situational",
                 "higherIsBetter": true,
                 "rank": 3,
                 "value": 7.2222,
@@ -4127,7 +4127,7 @@
               {
                 "key": "sack_rate_allowed",
                 "label": "Sacks Allowed Rate",
-                "unitTitle": "49ers Offense • Trenches & Situational",
+                "unitTitle": "Lions Offense • Trenches & Situational",
                 "higherIsBetter": false,
                 "rank": 15,
                 "value": 6.422,
@@ -4332,7 +4332,7 @@
               {
                 "key": "off_third_down_pct",
                 "label": "3rd Down Conversion %",
-                "unitTitle": "49ers Offense • Trenches & Situational",
+                "unitTitle": "Lions Offense • Trenches & Situational",
                 "higherIsBetter": true,
                 "rank": 13,
                 "value": 39.45,
@@ -4537,7 +4537,7 @@
               {
                 "key": "off_red_zone_td_pct",
                 "label": "Red Zone TD %",
-                "unitTitle": "49ers Offense • Trenches & Situational",
+                "unitTitle": "Lions Offense • Trenches & Situational",
                 "higherIsBetter": true,
                 "rank": 14,
                 "value": 62.16,
@@ -4752,7 +4752,7 @@
         "overall": {
           "key": "overall_defense_composite",
           "label": "Overall Defense Rank",
-          "unitTitle": "49ers Defense",
+          "unitTitle": "Lions Defense",
           "higherIsBetter": true,
           "rank": 17,
           "value": 37.9,
@@ -4958,7 +4958,7 @@
           {
             "key": "def_pts_allowed_game",
             "label": "Points Allowed / Game",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Lions Defense",
             "higherIsBetter": false,
             "rank": 16,
             "value": 22.1111,
@@ -5163,7 +5163,7 @@
           {
             "key": "def_total_yds_allowed_game",
             "label": "Yards Allowed / Game",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Lions Defense",
             "higherIsBetter": false,
             "rank": 17,
             "value": 332.3333,
@@ -5368,7 +5368,7 @@
           {
             "key": "def_epa_allowed_game",
             "label": "Def. EPA Allowed / Game",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Lions Defense",
             "higherIsBetter": false,
             "rank": 21,
             "value": 1.9606,
@@ -5573,7 +5573,7 @@
           {
             "key": "def_pass_yds_allowed_game",
             "label": "Pass Yards Allowed / Gm",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Lions Defense",
             "higherIsBetter": false,
             "rank": 29,
             "value": 241.8889,
@@ -5778,7 +5778,7 @@
           {
             "key": "def_pass_epa_allowed_game",
             "label": "Pass EPA Allowed / Gm",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Lions Defense",
             "higherIsBetter": false,
             "rank": 22,
             "value": 3.8454,
@@ -5983,7 +5983,7 @@
           {
             "key": "def_rush_yds_allowed_game",
             "label": "Rush Yards Allowed / Gm",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Lions Defense",
             "higherIsBetter": false,
             "rank": 5,
             "value": 90.4444,
@@ -6188,7 +6188,7 @@
           {
             "key": "def_rush_epa_allowed_game",
             "label": "Rush EPA Allowed / Gm",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Lions Defense",
             "higherIsBetter": false,
             "rank": 9,
             "value": -1.8848,
@@ -6398,7 +6398,7 @@
               {
                 "key": "def_yds_per_pass_att_allowed",
                 "label": "Net Yards / Pass Att Allowed",
-                "unitTitle": "49ers Defense • Pass Coverage & Explosives Allowed",
+                "unitTitle": "Lions Defense • Pass Coverage & Explosives Allowed",
                 "higherIsBetter": false,
                 "rank": 10,
                 "value": 5.8365,
@@ -6603,7 +6603,7 @@
               {
                 "key": "def_cpoe_allowed",
                 "label": "Completion CPOE Allowed",
-                "unitTitle": "49ers Defense • Pass Coverage & Explosives Allowed",
+                "unitTitle": "Lions Defense • Pass Coverage & Explosives Allowed",
                 "higherIsBetter": false,
                 "rank": 23,
                 "value": 2.0533,
@@ -6808,7 +6808,7 @@
               {
                 "key": "def_explosive_pass_allowed_game",
                 "label": "Explosive Passes Allowed / Gm",
-                "unitTitle": "49ers Defense • Pass Coverage & Explosives Allowed",
+                "unitTitle": "Lions Defense • Pass Coverage & Explosives Allowed",
                 "higherIsBetter": false,
                 "rank": 31,
                 "value": 4,
@@ -7018,7 +7018,7 @@
               {
                 "key": "def_yds_per_carry_allowed",
                 "label": "Yards / Carry Allowed",
-                "unitTitle": "49ers Defense • Run Front & Explosives Allowed",
+                "unitTitle": "Lions Defense • Run Front & Explosives Allowed",
                 "higherIsBetter": false,
                 "rank": 11,
                 "value": 3.9515,
@@ -7223,7 +7223,7 @@
               {
                 "key": "def_rush_1d_rate_allowed",
                 "label": "Rush 1st-Down Rate Allowed",
-                "unitTitle": "49ers Defense • Run Front & Explosives Allowed",
+                "unitTitle": "Lions Defense • Run Front & Explosives Allowed",
                 "higherIsBetter": false,
                 "rank": 26,
                 "value": 26.2136,
@@ -7428,7 +7428,7 @@
               {
                 "key": "def_explosive_rush_allowed_game",
                 "label": "Explosive Runs Allowed / Gm",
-                "unitTitle": "49ers Defense • Run Front & Explosives Allowed",
+                "unitTitle": "Lions Defense • Run Front & Explosives Allowed",
                 "higherIsBetter": false,
                 "rank": 16,
                 "value": 2.7778,
@@ -7638,7 +7638,7 @@
               {
                 "key": "def_explosive_plays_allowed_game",
                 "label": "Explosive Plays Allowed / Gm",
-                "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+                "unitTitle": "Lions Defense • Pass Rush, Havoc & Situational",
                 "higherIsBetter": false,
                 "rank": 27,
                 "value": 6.7778,
@@ -7843,7 +7843,7 @@
               {
                 "key": "def_sack_rate",
                 "label": "Defensive Sack Rate",
-                "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+                "unitTitle": "Lions Defense • Pass Rush, Havoc & Situational",
                 "higherIsBetter": true,
                 "rank": 4,
                 "value": 8.5791,
@@ -8048,7 +8048,7 @@
               {
                 "key": "def_sacks_game",
                 "label": "Defensive Sacks / Game",
-                "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+                "unitTitle": "Lions Defense • Pass Rush, Havoc & Situational",
                 "higherIsBetter": true,
                 "rank": 3,
                 "value": 3.5556,
@@ -8253,7 +8253,7 @@
               {
                 "key": "def_tfl_game",
                 "label": "Tackles For Loss (TFL) / Gm",
-                "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+                "unitTitle": "Lions Defense • Pass Rush, Havoc & Situational",
                 "higherIsBetter": true,
                 "rank": 9,
                 "value": 5.4444,
@@ -8458,7 +8458,7 @@
               {
                 "key": "def_third_down_pct_allowed",
                 "label": "3rd Down Conv % Allowed",
-                "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+                "unitTitle": "Lions Defense • Pass Rush, Havoc & Situational",
                 "higherIsBetter": false,
                 "rank": 25,
                 "value": 42.975,
@@ -8663,7 +8663,7 @@
               {
                 "key": "def_red_zone_td_pct_allowed",
                 "label": "Red Zone TD % Allowed",
-                "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+                "unitTitle": "Lions Defense • Pass Rush, Havoc & Situational",
                 "higherIsBetter": false,
                 "rank": 23,
                 "value": 65.63,
@@ -8878,7 +8878,7 @@
         "overall": {
           "key": "overall_st_composite",
           "label": "Overall Special Teams Rank",
-          "unitTitle": "49ers Special Teams",
+          "unitTitle": "Lions Special Teams",
           "higherIsBetter": true,
           "rank": 4,
           "value": 69.1,
@@ -9084,7 +9084,7 @@
           {
             "key": "st_fg_pct",
             "label": "Field Goal %",
-            "unitTitle": "49ers Special Teams",
+            "unitTitle": "Lions Special Teams",
             "higherIsBetter": true,
             "rank": 4,
             "value": 94.1176,
@@ -9289,7 +9289,7 @@
           {
             "key": "st_punt_net_avg",
             "label": "Net Punt Average",
-            "unitTitle": "49ers Special Teams",
+            "unitTitle": "Lions Special Teams",
             "higherIsBetter": true,
             "rank": 8,
             "value": 45.4333,
@@ -9494,7 +9494,7 @@
           {
             "key": "st_kr_avg",
             "label": "Kickoff Return Average",
-            "unitTitle": "49ers Special Teams",
+            "unitTitle": "Lions Special Teams",
             "higherIsBetter": true,
             "rank": 24,
             "value": 25,
@@ -9699,7 +9699,7 @@
           {
             "key": "st_pr_avg",
             "label": "Punt Return Average",
-            "unitTitle": "49ers Special Teams",
+            "unitTitle": "Lions Special Teams",
             "higherIsBetter": true,
             "rank": 5,
             "value": 12.3636,
@@ -9909,7 +9909,7 @@
               {
                 "key": "st_fg_50_plus_made",
                 "label": "50+ Yard Field Goals Made",
-                "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+                "unitTitle": "Lions Special Teams • Distance Kicking & Coverage Units",
                 "higherIsBetter": true,
                 "rank": 29,
                 "value": 1,
@@ -10114,7 +10114,7 @@
               {
                 "key": "st_punt_in20_pct",
                 "label": "Punts Inside 20 %",
-                "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+                "unitTitle": "Lions Special Teams • Distance Kicking & Coverage Units",
                 "higherIsBetter": true,
                 "rank": 4,
                 "value": 50,
@@ -10319,7 +10319,7 @@
               {
                 "key": "st_opp_kr_avg",
                 "label": "Opp. Kick Return Avg Allowed",
-                "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+                "unitTitle": "Lions Special Teams • Distance Kicking & Coverage Units",
                 "higherIsBetter": false,
                 "rank": 7,
                 "value": 24.1842,
@@ -10524,7 +10524,7 @@
               {
                 "key": "st_opp_pr_avg",
                 "label": "Opp. Punt Return Avg Allowed",
-                "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+                "unitTitle": "Lions Special Teams • Distance Kicking & Coverage Units",
                 "higherIsBetter": false,
                 "rank": 3,
                 "value": 6.9091,
@@ -12596,7 +12596,7 @@
       "overall_offense_composite": {
         "key": "overall_offense_composite",
         "label": "Overall Offense Rank",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Lions Offense",
         "higherIsBetter": true,
         "rank": 6,
         "value": 71.9,
@@ -12801,7 +12801,7 @@
       "off_pts_game": {
         "key": "off_pts_game",
         "label": "Points / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Lions Offense",
         "higherIsBetter": true,
         "rank": 6,
         "value": 28.5556,
@@ -13006,7 +13006,7 @@
       "off_total_yds_game": {
         "key": "off_total_yds_game",
         "label": "Total Yards / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Lions Offense",
         "higherIsBetter": true,
         "rank": 3,
         "value": 392.4444,
@@ -13211,7 +13211,7 @@
       "total_off_epa_game": {
         "key": "total_off_epa_game",
         "label": "Offensive EPA / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Lions Offense",
         "higherIsBetter": true,
         "rank": 7,
         "value": 6.5006,
@@ -13416,7 +13416,7 @@
       "off_pass_yds_game": {
         "key": "off_pass_yds_game",
         "label": "Passing Yards / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Lions Offense",
         "higherIsBetter": true,
         "rank": 5,
         "value": 257.6667,
@@ -13621,7 +13621,7 @@
       "passing_epa_game": {
         "key": "passing_epa_game",
         "label": "Passing EPA / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Lions Offense",
         "higherIsBetter": true,
         "rank": 4,
         "value": 7.358,
@@ -13826,7 +13826,7 @@
       "rush_yds_game": {
         "key": "rush_yds_game",
         "label": "Rushing Yards / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Lions Offense",
         "higherIsBetter": true,
         "rank": 6,
         "value": 134.7778,
@@ -14031,7 +14031,7 @@
       "rushing_epa_game": {
         "key": "rushing_epa_game",
         "label": "Rushing EPA / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Lions Offense",
         "higherIsBetter": true,
         "rank": 14,
         "value": -0.8574,
@@ -14236,7 +14236,7 @@
       "yards_per_pass_att": {
         "key": "yards_per_pass_att",
         "label": "Net Yards / Pass Att",
-        "unitTitle": "49ers Offense • Passing Efficiency & Explosives",
+        "unitTitle": "Lions Offense • Passing Efficiency & Explosives",
         "higherIsBetter": true,
         "rank": 6,
         "value": 7.0917,
@@ -14441,7 +14441,7 @@
       "passing_cpoe": {
         "key": "passing_cpoe",
         "label": "Completion CPOE",
-        "unitTitle": "49ers Offense • Passing Efficiency & Explosives",
+        "unitTitle": "Lions Offense • Passing Efficiency & Explosives",
         "higherIsBetter": true,
         "rank": 11,
         "value": 1.0021,
@@ -14646,7 +14646,7 @@
       "off_explosive_pass_game": {
         "key": "off_explosive_pass_game",
         "label": "Explosive Passes (20+ Yd) / Gm",
-        "unitTitle": "49ers Offense • Passing Efficiency & Explosives",
+        "unitTitle": "Lions Offense • Passing Efficiency & Explosives",
         "higherIsBetter": true,
         "rank": 16,
         "value": 3,
@@ -14851,7 +14851,7 @@
       "off_yds_per_carry": {
         "key": "off_yds_per_carry",
         "label": "Yards / Carry",
-        "unitTitle": "49ers Offense • Rushing Efficiency & Explosives",
+        "unitTitle": "Lions Offense • Rushing Efficiency & Explosives",
         "higherIsBetter": true,
         "rank": 8,
         "value": 4.5947,
@@ -15056,7 +15056,7 @@
       "off_rush_1d_rate": {
         "key": "off_rush_1d_rate",
         "label": "Rush 1st-Down Rate",
-        "unitTitle": "49ers Offense • Rushing Efficiency & Explosives",
+        "unitTitle": "Lions Offense • Rushing Efficiency & Explosives",
         "higherIsBetter": true,
         "rank": 3,
         "value": 29.5455,
@@ -15261,7 +15261,7 @@
       "off_explosive_rush_game": {
         "key": "off_explosive_rush_game",
         "label": "Explosive Runs (10+ Yd) / Gm",
-        "unitTitle": "49ers Offense • Rushing Efficiency & Explosives",
+        "unitTitle": "Lions Offense • Rushing Efficiency & Explosives",
         "higherIsBetter": true,
         "rank": 2,
         "value": 4.2222,
@@ -15466,7 +15466,7 @@
       "explosive_plays_game": {
         "key": "explosive_plays_game",
         "label": "Explosive Plays / Game",
-        "unitTitle": "49ers Offense • Trenches & Situational",
+        "unitTitle": "Lions Offense • Trenches & Situational",
         "higherIsBetter": true,
         "rank": 3,
         "value": 7.2222,
@@ -15671,7 +15671,7 @@
       "sack_rate_allowed": {
         "key": "sack_rate_allowed",
         "label": "Sacks Allowed Rate",
-        "unitTitle": "49ers Offense • Trenches & Situational",
+        "unitTitle": "Lions Offense • Trenches & Situational",
         "higherIsBetter": false,
         "rank": 15,
         "value": 6.422,
@@ -15876,7 +15876,7 @@
       "off_third_down_pct": {
         "key": "off_third_down_pct",
         "label": "3rd Down Conversion %",
-        "unitTitle": "49ers Offense • Trenches & Situational",
+        "unitTitle": "Lions Offense • Trenches & Situational",
         "higherIsBetter": true,
         "rank": 13,
         "value": 39.45,
@@ -16081,7 +16081,7 @@
       "off_red_zone_td_pct": {
         "key": "off_red_zone_td_pct",
         "label": "Red Zone TD %",
-        "unitTitle": "49ers Offense • Trenches & Situational",
+        "unitTitle": "Lions Offense • Trenches & Situational",
         "higherIsBetter": true,
         "rank": 14,
         "value": 62.16,
@@ -16286,7 +16286,7 @@
       "overall_defense_composite": {
         "key": "overall_defense_composite",
         "label": "Overall Defense Rank",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Lions Defense",
         "higherIsBetter": true,
         "rank": 17,
         "value": 37.9,
@@ -16491,7 +16491,7 @@
       "def_pts_allowed_game": {
         "key": "def_pts_allowed_game",
         "label": "Points Allowed / Game",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Lions Defense",
         "higherIsBetter": false,
         "rank": 16,
         "value": 22.1111,
@@ -16696,7 +16696,7 @@
       "def_total_yds_allowed_game": {
         "key": "def_total_yds_allowed_game",
         "label": "Yards Allowed / Game",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Lions Defense",
         "higherIsBetter": false,
         "rank": 17,
         "value": 332.3333,
@@ -16901,7 +16901,7 @@
       "def_epa_allowed_game": {
         "key": "def_epa_allowed_game",
         "label": "Def. EPA Allowed / Game",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Lions Defense",
         "higherIsBetter": false,
         "rank": 21,
         "value": 1.9606,
@@ -17106,7 +17106,7 @@
       "def_pass_yds_allowed_game": {
         "key": "def_pass_yds_allowed_game",
         "label": "Pass Yards Allowed / Gm",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Lions Defense",
         "higherIsBetter": false,
         "rank": 29,
         "value": 241.8889,
@@ -17311,7 +17311,7 @@
       "def_pass_epa_allowed_game": {
         "key": "def_pass_epa_allowed_game",
         "label": "Pass EPA Allowed / Gm",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Lions Defense",
         "higherIsBetter": false,
         "rank": 22,
         "value": 3.8454,
@@ -17516,7 +17516,7 @@
       "def_rush_yds_allowed_game": {
         "key": "def_rush_yds_allowed_game",
         "label": "Rush Yards Allowed / Gm",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Lions Defense",
         "higherIsBetter": false,
         "rank": 5,
         "value": 90.4444,
@@ -17721,7 +17721,7 @@
       "def_rush_epa_allowed_game": {
         "key": "def_rush_epa_allowed_game",
         "label": "Rush EPA Allowed / Gm",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Lions Defense",
         "higherIsBetter": false,
         "rank": 9,
         "value": -1.8848,
@@ -17926,7 +17926,7 @@
       "def_yds_per_pass_att_allowed": {
         "key": "def_yds_per_pass_att_allowed",
         "label": "Net Yards / Pass Att Allowed",
-        "unitTitle": "49ers Defense • Pass Coverage & Explosives Allowed",
+        "unitTitle": "Lions Defense • Pass Coverage & Explosives Allowed",
         "higherIsBetter": false,
         "rank": 10,
         "value": 5.8365,
@@ -18131,7 +18131,7 @@
       "def_cpoe_allowed": {
         "key": "def_cpoe_allowed",
         "label": "Completion CPOE Allowed",
-        "unitTitle": "49ers Defense • Pass Coverage & Explosives Allowed",
+        "unitTitle": "Lions Defense • Pass Coverage & Explosives Allowed",
         "higherIsBetter": false,
         "rank": 23,
         "value": 2.0533,
@@ -18336,7 +18336,7 @@
       "def_explosive_pass_allowed_game": {
         "key": "def_explosive_pass_allowed_game",
         "label": "Explosive Passes Allowed / Gm",
-        "unitTitle": "49ers Defense • Pass Coverage & Explosives Allowed",
+        "unitTitle": "Lions Defense • Pass Coverage & Explosives Allowed",
         "higherIsBetter": false,
         "rank": 31,
         "value": 4,
@@ -18541,7 +18541,7 @@
       "def_yds_per_carry_allowed": {
         "key": "def_yds_per_carry_allowed",
         "label": "Yards / Carry Allowed",
-        "unitTitle": "49ers Defense • Run Front & Explosives Allowed",
+        "unitTitle": "Lions Defense • Run Front & Explosives Allowed",
         "higherIsBetter": false,
         "rank": 11,
         "value": 3.9515,
@@ -18746,7 +18746,7 @@
       "def_rush_1d_rate_allowed": {
         "key": "def_rush_1d_rate_allowed",
         "label": "Rush 1st-Down Rate Allowed",
-        "unitTitle": "49ers Defense • Run Front & Explosives Allowed",
+        "unitTitle": "Lions Defense • Run Front & Explosives Allowed",
         "higherIsBetter": false,
         "rank": 26,
         "value": 26.2136,
@@ -18951,7 +18951,7 @@
       "def_explosive_rush_allowed_game": {
         "key": "def_explosive_rush_allowed_game",
         "label": "Explosive Runs Allowed / Gm",
-        "unitTitle": "49ers Defense • Run Front & Explosives Allowed",
+        "unitTitle": "Lions Defense • Run Front & Explosives Allowed",
         "higherIsBetter": false,
         "rank": 16,
         "value": 2.7778,
@@ -19156,7 +19156,7 @@
       "def_explosive_plays_allowed_game": {
         "key": "def_explosive_plays_allowed_game",
         "label": "Explosive Plays Allowed / Gm",
-        "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+        "unitTitle": "Lions Defense • Pass Rush, Havoc & Situational",
         "higherIsBetter": false,
         "rank": 27,
         "value": 6.7778,
@@ -19361,7 +19361,7 @@
       "def_sack_rate": {
         "key": "def_sack_rate",
         "label": "Defensive Sack Rate",
-        "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+        "unitTitle": "Lions Defense • Pass Rush, Havoc & Situational",
         "higherIsBetter": true,
         "rank": 4,
         "value": 8.5791,
@@ -19566,7 +19566,7 @@
       "def_sacks_game": {
         "key": "def_sacks_game",
         "label": "Defensive Sacks / Game",
-        "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+        "unitTitle": "Lions Defense • Pass Rush, Havoc & Situational",
         "higherIsBetter": true,
         "rank": 3,
         "value": 3.5556,
@@ -19771,7 +19771,7 @@
       "def_tfl_game": {
         "key": "def_tfl_game",
         "label": "Tackles For Loss (TFL) / Gm",
-        "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+        "unitTitle": "Lions Defense • Pass Rush, Havoc & Situational",
         "higherIsBetter": true,
         "rank": 9,
         "value": 5.4444,
@@ -19976,7 +19976,7 @@
       "def_third_down_pct_allowed": {
         "key": "def_third_down_pct_allowed",
         "label": "3rd Down Conv % Allowed",
-        "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+        "unitTitle": "Lions Defense • Pass Rush, Havoc & Situational",
         "higherIsBetter": false,
         "rank": 25,
         "value": 42.975,
@@ -20181,7 +20181,7 @@
       "def_red_zone_td_pct_allowed": {
         "key": "def_red_zone_td_pct_allowed",
         "label": "Red Zone TD % Allowed",
-        "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+        "unitTitle": "Lions Defense • Pass Rush, Havoc & Situational",
         "higherIsBetter": false,
         "rank": 23,
         "value": 65.63,
@@ -20386,7 +20386,7 @@
       "overall_st_composite": {
         "key": "overall_st_composite",
         "label": "Overall Special Teams Rank",
-        "unitTitle": "49ers Special Teams",
+        "unitTitle": "Lions Special Teams",
         "higherIsBetter": true,
         "rank": 4,
         "value": 69.1,
@@ -20591,7 +20591,7 @@
       "st_fg_pct": {
         "key": "st_fg_pct",
         "label": "Field Goal %",
-        "unitTitle": "49ers Special Teams",
+        "unitTitle": "Lions Special Teams",
         "higherIsBetter": true,
         "rank": 4,
         "value": 94.1176,
@@ -20796,7 +20796,7 @@
       "st_punt_net_avg": {
         "key": "st_punt_net_avg",
         "label": "Net Punt Average",
-        "unitTitle": "49ers Special Teams",
+        "unitTitle": "Lions Special Teams",
         "higherIsBetter": true,
         "rank": 8,
         "value": 45.4333,
@@ -21001,7 +21001,7 @@
       "st_kr_avg": {
         "key": "st_kr_avg",
         "label": "Kickoff Return Average",
-        "unitTitle": "49ers Special Teams",
+        "unitTitle": "Lions Special Teams",
         "higherIsBetter": true,
         "rank": 24,
         "value": 25,
@@ -21206,7 +21206,7 @@
       "st_pr_avg": {
         "key": "st_pr_avg",
         "label": "Punt Return Average",
-        "unitTitle": "49ers Special Teams",
+        "unitTitle": "Lions Special Teams",
         "higherIsBetter": true,
         "rank": 5,
         "value": 12.3636,
@@ -21411,7 +21411,7 @@
       "st_fg_50_plus_made": {
         "key": "st_fg_50_plus_made",
         "label": "50+ Yard Field Goals Made",
-        "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+        "unitTitle": "Lions Special Teams • Distance Kicking & Coverage Units",
         "higherIsBetter": true,
         "rank": 29,
         "value": 1,
@@ -21616,7 +21616,7 @@
       "st_punt_in20_pct": {
         "key": "st_punt_in20_pct",
         "label": "Punts Inside 20 %",
-        "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+        "unitTitle": "Lions Special Teams • Distance Kicking & Coverage Units",
         "higherIsBetter": true,
         "rank": 4,
         "value": 50,
@@ -21821,7 +21821,7 @@
       "st_opp_kr_avg": {
         "key": "st_opp_kr_avg",
         "label": "Opp. Kick Return Avg Allowed",
-        "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+        "unitTitle": "Lions Special Teams • Distance Kicking & Coverage Units",
         "higherIsBetter": false,
         "rank": 7,
         "value": 24.1842,
@@ -22026,7 +22026,7 @@
       "st_opp_pr_avg": {
         "key": "st_opp_pr_avg",
         "label": "Opp. Punt Return Avg Allowed",
-        "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+        "unitTitle": "Lions Special Teams • Distance Kicking & Coverage Units",
         "higherIsBetter": false,
         "rank": 3,
         "value": 6.9091,
@@ -24773,11 +24773,16 @@
       "impliedWinProb": "50%"
     },
     "franchiseHistory": {
-      "allTimeRecord": "Lions vs. Buccaneers"
+      "allTimeRecord": "Lions vs. Buccaneers",
+      "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=tam&yr=all"
     },
     "coachingMatchup": {
-      "headline": "Dan Campbell vs. Buccaneers Staff",
-      "summary": "Detroit Lions (Dan Campbell / OC Drew Petzing / DC Kelvin Sheppard) prepare for Week 11 against Tampa Bay Buccaneers."
+      "headline": "Dan Campbell & DC Kelvin Sheppard vs. HC Todd Bowles & DC Larry Foote (Ford Field)",
+      "summary": "Week 11 two-sided coordinator chess match pitting Detroit Lions's staff (Dan Campbell, OC Drew Petzing, DC Kelvin Sheppard) against Tampa Bay Buccaneers (3-6)—testing both Detroit's offensive efficiency and its defensive pass-rush and coverage discipline.",
+      "bullets": [
+        "Pass-Game Efficiency & Coverage Shell Delta: Dan Campbell and OC Drew Petzing look to stress Tampa Bay Buccaneers's single-high vs. two-high rotations with pre-snap motion, spacing, and play-action timing, while Tampa Bay Buccaneers's defensive front and coverage disguises aim to compress intermediate throwing windows.",
+        "Trench Run-Fit & Two-Way Leverage: DC Kelvin Sheppard balances pass-rush pressure with two-high/split-safety discipline on early downs, while Tampa Bay Buccaneers's offense tests Detroit's edge containment, third-down execution, and red-zone stops."
+      ]
     },
     "keyMatchupsMatrix": []
   }

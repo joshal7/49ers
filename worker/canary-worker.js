@@ -22,6 +22,7 @@ import {
   TEAM_REGISTRY,
   buildTeamCssVarsStyleBlock,
   getTeamBySlug,
+  hasCrossTeam49ersLeak,
   resolveTeamConfig
 } from '../src/config/teamRegistry.js';
 import {
@@ -222,9 +223,10 @@ UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVE
 4. STRICT EDITORIAL CHARTER: Zero clickbait, zero sensationalism, zero fluff. Ground every point in verified stats, All-22 scheme mechanics (personnel groupings, coverage shells, pass-rush fronts, EPA/play, CPOE, RYOE), and CBA salary cap math when relevant.`;
 }
 
-function isCacheableStructuredIntel(rawText = '') {
+function isCacheableStructuredIntel(rawText = '', team = null, oppAbbr = '') {
   const s = String(rawText || '').trim();
   if (s.length < 80) return false;
+  if (team && hasCrossTeam49ersLeak(s, team, oppAbbr)) return false;
   const start = s.indexOf('{');
   const end = s.lastIndexOf('}');
   if (start < 0 || end <= start) return false;
@@ -507,9 +509,11 @@ export default {
           /[^A-Za-z0-9@_-]/g,
           ''
         );
-        const kvKey = `daily_news_brief_v6:${team.abbr}:${cycleKey}`;
+        const kvKey = `daily_news_brief_v7:${team.abbr}:${cycleKey}`;
         const existing = await env.SHARED_CACHE?.get(kvKey, 'json');
-        if (existing) return jsonResp({ cached: true, teamAbbr: team.abbr, ...existing }, 200, cors);
+        if (existing && !hasCrossTeam49ersLeak(existing.rawText || JSON.stringify(existing.data || ''), team)) {
+          return jsonResp({ cached: true, teamAbbr: team.abbr, ...existing }, 200, cors);
+        }
         return jsonResp({ cached: false, teamAbbr: team.abbr, cycleKey, rawText: '' }, 200, cors);
       }
 
@@ -519,9 +523,13 @@ export default {
           return jsonResp({ error: 'Invalid daily news brief payload' }, 400, cors);
         }
         const cycleKey = String(body.cycleKey || new Date().toISOString().slice(0, 10)).replace(/[^A-Za-z0-9@_-]/g, '');
-        const kvKey = `daily_news_brief_v6:${team.abbr}:${cycleKey}`;
+        const kvKey = `daily_news_brief_v7:${team.abbr}:${cycleKey}`;
         const existing = await env.SHARED_CACHE?.get(kvKey, 'json');
-        if (existing && !body.forceRefresh) {
+        if (
+          existing &&
+          !body.forceRefresh &&
+          !hasCrossTeam49ersLeak(existing.rawText || JSON.stringify(existing.data || ''), team)
+        ) {
           return jsonResp({ cached: true, teamAbbr: team.abbr, ...existing }, 200, cors);
         }
 
@@ -569,7 +577,7 @@ export default {
             generatedAt: new Date().toISOString(),
             rawText: gen.rawText
           };
-          if (isCacheableStructuredIntel(gen.rawText)) {
+          if (isCacheableStructuredIntel(gen.rawText, team)) {
             await env.SHARED_CACHE?.put(kvKey, JSON.stringify(payloadOut), { expirationTtl: 60 * 60 * 26 });
           }
           return jsonResp({ cached: false, ...payloadOut }, 200, cors);
@@ -590,9 +598,13 @@ export default {
       const dayOfWeek = new Date().getUTCDay();
       const slot = team.abbr === 'SF' ? datePt : dayOfWeek >= 5 || dayOfWeek === 0 ? 'fri-final' : 'tue-preview';
       const cacheTtlSec = team.abbr === 'SF' ? 60 * 60 * 26 : 60 * 60 * 84;
-      const kvKey = `matchup_intel_v5:${team.abbr}:${seasonYear}:wk${week}:${oppAbbr}:${slot}`;
+      const kvKey = `matchup_intel_v6:${team.abbr}:${seasonYear}:wk${week}:${oppAbbr}:${slot}`;
       const existing = await env.SHARED_CACHE?.get(kvKey, 'json');
-      if (existing && !body.forceRefresh) {
+      if (
+        existing &&
+        !body.forceRefresh &&
+        !hasCrossTeam49ersLeak(existing.rawText || JSON.stringify(existing.data || ''), team, oppAbbr)
+      ) {
         return jsonResp({ cached: true, teamAbbr: team.abbr, ...existing }, 200, cors);
       }
 
@@ -629,7 +641,7 @@ export default {
           generatedAt: new Date().toISOString(),
           rawText: gen.rawText
         };
-        if (isCacheableStructuredIntel(gen.rawText)) {
+        if (isCacheableStructuredIntel(gen.rawText, team, oppAbbr)) {
           await env.SHARED_CACHE?.put(kvKey, JSON.stringify(out), { expirationTtl: cacheTtlSec });
         }
         return jsonResp({ cached: false, ...out }, 200, cors);

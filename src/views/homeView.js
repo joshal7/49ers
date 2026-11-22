@@ -66,7 +66,7 @@ import {
   resolveItemAuthorProfileUrl,
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
-import { renderDailyTopNewsBriefHtml, renderWireItemCardHtml } from './newsView.js?v=92';
+import { renderDailyTopNewsBriefHtml, renderWireItemCardHtml } from './newsView.js?v=93';
 import { buildDeterministicDailyTopNewsBrief } from '../services/aiWorkerClient.js';
 import {
   getItemReadKey,
@@ -295,7 +295,7 @@ function renderSingleDashboardCard({
               <div class="home-wire-list">
                 ${topTweets
                   .map((tw, idx) => {
-                    const rawAuthorName = tw.author || tw.reporterName || tw.outletName || '49ers Beat';
+                    const rawAuthorName = tw.author || tw.reporterName || tw.outletName || `${getActiveTeamConfig().nickname} Beat`;
                     const authorName = formatWireSourceDisplayName(rawAuthorName, tw);
                     const resolvedTwUrl = sanitizeExternalUrl(resolveOriginalTweetUrl(tw, rawList), '#');
                     const cleanedTweetBody = stripRedundantAuthorBoilerplate(
@@ -410,7 +410,7 @@ function renderSingleDashboardCard({
                 ${topArticles
                   .map(art => {
                     const safeArtUrl = sanitizeExternalUrl(art.url, '#');
-                    const artOutletLabel = formatWireSourceDisplayName(art.outletName || '49ers Beat', art);
+                    const artOutletLabel = formatWireSourceDisplayName(art.outletName || `${getActiveTeamConfig().nickname} Beat`, art);
                     const artReporterLabel = art.reporterName ? formatWireSourceDisplayName(art.reporterName, art) : '';
                     const artByline =
                       artReporterLabel &&
@@ -632,8 +632,9 @@ function renderSingleDashboardCard({
       const sched = schedModel.allGames;
       const intl = sched.filter(g => g.venue?.isInternational);
       const upcoming4 = schedModel.upcomingGames.filter(g => !g.isByeWeek).slice(0, 4);
+      const homeSchedTeam = getActiveTeamConfig();
       const overallRec = appData?.meta?.teamRecord || '—';
-      const divRec = appData?.meta?.divisionRecord ? ` (${appData.meta.divisionRecord} NFC West)` : '';
+      const divRec = appData?.meta?.divisionRecord ? ` (${appData.meta.divisionRecord} ${homeSchedTeam.division})` : '';
       const intlNotesHtml = intl
         .map(g => {
           const scoreTxt = g.completed ? `${g.result} ${g.sfScore}-${g.oppScore}` : `${g.homeAway === 'home' ? 'vs' : '@'} ${g.opponent?.abbr || ''}`;
@@ -644,7 +645,7 @@ function renderSingleDashboardCard({
             : esc(label);
         })
         .join(' &amp; ');
-      externalHeaderLink = `<a href="https://www.espn.com/nfl/team/schedule/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Schedule</span>${iconSvg('external', 11)}</a>`;
+      externalHeaderLink = `<a href="https://www.espn.com/nfl/team/schedule/_/name/${esc(homeSchedTeam.espnAbbr)}/${esc(homeSchedTeam.otcSlug)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Schedule</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         ${
           upcoming4.length
@@ -885,7 +886,8 @@ function renderSingleDashboardCard({
         .filter(p => p.rosterBucket === 'active' && p.headshotUrl)
         .sort((a, b) => (b.capHit2026 || 0) - (a.capHit2026 || 0))
         .slice(0, 7);
-      externalHeaderLink = `<a href="https://www.espn.com/nfl/team/roster/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Roster</span>${iconSvg('external', 11)}</a>`;
+      const homeRosterTeam = getActiveTeamConfig();
+      externalHeaderLink = `<a href="https://www.espn.com/nfl/team/roster/_/name/${esc(homeRosterTeam.espnAbbr)}/${esc(homeRosterTeam.otcSlug)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Roster</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
           ${starAvatars.length ? renderAvatarStackHtml(starAvatars, 30, 7) : ''}
@@ -911,7 +913,7 @@ function renderSingleDashboardCard({
       const deadPct = Math.min(100 - activePct, (deadCap / ceiling) * 100);
       const spacePct = Math.max(0, 100 - activePct - deadPct);
       const topCapStars = (appData?.cap?.players || []).filter(p => p.headshotUrl).slice(0, 5);
-      const otcTeamUrl = appData?.cap?.sourceUrl || 'https://overthecap.com/salary-cap/san-francisco-49ers';
+      const otcTeamUrl = appData?.cap?.sourceUrl || `https://overthecap.com/salary-cap/${getActiveTeamConfig().otcSlug}`;
       externalHeaderLink = `<a href="${esc(otcTeamUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>OverTheCap</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div class="kpi-grid">
@@ -965,7 +967,7 @@ function renderSingleDashboardCard({
       const beatEpsCount = (appData?.beatPodcasts?.episodes || []).length;
       const latestEp = eps[0];
       const showArtStackHtml = beatShows.length
-        ? `<div class="home-pod-art-stack" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="beat_podcasts" aria-label="Open 49ers Beat Podcasts">
+        ? `<div class="home-pod-art-stack" role="button" tabindex="0" data-action="jump-studio-sub" data-studio-sub="beat_podcasts" aria-label="Open ${esc(getActiveTeamConfig().nickname)} Beat Podcasts">
             ${beatShows
               .map(s => {
                 const opt = optimizeImageUrlForSlot(s.artworkUrl, 'artwork');

@@ -66,7 +66,7 @@ export function renderInjuryNewsItemCardHtml(
     n.videoStreamUrl && /^https:\/\//i.test(String(n.videoStreamUrl).trim())
       ? String(n.videoStreamUrl).trim()
       : '';
-  const rawAuthorName = n.author || n.reporterName || n.outletName || '49ers Beat';
+  const rawAuthorName = n.author || n.reporterName || n.outletName || `${getActiveTeamConfig().nickname} Beat`;
   const authorName = formatWireSourceDisplayName(rawAuthorName, n);
   const resolvedMentionUrl = isTweet
     ? sanitizeExternalUrl(

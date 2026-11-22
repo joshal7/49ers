@@ -24,8 +24,8 @@ import {
   ALL_DASHBOARD_BLOCKS,
   evaluateSeasonState,
   resolveHomeDashboardState
-} from './engine/seasonStateMachine.js?v=60';
-import { simulateCapScenario } from './engine/capSimulator.js?v=65';
+} from './engine/seasonStateMachine.js?v=61';
+import { simulateCapScenario } from './engine/capSimulator.js?v=66';
 import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js?v=65';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
 import {
@@ -52,7 +52,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=91';
+} from './services/dataService.js?v=92';
 import {
   SHARED_GEMINI_KEY_STORAGE_KEY,
   publishSharedGeminiApiKey,
@@ -77,7 +77,7 @@ import {
   shouldTriggerDailyTopNewsBriefRefresh,
   refreshDailyTopNewsBriefIfDue,
   clearDailyNewsBriefAttemptLock
-} from './services/aiWorkerClient.js?v=87';
+} from './services/aiWorkerClient.js?v=88';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -88,7 +88,7 @@ import {
   extractIncomingSharedRoute,
   shareItemNatively,
   shareAudioFileNatively
-} from './services/shareService.js?v=60';
+} from './services/shareService.js?v=61';
 
 import {
   esc,
@@ -98,7 +98,7 @@ import {
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
-} from './views/uiHelpers.js?v=51';
+} from './views/uiHelpers.js?v=52';
 import { getJargonEntry } from './engine/jargonGlossary.js?v=50';
 import {
   isAllowedInlineVideoStreamUrl,
@@ -113,21 +113,21 @@ import {
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=85';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=89';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=90';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=92';
+} from './views/newsView.js?v=93';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=49';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=78';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=90';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=66';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=79';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=91';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=67';
 import {
   renderSettingsSheetHtml,
   renderUniversalSearchSheetHtml,
   renderUniversalSearchResultsHtml,
   renderUniversalSearchScopeBarHtml
-} from './views/settingsArchiveView.js?v=88';
+} from './views/settingsArchiveView.js?v=89';
 import {
   normalizeNewsSortMode,
   computeCatchUpState,
@@ -2999,7 +2999,7 @@ function bindEvents() {
           const shareUrl = await buildShareableAnalysisUrl(rep, window.location);
           window.__lastSharedUrl = shareUrl;
           const shareRes = await shareItemNatively({
-            title: `49ers Scouting & Cap Brief: ${rep.title}`,
+            title: `${ACTIVE_TEAM.nickname} Scouting & Cap Brief: ${rep.title}`,
             text: `Read "${rep.title}" on ${ACTIVE_TEAM.brandName}:`,
             url: shareUrl
           });
@@ -3173,7 +3173,7 @@ function bindEvents() {
             estLabel: waitEst.estLabel,
             modelLabel: modelInfo.displayLabel,
             message: 'Step 1 of 3: Deep research on the topic…',
-            subDetail: 'Querying live 49ers beat wire, ESPN headlines & 88-player roster/EPA/cap ledger.'
+            subDetail: `Querying live ${ACTIVE_TEAM.nickname} beat wire, ESPN headlines & 88-player roster/EPA/cap ledger.`
           };
           renderMain();
           const episode = await generateOnDemandAutopodcast({
@@ -4581,7 +4581,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=111', { updateViaCache: 'none' })
+        .register('./sw.js?v=112', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

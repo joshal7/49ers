@@ -424,7 +424,7 @@ export function renderAudioAiViewHtml({
 
   const modeSwitcher = `
     <div class="card subnav-card">
-      <div class="segmented-control compact-seg-3" role="tablist" aria-label="Audio, 49ers Podcasts, and Deep Analysis Modes">
+      <div class="segmented-control compact-seg-3" role="tablist" aria-label="Audio, ${esc(getActiveTeamConfig().nickname)} Podcasts, and Deep Analysis Modes">
         <button type="button" class="pill-btn seg-btn ${studioSub === 'beat_podcasts' ? 'active' : ''}" data-action="set-studio-sub" data-studio-sub="beat_podcasts">
           ${iconSvg('audio', 13)}
           <span>Podcasts (${recentBeatEpisodes.length})</span>
@@ -658,7 +658,7 @@ function renderBeatPodcastsDirectory({
                 }
               </a>
               <div class="card-title-group">
-                <div class="card-eyebrow">${renderReporterSourceLinksHtml(show.hosts || show.network || '49ers Podcast')}</div>
+                <div class="card-eyebrow">${renderReporterSourceLinksHtml(show.hosts || show.network || `${activeTeam.nickname} Podcast`)}</div>
                 <h3 class="card-title"><a href="${esc(showLaunch.href)}" ${showTargetAttrs} style="color:inherit;text-decoration:none">${esc(show.name)}</a></h3>
               </div>
             </div>
@@ -861,7 +861,7 @@ function renderPodcastStudio({
                    </button>`
                 : ''
             }
-            <button type="button" class="icon-btn share-action-btn" data-action="share-podcast" data-episode-id="${esc(activeEp.id)}" aria-label="Share podcast link" title="Share link to play on 49ers.joshal.com">
+            <button type="button" class="icon-btn share-action-btn" data-action="share-podcast" data-episode-id="${esc(activeEp.id)}" aria-label="Share podcast link" title="Share link to play on ${esc(getActiveTeamConfig().domain)}">
               ${iconSvg(isActiveSharedToast ? 'check' : 'share', 14)}
               <span>${isActiveSharedToast ? 'Link Copied' : 'Share'}</span>
             </button>
@@ -929,7 +929,7 @@ function renderPodcastStudio({
       </div>
 
       <textarea id="podTopicInput" class="textarea-input" rows="3" style="margin-bottom:10px"
-                placeholder="e.g., Wide receivers, or Nick Bosa & Purdy 2027 cap structure"
+                placeholder="${esc(getActiveTeamConfig().abbr === 'SF' ? 'e.g., Wide receivers, or Nick Bosa & Purdy 2027 cap structure' : `e.g., ${getActiveTeamConfig().nickname} offense vs. two-high shells, or 2027 cap flexibility`)}"
                 aria-label="Podcast Topic">${esc(podTopicDraft)}</textarea>
 
       ${
@@ -1006,7 +1006,7 @@ function renderPodcastStudio({
                       ${renderSourceChips(ep.sourceLinks || [])}
                       <div class="podcast-action-row" style="margin-top:4px">
                         <div class="podcast-secondary-actions">
-                          <button type="button" class="icon-btn share-action-btn" data-action="share-podcast" data-episode-id="${esc(ep.id)}" aria-label="Share ${esc(ep.title)}" title="Share link to play on 49ers.joshal.com">
+                          <button type="button" class="icon-btn share-action-btn" data-action="share-podcast" data-episode-id="${esc(ep.id)}" aria-label="Share ${esc(ep.title)}" title="Share link to play on ${esc(getActiveTeamConfig().domain)}">
                             ${iconSvg(isCopied ? 'check' : 'share', 13)}
                             <span>${isCopied ? 'Link Copied' : 'Share'}</span>
                           </button>
@@ -1140,7 +1140,7 @@ function renderDeepAnalysisRunner({
       </div>
 
       <textarea id="analysisPromptInput" class="textarea-input" rows="3" style="margin-bottom:10px"
-                placeholder="Ask any nuanced 49ers position room, film, EPA, injury, cap, trade, or draft question…"
+                placeholder="Ask any nuanced ${esc(getActiveTeamConfig().nickname)} position room, film, EPA, injury, cap, trade, or draft question…"
                 aria-label="Deep Analysis Question">${esc(analysisPromptDraft)}</textarea>
 
       ${
@@ -1182,7 +1182,7 @@ function renderDeepAnalysisRunner({
                         <span class="badge badge-gold">${esc(rep.category)}</span>
                         <div class="podcast-secondary-actions">
                           <span class="mono" style="font-size:11px;color:var(--text-muted)">By ${esc(rep.createdBy)} • ${formatRelativeAge(rep.createdAt)}</span>
-                          <button type="button" class="icon-btn share-action-btn" data-action="share-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Share analysis link" title="Share link on 49ers.joshal.com">
+                          <button type="button" class="icon-btn share-action-btn" data-action="share-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Share analysis link" title="Share link on ${esc(getActiveTeamConfig().domain)}">
                             ${iconSvg(isCopied ? 'check' : 'share', 13)}
                             <span>${isCopied ? 'Link Copied' : 'Share'}</span>
                           </button>

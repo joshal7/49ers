@@ -26,7 +26,9 @@ import {
   ALL_NFL_TEAMS,
   CANARY_TEAM_SLUGS,
   NFL_DIVISIONS,
+  buildDeterministicCoachingMatchup,
   getTeamByAbbr,
+  getTeamCoaches,
   normalizeAnyTeamAbbr,
   resolveTeamConfig,
   setActiveTeamConfig
@@ -360,6 +362,7 @@ function buildTeamStatsForClub(team, leagueCtx) {
       m.value = hit.val;
       m.displayValue = hit.disp;
     }
+    if (m.unitTitle) m.unitTitle = String(m.unitTitle).replace(/^49ers\b/i, team.nickname);
   }
 
   // Refresh live PPG / PAPG / PtDiff / Records from today's live ESPN standings
@@ -1601,12 +1604,20 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       impliedWinProb: '50%'
     },
     franchiseHistory: {
-      allTimeRecord: `${team.nickname} vs. ${nextUnplayed?.opponent?.shortName || nextUnplayed?.opponent?.abbr || 'Opponent'}`
+      allTimeRecord: `${team.nickname} vs. ${nextUnplayed?.opponent?.shortName || nextUnplayed?.opponent?.abbr || 'Opponent'}`,
+      pfrQueryUrl: nextUnplayed?.opponent?.abbr
+        ? `https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=${team.pfrAbbr}&tm2=${getTeamByAbbr(nextUnplayed.opponent.abbr).pfrAbbr}&yr=all`
+        : `https://www.pro-football-reference.com/teams/${team.pfrAbbr}/head-to-head.htm`
     },
-    coachingMatchup: {
-      headline: `${coaches.hc} vs. ${oppCoaches?.hc || `${nextUnplayed?.opponent?.shortName || 'Opponent'} Staff`}`,
-      summary: `${team.fullName} (${coaches.hc} / OC ${coaches.oc} / DC ${coaches.dc}) prepare for Week ${nextUnplayed?.week || currentWeek} against ${nextUnplayed?.opponent?.name || 'their next opponent'}.`
-    },
+    coachingMatchup: buildDeterministicCoachingMatchup({
+      team,
+      metaCoaches: coaches,
+      week: nextUnplayed?.week || currentWeek,
+      oppAbbr: nextUnplayed?.opponent?.abbr || '',
+      oppName: nextUnplayed?.opponent?.name || 'Opponent',
+      oppRecord: nextUnplayed?.opponent?.record || '',
+      homeAway: nextUnplayed?.homeAway || 'home'
+    }),
     keyMatchupsMatrix: []
   };
 
@@ -1693,7 +1704,17 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       ],
       topNeeds2027: [],
       firstPickMockDatabase: [],
-      consensusBigBoard: leagueCtx.sharedBigBoard || [],
+      consensusBigBoard: (leagueCtx.sharedBigBoard || []).map(p => {
+        if (team.abbr === 'SF' || !p?.archetypeNote) return p;
+        return {
+          ...p,
+          archetypeNote: String(p.archetypeNote)
+            .replace(/Raheem Morris['’]s\s+/gi, '')
+            .replace(/for\s+Raheem Morris\b/gi, 'in modern NFL split-safety schemes')
+            .replace(/Kyle Shanahan['’]s\s+/gi, 'modern ')
+            .replace(/\bShanahan\s+wide-zone\b/gi, 'wide-zone')
+        };
+      }),
       consensusMockTargets: [],
       combineLeaderboard: leagueCtx.sharedCombineLeaderboard || null
     },

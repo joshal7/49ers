@@ -12,13 +12,33 @@ import path from 'node:path';
 import {
   ALL_NFL_TEAMS,
   CANARY_TEAM_SLUGS,
+  buildDeterministicCoachingMatchup,
   computeContrastRatio,
   getTeamByAbbr,
   getTeamBySlug,
+  getTeamCoaches,
+  hasCrossTeam49ersLeak,
   isOfficialTeamHost,
   resolveTeamFromHostname,
   setActiveTeamConfig
 } from '../src/config/teamRegistry.js';
+import {
+  buildAuthoritativeLiveContextSnapshot,
+  buildBalancedLeagueComparisonBlock,
+  describeSpreadCalibration,
+  sanitizeHallucinatedRosterText
+} from '../src/engine/groundingValidator.js';
+import {
+  getDeepAnalysisStage2SystemPrompt,
+  getDeepResearchStage1SystemPrompt,
+  getNotebookLmStage2SystemPrompt
+} from '../src/engine/geminiStudioPrompts.js';
+import { resolveCompleteScheduleModel } from '../src/engine/seasonStateMachine.js';
+import {
+  buildDailyMatchupIntelPrompt,
+  parseAndSanitizeDailyMatchupIntel
+} from '../src/services/aiWorkerClient.js';
+import { renderSeasonMatchupViewHtml } from '../src/views/seasonMatchupView.js';
 import {
   computeRootingGuideLeverage,
   runPlayoffMonteCarlo
@@ -678,13 +698,222 @@ await test('Canary Matchup Intel & Daily Brief: platform API works without BYOK 
       {}
     );
     assert.equal(nonJsonResp.status, 200);
-    assert.equal(kvStore.has('matchup_intel_v5:SF:2026:wk13:LAR:2026-11-24'), false, 'Non-JSON response must never poison shared KV');
+    assert.equal(kvStore.has('matchup_intel_v6:SF:2026:wk13:LAR:2026-11-24'), false, 'Non-JSON response must never poison shared KV');
+
+    // Cross-team SF-contaminated AI JSON on Bills vs. Chiefs must NEVER be written into shared KV!
+    const poisonedBillsPayload = JSON.stringify({
+      coachingMatchup: {
+        headline: "Kyle Shanahan & DC Raheem Morris vs. Kansas City Chiefs Staff (Levi's Stadium)",
+        summary: "Week 12 two-sided coordinator chess match pitting Kyle Shanahan's attack against Kansas City Chiefs.",
+        bullets: [
+          'Pass-Game Efficiency & Coverage Shell Delta: Shanahan uses condensed splits against Kansas City Chiefs.',
+          'Trench Run-Fit & Two-Way Leverage: Raheem Morris leans on light-box run fits.',
+          'Red-Zone Execution: San Francisco 49ers red-zone efficiency vs Kansas City Chiefs.'
+        ]
+      },
+      keyMatchupsMatrix: []
+    });
+    globalThis.fetch = async () =>
+      new Response(
+        JSON.stringify({ candidates: [{ content: { parts: [{ text: poisonedBillsPayload }] } }] }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    const poisonedRes = await canaryWorker.fetch(
+      new Request('https://bills.joshal.com/api/matchup-intel?team=BUF', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamAbbr: 'BUF', seasonYear: 2026, week: 12, oppAbbr: 'KC', datePt: '2026-11-22', prompt: 'bills kc test' })
+      }),
+      mockEnv,
+      {}
+    );
+    assert.equal(poisonedRes.status, 200);
+    const poisonedKeys = [...kvStore.keys()].filter(k => k.includes('matchup_intel_v6:BUF:2026:wk12:KC'));
+    assert.equal(poisonedKeys.length, 0, 'SF-contaminated Bills vs KC payload must NEVER be cached in shared KV');
   } finally {
     globalThis.window = origWindow;
     globalThis.__PLATFORM_API_ENABLED__ = origPlatformFlag;
     globalThis.localStorage = origLocalStorage;
     globalThis.fetch = origFetch;
   }
+});
+
+await test('Multi-team Coaching Matchup, AI Matchup Intel prompt, Spread Calibration & Season Views have ZERO 49ers hardcoding on Bills & Lions', () => {
+  // 1. Deterministic Coaching Matchup for Bills vs. Chiefs & Lions vs. Bears
+  const bufMatchup = buildDeterministicCoachingMatchup({
+    team: 'BUF',
+    week: 12,
+    oppAbbr: 'KC',
+    oppName: 'Kansas City Chiefs',
+    oppRecord: '8-2',
+    homeAway: 'home'
+  });
+  assert.ok(bufMatchup.headline.includes('Joe Brady'), `Expected Joe Brady in Bills headline: ${bufMatchup.headline}`);
+  assert.ok(bufMatchup.headline.includes('Jim Leonhard'), `Expected Jim Leonhard in Bills headline: ${bufMatchup.headline}`);
+  assert.ok(bufMatchup.headline.includes('Andy Reid'), `Expected Andy Reid in Chiefs opponent staff: ${bufMatchup.headline}`);
+  assert.ok(bufMatchup.headline.includes('Highmark Stadium'), `Expected Highmark Stadium in Bills home headline: ${bufMatchup.headline}`);
+  assert.equal(hasCrossTeam49ersLeak(JSON.stringify(bufMatchup), 'BUF', 'KC'), false, 'Bills vs KC coaching matchup must have zero 49ers leak');
+
+  const detMatchup = buildDeterministicCoachingMatchup({
+    team: 'DET',
+    week: 12,
+    oppAbbr: 'CHI',
+    oppName: 'Chicago Bears',
+    oppRecord: '8-2',
+    homeAway: 'home'
+  });
+  assert.ok(detMatchup.headline.includes('Dan Campbell'), `Expected Dan Campbell in Lions headline: ${detMatchup.headline}`);
+  assert.ok(detMatchup.headline.includes('Kelvin Sheppard'), `Expected Kelvin Sheppard in Lions headline: ${detMatchup.headline}`);
+  assert.ok(detMatchup.headline.includes('Ben Johnson'), `Expected Ben Johnson in Bears opponent staff: ${detMatchup.headline}`);
+  assert.ok(detMatchup.headline.includes('Ford Field'), `Expected Ford Field in Lions home headline: ${detMatchup.headline}`);
+  assert.equal(hasCrossTeam49ersLeak(JSON.stringify(detMatchup), 'DET', 'CHI'), false, 'Lions vs CHI coaching matchup must have zero 49ers leak');
+
+  // SF coachesSeed must be Raheem Morris (not stale Robert Saleh)
+  const sfCoaches = getTeamCoaches('SF');
+  assert.equal(sfCoaches.dc, 'Raheem Morris', 'SF DC coachesSeed must be Raheem Morris');
+
+  // 2. Spread calibration parses BUF -3.5 as +3.5 BUF margin (favorite), not inverted underdog!
+  const bufCal = describeSpreadCalibration('BUF -3.5', 'Kansas City Chiefs', '8-2', 'BUF');
+  assert.equal(bufCal.sfMargin, 3.5, 'BUF -3.5 must parse as +3.5 Bills favorite margin');
+  assert.ok(bufCal.guidanceLine.includes('BUF'), 'Spread guidance must reference BUF');
+  assert.ok(!/San Francisco|49ers|\bSF\b/.test(bufCal.guidanceLine), `Spread guidance leaked SF: ${bufCal.guidanceLine}`);
+
+  // 3. Gemini Studio Prompts for BUF & DET must have zero "Buffalo 49ers", Shanahan, or Morris
+  for (const abbr of ['BUF', 'DET']) {
+    const p1 = getDeepResearchStage1SystemPrompt(abbr);
+    const p2 = getDeepAnalysisStage2SystemPrompt(abbr);
+    const p3 = getNotebookLmStage2SystemPrompt(abbr);
+    for (const [label, txt] of [['Stage1', p1], ['Stage2', p2], ['PodStage2', p3]]) {
+      assert.ok(!/Kyle Shanahan|Raheem Morris|Buffalo 49ers|Detroit 49ers|49ers Faithful/i.test(txt), `${abbr} ${label} prompt leaked 49ers text`);
+    }
+  }
+
+  // 4. Bills & Lions real JSON bundles: buildDailyMatchupIntelPrompt, buildBalancedLeagueComparisonBlock,
+  //    buildAuthoritativeLiveContextSnapshot, parseAndSanitizeDailyMatchupIntel, resolveCompleteScheduleModel, renderSeasonMatchupViewHtml
+  for (const [slug, oppAbbr, oppName] of [
+    ['bills', 'KC', 'Kansas City Chiefs'],
+    ['lions', 'CHI', 'Chicago Bears']
+  ]) {
+    const team = getTeamBySlug(slug);
+    setActiveTeamConfig(team);
+    const dir = path.join(ROOT, 'data', 'teams', slug);
+    const readJson = rel => JSON.parse(fs.readFileSync(path.join(dir, rel), 'utf8'));
+    const appData = {
+      meta: readJson('meta.json'),
+      roster: readJson('roster.json'),
+      depthChart: readJson('depth-chart.json'),
+      cap: readJson('cap.json'),
+      health: readJson('health.json'),
+      news: readJson('news.json'),
+      scheduleMatchup: readJson('schedule-matchup.json'),
+      seasonal: readJson('seasonal.json'),
+      reporters: readJson('reporters.json')
+    };
+    // Simulate Week 12 matchup rollover vs KC / CHI
+    appData.scheduleMatchup.upcomingMatchup = {
+      ...appData.scheduleMatchup.upcomingMatchup,
+      week: 12,
+      oppAbbr,
+      oppName,
+      oppRecord: '8-2',
+      homeAway: 'home',
+      betting: { spread: `${team.abbr} -2.5`, overUnder: 48.5 },
+      coachingMatchup: buildDeterministicCoachingMatchup({
+        team,
+        metaCoaches: appData.meta.coaches,
+        week: 12,
+        oppAbbr,
+        oppName,
+        oppRecord: '8-2',
+        homeAway: 'home'
+      })
+    };
+
+    const intelPrompt = buildDailyMatchupIntelPrompt(appData);
+    assert.ok(intelPrompt.includes(team.fullName), `${slug} intel prompt must include ${team.fullName}`);
+    assert.ok(intelPrompt.includes(`${team.abbr} Edge`), `${slug} intel prompt must use ${team.abbr} Edge`);
+    assert.equal(hasCrossTeam49ersLeak(intelPrompt, team, oppAbbr), false, `${slug} intel prompt leaked 49ers/Shanahan/Morris`);
+    assert.ok(!intelPrompt.includes('San Francisco 49ers'), `${slug} intel prompt must not say San Francisco 49ers`);
+
+    const balancedBlock = buildBalancedLeagueComparisonBlock(appData, { compact: true });
+    assert.ok(!/49ERS LEAGUE-WIDE|OVER SF|vs SF #/i.test(balancedBlock), `${slug} balanced block leaked SF labels`);
+
+    const liveSnap = buildAuthoritativeLiveContextSnapshot(appData, { compactForDossier: true });
+    assert.ok(liveSnap.includes(appData.meta.coaches.hc), `${slug} live snapshot must include ${appData.meta.coaches.hc}`);
+    assert.ok(liveSnap.includes(team.division), `${slug} live snapshot must include ${team.division}`);
+    assert.equal(hasCrossTeam49ersLeak(liveSnap, team, oppAbbr), false, `${slug} live snapshot leaked 49ers/Shanahan/Morris`);
+
+    // Sanitizer must reject SF-contaminated response for non-SF team vs non-SF opponent
+    const rejected = parseAndSanitizeDailyMatchupIntel(
+      {
+        coachingMatchup: {
+          headline: "Kyle Shanahan & DC Raheem Morris vs. Kansas City Chiefs Staff (Levi's Stadium)",
+          summary: 'Week 12 coordinator chess match pitting Kyle Shanahan and DC Raheem Morris against Kansas City Chiefs.',
+          bullets: [
+            'Pass-Game Efficiency & Coverage Shell Delta: Shanahan uses condensed splits and orbit motion to test coverage.',
+            'Trench Run-Fit & Two-Way Leverage: Raheem Morris leans on disguised Quarters and Cover 6 shells.',
+            'Situational Execution: San Francisco red-zone discipline vs opponent front seven.'
+          ]
+        },
+        keyMatchupsMatrix: [
+          { phaseTag: 'Pass', unitMatchup: 'A vs B', advantage: 'Even', tacticalDetail: 'Detailed two-sentence breakdown of pass rush leverage and route spacing here.' },
+          { phaseTag: 'Run', unitMatchup: 'C vs D', advantage: 'Even', tacticalDetail: 'Detailed two-sentence breakdown of gap scheme run fits and box count leverage.' },
+          { phaseTag: 'Cov', unitMatchup: 'E vs F', advantage: 'Even', tacticalDetail: 'Detailed two-sentence breakdown of outside leverage and deep safety help.' },
+          { phaseTag: 'Red', unitMatchup: 'G vs H', advantage: 'Even', tacticalDetail: 'Detailed two-sentence breakdown of red zone spacing and tight end matchups.' }
+        ]
+      },
+      appData.scheduleMatchup.upcomingMatchup,
+      appData.roster.players,
+      { team, oppAbbr }
+    );
+    assert.equal(rejected, null, `${slug} parser must reject SF-contaminated coaching matchup`);
+
+    // Sanitizer must NOT rewrite former 49er names into 'Raheem Morris' or 'Brock Purdy' on non-SF teams
+    const nonSfClean = sanitizeHallucinatedRosterText(
+      'Robert Saleh and Sam Darnold visited the opponent facility.',
+      appData.roster.players,
+      { team }
+    );
+    assert.ok(!nonSfClean.includes('Raheem Morris') && !nonSfClean.includes('Brock Purdy'), `${slug} sanitizer must not inject SF names`);
+
+    // Postseason schedule model for AFC Bills must use AFC + Highmark Stadium + NFC Champion (TBD)
+    if (team.abbr === 'BUF') {
+      const postModel = resolveCompleteScheduleModel(
+        {
+          ...appData,
+          meta: { ...appData.meta, teamStatus: { clinchedPlayoffs: true, clinchedDivision: true, clinchedSeed1Bye: true } }
+        },
+        { teamOdds: { makePlayoffsPct: 100, winDivisionPct: 100, seed1ByePct: 100 } }
+      );
+      const postStr = JSON.stringify(postModel.postseasonGames) + JSON.stringify(postModel.postseasonStatus);
+      assert.ok(postStr.includes('Highmark Stadium'), 'Bills postseason projection must use Highmark Stadium');
+      assert.ok(postStr.includes('AFC'), 'Bills postseason projection must use AFC');
+      assert.ok(!/Levi['’]?s Stadium|Santa Clara|NFC West|49ers/i.test(postStr), 'Bills postseason projection leaked Levi/NFC West/49ers');
+    }
+
+    // Rendered Matchup, Stats & Draft HTML must contain zero 49ers hardcoding
+    const matchupHtml = renderSeasonMatchupViewHtml({ appData, seasonSubTab: 'matchup' });
+    assert.ok(matchupHtml.includes(`${team.nickname} Side:`), `${slug} matchup view must say "${team.nickname} Side:"`);
+    assert.ok(matchupHtml.includes(`Full ${team.nickname} Health`), `${slug} matchup view must say "Full ${team.nickname} Health"`);
+    assert.ok(!matchupHtml.includes('49ers Side:'), `${slug} matchup view must NOT say "49ers Side:"`);
+    assert.ok(!matchupHtml.includes('Full 49ers Health'), `${slug} matchup view must NOT say "Full 49ers Health"`);
+    assert.equal(hasCrossTeam49ersLeak(matchupHtml, team, oppAbbr), false, `${slug} matchup view HTML leaked 49ers/Shanahan/Morris/Levi's`);
+
+    const statsHtml = renderSeasonMatchupViewHtml({ appData, seasonSubTab: 'stats' });
+    assert.ok(!statsHtml.includes('PFR 49ers'), `${slug} stats view must NOT say "PFR 49ers"`);
+
+    const draftHtml = renderSeasonMatchupViewHtml({ appData, seasonSubTab: 'draft_prep' });
+    assert.ok(!draftHtml.includes('49ers 1st-pick'), `${slug} draft view must NOT say "49ers 1st-pick"`);
+    assert.ok(!draftHtml.includes('Shanahan / Lynch'), `${slug} draft view must NOT say "Shanahan / Lynch"`);
+  }
+
+  // Legitimate Bills vs. 49ers matchup IS allowed to reference Kyle Shanahan / Raheem Morris
+  assert.equal(
+    hasCrossTeam49ersLeak('Joe Brady vs. Kyle Shanahan & DC Raheem Morris', 'BUF', 'SF'),
+    false,
+    'Legitimate BUF vs SF matchup must NOT be flagged as a cross-team leak'
+  );
+  setActiveTeamConfig('SF');
 });
 
 // Restore default SF active team singleton

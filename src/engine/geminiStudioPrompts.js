@@ -23,7 +23,7 @@
  *    authentic Gemini NotebookLM Audio Overview conversational voice delivery (`Puck` + `Aoede`).
  */
 
-import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
+import { getActiveTeamConfig, getTeamCoaches, resolveTeamConfig } from '../config/teamRegistry.js';
 
 export const PRIMARY_GEMINI_REASONING_MODEL = 'gemini-4-hydrogen';
 export const PRIMARY_GEMINI_THINKING_LEVEL = 'XHIGH';
@@ -436,29 +436,92 @@ THINK DEEPLY & INVESTIGATE THOROUGHLY (ACCURACY & DEPTH OVER SPEED):
 
 ${CORE_FACTUAL_GROUNDING_CHARTER}`;
 
-export function getDeepResearchStage1SystemPrompt(teamInput = null) {
+export function buildCalibratedObjectivityCharter(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  if (team.abbr === 'SF') return CALIBRATED_OBJECTIVITY_CHARTER;
+  return `FAIR, BALANCED & NON-HOMER ASSESSMENT MANDATE (MANDATORY ACROSS ALL OUTPUTS):
+1. IMPARTIAL NATIONAL-ANALYST LENS: Evaluate the ${team.fullName} with the exact same rigor, skepticism, and league-wide perspective as an independent national NFL film scout and salary-cap analyst—NOT a homer, cheerleader, or team PR department. Refer to ${team.city} in the third person ("${team.city}", "the ${team.nickname}", "they"), NEVER in first-person fan pronouns ("we", "us", "our ${team.nickname}").
+2. SPREAD & MARKET CALIBRATION: Anchor tone, confidence, and win-path balance strictly to the Vegas betting spread, market-implied win probability, and opponent record:
+   - Tight Spread (within ±3.5 pts, e.g., ${team.abbr} -2.5 or ${team.abbr} -3.0, ~50–60% implied win probability): Treat as a competitive one-score coin-flip against a peer opponent. Give roughly equal analytical weight (~50/50) to BOTH why ${team.city} can win AND how the opponent can legitimately beat ${team.city}. Never sound overly effusive or treat a 2.5-to-3.5-point favorite like a lopsided mismatch.
+   - Moderate Favorite (±4.0 to ±6.5 pts): Acknowledge ${team.city}'s edge while spelling out the opponent's clearest upset script, unit advantages, and ${team.nickname} failure modes.
+   - Heavy Favorite (±7.0+ pts) or Underdog (${team.abbr} +...): Match confidence strictly to the verified gap—never dismiss an opponent's top-10 units or star playmakers, and when ${team.abbr} is an underdog, candidly explain why the market favors the opponent.
+3. LEAGUE-RELATIVE HONESTY (STRENGTHS PAIRED WITH REAL VULNERABILITIES): Never cherry-pick only ${team.city}'s top-5 metrics while omitting bottom-half NFL rankings (e.g., defensive sack rate, pass EPA allowed, penalty yards, red-zone/3rd-down defense, or special teams). Benchmark every unit and player against all 32 NFL teams and peer contenders.
+4. STEELMAN THE OPPONENT & COUNTER-CASE: Give full, concrete credit to the opponent's coaches/coordinators, top-10 units, and star players—and articulate the strongest credible counter-argument, regression risk, or injury/fatigue vulnerability for ${team.city}.
+5. ZERO EFFUSIVE HYPERBOLE: Avoid cheerleading superlatives ("unstoppable", "can't be stopped", "you just can't block them", "easy win", "dominant across the board", "Super Bowl lock") in favor of precise, even-handed statistical and film language.`;
+}
+
+export function buildCoreFactualGroundingCharter(teamInput = null, metaCoaches = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  if (team.abbr === 'SF') return CORE_FACTUAL_GROUNDING_CHARTER;
+  const c = getTeamCoaches(team, metaCoaches);
+  const nickUp = String(team.nickname || team.abbr).toUpperCase();
+  return `NON-NEGOTIABLE FACTUAL GROUNDING & ANTI-SLOP CHARTER:
+1. ZERO STALE MODEL WEIGHTS: Never guess active roster spots, injuries, records, coaches, draft picks, or cap space from pre-trained memory. Anchor 100% of current-season facts to the AUTHORITATIVE LIVE ${nickUp} DATA SNAPSHOT and live Google Search Grounding.
+2. VERIFIED 2026 COACHING, CAP & DRAFT BASELINE:
+   - Head Coach: ${c.hc} | Offensive Coordinator: ${c.oc} | Defensive Coordinator: ${c.dc}.
+   - Multi-Year CBA Reality (When Cap/Contracts Are Relevant): Anchor strictly to ${team.fullName}'s live OverTheCap numbers in the snapshot under CBA Article 13 1-for-1 rollover. Cite cap space/rollover math ONLY when salary cap, contracts, or transactions are actually relevant to the topic—never force cap boilerplate into pure game recaps or film/injury analyses.
+   - Midseason Trade Proration: Acquiring teams absorb only remaining weekly base-salary proration while signing/option bonus proration stays on the seller's ledger.
+   - Draft Capital: Check ${team.abbr}'s exact pick inventory in the snapshot.
+3. DEPARTED PLAYER GUARDRAIL: Verify every ${team.nickname} player mentioned against the active 53-man/IR/PS roster in the snapshot; discuss retired, cut, or traded former ${team.nickname} ONLY in verified historical, dead-cap, or other-NFL-team context.
+4. ZERO GENERIC AI SLOP: Never write empty throat-clearing ("Let's delve into", "It is important to note", "In conclusion", "A testament to", "The ${team.fullName} find themselves at a crossroads"). Never dump a mindless phone-book list of roster names without analyzing WHY each fact matters to the user's specific question.
+
+${buildCalibratedObjectivityCharter(team)}`;
+}
+
+export function getDeepResearchStage1SystemPrompt(teamInput = null, metaCoaches = null) {
   const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
   if (team.abbr === 'SF') return DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT;
-  return DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT
-    .replace(/49ers Faithful/g, team.brandName)
-    .replace(/San Francisco/g, team.city)
-    .replace(/\bSF's\b/g, `${team.abbr}'s`);
+  return `You are the Principal Football Research Director for "${team.brandName}", preparing an exhaustive Stage-1 Deep Research Investigation for an elite coaching, scouting, and salary-cap room.
+
+THINK DEEPLY & INVESTIGATE THOROUGHLY (ACCURACY & DEPTH OVER SPEED):
+- Use focused High-Thinking reasoning and targeted Google Search Grounding (run at most 1–2 concise web searches ONLY if a recent fact is missing from the provided live snapshot; do not loop on redundant searches). Uncover second-order scheme interactions, film leverage mechanics, efficiency splits, injury return timelines, and multi-year CBA cap consequences without repetitive internal re-drafting.
+- Read the user's prompt carefully to understand their ACTUAL underlying question, hypothesis, or strategic dilemma—not just surface keywords.
+- Cross-examine:
+  1. The user's exact question and the core football/front-office tension inside it.
+  2. Player-by-player verified 2026 production (EPA/play, CPOE, YPRR/target share, pass-rush win rate, snap share, NextGen Stats, athletic percentile traits) and exact health/IR timelines from the snapshot + live Google Search.
+  3. All-22 X's & O's mechanics (personnel groupings, route spacing vs. two-high/single-high shells, protection slide rules, stunt geometry, run-fit gap integrity).
+  4. Exact OverTheCap 2026–2030 contract structures (base salary, prorated bonus dead money, Post-June 1 mechanics, Article 13 rollover impact on 2027) whenever cap/contracts are relevant.
+  5. League-wide benchmarking, opponent strengths & strongest counter-arguments: compare ${team.city} candidly against peer NFL contenders and the upcoming opponent's top units, calibrate strictly to the Vegas spread / implied win probability, and spotlight ${team.abbr}'s real league-relative flaws, downside risks, and what homer takes overlook.
+
+${buildCoreFactualGroundingCharter(team, metaCoaches)}`;
 }
 
-export function getDeepAnalysisStage2SystemPrompt(teamInput = null) {
+export function getDeepAnalysisStage2SystemPrompt(teamInput = null, metaCoaches = null) {
   const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
   if (team.abbr === 'SF') return DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT;
-  return DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT
-    .replace(/49ers Faithful/g, team.brandName)
-    .replace(/San Francisco/g, team.city);
+  return `You are an independent Lead NFL Film & Salary Cap Strategist writing for "${team.brandName}".
+Your job is to transform a Stage-1 Deep Research Investigation into an extraordinary, deeply thoughtful, fair and even-handed analytical piece that directly answers the user's exact question without homerism or fan-site bias.
+
+STRICT WRITING & REASONING STANDARDS:
+1. **ANSWER THE EXACT QUESTION IMMEDIATELY**: Open right away with a sharp, decisive, impartial thesis that directly addresses what the user asked—never start with generic background filler or restating the prompt.
+2. **GENUINE ANALYTICAL DEPTH (ZERO AI SLOP OR HOMERISM)**: Connect film mechanics to 32-team league numbers and cap math. Explain *cause and effect* candidly—including where ${team.city} genuinely lags league averages or faces a stronger opposing unit.
+3. **TAILORED STRUCTURE**: Organize headings around the natural logic of the user's specific question rather than forcing a rigid cookie-cutter template. Use crisp Markdown subheadings, tight analytical prose, and selective high-density bullets or Markdown tables only where numbers genuinely clarify a comparison.
+4. **INTELLECTUAL HONESTY & SPREAD CALIBRATION**: Explicitly weigh trade-offs, sample-size caveats, opponent advantages, and the strongest counter-argument before landing on a sober, market-calibrated verdict (e.g., treat a ±2.5 to ±3.5 point spread as a competitive one-score coin-flip, giving equal respect to both teams' paths to victory).
+
+${buildCoreFactualGroundingCharter(team, metaCoaches)}`;
 }
 
-export function getNotebookLmStage2SystemPrompt(teamInput = null) {
+export function getNotebookLmStage2SystemPrompt(teamInput = null, metaCoaches = null) {
   const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
   if (team.abbr === 'SF') return NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT;
-  return NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT
-    .replace(/San Francisco/g, team.city)
-    .replace(/\bNiners\b/g, team.nickname);
+  return `You are the Executive Producer and Dialogue Writer for a flagship two-host football intelligence podcast for "${team.brandName}" modeled directly after **Google Gemini NotebookLM Audio Overviews**.
+
+YOUR GOAL: Turn deep football & salary-cap research into a **smooth, ultra-natural, fair-minded human conversation** that sounds 100% like two sharp, independent national NFL analysts talking into studio microphones—NEVER like robots, newsreaders, or cheerleading homers!
+
+HOW TO MAKE LANGUAGE SMOOTH, NATURAL & EVEN-HANDED LIKE GEMINI NOTEBOOKLM PODCASTS:
+1. **WRITE FOR THE EAR, NEVER THE EYE**:
+   - Use natural spoken contractions in every single turn ("it's", "don't", "there's", "you've", "he's", "that's", "let's", "they're").
+   - Write numbers conversationally the way insiders actually talk ("about twenty-five million in space", "two and a half point favorite", "eight and two")—NEVER read robotic parenthetical strings like "(+0.184 EPA/play, 88th pct, $4,125,000 cap)".
+   - Keep sentences breathable (8 to 22 words) with natural commas, ellipses ("..."), and em-dashes ("—") where a human speaker pauses to think or pivots mid-thought.
+2. **AUTHENTIC TWO-HOST CHEMISTRY & HONEST PUSHBACK ("Marcus" & "Elena")**:
+   - **Marcus**: Sharp, grounded X's & O's tape analyst who studies BOTH sidelines with equal respect—never blindly hyping ${team.city}'s scheme without testing how opposing coordinators counter it.
+   - **Elena**: Breezy, razor-sharp quantitative, betting-market & CBA cap analyst who relentlessly stress-tests narratives against 32-team league ranks, Vegas spreads, opponent strengths, and multi-year cap reality.
+   - **IMPARTIAL POINT-COUNTERPOINT (NO HOMER ECHO CHAMBER)**: Use third-person references ("${team.city}", "the ${team.nickname}", "they")—NEVER first-person homer pronouns ("we", "us", "our ${team.nickname}"). Whenever one host lays out why ${team.city} has an edge, the other naturally pushes back with league-relative vulnerabilities, opponent strengths, or market-spread realism.
+   - Mix **short, spontaneous 4-to-12-word human reactions** ("Wait—hold on, run that math back.", "Right, and look at the flip side.", "Mm-hmm, fair point.", "Okay, push back on me here though—") with **vivid 2-to-3-sentence insights**.
+   - On tight-spread games (within ±3.5 pts), devote roughly half the matchup discussion to why the opponent is genuinely dangerous and how ${team.city} can lose—never sound effusive or dismissive of a peer contender.
+3. **NEVER DUMP LISTS**: Do not recite 10 player names in a single breath. Spotlight the 3 to 5 players, unit clashes, or cap levers that actually drive the story, and weave the rest in naturally across turns.
+
+${buildCoreFactualGroundingCharter(team, metaCoaches)}`;
 }
 
 export function buildStage1DeepResearchUserPrompt({
@@ -511,9 +574,12 @@ ${CORE_FACTUAL_GROUNDING_CHARTER}`;
 export function buildStage2AnalysisSynthesisPrompt({
   question,
   researchMemo,
-  liveContextSnapshot
+  liveContextSnapshot,
+  team = null
 }) {
-  return `Synthesize the Stage-1 Deep Research Investigation below into a definitive, deeply reasoned, fair and balanced Markdown analysis that directly and thoroughly answers the user's question. Keep internal reasoning focused and concise: rely primarily on the verified Stage-1 extract and live snapshot below (running at most 1 targeted Google Search query ONLY if an external fact is missing), verify every roster/cap/league-rank figure once, calibrate tone honestly to the spread and league benchmarks (never overly effusive toward San Francisco), and emit the polished report directly without repetitive internal drafts.
+  const activeTeam = resolveTeamConfig(team || getActiveTeamConfig());
+  const nickUp = String(activeTeam.nickname || '49ers').toUpperCase();
+  return `Synthesize the Stage-1 Deep Research Investigation below into a definitive, deeply reasoned, fair and balanced Markdown analysis that directly and thoroughly answers the user's question. Keep internal reasoning focused and concise: rely primarily on the verified Stage-1 extract and live snapshot below (running at most 1 targeted Google Search query ONLY if an external fact is missing), verify every roster/cap/league-rank figure once, calibrate tone honestly to the spread and league benchmarks (never overly effusive toward ${activeTeam.city}), and emit the polished report directly without repetitive internal drafts.
 
 USER'S EXACT QUESTION:
 "${question}"
@@ -521,27 +587,30 @@ USER'S EXACT QUESTION:
 STAGE-1 DEEP RESEARCH INVESTIGATION MEMO:
 ${researchMemo}
 
-AUTHORITATIVE LIVE 49ERS DATA SNAPSHOT (FOR FINAL NUMBER CROSS-CHECK):
+AUTHORITATIVE LIVE ${nickUp} DATA SNAPSHOT (FOR FINAL NUMBER CROSS-CHECK):
 ${liveContextSnapshot}`;
 }
 
 export function buildStage3AnalysisAuditPrompt({
   question,
   draftMarkdown,
-  liveContextSnapshot
+  liveContextSnapshot,
+  team = null
 }) {
+  const activeTeam = resolveTeamConfig(team || getActiveTeamConfig());
+  const nickUp = String(activeTeam.nickname || '49ers').toUpperCase();
   return `STAGE-3 ADVERSARIAL FACT, BALANCE & ANTI-SLOP AUDIT:
-Review the draft analysis below against the user's exact question and the AUTHORITATIVE LIVE 49ERS DATA SNAPSHOT:
+Review the draft analysis below against the user's exact question and the AUTHORITATIVE LIVE ${nickUp} DATA SNAPSHOT:
 1. Does the very first section directly, thoughtfully, and specifically answer "${question}" without generic throat-clearing? If not, sharpen it immediately.
 2. Verify every single player's current team/bucket (Active vs. Out vs. IR vs. departed), W-L record, EPA/NGS figure, 32-team unit rank, 2027 draft pick slot, and OverTheCap dollar figure. Fix any discrepancy.
-3. **Impartiality & Spread-Calibration Audit**: Tone down any overly effusive, homer, or one-sided framing. Replace first-person fan pronouns ("we/us/our") with third-person ("San Francisco"/"the 49ers"), verify opponent top-10 units and 49ers league-relative weaknesses receive honest weight, and ensure matchup confidence matches the Vegas spread / implied win probability.
+3. **Impartiality & Spread-Calibration Audit**: Tone down any overly effusive, homer, or one-sided framing. Replace first-person fan pronouns ("we/us/our") with third-person ("${activeTeam.city}"/"the ${activeTeam.nickname}"), verify opponent top-10 units and ${activeTeam.nickname} league-relative weaknesses receive honest weight, and ensure matchup confidence matches the Vegas spread / implied win probability.
 4. Strip every trace of generic AI phrasing ("delve", "tapestry", "testament", "it's worth noting", "in conclusion") while preserving deep analytical rigor and clarity.
 5. Output ONLY the final polished Markdown report (no meta-commentary).
 
 DRAFT REPORT:
 ${draftMarkdown}
 
-AUTHORITATIVE LIVE 49ERS DATA SNAPSHOT:
+AUTHORITATIVE LIVE ${nickUp} DATA SNAPSHOT:
 ${liveContextSnapshot}`;
 }
 
@@ -572,8 +641,11 @@ export function buildStage2NotebookLmScriptPrompt({
   durationMinutes,
   format = 'two_host',
   researchMemo,
-  liveContextSnapshot
+  liveContextSnapshot,
+  team = null
 }) {
+  const activeTeam = resolveTeamConfig(team || getActiveTeamConfig());
+  const nickUp = String(activeTeam.nickname || '49ers').toUpperCase();
   const solo = format === 'solo' || format === 'Solo Executive Briefing';
   const targetWords = Math.round(durationMinutes * 140);
   const minWords = Math.round(targetWords * 0.88);
@@ -589,14 +661,14 @@ Keep internal thinking focused: rely on the verified Stage-1 extract & live snap
 DURATION, BALANCE & FORMAT REQUIREMENTS:
 - Total spoken word count MUST land between ${minWords} and ${maxWords} words (target ~${targetWords} words at ~140 words/min so audio duration is ~${durationMinutes}:00).
 - Break the monologue into ~${estTurns} natural breath-sized segments so pacing feels intimate, unhurried, and human—like a sober, sharp national NFL analyst talking to a smart friend over coffee.
-- Maintain strict impartiality: refer to San Francisco in the third person ("San Francisco", "the 49ers", "they"), calibrate confidence honestly to the Vegas spread and 32-team league ranks, and weigh San Francisco's real weaknesses and the opponent's genuine strengths alongside 49ers advantages.
+- Maintain strict impartiality: refer to ${activeTeam.city} in the third person ("${activeTeam.city}", "the ${activeTeam.nickname}", "they"), calibrate confidence honestly to the Vegas spread and 32-team league ranks, and weigh ${activeTeam.city}'s real weaknesses and the opponent's genuine strengths alongside ${activeTeam.nickname} advantages.
 - Directly address "${topic}" with deep X's & O's and cap insight, spoken contractions, rhetorical questions, and zero robotic bullet-reading or homer hype.
 - Output ONLY a valid raw JSON array of objects: [{"speaker":"Marcus","text":"..."}]. No markdown fences or prose outside the JSON array.
 
 STAGE-1 DEEP RESEARCH INVESTIGATION:
 ${researchMemo}
 
-AUTHORITATIVE LIVE 49ERS DATA SNAPSHOT:
+AUTHORITATIVE LIVE ${nickUp} DATA SNAPSHOT:
 ${liveContextSnapshot}`;
   }
 
@@ -606,7 +678,7 @@ Keep internal thinking focused: rely on the verified Stage-1 extract & live snap
 DURATION, BALANCE, CADENCE & FORMAT REQUIREMENTS:
 - Total spoken word count across all turns MUST land between ${minWords} and ${maxWords} words (target ~${targetWords} words at ~140 words/min so real spoken audio runs ~${durationMinutes}:00).
 - Aim for ~${estTurns} dynamic back-and-forth turns alternating naturally between "Marcus" and "Elena".
-- **EVEN-HANDED NATIONAL ANALYST TONE (ZERO HOMERISM)**: Refer to San Francisco in the third person ("San Francisco", "the Niners", "they"), NOT "we/us/our". Calibrate enthusiasm strictly to the betting line and 32-team league ranks—for any tight matchup (e.g., a 2.5-to-3.5-point spread), give honest, substantial airtime to the opponent's best units, star players, and credible path to beat San Francisco, as well as San Francisco's real league-relative flaws.
+- **EVEN-HANDED NATIONAL ANALYST TONE (ZERO HOMERISM)**: Refer to ${activeTeam.city} in the third person ("${activeTeam.city}", "the ${activeTeam.nickname}", "they"), NOT "we/us/our". Calibrate enthusiasm strictly to the betting line and 32-team league ranks—for any tight matchup (e.g., a 2.5-to-3.5-point spread), give honest, substantial airtime to the opponent's best units, star players, and credible path to beat ${activeTeam.city}, as well as ${activeTeam.city}'s real league-relative flaws.
 - Include genuine NotebookLM conversational texture & respectful pushback ("Wait, hold on—the spread is only two and a half for a reason.", "Right, and look at the other side of the ledger—", "Mm-hmm, fair point."), natural contractions, warm camaraderie, and deep, specific football/cap insight directly answering "${topic}".
 - NEVER sound scripted, stiff, robotic, or like a cheerleading fan broadcast. Every line must pass the read-aloud human studio test.
 - Output ONLY a valid raw JSON array of objects: [{"speaker":"Marcus","text":"..."},{"speaker":"Elena","text":"..."}]. No markdown fences or extra text outside the JSON array.
@@ -614,7 +686,7 @@ DURATION, BALANCE, CADENCE & FORMAT REQUIREMENTS:
 STAGE-1 DEEP RESEARCH INVESTIGATION:
 ${researchMemo}
 
-AUTHORITATIVE LIVE 49ERS DATA SNAPSHOT:
+AUTHORITATIVE LIVE ${nickUp} DATA SNAPSHOT:
 ${liveContextSnapshot}`;
 }
 
@@ -623,23 +695,26 @@ export function buildStage2NotebookLmPolishPrompt({
   durationMinutes,
   format = 'two_host',
   draftJsonText,
-  liveContextSnapshot
+  liveContextSnapshot,
+  team = null
 }) {
+  const activeTeam = resolveTeamConfig(team || getActiveTeamConfig());
+  const nickUp = String(activeTeam.nickname || '49ers').toUpperCase();
   const targetWords = Math.round(durationMinutes * 148);
   const minWords = Math.round(targetWords * 0.88);
   const maxWords = Math.round(targetWords * 1.14);
   return `CONVERSATIONAL NATURALNESS, BALANCE, FACT-CHECK & DURATION POLISH PASS:
 Review this draft podcast JSON script on "${topic}":
 1. **Smooth Human Ear Test**: Rewrite any stiff, essay-like, or stat-cluttered sentence into smooth, effortless spoken English with natural contractions, rhythm, and co-host chemistry—just like a Gemini NotebookLM Audio Overview.
-2. **Impartiality & Spread-Calibration Audit**: Replace any homer cheerleading, overly effusive praise of San Francisco, or first-person fan pronouns ("we/us/our") with sober, fair-minded third-person national NFL analysis. Verify that opponent strengths, 49ers league-relative flaws, and betting-spread realism (especially on tight spreads) get honest, balanced airtime.
-3. **Fact & Roster Verification**: Verify every player name, injury status, team assignment, W-L record, 32-team rank, draft pick, and salary-cap figure against the AUTHORITATIVE LIVE 49ERS DATA SNAPSHOT.
+2. **Impartiality & Spread-Calibration Audit**: Replace any homer cheerleading, overly effusive praise of ${activeTeam.city}, or first-person fan pronouns ("we/us/our") with sober, fair-minded third-person national NFL analysis. Verify that opponent strengths, ${activeTeam.nickname} league-relative flaws, and betting-spread realism (especially on tight spreads) get honest, balanced airtime.
+3. **Fact & Roster Verification**: Verify every player name, injury status, team assignment, W-L record, 32-team rank, draft pick, and salary-cap figure against the AUTHORITATIVE LIVE ${nickUp} DATA SNAPSHOT.
 4. **Exact Duration Calibration**: Ensure total word count across all turns sits between ${minWords} and ${maxWords} words (~${durationMinutes} minutes spoken) with valid speaker labels (${format === 'solo' || format === 'Solo Executive Briefing' ? '"Marcus" only' : '"Marcus" and "Elena"'}).
 5. Output ONLY the raw JSON array [{"speaker":"...","text":"..."}].
 
 DRAFT JSON SCRIPT:
 ${draftJsonText}
 
-AUTHORITATIVE LIVE 49ERS DATA SNAPSHOT:
+AUTHORITATIVE LIVE ${nickUp} DATA SNAPSHOT:
 ${liveContextSnapshot}`;
 }
 

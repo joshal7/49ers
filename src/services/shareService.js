@@ -271,8 +271,8 @@ export async function extractIncomingSharedRoute(
           : '';
         hydratedEpisode = {
           id: resolvedEpId,
-          title: String(decoded.t || 'Shared 49ers Podcast'),
-          topic: String(decoded.tp || decoded.t || 'Shared 49ers Podcast'),
+          title: String(decoded.t || `Shared ${getActiveTeamConfig().nickname} Podcast`),
+          topic: String(decoded.tp || decoded.t || `Shared ${getActiveTeamConfig().nickname} Podcast`),
           format: String(decoded.f || 'Two-Host Analytical Banter'),
           presetLabel: String(decoded.pl || 'Shared Pod'),
           modelUsed: String(decoded.m || PRIMARY_GEMINI_REASONING_MODEL),
@@ -463,7 +463,8 @@ export async function shareAudioFileNatively({
     const dlUrl = URL.createObjectURL(file);
     const a = document.createElement('a');
     a.href = dlUrl;
-    a.download = file.name || '49ers-podcast.mp3';
+    const defaultFileName = `${getActiveTeamConfig().slug}-podcast.mp3`;
+    a.download = file.name || defaultFileName;
     a.style.display = 'none';
     document.body.appendChild(a);
     a.click();
@@ -473,7 +474,7 @@ export async function shareAudioFileNatively({
         URL.revokeObjectURL(dlUrl);
       } catch {}
     }, 8000);
-    return { method: 'download', fileName: file.name || '49ers-podcast.mp3' };
+    return { method: 'download', fileName: file.name || defaultFileName };
   }
 
   return { method: 'unavailable' };

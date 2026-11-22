@@ -776,7 +776,7 @@ export function renderUniversalSearchResultsHtml({
              }
              ${
                res.query
-                 ? `<button type="button" class="btn-secondary" data-action="analyze-topic-jump" data-prompt="${esc(`49ers deep dive on ${res.query}`)}">
+                 ? `<button type="button" class="btn-secondary" data-action="analyze-topic-jump" data-prompt="${esc(`${getActiveTeamConfig().nickname} deep dive on ${res.query}`)}">
                       ${iconSvg('sparkles', 13)}
                       <span>Ask AI about &ldquo;${esc(res.query.slice(0, 32))}&rdquo;</span>
                     </button>`

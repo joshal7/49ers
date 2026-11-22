@@ -367,7 +367,7 @@ function findClusterEditorialPhoto(item = {}) {
   if (isEditorialPhotoUrl(item.imageUrl)) {
     return {
       rawUrl: String(item.imageUrl).trim(),
-      sourceLabel: item.outletName || item.author || '49ers Beat'
+      sourceLabel: item.outletName || item.author || `${getActiveTeamConfig().nickname} Beat`
     };
   }
   const confirming = Array.isArray(item.confirmingReports) ? item.confirmingReports : [];
@@ -375,7 +375,7 @@ function findClusterEditorialPhoto(item = {}) {
     if (isEditorialPhotoUrl(cr?.imageUrl)) {
       return {
         rawUrl: String(cr.imageUrl).trim(),
-        sourceLabel: cr.outletName || cr.author || '49ers Beat'
+        sourceLabel: cr.outletName || cr.author || `${getActiveTeamConfig().nickname} Beat`
       };
     }
   }
@@ -601,8 +601,8 @@ export function resolveDailyBriefHeroMedia(dailyBrief = null, rawStream = [], { 
     src: opt.src,
     fallbackSrc: opt.fallbackSrc,
     rawUrl: best.hit.rawUrl,
-    alt: best.item.title || dailyBrief?.headline || '49ers Daily Briefing photo',
-    creditLabel: best.hit.sourceLabel || best.item.outletName || '49ers Beat',
+    alt: best.item.title || dailyBrief?.headline || `${getActiveTeamConfig().nickname} Daily Briefing photo`,
+    creditLabel: best.hit.sourceLabel || best.item.outletName || `${getActiveTeamConfig().nickname} Beat`,
     creditUrl: best.item.url || '',
     featuredPlayers
   };

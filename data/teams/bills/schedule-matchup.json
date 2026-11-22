@@ -1036,7 +1036,7 @@
         "overall": {
           "key": "overall_offense_composite",
           "label": "Overall Offense Rank",
-          "unitTitle": "49ers Offense",
+          "unitTitle": "Bills Offense",
           "higherIsBetter": true,
           "rank": 3,
           "value": 82.8,
@@ -1242,7 +1242,7 @@
           {
             "key": "off_pts_game",
             "label": "Points / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Bills Offense",
             "higherIsBetter": true,
             "rank": 1,
             "value": 31.8889,
@@ -1447,7 +1447,7 @@
           {
             "key": "off_total_yds_game",
             "label": "Total Yards / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Bills Offense",
             "higherIsBetter": true,
             "rank": 4,
             "value": 386.6667,
@@ -1652,7 +1652,7 @@
           {
             "key": "total_off_epa_game",
             "label": "Offensive EPA / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Bills Offense",
             "higherIsBetter": true,
             "rank": 4,
             "value": 8.6138,
@@ -1857,7 +1857,7 @@
           {
             "key": "off_pass_yds_game",
             "label": "Passing Yards / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Bills Offense",
             "higherIsBetter": true,
             "rank": 13,
             "value": 234,
@@ -2062,7 +2062,7 @@
           {
             "key": "passing_epa_game",
             "label": "Passing EPA / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Bills Offense",
             "higherIsBetter": true,
             "rank": 6,
             "value": 5.8382,
@@ -2267,7 +2267,7 @@
           {
             "key": "rush_yds_game",
             "label": "Rushing Yards / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Bills Offense",
             "higherIsBetter": true,
             "rank": 2,
             "value": 152.6667,
@@ -2472,7 +2472,7 @@
           {
             "key": "rushing_epa_game",
             "label": "Rushing EPA / Game",
-            "unitTitle": "49ers Offense",
+            "unitTitle": "Bills Offense",
             "higherIsBetter": true,
             "rank": 2,
             "value": 2.7756,
@@ -2682,7 +2682,7 @@
               {
                 "key": "yards_per_pass_att",
                 "label": "Net Yards / Pass Att",
-                "unitTitle": "49ers Offense • Passing Efficiency & Explosives",
+                "unitTitle": "Bills Offense • Passing Efficiency & Explosives",
                 "higherIsBetter": true,
                 "rank": 3,
                 "value": 7.6582,
@@ -2887,7 +2887,7 @@
               {
                 "key": "passing_cpoe",
                 "label": "Completion CPOE",
-                "unitTitle": "49ers Offense • Passing Efficiency & Explosives",
+                "unitTitle": "Bills Offense • Passing Efficiency & Explosives",
                 "higherIsBetter": true,
                 "rank": 7,
                 "value": 2.7479,
@@ -3092,7 +3092,7 @@
               {
                 "key": "off_explosive_pass_game",
                 "label": "Explosive Passes (20+ Yd) / Gm",
-                "unitTitle": "49ers Offense • Passing Efficiency & Explosives",
+                "unitTitle": "Bills Offense • Passing Efficiency & Explosives",
                 "higherIsBetter": true,
                 "rank": 2,
                 "value": 3.8889,
@@ -3302,7 +3302,7 @@
               {
                 "key": "off_yds_per_carry",
                 "label": "Yards / Carry",
-                "unitTitle": "49ers Offense • Rushing Efficiency & Explosives",
+                "unitTitle": "Bills Offense • Rushing Efficiency & Explosives",
                 "higherIsBetter": true,
                 "rank": 6,
                 "value": 4.6894,
@@ -3507,7 +3507,7 @@
               {
                 "key": "off_rush_1d_rate",
                 "label": "Rush 1st-Down Rate",
-                "unitTitle": "49ers Offense • Rushing Efficiency & Explosives",
+                "unitTitle": "Bills Offense • Rushing Efficiency & Explosives",
                 "higherIsBetter": true,
                 "rank": 2,
                 "value": 29.6928,
@@ -3712,7 +3712,7 @@
               {
                 "key": "off_explosive_rush_game",
                 "label": "Explosive Runs (10+ Yd) / Gm",
-                "unitTitle": "49ers Offense • Rushing Efficiency & Explosives",
+                "unitTitle": "Bills Offense • Rushing Efficiency & Explosives",
                 "higherIsBetter": true,
                 "rank": 1,
                 "value": 4.5556,
@@ -3922,7 +3922,7 @@
               {
                 "key": "explosive_plays_game",
                 "label": "Explosive Plays / Game",
-                "unitTitle": "49ers Offense • Trenches & Situational",
+                "unitTitle": "Bills Offense • Trenches & Situational",
                 "higherIsBetter": true,
                 "rank": 1,
                 "value": 8.4444,
@@ -4127,7 +4127,7 @@
               {
                 "key": "sack_rate_allowed",
                 "label": "Sacks Allowed Rate",
-                "unitTitle": "49ers Offense • Trenches & Situational",
+                "unitTitle": "Bills Offense • Trenches & Situational",
                 "higherIsBetter": false,
                 "rank": 16,
                 "value": 6.5455,
@@ -4332,7 +4332,7 @@
               {
                 "key": "off_third_down_pct",
                 "label": "3rd Down Conversion %",
-                "unitTitle": "49ers Offense • Trenches & Situational",
+                "unitTitle": "Bills Offense • Trenches & Situational",
                 "higherIsBetter": true,
                 "rank": 9,
                 "value": 40.952,
@@ -4537,7 +4537,7 @@
               {
                 "key": "off_red_zone_td_pct",
                 "label": "Red Zone TD %",
-                "unitTitle": "49ers Offense • Trenches & Situational",
+                "unitTitle": "Bills Offense • Trenches & Situational",
                 "higherIsBetter": true,
                 "rank": 7,
                 "value": 66.67,
@@ -4752,7 +4752,7 @@
         "overall": {
           "key": "overall_defense_composite",
           "label": "Overall Defense Rank",
-          "unitTitle": "49ers Defense",
+          "unitTitle": "Bills Defense",
           "higherIsBetter": true,
           "rank": 12,
           "value": 46.8,
@@ -4958,7 +4958,7 @@
           {
             "key": "def_pts_allowed_game",
             "label": "Points Allowed / Game",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Bills Defense",
             "higherIsBetter": false,
             "rank": 15,
             "value": 22.1111,
@@ -5163,7 +5163,7 @@
           {
             "key": "def_total_yds_allowed_game",
             "label": "Yards Allowed / Game",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Bills Defense",
             "higherIsBetter": false,
             "rank": 18,
             "value": 335.4444,
@@ -5368,7 +5368,7 @@
           {
             "key": "def_epa_allowed_game",
             "label": "Def. EPA Allowed / Game",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Bills Defense",
             "higherIsBetter": false,
             "rank": 10,
             "value": -0.2592,
@@ -5573,7 +5573,7 @@
           {
             "key": "def_pass_yds_allowed_game",
             "label": "Pass Yards Allowed / Gm",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Bills Defense",
             "higherIsBetter": false,
             "rank": 28,
             "value": 241.8889,
@@ -5778,7 +5778,7 @@
           {
             "key": "def_pass_epa_allowed_game",
             "label": "Pass EPA Allowed / Gm",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Bills Defense",
             "higherIsBetter": false,
             "rank": 13,
             "value": 0.4578,
@@ -5983,7 +5983,7 @@
           {
             "key": "def_rush_yds_allowed_game",
             "label": "Rush Yards Allowed / Gm",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Bills Defense",
             "higherIsBetter": false,
             "rank": 8,
             "value": 93.5556,
@@ -6188,7 +6188,7 @@
           {
             "key": "def_rush_epa_allowed_game",
             "label": "Rush EPA Allowed / Gm",
-            "unitTitle": "49ers Defense",
+            "unitTitle": "Bills Defense",
             "higherIsBetter": false,
             "rank": 22,
             "value": -0.717,
@@ -6398,7 +6398,7 @@
               {
                 "key": "def_yds_per_pass_att_allowed",
                 "label": "Net Yards / Pass Att Allowed",
-                "unitTitle": "49ers Defense • Pass Coverage & Explosives Allowed",
+                "unitTitle": "Bills Defense • Pass Coverage & Explosives Allowed",
                 "higherIsBetter": false,
                 "rank": 14,
                 "value": 6.0138,
@@ -6603,7 +6603,7 @@
               {
                 "key": "def_cpoe_allowed",
                 "label": "Completion CPOE Allowed",
-                "unitTitle": "49ers Defense • Pass Coverage & Explosives Allowed",
+                "unitTitle": "Bills Defense • Pass Coverage & Explosives Allowed",
                 "higherIsBetter": false,
                 "rank": 4,
                 "value": -3.385,
@@ -6808,7 +6808,7 @@
               {
                 "key": "def_explosive_pass_allowed_game",
                 "label": "Explosive Passes Allowed / Gm",
-                "unitTitle": "49ers Defense • Pass Coverage & Explosives Allowed",
+                "unitTitle": "Bills Defense • Pass Coverage & Explosives Allowed",
                 "higherIsBetter": false,
                 "rank": 29,
                 "value": 3.6667,
@@ -7018,7 +7018,7 @@
               {
                 "key": "def_yds_per_carry_allowed",
                 "label": "Yards / Carry Allowed",
-                "unitTitle": "49ers Defense • Run Front & Explosives Allowed",
+                "unitTitle": "Bills Defense • Run Front & Explosives Allowed",
                 "higherIsBetter": false,
                 "rank": 13,
                 "value": 3.9717,
@@ -7223,7 +7223,7 @@
               {
                 "key": "def_rush_1d_rate_allowed",
                 "label": "Rush 1st-Down Rate Allowed",
-                "unitTitle": "49ers Defense • Run Front & Explosives Allowed",
+                "unitTitle": "Bills Defense • Run Front & Explosives Allowed",
                 "higherIsBetter": false,
                 "rank": 12,
                 "value": 23.5849,
@@ -7428,7 +7428,7 @@
               {
                 "key": "def_explosive_rush_allowed_game",
                 "label": "Explosive Runs Allowed / Gm",
-                "unitTitle": "49ers Defense • Run Front & Explosives Allowed",
+                "unitTitle": "Bills Defense • Run Front & Explosives Allowed",
                 "higherIsBetter": false,
                 "rank": 10,
                 "value": 2.3333,
@@ -7638,7 +7638,7 @@
               {
                 "key": "def_explosive_plays_allowed_game",
                 "label": "Explosive Plays Allowed / Gm",
-                "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+                "unitTitle": "Bills Defense • Pass Rush, Havoc & Situational",
                 "higherIsBetter": false,
                 "rank": 19,
                 "value": 6,
@@ -7843,7 +7843,7 @@
               {
                 "key": "def_sack_rate",
                 "label": "Defensive Sack Rate",
-                "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+                "unitTitle": "Bills Defense • Pass Rush, Havoc & Situational",
                 "higherIsBetter": true,
                 "rank": 21,
                 "value": 5.8011,
@@ -8048,7 +8048,7 @@
               {
                 "key": "def_sacks_game",
                 "label": "Defensive Sacks / Game",
-                "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+                "unitTitle": "Bills Defense • Pass Rush, Havoc & Situational",
                 "higherIsBetter": true,
                 "rank": 13,
                 "value": 2.3333,
@@ -8253,7 +8253,7 @@
               {
                 "key": "def_tfl_game",
                 "label": "Tackles For Loss (TFL) / Gm",
-                "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+                "unitTitle": "Bills Defense • Pass Rush, Havoc & Situational",
                 "higherIsBetter": true,
                 "rank": 18,
                 "value": 4.5556,
@@ -8458,7 +8458,7 @@
               {
                 "key": "def_third_down_pct_allowed",
                 "label": "3rd Down Conv % Allowed",
-                "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+                "unitTitle": "Bills Defense • Pass Rush, Havoc & Situational",
                 "higherIsBetter": false,
                 "rank": 12,
                 "value": 36.842,
@@ -8663,7 +8663,7 @@
               {
                 "key": "def_red_zone_td_pct_allowed",
                 "label": "Red Zone TD % Allowed",
-                "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+                "unitTitle": "Bills Defense • Pass Rush, Havoc & Situational",
                 "higherIsBetter": false,
                 "rank": 15,
                 "value": 59.38,
@@ -8878,7 +8878,7 @@
         "overall": {
           "key": "overall_st_composite",
           "label": "Overall Special Teams Rank",
-          "unitTitle": "49ers Special Teams",
+          "unitTitle": "Bills Special Teams",
           "higherIsBetter": true,
           "rank": 2,
           "value": 79,
@@ -9084,7 +9084,7 @@
           {
             "key": "st_fg_pct",
             "label": "Field Goal %",
-            "unitTitle": "49ers Special Teams",
+            "unitTitle": "Bills Special Teams",
             "higherIsBetter": true,
             "rank": 1,
             "value": 100,
@@ -9289,7 +9289,7 @@
           {
             "key": "st_punt_net_avg",
             "label": "Net Punt Average",
-            "unitTitle": "49ers Special Teams",
+            "unitTitle": "Bills Special Teams",
             "higherIsBetter": true,
             "rank": 6,
             "value": 46,
@@ -9494,7 +9494,7 @@
           {
             "key": "st_kr_avg",
             "label": "Kickoff Return Average",
-            "unitTitle": "49ers Special Teams",
+            "unitTitle": "Bills Special Teams",
             "higherIsBetter": true,
             "rank": 4,
             "value": 27.5556,
@@ -9699,7 +9699,7 @@
           {
             "key": "st_pr_avg",
             "label": "Punt Return Average",
-            "unitTitle": "49ers Special Teams",
+            "unitTitle": "Bills Special Teams",
             "higherIsBetter": true,
             "rank": 19,
             "value": 9.2105,
@@ -9909,7 +9909,7 @@
               {
                 "key": "st_fg_50_plus_made",
                 "label": "50+ Yard Field Goals Made",
-                "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+                "unitTitle": "Bills Special Teams • Distance Kicking & Coverage Units",
                 "higherIsBetter": true,
                 "rank": 16,
                 "value": 3,
@@ -10114,7 +10114,7 @@
               {
                 "key": "st_punt_in20_pct",
                 "label": "Punts Inside 20 %",
-                "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+                "unitTitle": "Bills Special Teams • Distance Kicking & Coverage Units",
                 "higherIsBetter": true,
                 "rank": 16,
                 "value": 40.9091,
@@ -10319,7 +10319,7 @@
               {
                 "key": "st_opp_kr_avg",
                 "label": "Opp. Kick Return Avg Allowed",
-                "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+                "unitTitle": "Bills Special Teams • Distance Kicking & Coverage Units",
                 "higherIsBetter": false,
                 "rank": 22,
                 "value": 26.5926,
@@ -10524,7 +10524,7 @@
               {
                 "key": "st_opp_pr_avg",
                 "label": "Opp. Punt Return Avg Allowed",
-                "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+                "unitTitle": "Bills Special Teams • Distance Kicking & Coverage Units",
                 "higherIsBetter": false,
                 "rank": 17,
                 "value": 9.2,
@@ -12596,7 +12596,7 @@
       "overall_offense_composite": {
         "key": "overall_offense_composite",
         "label": "Overall Offense Rank",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Bills Offense",
         "higherIsBetter": true,
         "rank": 3,
         "value": 82.8,
@@ -12801,7 +12801,7 @@
       "off_pts_game": {
         "key": "off_pts_game",
         "label": "Points / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Bills Offense",
         "higherIsBetter": true,
         "rank": 1,
         "value": 31.8889,
@@ -13006,7 +13006,7 @@
       "off_total_yds_game": {
         "key": "off_total_yds_game",
         "label": "Total Yards / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Bills Offense",
         "higherIsBetter": true,
         "rank": 4,
         "value": 386.6667,
@@ -13211,7 +13211,7 @@
       "total_off_epa_game": {
         "key": "total_off_epa_game",
         "label": "Offensive EPA / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Bills Offense",
         "higherIsBetter": true,
         "rank": 4,
         "value": 8.6138,
@@ -13416,7 +13416,7 @@
       "off_pass_yds_game": {
         "key": "off_pass_yds_game",
         "label": "Passing Yards / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Bills Offense",
         "higherIsBetter": true,
         "rank": 13,
         "value": 234,
@@ -13621,7 +13621,7 @@
       "passing_epa_game": {
         "key": "passing_epa_game",
         "label": "Passing EPA / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Bills Offense",
         "higherIsBetter": true,
         "rank": 6,
         "value": 5.8382,
@@ -13826,7 +13826,7 @@
       "rush_yds_game": {
         "key": "rush_yds_game",
         "label": "Rushing Yards / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Bills Offense",
         "higherIsBetter": true,
         "rank": 2,
         "value": 152.6667,
@@ -14031,7 +14031,7 @@
       "rushing_epa_game": {
         "key": "rushing_epa_game",
         "label": "Rushing EPA / Game",
-        "unitTitle": "49ers Offense",
+        "unitTitle": "Bills Offense",
         "higherIsBetter": true,
         "rank": 2,
         "value": 2.7756,
@@ -14236,7 +14236,7 @@
       "yards_per_pass_att": {
         "key": "yards_per_pass_att",
         "label": "Net Yards / Pass Att",
-        "unitTitle": "49ers Offense • Passing Efficiency & Explosives",
+        "unitTitle": "Bills Offense • Passing Efficiency & Explosives",
         "higherIsBetter": true,
         "rank": 3,
         "value": 7.6582,
@@ -14441,7 +14441,7 @@
       "passing_cpoe": {
         "key": "passing_cpoe",
         "label": "Completion CPOE",
-        "unitTitle": "49ers Offense • Passing Efficiency & Explosives",
+        "unitTitle": "Bills Offense • Passing Efficiency & Explosives",
         "higherIsBetter": true,
         "rank": 7,
         "value": 2.7479,
@@ -14646,7 +14646,7 @@
       "off_explosive_pass_game": {
         "key": "off_explosive_pass_game",
         "label": "Explosive Passes (20+ Yd) / Gm",
-        "unitTitle": "49ers Offense • Passing Efficiency & Explosives",
+        "unitTitle": "Bills Offense • Passing Efficiency & Explosives",
         "higherIsBetter": true,
         "rank": 2,
         "value": 3.8889,
@@ -14851,7 +14851,7 @@
       "off_yds_per_carry": {
         "key": "off_yds_per_carry",
         "label": "Yards / Carry",
-        "unitTitle": "49ers Offense • Rushing Efficiency & Explosives",
+        "unitTitle": "Bills Offense • Rushing Efficiency & Explosives",
         "higherIsBetter": true,
         "rank": 6,
         "value": 4.6894,
@@ -15056,7 +15056,7 @@
       "off_rush_1d_rate": {
         "key": "off_rush_1d_rate",
         "label": "Rush 1st-Down Rate",
-        "unitTitle": "49ers Offense • Rushing Efficiency & Explosives",
+        "unitTitle": "Bills Offense • Rushing Efficiency & Explosives",
         "higherIsBetter": true,
         "rank": 2,
         "value": 29.6928,
@@ -15261,7 +15261,7 @@
       "off_explosive_rush_game": {
         "key": "off_explosive_rush_game",
         "label": "Explosive Runs (10+ Yd) / Gm",
-        "unitTitle": "49ers Offense • Rushing Efficiency & Explosives",
+        "unitTitle": "Bills Offense • Rushing Efficiency & Explosives",
         "higherIsBetter": true,
         "rank": 1,
         "value": 4.5556,
@@ -15466,7 +15466,7 @@
       "explosive_plays_game": {
         "key": "explosive_plays_game",
         "label": "Explosive Plays / Game",
-        "unitTitle": "49ers Offense • Trenches & Situational",
+        "unitTitle": "Bills Offense • Trenches & Situational",
         "higherIsBetter": true,
         "rank": 1,
         "value": 8.4444,
@@ -15671,7 +15671,7 @@
       "sack_rate_allowed": {
         "key": "sack_rate_allowed",
         "label": "Sacks Allowed Rate",
-        "unitTitle": "49ers Offense • Trenches & Situational",
+        "unitTitle": "Bills Offense • Trenches & Situational",
         "higherIsBetter": false,
         "rank": 16,
         "value": 6.5455,
@@ -15876,7 +15876,7 @@
       "off_third_down_pct": {
         "key": "off_third_down_pct",
         "label": "3rd Down Conversion %",
-        "unitTitle": "49ers Offense • Trenches & Situational",
+        "unitTitle": "Bills Offense • Trenches & Situational",
         "higherIsBetter": true,
         "rank": 9,
         "value": 40.952,
@@ -16081,7 +16081,7 @@
       "off_red_zone_td_pct": {
         "key": "off_red_zone_td_pct",
         "label": "Red Zone TD %",
-        "unitTitle": "49ers Offense • Trenches & Situational",
+        "unitTitle": "Bills Offense • Trenches & Situational",
         "higherIsBetter": true,
         "rank": 7,
         "value": 66.67,
@@ -16286,7 +16286,7 @@
       "overall_defense_composite": {
         "key": "overall_defense_composite",
         "label": "Overall Defense Rank",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Bills Defense",
         "higherIsBetter": true,
         "rank": 12,
         "value": 46.8,
@@ -16491,7 +16491,7 @@
       "def_pts_allowed_game": {
         "key": "def_pts_allowed_game",
         "label": "Points Allowed / Game",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Bills Defense",
         "higherIsBetter": false,
         "rank": 15,
         "value": 22.1111,
@@ -16696,7 +16696,7 @@
       "def_total_yds_allowed_game": {
         "key": "def_total_yds_allowed_game",
         "label": "Yards Allowed / Game",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Bills Defense",
         "higherIsBetter": false,
         "rank": 18,
         "value": 335.4444,
@@ -16901,7 +16901,7 @@
       "def_epa_allowed_game": {
         "key": "def_epa_allowed_game",
         "label": "Def. EPA Allowed / Game",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Bills Defense",
         "higherIsBetter": false,
         "rank": 10,
         "value": -0.2592,
@@ -17106,7 +17106,7 @@
       "def_pass_yds_allowed_game": {
         "key": "def_pass_yds_allowed_game",
         "label": "Pass Yards Allowed / Gm",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Bills Defense",
         "higherIsBetter": false,
         "rank": 28,
         "value": 241.8889,
@@ -17311,7 +17311,7 @@
       "def_pass_epa_allowed_game": {
         "key": "def_pass_epa_allowed_game",
         "label": "Pass EPA Allowed / Gm",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Bills Defense",
         "higherIsBetter": false,
         "rank": 13,
         "value": 0.4578,
@@ -17516,7 +17516,7 @@
       "def_rush_yds_allowed_game": {
         "key": "def_rush_yds_allowed_game",
         "label": "Rush Yards Allowed / Gm",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Bills Defense",
         "higherIsBetter": false,
         "rank": 8,
         "value": 93.5556,
@@ -17721,7 +17721,7 @@
       "def_rush_epa_allowed_game": {
         "key": "def_rush_epa_allowed_game",
         "label": "Rush EPA Allowed / Gm",
-        "unitTitle": "49ers Defense",
+        "unitTitle": "Bills Defense",
         "higherIsBetter": false,
         "rank": 22,
         "value": -0.717,
@@ -17926,7 +17926,7 @@
       "def_yds_per_pass_att_allowed": {
         "key": "def_yds_per_pass_att_allowed",
         "label": "Net Yards / Pass Att Allowed",
-        "unitTitle": "49ers Defense • Pass Coverage & Explosives Allowed",
+        "unitTitle": "Bills Defense • Pass Coverage & Explosives Allowed",
         "higherIsBetter": false,
         "rank": 14,
         "value": 6.0138,
@@ -18131,7 +18131,7 @@
       "def_cpoe_allowed": {
         "key": "def_cpoe_allowed",
         "label": "Completion CPOE Allowed",
-        "unitTitle": "49ers Defense • Pass Coverage & Explosives Allowed",
+        "unitTitle": "Bills Defense • Pass Coverage & Explosives Allowed",
         "higherIsBetter": false,
         "rank": 4,
         "value": -3.385,
@@ -18336,7 +18336,7 @@
       "def_explosive_pass_allowed_game": {
         "key": "def_explosive_pass_allowed_game",
         "label": "Explosive Passes Allowed / Gm",
-        "unitTitle": "49ers Defense • Pass Coverage & Explosives Allowed",
+        "unitTitle": "Bills Defense • Pass Coverage & Explosives Allowed",
         "higherIsBetter": false,
         "rank": 29,
         "value": 3.6667,
@@ -18541,7 +18541,7 @@
       "def_yds_per_carry_allowed": {
         "key": "def_yds_per_carry_allowed",
         "label": "Yards / Carry Allowed",
-        "unitTitle": "49ers Defense • Run Front & Explosives Allowed",
+        "unitTitle": "Bills Defense • Run Front & Explosives Allowed",
         "higherIsBetter": false,
         "rank": 13,
         "value": 3.9717,
@@ -18746,7 +18746,7 @@
       "def_rush_1d_rate_allowed": {
         "key": "def_rush_1d_rate_allowed",
         "label": "Rush 1st-Down Rate Allowed",
-        "unitTitle": "49ers Defense • Run Front & Explosives Allowed",
+        "unitTitle": "Bills Defense • Run Front & Explosives Allowed",
         "higherIsBetter": false,
         "rank": 12,
         "value": 23.5849,
@@ -18951,7 +18951,7 @@
       "def_explosive_rush_allowed_game": {
         "key": "def_explosive_rush_allowed_game",
         "label": "Explosive Runs Allowed / Gm",
-        "unitTitle": "49ers Defense • Run Front & Explosives Allowed",
+        "unitTitle": "Bills Defense • Run Front & Explosives Allowed",
         "higherIsBetter": false,
         "rank": 10,
         "value": 2.3333,
@@ -19156,7 +19156,7 @@
       "def_explosive_plays_allowed_game": {
         "key": "def_explosive_plays_allowed_game",
         "label": "Explosive Plays Allowed / Gm",
-        "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+        "unitTitle": "Bills Defense • Pass Rush, Havoc & Situational",
         "higherIsBetter": false,
         "rank": 19,
         "value": 6,
@@ -19361,7 +19361,7 @@
       "def_sack_rate": {
         "key": "def_sack_rate",
         "label": "Defensive Sack Rate",
-        "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+        "unitTitle": "Bills Defense • Pass Rush, Havoc & Situational",
         "higherIsBetter": true,
         "rank": 21,
         "value": 5.8011,
@@ -19566,7 +19566,7 @@
       "def_sacks_game": {
         "key": "def_sacks_game",
         "label": "Defensive Sacks / Game",
-        "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+        "unitTitle": "Bills Defense • Pass Rush, Havoc & Situational",
         "higherIsBetter": true,
         "rank": 13,
         "value": 2.3333,
@@ -19771,7 +19771,7 @@
       "def_tfl_game": {
         "key": "def_tfl_game",
         "label": "Tackles For Loss (TFL) / Gm",
-        "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+        "unitTitle": "Bills Defense • Pass Rush, Havoc & Situational",
         "higherIsBetter": true,
         "rank": 18,
         "value": 4.5556,
@@ -19976,7 +19976,7 @@
       "def_third_down_pct_allowed": {
         "key": "def_third_down_pct_allowed",
         "label": "3rd Down Conv % Allowed",
-        "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+        "unitTitle": "Bills Defense • Pass Rush, Havoc & Situational",
         "higherIsBetter": false,
         "rank": 12,
         "value": 36.842,
@@ -20181,7 +20181,7 @@
       "def_red_zone_td_pct_allowed": {
         "key": "def_red_zone_td_pct_allowed",
         "label": "Red Zone TD % Allowed",
-        "unitTitle": "49ers Defense • Pass Rush, Havoc & Situational",
+        "unitTitle": "Bills Defense • Pass Rush, Havoc & Situational",
         "higherIsBetter": false,
         "rank": 15,
         "value": 59.38,
@@ -20386,7 +20386,7 @@
       "overall_st_composite": {
         "key": "overall_st_composite",
         "label": "Overall Special Teams Rank",
-        "unitTitle": "49ers Special Teams",
+        "unitTitle": "Bills Special Teams",
         "higherIsBetter": true,
         "rank": 2,
         "value": 79,
@@ -20591,7 +20591,7 @@
       "st_fg_pct": {
         "key": "st_fg_pct",
         "label": "Field Goal %",
-        "unitTitle": "49ers Special Teams",
+        "unitTitle": "Bills Special Teams",
         "higherIsBetter": true,
         "rank": 1,
         "value": 100,
@@ -20796,7 +20796,7 @@
       "st_punt_net_avg": {
         "key": "st_punt_net_avg",
         "label": "Net Punt Average",
-        "unitTitle": "49ers Special Teams",
+        "unitTitle": "Bills Special Teams",
         "higherIsBetter": true,
         "rank": 6,
         "value": 46,
@@ -21001,7 +21001,7 @@
       "st_kr_avg": {
         "key": "st_kr_avg",
         "label": "Kickoff Return Average",
-        "unitTitle": "49ers Special Teams",
+        "unitTitle": "Bills Special Teams",
         "higherIsBetter": true,
         "rank": 4,
         "value": 27.5556,
@@ -21206,7 +21206,7 @@
       "st_pr_avg": {
         "key": "st_pr_avg",
         "label": "Punt Return Average",
-        "unitTitle": "49ers Special Teams",
+        "unitTitle": "Bills Special Teams",
         "higherIsBetter": true,
         "rank": 19,
         "value": 9.2105,
@@ -21411,7 +21411,7 @@
       "st_fg_50_plus_made": {
         "key": "st_fg_50_plus_made",
         "label": "50+ Yard Field Goals Made",
-        "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+        "unitTitle": "Bills Special Teams • Distance Kicking & Coverage Units",
         "higherIsBetter": true,
         "rank": 16,
         "value": 3,
@@ -21616,7 +21616,7 @@
       "st_punt_in20_pct": {
         "key": "st_punt_in20_pct",
         "label": "Punts Inside 20 %",
-        "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+        "unitTitle": "Bills Special Teams • Distance Kicking & Coverage Units",
         "higherIsBetter": true,
         "rank": 16,
         "value": 40.9091,
@@ -21821,7 +21821,7 @@
       "st_opp_kr_avg": {
         "key": "st_opp_kr_avg",
         "label": "Opp. Kick Return Avg Allowed",
-        "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+        "unitTitle": "Bills Special Teams • Distance Kicking & Coverage Units",
         "higherIsBetter": false,
         "rank": 22,
         "value": 26.5926,
@@ -22026,7 +22026,7 @@
       "st_opp_pr_avg": {
         "key": "st_opp_pr_avg",
         "label": "Opp. Punt Return Avg Allowed",
-        "unitTitle": "49ers Special Teams • Distance Kicking & Coverage Units",
+        "unitTitle": "Bills Special Teams • Distance Kicking & Coverage Units",
         "higherIsBetter": false,
         "rank": 17,
         "value": 9.2,
@@ -24773,11 +24773,16 @@
       "impliedWinProb": "50%"
     },
     "franchiseHistory": {
-      "allTimeRecord": "Bills vs. Dolphins"
+      "allTimeRecord": "Bills vs. Dolphins",
+      "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=mia&yr=all"
     },
     "coachingMatchup": {
-      "headline": "Joe Brady vs. Dolphins Staff",
-      "summary": "Buffalo Bills (Joe Brady / OC Pete Carmichael Jr. / DC Jim Leonhard) prepare for Week 11 against Miami Dolphins."
+      "headline": "Joe Brady & DC Jim Leonhard vs. HC Mike McDaniel & DC Anthony Weaver (Highmark Stadium)",
+      "summary": "Week 11 two-sided coordinator chess match pitting Buffalo Bills's staff (Joe Brady, OC Pete Carmichael Jr., DC Jim Leonhard) against Miami Dolphins (1-8)—testing both Buffalo's offensive efficiency and its defensive pass-rush and coverage discipline.",
+      "bullets": [
+        "Pass-Game Efficiency & Coverage Shell Delta: Joe Brady and OC Pete Carmichael Jr. look to stress Miami Dolphins's single-high vs. two-high rotations with pre-snap motion, spacing, and play-action timing, while Miami Dolphins's defensive front and coverage disguises aim to compress intermediate throwing windows.",
+        "Trench Run-Fit & Two-Way Leverage: DC Jim Leonhard balances pass-rush pressure with two-high/split-safety discipline on early downs, while Miami Dolphins's offense tests Buffalo's edge containment, third-down execution, and red-zone stops."
+      ]
     },
     "keyMatchupsMatrix": []
   }
