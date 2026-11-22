@@ -164,6 +164,29 @@ await test('wrangler.canary.toml explicitly binds ONLY lions.joshal.com & bills.
   for (const excluded of ['.git', 'node_modules', 'worker', 'scripts', 'tests', 'data/podcasts/*.m4a']) {
     assert.ok(ignore.includes(excluded), `.assetsignore must exclude ${excluded}`);
   }
+
+  const pagesToml = fs.readFileSync(path.join(ROOT, 'worker', 'pages-canary', 'wrangler.toml'), 'utf8');
+  assert.ok(pagesToml.includes('name = "nfl-hq-canary"'), 'Pages config must name nfl-hq-canary');
+  assert.ok(pagesToml.includes('pages_build_output_dir = "../../dist-canary"'), 'Pages config must target dist-canary');
+  assert.ok(!pagesToml.includes('[triggers]'), 'Pages config must NOT declare unsupported Workers cron triggers');
+});
+
+await test('Cloudflare Pages bundle (dist-canary/_worker.js + _routes.json) builds & executes cleanly', async () => {
+  const { buildCanaryPagesDist } = await import('../scripts/build-canary-pages.mjs');
+  const built = buildCanaryPagesDist();
+  assert.ok(built.fileCount >= 60, `Expected >= 60 files in dist-canary/, got ${built.fileCount}`);
+  const routes = JSON.parse(fs.readFileSync(path.join(built.distDir, '_routes.json'), 'utf8'));
+  assert.ok(routes.include.includes('/') && routes.include.includes('/api/*') && routes.include.includes('/data/*'));
+  assert.ok(!fs.existsSync(path.join(built.distDir, 'node_modules')), 'dist-canary must not include node_modules');
+  assert.ok(!fs.existsSync(path.join(built.distDir, 'worker')), 'dist-canary must not include worker/');
+
+  const pagesWorker = (await import(`file://${path.join(built.distDir, '_worker.js')}?t=${Date.now()}`)).default;
+  const lionsRes = await pagesWorker.fetch(new Request('https://lions.joshal.com/manifest.json'), {}, {});
+  const lionsJson = await lionsRes.json();
+  assert.equal(lionsJson.name, 'Lions One Pride');
+  const billsRes = await pagesWorker.fetch(new Request('https://bills.joshal.com/manifest.json'), {}, {});
+  const billsJson = await billsRes.json();
+  assert.equal(billsJson.name, 'Bills Mafia');
 });
 
 await test('Timezone-local 5:00 PM brief cutoff rolls ET teams (DET/BUF) 3 hours before PT (SF)', () => {
