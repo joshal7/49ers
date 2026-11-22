@@ -11,6 +11,7 @@
 import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, rankBadgeClass, renderExpandableSummaryHtml, renderPlayerAvatarHtml, renderSalientThumbHtml, renderTweetLinkedArticleCardHtml, renderMiniMeterHtml } from './uiHelpers.js';
 import { resolveSalientCardVisual } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatDollars, formatOtcDollars, formatCompactDollars, formatCapActionLabel } from '../engine/capSimulator.js';
@@ -492,7 +493,7 @@ function renderOverviewTab(
     safeEspnUrl ? { label: 'ESPN Profile', url: safeEspnUrl } : null,
     safeOtcUrl
       ? {
-          label: isIndividualOtcPlayerUrl(safeOtcUrl) ? 'OverTheCap Contract' : 'OverTheCap 49ers Cap',
+          label: isIndividualOtcPlayerUrl(safeOtcUrl) ? 'OverTheCap Contract' : `OverTheCap ${getActiveTeamConfig().nickname} Cap`,
           url: safeOtcUrl
         }
       : null,
@@ -798,7 +799,7 @@ function renderContractTab(p, txScenario) {
     <div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
         <div class="sub-label">Contract Breakdown (${yrs[0].year}–${yrs[yrs.length - 1].year})</div>
-        <a href="${esc(p.otcUrl || 'https://overthecap.com/salary-cap/san-francisco-49ers')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+        <a href="${esc(p.otcUrl || `https://overthecap.com/salary-cap/${getActiveTeamConfig().otcSlug}`)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
           <span>OverTheCap</span>${iconSvg('externalLink', 10)}
         </a>
       </div>
@@ -962,7 +963,7 @@ function renderHealthTab(
         <div style="font-size:13px;color:var(--text-secondary)">Status: <strong>${esc(h.status || 'Active')}</strong> ${h.injuryType ? `(${esc(h.injuryType)})` : ''}</div>
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-        <a href="https://www.49ers.com/team/injury-report/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>49ers.com Report</span>${iconSvg('externalLink', 10)}</a>
+        <a href="${esc(getActiveTeamConfig().clubInjuryUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(getActiveTeamConfig().clubDomain)} Report</span>${iconSvg('externalLink', 10)}</a>
         <span class="badge ${playProbBadgeClass(h.playProbabilityPct)} mono" style="font-size:13px;padding:4px 10px">${esc(h.playBadgeLabel)}</span>
       </div>
     </div>

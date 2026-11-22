@@ -24,6 +24,7 @@ import {
   resolveSalientCardVisual
 } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   isUrgentBreakingBadge,
@@ -485,7 +486,7 @@ export function renderDailyTopNewsBriefHtml(
       <div class="daily-brief-head">
         <div style="min-width:0;flex:1">
           <div class="card-eyebrow">Top News Brief</div>
-          <h3 class="card-title daily-brief-headline">${escJargon(brief.headline || '49ers Daily Briefing', { maxTerms: 6, maxPlayers: 3, seenKeys: seenJargon })}</h3>
+          <h3 class="card-title daily-brief-headline">${escJargon(brief.headline || `${getActiveTeamConfig().nickname} Daily Briefing`, { maxTerms: 6, maxPlayers: 3, seenKeys: seenJargon })}</h3>
         </div>
         <span class="mono daily-brief-age" data-daily-brief-age title="${esc(briefAgeTooltip || `Generated ${brief.generatedAt || ''}`)}">${esc(ageTiny)}</span>
       </div>

@@ -23,6 +23,8 @@
  *    authentic Gemini NotebookLM Audio Overview conversational voice delivery (`Puck` + `Aoede`).
  */
 
+import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
+
 export const PRIMARY_GEMINI_REASONING_MODEL = 'gemini-4-hydrogen';
 export const PRIMARY_GEMINI_THINKING_LEVEL = 'XHIGH';
 export const LIVE_INTERACTIVE_GEMINI_THINKING_LEVEL = 'HIGH';
@@ -434,12 +436,45 @@ THINK DEEPLY & INVESTIGATE THOROUGHLY (ACCURACY & DEPTH OVER SPEED):
 
 ${CORE_FACTUAL_GROUNDING_CHARTER}`;
 
+export function getDeepResearchStage1SystemPrompt(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  if (team.abbr === 'SF') return DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT;
+  return DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT
+    .replace(/49ers Faithful/g, team.brandName)
+    .replace(/San Francisco/g, team.city)
+    .replace(/\bSF's\b/g, `${team.abbr}'s`);
+}
+
+export function getDeepAnalysisStage2SystemPrompt(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  if (team.abbr === 'SF') return DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT;
+  return DEEP_ANALYSIS_STAGE2_SYSTEM_PROMPT
+    .replace(/49ers Faithful/g, team.brandName)
+    .replace(/San Francisco/g, team.city);
+}
+
+export function getNotebookLmStage2SystemPrompt(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  if (team.abbr === 'SF') return NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT;
+  return NOTEBOOKLM_PODCAST_STAGE2_SYSTEM_PROMPT
+    .replace(/San Francisco/g, team.city)
+    .replace(/\bNiners\b/g, team.nickname);
+}
+
 export function buildStage1DeepResearchUserPrompt({
   topicOrQuestion,
   kind = 'analysis',
   dossierSummaryText = '',
-  liveContextSnapshot = ''
+  liveContextSnapshot = '',
+  team = null,
+  coaches = null
 }) {
+  const activeTeam = resolveTeamConfig(team || getActiveTeamConfig());
+  const c = coaches || activeTeam.coachesSeed || {};
+  const staffLabel =
+    activeTeam.abbr === 'SF'
+      ? 'Kyle Shanahan / Raheem Morris'
+      : [c.hc, c.dc || c.oc].filter(Boolean).join(' / ') || `the ${activeTeam.nickname} coaching staff`;
   return `CONDUCT STAGE-1 DEEP RESEARCH INVESTIGATION (${kind === 'podcast' ? 'FOR UPCOMING NOTEBOOKLM STUDIO PODCAST' : 'FOR UPCOMING DEEP SCOUTING & CAP REPORT'}):
 
 USER TOPIC / QUESTION TO INVESTIGATE IN DEPTH:
@@ -447,15 +482,15 @@ USER TOPIC / QUESTION TO INVESTIGATE IN DEPTH:
 
 Produce a dense, deeply reasoned, fair and balanced Research Investigation Memo covering:
 1. **Core Thesis & Deconstruction of the User's Question**: What is the exact football/cap question really asking, what is the sharpest non-obvious answer, and what nuance do surface-level or homer takes miss?
-2. **Verified Roster, Health & League-Relative Statistical Evidence**: Exact numbers, snap shares, EPA/NGS metrics, 32-team league ranks (highlighting BOTH San Francisco's top units AND its bottom-half vulnerabilities), and injury/IR return windows strictly relevant to answering this question (do not pad with irrelevant players).
-3. **All-22 Film, Scheme & Two-Sided Matchup Mechanics**: Specific alignments, route combinations, protection slides, or defensive rotations under Kyle Shanahan / Raheem Morris AND the opposing coaching staff—giving honest weight to opponent top-10 units, star players, and betting-spread calibration.
+2. **Verified Roster, Health & League-Relative Statistical Evidence**: Exact numbers, snap shares, EPA/NGS metrics, 32-team league ranks (highlighting BOTH ${activeTeam.city}'s top units AND its bottom-half vulnerabilities), and injury/IR return windows strictly relevant to answering this question (do not pad with irrelevant players).
+3. **All-22 Film, Scheme & Two-Sided Matchup Mechanics**: Specific alignments, route combinations, protection slides, or defensive rotations under ${staffLabel} AND the opposing coaching staff—giving honest weight to opponent top-10 units, star players, and betting-spread calibration.
 4. **Multi-Year CBA Salary Cap & Asset Math (When Relevant)**: Exact 2026–2028 OverTheCap numbers, Article 13 rollover trade-offs, contract restructure/cut levers, or draft capital implications.
-5. **Counter-Arguments, Opponent Win-Paths & Balanced Verdict**: The strongest pushback against the 49ers-favorable case, realistic loss/failure modes calibrated to market odds, and an even-handed conclusion.
+5. **Counter-Arguments, Opponent Win-Paths & Balanced Verdict**: The strongest pushback against the ${activeTeam.nickname}-favorable case, realistic loss/failure modes calibrated to market odds, and an even-handed conclusion.
 
 STAGE-1 STRUCTURED DATA EXTRACT:
 ${dossierSummaryText}
 
-AUTHORITATIVE LIVE 49ERS DATA SNAPSHOT:
+AUTHORITATIVE LIVE ${activeTeam.nickname.toUpperCase()} DATA SNAPSHOT:
 ${liveContextSnapshot}`;
 }
 

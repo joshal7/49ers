@@ -45,6 +45,7 @@ import {
   evaluateGameDayAboveBriefWindow
 } from '../engine/breakingClassifier.js';
 import { formatCompletedGameRecapForPrompt } from '../engine/gameDayRosterEngine.js';
+import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 import {
   isPaywalledPublisher,
   sanitizeExternalUrl,
@@ -189,6 +190,25 @@ export function hasLiveAiConnection(prefs = {}) {
   return Boolean(
     String(prefs?.geminiApiKey || '').trim() || String(prefs?.workerBaseUrl || '').trim()
   );
+}
+
+/**
+ * Resolves the API base for READ-ONLY shared site summaries (`/api/daily-news-brief`,
+ * `/api/matchup-intel`, `/api/live-wire`, `/api/gameday-inactives`).
+ * Deliberately NEVER used for interactive Auto Pods or Deep Analysis, which remain strictly BYOK.
+ */
+export function resolveReadOnlyPlatformApiBase(prefs = {}) {
+  const explicit = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+  if (explicit) return explicit;
+  if (
+    typeof window !== 'undefined' &&
+    window.location &&
+    (globalThis.__PLATFORM_API_ENABLED__ === true ||
+      (/^(lions|bills)\.joshal\.com$/i.test(window.location.hostname) && window.location.protocol === 'https:'))
+  ) {
+    return window.location.origin.replace(/\/+$/, '');
+  }
+  return '';
 }
 
 export function formatActiveModelBadge(_modelId = PRIMARY_GEMINI_REASONING_MODEL, suffix = 'Accuracy-First') {
@@ -2888,12 +2908,13 @@ export async function refreshDailyMatchupIntelIfDue({
       let normalized = null;
       let modelUsed = PRIMARY_GEMINI_REASONING_MODEL;
 
-      const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+      const baseUrl = resolveReadOnlyPlatformApiBase(prefs);
       const directKey = String(prefs?.geminiApiKey || '').trim();
+      const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
 
       if (baseUrl && !directKey) {
         const res = await fetchWithTimeout(
-          `${baseUrl}/api/matchup-intel`,
+          `${baseUrl}/api/matchup-intel?team=${encodeURIComponent(activeTeam.abbr)}`,
           {
             method: 'POST',
             headers: {
@@ -2901,6 +2922,7 @@ export async function refreshDailyMatchupIntelIfDue({
               'X-Group-Passcode': prefs?.groupPasscode || ''
             },
             body: JSON.stringify({
+              teamAbbr: activeTeam.abbr,
               seasonYear,
               week: um.week,
               oppAbbr,
@@ -5000,8 +5022,9 @@ export async function refreshDailyTopNewsBriefIfDue({
   const preHydrateBrief = appData.news.dailyTopNewsBrief || null;
   hydrateCachedDailyTopNewsBrief(appData, nowMs);
 
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
   const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();
-  const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+  const baseUrl = resolveReadOnlyPlatformApiBase(prefs);
   if (!effectiveKey && !baseUrl) {
     return { updated: false, reason: 'no_ai_connection' };
   }
@@ -5080,7 +5103,7 @@ export async function refreshDailyTopNewsBriefIfDue({
     if (baseUrl && !force) {
       try {
         const kvGetRes = await fetchWithTimeout(
-          `${baseUrl}/api/daily-news-brief?cycleKey=${encodeURIComponent(workerCycleKey)}`,
+          `${baseUrl}/api/daily-news-brief?team=${encodeURIComponent(activeTeam.abbr)}&cycleKey=${encodeURIComponent(workerCycleKey)}`,
           {
             method: 'GET',
             headers: {
@@ -5161,7 +5184,7 @@ export async function refreshDailyTopNewsBriefIfDue({
       if (baseUrl) {
         try {
           const res = await fetchWithTimeout(
-            `${baseUrl}/api/daily-news-brief`,
+            `${baseUrl}/api/daily-news-brief?team=${encodeURIComponent(activeTeam.abbr)}`,
             {
               method: 'POST',
               headers: {
@@ -5169,6 +5192,7 @@ export async function refreshDailyTopNewsBriefIfDue({
                 'X-Group-Passcode': prefs?.groupPasscode || ''
               },
               body: JSON.stringify({
+                teamAbbr: activeTeam.abbr,
                 cycleKey: workerCycleKey,
                 forceRefresh: Boolean(force),
                 prompt: promptText,

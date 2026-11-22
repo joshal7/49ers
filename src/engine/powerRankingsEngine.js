@@ -10,6 +10,8 @@
  *     include that game are disregarded unconditionally.
  */
 
+import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
+
 export const POST_GAME_FRESHNESS_CUTOFF_HOURS = 24;
 export const DEFAULT_GAME_DURATION_HOURS = 3.5;
 
@@ -374,7 +376,9 @@ function buildGroundedPowerTakeaway(activeSources, stats, { sfRecord, consistent
   const avgStr = stats.averageRank != null ? ` (avg #${stats.averageRank.toFixed(1)})` : '';
   const countLabel = `${activeSources.length} verified ${activeSources.length === 1 ? 'model' : 'models & polls'}`;
 
-  let sentence1 = `${countLabel} place the ${recordClause}49ers at #${stats.consensusRank} consensus${avgStr}${wkClause}`;
+  const activeTeam = resolveTeamConfig(getActiveTeamConfig());
+  const teamNick = activeTeam.nickname || '49ers';
+  let sentence1 = `${countLabel} place the ${recordClause}${teamNick} at #${stats.consensusRank} consensus${avgStr}${wkClause}`;
   if (stats.rangeMin !== stats.rangeMax) {
     sentence1 += `, ranging from #${stats.rangeMin} (${best.shortName || best.outlet}) to #${stats.rangeMax} (${worst.shortName || worst.outlet}).`;
   } else {
@@ -387,7 +391,7 @@ function buildGroundedPowerTakeaway(activeSources, stats, { sfRecord, consistent
   } else if (excludedCount > 0) {
     extras.push(`${excludedCount} outlet${excludedCount === 1 ? '' : 's'} still on an older week ${excludedCount === 1 ? 'is' : 'are'} excluded for week consistency.`);
   } else if (oppShortName && currentWeek && consistentThroughWeek != null && currentWeek > consistentThroughWeek) {
-    extras.push(`All listed models include the 49ers' latest result entering Week ${currentWeek} vs. ${oppShortName}.`);
+    extras.push(`All listed models include the ${teamNick}' latest result entering Week ${currentWeek} vs. ${oppShortName}.`);
   }
 
   return extras.length ? `${sentence1} ${extras.join(' ')}` : sentence1;

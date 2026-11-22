@@ -8,6 +8,7 @@ import { sanitizeExternalUrl, toEspnTeamSlug } from '../engine/linkIntegrity.js'
 import { optimizeImageUrlForSlot } from '../engine/salientMediaEngine.js';
 import { splitSummaryForExpandableDisplay } from '../engine/breakingClassifier.js';
 import { iconSvg } from './icons.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 
 export { jargonTerm, jargonInfoIcon };
 
@@ -154,14 +155,18 @@ export function annotateRosterAndJargonPlainText(
 
 export const escJargon = annotateRosterAndJargonPlainText;
 
-const KNOWN_SOURCE_OUTLET_URLS = {
-  'nfl mock draft db': 'https://www.nflmockdraftdatabase.com/nfl-teams/2027/san-francisco-49ers',
-  'nfl mock draft database': 'https://www.nflmockdraftdatabase.com/nfl-teams/2027/san-francisco-49ers',
-  'cbs sports': 'https://www.cbssports.com/nfl/draft/',
-  'espn': 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers',
-  'overthecap': 'https://overthecap.com/salary-cap/san-francisco-49ers',
-  'tankathon': 'https://www.tankathon.com/nfl/49ers'
-};
+function getKnownSourceOutletUrl(label = '') {
+  const key = String(label || '').trim().toLowerCase();
+  const team = getActiveTeamConfig();
+  if (key === 'nfl mock draft db' || key === 'nfl mock draft database') {
+    return `https://www.nflmockdraftdatabase.com/nfl-teams/2027/${team.otcSlug}`;
+  }
+  if (key === 'cbs sports') return 'https://www.cbssports.com/nfl/draft/';
+  if (key === 'espn') return `https://www.espn.com/nfl/team/_/name/${team.espnAbbr}/${team.otcSlug}`;
+  if (key === 'overthecap') return `https://overthecap.com/salary-cap/${team.otcSlug}`;
+  if (key === 'tankathon') return `https://www.tankathon.com/nfl/${team.slug}`;
+  return null;
+}
 
 export function renderReporterSourceLinksHtml(sourcesInput, fallbackUrl = null) {
   const safeFallback = sanitizeExternalUrl(fallbackUrl, null);
@@ -171,7 +176,7 @@ export function renderReporterSourceLinksHtml(sourcesInput, fallbackUrl = null) 
     return names
       .map(label => {
         const rep = resolveReporterFromNameOrHandle(label);
-        const outletUrl = KNOWN_SOURCE_OUTLET_URLS[label.toLowerCase()] || null;
+        const outletUrl = getKnownSourceOutletUrl(label);
         const href = sanitizeExternalUrl(rep?.xUrl || outletUrl || safeFallback, null);
         return href
           ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:inherit">${esc(label)} ${iconSvg('externalLink', 9)}</a>`
@@ -189,7 +194,7 @@ export function renderReporterSourceLinksHtml(sourcesInput, fallbackUrl = null) 
       const label = tok.trim();
       if (!label) return '';
       const rep = resolveReporterFromNameOrHandle(label);
-      const outletUrl = KNOWN_SOURCE_OUTLET_URLS[label.toLowerCase()] || null;
+      const outletUrl = getKnownSourceOutletUrl(label);
       const href = sanitizeExternalUrl(rep?.xUrl || outletUrl || safeFallback, null);
       return href
         ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:inherit">${esc(label)} ${iconSvg('externalLink', 9)}</a>`

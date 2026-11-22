@@ -48,6 +48,9 @@
   --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'SF Mono', ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
 
+  --bg-glow-primary: rgba(170, 0, 0, 0.16);
+  --bg-glow-secondary: rgba(179, 153, 93, 0.05);
+
   --bottom-nav-h: 66px;
   --mini-player-h: 0px;
 }
@@ -77,6 +80,9 @@
   --border-subtle: rgba(20, 23, 28, 0.085);
   --border-strong: rgba(20, 23, 28, 0.16);
 
+  --bg-glow-primary: rgba(179, 153, 93, 0.14);
+  --bg-glow-secondary: rgba(170, 0, 0, 0.03);
+
   --shadow-card: 0 4px 16px rgba(20, 16, 8, 0.06);
 }
 
@@ -102,7 +108,7 @@ body {
   max-width: 100vw;
   overflow-x: clip;
   background-color: var(--bg-primary);
-  background-image: radial-gradient(ellipse 85% 32% at 50% -6%, rgba(170, 0, 0, 0.16), rgba(179, 153, 93, 0.05) 55%, transparent 100%);
+  background-image: radial-gradient(ellipse 85% 32% at 50% -6%, var(--bg-glow-primary), var(--bg-glow-secondary) 55%, transparent 100%);
   color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: 14.5px;
@@ -111,7 +117,7 @@ body {
 }
 
 [data-theme="light"] body {
-  background-image: radial-gradient(ellipse 85% 30% at 50% -6%, rgba(179, 153, 93, 0.14), transparent 75%);
+  background-image: radial-gradient(ellipse 85% 30% at 50% -6%, var(--bg-glow-primary), transparent 75%);
 }
 
 body.has-mini-player {

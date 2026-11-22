@@ -890,6 +890,36 @@ export const JARGON_GLOSSARY = {
     category: 'Depth Chart & Alignment',
     definition:
       'Special-teams returner fielding kickoffs inside the NFL Dynamic Kickoff landing zone (goal line to 20-yard line) before coverage and return fronts converge.'
+  },
+  mint_front: {
+    term: 'Mint / Tite Front (4i–0–4i)',
+    category: 'Defensive Front & Scheme',
+    definition:
+      'Three-down defensive line alignment placing a nose tackle over the center (0-tech) flanked by two interior ends inside the offensive tackles (4i-techs) to seal both B-gaps and allow two-high safeties against the run.'
+  },
+  cover_0: {
+    term: 'Cover 0 / Zero Blitz',
+    category: 'Coverage & Pressure',
+    definition:
+      'All-out man-to-man coverage with zero deep safety help, sending six or more rushers to force immediate hot throws and overwhelm 5- or 6-man protections.'
+  },
+  creeper: {
+    term: 'Creeper Pressure',
+    category: 'Coverage & Pressure',
+    definition:
+      'Four-man replacement pressure where an off-ball linebacker or nickel defender blitzes while a defensive lineman drops into an underneath zone, keeping 7 defenders in coverage.'
+  },
+  rpo: {
+    term: 'RPO (Run-Pass Option)',
+    category: 'Offensive Scheme',
+    definition:
+      'Hybrid play where offensive linemen run-block while the quarterback reads a conflict defender post-snap to either hand off or fire a quick glance, slant, or bubble throw.'
+  },
+  mesh_concept: {
+    term: 'Mesh Concept',
+    category: 'Offensive Scheme',
+    definition:
+      'Air Raid / West Coast man-beater pairing two shallow crossing routes rubbing within a yard of each other underneath a sit route and corner/rail vertical stretch.'
   }
 };
 
@@ -1175,7 +1205,15 @@ const PHRASE_ALIASES = [
   ['Explosive Plays', 'explosive_plays'],
   ['Sacks Allowed Rate', 'sack_rate'],
   ['Net Yards / Pass Att', 'ny_pa'],
-  ['Def. Takeaways', 'takeaways']
+  ['Def. Takeaways', 'takeaways'],
+  ['Mint front', 'mint_front'],
+  ['Tite front', 'mint_front'],
+  ['Cover 0', 'cover_0'],
+  ['Zero blitz', 'cover_0'],
+  ['creeper pressure', 'creeper'],
+  ['creeper blitz', 'creeper'],
+  ['Mesh concept', 'mesh_concept'],
+  ['RPO', 'rpo']
 ];
 
 const STRICT_UPPERCASE_ACRONYMS = new Set([

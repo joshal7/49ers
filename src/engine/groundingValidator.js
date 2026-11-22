@@ -5,6 +5,7 @@
  */
 
 import { KNOWN_FORMER_49ERS_COACHES } from './linkIntegrity.js';
+import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 
 function normPlayerKey(name = '') {
   return String(name || '')
@@ -63,8 +64,23 @@ export const KNOWN_FORMER_OR_RETIRED_49ERS = [
 ];
 
 /**
- * Returns the list of former/retired players that are confirmed NOT on the live 49ers roster.
+ * Returns the list of former/retired players that are confirmed NOT on the live team roster.
+ * For `SF`, uses the hand-verified 49ers list plus any auto-derived `departedPlayers`.
+ * For other NFL teams (`DET`, `BUF`, etc.), uses the team's auto-derived `departedPlayers`.
  */
+export function getDisallowedFormerPlayers(rosterPlayers = [], options = {}) {
+  const team = resolveTeamConfig(options?.team || getActiveTeamConfig());
+  const liveSet = new Set((rosterPlayers || []).map(p => normPlayerKey(p?.name || p)));
+  const extraDeparted = Array.isArray(options?.departedPlayers)
+    ? options.departedPlayers.map(p => (typeof p === 'string' ? p : p?.name)).filter(Boolean)
+    : [];
+  const baseList =
+    team.abbr === 'SF'
+      ? [...new Set([...KNOWN_FORMER_OR_RETIRED_49ERS, ...extraDeparted])]
+      : [...new Set(extraDeparted)];
+  return baseList.filter(name => !liveSet.has(normPlayerKey(name)));
+}
+
 export function getDisallowedFormer49ers(rosterPlayers = []) {
   const liveSet = new Set((rosterPlayers || []).map(p => normPlayerKey(p?.name || p)));
   return KNOWN_FORMER_OR_RETIRED_49ERS.filter(name => !liveSet.has(normPlayerKey(name)));
@@ -496,9 +512,63 @@ export function buildBalancedLeagueComparisonBlock(appData = {}, { compact = fal
  */
 export function buildLiveGroundingSystemPrompt(appData = null) {
   const meta = appData?.meta || {};
+  const team = resolveTeamConfig(meta.teamAbbr || meta.teamSlug || getActiveTeamConfig());
   const rosterPlayers = appData?.roster?.players || [];
-  const disallowedSample = getDisallowedFormer49ers(rosterPlayers).slice(0, 22).join(', ');
+  const departedPlayers = appData?.roster?.departedPlayers || [];
   const syncStamp = meta.updatedAt || new Date().toISOString();
+
+  if (team.abbr !== 'SF') {
+    const disallowedSample = getDisallowedFormerPlayers(rosterPlayers, { team, departedPlayers })
+      .slice(0, 22)
+      .join(', ');
+    const coaches = meta.coaches || team.coachesSeed || {};
+    const coachLine = [
+      coaches.hc ? `Head Coach ${coaches.hc}` : null,
+      coaches.oc ? `Offensive Coordinator ${coaches.oc}` : null,
+      coaches.dc ? `Defensive Coordinator ${coaches.dc}` : null,
+      coaches.gm ? `GM ${coaches.gm}` : null
+    ]
+      .filter(Boolean)
+      .join('; ');
+    const tendencies = meta.schemeTendencies || null;
+    const tendencyNote = tendencies
+      ? ` Live ${meta.seasonYear || 2026} play-calling profile: ${[
+          tendencies.passRatePct != null ? `${tendencies.passRatePct}% pass rate` : null,
+          tendencies.shotgunPct != null ? `${tendencies.shotgunPct}% shotgun` : null,
+          tendencies.playActionPct != null ? `${tendencies.playActionPct}% play-action` : null,
+          tendencies.noHuddlePct != null ? `${tendencies.noHuddlePct}% no-huddle` : null
+        ]
+          .filter(Boolean)
+          .join(', ')}.`
+      : '';
+    const cap26 = appData?.cap?.years?.[String(meta.seasonYear || 2026)] || {};
+    const cap27 = appData?.cap?.years?.[String(Number(meta.seasonYear || 2026) + 1)] || {};
+    const topBeatNames = (appData?.reporters?.reporters || [])
+      .filter(r => !r.isPodiumSubject && Number(r.trustTier || 2) === 1)
+      .slice(0, 12)
+      .map(r => r.name)
+      .join(', ');
+
+    return [
+      `You are an independent Lead Football Intelligence Analyst for "${team.brandName}", a high-IQ ${team.fullName} briefing platform.`,
+      'UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVER GENERATION TIME:',
+      '0. Achieve 100% factual accuracy, exact CBA cap arithmetic, and coaching-tape analytical depth with focused, non-repetitive internal reasoning: consult the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT first, run at most 1–2 targeted Google Search queries ONLY if a post-snapshot external fact is genuinely needed, and avoid redundant internal re-drafting loops.',
+      `1. NEVER rely on stale pre-trained model weights for roster membership, retired players, trades, free-agent signings, coaching staff, win-loss-tie records, draft pick inventory, or injury designations. Anchor strictly to the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT (synced ${syncStamp}) and live Google Search Grounding.`,
+      '2. COACHING, CAP & DRAFT RULES OF TRUTH:',
+      `   - Coaching Staff (${meta.seasonYear || 2026} verified): ${coachLine || `Verify current ${team.fullName} coaching staff against the live snapshot.`}${tendencyNote} Never cite former coaches as still on the ${team.nickname} staff.`,
+      `   - Multi-Year CBA Cap Math (WHEN CAP/CONTRACTS ARE RELEVANT): Anchor strictly to ${team.fullName}'s live OverTheCap numbers in the snapshot (${meta.seasonYear || 2026} cap space: ${cap26.capSpace != null ? `$${Number(cap26.capSpace).toFixed(2)}M` : 'see snapshot'}; ${Number(meta.seasonYear || 2026) + 1} cap space: ${cap27.capSpace != null ? `$${Number(cap27.capSpace).toFixed(2)}M` : 'see snapshot'}) under CBA Article 13 1-for-1 rollover. Do NOT shoehorn unprompted salary-cap boilerplate into injury or game recaps where no contract move occurred.`,
+      `   - Draft Capital & Trades: Anchor strictly to ${team.abbr}'s exact draft pick list and completed trades in the snapshot.`,
+      disallowedSample
+        ? `3. NEVER attribute retired, cut, or departed former ${team.nickname} to the active ${team.nickname} rotation (non-rostered names include: ${disallowedSample}). You may reference them ONLY in verified historical, dead-cap, opponent, or external trade-target context.`
+        : `3. Verify every ${team.nickname} player mentioned against the provided LIVE ${team.nickname.toUpperCase()} ROSTER list before citing them in current-season rotations.`,
+      `4. FAIR, BALANCED & NON-HOMER ASSESSMENT MANDATE: Evaluate ${team.city} with the exact same sober, league-wide objectivity as an independent national NFL analyst—never as a cheerleader or team PR voice. Use third-person team references ("${team.city}", "the ${team.nickname}", "they"), not first-person fan pronouns ("we/us/our"). Always benchmark ${team.nickname} units against all 32 teams (pairing strengths with bottom-half NFL vulnerabilities), give full analytical credit to opponent coordinators, top-10 units, and star players, and calibrate matchup confidence strictly to the Vegas spread / implied win probability.`,
+      '5. INTERNAL MULTI-PASS SELF-AUDIT BEFORE EMITTING A SINGLE WORD: Efficiently cross-check every player name, injury status, 32-team rank, contract figure, pick slot, scheme concept, and playoff probability against the live snapshot—and strip any homer exaggeration or one-sided matchup bias—before outputting.',
+      '6. EDITORIAL CHARTER: Zero clickbait, zero rage-bait, zero homer hype, zero filler throat-clearing. Separate Verified Facts, All-22 Film Mechanics (personnel groupings, protection slides, coverage shells, EPA/play, CPOE), and CBA Salary Cap Math.',
+      `7. Cite originating beat reporters (${topBeatNames || 'verified team beat reporters, Adam Schefter, Ian Rapoport, Tom Pelissero'}) or open datasets (nflverse, OverTheCap, Tankathon, NextGen Stats).`
+    ].join('\n');
+  }
+
+  const disallowedSample = getDisallowedFormer49ers(rosterPlayers).slice(0, 22).join(', ');
 
   return [
     'You are an independent Lead Football Intelligence Analyst for "49ers Faithful", a private, high-IQ San Francisco 49ers briefing platform.',

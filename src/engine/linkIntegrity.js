@@ -9,6 +9,8 @@
  *   3) Dynamically advance with `seasonYear` / `draftYear` and roster transactions.
  */
 
+import { ALL_NFL_TEAMS, getActiveTeamConfig } from '../config/teamRegistry.js';
+
 const PAYWALLED_HOST_RULES = [
   // Hard-paywalled or subscription-gated sports/news domains & subpaths
   { host: /(^|\.)nytimes\.com$/i, path: /^\/athletic(\/|$)/i },
@@ -716,21 +718,70 @@ export function stripNon49ersEntityContexts(text = '') {
     .trim();
 }
 
-/**
- * Returns true if `text` contains a verified, non-former, non-other-team-attributed
- * 49ers franchise or current leadership reference.
- */
-export function hasExplicit49ersEntity(text = '') {
-  const cleaned = stripNon49ersEntityContexts(stripAggregatorBoilerplate(text));
-  if (!cleaned) return false;
-  return EXPLICIT_SF_ENTITY_REGEX.test(cleaned);
+const TEAM_WIRE_REGEX_CACHE = new Map();
+
+function escapeLinkRegex(s = '') {
+  return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getTeamWireMatchers(team = null) {
+  const active = team || getActiveTeamConfig();
+  if (!active || active.abbr === 'SF') {
+    return {
+      isSf: true,
+      explicitEntityRe: EXPLICIT_SF_ENTITY_REGEX,
+      otherTeamsRe: OTHER_NFL_TEAM_LEAD_REGEX,
+      teamShortRe: /\b(49ers|niners|san francisco)\b/i
+    };
+  }
+  const cacheKey = active.abbr;
+  if (TEAM_WIRE_REGEX_CACHE.has(cacheKey)) return TEAM_WIRE_REGEX_CACHE.get(cacheKey);
+  const tokens = new Set([
+    active.fullName,
+    active.nickname,
+    active.city,
+    active.clubDomain,
+    active.coachesSeed?.hc,
+    active.coachesSeed?.gm,
+    active.stadium
+  ].filter(Boolean).map(t => escapeLinkRegex(String(t).trim())));
+  const explicitEntityRe = new RegExp(`\\b(${[...tokens].join('|')})\\b`, 'i');
+  const teamShortRe = new RegExp(
+    `\\b(${[active.fullName, active.nickname, active.city].filter(Boolean).map(t => escapeLinkRegex(t)).join('|')})\\b`,
+    'i'
+  );
+  const otherTokens = [];
+  for (const t of ALL_NFL_TEAMS) {
+    if (t.abbr === active.abbr) continue;
+    otherTokens.push(escapeLinkRegex(t.nickname));
+    if (t.abbr === 'SF') otherTokens.push('niners');
+  }
+  const otherTeamsRe = new RegExp(`\\b(${otherTokens.join('|')})\\b`, 'i');
+  const built = { isSf: false, explicitEntityRe, otherTeamsRe, teamShortRe };
+  TEAM_WIRE_REGEX_CACHE.set(cacheKey, built);
+  return built;
 }
 
 /**
- * Determines whether a national/league-wide wire item is genuinely relevant to the 49ers.
- * Prevents other-team stories (e.g. "Rams C Coleman Shelton Expected To Miss 4-6 Weeks..." or
- * "Cam Ward: Shift in offensive philosophy..." mentioning "Titans head coach Robert Saleh")
- * from leaking in via boilerplate historical career-bio mentions, departed coaches, or body-only other-team framing.
+ * Returns true if `text` contains a verified, non-former, non-other-team-attributed
+ * active franchise or current leadership reference (SF or any active multi-team club).
+ */
+export function hasExplicit49ersEntity(text = '') {
+  const matchers = getTeamWireMatchers();
+  if (matchers.isSf) {
+    const cleaned = stripNon49ersEntityContexts(stripAggregatorBoilerplate(text));
+    if (!cleaned) return false;
+    return EXPLICIT_SF_ENTITY_REGEX.test(cleaned);
+  }
+  const cleaned = stripAggregatorBoilerplate(text);
+  if (!cleaned) return false;
+  return matchers.explicitEntityRe.test(cleaned);
+}
+
+/**
+ * Determines whether a national/league-wide wire item is genuinely relevant to the active team.
+ * Prevents other-team stories from leaking in via boilerplate historical career-bio mentions,
+ * departed coaches, or body-only other-team framing.
  */
 export function is49ersRelevantWireItem({
   title = '',
@@ -743,25 +794,25 @@ export function is49ersRelevantWireItem({
   bodyRosterMatchCount = 0
 } = {}) {
   if (!isNationalFeed) return true;
+  const matchers = getTeamWireMatchers();
   const leadText = stripAggregatorBoilerplate(`${title || ''} ${fullText || ''}`).trim();
-  const leadClean = stripNon49ersEntityContexts(leadText);
-  if (EXPLICIT_SF_ENTITY_REGEX.test(leadClean)) {
+  const leadClean = matchers.isSf ? stripNon49ersEntityContexts(leadText) : leadText;
+  if (matchers.explicitEntityRe.test(leadClean)) {
     return true;
   }
   if (Number(leadRosterMatchCount) > 0) {
     return true;
   }
-  if (OTHER_NFL_TEAM_LEAD_REGEX.test(leadText)) {
+  if (matchers.otherTeamsRe.test(leadText)) {
     return false;
   }
-  const cleanBody = stripHistoricalSfBioSentences(
-    `${externalTitle || ''} ${summary || ''} ${externalDescription || ''}`
-  );
-  const bodyClean = stripNon49ersEntityContexts(cleanBody);
-  if (EXPLICIT_SF_ENTITY_REGEX.test(bodyClean)) {
+  const rawBody = `${externalTitle || ''} ${summary || ''} ${externalDescription || ''}`;
+  const cleanBody = matchers.isSf ? stripHistoricalSfBioSentences(rawBody) : rawBody;
+  const bodyClean = matchers.isSf ? stripNon49ersEntityContexts(cleanBody) : cleanBody;
+  if (matchers.explicitEntityRe.test(bodyClean)) {
     return true;
   }
-  if (OTHER_NFL_TEAM_LEAD_REGEX.test(cleanBody)) {
+  if (matchers.otherTeamsRe.test(cleanBody)) {
     return false;
   }
   return Number(bodyRosterMatchCount) > 0;
@@ -773,16 +824,18 @@ export function is49ersRelevantWireItem({
  * "Trade Rumors" category heading in wire cards.
  */
 export function formatWireSourceDisplayName(authorName = '', item = null) {
-  const raw = String(authorName || item?.author || item?.reporterName || item?.outletName || '49ers Beat').trim();
+  const active = getActiveTeamConfig();
+  const defaultBeat = `${active?.nickname || '49ers'} Beat`;
+  const raw = String(authorName || item?.author || item?.reporterName || item?.outletName || defaultBeat).trim();
   const lower = raw.toLowerCase();
   if (lower === 'nfl trade rumors' || lower === 'nfltraderumors') return 'NFLTradeRumors.co';
   if (lower === 'pro football rumors' || lower === 'profootballrumors') return 'ProFootballRumors.com';
-  return raw || '49ers Beat';
+  return raw || defaultBeat;
 }
 
 /**
  * Identifies generic league-wide filler (fantasy D/ST, survivor pools, betting lines roundups,
- * uniform/arrival slideshows, non-49ers transactions) that should not pollute the 49ers news stream.
+ * uniform/arrival slideshows, non-team transactions) that should not pollute the team news stream.
  */
 export function isOffTopicLeagueFiller({
   url = '',
@@ -790,16 +843,17 @@ export function isOffTopicLeagueFiller({
   summary = '',
   hasRosterMatch = false
 } = {}) {
+  const matchers = getTeamWireMatchers();
   const u = String(url || '').trim();
   const t = stripAggregatorBoilerplate(String(title || '').trim());
-  const s = stripHistoricalSfBioSentences(String(summary || '').trim());
+  const s = matchers.isSf ? stripHistoricalSfBioSentences(String(summary || '').trim()) : String(summary || '').trim();
   if (u && OFF_TOPIC_LEAGUE_FILLER_URL_REGEX.test(u)) return true;
   if (OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX.test(t)) return true;
-  if (/\b(fantasy|lineup help|sleepers|waiver wire|d\/st)\b/i.test(t) && !/\b(49ers|niners|san francisco)\b/i.test(t)) {
+  if (/\b(fantasy|lineup help|sleepers|waiver wire|d\/st)\b/i.test(t) && !matchers.teamShortRe.test(t)) {
     return true;
   }
-  const combinedClean = stripNon49ersEntityContexts(`${t} ${s}`);
-  if (!hasRosterMatch && !EXPLICIT_SF_ENTITY_REGEX.test(combinedClean)) {
+  const combinedClean = matchers.isSf ? stripNon49ersEntityContexts(`${t} ${s}`) : `${t} ${s}`;
+  if (!hasRosterMatch && !matchers.explicitEntityRe.test(combinedClean)) {
     return true;
   }
   return false;

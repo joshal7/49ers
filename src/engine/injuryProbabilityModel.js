@@ -19,6 +19,7 @@ import {
   sanitizeExternalUrl,
   buildEspnPlayerNewsAnchorUrl
 } from './linkIntegrity.js';
+import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 import {
   buildXPlayerScoopSearchUrl,
   extractBeatAttributionFromText,
@@ -2775,7 +2776,14 @@ function normalizeOfficialGameStatusShared(rawStatus = '') {
  * (CORS-enabled `access-control-allow-origin: *` on NFL CDN), returning authoritative
  * Wed / Thu / Fri participation & game statuses for BOTH the San Francisco 49ers and the weekly Opponent.
  */
-export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') {
+export function parseOfficialClubInjuryReportHtml(html = '', oppTeamName = '', teamInput = null) {
+  return parseOfficial49ersInjuryReportHtml(html, oppTeamName, teamInput);
+}
+
+export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '', teamInput = null) {
+  const activeTeam = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  const teamFullLower = activeTeam.fullName.toLowerCase();
+  const teamNickLower = activeTeam.nickname.toLowerCase();
   const sfByKey = new Map();
   const oppByKey = new Map();
   if (!html || typeof html !== 'string') {
@@ -2844,8 +2852,8 @@ export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') 
   let tableIdx = 0;
   for (const { tableHtml, precedingContext, headers, dayColIndices } of candidateTables) {
     const isSf =
-      precedingContext.includes('san francisco 49ers') &&
-      (!oppMascot || precedingContext.lastIndexOf('49ers') > precedingContext.lastIndexOf(oppMascot));
+      (precedingContext.includes(teamFullLower) || precedingContext.includes(teamNickLower)) &&
+      (!oppMascot || precedingContext.lastIndexOf(teamNickLower) > precedingContext.lastIndexOf(oppMascot));
     const targetMap = isSf || (tableIdx === 0 && !oppMascot) ? sfByKey : oppByKey;
     tableIdx += 1;
 

@@ -3,6 +3,24 @@
  */
 
 import {
+  applyTeamThemeToDocument,
+  getActiveTeamConfig,
+  resolveTeamFromHostname,
+  setActiveTeamConfig
+} from './config/teamRegistry.js';
+
+const ACTIVE_TEAM =
+  typeof window !== 'undefined' && window.location
+    ? setActiveTeamConfig(
+        window.__ACTIVE_TEAM_SLUG__ ||
+          resolveTeamFromHostname(window.location.hostname, window.location.search)
+      )
+    : getActiveTeamConfig();
+if (typeof document !== 'undefined') {
+  applyTeamThemeToDocument(ACTIVE_TEAM);
+}
+
+import {
   ALL_DASHBOARD_BLOCKS,
   evaluateSeasonState,
   resolveHomeDashboardState
@@ -113,7 +131,7 @@ import {
   normalizeSearchText
 } from './engine/digestExperienceEngine.js?v=91';
 
-const RECENT_SEARCHES_KEY = '49ers_faithful_recent_searches_v1';
+const RECENT_SEARCHES_KEY = ACTIVE_TEAM.storageKeys?.recentSearches || '49ers_faithful_recent_searches_v1';
 
 function loadRecentSearches() {
   try {
@@ -403,7 +421,9 @@ function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', clean);
   const metaTheme = document.getElementById('metaThemeColor');
   if (metaTheme) {
-    metaTheme.setAttribute('content', clean === 'light' ? '#F7F5F0' : '#0B0D10');
+    const lightColor = ACTIVE_TEAM.themes?.light?.themeColor || '#F7F5F0';
+    const darkColor = ACTIVE_TEAM.themes?.dark?.themeColor || '#0B0D10';
+    metaTheme.setAttribute('content', clean === 'light' ? lightColor : darkColor);
   }
   const metaStatusBar = document.getElementById('metaStatusBarStyle');
   if (metaStatusBar) {
@@ -949,6 +969,8 @@ function getMonteCarloResult() {
   cachedMonteCarloKey = key;
   cachedMonteCarloResult = runPlayoffMonteCarlo({
     ...inputs,
+    targetTeam: ACTIVE_TEAM.abbr,
+    conference: ACTIVE_TEAM.conference,
     forcedWinners: overrides,
     iterations: 10000,
     seed: 492026
@@ -1064,7 +1086,7 @@ function syncLiveWireButtonsDom() {
 }
 
 const TAB_HEADER_TITLES = {
-  home: '49ers Faithful',
+  home: ACTIVE_TEAM.brandName || '49ers Faithful',
   news: 'News & Film',
   season: 'Game & Season',
   roster: 'Roster & Cap',
@@ -1072,23 +1094,23 @@ const TAB_HEADER_TITLES = {
 };
 
 function formatCompactHeaderStanding(rawSummary = '') {
+  const fallbackDiv = ACTIVE_TEAM.division || 'NFC West';
   const clean = String(rawSummary || '')
     .replace(/\s+/g, ' ')
     .trim();
-  if (!clean) return 'NFC West';
-  // Condense verbose standing strings ("1st in NFC West • #1 Seed in NFC" -> "1st NFC West · #1 Seed")
+  if (!clean) return fallbackDiv;
   const parts = clean
     .split(/\s*[•·]\s*/)
     .map(part =>
       part
-        .replace(/\bin\s+NFC\s+West\b/i, 'NFC West')
-        .replace(/\bWild\s*Card\s+in\s+NFC\b/i, 'Seed')
-        .replace(/\bSeed\s+in\s+NFC\b/i, 'Seed')
-        .replace(/\bin\s+NFC\b/i, 'NFC')
+        .replace(/\bin\s+((?:NFC|AFC)\s+(?:North|South|East|West))\b/i, '$1')
+        .replace(/\bWild\s*Card\s+in\s+(?:NFC|AFC)\b/i, 'Seed')
+        .replace(/\bSeed\s+in\s+(?:NFC|AFC)\b/i, 'Seed')
+        .replace(/\bin\s+(NFC|AFC)\b/i, '$1')
         .trim()
     )
     .filter(p => p && !/^outside\s+playoffs$/i.test(p) && !/^eliminated$/i.test(p));
-  return parts.length > 0 ? parts.slice(0, 2).join(' · ') : 'NFC West';
+  return parts.length > 0 ? parts.slice(0, 2).join(' · ') : fallbackDiv;
 }
 
 function renderHeader() {
@@ -1099,7 +1121,7 @@ function renderHeader() {
   }
   const titleEl = document.getElementById('headerTitleText');
   if (titleEl) {
-    titleEl.textContent = TAB_HEADER_TITLES[activeTab] || '49ers Faithful';
+    titleEl.textContent = TAB_HEADER_TITLES[activeTab] || ACTIVE_TEAM.brandName || '49ers Faithful';
   }
   if (!state.appData) {
     syncTopHeaderHeight();
@@ -1110,7 +1132,7 @@ function renderHeader() {
   const subStatus = document.getElementById('headerSubStatus');
   if (recPill) recPill.textContent = m.teamRecord || '—';
   if (subStatus) {
-    const compactStanding = formatCompactHeaderStanding(m.standingSummary || 'NFC West');
+    const compactStanding = formatCompactHeaderStanding(m.standingSummary || ACTIVE_TEAM.division || 'NFC West');
     const syncAge = formatRelativeAge(state.lastWireSyncAt || m.updatedAt);
     subStatus.innerHTML = `<span class="header-standing-text">${esc(compactStanding)}</span><span class="header-sub-sep" aria-hidden="true">·</span><span class="header-live-sync" title="Live data synced ${esc(syncAge)}"><span class="live-pulse-dot" aria-hidden="true"></span><span><span class="header-sync-verb">Synced </span>${esc(syncAge)}</span></span>`;
   }
@@ -4165,7 +4187,7 @@ function renderFeedLoadErrorState(err, { isRetrying = false } = {}) {
   mainEl.innerHTML = `
     <div class="card" data-feed-error-card="true">
       <div class="card-eyebrow" style="color:var(--crimson)">Feed Connection Interrupted</div>
-      <h2 class="card-title">Reconnecting 49ers Data Feeds</h2>
+      <h2 class="card-title">Reconnecting ${esc(ACTIVE_TEAM.nickname)} Data Feeds</h2>
       <p style="font-size:13px;color:var(--text-secondary);margin:6px 0 12px">${esc(friendlyDetail)}</p>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <button type="button" class="btn-primary" data-action="retry-load-feeds" ${isRetrying ? 'disabled' : ''}>

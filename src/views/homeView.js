@@ -25,6 +25,7 @@ import {
   resolveSalientCardVisual
 } from '../engine/salientMediaEngine.js';
 import { iconSvg, blockIconName } from './icons.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
 import { resolveConsistentPowerRankings } from '../engine/powerRankingsEngine.js';
 import {
@@ -492,11 +493,12 @@ function renderSingleDashboardCard({
       externalHeaderLink = um.gameUrl
         ? `<a href="${esc(um.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Gamecast</span>${iconSvg('external', 11)}</a>`
         : '';
+      const activeTeam = getActiveTeamConfig();
       const awayTeamCol = sfIsAway
-        ? `<a href="${esc(buildEspnNflTeamUrl('SF'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col" style="text-decoration:none;color:inherit">
-            ${renderTeamLogoHtml('SF', um.sfLogoUrl, 36)}
+        ? `<a href="${esc(buildEspnNflTeamUrl(activeTeam.abbr))}" target="_blank" rel="noopener noreferrer" class="sb-team-col" style="text-decoration:none;color:inherit">
+            ${renderTeamLogoHtml(activeTeam.abbr, um.sfLogoUrl, 36)}
             <div class="sb-team-meta">
-              <div class="sb-team-abbr">49ers</div>
+              <div class="sb-team-abbr">${esc(activeTeam.nickname)}</div>
               <div class="sb-team-rec mono">${esc(sfRecShort)}</div>
             </div>
           </a>`
@@ -515,12 +517,12 @@ function renderSingleDashboardCard({
             </div>
             ${renderTeamLogoHtml(um.oppAbbr || 'NFL', um.oppLogoUrl, 36)}
           </a>`
-        : `<a href="${esc(buildEspnNflTeamUrl('SF'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col home" style="text-decoration:none;color:inherit">
+        : `<a href="${esc(buildEspnNflTeamUrl(activeTeam.abbr))}" target="_blank" rel="noopener noreferrer" class="sb-team-col home" style="text-decoration:none;color:inherit">
             <div class="sb-team-meta">
-              <div class="sb-team-abbr">49ers</div>
+              <div class="sb-team-abbr">${esc(activeTeam.nickname)}</div>
               <div class="sb-team-rec mono">${esc(sfRecShort)}</div>
             </div>
-            ${renderTeamLogoHtml('SF', um.sfLogoUrl, 36)}
+            ${renderTeamLogoHtml(activeTeam.abbr, um.sfLogoUrl, 36)}
           </a>`;
       const homeHasScore = um.sfScore != null && um.oppScore != null;
       const homeAwayScore = sfIsAway ? um.sfScore : um.oppScore;
@@ -603,8 +605,9 @@ function renderSingleDashboardCard({
           : rawPr
       ).slice(0, 4);
       const healthSnapMap = userPrefs?.deltaSnapshots?.healthByPlayer || {};
-      const sfInjUrl = appData?.health?.sourceUrl || 'https://www.49ers.com/team/injury-report/';
-      externalHeaderLink = `<a href="${esc(sfInjUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>49ers.com Report</span>${iconSvg('external', 11)}</a>`;
+      const activeTeamHealth = getActiveTeamConfig();
+      const sfInjUrl = appData?.health?.sourceUrl || activeTeamHealth.clubInjuryUrl;
+      externalHeaderLink = `<a href="${esc(sfInjUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(activeTeamHealth.clubDomain)} Report</span>${iconSvg('external', 11)}</a>`;
       bodyHtml = `
         <div style="display:flex;flex-direction:column;gap:6px">
           ${pr

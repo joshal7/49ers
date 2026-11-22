@@ -84,6 +84,7 @@ import {
 } from '../engine/linkIntegrity.js';
 import {
   buildTargetedOriginalTweetUrl,
+  configureBeatAttributionForTeam,
   extractBeatAttributionFromText,
   isDirectSocialPostUrl,
   isEspnPlayerProfileUrl,
@@ -93,7 +94,15 @@ import {
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
 import { refreshLiveStandingsMetricsInTeamStats } from '../engine/statsLeaderboardEngine.js';
+import {
+  getActiveTeamConfig,
+  resolveTeamConfig,
+  resolveTeamDataBasePath
+} from '../config/teamRegistry.js';
 
+function getTeamStorageKeys() {
+  return getActiveTeamConfig().storageKeys;
+}
 const STORAGE_KEY = 'joshal_49ers_hq_prefs_v1';
 const LEGACY_WEEKLY_PRACTICE_CACHE_KEY = 'joshal_49ers_weekly_practice_v1';
 const WEEKLY_PRACTICE_CACHE_KEY = 'joshal_49ers_weekly_practice_v2';
@@ -372,7 +381,8 @@ export const DEFAULT_USER_PREFS = {
 
 export function loadUserPrefs() {
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const key = getTeamStorageKeys().prefs || STORAGE_KEY;
+    const raw = window.localStorage.getItem(key);
     if (!raw) return structuredCloneFallback(DEFAULT_USER_PREFS);
     const parsed = JSON.parse(raw);
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
@@ -483,7 +493,8 @@ export function loadUserPrefs() {
 
 export function saveUserPrefs(prefs) {
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+    const key = getTeamStorageKeys().prefs || STORAGE_KEY;
+    window.localStorage.setItem(key, JSON.stringify(prefs));
     return true;
   } catch {
     return false;
@@ -1212,8 +1223,13 @@ function hydrateBundlePostLoad(rawFiles) {
   return loadedBundle;
 }
 
-export async function loadAll49ersData(basePrefix = './data') {
-  const cleanBase = String(basePrefix || './data').replace(/\/+$/, '');
+export async function loadAll49ersData(basePrefix = null) {
+  const activeTeam = getActiveTeamConfig();
+  const cleanBase = String(basePrefix || resolveTeamDataBasePath(activeTeam)).replace(/\/+$/, '');
+  const fallbackShows =
+    activeTeam.abbr !== 'SF' && Array.isArray(activeTeam.beatPodcastShows) && activeTeam.beatPodcastShows.length > 0
+      ? activeTeam.beatPodcastShows
+      : FLAGSHIP_PODCAST_SHOWS_CLIENT;
   try {
     const [
       meta,
@@ -1241,10 +1257,12 @@ export async function loadAll49ersData(basePrefix = './data') {
       fetchJsonSafe(`${cleanBase}/beat-podcasts.json`).catch(() => ({
         updatedAt: '',
         windowDays: 7,
-        shows: FLAGSHIP_PODCAST_SHOWS_CLIENT,
+        shows: fallbackShows,
         episodes: []
       }))
     ]);
+
+    configureBeatAttributionForTeam(activeTeam, reporters, meta?.coaches || activeTeam.coachesSeed);
 
     const rawFiles = {
       meta,
@@ -1291,9 +1309,11 @@ function isProductionHostedOrigin() {
  * commits from GitHub Actions always propagate within seconds even without a Jekyll rebuild.
  */
 export async function fetchFresherUpstreamData(currentUpdatedAt = '') {
+  const activeTeam = getActiveTeamConfig();
+  const basePath = resolveTeamDataBasePath(activeTeam);
   const curMs = Date.parse(currentUpdatedAt || '') || 0;
-  const candidates = ['./data'];
-  if (isProductionHostedOrigin()) {
+  const candidates = [basePath];
+  if (isProductionHostedOrigin() && activeTeam.abbr === 'SF') {
     candidates.push(GITHUB_RAW_DATA_BASE);
   }
 
@@ -1613,8 +1633,42 @@ async function expandShortenerUrlsViaWorker(shortUrls = [], workerBaseUrl = '') 
   return out;
 }
 
+function getTeamEntityRegex(appData = null) {
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  if (!activeTeam || activeTeam.abbr === 'SF') return /\b(49ers|niners|san francisco)\b/i;
+  const toks = [activeTeam.fullName, activeTeam.nickname, activeTeam.city]
+    .filter(Boolean)
+    .map(t => escapeClientRegex(String(t).trim()));
+  return new RegExp(`\\b(${toks.join('|')})\\b`, 'i');
+}
+
+function getLiveBlueskyBeatAccountsForTeam(appData = null) {
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  if (!activeTeam || activeTeam.abbr === 'SF') return LIVE_BLUESKY_BEAT_ACCOUNTS;
+  const reporters = Array.isArray(appData?.reporters?.reporters) ? appData.reporters.reporters : [];
+  const seen = new Set();
+  const out = [];
+  for (const rep of reporters) {
+    const actor = String(rep?.bskyHandle || '').trim();
+    if (!actor || seen.has(actor.toLowerCase())) continue;
+    seen.add(actor.toLowerCase());
+    out.push({
+      actor,
+      reporterId: rep.id,
+      reporterName: rep.name,
+      authorHandle: rep.handle || '',
+      authorProfileUrl: rep.xUrl || `https://bsky.app/profile/${actor}`,
+      outletId: rep.outletId || `${activeTeam.slug}_beat`,
+      outletName: rep.outletName || rep.name,
+      trustTier: Number(rep.trustTier) || 1,
+      isNationalInsider: ['national_insider', 'film_analyst', 'cap_analyst'].includes(rep.category)
+    });
+  }
+  return out;
+}
+
 /**
- * Fetches real-time 49ers beat & NFL insider posts directly from CORS-enabled Bluesky public feeds
+ * Fetches real-time beat & NFL insider posts directly from CORS-enabled Bluesky public feeds
  * (`public.api.bsky.app`) with `cache: 'no-store'` so late-breaking & in-game injury return tweets,
  * author self-threads (snap counts, sideline threads), and link-card descriptions appear in < 1 minute.
  */
@@ -1623,6 +1677,9 @@ export async function hydrateLiveBlueskyBeatWire(
   { isGameLive = false, manual = false, workerBaseUrl = '' } = {}
 ) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const teamAccounts = getLiveBlueskyBeatAccountsForTeam(appData);
+  const clubVideoPrefixRe = new RegExp(`^https:\\/\\/www\\.${escapeClientRegex(activeTeam.clubDomain)}\\/video\\/`, 'i');
   const normUrlKey = u => String(u || '').trim().replace(/\/+$/, '');
   const existingIds = new Set(appData.news.rawStream.map(it => it.id).filter(Boolean));
   const existingUrls = new Set(
@@ -1639,7 +1696,7 @@ export async function hydrateLiveBlueskyBeatWire(
   const pendingItems = [];
   const shortUrlsToExpand = new Set();
   await Promise.all(
-    LIVE_BLUESKY_BEAT_ACCOUNTS.map(async acct => {
+    teamAccounts.map(async acct => {
       try {
         const limit = acct.isNationalInsider ? 25 : isGameLive || manual ? 30 : 22;
         const apiUrl = `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(acct.actor)}&limit=${limit}&filter=posts_and_author_threads`;
@@ -1796,7 +1853,7 @@ export async function hydrateLiveBlueskyBeatWire(
           const hasNativeSocialVideo =
             Boolean(vidEmbed?.playlist || vidEmbed?.cid) ||
             /^https:\/\/(?:www\.)?(?:x|twitter)\.com\/[^/]+\/status\/\d+\/video\//i.test(String(safeExtUrl || '')) ||
-            /^https:\/\/www\.49ers\.com\/video\//i.test(String(safeExtUrl || ''));
+            clubVideoPrefixRe.test(String(safeExtUrl || ''));
           const postHandle = post?.author?.handle || acct.actor;
           const bskyPermalink = `https://bsky.app/profile/${postHandle}/post/${rkey}`;
           const postUrl = resolveOriginalTweetUrl(
@@ -1821,7 +1878,7 @@ export async function hydrateLiveBlueskyBeatWire(
 
           const resolvedExternalVideoUrl =
             !extractedYtVideoId && hasNativeSocialVideo
-              ? safeExtUrl && /^https:\/\/www\.49ers\.com\/video\//i.test(safeExtUrl)
+              ? safeExtUrl && clubVideoPrefixRe.test(safeExtUrl)
                 ? safeExtUrl
                 : postUrl || bskyPermalink
               : undefined;
@@ -1867,7 +1924,9 @@ export async function hydrateLiveBlueskyBeatWire(
               authorProfileUrl:
                 parsedAttr.xUrl ||
                 acct.authorProfileUrl ||
-                (parsedAttr.authorHandle ? `https://x.com/${parsedAttr.authorHandle.replace(/^@/, '')}` : 'https://x.com/49ers'),
+                (parsedAttr.authorHandle
+                  ? `https://x.com/${parsedAttr.authorHandle.replace(/^@/, '')}`
+                  : `https://www.${activeTeam.clubDomain}/news/`),
               trustTier: parsedAttr.trustTier,
               wireSource: 'bsky_mirror',
               isBreaking: brk.isBreaking,
@@ -2060,14 +2119,15 @@ export async function hydrateLiveEspnPlayerBeatWire(
           const leadText = rawDesc || rawHeadline;
           if (!leadText || leadText.length < 20) continue;
 
-          // Ensure general league roundups in the feed actually reference this player or the 49ers
+          // Ensure general league roundups in the feed actually reference this player or the active team
           const playerParts = String(player.name || '').replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim().split(/\s+/);
           const playerSurname = playerParts[playerParts.length - 1] || player.name;
           const relevanceCheck = `${rawHeadline} ${rawDesc}`;
+          const activeTeamForPwire = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
           if (
             playerSurname &&
             !new RegExp(`\\b${escapeClientRegex(playerSurname)}\\b`, 'i').test(relevanceCheck) &&
-            !/\b(49ers|niners|san francisco)\b/i.test(relevanceCheck)
+            !getTeamEntityRegex(appData).test(relevanceCheck)
           ) {
             continue;
           }
@@ -2077,7 +2137,7 @@ export async function hydrateLiveEspnPlayerBeatWire(
             : '';
           const parsedAttr = extractBeatAttributionFromText(`${rawDesc} ${rawStory}`.trim(), {
             reporterId: null,
-            reporterName: bylineHint || '49ers Beat Wire',
+            reporterName: bylineHint || `${activeTeamForPwire.nickname} Beat Wire`,
             outletId: 'espn',
             outletName: 'ESPN / X Beat Wire'
           });
@@ -2287,7 +2347,7 @@ export async function hydrateLiveRotoWireBeatRss(appData, { isGameLive = false }
     const existingTextKeys = new Set(
       appData.news.rawStream.map(it => String(it.fullText || it.title || '').toLowerCase().slice(0, 90))
     );
-    const sfTeamRe = /\b(49ers|niners|san francisco)\b/i;
+    const sfTeamRe = getTeamEntityRegex(appData);
     const itemBlocks = xml.match(/<item\b[\s\S]*?<\/item>/gi) || [];
     const discovered = [];
 
@@ -2455,9 +2515,10 @@ export async function hydrateLiveRotoWireBeatRss(appData, { isGameLive = false }
  */
 export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 } = {}) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
   try {
     const res = await fetchSingleWithTimeout(
-      'https://site.api.espn.com/apis/site/v2/sports/football/nfl/transactions?team=25&limit=20',
+      `https://site.api.espn.com/apis/site/v2/sports/football/nfl/transactions?team=${activeTeam.espnId}&limit=20`,
       { cache: 'no-store' },
       6500
     );
@@ -2482,9 +2543,10 @@ export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 
       const desc = cleanSensationalistText(String(tx.description || '').trim());
       if (!desc || desc.length < 12) continue;
 
-      const fullLine = /^49ers\b|^San Francisco\b/i.test(desc) ? desc : `49ers roster move: ${desc}`;
+      const nickRe = new RegExp(`^${activeTeam.nickname}\\b|^${activeTeam.city}\\b`, 'i');
+      const fullLine = nickRe.test(desc) ? desc : `${activeTeam.nickname} roster move: ${desc}`;
       const txHash = hashWireKey(`${tx.date}_${desc}`);
-      const txUrl = `https://www.49ers.com/team/transactions/#tx-${txHash}`;
+      const txUrl = `https://www.${activeTeam.clubDomain}/team/transactions/#tx-${txHash}`;
       const textKey = fullLine.toLowerCase().slice(0, 90);
       if (existingUrls.has(txUrl) || existingTextKeys.has(textKey)) continue;
 
@@ -2495,7 +2557,7 @@ export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 
         {
           title: tweetDisplay.text,
           fullText: fullLine,
-          summary: 'Official San Francisco 49ers NFL transaction wire.',
+          summary: `Official ${activeTeam.fullName} NFL transaction wire.`,
           publishedAt: pubIso
         },
         nowMs,
@@ -2504,27 +2566,28 @@ export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 
 
       existingUrls.add(txUrl);
       existingTextKeys.add(textKey);
+      const officialOutletId = activeTeam.abbr === 'SF' ? '49ers_official' : `${activeTeam.slug}_official`;
       discovered.push({
-        id: `sf_tx_live_${txHash}`,
+        id: `${activeTeam.abbr.toLowerCase()}_tx_live_${txHash}`,
         type: 'tweet',
         title: tweetDisplay.text,
         fullText: fullLine,
         isFullTweet: tweetDisplay.isFullTweet,
         summary: '',
         imageUrl: mentioned[0]?.headshotUrl || '',
-        imageAlt: 'San Francisco 49ers transaction',
+        imageAlt: `${activeTeam.fullName} transaction`,
         mentionedPlayers: mentioned,
         publishedAt: pubIso,
         url: txUrl,
         externalUrl: null,
         externalTitle: null,
-        outletId: '49ers_official',
-        outletName: '49ers.com Official',
-        reporterId: '49ers_news',
-        reporterName: 'San Francisco 49ers Official',
-        author: 'San Francisco 49ers Official',
-        authorHandle: '@49ers',
-        authorProfileUrl: 'https://x.com/49ers',
+        outletId: officialOutletId,
+        outletName: `${activeTeam.clubDomain} Official`,
+        reporterId: activeTeam.abbr === 'SF' ? '49ers_news' : `${activeTeam.slug}_official`,
+        reporterName: `${activeTeam.fullName} Official`,
+        author: `${activeTeam.fullName} Official`,
+        authorHandle: `@${activeTeam.nickname}`,
+        authorProfileUrl: `https://www.${activeTeam.clubDomain}/news/`,
         trustTier: 1,
         wireSource: 'official_transactions',
         isBreaking: brk.isBreaking,
@@ -2556,6 +2619,7 @@ export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 
  */
 export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5 } = {}) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
   try {
     const [nflNewsRes, sfNewsRes, nflTxRes] = await Promise.all([
       fetchSingleWithTimeout(
@@ -2564,7 +2628,7 @@ export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5
         6500
       ).catch(() => null),
       fetchSingleWithTimeout(
-        'https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=18',
+        `https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${activeTeam.espnId}&limit=18`,
         { cache: 'no-store' },
         6500
       ).catch(() => null),
@@ -2587,7 +2651,7 @@ export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5
     const existingTextKeys = new Set(
       appData.news.rawStream.map(it => String(it.fullText || it.title || '').toLowerCase().slice(0, 90))
     );
-    const sfTeamRe = /\b(49ers|niners|san francisco)\b/i;
+    const sfTeamRe = getTeamEntityRegex(appData);
     const nowMs = Date.now();
     const maxAgeMs = maxAgeDays * 86_400_000;
     const discovered = [];
@@ -2686,13 +2750,14 @@ export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5
     for (const tx of Array.isArray(nflTxJson?.transactions) ? nflTxJson.transactions : []) {
       const desc = cleanSensationalistText(String(tx?.description || '').trim());
       const teamAbbr = String(tx?.team?.abbreviation || '').toUpperCase();
-      if (!desc || (teamAbbr !== 'SF' && !sfTeamRe.test(desc))) continue;
+      if (!desc || (teamAbbr !== activeTeam.abbr && !sfTeamRe.test(desc))) continue;
       const pubMs = tx.date ? new Date(tx.date).getTime() : 0;
       if (!pubMs || Number.isNaN(pubMs) || nowMs - pubMs > maxAgeMs) continue;
 
-      const fullLine = /^49ers\b|^San Francisco\b/i.test(desc) ? desc : `49ers roster move: ${desc}`;
+      const nickStartRe = new RegExp(`^${escapeClientRegex(activeTeam.nickname)}\\b|^${escapeClientRegex(activeTeam.city)}\\b`, 'i');
+      const fullLine = nickStartRe.test(desc) ? desc : `${activeTeam.nickname} roster move: ${desc}`;
       const txHash = hashWireKey(`${tx.date}_${desc}`);
-      const txUrl = `https://www.49ers.com/team/transactions/#tx-${txHash}`;
+      const txUrl = `https://www.${activeTeam.clubDomain}/team/transactions/#tx-${txHash}`;
       const textKey = fullLine.toLowerCase().slice(0, 90);
       if (existingUrls.has(txUrl) || existingTextKeys.has(textKey)) continue;
 
@@ -2707,27 +2772,28 @@ export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5
 
       existingUrls.add(txUrl);
       existingTextKeys.add(textKey);
+      const officialOutletId = activeTeam.abbr === 'SF' ? '49ers_official' : `${activeTeam.slug}_official`;
       discovered.push({
-        id: `sf_nfltx_live_${txHash}`,
+        id: `${activeTeam.abbr.toLowerCase()}_nfltx_live_${txHash}`,
         type: 'tweet',
         title: tweetDisplay.text,
         fullText: fullLine,
         isFullTweet: tweetDisplay.isFullTweet,
         summary: '',
         imageUrl: mentioned[0]?.headshotUrl || '',
-        imageAlt: 'San Francisco 49ers transaction',
+        imageAlt: `${activeTeam.fullName} transaction`,
         mentionedPlayers: mentioned,
         publishedAt: pubIso,
         url: txUrl,
         externalUrl: null,
         externalTitle: null,
-        outletId: '49ers_official',
-        outletName: '49ers.com Official',
-        reporterId: '49ers_news',
-        reporterName: 'San Francisco 49ers Official',
-        author: 'San Francisco 49ers Official',
-        authorHandle: '@49ers',
-        authorProfileUrl: 'https://x.com/49ers',
+        outletId: officialOutletId,
+        outletName: `${activeTeam.clubDomain} Official`,
+        reporterId: activeTeam.abbr === 'SF' ? '49ers_news' : `${activeTeam.slug}_official`,
+        reporterName: `${activeTeam.fullName} Official`,
+        author: `${activeTeam.fullName} Official`,
+        authorHandle: `@${activeTeam.nickname}`,
+        authorProfileUrl: `https://www.${activeTeam.clubDomain}/news/`,
         trustTier: 1,
         wireSource: 'official_transactions',
         isBreaking: brk.isBreaking,
@@ -2818,8 +2884,10 @@ export function dedupeRawStreamAtomically(items = []) {
  */
 export async function hydrateLive49ersOfficialRss(appData, { maxAgeDays = 6 } = {}) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const rssUrl = activeTeam.clubRssUrls?.[0] || `https://www.${activeTeam.clubDomain}/rss/news`;
   try {
-    const res = await fetchSingleWithTimeout('https://www.49ers.com/rss/news', { cache: 'no-store' }, 6500);
+    const res = await fetchSingleWithTimeout(rssUrl, { cache: 'no-store' }, 6500);
     if (!res.ok) return 0;
     const xml = await res.text();
     if (!xml || !xml.includes('<item')) return 0;
@@ -2874,8 +2942,9 @@ export async function hydrateLive49ersOfficialRss(appData, { maxAgeDays = 6 } = 
 
       existingUrls.add(link);
       existingTextKeys.add(textKey);
+      const rssOfficialOutletId = activeTeam.abbr === 'SF' ? '49ers_official' : `${activeTeam.slug}_official`;
       discovered.push({
-        id: `sf49_live_${hashWireKey(link)}`,
+        id: `${activeTeam.abbr.toLowerCase()}_live_${hashWireKey(link)}`,
         type: 'article',
         title,
         summary,
@@ -2884,13 +2953,13 @@ export async function hydrateLive49ersOfficialRss(appData, { maxAgeDays = 6 } = 
         mentionedPlayers: mentioned,
         publishedAt: pubIso,
         url: link,
-        outletId: '49ers_official',
-        outletName: '49ers.com Official',
-        reporterId: '49ers_news',
-        reporterName: '49ers.com Official',
-        author: '49ers.com Official',
-        authorHandle: '@49ers',
-        authorProfileUrl: 'https://x.com/49ers',
+        outletId: rssOfficialOutletId,
+        outletName: `${activeTeam.clubDomain} Official`,
+        reporterId: activeTeam.abbr === 'SF' ? '49ers_news' : `${activeTeam.slug}_official`,
+        reporterName: `${activeTeam.clubDomain} Official`,
+        author: `${activeTeam.clubDomain} Official`,
+        authorHandle: `@${activeTeam.nickname}`,
+        authorProfileUrl: `https://www.${activeTeam.clubDomain}/news/`,
         trustTier: 1,
         wireSource: '49ers_official_rss',
         isBreaking: brk.isBreaking,
@@ -2921,8 +2990,10 @@ export async function hydrateLive49ersOfficialRss(appData, { maxAgeDays = 6 } = 
  */
 export async function hydrateLive49ersOfficialVideosRss(appData, { maxAgeDays = 7 } = {}) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const videoRssUrl = activeTeam.clubRssUrls?.[1] || `https://www.${activeTeam.clubDomain}/rss/videos`;
   try {
-    const res = await fetchSingleWithTimeout('https://www.49ers.com/rss/videos', { cache: 'no-store' }, 6500);
+    const res = await fetchSingleWithTimeout(videoRssUrl, { cache: 'no-store' }, 6500);
     if (!res.ok) return 0;
     const xml = await res.text();
     if (!xml || !xml.includes('<item')) return 0;
@@ -2990,13 +3061,14 @@ export async function hydrateLive49ersOfficialVideosRss(appData, { maxAgeDays = 
         type: 'video',
         title,
         summary,
-        outletName: '49ers.com Official'
+        outletName: `${activeTeam.clubDomain} Official`
       });
 
       existingUrls.add(link);
       if (titleKey) existingVideoTitleKeys.add(titleKey);
+      const vidOutletId = activeTeam.abbr === 'SF' ? '49ers_official' : `${activeTeam.slug}_official`;
       discovered.push({
-        id: `sf49_vid_${hashWireKey(link)}`,
+        id: `${activeTeam.abbr.toLowerCase()}_vid_${hashWireKey(link)}`,
         type: 'video',
         title,
         summary,
@@ -3008,13 +3080,13 @@ export async function hydrateLive49ersOfficialVideosRss(appData, { maxAgeDays = 
         mentionedPlayers: mentioned,
         publishedAt: pubIso,
         url: link,
-        outletId: '49ers_official',
-        outletName: '49ers.com Official',
-        reporterId: '49ers_news',
-        reporterName: '49ers.com Video',
-        author: '49ers.com Video',
-        authorHandle: '@49ers',
-        authorProfileUrl: 'https://x.com/49ers',
+        outletId: vidOutletId,
+        outletName: `${activeTeam.clubDomain} Official`,
+        reporterId: activeTeam.abbr === 'SF' ? '49ers_news' : `${activeTeam.slug}_official`,
+        reporterName: `${activeTeam.clubDomain} Video`,
+        author: `${activeTeam.clubDomain} Video`,
+        authorHandle: `@${activeTeam.nickname}`,
+        authorProfileUrl: `https://www.${activeTeam.clubDomain}/video/`,
         trustTier: 1,
         wireSource: '49ers_official_videos_rss',
         isBreaking: false,
@@ -3044,6 +3116,7 @@ export async function hydrateLive49ersOfficialVideosRss(appData, { maxAgeDays = 
  */
 export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '' } = {}) {
   if (!appData?.news || !Array.isArray(appData.news.rawStream)) return 0;
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
   let effectiveWorkerBase = String(workerBaseUrl || '').trim();
   if (!effectiveWorkerBase && typeof window !== 'undefined') {
     try {
@@ -3051,10 +3124,18 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '' } 
     } catch {}
   }
   if (!effectiveWorkerBase || !/^https?:\/\//i.test(effectiveWorkerBase)) return 0;
+  // Never hit the SF-only legacy Worker (`49ers-api.joshal.com`) for non-SF teams!
+  if (activeTeam.abbr !== 'SF' && /49ers-api\.joshal\.com|49ers-faithful/i.test(effectiveWorkerBase)) {
+    return 0;
+  }
 
   try {
     const cleanBase = effectiveWorkerBase.replace(/\/+$/, '');
-    const res = await fetchSingleWithTimeout(`${cleanBase}/api/live-wire`, { cache: 'no-store' }, 4000);
+    const wireUrl =
+      activeTeam.abbr === 'SF'
+        ? `${cleanBase}/api/live-wire`
+        : `${cleanBase}/api/live-wire?team=${encodeURIComponent(activeTeam.slug)}`;
+    const res = await fetchSingleWithTimeout(wireUrl, { cache: 'no-store' }, 4000);
     if (!res.ok) return 0;
     const payload = await res.json();
     const rawItems = Array.isArray(payload?.items) ? payload.items : [];
@@ -4057,7 +4138,8 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
     const sleeperMap = await fetchThrottledSleeperPlayersMap(nowMs);
     if (sleeperMap) {
       if (!appData.liveGameDay.sf?.officialPosted) {
-        const sfSl = extractSleeperGameDaySignals(sleeperMap, 'SF', sfActivePlayers, baseSfReport);
+        const activeTeamGd = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+        const sfSl = extractSleeperGameDaySignals(sleeperMap, activeTeamGd.abbr, sfActivePlayers, baseSfReport);
         if (sfSl.officialPosted) {
           const sfNameByKey = new Map(sfActivePlayers.map(p => [normalizeLookupName(p.name), p.name]));
           appData.liveGameDay.sf = {
@@ -4065,7 +4147,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
             sourceRank: GAME_DAY_SOURCE_RANK.sleeper,
             inactives: sfSl.inactives,
             activeNames: [...sfSl.activeKeys].map(k => sfNameByKey.get(k)).filter(Boolean),
-            sourceUrl: 'https://www.49ers.com/team/injury-report/',
+            sourceUrl: activeTeamGd.clubInjuryUrl || `https://www.${activeTeamGd.clubDomain}/team/injury-report/`,
             sourceLabel: 'NFL Game-Day Wire'
           };
         }
@@ -4494,7 +4576,8 @@ export function reconcileLiveEspnSfRosterAndDepthChart(
           .toLowerCase()
           .replace(/[^a-z0-9]+/g, '-')
           .replace(/^-|-$/g, '');
-        const otcUrl = `https://overthecap.com/salary-cap/san-francisco-49ers`;
+        const activeTeamRos = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+        const otcUrl = `https://overthecap.com/salary-cap/${activeTeamRos.otcSlug}`;
 
         const playProb = computePlayerPlayProbability({
           name: fullName,
@@ -4519,7 +4602,10 @@ export function reconcileLiveEspnSfRosterAndDepthChart(
             imageUrl: art.images?.[0]?.url
               ? String(art.images[0].url).replace(/^http:\/\//i, 'https://')
               : '',
-            url: sanitizeExternalUrl(art.links?.web?.href, 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers')
+            url: sanitizeExternalUrl(
+              art.links?.web?.href,
+              `https://www.espn.com/nfl/team/_/name/${activeTeamRos.espnAbbr}/${activeTeamRos.otcSlug}`
+            )
           }));
 
         const newPlayer = {
@@ -4675,12 +4761,13 @@ export function reconcileLiveEspnSfRosterAndDepthChart(
 let cachedOfficialInjuryHtml = '';
 let cachedOfficialInjuryFetchedAtMs = 0;
 
-async function fetchOfficial49ersInjuryReportHtmlClient(nowMs = Date.now()) {
+async function fetchOfficial49ersInjuryReportHtmlClient(nowMs = Date.now(), teamInput = null) {
+  const activeTeam = resolveTeamConfig(teamInput || getActiveTeamConfig());
   if (cachedOfficialInjuryHtml && nowMs - cachedOfficialInjuryFetchedAtMs < 45_000) {
     return cachedOfficialInjuryHtml;
   }
   try {
-    const res = await fetchSingleWithTimeout('https://www.49ers.com/team/injury-report/', { cache: 'no-store' }, 6500);
+    const res = await fetchSingleWithTimeout(activeTeam.clubInjuryUrl, { cache: 'no-store' }, 6500);
     if (!res?.ok || typeof res.text !== 'function') return '';
     const html = await res.text();
     if (typeof html === 'string' && html.includes('<table')) {
@@ -4694,8 +4781,11 @@ async function fetchOfficial49ersInjuryReportHtmlClient(nowMs = Date.now()) {
   return '';
 }
 
-function extractTeamInjuriesFromEspnPayload(payload, { isSf = false, oppAbbr = '', oppName = '' } = {}) {
+function extractTeamInjuriesFromEspnPayload(payload, { isSf = false, oppAbbr = '', oppName = '', activeTeam = null } = {}) {
   if (!payload || !Array.isArray(payload.injuries)) return null;
+  const teamCfg = resolveTeamConfig(activeTeam || getActiveTeamConfig());
+  const espnIdStr = String(teamCfg.espnId);
+  const nickRe = new RegExp(teamCfg.nickname, 'i');
   // Shape 1: Live per-team `?team=<slug|id>` response (`{ team: {...}, injuries: [athleteItem, ...] }`)
   const firstEntry = payload.injuries[0];
   const isPerTeamShape =
@@ -4708,7 +4798,7 @@ function extractTeamInjuriesFromEspnPayload(payload, { isSf = false, oppAbbr = '
       const teamIdStr = String(payload.team.id || '');
       const teamDisp = String(payload.team.displayName || '');
       if (isSf) {
-        if (teamIdStr && teamIdStr !== '25' && teamAbbr && teamAbbr !== 'SF' && !/49ers/i.test(teamDisp)) {
+        if (teamIdStr && teamIdStr !== espnIdStr && teamAbbr && teamAbbr !== teamCfg.abbr && !nickRe.test(teamDisp)) {
           return null;
         }
       } else if (oppAbbr) {
@@ -4722,7 +4812,7 @@ function extractTeamInjuriesFromEspnPayload(payload, { isSf = false, oppAbbr = '
   // Shape 2: Legacy / test-mock 32-team response (`{ injuries: [{ id: '25', displayName: 'San Francisco 49ers', injuries: [...] }] }`)
   if (isSf) {
     return (
-      payload.injuries.find(t => String(t?.id) === '25' || /49ers/i.test(t?.displayName || '')) || null
+      payload.injuries.find(t => String(t?.id) === espnIdStr || nickRe.test(t?.displayName || '')) || null
     );
   }
   if (!oppAbbr) return null;
@@ -4736,6 +4826,7 @@ function extractTeamInjuriesFromEspnPayload(payload, { isSf = false, oppAbbr = '
 
 export async function hydrateLiveEspnOverlay(appData) {
   if (!appData?.meta || !appData?.scheduleMatchup) return false;
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
   let mutated = false;
   let standingsOrScoresChanged = false;
 
@@ -4747,7 +4838,7 @@ export async function hydrateLiveEspnOverlay(appData) {
 
   const initialOppAbbr = normalizeTeamAbbrClient(appData.scheduleMatchup?.upcomingMatchup?.oppAbbr || '');
   const initialOppSlug =
-    initialOppAbbr && initialOppAbbr !== 'SF' && initialOppAbbr !== 'TBD' && initialOppAbbr !== 'BYE'
+    initialOppAbbr && initialOppAbbr !== activeTeam.abbr && initialOppAbbr !== 'TBD' && initialOppAbbr !== 'BYE'
       ? toEspnTeamSlugClient(initialOppAbbr)
       : '';
 
@@ -4762,17 +4853,17 @@ export async function hydrateLiveEspnOverlay(appData) {
     official49ersInjHtml
   ] = await Promise.all([
     fetchCorsJson('https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings').catch(() => null),
-    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/sf/schedule').catch(() => null),
-    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=25').catch(() => null),
+    fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnAbbr}/schedule`).catch(() => null),
+    fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${activeTeam.espnId}`).catch(() => null),
     initialOppSlug
       ? fetchCorsJson(
           `https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${encodeURIComponent(initialOppSlug)}`
         ).catch(() => null)
       : Promise.resolve(null),
-    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=25&limit=25').catch(() => null),
-    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/roster').catch(() => null),
-    fetchCorsJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/25/depthcharts').catch(() => null),
-    fetchOfficial49ersInjuryReportHtmlClient().catch(() => '')
+    fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${activeTeam.espnId}&limit=25`).catch(() => null),
+    fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnId}/roster`).catch(() => null),
+    fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnId}/depthcharts`).catch(() => null),
+    fetchOfficial49ersInjuryReportHtmlClient(Date.now(), activeTeam).catch(() => '')
   ]);
   let oppInjuriesRaw = initialOppInjuriesRaw;
   let combinedEspnArticles = Array.isArray(espnNewsRaw?.articles) ? [...espnNewsRaw.articles] : [];
@@ -4805,14 +4896,15 @@ export async function hydrateLiveEspnOverlay(appData) {
       }
     }
 
-    const sfSt = teamRecords.get('SF');
+    const sfSt = teamRecords.get(activeTeam.abbr);
     if (sfSt) {
-      const nfcWestRanked = ['SF', 'SEA', 'LAR', 'ARI']
+      const divPeerAbbrs = [activeTeam.abbr, ...(activeTeam.divisionRivals || [])];
+      const nfcWestRanked = divPeerAbbrs
         .map(a => ({ abbr: a, ...(teamRecords.get(a) || { winPct: 0, wins: 0, pd: 0 }) }))
         .sort((a, b) => b.winPct - a.winPct || b.wins - a.wins || b.pd - a.pd);
-      const divIdx = Math.max(0, nfcWestRanked.findIndex(t => t.abbr === 'SF'));
+      const divIdx = Math.max(0, nfcWestRanked.findIndex(t => t.abbr === activeTeam.abbr));
       const divOrd = ['1st', '2nd', '3rd', '4th'][divIdx] || '1st';
-      const newSummary = `${divOrd} in NFC West • #${sfSt.seed} Seed in NFC`;
+      const newSummary = `${divOrd} in ${activeTeam.division} • #${sfSt.seed} Seed in ${activeTeam.conference}`;
       const newPdDisp = `${sfSt.pd >= 0 ? '+' : ''}${sfSt.pd} (${sfSt.pf} PF / ${sfSt.pa} PA)`;
 
       if (appData.meta.teamRecord !== sfSt.record) standingsOrScoresChanged = true;
@@ -4907,7 +4999,8 @@ export async function hydrateLiveEspnOverlay(appData) {
         const teamStatsUpdated = refreshLiveStandingsMetricsInTeamStats(
           appData.scheduleMatchup.teamStats,
           appData.scheduleMatchup.teamStatRankings,
-          teamRecords
+          teamRecords,
+          activeTeam.abbr
         );
         if (teamStatsUpdated) mutated = true;
       }
@@ -4938,7 +5031,7 @@ export async function hydrateLiveEspnOverlay(appData) {
       !allEvents.some(e => Number(e.seasonType?.type ?? e.seasonType?.id ?? 0) === 3)
     ) {
       const postRaw = await fetchCorsJson(
-        'https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/sf/schedule?seasontype=3'
+        `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnAbbr}/schedule?seasontype=3`
       ).catch(() => null);
       if (Array.isArray(postRaw?.events) && postRaw.events.length > 0) {
         allEvents.push(...postRaw.events);
@@ -4966,8 +5059,12 @@ export async function hydrateLiveEspnOverlay(appData) {
       }
 
       const comp = ev.competitions?.[0] || {};
-      const sfComp = (comp.competitors || []).find(c => c.team?.abbreviation === 'SF');
-      const oppComp = (comp.competitors || []).find(c => c.team?.abbreviation !== 'SF');
+      const sfComp = (comp.competitors || []).find(
+        c => normalizeTeamAbbrClient(c.team?.abbreviation) === activeTeam.abbr
+      );
+      const oppComp = (comp.competitors || []).find(
+        c => normalizeTeamAbbrClient(c.team?.abbreviation) !== activeTeam.abbr
+      );
       const completed = Boolean(comp.status?.type?.completed);
       const liveState = String(comp.status?.type?.state || '').toLowerCase();
 
@@ -5588,7 +5685,13 @@ export async function hydrateLiveEspnOverlay(appData) {
         }
       }
 
-      const freshMc = runPlayoffMonteCarlo({ ...simIn, iterations: 10000, seed: 492026 });
+      const freshMc = runPlayoffMonteCarlo({
+        ...simIn,
+        targetTeam: activeTeam.abbr,
+        conference: activeTeam.conference,
+        iterations: 10000,
+        seed: 492026
+      });
       if (freshMc?.sfOdds) {
         appData.seasonal.playoffPicture.baselineSimulation = freshMc;
         if (Array.isArray(appData.seasonal.playoffPicture.seedPathCards)) {
@@ -6185,7 +6288,8 @@ export async function hydrateLiveEspnOverlay(appData) {
   if (!earlyWeekBlankPractice && official49ersInjHtml) {
     const liveOfficial = parseOfficial49ersInjuryReportHtml(
       official49ersInjHtml,
-      appData.scheduleMatchup?.upcomingMatchup?.oppName || ''
+      appData.scheduleMatchup?.upcomingMatchup?.oppName || '',
+      activeTeam
     );
 
     if (liveOfficial.hasSfReport && Array.isArray(appData.roster?.players)) {
@@ -6863,8 +6967,16 @@ export async function hydrateLiveOpponentWeeklyPracticeWire(
  */
 export async function hydrateLive49ersPodcasts(appData) {
   if (!appData) return false;
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const teamShows =
+    activeTeam.abbr !== 'SF' && Array.isArray(activeTeam.beatPodcastShows) && activeTeam.beatPodcastShows.length > 0
+      ? activeTeam.beatPodcastShows
+      : Array.isArray(appData?.beatPodcasts?.shows) && appData.beatPodcasts.shows.length > 0
+        ? appData.beatPodcasts.shows
+        : FLAGSHIP_PODCAST_SHOWS_CLIENT;
   try {
-    const ids = FLAGSHIP_PODCAST_SHOWS_CLIENT.map(s => s.collectionId).join(',');
+    const ids = teamShows.map(s => s.collectionId).filter(Boolean).join(',');
+    if (!ids) return false;
     const res = await fetchSingleWithTimeout(
       `https://itunes.apple.com/lookup?id=${ids}&entity=podcastEpisode&limit=12`,
       { cache: 'no-cache' },
@@ -6887,12 +6999,12 @@ export async function hydrateLive49ersPodcasts(appData) {
     const episodes = [];
     for (const r of results) {
       if (r.wrapperType !== 'podcastEpisode') continue;
-      const showCfg = FLAGSHIP_PODCAST_SHOWS_CLIENT.find(s => s.collectionId === Number(r.collectionId));
+      const showCfg = teamShows.find(s => Number(s.collectionId) === Number(r.collectionId));
       if (!showCfg) continue;
       const pubMs = r.releaseDate ? new Date(r.releaseDate).getTime() : 0;
       if (!pubMs || nowMs - pubMs > windowMs) continue;
 
-      const showMeta = showMetaById.get(showCfg.collectionId) || {};
+      const showMeta = showMetaById.get(Number(showCfg.collectionId)) || {};
       const durMin = r.trackTimeMillis ? Math.max(1, Math.round(r.trackTimeMillis / 60000)) : null;
       const rawDesc = String(r.description || r.shortDescription || '')
         .replace(/<[^>]+>/g, ' ')
@@ -6911,7 +7023,7 @@ export async function hydrateLive49ersPodcasts(appData) {
         hosts: showCfg.hosts,
         network: showCfg.network,
         title: cleanSensationalistText(r.trackName || 'Episode'),
-        summary: summary || `${showCfg.name} episode analyzing the latest San Francisco 49ers news and film.`,
+        summary: summary || `${showCfg.name} episode analyzing the latest ${activeTeam.fullName} news and film.`,
         publishedAt: new Date(pubMs).toISOString(),
         durationMinutes: durMin,
         durationDisplay: durMin ? `${durMin} min` : 'Podcast',
@@ -6925,7 +7037,7 @@ export async function hydrateLive49ersPodcasts(appData) {
 
     episodes.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
-    const shows = FLAGSHIP_PODCAST_SHOWS_CLIENT.map(s => {
+    const shows = teamShows.map(s => {
       const meta = showMetaById.get(s.collectionId) || {};
       const count = episodes.filter(e => e.showId === s.id).length;
       return {

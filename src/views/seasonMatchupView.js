@@ -28,6 +28,7 @@ import {
   registerRosterPlayersForInlineLinks
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
@@ -492,10 +493,11 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
     return lb.find(x => x.team === abbr) || { rank: 16, disp: '—' };
   };
 
+  const activeTeamH2h = getActiveTeamConfig();
   const renderH2hRows = rows =>
     (rows || [])
       .map(r => {
-        const sfEntry = getTeamRowEntry(r, 'SF');
+        const sfEntry = getTeamRowEntry(r, activeTeamH2h.abbr);
         const oppEntry = getTeamRowEntry(r, oppAbbr);
         return `
           <tr>
@@ -509,7 +511,7 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
       })
       .join('');
 
-  const sfOverall = getTeamRowEntry(activeUnit.overall, 'SF');
+  const sfOverall = getTeamRowEntry(activeUnit.overall, activeTeamH2h.abbr);
   const oppOverall = getTeamRowEntry(activeUnit.overall, oppAbbr);
   const sfOverallDisp = String(sfOverall.disp || activeUnit.overall?.displayValue || '—').replace(/\s*idx\b/gi, '%');
   const oppOverallDisp = String(oppOverall.disp || '—').replace(/\s*idx\b/gi, '%');
@@ -521,7 +523,7 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
         <div class="card-header-left">
           <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('season', 16)}</div>
           <div class="card-title-group">
-            <h3 class="card-title">49ers vs. ${esc(oppShortName)} Unit Rankings</h3>
+            <h3 class="card-title">${esc(activeTeamH2h.nickname)} vs. ${esc(oppShortName)} Unit Rankings</h3>
           </div>
         </div>
       </div>
@@ -545,7 +547,7 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
           <thead>
             <tr>
               <th>Metric</th>
-              <th class="mono num-col">49ers</th>
+              <th class="mono num-col">${esc(activeTeamH2h.nickname)}</th>
               <th class="mono rank-col">Rank</th>
               <th class="mono num-col">${esc(oppShortName)}</th>
               <th class="mono rank-col">Rank</th>
@@ -711,13 +713,14 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
     return '0 on reserve';
   })();
 
+  const activeTeamMatchup = getActiveTeamConfig();
   const sfIsAway = um.homeAway === 'away';
   const sfRecShort = um.sfRecord?.split(' ')[0] || appData?.meta?.teamRecord || '—';
   const awayColHtml = sfIsAway
-    ? `<a href="${esc(buildEspnNflTeamUrl('SF'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col" style="text-decoration:none;color:inherit">
-        ${renderTeamLogoHtml('SF', um.sfLogoUrl, 40)}
+    ? `<a href="${esc(buildEspnNflTeamUrl(activeTeamMatchup.abbr))}" target="_blank" rel="noopener noreferrer" class="sb-team-col" style="text-decoration:none;color:inherit">
+        ${renderTeamLogoHtml(activeTeamMatchup.abbr, um.sfLogoUrl, 40)}
         <div class="sb-team-meta">
-          <div class="sb-team-abbr">49ers</div>
+          <div class="sb-team-abbr">${esc(activeTeamMatchup.nickname)}</div>
           <div class="sb-team-rec mono">${esc(sfRecShort)}</div>
         </div>
       </a>`
@@ -736,12 +739,12 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
         </div>
         ${renderTeamLogoHtml(um.oppAbbr || 'NFL', um.oppLogoUrl, 40)}
       </a>`
-    : `<a href="${esc(buildEspnNflTeamUrl('SF'))}" target="_blank" rel="noopener noreferrer" class="sb-team-col home" style="text-decoration:none;color:inherit">
+    : `<a href="${esc(buildEspnNflTeamUrl(activeTeamMatchup.abbr))}" target="_blank" rel="noopener noreferrer" class="sb-team-col home" style="text-decoration:none;color:inherit">
         <div class="sb-team-meta">
-          <div class="sb-team-abbr">49ers</div>
+          <div class="sb-team-abbr">${esc(activeTeamMatchup.nickname)}</div>
           <div class="sb-team-rec mono">${esc(sfRecShort)}</div>
         </div>
-        ${renderTeamLogoHtml('SF', um.sfLogoUrl, 40)}
+        ${renderTeamLogoHtml(activeTeamMatchup.abbr, um.sfLogoUrl, 40)}
       </a>`;
 
   const hasLiveOrFinalScore = um.sfScore != null && um.oppScore != null;
@@ -775,7 +778,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
           </div>
         </div>
         <button type="button" class="btn-ghost" data-action="analyze-topic-jump"
-                data-prompt="${esc(`Balanced All-22 breakdown for Week ${um.week} ${sfIsAway ? `49ers at ${um.oppName}` : `${um.oppName} at 49ers`} (${um.betting?.spread || 'spread TBD'}): where each team holds real unit edges, vulnerabilities & paths to win`)}">
+                data-prompt="${esc(`Balanced All-22 breakdown for Week ${um.week} ${sfIsAway ? `${activeTeamMatchup.nickname} at ${um.oppName}` : `${um.oppName} at ${activeTeamMatchup.nickname}`} (${um.betting?.spread || 'spread TBD'}): where each team holds real unit edges, vulnerabilities & paths to win`)}">
           ${iconSvg('sparkles', 13)}
           <span>AI Film Prep</span>
         </button>
@@ -1300,12 +1303,13 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
   });
   const directPosts = Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : [];
 
+  const activeTeamH = getActiveTeamConfig();
   return `
     ${renderGameDayRosterCard(sfGameDay, {
       is49ers: true,
       asSubcard: false,
-      teamName: '49ers',
-      teamAbbr: 'SF',
+      teamName: activeTeamH.nickname,
+      teamAbbr: activeTeamH.abbr,
       teamLogoUrl: appData?.scheduleMatchup?.upcomingMatchup?.sfLogoUrl
     })}
 
@@ -1319,8 +1323,8 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-          <a href="${esc(h.sourceUrl || 'https://www.49ers.com/team/injury-report/')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-            <span>49ers.com</span>${iconSvg('externalLink', 11)}
+          <a href="${esc(h.sourceUrl || activeTeamH.clubInjuryUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+            <span>${esc(activeTeamH.clubDomain)}</span>${iconSvg('externalLink', 11)}
           </a>
           <a href="${esc(h.espnInjuryUrl || 'https://www.espn.com/nfl/injuries')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
             <span>ESPN</span>${iconSvg('externalLink', 11)}
@@ -1511,8 +1515,9 @@ function renderTeamStatsAndPower(appData, userPrefs = null) {
       oppShortName: oppShort
     }
   );
+  const activeTeamStats = getActiveTeamConfig();
   const seasonYear = Number(appData?.meta?.seasonYear) || 2026;
-  const pfrSeasonUrl = buildPfrTeamSeasonUrl('SF', seasonYear);
+  const pfrSeasonUrl = buildPfrTeamSeasonUrl(activeTeamStats.abbr, seasonYear);
 
   const unitCardsHtml =
     units.length > 0
@@ -1537,7 +1542,7 @@ function renderTeamStatsAndPower(appData, userPrefs = null) {
               <thead>
                 <tr>
                   <th>Metric</th>
-                  <th class="mono num-col">49ers</th>
+                  <th class="mono num-col">${esc(activeTeamStats.nickname)}</th>
                   <th class="mono rank-col">Rank</th>
                   <th class="mono num-col">NFL Avg</th>
                 </tr>
@@ -1605,7 +1610,7 @@ function renderTeamStatsAndPower(appData, userPrefs = null) {
               ? `
             <div class="source-link-strip team-stats-sources">
               <a href="https://github.com/nflverse/nflverse-data" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>nflverse</span>${iconSvg('externalLink', 11)}</a>
-              <a href="${esc(pfrSeasonUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR 49ers</span>${iconSvg('externalLink', 11)}</a>
+              <a href="${esc(pfrSeasonUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR ${esc(activeTeamStats.nickname)}</span>${iconSvg('externalLink', 11)}</a>
               <a href="https://rbsdm.com/stats/stats/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>RBSDM EPA</span>${iconSvg('externalLink', 11)}</a>
             </div>
           `
@@ -1622,7 +1627,7 @@ function renderTeamStatsAndPower(appData, userPrefs = null) {
           <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('season', 16)}</div>
           <div class="card-title-group">
             <div class="card-eyebrow">nflverse ${seasonYear} • 32-Team Benchmarks</div>
-            <h2 class="card-title">49ers Team Stats &amp; NFL Rankings</h2>
+            <h2 class="card-title">${esc(activeTeamStats.nickname)} Team Stats &amp; NFL Rankings</h2>
           </div>
         </div>
       </div>
@@ -1979,7 +1984,7 @@ function renderRootingGameRowHtml(g, forcedWinners) {
       <div style="min-width:0">
         <div style="font-weight:700;font-size:13px">
           ${esc(g.matchupLabel)}
-          ${g.is49ersGame ? `<span class="badge badge-scarlet">49ers</span>` : ''}
+          ${g.is49ersGame ? `<span class="badge badge-scarlet">${esc(getActiveTeamConfig().nickname)}</span>` : ''}
         </div>
         <div style="font-size:11.5px;color:var(--text-secondary)">
           Root for <strong style="color:var(--emerald)">${esc(g.rootForTeam)}</strong> •
@@ -2084,7 +2089,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
           ${renderMiniMeterHtml(sf.makePlayoffsPct ?? 0, 'emerald')}
         </div>
         <div class="kpi-box">
-          <div class="kpi-label">Win NFC West</div>
+          <div class="kpi-label">Win ${esc(getActiveTeamConfig().division)}</div>
           <div class="kpi-val mono" style="color:var(--gold-bright)">${sf.winDivisionPct ?? 0}%${divDelta ? ` <span class="delta-chip ${divDelta.tone}" data-playoff-delta>${esc(divDelta.text)}</span>` : ''}</div>
           ${renderMiniMeterHtml(sf.winDivisionPct ?? 0, 'gold')}
         </div>
@@ -2095,7 +2100,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
         </div>
       </div>
 
-      <div class="sub-label" style="margin:10px 0 6px">NFC Seed Distribution (Proj. ${sf.projectedWins ?? 12.0} Wins)</div>
+      <div class="sub-label" style="margin:10px 0 6px">${esc(getActiveTeamConfig().conference)} Seed Distribution (Proj. ${sf.projectedWins ?? 10.0} Wins)</div>
       <div style="display:flex;flex-direction:column;gap:5px">
         ${[1, 2, 3, 4, 5, 6, 7]
           .map(s => {
@@ -2143,7 +2148,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
           .join('')}
       </div>
 
-      <div class="sub-label" style="margin-bottom:6px">NFC Projected Standings</div>
+      <div class="sub-label" style="margin-bottom:6px">${esc(getActiveTeamConfig().conference)} Projected Standings</div>
       <div class="table-scroll">
         <table class="data-table mono">
           <thead><tr><th>Team</th><th>Div</th><th>Rec</th><th>Proj W</th><th>Playoffs</th><th>Div %</th><th>#1 Bye</th></tr></thead>
@@ -2151,14 +2156,14 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
             ${(sim.allTeamOdds || [])
               .map(
                 t => `
-              <tr style="${t.abbr === 'SF' ? 'background:var(--gold-soft)' : ''}">
+              <tr style="${t.abbr === getActiveTeamConfig().abbr ? 'background:var(--gold-soft)' : ''}">
                 <td>
                   <a href="${esc(buildEspnNflTeamUrl(t.abbr))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="display:inline-flex;align-items:center;gap:6px;color:inherit">
                     ${renderTeamLogoHtml(t.abbr, t.logoUrl, 20)}
                     <strong>${esc(t.abbr)}</strong>
                   </a>
                 </td>
-                <td style="font-family:var(--font-sans);font-size:11px">${esc(t.division.replace('NFC ', ''))}</td>
+                <td style="font-family:var(--font-sans);font-size:11px">${esc(String(t.division || '').replace(/^(?:NFC|AFC)\s+/i, ''))}</td>
                 <td>${esc(t.currentRecord)}</td>
                 <td>${t.projectedWins}</td>
                 <td>${t.makePlayoffsPct}%</td>
@@ -2222,7 +2227,7 @@ function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
            style="padding:10px 11px;border-radius:10px;background:var(--bg-card-alt);border:1px solid ${borderColor}">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
           <div style="display:flex;align-items:center;gap:8px;min-width:0">
-            ${renderTeamLogoHtml('SF', g.sfLogoUrl, 28)}
+            ${renderTeamLogoHtml(getActiveTeamConfig().abbr, g.sfLogoUrl, 28)}
             <div style="min-width:0;display:flex;align-items:center;gap:5px;flex-wrap:wrap">
               <span class="mono" style="color:var(--gold-bright);font-weight:800">${esc(weekTagText)}</span>
               ${phasePillHtml}
@@ -2446,7 +2451,7 @@ function renderFullSchedule(appData, schedulePrevExpanded = false, mcSimResult =
             <h2 class="card-title">${seasonYr} Season</h2>
           </div>
         </div>
-        <a href="https://www.espn.com/nfl/team/schedule/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+        <a href="https://www.espn.com/nfl/team/schedule/_/name/${esc(getActiveTeamConfig().espnAbbr)}/${esc(getActiveTeamConfig().otcSlug)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
           <span>ESPN Schedule</span>${iconSvg('externalLink', 11)}
         </a>
       </div>
@@ -2720,7 +2725,7 @@ function renderBigBoardProspectItemHtml(
                   : `<span class="bb-cons-fallback mono">Cons #${consRank}</span>`
                 : ''
             }
-            ${inSfRange ? `<span class="badge badge-scarlet mono big-board-sf-tag" title="Inside 49ers 1st-Pick Range">SF</span>` : ''}
+            ${inSfRange ? `<span class="badge badge-scarlet mono big-board-sf-tag" title="Inside ${esc(getActiveTeamConfig().nickname)} 1st-Pick Range">${esc(getActiveTeamConfig().abbr)}</span>` : ''}
             <span class="mono big-board-spread ${spreadCls}">${esc(mobileSpreadTxt)}</span>
           </div>
         </div>
@@ -2733,7 +2738,7 @@ function renderBigBoardProspectItemHtml(
           <div class="bb-col bb-col-player">
             ${logoHtml}
             <span class="big-board-name">${esc(b.name)}</span>
-            ${inSfRange ? `<span class="badge badge-scarlet mono big-board-sf-tag" title="Inside 49ers 1st-Pick Range">SF</span>` : ''}
+            ${inSfRange ? `<span class="badge badge-scarlet mono big-board-sf-tag" title="Inside ${esc(getActiveTeamConfig().nickname)} 1st-Pick Range">${esc(getActiveTeamConfig().abbr)}</span>` : ''}
           </div>
           <div class="bb-col bb-col-pos mono"><strong style="color:var(--gold-bright)">${esc(b.pos)}</strong></div>
           <div class="bb-col bb-col-school">${esc(b.school)}</div>
@@ -2993,7 +2998,7 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
         <div class="card-header-left">
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('trophy', 17)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">49ers 1st Pick • Rd ${mockDb.projectedFirstPickRound} Est. #${mockDb.projectedFirstPickOverall}</div>
+            <div class="card-eyebrow">${esc(getActiveTeamConfig().nickname)} 1st Pick • Rd ${mockDb.projectedFirstPickRound} Est. #${mockDb.projectedFirstPickOverall}</div>
             <h3 class="card-title">Consensus Mock Draft</h3>
           </div>
         </div>
@@ -3449,7 +3454,7 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
 function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosSet = new Set()) {
   const dc = appData?.seasonal?.draftClass2026 || {};
   const draftYear = Number(dc.draftYear) || Number(appData?.meta?.seasonYear) || 2026;
-  const pfrDraftUrl = sanitizeExternalUrl(dc.sourceUrl, null) || buildPfrTeamDraftUrl('SF', draftYear);
+  const pfrDraftUrl = sanitizeExternalUrl(dc.sourceUrl, null) || buildPfrTeamDraftUrl(getActiveTeamConfig().abbr, draftYear);
   const picks = dc.picks || [];
   const udfas = dc.priorityUdfas || [];
 

@@ -14,6 +14,8 @@
  *    Official Transactions, Bluesky mirrors) so users always get X-first attribution and 1-tap X verification.
  */
 
+import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
+
 export const TRUST_TIER_LABELS = {
   1: 'Tier 1 • Primary Trusted',
   2: 'Tier 2 • Verified Beat & Film',
@@ -169,6 +171,79 @@ const AMBIGUOUS_SURNAMES = new Set([
     }
   }
 })();
+
+let ACTIVE_TEAM_CONTEXT = null;
+
+function registerReporterEntry(entry) {
+  if (!entry || !entry.id || !entry.name) return;
+  const cleanHandle = entry.handle
+    ? entry.handle.startsWith('@')
+      ? entry.handle
+      : `@${entry.handle}`
+    : null;
+  const enriched = {
+    ...entry,
+    handle: cleanHandle,
+    trustTier: Number(entry.trustTier) || 2,
+    xUrl:
+      entry.xUrl ||
+      (cleanHandle ? `https://x.com/${cleanHandle.replace(/^@/, '')}` : null)
+  };
+  BY_ID.set(enriched.id, enriched);
+  BY_LOWER_NAME.set(enriched.name.toLowerCase(), enriched);
+  if (enriched.handle) {
+    BY_LOWER_HANDLE.set(enriched.handle.replace(/^@/, '').toLowerCase(), enriched);
+  }
+  for (const al of enriched.aliases || []) {
+    BY_LOWER_NAME.set(String(al).toLowerCase(), enriched);
+  }
+  if (enriched.bskyHandle && enriched.handle) {
+    BSKY_ACTOR_TO_X_HANDLE[String(enriched.bskyHandle).toLowerCase()] = enriched.handle;
+  }
+  if (enriched.isPodiumSubject) {
+    PODIUM_SUBJECT_IDS.add(enriched.id);
+    NON_REPORTER_PREFIX_WORDS.add(enriched.name.toLowerCase());
+    const last = enriched.name.trim().split(/\s+/).pop()?.toLowerCase();
+    if (last && last.length >= 4) NON_REPORTER_PREFIX_WORDS.add(last);
+  }
+}
+
+export function configureBeatAttributionForTeam(teamInput = null, reportersData = null, coaches = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  ACTIVE_TEAM_CONTEXT = { team, coaches: coaches || team.coachesSeed || null };
+
+  if (coaches && typeof coaches === 'object') {
+    for (const val of Object.values(coaches)) {
+      const clean = String(val || '').trim();
+      if (!clean) continue;
+      const id = clean.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+      PODIUM_SUBJECT_IDS.add(id);
+      NON_REPORTER_PREFIX_WORDS.add(clean.toLowerCase());
+      const surname = clean.split(/\s+/).pop()?.toLowerCase();
+      if (surname && surname.length >= 4) NON_REPORTER_PREFIX_WORDS.add(surname);
+    }
+  }
+
+  for (const out of reportersData?.outlets || []) {
+    if (out?.id && out?.url) {
+      OUTLET_DEFAULT_HUB_URLS[out.id] = out.url;
+    }
+  }
+  OUTLET_DEFAULT_HUB_URLS.espn = `https://www.espn.com/nfl/team/_/name/${team.espnAbbr}/${team.otcSlug}`;
+  OUTLET_DEFAULT_HUB_URLS.nfl_network = `https://www.nfl.com/teams/${team.otcSlug}/`;
+  OUTLET_DEFAULT_HUB_URLS.pfrumors = `https://www.profootballrumors.com/${team.otcSlug}`;
+
+  const reps = Array.isArray(reportersData?.reporters) ? reportersData.reporters : [];
+  for (const r of reps) {
+    registerReporterEntry(r);
+  }
+  if (Array.isArray(reportersData?.podiumSubjectIds)) {
+    for (const pid of reportersData.podiumSubjectIds) {
+      PODIUM_SUBJECT_IDS.add(pid);
+    }
+  }
+  return ACTIVE_TEAM_CONTEXT;
+}
 
 export function getReporterDirectoryEntry(reporterId = '') {
   return BY_ID.get(String(reporterId || '').trim()) || null;
@@ -855,12 +930,26 @@ export function buildXBeatListSearchUrl(mode = 'trusted', options = {}) {
 
   const enabled = resolveEnabledDirectXReporters(options);
 
+  const activeTeam = resolveTeamConfig(options?.team || ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
+  const activeCoaches = options?.coaches || ACTIVE_TEAM_CONTEXT?.coaches || activeTeam?.coachesSeed || {};
+
   if (mode === 'insiders') {
     const nationalHandles = enabled.filter(isNationalReporter).map(r => r.handle);
-    const q = packXSearchQueryWithinBudget(
-      nationalHandles,
-      '(49ers OR Niners OR Shanahan OR Lynch OR Purdy)'
-    );
+    const scopeTerms =
+      activeTeam.abbr === 'SF'
+        ? '(49ers OR Niners OR Shanahan OR Lynch OR Purdy)'
+        : (() => {
+            const terms = [activeTeam.nickname];
+            if (!activeTeam.keywordRules?.excludeGenericCity && activeTeam.city && activeTeam.city !== activeTeam.nickname) {
+              terms.push(activeTeam.city);
+            }
+            const hcLast = String(activeCoaches.hc || '').trim().split(/\s+/).pop();
+            const gmLast = String(activeCoaches.gm || '').trim().split(/\s+/).pop();
+            if (hcLast && hcLast.length >= 4) terms.push(hcLast);
+            if (gmLast && gmLast.length >= 4 && gmLast !== hcLast) terms.push(gmLast);
+            return `(${[...new Set(terms)].join(' OR ')})`;
+          })();
+    const q = packXSearchQueryWithinBudget(nationalHandles, scopeTerms);
     return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
   }
 
@@ -872,7 +961,7 @@ export function buildXBeatListSearchUrl(mode = 'trusted', options = {}) {
     return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
   }
 
-  // Default `'trusted'`: All enabled Tier 1–3 local 49ers Beat Reporters & Official Team Voices
+  // Default `'trusted'`: All enabled Tier 1–3 local Beat Reporters & Official Team Voices
   const localBeatHandles = enabled
     .filter(r => !isNationalReporter(r) && (r.category === 'beat' || r.category === 'official'))
     .map(r => r.handle);
@@ -881,16 +970,26 @@ export function buildXBeatListSearchUrl(mode = 'trusted', options = {}) {
 }
 
 /**
- * Builds a 1-tap Live X (`x.com`) search URL for breaking beat updates on a specific 49ers player.
+ * Builds a 1-tap Live X (`x.com`) search URL for breaking beat updates on a specific team player.
  */
-export function buildXPlayerScoopSearchUrl(playerName = '') {
+export function buildXPlayerScoopSearchUrl(playerName = '', options = {}) {
   const cleanName = String(playerName || '')
     .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
     .trim();
-  if (!cleanName) return buildXBeatListSearchUrl('trusted');
+  if (!cleanName) return buildXBeatListSearchUrl('trusted', options);
+  const activeTeam = resolveTeamConfig(options?.team || ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
   const dotlessName = cleanName.replace(/\b([A-Za-z])\.([A-Za-z])\./g, '$1$2');
   const nameClause = dotlessName !== cleanName ? `("${cleanName}" OR "${dotlessName}")` : `"${cleanName}"`;
-  const q = `${nameClause} (49ers OR Niners OR from:MaioccoNBCS OR from:nwagoner OR from:mattbarrows OR from:LombardiHimself OR from:jenniferleechan OR from:Eric_Branch OR from:CamInman)`;
+  if (activeTeam.abbr === 'SF') {
+    const q = `${nameClause} (49ers OR Niners OR from:MaioccoNBCS OR from:nwagoner OR from:mattbarrows OR from:LombardiHimself OR from:jenniferleechan OR from:Eric_Branch OR from:CamInman)`;
+    return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
+  }
+  const repHandles = (options?.reporters || [])
+    .filter(r => r && r.handle && r.category === 'beat' && Number(r.trustTier || 2) === 1)
+    .slice(0, 6)
+    .map(r => `from:${String(r.handle).replace(/^@/, '')}`);
+  const teamTerms = [activeTeam.nickname, ...repHandles];
+  const q = `${nameClause} (${teamTerms.join(' OR ')})`;
   return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
 }
 

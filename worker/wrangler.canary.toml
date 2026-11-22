@@ -1,0 +1,47 @@
+# Canary Multi-Tenant Deployment for `lions.joshal.com` & `bills.joshal.com`
+#
+# CRITICAL ISOLATION GUARANTEES:
+# - Separate Worker name (`nfl-hq-canary`) -> NEVER touches production `49ers-worker` or `49ers.joshal.com`.
+# - Explicit `custom_domain = true` routes ONLY for `lions.joshal.com` and `bills.joshal.com`
+#   -> NEVER hijacks `workouts.joshal.com` or any future non-NFL subdomain on `joshal.com`.
+# - Uses dedicated `GEMINI_NFL_API_KEY` secret (`joshalbox@gmail.com`) -> 0 tokens from `joshal7@gmail.com`.
+
+name = "nfl-hq-canary"
+main = "canary-worker.js"
+compatibility_date = "2026-11-01"
+
+[assets]
+directory = ".."
+binding = "ASSETS"
+run_worker_first = ["/", "/index.html", "/manifest.json", "/apple-touch-icon.png", "/api/*", "/data/*"]
+
+# Explicit NFL canary subdomains ONLY (auto-provisions DNS + SSL in Cloudflare Free DNS)
+routes = [
+  { pattern = "lions.joshal.com", custom_domain = true },
+  { pattern = "bills.joshal.com", custom_domain = true }
+]
+
+# 100% Free-Tier Cloudflare Bindings:
+# Create once via:
+#   npx wrangler kv namespace create NFL_SHARED_CACHE
+#   npx wrangler r2 bucket create nfl-data-public
+[[kv_namespaces]]
+binding = "SHARED_CACHE"
+id = "REPLACE_WITH_NFL_SHARED_CACHE_KV_ID"
+
+[[r2_buckets]]
+binding = "DATA_BUCKET"
+bucket_name = "nfl-data-public"
+
+[triggers]
+# Staggered heartbeat / active-team brief window check (every 10 min during 5pm-9:30pm ET)
+crons = ["*/10 21-23,0-2 * * *"]
+
+[vars]
+CANARY_TEAMS = "DET,BUF"
+GEMINI_DEFAULT_FREE_MODEL = "gemini-4-hydrogen"
+GEMINI_THINKING_LEVEL = "XHIGH"
+
+# Secrets configured via `npx wrangler secret put <NAME> -c worker/wrangler.canary.toml`:
+# - GEMINI_NFL_API_KEY : Free-tier Gemini API key for `joshalbox@gmail.com` (NEVER committed to Git)
+# - GROUP_PASSCODE     : Optional private PIN (leave unset to enforce 100% public BYOK for Auto Pods/Analysis)

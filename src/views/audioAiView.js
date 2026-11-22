@@ -17,6 +17,7 @@ import {
   resolveAudioEpisodeVisual
 } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 import { formatTimeMmSs } from '../components/audioPlayer.js';
 import { hasCachedEpisodeAudioSync } from '../services/podcastAudioStore.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
@@ -551,17 +552,20 @@ function renderBeatPodcastsDirectory({
   showFilter = 'all',
   updatedAt = ''
 }) {
+  const activeTeam = getActiveTeamConfig();
   const defaultShows =
     shows.length > 0
       ? shows
-      : [
-          { id: 'the_gold_standard', name: 'The Gold Standard', hosts: 'Rob "Stats" Guerrera & Levin Black' },
-          { id: '49ers_talk', name: '49ers Talk', hosts: 'Matt Maiocco & Jennifer Lee Chan' },
-          { id: '49ers_plus_minus', name: '49ers +/-', hosts: 'Tim Kawakami & Matt Barrows' },
-          { id: 'dieter_and_hutch', name: 'Dieter and Hutch', hosts: 'Dieter Kurtenbach & Jake Hutchinson' },
-          { id: 'locked_on_49ers', name: 'Locked On 49ers', hosts: 'Brian Peacock & Eric Crocker' },
-          { id: 'lombardi_lounge', name: 'Lombardi Lounge', hosts: 'David Lombardi' }
-        ];
+      : activeTeam.abbr !== 'SF' && activeTeam.beatPodcastShows?.length > 0
+        ? activeTeam.beatPodcastShows
+        : [
+            { id: 'the_gold_standard', name: 'The Gold Standard', hosts: 'Rob "Stats" Guerrera & Levin Black' },
+            { id: '49ers_talk', name: '49ers Talk', hosts: 'Matt Maiocco & Jennifer Lee Chan' },
+            { id: '49ers_plus_minus', name: '49ers +/-', hosts: 'Tim Kawakami & Matt Barrows' },
+            { id: 'dieter_and_hutch', name: 'Dieter and Hutch', hosts: 'Dieter Kurtenbach & Jake Hutchinson' },
+            { id: 'locked_on_49ers', name: 'Locked On 49ers', hosts: 'Brian Peacock & Eric Crocker' },
+            { id: 'lombardi_lounge', name: 'Lombardi Lounge', hosts: 'David Lombardi' }
+          ];
 
   const headerCard = `
     <section class="card">
@@ -570,7 +574,7 @@ function renderBeatPodcastsDirectory({
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('audio', 18)}</div>
           <div class="card-title-group">
             <div class="card-eyebrow">Last 7 Days</div>
-            <h2 class="card-title">49ers Beat Podcasts</h2>
+            <h2 class="card-title">${esc(activeTeam.nickname)} Beat Podcasts</h2>
           </div>
         </div>
         <div class="podcast-view-toggle" role="group" aria-label="Organize Podcasts By">
@@ -710,11 +714,12 @@ function renderPodcastStudio({
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const wkLabel = um.week ? `Week ${um.week}` : `Week ${appData?.meta?.currentWeek || ''}`.trim();
   const oppShort = (um.oppName || 'Opponent').split(' ').slice(-1)[0] || 'Matchup';
+  const activeTeamPod = getActiveTeamConfig();
   const topicChips = [
-    `${wkLabel} 49ers vs. ${oppShort}: Balanced Matchup, Spread & Keys for Both Teams`.trim(),
-    '49ers Wide Receivers: Injury Timeline, Target Share & Cap Math',
-    '49ers Pass Rush & Pass Defense Reality Check vs. League Benchmarks',
-    `Calibrated #1 NFC Seed Odds (${appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds?.seed1ByePct ?? 34.5}%) & Conference Contenders`
+    `${wkLabel} ${activeTeamPod.nickname} vs. ${oppShort}: Balanced Matchup, Spread & Keys for Both Teams`.trim(),
+    `${activeTeamPod.nickname} Passing Game & Receiver Room: Injury Timeline, Target Share & Cap Math`,
+    `${activeTeamPod.nickname} Pass Rush & Defense Reality Check vs. League Benchmarks`,
+    `Calibrated #1 ${activeTeamPod.conference} Seed Odds (${appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds?.seed1ByePct ?? 0}%) & Conference Contenders`
   ];
 
   const isActiveExpanded = Boolean(activeEp && expandedTranscriptIds.has(activeEp.id));
@@ -1065,11 +1070,12 @@ function renderDeepAnalysisRunner({
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const wkLabel = um.week ? `Week ${um.week}` : 'upcoming';
   const oppLabel = um.oppName || 'opponent';
+  const activeTeamAnalysis = getActiveTeamConfig();
   const quickPrompts = [
-    `Balanced ${wkLabel} 49ers vs. ${oppLabel} scouting breakdown: unit edges, vulnerabilities & paths to win for both teams`,
-    'Deep dive on 49ers Wide Receivers: active depth, IR/Out timelines, target share & 2027 cap math',
-    'Assess 49ers 2026 trade window needs, realistic seller targets, 9/18ths rental math & 2027 -$31.54M cap horizon',
-    'Honest league-wide check on 49ers pass rush, pass defense & special teams weaknesses vs. NFC contenders'
+    `Balanced ${wkLabel} ${activeTeamAnalysis.nickname} vs. ${oppLabel} scouting breakdown: unit edges, vulnerabilities & paths to win for both teams`,
+    `Deep dive on ${activeTeamAnalysis.nickname} offensive playmakers: active depth, IR/Out timelines, target share & 2027 cap math`,
+    `Assess ${activeTeamAnalysis.nickname} 2026 trade & roster needs, realistic targets, draft capital & multi-year OverTheCap flexibility`,
+    `Honest league-wide check on ${activeTeamAnalysis.nickname} pass rush, pass defense & special teams vs. ${activeTeamAnalysis.conference} contenders`
   ];
 
   const sharedHeroReport = sharedAnalysisHighlightId

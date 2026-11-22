@@ -10,6 +10,7 @@ import {
   sanitizeExternalUrl,
   slugifyPlayerName
 } from './linkIntegrity.js';
+import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 
 export const ALL_DASHBOARD_BLOCKS = [
   {
@@ -620,6 +621,11 @@ export function normalizeScheduleGameItem(rawGame = {}, seasonYear = 2026) {
  *       into `previousGames` so past games are hidden inside the collapsible Previous Games bar.
  */
 export function resolveCompleteScheduleModel(appData = {}, mcSimResult = null) {
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const teamConf = activeTeam.conference || 'NFC';
+  const teamDiv = activeTeam.division || 'NFC West';
+  const teamNick = activeTeam.nickname || '49ers';
+  const teamStadium = activeTeam.stadium || "Levi's Stadium";
   const seasonYear = Number(appData?.meta?.seasonYear) || 2026;
   const rawSched = Array.isArray(appData?.scheduleMatchup?.schedule) ? appData.scheduleMatchup.schedule : [];
   const rawPreExtra = Array.isArray(appData?.scheduleMatchup?.preseasonSchedule)
@@ -780,7 +786,7 @@ export function resolveCompleteScheduleModel(appData = {}, mcSimResult = null) {
                 surface: 'Natural Grass'
               },
               qualificationNote:
-                'Clinched #1 NFC Seed — 49ers earn a Wild Card Weekend bye and homefield advantage through the NFC playoffs.'
+                `Clinched #1 ${teamConf} Seed — ${teamNick} earn a Wild Card Weekend bye and homefield advantage through the ${teamConf} playoffs.`
             },
             seasonYear
           )
@@ -820,7 +826,7 @@ export function resolveCompleteScheduleModel(appData = {}, mcSimResult = null) {
                 surface: 'Natural Grass'
               },
               qualificationNote:
-                'Automatic Divisional Round berth via #1 NFC Seed Bye — 49ers host the lowest remaining seed from Wild Card Weekend.'
+                `Automatic Divisional Round berth via #1 ${teamConf} Seed Bye — ${teamNick} host the lowest remaining seed from Wild Card Weekend.`
             },
             seasonYear
           )
@@ -950,9 +956,9 @@ export function resolveCompleteScheduleModel(appData = {}, mcSimResult = null) {
                       surface: 'TBD'
                     },
               qualificationNote: hasClinchedDivision
-                ? 'NFC West Champions — 49ers host an NFC Wild Card matchup at Levi’s Stadium (opponent TBD).'
+                ? `${teamDiv} Champions — ${teamNick} host a ${teamConf} Wild Card matchup at ${teamStadium} (opponent TBD).`
                 : isRoadWildCard
-                  ? 'NFC Wild Card berth clinched — 49ers travel to face an NFC division champion on Wild Card Weekend.'
+                  ? `${teamConf} Wild Card berth clinched — ${teamNick} travel to face a ${teamConf} division champion on Wild Card Weekend.`
                   : 'Playoff berth clinched — final seeding determines home vs. road Wild Card matchup.'
             },
             seasonYear
