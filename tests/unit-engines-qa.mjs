@@ -16747,6 +16747,113 @@ await testAsync(
   }
 );
 
+test('Regular-season bye weeks stay REG (never misclassified as POST #1 Seed First-Round Bye / Homefield Clinched) and self-heal stale corrupted bye JSON', () => {
+  // 1. Clean regular-season bye week (e.g., Week 7 Bye) stays REG & never triggers clinched playoffs / DIV
+  const cleanRegBye = normalizeScheduleGameItem(
+    {
+      id: 'bye_2026_wk7',
+      seasonType: 'REG',
+      week: 7,
+      weekLabel: 'Wk 7',
+      isByeWeek: true,
+      completed: true,
+      opponent: { abbr: 'BYE', name: 'BYE WEEK', record: '', isTbd: false },
+      venue: { name: 'Bye Week', city: '', state: '', country: 'USA', isInternational: false, surface: '' }
+    },
+    2026
+  );
+  assert.equal(cleanRegBye.seasonType, 'REG', 'Regular-season Week 7 bye must remain seasonType REG');
+  assert.equal(cleanRegBye.week, 7, 'Regular-season Week 7 bye must keep week 7 (never coerced to week 19)');
+  assert.equal(cleanRegBye.isByeWeek, true);
+  assert.equal(cleanRegBye.postseasonRound, undefined, 'Regular-season bye must not carry postseasonRound');
+
+  // 2. Self-heal previously corrupted regular-season bye JSON (tagged POST / week 19 / WC_BYE / #1 NFC Seed)
+  const corruptedRegBye = {
+    id: 'bye_2026_wk7',
+    seasonType: 'POST',
+    week: 19,
+    weekLabel: 'Wk 7',
+    isByeWeek: true,
+    completed: true,
+    opponent: { abbr: 'BYE', name: 'BYE WEEK', logoUrl: '', record: '#1 NFC Seed', isTbd: false },
+    venue: { name: 'Bye Week', city: '', state: '', country: 'USA', isInternational: false, surface: '' },
+    postseasonRound: 'WC_BYE',
+    roundBadgeLabel: 'First-Round Bye',
+    roundTitle: 'NFC Wild Card Weekend — First-Round Bye',
+    seasonYear: 2026
+  };
+  const healedBye = normalizeScheduleGameItem(corruptedRegBye, 2026);
+  assert.equal(healedBye.seasonType, 'REG', 'Corrupted bye_2026_wk7 must self-heal to seasonType REG');
+  assert.equal(healedBye.week, 7, 'Corrupted bye_2026_wk7 must self-heal to week 7');
+  assert.equal(healedBye.postseasonRound, undefined, 'Self-healed regular-season bye must strip postseasonRound');
+  assert.equal(healedBye.roundBadgeLabel, undefined, 'Self-healed regular-season bye must strip First-Round Bye badge');
+  assert.equal(healedBye.opponent.record, '', 'Self-healed regular-season bye must strip #1 NFC Seed record');
+
+  // 3. Unclinched 9-1 team (99.4% make playoffs, 40.6% #1 seed bye) with corrupted Week 7 bye must NOT clinch playoffs or synthesize DIV
+  const unclinchedWithByeData = {
+    meta: { seasonYear: 2026, currentWeek: 12, teamRecord: '9-1', teamStatus: {} },
+    scheduleMatchup: {
+      schedule: [
+        { id: 'g1', seasonType: 'REG', week: 1, completed: true, result: 'W', sfScore: 28, oppScore: 14, opponent: { abbr: 'MIA', name: 'Miami Dolphins' } },
+        { id: 'g6', seasonType: 'REG', week: 6, completed: true, result: 'W', sfScore: 24, oppScore: 17, opponent: { abbr: 'NYJ', name: 'New York Jets' } },
+        corruptedRegBye,
+        { id: 'g8', seasonType: 'REG', week: 8, completed: true, result: 'W', sfScore: 36, oppScore: 10, opponent: { abbr: 'BAL', name: 'Baltimore Ravens' } },
+        { id: 'g12', seasonType: 'REG', week: 12, completed: false, statusDetail: '11/26 - 8:20 PM EST', opponent: { abbr: 'KC', name: 'Kansas City Chiefs' } }
+      ]
+    },
+    seasonal: {
+      playoffPicture: {
+        baselineSimulation: {
+          sfOdds: { makePlayoffsPct: 99.4, winDivisionPct: 97.0, seed1ByePct: 40.6 }
+        }
+      }
+    }
+  };
+  const resolvedUnclinched = resolveCompleteScheduleModel(unclinchedWithByeData);
+  assert.equal(resolvedUnclinched.postseasonGames.length, 0, 'Unclinched 99.4% team with Week 7 bye must have 0 postseason games');
+  assert.equal(resolvedUnclinched.postseasonStatus.hasClinchedSeed1Bye, false, 'Week 7 bye must NOT set hasClinchedSeed1Bye');
+  assert.equal(resolvedUnclinched.postseasonStatus.hasClinchedPlayoffs, false, '99.4% odds + Week 7 bye must NOT set hasClinchedPlayoffs');
+  assert.equal(resolvedUnclinched.postseasonStatus.state, 'UNCLINCHED_IN_HUNT');
+
+  // Verify chronological ordering inside previousGames: Wk 1 -> Wk 6 -> Wk 7 (BYE) -> Wk 8
+  assert.deepEqual(
+    resolvedUnclinched.previousGames.map(g => g.week),
+    [1, 6, 7, 8],
+    'Regular-season Week 7 bye must sort chronologically between Week 6 and Week 8 in previousGames'
+  );
+
+  // Verify rendered Schedule HTML does NOT display Homefield Clinched / First-Round Bye / Divisional Round
+  const schedHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'schedule',
+    appData: unclinchedWithByeData,
+    userPrefs: {},
+    schedulePrevExpanded: true
+  });
+  assert.ok(schedHtml.includes('data-regular-bye="true"'), 'Schedule HTML must render regular-season bye with data-regular-bye="true"');
+  assert.ok(schedHtml.includes('Regular-Season Bye Week'), 'Schedule HTML must label regular-season bye clearly');
+  assert.ok(!schedHtml.includes('Homefield Advantage Clinched'), 'Unclinched schedule must NOT render Homefield Advantage Clinched');
+  assert.ok(!schedHtml.includes('First-Round Bye'), 'Unclinched schedule must NOT render First-Round Bye');
+  assert.ok(!schedHtml.includes('Divisional Round'), 'Unclinched schedule must NOT synthesize Divisional Round');
+  assert.ok(schedHtml.includes('99.4% Playoff Odds'), 'Unclinched schedule must show accurate 99.4% Postseason Qualification Tracker');
+
+  // 4. Legitimate postseason #1 Seed First-Round Bye STILL normalizes as POST / WC_BYE
+  const realPostBye = normalizeScheduleGameItem(
+    {
+      id: 'post_2026_wc_bye',
+      seasonType: 'POST',
+      postseasonRound: 'WC_BYE',
+      isByeWeek: true,
+      week: 19,
+      weekLabel: 'WC BYE'
+    },
+    2026
+  );
+  assert.equal(realPostBye.seasonType, 'POST');
+  assert.equal(realPostBye.postseasonRound, 'WC_BYE');
+  assert.equal(realPostBye.isByeWeek, true);
+  assert.equal(realPostBye.week, 19);
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

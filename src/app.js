@@ -6,7 +6,7 @@ import {
   ALL_DASHBOARD_BLOCKS,
   evaluateSeasonState,
   resolveHomeDashboardState
-} from './engine/seasonStateMachine.js?v=60';
+} from './engine/seasonStateMachine.js?v=61';
 import { simulateCapScenario } from './engine/capSimulator.js?v=65';
 import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js?v=65';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
@@ -113,7 +113,7 @@ import {
 } from './views/newsView.js?v=92';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=49';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=79';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=91';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=92';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=66';
 import {
   renderSettingsSheetHtml,

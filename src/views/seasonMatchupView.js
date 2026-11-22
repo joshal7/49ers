@@ -2267,6 +2267,34 @@ function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
       ? `<span class="badge ${isBye ? 'badge-positive' : 'badge-gold'} mono" style="font-size:9.5px;padding:1px 5px">${esc(g.roundBadgeLabel || 'Playoffs')}</span>`
       : '';
 
+  if (isBye && !isPost) {
+    return `
+      <div data-schedule-game-row="${g.completed ? 'previous' : 'upcoming'}"
+           data-schedule-season-type="REG"
+           data-schedule-week="${esc(g.week)}"
+           data-regular-bye="true"
+           style="padding:10px 11px;border-radius:10px;background:var(--bg-card-alt);border:1px solid var(--border-subtle)">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px;min-width:0">
+            ${renderTeamLogoHtml('SF', g.sfLogoUrl, 28)}
+            <div style="min-width:0;display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+              <span class="mono" style="color:var(--gold-bright);font-weight:800">${esc(weekTagText)}</span>
+              <span>•</span>
+              <strong>Bye Week</strong>
+            </div>
+          </div>
+          <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+            <span class="badge badge-neutral mono">BYE</span>
+          </div>
+        </div>
+        <div class="inline-icon-meta" style="margin-top:4px">
+          ${iconSvg('calendar', 13)}
+          <span>Regular-Season Bye Week • No Game Scheduled</span>
+        </div>
+      </div>
+    `;
+  }
+
   if (isBye) {
     return `
       <div data-schedule-game-row="${g.completed ? 'previous' : 'upcoming'}"
