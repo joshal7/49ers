@@ -4949,7 +4949,30 @@ export function isDailyBriefStaleForLiveState(brief = null, appData = null, nowM
     ...(Array.isArray(brief.bullets) ? brief.bullets : [])
   ].join(' ');
 
-  // Check midweek / Friday practice-report supersession (Issue A: prevent Thursday practice brief sticking after Friday report posts)
+  // Resolve the brief's Pacific cycle weekday (`0=Sun..6=Sat`) from `cycleKey` (preferred) or `generatedAt`.
+  // Practice-report supersession MUST ONLY heal a brief from THAT SAME practice day's cycle that was built
+  // before the live practice report hydrated — NEVER prematurely wipe Wednesday's brief on Thursday afternoon
+  // or Thursday's brief on Friday afternoon (before 5:00 PM PT), and NEVER falsely invalidate Saturday's brief
+  // on Saturday night or Sunday morning!
+  let briefCycleDow = -1;
+  const cycleDateMatch = String(brief.cycleKey || '').match(/^(\d{4})-(\d{2})-(\d{2})@/);
+  if (cycleDateMatch) {
+    const [, cy, cm, cd] = cycleDateMatch;
+    briefCycleDow = new Date(Date.UTC(Number(cy), Number(cm) - 1, Number(cd), 19, 0, 0)).getUTCDay();
+  } else if (brief.generatedAt) {
+    const genMsForDow = Date.parse(brief.generatedAt);
+    if (Number.isFinite(genMsForDow)) {
+      const genDateKey = getPacificClockParts(genMsForDow).dateKey;
+      const gMatch = String(genDateKey || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (gMatch) {
+        briefCycleDow = new Date(
+          Date.UTC(Number(gMatch[1]), Number(gMatch[2]) - 1, Number(gMatch[3]), 19, 0, 0)
+        ).getUTCDay();
+      }
+    }
+  }
+
+  // Check midweek / Friday practice-report supersession strictly on same-day unhydrated briefs
   const prRows = Array.isArray(appData?.health?.practiceReport) ? appData.health.practiceReport : [];
   const hasRealFridayPractice = prRows.some(
     r => r && r.fri && r.fri !== '-' && !/^vet\s*rest$/i.test(String(r.fri).trim())
@@ -4957,16 +4980,29 @@ export function isDailyBriefStaleForLiveState(brief = null, appData = null, nowM
   const hasRealThursdayPractice = prRows.some(
     r => r && r.thu && r.thu !== '-' && !/^vet\s*rest$/i.test(String(r.thu).trim())
   );
-  if (hasRealFridayPractice && !brief.isPostGame) {
+  const hadFridayAtGen = brief?.practiceReportCoverage?.hasFri === true;
+  const hadThursdayAtGen = brief?.practiceReportCoverage?.hasThu === true;
+
+  if (hasRealFridayPractice && !brief.isPostGame && briefCycleDow === 5 && !hadFridayAtGen) {
     const citesWedOrThuPractice =
       /\b(?:wednesday|thursday)(?:['’]s)?\s+practice(?:\s+(?:report|participation|session))?|\b(?:missed|limited\s+(?:in|at|on|by)|sat\s+out)\s+(?:wednesday|thursday)\b/i.test(
         fullBriefProse
       );
     const mentionsFriday = /\bfriday\b/i.test(fullBriefProse);
-    if (citesWedOrThuPractice && !mentionsFriday) {
+    const mentionsFinalGameStatus =
+      /\b(?:final\s+injury\s+report|game[- ]time\s+decision|questionable|doubtful|ruled\s+out\s+for\s+(?:sunday|monday|thursday|saturday|week\s+\d+)|out\s+for\s+(?:sunday|monday|thursday|saturday)|cleared\s+to\s+play|activated\s+from\s+(?:ir|injured\s+reserve))\b/i.test(
+        fullBriefProse
+      );
+    if (citesWedOrThuPractice && !mentionsFriday && !mentionsFinalGameStatus) {
       return true;
     }
-  } else if (hasRealThursdayPractice && !hasRealFridayPractice && !brief.isPostGame) {
+  } else if (
+    hasRealThursdayPractice &&
+    !hasRealFridayPractice &&
+    !brief.isPostGame &&
+    briefCycleDow === 4 &&
+    !hadThursdayAtGen
+  ) {
     const citesWedPracticeOnly =
       /\bwednesday(?:['’]s)?\s+practice(?:\s+(?:report|participation|session))?|\b(?:missed|limited\s+(?:in|at|on|by)|sat\s+out)\s+wednesday\b/i.test(
         fullBriefProse

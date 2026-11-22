@@ -3863,6 +3863,24 @@ export function parseAndSanitizeDailyTopNewsBrief(
       : isDeterministicSource
         ? 'NONE'
         : resolveGeminiThinkingLevelLabel(resolvedBriefModel);
+  const prRowsForCov = Array.isArray(appData?.health?.practiceReport) ? appData.health.practiceReport : [];
+  const liveHasThuPractice = prRowsForCov.some(
+    r => r && r.thu && r.thu !== '-' && !/^vet\s*rest$/i.test(String(r.thu).trim())
+  );
+  const liveHasFriPractice = prRowsForCov.some(
+    r => r && r.fri && r.fri !== '-' && !/^vet\s*rest$/i.test(String(r.fri).trim())
+  );
+  const practiceReportCoverage =
+    parsed?.practiceReportCoverage && typeof parsed.practiceReportCoverage === 'object'
+      ? {
+          hasThu: Boolean(parsed.practiceReportCoverage.hasThu),
+          hasFri: Boolean(parsed.practiceReportCoverage.hasFri)
+        }
+      : {
+          hasThu: liveHasThuPractice,
+          hasFri: liveHasFriPractice
+        };
+
   return {
     id: `daily_brief_${cycleKey.replace(/[^A-Za-z0-9_-]/g, '_')}`,
     cycleKey,
@@ -3874,6 +3892,7 @@ export function parseAndSanitizeDailyTopNewsBrief(
     modelUsed: resolvedBriefModel,
     thinkingLevel: resolvedThinkingLevel,
     source: resolvedSource,
+    practiceReportCoverage,
     wordCount,
     headline,
     summary: finalSummary,
@@ -4762,12 +4781,17 @@ export function hydrateCachedDailyTopNewsBrief(appData, nowMs = Date.now()) {
 
   // During Game-Day Hold ([T-90m, Final + buffer)), preserve the active pre-game brief so new game-day news stacks cleanly above it
   if (cycleState.isGameDayHold) {
+    const cachedHasBullets = Boolean(cached && Array.isArray(cached.bullets) && cached.bullets.length >= 2);
+    const cachedIsAi =
+      cached?.source === 'live-gemini-daily' || cached?.source === 'pipeline-gemini-daily';
+    const upstreamIsCanonicalAi =
+      upstream?.cycleKey === activeCycle && upstream?.source === 'pipeline-gemini-daily';
+    const cachedNewerThanUpstream =
+      (Date.parse(cached?.generatedAt || '') || 0) >= (Date.parse(upstream?.generatedAt || '') || 0);
     if (
-      cached &&
-      cached.cycleKey === activeCycle &&
-      Array.isArray(cached.bullets) &&
-      cached.bullets.length >= 2 &&
-      (!upstream || upstream.cycleKey !== activeCycle || upstream.source !== 'pipeline-gemini-daily')
+      cachedHasBullets &&
+      !upstreamIsCanonicalAi &&
+      (cached.cycleKey === activeCycle || (cachedIsAi && !cachedStale && cachedNewerThanUpstream))
     ) {
       appData.news.dailyTopNewsBrief = cached;
       return true;

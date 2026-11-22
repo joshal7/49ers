@@ -16062,6 +16062,221 @@ await testAsync('Fair, balanced & spread-calibrated assessments across autopodca
   assert.ok(candidCritique.signalScore >= 70, `Analytical critique signalScore should be >=70, got ${candidCritique.signalScore}`);
 });
 
+test('Top News Brief Schedule Fidelity: zero false practice-report invalidations on Saturday/Sunday or pre-5pm Thu/Fri, single-pass Friday self-heal with practiceReportCoverage loop guard, and game-day hold cache preservation', async () => {
+  const {
+    hydrateCachedDailyTopNewsBrief,
+    parseAndSanitizeDailyTopNewsBrief
+  } = await import('../src/services/aiWorkerClient.js');
+
+  const vikingsSchedule = [
+    {
+      id: 'wk11_min',
+      seasonType: 'REG',
+      week: 11,
+      dateIso: '2026-11-23T01:20:00Z',
+      completed: false,
+      statusState: 'pre',
+      opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+    }
+  ];
+
+  const appWithFridayPractice = {
+    meta: { seasonYear: 2026, currentWeek: 11, teamRecord: '8-1' },
+    health: {
+      practiceReport: [
+        { name: 'Mike Evans', wed: 'DNP', thu: 'LP', fri: 'LP', gameStatus: 'Questionable' },
+        { name: 'Dre Greenlaw', wed: 'LP', thu: 'LP', fri: 'FP', gameStatus: 'Active' }
+      ]
+    },
+    scheduleMatchup: {
+      schedule: vikingsSchedule,
+      upcomingMatchup: { week: 11, oppAbbr: 'MIN', oppName: 'Minnesota Vikings', dateIso: '2026-11-23T01:20:00Z' }
+    },
+    news: { rawStream: [] }
+  };
+
+  // 1. Saturday 5:00 PM PT brief (`2026-11-21@17PT`) viewed Sunday 7:04 AM PT mentioning Thursday practice without "Friday" MUST NOT be marked stale!
+  const sun704AmMs = Date.parse('2026-11-22T15:04:00Z');
+  const satBrief = {
+    id: 'daily_brief_2026-11-21_17PT',
+    cycleKey: '2026-11-21@17PT',
+    isPostGame: false,
+    generatedAt: '2026-11-22T01:02:00Z',
+    source: 'live-gemini-daily',
+    headline: '49ers Activate CJ West Ahead of Mexico City Clash With Vikings',
+    bullets: [
+      'Roster Moves: San Francisco activated CJ West from IR and released Brandin Cooks after Mike Evans was limited in Thursday practice.',
+      'Tactical Matchup: Kyle Shanahan faces Brian Flores in a 3.5-point spread showdown at Estadio Banorte.'
+    ],
+    sources: []
+  };
+  assert.equal(
+    isDailyBriefStaleForLiveState(satBrief, appWithFridayPractice, sun704AmMs),
+    false,
+    'Saturday 5 PM PT brief must NEVER be falsely flagged stale on Sunday morning when Friday practice is present'
+  );
+
+  // 2. Thursday 5:00 PM PT brief (`2026-11-19@17PT`) viewed Friday 2:30 PM PT (BEFORE 5:00 PM PT) MUST NOT be invalidated early when Friday practice drops!
+  const fri230PmMs = Date.parse('2026-11-20T22:30:00Z');
+  const thuBrief = {
+    id: 'daily_brief_2026-11-19_17PT',
+    cycleKey: '2026-11-19@17PT',
+    isPostGame: false,
+    generatedAt: '2026-11-20T01:02:00Z',
+    source: 'live-gemini-daily',
+    headline: '49ers Prep in Colorado Springs as Evans Returns to Thursday Practice',
+    bullets: [
+      'Injury Update: Mike Evans was limited in Thursday practice while Dre Greenlaw worked back on the side field.',
+      'Altitude Prep: Kyle Shanahan wrapped Thursday drills at 6,000 feet ahead of the Vikings trip.'
+    ],
+    sources: []
+  };
+  assert.equal(
+    isDailyBriefStaleForLiveState(thuBrief, appWithFridayPractice, fri230PmMs),
+    false,
+    'Thursday 5 PM PT brief must hold cleanly until Friday 5 PM PT rather than regenerating early at 2:30 PM PT'
+  );
+
+  // 3. Wednesday 5:00 PM PT brief (`2026-11-18@17PT`) viewed Thursday 2:30 PM PT MUST NOT be invalidated early when Thursday practice drops!
+  const thu230PmMs = Date.parse('2026-11-19T22:30:00Z');
+  const appWithThuOnly = {
+    ...appWithFridayPractice,
+    health: {
+      practiceReport: [{ name: 'Mike Evans', wed: 'DNP', thu: 'LP', fri: '-', gameStatus: 'Questionable' }]
+    }
+  };
+  const wedBrief = {
+    id: 'daily_brief_2026-11-18_17PT',
+    cycleKey: '2026-11-18@17PT',
+    isPostGame: false,
+    generatedAt: '2026-11-19T01:02:00Z',
+    source: 'live-gemini-daily',
+    headline: '49ers Open Week 11 Prep After Evans Misses Wednesday Practice',
+    bullets: [
+      'Injury Watch: Mike Evans missed Wednesday practice with Achilles soreness as San Francisco opened altitude prep.',
+      'Matchup Focus: Minnesota enters at 7-2 with Brian Flores leading the league in sack rate.'
+    ],
+    sources: []
+  };
+  assert.equal(
+    isDailyBriefStaleForLiveState(wedBrief, appWithThuOnly, thu230PmMs),
+    false,
+    'Wednesday 5 PM PT brief must hold cleanly until Thursday 5 PM PT rather than regenerating early at 2:30 PM PT'
+  );
+
+  // 4. Unhydrated Friday 5:00 PM PT brief (`2026-11-20@17PT`, no Friday data at gen & no final designations) DOES self-heal ONCE;
+  //    once re-parsed with Friday practice present (`practiceReportCoverage.hasFri === true`), it NEVER loops!
+  const fri510PmMs = Date.parse('2026-11-21T01:10:00Z');
+  const unhydratedFriBrief = {
+    id: 'daily_brief_2026-11-20_17PT',
+    cycleKey: '2026-11-20@17PT',
+    isPostGame: false,
+    generatedAt: '2026-11-21T01:01:00Z',
+    source: 'live-gemini-daily',
+    practiceReportCoverage: { hasThu: true, hasFri: false },
+    headline: '49ers Monitor Mike Evans After Limited Thursday Practice',
+    bullets: [
+      'Practice Status: Mike Evans was limited in Thursday practice while the staff monitors his Achilles.',
+      'Matchup Outlook: San Francisco prepares for Brian Flores and Minnesota in Mexico City.'
+    ],
+    sources: []
+  };
+  assert.equal(
+    isDailyBriefStaleForLiveState(unhydratedFriBrief, appWithFridayPractice, fri510PmMs),
+    true,
+    'Unhydrated Friday 5 PM PT brief citing only Thursday practice without final game designations must self-heal'
+  );
+
+  // Valid Friday brief with final game status ("game-time decision") is NOT falsely invalidated even without legacy coverage metadata
+  const validFriFinalStatusBrief = {
+    ...unhydratedFriBrief,
+    practiceReportCoverage: undefined,
+    bullets: [
+      'Practice Status: Mike Evans was limited in Thursday practice and enters Sunday as a game-time decision.',
+      'Matchup Outlook: San Francisco prepares for Brian Flores and Minnesota in Mexico City.'
+    ]
+  };
+  assert.equal(
+    isDailyBriefStaleForLiveState(validFriFinalStatusBrief, appWithFridayPractice, fri510PmMs),
+    false,
+    'Friday brief already citing final game-time decision status must not be falsely invalidated'
+  );
+
+  // Parsed brief stamps `practiceReportCoverage` from live `appData.health.practiceReport`, preventing regeneration loops
+  const parsedWithFri = parseAndSanitizeDailyTopNewsBrief(
+    {
+      headline: '49ers Finalize Mexico City Prep Ahead of Vikings Showdown',
+      bullets: [
+        'Injury Notes: Mike Evans logged limited Thursday practice reps as San Francisco wrapped Colorado Springs drills [S1].',
+        'Matchup Keys: Brian Flores brings the NFL-leading sack rate against Brock Purdy at Estadio Banorte [S1].'
+      ],
+      citedSourceIds: ['S1']
+    },
+    [
+      {
+        refId: 'S1',
+        type: 'article',
+        author: 'Nick Wagoner',
+        outlet: 'ESPN',
+        citeLabel: 'ESPN',
+        title: '49ers finalize Mexico City prep',
+        url: 'https://www.espn.com/nfl/story/_/id/50599999/49ers-mexico-city-prep',
+        publishedAt: '2026-11-21T00:30:00Z'
+      }
+    ],
+    appWithFridayPractice,
+    { cycleKey: '2026-11-20@17PT', generatedAt: '2026-11-21T01:05:00Z', source: 'live-gemini-daily' }
+  );
+  assert.equal(parsedWithFri.practiceReportCoverage?.hasFri, true, 'Parsed brief must record hasFri: true when Friday practice was loaded');
+  assert.equal(
+    isDailyBriefStaleForLiveState(parsedWithFri, appWithFridayPractice, fri510PmMs),
+    false,
+    'Brief synthesized with Friday practice already loaded must never trigger a self-invalidation loop'
+  );
+
+  // 5. During Game-Day Hold (`T-80m`, Sun 4:00 PM PT), hydrateCachedDailyTopNewsBrief preserves a newer cached AI brief over a stale static fallback
+  const origLocalStorage = globalThis.localStorage;
+  const origWindow = globalThis.window;
+  try {
+    const store = new Map();
+    const mockStorage = {
+      getItem: k => (store.has(k) ? store.get(k) : null),
+      setItem: (k, v) => store.set(k, String(v)),
+      removeItem: k => store.delete(k)
+    };
+    globalThis.localStorage = mockStorage;
+    globalThis.window = { ...(origWindow || {}), localStorage: mockStorage };
+    mockStorage.setItem('joshal_49ers_daily_news_brief_v5', JSON.stringify(parsedWithFri));
+
+    const sun400PmHoldMs = Date.parse('2026-11-23T00:00:00Z'); // T-80m before 5:20 PM PT kickoff
+    const holdAppData = {
+      ...structuredClone(appWithFridayPractice),
+      news: {
+        rawStream: [],
+        dailyTopNewsBrief: {
+          id: 'daily_brief_2026-11-17_17PT',
+          cycleKey: '2026-11-17@17PT',
+          generatedAt: '2026-11-18T01:03:00Z',
+          source: 'pipeline-grounded',
+          headline: 'Old Tuesday Static Fallback',
+          bullets: ['Old bullet 1.', 'Old bullet 2.'],
+          sources: []
+        }
+      }
+    };
+    const changed = hydrateCachedDailyTopNewsBrief(holdAppData, sun400PmHoldMs);
+    assert.equal(changed, true, 'Game-day hold must prefer newer cached AI brief over stale static fallback');
+    assert.equal(
+      holdAppData.news.dailyTopNewsBrief.cycleKey,
+      '2026-11-20@17PT',
+      'Newer cached Friday AI brief must be preserved during game-day hold over old Tuesday fallback'
+    );
+  } finally {
+    globalThis.localStorage = origLocalStorage;
+    globalThis.window = origWindow;
+  }
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);
