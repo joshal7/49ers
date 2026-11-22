@@ -2819,6 +2819,9 @@ export function resolveLeaderboardModalModel({ appData, scope = 'team', key = ''
       isHighlighted: r.isHighlighted,
       is49erTeammate: Boolean(r.meta.sfPlayerId && !r.isHighlighted),
       sfPlayerId: r.meta.sfPlayerId || null,
+      teamAbbr: r.meta.team || null,
+      playerPos: r.meta.pos || lb.peerGroup || null,
+      espnUrl: r.meta.espnUrl || null,
       extUrl: r.meta.pfrUrl || r.meta.espnUrl || null
     };
   });

@@ -54,7 +54,8 @@ export function renderInjuryNewsItemCardHtml(
     rosterPlayers = [],
     outerClassName = 'injury-news-item-card',
     activeVideosSet = new Set(),
-    readKeysSet = null
+    readKeysSet = null,
+    teamContext = null
   } = {}
 ) {
   const isVideo = n.type === 'video';
@@ -65,7 +66,10 @@ export function renderInjuryNewsItemCardHtml(
     n.videoStreamUrl && /^https:\/\//i.test(String(n.videoStreamUrl).trim())
       ? String(n.videoStreamUrl).trim()
       : '';
-  const rawAuthorName = n.author || n.reporterName || n.outletName || '49ers Beat';
+  const defaultBeatFallback = teamContext?.isRemoteTeam
+    ? `${teamContext.nickname || teamContext.abbr || 'NFL'} Beat`
+    : '49ers Beat';
+  const rawAuthorName = n.author || n.reporterName || n.outletName || defaultBeatFallback;
   const authorName = formatWireSourceDisplayName(rawAuthorName, n);
   const resolvedMentionUrl = isTweet
     ? sanitizeExternalUrl(
@@ -346,7 +350,9 @@ export function renderPlayerDossierSheetHtml({
   appData = null,
   userPrefs = null,
   reportersById = null,
-  activeVideosSet = new Set()
+  activeVideosSet = new Set(),
+  teamContext = null,
+  remoteStatus = null
 }) {
   if (!player) return `<div class="empty-state">Player not found.</div>`;
 
@@ -375,6 +381,8 @@ export function renderPlayerDossierSheetHtml({
     </div>
   `;
 
+  const remoteStatusBannerHtml = renderRemoteDossierStatusBannerHtml(teamContext, remoteStatus);
+
   let contentHtml = '';
 
   if (activeTab === 'overview') {
@@ -385,19 +393,41 @@ export function renderPlayerDossierSheetHtml({
       userPrefs,
       reportersById,
       activeVideosSet,
-      mentionsSortMode
+      mentionsSortMode,
+      teamContext
     );
   } else if (activeTab === 'stats') {
     contentHtml = renderStatsTab(player, statsMode);
   } else if (activeTab === 'spider') {
     contentHtml = renderSpiderChartHtml(player.spiderProfile, player.name);
   } else if (activeTab === 'contract') {
-    contentHtml = renderContractTab(player, txScenario);
+    contentHtml = renderContractTab(player, txScenario, teamContext);
   } else if (activeTab === 'health') {
-    contentHtml = renderHealthTab(player, rawStream, appData, userPrefs, reportersById, activeVideosSet);
+    contentHtml = renderHealthTab(player, rawStream, appData, userPrefs, reportersById, activeVideosSet, teamContext);
   }
 
-  return `${tabsBar}${contentHtml}`;
+  return `${tabsBar}${remoteStatusBannerHtml}${contentHtml}`;
+}
+
+function renderRemoteDossierStatusBannerHtml(teamContext, remoteStatus) {
+  if (!teamContext?.isRemoteTeam || !remoteStatus) return '';
+  const domain = teamContext.domain || `${teamContext.slug}.joshal.com`;
+  if (remoteStatus.state === 'loading') {
+    return `
+      <div class="remote-dossier-status-bar is-loading" data-remote-dossier-status="loading" role="status" aria-live="polite">
+        <span class="remote-dossier-status-text">${iconSvg('loader', 12, 'wire-sync-spin')}<span>Loading full ${esc(teamContext.nickname || teamContext.abbr)} dossier from <strong>${esc(domain)}</strong>…</span></span>
+      </div>
+    `;
+  }
+  if (remoteStatus.state === 'fallback') {
+    return `
+      <div class="remote-dossier-status-bar is-fallback" data-remote-dossier-status="fallback" role="status">
+        <span class="remote-dossier-status-text">Showing matchup snapshot — <strong>${esc(domain)}</strong> dossier is currently syncing.</span>
+        <button type="button" class="btn-ghost btn-compact remote-dossier-retry-btn" data-action="retry-remote-player-sheet">Retry</button>
+      </div>
+    `;
+  }
+  return '';
 }
 
 const PLAYER_MENTIONS_SORT_MIN_ITEMS = 5;
@@ -409,7 +439,8 @@ function renderOverviewTab(
   userPrefs = null,
   reportersById = null,
   activeVideosSet = new Set(),
-  mentionsSortMode = 'top'
+  mentionsSortMode = 'top',
+  teamContext = null
 ) {
   const nowMs = Date.now();
   const activeMentionsSort = normalizeNewsSortMode(mentionsSortMode);
@@ -474,7 +505,8 @@ function renderOverviewTab(
                   rosterPlayers: appData?.roster?.players || [],
                   outerClassName: 'subcard-panel',
                   activeVideosSet,
-                  readKeysSet: new Set(Array.isArray(userPrefs?.readItemKeys) ? userPrefs.readItemKeys : [])
+                  readKeysSet: new Set(Array.isArray(userPrefs?.readItemKeys) ? userPrefs.readItemKeys : []),
+                  teamContext
                 })
               )
               .join('')}
@@ -483,29 +515,47 @@ function renderOverviewTab(
       `
       : `<div style="font-size:12px;color:var(--text-muted)">No beat tweets, videos, or articles specific to ${esc(p.name)} in the past 7 days.</div>`;
 
+  const safeRemoteOrigin = teamContext?.isRemoteTeam ? sanitizeExternalUrl(teamContext.origin, null) : null;
   const safeEspnUrl = sanitizeExternalUrl(p.espnUrl, null);
   const safeOtcUrl = sanitizeExternalUrl(p.otcUrl, null);
   const safePfrUrl = sanitizeExternalUrl(p.pfrUrl, null);
-  const safeXBeatUrl = sanitizeExternalUrl(buildXPlayerScoopSearchUrl(p.name), null);
+  const safeXBeatUrl = sanitizeExternalUrl(buildXPlayerScoopSearchUrl(p.name, teamContext), null);
+  const otcFallbackLabel = teamContext?.isRemoteTeam
+    ? `OverTheCap ${teamContext.nickname || teamContext.abbr} Cap`
+    : 'OverTheCap 49ers Cap';
   const profileLinks = [
+    safeRemoteOrigin && teamContext?.domain
+      ? { label: teamContext.domain, url: safeRemoteOrigin, isTeamSite: true }
+      : null,
     safeXBeatUrl ? { label: 'Live X Beat', url: safeXBeatUrl } : null,
     safeEspnUrl ? { label: 'ESPN Profile', url: safeEspnUrl } : null,
     safeOtcUrl
       ? {
-          label: isIndividualOtcPlayerUrl(safeOtcUrl) ? 'OverTheCap Contract' : 'OverTheCap 49ers Cap',
+          label: isIndividualOtcPlayerUrl(safeOtcUrl) ? 'OverTheCap Contract' : otcFallbackLabel,
           url: safeOtcUrl
         }
       : null,
     safePfrUrl ? { label: 'Pro-Football-Ref', url: safePfrUrl } : null
   ].filter(Boolean);
 
+  const bioParts = [
+    p.displayHeight && p.displayHeight !== '—' ? p.displayHeight : null,
+    p.displayWeight && p.displayWeight !== '—' ? p.displayWeight : null,
+    p.age != null ? `Age ${p.age}` : null,
+    p.college || null
+  ].filter(Boolean);
+  const heroSubtitleText = bioParts.length
+    ? bioParts.join(' • ')
+    : teamContext?.fullName || 'NFL Roster';
+  const bucketLabel = String(p.rosterBucket || 'active').replace('_', ' ').toUpperCase();
+
   return `
     <div class="dossier-hero-banner">
       <div style="display:flex;align-items:center;gap:12px;min-width:0">
         ${renderPlayerAvatarHtml(p, 68, { showJerseyBadge: true, hero: true })}
         <div style="min-width:0">
-          <div style="font-weight:800;font-size:15px">${esc(p.position)} • ${esc(p.unit)} (${esc(p.rosterBucket.replace('_', ' ').toUpperCase())})</div>
-          <div style="font-size:12px;color:var(--text-secondary)">${esc(p.displayHeight)} • ${esc(p.displayWeight)} • Age ${p.age ?? '—'} • ${esc(p.college)}</div>
+          <div style="font-weight:800;font-size:15px">${esc(p.position)} • ${esc(p.unit)} (${esc(bucketLabel)})</div>
+          <div style="font-size:12px;color:var(--text-secondary)">${esc(heroSubtitleText)}</div>
         </div>
       </div>
       <span class="badge ${playProbBadgeClass(p.health?.playProbabilityPct)} mono">${esc(p.health?.playBadgeLabel)}</span>
@@ -516,7 +566,7 @@ function renderOverviewTab(
         ? `<div class="source-link-strip">
             ${profileLinks
               .map(
-                pl => `<a href="${esc(pl.url)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(pl.label)}</span>${iconSvg('externalLink', 11)}</a>`
+                pl => `<a href="${esc(pl.url)}" target="_blank" rel="noopener noreferrer" class="source-chip-link${pl.isTeamSite ? ' remote-team-site-chip' : ''}"${pl.isTeamSite ? ' data-remote-team-site-link="true"' : ''}><span>${esc(pl.label)}</span>${iconSvg('externalLink', 11)}</a>`
               )
               .join('')}
           </div>`
@@ -669,11 +719,21 @@ function renderStatsTab(p, statsMode) {
   `;
 
   if (!profile?.hasActiveStats || !(profile.sections || []).length) {
+    const statLineBox = p.statLine2026
+      ? `<div class="subcard-panel" style="border-color:var(--gold-border);font-size:12.5px">
+           <strong style="color:var(--gold-bright)">2026 Season Production:</strong> <span class="mono">${esc(p.statLine2026)}</span>
+         </div>`
+      : '';
     return `
       ${modeToggle}
       ${snapBannerHtml}
+      ${statLineBox}
       <div class="subcard-panel" style="font-size:12.5px;color:var(--text-secondary)">
-        No 2026 regular-season game snaps logged yet (${esc(p.health?.status || p.rosterBucket)}).${
+        ${
+          p.statLine2026
+            ? `Full positional percentile breakdown syncs automatically from team stats feeds.`
+            : `No 2026 regular-season game snaps logged yet (${esc(p.health?.status || p.rosterBucket)}).`
+        }${
           seasons.length > 0
             ? ` Switch to <strong>Career Year-by-Year (${seasons.length})</strong> above to inspect prior NFL seasons.`
             : ''
@@ -766,9 +826,21 @@ function renderStatsTab(p, statsMode) {
   return `${modeToggle}${snapBannerHtml}${sectionsHtml}${footnoteHtml}`;
 }
 
-function renderContractTab(p, txScenario) {
+function renderContractTab(p, txScenario, teamContext = null) {
   const yrs = Object.values(p.contractsByYear || {}).sort((a, b) => a.year - b.year);
+  const fallbackOtcUrl =
+    p.otcUrl || teamContext?.otcCapUrl || 'https://overthecap.com/salary-cap/san-francisco-49ers';
   if (yrs.length === 0) {
+    if (p._isMatchupSeedFallback && teamContext?.isRemoteTeam) {
+      return `<div class="subcard-panel" style="font-size:12.5px;display:flex;flex-direction:column;gap:8px">
+        <div>Multi-year OverTheCap contract table loads directly from <strong>${esc(teamContext.domain)}</strong> when available.</div>
+        <div>
+          <a href="${esc(fallbackOtcUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+            <span>View ${esc(teamContext.nickname || teamContext.abbr)} Cap on OverTheCap</span>${iconSvg('externalLink', 10)}
+          </a>
+        </div>
+      </div>`;
+    }
     return `<div class="subcard-panel" style="font-size:12.5px">
       Practice Squad / Non-Top-51 standard weekly agreement (no multi-year guaranteed dead-money exposure).
     </div>`;
@@ -798,7 +870,7 @@ function renderContractTab(p, txScenario) {
     <div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
         <div class="sub-label">Contract Breakdown (${yrs[0].year}–${yrs[yrs.length - 1].year})</div>
-        <a href="${esc(p.otcUrl || 'https://overthecap.com/salary-cap/san-francisco-49ers')}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+        <a href="${esc(fallbackOtcUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
           <span>OverTheCap</span>${iconSvg('externalLink', 10)}
         </a>
       </div>
@@ -859,7 +931,8 @@ function renderHealthTab(
   appData = null,
   userPrefs = null,
   reportersById = null,
-  activeVideosSet = new Set()
+  activeVideosSet = new Set(),
+  teamContext = null
 ) {
   const h = p.health || {};
   const isIrOrReserve = p.rosterBucket === 'ir' || p.rosterBucket === 'suspended';
@@ -942,7 +1015,8 @@ function renderHealthTab(
                     excludePlayerId: p.id,
                     rosterPlayers: appData?.roster?.players || [],
                     activeVideosSet,
-                    readKeysSet: new Set(Array.isArray(userPrefs?.readItemKeys) ? userPrefs.readItemKeys : [])
+                    readKeysSet: new Set(Array.isArray(userPrefs?.readItemKeys) ? userPrefs.readItemKeys : []),
+                    teamContext
                   })
                 )
                 .join('')}
@@ -954,6 +1028,13 @@ function renderHealthTab(
     : '';
 
   const noteBody = h.irBeatNote || h.longComment || h.shortComment || '';
+  const officialInjuryUrl = sanitizeExternalUrl(
+    teamContext?.injuryReportUrl || appData?.health?.sourceUrl || 'https://www.49ers.com/team/injury-report/',
+    'https://www.49ers.com/team/injury-report/'
+  );
+  const officialInjuryLabel = teamContext?.isRemoteTeam
+    ? `${teamContext.clubDomain || teamContext.abbr} Report`
+    : '49ers.com Report';
 
   return `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
@@ -962,7 +1043,7 @@ function renderHealthTab(
         <div style="font-size:13px;color:var(--text-secondary)">Status: <strong>${esc(h.status || 'Active')}</strong> ${h.injuryType ? `(${esc(h.injuryType)})` : ''}</div>
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-        <a href="https://www.49ers.com/team/injury-report/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>49ers.com Report</span>${iconSvg('externalLink', 10)}</a>
+        <a href="${esc(officialInjuryUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(officialInjuryLabel)}</span>${iconSvg('externalLink', 10)}</a>
         <span class="badge ${playProbBadgeClass(h.playProbabilityPct)} mono" style="font-size:13px;padding:4px 10px">${esc(h.playBadgeLabel)}</span>
       </div>
     </div>

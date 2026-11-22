@@ -68,6 +68,10 @@ import {
 import { renderDailyTopNewsBriefHtml, renderWireItemCardHtml } from './newsView.js?v=92';
 import { buildDeterministicDailyTopNewsBrief } from '../services/aiWorkerClient.js';
 import {
+  extractEspnPlayerIdFromRecord,
+  resolveNflTeamMeta
+} from '../services/remoteTeamDossierService.js';
+import {
   getItemReadKey,
   isItemRead,
   computeCatchUpState,
@@ -556,20 +560,27 @@ function renderSingleDashboardCard({
             oppInj.length
               ? `<div style="display:flex;flex-direction:column;gap:4px">
                   ${oppInj
-                    .map(
-                      op => `
+                    .map(op => {
+                      const oppTeamMeta = resolveNflTeamMeta(um.oppAbbr || '');
+                      const oppPid = extractEspnPlayerIdFromRecord(op);
+                      const oppTrigger = oppTeamMeta && op.name
+                        ? `data-action="open-opponent-player-sheet" data-opp-team="${esc(oppTeamMeta.abbr)}"${oppPid ? ` data-opp-player-id="${esc(oppPid)}"` : ''} data-opp-player-name="${esc(op.name)}"${op.position ? ` data-opp-player-pos="${esc(op.position)}"` : ''}${op.espnUrl ? ` data-opp-espn-url="${esc(sanitizeExternalUrl(op.espnUrl, '') || '')}"` : ''}`
+                        : '';
+                      return `
                     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
                       <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
                         ${
-                          op.espnUrl
-                            ? `<a href="${esc(op.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(op.name)}</strong></a>`
-                            : `<strong>${esc(op.name)}</strong>`
+                          oppTrigger
+                            ? `<button type="button" class="inline-player-link opp-inline-player-btn" ${oppTrigger}><strong>${esc(op.name)}</strong></button>`
+                            : op.espnUrl
+                              ? `<a href="${esc(op.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(op.name)}</strong></a>`
+                              : `<strong>${esc(op.name)}</strong>`
                         } <span style="color:var(--text-muted)">(${esc(op.position)} • ${esc(op.injuryType)})</span>
                       </span>
                       <span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(op.playBadgeLabel)}</span>
                     </div>
-                  `
-                    )
+                  `;
+                    })
                     .join('')}
                 </div>`
               : `<div style="font-size:11.5px;color:var(--text-muted);margin-top:3px">Active starters cleared (${homeOppSummary.activeStartersHealthy}/${homeOppSummary.totalStarters}) • ${homeOppSummary.irCount} on IR</div>`

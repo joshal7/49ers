@@ -883,13 +883,32 @@ export function buildXBeatListSearchUrl(mode = 'trusted', options = {}) {
 /**
  * Builds a 1-tap Live X (`x.com`) search URL for breaking beat updates on a specific 49ers player.
  */
-export function buildXPlayerScoopSearchUrl(playerName = '') {
+export function buildXPlayerScoopSearchUrl(playerName = '', teamContext = null) {
   const cleanName = String(playerName || '')
     .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
     .trim();
   if (!cleanName) return buildXBeatListSearchUrl('trusted');
   const dotlessName = cleanName.replace(/\b([A-Za-z])\.([A-Za-z])\./g, '$1$2');
   const nameClause = dotlessName !== cleanName ? `("${cleanName}" OR "${dotlessName}")` : `"${cleanName}"`;
+  if (teamContext && teamContext.isRemoteTeam) {
+    const terms = [];
+    const nickname = String(teamContext.nickname || '').trim();
+    const city = String(teamContext.city || '').trim();
+    if (nickname) terms.push(nickname.includes(' ') ? `"${nickname}"` : nickname);
+    if (city && city.toLowerCase() !== nickname.toLowerCase()) {
+      terms.push(city.includes(' ') ? `"${city}"` : city);
+    }
+    const handles = Array.isArray(teamContext.beatHandles) ? teamContext.beatHandles : [];
+    for (const h of handles.slice(0, 5)) {
+      const cleanHandle = String(h || '').replace(/^@/, '').trim();
+      if (/^[A-Za-z0-9_]{2,25}$/.test(cleanHandle)) {
+        terms.push(`from:${cleanHandle}`);
+      }
+    }
+    if (terms.length === 0) terms.push('NFL');
+    const q = `${nameClause} (${terms.join(' OR ')})`;
+    return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
+  }
   const q = `${nameClause} (49ers OR Niners OR from:MaioccoNBCS OR from:nwagoner OR from:mattbarrows OR from:LombardiHimself OR from:jenniferleechan OR from:Eric_Branch OR from:CamInman)`;
   return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
 }

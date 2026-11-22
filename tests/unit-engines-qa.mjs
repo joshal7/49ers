@@ -11,6 +11,22 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import {
+  ALL_NFL_TEAM_ENTRIES,
+  resolveNflTeamMeta,
+  buildTeamSiteOrigin,
+  buildTeamDataBaseUrls,
+  getRemoteTeamSheetThemeVars,
+  extractEspnPlayerIdFromRecord,
+  findPlayerInTeamRoster,
+  reconcileRemoteTeamRosterWithHealth,
+  buildOpponentSeedPlayer,
+  mergeRemoteAndLocalOpponentPlayer,
+  fetchRemoteTeamBundle,
+  clearRemoteTeamCache
+} from '../src/services/remoteTeamDossierService.js';
+import { renderPlayerDossierSheetHtml } from '../src/views/playerSheetView.js';
+
+import {
   ALL_DASHBOARD_BLOCKS,
   DEFAULT_HOME_BLOCK_IDS,
   evaluateSeasonState,
@@ -16432,6 +16448,302 @@ await testAsync(
     assert.equal(readSameOriginSharedGeminiKey(memStorage)?.c, 1);
     reconcilePrefsWithSameOriginSharedKey(teamAPrefs, { storage: memStorage, nowMs: 7100 });
     assert.equal(teamAPrefs.geminiApiKey, '');
+  }
+);
+
+await testAsync(
+  'Cross-team native player dossier service resolves all 32 teams, fetches & caches remote *.joshal.com JSON, rejects HTML fallbacks, and merges matchup telemetry with zero 49ers leaks',
+  async () => {
+    clearRemoteTeamCache();
+    assert.equal(ALL_NFL_TEAM_ENTRIES.length, 32, 'Must cover all 32 NFL franchises');
+
+    // Team alias & slug resolution
+    const min = resolveNflTeamMeta('MIN');
+    assert.equal(min?.slug, 'vikings');
+    assert.equal(min?.domain, 'vikings.joshal.com');
+    assert.equal(resolveNflTeamMeta('Minnesota Vikings')?.abbr, 'MIN');
+    assert.equal(resolveNflTeamMeta('vikes')?.abbr, 'MIN');
+    assert.equal(resolveNflTeamMeta('LA')?.abbr, 'LAR');
+    assert.equal(resolveNflTeamMeta('WSH')?.abbr, 'WAS');
+    assert.equal(resolveNflTeamMeta('JAC')?.abbr, 'JAX');
+    assert.equal(resolveNflTeamMeta('TBD'), null);
+    assert.equal(buildTeamSiteOrigin('MIN'), 'https://vikings.joshal.com');
+
+    // Candidate URL ordering
+    const minUrls = buildTeamDataBaseUrls('MIN');
+    assert.deepEqual(minUrls, [
+      'https://vikings.joshal.com/data/teams/vikings',
+      'https://vikings.joshal.com/data'
+    ]);
+    assert.deepEqual(buildTeamDataBaseUrls('SF'), ['https://49ers.joshal.com/data']);
+
+    // Team-scoped light/dark theme variables
+    const minLightVars = getRemoteTeamSheetThemeVars('MIN', 'light');
+    const minDarkVars = getRemoteTeamSheetThemeVars('MIN', 'dark');
+    assert.equal(minLightVars['--scarlet'], '#4F2683');
+    assert.equal(minDarkVars['--scarlet'], '#7C4DFF');
+
+    // X Beat search URL uses remote team context (zero 49ers beat leaks!)
+    const minXUrl = buildXPlayerScoopSearchUrl('Kyler Murray', {
+      isRemoteTeam: true,
+      nickname: 'Vikings',
+      city: 'Minnesota',
+      beatHandles: ['BenGoessling', 'Alec_Lewis']
+    });
+    assert.ok(decodeURIComponent(minXUrl).includes('Vikings'), 'Remote X search must include Vikings');
+    assert.ok(decodeURIComponent(minXUrl).includes('from:BenGoessling'), 'Remote X search must include team beat handle');
+    assert.ok(!decodeURIComponent(minXUrl).includes('MaioccoNBCS'), 'Remote X search must NOT include 49ers beat handles');
+
+    // Reject HTML 200 SPA fallback & recover via secondary candidate URL, plus in-flight dedupe & cache
+    let rosterFetchCount = 0;
+    const mockVikingsRoster = {
+      players: [
+        {
+          id: '3917315',
+          name: 'Kyler Murray',
+          shortName: 'K. Murray',
+          position: 'QB',
+          unit: 'Offense',
+          rosterBucket: 'active',
+          jersey: 1,
+          age: 29,
+          displayHeight: '5\' 10"',
+          displayWeight: '207 lbs',
+          college: 'Oklahoma',
+          draftInfo: '2019 • Rd 1, Pick #1',
+          espnUrl: 'https://www.espn.com/nfl/player/_/id/3917315/kyler-murray',
+          otcUrl: 'https://overthecap.com/player/kyler-murray/7792/',
+          pfrUrl: 'https://www.pro-football-reference.com/players/M/MurrKy00.htm',
+          capHit2026: 22500000,
+          contractsByYear: {
+            '2026': {
+              year: 2026,
+              baseSalary: 14000000,
+              proratedSigning: 8500000,
+              guaranteedSalary: 14000000,
+              capNumber: 22500000,
+              transactions: {
+                cut: { deadMoney: 19000000, capSavings: 3500000 }
+              }
+            }
+          },
+          primarySnapPct: 0,
+          snapSummary: { offenseSnaps: 410, offenseSnapPct: 86, defenseSnaps: 0, defenseSnapPct: 0, stSnaps: 0, stSnapPct: 0 },
+          health: { status: 'Questionable', injuryType: 'Hamstring', wed: 'DNP', thu: 'LP', fri: 'LP' },
+          recentNews: []
+        }
+      ]
+    };
+    const mockVikingsHealth = {
+      week: 11,
+      byeWeek: 7,
+      sourceUrl: 'https://www.vikings.com/team/injury-report/',
+      practiceReport: [
+        {
+          playerId: '3917315',
+          name: 'Kyler Murray',
+          position: 'QB',
+          wed: 'DNP',
+          thu: 'LP',
+          fri: 'LP',
+          injuryType: 'Hamstring',
+          gameStatus: 'Questionable',
+          playProbabilityPct: 62,
+          playBadgeLabel: '62% • Questionable',
+          factors: ['Logged back-to-back LP sessions Thu/Fri']
+        }
+      ]
+    };
+    const mockVikingsNews = {
+      rawStream: [
+        {
+          id: 'min_tw_1',
+          type: 'tweet',
+          author: 'Ben Goessling',
+          outletName: 'Star Tribune',
+          fullText: 'Kyler Murray (hamstring) took red-zone reps with Justin Jefferson on Friday in Eagan.',
+          publishedAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
+          url: 'https://x.com/BenGoessling/status/1999999999999999999'
+        }
+      ]
+    };
+    const mockVikingsReporters = {
+      reporters: [{ id: 'min_bg', name: 'Ben Goessling', xHandle: 'BenGoessling', tier: 1 }]
+    };
+
+    const mockFetch = async url => {
+      const u = String(url);
+      // Primary path returns HTML 200 SPA fallback — must be rejected cleanly!
+      if (u.includes('/data/teams/vikings/')) {
+        return {
+          ok: true,
+          status: 200,
+          headers: { get: k => (k.toLowerCase() === 'content-type' ? 'text/html; charset=utf-8' : null) },
+          text: async () => '<!DOCTYPE html><html><body>SPA Fallback</body></html>'
+        };
+      }
+      if (u.endsWith('/roster.json')) {
+        rosterFetchCount += 1;
+        return {
+          ok: true,
+          status: 200,
+          headers: { get: () => 'application/json' },
+          text: async () => JSON.stringify(mockVikingsRoster)
+        };
+      }
+      if (u.endsWith('/health.json')) {
+        return { ok: true, status: 200, headers: { get: () => 'application/json' }, text: async () => JSON.stringify(mockVikingsHealth) };
+      }
+      if (u.endsWith('/news.json')) {
+        return { ok: true, status: 200, headers: { get: () => 'application/json' }, text: async () => JSON.stringify(mockVikingsNews) };
+      }
+      if (u.endsWith('/reporters.json')) {
+        return { ok: true, status: 200, headers: { get: () => 'application/json' }, text: async () => JSON.stringify(mockVikingsReporters) };
+      }
+      if (u.endsWith('/meta.json')) {
+        return { ok: true, status: 200, headers: { get: () => 'application/json' }, text: async () => JSON.stringify({ teamAbbr: 'MIN', brandName: 'Vikings Skol', currentWeek: 11 }) };
+      }
+      return { ok: false, status: 404, headers: { get: () => 'text/plain' }, text: async () => 'Not found' };
+    };
+
+    // Concurrent calls deduplicate into a single fetch
+    const [b1, b2] = await Promise.all([
+      fetchRemoteTeamBundle('MIN', { fetchImpl: mockFetch }),
+      fetchRemoteTeamBundle('MIN', { fetchImpl: mockFetch })
+    ]);
+    assert.equal(b1.ok, true, 'Secondary /data fallback must succeed after rejecting HTML SPA fallback');
+    assert.equal(b2.ok, true);
+    assert.equal(rosterFetchCount, 1, 'Concurrent remote team fetches must deduplicate to 1 network request');
+
+    // Warm cache hit does zero additional fetches
+    const b3 = await fetchRemoteTeamBundle('MIN', { fetchImpl: mockFetch });
+    assert.equal(b3.ok, true);
+    assert.equal(rosterFetchCount, 1, 'Warm cache hit must perform 0 additional fetches');
+
+    // Player lookup & reconciliation + local matchup live game-day merge
+    const foundKyler = findPlayerInTeamRoster(b1.appData.roster.players, { playerId: '3917315', name: 'Kyler Murray' });
+    assert.equal(foundKyler?.name, 'Kyler Murray');
+    assert.equal(foundKyler?.health?.playProbabilityPct, 62, 'health.json must reconcile playProbabilityPct onto roster player');
+
+    const localSeed = buildOpponentSeedPlayer({
+      teamMeta: min,
+      playerId: '3917315',
+      playerName: 'Kyler Murray',
+      matchupData: {
+        opponentHealth: {
+          injuryReport: [
+            {
+              name: 'Kyler Murray',
+              position: 'QB',
+              jersey: 1,
+              espnUrl: 'https://www.espn.com/nfl/player/_/id/3917315/kyler-murray',
+              snapPct: 86,
+              statLine2026: '1022 pass yds, 5 TD, 3 INT',
+              playProbabilityPct: 100,
+              playBadgeLabel: '100% • In (Active)',
+              gameStatus: 'Active'
+            }
+          ]
+        }
+      }
+    });
+    assert.equal(extractEspnPlayerIdFromRecord(localSeed), '3917315');
+    const merged = mergeRemoteAndLocalOpponentPlayer({
+      remotePlayer: foundKyler,
+      remoteBundle: b1,
+      seedPlayer: localSeed,
+      teamMeta: min
+    });
+    assert.equal(merged.player.primarySnapPct, 86, 'Should fill 0 remote snapPct from local matchup seed');
+    assert.equal(merged.player.health.playBadgeLabel, '100% • In (Active)', 'Live game-day active resolution must surface on merged dossier');
+    assert.equal(merged.teamContext.domain, 'vikings.joshal.com');
+
+    // Render all key tabs and assert ZERO 49ers-hardcoded copy leaks
+    const overviewHtml = renderPlayerDossierSheetHtml({
+      player: merged.player,
+      activeTab: 'overview',
+      rawStream: merged.rawStream,
+      appData: merged.appData,
+      reportersById: merged.reportersById,
+      teamContext: merged.teamContext,
+      remoteStatus: { state: 'ready' }
+    });
+    assert.ok(overviewHtml.includes('vikings.joshal.com'), 'Overview must link to vikings.joshal.com');
+    assert.ok(overviewHtml.includes('OverTheCap Contract'), 'Overview must show individual OTC contract chip');
+    assert.ok(overviewHtml.includes('Ben Goessling'), 'Overview must show Vikings Recent Mentions from remote news.json');
+    assert.ok(!overviewHtml.includes('OverTheCap 49ers Cap'), 'Overview must NOT leak 49ers OTC label');
+
+    const healthHtml = renderPlayerDossierSheetHtml({
+      player: merged.player,
+      activeTab: 'health',
+      rawStream: merged.rawStream,
+      appData: merged.appData,
+      reportersById: merged.reportersById,
+      teamContext: merged.teamContext,
+      remoteStatus: { state: 'ready' }
+    });
+    assert.ok(healthHtml.includes('vikings.com Report'), 'Health tab must show vikings.com Report');
+    assert.ok(!healthHtml.includes('49ers.com Report'), 'Health tab must NOT leak 49ers.com Report');
+
+    const statsHtml = renderPlayerDossierSheetHtml({
+      player: merged.player,
+      activeTab: 'stats',
+      teamContext: merged.teamContext
+    });
+    assert.ok(statsHtml.includes('1022 pass yds, 5 TD, 3 INT'), 'Stats tab must display 2026 stat line when statProfile2026 is not populated');
+
+    const contractHtml = renderPlayerDossierSheetHtml({
+      player: merged.player,
+      activeTab: 'contract',
+      teamContext: merged.teamContext
+    });
+    assert.ok(contractHtml.includes('$22,500,000'), 'Contract tab must render remote OverTheCap 2026 Cap Hit');
+
+    // Verify Matchup & Home views wire opposing players to open-opponent-player-sheet
+    const liveSched = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/schedule-matchup.json'), 'utf8'));
+    const liveHealth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/health.json'), 'utf8'));
+    const liveRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/roster.json'), 'utf8'));
+    const liveMeta = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/meta.json'), 'utf8'));
+    const liveNews = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/news.json'), 'utf8'));
+    const liveCap = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/cap.json'), 'utf8'));
+    const liveSeasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/seasonal.json'), 'utf8'));
+    const mockAppData = {
+      meta: liveMeta,
+      roster: liveRoster,
+      health: liveHealth,
+      scheduleMatchup: liveSched,
+      news: liveNews,
+      cap: liveCap,
+      seasonal: liveSeasonal
+    };
+    const matchupHtml = renderSeasonMatchupViewHtml({
+      subTab: 'matchup',
+      appData: mockAppData,
+      userPrefs: {},
+      matchupIntel: null
+    });
+    const oppStart = matchupHtml.indexOf('id="opponentHealthSection"');
+    const oppSlice = matchupHtml.slice(oppStart, oppStart + 18000);
+    assert.ok(
+      oppSlice.includes('data-action="open-opponent-player-sheet"'),
+      'Opponent Health section must wire opposing players to open-opponent-player-sheet'
+    );
+    assert.ok(
+      !oppSlice.includes('href="https://www.espn.com/nfl/player/'),
+      'Opponent Health player links must open native joshal dossier instead of external ESPN player links'
+    );
+
+    const homeHtml = renderHomeDashboardHtml({
+      orderedBlocks: ALL_DASHBOARD_BLOCKS.filter(b => b.id === 'upcoming_matchup'),
+      appData: mockAppData,
+      userPrefs: {}
+    });
+    assert.ok(
+      homeHtml.includes('data-action="open-opponent-player-sheet"'),
+      'Home Upcoming Matchup opponent preview must wire opposing players to open-opponent-player-sheet'
+    );
+
+    clearRemoteTeamCache();
   }
 );
 

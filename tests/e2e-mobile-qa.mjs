@@ -134,6 +134,204 @@ function startStaticServer(port) {
     const server = http.createServer((req, res) => {
       const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
 
+      // Local Mock Remote `<team>.joshal.com` Data Endpoints for deterministic cross-team dossier E2E tests
+      if (urlPath.startsWith('/__mock_remote_teams_html__/')) {
+        res.writeHead(200, {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'no-store'
+        });
+        res.end('<!DOCTYPE html><html><body>SPA Fallback</body></html>');
+        return;
+      }
+
+      if (urlPath.startsWith('/__mock_remote_teams__/vikings/') && req.method === 'GET') {
+        const file = urlPath.split('/').pop();
+        const nowIso = new Date().toISOString();
+        const twoHrsAgoIso = new Date(Date.now() - 2 * 3600 * 1000).toISOString();
+        const mockPayloads = {
+          'meta.json': {
+            updatedAt: nowIso,
+            teamAbbr: 'MIN',
+            teamSlug: 'vikings',
+            brandName: 'Vikings Skol',
+            seasonYear: 2026,
+            currentWeek: 11,
+            byeWeek: 7
+          },
+          'reporters.json': {
+            reporters: [
+              { id: 'min_bg', name: 'Ben Goessling', xHandle: 'BenGoessling', outletName: 'Star Tribune', tier: 1 },
+              { id: 'min_al', name: 'Alec Lewis', xHandle: 'Alec_Lewis', outletName: 'The Athletic', tier: 1 }
+            ]
+          },
+          'health.json': {
+            updatedAt: nowIso,
+            week: 11,
+            byeWeek: 7,
+            sourceUrl: 'https://www.vikings.com/team/injury-report/',
+            practiceReport: [
+              {
+                playerId: '3917315',
+                name: 'Kyler Murray',
+                position: 'QB',
+                jersey: 1,
+                wed: 'DNP',
+                thu: 'LP',
+                fri: 'LP',
+                injuryType: 'Hamstring',
+                gameStatus: 'Questionable',
+                playProbabilityPct: 48,
+                playBadgeLabel: '48% • Questionable',
+                factors: ['Limited Thursday/Friday practice after hamstring flare-up']
+              }
+            ],
+            irAndReserveTracker: []
+          },
+          'news.json': {
+            rawStream: [
+              {
+                id: 'min_mock_tw_1',
+                type: 'tweet',
+                author: 'Ben Goessling',
+                reporterId: 'min_bg',
+                outletName: 'Star Tribune',
+                headline: 'Kyler Murray took limited reps with Justin Jefferson on Friday in Eagan.',
+                fullText: 'Kyler Murray (hamstring) took limited red-zone reps with Justin Jefferson on Friday in Eagan ahead of Week 11.',
+                publishedAt: twoHrsAgoIso,
+                url: 'https://x.com/BenGoessling/status/1991234567890123456'
+              },
+              {
+                id: 'min_mock_tw_2',
+                type: 'tweet',
+                author: 'Alec Lewis',
+                reporterId: 'min_al',
+                outletName: 'Vikings Beat',
+                headline: 'Justin Jefferson looked explosive in Friday walk-through.',
+                fullText: 'Justin Jefferson looked completely full-speed in Friday work with the Vikings offense.',
+                publishedAt: twoHrsAgoIso,
+                url: 'https://x.com/Alec_Lewis/status/1991234567890123457'
+              }
+            ]
+          },
+          'roster.json': {
+            updatedAt: nowIso,
+            players: [
+              {
+                id: '3917315',
+                name: 'Kyler Murray',
+                shortName: 'K. Murray',
+                position: 'QB',
+                unit: 'Offense',
+                rosterBucket: 'active',
+                jersey: 1,
+                age: 29,
+                displayHeight: '5\' 10"',
+                displayWeight: '207 lbs',
+                college: 'Oklahoma',
+                draftInfo: '2019 • Rd 1, Pick #1',
+                headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/3917315.png',
+                espnUrl: 'https://www.espn.com/nfl/player/_/id/3917315/kyler-murray',
+                otcUrl: 'https://overthecap.com/player/kyler-murray/7792/',
+                pfrUrl: 'https://www.pro-football-reference.com/players/M/MurrKy00.htm',
+                primarySnapPct: 86,
+                capHit2026: 22500000,
+                snapSummary: { offenseSnaps: 410, offenseSnapPct: 86, defenseSnaps: 0, defenseSnapPct: 0, stSnaps: 0, stSnapPct: 0 },
+                contractsByYear: {
+                  '2026': {
+                    year: 2026,
+                    baseSalary: 14000000,
+                    proratedSigning: 8500000,
+                    guaranteedSalary: 14000000,
+                    capNumber: 22500000,
+                    transactions: {
+                      cut: { deadMoney: 19000000, capSavings: 3500000 },
+                      june_1_cut: { deadMoney: 10500000, capSavings: 12000000 },
+                      trade: { deadMoney: 10500000, capSavings: 12000000 }
+                    }
+                  }
+                },
+                spiderProfile: {
+                  posGroup: 'QB',
+                  rasScore: 9.21,
+                  metrics: [
+                    { label: '40-Yd', percentile: 96, display: '4.38s' },
+                    { label: 'Agility', percentile: 94, display: '6.85s' },
+                    { label: 'Explosiveness', percentile: 88, display: '38"' },
+                    { label: 'Height', percentile: 4, display: '5\'10"' },
+                    { label: 'Weight', percentile: 18, display: '207 lb' }
+                  ]
+                },
+                careerSeasons: [
+                  { season: 2025, team: 'ARI', games: 17, passYds: 3851, passTd: 21, int: 11, rushYds: 572, rushTd: 5 }
+                ],
+                health: {
+                  status: 'Questionable',
+                  injuryType: 'Hamstring',
+                  wed: 'DNP',
+                  thu: 'LP',
+                  fri: 'LP',
+                  playProbabilityPct: 48,
+                  playBadgeLabel: '48% • Questionable',
+                  factors: ['Limited Thursday/Friday practice after hamstring flare-up']
+                },
+                recentNews: []
+              },
+              {
+                id: '4262921',
+                name: 'Justin Jefferson',
+                shortName: 'J. Jefferson',
+                position: 'WR',
+                unit: 'Offense',
+                rosterBucket: 'active',
+                jersey: 18,
+                age: 27,
+                displayHeight: '6\' 1"',
+                displayWeight: '195 lbs',
+                college: 'LSU',
+                draftInfo: '2020 • Rd 1, Pick #22',
+                headshotUrl: 'https://a.espncdn.com/i/headshots/nfl/players/full/4262921.png',
+                espnUrl: 'https://www.espn.com/nfl/player/_/id/4262921/justin-jefferson',
+                otcUrl: 'https://overthecap.com/player/justin-jefferson/8762/',
+                pfrUrl: 'https://www.pro-football-reference.com/players/J/JeffJu00.htm',
+                primarySnapPct: 97,
+                capHit2026: 35000000,
+                snapSummary: { offenseSnaps: 590, offenseSnapPct: 97, defenseSnaps: 0, defenseSnapPct: 0, stSnaps: 0, stSnapPct: 0 },
+                contractsByYear: {
+                  '2026': {
+                    year: 2026,
+                    baseSalary: 25000000,
+                    proratedSigning: 10000000,
+                    guaranteedSalary: 25000000,
+                    capNumber: 35000000,
+                    transactions: { cut: { deadMoney: 42000000, capSavings: -7000000 } }
+                  }
+                },
+                health: {
+                  status: 'Active',
+                  injuryType: 'Healthy',
+                  wed: 'FP',
+                  thu: 'FP',
+                  fri: 'FP',
+                  playProbabilityPct: 99,
+                  playBadgeLabel: '99% • Cleared',
+                  factors: ['Cleared without restrictive game-day designation']
+                },
+                recentNews: []
+              }
+            ]
+          }
+        };
+        if (mockPayloads[file]) {
+          res.writeHead(200, {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Access-Control-Allow-Origin': '*',
+            'Cache-Control': 'no-store'
+          });
+          res.end(JSON.stringify(mockPayloads[file]));
+          return;
+        }
+      }
+
       // Local Mock Gemini v1beta API for deterministic E2E testing of Browser -> Gemini 4 Hydrogen XHIGH + NotebookLM TTS
       if (urlPath === '/v1beta/models' && req.method === 'GET') {
         res.writeHead(200, {
@@ -6595,6 +6793,164 @@ async function main() {
         `Deep tweet/article word search, highlight marks, or scope tabs failed: ${JSON.stringify(searchUxAudit)}`
       );
       await cdp.assertNoOverflow('Unobstructed Header & Keyboard-Safe Search Suite (393x852)');
+    });
+
+    await runStep('Cross-Team Native Player Dossier: Clicking opposing matchup player pops up native <team>.joshal.com sheet without leaving 49ers.joshal.com', async () => {
+      await cdp.setViewport(393, 852, true);
+      await cdp.eval(() => {
+        window.__49ersDiagnostics.clearRemoteTeamCache();
+        window.__49ersDiagnostics.setRemoteTeamDataBaseOverride('/__mock_remote_teams__/{slug}');
+        document.querySelector('[data-nav-tab="season"]').click();
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
+      });
+
+      const triggerAudit = await cdp.eval(() => {
+        const sec = document.getElementById('opponentHealthSection');
+        const espnPlayerLinks = sec ? sec.querySelectorAll('a[href*="espn.com/nfl/player/"]').length : -1;
+        const oppTriggers = sec ? Array.from(sec.querySelectorAll('[data-action="open-opponent-player-sheet"]')) : [];
+        const kylerBtn =
+          oppTriggers.find(el => /kyler murray/i.test(el.getAttribute('data-opp-player-name') || '')) || oppTriggers[0];
+        if (kylerBtn) kylerBtn.click();
+        return {
+          espnPlayerLinks,
+          oppTriggerCount: oppTriggers.length,
+          clickedName: kylerBtn?.getAttribute('data-opp-player-name') || '',
+          clickedTeam: kylerBtn?.getAttribute('data-opp-team') || ''
+        };
+      });
+      assert(
+        triggerAudit.espnPlayerLinks === 0 && triggerAudit.oppTriggerCount >= 2,
+        `Opponent Health must wire opposing players to open-opponent-player-sheet instead of ESPN links: ${JSON.stringify(triggerAudit)}`
+      );
+
+      // Wait briefly for mock Vikings JSON bundle to hydrate the sheet
+      await new Promise(r => setTimeout(r, 250));
+
+      const vikingsSheetAudit = await cdp.eval(() => {
+        const backdrop = document.getElementById('bottomSheetBackdrop');
+        const container = document.getElementById('bottomSheetContainer');
+        const eyebrow = document.getElementById('sheetEyebrow')?.textContent?.trim() || '';
+        const title = document.getElementById('sheetTitle')?.textContent?.trim() || '';
+        const body = document.getElementById('sheetBody');
+        const bodyText = body?.textContent || '';
+        const teamSiteLink = body?.querySelector('a[data-remote-team-site-link="true"]')?.getAttribute('href') || '';
+        const xBeatLink = Array.from(body?.querySelectorAll('a.source-chip-link') || []).find(a => /live x beat/i.test(a.textContent || ''))?.getAttribute('href') || '';
+        const inlineTeammate = body?.querySelector('[data-action="open-opponent-player-sheet"][data-opp-player-name="Justin Jefferson"]');
+        const remoteTeamAttr = container?.getAttribute('data-remote-team') || '';
+        const scarletVar = container?.style.getPropertyValue('--scarlet') || '';
+        return {
+          open: Boolean(backdrop && !backdrop.hidden),
+          stillOnSameOrigin: window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost',
+          eyebrow,
+          title,
+          remoteTeamAttr,
+          scarletVar,
+          teamSiteLink,
+          xBeatLink,
+          hasVikingsMention: bodyText.includes('Ben Goessling'),
+          hasNo49ersOtcLeak: !bodyText.includes('OverTheCap 49ers Cap'),
+          hasInlineTeammate: Boolean(inlineTeammate)
+        };
+      });
+      assert(
+        vikingsSheetAudit.open &&
+          vikingsSheetAudit.stillOnSameOrigin &&
+          vikingsSheetAudit.remoteTeamAttr === 'MIN' &&
+          Boolean(vikingsSheetAudit.scarletVar) &&
+          vikingsSheetAudit.eyebrow.startsWith('MIN •'),
+        `Opposing player sheet must open natively with MIN branding without leaving site: ${JSON.stringify(vikingsSheetAudit)}`
+      );
+      assert(
+        vikingsSheetAudit.teamSiteLink === 'https://vikings.joshal.com' &&
+          decodeURIComponent(vikingsSheetAudit.xBeatLink).includes('Vikings') &&
+          !decodeURIComponent(vikingsSheetAudit.xBeatLink).includes('MaioccoNBCS') &&
+          vikingsSheetAudit.hasNo49ersOtcLeak,
+        `Remote player Overview must link to vikings.joshal.com + Vikings X beat with zero 49ers leaks: ${JSON.stringify(vikingsSheetAudit)}`
+      );
+      await cdp.assertNoOverflow('Remote Vikings Player Dossier Overview (393x852)');
+
+      // Inspect Health, Stats, Spider Chart & Contract tabs on hydrated Vikings player
+      const tabsAudit = await cdp.eval(() => {
+        const body = document.getElementById('sheetBody');
+        body.querySelector('[data-action="set-player-tab"][data-player-tab="health"]')?.click();
+        const healthTxt = body.textContent || '';
+        const hasVikingsReport = healthTxt.includes('vikings.com Report') && !healthTxt.includes('49ers.com Report');
+        body.querySelector('[data-action="set-player-tab"][data-player-tab="contract"]')?.click();
+        const contractTxt = body.textContent || '';
+        const hasContractHit = contractTxt.includes('$22,500,000') || contractTxt.includes('OverTheCap');
+        body.querySelector('[data-action="set-player-tab"][data-player-tab="spider"]')?.click();
+        const hasSpiderSvg = Boolean(body.querySelector('svg'));
+        body.querySelector('[data-action="set-player-tab"][data-player-tab="overview"]')?.click();
+        return { hasVikingsReport, hasContractHit, hasSpiderSvg };
+      });
+      assert(
+        tabsAudit.hasVikingsReport && tabsAudit.hasContractHit,
+        `Remote player Health & Contract tabs failed: ${JSON.stringify(tabsAudit)}`
+      );
+      await cdp.assertNoOverflow('Remote Vikings Player Dossier Tabs (393x852)');
+
+      // If Kyler Murray had Justin Jefferson mention, tap inline Justin Jefferson -> hops to JJ seamlessly
+      if (vikingsSheetAudit.hasInlineTeammate) {
+        const jjAudit = await cdp.eval(() => {
+          document.querySelector('#sheetBody [data-action="open-opponent-player-sheet"][data-opp-player-name="Justin Jefferson"]')?.click();
+          return {
+            title: document.getElementById('sheetTitle')?.textContent?.trim() || '',
+            eyebrow: document.getElementById('sheetEyebrow')?.textContent?.trim() || ''
+          };
+        });
+        assert(
+          jjAudit.title === 'Justin Jefferson' && jjAudit.eyebrow.includes('MIN • WR • #18'),
+          `Clicking inline Vikings teammate link should open Justin Jefferson dossier: ${JSON.stringify(jjAudit)}`
+        );
+      }
+
+      // Close sheet & open a native 49ers player -> verify remote team vars clear cleanly
+      const resetAudit = await cdp.eval(() => {
+        document.getElementById('closeSheetBtn')?.click();
+        const afterCloseAttr = document.getElementById('bottomSheetContainer')?.getAttribute('data-remote-team');
+        const afterCloseVar = document.getElementById('bottomSheetContainer')?.style.getPropertyValue('--scarlet') || '';
+        document.querySelector('[data-nav-tab="roster"]').click();
+        document.querySelector('[data-action="open-player-sheet"]')?.click();
+        const sfOpenAttr = document.getElementById('bottomSheetContainer')?.getAttribute('data-remote-team');
+        const sfTitle = document.getElementById('sheetTitle')?.textContent?.trim() || '';
+        document.getElementById('closeSheetBtn')?.click();
+        return { afterCloseAttr, afterCloseVar, sfOpenAttr, sfTitle };
+      });
+      assert(
+        !resetAudit.afterCloseAttr && !resetAudit.afterCloseVar && !resetAudit.sfOpenAttr && Boolean(resetAudit.sfTitle),
+        `Closing remote sheet & opening 49ers player must clear remote team styling cleanly: ${JSON.stringify(resetAudit)}`
+      );
+
+      // Verify graceful matchup fallback when remote team returns HTML SPA fallback (no console/network errors!)
+      await cdp.eval(() => {
+        window.__49ersDiagnostics.clearRemoteTeamCache();
+        window.__49ersDiagnostics.setRemoteTeamDataBaseOverride('/__mock_remote_teams_html__/{slug}');
+        document.querySelector('[data-nav-tab="home"]').click();
+      });
+      const homeFallbackOpen = await cdp.eval(() => {
+        const btn = document.querySelector('[data-action="open-opponent-player-sheet"]');
+        if (btn) btn.click();
+        return Boolean(btn);
+      });
+      await new Promise(r => setTimeout(r, 200));
+      const fallbackAudit = await cdp.eval(() => {
+        const backdrop = document.getElementById('bottomSheetBackdrop');
+        const isOpen = Boolean(backdrop && !backdrop.hidden);
+        const statusEl = document.querySelector('[data-remote-dossier-status="fallback"]');
+        const retryBtn = document.querySelector('[data-action="retry-remote-player-sheet"]');
+        document.getElementById('closeSheetBtn')?.click();
+        window.__49ersDiagnostics.setRemoteTeamDataBaseOverride(null);
+        window.__49ersDiagnostics.clearRemoteTeamCache();
+        return {
+          open: isOpen,
+          hasFallbackNotice: Boolean(statusEl),
+          hasRetryBtn: Boolean(retryBtn)
+        };
+      });
+      assert(
+        homeFallbackOpen && fallbackAudit.open && fallbackAudit.hasFallbackNotice && fallbackAudit.hasRetryBtn,
+        `Home opponent player click with unavailable remote team must gracefully show matchup snapshot + Retry: ${JSON.stringify({ homeFallbackOpen, fallbackAudit })}`
+      );
     });
 
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {

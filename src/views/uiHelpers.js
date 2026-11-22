@@ -12,6 +12,7 @@ import { iconSvg } from './icons.js';
 export { jargonTerm, jargonInfoIcon };
 
 let cachedRosterArrayRef = null;
+let cachedRosterTeamAbbr = 'SF';
 let inlinePlayerRegex = null;
 let inlinePlayerByLowerPhrase = new Map();
 let rosterByCanonKey = new Map();
@@ -28,10 +29,21 @@ function escapeRegexChars(str = '') {
   return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-export function registerRosterPlayersForInlineLinks(players = null) {
-  if (!Array.isArray(players) || players.length === 0) return;
-  if (players === cachedRosterArrayRef && inlinePlayerRegex) return;
+export function registerRosterPlayersForInlineLinks(players = null, { teamAbbr = 'SF' } = {}) {
+  const nextTeam = String(teamAbbr || 'SF').trim().toUpperCase() || 'SF';
+  if (!Array.isArray(players) || players.length === 0) {
+    if (nextTeam !== 'SF') {
+      cachedRosterArrayRef = null;
+      cachedRosterTeamAbbr = nextTeam;
+      inlinePlayerRegex = null;
+      inlinePlayerByLowerPhrase = new Map();
+      rosterByCanonKey = new Map();
+    }
+    return;
+  }
+  if (players === cachedRosterArrayRef && nextTeam === cachedRosterTeamAbbr && inlinePlayerRegex) return;
   cachedRosterArrayRef = players;
+  cachedRosterTeamAbbr = nextTeam;
 
   const phraseMap = new Map();
   const canonMap = new Map();
@@ -134,7 +146,11 @@ export function annotateRosterAndJargonPlainText(
     ) {
       usedPlayers.add(pEntry.id);
       playerCount += 1;
-      out += `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(pEntry.id)}" aria-label="Open ${esc(pEntry.name)} dossier">${esc(matchedText)}</span>`;
+      if (cachedRosterTeamAbbr && cachedRosterTeamAbbr !== 'SF') {
+        out += `<span class="inline-player-link" role="button" tabindex="0" data-action="open-opponent-player-sheet" data-opp-team="${esc(cachedRosterTeamAbbr)}" data-opp-player-id="${esc(pEntry.id)}" data-opp-player-name="${esc(pEntry.name)}" aria-label="Open ${esc(pEntry.name)} dossier">${esc(matchedText)}</span>`;
+      } else {
+        out += `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(pEntry.id)}" aria-label="Open ${esc(pEntry.name)} dossier">${esc(matchedText)}</span>`;
+      }
     } else {
       out += annotateJargonPlainText(matchedText, { maxTerms, seenKeys: usedJargon });
     }
