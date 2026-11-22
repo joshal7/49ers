@@ -159,6 +159,11 @@ await test('wrangler.canary.toml explicitly binds ONLY lions.joshal.com & bills.
   assert.ok(!toml.includes('*.joshal.com'), 'Must NOT bind catch-all wildcard *.joshal.com');
   assert.ok(!toml.includes('pattern = "49ers.joshal.com"'), 'Must NOT touch 49ers.joshal.com during canary');
   assert.ok(!toml.includes('pattern = "workouts.joshal.com"'), 'Must NOT touch workouts.joshal.com');
+
+  const ignore = fs.readFileSync(path.join(ROOT, '.assetsignore'), 'utf8');
+  for (const excluded of ['.git', 'node_modules', 'worker', 'scripts', 'tests', 'data/podcasts/*.m4a']) {
+    assert.ok(ignore.includes(excluded), `.assetsignore must exclude ${excluded}`);
+  }
 });
 
 await test('Timezone-local 5:00 PM brief cutoff rolls ET teams (DET/BUF) 3 hours before PT (SF)', () => {
