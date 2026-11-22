@@ -10,7 +10,7 @@ import {
   renderPlayerAvatarHtml
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
-import { getActiveTeamConfig } from '../config/teamRegistry.js';
+import { getActiveTeamConfig, getTeamBySlug } from '../config/teamRegistry.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import {
   buildXBeatListSearchUrl,
@@ -80,12 +80,20 @@ export function renderSettingsSheetHtml({
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap" data-settings-team-switcher>
         <div style="min-width:0;flex:1 1 160px">
           <strong>Team Sites</strong>
-          <div style="font-size:11.5px;color:var(--text-secondary)">Jump cleanly between active NFL HQ sites</div>
+          <div style="font-size:11.5px;color:var(--text-secondary)">Jump cleanly between active NFL team sites</div>
         </div>
         <div class="source-link-strip" style="gap:6px">
-          <a href="${esc(typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/i.test(window.location?.hostname || '') ? '?team=lions' : 'https://lions.joshal.com')}" class="source-chip-link ${activeTeam.slug === 'lions' ? 'active' : ''}" style="${activeTeam.slug === 'lions' ? 'border-color:var(--gold-border);background:var(--gold-soft);color:var(--text-primary)' : ''}"><span>Lions HQ</span></a>
-          <a href="${esc(typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/i.test(window.location?.hostname || '') ? '?team=bills' : 'https://bills.joshal.com')}" class="source-chip-link ${activeTeam.slug === 'bills' ? 'active' : ''}" style="${activeTeam.slug === 'bills' ? 'border-color:var(--gold-border);background:var(--gold-soft);color:var(--text-primary)' : ''}"><span>Bills HQ</span></a>
-          <a href="${esc(typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/i.test(window.location?.hostname || '') ? '?team=49ers' : 'https://49ers.joshal.com')}" class="source-chip-link ${activeTeam.slug === '49ers' ? 'active' : ''}" style="${activeTeam.slug === '49ers' ? 'border-color:var(--gold-border);background:var(--gold-soft);color:var(--text-primary)' : ''}"><span>49ers Faithful</span></a>
+          ${['lions', 'bills', '49ers']
+            .map(slug => {
+              const t = getTeamBySlug(slug);
+              const href =
+                typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/i.test(window.location?.hostname || '')
+                  ? `?team=${slug}`
+                  : `https://${t.domain}`;
+              const isCur = activeTeam.slug === slug;
+              return `<a href="${esc(href)}" class="source-chip-link ${isCur ? 'active' : ''}" style="${isCur ? 'border-color:var(--gold-border);background:var(--gold-soft);color:var(--text-primary)' : ''}"><span>${esc(t.brandName)}</span></a>`;
+            })
+            .join('')}
         </div>
       </div>
 
@@ -818,7 +826,7 @@ export function renderUniversalSearchSheetHtml({
                  autocapitalize="off"
                  spellcheck="false"
                  enterkeyhint="search"
-                 aria-label="Search 49ers Faithful" />
+                 aria-label="Search ${esc(getActiveTeamConfig().brandName)}" />
           <button type="button" id="universalSearchClearBtn" class="search-clear-btn" data-action="clear-universal-search" aria-label="Clear search" ${hasQuery || hasSource ? '' : 'hidden'}>${iconSvg('close', 13)}</button>
         </div>
 

@@ -1,4 +1,4 @@
-name: Refresh Canary NFL Teams (Lions HQ & Bills HQ -> R2)
+name: Refresh Canary NFL Teams (Lions One Pride & Bills Mafia -> R2)
 
 # Strictly isolated canary workflow for `lions.joshal.com` and `bills.joshal.com`.
 # NEVER modifies `main` or `49ers.joshal.com`.

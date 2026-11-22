@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
  * Headless Chrome Mobile E2E QA for Canary Multi-Tenant Sites (`?team=lions` & `?team=bills`)
- * Verifies real browser rendering across portrait (393x852 iPhone 16) & landscape (852x393):
- *  - Dynamic branding (`Lions HQ` / `Bills HQ`), crest SVG, dark & light themes
+ * Verifies real browser rendering across portrait (393x852 iPhone 16), ultra-narrow (320x640) & landscape (852x393):
+ *  - Dynamic branding (`Lions One Pride` / `Bills Mafia`), crest SVG, dark & light themes
  *  - All 5 bottom tabs (`Home`, `News & Film`, `Game & Season`, `Roster & Cap`, `Audio & AI`) + Settings
  *  - Zero console errors, zero uncaught page errors, zero 404/network failures, 0px horizontal overflow
- *  - Zero stale `"49ers"` leakage on Lions HQ and Bills HQ primary headings/titles
+ *  - Zero stale `"49ers"` leakage on Lions One Pride and Bills Mafia primary headings/titles
  */
 
 import assert from 'node:assert/strict';
@@ -158,24 +158,44 @@ async function runCanaryE2eForTeam(cdp, baseUrl, { slug, expectedBrand, expected
     return res.result?.value;
   };
 
-  // 1. Verify Home Header, Title, Crest & Zero Horizontal Overflow
+  // 1. Verify Home Header, Title, Apple App Title, Crest & Zero Horizontal Overflow (393px & 320px)
   const homeState = await evalJs(`(() => {
     const title = document.title;
+    const appleTitle = document.querySelector('meta[name="apple-mobile-web-app-title"]')?.getAttribute('content') || '';
     const hTitle = document.getElementById('headerTitleText')?.textContent?.trim();
     const rec = document.getElementById('headerRecordPill')?.textContent?.trim();
     const sub = document.getElementById('headerSubStatus')?.textContent?.trim();
     const crest = document.querySelector('.brand-medallion')?.getAttribute('src') || '';
     const overflowPx = Math.max(0, document.documentElement.scrollWidth - window.innerWidth);
     const mainText = document.getElementById('mainView')?.innerText || '';
-    return { title, hTitle, rec, sub, crest, overflowPx, hasMainContent: mainText.length > 200 };
+    return { title, appleTitle, hTitle, rec, sub, crest, overflowPx, hasMainContent: mainText.length > 200 };
   })()`);
 
   assert.equal(homeState.hTitle, expectedBrand, `Expected header "${expectedBrand}", got "${homeState.hTitle}"`);
-  assert.ok(homeState.title.includes(expectedBrand), `Expected title containing "${expectedBrand}", got "${homeState.title}"`);
+  assert.equal(homeState.title, `${expectedBrand} — ${slug}.joshal.com`, `Expected website title "${expectedBrand} — ${slug}.joshal.com", got "${homeState.title}"`);
+  assert.equal(homeState.appleTitle, expectedBrand, `Expected apple-mobile-web-app-title "${expectedBrand}", got "${homeState.appleTitle}"`);
   assert.ok(homeState.crest.includes(`assets/teams/${slug}/crest.svg`), `Expected custom crest for ${slug}, got ${homeState.crest}`);
   assert.ok(homeState.sub.includes(expectedDivision), `Expected "${expectedDivision}" in sub-header, got "${homeState.sub}"`);
   assert.equal(homeState.overflowPx, 0, `${slug} Home portrait overflow ${homeState.overflowPx}px`);
   assert.equal(homeState.hasMainContent, true, `${slug} Home missing content`);
+
+  // Verify 320px ultra-narrow viewport zero overflow with longer franchise brand titles
+  await cdp.send('Emulation.setDeviceMetricsOverride', {
+    width: 320,
+    height: 640,
+    deviceScaleFactor: 2,
+    mobile: true
+  });
+  await new Promise(r => setTimeout(r, 180));
+  const narrowOverflow = await evalJs(`Math.max(0, document.documentElement.scrollWidth - window.innerWidth)`);
+  assert.equal(narrowOverflow, 0, `${slug} Home 320px narrow overflow ${narrowOverflow}px`);
+  await cdp.send('Emulation.setDeviceMetricsOverride', {
+    width: 393,
+    height: 852,
+    deviceScaleFactor: 3,
+    mobile: true
+  });
+  await new Promise(r => setTimeout(r, 150));
 
   // 2. Navigate through News, Game & Season (Matchup, Health, Playoffs, Stats), Roster & Cap, Audio & AI
   const tabsToVisit = [
@@ -270,7 +290,7 @@ async function runCanaryE2eForTeam(cdp, baseUrl, { slug, expectedBrand, expected
   assert.equal(settingsCheck.isOpen, true, `${slug} Settings sheet failed to open`);
   assert.equal(settingsCheck.overflowPx, 0, `${slug} Settings portrait overflow ${settingsCheck.overflowPx}px`);
   assert.ok(settingsCheck.text.includes('Team Sites'), `${slug} Settings missing Team Sites switcher`);
-  assert.ok(settingsCheck.text.includes('Lions HQ') && settingsCheck.text.includes('Bills HQ'), `${slug} Settings missing canary links`);
+  assert.ok(settingsCheck.text.includes('Lions One Pride') && settingsCheck.text.includes('Bills Mafia'), `${slug} Settings missing canary links`);
   await evalJs(`document.querySelector('#sheetBody [data-action="toggle-theme"]')?.click()`);
   await new Promise(r => setTimeout(r, 300));
   const toggledOverflow = await evalJs(`Math.max(0, document.documentElement.scrollWidth - window.innerWidth)`);
@@ -306,7 +326,7 @@ async function runCanaryE2eForTeam(cdp, baseUrl, { slug, expectedBrand, expected
 }
 
 async function main() {
-  console.log('\n=== Canary Multi-Team Headless Chrome E2E QA (Lions HQ & Bills HQ) ===');
+  console.log('\n=== Canary Multi-Team Headless Chrome E2E QA (Lions One Pride & Bills Mafia) ===');
   const { server, port } = await startStaticServer();
   const cdpPort = 9222 + Math.floor(Math.random() * 600);
   const { proc, wsUrl, userDataDir } = await launchChrome(cdpPort);
@@ -320,13 +340,13 @@ async function main() {
     const baseUrl = `http://127.0.0.1:${port}`;
     await runCanaryE2eForTeam(cdp, baseUrl, {
       slug: 'lions',
-      expectedBrand: 'Lions HQ',
+      expectedBrand: 'Lions One Pride',
       expectedDivision: 'NFC North',
       expectedConf: 'NFC'
     });
     await runCanaryE2eForTeam(cdp, baseUrl, {
       slug: 'bills',
-      expectedBrand: 'Bills HQ',
+      expectedBrand: 'Bills Mafia',
       expectedDivision: 'AFC East',
       expectedConf: 'AFC'
     });

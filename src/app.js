@@ -920,7 +920,7 @@ async function sendTestQuietAlert() {
     renderSheet({ preserveScroll: true });
     return;
   }
-  const title = '49ers Faithful · Quiet Alert Test';
+  const title = `${ACTIVE_TEAM.brandName} · Quiet Alert Test`;
   const body = 'High-signal alerts only (Tier-1 breaking & 5:00 PM PT daily brief). Zero score spam.';
   try {
     const reg = await navigator.serviceWorker?.ready;
@@ -1677,7 +1677,7 @@ function renderSheet({ preserveScroll = false } = {}) {
       });
       if (!preserveScroll) body.scrollTop = 0;
     } else if (state.sheetMode === 'search') {
-      if (eyebrow) eyebrow.textContent = '49ers Faithful';
+      if (eyebrow) eyebrow.textContent = ACTIVE_TEAM.brandName;
       if (title) title.textContent = 'Search';
       const filteredRawItems = getFilteredRawItemsForSearch();
       body.innerHTML = renderUniversalSearchSheetHtml({
@@ -2942,8 +2942,8 @@ function bindEvents() {
           const shareUrl = await buildShareablePodcastUrl(ep, window.location, state.prefs);
           window.__lastSharedUrl = shareUrl;
           const shareRes = await shareItemNatively({
-            title: `49ers Faithful Podcast: ${ep.title}`,
-            text: `Listen to "${ep.title}" (${formatTimeMmSs(ep.durationSec)}) on 49ers Faithful:`,
+            title: `${ACTIVE_TEAM.brandName} Podcast: ${ep.title}`,
+            text: `Listen to "${ep.title}" (${formatTimeMmSs(ep.durationSec)}) on ${ACTIVE_TEAM.brandName}:`,
             url: shareUrl
           });
           if (shareRes.method === 'clipboard') {
@@ -2974,8 +2974,8 @@ function bindEvents() {
             if (audioFile) {
               await shareAudioFileNatively({
                 file: audioFile,
-                title: `49ers Faithful Podcast: ${ep.title}`,
-                text: `${ep.title} (${formatTimeMmSs(ep.durationSec)}) — 49ers Faithful`
+                title: `${ACTIVE_TEAM.brandName} Podcast: ${ep.title}`,
+                text: `${ep.title} (${formatTimeMmSs(ep.durationSec)}) — ${ACTIVE_TEAM.brandName}`
               });
             }
           } finally {
@@ -2994,7 +2994,7 @@ function bindEvents() {
           window.__lastSharedUrl = shareUrl;
           const shareRes = await shareItemNatively({
             title: `49ers Scouting & Cap Brief: ${rep.title}`,
-            text: `Read "${rep.title}" on 49ers Faithful:`,
+            text: `Read "${rep.title}" on ${ACTIVE_TEAM.brandName}:`,
             url: shareUrl
           });
           if (shareRes.method === 'clipboard') {

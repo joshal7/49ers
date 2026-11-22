@@ -838,8 +838,8 @@ function renderPodcastStudio({
         <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px">
           ${
             activeEp.isSharedImport
-              ? `Shared by <strong>${esc(activeEp.createdBy || '49ers Faithful')}</strong> • ${esc(activeEp.format || 'Two-Host Analytical Banter')} • No API key needed to listen`
-              : `${esc(activeEp.format || 'Two-Host Analytical Banter')} • ${esc(activeEp.presetLabel || 'Studio Pod')} • Created by ${esc(activeEp.createdBy || '49ers Faithful')}`
+              ? `Shared by <strong>${esc(activeEp.createdBy || getActiveTeamConfig().brandName)}</strong> • ${esc(activeEp.format || 'Two-Host Analytical Banter')} • No API key needed to listen`
+              : `${esc(activeEp.format || 'Two-Host Analytical Banter')} • ${esc(activeEp.presetLabel || 'Studio Pod')} • Created by ${esc(activeEp.createdBy || getActiveTeamConfig().brandName)}`
           }
         </div>
 
@@ -1090,7 +1090,7 @@ function renderDeepAnalysisRunner({
           <div class="card-header-left">
             <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('sparkles', 18)}</div>
             <div class="card-title-group">
-              <div class="card-eyebrow">Shared Scouting &amp; Cap Report • By ${esc(sharedHeroReport.createdBy || '49ers Faithful')}</div>
+              <div class="card-eyebrow">Shared Scouting &amp; Cap Report • By ${esc(sharedHeroReport.createdBy || getActiveTeamConfig().brandName)}</div>
               <h3 class="card-title">${esc(sharedHeroReport.title)}</h3>
             </div>
           </div>

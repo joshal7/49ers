@@ -10,8 +10,8 @@
  * Zero-Regression Invariants for `49ers.joshal.com`:
  *   - `SF` preserves exact legacy branding (`49ers Faithful` / `49ers HQ`), exact legacy `localStorage`,
  *     IndexedDB, and `CacheStorage` keys, and `priorityTier: 'vip'` (Priority #0, always eager, never lazy).
- *   - All other 31 NFL clubs default to `{Nickname} HQ` (e.g., `Lions HQ`, `Bills HQ`) with isolated
- *     per-subdomain storage namespaces and WCAG AA (`>= 4.5:1`) contrast-verified dark & light themes.
+ *   - All other 31 NFL clubs use their franchise fanbase brand (e.g., `Lions One Pride`, `Bills Mafia`)
+ *     with isolated per-subdomain storage namespaces and WCAG AA (`>= 4.5:1`) contrast-verified dark & light themes.
  */
 
 export const CANARY_TEAM_SLUGS = ['lions', 'bills'];
@@ -181,7 +181,7 @@ function makeTeamEntry(raw) {
       };
 
   const brandName = raw.brandName || (isSf ? '49ers Faithful' : `${raw.nickname} HQ`);
-  const shortTitle = raw.shortTitle || `${raw.nickname} HQ`;
+  const shortTitle = raw.shortTitle || brandName;
 
   return {
     abbr,
@@ -256,6 +256,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'SEA', slug: 'seahawks', aliases: ['hawks'],
     espnId: 26, espnAbbr: 'sea', otcSlug: 'seattle-seahawks', cbsAbbr: 'SEA', pfrAbbr: 'sea',
     city: 'Seattle', nickname: 'Seahawks', stadium: 'Lumen Field',
+    brandName: 'Seahawks 12s',
     timezone: 'America/Los_Angeles', clubDomain: 'seahawks.com',
     themes: buildThemeSpec({
       darkName: 'Lumen Night', lightName: 'Royal Throwback',
@@ -271,6 +272,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'LAR', slug: 'rams', aliases: ['la-rams'],
     espnId: 14, espnAbbr: 'lar', otcSlug: 'los-angeles-rams', cbsAbbr: 'LAR', pfrAbbr: 'ram',
     city: 'Los Angeles', nickname: 'Rams', stadium: 'SoFi Stadium',
+    brandName: 'Rams House',
     timezone: 'America/Los_Angeles', clubDomain: 'therams.com', excludeGenericCity: true,
     themes: buildThemeSpec({
       darkName: 'SoFi Night', lightName: 'Royal & Sol',
@@ -286,6 +288,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'ARI', slug: 'cardinals', aliases: ['cards'],
     espnId: 22, espnAbbr: 'ari', otcSlug: 'arizona-cardinals', cbsAbbr: 'ARI', pfrAbbr: 'crd',
     city: 'Arizona', nickname: 'Cardinals', stadium: 'State Farm Stadium',
+    brandName: 'Cardinals Red Sea',
     timezone: 'America/Phoenix', clubDomain: 'azcardinals.com',
     themes: buildThemeSpec({
       darkName: 'Desert Night', lightName: 'Cardinal White',
@@ -303,6 +306,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'DET', slug: 'lions', aliases: ['detroit', 'onepride'],
     espnId: 8, espnAbbr: 'det', otcSlug: 'detroit-lions', cbsAbbr: 'DET', pfrAbbr: 'det',
     city: 'Detroit', nickname: 'Lions', stadium: 'Ford Field',
+    brandName: 'Lions One Pride',
     timezone: 'America/Detroit', clubDomain: 'detroitlions.com',
     requiredNicknames: ['Lions', 'Detroit'],
     searchAliases: ['Lions', 'Detroit Lions', 'One Pride'],
@@ -374,6 +378,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'MIN', slug: 'vikings', aliases: ['vikes'],
     espnId: 16, espnAbbr: 'min', otcSlug: 'minnesota-vikings', cbsAbbr: 'MIN', pfrAbbr: 'min',
     city: 'Minnesota', nickname: 'Vikings', stadium: 'U.S. Bank Stadium',
+    brandName: 'Vikings Skol',
     timezone: 'America/Chicago', clubDomain: 'vikings.com',
     themes: buildThemeSpec({
       darkName: 'Valhalla Night', lightName: 'Purple & Gold',
@@ -389,6 +394,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'GB', slug: 'packers', aliases: ['pack', 'gnb'],
     espnId: 9, espnAbbr: 'gb', otcSlug: 'green-bay-packers', cbsAbbr: 'GB', pfrAbbr: 'gnb',
     city: 'Green Bay', nickname: 'Packers', stadium: 'Lambeau Field',
+    brandName: 'Go Pack Go',
     timezone: 'America/Chicago', clubDomain: 'packers.com',
     themes: buildThemeSpec({
       darkName: 'Lambeau Night', lightName: 'Titletown Classic',
@@ -404,6 +410,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'CHI', slug: 'bears', aliases: ['da-bears'],
     espnId: 3, espnAbbr: 'chi', otcSlug: 'chicago-bears', cbsAbbr: 'CHI', pfrAbbr: 'chi',
     city: 'Chicago', nickname: 'Bears', stadium: 'Soldier Field',
+    brandName: 'Da Bears',
     timezone: 'America/Chicago', clubDomain: 'chicagobears.com',
     themes: buildThemeSpec({
       darkName: 'Soldier Field Night', lightName: 'Midway Classic',
@@ -421,6 +428,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'PHI', slug: 'eagles', aliases: ['birds'],
     espnId: 21, espnAbbr: 'phi', otcSlug: 'philadelphia-eagles', cbsAbbr: 'PHI', pfrAbbr: 'phi',
     city: 'Philadelphia', nickname: 'Eagles', stadium: 'Lincoln Financial Field',
+    brandName: 'Fly Eagles Fly',
     timezone: 'America/New_York', clubDomain: 'philadelphiaeagles.com',
     themes: buildThemeSpec({
       darkName: 'Midnight Green', lightName: 'Kelly Throwback',
@@ -436,6 +444,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'DAL', slug: 'cowboys', aliases: ['boys'],
     espnId: 6, espnAbbr: 'dal', otcSlug: 'dallas-cowboys', cbsAbbr: 'DAL', pfrAbbr: 'dal',
     city: 'Dallas', nickname: 'Cowboys', stadium: 'AT&T Stadium',
+    brandName: 'Cowboys Nation',
     timezone: 'America/Chicago', clubDomain: 'dallascowboys.com',
     themes: buildThemeSpec({
       darkName: 'Starlight Navy', lightName: 'Silver & Blue',
@@ -451,6 +460,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'NYG', slug: 'giants', aliases: ['bigblue'],
     espnId: 19, espnAbbr: 'nyg', otcSlug: 'new-york-giants', cbsAbbr: 'NYG', pfrAbbr: 'nyg',
     city: 'New York', nickname: 'Giants', stadium: 'MetLife Stadium',
+    brandName: 'Giants Big Blue',
     timezone: 'America/New_York', clubDomain: 'giants.com', excludeGenericCity: true,
     themes: buildThemeSpec({
       darkName: 'Big Blue Night', lightName: 'Meadowlands Classic',
@@ -466,6 +476,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'WAS', slug: 'commanders', aliases: ['wsh', 'washington'],
     espnId: 28, espnAbbr: 'wsh', otcSlug: 'washington-commanders', cbsAbbr: 'WAS', pfrAbbr: 'was',
     city: 'Washington', nickname: 'Commanders', stadium: 'Northwest Stadium',
+    brandName: 'Hail Washington',
     timezone: 'America/New_York', clubDomain: 'commanders.com',
     themes: buildThemeSpec({
       darkName: 'Burgundy Night', lightName: 'Capital Gold',
@@ -483,6 +494,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'TB', slug: 'buccaneers', aliases: ['bucs', 'tam'],
     espnId: 27, espnAbbr: 'tb', otcSlug: 'tampa-bay-buccaneers', cbsAbbr: 'TB', pfrAbbr: 'tam',
     city: 'Tampa Bay', nickname: 'Buccaneers', stadium: 'Raymond James Stadium',
+    brandName: 'Bucs Krewe',
     timezone: 'America/New_York', clubDomain: 'buccaneers.com',
     themes: buildThemeSpec({
       darkName: 'Pewter Night', lightName: 'Creamsicle Heritage',
@@ -498,6 +510,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'NO', slug: 'saints', aliases: ['nor', 'whodat'],
     espnId: 18, espnAbbr: 'no', otcSlug: 'new-orleans-saints', cbsAbbr: 'NO', pfrAbbr: 'nor',
     city: 'New Orleans', nickname: 'Saints', stadium: 'Caesars Superdome',
+    brandName: 'Saints Who Dat',
     timezone: 'America/Chicago', clubDomain: 'neworleanssaints.com',
     themes: buildThemeSpec({
       darkName: 'Superdome Black', lightName: 'Old Gold Classic',
@@ -513,6 +526,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'ATL', slug: 'falcons', aliases: ['dirtybirds'],
     espnId: 1, espnAbbr: 'atl', otcSlug: 'atlanta-falcons', cbsAbbr: 'ATL', pfrAbbr: 'atl',
     city: 'Atlanta', nickname: 'Falcons', stadium: 'Mercedes-Benz Stadium',
+    brandName: 'Falcons Rise Up',
     timezone: 'America/New_York', clubDomain: 'atlantafalcons.com',
     themes: buildThemeSpec({
       darkName: 'Benz Blackout', lightName: 'Atlanta Classic',
@@ -528,6 +542,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'CAR', slug: 'panthers', aliases: ['keeppounding'],
     espnId: 29, espnAbbr: 'car', otcSlug: 'carolina-panthers', cbsAbbr: 'CAR', pfrAbbr: 'car',
     city: 'Carolina', nickname: 'Panthers', stadium: 'Bank of America Stadium',
+    brandName: 'Keep Pounding',
     timezone: 'America/New_York', clubDomain: 'panthers.com',
     themes: buildThemeSpec({
       darkName: 'Black & Blue Night', lightName: 'Process Blue',
@@ -545,6 +560,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'BUF', slug: 'bills', aliases: ['buffalo', 'billsmafia'],
     espnId: 2, espnAbbr: 'buf', otcSlug: 'buffalo-bills', cbsAbbr: 'BUF', pfrAbbr: 'buf',
     city: 'Buffalo', nickname: 'Bills', stadium: 'Highmark Stadium',
+    brandName: 'Bills Mafia',
     timezone: 'America/New_York', clubDomain: 'buffalobills.com',
     requiredNicknames: ['Bills', 'Buffalo'],
     searchAliases: ['Bills', 'Buffalo Bills', 'Bills Mafia'],
@@ -626,6 +642,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'NE', slug: 'patriots', aliases: ['pats', 'nwe'],
     espnId: 17, espnAbbr: 'ne', otcSlug: 'new-england-patriots', cbsAbbr: 'NE', pfrAbbr: 'nwe',
     city: 'New England', nickname: 'Patriots', stadium: 'Gillette Stadium',
+    brandName: 'Pats Nation',
     timezone: 'America/New_York', clubDomain: 'patriots.com',
     themes: buildThemeSpec({
       darkName: 'Foxborough Night', lightName: 'Pat Patriot Classic',
@@ -641,6 +658,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'MIA', slug: 'dolphins', aliases: ['fins'],
     espnId: 15, espnAbbr: 'mia', otcSlug: 'miami-dolphins', cbsAbbr: 'MIA', pfrAbbr: 'mia',
     city: 'Miami', nickname: 'Dolphins', stadium: 'Hard Rock Stadium',
+    brandName: 'Fins Up',
     timezone: 'America/New_York', clubDomain: 'miamidolphins.com',
     themes: buildThemeSpec({
       darkName: 'Biscayne Night', lightName: 'Aqua Throwback',
@@ -656,6 +674,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'NYJ', slug: 'jets', aliases: ['ganggreen'],
     espnId: 20, espnAbbr: 'nyj', otcSlug: 'new-york-jets', cbsAbbr: 'NYJ', pfrAbbr: 'nyj',
     city: 'New York', nickname: 'Jets', stadium: 'MetLife Stadium',
+    brandName: 'Jets Gang Green',
     timezone: 'America/New_York', clubDomain: 'newyorkjets.com', excludeGenericCity: true,
     themes: buildThemeSpec({
       darkName: 'Stealth Black', lightName: 'Gotham Green',
@@ -673,6 +692,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'BAL', slug: 'ravens', aliases: ['flock'],
     espnId: 33, espnAbbr: 'bal', otcSlug: 'baltimore-ravens', cbsAbbr: 'BAL', pfrAbbr: 'rav',
     city: 'Baltimore', nickname: 'Ravens', stadium: 'M&T Bank Stadium',
+    brandName: 'Ravens Flock',
     timezone: 'America/New_York', clubDomain: 'baltimoreravens.com',
     themes: buildThemeSpec({
       darkName: 'Charm City Night', lightName: 'Purple & Gold',
@@ -688,6 +708,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'CIN', slug: 'bengals', aliases: ['whodey'],
     espnId: 4, espnAbbr: 'cin', otcSlug: 'cincinnati-bengals', cbsAbbr: 'CIN', pfrAbbr: 'cin',
     city: 'Cincinnati', nickname: 'Bengals', stadium: 'Paycor Stadium',
+    brandName: 'Bengals Who Dey',
     timezone: 'America/New_York', clubDomain: 'bengals.com',
     themes: buildThemeSpec({
       darkName: 'Jungle Night', lightName: 'White Bengal',
@@ -703,6 +724,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'CLE', slug: 'browns', aliases: ['dawgpound'],
     espnId: 5, espnAbbr: 'cle', otcSlug: 'cleveland-browns', cbsAbbr: 'CLE', pfrAbbr: 'cle',
     city: 'Cleveland', nickname: 'Browns', stadium: 'Huntington Bank Field',
+    brandName: 'Browns Dawg Pound',
     timezone: 'America/New_York', clubDomain: 'clevelandbrowns.com',
     themes: buildThemeSpec({
       darkName: 'Lakefront Night', lightName: 'Kardiac Classic',
@@ -718,6 +740,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'PIT', slug: 'steelers', aliases: ['stillers'],
     espnId: 23, espnAbbr: 'pit', otcSlug: 'pittsburgh-steelers', cbsAbbr: 'PIT', pfrAbbr: 'pit',
     city: 'Pittsburgh', nickname: 'Steelers', stadium: 'Acrisure Stadium',
+    brandName: 'Steeler Nation',
     timezone: 'America/New_York', clubDomain: 'steelers.com',
     themes: buildThemeSpec({
       darkName: 'Three Rivers Night', lightName: 'Steel City Gold',
@@ -735,6 +758,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'HOU', slug: 'texans', aliases: ['htown'],
     espnId: 34, espnAbbr: 'hou', otcSlug: 'houston-texans', cbsAbbr: 'HOU', pfrAbbr: 'htx',
     city: 'Houston', nickname: 'Texans', stadium: 'NRG Stadium',
+    brandName: 'H-Town Texans',
     timezone: 'America/Chicago', clubDomain: 'houstontexans.com',
     themes: buildThemeSpec({
       darkName: 'Deep Steel Night', lightName: 'Battle Red',
@@ -750,6 +774,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'IND', slug: 'colts', aliases: ['indy'],
     espnId: 11, espnAbbr: 'ind', otcSlug: 'indianapolis-colts', cbsAbbr: 'IND', pfrAbbr: 'clt',
     city: 'Indianapolis', nickname: 'Colts', stadium: 'Lucas Oil Stadium',
+    brandName: 'Colts Nation',
     timezone: 'America/Indiana/Indianapolis', clubDomain: 'colts.com',
     themes: buildThemeSpec({
       darkName: 'Indiana Nights', lightName: 'Speed Blue Classic',
@@ -765,6 +790,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'JAX', slug: 'jaguars', aliases: ['jags', 'jac', 'duval'],
     espnId: 30, espnAbbr: 'jax', otcSlug: 'jacksonville-jaguars', cbsAbbr: 'JAC', pfrAbbr: 'jax',
     city: 'Jacksonville', nickname: 'Jaguars', stadium: 'EverBank Stadium',
+    brandName: 'Jags DUUUVAL',
     timezone: 'America/New_York', clubDomain: 'jaguars.com',
     themes: buildThemeSpec({
       darkName: 'Duval Night', lightName: 'Prowler Teal',
@@ -780,6 +806,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'TEN', slug: 'titans', aliases: ['titanup'],
     espnId: 10, espnAbbr: 'ten', otcSlug: 'tennessee-titans', cbsAbbr: 'TEN', pfrAbbr: 'oti',
     city: 'Tennessee', nickname: 'Titans', stadium: 'Nissan Stadium',
+    brandName: 'Titan Up',
     timezone: 'America/Chicago', clubDomain: 'tennesseetitans.com',
     themes: buildThemeSpec({
       darkName: 'Nashville Night', lightName: 'Oilers Blue',
@@ -797,6 +824,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'KC', slug: 'chiefs', aliases: ['kan'],
     espnId: 12, espnAbbr: 'kc', otcSlug: 'kansas-city-chiefs', cbsAbbr: 'KC', pfrAbbr: 'kan',
     city: 'Kansas City', nickname: 'Chiefs', stadium: 'GEHA Field at Arrowhead Stadium',
+    brandName: 'Chiefs Kingdom',
     timezone: 'America/Chicago', clubDomain: 'chiefs.com',
     themes: buildThemeSpec({
       darkName: 'Arrowhead Night', lightName: 'Red & Gold Classic',
@@ -812,6 +840,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'DEN', slug: 'broncos', aliases: ['milehigh'],
     espnId: 7, espnAbbr: 'den', otcSlug: 'denver-broncos', cbsAbbr: 'DEN', pfrAbbr: 'den',
     city: 'Denver', nickname: 'Broncos', stadium: 'Empower Field at Mile High',
+    brandName: 'Broncos Country',
     timezone: 'America/Denver', clubDomain: 'denverbroncos.com',
     themes: buildThemeSpec({
       darkName: 'Mile High Night', lightName: 'Orange Crush',
@@ -827,6 +856,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'LAC', slug: 'chargers', aliases: ['bolts'],
     espnId: 24, espnAbbr: 'lac', otcSlug: 'los-angeles-chargers', cbsAbbr: 'LAC', pfrAbbr: 'sdg',
     city: 'Los Angeles', nickname: 'Chargers', stadium: 'SoFi Stadium',
+    brandName: 'Chargers Bolt Up',
     timezone: 'America/Los_Angeles', clubDomain: 'chargers.com', excludeGenericCity: true,
     themes: buildThemeSpec({
       darkName: 'SoFi Bolt Night', lightName: 'Powder Blue Classic',
@@ -842,6 +872,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'LV', slug: 'raiders', aliases: ['lvr', 'oak', 'silverandblack'],
     espnId: 13, espnAbbr: 'lv', otcSlug: 'las-vegas-raiders', cbsAbbr: 'LV', pfrAbbr: 'rai',
     city: 'Las Vegas', nickname: 'Raiders', stadium: 'Allegiant Stadium',
+    brandName: 'Raider Nation',
     timezone: 'America/Los_Angeles', clubDomain: 'raiders.com',
     themes: buildThemeSpec({
       darkName: 'Death Star Black', lightName: 'Silver & Black',

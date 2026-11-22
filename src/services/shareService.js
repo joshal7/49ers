@@ -16,6 +16,7 @@ import {
   PRIMARY_GEMINI_REASONING_MODEL,
   resolveGeminiThinkingLevelLabel
 } from '../engine/geminiStudioPrompts.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 
 export const CANONICAL_SITE_ORIGIN = 'https://49ers.joshal.com';
 
@@ -179,16 +180,17 @@ export async function buildShareablePodcastUrl(episode, locationObj, prefs = nul
   const senderVoiceKey = String(prefs?.geminiApiKey || episode._sharedVoiceKey || '').trim();
   const maskedVk = !publicHttpsAudio && senderVoiceKey ? maskVoiceRelayToken(senderVoiceKey, epIdClean) : null;
 
+  const activeBrand = getActiveTeamConfig().brandName;
   const compactPayload = {
     v: 1,
     id: epIdClean,
-    t: String(episode.title || '49ers Faithful Podcast').slice(0, 160),
+    t: String(episode.title || `${activeBrand} Podcast`).slice(0, 160),
     tp: String(episode.topic || episode.title || '').slice(0, 220),
     f: String(episode.format || 'Two-Host Analytical Banter').slice(0, 60),
     pl: String(episode.presetLabel || 'Custom Pod').slice(0, 48),
     m: String(episode.modelUsed || PRIMARY_GEMINI_REASONING_MODEL).slice(0, 48),
     ...(episode.thinkingLevel ? { tl: String(episode.thinkingLevel).slice(0, 12) } : {}),
-    by: String(episode.createdBy || '49ers Faithful').slice(0, 40),
+    by: String(episode.createdBy || activeBrand).slice(0, 40),
     at: String(episode.createdAt || new Date().toISOString()).slice(0, 40),
     d: Math.max(10, Math.round(Number(episode.durationSec || 180))),
     au: publicHttpsAudio,
@@ -222,14 +224,15 @@ export async function buildShareableAnalysisUrl(report, locationObj) {
     return `${base}?analysis=${idParam}`;
   }
 
+  const activeTeam = getActiveTeamConfig();
   const compactPayload = {
     v: 1,
     id: String(report.id).slice(0, 80),
-    t: String(report.title || '49ers Scouting & Cap Analysis').slice(0, 180),
+    t: String(report.title || `${activeTeam.nickname} Scouting & Cap Analysis`).slice(0, 180),
     c: String(report.category || 'Deep Scouting & Cap Dive').slice(0, 60),
     m: String(report.modelUsed || PRIMARY_GEMINI_REASONING_MODEL).slice(0, 48),
     ...(report.thinkingLevel ? { tl: String(report.thinkingLevel).slice(0, 12) } : {}),
-    by: String(report.createdBy || '49ers Faithful').slice(0, 40),
+    by: String(report.createdBy || activeTeam.brandName).slice(0, 40),
     at: String(report.createdAt || new Date().toISOString()).slice(0, 40),
     src: (report.sourcesCited || []).slice(0, 6).map(s =>
       typeof s === 'string'
@@ -278,7 +281,7 @@ export async function extractIncomingSharedRoute(
             decoded.tl || null
           ),
           qualityPriority: 'accuracy_over_latency',
-          createdBy: String(decoded.by || '49ers Faithful'),
+          createdBy: String(decoded.by || getActiveTeamConfig().brandName),
           createdAt: String(decoded.at || new Date().toISOString()),
           audioUrl: sanitizeExternalUrl(decoded.au, null),
           durationSec: Math.max(10, Number(decoded.d || 180)),
@@ -325,7 +328,7 @@ export async function extractIncomingSharedRoute(
       if (decoded && decoded.md) {
         hydratedAnalysis = {
           id: String(decoded.id || analysisId || `shared_analysis_${Date.now()}`),
-          title: String(decoded.t || 'Shared 49ers Scouting Report'),
+          title: String(decoded.t || `Shared ${getActiveTeamConfig().nickname} Scouting Report`),
           category: String(decoded.c || 'Shared Deep Dive'),
           modelUsed: String(decoded.m || PRIMARY_GEMINI_REASONING_MODEL),
           thinkingLevel: resolveGeminiThinkingLevelLabel(
@@ -333,7 +336,7 @@ export async function extractIncomingSharedRoute(
             decoded.tl || null
           ),
           qualityPriority: 'accuracy_over_latency',
-          createdBy: String(decoded.by || '49ers Faithful'),
+          createdBy: String(decoded.by || getActiveTeamConfig().brandName),
           createdAt: String(decoded.at || new Date().toISOString()),
           isSharedImport: true,
           sourcesCited: Array.isArray(decoded.src)
@@ -387,9 +390,9 @@ export async function shareItemNatively({
   navigatorObj = typeof navigator !== 'undefined' ? navigator : null
 }) {
   const shareData = {
-    title: String(title || '49ers Faithful Briefing'),
+    title: String(title || `${getActiveTeamConfig().brandName} Briefing`),
     text: String(text || ''),
-    url: String(url || CANONICAL_SITE_ORIGIN)
+    url: String(url || `https://${getActiveTeamConfig().domain}`)
   };
 
   if (navigatorObj && typeof navigatorObj.share === 'function') {
@@ -433,7 +436,7 @@ export async function shareAudioFileNatively({
   if (navigatorObj && typeof navigatorObj.share === 'function' && typeof File === 'function' && file instanceof File) {
     const fileSharePayload = {
       files: [file],
-      title: String(title || '49ers Faithful Podcast'),
+      title: String(title || `${getActiveTeamConfig().brandName} Podcast`),
       ...(text ? { text: String(text) } : {})
     };
     let canShareFiles = true;
