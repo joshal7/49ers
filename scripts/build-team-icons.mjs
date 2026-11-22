@@ -50,11 +50,21 @@ async function fetchEspnLogoDataUri(espnAbbr) {
   }
 }
 
+const LIGHT_MEDALLION_SLUGS = new Set(['jets', 'rams', 'giants', 'colts', 'cowboys']);
+
 function buildCrestSvg(team, logoDataUri) {
   const pri = team.themes.crest.primary;
   const sec = team.themes.crest.secondary;
   const priDark = darkenHex(pri, 0.72);
   const secHi = lightenHex(sec, 0.25);
+  const useLightInner = LIGHT_MEDALLION_SLUGS.has(team.slug);
+  const innerStops = useLightInner
+    ? `<stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="55%" stop-color="#F1F5F9"/>
+      <stop offset="100%" stop-color="#CBD5E1"/>`
+    : `<stop offset="0%" stop-color="${lightenHex(pri, 0.14)}"/>
+      <stop offset="55%" stop-color="${pri}"/>
+      <stop offset="100%" stop-color="${priDark}"/>`;
 
   if (logoDataUri) {
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 272" width="460" height="272">
@@ -65,9 +75,7 @@ function buildCrestSvg(team, logoDataUri) {
       <stop offset="100%" stop-color="${darkenHex(sec, 0.75)}"/>
     </linearGradient>
     <linearGradient id="crestInner" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="${lightenHex(pri, 0.14)}"/>
-      <stop offset="55%" stop-color="${pri}"/>
-      <stop offset="100%" stop-color="${priDark}"/>
+      ${innerStops}
     </linearGradient>
   </defs>
   <ellipse cx="230" cy="136" rx="228" ry="134" fill="#FFFFFF"/>
@@ -140,9 +148,13 @@ function buildAppIconSvg(team, logoDataUri, { fullBleedSquare = false } = {}) {
       <stop offset="100%" stop-color="${darkenHex(sec, 0.72)}"/>
     </linearGradient>
     <linearGradient id="innerMedallion" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="${lightenHex(pri, 0.16)}"/>
+      ${LIGHT_MEDALLION_SLUGS.has(team.slug)
+        ? `<stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="55%" stop-color="#F1F5F9"/>
+      <stop offset="100%" stop-color="#CBD5E1"/>`
+        : `<stop offset="0%" stop-color="${lightenHex(pri, 0.16)}"/>
       <stop offset="55%" stop-color="${pri}"/>
-      <stop offset="100%" stop-color="${darkenHex(pri, 0.72)}"/>
+      <stop offset="100%" stop-color="${darkenHex(pri, 0.72)}"/>`}
     </linearGradient>
     <linearGradient id="ruleLeft" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="${sec}" stop-opacity="0"/>
