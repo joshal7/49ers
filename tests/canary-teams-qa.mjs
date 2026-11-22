@@ -607,6 +607,34 @@ await test('Canary Matchup Intel & Daily Brief: platform API works without BYOK 
     );
     assert.equal(lockResp.status, 202, 'Active in-flight matchup lock must return HTTP 202');
 
+    // If Google Search Grounding hits 429/403 quota on free tier, retry SAME gemini-4-hydrogen XHIGH without tools (no 502)
+    let fallbackCalls = 0;
+    globalThis.fetch = async (url, init = {}) => {
+      const body = JSON.parse(init.body || '{}');
+      fallbackCalls += 1;
+      if (Array.isArray(body.tools) && body.tools.length > 0) {
+        return new Response(JSON.stringify({ error: { message: 'Search grounding quota exceeded' } }), { status: 429 });
+      }
+      return new Response(
+        JSON.stringify({ candidates: [{ content: { parts: [{ text: sampleAiPayload }] } }] }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    };
+    const fallbackResp = await canaryWorker.fetch(
+      new Request('https://49ers2.joshal.com/api/matchup-intel?team=SF', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamAbbr: 'SF', seasonYear: 2026, week: 14, oppAbbr: 'ARI', datePt: '2026-11-25', prompt: 'fallback test' })
+      }),
+      mockEnv,
+      {}
+    );
+    const fallbackJson = await fallbackResp.json();
+    assert.equal(fallbackResp.status, 200, '429 on google_search must fall back cleanly to same-model direct snapshot call');
+    assert.equal(fallbackJson.modelUsed, 'gemini-4-hydrogen');
+    assert.equal(fallbackJson.grounded, false);
+    assert.equal(fallbackCalls, 2, 'Should try search once then same-model direct once');
+
     // Non-JSON Gemini text must NOT poison shared KV cache
     globalThis.fetch = async () =>
       new Response(

@@ -243,13 +243,32 @@ async function callGeminiSinglePass(
   const apiKey = String(env.GEMINI_NFL_API_KEY || env.GEMINI_API_KEY || '').trim();
   if (!apiKey) return { ok: false, status: 503, error: 'GEMINI_NFL_API_KEY not configured' };
 
-  const cascade = [PRIMARY_GEMINI_REASONING_MODEL, 'gemini-3.8-flash', 'gemini-3.5-flash', 'gemini-3-flash-preview'];
-  for (const model of cascade) {
-    const thinkingConfig = buildGeminiThinkingConfig(model, thinkingLevel);
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
-    const groundingAttempts = useGoogleSearch && !jsonMode ? [true, false] : [false];
+  const cascade = [
+    PRIMARY_GEMINI_REASONING_MODEL,
+    'gemini-3.8-flash',
+    'gemini-3.5-flash',
+    'gemini-3-flash-preview',
+    'gemini-2.5-flash'
+  ];
+  let lastError = 'All Gemini cascade tiers failed';
 
-    for (const withSearch of groundingAttempts) {
+  for (const model of cascade) {
+    const primaryThinking = buildGeminiThinkingConfig(model, { preferredThinkingLevel: thinkingLevel });
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+
+    const attempts = [];
+    if (useGoogleSearch && !jsonMode) {
+      attempts.push({ withSearch: true, thinkingConfig: primaryThinking });
+      attempts.push({ withSearch: false, thinkingConfig: primaryThinking });
+    } else {
+      attempts.push({ withSearch: false, thinkingConfig: primaryThinking });
+    }
+    if (primaryThinking?.thinkingLevel === 'XHIGH') {
+      attempts.push({ withSearch: false, thinkingConfig: { thinkingLevel: 'HIGH' } });
+    }
+
+    for (let idx = 0; idx < attempts.length; idx++) {
+      const { withSearch, thinkingConfig } = attempts[idx];
       try {
         const res = await fetch(endpoint, {
           method: 'POST',
@@ -267,8 +286,12 @@ async function callGeminiSinglePass(
           signal: AbortSignal.timeout(85000)
         });
         if (!res.ok) {
-          // Only retry the same model without google_search on 400 schema rejection; otherwise advance cascade.
-          if (withSearch && res.status === 400) continue;
+          const errSnippet = (await res.text().catch(() => '')).slice(0, 180);
+          lastError = `${model} (${withSearch ? 'search' : 'direct'}, HTTP ${res.status}): ${errSnippet || res.statusText}`;
+          // Retry same model without google_search if Search Grounding is rejected or free-tier quota-gated (400/403/429),
+          // or retry without XHIGH on HTTP 400. Otherwise advance to the next model in the cascade.
+          if (withSearch && (res.status === 400 || res.status === 403 || res.status === 429)) continue;
+          if (!withSearch && res.status === 400 && thinkingConfig?.thinkingLevel === 'XHIGH') continue;
           break;
         }
         const json = await res.json();
@@ -278,16 +301,18 @@ async function callGeminiSinglePass(
         return {
           ok: true,
           modelUsed: model,
-          thinkingLevelUsed: resolveGeminiThinkingLevelLabel(model, thinkingLevel),
+          thinkingLevelUsed:
+            thinkingConfig?.thinkingLevel || resolveGeminiThinkingLevelLabel(model, thinkingLevel),
           grounded: withSearch,
           rawText: text
         };
-      } catch {
+      } catch (err) {
+        lastError = `${model}: ${err?.message || String(err)}`;
         break;
       }
     }
   }
-  return { ok: false, status: 502, error: 'All Gemini cascade tiers failed' };
+  return { ok: false, status: 502, error: lastError };
 }
 
 async function handleCachedEdgeGet(request, cacheTtlSec, fetcherFn) {
