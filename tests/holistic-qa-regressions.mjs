@@ -3119,74 +3119,50 @@ await testAsync(
 );
 
 test(
-  'iOS non-standalone Safari/Chrome tabs have zero artificial top header or Search-sheet whitespace while preserving standalone PWA clearance',
+  'iOS Safari/Chrome tabs AND Home Screen PWAs (both default and black-translucent) use pure env(safe-area-inset-top) with zero hardcoded dead top whitespace',
   () => {
     const css = fs.readFileSync(path.join(rootDir, 'src/styles.css'), 'utf8');
+    const html = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
 
-    // Extract every @supports (-webkit-touch-callout: none) { ... } block with balanced braces
-    const blocks = [];
-    const marker = '@supports (-webkit-touch-callout: none)';
-    let idx = 0;
-    while ((idx = css.indexOf(marker, idx)) !== -1) {
-      const openIdx = css.indexOf('{', idx);
-      assert.ok(openIdx !== -1, 'Expected opening brace for @supports (-webkit-touch-callout: none)');
-      let depth = 0;
-      let endIdx = openIdx;
-      for (let i = openIdx; i < css.length; i++) {
-        if (css[i] === '{') depth++;
-        else if (css[i] === '}') {
-          depth--;
-          if (depth === 0) {
-            endIdx = i;
-            break;
-          }
-        }
-      }
-      blocks.push(css.slice(openIdx + 1, endIdx));
-      idx = endIdx + 1;
-    }
+    // Strip CSS comments before checking active rules
+    const activeCss = css.replace(/\/\*[\s\S]*?\*\//g, '');
 
-    assert.ok(blocks.length >= 2, `Expected at least 2 iOS @supports blocks (header + search sheet), found ${blocks.length}`);
-
-    // Every rule inside @supports (-webkit-touch-callout: none) must be gated on display-mode: standalone
-    // so normal iOS Safari & Chrome tabs never inherit hardcoded 48px/44px dead top whitespace.
-    for (const block of blocks) {
-      const stripped = block.replace(/\/\*[\s\S]*?\*\//g, '').trim();
-      assert.equal(
-        /^\.top-header\b/m.test(stripped),
-        false,
-        'Unscoped .top-header rule inside @supports (-webkit-touch-callout: none) injects dead top whitespace in iOS Safari/Chrome tabs'
-      );
-      assert.equal(
-        /padding-top:\s*max\([^;]+,\s*(?:48|44)px\)/.test(stripped),
-        false,
-        'Non-standalone 48px/44px top padding floor must be removed so iOS Safari & Chrome stay flush'
-      );
-      const mediaHeaders = [...stripped.matchAll(/@media\s*([^{]+)\{/g)].map(m => m[1].trim());
-      assert.ok(mediaHeaders.length >= 1, 'Expected @media rules inside @supports (-webkit-touch-callout: none)');
-      for (const mq of mediaHeaders) {
-        assert.ok(
-          mq.includes('display-mode: standalone'),
-          `Every iOS @supports @media rule must include display-mode: standalone; found: @media ${mq}`
-        );
-      }
-    }
-
-    // Verify standalone PWA clearance is preserved intact
-    const allIosCss = blocks.join('\n');
-    assert.ok(
-      allIosCss.includes('padding-top: max(calc(env(safe-area-inset-top, 0px) + 28px), 84px);'),
-      'Standalone Home Screen PWA .top-header clearance must remain intact'
+    // 1. Zero hardcoded iOS pixel floors (44px, 48px, 78px, 84px) or inflated +22px/+28px top-padding overrides
+    //    which cause huge blank white space below the status bar on iOS Safari/Chrome AND modern `default`-status-bar Home Screen PWAs.
+    assert.equal(
+      /padding-top:\s*max\([^;]+,\s*(?:44|48|78|84)px\)/.test(activeCss),
+      false,
+      'Hardcoded 44px/48px/78px/84px top-padding floor causes blank white space below iOS status bar in Safari, Chrome, and default-status-bar Home Screen PWAs'
     );
-    assert.ok(
-      allIosCss.includes('padding-top: max(calc(env(safe-area-inset-top, 0px) + 22px), 78px);'),
-      'Standalone Home Screen PWA Search sheet clearance must remain intact'
+    assert.equal(
+      /env\(safe-area-inset-top[^)]*\)\s*\+\s*(?:2[0-9]|[3-9][0-9])px/.test(activeCss),
+      false,
+      'Inflated safe-area-inset-top + >=20px offset creates dead top whitespace on iOS'
+    );
+    assert.equal(
+      activeCss.includes('@supports (-webkit-touch-callout: none)'),
+      false,
+      'No @supports (-webkit-touch-callout: none) hardcoded top-padding overrides should remain in src/styles.css'
     );
 
-    // Verify base .top-header still uses compact safe-area-aware 8px top padding
+    // 2. Verify pure safe-area-aware base rules remain intact for both default (inset=0) and legacy black-translucent (inset=59px) PWAs
     assert.ok(
-      css.includes('padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 8px;'),
+      activeCss.includes('padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 8px;'),
       'Base .top-header must preserve compact calc(env(safe-area-inset-top, 0px) + 8px) padding'
+    );
+    assert.ok(
+      activeCss.includes('padding: calc(env(safe-area-inset-top, 0px) + 8px) 12px 8px;'),
+      'Mobile portrait .top-header must preserve compact calc(env(safe-area-inset-top, 0px) + 8px) padding'
+    );
+    assert.ok(
+      activeCss.includes('padding-top: env(safe-area-inset-top, 0px);'),
+      'Mobile Search sheet must preserve compact env(safe-area-inset-top, 0px) top padding'
+    );
+
+    // 3. Viewport meta must keep viewport-fit=cover so legacy black-translucent PWAs still receive exact env(safe-area-inset-top)
+    assert.ok(
+      html.includes('viewport-fit=cover'),
+      'index.html viewport meta must include viewport-fit=cover for exact env(safe-area-inset-top) reporting'
     );
   }
 );
