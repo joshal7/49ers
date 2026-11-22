@@ -64,6 +64,11 @@ import {
   parseNflverseTradesCsv,
   parseTradeSentenceForTeam
 } from '../scripts/lib/teamTradeIntelligence.mjs';
+import { resolveLiveFranchiseHistoryForOpponent } from '../src/services/dataService.js';
+import {
+  buildFranchiseHeadToHeadHistory,
+  buildScheduleH2hByOpponentMap
+} from '../scripts/lib/nflversePlayerContext.mjs';
 import canaryWorker from '../worker/canary-worker.js';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -1111,6 +1116,39 @@ await test('Player-Level Parity & Zero Regressions (Spider Charts, Stats, Snaps,
       assert.equal(gibbs.health.isOnPracticeReport, false, 'Healthy Jahmyr Gibbs must not be on practice report');
       assert.ok(gibbs.health.playProbabilityPct >= 95, 'Healthy Jahmyr Gibbs must have >= 95% play probability');
     }
+
+    // Recent Meetings (franchiseHistory) must be populated on every canary team + precomputed byOpponent map
+    const teamAbbrExpected = slug === 'lions' ? 'DET' : 'BUF';
+    const fh = sched.upcomingMatchup?.franchiseHistory || {};
+    assert.ok(
+      /^\d+-\d+(?:-\d+)? in last \d+ meetings?$/.test(fh.recentRecord || ''),
+      `${slug} franchiseHistory.recentRecord missing/malformed: ${JSON.stringify(fh.recentRecord)}`
+    );
+    assert.ok(
+      Array.isArray(fh.recentGames) && fh.recentGames.length >= 4,
+      `${slug} franchiseHistory.recentGames should have >= 4 historical meetings, got ${fh.recentGames?.length || 0}`
+    );
+    for (const g of fh.recentGames) {
+      assert.ok(Number.isFinite(g.season) && g.season >= 1999, `${slug} recentGame invalid season: ${JSON.stringify(g)}`);
+      assert.ok(/^\d{4}-\d{2}-\d{2}$/.test(g.date || ''), `${slug} recentGame invalid date: ${g.date}`);
+      assert.ok(
+        String(g.scoreDisplay || '').startsWith(`${teamAbbrExpected} `),
+        `${slug} recentGame scoreDisplay must start with "${teamAbbrExpected} ", got "${g.scoreDisplay}"`
+      );
+      assert.ok(/^https:\/\//.test(g.boxscoreUrl || ''), `${slug} recentGame boxscoreUrl must be https: ${g.boxscoreUrl}`);
+    }
+    const schedOpps = new Set(
+      (sched.schedule || [])
+        .filter(g => !g.isByeWeek && g.opponent?.abbr && g.opponent.abbr !== 'TBD')
+        .map(g => g.opponent.abbr)
+    );
+    assert.ok(fh.byOpponent && typeof fh.byOpponent === 'object', `${slug} franchiseHistory.byOpponent map missing`);
+    for (const oppA of schedOpps) {
+      assert.ok(
+        fh.byOpponent[oppA] && Array.isArray(fh.byOpponent[oppA].recentGames) && fh.byOpponent[oppA].recentGames.length >= 1,
+        `${slug} franchiseHistory.byOpponent[${oppA}] missing historical games`
+      );
+    }
   }
 });
 
@@ -1316,6 +1354,103 @@ await test('Multi-Team Trade Window: unit parsers + live Lions & Bills completed
     assert.equal(hasCrossTeam49ersLeak(html, team), false, `${slug} rendered Trade UI must have zero 49ers leaks`);
   }
   setActiveTeamConfig('SF');
+});
+
+await test('buildFranchiseHeadToHeadHistory handles ties, modern relocations, zero cross-franchise conflation & rollover merge', () => {
+  const synthGames = [
+    // DET vs PIT tie + win
+    { season: '2021', game_type: 'REG', gameday: '2021-11-14', home_team: 'PIT', home_score: '16', away_team: 'DET', away_score: '16', location: 'Home', overtime: '1', espn: '401326470', pfr: '' },
+    { season: '2025', game_type: 'REG', gameday: '2025-12-21', home_team: 'DET', home_score: '27', away_team: 'PIT', away_score: '20', location: 'Home', overtime: '0', espn: '401772900', pfr: '' },
+    // Relocated franchises: LV/OAK & LAR/LA/STL
+    { season: '2016', game_type: 'REG', gameday: '2016-12-04', home_team: 'OAK', home_score: '38', away_team: 'BUF', away_score: '24', location: 'Home', overtime: '0', espn: '400874679', pfr: '' },
+    { season: '2023', game_type: 'REG', gameday: '2023-09-17', home_team: 'BUF', home_score: '38', away_team: 'LV', away_score: '10', location: 'Home', overtime: '0', espn: '401547412', pfr: '' },
+    // Cross-franchise guard: HOU Texans & BAL Ravens must NEVER pollute TEN Titans or IND Colts H2H!
+    { season: '2024', game_type: 'REG', gameday: '2024-11-10', home_team: 'HOU', home_score: '23', away_team: 'DET', away_score: '26', location: 'Home', overtime: '0', espn: '401671790', pfr: '' },
+    { season: '2024', game_type: 'REG', gameday: '2024-10-27', home_team: 'DET', home_score: '52', away_team: 'TEN', away_score: '14', location: 'Home', overtime: '0', espn: '401671755', pfr: '' },
+    { season: '2025', game_type: 'REG', gameday: '2025-09-22', home_team: 'BAL', home_score: '30', away_team: 'DET', away_score: '38', location: 'Home', overtime: '0', espn: '401772711', pfr: '' },
+    { season: '2024', game_type: 'REG', gameday: '2024-11-24', home_team: 'IND', home_score: '6', away_team: 'DET', away_score: '24', location: 'Home', overtime: '0', espn: '401671775', pfr: '' }
+  ];
+
+  // Tie formatting + rendering
+  const detPit = buildFranchiseHeadToHeadHistory(synthGames, 'DET', 'PIT');
+  assert.equal(detPit.recentRecord, '1-0-1 in last 2 meetings');
+  assert.equal(detPit.recentGames[0].result, 'W');
+  assert.equal(detPit.recentGames[1].result, 'T');
+  assert.equal(detPit.recentGames[1].tied, true);
+  assert.equal(detPit.recentGames[1].overtime, true);
+
+  // Relocation alias (BUF vs LV includes OAK)
+  const bufLv = buildFranchiseHeadToHeadHistory(synthGames, 'BUF', 'LV');
+  assert.equal(bufLv.recentRecord, '1-1 in last 2 meetings');
+  assert.equal(bufLv.recentGames[1].scoreDisplay, 'BUF 24, OAK 38');
+
+  // Zero cross-franchise conflation (DET vs TEN excludes HOU; DET vs IND excludes BAL)
+  const detTen = buildFranchiseHeadToHeadHistory(synthGames, 'DET', 'TEN');
+  assert.equal(detTen.recentGames.length, 1, 'DET vs TEN must NOT include HOU Texans games');
+  assert.equal(detTen.recentGames[0].scoreDisplay, 'DET 52, TEN 14');
+
+  const detInd = buildFranchiseHeadToHeadHistory(synthGames, 'DET', 'IND');
+  assert.equal(detInd.recentGames.length, 1, 'DET vs IND must NOT include BAL Ravens games');
+  assert.equal(detInd.recentGames[0].scoreDisplay, 'DET 24, IND 6');
+
+  // Client-side post-game Week N+1 rollover preserves full Recent Meetings + merges live rematch
+  const byOpp = buildScheduleH2hByOpponentMap(synthGames, 'DET', [
+    { week: 12, opponent: { abbr: 'TEN', shortName: 'Titans' } },
+    { week: 13, opponent: { abbr: 'PIT', shortName: 'Steelers' } }
+  ]);
+  const rolled = resolveLiveFranchiseHistoryForOpponent(
+    { ...detTen, byOpponent: byOpp },
+    {
+      teamAbbr: 'DET',
+      teamNickname: 'Lions',
+      oppAbbr: 'PIT',
+      oppShortName: 'Steelers',
+      scheduleGames: [
+        {
+          id: '401888111',
+          season: 2026,
+          seasonType: 'REG',
+          completed: true,
+          dateIso: '2026-10-18T17:00:00Z',
+          homeAway: 'away',
+          sfScore: 31,
+          oppScore: 24,
+          opponent: { abbr: 'PIT' },
+          gameUrl: 'https://www.espn.com/nfl/game/_/gameId/401888111'
+        }
+      ]
+    }
+  );
+  assert.equal(rolled.recentRecord, '2-0-1 in last 3 meetings');
+  assert.equal(rolled.recentGames[0].date, '2026-10-18');
+  assert.equal(rolled.recentGames[0].scoreDisplay, 'DET 31, PIT 24');
+  assert.ok(rolled.byOpponent?.TEN, 'byOpponent map must be preserved across rollovers');
+
+  // SeasonMatchupView renders populated Recent Meetings rows including Tie 'T' cleanly
+  setActiveTeamConfig('DET');
+  const lionsMatchupHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'matchup',
+    appData: {
+      meta: { teamAbbr: 'DET', currentWeek: 13, seasonYear: 2026 },
+      roster: { players: [] },
+      health: { practiceReport: [], irTracker: [], week: 13 },
+      scheduleMatchup: {
+        schedule: [],
+        upcomingMatchup: {
+          week: 13,
+          oppAbbr: 'PIT',
+          oppName: 'Pittsburgh Steelers',
+          homeAway: 'home',
+          franchiseHistory: rolled,
+          opponentHealth: { injuryReport: [], irReserve: [] },
+          coachingMatchup: buildDeterministicCoachingMatchup({ team: getTeamByAbbr('DET'), week: 13, oppAbbr: 'PIT', oppName: 'Pittsburgh Steelers' })
+        }
+      }
+    }
+  });
+  assert.ok(lionsMatchupHtml.includes('Recent Meetings (2-0-1 in last 3 meetings)'), 'Matchup HTML must show Recent Meetings record');
+  assert.ok(lionsMatchupHtml.includes('<strong>T</strong> DET 16, PIT 16 (OT)'), 'Matchup HTML must render tie outcome as T');
+  assert.ok(!lionsMatchupHtml.includes('historical game log available via Pro-Football-Reference above'), 'Matchup HTML must not show empty fallback when games exist');
 });
 
 // Restore default SF active team singleton

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T01:02:43.431Z",
+  "updatedAt": "2026-11-23T01:23:50.195Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T21:00:00Z",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 4:00 PM ET",
@@ -151,7 +151,7 @@
         "projectedPickCost": "2027 3rd-Round Pick (#94) or Day-2 Package",
         "fitScore": 92,
         "sourceUrl": "https://overthecap.com/player/cam-hart/11748/",
-        "fitBreakdown": "Age 25 CB posting 23 tackles, 8 PD, 2 INT (86% snaps in 9g). Addresses Lions' #2 need; $1.19M projected 2027 acquiring cap charge fits easily inside DET's $62.08M 2027 cap space."
+        "fitBreakdown": "Age 25 CB posting 28 tackles, 8 PD, 2 INT (86% snaps in 10g). Addresses Lions' #2 need; $1.19M projected 2027 acquiring cap charge fits easily inside DET's $62.08M 2027 cap space."
       },
       {
         "name": "Isaiah Adams",
@@ -227,15 +227,11 @@
       },
       {
         "trap": "Paying Draft Capital for Aging Name-Value Veterans",
-        "examples": "Calvin Ridley (TEN WR, Age 31), Harrison Phillips (NYJ DT, Age 30)",
+        "examples": "Calvin Ridley (TEN WR, Age 31)",
         "exampleLinks": [
           {
             "label": "Calvin Ridley (TEN WR, Age 31)",
             "url": "https://overthecap.com/player/calvin-ridley/6911/"
-          },
-          {
-            "label": "Harrison Phillips (NYJ DT, Age 30)",
-            "url": "https://overthecap.com/player/harrison-phillips/6981/"
           }
         ],
         "whyAvoid": "Veterans past age 30 with declining 2026 snap/efficiency metrics (11 rec, 159 yds, 1 TD, +9.0 EPA in 7g) rarely deliver postseason surplus over younger rookie-scale options."
@@ -3122,14 +3118,6 @@
           "awayScore": 23
         },
         {
-          "id": "401873069",
-          "week": 11,
-          "home": "NYG",
-          "away": "JAX",
-          "homeScore": 23,
-          "awayScore": 18
-        },
-        {
           "id": "401873070",
           "week": 11,
           "home": "BUF",
@@ -3200,6 +3188,14 @@
           "away": "LV",
           "homeScore": 38,
           "awayScore": 24
+        },
+        {
+          "id": "401873069",
+          "week": 11,
+          "home": "NYG",
+          "away": "JAX",
+          "homeScore": 23,
+          "awayScore": 18
         },
         {
           "id": "401873066",

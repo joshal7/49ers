@@ -24,7 +24,7 @@ import {
   ALL_DASHBOARD_BLOCKS,
   evaluateSeasonState,
   resolveHomeDashboardState
-} from './engine/seasonStateMachine.js?v=62';
+} from './engine/seasonStateMachine.js?v=63';
 import { simulateCapScenario } from './engine/capSimulator.js?v=66';
 import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js?v=65';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
@@ -52,7 +52,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=93';
+} from './services/dataService.js?v=95';
 import {
   SHARED_GEMINI_KEY_STORAGE_KEY,
   publishSharedGeminiApiKey,
@@ -131,7 +131,7 @@ import {
 } from './views/newsView.js?v=93';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=50';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=81';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=94';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=95';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=67';
 import {
   renderSettingsSheetHtml,

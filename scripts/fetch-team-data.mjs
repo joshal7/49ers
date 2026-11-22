@@ -42,6 +42,8 @@ import {
   resolveAuthoritativeRosterPlayerStatus
 } from './lib/liveHealthAndRosterResolver.mjs';
 import {
+  buildFranchiseHeadToHeadHistory,
+  buildScheduleH2hByOpponentMap,
   estimate4YrRookieContractByPick,
   loadSharedNflversePlayerContext,
   normPlayerName
@@ -2235,6 +2237,27 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       playProbabilityPct: p.health?.playProbabilityPct ?? 95
     }));
 
+  const h2hNext = buildFranchiseHeadToHeadHistory(
+    nflCtx?.gamesRows || [],
+    team.abbr,
+    nextUnplayed?.opponent?.abbr || '',
+    {
+      maxGames: 8,
+      teamNickname: team.nickname,
+      oppShortName: nextUnplayed?.opponent?.shortName || '',
+      scheduleGames: schedule
+    }
+  );
+  const h2hByOpponent = buildScheduleH2hByOpponentMap(
+    nflCtx?.gamesRows || [],
+    team.abbr,
+    schedule,
+    {
+      maxGames: 8,
+      teamNickname: team.nickname
+    }
+  );
+
   const upcomingMatchup = {
     week: nextUnplayed?.week || currentWeek,
     gameId: nextUnplayed?.id || '',
@@ -2270,10 +2293,8 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       impliedWinProb: '50%'
     },
     franchiseHistory: {
-      allTimeRecord: `${team.nickname} vs. ${nextUnplayed?.opponent?.shortName || nextUnplayed?.opponent?.abbr || 'Opponent'}`,
-      pfrQueryUrl: nextUnplayed?.opponent?.abbr
-        ? `https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=${team.pfrAbbr}&tm2=${getTeamByAbbr(nextUnplayed.opponent.abbr).pfrAbbr}&yr=all`
-        : `https://www.pro-football-reference.com/teams/${team.pfrAbbr}/head-to-head.htm`
+      ...h2hNext,
+      byOpponent: h2hByOpponent
     },
     coachingMatchup: buildDeterministicCoachingMatchup({
       team,

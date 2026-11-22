@@ -14,7 +14,7 @@
  */
 
 import zlib from 'node:zlib';
-import { normalizeAnyTeamAbbr } from '../../src/config/teamRegistry.js';
+import { getTeamByAbbr, normalizeAnyTeamAbbr } from '../../src/config/teamRegistry.js';
 import {
   aggregateEspnQbr2026,
   aggregateWeeklyNgsStats2026,
@@ -213,7 +213,8 @@ export async function loadSharedNflversePlayerContext(seasonYear = 2026) {
     snapsCurrent,
     injuriesCurrent,
     combineRows,
-    draftPicksRows
+    draftPicksRows,
+    gamesRows
   ] = await Promise.all([
     fetchCsvWithFallback(`${NFLVERSE_BASE}/players/players.csv.gz`, `${NFLVERSE_BASE}/players/players.csv`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/stats_player/stats_player_reg_${seasonYear}.csv.gz`),
@@ -240,7 +241,11 @@ export async function loadSharedNflversePlayerContext(seasonYear = 2026) {
     ),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/injuries/injuries_${seasonYear}.csv.gz`),
     fetchCsvWithFallback(`${NFLVERSE_BASE}/combine/combine.csv.gz`, `${NFLVERSE_BASE}/combine/combine.csv`),
-    fetchCsvWithFallback(`${NFLVERSE_BASE}/draft_picks/draft_picks.csv.gz`, `${NFLVERSE_BASE}/draft_picks/draft_picks.csv`)
+    fetchCsvWithFallback(`${NFLVERSE_BASE}/draft_picks/draft_picks.csv.gz`, `${NFLVERSE_BASE}/draft_picks/draft_picks.csv`),
+    fetchCsvWithFallback(
+      `${NFLVERSE_BASE}/schedules/games.csv.gz`,
+      'https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv'
+    )
   ]);
 
   // 1. Combine Spider Chart Indexer (MockDraftable 0–100th positional percentiles + RAS + Comps)
@@ -478,12 +483,13 @@ export async function loadSharedNflversePlayerContext(seasonYear = 2026) {
   }
 
   console.log(
-    `[stage-1/nflverse] Loaded players=${nflPlayers.length}, combine=${combineRows.length}, stats${seasonYear}=${statsPlayerCurrent.length}, snaps${seasonYear}=${snapsCurrent.length}, draftPicks=${draftPicksRows.length}, pfrMaxWk=${pfrAdvAgg.maxChartedWeek || 0}`
+    `[stage-1/nflverse] Loaded players=${nflPlayers.length}, combine=${combineRows.length}, stats${seasonYear}=${statsPlayerCurrent.length}, snaps${seasonYear}=${snapsCurrent.length}, draftPicks=${draftPicksRows.length}, games=${gamesRows.length}, pfrMaxWk=${pfrAdvAgg.maxChartedWeek || 0}`
   );
 
   return {
     seasonYear,
     nflPlayers,
+    gamesRows,
     statsPlayerCurrent,
     statsPlayerWeekCurrent,
     snapsCurrent,
@@ -503,4 +509,213 @@ export async function loadSharedNflversePlayerContext(seasonYear = 2026) {
     draftPickByPfrId,
     draftPickByNameYear
   };
+}
+
+// Only include post-1999 franchise relocations present in nflverse games.csv (1999–present).
+// Never alias IND->BAL or TEN->HOU (BAL Ravens & HOU Texans are distinct active franchises since 1996/2002).
+const MODERN_FRANCHISE_RELOCATION_ALIASES = {
+  LV: ['LV', 'OAK'],
+  LAR: ['LAR', 'LA', 'STL'],
+  LAC: ['LAC', 'SD'],
+  WAS: ['WAS', 'WSH']
+};
+
+const HISTORIC_PFR_OVERRIDES = {
+  OAK: 'rai',
+  STL: 'ram',
+  LA: 'ram',
+  SD: 'sdg',
+  WSH: 'was'
+};
+
+function getPfrCodeForHistoricalTeam(abbr = '') {
+  const up = String(abbr || '').trim().toUpperCase();
+  if (HISTORIC_PFR_OVERRIDES[up]) return HISTORIC_PFR_OVERRIDES[up];
+  const norm = normalizeAnyTeamAbbr(up);
+  return getTeamByAbbr(norm)?.pfrAbbr || up.toLowerCase();
+}
+
+function getModernFranchiseCodeSet(abbr = '') {
+  const norm = normalizeAnyTeamAbbr(abbr);
+  return new Set(MODERN_FRANCHISE_RELOCATION_ALIASES[norm] || [norm]);
+}
+
+function formatRecentRecordSummary(games = []) {
+  if (!games.length) return '';
+  let wins = 0;
+  let losses = 0;
+  let ties = 0;
+  for (const g of games) {
+    if (g.tied || g.result === 'T') ties += 1;
+    else if (g.sfWon || g.result === 'W') wins += 1;
+    else losses += 1;
+  }
+  const rec = ties > 0 ? `${wins}-${losses}-${ties}` : `${wins}-${losses}`;
+  return `${rec} in last ${games.length} meeting${games.length === 1 ? '' : 's'}`;
+}
+
+function buildLastMeetingNote(lastMeeting, teamAbbr, oppAbbr) {
+  if (!lastMeeting) return 'First recent meeting on the current schedule cycle.';
+  const otSuffix = lastMeeting.overtime ? ' in OT' : '';
+  const outcomePhrase =
+    lastMeeting.tied || lastMeeting.result === 'T'
+      ? `Tied ${lastMeeting.scoreDisplay}`
+      : lastMeeting.sfWon || lastMeeting.result === 'W'
+        ? `${teamAbbr} won ${lastMeeting.scoreDisplay}`
+        : `${oppAbbr} won ${lastMeeting.scoreDisplay}`;
+  return `Most recent meeting (${lastMeeting.date}): ${outcomePhrase}${otSuffix} (${lastMeeting.venue}).`;
+}
+
+/**
+ * Builds verified Recent Meetings head-to-head history for ANY NFL franchise pair
+ * from nflverse `schedules/games.csv` + optional live current-season `scheduleGames`.
+ */
+export function buildFranchiseHeadToHeadHistory(
+  gamesRows = [],
+  teamAbbr = 'SF',
+  oppAbbr = '',
+  { maxGames = 8, teamNickname = '', oppShortName = '', scheduleGames = [] } = {}
+) {
+  const teamNorm = normalizeAnyTeamAbbr(teamAbbr);
+  const oppNorm = normalizeAnyTeamAbbr(oppAbbr);
+  const teamCfg = getTeamByAbbr(teamNorm);
+  const resolvedNickname = teamNickname || teamCfg?.nickname || teamNorm;
+
+  if (!oppNorm || oppNorm === 'TBD' || oppNorm === 'BYE' || oppNorm === teamNorm) {
+    return {
+      allTimeRecord: `${resolvedNickname} vs. ${oppShortName || oppNorm || 'Opponent'}`,
+      recentRecord: '',
+      lastMeetingNote: 'Opponent not yet finalized on the current schedule cycle.',
+      pfrQueryUrl: `https://www.pro-football-reference.com/teams/${teamCfg?.pfrAbbr || teamNorm.toLowerCase()}/head-to-head.htm`,
+      recentGames: []
+    };
+  }
+
+  const oppCfg = getTeamByAbbr(oppNorm);
+  const resolvedOppShort = oppShortName || oppCfg?.nickname || oppNorm;
+  const pfrQueryUrl = `https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=${teamCfg?.pfrAbbr || teamNorm.toLowerCase()}&tm2=${oppCfg?.pfrAbbr || oppNorm.toLowerCase()}&yr=all`;
+
+  const teamCodes = getModernFranchiseCodeSet(teamNorm);
+  const oppCodes = getModernFranchiseCodeSet(oppNorm);
+
+  const byDate = new Map();
+
+  for (const g of gamesRows || []) {
+    if (!g) continue;
+    const rawHomeScore = String(g.home_score ?? '').trim();
+    const rawAwayScore = String(g.away_score ?? '').trim();
+    if (!rawHomeScore || rawHomeScore === 'NA' || !rawAwayScore || rawAwayScore === 'NA') continue;
+    const homePts = Number(rawHomeScore);
+    const awayPts = Number(rawAwayScore);
+    if (!Number.isFinite(homePts) || !Number.isFinite(awayPts)) continue;
+
+    const homeTeam = String(g.home_team || '').trim().toUpperCase();
+    const awayTeam = String(g.away_team || '').trim().toUpperCase();
+    const isTeamHome = teamCodes.has(homeTeam) && oppCodes.has(awayTeam);
+    const isTeamAway = teamCodes.has(awayTeam) && oppCodes.has(homeTeam);
+    if (!isTeamHome && !isTeamAway) continue;
+
+    const gameday = String(g.gameday || '').trim();
+    if (!gameday) continue;
+
+    const teamPts = isTeamHome ? homePts : awayPts;
+    const oppPts = isTeamHome ? awayPts : homePts;
+    const oppCodeRaw = isTeamHome ? awayTeam : homeTeam;
+    const oppCodeDisplay = oppCodeRaw === 'LA' ? 'LAR' : oppCodeRaw === 'WSH' ? 'WAS' : oppCodeRaw;
+    const espnGameId = g.espn && /^\d{6,}$/.test(String(g.espn).trim()) ? String(g.espn).trim() : '';
+    const pfrBoxId = g.pfr && /^[0-9a-z]+$/i.test(String(g.pfr).trim()) ? String(g.pfr).trim() : '';
+    const homePfrCode = getPfrCodeForHistoricalTeam(homeTeam);
+    const dateDigits = gameday.replace(/-/g, '');
+    const boxscoreUrl = espnGameId
+      ? `https://www.espn.com/nfl/game/_/gameId/${espnGameId}`
+      : pfrBoxId
+        ? `https://www.pro-football-reference.com/boxscores/${pfrBoxId}.htm`
+        : dateDigits.length === 8
+          ? `https://www.pro-football-reference.com/boxscores/${dateDigits}0${homePfrCode}.htm`
+          : pfrQueryUrl;
+
+    const tied = teamPts === oppPts;
+    const teamWon = teamPts > oppPts;
+    byDate.set(gameday, {
+      season: Number(g.season) || Number(gameday.slice(0, 4)),
+      date: gameday,
+      venue: g.location === 'Neutral' ? 'Neutral' : isTeamHome ? 'Home' : 'Away',
+      scoreDisplay: `${teamNorm} ${teamPts}, ${oppCodeDisplay} ${oppPts}`,
+      sfWon: teamWon,
+      tied,
+      result: tied ? 'T' : teamWon ? 'W' : 'L',
+      overtime: String(g.overtime || '').trim() === '1' || Number(g.overtime) === 1,
+      boxscoreUrl
+    });
+  }
+
+  // Merge any completed regular/postseason current-season games from live ESPN schedule
+  // that may not yet be synced in nflverse games.csv (e.g. same-day division rematch).
+  for (const sg of scheduleGames || []) {
+    if (!sg || !sg.completed || sg.isByeWeek) continue;
+    if (String(sg.seasonType || 'REG').toUpperCase() === 'PRE') continue;
+    const sgOpp = normalizeAnyTeamAbbr(sg.opponent?.abbr || '');
+    if (sgOpp !== oppNorm) continue;
+    const teamPts = Number(sg.sfScore);
+    const oppPts = Number(sg.oppScore);
+    if (!Number.isFinite(teamPts) || !Number.isFinite(oppPts)) continue;
+    const dateStr = String(sg.dateIso || '').slice(0, 10);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr) || byDate.has(dateStr)) continue;
+
+    const tied = teamPts === oppPts;
+    const teamWon = teamPts > oppPts;
+    const espnId = sg.id && /^\d{6,}$/.test(String(sg.id).trim()) ? String(sg.id).trim() : '';
+    byDate.set(dateStr, {
+      season: Number(sg.season) || Number(dateStr.slice(0, 4)),
+      date: dateStr,
+      venue: sg.neutralSite ? 'Neutral' : sg.homeAway === 'home' ? 'Home' : 'Away',
+      scoreDisplay: `${teamNorm} ${teamPts}, ${oppNorm} ${oppPts}`,
+      sfWon: teamWon,
+      tied,
+      result: tied ? 'T' : teamWon ? 'W' : 'L',
+      overtime: /\bOT\b/i.test(String(sg.statusDetail || '')),
+      boxscoreUrl: sg.gameUrl || (espnId ? `https://www.espn.com/nfl/game/_/gameId/${espnId}` : pfrQueryUrl)
+    });
+  }
+
+  const recentGames = [...byDate.values()]
+    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+    .slice(0, Math.max(1, maxGames));
+
+  return {
+    allTimeRecord: `${resolvedNickname} vs. ${resolvedOppShort}`,
+    recentRecord: formatRecentRecordSummary(recentGames),
+    lastMeetingNote: buildLastMeetingNote(recentGames[0] || null, teamNorm, oppNorm),
+    pfrQueryUrl,
+    recentGames
+  };
+}
+
+/**
+ * Precomputes compact head-to-head Recent Meetings history keyed by opponent abbr
+ * for every scheduled opponent so instant post-game week rollovers never blank out.
+ */
+export function buildScheduleH2hByOpponentMap(
+  gamesRows = [],
+  teamAbbr = 'SF',
+  scheduleGames = [],
+  { maxGames = 8, teamNickname = '' } = {}
+) {
+  const teamNorm = normalizeAnyTeamAbbr(teamAbbr);
+  const byOpponent = {};
+  const seen = new Set();
+
+  for (const sg of scheduleGames || []) {
+    if (!sg || sg.isByeWeek) continue;
+    const oppNorm = normalizeAnyTeamAbbr(sg.opponent?.abbr || '');
+    if (!oppNorm || oppNorm === 'TBD' || oppNorm === 'BYE' || oppNorm === teamNorm || seen.has(oppNorm)) continue;
+    seen.add(oppNorm);
+    byOpponent[oppNorm] = buildFranchiseHeadToHeadHistory(gamesRows, teamNorm, oppNorm, {
+      maxGames,
+      teamNickname,
+      oppShortName: sg.opponent?.shortName || '',
+      scheduleGames
+    });
+  }
+  return byOpponent;
 }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T01:02:43.431Z",
+  "updatedAt": "2026-11-23T01:23:50.195Z",
   "dailyTopNewsBrief": {
     "id": "brief_det_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -7,33 +7,33 @@
     "isPostGame": true,
     "gameWeek": 12,
     "teamRecord": "8-2",
-    "generatedAt": "2026-11-23T01:02:45.887Z",
+    "generatedAt": "2026-11-23T01:23:53.107Z",
     "modelUsed": "gemini-4-hydrogen",
     "thinkingLevel": "XHIGH",
     "source": "deterministic-digest",
-    "wordCount": 108,
+    "wordCount": 78,
     "headline": "Detroit Lions Daily Briefing — Week 12",
     "summary": "Detroit Lions (8-2, 1st in NFC North • #2 Seed in NFC) top verified storylines, injury status, and upcoming matchup intel.",
     "bullets": [
       "Week 11 NFL highlights: Best plays, moments, touchdowns, more ([NFL Nation](https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026))",
-      "NFL Week 11 arrivals: George Kittle rocks Luchador mask ahead of SNF in Mexico ([ESPN Staff](https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals))",
       "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games ([NFL Nation](https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026))",
+      "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico ([ESPN Staff](https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals))",
       "Khalil Dorsey is back in the game with a club over the hand where he suffered an injured wrist. ([Justin Rogers](https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x))",
-      "Kenny Gainwell: Records 59 total yards in loss: Gainwell rushed four times for 16 yards and brought in four of five targets for 43 yards in the Buccaneers 31-21 loss to the Lions on Sunday. Visit RotoWire.com for more analysis on this update. ([RotoWire NFL Beat](https://www.rotowire.com/football/player/kenny-gainwell-15222))"
+      "HIGHLIGHT: Gibbs strolls to the pylon to score his 15th TD of 2026 season ([detroitlions.com Video](https://www.detroitlions.com/video/highlight-gibbs-strolls-to-the-pylon-to-score-his-15th-td-of-2026-season))"
     ],
     "coveredStoryKeys": [
       "det_espn_c66b1cfb0eee8",
-      "det_espn_60efae509e729",
       "det_espn_7435c17a22db1",
+      "det_espn_60efae509e729",
       "det_bsky_dae5d18dedb6",
-      "det_roto_4fc110f240f4"
+      "det_vid_c4c9aff587fe"
     ],
     "coveredUrls": [
       "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
       "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
+      "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
       "https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x",
-      "https://www.rotowire.com/football/player/kenny-gainwell-15222"
+      "https://www.detroitlions.com/video/highlight-gibbs-strolls-to-the-pylon-to-score-his-15th-td-of-2026-season"
     ],
     "sources": [
       {
@@ -42,23 +42,23 @@
         "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
         "author": "NFL Nation",
         "outlet": "ESPN",
-        "publishedAt": "2026-11-23T00:37:43Z"
+        "publishedAt": "2026-11-23T01:07:44Z"
       },
       {
         "sid": "S2",
-        "title": "NFL Week 11 arrivals: George Kittle rocks Luchador mask ahead of SNF in Mexico",
-        "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-        "author": "ESPN Staff",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T00:49:16Z"
-      },
-      {
-        "sid": "S3",
         "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
         "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
         "author": "NFL Nation",
         "outlet": "ESPN",
-        "publishedAt": "2026-11-23T00:48:39Z"
+        "publishedAt": "2026-11-23T01:19:55Z"
+      },
+      {
+        "sid": "S3",
+        "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
+        "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
+        "author": "ESPN Staff",
+        "outlet": "ESPN",
+        "publishedAt": "2026-11-23T01:00:32Z"
       },
       {
         "sid": "S4",
@@ -70,14 +70,6 @@
       },
       {
         "sid": "S5",
-        "title": "Kenny Gainwell: Records 59 total yards in loss: Gainwell rushed four times for 16 yards and brought in four of five targets for 43 yards in the Buccaneers 31-21 loss to the Lions on Sunday. Visit RotoWire.com for more analysis on this update.",
-        "url": "https://www.rotowire.com/football/player/kenny-gainwell-15222",
-        "author": "RotoWire NFL Beat",
-        "outlet": "RotoWire NFL Beat",
-        "publishedAt": "2026-11-23T00:52:00.000Z"
-      },
-      {
-        "sid": "S6",
         "title": "HIGHLIGHT: Gibbs strolls to the pylon to score his 15th TD of 2026 season",
         "url": "https://www.detroitlions.com/video/highlight-gibbs-strolls-to-the-pylon-to-score-his-15th-td-of-2026-season",
         "author": "detroitlions.com Video",
@@ -85,7 +77,7 @@
         "publishedAt": "2026-11-22T21:10:01.000Z"
       },
       {
-        "sid": "S7",
+        "sid": "S6",
         "title": "HIGHLIGHT: Gibbs punches it in from 1-yard out",
         "url": "https://www.detroitlions.com/video/highlight-gibbs-punches-it-in-from-1-yard-out",
         "author": "detroitlions.com Video",
@@ -93,12 +85,20 @@
         "publishedAt": "2026-11-22T20:54:46.000Z"
       },
       {
-        "sid": "S8",
+        "sid": "S7",
         "title": "Anybody else worry for a split second the way Jamo landed that front flip in the end zone?",
         "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wfcn2z3s25",
         "author": "Dave Birkett",
         "outlet": "Dave Birkett",
         "publishedAt": "2026-11-22T19:52:28.756Z"
+      },
+      {
+        "sid": "S8",
+        "title": "HIGHLIGHT: 57-yard TD! Goff launches it to Williams for the score",
+        "url": "https://www.detroitlions.com/video/highlight-57-yard-td-goff-launches-it-to-williams-for-the-score",
+        "author": "detroitlions.com Video",
+        "outlet": "detroitlions.com Video",
+        "publishedAt": "2026-11-22T20:00:49.000Z"
       }
     ]
   },
@@ -108,10 +108,10 @@
       "id": "det_espn_c66b1cfb0eee8",
       "type": "article",
       "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of the top moments, TDs and analysis from games at the Cowboys, Chiefs, Eagles, Panthers and more.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749754_608x342_16-9.jpg",
+      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749944_608x342_16-9.jpg",
       "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-23T00:37:43Z",
+      "publishedAt": "2026-11-23T01:07:44Z",
       "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
       "outletId": "espn_det",
       "outletName": "ESPN",
@@ -125,7 +125,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.506,
+      "breakingPriority": 1.532,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -135,40 +135,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 57.3728
-    },
-    {
-      "id": "det_espn_60efae509e729",
-      "type": "article",
-      "title": "NFL Week 11 arrivals: George Kittle rocks Luchador mask ahead of SNF in Mexico",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 arrivals: George Kittle rocks Luchador mask ahead of SNF in Mexico",
-      "publishedAt": "2026-11-23T00:49:16Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-      "outletId": "espn_det",
-      "outletName": "ESPN",
-      "reporterId": "espn_det",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/det/detroit-lions",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 47.8405
+      "storyRank": 66.3836
     },
     {
       "id": "det_espn_7435c17a22db1",
@@ -177,7 +144,7 @@
       "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 11.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749880_608x342_16-9.jpg",
       "imageAlt": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-23T00:48:39Z",
+      "publishedAt": "2026-11-23T01:19:55Z",
       "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
       "outletId": "espn_det",
       "outletName": "ESPN",
@@ -201,7 +168,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 47.2852
+      "storyRank": 58.0715
+    },
+    {
+      "id": "det_espn_60efae509e729",
+      "type": "article",
+      "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
+      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg",
+      "imageAlt": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
+      "publishedAt": "2026-11-23T01:00:32Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
+      "outletId": "espn_det",
+      "outletName": "ESPN",
+      "reporterId": "espn_det",
+      "reporterName": "ESPN Staff",
+      "author": "ESPN Staff",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/det/detroit-lions",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 40.1218
     },
     {
       "id": "det_bsky_dae5d18dedb6",
@@ -228,7 +228,7 @@
       "isBreaking": false,
       "isInGameInjury": true,
       "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.483,
+      "breakingPriority": 1.436,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -245,41 +245,7 @@
       "playerValueScore": 0.09,
       "playerValueTier": "depth",
       "injuryImpactScore": 0.324,
-      "storyRank": 15.529
-    },
-    {
-      "id": "det_roto_4fc110f240f4",
-      "type": "tweet",
-      "title": "Kenny Gainwell: Records 59 total yards in loss: Gainwell rushed four times for 16 yards and brought in four of five targets for 43 yards in the Buccaneers 31-21 loss to the Lions on Sunday. Visit RotoWire.com for more analysis on this update.",
-      "fullText": "Kenny Gainwell: Records 59 total yards in loss: Gainwell rushed four times for 16 yards and brought in four of five targets for 43 yards in the Buccaneers 31-21 loss to the Lions on Sunday. Visit RotoWire.com for more analysis on this update.",
-      "isFullTweet": true,
-      "summary": "Gainwell rushed four times for 16 yards and brought in four of five targets for 43 yards in the Buccaneers 31-21 loss to the Lions on Sunday. Visit RotoWire.com for more analysis on this update.",
-      "imageUrl": "",
-      "publishedAt": "2026-11-23T00:52:00.000Z",
-      "url": "https://www.rotowire.com/football/player/kenny-gainwell-15222",
-      "outletId": "rotowire",
-      "outletName": "RotoWire NFL Beat",
-      "reporterId": "rotowire_nfl_beat",
-      "reporterName": "RotoWire NFL Beat",
-      "author": "RotoWire NFL Beat",
-      "authorHandle": "@RotoWireNFL",
-      "authorProfileUrl": "https://www.rotowire.com/football/news.php",
-      "trustTier": 2,
-      "wireSource": "rotowire_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.1896
+      "storyRank": 14.5903
     },
     {
       "id": "det_vid_c4c9aff587fe",
@@ -303,7 +269,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.009,
+      "breakingPriority": 0.969,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -313,7 +279,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.3457
+      "storyRank": 9.4272
     },
     {
       "id": "det_vid_7623bd535cab",
@@ -337,7 +303,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.98,
+      "breakingPriority": 0.941,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -347,7 +313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.6678
+      "storyRank": 8.8486
     },
     {
       "id": "det_bsky_49b3cc757a15",
@@ -374,7 +340,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.869,
+      "breakingPriority": 0.835,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -384,7 +350,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.8895
+      "storyRank": 8.2546
     },
     {
       "id": "det_vid_009110c13b8e",
@@ -408,7 +374,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.883,
+      "breakingPriority": 0.848,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -418,7 +384,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.7935
+      "storyRank": 7.2249
     },
     {
       "id": "det_vid_01f6b0259c93",
@@ -452,7 +418,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.3782
+      "storyRank": 5.6871
     },
     {
       "id": "det_bsky_76b4702b8f91",
@@ -489,7 +455,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.0319
+      "storyRank": 5.4382
     },
     {
       "id": "det_bsky_d9554a8c4310",
@@ -526,7 +492,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.0896
+      "storyRank": 5.5488
     },
     {
       "id": "det_rss_92d6faf1e8ed",
@@ -559,7 +525,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.4489
+      "storyRank": 4.3359
     },
     {
       "id": "det_bsky_95918640d49f",
@@ -596,7 +562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.9533
+      "storyRank": 4.569
     },
     {
       "id": "det_rss_e97a2a128e9b",
@@ -629,7 +595,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.422
+      "storyRank": 3.6228
     },
     {
       "id": "det_vid_21c8c930060d",
@@ -663,7 +629,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7998
+      "storyRank": 3.5406
     },
     {
       "id": "det_vid_e304e2423141",
@@ -697,7 +663,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7341
+      "storyRank": 3.4823
     },
     {
       "id": "det_vid_24ad36508274",
@@ -731,7 +697,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7217
+      "storyRank": 3.4713
     },
     {
       "id": "det_bsky_91007c4df1f0",
@@ -768,7 +734,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9026
+      "storyRank": 3.644
     },
     {
       "id": "det_bsky_d63bbf7a1d83",
@@ -805,7 +771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.857
+      "storyRank": 3.6033
     },
     {
       "id": "det_bsky_6bb1766a86d4",
@@ -842,7 +808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.843
+      "storyRank": 3.5909
     },
     {
       "id": "det_vid_45d058a69345",
@@ -876,7 +842,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5612
+      "storyRank": 3.3284
     },
     {
       "id": "det_vid_8fc7736e6ca3",
@@ -910,7 +876,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4844
+      "storyRank": 3.26
     },
     {
       "id": "det_bsky_70ffea10bca4",
@@ -947,7 +913,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6528
+      "storyRank": 3.4211
     },
     {
       "id": "det_vid_3e52ba837e92",
@@ -981,7 +947,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.396
+      "storyRank": 3.181
     },
     {
       "id": "det_bsky_ccd54bb8872f",
@@ -1018,7 +984,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4763
+      "storyRank": 3.263
     },
     {
       "id": "det_vid_f23bb1ec017f",
@@ -1052,7 +1018,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.47
+      "storyRank": 3.2617
     },
     {
       "id": "det_vid_165fdcb258f4",
@@ -1086,7 +1052,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4187
+      "storyRank": 3.2155
     },
     {
       "id": "det_vid_5dee2dad24d4",
@@ -1120,7 +1086,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4086
+      "storyRank": 3.2064
     },
     {
       "id": "det_vid_eb6b9f638b79",
@@ -1154,7 +1120,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.378
+      "storyRank": 3.1789
     },
     {
       "id": "det_espn_aea129f88ee07",
@@ -1187,7 +1153,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7517
+      "storyRank": 2.4019
     },
     {
       "id": "det_espn_9463dd92e41c3",
@@ -1220,7 +1186,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1514
+      "storyRank": 1.9174
     },
     {
       "id": "det_vid_a8905329fcc5",
@@ -1254,7 +1220,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0807
+      "storyRank": 1.8592
     },
     {
       "id": "det_rss_3ea274280813",
@@ -1287,7 +1253,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7852
+      "storyRank": 1.6013
     },
     {
       "id": "det_vid_9cc81b3422a9",
@@ -1321,7 +1287,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9497
+      "storyRank": 1.7505
     },
     {
       "id": "det_vid_23b6812e1771",
@@ -1355,7 +1321,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9378
+      "storyRank": 1.7407
     },
     {
       "id": "det_bsky_acc7c5faee45",
@@ -1392,7 +1358,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6504
+      "storyRank": 1.4959
     },
     {
       "id": "det_bsky_ef2779000aac",
@@ -1429,7 +1395,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.936
+      "storyRank": 1.7549
     },
     {
       "id": "det_vid_a79420d76426",
@@ -1463,7 +1429,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4807
+      "storyRank": 1.3455
     },
     {
       "id": "det_bsky_f1355f9db30e",
@@ -1500,7 +1466,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5561
+      "storyRank": 1.4159
     },
     {
       "id": "det_bsky_de8d1f1660b9",
@@ -1537,7 +1503,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2362
+      "storyRank": 1.15
     },
     {
       "id": "det_vid_31f3890de597",
@@ -1571,7 +1537,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9796
+      "storyRank": 0.9114
     },
     {
       "id": "det_bsky_789d1e0d3c3d",
@@ -1608,7 +1574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9375
+      "storyRank": 0.877
     },
     {
       "id": "det_bsky_5caee00df2ce",
@@ -1645,7 +1611,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9329
+      "storyRank": 0.8729
     },
     {
       "id": "det_vid_c7355fb69e2e",
@@ -1679,7 +1645,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7949
+      "storyRank": 0.7467
     },
     {
       "id": "det_bsky_d71edc7b2097",
@@ -1716,7 +1682,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8219
+      "storyRank": 0.7733
     },
     {
       "id": "det_bsky_0e00b32b5276",
@@ -1753,7 +1719,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1827
+      "storyRank": 0.1727
     },
     {
       "id": "det_bsky_d870fb1952b8",
@@ -1790,7 +1756,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1338
+      "storyRank": 0.1279
     },
     {
       "id": "det_rss_cd50a8afa84d",
@@ -1823,7 +1789,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1084
+      "storyRank": 0.1037
     },
     {
       "id": "det_rss_e8bb16dbb320",
@@ -1856,7 +1822,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0956
+      "storyRank": 0.0923
     },
     {
       "id": "det_bsky_0f1a6d53713f",
@@ -1893,7 +1859,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0341
+      "storyRank": 0.0335
     },
     {
       "id": "det_bsky_d40259a8fe91",
@@ -1930,7 +1896,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295
+      "storyRank": 0.029
     },
     {
       "id": "det_rss_d13c9787f2ee",
@@ -1963,7 +1929,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0272
+      "storyRank": 0.0268
     },
     {
       "id": "det_rss_20dd0e7f1bf2",
@@ -1996,7 +1962,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.093
+      "storyRank": 0.0918
     },
     {
       "id": "det_tx_3b82b2c77f40",
@@ -2030,7 +1996,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0199
     },
     {
       "id": "det_espn_4b15838125df3",
@@ -2063,7 +2029,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0152
+      "storyRank": 0.0151
     },
     {
       "id": "det_rss_eea329af076f",
@@ -2096,7 +2062,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0337
+      "storyRank": 0.0334
     },
     {
       "id": "det_espn_e18552bc1fb8c",
@@ -2129,7 +2095,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0569
+      "storyRank": 0.0563
     },
     {
       "id": "det_espn_f9ca15e024182",
@@ -2162,7 +2128,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0548
+      "storyRank": 0.0543
     },
     {
       "id": "det_rss_976be5789ea0",
@@ -2195,7 +2161,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0494
+      "storyRank": 0.049
     },
     {
       "id": "det_bsky_c9b6abbd9373",
@@ -2232,7 +2198,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
+      "storyRank": 0.0122
     },
     {
       "id": "det_rss_acd6e087c2ff",
@@ -2265,7 +2231,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0101
+      "storyRank": 0.01
     },
     {
       "id": "det_bsky_63c1f40089f1",
@@ -2302,7 +2268,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0115
+      "storyRank": 0.0114
     },
     {
       "id": "det_rss_419f73384a5b",
@@ -2335,7 +2301,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.047
+      "storyRank": 0.0466
     },
     {
       "id": "det_rss_9b21134f3822",
@@ -2368,7 +2334,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0115
     },
     {
       "id": "det_espn_04aa1b882d37e",
@@ -2401,7 +2367,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0463
+      "storyRank": 0.0459
     },
     {
       "id": "det_bsky_3f1b0a4ff5b2",
@@ -2541,7 +2507,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0206
     },
     {
       "id": "det_rss_d1cce69860d7",
@@ -2574,7 +2540,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0211
+      "storyRank": 0.021
     },
     {
       "id": "det_rss_25efb61590d8",
@@ -2607,7 +2573,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0331
+      "storyRank": 0.0329
     },
     {
       "id": "det_rss_cf4dfa9c1074",
@@ -2640,7 +2606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.008
     },
     {
       "id": "det_espn_b95a427d7fb7b",
@@ -2673,7 +2639,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0321
+      "storyRank": 0.0319
     },
     {
       "id": "det_rss_8e38e4f159ba",
@@ -2772,7 +2738,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0054
     },
     {
       "id": "det_espn_533c73d43a5d8",
@@ -2805,7 +2771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0223
+      "storyRank": 0.0222
     },
     {
       "id": "det_tx_c64f2ecbbd9b",
@@ -3170,7 +3136,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0138
+      "storyRank": 0.0137
     },
     {
       "id": "det_espn_7e0b06b35da0e",
@@ -3203,7 +3169,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132
+      "storyRank": 0.0131
     },
     {
       "id": "det_espn_800d17daf7f00",
@@ -3236,7 +3202,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0128
     },
     {
       "id": "det_tx_19ed81fc487c",
@@ -3303,7 +3269,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0118
+      "storyRank": 0.0117
     },
     {
       "id": "det_espn_6c60aedbc3d0b",

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T01:02:47.086Z",
+  "updatedAt": "2026-11-23T01:23:54.756Z",
   "sources": [
     {
       "label": "ESPN Bills Schedule",
@@ -24278,7 +24278,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-23T01:02:47.366Z"
+    "fetchedAtIso": "2026-11-23T01:23:55.097Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24547,7 +24547,1423 @@
     },
     "franchiseHistory": {
       "allTimeRecord": "Bills vs. Chiefs",
-      "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=kan&yr=all"
+      "recentRecord": "5-3 in last 8 meetings",
+      "lastMeetingNote": "Most recent meeting (2025-11-02): BUF won BUF 28, KC 21 (Home).",
+      "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=kan&yr=all",
+      "recentGames": [
+        {
+          "season": 2025,
+          "date": "2025-11-02",
+          "venue": "Home",
+          "scoreDisplay": "BUF 28, KC 21",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772768"
+        },
+        {
+          "season": 2024,
+          "date": "2025-01-26",
+          "venue": "Away",
+          "scoreDisplay": "BUF 29, KC 32",
+          "sfWon": false,
+          "tied": false,
+          "result": "L",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671887"
+        },
+        {
+          "season": 2024,
+          "date": "2024-11-17",
+          "venue": "Home",
+          "scoreDisplay": "BUF 30, KC 21",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671665"
+        },
+        {
+          "season": 2023,
+          "date": "2024-01-21",
+          "venue": "Home",
+          "scoreDisplay": "BUF 24, KC 27",
+          "sfWon": false,
+          "tied": false,
+          "result": "L",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547758"
+        },
+        {
+          "season": 2023,
+          "date": "2023-12-10",
+          "venue": "Away",
+          "scoreDisplay": "BUF 20, KC 17",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547583"
+        },
+        {
+          "season": 2022,
+          "date": "2022-10-16",
+          "venue": "Away",
+          "scoreDisplay": "BUF 24, KC 20",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437788"
+        },
+        {
+          "season": 2021,
+          "date": "2022-01-23",
+          "venue": "Away",
+          "scoreDisplay": "BUF 36, KC 42",
+          "sfWon": false,
+          "tied": false,
+          "result": "L",
+          "overtime": true,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401326633"
+        },
+        {
+          "season": 2021,
+          "date": "2021-10-10",
+          "venue": "Away",
+          "scoreDisplay": "BUF 38, KC 20",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401326408"
+        }
+      ],
+      "byOpponent": {
+        "HOU": {
+          "allTimeRecord": "Bills vs. Texans",
+          "recentRecord": "3-5 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-09-13): BUF won BUF 36, HOU 31 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=htx&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-09-13",
+              "venue": "Away",
+              "scoreDisplay": "BUF 36, HOU 31",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872660"
+            },
+            {
+              "season": 2025,
+              "date": "2025-11-20",
+              "venue": "Away",
+              "scoreDisplay": "BUF 19, HOU 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772946"
+            },
+            {
+              "season": 2024,
+              "date": "2024-10-06",
+              "venue": "Away",
+              "scoreDisplay": "BUF 20, HOU 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671859"
+            },
+            {
+              "season": 2021,
+              "date": "2021-10-03",
+              "venue": "Home",
+              "scoreDisplay": "BUF 40, HOU 0",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401326381"
+            },
+            {
+              "season": 2019,
+              "date": "2020-01-04",
+              "venue": "Away",
+              "scoreDisplay": "BUF 19, HOU 22",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401131037"
+            },
+            {
+              "season": 2018,
+              "date": "2018-10-14",
+              "venue": "Away",
+              "scoreDisplay": "BUF 13, HOU 20",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030748"
+            },
+            {
+              "season": 2015,
+              "date": "2015-12-06",
+              "venue": "Home",
+              "scoreDisplay": "BUF 30, HOU 21",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400791611"
+            },
+            {
+              "season": 2014,
+              "date": "2014-09-28",
+              "venue": "Away",
+              "scoreDisplay": "BUF 17, HOU 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554212"
+            }
+          ]
+        },
+        "DET": {
+          "allTimeRecord": "Bills vs. Lions",
+          "recentRecord": "7-1 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-09-18): BUF won BUF 41, DET 31 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=det&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-09-18",
+              "venue": "Home",
+              "scoreDisplay": "BUF 41, DET 31",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872932/lions-bills"
+            },
+            {
+              "season": 2026,
+              "date": "2026-09-17",
+              "venue": "Home",
+              "scoreDisplay": "BUF 41, DET 31",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872932"
+            },
+            {
+              "season": 2024,
+              "date": "2024-12-15",
+              "venue": "Away",
+              "scoreDisplay": "BUF 48, DET 42",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671681"
+            },
+            {
+              "season": 2022,
+              "date": "2022-11-24",
+              "venue": "Away",
+              "scoreDisplay": "BUF 28, DET 25",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437857"
+            },
+            {
+              "season": 2018,
+              "date": "2018-12-16",
+              "venue": "Home",
+              "scoreDisplay": "BUF 14, DET 13",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030896"
+            },
+            {
+              "season": 2014,
+              "date": "2014-10-05",
+              "venue": "Away",
+              "scoreDisplay": "BUF 17, DET 14",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554236"
+            },
+            {
+              "season": 2010,
+              "date": "2010-11-14",
+              "venue": "Home",
+              "scoreDisplay": "BUF 14, DET 12",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/301114002"
+            },
+            {
+              "season": 2006,
+              "date": "2006-10-15",
+              "venue": "Away",
+              "scoreDisplay": "BUF 17, DET 20",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/261015008"
+            }
+          ]
+        },
+        "LAC": {
+          "allTimeRecord": "Bills vs. Chargers",
+          "recentRecord": "4-4 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-09-27): BUF won BUF 24, LAC 16 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=sdg&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-09-27",
+              "venue": "Home",
+              "scoreDisplay": "BUF 24, LAC 16",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872953"
+            },
+            {
+              "season": 2023,
+              "date": "2023-12-23",
+              "venue": "Away",
+              "scoreDisplay": "BUF 24, LAC 22",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547611"
+            },
+            {
+              "season": 2020,
+              "date": "2020-11-29",
+              "venue": "Home",
+              "scoreDisplay": "BUF 27, LAC 17",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401220118"
+            },
+            {
+              "season": 2018,
+              "date": "2018-09-16",
+              "venue": "Home",
+              "scoreDisplay": "BUF 20, LAC 31",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030704"
+            },
+            {
+              "season": 2017,
+              "date": "2017-11-19",
+              "venue": "Away",
+              "scoreDisplay": "BUF 24, LAC 54",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400951807"
+            },
+            {
+              "season": 2014,
+              "date": "2014-09-21",
+              "venue": "Home",
+              "scoreDisplay": "BUF 10, SD 22",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554195"
+            },
+            {
+              "season": 2011,
+              "date": "2011-12-11",
+              "venue": "Away",
+              "scoreDisplay": "BUF 10, SD 37",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/311211024"
+            },
+            {
+              "season": 2008,
+              "date": "2008-10-19",
+              "venue": "Home",
+              "scoreDisplay": "BUF 23, SD 14",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/281019002"
+            }
+          ]
+        },
+        "NE": {
+          "allTimeRecord": "Bills vs. Patriots",
+          "recentRecord": "4-4 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-10-04): NE won BUF 26, NE 29 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=nwe&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-10-04",
+              "venue": "Home",
+              "scoreDisplay": "BUF 26, NE 29",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872971"
+            },
+            {
+              "season": 2025,
+              "date": "2025-12-14",
+              "venue": "Away",
+              "scoreDisplay": "BUF 35, NE 31",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772795"
+            },
+            {
+              "season": 2025,
+              "date": "2025-10-05",
+              "venue": "Home",
+              "scoreDisplay": "BUF 20, NE 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772922"
+            },
+            {
+              "season": 2024,
+              "date": "2025-01-05",
+              "venue": "Away",
+              "scoreDisplay": "BUF 16, NE 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671831"
+            },
+            {
+              "season": 2024,
+              "date": "2024-12-22",
+              "venue": "Home",
+              "scoreDisplay": "BUF 24, NE 21",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671494"
+            },
+            {
+              "season": 2023,
+              "date": "2023-12-31",
+              "venue": "Home",
+              "scoreDisplay": "BUF 27, NE 21",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547626"
+            },
+            {
+              "season": 2023,
+              "date": "2023-10-22",
+              "venue": "Away",
+              "scoreDisplay": "BUF 25, NE 29",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547485"
+            },
+            {
+              "season": 2022,
+              "date": "2023-01-08",
+              "venue": "Home",
+              "scoreDisplay": "BUF 35, NE 23",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437949"
+            }
+          ]
+        },
+        "LAR": {
+          "allTimeRecord": "Bills vs. Rams",
+          "recentRecord": "6-2 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-10-13): BUF won BUF 37, LAR 34 in OT (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=ram&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-10-13",
+              "venue": "Away",
+              "scoreDisplay": "BUF 37, LAR 34",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872994/bills-rams"
+            },
+            {
+              "season": 2026,
+              "date": "2026-10-12",
+              "venue": "Away",
+              "scoreDisplay": "BUF 37, LAR 34",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872994"
+            },
+            {
+              "season": 2024,
+              "date": "2024-12-08",
+              "venue": "Away",
+              "scoreDisplay": "BUF 42, LAR 44",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671773"
+            },
+            {
+              "season": 2022,
+              "date": "2022-09-08",
+              "venue": "Away",
+              "scoreDisplay": "BUF 31, LAR 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437654"
+            },
+            {
+              "season": 2020,
+              "date": "2020-09-27",
+              "venue": "Home",
+              "scoreDisplay": "BUF 35, LAR 32",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401220119"
+            },
+            {
+              "season": 2016,
+              "date": "2016-10-09",
+              "venue": "Away",
+              "scoreDisplay": "BUF 30, LAR 19",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400874633"
+            },
+            {
+              "season": 2012,
+              "date": "2012-12-09",
+              "venue": "Home",
+              "scoreDisplay": "BUF 12, STL 15",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/321209002"
+            },
+            {
+              "season": 2008,
+              "date": "2008-09-28",
+              "venue": "Away",
+              "scoreDisplay": "BUF 31, STL 14",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/280928014"
+            }
+          ]
+        },
+        "LV": {
+          "allTimeRecord": "Bills vs. Raiders",
+          "recentRecord": "6-2 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-10-18): BUF won BUF 33, LV 30 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=rai&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-10-18",
+              "venue": "Away",
+              "scoreDisplay": "BUF 33, LV 30",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873005"
+            },
+            {
+              "season": 2023,
+              "date": "2023-09-17",
+              "venue": "Home",
+              "scoreDisplay": "BUF 38, LV 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547411"
+            },
+            {
+              "season": 2020,
+              "date": "2020-10-04",
+              "venue": "Away",
+              "scoreDisplay": "BUF 30, LV 23",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401220229"
+            },
+            {
+              "season": 2017,
+              "date": "2017-10-29",
+              "venue": "Home",
+              "scoreDisplay": "BUF 34, OAK 14",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400951706"
+            },
+            {
+              "season": 2016,
+              "date": "2016-12-04",
+              "venue": "Away",
+              "scoreDisplay": "BUF 24, OAK 38",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400874724"
+            },
+            {
+              "season": 2014,
+              "date": "2014-12-21",
+              "venue": "Away",
+              "scoreDisplay": "BUF 24, OAK 26",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554442"
+            },
+            {
+              "season": 2011,
+              "date": "2011-09-18",
+              "venue": "Home",
+              "scoreDisplay": "BUF 38, OAK 35",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/310918002"
+            },
+            {
+              "season": 2008,
+              "date": "2008-09-21",
+              "venue": "Home",
+              "scoreDisplay": "BUF 24, OAK 23",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/280921002"
+            }
+          ]
+        },
+        "BAL": {
+          "allTimeRecord": "Bills vs. Ravens",
+          "recentRecord": "5-3 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-11-01): BUF won BUF 36, BAL 10 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=rav&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-11-01",
+              "venue": "Home",
+              "scoreDisplay": "BUF 36, BAL 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873026"
+            },
+            {
+              "season": 2025,
+              "date": "2025-09-07",
+              "venue": "Home",
+              "scoreDisplay": "BUF 41, BAL 40",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772918"
+            },
+            {
+              "season": 2024,
+              "date": "2025-01-19",
+              "venue": "Home",
+              "scoreDisplay": "BUF 27, BAL 25",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671886"
+            },
+            {
+              "season": 2024,
+              "date": "2024-09-29",
+              "venue": "Away",
+              "scoreDisplay": "BUF 10, BAL 35",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671783"
+            },
+            {
+              "season": 2022,
+              "date": "2022-10-02",
+              "venue": "Away",
+              "scoreDisplay": "BUF 23, BAL 20",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437750"
+            },
+            {
+              "season": 2020,
+              "date": "2021-01-16",
+              "venue": "Home",
+              "scoreDisplay": "BUF 17, BAL 3",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401220397"
+            },
+            {
+              "season": 2019,
+              "date": "2019-12-08",
+              "venue": "Home",
+              "scoreDisplay": "BUF 17, BAL 24",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401127868"
+            },
+            {
+              "season": 2018,
+              "date": "2018-09-09",
+              "venue": "Away",
+              "scoreDisplay": "BUF 3, BAL 47",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030711"
+            }
+          ]
+        },
+        "MIN": {
+          "allTimeRecord": "Bills vs. Vikings",
+          "recentRecord": "6-2 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-11-10): BUF won BUF 23, MIN 6 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=min&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-11-10",
+              "venue": "Away",
+              "scoreDisplay": "BUF 23, MIN 6",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873051/bills-vikings"
+            },
+            {
+              "season": 2026,
+              "date": "2026-11-09",
+              "venue": "Away",
+              "scoreDisplay": "BUF 23, MIN 6",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873051"
+            },
+            {
+              "season": 2022,
+              "date": "2022-11-13",
+              "venue": "Home",
+              "scoreDisplay": "BUF 30, MIN 33",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437833"
+            },
+            {
+              "season": 2018,
+              "date": "2018-09-23",
+              "venue": "Away",
+              "scoreDisplay": "BUF 27, MIN 6",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030784"
+            },
+            {
+              "season": 2014,
+              "date": "2014-10-19",
+              "venue": "Home",
+              "scoreDisplay": "BUF 17, MIN 16",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554268"
+            },
+            {
+              "season": 2010,
+              "date": "2010-12-05",
+              "venue": "Away",
+              "scoreDisplay": "BUF 14, MIN 38",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/301205016"
+            },
+            {
+              "season": 2006,
+              "date": "2006-10-01",
+              "venue": "Home",
+              "scoreDisplay": "BUF 17, MIN 12",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/261001002"
+            },
+            {
+              "season": 2002,
+              "date": "2002-09-15",
+              "venue": "Away",
+              "scoreDisplay": "BUF 45, MIN 39",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/220915016"
+            }
+          ]
+        },
+        "NYJ": {
+          "allTimeRecord": "Bills vs. Jets",
+          "recentRecord": "7-1 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-11-15): BUF won BUF 31, NYJ 12 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=nyj&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-11-15",
+              "venue": "Away",
+              "scoreDisplay": "BUF 31, NYJ 12",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873054"
+            },
+            {
+              "season": 2025,
+              "date": "2026-01-04",
+              "venue": "Home",
+              "scoreDisplay": "BUF 35, NYJ 8",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772967"
+            },
+            {
+              "season": 2025,
+              "date": "2025-09-14",
+              "venue": "Away",
+              "scoreDisplay": "BUF 30, NYJ 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772727"
+            },
+            {
+              "season": 2024,
+              "date": "2024-12-29",
+              "venue": "Home",
+              "scoreDisplay": "BUF 40, NYJ 14",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671495"
+            },
+            {
+              "season": 2024,
+              "date": "2024-10-14",
+              "venue": "Away",
+              "scoreDisplay": "BUF 23, NYJ 20",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671684"
+            },
+            {
+              "season": 2023,
+              "date": "2023-11-19",
+              "venue": "Home",
+              "scoreDisplay": "BUF 32, NYJ 6",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547543"
+            },
+            {
+              "season": 2023,
+              "date": "2023-09-11",
+              "venue": "Away",
+              "scoreDisplay": "BUF 16, NYJ 22",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547352"
+            },
+            {
+              "season": 2022,
+              "date": "2022-12-11",
+              "venue": "Home",
+              "scoreDisplay": "BUF 20, NYJ 12",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437889"
+            }
+          ]
+        },
+        "MIA": {
+          "allTimeRecord": "Bills vs. Dolphins",
+          "recentRecord": "7-1 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-11-22): BUF won BUF 26, MIA 9 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=mia&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-11-22",
+              "venue": "Home",
+              "scoreDisplay": "BUF 26, MIA 9",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873070"
+            },
+            {
+              "season": 2025,
+              "date": "2025-11-09",
+              "venue": "Away",
+              "scoreDisplay": "BUF 13, MIA 30",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772771"
+            },
+            {
+              "season": 2025,
+              "date": "2025-09-18",
+              "venue": "Home",
+              "scoreDisplay": "BUF 31, MIA 21",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772937"
+            },
+            {
+              "season": 2024,
+              "date": "2024-11-03",
+              "venue": "Home",
+              "scoreDisplay": "BUF 30, MIA 27",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671493"
+            },
+            {
+              "season": 2024,
+              "date": "2024-09-12",
+              "venue": "Away",
+              "scoreDisplay": "BUF 31, MIA 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671807"
+            },
+            {
+              "season": 2023,
+              "date": "2024-01-07",
+              "venue": "Away",
+              "scoreDisplay": "BUF 21, MIA 14",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547647"
+            },
+            {
+              "season": 2023,
+              "date": "2023-10-01",
+              "venue": "Home",
+              "scoreDisplay": "BUF 48, MIA 20",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547443"
+            },
+            {
+              "season": 2022,
+              "date": "2023-01-15",
+              "venue": "Home",
+              "scoreDisplay": "BUF 34, MIA 31",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401438002"
+            }
+          ]
+        },
+        "KC": {
+          "allTimeRecord": "Bills vs. Chiefs",
+          "recentRecord": "5-3 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2025-11-02): BUF won BUF 28, KC 21 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=kan&yr=all",
+          "recentGames": [
+            {
+              "season": 2025,
+              "date": "2025-11-02",
+              "venue": "Home",
+              "scoreDisplay": "BUF 28, KC 21",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772768"
+            },
+            {
+              "season": 2024,
+              "date": "2025-01-26",
+              "venue": "Away",
+              "scoreDisplay": "BUF 29, KC 32",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671887"
+            },
+            {
+              "season": 2024,
+              "date": "2024-11-17",
+              "venue": "Home",
+              "scoreDisplay": "BUF 30, KC 21",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671665"
+            },
+            {
+              "season": 2023,
+              "date": "2024-01-21",
+              "venue": "Home",
+              "scoreDisplay": "BUF 24, KC 27",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547758"
+            },
+            {
+              "season": 2023,
+              "date": "2023-12-10",
+              "venue": "Away",
+              "scoreDisplay": "BUF 20, KC 17",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547583"
+            },
+            {
+              "season": 2022,
+              "date": "2022-10-16",
+              "venue": "Away",
+              "scoreDisplay": "BUF 24, KC 20",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437788"
+            },
+            {
+              "season": 2021,
+              "date": "2022-01-23",
+              "venue": "Away",
+              "scoreDisplay": "BUF 36, KC 42",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401326633"
+            },
+            {
+              "season": 2021,
+              "date": "2021-10-10",
+              "venue": "Away",
+              "scoreDisplay": "BUF 38, KC 20",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401326408"
+            }
+          ]
+        },
+        "GB": {
+          "allTimeRecord": "Bills vs. Packers",
+          "recentRecord": "4-3 in last 7 meetings",
+          "lastMeetingNote": "Most recent meeting (2022-10-30): BUF won BUF 27, GB 17 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=gnb&yr=all",
+          "recentGames": [
+            {
+              "season": 2022,
+              "date": "2022-10-30",
+              "venue": "Home",
+              "scoreDisplay": "BUF 27, GB 17",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437817"
+            },
+            {
+              "season": 2018,
+              "date": "2018-09-30",
+              "venue": "Away",
+              "scoreDisplay": "BUF 0, GB 22",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030844"
+            },
+            {
+              "season": 2014,
+              "date": "2014-12-14",
+              "venue": "Home",
+              "scoreDisplay": "BUF 21, GB 13",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554386"
+            },
+            {
+              "season": 2010,
+              "date": "2010-09-19",
+              "venue": "Away",
+              "scoreDisplay": "BUF 7, GB 34",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/300919009"
+            },
+            {
+              "season": 2006,
+              "date": "2006-11-05",
+              "venue": "Home",
+              "scoreDisplay": "BUF 24, GB 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/261105002"
+            },
+            {
+              "season": 2002,
+              "date": "2002-12-22",
+              "venue": "Away",
+              "scoreDisplay": "BUF 0, GB 10",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/221222009"
+            },
+            {
+              "season": 2000,
+              "date": "2000-09-10",
+              "venue": "Home",
+              "scoreDisplay": "BUF 27, GB 18",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/200910002"
+            }
+          ]
+        },
+        "CHI": {
+          "allTimeRecord": "Bills vs. Bears",
+          "recentRecord": "4-3 in last 7 meetings",
+          "lastMeetingNote": "Most recent meeting (2022-12-24): BUF won BUF 35, CHI 13 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=chi&yr=all",
+          "recentGames": [
+            {
+              "season": 2022,
+              "date": "2022-12-24",
+              "venue": "Away",
+              "scoreDisplay": "BUF 35, CHI 13",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437920"
+            },
+            {
+              "season": 2018,
+              "date": "2018-11-04",
+              "venue": "Home",
+              "scoreDisplay": "BUF 9, CHI 41",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030769"
+            },
+            {
+              "season": 2014,
+              "date": "2014-09-07",
+              "venue": "Away",
+              "scoreDisplay": "BUF 23, CHI 20",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554232"
+            },
+            {
+              "season": 2010,
+              "date": "2010-11-07",
+              "venue": "Home",
+              "scoreDisplay": "BUF 19, CHI 22",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/301107002"
+            },
+            {
+              "season": 2006,
+              "date": "2006-10-08",
+              "venue": "Away",
+              "scoreDisplay": "BUF 7, CHI 40",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/261008003"
+            },
+            {
+              "season": 2002,
+              "date": "2002-09-29",
+              "venue": "Home",
+              "scoreDisplay": "BUF 33, CHI 27",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/220929002"
+            },
+            {
+              "season": 2000,
+              "date": "2000-11-12",
+              "venue": "Home",
+              "scoreDisplay": "BUF 20, CHI 3",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/201112002"
+            }
+          ]
+        },
+        "DEN": {
+          "allTimeRecord": "Bills vs. Broncos",
+          "recentRecord": "5-3 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-01-17): DEN won BUF 30, DEN 33 in OT (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=buf&tm2=den&yr=all",
+          "recentGames": [
+            {
+              "season": 2025,
+              "date": "2026-01-17",
+              "venue": "Away",
+              "scoreDisplay": "BUF 30, DEN 33",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772982"
+            },
+            {
+              "season": 2024,
+              "date": "2025-01-12",
+              "venue": "Home",
+              "scoreDisplay": "BUF 31, DEN 7",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671881"
+            },
+            {
+              "season": 2023,
+              "date": "2023-11-13",
+              "venue": "Home",
+              "scoreDisplay": "BUF 22, DEN 24",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547537"
+            },
+            {
+              "season": 2020,
+              "date": "2020-12-19",
+              "venue": "Away",
+              "scoreDisplay": "BUF 48, DEN 19",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401220213"
+            },
+            {
+              "season": 2019,
+              "date": "2019-11-24",
+              "venue": "Home",
+              "scoreDisplay": "BUF 20, DEN 3",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401127872"
+            },
+            {
+              "season": 2017,
+              "date": "2017-09-24",
+              "venue": "Home",
+              "scoreDisplay": "BUF 26, DEN 16",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400951583"
+            },
+            {
+              "season": 2014,
+              "date": "2014-12-07",
+              "venue": "Away",
+              "scoreDisplay": "BUF 17, DEN 24",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554428"
+            },
+            {
+              "season": 2011,
+              "date": "2011-12-24",
+              "venue": "Home",
+              "scoreDisplay": "BUF 40, DEN 14",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/311224002"
+            }
+          ]
+        }
+      }
     },
     "coachingMatchup": {
       "headline": "Joe Brady & DC Jim Leonhard vs. HC Andy Reid & DC Steve Spagnuolo (Highmark Stadium)",

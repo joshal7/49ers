@@ -752,7 +752,12 @@ export function resolveCompleteScheduleModel(appData = {}, mcSimResult = null) {
 
   const playableRegGames = regGames.filter(g => !g.isByeWeek);
   const allRegCompleted = playableRegGames.length >= 15 && playableRegGames.every(g => Boolean(g.completed));
-  const sfOdds = mcSimResult?.teamOdds || mcSimResult?.sfOdds || appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || null;
+  const sfOdds =
+    mcSimResult?.sfOdds ||
+    mcSimResult?.teamOdds ||
+    appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds ||
+    appData?.seasonal?.playoffPicture?.baselineSimulation?.teamOdds ||
+    null;
   const teamStatus = appData?.meta?.teamStatus || {};
   const nowMs = appData?.meta?.nowMs ? new Date(appData.meta.nowMs).getTime() : Date.now();
 

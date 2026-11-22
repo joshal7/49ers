@@ -1272,13 +1272,16 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
             ${(um.franchiseHistory?.recentGames || [])
               .map(g => {
                 const safeBoxUrl = sanitizeExternalUrl(g.boxscoreUrl, null);
-                const resInner = `<strong>${g.sfWon ? 'W' : 'L'}</strong> ${esc(g.scoreDisplay)}${g.overtime ? ' (OT)' : ''}`;
+                const isTie = Boolean(g.tied || g.result === 'T');
+                const outcomeLetter = isTie ? 'T' : g.sfWon ? 'W' : 'L';
+                const outcomeColor = isTie ? 'var(--text-secondary)' : g.sfWon ? 'var(--emerald)' : 'var(--crimson)';
+                const resInner = `<strong>${outcomeLetter}</strong> ${esc(g.scoreDisplay)}${g.overtime ? ' (OT)' : ''}`;
                 return `
               <tr>
                 <td>${g.season}</td>
                 <td>${esc(g.date)}</td>
                 <td>${esc(g.venue)}</td>
-                <td style="color:${g.sfWon ? 'var(--emerald)' : 'var(--crimson)'}">
+                <td style="color:${outcomeColor}">
                   ${
                     safeBoxUrl
                       ? `<a href="${esc(safeBoxUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="color:inherit">${resInner} ${iconSvg('externalLink', 10)}</a>`

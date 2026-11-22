@@ -239,6 +239,16 @@ async function runCanaryE2eForTeam(
     })`);
     assert.equal(subCheck.overflowPx, 0, `${slug} season/${subKey} portrait overflow ${subCheck.overflowPx}px`);
     assert.ok(subCheck.text.length > 100, `${slug} season/${subKey} rendered empty`);
+    if (subKey === 'matchup') {
+      assert.ok(
+        /Recent Meetings \(\d+-\d+(?:-\d+)? in last \d+ meetings?\)/.test(subCheck.text),
+        `${slug} Matchup view missing populated Recent Meetings record header`
+      );
+      assert.ok(
+        !subCheck.text.includes('historical game log available via Pro-Football-Reference above'),
+        `${slug} Matchup view showed empty Recent Meetings fallback`
+      );
+    }
     if (subKey === 'playoffs') {
       const lowerText = subCheck.text.toLowerCase();
       assert.ok(

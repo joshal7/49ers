@@ -4861,6 +4861,102 @@ function extractTeamInjuriesFromEspnPayload(payload, { isSf = false, oppAbbr = '
   );
 }
 
+export function resolveLiveFranchiseHistoryForOpponent(
+  existingHistory = null,
+  {
+    teamAbbr = 'SF',
+    teamNickname = '',
+    oppAbbr = '',
+    oppShortName = '',
+    scheduleGames = [],
+    pfrQueryUrl = '',
+    keepExistingGames = false
+  } = {}
+) {
+  const normTeam = normalizeTeamAbbrClient(teamAbbr || 'SF');
+  const normOpp = normalizeTeamAbbrClient(oppAbbr || '');
+  const byOpponent =
+    existingHistory?.byOpponent && typeof existingHistory.byOpponent === 'object' ? existingHistory.byOpponent : null;
+  const cachedOpp = normOpp && byOpponent ? byOpponent[normOpp] : null;
+  const baseGames = Array.isArray(cachedOpp?.recentGames)
+    ? cachedOpp.recentGames
+    : keepExistingGames && Array.isArray(existingHistory?.recentGames)
+      ? existingHistory.recentGames
+      : [];
+
+  const resolvedPfrUrl =
+    pfrQueryUrl || cachedOpp?.pfrQueryUrl || existingHistory?.pfrQueryUrl || buildPfrHeadToHeadUrl(normTeam, normOpp);
+  const byDate = new Map();
+  for (const g of baseGames) {
+    if (!g || !g.date) continue;
+    byDate.set(String(g.date), { ...g });
+  }
+
+  for (const sg of scheduleGames || []) {
+    if (!sg || !sg.completed || sg.isByeWeek) continue;
+    if (String(sg.seasonType || 'REG').toUpperCase() === 'PRE') continue;
+    const sgOpp = normalizeTeamAbbrClient(sg.opponent?.abbr || '');
+    if (!normOpp || sgOpp !== normOpp) continue;
+    const teamPts = Number(sg.sfScore);
+    const oppPts = Number(sg.oppScore);
+    if (!Number.isFinite(teamPts) || !Number.isFinite(oppPts)) continue;
+    const dateStr = String(sg.dateIso || '').slice(0, 10);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr) || byDate.has(dateStr)) continue;
+    const tied = teamPts === oppPts;
+    const teamWon = teamPts > oppPts;
+    const espnId = sg.id && /^\d{6,}$/.test(String(sg.id).trim()) ? String(sg.id).trim() : '';
+    byDate.set(dateStr, {
+      season: Number(sg.season) || Number(dateStr.slice(0, 4)),
+      date: dateStr,
+      venue: sg.neutralSite ? 'Neutral' : sg.homeAway === 'home' ? 'Home' : 'Away',
+      scoreDisplay: `${normTeam} ${teamPts}, ${normOpp} ${oppPts}`,
+      sfWon: teamWon,
+      tied,
+      result: tied ? 'T' : teamWon ? 'W' : 'L',
+      overtime: /\bOT\b/i.test(String(sg.statusDetail || '')),
+      boxscoreUrl: sg.gameUrl || (espnId ? `https://www.espn.com/nfl/game/_/gameId/${espnId}` : resolvedPfrUrl)
+    });
+  }
+
+  const recentGames = [...byDate.values()]
+    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+    .slice(0, 8);
+
+  let wins = 0;
+  let losses = 0;
+  let ties = 0;
+  for (const g of recentGames) {
+    if (g.tied || g.result === 'T') ties += 1;
+    else if (g.sfWon || g.result === 'W') wins += 1;
+    else losses += 1;
+  }
+  const recentRecord =
+    recentGames.length > 0
+      ? `${ties > 0 ? `${wins}-${losses}-${ties}` : `${wins}-${losses}`} in last ${recentGames.length} meeting${recentGames.length === 1 ? '' : 's'}`
+      : '';
+
+  const last = recentGames[0] || null;
+  const lastMeetingNote = last
+    ? `Most recent meeting (${last.date}): ${
+        last.tied || last.result === 'T'
+          ? `Tied ${last.scoreDisplay}`
+          : last.sfWon || last.result === 'W'
+            ? `${normTeam} won ${last.scoreDisplay}`
+            : `${normOpp} won ${last.scoreDisplay}`
+      }${last.overtime ? ' in OT' : ''} (${last.venue}).`
+    : cachedOpp?.lastMeetingNote || 'First recent meeting on the current schedule cycle.';
+
+  return {
+    ...(existingHistory || {}),
+    allTimeRecord: cachedOpp?.allTimeRecord || `${teamNickname || normTeam} vs. ${oppShortName || normOpp || 'Opponent'}`,
+    recentRecord,
+    lastMeetingNote,
+    pfrQueryUrl: resolvedPfrUrl,
+    recentGames,
+    ...(byOpponent ? { byOpponent } : {})
+  };
+}
+
 export async function hydrateLiveEspnOverlay(appData) {
   if (!appData?.meta || !appData?.scheduleMatchup) return false;
   const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
@@ -5285,12 +5381,15 @@ export async function hydrateLiveEspnOverlay(appData) {
         });
         um.keyMatchupsMatrix = [];
         if (um.franchiseHistory && !isTbdOpponent) {
-          um.franchiseHistory.pfrQueryUrl = buildPfrHeadToHeadUrl(activeTeam.abbr, oppAbbr);
-          if (oppAbbr !== initialOppAbbr) {
-            um.franchiseHistory.allTimeRecord = `${activeTeam.nickname} vs. ${nextGame.opponent?.shortName || um.oppName}`;
-            um.franchiseHistory.recentRecord = '';
-            um.franchiseHistory.recentGames = [];
-          }
+          um.franchiseHistory = resolveLiveFranchiseHistoryForOpponent(um.franchiseHistory, {
+            teamAbbr: activeTeam.abbr,
+            teamNickname: activeTeam.nickname,
+            oppAbbr,
+            oppShortName: nextGame.opponent?.shortName || um.oppName,
+            scheduleGames: appData.scheduleMatchup.schedule || [],
+            pfrQueryUrl: buildPfrHeadToHeadUrl(activeTeam.abbr, oppAbbr),
+            keepExistingGames: oppAbbr === initialOppAbbr
+          });
         }
         if (um.opponentHealth) {
           um.opponentHealth.teamAbbr = oppAbbr;

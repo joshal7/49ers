@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T01:02:47.086Z",
+  "updatedAt": "2026-11-23T01:23:54.756Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T21:00:00Z",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 4:00 PM ET",
@@ -149,7 +149,7 @@
         "projectedPickCost": "2027 3rd-Round Pick (#96) or Day-2 Package",
         "fitScore": 94,
         "sourceUrl": "https://overthecap.com/player/cam-hart/11748/",
-        "fitBreakdown": "Age 25 CB posting 23 tackles, 8 PD, 2 INT (86% snaps in 9g). Addresses Bills' #1 need; $1.19M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
+        "fitBreakdown": "Age 25 CB posting 28 tackles, 8 PD, 2 INT (86% snaps in 10g). Addresses Bills' #1 need; $1.19M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
       },
       {
         "name": "Maason Smith",
@@ -186,6 +186,23 @@
         "fitBreakdown": "Age 26 WR posting 39 rec, 430 yds, 1 TD, +9.4 EPA in 10g. Addresses Bills' #3 need; $1.19M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
       },
       {
+        "name": "Darrell Jackson Jr.",
+        "jersey": 95,
+        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/kmkykh3qj3gxyhn006jr",
+        "teamAbbr": "NYJ",
+        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png",
+        "currentTeam": "NYJ (3-8 Seller)",
+        "position": "DT",
+        "prorated2026CapCharge": 1050000,
+        "offseason2027CapCharge": 1050000,
+        "cap2027Impact": "$1.05M Rookie Scale",
+        "sellerIncentive": "3-8 Jets are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
+        "projectedPickCost": "2027 4th-Round Pick (#133)",
+        "fitScore": 88,
+        "sourceUrl": "https://overthecap.com/player/darrell-jackson-jr/13247/",
+        "fitBreakdown": "Age 23 DT posting 1.5 sacks, 3 QB hits, 2 TFL (48% snaps in 11g). Addresses Bills' #2 need; $1.05M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
+      },
+      {
         "name": "Darius Cooper",
         "jersey": 80,
         "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/pe71oe4eoyyfnq80fkxc",
@@ -201,23 +218,6 @@
         "fitScore": 88,
         "sourceUrl": "https://overthecap.com/player/darius-cooper/12984/",
         "fitBreakdown": "Age 24 WR posting 17 rec, 259 yds, 4 TD, +6.9 EPA in 10g. Addresses Bills' #3 need; $1.12M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
-      },
-      {
-        "name": "Zeek Biggers",
-        "jersey": 93,
-        "headshotUrl": "https://static.www.nfl.com/image/upload/f_auto,q_auto/league/suxeeie7m0bmqjrgwsmv",
-        "teamAbbr": "MIA",
-        "teamLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
-        "currentTeam": "MIA (1-9 Seller)",
-        "position": "DT",
-        "prorated2026CapCharge": 1120000,
-        "offseason2027CapCharge": 1120000,
-        "cap2027Impact": "$1.12M Rookie Scale",
-        "sellerIncentive": "1-9 Dolphins are in retooling territory; non-guaranteed 2027 contract makes a March trade clean for both sides.",
-        "projectedPickCost": "2027 4th-Round Pick (#133)",
-        "fitScore": 86,
-        "sourceUrl": "https://overthecap.com/player/zeek-biggers/12613/",
-        "fitBreakdown": "Age 23 DT posting 1.0 sacks, 4 QB hits, 1 TFL (55% snaps in 9g). Addresses Bills' #2 need; $1.12M projected 2027 acquiring cap charge fits BUF's cap-conscious -$48.86M 2027 outlook."
       },
       {
         "name": "Cedric Gray",
@@ -259,15 +259,11 @@
       },
       {
         "trap": "Paying Draft Capital for Aging Name-Value Veterans",
-        "examples": "Calvin Ridley (TEN WR, Age 31), Harrison Phillips (NYJ DT, Age 30)",
+        "examples": "Calvin Ridley (TEN WR, Age 31)",
         "exampleLinks": [
           {
             "label": "Calvin Ridley (TEN WR, Age 31)",
             "url": "https://overthecap.com/player/calvin-ridley/6911/"
-          },
-          {
-            "label": "Harrison Phillips (NYJ DT, Age 30)",
-            "url": "https://overthecap.com/player/harrison-phillips/6981/"
           }
         ],
         "whyAvoid": "Veterans past age 30 with declining 2026 snap/efficiency metrics (11 rec, 159 yds, 1 TD, +9.0 EPA in 7g) rarely deliver postseason surplus over younger rookie-scale options."
@@ -3154,14 +3150,6 @@
           "awayScore": 23
         },
         {
-          "id": "401873069",
-          "week": 11,
-          "home": "NYG",
-          "away": "JAX",
-          "homeScore": 23,
-          "awayScore": 18
-        },
-        {
           "id": "401873070",
           "week": 11,
           "home": "BUF",
@@ -3232,6 +3220,14 @@
           "away": "LV",
           "homeScore": 38,
           "awayScore": 24
+        },
+        {
+          "id": "401873069",
+          "week": 11,
+          "home": "NYG",
+          "away": "JAX",
+          "homeScore": 23,
+          "awayScore": 18
         },
         {
           "id": "401873066",

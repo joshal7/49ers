@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T01:02:43.431Z",
+  "updatedAt": "2026-11-23T01:23:50.195Z",
   "sources": [
     {
       "label": "ESPN Lions Schedule",
@@ -24278,7 +24278,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-23T01:02:43.811Z"
+    "fetchedAtIso": "2026-11-23T01:23:50.569Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24481,7 +24481,1434 @@
     },
     "franchiseHistory": {
       "allTimeRecord": "Lions vs. Bears",
-      "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=chi&yr=all"
+      "recentRecord": "7-1 in last 8 meetings",
+      "lastMeetingNote": "Most recent meeting (2026-01-04): DET won DET 19, CHI 16 (Away).",
+      "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=chi&yr=all",
+      "recentGames": [
+        {
+          "season": 2025,
+          "date": "2026-01-04",
+          "venue": "Away",
+          "scoreDisplay": "DET 19, CHI 16",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772965"
+        },
+        {
+          "season": 2025,
+          "date": "2025-09-14",
+          "venue": "Home",
+          "scoreDisplay": "DET 52, CHI 21",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772835"
+        },
+        {
+          "season": 2024,
+          "date": "2024-12-22",
+          "venue": "Away",
+          "scoreDisplay": "DET 34, CHI 17",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671868"
+        },
+        {
+          "season": 2024,
+          "date": "2024-11-28",
+          "venue": "Home",
+          "scoreDisplay": "DET 23, CHI 20",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671492"
+        },
+        {
+          "season": 2023,
+          "date": "2023-12-10",
+          "venue": "Away",
+          "scoreDisplay": "DET 13, CHI 28",
+          "sfWon": false,
+          "tied": false,
+          "result": "L",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547586"
+        },
+        {
+          "season": 2023,
+          "date": "2023-11-19",
+          "venue": "Home",
+          "scoreDisplay": "DET 31, CHI 26",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547546"
+        },
+        {
+          "season": 2022,
+          "date": "2023-01-01",
+          "venue": "Home",
+          "scoreDisplay": "DET 41, CHI 10",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437935"
+        },
+        {
+          "season": 2022,
+          "date": "2022-11-13",
+          "venue": "Away",
+          "scoreDisplay": "DET 31, CHI 30",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437834"
+        }
+      ],
+      "byOpponent": {
+        "NO": {
+          "allTimeRecord": "Lions vs. Saints",
+          "recentRecord": "5-3 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-09-13): DET won DET 31, NO 30 in OT (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=nor&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-09-13",
+              "venue": "Home",
+              "scoreDisplay": "DET 31, NO 30",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872923"
+            },
+            {
+              "season": 2023,
+              "date": "2023-12-03",
+              "venue": "Away",
+              "scoreDisplay": "DET 33, NO 28",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547572"
+            },
+            {
+              "season": 2020,
+              "date": "2020-10-04",
+              "venue": "Home",
+              "scoreDisplay": "DET 29, NO 35",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401220285"
+            },
+            {
+              "season": 2017,
+              "date": "2017-10-15",
+              "venue": "Away",
+              "scoreDisplay": "DET 38, NO 52",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400951704"
+            },
+            {
+              "season": 2016,
+              "date": "2016-12-04",
+              "venue": "Away",
+              "scoreDisplay": "DET 28, NO 13",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400874717"
+            },
+            {
+              "season": 2015,
+              "date": "2015-12-21",
+              "venue": "Away",
+              "scoreDisplay": "DET 35, NO 27",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400791729"
+            },
+            {
+              "season": 2014,
+              "date": "2014-10-19",
+              "venue": "Home",
+              "scoreDisplay": "DET 24, NO 23",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554271"
+            },
+            {
+              "season": 2011,
+              "date": "2012-01-07",
+              "venue": "Away",
+              "scoreDisplay": "DET 28, NO 45",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/320107018"
+            }
+          ]
+        },
+        "BUF": {
+          "allTimeRecord": "Lions vs. Bills",
+          "recentRecord": "1-7 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-09-18): BUF won DET 31, BUF 41 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=buf&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-09-18",
+              "venue": "Away",
+              "scoreDisplay": "DET 31, BUF 41",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872932/lions-bills"
+            },
+            {
+              "season": 2026,
+              "date": "2026-09-17",
+              "venue": "Away",
+              "scoreDisplay": "DET 31, BUF 41",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872932"
+            },
+            {
+              "season": 2024,
+              "date": "2024-12-15",
+              "venue": "Home",
+              "scoreDisplay": "DET 42, BUF 48",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671681"
+            },
+            {
+              "season": 2022,
+              "date": "2022-11-24",
+              "venue": "Home",
+              "scoreDisplay": "DET 25, BUF 28",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437857"
+            },
+            {
+              "season": 2018,
+              "date": "2018-12-16",
+              "venue": "Away",
+              "scoreDisplay": "DET 13, BUF 14",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030896"
+            },
+            {
+              "season": 2014,
+              "date": "2014-10-05",
+              "venue": "Home",
+              "scoreDisplay": "DET 14, BUF 17",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554236"
+            },
+            {
+              "season": 2010,
+              "date": "2010-11-14",
+              "venue": "Away",
+              "scoreDisplay": "DET 12, BUF 14",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/301114002"
+            },
+            {
+              "season": 2006,
+              "date": "2006-10-15",
+              "venue": "Home",
+              "scoreDisplay": "DET 20, BUF 17",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/261015008"
+            }
+          ]
+        },
+        "NYJ": {
+          "allTimeRecord": "Lions vs. Jets",
+          "recentRecord": "4-4 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-09-27): DET won DET 31, NYJ 24 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=nyj&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-09-27",
+              "venue": "Home",
+              "scoreDisplay": "DET 31, NYJ 24",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872954"
+            },
+            {
+              "season": 2022,
+              "date": "2022-12-18",
+              "venue": "Away",
+              "scoreDisplay": "DET 20, NYJ 17",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437911"
+            },
+            {
+              "season": 2018,
+              "date": "2018-09-10",
+              "venue": "Home",
+              "scoreDisplay": "DET 17, NYJ 48",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030728"
+            },
+            {
+              "season": 2014,
+              "date": "2014-09-28",
+              "venue": "Away",
+              "scoreDisplay": "DET 24, NYJ 17",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554252"
+            },
+            {
+              "season": 2010,
+              "date": "2010-11-07",
+              "venue": "Home",
+              "scoreDisplay": "DET 20, NYJ 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/301107008"
+            },
+            {
+              "season": 2006,
+              "date": "2006-10-22",
+              "venue": "Away",
+              "scoreDisplay": "DET 24, NYJ 31",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/261022020"
+            },
+            {
+              "season": 2002,
+              "date": "2002-11-17",
+              "venue": "Home",
+              "scoreDisplay": "DET 14, NYJ 31",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/221117008"
+            },
+            {
+              "season": 2000,
+              "date": "2000-12-17",
+              "venue": "Away",
+              "scoreDisplay": "DET 10, NYJ 7",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/201217020"
+            }
+          ]
+        },
+        "CAR": {
+          "allTimeRecord": "Lions vs. Panthers",
+          "recentRecord": "2-6 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-10-05): CAR won DET 26, CAR 32 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=car&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-10-05",
+              "venue": "Away",
+              "scoreDisplay": "DET 26, CAR 32",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872978/lions-panthers"
+            },
+            {
+              "season": 2026,
+              "date": "2026-10-04",
+              "venue": "Away",
+              "scoreDisplay": "DET 26, CAR 32",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872978"
+            },
+            {
+              "season": 2023,
+              "date": "2023-10-08",
+              "venue": "Home",
+              "scoreDisplay": "DET 42, CAR 24",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547464"
+            },
+            {
+              "season": 2022,
+              "date": "2022-12-24",
+              "venue": "Away",
+              "scoreDisplay": "DET 23, CAR 37",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437919"
+            },
+            {
+              "season": 2020,
+              "date": "2020-11-22",
+              "venue": "Away",
+              "scoreDisplay": "DET 0, CAR 20",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401220318"
+            },
+            {
+              "season": 2018,
+              "date": "2018-11-18",
+              "venue": "Home",
+              "scoreDisplay": "DET 20, CAR 19",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030910"
+            },
+            {
+              "season": 2017,
+              "date": "2017-10-08",
+              "venue": "Home",
+              "scoreDisplay": "DET 24, CAR 27",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400951558"
+            },
+            {
+              "season": 2014,
+              "date": "2014-09-14",
+              "venue": "Away",
+              "scoreDisplay": "DET 7, CAR 24",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554249"
+            }
+          ]
+        },
+        "ARI": {
+          "allTimeRecord": "Lions vs. Cardinals",
+          "recentRecord": "6-1-1 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-10-11): DET won DET 45, ARI 21 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=crd&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-10-11",
+              "venue": "Away",
+              "scoreDisplay": "DET 45, ARI 21",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401872991"
+            },
+            {
+              "season": 2024,
+              "date": "2024-09-22",
+              "venue": "Away",
+              "scoreDisplay": "DET 20, ARI 13",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671771"
+            },
+            {
+              "season": 2021,
+              "date": "2021-12-19",
+              "venue": "Home",
+              "scoreDisplay": "DET 30, ARI 12",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401326544"
+            },
+            {
+              "season": 2020,
+              "date": "2020-09-27",
+              "venue": "Away",
+              "scoreDisplay": "DET 26, ARI 23",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401220343"
+            },
+            {
+              "season": 2019,
+              "date": "2019-09-08",
+              "venue": "Away",
+              "scoreDisplay": "DET 27, ARI 27",
+              "sfWon": false,
+              "tied": true,
+              "result": "T",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401127999"
+            },
+            {
+              "season": 2018,
+              "date": "2018-12-09",
+              "venue": "Away",
+              "scoreDisplay": "DET 17, ARI 3",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030860"
+            },
+            {
+              "season": 2017,
+              "date": "2017-09-10",
+              "venue": "Home",
+              "scoreDisplay": "DET 35, ARI 23",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400951576"
+            },
+            {
+              "season": 2015,
+              "date": "2015-10-11",
+              "venue": "Home",
+              "scoreDisplay": "DET 17, ARI 42",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400791554"
+            }
+          ]
+        },
+        "GB": {
+          "allTimeRecord": "Lions vs. Packers",
+          "recentRecord": "5-3 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-10-25): DET won DET 20, GB 17 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=gnb&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-10-25",
+              "venue": "Home",
+              "scoreDisplay": "DET 20, GB 17",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873020"
+            },
+            {
+              "season": 2025,
+              "date": "2025-11-27",
+              "venue": "Home",
+              "scoreDisplay": "DET 24, GB 31",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772891"
+            },
+            {
+              "season": 2025,
+              "date": "2025-09-07",
+              "venue": "Away",
+              "scoreDisplay": "DET 13, GB 27",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772722"
+            },
+            {
+              "season": 2024,
+              "date": "2024-12-05",
+              "venue": "Home",
+              "scoreDisplay": "DET 34, GB 31",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671814"
+            },
+            {
+              "season": 2024,
+              "date": "2024-11-03",
+              "venue": "Away",
+              "scoreDisplay": "DET 24, GB 14",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671767"
+            },
+            {
+              "season": 2023,
+              "date": "2023-11-23",
+              "venue": "Home",
+              "scoreDisplay": "DET 22, GB 29",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547552"
+            },
+            {
+              "season": 2023,
+              "date": "2023-09-28",
+              "venue": "Away",
+              "scoreDisplay": "DET 34, GB 20",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547442"
+            },
+            {
+              "season": 2022,
+              "date": "2023-01-08",
+              "venue": "Away",
+              "scoreDisplay": "DET 20, GB 16",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437952"
+            }
+          ]
+        },
+        "MIN": {
+          "allTimeRecord": "Lions vs. Vikings",
+          "recentRecord": "6-2 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-11-01): DET won DET 19, MIN 15 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=min&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-11-01",
+              "venue": "Home",
+              "scoreDisplay": "DET 19, MIN 15",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873030"
+            },
+            {
+              "season": 2025,
+              "date": "2025-12-25",
+              "venue": "Away",
+              "scoreDisplay": "DET 10, MIN 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772711"
+            },
+            {
+              "season": 2025,
+              "date": "2025-11-02",
+              "venue": "Home",
+              "scoreDisplay": "DET 24, MIN 27",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772871"
+            },
+            {
+              "season": 2024,
+              "date": "2025-01-05",
+              "venue": "Home",
+              "scoreDisplay": "DET 31, MIN 9",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671843"
+            },
+            {
+              "season": 2024,
+              "date": "2024-10-20",
+              "venue": "Away",
+              "scoreDisplay": "DET 31, MIN 29",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671724"
+            },
+            {
+              "season": 2023,
+              "date": "2024-01-07",
+              "venue": "Home",
+              "scoreDisplay": "DET 30, MIN 20",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547642"
+            },
+            {
+              "season": 2023,
+              "date": "2023-12-24",
+              "venue": "Away",
+              "scoreDisplay": "DET 30, MIN 24",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547618"
+            },
+            {
+              "season": 2022,
+              "date": "2022-12-11",
+              "venue": "Home",
+              "scoreDisplay": "DET 34, MIN 23",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437892"
+            }
+          ]
+        },
+        "MIA": {
+          "allTimeRecord": "Lions vs. Dolphins",
+          "recentRecord": "4-4 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-11-08): DET won DET 19, MIA 9 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=mia&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-11-08",
+              "venue": "Away",
+              "scoreDisplay": "DET 19, MIA 9",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873042"
+            },
+            {
+              "season": 2022,
+              "date": "2022-10-30",
+              "venue": "Home",
+              "scoreDisplay": "DET 27, MIA 31",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437808"
+            },
+            {
+              "season": 2018,
+              "date": "2018-10-21",
+              "venue": "Away",
+              "scoreDisplay": "DET 32, MIA 21",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030830"
+            },
+            {
+              "season": 2014,
+              "date": "2014-11-09",
+              "venue": "Home",
+              "scoreDisplay": "DET 20, MIA 16",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554355"
+            },
+            {
+              "season": 2010,
+              "date": "2010-12-26",
+              "venue": "Away",
+              "scoreDisplay": "DET 34, MIA 27",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/301226015"
+            },
+            {
+              "season": 2006,
+              "date": "2006-11-23",
+              "venue": "Home",
+              "scoreDisplay": "DET 10, MIA 27",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/261123008"
+            },
+            {
+              "season": 2002,
+              "date": "2002-09-08",
+              "venue": "Away",
+              "scoreDisplay": "DET 21, MIA 49",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/220908015"
+            },
+            {
+              "season": 2000,
+              "date": "2000-11-05",
+              "venue": "Home",
+              "scoreDisplay": "DET 8, MIA 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/201105008"
+            }
+          ]
+        },
+        "NE": {
+          "allTimeRecord": "Lions vs. Patriots",
+          "recentRecord": "3-5 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-11-15): DET won DET 35, NE 10 (Neutral).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=nwe&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-11-15",
+              "venue": "Neutral",
+              "scoreDisplay": "DET 35, NE 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873053"
+            },
+            {
+              "season": 2022,
+              "date": "2022-10-09",
+              "venue": "Away",
+              "scoreDisplay": "DET 0, NE 29",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437767"
+            },
+            {
+              "season": 2018,
+              "date": "2018-09-23",
+              "venue": "Home",
+              "scoreDisplay": "DET 26, NE 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030802"
+            },
+            {
+              "season": 2014,
+              "date": "2014-11-23",
+              "venue": "Away",
+              "scoreDisplay": "DET 9, NE 34",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554322"
+            },
+            {
+              "season": 2010,
+              "date": "2010-11-25",
+              "venue": "Home",
+              "scoreDisplay": "DET 24, NE 45",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/301125008"
+            },
+            {
+              "season": 2006,
+              "date": "2006-12-03",
+              "venue": "Away",
+              "scoreDisplay": "DET 21, NE 28",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/261203017"
+            },
+            {
+              "season": 2002,
+              "date": "2002-11-28",
+              "venue": "Home",
+              "scoreDisplay": "DET 12, NE 20",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/221128008"
+            },
+            {
+              "season": 2000,
+              "date": "2000-11-23",
+              "venue": "Home",
+              "scoreDisplay": "DET 34, NE 9",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/201123008"
+            }
+          ]
+        },
+        "TB": {
+          "allTimeRecord": "Lions vs. Buccaneers",
+          "recentRecord": "5-3 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-11-22): DET won DET 31, TB 21 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=tam&yr=all",
+          "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-11-22",
+              "venue": "Home",
+              "scoreDisplay": "DET 31, TB 21",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873072"
+            },
+            {
+              "season": 2025,
+              "date": "2025-10-20",
+              "venue": "Home",
+              "scoreDisplay": "DET 24, TB 9",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772816"
+            },
+            {
+              "season": 2024,
+              "date": "2024-09-15",
+              "venue": "Home",
+              "scoreDisplay": "DET 16, TB 20",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671721"
+            },
+            {
+              "season": 2023,
+              "date": "2024-01-21",
+              "venue": "Home",
+              "scoreDisplay": "DET 31, TB 23",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547757"
+            },
+            {
+              "season": 2023,
+              "date": "2023-10-15",
+              "venue": "Away",
+              "scoreDisplay": "DET 20, TB 6",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547478"
+            },
+            {
+              "season": 2020,
+              "date": "2020-12-26",
+              "venue": "Home",
+              "scoreDisplay": "DET 7, TB 47",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401220286"
+            },
+            {
+              "season": 2019,
+              "date": "2019-12-15",
+              "venue": "Home",
+              "scoreDisplay": "DET 17, TB 38",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401128028"
+            },
+            {
+              "season": 2017,
+              "date": "2017-12-10",
+              "venue": "Away",
+              "scoreDisplay": "DET 24, TB 21",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400951660"
+            }
+          ]
+        },
+        "CHI": {
+          "allTimeRecord": "Lions vs. Bears",
+          "recentRecord": "7-1 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-01-04): DET won DET 19, CHI 16 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=chi&yr=all",
+          "recentGames": [
+            {
+              "season": 2025,
+              "date": "2026-01-04",
+              "venue": "Away",
+              "scoreDisplay": "DET 19, CHI 16",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772965"
+            },
+            {
+              "season": 2025,
+              "date": "2025-09-14",
+              "venue": "Home",
+              "scoreDisplay": "DET 52, CHI 21",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772835"
+            },
+            {
+              "season": 2024,
+              "date": "2024-12-22",
+              "venue": "Away",
+              "scoreDisplay": "DET 34, CHI 17",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671868"
+            },
+            {
+              "season": 2024,
+              "date": "2024-11-28",
+              "venue": "Home",
+              "scoreDisplay": "DET 23, CHI 20",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671492"
+            },
+            {
+              "season": 2023,
+              "date": "2023-12-10",
+              "venue": "Away",
+              "scoreDisplay": "DET 13, CHI 28",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547586"
+            },
+            {
+              "season": 2023,
+              "date": "2023-11-19",
+              "venue": "Home",
+              "scoreDisplay": "DET 31, CHI 26",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547546"
+            },
+            {
+              "season": 2022,
+              "date": "2023-01-01",
+              "venue": "Home",
+              "scoreDisplay": "DET 41, CHI 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437935"
+            },
+            {
+              "season": 2022,
+              "date": "2022-11-13",
+              "venue": "Away",
+              "scoreDisplay": "DET 31, CHI 30",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437834"
+            }
+          ]
+        },
+        "ATL": {
+          "allTimeRecord": "Lions vs. Falcons",
+          "recentRecord": "3-5 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2023-09-24): DET won DET 20, ATL 6 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=atl&yr=all",
+          "recentGames": [
+            {
+              "season": 2023,
+              "date": "2023-09-24",
+              "venue": "Home",
+              "scoreDisplay": "DET 20, ATL 6",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547433"
+            },
+            {
+              "season": 2021,
+              "date": "2021-12-26",
+              "venue": "Away",
+              "scoreDisplay": "DET 16, ATL 20",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401326556"
+            },
+            {
+              "season": 2020,
+              "date": "2020-10-25",
+              "venue": "Away",
+              "scoreDisplay": "DET 23, ATL 22",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401220310"
+            },
+            {
+              "season": 2017,
+              "date": "2017-09-24",
+              "venue": "Home",
+              "scoreDisplay": "DET 26, ATL 30",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400951594"
+            },
+            {
+              "season": 2014,
+              "date": "2014-10-26",
+              "venue": "Neutral",
+              "scoreDisplay": "DET 22, ATL 21",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554224"
+            },
+            {
+              "season": 2012,
+              "date": "2012-12-22",
+              "venue": "Home",
+              "scoreDisplay": "DET 18, ATL 31",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/321222008"
+            },
+            {
+              "season": 2011,
+              "date": "2011-10-23",
+              "venue": "Home",
+              "scoreDisplay": "DET 16, ATL 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/311023008"
+            },
+            {
+              "season": 2008,
+              "date": "2008-09-07",
+              "venue": "Away",
+              "scoreDisplay": "DET 21, ATL 34",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/280907001"
+            }
+          ]
+        },
+        "TEN": {
+          "allTimeRecord": "Lions vs. Titans",
+          "recentRecord": "1-6 in last 7 meetings",
+          "lastMeetingNote": "Most recent meeting (2024-10-27): DET won DET 52, TEN 14 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=oti&yr=all",
+          "recentGames": [
+            {
+              "season": 2024,
+              "date": "2024-10-27",
+              "venue": "Home",
+              "scoreDisplay": "DET 52, TEN 14",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671720"
+            },
+            {
+              "season": 2020,
+              "date": "2020-12-20",
+              "venue": "Away",
+              "scoreDisplay": "DET 25, TEN 46",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401220208"
+            },
+            {
+              "season": 2016,
+              "date": "2016-09-18",
+              "venue": "Home",
+              "scoreDisplay": "DET 15, TEN 16",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400874488"
+            },
+            {
+              "season": 2012,
+              "date": "2012-09-23",
+              "venue": "Away",
+              "scoreDisplay": "DET 41, TEN 44",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/320923010"
+            },
+            {
+              "season": 2008,
+              "date": "2008-11-27",
+              "venue": "Home",
+              "scoreDisplay": "DET 10, TEN 47",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/281127008"
+            },
+            {
+              "season": 2004,
+              "date": "2005-01-02",
+              "venue": "Away",
+              "scoreDisplay": "DET 19, TEN 24",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/250102010"
+            },
+            {
+              "season": 2001,
+              "date": "2001-10-21",
+              "venue": "Home",
+              "scoreDisplay": "DET 24, TEN 27",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/211021008"
+            }
+          ]
+        },
+        "NYG": {
+          "allTimeRecord": "Lions vs. Giants",
+          "recentRecord": "5-3 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2025-11-23): DET won DET 34, NYG 27 in OT (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=det&tm2=nyg&yr=all",
+          "recentGames": [
+            {
+              "season": 2025,
+              "date": "2025-11-23",
+              "venue": "Home",
+              "scoreDisplay": "DET 34, NYG 27",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772888"
+            },
+            {
+              "season": 2022,
+              "date": "2022-11-20",
+              "venue": "Away",
+              "scoreDisplay": "DET 31, NYG 18",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437852"
+            },
+            {
+              "season": 2019,
+              "date": "2019-10-27",
+              "venue": "Home",
+              "scoreDisplay": "DET 31, NYG 26",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401128042"
+            },
+            {
+              "season": 2017,
+              "date": "2017-09-18",
+              "venue": "Away",
+              "scoreDisplay": "DET 24, NYG 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400951681"
+            },
+            {
+              "season": 2016,
+              "date": "2016-12-18",
+              "venue": "Away",
+              "scoreDisplay": "DET 6, NYG 17",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400874687"
+            },
+            {
+              "season": 2014,
+              "date": "2014-09-08",
+              "venue": "Home",
+              "scoreDisplay": "DET 35, NYG 14",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554296"
+            },
+            {
+              "season": 2013,
+              "date": "2013-12-22",
+              "venue": "Home",
+              "scoreDisplay": "DET 20, NYG 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/331222008"
+            },
+            {
+              "season": 2010,
+              "date": "2010-10-17",
+              "venue": "Away",
+              "scoreDisplay": "DET 20, NYG 28",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/301017019"
+            }
+          ]
+        }
+      }
     },
     "coachingMatchup": {
       "headline": "Dan Campbell & DC Kelvin Sheppard vs. HC Ben Johnson & DC Dennis Allen (Ford Field)",
