@@ -502,18 +502,45 @@ export function normalizeScheduleGameItem(rawGame = {}, seasonYear = 2026) {
   const rawSt = String(rawGame.seasonType || '').trim().toUpperCase();
   const rawWk = Number(rawGame.week ?? 0);
   const rawLabel = String(rawGame.weekLabel || '').trim();
+  const rawId = String(rawGame.id || '').trim();
+  const oppAbbrRawUpper = String(rawGame.opponent?.abbr || '').trim().toUpperCase();
+
+  // Detect regular-season bye weeks (Weeks 1..18) and self-heal any previously corrupted
+  // `bye_YYYY_wkN` or `Wk N` (1..18) bye entries that were mistakenly tagged as POST / WC_BYE.
+  const regByeIdMatch = rawId.match(/^bye_\d{4}_wk(\d{1,2})$/i);
+  const regByeLabelMatch = rawLabel.match(/^(?:WK|WEEK)\s*(\d{1,2})$/i);
+  const regByeMatchedWeek = regByeIdMatch
+    ? Number(regByeIdMatch[1])
+    : regByeLabelMatch
+      ? Number(regByeLabelMatch[1])
+      : rawWk >= 1 && rawWk <= 18
+        ? rawWk
+        : 0;
+  const isByeSignal = Boolean(rawGame.isByeWeek) || oppAbbrRawUpper === 'BYE';
+  const isRegularSeasonBye = Boolean(
+    isByeSignal &&
+      regByeMatchedWeek >= 1 &&
+      regByeMatchedWeek <= 18 &&
+      (rawSt === 'REG' ||
+        rawSt === 'REGULAR' ||
+        rawSt === '2' ||
+        Boolean(regByeIdMatch) ||
+        Boolean(regByeLabelMatch) ||
+        (!rawSt && !rawGame.postseasonRound))
+  );
 
   let seasonType = 'REG';
   if (rawSt === 'PRE' || rawSt === 'PRESEASON' || rawSt === '1' || rawWk < 0 || Number(rawGame.preseasonWeek) > 0 || /^PRE\b/i.test(rawLabel)) {
     seasonType = 'PRE';
   } else if (
-    rawSt === 'POST' ||
-    rawSt === 'POSTSEASON' ||
-    rawSt === '3' ||
-    rawWk >= 19 ||
-    Boolean(rawGame.postseasonRound) ||
-    Boolean(rawGame.isByeWeek) ||
-    /^(?:WC|DIV|CON|NFC CHAMP|SUPER BOWL|POST)\b/i.test(rawLabel)
+    !isRegularSeasonBye &&
+    (rawSt === 'POST' ||
+      rawSt === 'POSTSEASON' ||
+      rawSt === '3' ||
+      rawWk >= 19 ||
+      Boolean(rawGame.postseasonRound) ||
+      Boolean(rawGame.isByeWeek) ||
+      /^(?:WC|DIV|CON|NFC CHAMP|AFC CHAMP|SUPER BOWL|POST)\b/i.test(rawLabel))
   ) {
     seasonType = 'POST';
   }
@@ -541,8 +568,25 @@ export function normalizeScheduleGameItem(rawGame = {}, seasonYear = 2026) {
   }
 
   if (seasonType === 'POST') {
+    const activeTeam = getActiveTeamConfig();
+    const teamConf = activeTeam.conference || 'NFC';
+    const oppConf = teamConf === 'AFC' ? 'NFC' : 'AFC';
+    const localizeConf = s =>
+      teamConf === 'AFC'
+        ? String(s || '')
+            .replace(/\bAFC Champion\b/g, '__OPP_CHAMP__')
+            .replace(/\bNFC\b/g, 'AFC')
+            .replace(/__OPP_CHAMP__/g, `${oppConf} Champion`)
+        : String(s || '');
     const roundCode = inferPostseasonRoundCode(rawGame);
-    const meta = POSTSEASON_ROUND_META[roundCode] || POSTSEASON_ROUND_META.WC;
+    const baseMeta = POSTSEASON_ROUND_META[roundCode] || POSTSEASON_ROUND_META.WC;
+    const meta = {
+      ...baseMeta,
+      weekLabel: localizeConf(baseMeta.weekLabel),
+      roundBadgeLabel: localizeConf(baseMeta.roundBadgeLabel),
+      roundTitle: localizeConf(baseMeta.roundTitle),
+      defaultOpponentName: localizeConf(baseMeta.defaultOpponentName)
+    };
     const isBye = roundCode === 'WC_BYE' || Boolean(rawGame.isByeWeek);
     const oppRaw = rawGame.opponent || {};
     const oppAbbrRaw = String(oppRaw.abbr || '').trim().toUpperCase();
@@ -560,7 +604,7 @@ export function normalizeScheduleGameItem(rawGame = {}, seasonYear = 2026) {
           abbr: 'BYE',
           name: oppRaw.name || meta.defaultOpponentName,
           logoUrl: '',
-          record: oppRaw.record || '#1 NFC Seed',
+          record: oppRaw.record || `#1 ${teamConf} Seed`,
           isTbd: false
         }
       : {
@@ -585,17 +629,46 @@ export function normalizeScheduleGameItem(rawGame = {}, seasonYear = 2026) {
       roundTitle: rawGame.roundTitle || meta.roundTitle,
       completed: Boolean(rawGame.completed),
       opponent,
-      venue: rawGame.venue || (() => {
-        const t = getActiveTeamConfig();
-        return {
-          name: t.stadium || "Levi's Stadium",
-          city: t.city || 'Santa Clara',
-          state: '',
-          country: 'USA',
-          isInternational: false,
-          surface: 'Natural Grass'
-        };
-      })(),
+      venue: rawGame.venue || {
+        name: activeTeam.stadium || "Levi's Stadium",
+        city: activeTeam.city || 'Santa Clara',
+        state: '',
+        country: 'USA',
+        isInternational: false,
+        surface: 'Natural Grass'
+      },
+      seasonYear
+    };
+  }
+
+  if (isRegularSeasonBye) {
+    const cleanBye = { ...rawGame };
+    delete cleanBye.postseasonRound;
+    delete cleanBye.postseasonState;
+    delete cleanBye.roundBadgeLabel;
+    delete cleanBye.roundTitle;
+    delete cleanBye.qualificationNote;
+    const rawStatus = String(cleanBye.statusDetail || '').trim();
+    const isCorruptedStatus = /1st-round|first-round|#1\s+(?:nfc|afc)|homefield|clinched/i.test(rawStatus);
+    const oppRaw = cleanBye.opponent || {};
+    const oppNameRaw = String(oppRaw.name || '').trim();
+    const cleanOppName =
+      oppNameRaw && !/first-round|playoff|#1\s+(?:nfc|afc)/i.test(oppNameRaw) ? oppNameRaw : 'BYE WEEK';
+    return {
+      ...cleanBye,
+      seasonType: 'REG',
+      isByeWeek: true,
+      week: regByeMatchedWeek,
+      weekLabel: `WK ${regByeMatchedWeek}`,
+      statusDetail: !rawStatus || isCorruptedStatus ? 'Bye Week' : rawStatus,
+      completed: Boolean(rawGame.completed),
+      opponent: {
+        abbr: 'BYE',
+        name: cleanOppName,
+        logoUrl: '',
+        record: '',
+        isTbd: false
+      },
       seasonYear
     };
   }
@@ -677,8 +750,9 @@ export function resolveCompleteScheduleModel(appData = {}, mcSimResult = null) {
     .filter(g => g.seasonType === 'POST')
     .sort((a, b) => (a.week || 0) - (b.week || 0));
 
-  const allRegCompleted = regGames.length >= 15 && regGames.every(g => Boolean(g.completed));
-  const sfOdds = mcSimResult?.sfOdds || appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || null;
+  const playableRegGames = regGames.filter(g => !g.isByeWeek);
+  const allRegCompleted = playableRegGames.length >= 15 && playableRegGames.every(g => Boolean(g.completed));
+  const sfOdds = mcSimResult?.teamOdds || mcSimResult?.sfOdds || appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || null;
   const teamStatus = appData?.meta?.teamStatus || {};
   const nowMs = appData?.meta?.nowMs ? new Date(appData.meta.nowMs).getTime() : Date.now();
 
@@ -713,7 +787,7 @@ export function resolveCompleteScheduleModel(appData = {}, mcSimResult = null) {
         teamStatus.clinchedBye ||
         clinchCode === 'z' ||
         (seed1ByePct !== null && seed1ByePct >= 99.95) ||
-        postGames.some(g => g.postseasonRound === 'WC_BYE' || g.isByeWeek))
+        postGames.some(g => g.seasonType === 'POST' && (g.postseasonRound === 'WC_BYE' || g.isByeWeek)))
   );
 
   const hasClinchedDivision = Boolean(

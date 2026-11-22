@@ -222,6 +222,32 @@
       "broadcast": "NFL TV"
     },
     {
+      "id": "bye_2026_wk7",
+      "seasonType": "REG",
+      "week": 7,
+      "weekLabel": "WK 7",
+      "isByeWeek": true,
+      "completed": true,
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
+      "opponent": {
+        "abbr": "BYE",
+        "name": "BYE WEEK",
+        "logoUrl": "",
+        "record": "",
+        "isTbd": false
+      },
+      "venue": {
+        "name": "Bye Week",
+        "city": "",
+        "state": "",
+        "country": "USA",
+        "isInternational": false,
+        "surface": ""
+      },
+      "seasonYear": 2026,
+      "statusDetail": "Bye Week"
+    },
+    {
       "id": "401873026",
       "seasonType": "REG",
       "preseasonWeek": null,
@@ -605,34 +631,6 @@
         "surface": "Turf"
       },
       "broadcast": "NFL TV"
-    },
-    {
-      "id": "bye_2026_wk7",
-      "seasonType": "POST",
-      "week": 19,
-      "weekLabel": "Wk 7",
-      "isByeWeek": true,
-      "completed": true,
-      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
-      "opponent": {
-        "abbr": "BYE",
-        "name": "BYE WEEK",
-        "logoUrl": "",
-        "record": "#1 NFC Seed",
-        "isTbd": false
-      },
-      "venue": {
-        "name": "Bye Week",
-        "city": "",
-        "state": "",
-        "country": "USA",
-        "isInternational": false,
-        "surface": ""
-      },
-      "postseasonRound": "WC_BYE",
-      "roundBadgeLabel": "First-Round Bye",
-      "roundTitle": "NFC Wild Card Weekend — First-Round Bye",
-      "seasonYear": 2026
     }
   ],
   "lastCompletedGameRecap": null,

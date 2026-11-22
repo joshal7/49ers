@@ -876,6 +876,53 @@ await test('Multi-team Coaching Matchup, AI Matchup Intel prompt, Spread Calibra
     );
     assert.ok(!nonSfClean.includes('Raheem Morris') && !nonSfClean.includes('Brock Purdy'), `${slug} sanitizer must not inject SF names`);
 
+    // Regular-season Bye Week must remain seasonType REG (Weeks 5..14) and NEVER trigger premature playoff clinch / homefield advantage
+    const regByeItems = (appData.scheduleMatchup.schedule || []).filter(g => g.isByeWeek);
+    assert.equal(regByeItems.length, 1, `${slug} schedule must contain its single regular-season bye week`);
+    assert.equal(regByeItems[0].seasonType, 'REG', `${slug} regular-season bye week must be seasonType REG (never POST)`);
+    assert.ok(
+      Number(regByeItems[0].week) >= 5 && Number(regByeItems[0].week) <= 14,
+      `${slug} regular-season bye week must be in Weeks 5..14 (got ${regByeItems[0].week})`
+    );
+    assert.equal(regByeItems[0].postseasonRound, undefined, `${slug} regular-season bye must not have postseasonRound`);
+
+    const liveSchedModel = resolveCompleteScheduleModel(appData);
+    const liveMakePlayoffsPct = Number(appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds?.makePlayoffsPct ?? 0);
+    if (liveMakePlayoffsPct < 99.95 && !appData?.meta?.teamStatus?.clinchedPlayoffs) {
+      assert.equal(
+        liveSchedModel.postseasonStatus.hasClinchedSeed1Bye,
+        false,
+        `${slug} unclinched (${liveMakePlayoffsPct}% playoffs) must NOT report hasClinchedSeed1Bye=true`
+      );
+      assert.equal(
+        liveSchedModel.postseasonStatus.hasClinchedPlayoffs,
+        false,
+        `${slug} unclinched (${liveMakePlayoffsPct}% playoffs) must NOT report hasClinchedPlayoffs=true`
+      );
+      assert.equal(
+        liveSchedModel.postseasonGames.length,
+        0,
+        `${slug} unclinched (${liveMakePlayoffsPct}% playoffs) must NOT inject premature postseason games`
+      );
+      const liveSchedHtml = renderSeasonMatchupViewHtml({
+        appData,
+        seasonSub: 'schedule',
+        schedulePrevExpanded: true
+      });
+      assert.ok(
+        !liveSchedHtml.includes('Homefield Advantage Clinched'),
+        `${slug} unclinched schedule HTML must NOT display "Homefield Advantage Clinched"`
+      );
+      assert.ok(
+        !liveSchedHtml.includes('First-Round Bye'),
+        `${slug} unclinched schedule HTML must NOT display "First-Round Bye"`
+      );
+      assert.ok(
+        liveSchedHtml.includes('data-regular-bye="true"'),
+        `${slug} schedule HTML must render regular-season bye week cleanly`
+      );
+    }
+
     // Postseason schedule model for AFC Bills must use AFC + Highmark Stadium + NFC Champion (TBD)
     if (team.abbr === 'BUF') {
       const postModel = resolveCompleteScheduleModel(

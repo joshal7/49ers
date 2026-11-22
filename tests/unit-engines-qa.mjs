@@ -16477,6 +16477,102 @@ await testAsync(
   }
 );
 
+test('Regular-season bye weeks stay REG (never misclassified as POST #1 Seed First-Round Bye / Homefield Clinched) and self-heal stale corrupted bye JSON', () => {
+  const cleanRegBye = normalizeScheduleGameItem(
+    {
+      id: 'bye_2026_wk7',
+      seasonType: 'REG',
+      week: 7,
+      weekLabel: 'Wk 7',
+      isByeWeek: true,
+      completed: true,
+      opponent: { abbr: 'BYE', name: 'BYE WEEK', record: '', isTbd: false },
+      venue: { name: 'Bye Week', city: '', state: '', country: 'USA', isInternational: false, surface: '' }
+    },
+    2026
+  );
+  assert.equal(cleanRegBye.seasonType, 'REG');
+  assert.equal(cleanRegBye.week, 7);
+  assert.equal(cleanRegBye.isByeWeek, true);
+  assert.equal(cleanRegBye.postseasonRound, undefined);
+
+  const corruptedRegBye = {
+    id: 'bye_2026_wk7',
+    seasonType: 'POST',
+    week: 19,
+    weekLabel: 'Wk 7',
+    isByeWeek: true,
+    completed: true,
+    opponent: { abbr: 'BYE', name: 'BYE WEEK', logoUrl: '', record: '#1 NFC Seed', isTbd: false },
+    venue: { name: 'Bye Week', city: '', state: '', country: 'USA', isInternational: false, surface: '' },
+    postseasonRound: 'WC_BYE',
+    roundBadgeLabel: 'First-Round Bye',
+    roundTitle: 'NFC Wild Card Weekend — First-Round Bye',
+    seasonYear: 2026
+  };
+  const healedBye = normalizeScheduleGameItem(corruptedRegBye, 2026);
+  assert.equal(healedBye.seasonType, 'REG');
+  assert.equal(healedBye.week, 7);
+  assert.equal(healedBye.postseasonRound, undefined);
+  assert.equal(healedBye.roundBadgeLabel, undefined);
+  assert.equal(healedBye.opponent.record, '');
+
+  const unclinchedWithByeData = {
+    meta: { seasonYear: 2026, currentWeek: 12, teamRecord: '9-1', teamStatus: {} },
+    scheduleMatchup: {
+      schedule: [
+        { id: 'g1', seasonType: 'REG', week: 1, completed: true, result: 'W', sfScore: 28, oppScore: 14, opponent: { abbr: 'MIA', name: 'Miami Dolphins' } },
+        { id: 'g6', seasonType: 'REG', week: 6, completed: true, result: 'W', sfScore: 24, oppScore: 17, opponent: { abbr: 'NYJ', name: 'New York Jets' } },
+        corruptedRegBye,
+        { id: 'g8', seasonType: 'REG', week: 8, completed: true, result: 'W', sfScore: 36, oppScore: 10, opponent: { abbr: 'BAL', name: 'Baltimore Ravens' } },
+        { id: 'g12', seasonType: 'REG', week: 12, completed: false, statusDetail: '11/26 - 8:20 PM EST', opponent: { abbr: 'KC', name: 'Kansas City Chiefs' } }
+      ]
+    },
+    seasonal: {
+      playoffPicture: {
+        baselineSimulation: {
+          sfOdds: { makePlayoffsPct: 99.4, winDivisionPct: 97.0, seed1ByePct: 40.6 }
+        }
+      }
+    }
+  };
+  const resolvedUnclinched = resolveCompleteScheduleModel(unclinchedWithByeData);
+  assert.equal(resolvedUnclinched.postseasonGames.length, 0);
+  assert.equal(resolvedUnclinched.postseasonStatus.hasClinchedSeed1Bye, false);
+  assert.equal(resolvedUnclinched.postseasonStatus.hasClinchedPlayoffs, false);
+  assert.equal(resolvedUnclinched.postseasonStatus.state, 'UNCLINCHED_IN_HUNT');
+  assert.deepEqual(resolvedUnclinched.previousGames.map(g => g.week), [1, 6, 7, 8]);
+
+  const schedHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'schedule',
+    appData: unclinchedWithByeData,
+    userPrefs: {},
+    schedulePrevExpanded: true
+  });
+  assert.ok(schedHtml.includes('data-regular-bye="true"'));
+  assert.ok(schedHtml.includes('Regular-Season Bye Week'));
+  assert.ok(!schedHtml.includes('Homefield Advantage Clinched'));
+  assert.ok(!schedHtml.includes('First-Round Bye'));
+  assert.ok(!schedHtml.includes('Divisional Round'));
+  assert.ok(schedHtml.includes('99.4% Playoff Odds'));
+
+  const realPostBye = normalizeScheduleGameItem(
+    {
+      id: 'post_2026_wc_bye',
+      seasonType: 'POST',
+      postseasonRound: 'WC_BYE',
+      isByeWeek: true,
+      week: 19,
+      weekLabel: 'WC BYE'
+    },
+    2026
+  );
+  assert.equal(realPostBye.seasonType, 'POST');
+  assert.equal(realPostBye.postseasonRound, 'WC_BYE');
+  assert.equal(realPostBye.isByeWeek, true);
+  assert.equal(realPostBye.week, 19);
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

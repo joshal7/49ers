@@ -5044,7 +5044,7 @@ export async function hydrateLiveEspnOverlay(appData) {
 
     const allEvents = [...scheduleRaw.events];
     const allRegDone = appData.scheduleMatchup.schedule
-      .filter(g => (g.seasonType || 'REG') === 'REG')
+      .filter(g => (g.seasonType || 'REG') === 'REG' && !g.isByeWeek)
       .every(g => Boolean(g.completed));
     if (
       allRegDone &&
@@ -5185,7 +5185,7 @@ export async function hydrateLiveEspnOverlay(appData) {
     }
 
     const allRegCompletedAfterSync = appData.scheduleMatchup.schedule
-      .filter(g => (g.seasonType || 'REG') === 'REG')
+      .filter(g => (g.seasonType || 'REG') === 'REG' && !g.isByeWeek)
       .every(g => Boolean(g.completed));
     const schedModelAfterSync = allRegCompletedAfterSync ? resolveCompleteScheduleModel(appData) : null;
     const projectedNextPostGame = schedModelAfterSync

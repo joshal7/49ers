@@ -976,15 +976,26 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     }
   }
   if (byeWeek) {
+    const anyCompletedAfterBye = schedule.some(
+      g => g.seasonType === 'REG' && !g.isByeWeek && g.completed && Number(g.week) > byeWeek
+    );
+    const nextAfterBye = schedule.find(
+      g => g.seasonType === 'REG' && !g.isByeWeek && Number(g.week) > byeWeek && g.dateIso
+    );
+    const byeWindowElapsed =
+      nextAfterBye?.dateIso && Number.isFinite(Date.parse(nextAfterBye.dateIso))
+        ? Date.now() >= Date.parse(nextAfterBye.dateIso) - 5 * 86_400_000
+        : teamStanding.wins + teamStanding.losses + teamStanding.ties >= byeWeek;
     schedule.push(
       normalizeScheduleGameItem(
         {
           id: `bye_${seasonYear}_wk${byeWeek}`,
           seasonType: 'REG',
           week: byeWeek,
-          weekLabel: `Wk ${byeWeek}`,
+          weekLabel: `WK ${byeWeek}`,
           isByeWeek: true,
-          completed: teamStanding.wins + teamStanding.losses + teamStanding.ties >= byeWeek,
+          statusDetail: 'Bye Week',
+          completed: Boolean(anyCompletedAfterBye || byeWindowElapsed),
           sfLogoUrl: teamLogoUrl,
           opponent: { abbr: 'BYE', name: 'BYE WEEK', record: '', isTbd: false },
           venue: { name: 'Bye Week', city: '', state: '', country: 'USA', isInternational: false, surface: '' }

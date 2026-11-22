@@ -2232,7 +2232,38 @@ function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
       ? `<span class="badge ${isBye ? 'badge-positive' : 'badge-gold'} mono" style="font-size:9.5px;padding:1px 5px">${esc(g.roundBadgeLabel || 'Playoffs')}</span>`
       : '';
 
+  if (isBye && !isPost) {
+    const activeTeam = getActiveTeamConfig();
+    return `
+      <div data-schedule-game-row="${g.completed ? 'previous' : 'upcoming'}"
+           data-schedule-season-type="REG"
+           data-schedule-week="${esc(g.week)}"
+           data-regular-bye="true"
+           style="padding:10px 11px;border-radius:10px;background:var(--bg-card-alt);border:1px solid var(--border-subtle)">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px;min-width:0">
+            ${renderTeamLogoHtml(activeTeam.abbr, g.sfLogoUrl, 28)}
+            <div style="min-width:0;display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+              <span class="mono" style="color:var(--gold-bright);font-weight:800">${esc(weekTagText)}</span>
+              <span>•</span>
+              <strong>Bye Week</strong>
+            </div>
+          </div>
+          <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+            <span class="badge badge-neutral mono">BYE</span>
+          </div>
+        </div>
+        <div class="inline-icon-meta" style="margin-top:4px">
+          ${iconSvg('calendar', 13)}
+          <span>Regular-Season Bye Week • No Game Scheduled</span>
+        </div>
+      </div>
+    `;
+  }
+
   if (isBye) {
+    const activeTeam = getActiveTeamConfig();
+    const teamConf = activeTeam.conference || 'NFC';
     return `
       <div data-schedule-game-row="${g.completed ? 'previous' : 'upcoming'}"
            data-schedule-season-type="POST"
@@ -2242,12 +2273,12 @@ function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
            style="padding:10px 11px;border-radius:10px;background:var(--bg-card-alt);border:1px solid ${borderColor}">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
           <div style="display:flex;align-items:center;gap:8px;min-width:0">
-            ${renderTeamLogoHtml(getActiveTeamConfig().abbr, g.sfLogoUrl, 28)}
+            ${renderTeamLogoHtml(activeTeam.abbr, g.sfLogoUrl, 28)}
             <div style="min-width:0;display:flex;align-items:center;gap:5px;flex-wrap:wrap">
               <span class="mono" style="color:var(--gold-bright);font-weight:800">${esc(weekTagText)}</span>
               ${phasePillHtml}
               <span>•</span>
-              <strong>${esc(g.opponent?.name || 'First-Round Playoff Bye (#1 NFC Seed)')}</strong>
+              <strong>${esc(g.opponent?.name || `First-Round Playoff Bye (#1 ${teamConf} Seed)`)}</strong>
             </div>
           </div>
           <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
@@ -2256,7 +2287,7 @@ function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
         </div>
         <div class="inline-icon-meta" style="margin-top:4px">
           ${iconSvg('stadium', 13)}
-          <span>${esc(g.venue?.name || getActiveTeamConfig().stadium)} (${esc(g.venue?.city || getActiveTeamConfig().city)}) • Homefield Advantage Clinched</span>
+          <span>${esc(g.venue?.name || activeTeam.stadium)} (${esc(g.venue?.city || activeTeam.city)}) • Homefield Advantage Clinched</span>
         </div>
         ${
           g.qualificationNote
