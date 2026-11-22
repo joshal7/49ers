@@ -24,7 +24,13 @@ import {
   runPlayoffMonteCarlo
 } from '../src/engine/playoffMonteCarlo.js';
 import { resolveNewsBriefCycleState } from '../src/engine/breakingClassifier.js';
-import { buildXBeatListSearchUrl, configureBeatAttributionForTeam } from '../src/engine/beatAttributionEngine.js';
+import {
+  buildXBeatListSearchUrl,
+  configureBeatAttributionForTeam,
+  extractBeatAttributionFromText,
+  getReporterDirectoryEntry,
+  resolveReporterFromNameOrHandle
+} from '../src/engine/beatAttributionEngine.js';
 import { isPaywalledPublisher } from '../src/engine/linkIntegrity.js';
 import canaryWorker from '../worker/canary-worker.js';
 
@@ -376,6 +382,53 @@ for (const slug of CANARY_TEAM_SLUGS) {
     assert.ok(Array.isArray(podIdx.episodes), 'Missing podcasts/index.json episodes array');
   });
 }
+
+await test('All 32 teams configure official club video RSS as plural /rss/videos (never 404 /rss/video)', () => {
+  for (const team of ALL_NFL_TEAMS) {
+    assert.ok(Array.isArray(team.clubRssUrls) && team.clubRssUrls.length >= 2, `${team.abbr}: missing clubRssUrls`);
+    assert.ok(team.clubRssUrls[0].endsWith('/rss/news'), `${team.abbr}: unexpected news RSS ${team.clubRssUrls[0]}`);
+    assert.ok(
+      team.clubRssUrls[1].endsWith('/rss/videos'),
+      `${team.abbr}: video RSS must end with plural /rss/videos, got ${team.clubRssUrls[1]}`
+    );
+  }
+});
+
+await test('configureBeatAttributionForTeam preserves built-in SF reporter outletName, credibilityScore, aliases & non-podium @49ers handle', () => {
+  const sfReporters = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'reporters.json'), 'utf8'));
+  setActiveTeamConfig('SF');
+  configureBeatAttributionForTeam('SF', sfReporters, { hc: 'Kyle Shanahan', gm: 'John Lynch' });
+
+  const barrows = getReporterDirectoryEntry('matt_barrows');
+  assert.equal(barrows?.outletName, 'The Athletic', 'Matt Barrows outletName must not be wiped on SF configure');
+  assert.equal(barrows?.credibilityScore, 98, 'Matt Barrows credibilityScore must remain 98');
+
+  const maiocco = getReporterDirectoryEntry('matt_maiocco');
+  assert.equal(maiocco?.outletName, 'NBC Sports Bay Area');
+  assert.equal(maiocco?.credibilityScore, 98);
+
+  const florio = resolveReporterFromNameOrHandle('Mike Florio');
+  assert.equal(florio?.id, 'mike_florio', 'Built-in aliases (Mike Florio -> mike_florio) must survive configure');
+
+  const sfHandleOwner = resolveReporterFromNameOrHandle('@49ers');
+  assert.equal(sfHandleOwner?.id, '49ers_news', 'Podium subject Kyle Shanahan must not overwrite @49ers official handle');
+
+  // Verify wire attribution does NOT fall back to rewrite aggregator outletName (which would drop StoryRank!)
+  const attr = extractBeatAttributionFromText(
+    '49ers wide receiver Mike Evans questionable for SNF showdown vs. Vikings; per Matt Barrows',
+    { reporterName: '49ers Webzone', outletId: '49ers_webzone', outletName: '49ers Webzone' }
+  );
+  assert.equal(attr.reporterId, 'matt_barrows');
+  assert.equal(attr.outletName, 'The Athletic', 'Must retain The Athletic instead of falling back to 49ers Webzone');
+  assert.equal(attr.credibilityScore, 98);
+
+  // Also verify non-SF reporters (Lions) populate outletName & credibilityScore from reporters.json
+  const detReporters = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'teams', 'lions', 'reporters.json'), 'utf8'));
+  configureBeatAttributionForTeam('DET', detReporters, { hc: 'Dan Campbell', gm: 'Brad Holmes' });
+  const birkett = getReporterDirectoryEntry('dave_birkett');
+  assert.equal(birkett?.outletName, 'Detroit Free Press');
+  assert.ok(birkett?.credibilityScore >= 95, `Expected Dave Birkett credibilityScore >= 95, got ${birkett?.credibilityScore}`);
+});
 
 // Restore default SF active team singleton
 setActiveTeamConfig('SF');

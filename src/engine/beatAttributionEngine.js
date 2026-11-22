@@ -174,33 +174,88 @@ const AMBIGUOUS_SURNAMES = new Set([
 
 let ACTIVE_TEAM_CONTEXT = null;
 
-function registerReporterEntry(entry) {
+function registerReporterEntry(entry, outletNameById = null) {
   if (!entry || !entry.id || !entry.name) return;
-  const cleanHandle = entry.handle
-    ? entry.handle.startsWith('@')
-      ? entry.handle
-      : `@${entry.handle}`
+  const existing = BY_ID.get(entry.id) || null;
+  const rawHandle = entry.handle || existing?.handle || '';
+  const cleanHandle = rawHandle
+    ? rawHandle.startsWith('@')
+      ? rawHandle
+      : `@${rawHandle}`
     : null;
+  const trustTier = Number(entry.trustTier) || existing?.trustTier || 2;
+  const rawOutletName =
+    entry.outletName ||
+    existing?.outletName ||
+    (outletNameById && entry.outletId ? outletNameById.get(entry.outletId) : '') ||
+    '';
+  const resolvedOutletName = rawOutletName
+    ? String(rawOutletName).replace(/\s*\(Public Beat Wire\)\s*$/i, '').trim()
+    : undefined;
+  const resolvedCredibility =
+    Number(entry.credibilityScore) ||
+    existing?.credibilityScore ||
+    Number(entry.baseScore) ||
+    (trustTier === 1 ? 95 : trustTier === 2 ? 89 : 82);
+  const mergedAliases = [
+    ...new Set([...(existing?.aliases || []), ...(entry.aliases || [])].filter(Boolean))
+  ];
+  const mergedHandleAliases = [
+    ...new Set([...(existing?.handleAliases || []), ...(entry.handleAliases || [])].filter(Boolean))
+  ];
+  const isPodium = Boolean(
+    entry.isPodiumSubject || existing?.isPodiumSubject || PODIUM_SUBJECT_IDS.has(entry.id)
+  );
   const enriched = {
+    ...(existing || {}),
     ...entry,
     handle: cleanHandle,
-    trustTier: Number(entry.trustTier) || 2,
+    trustTier,
+    trustTierLabel: TRUST_TIER_LABELS[trustTier] || existing?.trustTierLabel || TRUST_TIER_LABELS[2],
+    outletName: resolvedOutletName,
+    credibilityScore: resolvedCredibility,
+    aliases: mergedAliases.length > 0 ? mergedAliases : undefined,
+    handleAliases: mergedHandleAliases.length > 0 ? mergedHandleAliases : undefined,
+    isPodiumSubject: isPodium || undefined,
     xUrl:
+      entry.xUrl ||
+      existing?.xUrl ||
+      (cleanHandle ? `https://x.com/${cleanHandle.replace(/^@/, '')}` : null),
+    profileUrl:
+      entry.profileUrl ||
+      existing?.profileUrl ||
       entry.xUrl ||
       (cleanHandle ? `https://x.com/${cleanHandle.replace(/^@/, '')}` : null)
   };
   BY_ID.set(enriched.id, enriched);
   BY_LOWER_NAME.set(enriched.name.toLowerCase(), enriched);
   if (enriched.handle) {
-    BY_LOWER_HANDLE.set(enriched.handle.replace(/^@/, '').toLowerCase(), enriched);
+    const handleKey = enriched.handle.replace(/^@/, '').toLowerCase();
+    const curHandleOwner = BY_LOWER_HANDLE.get(handleKey);
+    const curIsNonPodium =
+      curHandleOwner && !PODIUM_SUBJECT_IDS.has(curHandleOwner.id) && !curHandleOwner.isPodiumSubject;
+    if (!isPodium || !curIsNonPodium) {
+      BY_LOWER_HANDLE.set(handleKey, enriched);
+    }
   }
-  for (const al of enriched.aliases || []) {
+  for (const hal of mergedHandleAliases) {
+    const cleanAlias = String(hal || '').replace(/^@/, '').trim().toLowerCase();
+    if (cleanAlias && !BY_LOWER_HANDLE.has(cleanAlias)) {
+      BY_LOWER_HANDLE.set(cleanAlias, enriched);
+    }
+  }
+  for (const al of mergedAliases) {
     BY_LOWER_NAME.set(String(al).toLowerCase(), enriched);
+  }
+  const parts = enriched.name.trim().split(/\s+/);
+  const surname = (parts[parts.length - 1] || '').toLowerCase().replace(/[^a-z]/g, '');
+  if (surname && UNIQUE_SURNAME_MAP.get(surname)?.id === enriched.id) {
+    UNIQUE_SURNAME_MAP.set(surname, enriched);
   }
   if (enriched.bskyHandle && enriched.handle) {
     BSKY_ACTOR_TO_X_HANDLE[String(enriched.bskyHandle).toLowerCase()] = enriched.handle;
   }
-  if (enriched.isPodiumSubject) {
+  if (isPodium) {
     PODIUM_SUBJECT_IDS.add(enriched.id);
     NON_REPORTER_PREFIX_WORDS.add(enriched.name.toLowerCase());
     const last = enriched.name.trim().split(/\s+/).pop()?.toLowerCase();
@@ -224,9 +279,13 @@ export function configureBeatAttributionForTeam(teamInput = null, reportersData 
     }
   }
 
+  const outletNameById = new Map();
   for (const out of reportersData?.outlets || []) {
     if (out?.id && out?.url) {
       OUTLET_DEFAULT_HUB_URLS[out.id] = out.url;
+    }
+    if (out?.id && out?.name) {
+      outletNameById.set(out.id, out.name);
     }
   }
   OUTLET_DEFAULT_HUB_URLS.espn = `https://www.espn.com/nfl/team/_/name/${team.espnAbbr}/${team.otcSlug}`;
@@ -235,7 +294,7 @@ export function configureBeatAttributionForTeam(teamInput = null, reportersData 
 
   const reps = Array.isArray(reportersData?.reporters) ? reportersData.reporters : [];
   for (const r of reps) {
-    registerReporterEntry(r);
+    registerReporterEntry(r, outletNameById);
   }
   if (Array.isArray(reportersData?.podiumSubjectIds)) {
     for (const pid of reportersData.podiumSubjectIds) {

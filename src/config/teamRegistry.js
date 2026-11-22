@@ -212,7 +212,7 @@ function makeTeamEntry(raw) {
     clubNewsUrl: `https://www.${clubDomain}/news/`,
     clubRssUrls: raw.clubRssUrls || [
       `https://www.${clubDomain}/rss/news`,
-      `https://www.${clubDomain}/rss/video`
+      `https://www.${clubDomain}/rss/videos`
     ],
     priorityTier: isSf ? 'vip' : 'standard',
     isCanary: CANARY_TEAM_SLUGS.includes(slug),
