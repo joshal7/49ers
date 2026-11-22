@@ -122,7 +122,7 @@ async function main() {
   step(5, 'Verifying live HTTPS & GoDaddy CNAME status...');
   const pagesChk = await fetchStatusSafe(`https://${PAGES_TARGET_HOST}/`);
   console.log(
-    `  ${pagesChk.ok && pagesChk.text.includes('49ers Faithful') ? '✓ LIVE' : '… PENDING'}  https://${PAGES_TARGET_HOST}/ (HTTP ${pagesChk.status})`
+    `  ${pagesChk.ok && pagesChk.text.includes('NFL Team Hub') && pagesChk.text.includes('49ers Faithful') ? '✓ LIVE' : '… PENDING'}  https://${PAGES_TARGET_HOST}/ (HTTP ${pagesChk.status})`
   );
 
   const cnames = digCname(CUSTOM_DOMAIN);
@@ -130,7 +130,7 @@ async function main() {
   if (cnameReady) {
     const customChk = await fetchStatusSafe(`https://${CUSTOM_DOMAIN}/`);
     console.log(
-      `  ${customChk.ok && customChk.text.includes('49ers Faithful') ? '✓ LIVE' : '… SSL PROVISIONING'}  https://${CUSTOM_DOMAIN}/ (HTTP ${customChk.status})`
+      `  ${customChk.ok && customChk.text.includes('NFL Team Hub') && customChk.text.includes('49ers Faithful') ? '✓ LIVE' : '… SSL PROVISIONING'}  https://${CUSTOM_DOMAIN}/ (HTTP ${customChk.status})`
     );
   } else {
     console.log('\n========================================================================');

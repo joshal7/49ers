@@ -23,7 +23,34 @@ const CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
 
 export const PORTAL_CONFERENCES = ['NFC', 'AFC'];
 export const PORTAL_DIVISIONS = ['North', 'South', 'East', 'West'];
-const ASSET_VER = '2';
+const ASSET_VER = '3';
+
+const NFL_MONOGRAM_PATHS = {
+  N: 'M -124,-48 L -95,-48 L -68,7 L -68,-34 L -74,-34 L -74,-48 L -42,-48 L -42,-34 L -48,-34 L -48,48 L -71,48 L -98,-7 L -98,34 L -92,34 L -92,48 L -124,48 L -124,34 L -118,34 L -118,-34 L -124,-34 Z',
+  F: 'M -27,-48 L 37,-48 L 37,-18 L 22,-18 L 22,-30 L -1,-30 L -1,-9 L 13,-9 L 13,-14 L 26,-14 L 26,12 L 13,12 L 13,7 L -1,7 L -1,34 L 7,34 L 7,48 L -27,48 L -27,34 L -21,34 L -21,-34 L -27,-34 Z',
+  L: 'M 52,-48 L 84,-48 L 84,-34 L 78,-34 L 78,30 L 109,30 L 109,16 L 124,16 L 124,48 L 52,48 L 52,34 L 58,34 L 58,-34 L 52,-34 Z'
+};
+
+function buildStarPath(cx, cy, rOuter, rInner) {
+  const pts = [];
+  for (let i = 0; i < 10; i += 1) {
+    const angle = -Math.PI / 2 + (i * Math.PI) / 5;
+    const r = i % 2 === 0 ? rOuter : rInner;
+    pts.push(`${(cx + Math.cos(angle) * r).toFixed(2)},${(cy + Math.sin(angle) * r).toFixed(2)}`);
+  }
+  return `M ${pts[0]} L ${pts.slice(1).join(' L ')} Z`;
+}
+
+function buildFootballPath(cx, cy, rx, ry) {
+  const xL = (cx - rx).toFixed(2);
+  const xR = (cx + rx).toFixed(2);
+  const xC1 = (cx - rx * 0.56).toFixed(2);
+  const xC2 = (cx + rx * 0.56).toFixed(2);
+  const yTop = (cy - ry * 1.18).toFixed(2);
+  const yBot = (cy + ry * 1.18).toFixed(2);
+  const yMid = cy.toFixed(2);
+  return `M ${xL} ${yMid} C ${xC1} ${yTop}, ${xC2} ${yTop}, ${xR} ${yMid} C ${xC2} ${yBot}, ${xC1} ${yBot}, ${xL} ${yMid} Z`;
+}
 
 function escapeHtml(str = '') {
   return String(str)
@@ -48,72 +75,338 @@ export function getGroupedPortalTeams() {
   }));
 }
 
-function buildNflPortalIconSvg({ fullBleedSquare = false } = {}) {
+export function buildNflCrestSvg() {
+  const starCoords = [
+    [98, 92], [126, 76], [154, 65], [182, 59],
+    [278, 59], [306, 65], [334, 76], [362, 92]
+  ];
+  const starsMarkup = starCoords
+    .map(([x, y]) => `<path d="${buildStarPath(x, y, 11.2, 4.7)}" fill="#FFFFFF"/>`)
+    .join('\n      ');
+
+  const stripeFills = [
+    'url(#crestRed)', 'url(#crestWhite)', 'url(#crestRed)', 'url(#crestWhite)',
+    'url(#crestRed)', 'url(#crestWhite)', 'url(#crestRed)', 'url(#crestWhite)', 'url(#crestRed)'
+  ];
+  const stripes = stripeFills
+    .map((fill, i) => {
+      const x = (44 + i * 41.34).toFixed(2);
+      return `<rect x="${x}" y="102" width="42" height="150" fill="${fill}"/>`;
+    })
+    .join('\n      ');
+
+  const lettersPath = `${NFL_MONOGRAM_PATHS.N} ${NFL_MONOGRAM_PATHS.F} ${NFL_MONOGRAM_PATHS.L}`;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 272" width="460" height="272">
+  <defs>
+    <linearGradient id="crestSilver" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="48%" stop-color="#CBD5E1"/>
+      <stop offset="100%" stop-color="#7E8FA6"/>
+    </linearGradient>
+    <linearGradient id="crestNavy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0B46A0"/>
+      <stop offset="55%" stop-color="#013369"/>
+      <stop offset="100%" stop-color="#011E44"/>
+    </linearGradient>
+    <linearGradient id="crestRed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E11D2E"/>
+      <stop offset="55%" stop-color="#C8102E"/>
+      <stop offset="100%" stop-color="#8F0A1D"/>
+    </linearGradient>
+    <linearGradient id="crestWhite" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#DCE4F0"/>
+    </linearGradient>
+    <linearGradient id="crestHorizon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#94A3B8"/>
+      <stop offset="50%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#94A3B8"/>
+    </linearGradient>
+    <linearGradient id="crestEdgeShade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#020814" stop-opacity="0.28"/>
+      <stop offset="18%" stop-color="#020814" stop-opacity="0"/>
+      <stop offset="82%" stop-color="#020814" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#020814" stop-opacity="0.28"/>
+    </linearGradient>
+    <clipPath id="crestInnerClip">
+      <ellipse cx="230" cy="136" rx="184" ry="107"/>
+    </clipPath>
+  </defs>
+  <ellipse cx="230" cy="136" rx="228" ry="134" fill="#FFFFFF" stroke="#94A3B8" stroke-opacity="0.32" stroke-width="2"/>
+  <ellipse cx="230" cy="136" rx="219" ry="125" fill="#071122"/>
+  <ellipse cx="230" cy="136" rx="201" ry="117" fill="url(#crestSilver)"/>
+  <ellipse cx="230" cy="136" rx="187" ry="109" fill="#061022"/>
+  <g clip-path="url(#crestInnerClip)">
+    <g>
+      ${stripes}
+    </g>
+    <path d="M 40,115 Q 230,101 420,115 L 420,24 L 40,24 Z" fill="url(#crestNavy)"/>
+    <path d="M 40,118 Q 230,104 420,118" fill="none" stroke="#011532" stroke-width="6"/>
+    <path d="M 40,115 Q 230,101 420,115" fill="none" stroke="url(#crestHorizon)" stroke-width="4.5"/>
+    <g>
+      ${starsMarkup}
+    </g>
+    <path d="${buildFootballPath(230, 62, 27, 14.5)}" fill="#FFFFFF"/>
+    <line x1="215" y1="62" x2="245" y2="62" stroke="#012554" stroke-width="3.6" stroke-linecap="round"/>
+    <line x1="222" y1="56" x2="222" y2="68" stroke="#012554" stroke-width="3.2" stroke-linecap="round"/>
+    <line x1="230" y1="55.5" x2="230" y2="68.5" stroke="#012554" stroke-width="3.2" stroke-linecap="round"/>
+    <line x1="238" y1="56" x2="238" y2="68" stroke="#012554" stroke-width="3.2" stroke-linecap="round"/>
+    <rect x="44" y="26" width="372" height="220" fill="url(#crestEdgeShade)"/>
+    <g transform="translate(230, 158) scale(0.97, 0.91)">
+      <path d="${lettersPath}" transform="translate(4, 5)" fill="#01132E" stroke="#01132E" stroke-width="18" stroke-linejoin="round"/>
+      <path d="${lettersPath}" fill="#FFFFFF" stroke="#011D47" stroke-width="17" stroke-linejoin="round" paint-order="stroke fill"/>
+    </g>
+  </g>
+</svg>`;
+}
+
+export function buildNflPortalIconSvg({ fullBleedSquare = false } = {}) {
+  const starCoords = [
+    [144, 178], [168, 164], [193, 155], [218, 150],
+    [294, 150], [319, 155], [344, 164], [368, 178]
+  ];
+  const starsMarkup = starCoords
+    .map(([x, y]) => `<path d="${buildStarPath(x, y, 8.8, 3.7)}" fill="url(#starFace)" stroke="#011A40" stroke-width="1.2" paint-order="stroke fill"/>`)
+    .join('\n        ');
+
+  // 9 crisp vertical stripes inside the inner oval (x = 98..414, 316px -> 9 stripes of ~35.2px)
+  const stripeColors = [
+    'url(#ovalRed)', 'url(#ovalWhite)', 'url(#ovalRed)', 'url(#ovalWhite)',
+    'url(#ovalRed)', 'url(#ovalWhite)', 'url(#ovalRed)', 'url(#ovalWhite)', 'url(#ovalRed)'
+  ];
+  const stripesMarkup = stripeColors
+    .map((fill, i) => {
+      const x = (98 + i * 35.12).toFixed(2);
+      return `<rect x="${x}" y="192" width="35.6" height="122" fill="${fill}"/>`;
+    })
+    .join('\n        ');
+
+  const lettersPath = `${NFL_MONOGRAM_PATHS.N} ${NFL_MONOGRAM_PATHS.F} ${NFL_MONOGRAM_PATHS.L}`;
+  const ballPath = buildFootballPath(256, 152, 23.5, 13);
+
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0C1B3A"/>
-      <stop offset="50%" stop-color="#0B111E"/>
-      <stop offset="100%" stop-color="#2D0C14"/>
+    <!-- Deep Studio NFL Navy Base matching JOSHAL Icon Family -->
+    <linearGradient id="bgBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#113478"/>
+      <stop offset="46%" stop-color="#091D47"/>
+      <stop offset="84%" stop-color="#051029"/>
+      <stop offset="100%" stop-color="#030816"/>
     </linearGradient>
-    <radialGradient id="spot" cx="50%" cy="38%" r="58%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.16"/>
-      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    <radialGradient id="spotlight" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.34"/>
+      <stop offset="52%" stop-color="#1D4ED8" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#030816" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="shieldRim" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#F8FAFC"/>
-      <stop offset="50%" stop-color="#CBD5E1"/>
+    <radialGradient id="afcGlow" cx="84%" cy="80%" r="54%">
+      <stop offset="0%" stop-color="#DC2626" stop-opacity="0.28"/>
+      <stop offset="60%" stop-color="#991B1B" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#030816" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="72%">
+      <stop offset="56%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#02050C" stop-opacity="0.72"/>
+    </radialGradient>
+    <linearGradient id="glassSheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.16"/>
+      <stop offset="42%" stop-color="#FFFFFF" stop-opacity="0.025"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Multi-Stop Brushed Platinum Chrome Bezel -->
+    <linearGradient id="chromeBezel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="28%" stop-color="#E2E8F0"/>
+      <stop offset="55%" stop-color="#A8B5C7"/>
+      <stop offset="82%" stop-color="#64748B"/>
+      <stop offset="100%" stop-color="#94A3B8"/>
+    </linearGradient>
+    <linearGradient id="chromeInnerPin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.88"/>
+      <stop offset="50%" stop-color="#CBD5E1" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#F8FAFC" stop-opacity="0.65"/>
+    </linearGradient>
+
+    <!-- Oval Interior: Deep Starfield Canton + Dimensional Stripes -->
+    <radialGradient id="cantonNavy" cx="50%" cy="22%" r="68%">
+      <stop offset="0%" stop-color="#1759C4"/>
+      <stop offset="52%" stop-color="#013369"/>
+      <stop offset="100%" stop-color="#011B3D"/>
+    </radialGradient>
+    <linearGradient id="ovalRed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E5192D"/>
+      <stop offset="50%" stop-color="#C8102E"/>
+      <stop offset="100%" stop-color="#87081B"/>
+    </linearGradient>
+    <linearGradient id="ovalWhite" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="68%" stop-color="#EDF2F8"/>
+      <stop offset="100%" stop-color="#CBD5E1"/>
+    </linearGradient>
+    <linearGradient id="cylShade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#010918" stop-opacity="0.42"/>
+      <stop offset="18%" stop-color="#010918" stop-opacity="0.06"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.09"/>
+      <stop offset="82%" stop-color="#010918" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#010918" stop-opacity="0.42"/>
+    </linearGradient>
+    <linearGradient id="horizonBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#64748B"/>
+      <stop offset="24%" stop-color="#E2E8F0"/>
+      <stop offset="50%" stop-color="#FFFFFF"/>
+      <stop offset="76%" stop-color="#E2E8F0"/>
       <stop offset="100%" stop-color="#64748B"/>
     </linearGradient>
-    <linearGradient id="shieldLeft" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#1D5FD6"/>
-      <stop offset="100%" stop-color="#012456"/>
+    <linearGradient id="starFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#D7E2F0"/>
     </linearGradient>
-    <linearGradient id="shieldRight" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#E02424"/>
-      <stop offset="100%" stop-color="#7F0A14"/>
+    <linearGradient id="ballBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="65%" stop-color="#EEF3F9"/>
+      <stop offset="100%" stop-color="#B8C7DB"/>
     </linearGradient>
-    <linearGradient id="ruleL" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="letterFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="65%" stop-color="#F1F5FA"/>
+      <stop offset="100%" stop-color="#CBD7E8"/>
+    </linearGradient>
+    <linearGradient id="ovalEnamel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="46%" stop-color="#FFFFFF" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- JOSHAL Metallic Silver Flanking Rules -->
+    <linearGradient id="ruleLeft" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#94A3B8" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#E2E8F0" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E2E8F0" stop-opacity="0.92"/>
     </linearGradient>
-    <linearGradient id="ruleR" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#E2E8F0" stop-opacity="0.9"/>
+    <linearGradient id="ruleRight" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#E2E8F0" stop-opacity="0.92"/>
       <stop offset="100%" stop-color="#94A3B8" stop-opacity="0"/>
     </linearGradient>
-    <clipPath id="clipIcon">
+
+    <filter id="crestShadow" x="-18%" y="-18%" width="136%" height="145%">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#020408" flood-opacity="0.76"/>
+      <feDropShadow dx="0" dy="3" stdDeviation="3.5" flood-color="#000000" flood-opacity="0.52"/>
+    </filter>
+    <filter id="wordmarkShadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#020408" flood-opacity="0.72"/>
+    </filter>
+    <filter id="badgeLift" x="-12%" y="-12%" width="124%" height="132%">
+      <feDropShadow dx="0" dy="3.5" stdDeviation="3" flood-color="#010918" flood-opacity="0.65"/>
+    </filter>
+
+    <clipPath id="iconClip">
       <rect width="512" height="512" rx="${fullBleedSquare ? 0 : 112}"/>
     </clipPath>
-    <clipPath id="shieldInnerClip">
-      <path d="M256 76 C214 96 164 102 128 96 L128 214 C128 286 184 334 256 356 C328 334 384 286 384 214 L384 96 C348 102 298 96 256 76 Z"/>
+    <clipPath id="ovalInnerClip">
+      <ellipse cx="256" cy="212" rx="154" ry="93"/>
     </clipPath>
-    <filter id="drop" x="-18%" y="-18%" width="136%" height="145%">
-      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#020408" flood-opacity="0.72"/>
-    </filter>
+    <clipPath id="ballClip">
+      <path d="${ballPath}"/>
+    </clipPath>
   </defs>
-  <g clip-path="url(#clipIcon)">
-    <rect width="512" height="512" fill="url(#bg)"/>
-    <rect width="512" height="512" fill="url(#spot)"/>
-    <g filter="url(#drop)">
-      <path d="M256 62 C210 84 156 90 116 84 L116 216 C116 296 178 348 256 372 C334 348 396 296 396 216 L396 84 C356 90 302 84 256 62 Z" fill="url(#shieldRim)"/>
-      <g clip-path="url(#shieldInnerClip)">
-        <rect x="116" y="62" width="140" height="310" fill="url(#shieldLeft)"/>
-        <rect x="256" y="62" width="140" height="310" fill="url(#shieldRight)"/>
-        <rect x="116" y="62" width="280" height="106" fill="#0B1220" opacity="0.52"/>
-        <ellipse cx="256" cy="120" rx="34" ry="18" fill="#FFFFFF" opacity="0.95"/>
-        <line x1="234" y1="120" x2="278" y2="120" stroke="#0B1220" stroke-width="3.5" stroke-linecap="round"/>
-        <line x1="244" y1="113" x2="244" y2="127" stroke="#0B1220" stroke-width="3" stroke-linecap="round"/>
-        <line x1="256" y1="113" x2="256" y2="127" stroke="#0B1220" stroke-width="3" stroke-linecap="round"/>
-        <line x1="268" y1="113" x2="268" y2="127" stroke="#0B1220" stroke-width="3" stroke-linecap="round"/>
-      </g>
-      <text x="256" y="274" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Arial Black', sans-serif" font-weight="900" font-size="100" letter-spacing="4" fill="#FFFFFF" stroke="#070B14" stroke-width="6" paint-order="stroke fill">NFL</text>
+
+  <g clip-path="url(#iconClip)">
+    <!-- 1. Studio Background Layers (exact JOSHAL flagship family formula) -->
+    <rect width="512" height="512" fill="url(#bgBase)"/>
+    <rect width="512" height="512" fill="url(#spotlight)"/>
+    <rect width="512" height="512" fill="url(#afcGlow)"/>
+    <g stroke="#FFFFFF" stroke-opacity="0.032" stroke-width="1.5">
+      <line x1="-60" y1="130" x2="210" y2="-40"/>
+      <line x1="-60" y1="215" x2="345" y2="-40"/>
+      <line x1="-60" y1="300" x2="480" y2="-40"/>
+      <line x1="-40" y1="385" x2="572" y2="0"/>
+      <line x1="50" y1="540" x2="572" y2="210"/>
+      <line x1="185" y1="545" x2="572" y2="300"/>
+      <line x1="320" y1="550" x2="572" y2="390"/>
     </g>
-    <rect x="64" y="421.5" width="58" height="2" rx="1" fill="url(#ruleL)"/>
-    <rect x="390" y="421.5" width="58" height="2" rx="1" fill="url(#ruleR)"/>
-    <circle cx="129" cy="422.5" r="2.2" fill="#E2E8F0"/>
-    <circle cx="383" cy="422.5" r="2.2" fill="#E2E8F0"/>
-    <g transform="translate(256, 435) scale(1.12, 1)">
-      <text x="0" y="0" text-anchor="middle" font-family="Georgia, 'Charter', serif" font-weight="900" font-size="36" letter-spacing="5" fill="#FFFFFF" stroke="#000000" stroke-width="2.5" paint-order="stroke fill">JOSHAL</text>
+    <ellipse cx="256" cy="-28" rx="340" ry="175" fill="url(#glassSheen)"/>
+    <rect width="512" height="512" fill="url(#vignette)"/>
+
+    <!-- 2. Detailed Multi-Bezel NFL Oval Crest Medallion -->
+    <g filter="url(#crestShadow)">
+      <ellipse cx="256" cy="212" rx="188" ry="116" fill="#FFFFFF" opacity="0.97"/>
+      <ellipse cx="256" cy="212" rx="180" ry="109" fill="#060B16"/>
+      <ellipse cx="256" cy="212" rx="168" ry="102" fill="url(#chromeBezel)"/>
+      <ellipse cx="256" cy="212" rx="166" ry="100.5" fill="none" stroke="url(#chromeInnerPin)" stroke-width="1.6"/>
+      <ellipse cx="256" cy="212" rx="157" ry="95" fill="#040B18"/>
+
+      <g clip-path="url(#ovalInnerClip)">
+        <!-- Lower Dimensional Red & White Stripes -->
+        <g>
+          ${stripesMarkup}
+        </g>
+
+        <!-- Upper Deep Navy Starfield Canton with Subtle Stadium Rays -->
+        <path d="M 96,196 Q 256,182 416,196 L 416,114 L 96,114 Z" fill="url(#cantonNavy)"/>
+        <g stroke="#93C5FD" stroke-opacity="0.14" stroke-width="1.2">
+          <line x1="256" y1="152" x2="140" y2="112"/>
+          <line x1="256" y1="152" x2="196" y2="110"/>
+          <line x1="256" y1="152" x2="256" y2="108"/>
+          <line x1="256" y1="152" x2="316" y2="110"/>
+          <line x1="256" y1="152" x2="372" y2="112"/>
+          <line x1="256" y1="152" x2="116" y2="162"/>
+          <line x1="256" y1="152" x2="396" y2="162"/>
+        </g>
+        <ellipse cx="256" cy="148" rx="92" ry="32" fill="#3B82F6" opacity="0.2"/>
+
+        <!-- Curved Brushed-Silver Horizon Divider -->
+        <path d="M 96,199 Q 256,185 416,199" fill="none" stroke="#01122C" stroke-width="5.5"/>
+        <path d="M 96,196 Q 256,182 416,196" fill="none" stroke="url(#horizonBar)" stroke-width="3.6"/>
+        <path d="M 96,194.6 Q 256,180.6 416,194.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="0.9"/>
+
+        <!-- 8 Sculpted Conference Division Stars (4 NFC left, 4 AFC right) -->
+        <g filter="url(#badgeLift)">
+          ${starsMarkup}
+        </g>
+
+        <!-- Detailed 3D Stitched Football -->
+        <g filter="url(#badgeLift)">
+          <path d="${ballPath}" fill="url(#ballBody)" stroke="#011B40" stroke-width="1.4"/>
+          <g clip-path="url(#ballClip)">
+            <rect x="237" y="136" width="4.2" height="32" fill="#013369" opacity="0.86"/>
+            <rect x="270.8" y="136" width="4.2" height="32" fill="#C8102E" opacity="0.88"/>
+            <ellipse cx="256" cy="144.5" rx="18" ry="5" fill="#FFFFFF" opacity="0.62"/>
+            <ellipse cx="256" cy="161" rx="22" ry="5" fill="#64748B" opacity="0.28"/>
+          </g>
+          <line x1="244.5" y1="152" x2="267.5" y2="152" stroke="#011E47" stroke-width="2.6" stroke-linecap="round"/>
+          <line x1="248" y1="147.2" x2="248" y2="156.8" stroke="#011E47" stroke-width="2.1" stroke-linecap="round"/>
+          <line x1="253.3" y1="146.5" x2="253.3" y2="157.5" stroke="#011E47" stroke-width="2.1" stroke-linecap="round"/>
+          <line x1="258.7" y1="146.5" x2="258.7" y2="157.5" stroke="#011E47" stroke-width="2.1" stroke-linecap="round"/>
+          <line x1="264" y1="147.2" x2="264" y2="156.8" stroke="#011E47" stroke-width="2.1" stroke-linecap="round"/>
+        </g>
+
+        <!-- Cylindrical 3D Depth Shading Across Oval -->
+        <rect x="98" y="116" width="316" height="194" fill="url(#cylShade)"/>
+
+        <!-- 3D-Extruded Athletic Slab-Serif NFL Monogram -->
+        <g transform="translate(256, 232) scale(0.82, 0.77)" filter="url(#badgeLift)">
+          <path d="${lettersPath}" transform="translate(5.4, 6.4)" fill="#010E22" stroke="#010E22" stroke-width="18.5" stroke-linejoin="round"/>
+          <path d="${lettersPath}" transform="translate(2.7, 3.2)" fill="#01183B" stroke="#01183B" stroke-width="18" stroke-linejoin="round"/>
+          <path d="${lettersPath}" fill="url(#letterFace)" stroke="#011D47" stroke-width="16.5" stroke-linejoin="round" paint-order="stroke fill"/>
+          <path d="${lettersPath}" fill="none" stroke="#FFFFFF" stroke-opacity="0.65" stroke-width="1.8"/>
+        </g>
+
+        <!-- Subtle Enamel Top Glass Gloss -->
+        <ellipse cx="256" cy="146" rx="154" ry="62" fill="url(#ovalEnamel)"/>
+      </g>
+    </g>
+
+    <!-- 3. Standard JOSHAL Studio Wordmark Footer (exact match to all 32 team icons) -->
+    <g filter="url(#wordmarkShadow)">
+      <rect x="62" y="388.5" width="58" height="2" rx="1" fill="url(#ruleLeft)"/>
+      <rect x="392" y="388.5" width="58" height="2" rx="1" fill="url(#ruleRight)"/>
+      <circle cx="127" cy="389.5" r="2.2" fill="#E2E8F0" opacity="0.92"/>
+      <circle cx="385" cy="389.5" r="2.2" fill="#E2E8F0" opacity="0.92"/>
+      <g transform="translate(256.5, 402) scale(1.15, 1)">
+        <text x="3.2" y="3.5" text-anchor="middle" font-family="Georgia, 'Charter', 'Times New Roman', serif" font-weight="900" font-size="37" letter-spacing="5" fill="#000000" stroke="#000000" stroke-width="3.2" stroke-linejoin="miter">JOSHAL</text>
+        <text x="1.6" y="1.8" text-anchor="middle" font-family="Georgia, 'Charter', 'Times New Roman', serif" font-weight="900" font-size="37" letter-spacing="5" fill="#000000" stroke="#000000" stroke-width="3.2" stroke-linejoin="miter">JOSHAL</text>
+        <text x="0" y="0" text-anchor="middle" font-family="Georgia, 'Charter', 'Times New Roman', serif" font-weight="900" font-size="37" letter-spacing="5" fill="#FFFFFF" stroke="#000000" stroke-width="2.8" stroke-linejoin="miter" paint-order="stroke fill">JOSHAL</text>
+      </g>
     </g>
   </g>
 </svg>`;
@@ -211,7 +504,7 @@ function renderConferenceColumn({ conference, divisions }) {
     .map(
       ({ name, teams }) => `<div class="division" data-division="${escapeHtml(`${conference} ${name}`)}">
               <div class="div-header">
-                <h2 class="div-title">${escapeHtml(name)}</h2>
+                <h3 class="div-title">${escapeHtml(name)}</h3>
                 <span class="div-rule" aria-hidden="true"></span>
               </div>
               <div class="team-grid">
@@ -224,7 +517,7 @@ function renderConferenceColumn({ conference, divisions }) {
   return `<section class="conference conference--${confSlug}" data-conference="${conference}" aria-label="${conference} Conference">
           <div class="conf-header">
             <span class="conf-dot" aria-hidden="true"></span>
-            <h1 class="conf-title">${conference}</h1>
+            <h2 class="conf-title">${conference}</h2>
           </div>
           <div class="divisions">
             ${divsHtml}
@@ -244,8 +537,8 @@ function buildIndexHtml(grouped) {
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="NFL">
-  <meta name="description" content="NFL team hubs across all 32 NFC and AFC franchises at nfl.joshal.com.">
-  <title>NFL — joshal.com</title>
+  <meta name="description" content="NFL Team Hub — All 32 NFC and AFC franchise hubs.">
+  <title>NFL Team Hub</title>
   <link rel="icon" type="image/svg+xml" href="./nfl-icon.svg?v=${ASSET_VER}">
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=${ASSET_VER}">
   <link rel="manifest" href="./manifest.json?v=${ASSET_VER}">
@@ -351,7 +644,7 @@ function buildIndexHtml(grouped) {
       }
     }
 
-    /* Top bar: ultra-minimal, crisp identity + subtle theme switch */
+    /* Top bar: crisp per-team-consistent oval crest + title + subtle theme switch */
     .topbar {
       display: flex;
       align-items: center;
@@ -364,35 +657,33 @@ function buildIndexHtml(grouped) {
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       text-decoration: none;
       color: var(--text);
+      min-width: 0;
     }
 
-    .brand-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2px 6px;
-      border-radius: 6px;
-      font-size: 10.5px;
+    .brand-crest {
+      display: block;
+      width: 34px;
+      height: 20px;
+      flex: 0 0 auto;
+      object-fit: contain;
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.42));
+    }
+
+    [data-theme="light"] .brand-crest {
+      filter: drop-shadow(0 1px 2.5px rgba(15, 23, 42, 0.24));
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 15px;
       font-weight: 800;
-      letter-spacing: 0.08em;
-      color: #FFFFFF;
-      background: linear-gradient(135deg, #1D4ED8 0%, #0F172A 50%, #DC2626 100%);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    }
-
-    .brand-domain {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: -0.015em;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
       color: var(--text);
-    }
-
-    .brand-domain span {
-      color: var(--text-muted);
-      font-weight: 500;
+      white-space: nowrap;
     }
 
     .theme-btn {
@@ -678,12 +969,15 @@ function buildIndexHtml(grouped) {
       .topbar {
         min-height: 34px;
       }
-      .brand-badge {
-        font-size: 12px;
-        padding: 3px 8px;
+      .brand {
+        gap: 10px;
       }
-      .brand-domain {
-        font-size: 15px;
+      .brand-crest {
+        width: 42px;
+        height: 25px;
+      }
+      .brand-title {
+        font-size: 17px;
       }
       .theme-btn {
         width: 32px;
@@ -737,9 +1031,9 @@ function buildIndexHtml(grouped) {
 <body>
   <div class="shell">
     <header class="topbar">
-      <div class="brand" aria-label="nfl.joshal.com">
-        <span class="brand-badge">NFL</span>
-        <span class="brand-domain">nfl<span>.joshal.com</span></span>
+      <div class="brand" aria-label="NFL Team Hub">
+        <img class="brand-crest" src="./nfl-crest.svg?v=${ASSET_VER}" alt="" width="34" height="20" decoding="async" fetchpriority="high">
+        <h1 class="brand-title">NFL Team Hub</h1>
       </div>
       <button type="button" class="theme-btn" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme">
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -783,16 +1077,18 @@ export function buildNflPortalDist() {
   // 1. Copy all 32 180x180 JOSHAL team icons
   copyTeamIcons(path.join(DIST, 'icons'));
 
-  // 2. Write portal favicon + iOS apple-touch-icon + manifest
+  // 2. Write portal oval crest + favicon + iOS apple-touch-icon + manifest
+  const crestSvg = buildNflCrestSvg();
   const roundedSvg = buildNflPortalIconSvg({ fullBleedSquare: false });
   const squareSvg = buildNflPortalIconSvg({ fullBleedSquare: true });
+  fs.writeFileSync(path.join(DIST, 'nfl-crest.svg'), crestSvg, 'utf8');
   fs.writeFileSync(path.join(DIST, 'nfl-icon.svg'), roundedSvg, 'utf8');
   rasterizePortalIconPng(squareSvg, path.join(DIST, 'apple-touch-icon.png'));
 
   const manifest = {
-    name: 'NFL — joshal.com',
+    name: 'NFL Team Hub',
     short_name: 'NFL',
-    description: 'All 32 NFC and AFC team hubs at nfl.joshal.com',
+    description: 'All 32 NFC and AFC franchise hubs',
     start_url: '/',
     display: 'standalone',
     background_color: '#080B10',

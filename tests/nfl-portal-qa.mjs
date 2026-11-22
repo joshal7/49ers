@@ -154,10 +154,23 @@ async function main() {
   const distDir = built.distDir;
   const html = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
 
-  await test('Static build produces index.html, manifest, favicon, apple-touch-icon, _headers & 32 team icons', () => {
-    for (const rel of ['index.html', 'manifest.json', 'nfl-icon.svg', 'apple-touch-icon.png', '_headers']) {
+  await test('Static build produces index.html, manifest, oval crest, flagship app icon, apple-touch-icon, _headers & 32 team icons', () => {
+    for (const rel of ['index.html', 'manifest.json', 'nfl-crest.svg', 'nfl-icon.svg', 'apple-touch-icon.png', '_headers']) {
       assert.ok(fs.existsSync(path.join(distDir, rel)), `Missing ${rel}`);
     }
+    const crestSvg = fs.readFileSync(path.join(distDir, 'nfl-crest.svg'), 'utf8');
+    assert.ok(crestSvg.includes('<ellipse'), 'nfl-crest.svg must use oval medallion geometry');
+    assert.ok(crestSvg.includes('viewBox="0 0 460 272"'), 'nfl-crest.svg must match per-team 460x272 oval crest ratio');
+
+    const appIconSvg = fs.readFileSync(path.join(distDir, 'nfl-icon.svg'), 'utf8');
+    assert.ok(appIconSvg.includes('<ellipse cx="256" cy="212"'), 'nfl-icon.svg must match standard JOSHAL oval medallion geometry');
+    assert.ok(appIconSvg.includes('JOSHAL'), 'nfl-icon.svg must include JOSHAL studio wordmark');
+
+    const touchPng = fs.readFileSync(path.join(distDir, 'apple-touch-icon.png'));
+    assert.ok(touchPng.length > 10000, `apple-touch-icon.png too small: ${touchPng.length}B`);
+    assert.equal(touchPng[0], 0x89, 'Invalid PNG header for apple-touch-icon.png');
+    assert.equal(touchPng[1], 0x50);
+
     for (const team of ALL_NFL_TEAMS) {
       const p = path.join(distDir, 'icons', `${team.slug}.png`);
       assert.ok(fs.existsSync(p), `Missing icon for ${team.slug}`);
@@ -185,8 +198,12 @@ async function main() {
     assert.equal(total, 32);
   });
 
-  await test('HTML contains all 32 team links (https://<slug>.joshal.com), accessible labels, zero visible team names & zero disallowed phrasing', () => {
+  await test('HTML contains NFL Team Hub header (zero nfl.joshal.com in topbar), all 32 team links, accessible labels, zero visible team names & zero disallowed phrasing', () => {
     assert.ok(!html.includes('class="team-name"'), 'Visible .team-name labels must be removed');
+    assert.ok(!html.includes('class="brand-badge"'), 'Legacy rectangular .brand-badge must be replaced by oval crest');
+    assert.ok(!html.includes('class="brand-domain"'), 'Redundant domain text must be removed from topbar');
+    assert.ok(html.includes('<h1 class="brand-title">NFL Team Hub</h1>'), 'Expected "NFL Team Hub" heading in topbar');
+    assert.ok(html.includes('src="./nfl-crest.svg?v='), 'Expected oval nfl-crest.svg in topbar');
     for (const team of ALL_NFL_TEAMS) {
       assert.ok(html.includes(`href="https://${team.slug}.joshal.com"`), `Missing link for ${team.slug}`);
       assert.ok(html.includes(`alt="${team.brandName}"`), `Missing accessible alt for ${team.brandName}`);
@@ -272,6 +289,10 @@ async function main() {
               }
             }
           }
+          const topbarText = (document.querySelector('.topbar')?.textContent || '').trim();
+          const crestEl = document.querySelector('.brand-crest');
+          const crestRect = crestEl ? crestEl.getBoundingClientRect() : null;
+          const crestLoaded = Boolean(crestEl && crestEl.complete && crestEl.naturalWidth > 0);
           const divOrder = {};
           for (const c of ['NFC', 'AFC']) {
             divOrder[c] = Array.from(document.querySelectorAll('[data-conference="' + c + '"] .div-title')).map(el => el.textContent.trim());
@@ -283,6 +304,10 @@ async function main() {
             scrollHeight: doc.scrollHeight,
             nfcRight: nfcRect.right,
             afcLeft: afcRect.left,
+            topbarText,
+            crestLoaded,
+            crestWidth: crestRect ? Math.round(crestRect.width) : 0,
+            crestHeight: crestRect ? Math.round(crestRect.height) : 0,
             tileCount: tiles.length,
             imgCount: imgs.length,
             textCount,
@@ -294,6 +319,10 @@ async function main() {
           };
         })()`);
 
+        assert.equal(metrics.topbarText, 'NFL Team Hub', `Unexpected topbar text: "${metrics.topbarText}"`);
+        assert.ok(!/joshal\.com/i.test(metrics.topbarText), `Topbar must not display redundant domain: "${metrics.topbarText}"`);
+        assert.ok(metrics.crestLoaded, 'Oval .brand-crest SVG failed to load');
+        assert.ok(metrics.crestWidth > metrics.crestHeight && metrics.crestWidth >= 32, `Crest should be crisp horizontal oval (${metrics.crestWidth}x${metrics.crestHeight})`);
         assert.equal(metrics.tileCount, 32, 'Expected 32 team tiles');
         assert.equal(metrics.imgCount, 32, 'Expected 32 team logos');
         assert.equal(metrics.textCount, 0, 'Expected zero visible team name elements');
