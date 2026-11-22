@@ -630,6 +630,8 @@ function captureDeltaSnapshotsOnBoot(appData) {
  */
 function syncHealthDeltaSnapshots(appData) {
   if (!appData || appData._awaitingInitialLiveWireSync) return;
+  // Do not overwrite weekly mid-week practice trajectory snapshots with resolved game-day 0%/99% states
+  if (appData?.health?.gameDayRoster?.isActive) return;
   const rows = appData?.health?.practiceReport || [];
   const { oppAbbr, oppRows, oppHealthKey } = getCurrentOppHealthContext(appData);
   if (rows.length === 0 && oppRows.length === 0) return;
@@ -3387,6 +3389,7 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
     manual
   });
   const addedTweets = Number(wireResult?.totalAdded || 0);
+  const gameDayChanged = Boolean(wireResult?.gameDayChanged);
   state.lastWireSourceCounts = wireResult?.bySource || null;
 
   state.lastWireSyncAt = new Date().toISOString();
@@ -3398,7 +3401,7 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
 
   const briefChanged = hydrateCachedDailyTopNewsBrief(state.appData);
 
-  if (addedTweets > 0 || espnChanged || briefChanged) {
+  if (addedTweets > 0 || espnChanged || briefChanged || gameDayChanged) {
     cachedMonteCarloKey = '';
     cachedMonteCarloResult = null;
   }
@@ -3409,7 +3412,7 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
   const hasPlayingIframe = hasActivelyPlayingInlineMedia();
 
   if (
-    (manual || addedTweets > 0 || espnChanged || briefChanged) &&
+    (manual || addedTweets > 0 || espnChanged || briefChanged || gameDayChanged) &&
     !isTyping &&
     !hasPlayingIframe &&
     !state.jobStatus?.active
@@ -3553,6 +3556,7 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
       workerBaseUrl: state.prefs?.workerBaseUrl || ''
     });
     const addedLivePosts = Number(wireResult?.totalAdded || 0);
+    const gameDayChanged = Boolean(wireResult?.gameDayChanged);
     state.lastWireSourceCounts = wireResult?.bySource || null;
     state.lastWireSyncAt = new Date().toISOString();
     lastWirePollMs = Date.now();
@@ -3561,7 +3565,7 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
 
     const briefHydratedChanged = hydrateCachedDailyTopNewsBrief(state.appData);
 
-    if (addedLivePosts > 0 || espnMutated || podsMutated || briefHydratedChanged) {
+    if (addedLivePosts > 0 || espnMutated || podsMutated || briefHydratedChanged || gameDayChanged) {
       cachedMonteCarloKey = '';
       cachedMonteCarloResult = null;
       hasNewUpstreamData = true;

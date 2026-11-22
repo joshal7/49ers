@@ -947,12 +947,24 @@ export function evaluateWeeklyIrActivationWindow({
           return Number.isFinite(gMs) && Math.abs(gMs - koMs) < 18 * 3_600_000;
         }) || null
       : null;
-  const koGameAlreadyCompleted = Boolean(matchedKoGame?.completed);
+  const koGameStatusStr = String(matchedKoGame?.statusDetail || '');
+  const koGameStateLower = String(matchedKoGame?.statusState || '').toLowerCase();
+  const koGameAlreadyCompleted = Boolean(
+    matchedKoGame?.completed || koGameStateLower === 'post' || /\bfinal\b/i.test(koGameStatusStr)
+  );
+  const koGameIsLiveOrDelayed =
+    !koGameAlreadyCompleted &&
+    (koGameStateLower === 'in' ||
+      Boolean(matchedKoGame?.isLive) ||
+      /\b(1st|2nd|3rd|4th|q[1-4]|halftime|in progress|ot|overtime|delayed|weather delay|lightning delay|suspended)\b/i.test(
+        koGameStatusStr
+      ));
+  const effectiveMaxPostKickoffMs = koGameIsLiveOrDelayed ? 10 * 3_600_000 : maxPostKickoffGameMs;
 
-  // If the supplied `kickoffIso` has already concluded (`completed === true` at 0m post-whistle or >5.25h post-kickoff),
-  // immediately advance to the next unplayed non-bye game in `schedule` when available (or clear the finished game's lock).
+  // If the supplied `kickoffIso` has already concluded (`completed === true` at 0m post-whistle or >5.25h post-kickoff
+  // when NOT explicitly live/OT/delayed), immediately advance to the next unplayed non-bye game in `schedule`.
   if (
-    (!Number.isFinite(koMs) || koGameAlreadyCompleted || ts > koMs + maxPostKickoffGameMs) &&
+    (!Number.isFinite(koMs) || koGameAlreadyCompleted || ts > koMs + effectiveMaxPostKickoffMs) &&
     Array.isArray(schedule) &&
     schedule.length > 0
   ) {
@@ -963,7 +975,7 @@ export function evaluateWeeklyIrActivationWindow({
       .sort((a, b) => a.ms - b.ms)[0];
     if (nextGame) {
       koMs = nextGame.ms;
-    } else if (koGameAlreadyCompleted || (Number.isFinite(koMs) && ts > koMs + maxPostKickoffGameMs)) {
+    } else if (koGameAlreadyCompleted || (Number.isFinite(koMs) && ts > koMs + effectiveMaxPostKickoffMs)) {
       koMs = NaN;
     }
   }
@@ -1010,8 +1022,8 @@ export function evaluateWeeklyIrActivationWindow({
   );
   const deadlineMs = Math.min(rawDeadlineMs, koMs - 90 * 60_000);
 
-  // Missed weekly activation window holds from 4:00 PM ET deadline through final whistle (`completed` or `koMs + 5.25h`).
-  const hasMissedWeeklyDeadline = ts >= deadlineMs && ts <= koMs + maxPostKickoffGameMs;
+  // Missed weekly activation window holds from 4:00 PM ET deadline through final whistle (`completed`, `koMs + 5.25h`, or up to `10h` when explicitly live/OT/delayed).
+  const hasMissedWeeklyDeadline = ts >= deadlineMs && ts <= koMs + effectiveMaxPostKickoffMs;
 
   return {
     hasMissedWeeklyDeadline,
@@ -5286,10 +5298,27 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
           return gMs !== null && Math.abs(gMs - rawUpcomingMs) < 18 * 3_600_000;
         }) || null
       : null;
+  const umObj = appData?.scheduleMatchup?.upcomingMatchup || {};
+  const umStDetail = `${matchedUpcomingGame?.statusDetail || ''} ${umObj.statusDetail || ''}`;
+  const umExplicitCompleted = Boolean(
+    umObj.completed ||
+      matchedUpcomingGame?.completed ||
+      String(umObj.liveState || '').toLowerCase() === 'post' ||
+      String(matchedUpcomingGame?.statusState || '').toLowerCase() === 'post' ||
+      /\bfinal\b/i.test(umStDetail)
+  );
+  const umLiveOrDelayed =
+    !umExplicitCompleted &&
+    (String(umObj.liveState || '').toLowerCase() === 'in' ||
+      Boolean(umObj.isGameInProgress) ||
+      String(matchedUpcomingGame?.statusState || '').toLowerCase() === 'in' ||
+      Boolean(matchedUpcomingGame?.isLive) ||
+      /\b(1st|2nd|3rd|4th|q[1-4]|halftime|in progress|ot|overtime|delayed|weather delay|lightning delay|suspended)\b/i.test(
+        umStDetail
+      ));
+  const upcomingMaxClockMs = umLiveOrDelayed ? 10 * 3_600_000 : 5.25 * 3_600_000;
   const upcomingHasConcludedByClock =
-    Boolean(appData?.scheduleMatchup?.upcomingMatchup?.completed) ||
-    Boolean(matchedUpcomingGame?.completed) ||
-    (rawUpcomingMs !== null && nowMs > rawUpcomingMs + 5.25 * 3_600_000);
+    umExplicitCompleted || (rawUpcomingMs !== null && nowMs > rawUpcomingMs + upcomingMaxClockMs);
   const seasonConcluded = Boolean(appData?.scheduleMatchup?.upcomingMatchup?.seasonConcluded);
 
   // If the static upcomingMatchup has already concluded by wall-clock time (e.g. Monday morning before static refresh),

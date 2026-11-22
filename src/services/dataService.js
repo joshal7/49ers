@@ -47,11 +47,13 @@ import {
   stripRedundantAuthorBoilerplate
 } from '../engine/breakingClassifier.js';
 import {
+  ESPN_NFL_TEAM_IDS,
   NFL_TEAM_OFFICIAL_RSS_URLS,
   evaluateGameDayWindow,
   isBeforeWeeklyPracticeWindow,
   discoverOfficialClubInactivesRssItem,
   parseOfficialClubInactivesArticle,
+  parseEspnCoreEventRosterInactives,
   extractSleeperGameDaySignals,
   extractLiveInGameInjurySignals,
   buildTeamGameDayRosterModel,
@@ -1723,7 +1725,7 @@ export async function hydrateLiveBlueskyBeatWire(
               });
               if (
                 (mentionsOppTeam || oppMatched.length > 0) &&
-                /\b(injur|practice|questionable|doubtful|ruled out|out for|trending|optimistic|setback|concussion|expected to play|unlikely|long shot|window|activated|ir\b|dnp|limited|full participant|illness|downgraded)\b/i.test(
+                /\b(injur|practice|questionable|doubtful|ruled out|out for|trending|optimistic|setback|concussion|expected to play|unlikely|long shot|window|activated|ir\b|dnp|limited|full participant|illness|downgraded|inactive|inactives|officially active|is active|are active|scratch|warmups?|suiting up|won['’]?t play|will not play|medical tent|locker room|carted|to return|exited|left (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s) game)\b/i.test(
                   combinedNonBioCheck
                 )
               ) {
@@ -3282,9 +3284,14 @@ export async function hydrateLiveMultiSourceBeatWire(
   persistWeeklyPracticeSnapshot(appData);
 
   // Also refresh Game-Day Inactives & Active Roster if inside [T-90m, Final) window
-  await hydrateLiveGameDayRosters(appData).catch(() => false);
+  const gameDayChanged = await hydrateLiveGameDayRosters(appData).catch(() => false);
 
-  return { totalAdded: totalAdded + (healthAligned && totalAdded === 0 ? 1 : 0), bySource, healthAligned };
+  return {
+    totalAdded: totalAdded + ((healthAligned || gameDayChanged) && totalAdded === 0 ? 1 : 0),
+    bySource,
+    healthAligned,
+    gameDayChanged: Boolean(gameDayChanged)
+  };
 }
 
 function toEspnTeamSlugClient(abbr = '') {
@@ -3326,16 +3333,64 @@ function extractActiveRosterFromEspnTeamRoster(oppRosterRaw, starterNamesSet = n
 
 let oppGameDaySweepCursor = 0;
 const clubOfficialRssPollState = new Map();
+const espnCoreRosterPollState = new Map();
 let cachedSleeperPlayersState = { fetchedAtMs: 0, data: null, inFlight: null };
+
+// Source authority ladder so higher-authority official sources (`club_rss`, `rotowire`, `espn_event_roster`)
+// can ALWAYS upgrade lower-authority fallback results (`sleeper`, `gemini_ai`) if those populated earlier.
+const GAME_DAY_SOURCE_RANK = {
+  club_rss: 4,
+  rotowire: 3,
+  espn_event_roster: 3,
+  sleeper: 2,
+  gemini_ai: 1
+};
+
+function hasAuthoritativeInactives(sideState, minRank = 3) {
+  return Boolean(
+    sideState?.officialPosted &&
+      Array.isArray(sideState.inactives) &&
+      sideState.inactives.length >= 3 &&
+      (Number(sideState.sourceRank) || 3) >= minRank
+  );
+}
+
+function computeGameDayStateFingerprint(appData) {
+  const sfGd = appData?.health?.gameDayRoster;
+  const oppGd = appData?.scheduleMatchup?.upcomingMatchup?.opponentHealth?.gameDayRoster;
+  const sfInact = (sfGd?.inactives || []).map(p => normalizeLookupName(p.name)).sort().join(',');
+  const sfInGame = (sfGd?.inGameSignals?.list || [])
+    .map(s => `${s.key}:${s.state}:${s.injuryType}:${s.probabilityPct}`)
+    .sort()
+    .join(',');
+  const oppInact = (oppGd?.inactives || []).map(p => normalizeLookupName(p.name)).sort().join(',');
+  const oppInGame = (oppGd?.inGameSignals?.list || [])
+    .map(s => `${s.key}:${s.state}:${s.injuryType}:${s.probabilityPct}`)
+    .sort()
+    .join(',');
+  return [
+    sfGd?.isActive ? '1' : '0',
+    sfGd?.officialPosted ? '1' : '0',
+    sfGd?.statusBadgeLabel || '',
+    sfInact,
+    sfInGame,
+    oppGd?.isActive ? '1' : '0',
+    oppGd?.officialPosted ? '1' : '0',
+    oppGd?.statusBadgeLabel || '',
+    oppInact,
+    oppInGame
+  ].join('|');
+}
 
 async function fetchClubOfficialRssInactivesIfDue(
   teamAbbr,
+  teamName,
   candidatePlayers,
   windowState,
   existingSideState,
   nowMs = Date.now()
 ) {
-  if (existingSideState?.officialPosted && Array.isArray(existingSideState.inactives) && existingSideState.inactives.length >= 3) {
+  if (hasAuthoritativeInactives(existingSideState, GAME_DAY_SOURCE_RANK.club_rss)) {
     return existingSideState;
   }
   const canonAbbr = normalizeTeamAbbrClient(teamAbbr);
@@ -3348,7 +3403,8 @@ async function fetchClubOfficialRssInactivesIfDue(
   const prevPoll = clubOfficialRssPollState.get(pollKey);
   const inUrgentInactivesWindow =
     !windowState.hasKickoffStarted ||
-    (Number.isFinite(windowState.kickoffMs) && nowMs <= windowState.kickoffMs + 15 * 60_000);
+    Boolean(windowState.isDelayed) ||
+    (Number.isFinite(windowState.kickoffMs) && nowMs <= windowState.kickoffMs + 35 * 60_000);
   const minIntervalMs = inUrgentInactivesWindow ? 15_000 : 28_000;
   if (prevPoll && nowMs - prevPoll.lastPollMs < minIntervalMs) {
     return existingSideState || null;
@@ -3365,22 +3421,80 @@ async function fetchClubOfficialRssInactivesIfDue(
     });
     if (!discoveredItem?.url) return existingSideState || null;
 
-    const artRes = await fetchSingleWithTimeout(discoveredItem.url, { cache: 'no-store' }, 6500);
-    if (!artRes.ok) return existingSideState || null;
-    const artHtml = await artRes.text();
-    const parsed = parseOfficialClubInactivesArticle(artHtml, candidatePlayers, {
-      week: windowState.week
+    let artHtml = '';
+    try {
+      const artRes = await fetchSingleWithTimeout(discoveredItem.url, { cache: 'no-store' }, 6500);
+      if (artRes.ok) {
+        artHtml = await artRes.text();
+      }
+    } catch {}
+
+    // Zero-CORS fallback: if direct club article HTML is CORS-blocked, parse inline `<content:encoded>` / `<description>` from RSS XML
+    const parseSource = artHtml || discoveredItem.inlineHtml || discoveredItem.description || '';
+    if (!parseSource) return existingSideState || null;
+
+    const parsed = parseOfficialClubInactivesArticle(parseSource, candidatePlayers, {
+      week: windowState.week,
+      teamAbbr: canonAbbr,
+      teamName
     });
     if (!parsed.officialPosted) return existingSideState || null;
 
     const nameByKey = new Map(candidatePlayers.map(p => [normalizeLookupName(p.name), p.name]));
     return {
       officialPosted: true,
+      sourceRank: GAME_DAY_SOURCE_RANK.club_rss,
       inactives: parsed.inactives,
       activeNames: [...parsed.activeKeys].map(k => nameByKey.get(k)).filter(Boolean),
       emergencyQbNames: [...parsed.emergencyQbKeys].map(k => nameByKey.get(k)).filter(Boolean),
       sourceUrl: discoveredItem.url,
       sourceLabel: `${canonAbbr === 'SF' ? '49ers.com' : `${canonAbbr}`} Official`
+    };
+  } catch {
+    return existingSideState || null;
+  }
+}
+
+async function fetchEspnCoreEventRosterInactivesIfDue(
+  teamAbbr,
+  candidatePlayers,
+  windowState,
+  existingSideState,
+  nowMs = Date.now()
+) {
+  if (hasAuthoritativeInactives(existingSideState, GAME_DAY_SOURCE_RANK.espn_event_roster)) {
+    return existingSideState;
+  }
+  const gameId = String(windowState?.gameId || '').trim();
+  if (!/^\d{6,12}$/.test(gameId)) return existingSideState || null;
+
+  const canonAbbr = normalizeTeamAbbrClient(teamAbbr);
+  const espnTeamId = ESPN_NFL_TEAM_IDS[canonAbbr];
+  if (!espnTeamId) return existingSideState || null;
+
+  const pollKey = `${gameId}:${canonAbbr}`;
+  const prevPoll = espnCoreRosterPollState.get(pollKey);
+  if (prevPoll && nowMs - prevPoll.lastPollMs < 25_000) {
+    return existingSideState || null;
+  }
+  espnCoreRosterPollState.set(pollKey, { lastPollMs: nowMs });
+
+  try {
+    const url = `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/${encodeURIComponent(gameId)}/competitions/${encodeURIComponent(gameId)}/competitors/${espnTeamId}/roster`;
+    const res = await fetchSingleWithTimeout(url, { cache: 'no-store' }, 5500);
+    if (!res.ok) return existingSideState || null;
+    const raw = await res.json();
+    const parsed = parseEspnCoreEventRosterInactives(raw, candidatePlayers);
+    if (!parsed.officialPosted) return existingSideState || null;
+
+    const nameByKey = new Map((candidatePlayers || []).map(p => [normalizeLookupName(p.name), p.name]));
+    return {
+      officialPosted: true,
+      sourceRank: GAME_DAY_SOURCE_RANK.espn_event_roster,
+      inactives: parsed.inactives,
+      activeNames: [...parsed.activeKeys].map(k => nameByKey.get(k)).filter(Boolean),
+      sourceUrl: buildEspnTeamInjuriesUrl(canonAbbr),
+      sourceLabel: 'ESPN Official Game Roster'
     };
   } catch {
     return existingSideState || null;
@@ -3604,10 +3718,17 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
 
     if (appData.health?.gameDayRoster?.isActive) {
       const liveSfRows = Array.isArray(appData.health.practiceReport) ? appData.health.practiceReport : [];
-      const sustainedSfRows = liveSfRows.filter(
-        r => Boolean(r?.sustainedInLastGame || r?.isInGameInjury || r?.isInGameReturned)
-      );
+      const cachedSustained = Array.isArray(appData.health._liveSustainedInGameRows)
+        ? appData.health._liveSustainedInGameRows
+        : [];
+      const sustainedByNorm = new Map();
+      for (const r of [...cachedSustained, ...liveSfRows]) {
+        if (!r || !(r.sustainedInLastGame || r.isInGameInjury || r.isInGameReturned)) continue;
+        sustainedByNorm.set(normalizeLookupName(r.name), r);
+      }
+      const sustainedSfRows = [...sustainedByNorm.values()];
       appData.health.gameDayRoster = null;
+      delete appData.health._liveSustainedInGameRows;
 
       if (espnOverlayAlreadyRolledWeek) {
         // `hydrateLiveEspnOverlay` already advanced `appData.health.week` to `N+1` and cleared `didNotPlay === false`
@@ -3626,11 +3747,39 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
             { clearPracticeDays: true, upcomingWeek: nextWeekNum }
           );
           const byNorm = new Map(liveSfRows.map(r => [normalizeLookupName(r.name), r]));
+          const rolledSustByNorm = new Map();
           for (const sr of rolledSustained) {
             const nk = normalizeLookupName(sr.name);
-            if (!byNorm.has(nk)) byNorm.set(nk, sr);
+            rolledSustByNorm.set(nk, sr);
+            const existingRow = byNorm.get(nk);
+            if (
+              !existingRow ||
+              existingRow.isInGameInjury ||
+              existingRow.isInGameReturned ||
+              /\(in-game\)|to return/i.test(
+                String(existingRow.badgeLabel || existingRow.playBadgeLabel || existingRow.gameStatus || '')
+              )
+            ) {
+              byNorm.set(nk, sr);
+            }
           }
           appData.health.practiceReport = [...byNorm.values()];
+          for (const p of appData.roster?.players || []) {
+            if (!p?.health || p.rosterBucket !== 'active') continue;
+            const sr = rolledSustByNorm.get(normalizeLookupName(p.name));
+            if (sr) {
+              p.health.isOnPracticeReport = true;
+              p.health.wed = '-';
+              p.health.thu = '-';
+              p.health.fri = '-';
+              p.health.injuryType = sr.injuryType || p.health.injuryType;
+              p.health.status = sr.gameStatus || 'Questionable';
+              p.health.playProbabilityPct = sr.playProbabilityPct;
+              p.health.playTier = sr.playTier || sr.tier || 'QUESTIONABLE';
+              p.health.playBadgeLabel = sr.playBadgeLabel;
+              p.health.shortComment = sr.shortComment || p.health.shortComment || '';
+            }
+          }
         }
       } else {
         // Restore pregame snapshots on roster players first, then carry forward any newly sustained mid-game injuries
@@ -3788,6 +3937,8 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
     }
   }
 
+  const beforeFingerprint = computeGameDayStateFingerprint(appData);
+
   const sfActivePlayers = (appData.roster?.players || []).filter(p => p.rosterBucket === 'active');
   const baseSfReport = appData.health?._preGamePracticeReport || appData.health?.practiceReport || [];
   const baseOppReport = oh?._preGameInjuryReport || oh?.injuryReport || [];
@@ -3801,9 +3952,16 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
 
   // 1. Poll Official 32-Team Club `/rss/news` + Discovered Inactives Article (CORS `*`, zero tokens) + Opponent Player Wire in parallel!
   const [rssSfState, rssOppState] = await Promise.all([
-    fetchClubOfficialRssInactivesIfDue('SF', [...sfActivePlayers, ...baseSfReport], windowState, appData.liveGameDay.sf, nowMs),
+    fetchClubOfficialRssInactivesIfDue(
+      'SF',
+      'San Francisco 49ers',
+      [...sfActivePlayers, ...baseSfReport],
+      windowState,
+      appData.liveGameDay.sf,
+      nowMs
+    ),
     oppAbbr
-      ? fetchClubOfficialRssInactivesIfDue(oppAbbr, oppCandidatePool, windowState, appData.liveGameDay.opp, nowMs)
+      ? fetchClubOfficialRssInactivesIfDue(oppAbbr, oppName, oppCandidatePool, windowState, appData.liveGameDay.opp, nowMs)
       : Promise.resolve(appData.liveGameDay.opp),
     hydrateLiveOpponentGameDayPlayerWire(appData, windowState, oppCandidatePool, oppAbbr, nowMs).catch(() => 0)
   ]);
@@ -3811,11 +3969,15 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
   if (rssSfState) appData.liveGameDay.sf = rssSfState;
   if (rssOppState) appData.liveGameDay.opp = rssOppState;
 
-  // 2. Optional Cloudflare Edge Worker `/api/gameday-inactives` (RotoWire structured league table + KV group cache)
+  // 2. Optional Cloudflare Edge Worker `/api/gameday-inactives` (Server-side Club Article HTML + RotoWire + ESPN Core Roster + KV cache)
   const workerBase = String(effectivePrefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+  const sfNeedsAuthoritative = !hasAuthoritativeInactives(appData.liveGameDay.sf, GAME_DAY_SOURCE_RANK.rotowire);
+  const oppNeedsAuthoritative = Boolean(
+    oppAbbr && !hasAuthoritativeInactives(appData.liveGameDay.opp, GAME_DAY_SOURCE_RANK.rotowire)
+  );
   if (
     workerBase &&
-    (!appData.liveGameDay.sf?.officialPosted || (oppAbbr && !appData.liveGameDay.opp?.officialPosted)) &&
+    (sfNeedsAuthoritative || oppNeedsAuthoritative) &&
     (!appData.liveGameDay._lastWorkerInactMs || nowMs - appData.liveGameDay._lastWorkerInactMs >= 28_000)
   ) {
     appData.liveGameDay._lastWorkerInactMs = nowMs;
@@ -3824,25 +3986,40 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
         teams: `SF,${oppAbbr}`,
         seasonYear: String(appData.meta?.seasonYear || 2026),
         week: String(windowState.week || 1),
-        oppName
+        oppName,
+        gameId: windowState.gameId || '',
+        kickoffMs: Number.isFinite(windowState.kickoffMs) ? String(windowState.kickoffMs) : ''
       });
-      const wRes = await fetchSingleWithTimeout(`${workerBase}/api/gameday-inactives?${q.toString()}`, { cache: 'no-store' }, 5500);
+      const wRes = await fetchSingleWithTimeout(`${workerBase}/api/gameday-inactives?${q.toString()}`, { cache: 'no-store' }, 6500);
       if (wRes.ok) {
         const wJson = await wRes.json();
-        if (!appData.liveGameDay.sf?.officialPosted && wJson?.sf?.inactives?.length >= 3) {
+        const wSfRank = Number(wJson?.sf?.sourceRank) || GAME_DAY_SOURCE_RANK.rotowire;
+        if (
+          wJson?.sf?.inactives?.length >= 3 &&
+          (!appData.liveGameDay.sf?.officialPosted || wSfRank > (Number(appData.liveGameDay.sf?.sourceRank) || 0))
+        ) {
           appData.liveGameDay.sf = {
             officialPosted: true,
+            sourceRank: wSfRank,
             inactives: wJson.sf.inactives,
             activeNames: wJson.sf.activeNames || [],
+            emergencyQbNames: wJson.sf.emergencyQbNames || [],
             sourceUrl: wJson.sf.sourceUrl || 'https://www.rotowire.com/football/inactives.php',
             sourceLabel: wJson.sf.sourceLabel || 'NFL Official Wire'
           };
         }
-        if (oppAbbr && !appData.liveGameDay.opp?.officialPosted && wJson?.opp?.inactives?.length >= 3) {
+        const wOppRank = Number(wJson?.opp?.sourceRank) || GAME_DAY_SOURCE_RANK.rotowire;
+        if (
+          oppAbbr &&
+          wJson?.opp?.inactives?.length >= 3 &&
+          (!appData.liveGameDay.opp?.officialPosted || wOppRank > (Number(appData.liveGameDay.opp?.sourceRank) || 0))
+        ) {
           appData.liveGameDay.opp = {
             officialPosted: true,
+            sourceRank: wOppRank,
             inactives: wJson.opp.inactives,
             activeNames: wJson.opp.activeNames || [],
+            emergencyQbNames: wJson.opp.emergencyQbNames || [],
             sourceUrl: wJson.opp.sourceUrl || 'https://www.rotowire.com/football/inactives.php',
             sourceLabel: wJson.opp.sourceLabel || 'NFL Official Wire'
           };
@@ -3851,10 +4028,27 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
     } catch {}
   }
 
-  // 3. Zero-Worker Browser Fallback for Healthy Scratches: Throttled Sleeper Active-53 `Out` Sync (CORS `*`, pre-kickoff / early kickoff only!)
+  // 2b. Zero-Worker ESPN Core Event Competitor Roster Fallback (CORS `*`, official active/inactive flags when published)
+  if (
+    windowState.gameId &&
+    (!hasAuthoritativeInactives(appData.liveGameDay.sf, GAME_DAY_SOURCE_RANK.espn_event_roster) ||
+      (oppAbbr && !hasAuthoritativeInactives(appData.liveGameDay.opp, GAME_DAY_SOURCE_RANK.espn_event_roster)))
+  ) {
+    const [espnSfState, espnOppState] = await Promise.all([
+      fetchEspnCoreEventRosterInactivesIfDue('SF', sfActivePlayers, windowState, appData.liveGameDay.sf, nowMs),
+      oppAbbr
+        ? fetchEspnCoreEventRosterInactivesIfDue(oppAbbr, oppCandidatePool, windowState, appData.liveGameDay.opp, nowMs)
+        : Promise.resolve(appData.liveGameDay.opp)
+    ]);
+    if (espnSfState) appData.liveGameDay.sf = espnSfState;
+    if (espnOppState) appData.liveGameDay.opp = espnOppState;
+  }
+
+  // 3. Zero-Worker Browser Fallback for Healthy Scratches: Throttled Sleeper Active-53 `Out` Sync (CORS `*`, widened to ko+45m / delayed)
   const withinPregameScratchDiscovery =
     !windowState.hasKickoffStarted ||
-    (Number.isFinite(windowState.kickoffMs) && nowMs <= windowState.kickoffMs + 20 * 60_000);
+    Boolean(windowState.isDelayed) ||
+    (Number.isFinite(windowState.kickoffMs) && nowMs <= windowState.kickoffMs + 45 * 60_000);
 
   if (
     withinPregameScratchDiscovery &&
@@ -3868,6 +4062,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
           const sfNameByKey = new Map(sfActivePlayers.map(p => [normalizeLookupName(p.name), p.name]));
           appData.liveGameDay.sf = {
             officialPosted: true,
+            sourceRank: GAME_DAY_SOURCE_RANK.sleeper,
             inactives: sfSl.inactives,
             activeNames: [...sfSl.activeKeys].map(k => sfNameByKey.get(k)).filter(Boolean),
             sourceUrl: 'https://www.49ers.com/team/injury-report/',
@@ -3881,6 +4076,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
           const oppNameByKey = new Map(oppCandidatePool.map(p => [normalizeLookupName(p.name), p.name]));
           appData.liveGameDay.opp = {
             officialPosted: true,
+            sourceRank: GAME_DAY_SOURCE_RANK.sleeper,
             inactives: oppSl.inactives,
             activeNames: [...oppSl.activeKeys].map(k => oppNameByKey.get(k)).filter(Boolean),
             sourceUrl: buildEspnTeamInjuriesUrl(oppAbbr),
@@ -3916,6 +4112,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
       if (!appData.liveGameDay.sf?.officialPosted && aiRes.sfInactives?.length >= 3) {
         appData.liveGameDay.sf = {
           officialPosted: true,
+          sourceRank: GAME_DAY_SOURCE_RANK.gemini_ai,
           inactives: aiRes.sfInactives,
           activeNames: aiRes.sfActives || [],
           sourceUrl: 'https://www.49ers.com/news/',
@@ -3925,6 +4122,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
       if (oppAbbr && !appData.liveGameDay.opp?.officialPosted && aiRes.oppInactives?.length >= 3) {
         appData.liveGameDay.opp = {
           officialPosted: true,
+          sourceRank: GAME_DAY_SOURCE_RANK.gemini_ai,
           inactives: aiRes.oppInactives,
           activeNames: aiRes.oppActives || [],
           sourceUrl: buildEspnTeamInjuriesUrl(oppAbbr),
@@ -3966,6 +4164,15 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
       activeRosterPlayers: sfActivePlayers
     });
 
+    // Persist newly sustained mid-game injuries separately so an immediate post-Final ESPN `/injuries`
+    // refresh (which doesn't include them yet) can NEVER wipe them before Week N+1 rollover!
+    const liveSustainedSf = appData.health.practiceReport.filter(
+      r => Boolean(r?.sustainedInLastGame || r?.isInGameInjury || r?.isInGameReturned)
+    );
+    if (liveSustainedSf.length > 0) {
+      appData.health._liveSustainedInGameRows = liveSustainedSf.map(r => ({ ...r, sustainedInLastGame: true }));
+    }
+
     const byId = new Map(appData.health.practiceReport.map(r => [String(r.playerId || ''), r]));
     const byName = new Map(appData.health.practiceReport.map(r => [normalizeLookupName(r.name), r]));
     const sfInactByKey = new Map(
@@ -3997,6 +4204,9 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
         p.health.playBadgeLabel = reportMatch.playBadgeLabel || reportMatch.badgeLabel || p.health.playBadgeLabel;
         p.health.isInGameInjury = Boolean(reportMatch.isInGameInjury);
         p.health.isInGameReturned = Boolean(reportMatch.isInGameReturned);
+        if (reportMatch.sustainedInLastGame || reportMatch.isInGameInjury || reportMatch.isInGameReturned) {
+          p.health.sustainedInLastGame = true;
+        }
 
         // Ensure latest mid-game injury/return tweet is immediately visible inside the Player Sheet modal!
         if (reportMatch.inGameLatestItem && Array.isArray(p.recentNews)) {
@@ -4048,6 +4258,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
     const cleanBaseOppStarters = oh._preGameKeyStartersHealthy || oh.keyStartersHealthy || [];
     const oppNewsCombined = [
       ...(appData.liveGameDay.oppWireItems || []),
+      ...(appData._oppNewsWire || []),
       ...(appData.news?.rawStream || [])
     ];
     const fullOppPool = [
@@ -4131,7 +4342,8 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
   }
 
   persistGameDayInactivesSnapshot(appData, windowState);
-  return true;
+  const afterFingerprint = computeGameDayStateFingerprint(appData);
+  return afterFingerprint !== beforeFingerprint;
 }
 
 function normPlayerNameKey(s = '') {
@@ -4802,6 +5014,20 @@ export async function hydrateLiveEspnOverlay(appData) {
       if (!item) continue;
       item.statusState = liveState;
 
+      // Sync last-minute NFL flexes / rescheduled kickoff times & broadcast networks immediately!
+      if (ev.date) {
+        const liveEvMs = Date.parse(ev.date);
+        const prevItemMs = item.dateIso ? Date.parse(item.dateIso) : NaN;
+        if (Number.isFinite(liveEvMs) && (!Number.isFinite(prevItemMs) || Math.abs(liveEvMs - prevItemMs) >= 60_000)) {
+          item.dateIso = ev.date;
+          standingsOrScoresChanged = true;
+        }
+      }
+      const liveBroadcast = comp.broadcasts?.[0]?.names?.[0] || comp.geoBroadcasts?.[0]?.media?.shortName || '';
+      if (liveBroadcast && liveBroadcast !== item.broadcast) {
+        item.broadcast = liveBroadcast;
+      }
+
       if (completed && !item.completed) standingsOrScoresChanged = true;
       if (completed || liveState === 'in') {
         const sfSc = Number(sfComp?.score?.value ?? sfComp?.score?.displayValue ?? item.sfScore ?? 0);
@@ -4811,7 +5037,8 @@ export async function hydrateLiveEspnOverlay(appData) {
         if (completed) {
           if (!item.completed && !item.completedAt) {
             const koCheckMs = item.dateIso ? Date.parse(item.dateIso) : NaN;
-            if (Number.isFinite(koCheckMs) && Date.now() >= koCheckMs && Date.now() <= koCheckMs + 5.5 * 3600_000) {
+            // Widened to 8.5h to cover weather-delayed and overtime games finishing past ko + 5.5h
+            if (Number.isFinite(koCheckMs) && Date.now() >= koCheckMs && Date.now() <= koCheckMs + 8.5 * 3600_000) {
               item.completedAt = new Date().toISOString();
             }
           }
@@ -5028,11 +5255,28 @@ export async function hydrateLiveEspnOverlay(appData) {
         }
       }
 
-      // Always synchronize live in-game, final-score, TBD, and season-concluded telemetry onto `upcomingMatchup`
+      // Always synchronize live in-game, final-score, flexed kickoff time, TBD, and season-concluded telemetry onto `upcomingMatchup`
+      if (nextGame.id && !String(nextGame.id).startsWith('post_')) {
+        um.gameId = nextGame.id;
+      }
+      if (nextGame.dateIso) {
+        const nextMs = Date.parse(nextGame.dateIso);
+        const prevUmMs = Date.parse(um.dateIso || um.kickoffIso || '');
+        const flexedTime = Number.isFinite(nextMs) && (!Number.isFinite(prevUmMs) || Math.abs(nextMs - prevUmMs) >= 60_000);
+        if (flexedTime || !um.dateIso || !um.kickoffIso) {
+          um.dateIso = nextGame.dateIso;
+          um.kickoffIso = nextGame.dateIso;
+          const dtFlex = new Date(nextGame.dateIso);
+          if (!Number.isNaN(dtFlex.getTime())) {
+            um.kickoffDisplay = `${dtFlex.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'America/Los_Angeles' })} • ${dtFlex.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Los_Angeles' })} PT (${nextGame.broadcast || 'NFL'})`;
+          }
+        }
+      }
       const resolvedState = String(nextGame.statusState || (nextGame.completed ? 'post' : 'pre')).toLowerCase();
       um.liveState = resolvedState;
       um.isGameInProgress = resolvedState === 'in';
       um.completed = Boolean(nextGame.completed);
+      if (nextGame.completedAt) um.completedAt = nextGame.completedAt;
       um.isTbd = isTbdOpponent;
       um.seasonConcluded = isSeasonConcluded;
       if (nextGame.statusDetail) {
@@ -5463,7 +5707,7 @@ export async function hydrateLiveEspnOverlay(appData) {
           if (p.rosterBucket === 'active' && !liveInjuredKeys.has(k)) {
             const postKoNotInEspn = resolvePostKickoffWireInjuryForPlayer(p);
             const hasSustainedWireInjury =
-              Boolean(p.health.sustainedInLastGame) ||
+              Boolean(p.health.sustainedInLastGame || p.health.isInGameInjury) ||
               Boolean(
                 postKoNotInEspn?.hasSignal &&
                   postKoNotInEspn.confidence >= 0.42 &&

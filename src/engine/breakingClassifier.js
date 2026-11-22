@@ -40,17 +40,32 @@ export const WIRE_BLURB_SUMMARY_MAX_CHARS = 900;
 export const WIRE_SUMMARY_EXPAND_THRESHOLD = 450;
 export const WIRE_SUMMARY_PREVIEW_MAX = 320;
 
-const URGENT_BREAKING_BADGES = new Set(['BREAKING', 'LIVE INJURY UPDATE', 'LIVE IN-GAME']);
+const URGENT_BREAKING_BADGES = new Set(['BREAKING', 'LIVE INJURY UPDATE']);
 
 export function isUrgentBreakingBadge(badge = '') {
   return URGENT_BREAKING_BADGES.has(String(badge || '').trim().toUpperCase());
 }
 
 const IN_GAME_INJURY_RETURN_REGEX =
-  /\b(questionable to return|probable to return|doubtful to return|ruled out for the rest|out for the rest of the game|will not return|did not return|cleared to return|back in the game|returning to the game|returned to the game|headed to the locker room|going to the locker room|went to the locker room|blue medical tent|medical tent|evaluated for a concussion|concussion evaluation|carted off|limped off|limping off|helped off the field|helped off|walked off with trainers|with athletic trainers|examined by trainers|examined on the sideline|left the game|exited the game|left sunday'?s game|exited sunday'?s game|in-game injury|injury update:\s*[a-z])\b/i;
+  /\b(questionable to return|probable to return|doubtful to return|ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded to out|out for the (?:rest|remainder|game|night|day)|will not return|won['’]?t return|did not return|done for the (?:day|night|game)|cleared to return|cleared concussion protocol|back in the game|returning to the game|returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|(?:headed|going|went|walked|taken) to the locker room|blue medical tent|medical tent|evaluated for (?:a )?concussion|concussion (?:evaluation|protocol)|carted (?:off|to the locker room|away)|in an air cast|air cast|on crutches|walking boot|non-contact (?:injury|knee|ankle|leg)|limped off|limping off|helped off(?: the field)?|walked off with trainers|with athletic trainers|examined by trainers|examined on the sideline|(?:left|exited) (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s) (?:game|contest|matchup)|in-game injury|injury update:\s*[a-z])\b/i;
+
+const MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX =
+  /\b(cramps?|cramping|dehydrat(?:ed|ion)|wind knocked out|shook it off|stayed in the game|back in on the next play|minor nick|looks like (?:it )?(?:could|might) be|from the broadcast angle|by video|my guess is|fearing the worst|looks bad|didn['’]?t look good|hopefully not|pray(?:ing|ers) for)\b/i;
+
+const CONFIRMED_IN_GAME_STATUS_REGEX =
+  /\b(ruled out|downgraded to out|questionable to return|doubtful to return|probable to return|will not return|won['’]?t return|did not return|done for the (?:day|night|game)|cleared to return|cleared concussion protocol|returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|blue medical tent|medical tent|locker room|carted|air cast|walked off with trainers|helped off(?: the field)?|examined by trainers|concussion (?:evaluation|protocol)|mri|x-rays?|ct scan|confirmed|diagnosed)\b/i;
+
+const DIAGNOSTIC_SCHEDULED_ONLY_REGEX =
+  /\b(scheduled for (?:an? )?(?:mri|x-ray|ct scan|tests?|imaging|further testing)|will undergo (?:an? )?(?:mri|x-ray|ct scan|tests?|imaging)|awaiting (?:an? )?(?:mri|test results?)|to undergo (?:an? )?(?:mri|further testing|tests?)|getting (?:an? )?(?:mri|x-rays?)\s+(?:tomorrow|monday|tuesday|today))\b/i;
+
+const MATERIAL_INJURY_DIAGNOSIS_REGEX =
+  /\b(not (?:a )?(?:torn )?(?:acl|achilles|fracture|broken)|acl (?:is )?intact|avoided (?:a )?(?:torn |major |serious )?(?:acl|achilles|structural|season-ending|tear|fracture)|no (?:acl|achilles|ligament|structural) (?:tear|damage)|x-rays? (?:came back |were )?negative|negative x-rays?|mri (?:came back |was |showed )?(?:clean|negative|no structural|no tear|intact)|(?:mri|tests?|initial tests?|imaging|ct scan|x-rays?|exams?)\s+(?:showed|confirmed|revealed|diagnosed|indicated)|(?:diagnosed with|confirmed (?:to be |as )?(?:a|an)?)\s+(?:grade\s+[123i]+\s+)?(?:mcl|pcl|lcl|acl|high[- ]ankle|ankle|knee|hamstring|calf|groin|oblique|rib|pectoral|shoulder|foot|lisfranc|turf toe|meniscus|concussion|fracture|sprain|strain|tear|dislocation)|grade\s+[123i]+\s+(?:mcl|pcl|lcl|sprain|strain)|high[- ]ankle sprain|lisfranc|fractured|broken\s+(?:ankle|leg|arm|foot|collarbone|wrist|hand|rib|ribs|thumb|finger)|concussion protocol|(?:out|expected to miss|likely to miss|sidelined)\s+(?:at least\s+)?(?:\d+(?:-\d+)?\s+weeks?|multiple weeks|several weeks|indefinitely)|needs surgery|will undergo surgery|undergoing surgery)\b/i;
+
+const NEGATED_CATASTROPHIC_INJURY_REGEX =
+  /\b(not (?:a )?torn|avoided (?:a )?torn|no torn|did not tear|didn['’]?t tear|acl (?:is )?intact|achilles (?:is )?intact)\b/i;
 
 const POST_GAME_INJURY_FOLLOWUP_REGEX =
-  /\b(suffered a|sustained a|exited (?:sunday|monday|thursday|saturday|the game)|left (?:sunday|monday|thursday|saturday|the game)|left with (?:a|an|the(?:\s+same)?)\s+[a-z-]+\s+injury|did(?:n['’]?t|\s+not)\s+return|underwent an mri|scheduled for an mri|\bmri\b|\bx-rays?\b|ct scan|tests showed|initial tests|believed to have avoided|feared to have|day-to-day|week-to-week|high-ankle|sprain|strain|concussion protocol|torn acl|torn achilles|torn pectoral|meniscus|fracture|out multiple weeks|out several weeks|(?:49ers\s+)?injury\s+update:\s*(?:kyle\s+)?shanahan|shanahan (?:said|noted|confirmed|announced|provided|reveals?)[\s\S]{0,65}\b(?:injury|ankle|knee|foot|back|shoulder|hamstring|calf|quad|groin|rib|wrist|hand|concussion|mri|day-to-day|week-to-week))\b/i;
+  /\b(suffered a|sustained a|exited (?:tonight|sunday|monday|thursday|saturday|the game)|left (?:tonight|sunday|monday|thursday|saturday|the game)|left with (?:a|an|the(?:\s+same)?)\s+[a-z-]+\s+injury|did(?:n['’]?t|\s+not)\s+return|underwent an mri|scheduled for an mri|\bmri\b|\bx-rays?\b|ct scan|tests showed|initial tests|believed to have avoided|avoided (?:a )?(?:torn|major|serious)|not (?:a )?(?:torn )?acl|acl (?:is )?intact|feared to have|day-to-day|week-to-week|high-ankle|sprain|strain|concussion protocol|torn acl|torn achilles|torn pectoral|meniscus|fracture|out multiple weeks|out several weeks|(?:49ers\s+)?injury\s+update:\s*(?:kyle\s+)?shanahan|shanahan (?:said|noted|confirmed|announced|provided|reveals?)[\s\S]{0,65}\b(?:injury|ankle|knee|foot|back|shoulder|hamstring|calf|quad|groin|rib|wrist|hand|concussion|mri|day-to-day|week-to-week))\b/i;
 
 const PRACTICE_WARMUP_INJURY_SCOOP_REGEX =
   /\b(not practicing|not seen at practice|working on a side field|rehab field|blue non-contact|non-contact jersey|walking boot|suffered a setback|aggravated his|underwent an mri|scheduled for an mri|high-ankle sprain|torn acl|torn achilles|torn pectoral|meniscus|21-day practice window|designated (?:dt |wr |rb |cb |lb |te |ol |de |qb |s )?[a-z .'-]{0,28}(?:for|to) return|open(?:ed|s|ing)? [a-z .'-]{0,28}practice window|didn['’]?t activate|did not activate|returns? to practice)\b/i;
@@ -390,8 +405,12 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
 
   const latestCompletedWeek = latestCompleted ? Number(latestCompleted.week) || null : null;
   const latestCompletedKickoffMs = Number.isFinite(latestKoMs) ? latestKoMs : null;
-  const latestCompletedEndMs =
-    latestCompletedKickoffMs !== null ? Math.min(ts, latestCompletedKickoffMs + 3.25 * 3600_000) : null;
+  const latestCompletedAtMs = latestCompleted?.completedAt ? Date.parse(latestCompleted.completedAt) : NaN;
+  const latestCompletedEndMs = Number.isFinite(latestCompletedAtMs)
+    ? Math.min(ts, latestCompletedAtMs)
+    : latestCompletedKickoffMs !== null
+      ? Math.min(ts, latestCompletedKickoffMs + 3.25 * 3600_000)
+      : null;
   const latestCompletedOppAbbr = String(latestCompleted?.opponent?.abbr || '').toUpperCase();
   const latestCompletedOppNickname = extractTeamNickname(latestCompleted?.opponent?.name || '');
 
@@ -409,17 +428,26 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     tradeDeadlineMs
   };
 
-  // 1. Check if a 49ers game is currently in progress (from kickoff until completion)
+  // 1. Check if a 49ers game is currently in progress (from kickoff until completion; supports OT & weather delays)
   for (const g of schedule) {
-    if (!g || g.completed || g.isByeWeek || g.opponent?.isTbd || String(g.opponent?.abbr || '').toUpperCase() === 'TBD') {
+    if (!g || g.isByeWeek || g.opponent?.isTbd || String(g.opponent?.abbr || '').toUpperCase() === 'TBD') {
+      continue;
+    }
+    const statusLower = String(g.statusDetail || '').toLowerCase();
+    const stateLower = String(g.statusState || '').toLowerCase();
+    const isFinished = Boolean(g.completed || stateLower === 'post' || /\bfinal\b/.test(statusLower));
+    if (isFinished || /\b(postponed|canceled|cancelled)\b/.test(statusLower)) {
       continue;
     }
     const koMs = Date.parse(g.dateIso || '');
-    const statusLower = String(g.statusDetail || '').toLowerCase();
-    const statusIndicatesLive = /\b(q1|q2|q3|q4|1st|2nd|3rd|4th|halftime|in progress|ot|overtime)\b/.test(statusLower);
+    const isDelayed = /\b(delayed|weather delay|lightning delay|suspended)\b/.test(statusLower);
+    const statusIndicatesLive =
+      stateLower === 'in' ||
+      Boolean(g.isLive) ||
+      /\b(q1|q2|q3|q4|1st|2nd|3rd|4th|halftime|in progress|ot|overtime|end of (?:1st|2nd|3rd|4th))\b/.test(statusLower);
     if (
-      statusIndicatesLive ||
-      (Number.isFinite(koMs) && ts >= koMs && ts <= koMs + 4.75 * 3600_000)
+      (statusIndicatesLive && (!Number.isFinite(koMs) || ts <= koMs + 10 * 3600_000)) ||
+      (!isDelayed && Number.isFinite(koMs) && ts >= koMs && ts <= koMs + 5.25 * 3600_000)
     ) {
       return {
         inGame: true,
@@ -437,7 +465,13 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     }
   }
 
-  if (upcoming.liveState === 'in' || upcoming.isGameInProgress) {
+  const umStatusLower = String(upcoming.statusDetail || '').toLowerCase();
+  if (
+    !upcoming.completed &&
+    String(upcoming.liveState || '').toLowerCase() !== 'post' &&
+    !/\bfinal\b/.test(umStatusLower) &&
+    (upcoming.liveState === 'in' || upcoming.isGameInProgress)
+  ) {
     const upKoMs = Date.parse(upcoming.dateIso || upcoming.kickoffIso || '');
     return {
       inGame: true,
@@ -456,7 +490,7 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
 
   // 2. Check if a 49ers game completed within the last 48 hours (with <=24h immediate post-game high-urgency sub-window)
   if (latestCompleted && Number.isFinite(latestKoMs)) {
-    const estEndMs = latestKoMs + 3.25 * 3600_000;
+    const estEndMs = Number.isFinite(latestCompletedAtMs) ? latestCompletedAtMs : latestKoMs + 3.25 * 3600_000;
     const sinceEndMs = ts - estEndMs;
     if (ts >= latestKoMs + 2 * 3600_000 && sinceEndMs <= 48 * 3600_000) {
       const isImmediatePostGame = sinceEndMs <= 24 * 3600_000;
@@ -589,11 +623,27 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
   const isOpposingTeamOnlySubject = isNon49ersTeamSubjectLead(leadClaim, item);
 
   // Evaluate primary event patterns strictly against `leadClaim` (never trailing recap paragraphs or opposing-team player injuries!)
+  const hasConfirmedInGameStatus = CONFIRMED_IN_GAME_STATUS_REGEX.test(leadClaim);
+  const isMinorOrSpeculativeInjury =
+    MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX.test(leadClaim) && !hasConfirmedInGameStatus;
+  const isDiagnosticScheduledOnly =
+    DIAGNOSTIC_SCHEDULED_ONLY_REGEX.test(leadClaim) && !MATERIAL_INJURY_DIAGNOSIS_REGEX.test(leadClaim);
+  const isNegatedCatastrophicTear = NEGATED_CATASTROPHIC_INJURY_REGEX.test(leadClaim);
+
   const matchesInGame =
     !isSpeculative &&
     !isSecondaryOrCommentary &&
     !isOpposingTeamOnlySubject &&
+    !isMinorOrSpeculativeInjury &&
     IN_GAME_INJURY_RETURN_REGEX.test(leadClaim);
+  const matchesMaterialInjuryDiagnosis =
+    !isSpeculative &&
+    !isSecondaryOrCommentary &&
+    !isExpectedRoutineAbsence &&
+    !isOpposingTeamOnlySubject &&
+    !isMinorOrSpeculativeInjury &&
+    !isDiagnosticScheduledOnly &&
+    MATERIAL_INJURY_DIAGNOSIS_REGEX.test(leadClaim);
   const matchesPostGameInjury =
     !isSpeculative &&
     !isSecondaryOrCommentary &&
@@ -609,12 +659,16 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
   const matchesPreGameAvailabilityNoise =
     PRE_GAME_AVAILABILITY_NOISE_REGEX.test(leadClaim) || isPreGamePlayAvailabilityItem(item);
 
+  // Guard TIER1_MAJOR against negated catastrophic injuries ("avoided a torn ACL" / "NOT a torn ACL")
+  const leadForTier1 = isNegatedCatastrophicTear
+    ? leadClaim.replace(/\b(?:torn\s+(?:acl|achilles|pectoral|patellar)|season-ending\s+[a-z]+)\b/gi, '')
+    : leadClaim;
   const matchesTier1Major =
     !isSpeculative &&
     !isSecondaryOrCommentary &&
     !isOpposingTeamOnlySubject &&
     !NON_TRANSACTION_RELEASE_REGEX.test(leadClaim) &&
-    TIER1_MAJOR_BREAKING_EVENT_REGEX.test(leadClaim);
+    TIER1_MAJOR_BREAKING_EVENT_REGEX.test(leadForTier1);
 
   const matchesTier2RosterMove =
     !isSpeculative &&
@@ -680,14 +734,28 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
       };
     }
 
-    if (matchesInGame || matchesPostGameInjury) {
+    // Confirmed/salient in-game injury updates & material diagnostic updates get urgent `LIVE INJURY UPDATE`
+    // while minor cramps, speculative video takes, scheduled-MRI remarks, and Tier-3 vague blurbs stay calm!
+    if ((matchesInGame || matchesMaterialInjuryDiagnosis) && (effectiveTrustTier <= 2 || hasConfirmedInGameStatus)) {
       return {
         isBreaking: true,
         isUrgentBreaking: true,
         isInGameInjury: true,
         storyTier: 'in_game_injury',
-        breakingPriority: 3.3,
+        breakingPriority: matchesMaterialInjuryDiagnosis ? 3.34 : 3.3,
         breakingBadge: 'LIVE INJURY UPDATE',
+        ageHours
+      };
+    }
+
+    if (matchesPostGameInjury && !isMinorOrSpeculativeInjury && !isDiagnosticScheduledOnly && effectiveTrustTier <= 2) {
+      return {
+        isBreaking: true,
+        isUrgentBreaking: false,
+        isInGameInjury: true,
+        storyTier: 'post_game_injury',
+        breakingPriority: 2.65,
+        breakingBadge: 'INJURY UPDATE',
         ageHours
       };
     }
@@ -704,14 +772,15 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
       };
     }
 
+    // Routine in-game beat tweets stay prioritized in-game (`storyTier: 'live_in_game'`) WITHOUT spamming red breaking badges
     if ((item.type === 'tweet' || item.type === 'social') && !isSpeculative) {
       return {
-        isBreaking: true,
-        isUrgentBreaking: true,
+        isBreaking: false,
+        isUrgentBreaking: false,
         isInGameInjury: false,
         storyTier: 'live_in_game',
         breakingPriority: 2.1,
-        breakingBadge: 'LIVE IN-GAME',
+        breakingBadge: null,
         ageHours
       };
     }
@@ -758,16 +827,16 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
   }
 
   // 3. LIVE / RECENT SIDELINE IN-GAME INJURY UPDATES (<16h)
-  if (matchesInGame && ageHours <= 16) {
-    const isUrgent = ageHours <= 4;
+  if (matchesInGame && ageHours <= 16 && (effectiveTrustTier <= 2 || hasConfirmedInGameStatus || Boolean(item.isFirstMoverInjuryScoop))) {
+    const isUrgent = ageHours <= 4.5;
     return {
-      isBreaking: ageHours <= 8,
+      isBreaking: isUrgent,
       isUrgentBreaking: isUrgent,
       isInGameInjury: ageHours <= 8,
       isPostGameInjuryUpdate: Boolean(ctx?.postGame48h),
       storyTier: 'in_game_injury',
       breakingPriority: isUrgent ? 3.28 : decayPriority(2.65, ageHours, 7.5),
-      breakingBadge: ageHours <= 6 ? 'LIVE INJURY UPDATE' : 'INJURY UPDATE',
+      breakingBadge: isUrgent ? 'LIVE INJURY UPDATE' : 'INJURY UPDATE',
       ageHours
     };
   }
@@ -792,6 +861,31 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
         ageHours
       };
     }
+  }
+
+  // 4b. CONFIRMED MATERIAL INJURY DIAGNOSTIC UPDATES (e.g. "avoided a torn ACL", "X-rays negative", "MRI confirmed MCL sprain, out 2-3 weeks")
+  //     Wears urgent `BREAKING` strictly when fresh (<= 4.5h) from Tier 1-2, then transitions to calm `INJURY UPDATE`.
+  //     Non-material remarks ("scheduled for an MRI tomorrow", "we'll see Wednesday") fall through to calm Section 5/7.
+  const isPreFinishedGameItem =
+    ctx?.postGame48h && Number.isFinite(ctx.completedKickoffMs) && Number.isFinite(pubMs) && pubMs < ctx.completedKickoffMs;
+  if (
+    matchesMaterialInjuryDiagnosis &&
+    !isPreFinishedGameItem &&
+    ageHours <= 24 &&
+    effectiveTrustTier <= 2 &&
+    !(matchesPreGameAvailabilityNoise && !/\b(?:mri|x-ray|ct scan|acl|achilles|intact|avoided|negative|fracture|broken|surgery|concussion protocol|grade\s+[123]|multiple weeks|several weeks|\d+(?:-\d+)?\s+weeks?)\b/i.test(leadClaim))
+  ) {
+    const withinBreakingWindow = ageHours <= 4.5;
+    return {
+      isBreaking: withinBreakingWindow,
+      isUrgentBreaking: withinBreakingWindow,
+      isInGameInjury: false,
+      isPostGameInjuryUpdate: Boolean(ctx?.postGame48h),
+      storyTier: 'post_game_injury',
+      breakingPriority: decayPriority(2.92, ageHours, 8.5),
+      breakingBadge: withinBreakingWindow ? 'BREAKING' : 'INJURY UPDATE',
+      ageHours
+    };
   }
 
   // 5. 48-HOUR POST-GAME DIAGNOSTIC & INJURY FOLLOW-UPS
@@ -949,8 +1043,9 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
 
   // Live In-Game Override: keep live sideline injuries & in-game beat updates strictly at the very top
   if (ctx?.inGame) {
-    if (item.isInGameInjury) return 500 - Math.min(45, clusterAnchorAge * 12);
-    if (item.breakingBadge === 'LIVE IN-GAME') return 360 - Math.min(50, clusterAnchorAge * 14);
+    if (item.isInGameInjury && isUrgentBreakingBadge(item.breakingBadge)) return 500 - Math.min(45, clusterAnchorAge * 12);
+    if (item.isInGameInjury) return 440 - Math.min(45, clusterAnchorAge * 12);
+    if (item.storyTier === 'live_in_game') return 360 - Math.min(50, clusterAnchorAge * 14);
     if (item.storyTier === 'tier1_major' && clusterAnchorAge <= 6) return 420 - clusterAnchorAge * 12;
   }
 
@@ -1530,9 +1625,9 @@ export function sortNewsWithBreakingPriority(
       return bMs - aMs;
     });
 
-  // Enforce feed-wide BREAKING scarcity cap outside active live games so at most `maxUrgentBreakingBadges`
-  // distinct story angles scream `BREAKING` simultaneously (gracefully downgrading overflow to ROSTER MOVE / INJURY UPDATE)
-  if (!ctx?.inGame && maxUrgentBreakingBadges > 0) {
+  // Enforce feed-wide BREAKING scarcity cap BOTH in-game and out-of-game so at most `maxUrgentBreakingBadges`
+  // distinct story angles wear urgent red badges simultaneously (gracefully downgrading overflow to ROSTER MOVE / INJURY UPDATE).
+  if (maxUrgentBreakingBadges > 0) {
     let urgentSeen = 0;
     const seenUrgentKeys = new Set();
     for (const item of scored) {
@@ -1545,7 +1640,9 @@ export function sortNewsWithBreakingPriority(
         item.isUrgentBreaking = false;
         item.isBreaking = false;
         item.breakingBadge =
-          item.category === 'injury' || item.isInGameInjury ? 'INJURY UPDATE' : 'ROSTER MOVE';
+          item.category === 'injury' || item.isInGameInjury || item.isPostGameInjuryUpdate
+            ? 'INJURY UPDATE'
+            : 'ROSTER MOVE';
       }
     }
   }
@@ -1635,6 +1732,55 @@ export function balanceFeedTopSalience(
   return result;
 }
 
+const INJURY_BODY_PART_EXTRACT_RE =
+  /\b(acl|mcl|pcl|lcl|meniscus|achilles|concussion|high[- ]ankle|ankle|knee|hamstring|calf|groin|quad|quadriceps|hip|shoulder|collarbone|rib|ribs|chest|pectoral|back|neck|head|elbow|wrist|hand|thumb|finger|foot|toe|turf toe|lisfranc|shin|oblique|abdomen)\b/i;
+
+function extractNamedInjuryBodyPart(text = '') {
+  const m = String(text || '').match(INJURY_BODY_PART_EXTRACT_RE);
+  return m ? m[1].toLowerCase().replace(/\s+/g, '-') : '';
+}
+
+/**
+ * Ranks the informational progression stage of an injury report (`0..5`) so that inside an
+ * injury story cluster, material new developments IMMEDIATELY supersede earlier preliminary tweets:
+ *  - Stage 1: Initial sideline exit / blue medical tent / shaken up / limped off
+ *  - Stage 2: Specific body part identified / Questionable to return / locker room / concussion evaluation
+ *  - Stage 3: Doubtful to return / carted off / air cast / crutches / walking boot
+ *  - Stage 4: Definitively ruled OUT for the game OR cleared/returned to action
+ *  - Stage 5: Confirmed diagnostic result (MRI/X-ray/not an ACL/no structural damage/specific tear/timeline)
+ */
+export function computeInjuryProgressionLevel(item = {}) {
+  const lead = extractPrimaryClaimText(item);
+  const full = `${lead} ${String(item?.fullText || item?.title || '').slice(0, 260)}`;
+  if (!full.trim()) return 0;
+
+  if (MATERIAL_INJURY_DIAGNOSIS_REGEX.test(full) && !DIAGNOSTIC_SCHEDULED_ONLY_REGEX.test(lead)) {
+    return 5;
+  }
+  if (
+    /\b(ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded to out|out for the (?:rest|remainder|game|night|day)|will not return|won['’]?t return|did not return|done for the (?:day|night|game)|returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|cleared to return|cleared concussion protocol|is back in the (?:game|huddle|lineup)|back on the field)\b/i.test(
+      full
+    )
+  ) {
+    return 4;
+  }
+  if (/\b(doubtful to return|carted (?:off|to the locker room|away)|in an air cast|air cast|on crutches|walking boot|unlikely to return)\b/i.test(full)) {
+    return 3;
+  }
+  if (
+    /\b(questionable to return|probable to return|concussion (?:evaluation|protocol)|evaluated for (?:a )?concussion|(?:headed|going|went|walked|taken) to the locker room)\b/i.test(
+      full
+    ) ||
+    (IN_GAME_INJURY_RETURN_REGEX.test(full) && Boolean(extractNamedInjuryBodyPart(full)))
+  ) {
+    return 2;
+  }
+  if (IN_GAME_INJURY_RETURN_REGEX.test(full)) {
+    return 1;
+  }
+  return 0;
+}
+
 function resolveInjuryMilestoneBucket(text = '') {
   const t = String(text || '').toLowerCase();
   if (
@@ -1644,14 +1790,20 @@ function resolveInjuryMilestoneBucket(text = '') {
   ) {
     return 'ir_roster_move';
   }
+  if (MATERIAL_INJURY_DIAGNOSIS_REGEX.test(t) && !DIAGNOSTIC_SCHEDULED_ONLY_REGEX.test(t)) {
+    return 'diagnostic_result';
+  }
+  if (DIAGNOSTIC_SCHEDULED_ONLY_REGEX.test(t)) {
+    return 'diagnostic_scheduled';
+  }
   if (/\b(mri|x-ray|x-rays|ct scan|tests showed|initial tests|imaging)\b/.test(t)) {
-    return 'diagnostic_imaging';
+    return 'diagnostic_result';
   }
   if (/\b(day-to-day|week-to-week|out multiple weeks|out several weeks|miss \d+|expected to miss)\b/.test(t)) {
     return 'recovery_timeline';
   }
   if (
-    /\b(questionable to return|doubtful to return|ruled out for the rest|will not return|did not return|exited|left .*game|(?:headed|going|went|walked|taken) to the locker room|medical tent|carted off|suffered a|sustained a)\b/.test(
+    /\b(questionable to return|doubtful to return|probable to return|ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded to out|out for the (?:rest|remainder|game|night|day)|will not return|won['’]?t return|did not return|done for the (?:day|night|game)|returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|cleared to return|cleared concussion protocol|exited|left .*game|(?:headed|going|went|walked|taken) to the locker room|medical tent|carted (?:off|to the locker room)|air cast|suffered a|sustained a)\b/.test(
       t
     )
   ) {
@@ -1736,7 +1888,10 @@ function extractArticleSummaryTokens(item = {}) {
 
 function extractLeadProperNameSlugs(lead = '') {
   const slugs = [];
-  const clean = String(lead || '').replace(/^[#"'“‘]+/, '');
+  // Strip NFL position/league prefixes before capitalized player names so `"49ers DE Nick Bosa"` extracts `nickbosa`, NOT `denick`!
+  const clean = String(lead || '')
+    .replace(/^[#"'“‘]+/, '')
+    .replace(/\b(?:QB|RB|FB|WR|TE|OL|OT|OG|DL|DE|DT|NT|EDGE|LB|ILB|OLB|CB|DB|FS|SS|PK|LS|NFL|NFC|AFC)\s+(?=[A-Z]\.?[A-Za-z])/g, '');
   const re = /\b([A-Z]\.?[A-Za-z'.-]{1,14}\s+[A-Z][a-zA-Z'.-]{2,16})(?:\s+(?:Jr\.?|Sr\.?|II|III|IV|V))?\b/g;
   const ignore = new Set([
     'sanfrancisco', 'kyleshanahan', 'johnlynch', 'probowl', 'superbowl', 'nfltrade', 'traderumors',
@@ -1906,6 +2061,36 @@ function hasPracticeOrEscalationConflict(bucketA, bucketB, textA = '', textB = '
  * Builds a deterministic semantic angle key (`entity::angle`) for exact same-event stories so
  * cross-outlet coverage (Articles + Tweets + Videos) merges reliably without touching distinct angles.
  */
+const CORE_49ERS_SHORTHAND_PLAYER_SLUGS = [
+  { re: /\b(?<!joey\s)bosa\b/i, slug: 'nickbosa' },
+  { re: /\bpurdy\b/i, slug: 'brockpurdy' },
+  { re: /\bkittle\b/i, slug: 'georgekittle' },
+  { re: /\b(?:cmc|mccaffrey)\b/i, slug: 'christianmccaffrey' },
+  { re: /\bwarner\b/i, slug: 'fredwarner' },
+  { re: /\bpearsall\b/i, slug: 'rickypearsall' },
+  { re: /\blenoir\b/i, slug: 'deommodorelenoir' },
+  { re: /\bjuszczyk\b/i, slug: 'kylejuszczyk' },
+  { re: /\bmustapha\b/i, slug: 'malikmustapha' },
+  { re: /\bpuni\b/i, slug: 'dominickpuni' },
+  { re: /\bguerendo\b/i, slug: 'isaacguerendo' },
+  { re: /\bjennings\b/i, slug: 'jauanjennings' },
+  { re: /\bgreenlaw\b/i, slug: 'dregreenlaw' },
+  { re: /\bdeebo\b/i, slug: 'deebosamuel' },
+  { re: /\baiyuk\b/i, slug: 'brandonaiyuk' },
+  { re: /\bpineiro\b/i, slug: 'eddypineiro' },
+  { re: /\brenardo\b/i, slug: 'renardogreen' },
+  { re: /\bmckivitz\b/i, slug: 'coltonmckivitz' },
+  { re: /\bbrendel\b/i, slug: 'jakebrendel' },
+  { re: /\bwinters\b/i, slug: 'deewinters' }
+];
+
+function resolveFallback49ersShorthandSlug(lead = '') {
+  for (const entry of CORE_49ERS_SHORTHAND_PLAYER_SLUGS) {
+    if (entry.re.test(lead)) return entry.slug;
+  }
+  return '';
+}
+
 function buildStorySignatureKey(item = {}) {
   const lead = extractPrimaryClaimText(item);
   if (!lead) return null;
@@ -1920,7 +2105,7 @@ function buildStorySignatureKey(item = {}) {
         .replace(/[^a-z0-9]/g, '')
     : primaryPlayer?.id
       ? String(primaryPlayer.id).toLowerCase().replace(/[^a-z0-9]/g, '')
-      : leadSlugs[0] || '';
+      : leadSlugs[0] || resolveFallback49ersShorthandSlug(lead);
 
   const collectPlayerSlugs = () => {
     const combined = new Set();
@@ -2235,20 +2420,40 @@ export function deduplicateAndGroupWireItems(
   if (!Array.isArray(items) || items.length <= 1) return items;
 
   // Flat exact-URL-only dedup mode (used for Latest chronological wire or when Top story grouping is turned off)
+  // Still prevents red-badge flooding when 5 reporters echo the exact same injury/roster breaking stage!
   if (groupSimilarStories === false) {
     const seenUrls = new Set();
+    const seenUrgentAngleStage = new Set();
     const flat = [];
     for (const item of items) {
       if (!item || typeof item !== 'object') continue;
       const cu = canonicalComparableUrl(item.url || '');
       if (cu && !cu.includes('x.com/search?') && seenUrls.has(cu)) continue;
       if (cu) seenUrls.add(cu);
-      flat.push({
+      const copy = {
         ...item,
         confirmingReports: [],
         clusterKind: undefined,
         _isLowSalienceRoundupCluster: undefined
-      });
+      };
+      if (isUrgentBreakingBadge(copy.breakingBadge)) {
+        const sigKey = buildStorySignatureKey(copy);
+        if (sigKey) {
+          const prog = computeInjuryProgressionLevel(copy);
+          const stageKey = `${sigKey}::p${prog}`;
+          if (seenUrgentAngleStage.has(stageKey)) {
+            copy.isUrgentBreaking = false;
+            copy.isBreaking = false;
+            copy.breakingBadge =
+              copy.category === 'injury' || copy.isInGameInjury || copy.isPostGameInjuryUpdate
+                ? 'INJURY UPDATE'
+                : 'ROSTER MOVE';
+          } else {
+            seenUrgentAngleStage.add(stageKey);
+          }
+        }
+      }
+      flat.push(copy);
     }
     return flat;
   }
@@ -2601,14 +2806,35 @@ export function deduplicateAndGroupWireItems(
       isDirectXStatusUrl(item.url) &&
       isBlueskyPostUrl(matchedCluster.lead.url) &&
       (Number(item.trustTier) || 2) <= (Number(matchedCluster.lead.trustTier) || 2);
+
+    // Progression-aware injury lead promotion:
+    // If a newer report identifies the body part, upgrades to Doubtful/Out/Returned, or reveals MRI/X-ray
+    // results, IMMEDIATELY promote it to the lead card (never wait 15m or bury under an older longer tent tweet!).
+    const existingProg = computeInjuryProgressionLevel(matchedCluster.lead);
+    const candProg = computeInjuryProgressionLevel(item);
+    const existingBody = extractNamedInjuryBodyPart(
+      `${matchedCluster.lead.title || ''} ${matchedCluster.lead.fullText || ''}`
+    );
+    const candBody = extractNamedInjuryBodyPart(`${item.title || ''} ${item.fullText || ''}`);
+    const candAdvancesInjuryStage =
+      candProg > existingProg ||
+      (candProg >= 1 && candProg === existingProg && !existingBody && Boolean(candBody) && itemMs >= existingMs - 5 * 60_000);
+    const existingHasHigherInjuryStage = existingProg > candProg;
+
     const candidateIsBetterLead =
-      xUpgradesBskyLead ||
-      candQual > existingQual + 5 ||
-      (Math.abs(candQual - existingQual) <= 5 &&
-        !isBlueskyPostUrl(item.url) &&
-        itemMs > existingMs + 15 * 60_000 &&
-        String(item.fullText || item.title || '').length >=
-          String(matchedCluster.lead.fullText || matchedCluster.lead.title || '').length * 0.75);
+      candAdvancesInjuryStage ||
+      (!existingHasHigherInjuryStage &&
+        (xUpgradesBskyLead ||
+          candQual > existingQual + 5 ||
+          (Math.abs(candQual - existingQual) <= 5 &&
+            !isBlueskyPostUrl(item.url) &&
+            itemMs > existingMs + 15 * 60_000 &&
+            String(item.fullText || item.title || '').length >=
+              String(matchedCluster.lead.fullText || matchedCluster.lead.title || '').length * 0.75)));
+
+    if (candAdvancesInjuryStage) {
+      matchedCluster.hasInjuryProgressionAdvance = true;
+    }
 
     if (candidateIsBetterLead) {
       const demotedPrev = { ...matchedCluster.lead };
@@ -2694,7 +2920,7 @@ export function deduplicateAndGroupWireItems(
           lead.storyTier === 'tier2_roster' ||
           lead.category === 'injury' ||
           lead.category === 'roster' ||
-          /::(ir_roster_move|diagnostic_imaging|recovery_timeline|in_game_injury_status|weekly_injury_report|trade_acquisition|contract_restructure|practice_return_hope|cb_roster_moves_positive)$/.test(
+          /::(ir_roster_move|diagnostic_result|diagnostic_scheduled|diagnostic_imaging|recovery_timeline|in_game_injury_status|weekly_injury_report|trade_acquisition|contract_restructure|practice_return_hope|cb_roster_moves_positive)$/.test(
             cl.sigKey || ''
           ));
       lead.clusterKind = isBreakingCorroboration ? 'corroboration' : 'similar';
@@ -2704,10 +2930,14 @@ export function deduplicateAndGroupWireItems(
       const leadAge = Number.isFinite(leadMs) ? Math.max(0, (nowMs - leadMs) / 3_600_000) : 24;
       const oldestAge = cl.oldestMs ? Math.max(0, (nowMs - cl.oldestMs) / 3_600_000) : leadAge;
       const newestAge = cl.newestMs ? Math.max(0, (nowMs - cl.newestMs) / 3_600_000) : leadAge;
-      // Anchor age rewards fresh multi-source developments (<12h) while preventing >14h late reactions from resetting yesterday's story
+      // Anchor age rewards fresh multi-source developments (<12h) and immediately refreshes to `newestAge`
+      // whenever a material injury progression (e.g. Tent -> QTR -> Ruled Out -> MRI) supersedes earlier reports!
       lead._clusterNewestAgeHours = newestAge;
-      lead._clusterAnchorAgeHours =
-        oldestAge > 14 ? Math.max(leadAge, oldestAge * 0.6) : 0.4 * leadAge + 0.6 * newestAge;
+      lead._clusterAnchorAgeHours = cl.hasInjuryProgressionAdvance
+        ? Math.min(leadAge, newestAge)
+        : oldestAge > 14
+          ? Math.max(leadAge, oldestAge * 0.6)
+          : 0.4 * leadAge + 0.6 * newestAge;
       const priorStoryRank = Number.isFinite(Number(lead.storyRank)) ? Number(lead.storyRank) : 0;
       const recomputedRank = computeWireStoryRank(lead, nowMs, ctx);
       lead.storyRank = isLowSalienceRoundup
@@ -3726,21 +3956,44 @@ export function is49ersGameLiveWindow(appData = {}, now = new Date()) {
   const schedule = appData?.scheduleMatchup?.schedule || [];
   const upcoming = appData?.scheduleMatchup?.upcomingMatchup || {};
 
-  if (upcoming.liveState === 'in' || upcoming.isGameInProgress) {
+  const umStatusLower = String(upcoming.statusDetail || '').toLowerCase();
+  const umCompleted = Boolean(
+    upcoming.completed || String(upcoming.liveState || '').toLowerCase() === 'post' || /\bfinal\b/.test(umStatusLower)
+  );
+  if (!umCompleted && (upcoming.liveState === 'in' || upcoming.isGameInProgress)) {
     return true;
   }
 
   for (const g of schedule) {
-    if (!g || g.completed || g.isByeWeek || g.opponent?.isTbd || String(g.opponent?.abbr || '').toUpperCase() === 'TBD') {
+    if (!g || g.isByeWeek || g.opponent?.isTbd || String(g.opponent?.abbr || '').toUpperCase() === 'TBD') {
       continue;
     }
     const statusLower = String(g.statusDetail || '').toLowerCase();
-    if (/\b(q1|q2|q3|q4|1st|2nd|3rd|4th|halftime|in progress|ot|overtime)\b/.test(statusLower)) {
-      return true;
+    const stateLower = String(g.statusState || '').toLowerCase();
+    if (/\b(postponed|canceled|cancelled)\b/.test(statusLower)) {
+      continue;
+    }
+    const isCompleted = Boolean(g.completed || stateLower === 'post' || /\bfinal\b/.test(statusLower));
+    if (isCompleted) {
+      // Keep 20s fast wire cadence for 35m right after Final so Shanahan's post-game injury presser lands immediately!
+      const compAtMs = g.completedAt ? Date.parse(g.completedAt) : NaN;
+      if (Number.isFinite(compAtMs) && nowMs >= compAtMs && nowMs <= compAtMs + 35 * 60_000) {
+        return true;
+      }
+      continue;
     }
     const koMs = g.dateIso ? new Date(g.dateIso).getTime() : NaN;
+    const isLiveOrDelayed =
+      stateLower === 'in' ||
+      Boolean(g.isLive) ||
+      /\b(q1|q2|q3|q4|1st|2nd|3rd|4th|halftime|in progress|ot|overtime|end of (?:1st|2nd|3rd|4th)|delayed|weather delay|lightning delay|suspended)\b/.test(
+        statusLower
+      );
+    if (isLiveOrDelayed && (!Number.isFinite(koMs) || nowMs <= koMs + 10 * 3600_000)) {
+      return true;
+    }
     if (Number.isFinite(koMs)) {
-      if (nowMs >= koMs - 95 * 60_000 && nowMs <= koMs + 4.5 * 3600_000) {
+      if (nowMs >= koMs - 95 * 60_000 && nowMs <= koMs + 5.25 * 3600_000) {
         return true;
       }
     }
@@ -3750,18 +4003,19 @@ export function is49ersGameLiveWindow(appData = {}, now = new Date()) {
   const hasMatchedScheduleEntry = schedule.some(g => g && Number(g.week) === Number(upcoming.week));
   if (
     !hasMatchedScheduleEntry &&
-    !upcoming.completed &&
+    !umCompleted &&
     !upcoming.isByeWeek &&
     !upcoming.isTbd &&
     !upcoming.seasonConcluded &&
     umOppUpper !== 'BYE' &&
-    umOppUpper !== 'TBD'
+    umOppUpper !== 'TBD' &&
+    !/\b(postponed|canceled|cancelled)\b/.test(umStatusLower)
   ) {
     const upKoMs =
       upcoming.dateIso || upcoming.kickoffIso
         ? new Date(upcoming.dateIso || upcoming.kickoffIso).getTime()
         : NaN;
-    if (Number.isFinite(upKoMs) && nowMs >= upKoMs - 95 * 60_000 && nowMs <= upKoMs + 4.5 * 3600_000) {
+    if (Number.isFinite(upKoMs) && nowMs >= upKoMs - 95 * 60_000 && nowMs <= upKoMs + 5.25 * 3600_000) {
       return true;
     }
   }
@@ -3999,14 +4253,24 @@ export function isBreakingItemCoveredInBrief(item = {}, dailyBrief = null, nowMs
     if (crUrl && coveredUrls.has(crUrl)) return true;
   }
 
+  const briefGenMs = dailyBrief.generatedAt ? Date.parse(dailyBrief.generatedAt) : NaN;
+  const itemPubMs = resolveEffectivePublishTimestampMs(item, nowMs);
   const coveredStoryKeys = new Set(Array.isArray(dailyBrief.coveredStoryKeys) ? dailyBrief.coveredStoryKeys : []);
   const sigKey = buildStorySignatureKey(item);
-  if (sigKey && coveredStoryKeys.has(sigKey)) {
+
+  // Never let an older brief's `coveredStoryKeys` suppress a brand-new post-brief material injury update
+  // (e.g. confirmed MRI result / "not an ACL" / IR placement / ruled-out escalation published >45m after the brief)!
+  const isFreshPostBriefMaterialUpdate =
+    Number.isFinite(briefGenMs) &&
+    Number.isFinite(itemPubMs) &&
+    itemPubMs > briefGenMs + 45 * 60_000 &&
+    (computeInjuryProgressionLevel(item) >= 4 ||
+      /::(diagnostic_result|ir_roster_move)$/.test(sigKey || ''));
+
+  if (sigKey && coveredStoryKeys.has(sigKey) && !isFreshPostBriefMaterialUpdate) {
     return true;
   }
 
-  const briefGenMs = dailyBrief.generatedAt ? Date.parse(dailyBrief.generatedAt) : NaN;
-  const itemPubMs = resolveEffectivePublishTimestampMs(item, nowMs);
   // If the breaking item was published AFTER the daily brief was generated (and matched neither URL nor story signature),
   // it is brand-new breaking news not yet covered in the brief!
   if (Number.isFinite(briefGenMs) && Number.isFinite(itemPubMs) && itemPubMs > briefGenMs + 90_000) {
@@ -4088,23 +4352,64 @@ function collectScheduleGamesForBrief(appData = null) {
   const rawSched = Array.isArray(appData?.scheduleMatchup?.schedule)
     ? appData.scheduleMatchup.schedule
     : [];
+  const um = appData?.scheduleMatchup?.upcomingMatchup;
+  const umWeek = Number(um?.week || 0) || null;
+  const umOpp = String(um?.oppAbbr || '').toUpperCase();
+  const umStatusDetail = String(um?.statusDetail || '').trim();
+  const umLiveState = String(um?.liveState || '').toLowerCase();
+
   const out = [];
   const seenKeys = new Set();
 
   for (const g of rawSched) {
     if (!g || g.isByeWeek || g.opponent?.isTbd || String(g.opponent?.abbr || '').toUpperCase() === 'TBD') continue;
+    if (/\b(postponed|canceled|cancelled)\b/i.test(String(g.statusDetail || ''))) continue;
     const koIso = g.dateIso || g.kickoffIso || '';
     const koMs = koIso ? Date.parse(koIso) : NaN;
     if (!Number.isFinite(koMs)) continue;
-    const key = `${String(g.seasonType || 'REG').toUpperCase()}:${Number(g.week || 0)}`;
+    const st = String(g.seasonType || 'REG').toUpperCase();
+    const wk = Number(g.week || 0);
+    const key = `${st}:${wk}`;
     if (seenKeys.has(key)) continue;
     seenKeys.add(key);
-    out.push({ game: g, koMs, key });
+
+    // Merge freshest live flags from `upcomingMatchup` if it matches this scheduled week
+    let effectiveGame = g;
+    if (um && umWeek && wk === umWeek && st === 'REG') {
+      const mergedCompleted = Boolean(
+        g.completed ||
+          String(g.statusState || '').toLowerCase() === 'post' ||
+          /\bfinal\b/i.test(String(g.statusDetail || '')) ||
+          um.completed ||
+          umLiveState === 'post' ||
+          /\bfinal\b/i.test(umStatusDetail)
+      );
+      const mergedState = mergedCompleted
+        ? 'post'
+        : g.statusState === 'in' || g.isLive || umLiveState === 'in' || um.isGameInProgress
+          ? 'in'
+          : g.statusState || umLiveState || '';
+      effectiveGame = {
+        ...g,
+        completed: mergedCompleted,
+        statusState: mergedState,
+        isLive: Boolean(g.isLive || um.isGameInProgress || mergedState === 'in'),
+        statusDetail: g.statusDetail || umStatusDetail || (um.isGameInProgress ? 'In Progress' : ''),
+        completedAt: g.completedAt || um.completedAt || undefined
+      };
+    }
+    out.push({ game: effectiveGame, koMs, key });
   }
 
-  const um = appData?.scheduleMatchup?.upcomingMatchup;
-  const umOpp = String(um?.oppAbbr || '').toUpperCase();
-  if (um && umOpp && umOpp !== 'BYE' && umOpp !== 'TBD' && !um.isTbd && !um.seasonConcluded) {
+  if (
+    um &&
+    umOpp &&
+    umOpp !== 'BYE' &&
+    umOpp !== 'TBD' &&
+    !um.isTbd &&
+    !um.seasonConcluded &&
+    !/\b(postponed|canceled|cancelled)\b/i.test(umStatusDetail)
+  ) {
     const umIso = um.dateIso || um.kickoffIso || '';
     const umKoMs = umIso ? Date.parse(umIso) : NaN;
     const umKey = `REG:${Number(um.week || 0)}`;
@@ -4114,9 +4419,11 @@ function collectScheduleGamesForBrief(appData = null) {
           week: Number(um.week || appData?.meta?.currentWeek || 1),
           seasonType: 'REG',
           dateIso: umIso,
-          completed: Boolean(um.completed),
-          statusState: um.liveState || (um.isGameInProgress ? 'in' : 'pre'),
-          statusDetail: um.isGameInProgress ? 'In Progress' : '',
+          completed: Boolean(um.completed || umLiveState === 'post' || /\bfinal\b/i.test(umStatusDetail)),
+          statusState: umLiveState || (um.isGameInProgress ? 'in' : 'pre'),
+          isLive: Boolean(um.isGameInProgress || umLiveState === 'in'),
+          statusDetail: umStatusDetail || (um.isGameInProgress ? 'In Progress' : ''),
+          completedAt: um.completedAt || undefined,
           opponent: { abbr: um.oppAbbr, name: um.oppName || um.oppAbbr }
         },
         koMs: umKoMs,
@@ -4169,16 +4476,23 @@ export function resolveNewsBriefCycleState(
     const slug = formatGameBriefCycleSlug(game);
     const postGameCycleKey = `${gameDatePt}@postgame-${slug}`;
     const statusStr = String(game.statusDetail || '');
-    const completedFlag = Boolean(game.completed) || /\bfinal\b/i.test(statusStr);
+    const stateLower = String(game.statusState || '').toLowerCase();
+    const completedFlag = Boolean(game.completed) || stateLower === 'post' || /\bfinal\b/i.test(statusStr);
     const completedAtMs = game.completedAt ? Date.parse(game.completedAt) : NaN;
     const isLiveStatus =
-      game.statusState === 'in' ||
-      (!completedFlag && /\b(q[1-4]|1st|2nd|3rd|4th|halftime|in progress|ot|overtime)\b/i.test(statusStr));
+      !completedFlag &&
+      (stateLower === 'in' ||
+        Boolean(game.isLive) ||
+        /\b(q[1-4]|1st|2nd|3rd|4th|halftime|in progress|ot|overtime|end of (?:1st|2nd|3rd|4th)|delayed|weather delay|lightning delay|suspended)\b/i.test(
+          statusStr
+        ));
 
+    // Anchor post-game stream count to actual `completedAtMs` when known so OT/Q4 tweets never bypass the post-whistle buffer!
+    const postGameFloorMs = Number.isFinite(completedAtMs) ? completedAtMs - 2 * 60_000 : koMs + 2.4 * 3600_000;
     let postGameStreamCount = 0;
     for (const it of rawStream) {
       const pMs = resolveEffectivePublishTimestampMs(it, ts);
-      if (Number.isFinite(pMs) && pMs >= koMs + 2.4 * 3600_000) {
+      if (Number.isFinite(pMs) && pMs >= postGameFloorMs) {
         postGameStreamCount += 1;
         if (postGameStreamCount >= 4) break;
       }
@@ -4217,11 +4531,11 @@ export function resolveNewsBriefCycleState(
     return `${priorDatePt}@${peakHourPt}PT`;
   };
 
-  // 1. Check if a game is scheduled today (or currently in its live/post-whistle window across midnight PT)
+  // 1. Check if a game is scheduled today (or currently in its live/OT/delayed post-whistle window across midnight PT)
   const activeOrTodayGame = evaluated.find(
     e =>
       e.gameDatePt === todayPt ||
-      (ts >= e.koMs - GAME_DAY_ABOVE_BRIEF_LEAD_MS && ts <= e.koMs + 8.5 * 3600_000 && !e.isPostGameReady)
+      (ts >= e.koMs - GAME_DAY_ABOVE_BRIEF_LEAD_MS && ts <= e.koMs + 10.5 * 3600_000 && !e.isPostGameReady)
   );
 
   if (activeOrTodayGame) {
@@ -4382,13 +4696,25 @@ export function isDailyBriefStaleForLiveState(brief = null, appData = null, nowM
   const games = collectScheduleGamesForBrief(appData);
   if (games.length === 0) return false;
 
-  // Find the most recent game that has already completed (or passed kickoff + 5.5h) within the last 42h
+  // Find the most recent game that has already completed (or passed kickoff + 5.5h when NOT live/delayed) within the last 42h
   let recentFinished = null;
   for (const entry of games) {
+    const stDetail = String(entry.game.statusDetail || '');
+    const stState = String(entry.game.statusState || '').toLowerCase();
+    const isStillLiveOrDelayed =
+      !entry.game.completed &&
+      stState !== 'post' &&
+      !/\bfinal\b/i.test(stDetail) &&
+      (stState === 'in' ||
+        Boolean(entry.game.isLive) ||
+        /\b(1st|2nd|3rd|4th|q[1-4]|halftime|in progress|ot|overtime|delayed|weather delay|lightning delay|suspended)\b/i.test(
+          stDetail
+        ));
     const completedFlag =
       Boolean(entry.game.completed) ||
-      /\bfinal\b/i.test(String(entry.game.statusDetail || '')) ||
-      ts >= entry.koMs + 5.5 * 3600_000;
+      stState === 'post' ||
+      /\bfinal\b/i.test(stDetail) ||
+      (!isStillLiveOrDelayed && ts >= entry.koMs + 5.5 * 3600_000);
     if (completedFlag && ts >= entry.koMs + 3.25 * 3600_000 && ts - entry.koMs <= 42 * 3600_000) {
       recentFinished = entry;
     }
@@ -4516,13 +4842,29 @@ export function evaluateGameDayAboveBriefWindow(
 
   const gameDatePt = getPacificClockParts(koMs).dateKey;
   const expectedPostGameCycleKey = `${gameDatePt}@postgame-${formatGameBriefCycleSlug(game)}`;
-  const completedFlag = Boolean(game.completed) || /\bfinal\b/i.test(String(game.statusDetail || ''));
-  const phaseLabel =
-    ts < koMs
-      ? 'Pre-Game Inactives & Warmups'
-      : completedFlag || ts >= koMs + 3.4 * 3600_000
+  const statusStr = String(game.statusDetail || '');
+  const stateLower = String(game.statusState || '').toLowerCase();
+  const completedFlag = Boolean(game.completed) || stateLower === 'post' || /\bfinal\b/i.test(statusStr);
+  const isExplicitLive =
+    !completedFlag &&
+    (stateLower === 'in' ||
+      Boolean(game.isLive) ||
+      /\b(q[1-4]|1st|2nd|3rd|4th|halftime|in progress|ot|overtime|end of (?:1st|2nd|3rd|4th))\b/i.test(statusStr));
+  const isDelayed = !completedFlag && !isExplicitLive && /\b(delayed|weather delay|lightning delay|suspended)\b/i.test(statusStr);
+
+  const phaseLabel = isExplicitLive
+    ? /\b(ot|overtime)\b/i.test(statusStr)
+      ? 'Overtime Live Wire'
+      : 'Live In-Game Wire'
+    : isDelayed
+      ? 'Delayed Kickoff • Live Wire'
+      : completedFlag
         ? 'Post-Game Live Wire'
-        : 'Live In-Game Wire';
+        : ts < koMs
+          ? 'Pre-Game Inactives & Warmups'
+          : ts >= koMs + 3.4 * 3600_000
+            ? 'Post-Game Live Wire'
+            : 'Live In-Game Wire';
 
   return {
     active: true,
@@ -4549,7 +4891,7 @@ function resolveClusterLatestTimestampMs(item = {}, nowMs = Date.now()) {
 
 /**
  * Partitions a prioritized, deduplicated news stream relative to `dailyBrief`:
- * - Standard Mode: Active urgent breaking news (`BREAKING`, `LIVE INJURY UPDATE`, `LIVE IN-GAME`)
+ * - Standard Mode: Active urgent breaking news (`BREAKING`, `LIVE INJURY UPDATE`)
  *   that is NOT already covered in `dailyBrief` (up to 3 items) rises ABOVE the summary block.
  * - Game-Day Mode (`options.promoteAllGameDayNews === true` inside `[T-90m, Post-Game Brief Formed)`):
  *   ALL new news arriving from `T-90m` onward stacks ABOVE the summary card until the post-game AI
@@ -4621,8 +4963,8 @@ export function partitionBreakingNewsAboveBrief(
     }
 
     breakingAboveBrief.sort((a, b) => {
-      const aInj = a?.isInGameInjury ? 1 : 0;
-      const bInj = b?.isInGameInjury ? 1 : 0;
+      const aInj = a?.isInGameInjury && isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
+      const bInj = b?.isInGameInjury && isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;
       if (aInj !== bInj) return bInj - aInj;
       const aUrg = isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
       const bUrg = isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;

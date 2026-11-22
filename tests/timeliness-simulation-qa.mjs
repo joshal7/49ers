@@ -1258,6 +1258,284 @@ await runSim('Scenario 11 [Playable Video Preservation]: Standalone YouTube film
   assert.equal(classifyNewsItemCategory(qbSchoolXClip), 'film', '@theqbschool X video breakdown must classify into Film & Trench');
 });
 
+// ---------------------------------------------------------------------------
+// Scenario 12: End-to-End SNF Game-Day Lifecycle — T-89m Inactives -> OT Injury -> Immediate Post-Final Rollover
+// ---------------------------------------------------------------------------
+await runSim('Scenario 12 [SNF Game-Day Lifecycle & Post-Final Rollover]: hydrateLiveGameDayRosters signals gameDayChanged on new inactives, preserves OT injured starter across ESPN post-Final rollover, and blanks W/T/F', async () => {
+  const { hydrateLiveGameDayRosters, hydrateLiveEspnOverlay } = await import('../src/services/dataService.js');
+  const koIso = '2026-11-23T01:20:00Z'; // Sun Nov 22, 5:20 PM PT SNF
+  const koMs = Date.parse(koIso);
+
+  const snfApp = {
+    meta: { seasonYear: 2026, currentWeek: 11, teamStatus: { currentWeek: 11 } },
+    roster: {
+      players: [
+        {
+          id: '3040151',
+          name: 'George Kittle',
+          position: 'TE',
+          unit: 'Offense',
+          jersey: 85,
+          rosterBucket: 'active',
+          isStarter: true,
+          primarySnapPct: 88,
+          recentNews: [],
+          health: {
+            status: 'Active',
+            injuryType: '',
+            playProbabilityPct: 95,
+            playTier: 'ACTIVE',
+            playBadgeLabel: '95% • Full Go',
+            wed: '-',
+            thu: '-',
+            fri: '-'
+          }
+        },
+        {
+          id: '16737',
+          name: 'Mike Evans',
+          position: 'WR',
+          unit: 'Offense',
+          jersey: 13,
+          rosterBucket: 'active',
+          isStarter: true,
+          primarySnapPct: 80,
+          recentNews: [],
+          health: {
+            status: 'Questionable',
+            injuryType: 'Achilles',
+            playProbabilityPct: 55,
+            playTier: 'QUESTIONABLE',
+            playBadgeLabel: '55% • Questionable',
+            wed: 'DNP',
+            thu: 'LP',
+            fri: 'LP'
+          }
+        },
+        {
+          id: '90001',
+          name: 'Kurtis Rourke',
+          position: 'QB',
+          unit: 'Offense',
+          jersey: 17,
+          rosterBucket: 'active',
+          recentNews: [],
+          health: { status: 'Active', injuryType: '', playProbabilityPct: 95, playTier: 'ACTIVE', playBadgeLabel: '95% • Full Go' }
+        },
+        {
+          id: '90002',
+          name: 'Ben Bartch',
+          position: 'OL',
+          unit: 'Offense',
+          jersey: 78,
+          rosterBucket: 'active',
+          recentNews: [],
+          health: { status: 'Active', injuryType: '', playProbabilityPct: 95, playTier: 'ACTIVE', playBadgeLabel: '95% • Full Go' }
+        }
+      ]
+    },
+    health: {
+      week: 11,
+      byeWeek: 8,
+      practiceReport: [
+        {
+          playerId: '16737',
+          name: 'Mike Evans',
+          position: 'WR',
+          unit: 'Offense',
+          isStarter: true,
+          wed: 'DNP',
+          thu: 'LP',
+          fri: 'LP',
+          gameStatus: 'Questionable',
+          injuryType: 'Achilles',
+          playProbabilityPct: 55,
+          tier: 'QUESTIONABLE',
+          badgeLabel: '55% • Questionable'
+        }
+      ],
+      irReserve: []
+    },
+    news: { rawStream: [] },
+    scheduleMatchup: {
+      upcomingMatchup: {
+        week: 11,
+        gameId: '401873077',
+        oppAbbr: 'MIN',
+        oppName: 'Minnesota Vikings',
+        dateIso: koIso,
+        kickoffIso: koIso,
+        liveState: 'pre',
+        isGameInProgress: false,
+        completed: false,
+        opponentHealth: {
+          teamAbbr: 'MIN',
+          teamName: 'Minnesota Vikings',
+          activeRoster: [
+            { id: 'm1', name: 'Max Brosmer', position: 'QB', rosterBucket: 'active' },
+            { id: 'm2', name: 'Harrison Smith', position: 'S', rosterBucket: 'active', isStarter: true },
+            { id: 'm3', name: 'Christian Darrisaw', position: 'OT', rosterBucket: 'active', isStarter: true }
+          ],
+          injuryReport: [],
+          keyStartersHealthy: [],
+          irReserve: []
+        }
+      },
+      schedule: [
+        {
+          id: '401873077',
+          week: 11,
+          seasonType: 'REG',
+          dateIso: koIso,
+          completed: false,
+          statusState: 'pre',
+          opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+        },
+        {
+          id: '401873099',
+          week: 12,
+          seasonType: 'REG',
+          dateIso: '2026-11-29T21:25:00Z',
+          completed: false,
+          statusState: 'pre',
+          opponent: { abbr: 'SEA', name: 'Seattle Seahawks' }
+        }
+      ]
+    }
+  };
+
+  const origFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response('', { status: 404 });
+  try {
+    // T-88m: Official inactives arrive via multi-line beat tweet -> hydrateLiveGameDayRosters MUST return true (changed!)
+    snfApp.news.rawStream.push({
+      id: 'snf_inact_list',
+      type: 'tweet',
+      author: 'Matt Maiocco',
+      trustTier: 1,
+      title: '49ers inactives vs. Vikings:\nQB Kurtis Rourke (3rd QB)\nWR Mike Evans\nOL Ben Bartch',
+      fullText: '49ers inactives vs. Vikings:\nQB Kurtis Rourke (3rd QB)\nWR Mike Evans\nOL Ben Bartch',
+      publishedAt: new Date(koMs - 88 * 60_000).toISOString()
+    });
+    const firstChanged = await hydrateLiveGameDayRosters(snfApp, koMs - 87 * 60_000, { prefs: {} });
+    assert.equal(firstChanged, true, 'First game-day hydration with newly posted inactives must signal gameDayChanged: true');
+    assert.equal(snfApp.health.gameDayRoster.officialPosted, true);
+    assert.equal(
+      snfApp.roster.players.find(p => p.name === 'Mike Evans').health.playBadgeLabel,
+      '0% • Out (Inactive)'
+    );
+
+    // Repeating with identical state returns false (no wasted re-renders)
+    const repeatChanged = await hydrateLiveGameDayRosters(snfApp, koMs - 86 * 60_000, { prefs: {} });
+    assert.equal(repeatChanged, false, 'Identical game-day state must return gameDayChanged: false');
+
+    // Overtime at ko + 5.6h: George Kittle suffers rib injury and is ruled out
+    const otMs = koMs + 5.6 * 3600_000;
+    snfApp.scheduleMatchup.schedule[0].statusState = 'in';
+    snfApp.scheduleMatchup.schedule[0].isLive = true;
+    snfApp.scheduleMatchup.schedule[0].statusDetail = 'OT - 3:45';
+    snfApp.scheduleMatchup.upcomingMatchup.liveState = 'in';
+    snfApp.scheduleMatchup.upcomingMatchup.isGameInProgress = true;
+    snfApp.scheduleMatchup.upcomingMatchup.statusDetail = 'OT - 3:45';
+    snfApp.news.rawStream.unshift({
+      id: 'kittle_ot_out',
+      type: 'tweet',
+      author: 'Matt Maiocco',
+      trustTier: 1,
+      title: '49ers TE George Kittle (ribs) has been ruled out for the rest of tonight’s game.',
+      fullText: '49ers TE George Kittle (ribs) has been ruled out for the rest of tonight’s game.',
+      publishedAt: new Date(otMs - 60_000).toISOString()
+    });
+
+    const otChanged = await hydrateLiveGameDayRosters(snfApp, otMs, { prefs: {} });
+    assert.equal(otChanged, true, 'New OT injury must signal gameDayChanged: true');
+    const kittleLive = snfApp.roster.players.find(p => p.name === 'George Kittle');
+    assert.equal(kittleLive.health.playBadgeLabel, '0% • Out (In-Game)');
+    assert.equal(kittleLive.health.sustainedInLastGame, true, 'OT injured starter must stamp sustainedInLastGame');
+    assert.ok(
+      Array.isArray(snfApp.health._liveSustainedInGameRows) &&
+        snfApp.health._liveSustainedInGameRows.some(r => r.name === 'George Kittle'),
+      'Sustained OT injury must be cached on _liveSustainedInGameRows before ESPN post-Final rollover'
+    );
+
+    // 1 minute after Final: ESPN marks Week 11 Final (and hasn't added Kittle to /injuries yet!)
+    const postFinalMs = otMs + 15 * 60_000;
+    globalThis.fetch = async url => {
+      const u = String(url);
+      if (u.includes('/teams/sf/schedule')) {
+        return new Response(
+          JSON.stringify({
+            events: [
+              {
+                id: '401873077',
+                date: koIso,
+                season: { type: 2 },
+                week: { number: 11 },
+                competitions: [
+                  {
+                    status: { type: { state: 'post', completed: true, shortDetail: 'Final/OT' } },
+                    competitors: [
+                      { id: '25', homeAway: 'home', score: { value: 27 }, team: { abbreviation: 'SF', displayName: 'San Francisco 49ers' } },
+                      { id: '16', homeAway: 'away', score: { value: 24 }, team: { abbreviation: 'MIN', displayName: 'Minnesota Vikings' } }
+                    ]
+                  }
+                ]
+              },
+              {
+                id: '401873099',
+                date: '2026-11-29T21:25:00Z',
+                season: { type: 2 },
+                week: { number: 12 },
+                competitions: [
+                  {
+                    status: { type: { state: 'pre', completed: false, shortDetail: '11/29 - 4:25 PM EST' } },
+                    competitors: [
+                      { id: '25', homeAway: 'away', team: { abbreviation: 'SF', displayName: 'San Francisco 49ers' } },
+                      { id: '26', homeAway: 'home', team: { abbreviation: 'SEA', displayName: 'Seattle Seahawks' } }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }),
+          { status: 200 }
+        );
+      }
+      if (u.includes('/injuries?team=sf')) {
+        // ESPN hasn't added Kittle's brand-new OT rib injury yet!
+        return new Response(JSON.stringify({ injuries: [{ team: { abbreviation: 'SF' }, injuries: [] }] }), { status: 200 });
+      }
+      return new Response('', { status: 404 });
+    };
+
+    const overlayMutated = await hydrateLiveEspnOverlay(snfApp);
+    assert.equal(overlayMutated, true, 'Post-Final overlay must return mutated: true');
+    assert.equal(snfApp.health.week, 12, 'Post-Final overlay advances health week to 12');
+    assert.equal(snfApp.health.gameDayRoster, null, 'Post-Final overlay atomically retires game-day roster at Final');
+    assert.notEqual(
+      snfApp.roster.players.find(p => p.name === 'George Kittle').health.playBadgeLabel,
+      '95% • Full Go',
+      'Immediate post-Final ESPN overlay must NOT wipe OT-injured George Kittle back to 95% Full Go!'
+    );
+
+    const kittleWk12Row = snfApp.health.practiceReport.find(r => r.name === 'George Kittle');
+    assert.ok(kittleWk12Row, 'OT-injured George Kittle must roll onto Week 12 practice report instead of vanishing!');
+    assert.equal(kittleWk12Row.wed, '-', 'Week 12 early-week practice report W must be blank');
+    assert.equal(kittleWk12Row.thu, '-', 'Week 12 early-week practice report T must be blank');
+    assert.equal(kittleWk12Row.fri, '-', 'Week 12 early-week practice report F must be blank');
+    assert.ok(
+      kittleWk12Row.playProbabilityPct > 0 && kittleWk12Row.playProbabilityPct < 90,
+      `Kittle Week 12 rolled play probability must reflect injury uncertainty (0 < pct < 90), got ${kittleWk12Row.playProbabilityPct}`
+    );
+
+    // Calling hydrateLiveGameDayRosters again after rollover is an idempotent no-op
+    const repeatPost = await hydrateLiveGameDayRosters(snfApp, postFinalMs, { prefs: {} });
+    assert.equal(repeatPost, false, 'Repeated post-Final game-day hydration is an idempotent no-op');
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+});
+
 console.log(`\nTimeliness Simulation Summary: ${passed} passed, ${failed} failed.\n`);
 if (failed > 0) {
   process.exit(1);

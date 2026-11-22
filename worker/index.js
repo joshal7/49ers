@@ -35,10 +35,13 @@ import {
   NOTEBOOKLM_VOICE_PROFILES
 } from '../src/engine/geminiStudioPrompts.js';
 import {
+  ESPN_NFL_TEAM_IDS,
   NFL_TEAM_OFFICIAL_RSS_URLS,
   normalizeCanonicalTeamAbbr,
   discoverOfficialClubInactivesRssItem,
-  parseRotoWireInactivesHtml
+  parseOfficialClubInactivesArticle,
+  parseRotoWireInactivesHtml,
+  parseEspnCoreEventRosterInactives
 } from '../src/engine/gameDayRosterEngine.js';
 import {
   isAllowedInlineVideoStreamUrl,
@@ -983,7 +986,13 @@ export async function overlayLiveEspnScheduleForBrief(
     const isCompleted = Boolean(statusType.completed) || String(statusType.state || '').toLowerCase() === 'post';
     const stateStr = String(statusType.state || '').toLowerCase();
 
-    if (ev.date && !target.dateIso) target.dateIso = ev.date;
+    if (ev.date) {
+      const liveEvMs = Date.parse(ev.date);
+      const prevMs = target.dateIso ? Date.parse(target.dateIso) : NaN;
+      if (Number.isFinite(liveEvMs) && (!Number.isFinite(prevMs) || Math.abs(liveEvMs - prevMs) >= 60_000)) {
+        target.dateIso = ev.date;
+      }
+    }
     if (stateStr) target.statusState = stateStr;
     if (statusType.shortDetail || statusType.description) {
       target.statusDetail = statusType.shortDetail || statusType.description;
@@ -1581,10 +1590,12 @@ export default {
       const seasonYear = Number(url.searchParams.get('seasonYear') || 2026);
       const week = Number(url.searchParams.get('week') || 0) || null;
       const oppName = String(url.searchParams.get('oppName') || '').slice(0, 48);
+      const gameId = String(url.searchParams.get('gameId') || '').trim();
+      const kickoffMsParam = Number(url.searchParams.get('kickoffMs') || 0) || 0;
       const allowAiFallback = url.searchParams.get('aiFallback') === '1';
       const oppAbbr = teams.find(t => t !== 'SF') || '';
 
-      const kvKey = `gameday_inact_v1:${seasonYear}:wk${week || 'cur'}:${teams.join('-')}`;
+      const kvKey = `gameday_inact_v2:${seasonYear}:wk${week || 'cur'}:${teams.join('-')}`;
       const cachedInact = await env.SHARED_CACHE?.get(kvKey, 'json');
       if (
         cachedInact &&
@@ -1614,14 +1625,118 @@ export default {
       ]);
 
       const rwByTeam = parseRotoWireInactivesHtml(rwHtml, teams);
+      const discoveredByTeam = {};
       const sourceUrlByTeam = {};
       teams.forEach((abbr, idx) => {
-        const discovered = discoverOfficialClubInactivesRssItem(clubRssXmls[idx] || '', { week });
-        if (discovered?.url) sourceUrlByTeam[abbr] = discovered.url;
+        const discovered = discoverOfficialClubInactivesRssItem(clubRssXmls[idx] || '', {
+          kickoffMs: kickoffMsParam,
+          week
+        });
+        if (discovered?.url) {
+          discoveredByTeam[abbr] = discovered;
+          sourceUrlByTeam[abbr] = discovered.url;
+        }
       });
 
-      let sfList = rwByTeam.SF || [];
-      let oppList = oppAbbr ? rwByTeam[oppAbbr] || [] : [];
+      // Server-side (zero-CORS) fetch & parse of discovered official club inactives articles (`49ers.com` + opponent `<club>.com`)
+      const clubParsedByTeam = {};
+      await Promise.all(
+        teams.map(async abbr => {
+          const disc = discoveredByTeam[abbr];
+          if (!disc?.url) return;
+          let artHtml = '';
+          try {
+            const artRes = await fetch(disc.url, {
+              headers: { 'User-Agent': 'Mozilla/5.0 (compatible; 49ersFaithfulEdge/1.0)' },
+              signal: AbortSignal.timeout(5500)
+            });
+            if (artRes.ok) artHtml = await artRes.text();
+          } catch {}
+          const parseSource = artHtml || disc.inlineHtml || disc.description || '';
+          if (!parseSource) return;
+          const parsed = parseOfficialClubInactivesArticle(parseSource, [], {
+            week,
+            teamAbbr: abbr,
+            teamName: abbr === 'SF' ? 'San Francisco 49ers' : abbr === oppAbbr ? oppName : ''
+          });
+          if (parsed.officialPosted) {
+            clubParsedByTeam[abbr] = parsed;
+          }
+        })
+      );
+
+      let sfList = [];
+      let sfEmergencyQbNames = [];
+      let sfSourceRank = 0;
+      let sfSourceLabel = 'RotoWire NFL Inactives';
+      if (clubParsedByTeam.SF?.inactives?.length >= 3) {
+        sfList = clubParsedByTeam.SF.inactives;
+        sfEmergencyQbNames = clubParsedByTeam.SF.inactives
+          .filter(p => clubParsedByTeam.SF.emergencyQbKeys?.has(String(p.name || '').toLowerCase().replace(/[^a-z0-9]/g, '')))
+          .map(p => p.name);
+        sfSourceRank = 4;
+        sfSourceLabel = '49ers.com Official';
+      } else if ((rwByTeam.SF || []).length >= 3) {
+        sfList = rwByTeam.SF;
+        sfSourceRank = 3;
+        sfSourceLabel = sourceUrlByTeam.SF ? '49ers.com Official' : 'RotoWire NFL Inactives';
+      }
+
+      let oppList = [];
+      let oppEmergencyQbNames = [];
+      let oppSourceRank = 0;
+      let oppSourceLabel = 'RotoWire NFL Inactives';
+      if (oppAbbr) {
+        if (clubParsedByTeam[oppAbbr]?.inactives?.length >= 3) {
+          oppList = clubParsedByTeam[oppAbbr].inactives;
+          oppEmergencyQbNames = clubParsedByTeam[oppAbbr].inactives
+            .filter(p =>
+              clubParsedByTeam[oppAbbr].emergencyQbKeys?.has(String(p.name || '').toLowerCase().replace(/[^a-z0-9]/g, ''))
+            )
+            .map(p => p.name);
+          oppSourceRank = 4;
+          oppSourceLabel = `${oppAbbr} Official`;
+        } else if ((rwByTeam[oppAbbr] || []).length >= 3) {
+          oppList = rwByTeam[oppAbbr];
+          oppSourceRank = 3;
+          oppSourceLabel = sourceUrlByTeam[oppAbbr] ? `${oppAbbr} Official` : 'RotoWire NFL Inactives';
+        }
+      }
+
+      // ESPN Core Event Competitor Roster fallback if gameId is known and club/RotoWire haven't posted yet
+      if (/^\d{6,12}$/.test(gameId) && (sfList.length < 3 || (oppAbbr && oppList.length < 3))) {
+        const espnTargets = [];
+        if (sfList.length < 3) espnTargets.push('SF');
+        if (oppAbbr && oppList.length < 3) espnTargets.push(oppAbbr);
+        await Promise.all(
+          espnTargets.map(async abbr => {
+            const tid = ESPN_NFL_TEAM_IDS[abbr];
+            if (!tid) return;
+            try {
+              const eUrl = `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/${encodeURIComponent(gameId)}/competitions/${encodeURIComponent(gameId)}/competitors/${tid}/roster`;
+              const eRes = await fetch(eUrl, {
+                headers: { 'User-Agent': '49ersFaithfulEdge/1.0' },
+                signal: AbortSignal.timeout(5000)
+              });
+              if (!eRes.ok) return;
+              const eJson = await eRes.json();
+              const parsed = parseEspnCoreEventRosterInactives(eJson, []);
+              if (parsed.officialPosted) {
+                if (abbr === 'SF' && sfList.length < 3) {
+                  sfList = parsed.inactives;
+                  sfSourceRank = 3;
+                  sfSourceLabel = 'ESPN Official Game Roster';
+                } else if (abbr === oppAbbr && oppList.length < 3) {
+                  oppList = parsed.inactives;
+                  oppSourceRank = 3;
+                  oppSourceLabel = 'ESPN Official Game Roster';
+                }
+              }
+            } catch {}
+          })
+        );
+      }
+
       let modelUsed = null;
 
       // Top-Tier-Minus-1 Free Flash Fallback (`gemini-3.8-flash` today, auto-incrementing via `/v1beta/models`)
@@ -1680,9 +1795,13 @@ export default {
                 const parsed = JSON.parse(jm[0]);
                 if (sfList.length < 3 && Array.isArray(parsed.sf) && parsed.sf.length >= 3) {
                   sfList = parsed.sf;
+                  sfSourceRank = 1;
+                  sfSourceLabel = 'Grounded NFL Wire';
                 }
                 if (oppAbbr && oppList.length < 3 && Array.isArray(parsed.opp) && parsed.opp.length >= 3) {
                   oppList = parsed.opp;
+                  oppSourceRank = 1;
+                  oppSourceLabel = 'Grounded NFL Wire';
                 }
                 modelUsed = targetModel;
               }
@@ -1698,17 +1817,21 @@ export default {
         modelUsed,
         sf: {
           officialPosted: sfList.length >= 3,
+          sourceRank: sfSourceRank,
           inactives: sfList,
+          emergencyQbNames: sfEmergencyQbNames,
           sourceUrl: sourceUrlByTeam.SF || 'https://www.rotowire.com/football/inactives.php',
-          sourceLabel: sourceUrlByTeam.SF ? '49ers.com Official' : 'RotoWire NFL Inactives'
+          sourceLabel: sfSourceLabel
         },
         opp: oppAbbr
           ? {
               teamAbbr: oppAbbr,
               officialPosted: oppList.length >= 3,
+              sourceRank: oppSourceRank,
               inactives: oppList,
+              emergencyQbNames: oppEmergencyQbNames,
               sourceUrl: sourceUrlByTeam[oppAbbr] || 'https://www.rotowire.com/football/inactives.php',
-              sourceLabel: sourceUrlByTeam[oppAbbr] ? `${oppAbbr} Official` : 'RotoWire NFL Inactives'
+              sourceLabel: oppSourceLabel
             }
           : null
       };

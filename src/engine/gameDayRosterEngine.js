@@ -14,6 +14,14 @@ export { getPracticeReportLeadDays };
 
 export const GAME_DAY_INACTIVES_LEAD_MS = 90 * 60_000; // 90 minutes before kickoff
 const MAX_LIVE_GAME_DURATION_MS = 5.25 * 3600_000;
+const MAX_EXTENDED_LIVE_GAME_DURATION_MS = 10 * 3600_000; // Covers multi-hour weather delays + OT when ESPN confirms live/delayed
+
+const LIVE_STATUS_DETAIL_RE =
+  /\b(?:1st|2nd|3rd|4th|q[1-4]|halftime|\bot\b|overtime|end of (?:1st|2nd|3rd|4th)|in progress)\b/i;
+const DELAYED_STATUS_DETAIL_RE = /\b(?:delayed|weather\s+delay|lightning\s+delay|suspended)\b/i;
+const POSTPONED_STATUS_DETAIL_RE = /\b(?:postponed|canceled|cancelled)\b/i;
+const FINAL_STATUS_DETAIL_RE = /\bfinal\b/i;
+const OVERTIME_STATUS_DETAIL_RE = /\b(?:ot|overtime)\b/i;
 
 const OFFENSE_POS_ORDER = {
   QB: 1,
@@ -107,15 +115,71 @@ export function evaluateGameDayWindow(scheduleOrGame = [], upcomingMatchupOrNow 
   }
 
   const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
-  const candidates = [...schedule];
-
+  const umWeek = Number(upcomingMatchup?.week || 0) || null;
+  const umGameId = upcomingMatchup?.gameId || upcomingMatchup?.id ? String(upcomingMatchup.gameId || upcomingMatchup.id) : null;
   const umDateIso = upcomingMatchup?.dateIso || upcomingMatchup?.kickoffIso || '';
-  if (umDateIso && !candidates.some(g => Number(g?.week) === Number(upcomingMatchup.week))) {
+  const umStatusDetail = String(upcomingMatchup?.statusDetail || '').trim();
+  const umLiveState = String(upcomingMatchup?.liveState || '').toLowerCase();
+
+  const candidates = schedule.map(rawG => {
+    if (!rawG || typeof rawG !== 'object') return rawG;
+    const gWeek = Number(rawG.week || 0) || null;
+    const gId = rawG.id || rawG.gameId ? String(rawG.id || rawG.gameId) : null;
+    const matchesUm =
+      Boolean(upcomingMatchup) &&
+      ((umGameId && gId && umGameId === gId) || (umWeek && gWeek && umWeek === gWeek));
+    if (!matchesUm) return rawG;
+
+    const gStatusState = String(rawG.statusState || '').toLowerCase();
+    const gStatusDetail = String(rawG.statusDetail || '').trim();
+    const mergedCompleted = Boolean(
+      rawG.completed ||
+        gStatusState === 'post' ||
+        FINAL_STATUS_DETAIL_RE.test(gStatusDetail) ||
+        upcomingMatchup.completed ||
+        umLiveState === 'post' ||
+        FINAL_STATUS_DETAIL_RE.test(umStatusDetail)
+    );
+    const mergedStatusState = mergedCompleted
+      ? 'post'
+      : gStatusState === 'in' || rawG.isLive || umLiveState === 'in' || upcomingMatchup.isGameInProgress
+        ? 'in'
+        : gStatusState || umLiveState || '';
+    const mergedStatusDetail =
+      (LIVE_STATUS_DETAIL_RE.test(umStatusDetail) ||
+        DELAYED_STATUS_DETAIL_RE.test(umStatusDetail) ||
+        POSTPONED_STATUS_DETAIL_RE.test(umStatusDetail) ||
+        FINAL_STATUS_DETAIL_RE.test(umStatusDetail)) &&
+      !(
+        LIVE_STATUS_DETAIL_RE.test(gStatusDetail) ||
+        DELAYED_STATUS_DETAIL_RE.test(gStatusDetail) ||
+        POSTPONED_STATUS_DETAIL_RE.test(gStatusDetail) ||
+        FINAL_STATUS_DETAIL_RE.test(gStatusDetail)
+      )
+        ? umStatusDetail
+        : gStatusDetail || umStatusDetail;
+
+    return {
+      ...rawG,
+      dateIso: rawG.dateIso || rawG.kickoffIso || umDateIso,
+      completed: mergedCompleted,
+      statusState: mergedStatusState,
+      isLive: Boolean(rawG.isLive || upcomingMatchup.isGameInProgress || mergedStatusState === 'in'),
+      statusDetail: mergedStatusDetail
+    };
+  });
+
+  if (umDateIso && !candidates.some(g => (umGameId && String(g?.id || g?.gameId || '') === umGameId) || (umWeek && Number(g?.week) === umWeek))) {
     candidates.push({
-      id: upcomingMatchup.gameId || upcomingMatchup.id || `wk_${upcomingMatchup.week}`,
+      id: umGameId || `wk_${upcomingMatchup.week}`,
       week: upcomingMatchup.week,
       dateIso: umDateIso,
-      completed: Boolean(upcomingMatchup.completed),
+      completed: Boolean(
+        upcomingMatchup.completed || umLiveState === 'post' || FINAL_STATUS_DETAIL_RE.test(umStatusDetail)
+      ),
+      statusState: umLiveState || (upcomingMatchup.isGameInProgress ? 'in' : ''),
+      isLive: Boolean(upcomingMatchup.isGameInProgress || umLiveState === 'in'),
+      statusDetail: umStatusDetail,
       opponent: {
         abbr: upcomingMatchup.oppAbbr || upcomingMatchup.opponent?.abbr,
         name: upcomingMatchup.oppName || upcomingMatchup.opponent?.name
@@ -124,15 +188,31 @@ export function evaluateGameDayWindow(scheduleOrGame = [], upcomingMatchupOrNow 
   }
 
   for (const g of candidates) {
-    if (!g || g.completed || g.isByeWeek || g.opponent?.isTbd) continue;
+    if (!g || g.isByeWeek || g.opponent?.isTbd) continue;
+    const statusState = String(g.statusState || '').toLowerCase();
+    const statusDetail = String(g.statusDetail || '').trim();
+    const isCompleted = Boolean(g.completed || statusState === 'post' || FINAL_STATUS_DETAIL_RE.test(statusDetail));
+    if (isCompleted) continue;
+    if (POSTPONED_STATUS_DETAIL_RE.test(statusDetail)) continue;
+
     const kickoffMs = Date.parse(g.dateIso || g.kickoffIso || '');
     if (!Number.isFinite(kickoffMs)) continue;
 
+    const isDelayed = DELAYED_STATUS_DETAIL_RE.test(statusDetail);
+    const isExplicitLive = Boolean(
+      statusState === 'in' || g.isLive || LIVE_STATUS_DETAIL_RE.test(statusDetail)
+    );
+    const isOvertime = OVERTIME_STATUS_DETAIL_RE.test(statusDetail);
+
     const windowStartMs = kickoffMs - GAME_DAY_INACTIVES_LEAD_MS;
-    const safetyEndMs = kickoffMs + MAX_LIVE_GAME_DURATION_MS;
-    if (ts >= windowStartMs && ts <= safetyEndMs) {
+    const safetyEndMs =
+      kickoffMs + (isExplicitLive || isDelayed ? MAX_EXTENDED_LIVE_GAME_DURATION_MS : MAX_LIVE_GAME_DURATION_MS);
+
+    if ((ts >= windowStartMs && ts <= safetyEndMs) || (isExplicitLive && ts <= kickoffMs + MAX_EXTENDED_LIVE_GAME_DURATION_MS)) {
       const minutesUntilKickoff = Math.round((kickoffMs - ts) / 60_000);
-      const hasKickoffStarted = ts >= kickoffMs;
+      // If ESPN explicitly reports live play, kickoff has started (even if clock is 1-2m early).
+      // If ESPN explicitly reports a pre-kickoff weather delay (not live yet), hold in pregame phase!
+      const hasKickoffStarted = isExplicitLive ? true : isDelayed ? false : ts >= kickoffMs;
       return {
         isActive: true,
         phase: hasKickoffStarted ? 'in_game' : 'pregame',
@@ -140,10 +220,14 @@ export function evaluateGameDayWindow(scheduleOrGame = [], upcomingMatchupOrNow 
         week: Number(g.week || upcomingMatchup?.week || 0) || null,
         kickoffIso: g.dateIso || g.kickoffIso,
         kickoffMs,
+        safetyEndMs,
         minutesUntilKickoff,
         minutesToKickoff: minutesUntilKickoff,
         hasKickoffStarted,
-        statusDetail: g.statusDetail || '',
+        isExplicitLive,
+        isDelayed,
+        isOvertime,
+        statusDetail,
         oppAbbr: g.opponent?.abbr || g.oppAbbr || upcomingMatchup?.oppAbbr || null,
         oppName: g.opponent?.name || g.oppName || upcomingMatchup?.oppName || null
       };
@@ -157,9 +241,13 @@ export function evaluateGameDayWindow(scheduleOrGame = [], upcomingMatchupOrNow 
     week: null,
     kickoffIso: null,
     kickoffMs: null,
+    safetyEndMs: null,
     minutesUntilKickoff: null,
     minutesToKickoff: null,
     hasKickoffStarted: false,
+    isExplicitLive: false,
+    isDelayed: false,
+    isOvertime: false,
     statusDetail: '',
     oppAbbr: null,
     oppName: null
@@ -280,6 +368,14 @@ export const NFL_TEAM_OFFICIAL_RSS_URLS = {
   WSH: 'https://www.commanders.com/rss/news'
 };
 
+export const ESPN_NFL_TEAM_IDS = {
+  ARI: 22, ATL: 1, BAL: 33, BUF: 2, CAR: 29, CHI: 3, CIN: 4, CLE: 5,
+  DAL: 6, DEN: 7, DET: 8, GB: 9, HOU: 34, IND: 11, JAX: 30, JAC: 30,
+  KC: 12, LAC: 24, LAR: 14, LA: 14, LV: 13, MIA: 15, MIN: 16, NE: 17,
+  NO: 18, NYG: 19, NYJ: 20, PHI: 21, PIT: 23, SEA: 26, SF: 25, TB: 27,
+  TEN: 10, WAS: 28, WSH: 28
+};
+
 export function normalizeCanonicalTeamAbbr(abbr = '') {
   const up = String(abbr || '').trim().toUpperCase();
   if (up === 'WSH') return 'WAS';
@@ -306,42 +402,225 @@ function decodeHtmlEntitiesBasic(str = '') {
     .replace(/&mdash;|&ndash;/gi, '-');
 }
 
+const AMBIGUOUS_COMMON_SURNAMES = new Set([
+  'baker', 'ball', 'banks', 'bates', 'bell', 'best', 'black', 'brooks', 'brown', 'burns', 'bush',
+  'chase', 'cook', 'cross', 'fields', 'ford', 'grant', 'gray', 'green', 'hall', 'hardy', 'hayes',
+  'henry', 'hill', 'hooks', 'house', 'hunt', 'jones', 'kelly', 'king', 'lewis', 'long', 'love',
+  'lowe', 'mason', 'miles', 'moore', 'moss', 'nash', 'neal', 'pace', 'page', 'parks', 'payne',
+  'perry', 'pierce', 'price', 'quick', 'ray', 'reed', 'rice', 'rivers', 'ross', 'rush', 'scott',
+  'sharp', 'short', 'sims', 'small', 'smart', 'smith', 'snow', 'sparks', 'speed', 'steel', 'stone',
+  'strong', 'sweet', 'swift', 'taylor', 'thomas', 'walker', 'ward', 'watts', 'webb', 'wells',
+  'west', 'white', 'wills', 'wilson', 'winters', 'wise', 'wolf', 'wood', 'woods', 'wright', 'young'
+]);
+
+const NON_FIRST_NAME_LEAD_WORDS = new Set([
+  'qb', 'rb', 'fb', 'wr', 'te', 'ol', 'ot', 'og', 'dl', 'de', 'dt', 'nt', 'edge', 'lb', 'ilb', 'olb',
+  'cb', 'db', 'fs', 'ss', 'pk', 'ls', 't', 'g', 'c', 's', 'k', 'p',
+  'coach', '49ers', 'niners', 'sf', 'san', 'francisco', 'vikings', 'minnesota', 'min', 'cowboys', 'seahawks',
+  'rams', 'cardinals', 'eagles', 'lions', 'packers', 'bears', 'chiefs', 'bills', 'ravens', 'bengals',
+  'update', 'injury', 'status', 'report', 'breaking', 'news', 'source', 'sources', 'watch',
+  'on', 'for', 'with', 'without', 'says', 'said', 'per', 'from', 'the', 'and', 'while', 'but',
+  'still', 'now', 'after', 'before', 'both', 'also', 'expect', 'expected', 'ruled', 'active', 'inactive',
+  'star', 'starter', 'veteran', 'rookie', 'pro', 'bowl', 'all-pro', 'safety', 'tackle', 'guard', 'center',
+  'quarterback', 'receiver', 'linebacker', 'cornerback', 'defensive', 'offensive', 'running', 'tight'
+]);
+
+const NFL_TEAM_NICKNAME_MAP = {
+  ARI: ['cardinals', 'arizona'],
+  ATL: ['falcons', 'atlanta'],
+  BAL: ['ravens', 'baltimore'],
+  BUF: ['bills', 'buffalo'],
+  CAR: ['panthers', 'carolina'],
+  CHI: ['bears', 'chicago'],
+  CIN: ['bengals', 'cincinnati'],
+  CLE: ['browns', 'cleveland'],
+  DAL: ['cowboys', 'dallas'],
+  DEN: ['broncos', 'denver'],
+  DET: ['lions', 'detroit'],
+  GB: ['packers', 'green bay'],
+  HOU: ['texans', 'houston'],
+  IND: ['colts', 'indianapolis'],
+  JAX: ['jaguars', 'jags', 'jacksonville'],
+  KC: ['chiefs', 'kansas city'],
+  LAC: ['chargers', 'la chargers', 'los angeles chargers'],
+  LAR: ['rams', 'la rams', 'los angeles rams'],
+  LV: ['raiders', 'las vegas'],
+  MIA: ['dolphins', 'miami'],
+  MIN: ['vikings', 'minnesota'],
+  NE: ['patriots', 'pats', 'new england'],
+  NO: ['saints', 'new orleans'],
+  NYG: ['giants', 'ny giants', 'new york giants'],
+  NYJ: ['jets', 'ny jets', 'new york jets'],
+  PHI: ['eagles', 'philadelphia'],
+  PIT: ['steelers', 'pittsburgh'],
+  SEA: ['seahawks', 'seattle'],
+  SF: ['49ers', 'niners', 'san francisco'],
+  TB: ['buccaneers', 'bucs', 'tampa bay'],
+  TEN: ['titans', 'tennessee'],
+  WAS: ['commanders', 'washington']
+};
+
+const FULL_POS_TO_ABBR = {
+  quarterback: 'QB',
+  'running back': 'RB',
+  fullback: 'FB',
+  'wide receiver': 'WR',
+  'tight end': 'TE',
+  'offensive lineman': 'OL',
+  'offensive tackle': 'OT',
+  tackle: 'OT',
+  'offensive guard': 'OG',
+  guard: 'OG',
+  center: 'C',
+  'defensive lineman': 'DL',
+  'defensive end': 'DE',
+  'defensive tackle': 'DT',
+  'nose tackle': 'NT',
+  'edge rusher': 'EDGE',
+  edge: 'EDGE',
+  linebacker: 'LB',
+  'inside linebacker': 'ILB',
+  'outside linebacker': 'OLB',
+  cornerback: 'CB',
+  'defensive back': 'DB',
+  safety: 'S',
+  'free safety': 'FS',
+  'strong safety': 'SS',
+  kicker: 'K',
+  punter: 'P',
+  'long snapper': 'LS'
+};
+
+function maskAbbreviationsForClauseSplit(text = '') {
+  return String(text || '')
+    .replace(/\b(vs|jr|sr|st|dr|mr|no)\./gi, '$1\u0001')
+    .replace(/\b([A-Z])\.([A-Z])\./g, '$1\u0001$2\u0001');
+}
+
+function splitTextIntoGameDayClauses(text = '') {
+  const masked = maskAbbreviationsForClauseSplit(text);
+  return masked
+    .split(/[.;!\n]+|\b(?:while|whereas|but|however|meanwhile)\b/i)
+    .map(c => c.replace(/\u0001/g, '.').trim())
+    .filter(Boolean);
+}
+
 function buildCandidateMatchers(candidatePlayers = []) {
   const seenKeys = new Set();
-  const matchers = [];
+  const surnameCounts = new Map();
+  const rawEntries = [];
+
   for (const p of candidatePlayers || []) {
     const name = String(p?.name || p?.fullName || p?.displayName || '').trim();
     const key = normalizeLookupName(name);
     if (!key || name.length < 4 || seenKeys.has(key)) continue;
     seenKeys.add(key);
     const stripped = name.replace(/\b(Jr\.?|Sr\.?|II|III|IV|V)\b\.?/gi, '').trim();
+    const parts = stripped.split(/\s+/).filter(Boolean);
+    const firstName = parts[0] || '';
+    const lastName = parts.length >= 2 ? parts[parts.length - 1] : '';
+    const lastLower = lastName.toLowerCase();
+    if (lastLower) {
+      surnameCounts.set(lastLower, (surnameCounts.get(lastLower) || 0) + 1);
+    }
+    rawEntries.push({ p, name, key, stripped, firstName, lastName, lastLower });
+  }
+
+  const matchers = [];
+  for (const { p, name, key, stripped, firstName, lastName, lastLower } of rawEntries) {
     const collapsed = collapseInitialDots(stripped);
     const dottedInitials = stripped.replace(/\b([A-Z])([A-Z])\b/g, '$1.$2.');
     const variants = [...new Set([name, stripped, collapsed, dottedInitials].filter(s => s && s.length >= 4))].map(
       s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+')
     );
     if (variants.length > 0) {
+      const canUseUniqueSurname =
+        Boolean(lastName) &&
+        lastName.length >= 5 &&
+        (surnameCounts.get(lastLower) || 0) === 1 &&
+        !AMBIGUOUS_COMMON_SURNAMES.has(lastLower);
+      const surnameEsc = canUseUniqueSurname
+        ? lastName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        : '';
+      const nicknameRegex =
+        key === 'christianmccaffrey'
+          ? /\bCMC\b/
+          : null;
       matchers.push({
         key,
         name,
+        firstNameLower: firstName.toLowerCase(),
         position: p?.position || 'ATH',
         jersey: p?.jersey ?? null,
-        regex: getCachedPlayerRegex(`(?:${variants.join('|')})`)
+        regex: getCachedPlayerRegex(`(?:${variants.join('|')})`),
+        surnameRegex: surnameEsc ? getCachedPlayerRegex(surnameEsc) : null,
+        nicknameRegex
       });
     }
   }
   return matchers;
 }
 
+function doesClauseMentionPlayer(pm, clause = '', { allowUniqueSurname = false } = {}) {
+  if (!pm || !clause) return false;
+  if (pm.regex.test(clause)) return true;
+  if (allowUniqueSurname && pm.nicknameRegex && pm.nicknameRegex.test(clause)) return true;
+  if (!allowUniqueSurname || !pm.surnameRegex) return false;
+
+  const m = pm.surnameRegex.exec(clause);
+  if (!m) return false;
+  // Guard against brother/homonym collisions (e.g. "Joey Bosa" must NOT match "Nick Bosa")
+  const before = clause.slice(0, m.index).trimEnd();
+  const prevWordMatch = before.match(/(?:^|[\s,(/:;'-])([A-Z][A-Za-z'.-]{1,16})$/);
+  if (prevWordMatch) {
+    const prevWord = prevWordMatch[1];
+    const prevLower = prevWord.toLowerCase().replace(/\.$/, '');
+    if (prevLower !== pm.firstNameLower && !NON_FIRST_NAME_LEAD_WORDS.has(prevLower)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function getTeamHeaderHints(teamAbbr = null, teamName = null) {
+  const canon = normalizeCanonicalTeamAbbr(teamAbbr || '');
+  const hints = [];
+  if (canon && NFL_TEAM_NICKNAME_MAP[canon]) {
+    hints.push(...NFL_TEAM_NICKNAME_MAP[canon]);
+  }
+  if (teamName) {
+    const clean = String(teamName).trim().toLowerCase();
+    if (clean) {
+      hints.push(clean);
+      const lastTok = clean.split(/\s+/).pop();
+      if (lastTok && lastTok.length >= 4) hints.push(lastTok);
+    }
+  }
+  return [...new Set(hints.filter(Boolean))];
+}
+
+function detectTeamAbbrInHeading(headingText = '') {
+  const lower = String(headingText || '').toLowerCase();
+  if (!lower) return null;
+  for (const [abbr, aliases] of Object.entries(NFL_TEAM_NICKNAME_MAP)) {
+    for (const alias of aliases) {
+      if (new RegExp(`\\b${alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(lower)) {
+        return abbr;
+      }
+    }
+  }
+  return null;
+}
+
 /**
  * Finds the current game's official "Inactives" article from a club's `/rss/news` XML feed,
- * rejecting prior-week inactive articles by checking both `Week N` tags and publish window `[kickoff - 10h, kickoff + 5h]`.
+ * rejecting prior-week inactive articles by checking both `Week N` tags and publish window `[kickoff - 12h, kickoff + 6h]`.
  */
 export function discoverOfficialClubInactivesRssItem(rssXml = '', { kickoffMs = 0, week = null } = {}) {
   if (!rssXml || typeof rssXml !== 'string') return null;
   const blocks = rssXml.match(/<item\b[\s\S]*?<\/item>/gi) || [];
-  const minPub = Number.isFinite(kickoffMs) && kickoffMs > 0 ? kickoffMs - 10 * 3_600_000 : 0;
-  const maxPub = Number.isFinite(kickoffMs) && kickoffMs > 0 ? kickoffMs + 5 * 3_600_000 : Infinity;
+  const minPub = Number.isFinite(kickoffMs) && kickoffMs > 0 ? kickoffMs - 12 * 3_600_000 : 0;
+  const maxPub = Number.isFinite(kickoffMs) && kickoffMs > 0 ? kickoffMs + 6 * 3_600_000 : Infinity;
 
   for (const block of blocks) {
     const title = decodeHtmlEntitiesBasic((block.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '')
@@ -351,7 +630,11 @@ export function discoverOfficialClubInactivesRssItem(rssXml = '', { kickoffMs = 
     const link = decodeHtmlEntitiesBasic((block.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '')
       .replace(/<[^>]+>/g, '')
       .trim();
-    const description = decodeHtmlEntitiesBasic((block.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '')
+    const rawDescription = decodeHtmlEntitiesBasic((block.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '');
+    const rawContentEncoded = decodeHtmlEntitiesBasic(
+      (block.match(/<content:encoded>([\s\S]*?)<\/content:encoded>/i) || [])[1] || ''
+    );
+    const description = rawDescription
       .replace(/<[^>]+>/g, ' ')
       .replace(/\s+/g, ' ')
       .trim();
@@ -378,6 +661,7 @@ export function discoverOfficialClubInactivesRssItem(rssXml = '', { kickoffMs = 
       title,
       url: link.startsWith('http://') ? `https://${link.slice(7)}` : link,
       description,
+      inlineHtml: rawContentEncoded || rawDescription || '',
       publishedAt: Number.isFinite(pubMs) ? new Date(pubMs).toISOString() : new Date().toISOString(),
       pubMs: Number.isFinite(pubMs) ? pubMs : null
     };
@@ -387,16 +671,17 @@ export function discoverOfficialClubInactivesRssItem(rssXml = '', { kickoffMs = 
 
 /**
  * Deterministically parses an official NFL club's unstructured "Inactives" article HTML or text
- * (e.g. `49ers.com/news/deebo-samuel-returns-williams-active-vs-cowboys-inactives-week-10-sfvsdal`)
- * for ANY NFL team (49ers or Opponent):
+ * (e.g. `49ers.com/news/...` or `vikings.com/news/...`) for ANY NFL team (49ers or Opponent):
  *  - Truncates cleanly before `"Related Content"` / `"More News"` footer links so prior-week headlines
- *    ("Bosa, Sigle Active vs. Raiders") never contaminate the current week's roster!
- *  - Extracts both the declared inactive players list AND explicitly confirmed active Questionable players.
+ *    never contaminate the current week's roster!
+ *  - Supports colon-less headings (`<h3>Vikings Inactives</h3>`), dual-team articles (scoping strictly to
+ *    `teamAbbr`/`teamName` and stopping at the opposing team's header), `(3rd QB)` notation, and standalone
+ *    structured `POS First Last` list items (catching newly elevated PS players & server-side Worker parsing).
  */
 export function parseOfficialClubInactivesArticle(
   htmlOrText = '',
   candidatePlayers = [],
-  { week = null } = {}
+  { week = null, teamAbbr = null, teamName = null } = {}
 ) {
   if (!htmlOrText || typeof htmlOrText !== 'string') {
     return { inactives: [], activeKeys: new Set(), emergencyQbKeys: new Set(), officialPosted: false };
@@ -436,20 +721,108 @@ export function parseOfficialClubInactivesArticle(
   const inactiveMap = new Map();
   const activeKeys = new Set();
   const emergencyQbKeys = new Set();
+  const targetCanon = teamAbbr ? normalizeCanonicalTeamAbbr(teamAbbr) : null;
+  const targetHints = getTeamHeaderHints(targetCanon, teamName);
 
-  // Locate explicit "Here are the ... inactive players" / "... Inactives:" list block
-  const listHeaderRe =
-    /(?:here are|below are|check out|full list of)[^.\n]{0,95}?\binactives?(?:\s+players?|\s+list)?[^:\n]{0,65}?:|\b(?:today'?s|game[\s-]?day|week\s*\d+|official|[a-z0-9 .'-]{2,28})\s+inactives?(?:\s+list|\s+for\s+[^\n:]{2,45})?\s*:|\bdeclared the following players?\s+inactive\b[^:\n]*:?|\bfollowing players?\s+(?:are|will be)\s+inactive\b[^:\n]*:?/i;
-  const listMatch = listHeaderRe.exec(cleaned);
+  // Locate explicit "Here are the ... inactive players" / "... Inactives:" OR colon-less "Vikings Inactives\n" headings
+  const listHeaderGlobalRe =
+    /(?:^|\n)[ \t]*(?:(?:here are|below are|check out|full list of)[^.\n]{0,95}?\binactives?(?:\s+players?|\s+list)?[^:\n]{0,65}:?|(?:today'?s|game[\s-]?day|week\s*\d+|official|[a-z0-9 .'-]{2,34})\s+inactives?(?:\s+players?|\s+list|\s+for\s+[^\n:]{2,45})?\s*:?|inactives?\s*:?|\bdeclared the following players?\s+inactive\b[^:\n]*:?|\bfollowing players?\s+(?:are|will be)\s+inactive\b[^:\n]*:?)[ \t]*(?=\n|:|$)/gim;
 
-  const prosePart = listMatch ? cleaned.slice(0, listMatch.index) : cleaned;
-  const listPart = listMatch ? cleaned.slice(listMatch.index + listMatch[0].length, listMatch.index + listMatch[0].length + 1400) : '';
+  const headerMatches = [];
+  let hm;
+  while ((hm = listHeaderGlobalRe.exec(cleaned)) !== null) {
+    const rawHeader = hm[0].trim();
+    // Skip headline-like long sentences (>95 chars) that don't end with ":" and aren't "Here are ... inactives"
+    if (rawHeader.length > 95 && !rawHeader.endsWith(':') && !/\b(?:here are|below are|declared the following|following players)\b/i.test(rawHeader)) {
+      continue;
+    }
+    // Skip top page title if followed immediately by date/prose rather than list, ONLY when another dedicated header exists later
+    headerMatches.push({
+      text: rawHeader,
+      index: hm.index,
+      endIndex: hm.index + hm[0].length,
+      detectedTeam: detectTeamAbbrInHeading(rawHeader)
+    });
+  }
+
+  // Pick the best matching list header (preferring target team's heading on dual-team articles!)
+  let chosenHeader = null;
+  if (headerMatches.length > 0) {
+    if (targetCanon && targetHints.length > 0) {
+      // Look for explicit team-matching heading where the heading itself isn't a generic title mentioning both teams ("49ers vs. Vikings Inactives")
+      const strictTeamMatch = headerMatches.find(
+        h =>
+          h.detectedTeam === targetCanon &&
+          !/\b(?:vs\.?|at|against)\b/i.test(h.text)
+      );
+      if (strictTeamMatch) {
+        chosenHeader = strictTeamMatch;
+      } else {
+        // Fallback to any non-opposing header
+        chosenHeader =
+          headerMatches.find(h => !h.detectedTeam || h.detectedTeam === targetCanon) ||
+          headerMatches[0];
+      }
+    } else {
+      chosenHeader = headerMatches[0];
+    }
+  }
+
+  // Fallback to inline mid-paragraph "Here are the ... inactives:" matcher if line-anchored didn't hit
+  if (!chosenHeader) {
+    const inlineListHeaderRe =
+      /(?:here are|below are|check out|full list of)[^.\n]{0,95}?\binactives?(?:\s+players?|\s+list)?[^:\n]{0,65}?:|\b(?:today'?s|game[\s-]?day|week\s*\d+|official|[a-z0-9 .'-]{2,28})\s+inactives?(?:\s+list|\s+for\s+[^\n:]{2,45})?\s*:|\bdeclared the following players?\s+inactive\b[^:\n]*:?|\bfollowing players?\s+(?:are|will be)\s+inactive\b[^:\n]*:?/i;
+    const inlineMatch = inlineListHeaderRe.exec(cleaned);
+    if (inlineMatch) {
+      chosenHeader = {
+        text: inlineMatch[0],
+        index: inlineMatch.index,
+        endIndex: inlineMatch.index + inlineMatch[0].length,
+        detectedTeam: detectTeamAbbrInHeading(inlineMatch[0])
+      };
+    }
+  }
+
+  // Determine end boundary of chosen list block (stop at any subsequent team's inactives heading!)
+  let listBlockEnd = chosenHeader ? chosenHeader.endIndex + 1600 : 0;
+  if (chosenHeader) {
+    for (const h of headerMatches) {
+      if (h.index > chosenHeader.endIndex) {
+        if (targetCanon && h.detectedTeam && h.detectedTeam !== targetCanon) {
+          listBlockEnd = Math.min(listBlockEnd, h.index);
+          break;
+        }
+        if (!targetCanon && h.detectedTeam && chosenHeader.detectedTeam && h.detectedTeam !== chosenHeader.detectedTeam) {
+          listBlockEnd = Math.min(listBlockEnd, h.index);
+          break;
+        }
+      }
+    }
+  }
+
+  const prosePart = chosenHeader ? cleaned.slice(0, chosenHeader.index) : cleaned;
+  const listPart = chosenHeader ? cleaned.slice(chosenHeader.endIndex, listBlockEnd) : '';
+
+  const POS_LINE_RE =
+    /^(?:[-•*]\s*)?(?:#?\d{1,2}\s+)?(QB|RB|FB|WR|TE|OL|OT|OG|C|T|G|DL|DE|DT|NT|EDGE|LB|ILB|OLB|CB|DB|S|FS|SS|K|PK|P|LS|Quarterback|Running Back|Fullback|Wide Receiver|Tight End|Offensive Lineman|Offensive Tackle|Tackle|Offensive Guard|Guard|Center|Defensive Lineman|Defensive End|Defensive Tackle|Nose Tackle|Edge Rusher|Edge|Linebacker|Inside Linebacker|Outside Linebacker|Cornerback|Defensive Back|Safety|Free Safety|Strong Safety|Kicker|Punter|Long Snapper)\s+([A-Z][A-Za-z'.-]+(?:\s+[A-Z][A-Za-z'.-]+){1,2}(?:\s+(?:Jr\.?|Sr\.?|II|III|IV|V))?)\b(.*)$/;
+
+  const NON_PLAYER_PROSE_WORDS_RE = /\b(?:will|was|were|have|has|had|are|been|being|against|versus|sunday|monday|thursday|saturday|quarterback|inactives?|active|game|week|season|roster|injury|report)\b/i;
 
   if (listPart) {
-    // Stop list block if prose paragraphs resume after the bullet/position list
+    // Stop list block if prose paragraphs resume after the bullet/position list or opposing team section starts
     const listLines = listPart.split(/\n+/).map(l => l.trim()).filter(Boolean);
     const collectedListLines = [];
     for (const ln of listLines) {
+      // Stop if another team's Inactives header appears inline
+      if (
+        collectedListLines.length >= 2 &&
+        /\binactives?\b/i.test(ln) &&
+        ln.length <= 65 &&
+        detectTeamAbbrInHeading(ln) &&
+        (!targetCanon || detectTeamAbbrInHeading(ln) !== targetCanon)
+      ) {
+        break;
+      }
       if (
         collectedListLines.length >= 3 &&
         ln.length > 140 &&
@@ -459,7 +832,7 @@ export function parseOfficialClubInactivesArticle(
       }
       collectedListLines.push(ln);
     }
-    const listBlockText = collectedListLines.join('\n') || listPart.slice(0, 650);
+    const listBlockText = collectedListLines.join('\n') || listPart.slice(0, 750);
 
     for (const pm of matchers) {
       if (pm.regex.test(listBlockText)) {
@@ -469,19 +842,44 @@ export function parseOfficialClubInactivesArticle(
           jersey: pm.jersey,
           reason: ''
         });
-        const emRe = new RegExp(`${pm.regex.source}[^\\n.;]{0,55}\\bemergency\\s+(?:third|3rd)\\s+(?:quarterback|qb)\\b`, 'i');
+        const emRe = new RegExp(
+          `${pm.regex.source}[^\\n.;]{0,65}(?:\\bemergency\\s+(?:third|3rd)?\\s*(?:quarterback|qb)\\b|\\(\\s*(?:emergency\\s+)?(?:3rd|third)\\s+qb\\s*\\))`,
+          'i'
+        );
         if (emRe.test(listBlockText)) {
           emergencyQbKeys.add(pm.key);
         }
       }
     }
+
+    // Also parse structured `POS First Last` lines directly (captures Saturday PS elevations & supports Worker calls without candidate list)
+    for (const ln of collectedListLines) {
+      if (ln.length > 110) continue;
+      const m = ln.match(POS_LINE_RE);
+      if (!m) continue;
+      const rawPos = m[1].trim();
+      const rawName = m[2].trim();
+      const tail = m[3] || '';
+      if (NON_PLAYER_PROSE_WORDS_RE.test(rawName)) continue;
+      const key = normalizeLookupName(rawName);
+      if (!key) continue;
+      const normPos = FULL_POS_TO_ABBR[rawPos.toLowerCase()] || rawPos.toUpperCase();
+      if (!inactiveMap.has(key)) {
+        inactiveMap.set(key, {
+          name: rawName,
+          position: normPos,
+          jersey: null,
+          reason: ''
+        });
+      }
+      if (/\bemergency\s+(?:third|3rd)?\s*(?:quarterback|qb)\b|\(\s*(?:emergency\s+)?(?:3rd|third)\s+qb\s*\)/i.test(tail)) {
+        emergencyQbKeys.add(key);
+      }
+    }
   }
 
   // Also scan prose clauses for explicit active confirmations & individual ruled-out notes (excluding IR remainders)
-  const clauses = prosePart
-    .split(/[.;!\n]+|\b(?:while|whereas|but|however|meanwhile)\b/i)
-    .map(c => c.trim())
-    .filter(Boolean);
+  const clauses = splitTextIntoGameDayClauses(prosePart);
 
   for (const idxStr of Object.keys(clauses)) {
     const idxNum = Number(idxStr);
@@ -547,8 +945,9 @@ export function parseRotoWireInactivesHtml(html = '', targetTeams = null) {
     ? new Set(targetTeams.map(t => normalizeCanonicalTeamAbbr(t)))
     : null;
 
+  // Bounded lookahead prevents crossing into the next team's logo block while tolerating wider markup up to 1200 chars
   const blockRe =
-    /images\/teamlogo\/football\/([A-Z]{2,3})\.svg[\s\S]{0,450}?<ul\s+class="list[^"]*"[^>]*>([\s\S]*?)<\/ul>/gi;
+    /images\/teamlogo\/football\/([A-Z]{2,3})\.svg(?:(?!images\/teamlogo\/football\/)[\s\S]){0,1200}?<ul\s+class="list[^"]*"[^>]*>([\s\S]*?)<\/ul>/gi;
   let match;
   while ((match = blockRe.exec(html)) !== null) {
     const abbr = normalizeCanonicalTeamAbbr(match[1]);
@@ -561,10 +960,16 @@ export function parseRotoWireInactivesHtml(html = '', targetTeams = null) {
       const posRaw = decodeHtmlEntitiesBasic((inner.match(/<span[^>]*>([\s\S]*?)<\/span>/i) || [])[1] || '')
         .replace(/<[^>]+>/g, '')
         .trim();
-      const nameRaw = decodeHtmlEntitiesBasic((inner.match(/<a[^>]*>([\s\S]*?)<\/a>/i) || [])[1] || '')
+      const linkNameRaw = decodeHtmlEntitiesBasic((inner.match(/<a[^>]*>([\s\S]*?)<\/a>/i) || [])[1] || '')
         .replace(/<[^>]+>/g, '')
         .trim();
-      if (!nameRaw || nameRaw.length < 3) continue;
+      const plainFallback = !linkNameRaw
+        ? decodeHtmlEntitiesBasic(inner.replace(/<span[^>]*>[\s\S]*?<\/span>/gi, '').replace(/<[^>]+>/g, ' '))
+            .replace(/\s+/g, ' ')
+            .trim()
+        : '';
+      const nameRaw = linkNameRaw || plainFallback;
+      if (!nameRaw || nameRaw.length < 3 || /^none$/i.test(nameRaw)) continue;
       players.push({
         name: nameRaw,
         position: posRaw || 'ATH',
@@ -579,9 +984,63 @@ export function parseRotoWireInactivesHtml(html = '', targetTeams = null) {
 }
 
 /**
+ * Parses ESPN's Core Event Competitor Roster JSON
+ * (`sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{gameId}/competitions/{gameId}/competitors/{teamId}/roster`)
+ * Strictly guards against pre-T-90m empty/all-active/all-inactive states (requires >=40 total entries & 3..12 inactives).
+ */
+export function parseEspnCoreEventRosterInactives(rosterJson = null, candidatePlayers = []) {
+  const empty = { inactives: [], activeKeys: new Set(), officialPosted: false };
+  const entries = Array.isArray(rosterJson?.entries)
+    ? rosterJson.entries
+    : Array.isArray(rosterJson?.roster)
+      ? rosterJson.roster
+      : [];
+  if (entries.length < 40) return empty;
+
+  const candByKey = new Map();
+  for (const p of candidatePlayers || []) {
+    const k = normalizeLookupName(p?.name || p?.fullName || p?.displayName || '');
+    if (k) candByKey.set(k, p);
+  }
+
+  const inactives = [];
+  const activeKeys = new Set();
+
+  for (const entry of entries) {
+    const athlete = entry?.athlete && typeof entry.athlete === 'object' ? entry.athlete : entry;
+    const name = String(entry?.displayName || entry?.fullName || athlete?.displayName || athlete?.fullName || '').trim();
+    const k = normalizeLookupName(name);
+    if (!k) continue;
+    const statusText = String(entry?.status?.name || athlete?.status?.name || '').toLowerCase();
+    if (/injured reserve|reserve|pup|nfi|suspended|practice/i.test(statusText)) continue;
+
+    if (entry.active === false) {
+      const matchCand = candByKey.get(k);
+      inactives.push({
+        name: matchCand?.name || name,
+        position: matchCand?.position || entry?.position?.abbreviation || athlete?.position?.abbreviation || 'ATH',
+        jersey: matchCand?.jersey ?? (entry?.jersey != null ? Number(entry.jersey) : null),
+        reason: ''
+      });
+    } else if (entry.active === true) {
+      activeKeys.add(k);
+    }
+  }
+
+  // NFL game-day inactives are 4–8 (up to 12 with elevations/emergency QB); reject 0..2 or >12 bogus states
+  const officialPosted = inactives.length >= 3 && inactives.length <= 12;
+  return {
+    inactives: officialPosted ? inactives : [],
+    activeKeys: officialPosted ? activeKeys : new Set(),
+    officialPosted
+  };
+}
+
+/**
  * Reconciles Sleeper's CORS-enabled NFL player status feed (`api.sleeper.app/v1/players/nfl`)
  * strictly against the team's known active 53-man roster during the pre-kickoff 90-minute window.
- * Catches 100% of healthy scratches (Coach's Decision) even when a team does not publish an RSS article!
+ * Catches healthy scratches (Coach's Decision) while guarding against Friday-Out false positives
+ * before official T-90m inactives have actually dropped!
  */
 export function extractSleeperGameDaySignals(
   sleeperPlayersObj = null,
@@ -605,16 +1064,24 @@ export function extractSleeperGameDaySignals(
     if (k) active53ByKey.set(k, p);
   }
   const injByKey = new Map();
+  const preDeclaredOutKeys = new Set();
+  const preDeclaredQuestionableKeys = new Set();
   for (const r of injuryReportRows || []) {
-    const st = String(r?.gameStatus || r?.status || '');
+    const st = String(r?.preGameStatus || r?.gameStatus || r?.status || '').trim();
     if (/injured reserve|\bir\b|suspended|pup/i.test(st)) continue;
     const k = normalizeLookupName(r?.name || '');
-    if (k) injByKey.set(k, r);
+    if (!k) continue;
+    injByKey.set(k, r);
+    const stLower = st.toLowerCase();
+    if (stLower === 'out' || stLower === 'inactive') preDeclaredOutKeys.add(k);
+    else if (stLower === 'questionable' || stLower === 'doubtful') preDeclaredQuestionableKeys.add(k);
   }
 
   const inactives = [];
   const activeCandidateKeys = new Set();
   const seenKeys = new Set();
+  let newGameDayScratchCount = 0;
+  let stillQuestionableInSleeperCount = 0;
 
   for (const sp of Object.values(sleeperPlayersObj)) {
     if (!sp || !sleeperTeamVariants.has(normalizeCanonicalTeamAbbr(sp.team || ''))) continue;
@@ -629,18 +1096,29 @@ export function extractSleeperGameDaySignals(
 
     const injSt = String(sp.injury_status || '').trim().toLowerCase();
     if (injSt === 'out' || injSt === 'na' || injSt === 'inactive') {
+      if (!preDeclaredOutKeys.has(k)) newGameDayScratchCount += 1;
       inactives.push({
         name: rosterMatch.name || fullName,
         position: rosterMatch.position || sp.position || 'ATH',
         jersey: rosterMatch.jersey ?? (sp.number != null ? Number(sp.number) : null),
         reason: sp.injury_body_part || sp.injury_notes || ''
       });
+    } else if (injSt === 'questionable' || injSt === 'doubtful') {
+      if (preDeclaredQuestionableKeys.has(k)) stillQuestionableInSleeperCount += 1;
     } else if (!injSt) {
       activeCandidateKeys.add(k);
     }
   }
 
-  const officialPosted = inactives.length >= 3;
+  // Prevent Friday-Out false positives: if a team already ruled 3+ players Out on Friday, Sleeper still
+  // reflects those Friday Outs at T-90m BEFORE game-day inactives post. Require at least 1 new game-day
+  // scratch (or no Friday Outs on the ledger) and do not finalize while Questionables remain unresolved without >=2 new scratches.
+  const allOnlyPreDeclaredOuts = preDeclaredOutKeys.size > 0 && newGameDayScratchCount === 0;
+  const officialPosted =
+    inactives.length >= 3 &&
+    !allOnlyPreDeclaredOuts &&
+    !(stillQuestionableInSleeperCount > 0 && newGameDayScratchCount < 2);
+
   return {
     inactives,
     activeKeys: officialPosted ? activeCandidateKeys : new Set(),
@@ -649,11 +1127,12 @@ export function extractSleeperGameDaySignals(
 }
 
 const BODY_PART_IN_GAME_RE =
-  /\b(right\s+shoulder|left\s+shoulder|shoulder|right\s+ankle|left\s+ankle|high[\s-]ankle|ankle|right\s+knee|left\s+knee|knee|hamstring|concussion|head|neck|stinger|elbow|wrist|hand|thumb|finger|rib|ribs|chest|pectoral|back|lower\s+back|hip|groin|quad|quadriceps|calf|shin|foot|toe|turf\s+toe|achilles|illness|cramps|eye|jaw)\b/i;
+  /\b(right\s+shoulder|left\s+shoulder|shoulder|right\s+ankle|left\s+ankle|high[\s-]ankle|ankle|right\s+knee|left\s+knee|knee|acl|mcl|pcl|meniscus|hamstring|concussion|head|neck|stinger|elbow|wrist|hand|thumb|finger|rib|ribs|chest|pectoral|back|lower\s+back|hip|groin|quad|quadriceps|calf|shin|foot|toe|turf\s+toe|achilles|illness|cramps|eye|jaw|abdomen|oblique)\b/i;
 
 function formatBodyPartTitle(raw = '') {
   const clean = String(raw || '').trim();
   if (!clean) return '';
+  if (/^(acl|mcl|pcl)$/i.test(clean)) return clean.toUpperCase();
   return clean
     .split(/\s+/)
     .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
@@ -663,8 +1142,8 @@ function formatBodyPartTitle(raw = '') {
 /**
  * Evaluates live post-kickoff beat tweets & wire blurbs (`[Kickoff, Final)`) to track real-time
  * in-game injuries and return probabilities for ANY active 49ers or Opponent player:
- *  - Evaluates chronologically so the newest status always wins:
- *    e.g., Q2 injury (`50% • QTR (In-Game)`) -> either ruled out (`0% • Out (In-Game)`) OR returns to game (`99% • In (Active)`)!
+ *  - Evaluates chronologically so sequential transitions (QTR -> Returned OR QTR -> Ruled Out) resolve cleanly
+ *  - Protects against lagging blurb regressions (e.g. a delayed QTR blurb cannot revert `0% • Out (In-Game)`!)
  */
 export function extractLiveInGameInjurySignals(
   newsItems = [],
@@ -683,7 +1162,9 @@ export function extractLiveInGameInjurySignals(
   }
 
   const minInGameMs = kickoffMs - 2 * 60_000;
-  const maxInGameMs = kickoffMs + MAX_LIVE_GAME_DURATION_MS;
+  const maxInGameMs = Number.isFinite(windowState.safetyEndMs)
+    ? windowState.safetyEndMs
+    : kickoffMs + (windowState.isExplicitLive || windowState.isDelayed ? MAX_EXTENDED_LIVE_GAME_DURATION_MS : MAX_LIVE_GAME_DURATION_MS);
   const matchers = buildCandidateMatchers(candidatePlayers);
   if (matchers.length === 0) return { byKey, list: [] };
 
@@ -699,35 +1180,39 @@ export function extractLiveInGameInjurySignals(
   // Sort oldest -> newest so sequential transitions (QTR -> Returned OR QTR -> Ruled Out) resolve to the freshest truth!
   relevantItems.sort((a, b) => a.pubMs - b.pubMs);
 
+  const RE_INJURY_RE =
+    /\b(?:re-?injur|aggravat|again|second\s+time|back\s+to\s+the\s+(?:blue\s+)?(?:medical\s+)?tent|headed\s+back\s+to\s+the\s+locker\s+room|exited\s+again)\b/i;
+
   for (const { item, pubMs, text } of relevantItems) {
     // Skip pre-game inactive list recaps posted right around kickoff
     if (/\b(?:today'?s|official|week\s*\d+|game[\s-]?day)\s+inactives\b/i.test(text)) continue;
 
-    const clauses = text
-      .split(/[.;!\n]+|\b(?:while|whereas|but|however|meanwhile)\b/i)
-      .map(c => c.trim())
-      .filter(Boolean);
+    const clauses = splitTextIntoGameDayClauses(text);
 
     for (const clause of clauses) {
+      if (/\b(?:shook it off and stayed in|stayed in the game|no injury)\b/i.test(clause)) continue;
+
       const isReturned =
-        /\b(returned to (?:the|sunday'?s|monday'?s|thursday'?s|saturday'?s|today'?s)?\s*(?:game|action|contest|matchup|field)|has returned|is back in the (?:game|huddle|lineup)|back on the field|cleared to return|helmet back on and in)\b/i.test(
+        /\b(returned to (?:the|tonight'?s|sunday'?s|monday'?s|thursday'?s|saturday'?s|today'?s)?\s*(?:game|action|contest|matchup|field)|has returned|is back in the (?:game|huddle|lineup)|back on the field|cleared to return|cleared concussion protocol|helmet back on and in|exited (?:the )?(?:blue )?medical tent and (?:is )?back)\b/i.test(
           clause
         ) && !/\b(?:not|never|won'?t|will not|unlikely to|questionable to|doubtful to)\s+return\b/i.test(clause);
 
       const isRuledOutInGame =
-        /\b(ruled out(?:\s+for\s+the\s+(?:rest|remainder))?|out for the (?:rest|remainder) of|will not return|won'?t return|done for the (?:day|night|game))\b/i.test(
+        /\b(ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded\s+to\s+out|out for the (?:rest|remainder|game|night|day)|will not return|won'?t return|did not return|done for the (?:day|night|game))\b/i.test(
           clause
-        );
+        ) && !/\b(?:not|hasn'?t been|haven'?t been|isn'?t)\s+ruled\s+out\b/i.test(clause);
 
       const isDoubtfulInGame =
         !isRuledOutInGame &&
-        /\b(doubtful to return|carted (?:off|to the locker room)|in an air cast|unlikely to return)\b/i.test(clause);
+        /\b(doubtful to return|carted (?:off|to the locker room|away)|in an air cast|air cast|on crutches|walking boot|unlikely to return)\b/i.test(
+          clause
+        );
 
       const isQuestionableInGame =
         !isRuledOutInGame &&
         !isDoubtfulInGame &&
         !isReturned &&
-        /\b(questionable to return|evaluated for (?:a|an)\b|being evaluated|blue medical tent|medical tent|headed to the locker room|went to the locker room|walked to the locker room|limped off|helped off|shaken up on the play|exited (?:sunday'?s|monday'?s|thursday'?s|saturday'?s|today'?s|the)\s+(?:game|contest|matchup))\b/i.test(
+        /\b(questionable to return|evaluated for (?:a|an)\b|being evaluated|being checked (?:in|out in) the (?:blue )?(?:medical )?tent|blue medical tent|medical tent|headed to the locker room|went to the locker room|walked to the locker room|taken to the locker room|limped off|helped off|shaken up on the play|non-contact|concussion (?:protocol|evaluation)|(?:exited|left) (?:tonight'?s|sunday'?s|monday'?s|thursday'?s|saturday'?s|today'?s|the)\s+(?:game|contest|matchup))\b/i.test(
           clause
         );
 
@@ -738,11 +1223,16 @@ export function extractLiveInGameInjurySignals(
 
       for (const pm of matchers) {
         if (pregameInactiveKeys.has(pm.key)) continue;
-        if (!pm.regex.test(clause)) continue;
+        if (!doesClauseMentionPlayer(pm, clause, { allowUniqueSurname: true })) continue;
 
         const prev = byKey.get(pm.key) || null;
         // Only recognize a "returned to the game" signal if the player had an in-game injury or explicit return report
-        if (isReturned && !prev && !extractedBodyPart && !/\breturn(?:ed)?\s+to\s+(?:the\s+|sunday'?s\s+|monday'?s\s+|thursday'?s\s+|saturday'?s\s+)?game\b/i.test(clause)) {
+        if (
+          isReturned &&
+          !prev &&
+          !extractedBodyPart &&
+          !/\breturn(?:ed)?\s+to\s+(?:the\s+|tonight'?s\s+|sunday'?s\s+|monday'?s\s+|thursday'?s\s+|saturday'?s\s+)?(?:game|action)\b/i.test(clause)
+        ) {
           continue;
         }
 
@@ -769,6 +1259,36 @@ export function extractLiveInGameInjurySignals(
           probabilityPct = 99;
           status = 'Active';
           badgeLabel = '99% • In (Active)';
+        }
+
+        // Monotonic state-transition guards against lagging wire/RotoWire blurbs:
+        // 1. Once ruled OUT, a delayed QTR/Doubtful blurb cannot downgrade OUT back to QTR (though we may enrich body part).
+        if (prev?.state === 'out' && (state === 'questionable' || state === 'doubtful')) {
+          if (prev.injuryType === 'In-Game Injury' && extractedBodyPart) {
+            byKey.set(pm.key, { ...prev, injuryType: extractedBodyPart });
+          }
+          continue;
+        }
+        // 2. Once explicitly RETURNED to action, ignore lagging QTR blurbs within 12m unless explicit re-injury language appears.
+        if (
+          prev?.state === 'returned' &&
+          state === 'questionable' &&
+          pubMs - prev.pubMs <= 12 * 60_000 &&
+          !RE_INJURY_RE.test(clause)
+        ) {
+          continue;
+        }
+        // 3. Once DOUBTFUL/carted, ignore lagging generic QTR blurbs within 20m unless explicitly "upgraded to questionable".
+        if (
+          prev?.state === 'doubtful' &&
+          state === 'questionable' &&
+          pubMs - prev.pubMs <= 20 * 60_000 &&
+          !/\bupgraded\s+to\s+questionable\b/i.test(clause)
+        ) {
+          if (prev.injuryType === 'In-Game Injury' && extractedBodyPart) {
+            byKey.set(pm.key, { ...prev, injuryType: extractedBodyPart });
+          }
+          continue;
         }
 
         const cleanHeadline = String(item?.fullText || item?.title || item?.headline || clause).trim();
@@ -799,57 +1319,140 @@ export function extractLiveInGameInjurySignals(
 
 /**
  * Parses recent wire items (tweets/blurbs near kickoff) to detect official inactive lists,
- * individual inactive scratches, active confirmations, and rare emergency/GTD active tags.
- * Evaluates status per-clause so mixed tweets ("Bosa is active today, while Evans is inactive")
- * never cross-contaminate active and inactive players.
+ * individual inactive scratches, active confirmations, late warmup scratches, and rare emergency/GTD active tags.
+ * Evaluates chronologically & per-clause (with multi-line bulleted list support and abbreviation masking)
+ * so mixed tweets never cross-contaminate and T-20m warmup scratches override earlier active notes.
  */
-export function extractWireGameDaySignals(newsItems = [], candidatePlayers = [], kickoffMs = 0) {
+export function extractWireGameDaySignals(newsItems = [], candidatePlayers = [], kickoffMs = 0, options = {}) {
   const inactiveKeys = new Set();
   const activeKeys = new Set();
   const gtdActiveKeys = new Set();
   const emergencyQbKeys = new Set();
+  const lateOverrideInactiveKeys = new Set();
   let hasOfficialListSignal = false;
 
+  const targetCanon = options?.teamAbbr ? normalizeCanonicalTeamAbbr(options.teamAbbr) : null;
+  const isDelayed = Boolean(options?.isDelayed);
   const minPubMs = Number.isFinite(kickoffMs) && kickoffMs > 0 ? kickoffMs - 4.5 * 3600_000 : 0;
-  const maxPubMs = Number.isFinite(kickoffMs) && kickoffMs > 0 ? kickoffMs + 4.5 * 3600_000 : Infinity;
-  // Do NOT mistake post-kickoff in-game injuries ("ruled out for remainder of Sunday's game") for pregame inactives!
-  const pregameCutoffMs = Number.isFinite(kickoffMs) && kickoffMs > 0 ? kickoffMs + 20 * 60_000 : Infinity;
+  const maxPubMs = Number.isFinite(options?.safetyEndMs)
+    ? options.safetyEndMs
+    : Number.isFinite(kickoffMs) && kickoffMs > 0
+      ? kickoffMs + (isDelayed ? MAX_EXTENDED_LIVE_GAME_DURATION_MS : 4.5 * 3600_000)
+      : Infinity;
+  // Widen pregame scratch discovery to ko+35m (or full delay window) for late-posting inactive lists,
+  // while still filtering out post-kickoff in-game injury exits.
+  const pregameCutoffMs = isDelayed
+    ? maxPubMs
+    : Number.isFinite(kickoffMs) && kickoffMs > 0
+      ? kickoffMs + 35 * 60_000
+      : Infinity;
+  const liveExitGuardMs = Number.isFinite(kickoffMs) && kickoffMs > 0 ? kickoffMs - 2 * 60_000 : Infinity;
 
   const playerMatchers = buildCandidateMatchers(candidatePlayers);
-
+  const chronological = [];
   for (const item of newsItems || []) {
     const pubMs = Date.parse(item?.publishedAt || '');
     if (Number.isFinite(pubMs) && (pubMs < minPubMs || pubMs > maxPubMs)) continue;
-
     const text = `${item?.title || ''} ${item?.fullText || ''} ${item?.headline || ''} ${item?.summary || ''}`.trim();
     if (!text) continue;
+    chronological.push({ item, pubMs: Number.isFinite(pubMs) ? pubMs : 0, text });
+  }
+  chronological.sort((a, b) => a.pubMs - b.pubMs);
 
+  const latestStatusByKey = new Map(); // key -> { status: 'inactive' | 'active' | 'gtd', pubMs }
+
+  for (const { item, pubMs, text } of chronological) {
     // Ignore mid-game injury exit blurbs after kickoff so they don't mutate the pregame Declared Inactives card
     if (
-      Number.isFinite(pubMs) &&
-      pubMs > pregameCutoffMs &&
-      /\b(to return|remainder of|rest of the|medical tent|locker room|exited|left the game)\b/i.test(text)
+      pubMs > liveExitGuardMs &&
+      /\b(to return|remainder of|rest of the|medical tent|locker room|exited (?:tonight'?s|sunday'?s|monday'?s|thursday'?s|saturday'?s|today'?s|the)\s+game|left the game)\b/i.test(
+        text
+      )
     ) {
       continue;
     }
-
-    if (/\binactives?\b\s*[:\-]|game[\s-]?day inactives|today'?s inactives|inactive players for week/i.test(text)) {
-      hasOfficialListSignal = true;
+    if (pubMs > pregameCutoffMs && !/\binactives?\b/i.test(text)) {
+      continue;
     }
 
-    const clauses = text
-      .split(/[.;!\n]+|\b(?:while|whereas|but|however|meanwhile)\b/i)
-      .map(c => c.trim())
-      .filter(Boolean);
+    const listHeaderHit =
+      /(?:today'?s|game[\s-]?day|week\s*\d+|official|[a-z0-9 .'-]{2,28})?\s*\binactives?(?:\s+(?:players?|list))?(?:\s+(?:vs\.?|against|at|for)\s+[^\n:]{2,35})?\s*[:\-]/i.exec(
+        text
+      );
+    const hasGenericListMarker =
+      Boolean(listHeaderHit) || /game[\s-]?day inactives|today'?s inactives|inactive players for week/i.test(text);
+
+    // Handle multi-line bulleted inactives tweets (e.g. "49ers inactives vs. Vikings:\nQB Kurtis Rourke (3rd QB)\nWR Mike Evans...")
+    const multilineSource = String(item?.fullText || item?.title || item?.headline || text);
+    const mlMatch =
+      /(?:^|\n)([^\n]{0,85}?\binactives?(?:\s+(?:players?|list))?(?:\s+(?:vs\.?|against|at|for)\s+[^\n:]{2,35})?\s*[:\-])[ \t]*\n([\s\S]+)/i.exec(
+        multilineSource
+      );
+    if (mlMatch) {
+      const headerLine = mlMatch[1] || '';
+      const beforeVs = headerLine.split(/\b(?:vs\.?|against|at)\b/i)[0] || headerLine;
+      const headerTeam = detectTeamAbbrInHeading(beforeVs);
+      const teamMatches = !targetCanon || !headerTeam || headerTeam === targetCanon;
+      if (teamMatches) {
+        hasOfficialListSignal = true;
+        const bodyLines = (mlMatch[2] || '').split(/\n+/).map(l => l.trim()).filter(Boolean);
+        let matchedInBlock = 0;
+        for (const ln of bodyLines) {
+          if (/^(?:active\b|questionable\s+players|key\s+actives|note:|also\s+active)/i.test(ln)) break;
+          const lineHeaderTeam = /\binactives?\b/i.test(ln) ? detectTeamAbbrInHeading(ln.split(/\b(?:vs\.?|against|at)\b/i)[0]) : null;
+          if (lineHeaderTeam && targetCanon && lineHeaderTeam !== targetCanon) break;
+          const isEmergLine =
+            /\bemergency\s+(?:third|3rd)?\s*(?:quarterback|qb)\b|\(\s*(?:emergency\s+)?(?:3rd|third)\s+qb\s*\)/i.test(ln);
+          for (const pm of playerMatchers) {
+            if (pm.regex.test(ln)) {
+              matchedInBlock += 1;
+              latestStatusByKey.set(pm.key, { status: 'inactive', pubMs });
+              if (isEmergLine) emergencyQbKeys.add(pm.key);
+            }
+          }
+        }
+        if (matchedInBlock >= 2) {
+          // Still check prose lines BEFORE the list header (e.g. "Kittle is active. 49ers inactives:\n...")
+          const preList = multilineSource.slice(0, mlMatch.index).trim();
+          if (!preList) continue;
+        }
+      }
+    }
+
+    if (hasGenericListMarker) {
+      const preVs = listHeaderHit ? listHeaderHit[0].split(/\b(?:vs\.?|against|at)\b/i)[0] : text.slice(0, 70);
+      const detected = detectTeamAbbrInHeading(preVs);
+      if (!targetCanon || !detected || detected === targetCanon) {
+        hasOfficialListSignal = true;
+      }
+    }
+
+    const clauses = splitTextIntoGameDayClauses(text);
 
     for (const clause of clauses) {
       if (/\b(?:to return|remainder of|rest of the game)\b/i.test(clause)) continue;
 
-      const isInactiveListClause = /\b(?:today'?s |game[\s-]?day |49ers |official |week \d+ )?inactives?(?:\s+players?|\s+list)?\s*:/i.test(clause);
-      const isEmergencyQbClause = /\bemergency\s+(?:third|3rd)\s+(?:quarterback|qb)\b/i.test(clause);
+      const isInactiveListClause =
+        /\b(?:today'?s |game[\s-]?day |49ers |official |week \d+ |[a-z]+ )?inactives?(?:\s+players?|\s+list)?(?:\s+(?:vs\.?|against|at|for)\s+[^:\n]{2,35})?\s*:/i.test(
+          clause
+        );
+      if (isInactiveListClause && targetCanon) {
+        const beforeColon = clause.split(':')[0] || '';
+        const listOwner = detectTeamAbbrInHeading(beforeColon.split(/\b(?:vs\.?|against|at)\b/i)[0]);
+        if (listOwner && listOwner !== targetCanon) continue;
+      }
+
+      const isEmergencyQbClause =
+        /\bemergency\s+(?:third|3rd)?\s*(?:quarterback|qb)\b|\(\s*(?:emergency\s+)?(?:3rd|third)\s+qb\s*\)/i.test(clause);
+      const isWarmupScratchClause =
+        /\b(?:warmups?|pre-?game\s+warmups?|pregame\s+injury|downgraded[^.;]{0,45}to\s+out|late\s+scratch)\b/i.test(clause);
+
       const isInactiveProse =
         isInactiveListClause ||
-        /\b(is inactive|are inactive|officially inactive|among .*inactives|ruled out for (?:today|sunday|monday|thursday|saturday)|will not play (?:today|in sunday|in monday|in thursday|in saturday)|won'?t play in (?:sunday|monday|thursday|saturday)'?s game|healthy scratch)\b/i.test(
+        /\b(is inactive|are inactive|officially inactive|among .*inactives|ruled out(?:\s+for\s+(?:today|tonight|sunday|monday|thursday|saturday|week\s*\d+|the\s+game))?|downgraded[^.;]{0,45}to\s+out|will not play(?:\s+(?:today|tonight|sunday|monday|thursday|saturday|in\s+sunday|in\s+monday|in\s+thursday|in\s+saturday))?|won'?t play(?:\s+(?:today|tonight|sunday|monday|thursday|saturday|in\s+(?:sunday|monday|thursday|saturday)'?s\s+game))?|healthy scratch|scratched\s+(?:for|from|in\s+warmups)|inactive\s+(?:today|tonight|for|vs\.?|against))\b/i.test(
+          clause
+        ) ||
+        /:\s*(?:inactive|ruled out|out\s+(?:for|vs\.?|against|today|tonight|sunday|monday|thursday|saturday)|won'?t play|will not play|not active)\b/i.test(
           clause
         );
       const isEmergencyGtdProse =
@@ -859,24 +1462,41 @@ export function extractWireGameDaySignals(newsItems = [], candidatePlayers = [],
         );
       const isActiveProse =
         !isInactiveProse &&
-        /\b(officially active|is active(?:\s+(?:today|for|against|vs\.?))?|are active(?:\s+(?:today|for|against|vs\.?))?|active (?:for|vs\.?|against)\s+(?:today|sunday|monday|thursday|saturday|[a-z]{3,})|will play today|cleared to play|good to go (?:today|for (?:today|sunday|monday|thursday|saturday)))/i.test(
+        (/\b(officially active|is active(?:\s+(?:today|tonight|for|against|vs\.?))?|are active(?:\s+(?:today|tonight|for|against|vs\.?))?|active (?:today|tonight|for|vs\.?|against)\s+(?:today|tonight|sunday|monday|thursday|saturday|[a-z]{3,})|will play (?:today|tonight|sunday|monday|thursday|saturday)|suiting up|cleared to play|good to go (?:today|tonight|for (?:today|tonight|sunday|monday|thursday|saturday)))\b/i.test(
           clause
-        );
+        ) ||
+          /:\s*(?:active|will play|playing|good to go|cleared to play|in the lineup)\b/i.test(clause));
 
       if (!isInactiveProse && !isEmergencyGtdProse && !isActiveProse) continue;
 
       for (const pm of playerMatchers) {
-        if (!pm.regex.test(clause)) continue;
+        if (!doesClauseMentionPlayer(pm, clause, { allowUniqueSurname: isWarmupScratchClause })) continue;
+        const prev = latestStatusByKey.get(pm.key);
         if (isInactiveProse && !isActiveProse) {
-          inactiveKeys.add(pm.key);
+          if (prev?.status === 'active' || isWarmupScratchClause) {
+            lateOverrideInactiveKeys.add(pm.key);
+          }
+          latestStatusByKey.set(pm.key, { status: 'inactive', pubMs });
           if (isEmergencyQbClause) emergencyQbKeys.add(pm.key);
         } else if (isEmergencyGtdProse) {
-          activeKeys.add(pm.key);
+          latestStatusByKey.set(pm.key, { status: 'gtd', pubMs });
           gtdActiveKeys.add(pm.key);
         } else if (isActiveProse && !isInactiveProse) {
-          activeKeys.add(pm.key);
+          // Do not let an older/same-timestamp active mention overwrite a late warmup scratch
+          if (!lateOverrideInactiveKeys.has(pm.key) || pubMs > (prev?.pubMs || 0) + 5 * 60_000) {
+            latestStatusByKey.set(pm.key, { status: 'active', pubMs });
+            lateOverrideInactiveKeys.delete(pm.key);
+          }
         }
       }
+    }
+  }
+
+  for (const [k, rec] of latestStatusByKey.entries()) {
+    if (rec.status === 'inactive') {
+      inactiveKeys.add(k);
+    } else if (rec.status === 'active' || rec.status === 'gtd') {
+      activeKeys.add(k);
     }
   }
 
@@ -889,6 +1509,7 @@ export function extractWireGameDaySignals(newsItems = [], candidatePlayers = [],
     activeKeys,
     gtdActiveKeys,
     emergencyQbKeys,
+    lateOverrideInactiveKeys,
     hasOfficialListSignal
   };
 }
@@ -1037,7 +1658,12 @@ export function buildTeamGameDayRosterModel({
   }
 
   const allCandidates = Array.from(mergedRosterMap.values());
-  const wireSignals = extractWireGameDaySignals(effectiveNews, allCandidates, effectiveWindow.kickoffMs);
+  const wireSignals = extractWireGameDaySignals(effectiveNews, allCandidates, effectiveWindow.kickoffMs, {
+    teamAbbr,
+    teamName,
+    isDelayed: Boolean(effectiveWindow.isDelayed),
+    safetyEndMs: effectiveWindow.safetyEndMs
+  });
 
   // Only assert `isOfficialListPosted = true` when we actually have a verified official scratch list
   // (never fabricate a 52-player active game-day dress list just because the kickoff clock started while offline!).
@@ -1069,8 +1695,12 @@ export function buildTeamGameDayRosterModel({
         /\bruled out\b|\bwill not play\b/i.test(combinedNote));
 
     const isWireInactive = wireSignals.inactiveKeys.has(k);
+    const isLateWarmupScratch = Boolean(wireSignals.lateOverrideInactiveKeys?.has(k));
     const isCompInactive = Boolean(compRow?.isExplicitlyInactive);
-    const isWireActive = (wireSignals.activeKeys.has(k) || feedActiveKeySet.has(k)) && !isCompInactive;
+    const isWireActive =
+      !isLateWarmupScratch &&
+      (wireSignals.activeKeys.has(k) || feedActiveKeySet.has(k)) &&
+      !isCompInactive;
 
     const isEmergencyQb =
       wireSignals.emergencyQbKeys.has(k) ||
@@ -1153,10 +1783,16 @@ export function buildTeamGameDayRosterModel({
 
   const gtdKeySet = new Set(actives.filter(p => p.isEmergencyGtd).map(p => normalizeLookupName(p.name)));
   const statusBadgeLabel = effectiveWindow.hasKickoffStarted
-    ? 'Live Game-Day Roster'
-    : isOfficialListPosted
-      ? 'Official Inactives Declared'
-      : 'Official Inactives Pending';
+    ? effectiveWindow.isOvertime
+      ? 'Overtime • Live Roster'
+      : 'Live Game-Day Roster'
+    : effectiveWindow.isDelayed
+      ? isOfficialListPosted
+        ? 'Delayed Kickoff • Inactives Declared'
+        : 'Delayed Kickoff • Inactives Pending'
+      : isOfficialListPosted
+        ? 'Official Inactives Declared'
+        : 'Official Inactives Pending';
 
   return {
     isActive: true,
@@ -1460,7 +2096,11 @@ export function resolveTeamGameDayModel(appData, { is49ers = false, windowState 
 
   const combinedNews = is49ers
     ? appData?.news?.rawStream || []
-    : [...(appData?.liveGameDay?.oppWireItems || []), ...(appData?.news?.rawStream || [])];
+    : [
+        ...(appData?.liveGameDay?.oppWireItems || []),
+        ...(appData?._oppNewsWire || []),
+        ...(appData?.news?.rawStream || [])
+      ];
 
   let model = null;
   if (
@@ -1468,10 +2108,23 @@ export function resolveTeamGameDayModel(appData, { is49ers = false, windowState 
     (!liveFeedOverride?.officialPosted || preHydrated.officialPosted) &&
     Number(preHydrated.week || win.week) === Number(win.week)
   ) {
+    const syncedStatusBadgeLabel = win.hasKickoffStarted
+      ? win.isOvertime
+        ? 'Overtime • Live Roster'
+        : 'Live Game-Day Roster'
+      : win.isDelayed
+        ? preHydrated.isOfficialListPosted
+          ? 'Delayed Kickoff • Inactives Declared'
+          : 'Delayed Kickoff • Inactives Pending'
+        : preHydrated.isOfficialListPosted
+          ? 'Official Inactives Declared'
+          : 'Official Inactives Pending';
     model = {
       ...preHydrated,
       hasKickoffStarted: Boolean(win.hasKickoffStarted),
       minutesUntilKickoff: win.minutesUntilKickoff,
+      statusBadgeLabel: syncedStatusBadgeLabel,
+      statusLabel: syncedStatusBadgeLabel,
       windowState: win,
       windowInfo: win
     };

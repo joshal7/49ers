@@ -438,6 +438,19 @@ function shortPracticeCode(val) {
 export function computePracticeTrajectoryDelta(row = {}, prevSnapshotEntry = null) {
   if (!row || typeof row !== 'object') return null;
 
+  // Suppress stale mid-week practice trajectory / probability delta chips once a player's status
+  // is resolved on game day (`0% • Out (Inactive)`, `99% • In (Active)`, `50% • QTR (In-Game)`, etc.).
+  const badgeStr = String(row.badgeLabel || row.playBadgeLabel || '');
+  if (
+    row.isInGameInjury ||
+    row.isInGameReturned ||
+    /\b(?:in \(active\)|out \(inactive\)|qtr \(in-game\)|out \(in-game\)|doubtful \(in-game\)|active • gtd)/i.test(
+      badgeStr
+    )
+  ) {
+    return null;
+  }
+
   const days = [row.wed, row.thu, row.fri]
     .map(v => ({ code: shortPracticeCode(v), level: parsePracticeLevel(v) }))
     .filter(d => d.level !== null);

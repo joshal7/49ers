@@ -203,10 +203,14 @@ function renderGameDayRosterCard(
   const win = gameDayModel.windowInfo || {};
   const timingLabel =
     win.phase === 'in_game'
-      ? 'Live Game'
-      : typeof win.minutesToKickoff === 'number' && win.minutesToKickoff > 0
-        ? `Kickoff in ${win.minutesToKickoff}m`
-        : 'Pre-Kickoff';
+      ? win.isOvertime
+        ? 'Overtime • Live'
+        : 'Live Game'
+      : win.isDelayed
+        ? 'Kickoff Delayed'
+        : typeof win.minutesToKickoff === 'number' && win.minutesToKickoff > 0
+          ? `Kickoff in ${win.minutesToKickoff}m`
+          : 'Pre-Kickoff';
 
   const statusBadgeCls = gameDayModel.officialPosted ? 'badge-positive' : 'badge-warning';
   const statusLabel =

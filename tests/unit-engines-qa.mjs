@@ -185,6 +185,7 @@ import {
   isUrgentBreakingBadge,
   classifyNewsItemCategory,
   classifyBreakingItem,
+  computeInjuryProgressionLevel,
   computeWireStoryRank,
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay,
@@ -220,6 +221,7 @@ import {
   discoverOfficialClubInactivesRssItem,
   parseOfficialClubInactivesArticle,
   parseRotoWireInactivesHtml,
+  parseEspnCoreEventRosterInactives,
   extractSleeperGameDaySignals,
   extractLiveInGameInjurySignals,
   extractWireGameDaySignals,
@@ -13355,13 +13357,13 @@ await testAsync(
       'GitHub Actions workflow must schedule 5:05 PM PT + 30m windows and pass Gemini/Worker secrets'
     );
 
-    // 2. Wrangler config registers 5:02 PM PT + half-hourly daytime/game-day cron triggers
+    // 2. Wrangler config registers 5:02 PM PT + half-hourly daytime/game-day (incl. late OT/weather-delayed SNF/MNF through 09:30 UTC) cron triggers
     const wranglerText = fs.readFileSync(path.join(rootDir, 'worker', 'wrangler.toml'), 'utf8');
     assert.ok(
       wranglerText.includes('"2 0,1 * * *"') &&
-        wranglerText.includes('"*/30 16-23,0-7 * * *"') &&
+        wranglerText.includes('"*/30 16-23,0-9 * * *"') &&
         wranglerText.includes('"15 */6 * * *"'),
-      'worker/wrangler.toml must register 6h model discovery, 5:02 PM PT daily brief, and half-hourly game-day crons'
+      'worker/wrangler.toml must register 6h model discovery, 5:02 PM PT daily brief, and half-hourly game-day (incl. late OT/delay) crons'
     );
 
     // 3. Mock KV + fetch to test runScheduledDailyNewsBrief end-to-end across 5:02 PM PT, cache hit, game-day hold, and post-game completion
@@ -14772,6 +14774,687 @@ await testAsync(
       0,
       'Teammate reaction article ("Brock Purdy ... react to Mike Evans\' return to practice") must NOT bleed Injury News onto healthy Brock Purdy'
     );
+  }
+);
+
+await testAsync(
+  'Game-day timing variations: last-minute NFL time flexes, weather-delayed kickoffs, postponed games, 6h+ OT live games, OT podium buffer & post-Final 35m presser cadence',
+  async () => {
+    const { hydrateLiveEspnOverlay } = await import('../src/services/dataService.js');
+    const { evaluateWeeklyIrActivationWindow } = await import('../src/engine/injuryProbabilityModel.js');
+
+    // 1. Last-minute NFL time flex (1:05 PM PT FOX -> 5:20 PM PT NBC SNF) updates both client & Worker kickoff times
+    const flexApp = {
+      meta: { seasonYear: 2026, currentWeek: 11, teamStatus: { currentWeek: 11 } },
+      roster: { players: [] },
+      health: { week: 11, practiceReport: [], irReserve: [] },
+      news: { rawStream: [] },
+      scheduleMatchup: {
+        upcomingMatchup: {
+          week: 11,
+          gameId: '401873077',
+          oppAbbr: 'MIN',
+          oppName: 'Minnesota Vikings',
+          dateIso: '2026-11-22T21:05:00Z',
+          kickoffIso: '2026-11-22T21:05:00Z',
+          kickoffDisplay: 'Sun, Nov 22 • 1:05 PM PT (FOX)',
+          opponentHealth: { teamAbbr: 'MIN', injuryReport: [], irReserve: [], keyStartersHealthy: [] }
+        },
+        schedule: [
+          {
+            id: '401873077',
+            week: 11,
+            seasonType: 'REG',
+            dateIso: '2026-11-22T21:05:00Z',
+            broadcast: 'FOX',
+            completed: false,
+            statusState: 'pre',
+            opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+          }
+        ]
+      }
+    };
+
+    const origFetch = globalThis.fetch;
+    globalThis.fetch = async url => {
+      const u = String(url);
+      if (u.includes('/teams/sf/schedule')) {
+        return new Response(
+          JSON.stringify({
+            events: [
+              {
+                id: '401873077',
+                date: '2026-11-23T01:20:00Z',
+                season: { type: 2 },
+                week: { number: 11 },
+                competitions: [
+                  {
+                    status: { type: { state: 'pre', completed: false, shortDetail: '11/22 - 8:20 PM EST' } },
+                    broadcasts: [{ names: ['NBC'] }],
+                    competitors: [
+                      { id: '25', homeAway: 'home', team: { abbreviation: 'SF', displayName: 'San Francisco 49ers' } },
+                      { id: '16', homeAway: 'away', team: { abbreviation: 'MIN', displayName: 'Minnesota Vikings' } }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }),
+          { status: 200 }
+        );
+      }
+      return new Response(JSON.stringify({}), { status: 404 });
+    };
+    try {
+      await hydrateLiveEspnOverlay(flexApp);
+      assert.equal(flexApp.scheduleMatchup.schedule[0].dateIso, '2026-11-23T01:20:00Z', 'Flexed schedule dateIso must sync');
+      assert.equal(flexApp.scheduleMatchup.schedule[0].broadcast, 'NBC', 'Flexed broadcast network must sync');
+      assert.equal(flexApp.scheduleMatchup.upcomingMatchup.dateIso, '2026-11-23T01:20:00Z', 'Flexed upcomingMatchup dateIso must sync');
+      assert.equal(flexApp.scheduleMatchup.upcomingMatchup.kickoffIso, '2026-11-23T01:20:00Z', 'Flexed upcomingMatchup kickoffIso must sync');
+      assert.ok(
+        flexApp.scheduleMatchup.upcomingMatchup.kickoffDisplay.includes('5:20 PM PT') &&
+          flexApp.scheduleMatchup.upcomingMatchup.kickoffDisplay.includes('NBC'),
+        `Flexed kickoffDisplay must show 5:20 PM PT (NBC), got "${flexApp.scheduleMatchup.upcomingMatchup.kickoffDisplay}"`
+      );
+      const oldWindowCheck = evaluateGameDayWindow(flexApp.scheduleMatchup.schedule, flexApp.scheduleMatchup.upcomingMatchup, Date.parse('2026-11-22T20:00:00Z'));
+      assert.equal(oldWindowCheck.isActive, false, 'Old 1:05 PM PT T-65m slot must NOT open early after flex to 5:20 PM PT');
+      const newWindowCheck = evaluateGameDayWindow(flexApp.scheduleMatchup.schedule, flexApp.scheduleMatchup.upcomingMatchup, Date.parse('2026-11-23T00:00:00Z'));
+      assert.equal(newWindowCheck.isActive, true, 'New flexed 5:20 PM PT T-80m slot must open game-day window');
+    } finally {
+      globalThis.fetch = origFetch;
+    }
+
+    // 2. Weather-delayed kickoff holds pregame phase, extends beyond 5.25h, holds daily brief, and does NOT roll IR lock
+    const koIso = '2026-11-23T01:20:00Z';
+    const koMs = Date.parse(koIso);
+    const delayedSched = [
+      {
+        id: '401873077',
+        week: 11,
+        seasonType: 'REG',
+        dateIso: koIso,
+        completed: false,
+        statusState: 'pre',
+        statusDetail: 'Weather Delay',
+        opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+      },
+      {
+        id: '401873099',
+        week: 12,
+        seasonType: 'REG',
+        dateIso: '2026-11-29T21:25:00Z',
+        completed: false,
+        statusState: 'pre',
+        opponent: { abbr: 'SEA', name: 'Seattle Seahawks' }
+      }
+    ];
+    const delayWin = evaluateGameDayWindow(delayedSched, null, koMs + 95 * 60_000);
+    assert.equal(delayWin.isActive, true, 'Weather-delayed game must remain active');
+    assert.equal(delayWin.isDelayed, true, 'Weather-delayed game must set isDelayed: true');
+    assert.equal(delayWin.hasKickoffStarted, false, 'Pre-kickoff weather delay must hold hasKickoffStarted: false');
+    assert.equal(delayWin.phase, 'pregame');
+    const delayApp = {
+      scheduleMatchup: { schedule: delayedSched, upcomingMatchup: { week: 11, dateIso: koIso, oppAbbr: 'MIN', oppName: 'Minnesota Vikings' } },
+      news: { rawStream: [] }
+    };
+    const delayBriefCycle = resolveNewsBriefCycleState(koMs + 6 * 3600_000, delayApp);
+    assert.equal(delayBriefCycle.isGameDayHold, true, 'Weather-delayed game at ko+6h must still hold post-game brief');
+    assert.equal(delayBriefCycle.isPostGameCycle, false);
+    const delayAbove = evaluateGameDayAboveBriefWindow(delayApp, { headline: 'Old', bullets: ['A', 'B'], generatedAt: '2026-11-22T01:00:00Z' }, koMs + 4 * 3600_000);
+    assert.equal(delayAbove.phaseLabel, 'Delayed Kickoff • Live Wire');
+    const irDelayEval = evaluateWeeklyIrActivationWindow({
+      kickoffIso: koIso,
+      schedule: delayedSched,
+      nowMs: koMs + 5.6 * 3600_000
+    });
+    assert.equal(irDelayEval.hasMissedWeeklyDeadline, true, 'Weather-delayed live game must NOT prematurely roll IR window to Week 12');
+
+    // 3. Postponed game must NOT falsely open game-day roster or 20s live window
+    const postponedSched = [{ ...delayedSched[0], statusDetail: 'Postponed' }];
+    assert.equal(evaluateGameDayWindow(postponedSched, null, koMs - 30 * 60_000).isActive, false);
+    assert.equal(is49ersGameLiveWindow({ scheduleMatchup: { schedule: postponedSched } }, koMs - 30 * 60_000), false);
+
+    // 4. 6-hour Overtime game (weather delay + OT at ko+5.75h) stays active across ALL engines & tracks OT injuries!
+    const otSched = [{ ...delayedSched[0], statusState: 'in', isLive: true, statusDetail: 'OT - 4:12' }, delayedSched[1]];
+    const otNowMs = koMs + 5.75 * 3600_000;
+    const otWin = evaluateGameDayWindow(otSched, null, otNowMs);
+    assert.equal(otWin.isActive, true, 'Explicit live OT game at ko+5.75h must stay active past 5.25h cutoff');
+    assert.equal(otWin.isOvertime, true);
+    assert.equal(otWin.hasKickoffStarted, true);
+    const otApp = {
+      scheduleMatchup: { schedule: otSched, upcomingMatchup: { week: 11, dateIso: koIso, liveState: 'in', isGameInProgress: true, statusDetail: 'OT - 4:12', oppAbbr: 'MIN', oppName: 'Minnesota Vikings' } },
+      news: { rawStream: [] }
+    };
+    assert.equal(is49ersGameLiveWindow(otApp, otNowMs), true, '20s live polling must stay active in OT at ko+5.75h');
+    assert.equal(resolveGameNewsContext(otApp, otNowMs).inGame, true, 'resolveGameNewsContext must stay inGame during OT at ko+5.75h');
+    assert.equal(resolveNewsBriefCycleState(otNowMs, otApp).isGameDayHold, true, 'OT game at ko+5.75h must hold post-game brief');
+    const otAbove = evaluateGameDayAboveBriefWindow(otApp, { headline: 'Old', bullets: ['A', 'B'], generatedAt: '2026-11-22T01:00:00Z' }, otNowMs);
+    assert.equal(otAbove.phaseLabel, 'Overtime Live Wire', 'Live OT game must NEVER show Post-Game Live Wire');
+    const otInjurySig = extractLiveInGameInjurySignals(
+      [
+        {
+          id: 'ot_inj_1',
+          title: 'George Kittle (ribs) headed to the locker room in overtime, questionable to return.',
+          publishedAt: new Date(otNowMs - 60_000).toISOString()
+        }
+      ],
+      [{ name: 'George Kittle', position: 'TE', jersey: 85 }],
+      otWin
+    );
+    assert.equal(otInjurySig.list.length, 1, 'extractLiveInGameInjurySignals must still track injuries in 6h+ OT/delayed games');
+    assert.equal(otInjurySig.list[0].injuryType, 'Ribs');
+
+    // 5. OT Post-Whistle Podium Buffer (`completedAtMs` anchor) & Post-Final 35m Fast Presser Polling
+    const otCompletedAtMs = koMs + 4.2 * 3600_000;
+    const otFinishedApp = {
+      scheduleMatchup: {
+        schedule: [
+          {
+            ...delayedSched[0],
+            completed: true,
+            statusState: 'post',
+            statusDetail: 'Final/OT',
+            completedAt: new Date(otCompletedAtMs).toISOString()
+          },
+          delayedSched[1]
+        ],
+        upcomingMatchup: { week: 12, dateIso: delayedSched[1].dateIso, oppAbbr: 'SEA', oppName: 'Seattle Seahawks' }
+      },
+      news: {
+        // 4 in-game Q4/OT tweets (BEFORE completedAt) — must NOT trick the 18m post-whistle buffer!
+        rawStream: [1, 2, 3, 4].map(i => ({
+          id: `q4_tw_${i}`,
+          type: 'tweet',
+          title: `49ers Q4 drive update #${i}`,
+          publishedAt: new Date(koMs + (2.9 + i * 0.2) * 3600_000).toISOString()
+        }))
+      }
+    };
+    const cycleAtPlus6m = resolveNewsBriefCycleState(otCompletedAtMs + 6 * 60_000, otFinishedApp);
+    assert.equal(cycleAtPlus6m.isGameDayHold, true, 'In-game Q4 tweets must NOT bypass the 18m post-Final podium buffer');
+    assert.equal(cycleAtPlus6m.isPostGameCycle, false);
+    assert.equal(is49ersGameLiveWindow(otFinishedApp, otCompletedAtMs + 15 * 60_000), true, 'Post-Final 35m window keeps 20s presser polling active');
+    assert.equal(is49ersGameLiveWindow(otFinishedApp, otCompletedAtMs + 45 * 60_000), false, 'Polling drops back to 45s after post-Final 35m window');
+    const cycleAtPlus20m = resolveNewsBriefCycleState(otCompletedAtMs + 20 * 60_000, otFinishedApp);
+    assert.equal(cycleAtPlus20m.isPostGameCycle, true, 'Post-game brief opens cleanly 20m after OT Final');
+  }
+);
+
+await testAsync(
+  '90m pre-kickoff inactives retrieval: Vikings colon-less dual-team HTML + (3rd QB), multi-line beat tweets with vs./C.J., T-20m warmup scratch, Sleeper 3-Friday-Out guard, ESPN Core Roster & Worker server-side club HTML parser',
+  async () => {
+    const { computePracticeTrajectoryDelta } = await import('../src/engine/digestExperienceEngine.js');
+    const workerMod = await import('../worker/index.js');
+    const worker = workerMod.default;
+
+    // 1. Dual-team colon-less club article HTML (Vikings.com real-world format with full position names + (3rd QB) + no candidatePlayers)
+    const dualTeamHtml = `
+      <article>
+        <h1>Week 11 Inactives: Vikings at 49ers</h1>
+        <h3>Vikings Inactives</h3>
+        <ul>
+          <li>QB Max Brosmer (3rd QB)</li>
+          <li>Safety Harrison Smith</li>
+          <li>Tackle Christian Darrisaw</li>
+          <li>WR Tai Felton</li>
+          <li>Cornerback Byron Murphy Jr.</li>
+        </ul>
+        <h3>49ers Inactives</h3>
+        <ul>
+          <li>QB Kurtis Rourke (Emergency 3rd QB)</li>
+          <li>WR Mike Evans</li>
+          <li>OL Ben Bartch</li>
+          <li>DL Yetur Gross-Matos</li>
+        </ul>
+      </article>
+    `;
+    const minParsed = parseOfficialClubInactivesArticle(dualTeamHtml, [], {
+      week: 11,
+      teamAbbr: 'MIN',
+      teamName: 'Minnesota Vikings'
+    });
+    assert.equal(minParsed.officialPosted, true, 'Colon-less Vikings HTML must parse cleanly');
+    assert.equal(minParsed.inactives.length, 5, `Expected 5 Vikings inactives (zero 49ers bleed), got ${minParsed.inactives.length}`);
+    assert.ok(minParsed.inactives.some(p => p.name === 'Max Brosmer' && p.position === 'QB'));
+    assert.ok(minParsed.inactives.some(p => p.name === 'Harrison Smith' && p.position === 'S'));
+    assert.ok(minParsed.inactives.some(p => p.name === 'Christian Darrisaw' && p.position === 'OT'));
+    assert.ok(!minParsed.inactives.some(p => p.name === 'Mike Evans'), 'Dual-team scoping must exclude 49ers from Vikings list');
+    assert.ok(minParsed.emergencyQbKeys.has('maxbrosmer'), '(3rd QB) must be recognized as Emergency 3rd QB');
+
+    const sfParsed = parseOfficialClubInactivesArticle(dualTeamHtml, [], {
+      week: 11,
+      teamAbbr: 'SF',
+      teamName: 'San Francisco 49ers'
+    });
+    assert.equal(sfParsed.officialPosted, true);
+    assert.equal(sfParsed.inactives.length, 4, `Expected 4 49ers inactives (zero Vikings bleed), got ${sfParsed.inactives.length}`);
+    assert.ok(!sfParsed.inactives.some(p => p.name === 'Max Brosmer'), 'Dual-team scoping must exclude Vikings from 49ers list');
+    assert.ok(sfParsed.emergencyQbKeys.has('kurtisrourke'));
+
+    // 2. Sleeper 3-Friday-Out false-positive guard
+    const sfPool5 = [
+      { name: 'Mike Evans', position: 'WR', rosterBucket: 'active' },
+      { name: 'Ben Bartch', position: 'OL', rosterBucket: 'active' },
+      { name: 'Renardo Green', position: 'CB', rosterBucket: 'active' },
+      { name: 'George Kittle', position: 'TE', rosterBucket: 'active' },
+      { name: 'Kurtis Rourke', position: 'QB', rosterBucket: 'active' },
+      { name: 'Jordan James', position: 'RB', rosterBucket: 'active' }
+    ];
+    const friReport = [
+      { name: 'Mike Evans', gameStatus: 'Out' },
+      { name: 'Ben Bartch', gameStatus: 'Out' },
+      { name: 'Renardo Green', gameStatus: 'Out' },
+      { name: 'George Kittle', gameStatus: 'Questionable' }
+    ];
+    const preInactSleeper = {
+      '1': { team: 'SF', status: 'Active', full_name: 'Mike Evans', injury_status: 'Out' },
+      '2': { team: 'SF', status: 'Active', full_name: 'Ben Bartch', injury_status: 'Out' },
+      '3': { team: 'SF', status: 'Active', full_name: 'Renardo Green', injury_status: 'Out' },
+      '4': { team: 'SF', status: 'Active', full_name: 'George Kittle', injury_status: 'Questionable' },
+      '5': { team: 'SF', status: 'Active', full_name: 'Kurtis Rourke', injury_status: '' },
+      '6': { team: 'SF', status: 'Active', full_name: 'Jordan James', injury_status: '' }
+    };
+    const preSleeperRes = extractSleeperGameDaySignals(preInactSleeper, 'SF', sfPool5, friReport);
+    assert.equal(preSleeperRes.officialPosted, false, 'Sleeper must NOT false-positive officialPosted when only 3 pre-declared Friday Outs exist');
+    const postInactSleeper = {
+      ...preInactSleeper,
+      '4': { team: 'SF', status: 'Active', full_name: 'George Kittle', injury_status: '' },
+      '5': { team: 'SF', status: 'Active', full_name: 'Kurtis Rourke', injury_status: 'NA' },
+      '6': { team: 'SF', status: 'Active', full_name: 'Jordan James', injury_status: 'Inactive' }
+    };
+    const postSleeperRes = extractSleeperGameDaySignals(postInactSleeper, 'SF', sfPool5, friReport);
+    assert.equal(postSleeperRes.officialPosted, true, 'Sleeper flips officialPosted: true once new game-day scratches appear and Qs resolve');
+    assert.equal(postSleeperRes.inactives.length, 5);
+
+    // 3. ESPN Core Event Roster parser guardrails
+    const makeEntries = inactiveCount =>
+      Array.from({ length: 53 }, (_, i) => ({
+        displayName: `Player ${i + 1}`,
+        position: { abbreviation: 'WR' },
+        jersey: String(i + 1),
+        active: i >= inactiveCount
+      }));
+    assert.equal(parseEspnCoreEventRosterInactives({ entries: makeEntries(0) }).officialPosted, false);
+    assert.equal(parseEspnCoreEventRosterInactives({ entries: makeEntries(2) }).officialPosted, false);
+    assert.equal(parseEspnCoreEventRosterInactives({ entries: makeEntries(53) }).officialPosted, false);
+    const validEspn = parseEspnCoreEventRosterInactives({ entries: makeEntries(6) });
+    assert.equal(validEspn.officialPosted, true);
+    assert.equal(validEspn.inactives.length, 6);
+
+    // 4. Multi-line beat tweet (`vs.`, `C.J.`, `(3rd QB)`) + T-20m warmup scratch overriding T-88m active!
+    const koMs = Date.parse('2026-11-23T01:20:00Z');
+    const candidates = [
+      { id: '1', name: 'Kurtis Rourke', position: 'QB', rosterBucket: 'active' },
+      { id: '2', name: 'Mike Evans', position: 'WR', rosterBucket: 'active' },
+      { id: '3', name: 'C.J. West', position: 'DT', rosterBucket: 'active' },
+      { id: '4', name: 'Ben Bartch', position: 'OL', rosterBucket: 'active' },
+      { id: '5', name: 'George Kittle', position: 'TE', rosterBucket: 'active', isStarter: true }
+    ];
+    const wireTweets = [
+      {
+        id: 't88_inact',
+        type: 'tweet',
+        title: '49ers inactives vs. Vikings:\nQB Kurtis Rourke (3rd QB)\nWR Mike Evans\nDT C.J. West\nOL Ben Bartch',
+        fullText: '49ers inactives vs. Vikings:\nQB Kurtis Rourke (3rd QB)\nWR Mike Evans\nDT C.J. West\nOL Ben Bartch',
+        publishedAt: new Date(koMs - 88 * 60_000).toISOString()
+      },
+      {
+        id: 't85_kittle_act',
+        type: 'tweet',
+        title: 'George Kittle is active vs. Minnesota.',
+        fullText: 'George Kittle is active vs. Minnesota.',
+        publishedAt: new Date(koMs - 85 * 60_000).toISOString()
+      },
+      {
+        id: 't20_kittle_warmup',
+        type: 'tweet',
+        title: 'Late scratch: George Kittle hurt his calf in pregame warmups and has been downgraded to out vs. Vikings.',
+        fullText: 'Late scratch: George Kittle hurt his calf in pregame warmups and has been downgraded to out vs. Vikings.',
+        publishedAt: new Date(koMs - 20 * 60_000).toISOString()
+      }
+    ];
+    const gdWin = { isActive: true, phase: 'pregame', week: 11, kickoffMs: koMs, hasKickoffStarted: false };
+    const gdModel = buildTeamGameDayRosterModel({
+      teamAbbr: 'SF',
+      teamName: 'San Francisco 49ers',
+      activeRosterPlayers: candidates,
+      injuryReport: [{ playerId: '5', name: 'George Kittle', gameStatus: 'Questionable', injuryType: 'Calf', isStarter: true }],
+      newsItems: wireTweets,
+      liveFeedData: { officialPosted: true, activeNames: ['George Kittle'], inactives: [] },
+      windowState: gdWin
+    });
+    assert.equal(gdModel.isOfficialListPosted, true);
+    for (const expectedName of ['Kurtis Rourke', 'Mike Evans', 'C.J. West', 'Ben Bartch', 'George Kittle']) {
+      assert.ok(
+        gdModel.inactives.some(p => p.name === expectedName),
+        `Expected ${expectedName} in Declared Inactives (incl. multi-line C.J. West & T-20m warmup scratch George Kittle)`
+      );
+    }
+    assert.ok(
+      gdModel.inactives.find(p => p.name === 'Kurtis Rourke')?.isEmergencyQb,
+      'Kurtis Rourke (3rd QB) must be tagged Emergency 3rd QB'
+    );
+
+    // 5. Worker /api/gameday-inactives parses official club article HTML server-side even when RotoWire is empty!
+    const origFetch = globalThis.fetch;
+    const mockKv = new Map();
+    const mockEnv = {
+      ALLOWED_ORIGIN: '*',
+      SHARED_CACHE: {
+        async get(k, type) {
+          const v = mockKv.get(k);
+          if (!v) return null;
+          return type === 'json' ? JSON.parse(v) : v;
+        },
+        async put(k, v) {
+          mockKv.set(k, v);
+        }
+      }
+    };
+    globalThis.fetch = async url => {
+      const u = String(url);
+      if (u.includes('rotowire.com')) return new Response('<html><body>No inactives yet</body></html>', { status: 200 });
+      if (u.includes('49ers.com/rss/news')) {
+        return new Response(
+          `<rss><channel><item><title>49ers Week 11 Inactives vs Vikings</title><link>https://www.49ers.com/news/week-11-inactives-vs-vikings</link><pubDate>${new Date(koMs - 85 * 60_000).toUTCString()}</pubDate></item></channel></rss>`,
+          { status: 200 }
+        );
+      }
+      if (u.includes('vikings.com/rss/news')) {
+        return new Response(
+          `<rss><channel><item><title>Vikings Week 11 Inactives at 49ers</title><link>https://www.vikings.com/news/week-11-inactives-at-49ers</link><pubDate>${new Date(koMs - 85 * 60_000).toUTCString()}</pubDate></item></channel></rss>`,
+          { status: 200 }
+        );
+      }
+      if (u.includes('49ers.com/news/week-11-inactives') || u.includes('vikings.com/news/week-11-inactives')) {
+        return new Response(dualTeamHtml, { status: 200 });
+      }
+      return new Response('', { status: 404 });
+    };
+    try {
+      const req = new Request(
+        `https://worker.test/api/gameday-inactives?teams=SF,MIN&seasonYear=2026&week=11&oppName=Minnesota+Vikings&kickoffMs=${koMs}`
+      );
+      const res = await worker.fetch(req, mockEnv);
+      assert.equal(res.status, 200);
+      const payload = await res.json();
+      assert.equal(payload.sf.officialPosted, true, 'Worker must parse 49ers.com inactives HTML server-side');
+      assert.equal(payload.sf.sourceRank, 4);
+      assert.equal(payload.sf.inactives.length, 4);
+      assert.equal(payload.opp.officialPosted, true, 'Worker must parse vikings.com inactives HTML server-side');
+      assert.equal(payload.opp.sourceRank, 4);
+      assert.equal(payload.opp.inactives.length, 5);
+    } finally {
+      globalThis.fetch = origFetch;
+    }
+
+    // 6. Resolved game-day badges suppress stale Friday practice trajectory delta chips
+    assert.equal(
+      computePracticeTrajectoryDelta({ wed: 'DNP', thu: 'LP', fri: 'FP', playProbabilityPct: 0, badgeLabel: '0% • Out (Inactive)' }),
+      null
+    );
+    assert.equal(
+      computePracticeTrajectoryDelta({ wed: 'DNP', thu: 'LP', fri: 'LP', playProbabilityPct: 99, badgeLabel: '99% • In (Active)' }),
+      null
+    );
+    assert.equal(
+      computePracticeTrajectoryDelta({ wed: 'LP', thu: 'FP', fri: 'FP', playProbabilityPct: 50, badgeLabel: '50% • QTR (In-Game)', isInGameInjury: true }),
+      null
+    );
+  }
+);
+
+test(
+  'In-game injury & breaking-news precision: zero breaking spam on routine play-by-play, progressive cluster promotion (Tent -> Body Part -> Out), lagging-blurb monotonic guard, material post-injury MRI ("not an ACL") & anti-flood scarcity cap',
+  () => {
+    const koMs = Date.parse('2026-11-23T01:20:00Z');
+    const inGameNow = koMs + 75 * 60_000;
+    const liveApp = {
+      scheduleMatchup: {
+        schedule: [
+          {
+            id: '401873077',
+            week: 11,
+            seasonType: 'REG',
+            dateIso: new Date(koMs).toISOString(),
+            completed: false,
+            statusState: 'in',
+            statusDetail: '2nd - 4:20',
+            opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+          }
+        ],
+        upcomingMatchup: { week: 11, dateIso: new Date(koMs).toISOString(), liveState: 'in', isGameInProgress: true, oppAbbr: 'MIN', oppName: 'Minnesota Vikings' }
+      }
+    };
+
+    // 1. Routine play-by-play & minor/speculative injury tweets MUST NOT wear urgent red breaking badges
+    const routineTd = classifyBreakingItem(
+      {
+        id: 'td_play',
+        type: 'tweet',
+        author: 'Matt Maiocco',
+        trustTier: 1,
+        title: 'Brock Purdy hits George Kittle up the seam for a 24-yard touchdown. 49ers lead 14-7.',
+        fullText: 'Brock Purdy hits George Kittle up the seam for a 24-yard touchdown. 49ers lead 14-7.',
+        publishedAt: new Date(inGameNow - 2 * 60_000).toISOString()
+      },
+      inGameNow,
+      { appData: liveApp }
+    );
+    assert.equal(routineTd.isBreaking, false, 'Routine in-game TD tweet must NOT wear a breaking badge');
+    assert.equal(routineTd.isUrgentBreaking, false);
+    assert.equal(routineTd.breakingBadge, null);
+    assert.equal(routineTd.storyTier, 'live_in_game');
+
+    const crampsTweet = classifyBreakingItem(
+      {
+        id: 'cramps_1',
+        type: 'tweet',
+        author: 'Matt Barrows',
+        trustTier: 1,
+        title: 'George Kittle dealt with cramps briefly, shook it off and stayed in the game.',
+        publishedAt: new Date(inGameNow - 2 * 60_000).toISOString()
+      },
+      inGameNow,
+      { appData: liveApp }
+    );
+    assert.equal(crampsTweet.isUrgentBreaking, false, 'Cramps / shook-it-off chatter must NOT trigger urgent breaking');
+
+    const specVideoDoc = classifyBreakingItem(
+      {
+        id: 'spec_doc',
+        type: 'tweet',
+        author: 'Random Fan',
+        trustTier: 3,
+        title: 'Looks like it could be an ACL from the broadcast angle, praying for Nick Bosa.',
+        publishedAt: new Date(inGameNow - 2 * 60_000).toISOString()
+      },
+      inGameNow,
+      { appData: liveApp }
+    );
+    assert.equal(specVideoDoc.isUrgentBreaking, false, 'Unconfirmed broadcast-angle speculation must NOT trigger urgent breaking');
+
+    // 2. Progressive in-game injury lifecycle: Tent (2 dupes) -> Body Part QTR -> Ruled OUT (3 dupes)
+    //    Must collapse into ONE breaking card AND immediately promote the latest material stage to lead!
+    const progressiveStream = [
+      {
+        id: 'bosa_tent_1',
+        type: 'tweet',
+        author: 'Matt Maiocco',
+        outletName: 'NBC Sports Bay Area',
+        trustTier: 1,
+        title: 'Nick Bosa limped off and walked into the blue medical tent on the 49ers sideline.',
+        fullText: 'Nick Bosa limped off and walked into the blue medical tent on the 49ers sideline.',
+        url: 'https://x.com/MaioccoNBCS/status/1001',
+        publishedAt: new Date(inGameNow - 18 * 60_000).toISOString()
+      },
+      {
+        id: 'bosa_tent_2',
+        type: 'tweet',
+        author: 'Matt Barrows',
+        outletName: 'The Athletic',
+        trustTier: 1,
+        title: 'Nick Bosa is inside the blue medical tent being examined by trainers.',
+        fullText: 'Nick Bosa is inside the blue medical tent being examined by trainers.',
+        url: 'https://x.com/mattbarrows/status/1002',
+        publishedAt: new Date(inGameNow - 17 * 60_000).toISOString()
+      },
+      {
+        id: 'bosa_qtr_knee',
+        type: 'tweet',
+        author: 'Adam Schefter',
+        outletName: 'ESPN',
+        trustTier: 1,
+        title: 'Bosa (knee) is questionable to return.',
+        fullText: 'Bosa (knee) is questionable to return.',
+        url: 'https://x.com/AdamSchefter/status/1003',
+        publishedAt: new Date(inGameNow - 10 * 60_000).toISOString()
+      },
+      {
+        id: 'bosa_out_1',
+        type: 'tweet',
+        author: 'Nick Wagoner',
+        outletName: 'ESPN',
+        trustTier: 1,
+        title: 'Nick Bosa (knee) has been ruled out for the rest of tonight’s game.',
+        fullText: 'Nick Bosa (knee) has been ruled out for the rest of tonight’s game.',
+        url: 'https://x.com/nwagoner/status/1004',
+        publishedAt: new Date(inGameNow - 2 * 60_000).toISOString()
+      },
+      {
+        id: 'bosa_out_2',
+        type: 'tweet',
+        author: 'Ian Rapoport',
+        outletName: 'NFL Network',
+        trustTier: 1,
+        title: '49ers DE Nick Bosa (knee) is ruled out for the remainder of the game.',
+        fullText: '49ers DE Nick Bosa (knee) is ruled out for the remainder of the game.',
+        url: 'https://x.com/RapSheet/status/1005',
+        publishedAt: new Date(inGameNow - 1 * 60_000).toISOString()
+      }
+    ];
+    assert.equal(computeInjuryProgressionLevel(progressiveStream[0]), 1);
+    assert.equal(computeInjuryProgressionLevel(progressiveStream[2]), 2);
+    assert.equal(computeInjuryProgressionLevel(progressiveStream[3]), 4);
+
+    const sortedProg = sortNewsWithBreakingPriority(progressiveStream, inGameNow, { appData: liveApp });
+    const clusteredProg = deduplicateAndGroupWireItems(sortedProg, { nowMs: inGameNow, appData: liveApp });
+    assert.equal(clusteredProg.length, 1, `All 5 Bosa progression tweets must collapse into 1 card (zero flood), got ${clusteredProg.length}`);
+    assert.ok(
+      ['bosa_out_1', 'bosa_out_2'].includes(clusteredProg[0].id),
+      `Ruled-OUT tweet must immediately supersede earlier Tent/QTR tweets as lead, got ${clusteredProg[0].id}`
+    );
+    assert.equal(clusteredProg[0].breakingBadge, 'LIVE INJURY UPDATE');
+    assert.equal(clusteredProg[0].confirmingReports.length, 4);
+
+    // Flat `Latest` mode must NOT flood 5 identical-angle red badges either
+    const flatProg = deduplicateAndGroupWireItems(sortedProg, { nowMs: inGameNow, appData: liveApp, groupSimilarStories: false });
+    const flatOutUrgent = flatProg.filter(x => ['bosa_out_1', 'bosa_out_2'].includes(x.id) && isUrgentBreakingBadge(x.breakingBadge));
+    assert.equal(flatOutUrgent.length, 1, 'Flat Latest mode must allow at most 1 urgent red badge for duplicate same-stage ruled-out echoes');
+
+    // 3. Lagging-blurb monotonic guard: lagging 6:25 PM RotoWire QTR blurb CANNOT revert 6:22 PM Ruled Out!
+    const liveWin = { isActive: true, hasKickoffStarted: true, kickoffMs: koMs, safetyEndMs: koMs + 5.25 * 3600_000 };
+    const monoSig = extractLiveInGameInjurySignals(
+      [
+        { id: 'out_622', title: 'Nick Bosa (knee) ruled out for the rest of tonight’s game.', publishedAt: new Date(koMs + 62 * 60_000).toISOString() },
+        { id: 'lag_qtr_625', title: 'Nick Bosa walked to the blue medical tent and is questionable to return.', publishedAt: new Date(koMs + 65 * 60_000).toISOString() }
+      ],
+      [{ name: 'Nick Bosa', position: 'DE', jersey: 97 }],
+      liveWin
+    );
+    assert.equal(monoSig.list[0].state, 'out', 'Lagging QTR blurb must NOT revert confirmed 0% • Out (In-Game)');
+    assert.equal(monoSig.list[0].probabilityPct, 0);
+
+    // 4. Post-game scheduled MRI (calm) vs Monday confirmed "NOT an ACL" MRI result (urgent BREAKING, rises above Sunday brief!)
+    const sunPostMs = koMs + 4.5 * 3600_000;
+    const monMriMs = koMs + 19 * 3600_000;
+    const postGameApp = {
+      scheduleMatchup: {
+        schedule: [
+          {
+            id: '401873077',
+            week: 11,
+            seasonType: 'REG',
+            dateIso: new Date(koMs).toISOString(),
+            completed: true,
+            statusState: 'post',
+            statusDetail: 'Final',
+            completedAt: new Date(koMs + 3.25 * 3600_000).toISOString(),
+            opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+          }
+        ]
+      }
+    };
+    const scheduledMriItem = {
+      id: 'bosa_mri_sched',
+      type: 'tweet',
+      author: 'Matt Maiocco',
+      trustTier: 1,
+      title: 'Kyle Shanahan said Nick Bosa is scheduled for an MRI tomorrow on his knee.',
+      mentionedPlayers: [{ name: 'Nick Bosa' }],
+      publishedAt: new Date(sunPostMs - 10 * 60_000).toISOString()
+    };
+    const schedCls = classifyBreakingItem(scheduledMriItem, sunPostMs, { appData: postGameApp });
+    assert.equal(schedCls.isUrgentBreaking, false, 'Non-material "scheduled for MRI tomorrow" must stay calm INJURY UPDATE');
+
+    const sundayBrief = {
+      headline: '49ers top Vikings in Week 11',
+      bullets: ['Nick Bosa exited with a knee injury and is scheduled for an MRI Monday.', 'Brock Purdy threw 3 TDs.'],
+      generatedAt: new Date(sunPostMs + 15 * 60_000).toISOString(),
+      coveredStoryKeys: ['nickbosa::diagnostic_scheduled', 'nickbosa::in_game_injury_status'],
+      sources: []
+    };
+    const mondayNotAclTweets = [
+      {
+        id: 'bosa_not_acl_1',
+        type: 'tweet',
+        author: 'Adam Schefter',
+        outletName: 'ESPN',
+        trustTier: 1,
+        title: 'Good news for the 49ers: MRI confirmed Nick Bosa avoided a torn ACL — Grade 1 MCL sprain, expected to miss 2-3 weeks.',
+        fullText: 'Good news for the 49ers: MRI confirmed Nick Bosa avoided a torn ACL — Grade 1 MCL sprain, expected to miss 2-3 weeks.',
+        mentionedPlayers: [{ name: 'Nick Bosa' }],
+        url: 'https://x.com/AdamSchefter/status/2001',
+        publishedAt: new Date(monMriMs - 5 * 60_000).toISOString()
+      },
+      {
+        id: 'bosa_not_acl_2',
+        type: 'tweet',
+        author: 'Matt Maiocco',
+        outletName: 'NBC Sports Bay Area',
+        trustTier: 1,
+        title: '49ers DE Nick Bosa’s MRI confirmed it is NOT a torn ACL; he suffered an MCL sprain and is out 2-3 weeks.',
+        fullText: '49ers DE Nick Bosa’s MRI confirmed it is NOT a torn ACL; he suffered an MCL sprain and is out 2-3 weeks.',
+        mentionedPlayers: [{ name: 'Nick Bosa' }],
+        url: 'https://x.com/MaioccoNBCS/status/2002',
+        publishedAt: new Date(monMriMs - 4 * 60_000).toISOString()
+      }
+    ];
+    const notAclCls = classifyBreakingItem(mondayNotAclTweets[0], monMriMs, { appData: postGameApp });
+    assert.equal(notAclCls.isUrgentBreaking, true, 'Confirmed "avoided a torn ACL / MCL sprain" MRI result must be urgent BREAKING');
+    assert.equal(notAclCls.breakingBadge, 'BREAKING');
+    assert.notEqual(notAclCls.storyTier, 'tier1_major', 'Negated "avoided a torn ACL" must NOT be misclassified as season-ending tear');
+
+    const sortedMon = sortNewsWithBreakingPriority(mondayNotAclTweets, monMriMs, { appData: postGameApp });
+    const dedupMon = deduplicateAndGroupWireItems(sortedMon, { nowMs: monMriMs, appData: postGameApp });
+    assert.equal(dedupMon.length, 1, 'Multiple reporters confirming "not an ACL" must collapse into 1 breaking card');
+    const partitioned = partitionBreakingNewsAboveBrief(dedupMon, sundayBrief, monMriMs);
+    assert.equal(
+      partitioned.breakingAboveBrief.length,
+      1,
+      'Confirmed Monday "not an ACL" MRI result must rise ABOVE Sunday Post-Game Brief even though Sunday brief covered scheduled MRI!'
+    );
+
+    // 5. Feed-wide scarcity cap holds at <=3 distinct urgent breaking clusters EVEN during a live game
+    const fourDistinctInjuries = [
+      { id: 'i1', type: 'tweet', author: 'Matt Maiocco', trustTier: 1, title: 'Nick Bosa (knee) ruled out for the rest of tonight’s game.', publishedAt: new Date(inGameNow - 1 * 60_000).toISOString() },
+      { id: 'i2', type: 'tweet', author: 'Matt Maiocco', trustTier: 1, title: 'Fred Warner (ankle) questionable to return.', publishedAt: new Date(inGameNow - 2 * 60_000).toISOString() },
+      { id: 'i3', type: 'tweet', author: 'Matt Maiocco', trustTier: 1, title: 'George Kittle (ribs) questionable to return.', publishedAt: new Date(inGameNow - 3 * 60_000).toISOString() },
+      { id: 'i4', type: 'tweet', author: 'Matt Maiocco', trustTier: 1, title: 'Ricky Pearsall (shoulder) questionable to return.', publishedAt: new Date(inGameNow - 4 * 60_000).toISOString() }
+    ];
+    const cappedInGame = sortNewsWithBreakingPriority(fourDistinctInjuries, inGameNow, { appData: liveApp, maxUrgentBreakingBadges: 3 });
+    const urgentCount = cappedInGame.filter(x => isUrgentBreakingBadge(x.breakingBadge)).length;
+    assert.equal(urgentCount, 3, `Expected scarcity cap of 3 urgent breaking badges even during live game, got ${urgentCount}`);
   }
 );
 
