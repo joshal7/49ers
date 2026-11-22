@@ -181,7 +181,7 @@ function makeTeamEntry(raw) {
       };
 
   const brandName = raw.brandName || (isSf ? '49ers Faithful' : `${raw.nickname} HQ`);
-  const shortTitle = raw.shortTitle || brandName;
+  const shortTitle = raw.shortTitle || raw.nickname;
 
   return {
     abbr,
@@ -236,7 +236,7 @@ export const ALL_NFL_TEAMS = [
     abbr: 'SF', slug: '49ers', aliases: ['49ers2', 'niners', 'sfo'],
     espnId: 25, espnAbbr: 'sf', otcSlug: 'san-francisco-49ers', cbsAbbr: 'SF', pfrAbbr: 'sfo',
     city: 'San Francisco', nickname: '49ers', stadium: "Levi's Stadium",
-    brandName: '49ers Faithful', shortTitle: '49ers HQ',
+    brandName: '49ers Faithful', shortTitle: '49ers',
     timezone: 'America/Los_Angeles', clubDomain: '49ers.com',
     requiredNicknames: ['49ers', 'Niners'],
     searchAliases: ['49ers', 'Niners', 'San Francisco 49ers'],
@@ -1018,6 +1018,8 @@ export function applyTeamThemeToDocument(teamInput = null) {
   }
   const appTitleEl = document.querySelector('meta[name="apple-mobile-web-app-title"]');
   if (appTitleEl) appTitleEl.setAttribute('content', team.shortTitle);
+  const appNameEl = document.querySelector('meta[name="application-name"]');
+  if (appNameEl) appNameEl.setAttribute('content', team.shortTitle);
 
   const crestImg = document.querySelector('.brand-medallion');
   if (crestImg) {

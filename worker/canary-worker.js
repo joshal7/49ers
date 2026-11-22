@@ -133,7 +133,7 @@ function rewriteHtmlForTeam(response, team, requestHost = '') {
         );
       }
     })
-    .on('meta[name="apple-mobile-web-app-title"]', {
+    .on('meta[name="apple-mobile-web-app-title"], meta[name="application-name"]', {
       element(el) {
         el.setAttribute('content', team.shortTitle);
       }
@@ -280,7 +280,7 @@ export default {
     // 1. Dynamic per-team PWA manifest & iOS apple-touch-icon.png
     if (request.method === 'GET' && url.pathname === '/manifest.json') {
       return jsonResp(buildDynamicManifest(team), 200, cors, {
-        'Cache-Control': 'public, max-age=3600'
+        'Cache-Control': 'public, max-age=300'
       });
     }
 

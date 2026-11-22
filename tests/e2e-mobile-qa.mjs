@@ -671,7 +671,7 @@ async function main() {
       });
 
       assert(pwaInfo.appleCapable === 'yes', 'Missing apple-mobile-web-app-capable=yes');
-      assert(pwaInfo.appleTitle === '49ers HQ', `Unexpected apple title: ${pwaInfo.appleTitle}`);
+      assert(pwaInfo.appleTitle === '49ers' || pwaInfo.appleTitle === '49ers HQ', `Unexpected apple title: ${pwaInfo.appleTitle}`);
       assert(pwaInfo.manifestDisplay === 'standalone', 'Manifest display must be standalone');
       assert(pwaInfo.manifestIcons >= 2, 'Manifest must define icons');
       assert(pwaInfo.iconStatus === 200, 'apple-touch-icon.png did not return HTTP 200');

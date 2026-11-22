@@ -56,14 +56,14 @@ await test('32-Team Registry completeness, uniqueness, timezones & SF legacy sto
 
   const sf = getTeamByAbbr('SF');
   assert.equal(sf.brandName, '49ers Faithful');
-  assert.equal(sf.shortTitle, '49ers HQ');
+  assert.equal(sf.shortTitle, '49ers');
   assert.equal(sf.priorityTier, 'vip');
   assert.equal(sf.storageKeys.prefs, 'joshal_49ers_hq_prefs_v1');
   assert.equal(sf.storageKeys.podcastCache, '49ers-podcast-studio-audio-v1');
 
   const det = getTeamByAbbr('DET');
   assert.equal(det.brandName, 'Lions One Pride');
-  assert.equal(det.shortTitle, 'Lions One Pride');
+  assert.equal(det.shortTitle, 'Lions');
   assert.equal(det.conference, 'NFC');
   assert.equal(det.division, 'NFC North');
   assert.equal(det.timezone, 'America/Detroit');
@@ -71,7 +71,7 @@ await test('32-Team Registry completeness, uniqueness, timezones & SF legacy sto
 
   const buf = getTeamByAbbr('BUF');
   assert.equal(buf.brandName, 'Bills Mafia');
-  assert.equal(buf.shortTitle, 'Bills Mafia');
+  assert.equal(buf.shortTitle, 'Bills');
   assert.equal(buf.conference, 'AFC');
   assert.equal(buf.division, 'AFC East');
   assert.equal(buf.timezone, 'America/New_York');
@@ -120,9 +120,7 @@ await test('All 32 NFL franchises carry their exact fanbase brand name (home tit
   for (const [abbr, expectedName] of Object.entries(expectedBrands)) {
     const team = getTeamByAbbr(abbr);
     assert.equal(team.brandName, expectedName, `${abbr} expected brandName "${expectedName}", got "${team.brandName}"`);
-    if (abbr !== 'SF') {
-      assert.equal(team.shortTitle, expectedName, `${abbr} expected shortTitle "${expectedName}", got "${team.shortTitle}"`);
-    }
+    assert.equal(team.shortTitle, team.nickname, `${abbr} home-screen shortTitle should be team name "${team.nickname}", got "${team.shortTitle}"`);
   }
 });
 
@@ -237,16 +235,21 @@ await test('Canary Worker: dynamic manifest, team health, BYOK 401 lock & SF Pri
     GEMINI_NFL_API_KEY: ''
   };
 
-  // Dynamic manifests
+  // Dynamic manifests (full fanbase brand in `name`, concise team nickname in `short_name` for iOS/Android home screen)
   const detManifestRes = await canaryWorker.fetch(new Request('https://lions.joshal.com/manifest.json'), mockEnv, {});
   const detManifest = await detManifestRes.json();
   assert.equal(detManifest.name, 'Lions One Pride');
-  assert.equal(detManifest.short_name, 'Lions One Pride');
+  assert.equal(detManifest.short_name, 'Lions');
 
   const bufManifestRes = await canaryWorker.fetch(new Request('https://bills.joshal.com/manifest.json'), mockEnv, {});
   const bufManifest = await bufManifestRes.json();
   assert.equal(bufManifest.name, 'Bills Mafia');
-  assert.equal(bufManifest.short_name, 'Bills Mafia');
+  assert.equal(bufManifest.short_name, 'Bills');
+
+  const sf2ManifestRes = await canaryWorker.fetch(new Request('https://49ers2.joshal.com/manifest.json'), mockEnv, {});
+  const sf2Manifest = await sf2ManifestRes.json();
+  assert.equal(sf2Manifest.name, '49ers Faithful');
+  assert.equal(sf2Manifest.short_name, '49ers');
 
   // Strict BYOK 401 lock on /api/podcast and /api/analyze
   const podRes = await canaryWorker.fetch(

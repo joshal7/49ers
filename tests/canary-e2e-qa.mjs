@@ -166,18 +166,20 @@ async function runCanaryE2eForTeam(
   const homeState = await evalJs(`(() => {
     const title = document.title;
     const appleTitle = document.querySelector('meta[name="apple-mobile-web-app-title"]')?.getAttribute('content') || '';
+    const appName = document.querySelector('meta[name="application-name"]')?.getAttribute('content') || '';
     const hTitle = document.getElementById('headerTitleText')?.textContent?.trim();
     const rec = document.getElementById('headerRecordPill')?.textContent?.trim();
     const sub = document.getElementById('headerSubStatus')?.textContent?.trim();
     const crest = document.querySelector('.brand-medallion')?.getAttribute('src') || '';
     const overflowPx = Math.max(0, document.documentElement.scrollWidth - window.innerWidth);
     const mainText = document.getElementById('mainView')?.innerText || '';
-    return { title, appleTitle, hTitle, rec, sub, crest, overflowPx, hasMainContent: mainText.length > 200 };
+    return { title, appleTitle, appName, hTitle, rec, sub, crest, overflowPx, hasMainContent: mainText.length > 200 };
   })()`);
 
   assert.equal(homeState.hTitle, expectedBrand, `Expected header "${expectedBrand}", got "${homeState.hTitle}"`);
   assert.equal(homeState.title, `${expectedBrand} — ${expectedDomain}`, `Expected website title "${expectedBrand} — ${expectedDomain}", got "${homeState.title}"`);
   assert.equal(homeState.appleTitle, expectedShortTitle, `Expected apple-mobile-web-app-title "${expectedShortTitle}", got "${homeState.appleTitle}"`);
+  assert.equal(homeState.appName, expectedShortTitle, `Expected application-name "${expectedShortTitle}", got "${homeState.appName}"`);
   assert.ok(homeState.crest.includes(expectedCrestPart), `Expected custom crest "${expectedCrestPart}" for ${querySlug}, got ${homeState.crest}`);
   assert.ok(homeState.sub.includes(expectedDivision), `Expected "${expectedDivision}" in sub-header, got "${homeState.sub}"`);
   assert.equal(homeState.overflowPx, 0, `${slug} Home portrait overflow ${homeState.overflowPx}px`);
@@ -347,12 +349,14 @@ async function main() {
     await runCanaryE2eForTeam(cdp, baseUrl, {
       slug: 'lions',
       expectedBrand: 'Lions One Pride',
+      expectedShortTitle: 'Lions',
       expectedDivision: 'NFC North',
       expectedConf: 'NFC'
     });
     await runCanaryE2eForTeam(cdp, baseUrl, {
       slug: 'bills',
       expectedBrand: 'Bills Mafia',
+      expectedShortTitle: 'Bills',
       expectedDivision: 'AFC East',
       expectedConf: 'AFC'
     });
@@ -360,7 +364,7 @@ async function main() {
       slug: '49ers',
       querySlug: '49ers2',
       expectedBrand: '49ers Faithful',
-      expectedShortTitle: '49ers HQ',
+      expectedShortTitle: '49ers',
       expectedDomain: '49ers.joshal.com',
       expectedCrestPart: 'assets/sf-crest.svg',
       expectedDivision: 'NFC West',
