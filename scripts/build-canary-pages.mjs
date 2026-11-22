@@ -48,10 +48,17 @@ export function buildCanaryPagesDist() {
     copyRecursive(path.join(ROOT, 'assets', sfAsset), path.join(DIST, 'assets', sfAsset));
   }
 
-  // 3. League + canary team live JSON data (serves as instant fallback alongside R2)
-  copyRecursive(path.join(ROOT, 'data', 'league'), path.join(DIST, 'data', 'league'));
+  // 3. League + canary team live JSON data + 49ers A/B canary (`49ers2.joshal.com`) full data & studio `.m4a` podcasts
+  const rootDataDir = path.join(ROOT, 'data');
+  for (const entry of fs.readdirSync(rootDataDir, { withFileTypes: true })) {
+    if (entry.isFile() && entry.name.endsWith('.json')) {
+      copyRecursive(path.join(rootDataDir, entry.name), path.join(DIST, 'data', entry.name));
+    }
+  }
+  copyRecursive(path.join(rootDataDir, 'podcasts'), path.join(DIST, 'data', 'podcasts'));
+  copyRecursive(path.join(rootDataDir, 'league'), path.join(DIST, 'data', 'league'));
   for (const slug of CANARY_TEAM_SLUGS) {
-    copyRecursive(path.join(ROOT, 'data', 'teams', slug), path.join(DIST, 'data', 'teams', slug));
+    copyRecursive(path.join(rootDataDir, 'teams', slug), path.join(DIST, 'data', 'teams', slug));
   }
 
   // 4. Cloudflare Pages Advanced Mode `_worker.js` (rewriting `../src/` -> `./src/`)

@@ -48,10 +48,17 @@ function resolveTeamForRequest(request, url) {
   }
   const host = String(request.headers.get('Host') || url.hostname || '').toLowerCase().split(':')[0];
   const m = host.match(/^([a-z0-9-]+)\.joshal\.com$/);
-  if (m && TEAM_BY_SLUG[m[1]]) return TEAM_BY_SLUG[m[1]];
+  if (m) {
+    if (m[1] === '49ers2') return TEAM_REGISTRY.SF;
+    if (TEAM_BY_SLUG[m[1]]) return TEAM_BY_SLUG[m[1]];
+  }
   const origin = String(request.headers.get('Origin') || '');
   const om = origin.match(/^https:\/\/([a-z0-9-]+)\.joshal\.com$/i);
-  if (om && TEAM_BY_SLUG[om[1].toLowerCase()]) return TEAM_BY_SLUG[om[1].toLowerCase()];
+  if (om) {
+    const sub = om[1].toLowerCase();
+    if (sub === '49ers2') return TEAM_REGISTRY.SF;
+    if (TEAM_BY_SLUG[sub]) return TEAM_BY_SLUG[sub];
+  }
   return getTeamBySlug(CANARY_TEAM_SLUGS[0]);
 }
 
@@ -107,14 +114,15 @@ function buildDynamicManifest(team) {
   };
 }
 
-function rewriteHtmlForTeam(response, team) {
+function rewriteHtmlForTeam(response, team, requestHost = '') {
   const cssVars = buildTeamCssVarsStyleBlock(team);
+  const displayDomain = String(requestHost || '').toLowerCase() === '49ers2.joshal.com' ? '49ers2.joshal.com' : team.domain;
   const bootScript = `<script>window.__ACTIVE_TEAM_SLUG__=${JSON.stringify(team.slug)};window.__PLATFORM_API_ENABLED__=true;</script><style id="teamThemeOverrides">${cssVars}</style>`;
 
   return new HTMLRewriter()
     .on('title', {
       element(el) {
-        el.setInnerContent(`${team.brandName} — ${team.domain}`);
+        el.setInnerContent(`${team.brandName} — ${displayDomain}`);
       }
     })
     .on('meta[name="description"]', {
@@ -319,6 +327,7 @@ export default {
           division: team.division,
           timezone: team.timezone,
           priorityTier: team.priorityTier,
+          isAbCanary: url.hostname.toLowerCase() === '49ers2.joshal.com',
           activeModel: PRIMARY_GEMINI_REASONING_MODEL,
           interactiveAiMode: 'BYOK_REQUIRED'
         },
@@ -554,7 +563,7 @@ export default {
         if (ctx && typeof ctx.waitUntil === 'function') {
           ctx.waitUntil(trackActiveTeamVisit(env, team));
         }
-        return rewriteHtmlForTeam(assetRes, team);
+        return rewriteHtmlForTeam(assetRes, team, url.hostname);
       }
       return assetRes;
     }

@@ -123,7 +123,11 @@ function createCdpClient(wsUrl) {
   });
 }
 
-async function runCanaryE2eForTeam(cdp, baseUrl, { slug, expectedBrand, expectedDivision, expectedConf }) {
+async function runCanaryE2eForTeam(
+  cdp,
+  baseUrl,
+  { slug, querySlug = slug, expectedBrand, expectedShortTitle = expectedBrand, expectedDomain = `${slug}.joshal.com`, expectedCrestPart = `assets/teams/${slug}/crest.svg`, expectedDivision, expectedConf, allowSfWire = false }
+) {
   const consoleErrors = [];
   const pageErrors = [];
   const localFailures = [];
@@ -149,7 +153,7 @@ async function runCanaryE2eForTeam(cdp, baseUrl, { slug, expectedBrand, expected
     mobile: true
   });
 
-  await cdp.send('Page.navigate', { url: `${baseUrl}/?team=${slug}` });
+  await cdp.send('Page.navigate', { url: `${baseUrl}/?team=${querySlug}` });
   await new Promise(r => setTimeout(r, 2400));
 
   const evalJs = async expr => {
@@ -172,9 +176,9 @@ async function runCanaryE2eForTeam(cdp, baseUrl, { slug, expectedBrand, expected
   })()`);
 
   assert.equal(homeState.hTitle, expectedBrand, `Expected header "${expectedBrand}", got "${homeState.hTitle}"`);
-  assert.equal(homeState.title, `${expectedBrand} — ${slug}.joshal.com`, `Expected website title "${expectedBrand} — ${slug}.joshal.com", got "${homeState.title}"`);
-  assert.equal(homeState.appleTitle, expectedBrand, `Expected apple-mobile-web-app-title "${expectedBrand}", got "${homeState.appleTitle}"`);
-  assert.ok(homeState.crest.includes(`assets/teams/${slug}/crest.svg`), `Expected custom crest for ${slug}, got ${homeState.crest}`);
+  assert.equal(homeState.title, `${expectedBrand} — ${expectedDomain}`, `Expected website title "${expectedBrand} — ${expectedDomain}", got "${homeState.title}"`);
+  assert.equal(homeState.appleTitle, expectedShortTitle, `Expected apple-mobile-web-app-title "${expectedShortTitle}", got "${homeState.appleTitle}"`);
+  assert.ok(homeState.crest.includes(expectedCrestPart), `Expected custom crest "${expectedCrestPart}" for ${querySlug}, got ${homeState.crest}`);
   assert.ok(homeState.sub.includes(expectedDivision), `Expected "${expectedDivision}" in sub-header, got "${homeState.sub}"`);
   assert.equal(homeState.overflowPx, 0, `${slug} Home portrait overflow ${homeState.overflowPx}px`);
   assert.equal(homeState.hasMainContent, true, `${slug} Home missing content`);
@@ -213,10 +217,10 @@ async function runCanaryE2eForTeam(cdp, baseUrl, { slug, expectedBrand, expected
     })`);
     assert.equal(tabCheck.overflowPx, 0, `${slug} ${t.label} portrait overflow ${tabCheck.overflowPx}px`);
     assert.ok(tabCheck.text.length > 120, `${slug} ${t.label} rendered empty`);
-    if (t.nav === 'news') {
+    if (t.nav === 'news' && !allowSfWire) {
       assert.ok(
         !/\bTim Kawakami\b|\bMatt Maiocco\b|\b49ers waived\b/i.test(tabCheck.text),
-        `${slug} News & Film leaked 49ers live-wire beat items: ${tabCheck.text.slice(0, 260)}`
+        `${querySlug} News & Film leaked 49ers live-wire beat items: ${tabCheck.text.slice(0, 260)}`
       );
     }
   }
@@ -243,7 +247,9 @@ async function runCanaryE2eForTeam(cdp, baseUrl, { slug, expectedBrand, expected
         lowerText.includes(`${expectedConf.toLowerCase()} projected standings`),
         `${slug} Playoffs missing "${expectedConf} Projected Standings"`
       );
-      assert.ok(!lowerText.includes('win nfc west'), `${slug} Playoffs leaked "Win NFC West"`);
+      if (!allowSfWire) {
+        assert.ok(!lowerText.includes('win nfc west'), `${querySlug} Playoffs leaked "Win NFC West"`);
+      }
     }
   }
 
@@ -349,6 +355,17 @@ async function main() {
       expectedBrand: 'Bills Mafia',
       expectedDivision: 'AFC East',
       expectedConf: 'AFC'
+    });
+    await runCanaryE2eForTeam(cdp, baseUrl, {
+      slug: '49ers',
+      querySlug: '49ers2',
+      expectedBrand: '49ers Faithful',
+      expectedShortTitle: '49ers HQ',
+      expectedDomain: '49ers.joshal.com',
+      expectedCrestPart: 'assets/sf-crest.svg',
+      expectedDivision: 'NFC West',
+      expectedConf: 'NFC',
+      allowSfWire: true
     });
     console.log('\n======================================================');
     console.log('CANARY E2E QA SUMMARY: ALL PASSED (0 failures)');

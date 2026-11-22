@@ -14,9 +14,9 @@ compatibility_date = "2026-11-01"
 
 [[kv_namespaces]]
 binding = "SHARED_CACHE"
-id = "REPLACE_WITH_NFL_SHARED_CACHE_KV_ID"
+id = "7562e055d295422fbb209adc711aba32"
 
 [vars]
-CANARY_TEAMS = "DET,BUF"
+CANARY_TEAMS = "SF,DET,BUF"
 GEMINI_DEFAULT_FREE_MODEL = "gemini-4-hydrogen"
 GEMINI_THINKING_LEVEL = "XHIGH"

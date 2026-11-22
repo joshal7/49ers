@@ -83,15 +83,27 @@ export function renderSettingsSheetHtml({
           <div style="font-size:11.5px;color:var(--text-secondary)">Jump cleanly between active NFL team sites</div>
         </div>
         <div class="source-link-strip" style="gap:6px">
-          ${['lions', 'bills', '49ers']
-            .map(slug => {
-              const t = getTeamBySlug(slug);
-              const href =
-                typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/i.test(window.location?.hostname || '')
-                  ? `?team=${slug}`
-                  : `https://${t.domain}`;
-              const isCur = activeTeam.slug === slug;
-              return `<a href="${esc(href)}" class="source-chip-link ${isCur ? 'active' : ''}" style="${isCur ? 'border-color:var(--gold-border);background:var(--gold-soft);color:var(--text-primary)' : ''}"><span>${esc(t.brandName)}</span></a>`;
+          ${[
+            { slug: 'lions', host: 'lions.joshal.com', query: '?team=lions', label: getTeamBySlug('lions').brandName },
+            { slug: 'bills', host: 'bills.joshal.com', query: '?team=bills', label: getTeamBySlug('bills').brandName },
+            { slug: '49ers2', host: '49ers2.joshal.com', query: '?team=49ers2', label: '49ers2 (A/B)' },
+            { slug: '49ers', host: '49ers.joshal.com', query: '?team=49ers', label: getTeamBySlug('49ers').brandName }
+          ]
+            .map(entry => {
+              const curHost =
+                typeof window !== 'undefined' ? String(window.location?.hostname || '').toLowerCase() : '';
+              const isLocal = /^(localhost|127\.0\.0\.1)$/i.test(curHost);
+              const href = isLocal ? entry.query : `https://${entry.host}`;
+              const isCur =
+                entry.slug === '49ers2'
+                  ? curHost === '49ers2.joshal.com' ||
+                    (isLocal && new URLSearchParams(window.location?.search || '').get('team') === '49ers2')
+                  : entry.slug === '49ers'
+                    ? activeTeam.slug === '49ers' &&
+                      curHost !== '49ers2.joshal.com' &&
+                      !(isLocal && new URLSearchParams(window.location?.search || '').get('team') === '49ers2')
+                    : activeTeam.slug === entry.slug;
+              return `<a href="${esc(href)}" class="source-chip-link ${isCur ? 'active' : ''}" style="${isCur ? 'border-color:var(--gold-border);background:var(--gold-soft);color:var(--text-primary)' : ''}"><span>${esc(entry.label)}</span></a>`;
             })
             .join('')}
         </div>

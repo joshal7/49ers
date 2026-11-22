@@ -233,7 +233,7 @@ function makeTeamEntry(raw) {
 export const ALL_NFL_TEAMS = [
   // ============================ NFC WEST ============================
   makeTeamEntry({
-    abbr: 'SF', slug: '49ers', aliases: ['niners', 'sfo'],
+    abbr: 'SF', slug: '49ers', aliases: ['49ers2', 'niners', 'sfo'],
     espnId: 25, espnAbbr: 'sf', otcSlug: 'san-francisco-49ers', cbsAbbr: 'SF', pfrAbbr: 'sfo',
     city: 'San Francisco', nickname: '49ers', stadium: "Levi's Stadium",
     brandName: '49ers Faithful', shortTitle: '49ers HQ',
@@ -1006,7 +1006,9 @@ export function applyTeamThemeToDocument(teamInput = null) {
   }
   styleEl.textContent = buildTeamCssVarsStyleBlock(team);
 
-  document.title = `${team.brandName} — ${team.domain}`;
+  const curHost = typeof window !== 'undefined' ? String(window.location?.hostname || '').toLowerCase() : '';
+  const displayDomain = curHost === '49ers2.joshal.com' ? '49ers2.joshal.com' : team.domain;
+  document.title = `${team.brandName} — ${displayDomain}`;
   const descEl = document.querySelector('meta[name="description"]');
   if (descEl) {
     descEl.setAttribute(
@@ -1034,5 +1036,5 @@ export function isOfficialTeamHost(hostname = '') {
   const host = String(hostname || '').trim().toLowerCase();
   const m = host.match(/^([a-z0-9-]+)\.joshal\.com$/);
   if (!m) return false;
-  return Boolean(TEAM_BY_SLUG[m[1]]);
+  return m[1] === '49ers2' || Boolean(TEAM_BY_SLUG[m[1]]);
 }

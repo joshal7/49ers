@@ -1383,16 +1383,17 @@ async function main() {
             reporterId: 'matt_barrows',
             outletName: '49ers Beat',
             trustTier: 1,
-            title: '49ers Week 11 practice observations and red-zone package tweaks ahead of Sunday.',
-            fullText: '49ers Week 11 practice observations and red-zone package tweaks ahead of Sunday.',
+            title: '49ers red-zone motion rate and 2027 salary cap flexibility breakdown from All-22 film.',
+            fullText: '49ers red-zone motion rate and 2027 salary cap flexibility breakdown from All-22 film.',
             url: 'https://x.com/mattbarrows/status/1999999999999999999',
-            externalUrl: 'https://www.espn.com/nfl/story/_/id/50999999/49ers-week-11-practice-notes',
-            externalTitle: '49ers Week 11 practice notes: Red-zone packages and injury ramp',
+            externalUrl: 'https://www.espn.com/nfl/story/_/id/50999999/49ers-redzone-motion-film-study',
+            externalTitle: '49ers film breakdown: Red-zone motion rates and 2027 cap architecture',
             externalDomain: 'espn.com',
             publishedAt: new Date().toISOString(),
             category: 'news'
           });
-          if (typeof diag.renderActiveView === 'function') diag.renderActiveView();
+          if (typeof diag.forceRender === 'function') diag.forceRender();
+          else if (typeof diag.renderActiveView === 'function') diag.renderActiveView();
           else if (tweetsBtn) tweetsBtn.click();
           await sleep(80);
           linkedCards = Array.from(document.querySelectorAll('[data-linked-article-card="true"]'));
@@ -1523,22 +1524,27 @@ async function main() {
         diag.forceRender();
 
         const mainHtml = document.getElementById('mainView')?.innerHTML || '';
-        const bannerIdx = mainHtml.indexOf('data-gameday-above-brief-banner');
+        const aboveCardIdx = mainHtml.indexOf('data-gameday-live-above-brief="true"');
+        const hasRemovedBanner =
+          mainHtml.includes('data-gameday-above-brief-banner') ||
+          mainHtml.includes('LIVE IN-GAME WIRE') ||
+          mainHtml.includes('New updates above brief until postgame summary');
         const itemIdx = mainHtml.indexOf('Brock Purdy hits George Kittle down the seam');
         const briefIdx = mainHtml.indexOf('data-daily-news-brief');
 
         window.__e2eGdRestore = { savedBrief, savedSched0, savedStream };
-        return { bannerIdx, itemIdx, briefIdx };
+        return { aboveCardIdx, hasRemovedBanner, itemIdx, briefIdx };
       });
       assert(
-        gdBeforeSnap.bannerIdx > -1 &&
+        gdBeforeSnap.aboveCardIdx > -1 &&
+          !gdBeforeSnap.hasRemovedBanner &&
           gdBeforeSnap.itemIdx > -1 &&
           gdBeforeSnap.briefIdx > -1 &&
-          gdBeforeSnap.bannerIdx < gdBeforeSnap.briefIdx &&
+          gdBeforeSnap.aboveCardIdx < gdBeforeSnap.briefIdx &&
           gdBeforeSnap.itemIdx < gdBeforeSnap.briefIdx,
-        `Expected Game-Day Live Feed banner & non-breaking update above Top News Brief in All, got ${JSON.stringify(gdBeforeSnap)}`
+        `Expected Game-Day live promotion above Top News Brief in All without removed banner, got ${JSON.stringify(gdBeforeSnap)}`
       );
-      await cdp.assertNoOverflow('News -> All Game-Day T-90m Live Promotion Banner');
+      await cdp.assertNoOverflow('News -> All Game-Day T-90m Live Promotion');
 
       const gdAfterSnap = await cdp.eval(() => {
         const diag = window.__49ersDiagnostics;
@@ -1569,6 +1575,7 @@ async function main() {
         diag.forceRender();
 
         const mainHtml = document.getElementById('mainView')?.innerHTML || '';
+        const hasAboveAfter = mainHtml.includes('data-gameday-live-above-brief');
         const hasBannerAfter = mainHtml.includes('data-gameday-above-brief-banner');
         const itemIdxAfter = mainHtml.indexOf('Brock Purdy hits George Kittle down the seam');
         const briefIdxAfter = mainHtml.indexOf('data-daily-news-brief');
@@ -1581,10 +1588,10 @@ async function main() {
         delete window.__e2eGdRestore;
         diag.forceRender();
 
-        return { hasBannerAfter, itemIdxAfter, briefIdxAfter };
+        return { hasAboveAfter, hasBannerAfter, itemIdxAfter, briefIdxAfter };
       });
       assert(
-        !gdAfterSnap.hasBannerAfter && gdAfterSnap.itemIdxAfter > gdAfterSnap.briefIdxAfter,
+        !gdAfterSnap.hasAboveAfter && !gdAfterSnap.hasBannerAfter && gdAfterSnap.itemIdxAfter > gdAfterSnap.briefIdxAfter,
         `Expected non-breaking update to move below brief once post-game AI summary formed, got ${JSON.stringify(gdAfterSnap)}`
       );
     });

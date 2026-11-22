@@ -144,10 +144,14 @@ await test('Hostname resolution isolates NFL subdomains & never matches workouts
   assert.equal(resolveTeamFromHostname('lions.joshal.com').abbr, 'DET');
   assert.equal(resolveTeamFromHostname('bills.joshal.com').abbr, 'BUF');
   assert.equal(resolveTeamFromHostname('49ers.joshal.com').abbr, 'SF');
+  assert.equal(resolveTeamFromHostname('49ers2.joshal.com').abbr, 'SF');
+  assert.equal(resolveTeamFromHostname('49ers2.joshal.com').priorityTier, 'vip');
   assert.equal(resolveTeamFromHostname('localhost', '?team=bills').abbr, 'BUF');
   assert.equal(resolveTeamFromHostname('localhost', '?team=lions').abbr, 'DET');
+  assert.equal(resolveTeamFromHostname('localhost', '?team=49ers2').abbr, 'SF');
   assert.equal(isOfficialTeamHost('lions.joshal.com'), true);
   assert.equal(isOfficialTeamHost('bills.joshal.com'), true);
+  assert.equal(isOfficialTeamHost('49ers2.joshal.com'), true);
   assert.equal(isOfficialTeamHost('workouts.joshal.com'), false, 'workouts.joshal.com must NEVER be intercepted');
   assert.equal(isOfficialTeamHost('futureapp.joshal.com'), false);
 });
@@ -183,6 +187,10 @@ await test('Cloudflare Pages bundle (dist-canary/_worker.js + _routes.json + _he
   assert.ok(headers.includes('/data/*') && headers.includes('Access-Control-Allow-Origin: *'));
   assert.ok(!fs.existsSync(path.join(built.distDir, 'node_modules')), 'dist-canary must not include node_modules');
   assert.ok(!fs.existsSync(path.join(built.distDir, 'worker')), 'dist-canary must not include worker/');
+  // Verify 49ers2.joshal.com apples-to-apples 49ers data + studio .m4a podcasts exist in dist-canary/
+  assert.ok(fs.existsSync(path.join(built.distDir, 'data', 'meta.json')), 'dist-canary missing 49ers data/meta.json');
+  assert.ok(fs.existsSync(path.join(built.distDir, 'data', 'roster.json')), 'dist-canary missing 49ers data/roster.json');
+  assert.ok(fs.existsSync(path.join(built.distDir, 'data', 'podcasts', 'index.json')), 'dist-canary missing 49ers podcasts/index.json');
 
   const pagesWorker = (await import(`file://${path.join(built.distDir, '_worker.js')}?t=${Date.now()}`)).default;
   const lionsRes = await pagesWorker.fetch(new Request('https://lions.joshal.com/manifest.json'), {}, {});
@@ -191,6 +199,12 @@ await test('Cloudflare Pages bundle (dist-canary/_worker.js + _routes.json + _he
   const billsRes = await pagesWorker.fetch(new Request('https://bills.joshal.com/manifest.json'), {}, {});
   const billsJson = await billsRes.json();
   assert.equal(billsJson.name, 'Bills Mafia');
+  const sf2HealthRes = await pagesWorker.fetch(new Request('https://49ers2.joshal.com/api/health'), {}, {});
+  const sf2Health = await sf2HealthRes.json();
+  assert.equal(sf2Health.brandName, '49ers Faithful');
+  assert.equal(sf2Health.teamAbbr, 'SF');
+  assert.equal(sf2Health.priorityTier, 'vip');
+  assert.equal(sf2Health.isAbCanary, true);
 });
 
 await test('Timezone-local 5:00 PM brief cutoff rolls ET teams (DET/BUF) 3 hours before PT (SF)', () => {
@@ -261,6 +275,18 @@ await test('Canary Worker: dynamic manifest, team health, BYOK 401 lock & SF Pri
     {}
   );
   assert.equal(blockedDetRes.status, 429, 'Non-SF team must stop before touching SF reserved quota');
+
+  // Meanwhile 49ers2.joshal.com (VIP Priority #0) MUST pass the 42-call non-SF gate (hits 503 missing key instead of 429 quota block!)
+  const vipSf2Res = await canaryWorker.fetch(
+    new Request('https://49ers2.joshal.com/api/daily-news-brief', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cycleKey: 'test-q', prompt: 'test brief' })
+    }),
+    mockEnv,
+    {}
+  );
+  assert.notEqual(vipSf2Res.status, 429, '49ers2.joshal.com must inherit SF Priority #0 reserved quota');
 });
 
 for (const slug of CANARY_TEAM_SLUGS) {

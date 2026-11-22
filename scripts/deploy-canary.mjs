@@ -97,8 +97,9 @@ async function fetchStatusSafe(url, timeoutMs = 8000) {
 async function main() {
   console.log('========================================================================');
   console.log('  NFL Canary Go-Live (100% Free Tier — No R2 / No Credit Card)');
-  console.log('  Target sites  : lions.joshal.com (Lions One Pride)');
-  console.log('                  bills.joshal.com (Bills Mafia)');
+  console.log('  Target sites  : lions.joshal.com  (Lions One Pride)');
+  console.log('                  bills.joshal.com  (Bills Mafia)');
+  console.log('                  49ers2.joshal.com (49ers Faithful — Temporary A/B)');
   console.log('  100% Untouched: GoDaddy Nameservers, www.joshal.com (SmugMug),');
   console.log('                  joshal.com, whisky/whiskey, email/MX, 49ers, workouts');
   console.log('========================================================================');
@@ -221,12 +222,15 @@ async function main() {
   step(7, 'Checking GoDaddy CNAMEs & verifying live HTTPS endpoints...');
   const lionsCname = digCname('lions.joshal.com');
   const billsCname = digCname('bills.joshal.com');
+  const sf2Cname = digCname('49ers2.joshal.com');
   const lionsLinked = lionsCname.includes(PAGES_TARGET_HOST);
   const billsLinked = billsCname.includes(PAGES_TARGET_HOST);
+  const sf2Linked = sf2Cname.includes(PAGES_TARGET_HOST);
 
   const checks = [
     { url: `https://${PAGES_TARGET_HOST}/api/health?team=lions`, expect: 'Lions One Pride' },
     { url: `https://${PAGES_TARGET_HOST}/api/health?team=bills`, expect: 'Bills Mafia' },
+    { url: `https://${PAGES_TARGET_HOST}/api/health?team=49ers2`, expect: '49ers Faithful' },
     { url: 'https://www.joshal.com/', expect: '' },
     { url: 'https://49ers.joshal.com/', expect: '49ers Faithful' },
     { url: 'https://workouts.joshal.com/', expect: '' }
@@ -237,6 +241,9 @@ async function main() {
   if (billsLinked) {
     checks.unshift({ url: 'https://bills.joshal.com/api/health', expect: 'Bills Mafia' });
   }
+  if (sf2Linked) {
+    checks.unshift({ url: 'https://49ers2.joshal.com/api/health', expect: '49ers Faithful' });
+  }
 
   for (const chk of checks) {
     const res = await fetchStatusSafe(chk.url);
@@ -244,30 +251,34 @@ async function main() {
     console.log(`  ${okLabel}  ${chk.url} (HTTP ${res.status})`);
   }
 
-  if (!lionsLinked || !billsLinked) {
+  if (!lionsLinked || !billsLinked || !sf2Linked) {
     console.log('\n========================================================================');
-    console.log('  CLOUDFLARE PAGES IS LIVE ($0, NO CREDIT CARD)! Final 2-minute step:');
+    console.log('  CLOUDFLARE PAGES IS LIVE ($0, NO CREDIT CARD)! Connect remaining domain(s):');
     console.log('  (GoDaddy nameservers, SmugMug, whisky, email, 49ers & workouts untouched)');
     console.log('');
-    console.log('  A) In GoDaddy -> joshal.com -> DNS -> Add 2 CNAME records:');
-    if (!lionsLinked) console.log(`       Type: CNAME | Name: lions | Value: ${PAGES_TARGET_HOST} | TTL: 1 Hour`);
-    if (!billsLinked) console.log(`       Type: CNAME | Name: bills | Value: ${PAGES_TARGET_HOST} | TTL: 1 Hour`);
+    console.log('  A) In GoDaddy -> joshal.com -> DNS -> Add CNAME record(s):');
+    if (!lionsLinked) console.log(`       Type: CNAME | Name: lions  | Value: ${PAGES_TARGET_HOST} | TTL: 1 Hour`);
+    if (!billsLinked) console.log(`       Type: CNAME | Name: bills  | Value: ${PAGES_TARGET_HOST} | TTL: 1 Hour`);
+    if (!sf2Linked) console.log(`       Type: CNAME | Name: 49ers2 | Value: ${PAGES_TARGET_HOST} | TTL: 1 Hour`);
     console.log('');
     console.log(`  B) In Cloudflare Dashboard -> Workers & Pages -> ${PROJECT_NAME} -> Custom domains:`);
-    if (!lionsLinked) console.log('       Click "Set up a custom domain" -> lions.joshal.com -> Activate');
-    if (!billsLinked) console.log('       Click "Set up a custom domain" -> bills.joshal.com -> Activate');
+    if (!lionsLinked) console.log('       Set up custom domain -> lions.joshal.com  -> My DNS provider -> Begin CNAME setup');
+    if (!billsLinked) console.log('       Set up custom domain -> bills.joshal.com  -> My DNS provider -> Begin CNAME setup');
+    if (!sf2Linked) console.log('       Set up custom domain -> 49ers2.joshal.com -> My DNS provider -> Begin CNAME setup');
     console.log('');
     console.log('  Preview right now before adding CNAMEs:');
-    console.log(`    - Lions One Pride : https://${PAGES_TARGET_HOST}/?team=lions`);
-    console.log(`    - Bills Mafia     : https://${PAGES_TARGET_HOST}/?team=bills`);
+    console.log(`    - Lions One Pride  : https://${PAGES_TARGET_HOST}/?team=lions`);
+    console.log(`    - Bills Mafia      : https://${PAGES_TARGET_HOST}/?team=bills`);
+    console.log(`    - 49ers2 (A/B)     : https://${PAGES_TARGET_HOST}/?team=49ers2`);
     console.log('========================================================================\n');
   } else {
     console.log('\n========================================================================');
     console.log('  GO-LIVE COMPLETE ($0 FREE TIER, ZERO CREDIT CARD)!');
     console.log('  - Lions One Pride : https://lions.joshal.com');
     console.log('  - Bills Mafia     : https://bills.joshal.com');
+    console.log('  - 49ers2 (A/B)    : https://49ers2.joshal.com (VIP Priority #0)');
+    console.log('  - 49ers Faithful  : https://49ers.joshal.com (untouched production)');
     console.log('  - SmugMug         : https://www.joshal.com (untouched)');
-    console.log('  - 49ers Faithful  : https://49ers.joshal.com (untouched)');
     console.log('  - Workouts        : https://workouts.joshal.com (untouched)');
     console.log('========================================================================\n');
   }
