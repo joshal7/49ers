@@ -89,11 +89,11 @@ import {
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=48';
 import { iconSvg } from './views/icons.js?v=85';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=88';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=89';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=91';
+} from './views/newsView.js?v=92';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=49';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=78';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=90';
@@ -4451,9 +4451,12 @@ async function init() {
   // Register Offline-Ready Service Worker AFTER initial boot attempt and NEVER reload mid-boot or mid-job
   if ('serviceWorker' in navigator) {
     let refreshingSw = false;
+    let pendingSwReload = false;
+    let activeSwReg = null;
+    let lastSwUpdateCheckMs = Date.now();
     const hadController = Boolean(navigator.serviceWorker.controller);
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (!hadController || refreshingSw) return;
+    const tryReloadForUpdatedSw = () => {
+      if (!pendingSwReload || !hadController || refreshingSw) return false;
       if (
         isBootingAppData ||
         !state.appData ||
@@ -4462,17 +4465,43 @@ async function init() {
         state.audioState?.isPlaying ||
         hasActivelyPlayingInlineMedia()
       ) {
-        return;
+        return false;
       }
       refreshingSw = true;
+      pendingSwReload = false;
       window.location.reload();
+      return true;
+    };
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!hadController || refreshingSw) return;
+      pendingSwReload = true;
+      if (!tryReloadForUpdatedSw()) {
+        // Retry cleanly once active boot/job/playback settles so updated views never stay trapped behind stale modules
+        const retryTimer = window.setInterval(() => {
+          if (!pendingSwReload || tryReloadForUpdatedSw()) {
+            window.clearInterval(retryTimer);
+          }
+        }, 1500);
+      }
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=109', { updateViaCache: 'none' })
-        .then(reg => reg.update().catch(() => {}))
+        .register('./sw.js?v=110', { updateViaCache: 'none' })
+        .then(reg => {
+          activeSwReg = reg;
+          return reg.update().catch(() => {});
+        })
         .catch(() => {});
     };
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState !== 'visible') return;
+      if (pendingSwReload && tryReloadForUpdatedSw()) return;
+      const now = Date.now();
+      if (activeSwReg && now - lastSwUpdateCheckMs >= 60_000) {
+        lastSwUpdateCheckMs = now;
+        activeSwReg.update().catch(() => {});
+      }
+    });
     if (document.readyState === 'complete') {
       registerSw();
     } else {

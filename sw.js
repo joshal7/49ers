@@ -1,4 +1,4 @@
-const CACHE_NAME = '49ers-faithful-v131';
+const CACHE_NAME = '49ers-faithful-v132';
 const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-'];
 const NETWORK_TIMEOUT_MS = 7500;
 const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;
@@ -97,8 +97,12 @@ self.addEventListener('activate', event => {
       if (oldKeys.length > 0) {
         try {
           const nextCache = await caches.open(CACHE_NAME);
-          // Carry forward any core/data asset that failed to pre-fetch on a flaky cellular SW install
+          // Carry forward ONLY offline data/media assets that failed to pre-fetch on a flaky cellular SW install.
+          // NEVER carry forward stale .js/.css/.html application code across cache versions!
           for (const assetUrl of CORE_ASSETS) {
+            if (!/^\.\/(?:data|assets)\//.test(assetUrl) && assetUrl !== './apple-touch-icon.png') {
+              continue;
+            }
             const alreadyPresent = await nextCache.match(assetUrl, { ignoreSearch: true });
             if (alreadyPresent) continue;
             for (const oldKey of oldKeys) {
