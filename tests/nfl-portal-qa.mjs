@@ -411,8 +411,9 @@ async function main() {
       assert.ok(!vaultHtml.includes('workouts.joshal.com'), 'key-sync.html must NEVER allowlist workouts.joshal.com');
       assert.ok(!headersTxt.includes('www.joshal.com'), '_headers must NEVER allowlist www.joshal.com');
       assert.ok(
-        headersTxt.includes("Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors"),
-        '_headers must hermetically seal /key-sync.html with default-src none + strict frame-ancestors'
+        headersTxt.includes('\n/key-sync\n') &&
+          headersTxt.includes("Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors"),
+        '_headers must hermetically seal both /key-sync and /key-sync.html with default-src none + strict frame-ancestors'
       );
     });
 

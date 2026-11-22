@@ -58,7 +58,7 @@ import {
   publishSharedGeminiApiKey,
   publishClearedSharedGeminiApiKey,
   syncPrefsWithSharedGeminiKeyVault
-} from './services/sharedApiKeyStore.js?v=1';
+} from './services/sharedApiKeyStore.js?v=2';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
