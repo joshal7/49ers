@@ -7731,7 +7731,8 @@ await testAsync(
     assert.equal(partMidGame.remainingBelowBrief.length, 1);
     assert.equal(partMidGame.remainingBelowBrief[0].id, 'sun_morning_pre90', 'Pre-T-90m item must stay below brief');
 
-    // Verify rendered `News & Film -> All` HTML places `[data-gameday-above-brief-banner]` and all 5 items ABOVE `[data-daily-news-brief]`
+    // Verify rendered `News & Film -> All` HTML places `[data-gameday-live-above-brief="true"]` and all 5 items ABOVE `[data-daily-news-brief]`
+    // WITHOUT rendering the removed `LIVE IN-GAME WIRE` / `New updates above brief until postgame summary` banner text
     const midGameNewsHtml = renderNewsViewHtml({
       appData: gdAppData,
       newsCategoryFilter: 'all',
@@ -7740,16 +7741,37 @@ await testAsync(
       userPrefs: {},
       nowMs: midGameMs
     });
-    const gdBannerIdx = midGameNewsHtml.indexOf('data-gameday-above-brief-banner');
+    const gdAboveIdx = midGameNewsHtml.indexOf('data-gameday-live-above-brief="true"');
     const gdBriefIdx = midGameNewsHtml.indexOf('data-daily-news-brief');
     const pre90Idx = midGameNewsHtml.indexOf('Early Sunday keys to watching Brock Purdy');
-    assert.ok(gdBannerIdx > -1 && gdBriefIdx > -1 && gdBannerIdx < gdBriefIdx, 'Game-day live banner & new updates must render ABOVE summary card in All');
+    assert.ok(gdAboveIdx > -1 && gdBriefIdx > -1 && gdAboveIdx < gdBriefIdx, 'Game-day live updates container must render ABOVE summary card in All');
+    assert.ok(
+      !midGameNewsHtml.includes('data-gameday-above-brief-banner') &&
+        !midGameNewsHtml.includes('LIVE IN-GAME WIRE') &&
+        !midGameNewsHtml.includes('New updates above brief until postgame summary'),
+      'Removed game-day live wire banner text must NOT render in News -> All'
+    );
     assert.ok(
       midGameNewsHtml.indexOf('Game-day live beat update #5') < gdBriefIdx &&
         midGameNewsHtml.indexOf('Game-day live beat update #1') < gdBriefIdx,
       'Every post-T-90m update must render above the summary card'
     );
     assert.ok(pre90Idx > gdBriefIdx, 'Pre-T-90m story must render below the summary card');
+
+    // Verify 0-item game-day window renders NO empty above-brief wrapper card
+    const midGameEmptyNewsHtml = renderNewsViewHtml({
+      appData: { ...gdAppData, news: { ...gdAppData.news, rawStream: [preWindowMorningItem] } },
+      newsCategoryFilter: 'all',
+      filteredRawItems: [preWindowMorningItem],
+      activeVideosSet: new Set(),
+      userPrefs: {},
+      nowMs: midGameMs
+    });
+    assert.ok(
+      !midGameEmptyNewsHtml.includes('data-gameday-live-above-brief') &&
+        !midGameEmptyNewsHtml.includes('data-gameday-above-brief-banner'),
+      'When 0 game-day items exist, News -> All must not render an empty above-brief card or banner'
+    );
 
     // 2C. Post-whistle while user's AI key is still awaiting post-game AI synthesis (`requireAiPostGameBrief: true`):
     //     Even if a deterministic fallback exists, `All` keeps promoting game-day news above brief until AI summary forms!
@@ -7802,7 +7824,7 @@ await testAsync(
       userPrefs: { geminiApiKey: 'AIzaTestKey' },
       nowMs: postGameMs
     });
-    assert.ok(!postAiNewsHtml.includes('data-gameday-above-brief-banner'), 'Game-day banner must disappear once post-game AI summary is generated');
+    assert.ok(!postAiNewsHtml.includes('data-gameday-live-above-brief') && !postAiNewsHtml.includes('data-gameday-above-brief-banner'), 'Game-day above-brief promotion must disappear once post-game AI summary is generated');
 
     // And a brand-new post-brief BREAKING news item STILL rises above the new post-game brief under standard logic!
     const lateMondayBreaking = {
@@ -15690,13 +15712,31 @@ test(
       userPrefs: {},
       nowMs: inGameNow
     });
-    const homeBannerPos = homeLiveHtml.indexOf('data-gameday-above-brief-banner');
+    const homeAbovePos = homeLiveHtml.indexOf('data-gameday-live-above-brief="true"');
     const homeBriefPos = homeLiveHtml.indexOf('data-daily-news-brief');
-    assert.ok(homeBannerPos > -1 && homeBriefPos > -1 && homeBannerPos < homeBriefPos, 'Home must place game-day news ABOVE yesterday’s AI summary');
+    assert.ok(homeAbovePos > -1 && homeBriefPos > -1 && homeAbovePos < homeBriefPos, 'Home must place game-day news ABOVE yesterday’s AI summary');
+    assert.ok(
+      !homeLiveHtml.includes('data-gameday-above-brief-banner') &&
+        !homeLiveHtml.includes('LIVE IN-GAME WIRE') &&
+        !homeLiveHtml.includes('New updates above brief until postgame summary'),
+      'Removed game-day live wire banner text must NOT render on Home'
+    );
     assert.ok(
       homeLiveHtml.indexOf('Christian McCaffrey (knee)') < homeBriefPos &&
         homeLiveHtml.indexOf('Sebastian Valdez (ankle)') < homeBriefPos,
       'Home must render CMC and Valdez game-day updates ABOVE yesterday’s AI summary'
+    );
+    const homeEmptyLiveHtml = renderHomeDashboardHtml({
+      orderedBlocks: homeNewsBlock,
+      appData: { ...gdApp, news: { ...gdApp.news, rawStream: [] } },
+      filteredRawItems: [],
+      userPrefs: {},
+      nowMs: inGameNow
+    });
+    assert.ok(
+      !homeEmptyLiveHtml.includes('data-gameday-live-above-brief') &&
+        !homeEmptyLiveHtml.includes('data-gameday-above-brief-banner'),
+      'When 0 game-day items exist, Home must not render an empty above-brief wrapper or banner'
     );
 
     // Post-Final with ONLY deterministic fallback (no client API key!) -> News & Home MUST keep game news ABOVE brief!
@@ -15726,9 +15766,10 @@ test(
       nowMs: postFinalMs
     });
     assert.ok(
-      newsAwaitingAiHtml.includes('data-gameday-above-brief-banner') &&
-        newsAwaitingAiHtml.indexOf('data-gameday-above-brief-banner') < newsAwaitingAiHtml.indexOf('data-daily-news-brief'),
-      'News must keep game news ABOVE non-AI deterministic fallback even when user has no client Gemini API key'
+      newsAwaitingAiHtml.includes('data-gameday-live-above-brief="true"') &&
+        !newsAwaitingAiHtml.includes('data-gameday-above-brief-banner') &&
+        newsAwaitingAiHtml.indexOf('data-gameday-live-above-brief="true"') < newsAwaitingAiHtml.indexOf('data-daily-news-brief'),
+      'News must keep game news ABOVE non-AI deterministic fallback even when user has no client Gemini API key (without removed banner)'
     );
 
     // Once real post-game AI summary (`pipeline-gemini-daily`) arrives -> AI summary immediately returns to top on BOTH News & Home!
@@ -15746,7 +15787,8 @@ test(
       nowMs: postFinalMs + 5 * 60_000
     });
     assert.ok(
-      !newsAfterAiHtml.includes('data-gameday-above-brief-banner'),
+      !newsAfterAiHtml.includes('data-gameday-live-above-brief') &&
+        !newsAfterAiHtml.includes('data-gameday-above-brief-banner'),
       'News must put the new post-game AI summary back on top immediately once created'
     );
     const homeAfterAiHtml = renderHomeDashboardHtml({
@@ -15757,7 +15799,8 @@ test(
       nowMs: postFinalMs + 5 * 60_000
     });
     assert.ok(
-      !homeAfterAiHtml.includes('data-gameday-above-brief-banner'),
+      !homeAfterAiHtml.includes('data-gameday-live-above-brief') &&
+        !homeAfterAiHtml.includes('data-gameday-above-brief-banner'),
       'Home must put the new post-game AI summary back on top immediately once created'
     );
   }

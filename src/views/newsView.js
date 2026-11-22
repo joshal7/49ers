@@ -40,7 +40,6 @@ import {
   filterOutCompletedGameAvailabilityItems,
   filterFreshVideosForCurrentSlate,
   scoreHighlightAndTeamVideoSalience,
-  evaluateGameDayAboveBriefWindow,
   partitionBreakingNewsAboveBrief
 } from '../engine/breakingClassifier.js';
 import {
@@ -1232,9 +1231,6 @@ export function renderNewsViewHtml({
     // Keep ALL game-day news above yesterday's AI summary until a real post-game AI summary
     // (`live-gemini-daily` or `pipeline-gemini-daily`) has actually been created!
     const requireAiPostGameBrief = true;
-    const gdWindow = evaluateGameDayAboveBriefWindow(appData, dailyBrief, nowMs, {
-      requireAiSource: requireAiPostGameBrief
-    });
     const isNarrowedByTopicOrSearch = Boolean(cleanSearchQuery);
     const scopedRaw = applyTopicAndSearch(dedupedRaw);
 
@@ -1249,33 +1245,18 @@ export function renderNewsViewHtml({
     const {
       breakingAboveBrief,
       remainingBelowBrief,
-      gameDayLiveMode,
-      gameDayPhaseLabel
+      gameDayLiveMode
     } = partitionBreakingNewsAboveBrief(scopedRaw, dailyBrief, nowMs, {
       appData,
       promoteAllGameDayNews: true,
       requireAiPostGameBrief
     });
 
-    const gameDayBannerHtml =
-      gdWindow.active || gameDayLiveMode
-        ? `
-          <div class="gameday-above-brief-banner" data-gameday-above-brief-banner>
-            <span class="gameday-live-label">
-              <span class="gameday-live-dot" aria-hidden="true"></span>
-              <span>${esc(gameDayPhaseLabel || gdWindow.phaseLabel || 'Game-Day Live Wire')}</span>
-            </span>
-            <span class="gameday-live-note mono">New updates above brief until postgame summary</span>
-          </div>
-        `
-        : '';
-
     const rosterPlayers = appData?.roster?.players || [];
     const breakingTopHtml =
       breakingAboveBrief.length > 0
         ? `
           <div class="card breaking-above-brief-card${gameDayLiveMode ? ' gameday-live-above-card' : ''}" data-breaking-above-brief${gameDayLiveMode ? ' data-gameday-live-above-brief="true"' : ''} style="display:flex;flex-direction:column;gap:9px">
-            ${gameDayBannerHtml}
             ${breakingAboveBrief
               .slice(0, 200)
               .map((item, idx) =>
@@ -1292,9 +1273,7 @@ export function renderNewsViewHtml({
               .join('')}
           </div>
         `
-        : gameDayBannerHtml
-          ? `<div class="card breaking-above-brief-card gameday-live-above-card" data-gameday-live-above-brief="true" style="padding:8px 11px">${gameDayBannerHtml}</div>`
-          : '';
+        : '';
 
     const briefHtml = renderDailyTopNewsBriefHtml(dailyBrief, {
       rawStream: prioritizedRaw,
