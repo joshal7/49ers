@@ -1383,16 +1383,17 @@ async function main() {
             reporterId: 'matt_barrows',
             outletName: '49ers Beat',
             trustTier: 1,
-            title: '49ers Week 11 practice observations and red-zone package tweaks ahead of Sunday.',
-            fullText: '49ers Week 11 practice observations and red-zone package tweaks ahead of Sunday.',
+            title: '49ers red-zone motion rate and 2027 salary cap flexibility breakdown from All-22 film.',
+            fullText: '49ers red-zone motion rate and 2027 salary cap flexibility breakdown from All-22 film.',
             url: 'https://x.com/mattbarrows/status/1999999999999999999',
-            externalUrl: 'https://www.espn.com/nfl/story/_/id/50999999/49ers-week-11-practice-notes',
-            externalTitle: '49ers Week 11 practice notes: Red-zone packages and injury ramp',
+            externalUrl: 'https://www.espn.com/nfl/story/_/id/50999999/49ers-redzone-motion-film-study',
+            externalTitle: '49ers film breakdown: Red-zone motion rates and 2027 cap architecture',
             externalDomain: 'espn.com',
             publishedAt: new Date().toISOString(),
             category: 'news'
           });
-          if (typeof diag.renderActiveView === 'function') diag.renderActiveView();
+          if (typeof diag.forceRender === 'function') diag.forceRender();
+          else if (typeof diag.renderActiveView === 'function') diag.renderActiveView();
           else if (tweetsBtn) tweetsBtn.click();
           await sleep(80);
           linkedCards = Array.from(document.querySelectorAll('[data-linked-article-card="true"]'));
@@ -6445,7 +6446,9 @@ async function main() {
         const headerStyle = headerEl ? getComputedStyle(headerEl) : null;
         const headerPosition = headerStyle?.position || '';
         const headerBackdrop = headerStyle?.backdropFilter || headerStyle?.webkitBackdropFilter || 'none';
+        const headerPaddingTop = parseFloat(headerStyle?.paddingTop || '0') || 0;
         const headerRect = headerEl?.getBoundingClientRect();
+        const headerHeight = headerRect ? Math.round(headerRect.height) : 0;
         const mainViewRect = document.getElementById('mainView')?.getBoundingClientRect();
         const searchBtn = document.getElementById('openSearchBtn');
         const settingsBtn = document.getElementById('openSettingsBtn');
@@ -6475,6 +6478,7 @@ async function main() {
 
         const sheetModeAttr = backdrop?.getAttribute('data-sheet-mode') || '';
         const backdropAlignItems = backdrop ? getComputedStyle(backdrop).alignItems : '';
+        const searchSheetPaddingTop = sheet ? parseFloat(getComputedStyle(sheet).paddingTop || '0') || 0 : 0;
         const sheetRectKb = sheet?.getBoundingClientRect();
         const paneRectKb = resultsPane?.getBoundingClientRect();
 
@@ -6521,6 +6525,9 @@ async function main() {
         return {
           headerPosition,
           headerBackdrop,
+          headerPaddingTop,
+          headerHeight,
+          searchSheetPaddingTop,
           btnWidth: btnRect ? Math.round(btnRect.width) : 0,
           btnHeight: btnRect ? Math.round(btnRect.height) : 0,
           setHeight: setRect ? Math.round(setRect.height) : 0,
@@ -6547,8 +6554,11 @@ async function main() {
       assert(
         searchUxAudit.headerPosition === 'fixed' &&
           searchUxAudit.headerBackdrop === 'none' &&
-          searchUxAudit.mainClearsFixedHeader,
-        `Top header must be fixed, solid non-frosted, and cleared by mainView: ${JSON.stringify(searchUxAudit)}`
+          searchUxAudit.mainClearsFixedHeader &&
+          searchUxAudit.headerPaddingTop <= 12 &&
+          searchUxAudit.headerHeight <= 68 &&
+          searchUxAudit.searchSheetPaddingTop <= 12,
+        `Top header must be fixed, solid non-frosted, compact with zero dead browser top whitespace, and cleared by mainView: ${JSON.stringify(searchUxAudit)}`
       );
       assert(
         searchUxAudit.searchBtnUnobstructed &&
