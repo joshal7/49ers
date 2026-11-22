@@ -208,7 +208,38 @@ async function checkAndReserveDailyQuota(env, team) {
   return { allowed: true, usedToday: raw + 1 };
 }
 
-async function callGeminiSinglePass(env, { systemPrompt, userPrompt, thinkingLevel = 'XHIGH', jsonMode = false }) {
+function buildTeamEditorialSystemPrompt(team) {
+  const isSf = team?.abbr === 'SF';
+  const clubGuardrail = isSf
+    ? 'SF GROUNDING: HC Kyle Shanahan, OC Klay Kubiak, DC Raheem Morris. Former 49ers coaches Robert Saleh, Nick Sorensen, Steve Wilks, DeMeco Ryans, Mike McDaniel, and Klint Kubiak are NO LONGER on San Francisco\'s staff. Never attribute retired/departed players (Bryce Huff, Javon Hargrave, Charvarius Ward, Talanoa Hufanga, Aaron Banks, Leonard Floyd, Maliek Collins, Jordan Mason, Elijah Mitchell, Jauan Jennings, Arik Armstead, Chase Young, Randy Gregory) to the active 49ers roster unless explicitly active in the live snapshot.'
+    : `CLUB GROUNDING: Treat the provided live ${team.fullName} snapshot and live Google Search Grounding as your sole source of truth for current coaches, active roster, injuries, records, and stats.`;
+
+  return `You are an independent Lead Football Intelligence Analyst for "${team.brandName}" (${team.fullName}).
+UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVER GENERATION TIME:
+1. Never rely on stale pre-trained model weights for rosters, coaches, injuries, records, trades, or stats. Use the provided AUTHORITATIVE LIVE DATA SNAPSHOT first, supplemented with targeted Google Search Grounding only for brand-new external facts.
+2. ${clubGuardrail}
+3. FAIR, BALANCED & NON-HOMER ASSESSMENT: Evaluate ${team.fullName} with sober, league-wide objectivity using third-person team references ("${team.city}", "the ${team.nickname}", "they") — never first-person fan pronouns ("we/us/our"). Benchmark strengths against bottom-half NFL vulnerabilities, give full analytical weight to opponent coordinators and top units, and calibrate confidence strictly to the Vegas spread.
+4. STRICT EDITORIAL CHARTER: Zero clickbait, zero sensationalism, zero fluff. Ground every point in verified stats, All-22 scheme mechanics (personnel groupings, coverage shells, pass-rush fronts, EPA/play, CPOE, RYOE), and CBA salary cap math when relevant.`;
+}
+
+function isCacheableStructuredIntel(rawText = '') {
+  const s = String(rawText || '').trim();
+  if (s.length < 80) return false;
+  const start = s.indexOf('{');
+  const end = s.lastIndexOf('}');
+  if (start < 0 || end <= start) return false;
+  try {
+    const parsed = JSON.parse(s.slice(start, end + 1));
+    return Boolean(parsed && typeof parsed === 'object' && !Array.isArray(parsed));
+  } catch {
+    return false;
+  }
+}
+
+async function callGeminiSinglePass(
+  env,
+  { systemPrompt, userPrompt, thinkingLevel = 'XHIGH', jsonMode = false, useGoogleSearch = true }
+) {
   const apiKey = String(env.GEMINI_NFL_API_KEY || env.GEMINI_API_KEY || '').trim();
   if (!apiKey) return { ok: false, status: 503, error: 'GEMINI_NFL_API_KEY not configured' };
 
@@ -216,34 +247,44 @@ async function callGeminiSinglePass(env, { systemPrompt, userPrompt, thinkingLev
   for (const model of cascade) {
     const thinkingConfig = buildGeminiThinkingConfig(model, thinkingLevel);
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
-    try {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: systemPrompt }] },
-          generationConfig: {
-            temperature: 0.16,
-            ...(jsonMode ? { responseMimeType: 'application/json' } : {}),
-            ...(thinkingConfig ? { thinkingConfig } : {})
-          },
-          contents: [{ role: 'user', parts: [{ text: String(userPrompt).slice(0, 24000) }] }]
-        }),
-        signal: AbortSignal.timeout(85000)
-      });
-      if (!res.ok) continue;
-      const json = await res.json();
-      const parts = json?.candidates?.[0]?.content?.parts || [];
-      const text = parts.filter(p => !p.thought && typeof p.text === 'string').map(p => p.text).join('').trim();
-      if (!text) continue;
-      return {
-        ok: true,
-        modelUsed: model,
-        thinkingLevelUsed: resolveGeminiThinkingLevelLabel(model, thinkingLevel),
-        rawText: text
-      };
-    } catch {
-      continue;
+    const groundingAttempts = useGoogleSearch && !jsonMode ? [true, false] : [false];
+
+    for (const withSearch of groundingAttempts) {
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: systemPrompt }] },
+            ...(withSearch ? { tools: [{ google_search: {} }] } : {}),
+            generationConfig: {
+              temperature: 0.18,
+              ...(jsonMode && !withSearch ? { responseMimeType: 'application/json' } : {}),
+              ...(thinkingConfig ? { thinkingConfig } : {})
+            },
+            contents: [{ role: 'user', parts: [{ text: String(userPrompt).slice(0, 24000) }] }]
+          }),
+          signal: AbortSignal.timeout(85000)
+        });
+        if (!res.ok) {
+          // Only retry the same model without google_search on 400 schema rejection; otherwise advance cascade.
+          if (withSearch && res.status === 400) continue;
+          break;
+        }
+        const json = await res.json();
+        const parts = json?.candidates?.[0]?.content?.parts || [];
+        const text = parts.filter(p => !p.thought && typeof p.text === 'string').map(p => p.text).join('').trim();
+        if (!text) continue;
+        return {
+          ok: true,
+          modelUsed: model,
+          thinkingLevelUsed: resolveGeminiThinkingLevelLabel(model, thinkingLevel),
+          grounded: withSearch,
+          rawText: text
+        };
+      } catch {
+        break;
+      }
     }
   }
   return { ok: false, status: 502, error: 'All Gemini cascade tiers failed' };
@@ -477,10 +518,14 @@ export default {
           if (!quota.allowed) {
             return jsonResp({ error: 'Daily league quota reserved for priority teams', ...quota }, 429, cors);
           }
+          const editorialSystem = buildTeamEditorialSystemPrompt(team);
+          const clientSystem = String(body.systemPrompt || '').slice(0, 8000);
+          const effectiveSystem = clientSystem ? `${editorialSystem}\n\n${clientSystem}` : editorialSystem;
           const gen = await callGeminiSinglePass(env, {
-            systemPrompt: String(body.systemPrompt || `You are an objective NFL analyst for ${team.brandName}.`).slice(0, 8000),
+            systemPrompt: effectiveSystem,
             userPrompt: String(body.prompt).slice(0, 24000),
-            thinkingLevel: 'XHIGH'
+            thinkingLevel: 'XHIGH',
+            useGoogleSearch: true
           });
           if (!gen.ok) return jsonResp({ error: gen.error }, gen.status || 502, cors);
           const payloadOut = {
@@ -488,10 +533,13 @@ export default {
             cycleKey,
             modelUsed: gen.modelUsed,
             thinkingLevel: gen.thinkingLevelUsed,
+            grounded: Boolean(gen.grounded),
             generatedAt: new Date().toISOString(),
             rawText: gen.rawText
           };
-          await env.SHARED_CACHE?.put(kvKey, JSON.stringify(payloadOut), { expirationTtl: 60 * 60 * 26 });
+          if (isCacheableStructuredIntel(gen.rawText)) {
+            await env.SHARED_CACHE?.put(kvKey, JSON.stringify(payloadOut), { expirationTtl: 60 * 60 * 26 });
+          }
           return jsonResp({ cached: false, ...payloadOut }, 200, cors);
         } finally {
           await env.SHARED_CACHE?.delete(lockKey).catch(() => {});
@@ -499,40 +547,63 @@ export default {
       }
     }
 
-    // 8. Team-Scoped Matchup Intel (Tue/Fri slot caching in team-namespaced KV)
+    // 8. Team-Scoped Matchup Intel (1/day for SF VIP parity; Tue/Fri slots for non-SF clubs; XHIGH + Google Search)
     if (request.method === 'POST' && url.pathname === '/api/matchup-intel') {
       const body = await request.json().catch(() => null);
       if (!body?.prompt) return jsonResp({ error: 'Invalid matchup intel payload' }, 400, cors);
       const seasonYear = Number(body.seasonYear || 2026);
       const week = Number(body.week || 1);
       const oppAbbr = String(body.oppAbbr || 'OPP').replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+      const datePt = String(body.datePt || new Date().toISOString().slice(0, 10)).replace(/[^0-9-]/g, '');
       const dayOfWeek = new Date().getUTCDay();
-      const slot = dayOfWeek >= 5 || dayOfWeek === 0 ? 'fri-final' : 'tue-preview';
-      const kvKey = `matchup_intel_v4:${team.abbr}:${seasonYear}:wk${week}:${oppAbbr}:${slot}`;
+      const slot = team.abbr === 'SF' ? datePt : dayOfWeek >= 5 || dayOfWeek === 0 ? 'fri-final' : 'tue-preview';
+      const cacheTtlSec = team.abbr === 'SF' ? 60 * 60 * 26 : 60 * 60 * 84;
+      const kvKey = `matchup_intel_v5:${team.abbr}:${seasonYear}:wk${week}:${oppAbbr}:${slot}`;
       const existing = await env.SHARED_CACHE?.get(kvKey, 'json');
       if (existing && !body.forceRefresh) {
         return jsonResp({ cached: true, teamAbbr: team.abbr, ...existing }, 200, cors);
       }
-      const quota = await checkAndReserveDailyQuota(env, team);
-      if (!quota.allowed) return jsonResp({ error: 'Daily league quota reserved', ...quota }, 429, cors);
-      const gen = await callGeminiSinglePass(env, {
-        systemPrompt: String(body.systemPrompt || `You are an objective NFL matchup strategist for ${team.brandName}.`).slice(0, 8000),
-        userPrompt: String(body.prompt).slice(0, 24000),
-        thinkingLevel: 'XHIGH'
-      });
-      if (!gen.ok) return jsonResp({ error: gen.error }, gen.status || 502, cors);
-      const out = {
-        teamAbbr: team.abbr,
-        seasonYear,
-        week,
-        oppAbbr,
-        slot,
-        modelUsed: gen.modelUsed,
-        generatedAt: new Date().toISOString(),
-        rawText: gen.rawText
-      };
-      await env.SHARED_CACHE?.put(kvKey, JSON.stringify(out), { expirationTtl: 60 * 60 * 84 });
-      return jsonResp({ cached: false, ...out }, 200, cors);
+
+      const lockKey = `lock:matchup:${team.abbr}:${seasonYear}:wk${week}:${oppAbbr}:${slot}`;
+      const existingLock = await env.SHARED_CACHE?.get(lockKey);
+      if (existingLock) {
+        return jsonResp({ cached: false, inFlight: true, teamAbbr: team.abbr, slot }, 202, cors);
+      }
+      await env.SHARED_CACHE?.put(lockKey, '1', { expirationTtl: 120 });
+
+      try {
+        const quota = await checkAndReserveDailyQuota(env, team);
+        if (!quota.allowed) return jsonResp({ error: 'Daily league quota reserved', ...quota }, 429, cors);
+        const editorialSystem = buildTeamEditorialSystemPrompt(team);
+        const clientSystem = String(body.systemPrompt || '').slice(0, 8000);
+        const effectiveSystem = clientSystem ? `${editorialSystem}\n\n${clientSystem}` : editorialSystem;
+        const gen = await callGeminiSinglePass(env, {
+          systemPrompt: effectiveSystem,
+          userPrompt: String(body.prompt).slice(0, 24000),
+          thinkingLevel: 'XHIGH',
+          useGoogleSearch: true
+        });
+        if (!gen.ok) return jsonResp({ error: gen.error }, gen.status || 502, cors);
+        const out = {
+          teamAbbr: team.abbr,
+          datePt,
+          seasonYear,
+          week,
+          oppAbbr,
+          slot,
+          modelUsed: gen.modelUsed,
+          thinkingLevel: gen.thinkingLevelUsed,
+          grounded: Boolean(gen.grounded),
+          generatedAt: new Date().toISOString(),
+          rawText: gen.rawText
+        };
+        if (isCacheableStructuredIntel(gen.rawText)) {
+          await env.SHARED_CACHE?.put(kvKey, JSON.stringify(out), { expirationTtl: cacheTtlSec });
+        }
+        return jsonResp({ cached: false, ...out }, 200, cors);
+      } finally {
+        await env.SHARED_CACHE?.delete(lockKey).catch(() => {});
+      }
     }
 
     // 9. Strict BYOK Protection: Public users CANNOT spend owner keys on Auto Pods or Deep Analysis

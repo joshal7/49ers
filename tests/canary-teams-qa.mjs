@@ -430,6 +430,208 @@ await test('configureBeatAttributionForTeam preserves built-in SF reporter outle
   assert.ok(birkett?.credibilityScore >= 95, `Expected Dave Birkett credibilityScore >= 95, got ${birkett?.credibilityScore}`);
 });
 
+await test('Canary Matchup Intel & Daily Brief: platform API works without BYOK key + Worker uses Gemini 4 Hydrogen XHIGH with Google Search Grounding', async () => {
+  const {
+    resolveReadOnlyPlatformApiBase,
+    refreshDailyMatchupIntelIfDue,
+    clearDailyMatchupIntelAttemptLock
+  } = await import('../src/services/aiWorkerClient.js');
+
+  // 1. resolveReadOnlyPlatformApiBase enables built-in Pages API on 49ers2, lions & bills (never on GitHub Pages 49ers.joshal.com)
+  const origWindow = globalThis.window;
+  const origPlatformFlag = globalThis.__PLATFORM_API_ENABLED__;
+  const origLocalStorage = globalThis.localStorage;
+  const origFetch = globalThis.fetch;
+
+  const lsMap = new Map();
+  globalThis.localStorage = {
+    getItem: k => (lsMap.has(k) ? lsMap.get(k) : null),
+    setItem: (k, v) => lsMap.set(k, String(v)),
+    removeItem: k => lsMap.delete(k)
+  };
+
+  try {
+    globalThis.__PLATFORM_API_ENABLED__ = false;
+    for (const host of ['49ers2.joshal.com', 'lions.joshal.com', 'bills.joshal.com']) {
+      globalThis.window = { location: { hostname: host, protocol: 'https:', origin: `https://${host}`, search: '' } };
+      assert.equal(resolveReadOnlyPlatformApiBase({}), `https://${host}`, `${host} should resolve built-in read-only API base`);
+    }
+    globalThis.window = { location: { hostname: '49ers.joshal.com', protocol: 'https:', origin: 'https://49ers.joshal.com', search: '' } };
+    assert.equal(resolveReadOnlyPlatformApiBase({}), '', '49ers.joshal.com (GitHub Pages) must NOT assume built-in /api/*');
+
+    // 2. Worker /api/matchup-intel uses gemini-4-hydrogen + XHIGH + google_search grounding + SF daily KV + in-flight 202 lock + rejects KV poisoning
+    const kvStore = new Map();
+    const mockEnv = {
+      SHARED_CACHE: {
+        async get(k, type) {
+          const v = kvStore.get(k);
+          if (v == null) return null;
+          return type === 'json' ? JSON.parse(v) : v;
+        },
+        async put(k, v) { kvStore.set(k, String(v)); },
+        async delete(k) { kvStore.delete(k); }
+      },
+      GEMINI_NFL_API_KEY: 'test-key-matchup-qa'
+    };
+
+    const sampleAiPayload = JSON.stringify({
+      coachingMatchup: {
+        headline: "Kyle Shanahan & DC Raheem Morris vs. Minnesota Vikings HC Kevin O'Connell, OC Wes Phillips, DC Brian Flores",
+        summary: 'Grounded Week 11 scheme clash pitting San Francisco #1 offensive EPA against Brian Flores #1 defensive EPA and simulated pressure packages.',
+        bullets: [
+          'Pass-Game Efficiency & Coverage Shell Delta: Shanahan condensed splits and motion attack Minnesota disguised Quarters and Cover 6 rotations.',
+          'Run-Scheme vs. Box Math: San Francisco top-ranked zone and gap run game tests Flores light boxes and downhill overhang triggers.',
+          'Third-Down & Red-Zone Leverage: San Francisco red-zone touchdown efficiency meets Minnesota league-leading sack rate and pressure fronts.',
+          'Special Teams & Venue Factors: Mexico City altitude and field-position margins amplify every punting and field-goal sequence.'
+        ]
+      },
+      keyMatchupsMatrix: [
+        {
+          phaseTag: 'PASS PROTECTION',
+          unitMatchup: 'SF Interior OL vs. MIN Blitz Packages',
+          advantage: 'MIN Heavy Edge',
+          sfPlayers: ['Dominick Puni', 'Jake Brendel'],
+          statComparison: 'SF: 8.32 NY/PA (#1) | MIN: 12.2% Sack Rate (#1)',
+          tacticalDetail: 'Dominick Puni and Jake Brendel must sort double-A-gap mugged looks against Dallas Turner and Andrew Van Ginkel without surrendering quick interior pressure.',
+          filmTell: 'Watch Minnesota mug both A-gaps with linebackers before dropping one into robber coverage.'
+        },
+        {
+          phaseTag: 'PERIMETER PASSING',
+          unitMatchup: 'SF WRs vs. MIN CBs',
+          advantage: 'Even Star Clash',
+          sfPlayers: ['Keenan Allen', 'Mike Evans'],
+          statComparison: 'SF: +5.4% CPOE (#1) | MIN: #2 Pass Defense',
+          tacticalDetail: 'With injury designations monitoring perimeter speed, Keenan Allen must win option routes inside against Byron Murphy Jr. and tight intermediate windows.',
+          filmTell: 'Observe whether Murphy plays trail technique with safety help over the top on third downs.'
+        },
+        {
+          phaseTag: 'GROUND ATTACK',
+          unitMatchup: 'Christian McCaffrey vs. MIN Front Seven',
+          advantage: 'SF Edge',
+          sfPlayers: ['Christian McCaffrey'],
+          statComparison: 'SF: +42.93 Rush EPA (#1) | MIN: #5 Rush Defense',
+          tacticalDetail: 'Christian McCaffrey stretches horizontal edges and attacks flat leverages as a receiver to stress Minnesota aggressive edge rushers out of vertical lanes.',
+          filmTell: 'Look for 21-personnel motion to identify Bear fronts before outside-zone tosses.'
+        },
+        {
+          phaseTag: 'DEFENSIVE SECONDARY',
+          unitMatchup: 'SF Secondary vs. Justin Jefferson',
+          advantage: 'MIN Edge',
+          sfPlayers: ['Deommodore Lenoir', 'Renardo Green'],
+          statComparison: 'SF: #20 Pass Defense | MIN: Justin Jefferson',
+          tacticalDetail: 'San Francisco cornerbacks must maintain disciplined cloud leverage and safety capping against Justin Jefferson intermediate crossers and deep digs.',
+          filmTell: 'Watch whether Lenoir aligns inside in nickel and receives safety bracket help over Jefferson.'
+        }
+      ]
+    });
+
+    const capturedGeminiReqs = [];
+    globalThis.fetch = async (url, init = {}) => {
+      const u = String(url);
+      if (u.includes('generativelanguage.googleapis.com')) {
+        capturedGeminiReqs.push({ url: u, body: JSON.parse(init.body || '{}') });
+        return new Response(
+          JSON.stringify({ candidates: [{ content: { parts: [{ text: sampleAiPayload }] } }] }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      if (u.startsWith('https://49ers2.joshal.com/api/matchup-intel')) {
+        return canaryWorker.fetch(new Request(u, { method: init.method, headers: init.headers, body: init.body }), mockEnv, {});
+      }
+      throw new Error(`Unexpected fetch in QA: ${u}`);
+    };
+
+    // Client refreshDailyMatchupIntelIfDue with EMPTY prefs (no personal geminiApiKey) on 49ers2.joshal.com
+    globalThis.window = { location: { hostname: '49ers2.joshal.com', protocol: 'https:', origin: 'https://49ers2.joshal.com', search: '' } };
+    globalThis.__PLATFORM_API_ENABLED__ = true;
+    clearDailyMatchupIntelAttemptLock();
+
+    const sfSchedule = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'schedule-matchup.json'), 'utf8'));
+    const sfRoster = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'roster.json'), 'utf8'));
+    const sfMeta = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'meta.json'), 'utf8'));
+    const testAppData = {
+      meta: { ...sfMeta, teamAbbr: 'SF' },
+      roster: sfRoster,
+      scheduleMatchup: JSON.parse(JSON.stringify(sfSchedule))
+    };
+
+    const res = await refreshDailyMatchupIntelIfDue({
+      appData: testAppData,
+      prefs: {},
+      nowMs: Date.parse('2026-11-22T20:00:00Z')
+    });
+    assert.equal(res.updated, true, `Expected Matchup Intel to update without BYOK key, got ${JSON.stringify(res)}`);
+    assert.equal(res.modelUsed, 'gemini-4-hydrogen');
+    assert.equal(testAppData.scheduleMatchup.upcomingMatchup.aiMatchupMeta?.datePt, '2026-11-22');
+    assert.equal(capturedGeminiReqs.length, 1, 'Expected exactly 1 Gemini API call');
+    assert.ok(capturedGeminiReqs[0].url.includes('models/gemini-4-hydrogen:generateContent'));
+    assert.deepEqual(capturedGeminiReqs[0].body.generationConfig?.thinkingConfig, { thinkingLevel: 'XHIGH' });
+    assert.deepEqual(capturedGeminiReqs[0].body.tools, [{ google_search: {} }], 'Canary worker MUST pass live google_search grounding');
+    assert.ok(
+      String(capturedGeminiReqs[0].body.systemInstruction?.parts?.[0]?.text || '').includes('Kyle Shanahan'),
+      'Canary worker MUST prepend SF editorial grounding prompt'
+    );
+
+    // Second request hits SF daily KV cache (0 extra Gemini calls)
+    const cachedRes = await (
+      await canaryWorker.fetch(
+        new Request('https://49ers2.joshal.com/api/matchup-intel?team=SF', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            teamAbbr: 'SF',
+            seasonYear: 2026,
+            week: testAppData.scheduleMatchup.upcomingMatchup.week,
+            oppAbbr: testAppData.scheduleMatchup.upcomingMatchup.oppAbbr,
+            datePt: '2026-11-22',
+            prompt: 'cached read'
+          })
+        }),
+        mockEnv,
+        {}
+      )
+    ).json();
+    assert.equal(cachedRes.cached, true, 'Second request on same PT day should hit KV cache');
+    assert.equal(capturedGeminiReqs.length, 1, 'KV cache hit must not invoke Gemini again');
+
+    // In-flight lock returns HTTP 202 and does NOT lock browser out permanently
+    kvStore.set('lock:matchup:SF:2026:wk12:SEA:2026-11-23', '1');
+    const lockResp = await canaryWorker.fetch(
+      new Request('https://49ers2.joshal.com/api/matchup-intel?team=SF', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamAbbr: 'SF', seasonYear: 2026, week: 12, oppAbbr: 'SEA', datePt: '2026-11-23', prompt: 'test' })
+      }),
+      mockEnv,
+      {}
+    );
+    assert.equal(lockResp.status, 202, 'Active in-flight matchup lock must return HTTP 202');
+
+    // Non-JSON Gemini text must NOT poison shared KV cache
+    globalThis.fetch = async () =>
+      new Response(
+        JSON.stringify({ candidates: [{ content: { parts: [{ text: 'Pong. Not JSON.' }] } }] }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    const nonJsonResp = await canaryWorker.fetch(
+      new Request('https://49ers2.joshal.com/api/matchup-intel?team=SF', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamAbbr: 'SF', seasonYear: 2026, week: 13, oppAbbr: 'LAR', datePt: '2026-11-24', prompt: 'ping' })
+      }),
+      mockEnv,
+      {}
+    );
+    assert.equal(nonJsonResp.status, 200);
+    assert.equal(kvStore.has('matchup_intel_v5:SF:2026:wk13:LAR:2026-11-24'), false, 'Non-JSON response must never poison shared KV');
+  } finally {
+    globalThis.window = origWindow;
+    globalThis.__PLATFORM_API_ENABLED__ = origPlatformFlag;
+    globalThis.localStorage = origLocalStorage;
+    globalThis.fetch = origFetch;
+  }
+});
+
 // Restore default SF active team singleton
 setActiveTeamConfig('SF');
 

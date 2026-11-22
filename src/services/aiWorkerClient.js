@@ -204,7 +204,7 @@ export function resolveReadOnlyPlatformApiBase(prefs = {}) {
     typeof window !== 'undefined' &&
     window.location &&
     (globalThis.__PLATFORM_API_ENABLED__ === true ||
-      (/^(lions|bills)\.joshal\.com$/i.test(window.location.hostname) && window.location.protocol === 'https:'))
+      (/^(49ers2|lions|bills)\.joshal\.com$/i.test(window.location.hostname) && window.location.protocol === 'https:'))
   ) {
     return window.location.origin.replace(/\/+$/, '');
   }
@@ -2816,8 +2816,10 @@ export function parseAndSanitizeDailyMatchupIntel(rawTextOrObj, um = {}, rosterP
 export function hydrateCachedDailyMatchupIntel(appData) {
   const um = appData?.scheduleMatchup?.upcomingMatchup;
   if (!um || !um.week || !um.oppAbbr) return false;
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
   const seasonYear = Number(appData?.meta?.seasonYear || 2026);
-  const scopeId = `${seasonYear}:wk${um.week}:${String(um.oppAbbr).toUpperCase()}`;
+  const baseScope = `${seasonYear}:wk${um.week}:${String(um.oppAbbr).toUpperCase()}`;
+  const scopeId = activeTeam.abbr === 'SF' ? baseScope : `${activeTeam.abbr}:${baseScope}`;
   const cached = safeReadLocalJson(DAILY_MATCHUP_CACHE_KEY);
   if (!cached || cached.scopeId !== scopeId || !cached.coachingMatchup || !cached.keyMatchupsMatrix) {
     return false;
@@ -2848,7 +2850,9 @@ export async function refreshDailyMatchupIntelIfDue({
   force = false,
   nowMs = Date.now()
 } = {}) {
-  if (!hasLiveAiConnection(prefs)) {
+  const baseUrl = resolveReadOnlyPlatformApiBase(prefs);
+  const directKey = String(prefs?.geminiApiKey || '').trim();
+  if (!directKey && !baseUrl) {
     return { updated: false, reason: 'no_ai_connection' };
   }
   const um = appData?.scheduleMatchup?.upcomingMatchup;
@@ -2866,9 +2870,11 @@ export async function refreshDailyMatchupIntelIfDue({
     return { updated: false, reason: 'no_active_matchup' };
   }
 
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
   const seasonYear = Number(appData?.meta?.seasonYear || 2026);
   const todayPt = getPacificDateKey(nowMs);
-  const scopeId = `${seasonYear}:wk${um.week}:${oppAbbr}`;
+  const baseScope = `${seasonYear}:wk${um.week}:${oppAbbr}`;
+  const scopeId = activeTeam.abbr === 'SF' ? baseScope : `${activeTeam.abbr}:${baseScope}`;
 
   hydrateCachedDailyMatchupIntel(appData);
 
@@ -2908,10 +2914,6 @@ export async function refreshDailyMatchupIntelIfDue({
       let normalized = null;
       let modelUsed = PRIMARY_GEMINI_REASONING_MODEL;
 
-      const baseUrl = resolveReadOnlyPlatformApiBase(prefs);
-      const directKey = String(prefs?.geminiApiKey || '').trim();
-      const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
-
       if (baseUrl && !directKey) {
         const res = await fetchWithTimeout(
           `${baseUrl}/api/matchup-intel?team=${encodeURIComponent(activeTeam.abbr)}`,
@@ -2932,12 +2934,19 @@ export async function refreshDailyMatchupIntelIfDue({
               systemPrompt
             })
           },
-          55000
+          90000
         );
+        if (res.status === 202) {
+          // Another visitor is actively generating today's shared brief; allow retry on next visit.
+          safeDeleteLocalKey(DAILY_MATCHUP_ATTEMPT_KEY);
+          return { updated: false, inFlight: true, datePt: todayPt };
+        }
         if (res.ok) {
           const json = await res.json();
           modelUsed = json?.modelUsed || modelUsed;
           normalized = parseAndSanitizeDailyMatchupIntel(json?.data || json?.rawText, um, rosterPlayers);
+        } else {
+          safeDeleteLocalKey(DAILY_MATCHUP_ATTEMPT_KEY);
         }
       } else if (directKey) {
         const conn = await resolveDirectGeminiCascades(prefs);
