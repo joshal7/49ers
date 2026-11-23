@@ -107,6 +107,111 @@ export function normalizeTeamAbbr(abbr) {
 }
 
 /**
+ * Canonical deduplication key for an NFL game across mixed feed IDs (e.g. nflverse `2026_13_MIA_DEN`
+ * vs. ESPN numeric event ID `401873085`). Because two clubs can never play each other twice in the
+ * same NFL week, keying by `week:sortedTeamA_sortedTeamB` collapses both identical-order duplicates
+ * and neutral-site home/away discrepancies, while falling back cleanly to `id` for synthetic tests
+ * that omit `week`.
+ */
+export function canonicalPlayoffGameKey(game) {
+  if (!game || typeof game !== 'object') return null;
+  const wk = Number(game.week || 0);
+  const home = normalizeTeamAbbr(game.home);
+  const away = normalizeTeamAbbr(game.away);
+  if (wk > 0 && home && away) {
+    const pair = home < away ? `${home}_${away}` : `${away}_${home}`;
+    return `${wk}:${pair}`;
+  }
+  const id = String(game.id ?? game.gameId ?? '').trim();
+  return id ? `id:${id}` : null;
+}
+
+/**
+ * Reconciles and deduplicates `completedGames` and `remainingGames` so no NFL matchup is ever
+ * double-counted in Monte Carlo simulations or duplicated in the Rooting Guide when nflverse and
+ * live ESPN scoreboard feeds use different event ID schemes.
+ */
+export function reconcileAndDedupePlayoffGames(completedGames = [], remainingGames = []) {
+  const completedByKey = new Map();
+  const completedNoKey = [];
+
+  for (const cg of Array.isArray(completedGames) ? completedGames : []) {
+    if (!cg || typeof cg !== 'object') continue;
+    const norm = {
+      ...cg,
+      home: normalizeTeamAbbr(cg.home),
+      away: normalizeTeamAbbr(cg.away)
+    };
+    const key = canonicalPlayoffGameKey(norm);
+    if (!key) {
+      completedNoKey.push(norm);
+      continue;
+    }
+    const existing = completedByKey.get(key);
+    if (!existing) {
+      completedByKey.set(key, norm);
+    } else {
+      const existingHasScores =
+        existing.homeScore != null &&
+        existing.awayScore != null &&
+        Number.isFinite(Number(existing.homeScore)) &&
+        Number.isFinite(Number(existing.awayScore));
+      const nextHasScores =
+        norm.homeScore != null &&
+        norm.awayScore != null &&
+        Number.isFinite(Number(norm.homeScore)) &&
+        Number.isFinite(Number(norm.awayScore));
+      if (!existingHasScores && nextHasScores) {
+        completedByKey.set(key, { ...norm, id: existing.id || norm.id });
+      }
+    }
+  }
+
+  const remainingByKey = new Map();
+  const remainingNoKey = [];
+  const aliasIdMap = new Map();
+
+  for (const rg of Array.isArray(remainingGames) ? remainingGames : []) {
+    if (!rg || typeof rg !== 'object') continue;
+    const norm = {
+      ...rg,
+      home: normalizeTeamAbbr(rg.home),
+      away: normalizeTeamAbbr(rg.away)
+    };
+    const key = canonicalPlayoffGameKey(norm);
+    if (key && completedByKey.has(key)) continue;
+    if (!key) {
+      remainingNoKey.push(norm);
+      continue;
+    }
+    const existing = remainingByKey.get(key);
+    if (!existing) {
+      remainingByKey.set(key, norm);
+      if (norm.id != null) {
+        const cid = String(norm.id);
+        aliasIdMap.set(cid, new Set([cid]));
+      }
+    } else {
+      const canonId = String(existing.id ?? '');
+      const altId = String(norm.id ?? '');
+      if (canonId && altId && altId !== canonId) {
+        if (!aliasIdMap.has(canonId)) aliasIdMap.set(canonId, new Set([canonId]));
+        aliasIdMap.get(canonId).add(altId);
+      }
+      if (!existing.neutral && norm.neutral) {
+        existing.neutral = true;
+      }
+    }
+  }
+
+  return {
+    completedGames: [...completedByKey.values(), ...completedNoKey],
+    remainingGames: [...remainingByKey.values(), ...remainingNoKey],
+    aliasIdMap
+  };
+}
+
+/**
  * Computes a market-calibrated NFL Elo power rating centered at 1500 (`22 Elo ≈ 1.0 spread pt`).
  *
  * Avoids double-counting W-L record and raw point differential without regression:
@@ -323,8 +428,13 @@ export function runPlayoffMonteCarlo(config = {}) {
 
   // Track other-conference wins/losses from completedGames if explicit standings weren't supplied
   const hasExplicitAfcStandings = Object.keys(resolvedOtherStandings || {}).length > 0;
+  const {
+    completedGames: cleanCompletedGames,
+    remainingGames: cleanRemainingGames,
+    aliasIdMap
+  } = reconcileAndDedupePlayoffGames(completedGames, remainingGames);
 
-  for (const cg of completedGames) {
+  for (const cg of cleanCompletedGames) {
     const hAbbr = normalizeTeamAbbr(cg.home);
     const aAbbr = normalizeTeamAbbr(cg.away);
     const hi = abbrToIdx.get(hAbbr);
@@ -376,7 +486,7 @@ export function runPlayoffMonteCarlo(config = {}) {
   }
 
   // Pre-compile all remaining NFL games (including AFC-vs-AFC so full-season SOV/SOS tiebreakers reflect 17 games)
-  const sortedRemGames = [...remainingGames].sort((a, b) => Number(a.week || 0) - Number(b.week || 0));
+  const sortedRemGames = [...cleanRemainingGames].sort((a, b) => Number(a.week || 0) - Number(b.week || 0));
   const compiledGames = [];
   for (const g of sortedRemGames) {
     const hAbbr = normalizeTeamAbbr(g.home);
@@ -390,7 +500,18 @@ export function runPlayoffMonteCarlo(config = {}) {
     const hfa = g.neutral ? 0 : HOME_FIELD_ELO_ADV;
 
     let forcedCode = 0; // 0 = simulate, 1 = HOME, 2 = AWAY, 3 = TIE
-    const fw = forcedWinners[g.id];
+    let fw = forcedWinners[g.id];
+    if (fw === undefined && g.id != null) {
+      const aliases = aliasIdMap.get(String(g.id));
+      if (aliases) {
+        for (const aid of aliases) {
+          if (forcedWinners[aid] !== undefined) {
+            fw = forcedWinners[aid];
+            break;
+          }
+        }
+      }
+    }
     if (fw === 'HOME' || fw === hAbbr) forcedCode = 1;
     else if (fw === 'AWAY' || fw === aAbbr) forcedCode = 2;
     else if (fw === 'TIE') forcedCode = 3;
@@ -960,15 +1081,22 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
       ? baseConfig.conferenceTeams
       : baseConfig?.nfcTeams || [];
   const confSet = new Set(confTeamList.map(t => normalizeTeamAbbr(t.abbr)));
+  const reconciled = reconcileAndDedupePlayoffGames(baseConfig?.completedGames, baseConfig?.remainingGames);
+  const cleanBaseConfig = {
+    ...baseConfig,
+    completedGames: reconciled.completedGames,
+    remainingGames: reconciled.remainingGames
+  };
   let candidateGames = [];
   let maxOut = 12;
 
   if (Array.isArray(targetOrMaxCount)) {
-    candidateGames = targetOrMaxCount;
-    maxOut = targetOrMaxCount.length || 12;
+    const dedupedCandidates = reconcileAndDedupePlayoffGames(reconciled.completedGames, targetOrMaxCount);
+    candidateGames = dedupedCandidates.remainingGames;
+    maxOut = candidateGames.length || 12;
   } else {
     maxOut = Math.max(1, Number(targetOrMaxCount) || 12);
-    const rem = Array.isArray(baseConfig?.remainingGames) ? baseConfig.remainingGames : [];
+    const rem = reconciled.remainingGames;
     const confRelevantRem = rem.filter(g => {
       const h = normalizeTeamAbbr(g.home);
       const a = normalizeTeamAbbr(g.away);
@@ -1009,18 +1137,18 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
     const home = normalizeTeamAbbr(g.home);
     const away = normalizeTeamAbbr(g.away);
     const homeSim = runPlayoffMonteCarlo({
-      ...baseConfig,
+      ...cleanBaseConfig,
       targetTeam: targetAbbr,
       conference: activeConf,
-      forcedWinners: { ...(baseConfig.forcedWinners || {}), [g.id]: 'HOME' },
+      forcedWinners: { ...(cleanBaseConfig.forcedWinners || {}), [g.id]: 'HOME' },
       iterations: 2500,
       seed: 777
     });
     const awaySim = runPlayoffMonteCarlo({
-      ...baseConfig,
+      ...cleanBaseConfig,
       targetTeam: targetAbbr,
       conference: activeConf,
-      forcedWinners: { ...(baseConfig.forcedWinners || {}), [g.id]: 'AWAY' },
+      forcedWinners: { ...(cleanBaseConfig.forcedWinners || {}), [g.id]: 'AWAY' },
       iterations: 2500,
       seed: 777
     });

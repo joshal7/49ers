@@ -24,9 +24,11 @@ import {
   select22OffDefStartersFromDepthChart
 } from '../engine/injuryProbabilityModel.js';
 import {
+  canonicalPlayoffGameKey,
   runPlayoffMonteCarlo,
   computeCalibratedTeamPowerRating,
-  computeRootingGuideLeverage
+  computeRootingGuideLeverage,
+  reconcileAndDedupePlayoffGames
 } from '../engine/playoffMonteCarlo.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
@@ -1227,6 +1229,66 @@ function hydrateBundlePostLoad(rawFiles) {
 
   if (meta && typeof meta === 'object' && meta.updatedAt && !meta._upstreamUpdatedAt) {
     meta._upstreamUpdatedAt = meta.updatedAt;
+  }
+
+  // Self-heal any stale/cached playoff simulator inputs or rooting leverage containing duplicate or already-completed matchups
+  const pp = seasonal?.playoffPicture;
+  const simInBoot = pp?.simulatorInputs;
+  if (simInBoot && (Array.isArray(simInBoot.completedGames) || Array.isArray(simInBoot.remainingGames))) {
+    const prevCompLen = Array.isArray(simInBoot.completedGames) ? simInBoot.completedGames.length : 0;
+    const prevRemLen = Array.isArray(simInBoot.remainingGames) ? simInBoot.remainingGames.length : 0;
+    const rec = reconcileAndDedupePlayoffGames(simInBoot.completedGames, simInBoot.remainingGames);
+    const hadDupOrOverlap = rec.completedGames.length !== prevCompLen || rec.remainingGames.length !== prevRemLen;
+    if (hadDupOrOverlap) {
+      simInBoot.completedGames = rec.completedGames;
+      simInBoot.remainingGames = rec.remainingGames;
+    }
+    let rootingHadDups = false;
+    if (Array.isArray(pp.rootingLeverage)) {
+      const seenRootKeys = new Set();
+      const dedupedRooting = [];
+      for (const g of pp.rootingLeverage) {
+        const key = canonicalPlayoffGameKey(g);
+        if (key && seenRootKeys.has(key)) {
+          rootingHadDups = true;
+          continue;
+        }
+        if (key) seenRootKeys.add(key);
+        dedupedRooting.push(g);
+      }
+      if (rootingHadDups) {
+        pp.rootingLeverage = dedupedRooting;
+      }
+    }
+    if (hadDupOrOverlap || rootingHadDups) {
+      try {
+        const bootTeam = getActiveTeamConfig();
+        const freshBootMc = runPlayoffMonteCarlo({
+          ...simInBoot,
+          targetTeam: simInBoot.targetTeam || bootTeam.abbr,
+          conference: simInBoot.conference || bootTeam.conference,
+          iterations: 10000,
+          seed: 492026
+        });
+        if (freshBootMc?.sfOdds) {
+          pp.baselineSimulation = freshBootMc;
+        }
+        pp.rootingLeverage = computeRootingGuideLeverage(
+          {
+            ...simInBoot,
+            targetTeam: simInBoot.targetTeam || bootTeam.abbr,
+            conference: simInBoot.conference || bootTeam.conference
+          },
+          12
+        ).map(g => ({
+          ...g,
+          awayLogoUrl: g.awayLogoUrl || buildEspnTeamLogoUrl(g.away),
+          homeLogoUrl: g.homeLogoUrl || buildEspnTeamLogoUrl(g.home)
+        }));
+      } catch {
+        // Keep deduplicated arrays even if recompute fails
+      }
+    }
   }
 
   const loadedBundle = {
@@ -5148,74 +5210,101 @@ export async function hydrateLiveEspnOverlay(appData) {
       };
 
       const simInputsRef = appData.seasonal?.playoffPicture?.simulatorInputs;
-      const nfcInputs = simInputsRef?.nfcTeams || [];
-      for (const nt of nfcInputs) {
-        const normAbbr = normalizeTeamAbbrClient(nt.abbr);
-        const liveT = teamRecords.get(normAbbr);
-        if (liveT) {
-          if (
-            Number(nt.wins || 0) !== liveT.wins ||
-            Number(nt.losses || 0) !== liveT.losses ||
-            Number(nt.ties || 0) !== liveT.ties
-          ) {
-            standingsOrScoresChanged = true;
+      const confInputs =
+        Array.isArray(simInputsRef?.conferenceTeams) && simInputsRef.conferenceTeams.length > 0
+          ? simInputsRef.conferenceTeams
+          : simInputsRef?.nfcTeams || [];
+      const syncConfTeamList = list => {
+        for (const nt of list) {
+          const normAbbr = normalizeTeamAbbrClient(nt.abbr);
+          const liveT = teamRecords.get(normAbbr);
+          if (liveT) {
+            if (
+              Number(nt.wins || 0) !== liveT.wins ||
+              Number(nt.losses || 0) !== liveT.losses ||
+              Number(nt.ties || 0) !== liveT.ties
+            ) {
+              standingsOrScoresChanged = true;
+            }
+            nt.wins = liveT.wins;
+            nt.losses = liveT.losses;
+            nt.ties = liveT.ties;
+            nt.pointDiff = liveT.pd;
+            if (liveT.divRec && liveT.divRec !== '0-0') {
+              const dParsed = parseWltRecord(liveT.divRec);
+              nt.divWins = dParsed.w;
+              nt.divLosses = dParsed.l;
+              nt.divTies = dParsed.t;
+            }
+            if (liveT.confRec && liveT.confRec !== '0-0') {
+              const cParsed = parseWltRecord(liveT.confRec);
+              nt.confWins = cParsed.w;
+              nt.confLosses = cParsed.l;
+              nt.confTies = cParsed.t;
+            }
+            nt.powerRating = computeCalibratedTeamPowerRating({
+              wins: liveT.wins,
+              losses: liveT.losses,
+              ties: liveT.ties,
+              pointDiff: liveT.pd,
+              netEpaPerGame: nt.netEpaPerGame ?? null,
+              sosSpreadAdj: nt.sosSpreadAdj ?? 0
+            });
           }
-          nt.wins = liveT.wins;
-          nt.losses = liveT.losses;
-          nt.ties = liveT.ties;
-          nt.pointDiff = liveT.pd;
-          if (liveT.divRec && liveT.divRec !== '0-0') {
-            const dParsed = parseWltRecord(liveT.divRec);
-            nt.divWins = dParsed.w;
-            nt.divLosses = dParsed.l;
-            nt.divTies = dParsed.t;
-          }
-          if (liveT.confRec && liveT.confRec !== '0-0') {
-            const cParsed = parseWltRecord(liveT.confRec);
-            nt.confWins = cParsed.w;
-            nt.confLosses = cParsed.l;
-            nt.confTies = cParsed.t;
-          }
-          nt.powerRating = computeCalibratedTeamPowerRating({
-            wins: liveT.wins,
-            losses: liveT.losses,
-            ties: liveT.ties,
-            pointDiff: liveT.pd,
-            netEpaPerGame: nt.netEpaPerGame ?? null,
-            sosSpreadAdj: nt.sosSpreadAdj ?? 0
-          });
         }
+      };
+      syncConfTeamList(confInputs);
+      if (
+        Array.isArray(simInputsRef?.nfcTeams) &&
+        simInputsRef.nfcTeams !== confInputs &&
+        simInputsRef.nfcTeams.length > 0
+      ) {
+        syncConfTeamList(simInputsRef.nfcTeams);
       }
 
       if (simInputsRef) {
-        const nfcAbbrSet = new Set(nfcInputs.map(t => normalizeTeamAbbrClient(t.abbr)));
+        const confAbbrSet = new Set(confInputs.map(t => normalizeTeamAbbrClient(t.abbr)));
         if (!simInputsRef.afcStandings || typeof simInputsRef.afcStandings !== 'object') {
           simInputsRef.afcStandings = {};
         }
         if (!simInputsRef.afcRatings || typeof simInputsRef.afcRatings !== 'object') {
           simInputsRef.afcRatings = {};
         }
+        if (simInputsRef.otherConferenceStandings && typeof simInputsRef.otherConferenceStandings === 'object') {
+          // Keep mirrored other-conference objects synchronized for AFC & NFC franchises
+        }
         for (const [abbr, liveT] of teamRecords.entries()) {
-          if (nfcAbbrSet.has(abbr)) continue;
-          const prevAfc = simInputsRef.afcStandings[abbr];
+          if (confAbbrSet.has(abbr)) continue;
+          const prevOther = simInputsRef.otherConferenceStandings?.[abbr] || simInputsRef.afcStandings[abbr];
           if (
-            prevAfc &&
-            (prevAfc.wins !== liveT.wins || prevAfc.losses !== liveT.losses || prevAfc.ties !== liveT.ties)
+            prevOther &&
+            (prevOther.wins !== liveT.wins || prevOther.losses !== liveT.losses || prevOther.ties !== liveT.ties)
           ) {
             standingsOrScoresChanged = true;
           }
-          simInputsRef.afcStandings[abbr] = {
+          const standingObj = {
             wins: liveT.wins,
             losses: liveT.losses,
             ties: liveT.ties,
             pointDiff: liveT.pd
           };
-          simInputsRef.afcRatings[abbr] = computeCalibratedTeamPowerRating({
+          const ratingVal = computeCalibratedTeamPowerRating({
             wins: liveT.wins,
             losses: liveT.losses,
             ties: liveT.ties,
             pointDiff: liveT.pd
           });
+          simInputsRef.afcStandings[abbr] = standingObj;
+          simInputsRef.afcRatings[abbr] = ratingVal;
+          if (simInputsRef.otherConferenceStandings && typeof simInputsRef.otherConferenceStandings === 'object') {
+            simInputsRef.otherConferenceStandings[abbr] = standingObj;
+          }
+          if (simInputsRef.otherConferencePowerRatings && typeof simInputsRef.otherConferencePowerRatings === 'object') {
+            simInputsRef.otherConferencePowerRatings[abbr] = ratingVal;
+          }
+          if (simInputsRef.afcPowerRatings && typeof simInputsRef.afcPowerRatings === 'object') {
+            simInputsRef.afcPowerRatings[abbr] = ratingVal;
+          }
         }
       }
 
@@ -5846,29 +5935,43 @@ export async function hydrateLiveEspnOverlay(appData) {
   if (standingsOrScoresChanged && appData.seasonal?.playoffPicture?.simulatorInputs) {
     try {
       const simIn = appData.seasonal.playoffPicture.simulatorInputs;
+      const activeTeamAbbr = normalizeTeamAbbrClient(activeTeam.abbr || 'SF');
       let prunedRemainingCount = 0;
-      // Ensure newly completed SF regular-season schedule games are moved out of remainingGames so SF never exceeds 17 games
-      const completedSfWeeks = new Set(
+
+      // First reconcile & deduplicate any mixed-ID completed/remaining schedule games
+      const initialRemLen = Array.isArray(simIn.remainingGames) ? simIn.remainingGames.length : 0;
+      const recLive = reconcileAndDedupePlayoffGames(simIn.completedGames, simIn.remainingGames);
+      simIn.completedGames = recLive.completedGames;
+      simIn.remainingGames = recLive.remainingGames;
+      if (simIn.remainingGames.length < initialRemLen) {
+        prunedRemainingCount += initialRemLen - simIn.remainingGames.length;
+      }
+
+      // Ensure newly completed active-team regular-season schedule games are moved out of remainingGames so the club never exceeds 17 games
+      const completedTeamWeeks = new Set(
         (appData.scheduleMatchup?.schedule || [])
           .filter(g => g.completed && (g.seasonType || 'REG') === 'REG' && Number(g.week) >= 1 && Number(g.week) <= 18)
           .map(g => Number(g.week))
       );
-      if (Array.isArray(simIn.remainingGames) && completedSfWeeks.size > 0) {
+      if (Array.isArray(simIn.remainingGames) && completedTeamWeeks.size > 0) {
+        const isTargetGame = rg =>
+          normalizeTeamAbbrClient(rg.home) === activeTeamAbbr || normalizeTeamAbbrClient(rg.away) === activeTeamAbbr;
         const newlyDone = simIn.remainingGames.filter(
-          rg => (rg.home === 'SF' || rg.away === 'SF') && completedSfWeeks.has(Number(rg.week))
+          rg => isTargetGame(rg) && completedTeamWeeks.has(Number(rg.week))
         );
         if (newlyDone.length > 0) {
           prunedRemainingCount += newlyDone.length;
           simIn.remainingGames = simIn.remainingGames.filter(
-            rg => !((rg.home === 'SF' || rg.away === 'SF') && completedSfWeeks.has(Number(rg.week)))
+            rg => !(isTargetGame(rg) && completedTeamWeeks.has(Number(rg.week)))
           );
           for (const nd of newlyDone) {
             const schedItem = (appData.scheduleMatchup?.schedule || []).find(
               s => (s.seasonType || 'REG') === 'REG' && Number(s.week) === Number(nd.week)
             );
             if (schedItem && schedItem.sfScore != null && schedItem.oppScore != null) {
-              const homeScore = nd.home === 'SF' ? Number(schedItem.sfScore) : Number(schedItem.oppScore);
-              const awayScore = nd.home === 'SF' ? Number(schedItem.oppScore) : Number(schedItem.sfScore);
+              const teamIsHome = normalizeTeamAbbrClient(nd.home) === activeTeamAbbr;
+              const homeScore = teamIsHome ? Number(schedItem.sfScore) : Number(schedItem.oppScore);
+              const awayScore = teamIsHome ? Number(schedItem.oppScore) : Number(schedItem.sfScore);
               simIn.completedGames = [
                 ...(simIn.completedGames || []),
                 { id: nd.id, week: nd.week, home: nd.home, away: nd.away, homeScore, awayScore }
@@ -5878,14 +5981,22 @@ export async function hydrateLiveEspnOverlay(appData) {
         }
       }
 
-      // Also prune newly completed non-SF NFL games when live standings advance so no rival team simulates 18 games
+      // Also prune newly completed non-active-team NFL games when live standings advance so no rival team simulates 18 games
       if (Array.isArray(simIn.remainingGames) && simIn.remainingGames.length > 0) {
         const playedCountByAbbr = new Map();
-        for (const nt of simIn.nfcTeams || []) {
+        const activeConfTeamsList =
+          Array.isArray(simIn.conferenceTeams) && simIn.conferenceTeams.length > 0
+            ? simIn.conferenceTeams
+            : simIn.nfcTeams || [];
+        for (const nt of activeConfTeamsList) {
           const ab = normalizeTeamAbbrClient(nt.abbr);
           playedCountByAbbr.set(ab, (Number(nt.wins) || 0) + (Number(nt.losses) || 0) + (Number(nt.ties) || 0));
         }
-        for (const [ab, st] of Object.entries(simIn.afcStandings || {})) {
+        const otherConfStandingsMap =
+          simIn.otherConferenceStandings && Object.keys(simIn.otherConferenceStandings).length > 0
+            ? simIn.otherConferenceStandings
+            : simIn.afcStandings || {};
+        for (const [ab, st] of Object.entries(otherConfStandingsMap)) {
           playedCountByAbbr.set(
             normalizeTeamAbbrClient(ab),
             (Number(st.wins) || 0) + (Number(st.losses) || 0) + (Number(st.ties) || 0)
@@ -5940,7 +6051,7 @@ export async function hydrateLiveEspnOverlay(appData) {
           for (const card of appData.seasonal.playoffPicture.seedPathCards) {
             if (/bye|#1\s*seed/i.test(card.target)) {
               card.currentProbPct = sf.seed1ByePct;
-            } else if (/division|nfc\s*west/i.test(card.target)) {
+            } else if (/division|nfc\s*west|afc\s*west|nfc\s*north|afc\s*north|nfc\s*east|afc\s*east|nfc\s*south|afc\s*south/i.test(card.target)) {
               card.currentProbPct = sf.winDivisionPct;
             } else if (/playoff\s*berth|make\s*playoffs|seeds\s*#1/i.test(card.target)) {
               card.currentProbPct = sf.makePlayoffsPct;
@@ -5950,7 +6061,14 @@ export async function hydrateLiveEspnOverlay(appData) {
           }
         }
         if (prunedRemainingCount > 0 && Array.isArray(appData.seasonal.playoffPicture.rootingLeverage)) {
-          appData.seasonal.playoffPicture.rootingLeverage = computeRootingGuideLeverage(simIn, 12).map(g => ({
+          appData.seasonal.playoffPicture.rootingLeverage = computeRootingGuideLeverage(
+            {
+              ...simIn,
+              targetTeam: activeTeam.abbr,
+              conference: activeTeam.conference
+            },
+            12
+          ).map(g => ({
             ...g,
             awayLogoUrl: g.awayLogoUrl || buildEspnTeamLogoUrl(g.away),
             homeLogoUrl: g.homeLogoUrl || buildEspnTeamLogoUrl(g.home)

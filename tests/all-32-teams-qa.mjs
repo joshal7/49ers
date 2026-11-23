@@ -42,6 +42,7 @@ import {
 } from '../src/engine/salientMediaEngine.js';
 import { classifySourceLensTag, extractPresserTakeaways } from '../src/engine/digestExperienceEngine.js';
 import { formatCompletedGameRecapForPrompt } from '../src/engine/gameDayRosterEngine.js';
+import { canonicalPlayoffGameKey, normalizeTeamAbbr } from '../src/engine/playoffMonteCarlo.js';
 import { runUniversalSearch } from '../src/engine/universalSearchEngine.js';
 import { buildNflTeamsPagesDist } from '../scripts/build-nfl-teams-pages.mjs';
 
@@ -243,6 +244,42 @@ await test('2. All 32 teams have valid live 11-file 2026 JSON bundles with zero 
     assert.ok(news.dailyTopNewsBrief?.headline, `${team.abbr} missing dailyTopNewsBrief headline`);
     const teamOdds = seasonal.playoffPicture?.baselineSimulation?.teamOdds || seasonal.playoffPicture?.baselineSimulation?.sfOdds;
     assert.ok(typeof teamOdds?.makePlayoffsPct === 'number', `${team.abbr} missing playoff Monte Carlo odds`);
+
+    // Playoff schedule & Rooting Guide deduplication invariant across all 32 franchises
+    const simIn = seasonal.playoffPicture?.simulatorInputs;
+    const compGames = simIn?.completedGames || [];
+    const remGames = simIn?.remainingGames || [];
+    const rootingGames = seasonal.playoffPicture?.rootingLeverage || [];
+    const compKeys = new Set(compGames.map(canonicalPlayoffGameKey));
+    const remKeys = new Set(remGames.map(canonicalPlayoffGameKey));
+    const rootKeys = new Set(rootingGames.map(canonicalPlayoffGameKey));
+    assert.equal(compKeys.size, compGames.length, `${team.abbr} completedGames contains duplicate matchups`);
+    assert.equal(remKeys.size, remGames.length, `${team.abbr} remainingGames contains duplicate matchups`);
+    assert.equal(rootKeys.size, rootingGames.length, `${team.abbr} rootingLeverage contains duplicate same-week games`);
+    const compRemOverlap = [...remKeys].filter(k => compKeys.has(k));
+    assert.equal(compRemOverlap.length, 0, `${team.abbr} has ${compRemOverlap.length} games in both completedGames & remainingGames`);
+    assert.equal(
+      compGames.length + remGames.length,
+      272,
+      `${team.abbr} regular-season game count must equal 272 (got ${compGames.length} + ${remGames.length})`
+    );
+    const remByClub = new Map();
+    for (const rg of remGames) {
+      const h = normalizeTeamAbbr(rg.home);
+      const a = normalizeTeamAbbr(rg.away);
+      remByClub.set(h, (remByClub.get(h) || 0) + 1);
+      remByClub.set(a, (remByClub.get(a) || 0) + 1);
+    }
+    const confClubList = (simIn?.conferenceTeams?.length ? simIn.conferenceTeams : simIn?.nfcTeams) || [];
+    for (const c of confClubList) {
+      const ab = normalizeTeamAbbr(c.abbr);
+      const gp = (c.wins || 0) + (c.losses || 0) + (c.ties || 0);
+      assert.equal(
+        gp + (remByClub.get(ab) || 0),
+        17,
+        `${team.abbr} simulator has ${ab} playing ${gp + (remByClub.get(ab) || 0)} games instead of 17`
+      );
+    }
 
     if (team.abbr !== 'SF') {
       assert.equal(meta.teamAbbr, team.abbr, `${team.slug}/meta.json teamAbbr mismatch`);

@@ -100,6 +100,8 @@ import {
   resolveAuthoritativeRosterPlayerStatus
 } from '../scripts/lib/liveHealthAndRosterResolver.mjs';
 import {
+  canonicalPlayoffGameKey,
+  reconcileAndDedupePlayoffGames,
   runPlayoffMonteCarlo,
   computeRootingGuideLeverage,
   computeCalibratedTeamPowerRating
@@ -17449,6 +17451,95 @@ test('Cross-team Matchup Unit Rankings focus opposing team in 32-team leaderboar
   } finally {
     setActiveTeamConfig(getTeamByAbbr('SF'));
   }
+});
+
+test('Playoff Monte Carlo & Rooting Guide collapse mixed nflverse/ESPN game IDs and never duplicate same-week matchups', () => {
+  // 1. canonicalPlayoffGameKey collapses nflverse vs ESPN numeric IDs & neutral-site home/away flips in the same week
+  assert.equal(
+    canonicalPlayoffGameKey({ id: '2026_13_MIA_DEN', week: 13, away: 'MIA', home: 'DEN' }),
+    canonicalPlayoffGameKey({ id: '401873085', week: 13, away: 'MIA', home: 'DEN' })
+  );
+  assert.equal(
+    canonicalPlayoffGameKey({ id: '2026_13_KC_LA', week: 13, away: 'KC', home: 'LA' }),
+    canonicalPlayoffGameKey({ id: '401873086', week: 13, away: 'KC', home: 'LAR' })
+  );
+  assert.equal(
+    canonicalPlayoffGameKey({ id: '2026_11_MIN_SF', week: 11, away: 'MIN', home: 'SF', neutral: true }),
+    canonicalPlayoffGameKey({ id: '401873077', week: 11, away: 'SF', home: 'MIN', neutral: true })
+  );
+  // Synthetic weekless games with distinct IDs stay distinct
+  assert.notEqual(
+    canonicalPlayoffGameKey({ id: 'g1', away: 'SF', home: 'LAR' }),
+    canonicalPlayoffGameKey({ id: 'g2', away: 'LAR', home: 'SF' })
+  );
+
+  // 2. reconcileAndDedupePlayoffGames drops completed-game overlaps and collapses duplicate remaining games with alias tracking
+  const broncosSeasonal = JSON.parse(
+    fs.readFileSync(path.join(rootDir, 'data', 'teams', 'broncos', 'seasonal.json'), 'utf8')
+  );
+  const cleanInputs = broncosSeasonal.playoffPicture.simulatorInputs;
+  const wk13MiaDen = cleanInputs.remainingGames.find(g => Number(g.week) === 13 && g.away === 'MIA' && g.home === 'DEN');
+  const wk13KcLar = cleanInputs.remainingGames.find(g => Number(g.week) === 13 && g.away === 'KC' && g.home === 'LAR');
+  const sampleCompleted = cleanInputs.completedGames[cleanInputs.completedGames.length - 1];
+  assert.ok(wk13MiaDen && wk13KcLar && sampleCompleted, 'Expected Week 13 MIA@DEN, KC@LAR and completed game fixtures');
+
+  const pollutedInputs = {
+    ...cleanInputs,
+    completedGames: [
+      ...cleanInputs.completedGames,
+      { ...sampleCompleted, id: '401999001' }
+    ],
+    remainingGames: [
+      ...cleanInputs.remainingGames,
+      // Duplicate already-completed game under a different ID
+      { id: '2026_dup_done', week: sampleCompleted.week, home: sampleCompleted.home, away: sampleCompleted.away, neutral: false },
+      // Duplicate Week 13 MIA @ DEN & KC @ LAR with ESPN numeric event IDs
+      { id: '401873085', week: 13, home: 'DEN', away: 'MIA', neutral: false },
+      { id: '401873086', week: 13, home: 'LAR', away: 'KC', neutral: false }
+    ]
+  };
+
+  const rec = reconcileAndDedupePlayoffGames(pollutedInputs.completedGames, pollutedInputs.remainingGames);
+  assert.equal(rec.completedGames.length, cleanInputs.completedGames.length, 'Completed duplicate must collapse');
+  assert.equal(rec.remainingGames.length, cleanInputs.remainingGames.length, 'Remaining duplicates & completed overlap must collapse');
+  assert.ok(rec.aliasIdMap.get(String(wk13MiaDen.id))?.has('401873085'), 'Alias ESPN ID must map back to canonical game ID');
+
+  // 3. Monte Carlo odds on polluted input MUST match clean input identically (zero double-simulation)
+  const cleanMc = runPlayoffMonteCarlo({ ...cleanInputs, iterations: 2000, seed: 492026 });
+  const pollutedMc = runPlayoffMonteCarlo({ ...pollutedInputs, iterations: 2000, seed: 492026 });
+  assert.deepEqual(pollutedMc.teamOdds, cleanMc.teamOdds, 'Polluted duplicate games must not distort Monte Carlo odds');
+
+  // 4. Forced winner keyed by collapsed alias ESPN ID still takes effect
+  const forcedByCanon = runPlayoffMonteCarlo({
+    ...pollutedInputs,
+    forcedWinners: { [wk13MiaDen.id]: 'AWAY' },
+    iterations: 2000,
+    seed: 492026
+  });
+  const forcedByAlias = runPlayoffMonteCarlo({
+    ...pollutedInputs,
+    forcedWinners: { '401873085': 'AWAY' },
+    iterations: 2000,
+    seed: 492026
+  });
+  assert.deepEqual(forcedByAlias.teamOdds, forcedByCanon.teamOdds, 'Alias forcedWinners override must match canonical ID');
+
+  // 5. Rooting Guide Leverage never emits MIA @ DEN or KC @ LAR twice in Week 13
+  const wk13OnlyInputs = {
+    ...pollutedInputs,
+    remainingGames: pollutedInputs.remainingGames.filter(g => Number(g.week) >= 13)
+  };
+  const wk13Rooting = computeRootingGuideLeverage(wk13OnlyInputs, 12);
+  const seenKeys = new Set();
+  for (const row of wk13Rooting) {
+    const k = canonicalPlayoffGameKey(row);
+    assert.ok(!seenKeys.has(k), `Duplicate rooting guide game emitted: wk ${row.week} ${row.matchupLabel}`);
+    seenKeys.add(k);
+  }
+  const miaDenRows = wk13Rooting.filter(r => Number(r.week) === 13 && r.away === 'MIA' && r.home === 'DEN');
+  const kcLarRows = wk13Rooting.filter(r => Number(r.week) === 13 && r.away === 'KC' && r.home === 'LAR');
+  assert.equal(miaDenRows.length, 1, 'MIA @ DEN must appear exactly once in Week 13 rooting guide');
+  assert.equal(kcLarRows.length, 1, 'KC @ LAR must appear exactly once in Week 13 rooting guide');
 });
 
 console.log(`\n======================================================`);

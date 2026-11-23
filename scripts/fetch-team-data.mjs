@@ -57,8 +57,10 @@ import {
   loadSharedLeagueTradeContext
 } from './lib/teamTradeIntelligence.mjs';
 import {
+  canonicalPlayoffGameKey,
   computeCalibratedTeamPowerRating,
   computeRootingGuideLeverage,
+  reconcileAndDedupePlayoffGames,
   runPlayoffMonteCarlo
 } from '../src/engine/playoffMonteCarlo.js';
 import {
@@ -286,9 +288,22 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
   const sharedCompletedGames = sfSeasonal?.playoffPicture?.simulatorInputs?.completedGames || [];
   const sharedRemainingGames = sfSeasonal?.playoffPicture?.simulatorInputs?.remainingGames || [];
 
-  // Re-fetch current week + next 2 weeks of ESPN NFL scoreboard to ensure completedGames/remainingGames are 100% fresh
-  const liveScoreboardCompleted = new Map(sharedCompletedGames.map(g => [String(g.id), g]));
-  const liveScoreboardRemaining = new Map(sharedRemainingGames.map(g => [String(g.id), g]));
+  // Re-fetch current week + next 2 weeks of ESPN NFL scoreboard to ensure completedGames/remainingGames are 100% fresh.
+  // Key strictly by canonical `(week, sortedTeamPair)` so ESPN numeric event IDs (`401873...`) reconcile cleanly
+  // with nflverse schedule IDs (`2026_13_MIA_DEN`) instead of duplicating unplayed games or stranding completed ones.
+  const seeded = reconcileAndDedupePlayoffGames(sharedCompletedGames, sharedRemainingGames);
+  const liveScoreboardCompleted = new Map();
+  for (const g of seeded.completedGames) {
+    const key = canonicalPlayoffGameKey(g) || String(g.id);
+    liveScoreboardCompleted.set(key, g);
+  }
+  const liveScoreboardRemaining = new Map();
+  for (const g of seeded.remainingGames) {
+    const key = canonicalPlayoffGameKey(g) || String(g.id);
+    if (!liveScoreboardCompleted.has(key)) {
+      liveScoreboardRemaining.set(key, g);
+    }
+  }
   const currentMaxGp = Math.max(1, ...[...standingsByAbbr.values()].map(s => s.wins + s.losses + s.ties));
   const probeWeeks = [Math.max(1, currentMaxGp), Math.min(18, currentMaxGp + 1), Math.min(18, currentMaxGp + 2)];
   const sbPayloads = await Promise.all(
@@ -309,11 +324,15 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
       const home = normalizeAnyTeamAbbr(homeC.team?.abbreviation || '');
       const away = normalizeAnyTeamAbbr(awayC.team?.abbreviation || '');
       const wk = Number(ev.week?.number || sb?.week?.number || 1);
-      const id = String(ev.id || `w${wk}_${away}_${home}`);
+      const fallbackId = String(ev.id || `w${wk}_${away}_${home}`);
+      const key = canonicalPlayoffGameKey({ week: wk, home, away, id: fallbackId }) || fallbackId;
+      const existingRem = liveScoreboardRemaining.get(key);
+      const existingComp = liveScoreboardCompleted.get(key);
+      const id = String(existingRem?.id || existingComp?.id || fallbackId);
       const completed = Boolean(comp.status?.type?.completed);
       if (completed) {
-        liveScoreboardRemaining.delete(id);
-        liveScoreboardCompleted.set(id, {
+        liveScoreboardRemaining.delete(key);
+        liveScoreboardCompleted.set(key, {
           id,
           week: wk,
           home,
@@ -321,17 +340,21 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
           homeScore: Number(homeC.score || 0),
           awayScore: Number(awayC.score || 0)
         });
-      } else if (!liveScoreboardCompleted.has(id)) {
-        liveScoreboardRemaining.set(id, {
+      } else if (!liveScoreboardCompleted.has(key)) {
+        liveScoreboardRemaining.set(key, {
           id,
           week: wk,
-          home,
-          away,
-          neutral: Boolean(comp.neutralSite)
+          home: existingRem?.home || home,
+          away: existingRem?.away || away,
+          neutral: Boolean(comp.neutralSite || existingRem?.neutral)
         });
       }
     }
   }
+  const reconciledLeagueGames = reconcileAndDedupePlayoffGames(
+    [...liveScoreboardCompleted.values()],
+    [...liveScoreboardRemaining.values()]
+  );
 
   const leagueTradeCtx = await loadSharedLeagueTradeContext({
     seasonYear,
@@ -350,8 +373,8 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
         updatedAt: new Date().toISOString(),
         seasonYear,
         standingsCount: standingsByAbbr.size,
-        completedLeagueGames: liveScoreboardCompleted.size,
-        remainingLeagueGames: liveScoreboardRemaining.size,
+        completedLeagueGames: reconciledLeagueGames.completedGames.length,
+        remainingLeagueGames: reconciledLeagueGames.remainingGames.length,
         leagueTradesCount: leagueTradeCtx.leagueTrades.length,
         sellerTradeCandidates: leagueTradeCtx.sellerCandidates.length
       },
@@ -367,8 +390,8 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     rotowireXml,
     nflverse,
     leagueTradeCtx,
-    completedGames: [...liveScoreboardCompleted.values()],
-    remainingGames: [...liveScoreboardRemaining.values()],
+    completedGames: reconciledLeagueGames.completedGames,
+    remainingGames: reconciledLeagueGames.remainingGames,
     baseTeamStatsTemplate: sfMatchup?.teamStats || null,
     sharedBigBoard: sfSeasonal?.draftPrep2027?.consensusBigBoard || [],
     sharedBigBoardMeta: sfSeasonal?.draftPrep2027?.bigBoardMeta || null,

@@ -34,6 +34,7 @@ import { getActiveTeamConfig, getTeamCoaches } from '../config/teamRegistry.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
+import { canonicalPlayoffGameKey } from '../engine/playoffMonteCarlo.js';
 import { resolveConsistentPowerRankings } from '../engine/powerRankingsEngine.js';
 import {
   evaluateCombineLeaderboardWindow,
@@ -2166,7 +2167,11 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
   const byeDelta = formatPlayoffOddsDeltaCue(sf.seed1ByePct, refSf.seed1ByePct);
 
   const byWeek = new Map();
+  const seenRootingKeys = new Set();
   for (const g of pp.rootingLeverage || []) {
+    const dedupeKey = canonicalPlayoffGameKey(g);
+    if (dedupeKey && seenRootingKeys.has(dedupeKey)) continue;
+    if (dedupeKey) seenRootingKeys.add(dedupeKey);
     const wk = Number(g.week || 0);
     if (!byWeek.has(wk)) byWeek.set(wk, []);
     byWeek.get(wk).push(g);
