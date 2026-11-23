@@ -18,6 +18,92 @@ let cachedActiveTeamAbbr = null;
 let inlinePlayerRegex = null;
 let inlinePlayerByLowerPhrase = new Map();
 let rosterByCanonKey = new Map();
+let opponentInlineTeamAbbr = null;
+let opponentInlineByLowerPhrase = new Map();
+let opponentInlineRegex = null;
+
+function buildPlayerPhraseEntries(players = []) {
+  const phraseMap = new Map();
+  const canonMap = new Map();
+  for (const p of players) {
+    if (!p?.name) continue;
+    const full = String(p.name).trim();
+    if (!full.includes(' ') || full.length < 6) continue;
+    const rawId = p.id != null ? String(p.id).trim() : '';
+    const entry = {
+      id: rawId,
+      name: full,
+      position: String(p.position || '').trim(),
+      espnUrl: String(p.espnUrl || '').trim()
+    };
+
+    const ck = normalizePlayerCanon(full);
+    if (ck && !canonMap.has(ck)) canonMap.set(ck, entry);
+
+    const variants = new Set([
+      full,
+      full.replace(/'/g, '’'),
+      full.replace(/’/g, "'")
+    ]);
+    const collapsedFull = full.replace(/\b([A-Za-z])\.\s*([A-Za-z])\.(?=\s|$)/g, '$1$2');
+    if (collapsedFull.includes(' ') && collapsedFull.length >= 6) {
+      variants.add(collapsedFull);
+    }
+    const withoutSuffix = full.replace(/,?\s+\b(?:Jr\.?|Sr\.?|II|III|IV|V)\b\.?$/i, '').trim();
+    if (withoutSuffix.includes(' ') && withoutSuffix.length >= 6) {
+      variants.add(withoutSuffix);
+      variants.add(withoutSuffix.replace(/'/g, '’'));
+      const collapsedNoSuffix = withoutSuffix.replace(/\b([A-Za-z])\.\s*([A-Za-z])\.(?=\s|$)/g, '$1$2');
+      if (collapsedNoSuffix.includes(' ') && collapsedNoSuffix.length >= 6) {
+        variants.add(collapsedNoSuffix);
+      }
+    }
+
+    for (const v of variants) {
+      const lower = v.toLowerCase();
+      if (!phraseMap.has(lower)) {
+        phraseMap.set(lower, { phrase: v, ...entry });
+      }
+    }
+  }
+  return { phraseMap, canonMap };
+}
+
+function buildInlinePhraseRegex(phraseMap) {
+  const sortedPhrases = [...phraseMap.values()]
+    .map(x => x.phrase)
+    .sort((a, b) => b.length - a.length);
+  return sortedPhrases.length > 0
+    ? new RegExp(
+        `(?<![A-Za-z0-9_/'’-])(${sortedPhrases.map(escapeRegexChars).join('|')})(?![A-Za-z0-9_-])`,
+        'gi'
+      )
+    : null;
+}
+
+export function registerOpponentPlayersForInlineLinks(players = null, teamAbbr = null) {
+  const cleanTeam = String(teamAbbr || '').trim().toUpperCase();
+  if (!cleanTeam || !Array.isArray(players) || players.length === 0) {
+    opponentInlineTeamAbbr = null;
+    opponentInlineByLowerPhrase = new Map();
+    opponentInlineRegex = null;
+    return;
+  }
+  const { phraseMap } = buildPlayerPhraseEntries(players);
+  // Active team players always take precedence on name collisions
+  for (const k of inlinePlayerByLowerPhrase.keys()) {
+    phraseMap.delete(k);
+  }
+  opponentInlineTeamAbbr = cleanTeam;
+  opponentInlineByLowerPhrase = phraseMap;
+  opponentInlineRegex = buildInlinePhraseRegex(phraseMap);
+}
+
+export function clearOpponentPlayersForInlineLinks() {
+  opponentInlineTeamAbbr = null;
+  opponentInlineByLowerPhrase = new Map();
+  opponentInlineRegex = null;
+}
 
 function normalizePlayerCanon(name = '') {
   return String(name || '')
@@ -124,14 +210,56 @@ export function annotateRosterAndJargonPlainText(
   const text = String(rawText);
   if (!text) return '';
 
-  if (!inlinePlayerRegex) {
-    return annotateJargonPlainText(text, { maxTerms, seenKeys });
-  }
-
   const usedJargon = seenKeys instanceof Set ? seenKeys : new Set();
   const usedPlayers = seenPlayerIds instanceof Set ? seenPlayerIds : new Set();
   const excl = excludePlayerId != null ? String(excludePlayerId) : null;
   let playerCount = 0;
+
+  const annotateGapWithOpponentAndJargon = segment => {
+    if (!segment) return '';
+    if (!opponentInlineRegex || !opponentInlineTeamAbbr || playerCount >= maxPlayers) {
+      return annotateJargonPlainText(segment, { maxTerms, seenKeys: usedJargon });
+    }
+    let segOut = '';
+    let segLastIdx = 0;
+    opponentInlineRegex.lastIndex = 0;
+    let om;
+    while ((om = opponentInlineRegex.exec(segment)) !== null) {
+      const mText = om[1];
+      const oStart = om.index;
+      const oEnd = oStart + mText.length;
+      if (oStart > segLastIdx) {
+        segOut += annotateJargonPlainText(segment.slice(segLastIdx, oStart), {
+          maxTerms,
+          seenKeys: usedJargon
+        });
+      }
+      const oEntry = opponentInlineByLowerPhrase.get(mText.toLowerCase());
+      const oKey = oEntry ? `opp:${opponentInlineTeamAbbr}:${oEntry.id || normalizePlayerCanon(oEntry.name)}` : '';
+      if (oEntry && oKey && !usedPlayers.has(oKey) && playerCount < maxPlayers) {
+        usedPlayers.add(oKey);
+        playerCount += 1;
+        const pidAttr = oEntry.id && /^\d{4,10}$/.test(oEntry.id) ? ` data-opp-player-id="${esc(oEntry.id)}"` : '';
+        const posAttr = oEntry.position ? ` data-opp-player-pos="${esc(oEntry.position)}"` : '';
+        segOut += `<span class="inline-player-link" role="button" tabindex="0" data-action="open-opponent-player-sheet" data-opp-team="${esc(opponentInlineTeamAbbr)}"${pidAttr} data-opp-player-name="${esc(oEntry.name)}"${posAttr} aria-label="Open ${esc(oEntry.name)} dossier">${esc(mText)}</span>`;
+      } else {
+        segOut += annotateJargonPlainText(mText, { maxTerms, seenKeys: usedJargon });
+      }
+      segLastIdx = oEnd;
+    }
+    if (segLastIdx < segment.length) {
+      segOut += annotateJargonPlainText(segment.slice(segLastIdx), {
+        maxTerms,
+        seenKeys: usedJargon
+      });
+    }
+    return segOut;
+  };
+
+  if (!inlinePlayerRegex) {
+    return annotateGapWithOpponentAndJargon(text);
+  }
+
   let lastIdx = 0;
   let out = '';
 
@@ -143,10 +271,7 @@ export function annotateRosterAndJargonPlainText(
     const mEnd = mStart + matchedText.length;
 
     if (mStart > lastIdx) {
-      out += annotateJargonPlainText(text.slice(lastIdx, mStart), {
-        maxTerms,
-        seenKeys: usedJargon
-      });
+      out += annotateGapWithOpponentAndJargon(text.slice(lastIdx, mStart));
     }
 
     const pEntry = inlinePlayerByLowerPhrase.get(matchedText.toLowerCase());
@@ -164,17 +289,14 @@ export function annotateRosterAndJargonPlainText(
         out += `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(pEntry.id)}" aria-label="Open ${esc(pEntry.name)} dossier">${esc(matchedText)}</span>`;
       }
     } else {
-      out += annotateJargonPlainText(matchedText, { maxTerms, seenKeys: usedJargon });
+      out += annotateGapWithOpponentAndJargon(matchedText);
     }
 
     lastIdx = mEnd;
   }
 
   if (lastIdx < text.length) {
-    out += annotateJargonPlainText(text.slice(lastIdx), {
-      maxTerms,
-      seenKeys: usedJargon
-    });
+    out += annotateGapWithOpponentAndJargon(text.slice(lastIdx));
   }
 
   return out;

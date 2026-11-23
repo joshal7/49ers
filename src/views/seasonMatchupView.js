@@ -25,7 +25,9 @@ import {
   renderReporterSourceLinksHtml,
   buildEspnNflTeamUrl,
   lookupRosterPlayerByName,
-  registerRosterPlayersForInlineLinks
+  registerRosterPlayersForInlineLinks,
+  registerOpponentPlayersForInlineLinks,
+  clearOpponentPlayersForInlineLinks
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { getActiveTeamConfig, getTeamCoaches } from '../config/teamRegistry.js';
@@ -497,7 +499,11 @@ export function renderSeasonMatchupViewHtml({
   return switcherCard + renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosSet);
 }
 
-function renderTeamRankTriggerHtml(rank, metricKey, { showMeter = true, large = false } = {}) {
+function renderTeamRankTriggerHtml(
+  rank,
+  metricKey,
+  { showMeter = true, large = false, focusTeamAbbr = null, teamLabel = null } = {}
+) {
   const rNum = Number(rank || 16);
   const pct = ((33 - rNum) / 32) * 100;
   const meterColor = rNum <= 8 ? 'emerald' : rNum <= 18 ? 'gold' : 'scarlet';
@@ -506,12 +512,15 @@ function renderTeamRankTriggerHtml(rank, metricKey, { showMeter = true, large = 
       showMeter ? renderMiniMeterHtml(pct, meterColor) : ''
     }</div>`;
   }
+  const cleanFocus = String(focusTeamAbbr || '').trim().toUpperCase();
+  const focusAttr = cleanFocus ? ` data-focus-team="${esc(cleanFocus)}"` : '';
+  const ariaPrefix = teamLabel ? `${teamLabel} ` : cleanFocus ? `${cleanFocus} ` : '';
   return `
     <button type="button" class="rank-badge-trigger ${large ? 'large' : ''}"
             data-action="open-stat-rank-modal"
             data-rank-scope="team"
-            data-rank-key="${esc(metricKey)}"
-            aria-label="Rank #${rNum} — tap to view all 32 NFL teams">
+            data-rank-key="${esc(metricKey)}"${focusAttr}
+            aria-label="${esc(ariaPrefix)}Rank #${rNum} — tap to view all 32 NFL teams">
       <span class="badge ${rankBadgeClass(rNum)} mono ${large ? 'overall-rank-pill' : ''}">#${rNum}</span>
       ${showMeter ? renderMiniMeterHtml(pct, meterColor) : ''}
     </button>
@@ -543,9 +552,17 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
           <tr>
             <td><strong>${escJargon(r.label)}</strong></td>
             <td class="mono num-col"><strong>${esc(sfEntry.disp ?? r.displayValue)}</strong></td>
-            <td class="rank-col">${renderTeamRankTriggerHtml(sfEntry.rank ?? r.rank, r.key, { showMeter: false })}</td>
+            <td class="rank-col">${renderTeamRankTriggerHtml(sfEntry.rank ?? r.rank, r.key, {
+              showMeter: false,
+              focusTeamAbbr: activeTeamH2h.abbr,
+              teamLabel: activeTeamH2h.nickname
+            })}</td>
             <td class="mono num-col">${esc(oppEntry.disp)}</td>
-            <td class="rank-col">${renderTeamRankTriggerHtml(oppEntry.rank, r.key, { showMeter: false })}</td>
+            <td class="rank-col">${renderTeamRankTriggerHtml(oppEntry.rank, r.key, {
+              showMeter: false,
+              focusTeamAbbr: oppAbbr,
+              teamLabel: oppShortName
+            })}</td>
           </tr>
         `;
       })
@@ -601,11 +618,21 @@ function renderMatchupTeamStatsComparison(appData, matchupStatsUnit = 'offense')
               </td>
               <td class="mono num-col overall-val-cell" data-overall-col="sf-val"><strong>${esc(sfOverallDisp)}</strong></td>
               <td class="rank-col overall-rank-cell" data-overall-col="sf-rank">
-                <div class="unit-overall-right">${renderTeamRankTriggerHtml(sfOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}</div>
+                <div class="unit-overall-right">${renderTeamRankTriggerHtml(sfOverall.rank, activeUnit.overall?.key, {
+                  showMeter: false,
+                  large: true,
+                  focusTeamAbbr: activeTeamH2h.abbr,
+                  teamLabel: activeTeamH2h.nickname
+                })}</div>
               </td>
               <td class="mono num-col overall-val-cell" data-overall-col="opp-val"><strong>${esc(oppOverallDisp)}</strong></td>
               <td class="rank-col overall-rank-cell" data-overall-col="opp-rank">
-                <div class="unit-overall-right">${renderTeamRankTriggerHtml(oppOverall.rank, activeUnit.overall?.key, { showMeter: false, large: true })}</div>
+                <div class="unit-overall-right">${renderTeamRankTriggerHtml(oppOverall.rank, activeUnit.overall?.key, {
+                  showMeter: false,
+                  large: true,
+                  focusTeamAbbr: oppAbbr,
+                  teamLabel: oppShortName
+                })}</div>
               </td>
             </tr>
           </thead>
@@ -807,6 +834,22 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
       : um.kickoffDisplay;
   const matchupHeading = um.completed ? `Week ${um.week} Final` : `Week ${um.week} Matchup`;
 
+  const oppInlineRosterPool = [
+    ...(oppHealth.activeRoster || []),
+    ...(oppHealth._preGameKeyStartersHealthy || oppHealth.keyStartersHealthy || []),
+    ...oppInjReport,
+    ...oppIrList,
+    ...(oppGameDay?.inactives || []),
+    ...(oppGameDay?.activesByUnit?.Offense || []),
+    ...(oppGameDay?.activesByUnit?.Defense || []),
+    ...(oppGameDay?.activesByUnit?.['Special Teams'] || [])
+  ];
+  const resolvedOppMetaForInline = resolveNflTeamMeta(um.oppAbbr || '');
+  if (resolvedOppMetaForInline && oppInlineRosterPool.length > 0) {
+    registerOpponentPlayersForInlineLinks(oppInlineRosterPool, resolvedOppMetaForInline.abbr);
+  }
+
+  try {
   return `
     <section class="card temporal-highlight">
       <div class="card-header">
@@ -1298,6 +1341,9 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
       }
     </section>
   `;
+  } finally {
+    clearOpponentPlayersForInlineLinks();
+  }
 }
 
 function formatIrCardBadgeAndSubtitle(ir, seasonYear = 2026, { isOpponent = false } = {}) {

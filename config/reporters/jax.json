@@ -1,0 +1,225 @@
+{
+  "teamAbbr": "JAX",
+  "podiumSubjectIds": [
+    "liam_coen",
+    "james_gladstone",
+    "grant_udinski",
+    "anthony_campanile"
+  ],
+  "outlets": [
+    {
+      "id": "jaguars_official",
+      "name": "Jaguars.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.jaguars.com/news/"
+    },
+    {
+      "id": "espn_jax",
+      "name": "ESPN Jacksonville Jaguars Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/jax/jacksonville-jaguars"
+    },
+    {
+      "id": "big_cat_country",
+      "name": "Big Cat Country (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.bigcatcountry.com/"
+    },
+    {
+      "id": "florida_times_union_jax",
+      "name": "Florida Times-Union",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/Demetrius82"
+    },
+    {
+      "id": "1010xl_jax_sports_radio_jax",
+      "name": "1010XL Jax Sports Radio",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/MiaOBrienTV"
+    },
+    {
+      "id": "jaguars_on_si_jax",
+      "name": "Jaguars On SI",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/JShipleyNFL"
+    },
+    {
+      "id": "news4jax_jax",
+      "name": "News4JAX",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/JStCyrTV"
+    },
+    {
+      "id": "locked_on_jaguars_jax",
+      "name": "Locked On Jaguars",
+      "tier": 2,
+      "type": "audio_beat",
+      "url": "https://x.com/Wiggnsport"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "liam_coen",
+      "name": "Liam Coen",
+      "handle": "@Jaguars",
+      "outletId": "jaguars_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Jaguars",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "james_gladstone",
+      "name": "James Gladstone",
+      "handle": "@Jaguars",
+      "outletId": "jaguars_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Jaguars",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "michael_dirocco",
+      "name": "Michael DiRocco",
+      "handle": "@ESPNdirocco",
+      "outletId": "espn_jax",
+      "role": "ESPN NFL Nation Jaguars Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ESPNdirocco",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "demetrius_harvey",
+      "name": "Demetrius Harvey",
+      "handle": "@Demetrius82",
+      "outletId": "florida_times_union_jax",
+      "role": "Lead Jaguars Beat Writer (Jacksonville.com)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Demetrius82",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "mia_obrien",
+      "name": "Mia O'Brien",
+      "handle": "@MiaOBrienTV",
+      "outletId": "1010xl_jax_sports_radio_jax",
+      "role": "Jaguars Beat Reporter & Insider",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/MiaOBrienTV",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "john_shipley",
+      "name": "John Shipley",
+      "handle": "@JShipleyNFL",
+      "outletId": "jaguars_on_si_jax",
+      "role": "Jaguars Beat Writer",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JShipleyNFL",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jamal_st_cyr",
+      "name": "Jamal St. Cyr",
+      "handle": "@JStCyrTV",
+      "outletId": "news4jax_jax",
+      "role": "Jaguars Beat Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JStCyrTV",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "tony_wiggins",
+      "name": "Tony Wiggins",
+      "handle": "@Wiggnsport",
+      "outletId": "locked_on_jaguars_jax",
+      "role": "Host of Locked On Jaguars",
+      "category": "audio_beat",
+      "styleTag": "daily-audio",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/Wiggnsport",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "john_oehser",
+      "name": "John Oehser",
+      "handle": "@JohnOehser",
+      "outletId": "jaguars_official",
+      "role": "Senior Writer (Jaguars.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JohnOehser",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "brian_sexton",
+      "name": "Brian Sexton",
+      "handle": "@Bsextonjax",
+      "outletId": "jaguars_official",
+      "role": "Senior Correspondent (Jaguars.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/Bsextonjax",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jaguars_pr",
+      "name": "Jacksonville Jaguars PR",
+      "handle": "@JaguarsPR",
+      "outletId": "jaguars_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JaguarsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

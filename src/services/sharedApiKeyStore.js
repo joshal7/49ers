@@ -6,11 +6,11 @@
  *      cookie, ensuring third-party-mapped subdomains (e.g. `www.joshal.com` on SmugMug) and CDN/server
  *      HTTP logs receive ZERO bytes of the API key.
  *   2. Hermetically Sealed Same-Site Vault (`https://nfl.joshal.com/key-sync.html`):
- *      - All 32 `<team>.joshal.com` apps (plus `49ers2.joshal.com`) share the same eTLD+1 (`joshal.com`),
+ *      - All 32 `<team>.joshal.com` apps share the same eTLD+1 (`joshal.com`),
  *        so Chrome, Safari (iOS & macOS), Firefox, and Edge treat `nfl.joshal.com` as same-site/first-party
  *        with a single unified storage partition across every NFL team app.
  *      - Strictly allowlisted by BOTH HTTP `Content-Security-Policy: frame-ancestors` AND JS `event.origin`
- *        checks to the exact 32 NFL team subdomains + `49ers2.joshal.com` + `nfl.joshal.com`.
+ *        checks to the exact 32 NFL team subdomains + `nfl.joshal.com`.
  *      - `default-src 'none'; script-src 'unsafe-inline'` prevents the vault page from ever making network calls.
  *   3. Instant Same-Origin Sync (`localStorage['joshal_nfl_shared_gemini_key_v1']`):
  *      - Provides 0ms synchronous sharing across `?team=` query switches on `localhost` / `*.pages.dev`
@@ -30,7 +30,6 @@ export const DEFAULT_VAULT_TIMEOUT_MS = 2500;
 
 export const ALLOWED_NFL_TEAM_SLUGS = Object.freeze([
   '49ers',
-  '49ers2',
   'bears',
   'bengals',
   'bills',
@@ -68,7 +67,7 @@ export const ALLOWED_NFL_TEAM_SLUGS = Object.freeze([
 const ALLOWED_NFL_TEAM_SLUG_SET = new Set(ALLOWED_NFL_TEAM_SLUGS);
 
 /**
- * Returns true ONLY for the 32 official `<team>.joshal.com` hosts, `49ers2.joshal.com`, and `nfl.joshal.com`.
+ * Returns true ONLY for the 32 official `<team>.joshal.com` hosts and `nfl.joshal.com`.
  * Explicitly excludes `www.joshal.com`, `workouts.joshal.com`, `localhost`, `*.pages.dev`, and lookalike domains.
  */
 export function isAllowedNflTeamHostname(hostname = '') {
@@ -287,7 +286,7 @@ export function reconcilePrefsWithSameOriginSharedKey(prefs, { storage = null, n
 
 /**
  * Determines whether the remote `https://nfl.joshal.com/key-sync.html` iframe vault should be mounted.
- * Active on all 32 official `<team>.joshal.com` hosts + `49ers2.joshal.com` (excluding `nfl.joshal.com` itself),
+ * Active on all 32 official `<team>.joshal.com` hosts (excluding `nfl.joshal.com` itself),
  * or when an explicit `vaultUrlOverride` is injected (e.g. cross-origin Chrome E2E verification).
  */
 export function shouldUseCrossSubdomainVault({ hostname = '', origin = '', vaultUrlOverride = '' } = {}) {

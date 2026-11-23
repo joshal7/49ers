@@ -1,0 +1,43 @@
+# Reference workflow template (kept under scripts/ci/ so PAT without `workflow` scope can push cleanly).
+# Copy to .github/workflows/refresh-all-teams.yml via GitHub UI or PAT with `workflow` scope.
+name: Refresh All 32 NFL Teams & Deploy Cloudflare Pages
+
+on:
+  schedule:
+    # Twice daily (5:05 PM PT / 01:05 UTC + morning 15:05 UTC)
+    - cron: '5 1,15 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: nfl-teams-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Refresh 49ers live data
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_NFL_API_KEY }}
+        run: node scripts/fetch-live-49ers-data.mjs
+
+      - name: Refresh all 31 other NFL teams live data
+        env:
+          GEMINI_NFL_API_KEY: ${{ secrets.GEMINI_NFL_API_KEY }}
+        run: node scripts/fetch-team-data.mjs --all
+
+      - name: Build dist-nfl-teams/ Pages bundle
+        run: node scripts/build-nfl-teams-pages.mjs
+
+      - name: Deploy all 32 teams to Cloudflare Pages (nfl-teams)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        working-directory: worker/pages-nfl-teams
+        run: npx --yes wrangler@4 pages deploy ../../dist-nfl-teams --project-name=nfl-teams --branch=main --commit-dirty=true

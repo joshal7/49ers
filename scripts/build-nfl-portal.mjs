@@ -3,7 +3,7 @@
  * Builds the permanent static landing page for `nfl.joshal.com` into `dist-nfl/`.
  *
  * Architecture:
- *   - 100% static Cloudflare Pages site (dedicated project `nfl-joshal`, completely separate from `nfl-hq-canary`).
+ *   - 100% static Cloudflare Pages site (dedicated project `nfl-joshal`, separate from `nfl-teams`).
  *   - Single source of truth: reads all 32 teams, divisions, fanbase brand names, slugs, and theme accents
  *     directly from `src/config/teamRegistry.js`.
  *   - Layout: Two conference columns (`NFC` | `AFC`), each containing `North`, `South`, `East`, `West`
@@ -1081,7 +1081,7 @@ function buildIndexHtml(grouped) {
 
 export function getKeySyncAllowedOrigins() {
   const fromRegistry = ALL_NFL_TEAMS.map(t => `https://${t.slug}.joshal.com`);
-  return Array.from(new Set([...getAllowedNflTeamOrigins(), ...fromRegistry, 'https://49ers2.joshal.com', 'https://nfl.joshal.com'])).sort();
+  return Array.from(new Set([...getAllowedNflTeamOrigins(), ...fromRegistry, 'https://nfl.joshal.com'])).sort();
 }
 
 export function buildKeySyncVaultHtml({ extraAllowedOrigins = [] } = {}) {

@@ -1,0 +1,253 @@
+{
+  "teamAbbr": "SEA",
+  "podiumSubjectIds": [
+    "mike_macdonald",
+    "john_schneider",
+    "brian_fleury",
+    "aden_durde"
+  ],
+  "outlets": [
+    {
+      "id": "seahawks_official",
+      "name": "Seahawks.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.seahawks.com/news/"
+    },
+    {
+      "id": "espn_sea",
+      "name": "ESPN Seattle Seahawks Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/sea/seattle-seahawks"
+    },
+    {
+      "id": "field_gulls",
+      "name": "Field Gulls (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.fieldgulls.com/"
+    },
+    {
+      "id": "the_athletic_seattle_public_beat_wire_se",
+      "name": "The Athletic Seattle (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/MikeDugar"
+    },
+    {
+      "id": "seattle_times_public_beat_wire_sea",
+      "name": "Seattle Times (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/bcondotta"
+    },
+    {
+      "id": "tacoma_news_tribune_sea",
+      "name": "Tacoma News Tribune",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/gbellseattle"
+    },
+    {
+      "id": "locked_on_seahawks_sea",
+      "name": "Locked On Seahawks",
+      "tier": 2,
+      "type": "beat",
+      "url": "https://x.com/CorbinSmithNFL"
+    },
+    {
+      "id": "seattle_overload_sea",
+      "name": "Seattle Overload",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/mattyfbrown"
+    },
+    {
+      "id": "hawk_blogger_sea",
+      "name": "Hawk Blogger",
+      "tier": 2,
+      "type": "video_film",
+      "url": "https://x.com/hawkblogger"
+    },
+    {
+      "id": "fox_13_seattle_sea",
+      "name": "FOX 13 Seattle",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/Curtis_Crabtree"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "mike_macdonald",
+      "name": "Mike Macdonald",
+      "handle": "@Seahawks",
+      "outletId": "seahawks_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Seahawks",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "john_schneider",
+      "name": "John Schneider",
+      "handle": "@Seahawks",
+      "outletId": "seahawks_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Seahawks",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "brady_henderson",
+      "name": "Brady Henderson",
+      "handle": "@BradyHenderson",
+      "outletId": "espn_sea",
+      "role": "ESPN NFL Nation Seahawks Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/BradyHenderson",
+      "bskyHandle": "bradyhenderson.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "michael_shawn_dugar",
+      "name": "Michael-Shawn Dugar",
+      "handle": "@MikeDugar",
+      "outletId": "the_athletic_seattle_public_beat_wire_se",
+      "role": "Seahawks Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/MikeDugar",
+      "bskyHandle": "mikedugar.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "bob_condotta",
+      "name": "Bob Condotta",
+      "handle": "@bcondotta",
+      "outletId": "seattle_times_public_beat_wire_sea",
+      "role": "Lead Seahawks Beat Writer (Seattle Times)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/bcondotta",
+      "bskyHandle": "bcondotta.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "gregg_bell",
+      "name": "Gregg Bell",
+      "handle": "@gbellseattle",
+      "outletId": "tacoma_news_tribune_sea",
+      "role": "Seahawks Beat Writer (News Tribune)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/gbellseattle",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "john_boyle",
+      "name": "John Boyle",
+      "handle": "@johnpboyle",
+      "outletId": "seahawks_official",
+      "role": "Senior Reporter (Seahawks.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/johnpboyle",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "corbin_smith",
+      "name": "Corbin Smith",
+      "handle": "@CorbinSmithNFL",
+      "outletId": "locked_on_seahawks_sea",
+      "role": "Host & Seahawks Analyst (Locked On)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/CorbinSmithNFL",
+      "bskyHandle": "corbinsmithnfl.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "matty_f_brown",
+      "name": "Matty F. Brown",
+      "handle": "@mattyfbrown",
+      "outletId": "seattle_overload_sea",
+      "role": "Seahawks All-22 Film Analyst (Seattle Overload)",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/mattyfbrown",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "brian_nemhauser",
+      "name": "Brian Nemhauser",
+      "handle": "@hawkblogger",
+      "outletId": "hawk_blogger_sea",
+      "role": "Seahawks Cap & Film Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/hawkblogger",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "curtis_crabtree",
+      "name": "Curtis Crabtree",
+      "handle": "@Curtis_Crabtree",
+      "outletId": "fox_13_seattle_sea",
+      "role": "Seahawks Beat Reporter (FOX 13)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Curtis_Crabtree",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "seahawks_pr",
+      "name": "Seattle Seahawks PR",
+      "handle": "@seahawksPR",
+      "outletId": "seahawks_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/seahawksPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

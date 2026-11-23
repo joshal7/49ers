@@ -1,0 +1,211 @@
+{
+  "teamAbbr": "NO",
+  "podiumSubjectIds": [
+    "kellen_moore",
+    "mickey_loomis",
+    "doug_nussmeier",
+    "brandon_staley"
+  ],
+  "outlets": [
+    {
+      "id": "saints_official",
+      "name": "NewOrleansSaints.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.neworleanssaints.com/news/"
+    },
+    {
+      "id": "espn_no",
+      "name": "ESPN New Orleans Saints Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints"
+    },
+    {
+      "id": "canal_street_chronicles",
+      "name": "Canal Street Chronicles (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.canalstreetchronicles.com/"
+    },
+    {
+      "id": "neworleans_football_no",
+      "name": "NewOrleans.Football",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/nick_underhill"
+    },
+    {
+      "id": "the_times_picayune_public_beat_wire_no",
+      "name": "The Times-Picayune (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/ByLukeJohnson"
+    },
+    {
+      "id": "locked_on_saints_no",
+      "name": "Locked On Saints",
+      "tier": 1,
+      "type": "audio_beat",
+      "url": "https://x.com/RossJacksonNOLA"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "kellen_moore",
+      "name": "Kellen Moore",
+      "handle": "@Saints",
+      "outletId": "saints_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Saints",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "mickey_loomis",
+      "name": "Mickey Loomis",
+      "handle": "@Saints",
+      "outletId": "saints_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Saints",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "katherine_terrell",
+      "name": "Katherine Terrell",
+      "handle": "@Kat_Terrell",
+      "outletId": "espn_no",
+      "role": "ESPN NFL Nation Saints Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Kat_Terrell",
+      "bskyHandle": "katterrell.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "nick_underhill",
+      "name": "Nick Underhill",
+      "handle": "@nick_underhill",
+      "outletId": "neworleans_football_no",
+      "role": "Founder & Lead Saints Insider (NOF)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/nick_underhill",
+      "bskyHandle": "nickunderhill.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "mike_triplett",
+      "name": "Mike Triplett",
+      "handle": "@MikeTriplett",
+      "outletId": "neworleans_football_no",
+      "role": "Senior Saints Writer (NOF)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/MikeTriplett",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "luke_johnson",
+      "name": "Luke Johnson",
+      "handle": "@ByLukeJohnson",
+      "outletId": "the_times_picayune_public_beat_wire_no",
+      "role": "Saints Beat Writer (NOLA.com)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ByLukeJohnson",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "matthew_paras",
+      "name": "Matthew Paras",
+      "handle": "@Matthew_Paras",
+      "outletId": "the_times_picayune_public_beat_wire_no",
+      "role": "Saints Beat Reporter (NOLA.com)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Matthew_Paras",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "ross_jackson",
+      "name": "Ross Jackson",
+      "handle": "@RossJacksonNOLA",
+      "outletId": "locked_on_saints_no",
+      "role": "Host of Locked On Saints & Beat Reporter",
+      "category": "audio_beat",
+      "styleTag": "daily-audio",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/RossJacksonNOLA",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "john_deshazier",
+      "name": "John DeShazier",
+      "handle": "@JohnDeShazier",
+      "outletId": "saints_official",
+      "role": "Senior Writer (NewOrleansSaints.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JohnDeShazier",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jeff_duncan",
+      "name": "Jeff Duncan",
+      "handle": "@JeffDuncan_",
+      "outletId": "the_times_picayune_public_beat_wire_no",
+      "role": "Saints Columnist",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/JeffDuncan_",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "saints_pr",
+      "name": "New Orleans Saints PR",
+      "handle": "@SaintsPR",
+      "outletId": "saints_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/SaintsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

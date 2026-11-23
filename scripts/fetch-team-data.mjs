@@ -677,6 +677,8 @@ async function fetchTeamBeatPodcasts(team) {
   };
 }
 
+const GEMINI_BATCH_TIMEOUT_COUNTS = new Map();
+
 async function generateGroundedDailyBrief(team, appData, apiKey, { existingBrief = null, forceBrief = false } = {}) {
   const nowMs = Date.now();
   const cycleState = resolveNewsBriefCycleState(nowMs, appData, 17);
@@ -771,6 +773,7 @@ ${snapshot.slice(0, 9000)}`;
 
   const models = [PRIMARY_GEMINI_REASONING_MODEL, 'gemini-3.8-flash', 'gemini-3.5-flash', 'gemini-3-flash-preview'];
   for (const model of models) {
+    if ((GEMINI_BATCH_TIMEOUT_COUNTS.get(model) || 0) >= 2) continue;
     try {
       const thinkingConfig = buildGeminiThinkingConfig(model, 'XHIGH');
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
@@ -786,12 +789,13 @@ ${snapshot.slice(0, 9000)}`;
           },
           contents: [{ role: 'user', parts: [{ text: userPrompt }] }]
         }),
-        signal: AbortSignal.timeout(95000)
+        signal: AbortSignal.timeout(28000)
       });
       if (!res.ok) {
         console.warn(`[ai-brief] ${team.abbr} ${model} HTTP ${res.status}`);
         continue;
       }
+      GEMINI_BATCH_TIMEOUT_COUNTS.set(model, 0);
       const json = await res.json();
       const parts = json?.candidates?.[0]?.content?.parts || [];
       const rawText = parts.filter(p => !p.thought && typeof p.text === 'string').map(p => p.text).join('').trim();
@@ -830,7 +834,11 @@ ${snapshot.slice(0, 9000)}`;
         }))
       };
     } catch (err) {
-      console.warn(`[ai-brief] ${team.abbr} ${model} error: ${err?.message || err}`);
+      const msg = String(err?.message || err);
+      if (/timeout|aborted/i.test(msg)) {
+        GEMINI_BATCH_TIMEOUT_COUNTS.set(model, (GEMINI_BATCH_TIMEOUT_COUNTS.get(model) || 0) + 1);
+      }
+      console.warn(`[ai-brief] ${team.abbr} ${model} error: ${msg}`);
       continue;
     }
   }
@@ -2680,23 +2688,43 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
 
 async function main() {
   const args = process.argv.slice(2);
+  const runAll = args.includes('--all');
+  const missingOnly = args.includes('--missing-only');
   const teamsArg = args.find(a => a.startsWith('--teams=')) || args.find(a => a.startsWith('--team='));
-  const rawList = teamsArg
-    ? teamsArg.replace(/^--teams?=/, '').split(',').map(s => s.trim()).filter(Boolean)
-    : [...CANARY_TEAM_SLUGS];
-
-  const teams = rawList.map(resolveTeamConfig).filter(t => t && t.abbr !== 'SF');
+  let teams = [];
+  if (runAll) {
+    teams = ALL_NFL_TEAMS.filter(t => t.abbr !== 'SF');
+  } else if (teamsArg) {
+    const rawList = teamsArg.replace(/^--teams?=/, '').split(',').map(s => s.trim()).filter(Boolean);
+    teams = rawList.map(resolveTeamConfig).filter(t => t && t.abbr !== 'SF');
+  } else {
+    teams = ALL_NFL_TEAMS.filter(t => t.abbr !== 'SF');
+  }
+  if (missingOnly) {
+    teams = teams.filter(t => !fs.existsSync(path.join(ROOT, 'data', 'teams', t.slug, 'meta.json')));
+  }
   if (teams.length === 0) {
-    console.error('No non-SF target teams specified. Example: --teams=DET,BUF');
-    process.exit(1);
+    console.log('[stage-2] All target teams already built (0 remaining).');
+    return;
   }
 
   const leagueCtx = await loadSharedLeagueContext(2026);
   const geminiApiKey = String(process.env.GEMINI_NFL_API_KEY || '').trim();
+  const failures = [];
 
   for (let i = 0; i < teams.length; i += 1) {
-    await buildTeamBundle(teams[i], leagueCtx, { geminiApiKey });
+    const t = teams[i];
+    try {
+      await buildTeamBundle(t, leagueCtx, { geminiApiKey });
+    } catch (err) {
+      console.error(`[stage-2] ERROR building ${t.abbr} (${t.slug}):`, err?.message || err);
+      failures.push({ abbr: t.abbr, slug: t.slug, error: err?.message || String(err) });
+    }
     if (i < teams.length - 1) await sleep(850);
+  }
+  if (failures.length > 0) {
+    console.error(`[stage-2] Completed with ${failures.length} failures:`, JSON.stringify(failures));
+    process.exit(1);
   }
 }
 

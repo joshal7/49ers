@@ -1,0 +1,246 @@
+{
+  "teamAbbr": "BAL",
+  "podiumSubjectIds": [
+    "jesse_minter",
+    "eric_decosta",
+    "declan_doyle",
+    "anthony_weaver"
+  ],
+  "outlets": [
+    {
+      "id": "ravens_official",
+      "name": "BaltimoreRavens.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.baltimoreravens.com/news/"
+    },
+    {
+      "id": "espn_bal",
+      "name": "ESPN Baltimore Ravens Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/bal/baltimore-ravens"
+    },
+    {
+      "id": "baltimore_beatdown",
+      "name": "Baltimore Beatdown (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.baltimorebeatdown.com/"
+    },
+    {
+      "id": "the_athletic_baltimore_public_beat_wire_",
+      "name": "The Athletic Baltimore (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/jeffzrebiec"
+    },
+    {
+      "id": "baltimore_sun_public_beat_wire_bal",
+      "name": "Baltimore Sun (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/brianwacker1"
+    },
+    {
+      "id": "the_baltimore_banner_bal",
+      "name": "The Baltimore Banner",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/jonas_shaffer"
+    },
+    {
+      "id": "filmstudy_baltimore_bal",
+      "name": "Filmstudy Baltimore",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/FilmstudyRavens"
+    },
+    {
+      "id": "ravens_vault_bal",
+      "name": "Ravens Vault",
+      "tier": 2,
+      "type": "audio_beat",
+      "url": "https://x.com/sgellison"
+    },
+    {
+      "id": "russell_street_report_bal",
+      "name": "Russell Street Report",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/RavensSalaryCap"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "jesse_minter",
+      "name": "Jesse Minter",
+      "handle": "@Ravens",
+      "outletId": "ravens_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Ravens",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "eric_decosta",
+      "name": "Eric DeCosta",
+      "handle": "@Ravens",
+      "outletId": "ravens_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Ravens",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jamison_hensley",
+      "name": "Jamison Hensley",
+      "handle": "@jamisonhensley",
+      "outletId": "espn_bal",
+      "role": "ESPN NFL Nation Ravens Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/jamisonhensley",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jeff_zrebiec",
+      "name": "Jeff Zrebiec",
+      "handle": "@jeffzrebiec",
+      "outletId": "the_athletic_baltimore_public_beat_wire_",
+      "role": "Lead Ravens Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/jeffzrebiec",
+      "bskyHandle": "jeffzrebiec.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "brian_wacker",
+      "name": "Brian Wacker",
+      "handle": "@brianwacker1",
+      "outletId": "baltimore_sun_public_beat_wire_bal",
+      "role": "Ravens Beat Reporter (Baltimore Sun)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/brianwacker1",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jonas_shaffer",
+      "name": "Jonas Shaffer",
+      "handle": "@jonas_shaffer",
+      "outletId": "the_baltimore_banner_bal",
+      "role": "Ravens Beat & Analytics Writer",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/jonas_shaffer",
+      "bskyHandle": "jonasshaffer.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "kyle_goon",
+      "name": "Kyle Goon",
+      "handle": "@kylegoon",
+      "outletId": "the_baltimore_banner_bal",
+      "role": "Ravens Columnist & Beat",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/kylegoon",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "ken_mckusick",
+      "name": "Ken McKusick",
+      "handle": "@FilmstudyRavens",
+      "outletId": "filmstudy_baltimore_bal",
+      "role": "Ravens All-22 Film & Cap Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/FilmstudyRavens",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "ryan_mink",
+      "name": "Ryan Mink",
+      "handle": "@ryanmink",
+      "outletId": "ravens_official",
+      "role": "Editorial Director (BaltimoreRavens.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ryanmink",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "sarah_ellison",
+      "name": "Sarah Ellison",
+      "handle": "@sgellison",
+      "outletId": "ravens_vault_bal",
+      "role": "Ravens Beat & Podcast Co-Host",
+      "category": "audio_beat",
+      "styleTag": "daily-audio",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/sgellison",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "brian_mcfarland",
+      "name": "Brian McFarland",
+      "handle": "@RavensSalaryCap",
+      "outletId": "russell_street_report_bal",
+      "role": "Ravens Salary Cap Specialist",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/RavensSalaryCap",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "ravens_pr",
+      "name": "Baltimore Ravens PR",
+      "handle": "@RavensPR",
+      "outletId": "ravens_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/RavensPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

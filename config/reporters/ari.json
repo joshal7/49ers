@@ -1,0 +1,218 @@
+{
+  "teamAbbr": "ARI",
+  "podiumSubjectIds": [
+    "mike_lafleur",
+    "monti_ossenfort",
+    "nathaniel_hackett",
+    "nick_rallis"
+  ],
+  "outlets": [
+    {
+      "id": "cardinals_official",
+      "name": "AZCardinals.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.azcardinals.com/news/"
+    },
+    {
+      "id": "espn_ari",
+      "name": "ESPN Arizona Cardinals Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/ari/arizona-cardinals"
+    },
+    {
+      "id": "revenge_of_the_birds",
+      "name": "Revenge of the Birds (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.revengeofthebirds.com/"
+    },
+    {
+      "id": "arizona_republic_public_beat_wire_ari",
+      "name": "Arizona Republic (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/theo_mackie"
+    },
+    {
+      "id": "phnx_cardinals_ari",
+      "name": "PHNX Cardinals",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/HBalzer721"
+    },
+    {
+      "id": "locked_on_cardinals_ari",
+      "name": "Locked On Cardinals",
+      "tier": 2,
+      "type": "audio_beat",
+      "url": "https://x.com/ClancysCorner"
+    },
+    {
+      "id": "arizona_cardinals_beat_ari",
+      "name": "Arizona Cardinals Beat",
+      "tier": 2,
+      "type": "beat",
+      "url": "https://x.com/Kyle_Odegard"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "mike_lafleur",
+      "name": "Mike LaFleur",
+      "handle": "@AZCardinals",
+      "outletId": "cardinals_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AZCardinals",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "monti_ossenfort",
+      "name": "Monti Ossenfort",
+      "handle": "@AZCardinals",
+      "outletId": "cardinals_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AZCardinals",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "josh_weinfuss",
+      "name": "Josh Weinfuss",
+      "handle": "@joshweinfuss",
+      "outletId": "espn_ari",
+      "role": "ESPN NFL Nation Cardinals Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/joshweinfuss",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "darren_urban",
+      "name": "Darren Urban",
+      "handle": "@Cardschatter",
+      "outletId": "cardinals_official",
+      "role": "Senior Writer (AZCardinals.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Cardschatter",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "theo_mackie",
+      "name": "Theo Mackie",
+      "handle": "@theo_mackie",
+      "outletId": "arizona_republic_public_beat_wire_ari",
+      "role": "Cardinals Beat Writer (AZCentral)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/theo_mackie",
+      "bskyHandle": "theomackie.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "howard_balzer",
+      "name": "Howard Balzer",
+      "handle": "@HBalzer721",
+      "outletId": "phnx_cardinals_ari",
+      "role": "Veteran Cardinals Insider & Transactions Analyst",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/HBalzer721",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "johnny_venerable",
+      "name": "Johnny Venerable",
+      "handle": "@JohnnyVenerable",
+      "outletId": "phnx_cardinals_ari",
+      "role": "PHNX Cardinals Host & Insider",
+      "category": "audio_beat",
+      "styleTag": "daily-audio",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/JohnnyVenerable",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "bo_brack",
+      "name": "Bo Brack",
+      "handle": "@BoBrack",
+      "outletId": "phnx_cardinals_ari",
+      "role": "Cardinals Beat Reporter (PHNX)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/BoBrack",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "alex_clancy",
+      "name": "Alex Clancy",
+      "handle": "@ClancysCorner",
+      "outletId": "locked_on_cardinals_ari",
+      "role": "Host of Locked On Cardinals",
+      "category": "audio_beat",
+      "styleTag": "daily-audio",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/ClancysCorner",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "kyle_odegard",
+      "name": "Kyle Odegard",
+      "handle": "@Kyle_Odegard",
+      "outletId": "arizona_cardinals_beat_ari",
+      "role": "Cardinals Analyst & Former Team Writer",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/Kyle_Odegard",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "cardinals_pr",
+      "name": "Arizona Cardinals PR",
+      "handle": "@AZCardsPR",
+      "outletId": "cardinals_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AZCardsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

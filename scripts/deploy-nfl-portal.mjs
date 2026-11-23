@@ -2,7 +2,7 @@
 /**
  * Permanent Go-Live Script for `nfl.joshal.com` on Cloudflare Pages Free (`nfl-joshal`).
  *
- * Completely independent from `nfl-hq-canary`, `49ers.joshal.com`, and `49ers-worker`:
+ * Completely independent from `nfl-teams` and `49ers-worker`:
  *   - 100% static Cloudflare Pages project (`nfl-joshal.pages.dev`) — 0 Functions, 0 KV, 0 R2, $0 forever.
  *   - Keeps GoDaddy nameservers and all existing subdomains (`www`, `49ers`, `lions`, `bills`, `workouts`, MX) untouched.
  *

@@ -49,6 +49,7 @@ import {
   getActiveTeamConfig,
   getTeamCoaches,
   hasCrossTeam49ersLeak,
+  isOfficialTeamHost,
   resolveTeamConfig
 } from '../config/teamRegistry.js';
 import {
@@ -205,13 +206,15 @@ export function hasLiveAiConnection(prefs = {}) {
 export function resolveReadOnlyPlatformApiBase(prefs = {}) {
   const explicit = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
   if (explicit) return explicit;
-  if (
-    typeof window !== 'undefined' &&
-    window.location &&
-    (globalThis.__PLATFORM_API_ENABLED__ === true ||
-      (/^(49ers2|lions|bills)\.joshal\.com$/i.test(window.location.hostname) && window.location.protocol === 'https:'))
-  ) {
-    return window.location.origin.replace(/\/+$/, '');
+  if (typeof window !== 'undefined' && window.location) {
+    const host = String(window.location.hostname || '').toLowerCase();
+    const isHttps = window.location.protocol === 'https:';
+    if (
+      globalThis.__PLATFORM_API_ENABLED__ === true ||
+      (isHttps && (isOfficialTeamHost(host) || host === 'nfl-teams.pages.dev' || host.endsWith('.nfl-teams.pages.dev')))
+    ) {
+      return window.location.origin.replace(/\/+$/, '');
+    }
   }
   return '';
 }

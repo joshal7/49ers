@@ -1,0 +1,210 @@
+{
+  "teamAbbr": "TB",
+  "podiumSubjectIds": [
+    "todd_bowles",
+    "jason_licht",
+    "zac_robinson"
+  ],
+  "outlets": [
+    {
+      "id": "buccaneers_official",
+      "name": "Buccaneers.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.buccaneers.com/news/"
+    },
+    {
+      "id": "espn_tb",
+      "name": "ESPN Tampa Bay Buccaneers Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/tb/tampa-bay-buccaneers"
+    },
+    {
+      "id": "bucs_nation",
+      "name": "Bucs Nation (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.bucsnation.com/"
+    },
+    {
+      "id": "fox_sports_tb",
+      "name": "FOX Sports",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/gregauman"
+    },
+    {
+      "id": "tampa_bay_times_public_beat_wire_tb",
+      "name": "Tampa Bay Times (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/NFLSTROUD"
+    },
+    {
+      "id": "pewter_report_tb",
+      "name": "Pewter Report",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/PewterReport"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "todd_bowles",
+      "name": "Todd Bowles",
+      "handle": "@Buccaneers",
+      "outletId": "buccaneers_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Buccaneers",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jason_licht",
+      "name": "Jason Licht",
+      "handle": "@Buccaneers",
+      "outletId": "buccaneers_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Buccaneers",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jenna_laine",
+      "name": "Jenna Laine",
+      "handle": "@JennaLaineESPN",
+      "outletId": "espn_tb",
+      "role": "ESPN NFL Nation Buccaneers Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JennaLaineESPN",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "greg_auman",
+      "name": "Greg Auman",
+      "handle": "@gregauman",
+      "outletId": "fox_sports_tb",
+      "role": "NFC South & Buccaneers Senior Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/gregauman",
+      "bskyHandle": "gregauman.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "rick_stroud",
+      "name": "Rick Stroud",
+      "handle": "@NFLSTROUD",
+      "outletId": "tampa_bay_times_public_beat_wire_tb",
+      "role": "Lead Buccaneers Beat Writer (TB Times)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/NFLSTROUD",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "pewter_report",
+      "name": "Pewter Report",
+      "handle": "@PewterReport",
+      "outletId": "pewter_report_tb",
+      "role": "Buccaneers Beat, Cap & Draft Staff",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/PewterReport",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "scott_reynolds",
+      "name": "Scott Reynolds",
+      "handle": "@PewterReport",
+      "outletId": "pewter_report_tb",
+      "role": "Publisher & Senior Bucs Analyst",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/PewterReport",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "joshua_queipo",
+      "name": "Joshua Queipo",
+      "handle": "@josh_queipo",
+      "outletId": "pewter_report_tb",
+      "role": "Buccaneers Cap & Analytics Specialist",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/josh_queipo",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "scott_smith",
+      "name": "Scott Smith",
+      "handle": "@ScottSBucs",
+      "outletId": "buccaneers_official",
+      "role": "Senior Writer & Editor (Buccaneers.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ScottSBucs",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "joey_knight",
+      "name": "Joey Knight",
+      "handle": "@TBTimes_Bulls",
+      "outletId": "tampa_bay_times_public_beat_wire_tb",
+      "role": "Buccaneers Beat Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/TBTimes_Bulls",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "buccaneers_pr",
+      "name": "Tampa Bay Buccaneers PR",
+      "handle": "@BuccaneersComms",
+      "outletId": "buccaneers_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/BuccaneersComms",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

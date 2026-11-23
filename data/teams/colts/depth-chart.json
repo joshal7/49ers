@@ -1,0 +1,1743 @@
+{
+  "updatedAt": "2026-11-23T03:53:02.299Z",
+  "week": 12,
+  "units": [
+    {
+      "id": "21",
+      "unitName": "Offense (3WR 1TE)",
+      "rows": [
+        {
+          "slotKey": "wr1",
+          "slotLabel": "WR (X)",
+          "baselineChain": [
+            {
+              "playerId": "3051889",
+              "name": "Laquon Treadwell",
+              "jersey": 13,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3051889.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4061956",
+              "name": "Ashton Dulin",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4061956.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4360078",
+              "name": "Alec Pierce",
+              "jersey": 14,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360078.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out for Season",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "3051889",
+              "name": "Laquon Treadwell",
+              "jersey": 13,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3051889.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4061956",
+              "name": "Ashton Dulin",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4061956.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4360078",
+              "name": "Alec Pierce",
+              "jersey": 14,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360078.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out for Season",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "wr2",
+          "slotLabel": "WR (Z)",
+          "baselineChain": [
+            {
+              "playerId": "4683151",
+              "name": "Deion Burks",
+              "jersey": 80,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683151.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3929785",
+              "name": "Nick Westbrook-Ikhine",
+              "jersey": 12,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929785.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4249030",
+              "name": "D.J. Montgomery",
+              "jersey": 2,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4249030.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4683151",
+              "name": "Deion Burks",
+              "jersey": 80,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683151.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3929785",
+              "name": "Nick Westbrook-Ikhine",
+              "jersey": 12,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929785.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4249030",
+              "name": "D.J. Montgomery",
+              "jersey": 2,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4249030.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "wr3",
+          "slotLabel": "WR (Slot)",
+          "baselineChain": [
+            {
+              "playerId": "4429684",
+              "name": "Anthony Gould",
+              "jersey": 6,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429684.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4050373",
+              "name": "Quez Watkins",
+              "jersey": 9,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4050373.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4429684",
+              "name": "Anthony Gould",
+              "jersey": 6,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429684.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4050373",
+              "name": "Quez Watkins",
+              "jersey": 9,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4050373.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "lt",
+          "slotLabel": "LT",
+          "baselineChain": [
+            {
+              "playerId": "4362580",
+              "name": "Bernhard Raimann",
+              "jersey": 79,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362580.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4361979",
+              "name": "Luke Tenuta",
+              "jersey": 67,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361979.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3895840",
+              "name": "Charlie Heck",
+              "jersey": 73,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895840.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4361979",
+              "name": "Luke Tenuta",
+              "jersey": 67,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361979.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3895840",
+              "name": "Charlie Heck",
+              "jersey": 73,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895840.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4362580",
+              "name": "Bernhard Raimann",
+              "jersey": 79,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362580.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": true
+        },
+        {
+          "slotKey": "lg",
+          "slotLabel": "LG",
+          "baselineChain": [
+            {
+              "playerId": "4838270",
+              "name": "Jalen Farmer",
+              "jersey": 62,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4838270.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4370363",
+              "name": "Dalton Tucker",
+              "jersey": 68,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4370363.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4838270",
+              "name": "Jalen Farmer",
+              "jersey": 62,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4838270.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4370363",
+              "name": "Dalton Tucker",
+              "jersey": 68,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4370363.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "c",
+          "slotLabel": "C",
+          "baselineChain": [
+            {
+              "playerId": "4430957",
+              "name": "Tanor Bortolini",
+              "jersey": 60,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430957.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4430815",
+              "name": "Sedrick Van Pran-Granger",
+              "jersey": 63,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430815.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4430957",
+              "name": "Tanor Bortolini",
+              "jersey": 60,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430957.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4430815",
+              "name": "Sedrick Van Pran-Granger",
+              "jersey": 63,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430815.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "rg",
+          "slotLabel": "RG",
+          "baselineChain": [
+            {
+              "playerId": "4427298",
+              "name": "Matt Goncalves",
+              "jersey": 71,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427298.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4370363",
+              "name": "Dalton Tucker",
+              "jersey": 68,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4370363.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4838270",
+              "name": "Jalen Farmer",
+              "jersey": 62,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4838270.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4427298",
+              "name": "Matt Goncalves",
+              "jersey": 71,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427298.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4370363",
+              "name": "Dalton Tucker",
+              "jersey": 68,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4370363.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4838270",
+              "name": "Jalen Farmer",
+              "jersey": 62,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4838270.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "rt",
+          "slotLabel": "RT",
+          "baselineChain": [
+            {
+              "playerId": "4892240",
+              "name": "Jalen Travis",
+              "jersey": 75,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4892240.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4427298",
+              "name": "Matt Goncalves",
+              "jersey": 71,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427298.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4361979",
+              "name": "Luke Tenuta",
+              "jersey": 67,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361979.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4427298",
+              "name": "Matt Goncalves",
+              "jersey": 71,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427298.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4361979",
+              "name": "Luke Tenuta",
+              "jersey": 67,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361979.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4892240",
+              "name": "Jalen Travis",
+              "jersey": 75,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4892240.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": true
+        },
+        {
+          "slotKey": "qb",
+          "slotLabel": "QB",
+          "baselineChain": [
+            {
+              "playerId": "4429084",
+              "name": "Anthony Richardson Sr.",
+              "jersey": 5,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429084.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4683423",
+              "name": "Riley Leonard",
+              "jersey": 15,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683423.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4429084",
+              "name": "Anthony Richardson Sr.",
+              "jersey": 5,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429084.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4683423",
+              "name": "Riley Leonard",
+              "jersey": 15,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683423.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "te",
+          "slotLabel": "TE",
+          "baselineChain": [
+            {
+              "playerId": "4431459",
+              "name": "Tyler Warren",
+              "jersey": 84,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431459.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4362523",
+              "name": "Will Mallory",
+              "jersey": 86,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362523.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4722908",
+              "name": "Drew Ogletree",
+              "jersey": 85,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4722908.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "2971281",
+              "name": "Pharaoh Brown",
+              "jersey": 49,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971281.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "2998565",
+              "name": "Mo Alie-Cox",
+              "jersey": 81,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2998565.png",
+              "baselineRank": 5,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4702120",
+              "name": "Carson Towt",
+              "jersey": 45,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4702120.png",
+              "baselineRank": 6,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4431459",
+              "name": "Tyler Warren",
+              "jersey": 84,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431459.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4722908",
+              "name": "Drew Ogletree",
+              "jersey": 85,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4722908.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "2971281",
+              "name": "Pharaoh Brown",
+              "jersey": 49,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971281.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4362523",
+              "name": "Will Mallory",
+              "jersey": 86,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362523.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "2998565",
+              "name": "Mo Alie-Cox",
+              "jersey": 81,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2998565.png",
+              "baselineRank": 5,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4702120",
+              "name": "Carson Towt",
+              "jersey": 45,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4702120.png",
+              "baselineRank": 6,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "rb",
+          "slotLabel": "RB",
+          "baselineChain": [
+            {
+              "playerId": "4242335",
+              "name": "Jonathan Taylor",
+              "jersey": 28,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242335.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4686468",
+              "name": "Seth McGowan",
+              "jersey": 20,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686468.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 38,
+              "statusBadge": "38% • Long Shot",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4874509",
+              "name": "DJ Giddens",
+              "jersey": 21,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4874509.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4242335",
+              "name": "Jonathan Taylor",
+              "jersey": 28,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242335.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4874509",
+              "name": "DJ Giddens",
+              "jersey": 21,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4874509.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4686468",
+              "name": "Seth McGowan",
+              "jersey": 20,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686468.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 38,
+              "statusBadge": "38% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "unitName": "Defense (Base 4-3 D)",
+      "rows": [
+        {
+          "slotKey": "lde",
+          "slotLabel": "LDE",
+          "baselineChain": [
+            {
+              "playerId": "3843843",
+              "name": "Arden Key",
+              "jersey": 98,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3843843.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4566154",
+              "name": "Jaylahn Tuimoloau",
+              "jersey": 91,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566154.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4708238",
+              "name": "George Gumbs Jr.",
+              "jersey": 52,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4708238.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "3843843",
+              "name": "Arden Key",
+              "jersey": 98,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3843843.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4566154",
+              "name": "Jaylahn Tuimoloau",
+              "jersey": 91,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566154.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4708238",
+              "name": "George Gumbs Jr.",
+              "jersey": 52,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4708238.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "ldt",
+          "slotLabel": "LDT",
+          "baselineChain": [
+            {
+              "playerId": "4058825",
+              "name": "Grover Stewart",
+              "jersey": 90,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4058825.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4692033",
+              "name": "Tim Smith",
+              "jersey": 93,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4692033.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4058825",
+              "name": "Grover Stewart",
+              "jersey": 90,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4058825.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4692033",
+              "name": "Tim Smith",
+              "jersey": 93,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4692033.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "rdt",
+          "slotLabel": "RDT",
+          "baselineChain": [
+            {
+              "playerId": "4427635",
+              "name": "Adetomiwa Adebawore",
+              "jersey": 95,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427635.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3863182",
+              "name": "Jerry Tillery",
+              "jersey": 94,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3863182.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "3929641",
+              "name": "Kevin Givens",
+              "jersey": 74,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929641.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4427635",
+              "name": "Adetomiwa Adebawore",
+              "jersey": 95,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427635.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3929641",
+              "name": "Kevin Givens",
+              "jersey": 74,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929641.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3863182",
+              "name": "Jerry Tillery",
+              "jersey": 94,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3863182.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "rde",
+          "slotLabel": "RDE",
+          "baselineChain": [
+            {
+              "playerId": "4426473",
+              "name": "Laiatu Latu",
+              "jersey": 97,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426473.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4685324",
+              "name": "Caden Curry",
+              "jersey": 55,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685324.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4240896",
+              "name": "Micheal Clemons",
+              "jersey": 72,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240896.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4426473",
+              "name": "Laiatu Latu",
+              "jersey": 97,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426473.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4685324",
+              "name": "Caden Curry",
+              "jersey": 55,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685324.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4240896",
+              "name": "Micheal Clemons",
+              "jersey": 72,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240896.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "wlb",
+          "slotLabel": "WILL LB",
+          "baselineChain": [
+            {
+              "playerId": "4692638",
+              "name": "Tahj Chambers",
+              "jersey": 44,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4692638.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3917142",
+              "name": "Akeem Davis-Gaither",
+              "jersey": 51,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917142.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4692638",
+              "name": "Tahj Chambers",
+              "jersey": 44,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4692638.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "3917142",
+              "name": "Akeem Davis-Gaither",
+              "jersey": 51,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917142.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "mlb",
+          "slotLabel": "MIKE LB",
+          "baselineChain": [
+            {
+              "playerId": "4870598",
+              "name": "CJ Allen",
+              "jersey": 53,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870598.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4587724",
+              "name": "West Weeks",
+              "jersey": 47,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4587724.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4601021",
+              "name": "Jaylon Carlies",
+              "jersey": 57,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4601021.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4870598",
+              "name": "CJ Allen",
+              "jersey": 53,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870598.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4587724",
+              "name": "West Weeks",
+              "jersey": 47,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4587724.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4601021",
+              "name": "Jaylon Carlies",
+              "jersey": 57,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4601021.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "slb",
+          "slotLabel": "SAM LB",
+          "baselineChain": [
+            {
+              "playerId": "5088571",
+              "name": "Bryce Boettcher",
+              "jersey": 50,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5088571.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4374171",
+              "name": "Austin Ajiake",
+              "jersey": 58,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4374171.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "5088571",
+              "name": "Bryce Boettcher",
+              "jersey": 50,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5088571.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4374171",
+              "name": "Austin Ajiake",
+              "jersey": 58,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4374171.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "lcb",
+          "slotLabel": "LCB",
+          "baselineChain": [
+            {
+              "playerId": "4427250",
+              "name": "Sauce Gardner",
+              "jersey": 1,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427250.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4685970",
+              "name": "Kenneth Harris",
+              "jersey": 33,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685970.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4569607",
+              "name": "Cameron Mitchell",
+              "jersey": 43,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569607.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out for Season",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4685970",
+              "name": "Kenneth Harris",
+              "jersey": 33,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685970.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4427250",
+              "name": "Sauce Gardner",
+              "jersey": 1,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427250.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4569607",
+              "name": "Cameron Mitchell",
+              "jersey": 43,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569607.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out for Season",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": true
+        },
+        {
+          "slotKey": "ss",
+          "slotLabel": "SS",
+          "baselineChain": [
+            {
+              "playerId": "4905664",
+              "name": "A.J. Haulcy",
+              "jersey": 25,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4905664.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4432789",
+              "name": "Hunter Wohler",
+              "jersey": 30,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432789.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4905664",
+              "name": "A.J. Haulcy",
+              "jersey": 25,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4905664.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4432789",
+              "name": "Hunter Wohler",
+              "jersey": 30,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432789.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "fs",
+          "slotLabel": "FS",
+          "baselineChain": [
+            {
+              "playerId": "4035861",
+              "name": "Cam Bynum",
+              "jersey": 0,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035861.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4331768",
+              "name": "Jonathan Owens",
+              "jersey": 38,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4331768.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4035861",
+              "name": "Cam Bynum",
+              "jersey": 0,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035861.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4331768",
+              "name": "Jonathan Owens",
+              "jersey": 38,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4331768.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "rcb",
+          "slotLabel": "RCB",
+          "baselineChain": [
+            {
+              "playerId": "4037361",
+              "name": "Charvarius Ward",
+              "jersey": 7,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037361.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4695991",
+              "name": "Johnathan Edwards",
+              "jersey": 35,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4695991.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4361196",
+              "name": "Cam Taylor-Britt",
+              "jersey": 29,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361196.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4695991",
+              "name": "Johnathan Edwards",
+              "jersey": 35,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4695991.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4037361",
+              "name": "Charvarius Ward",
+              "jersey": 7,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037361.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            },
+            {
+              "playerId": "4361196",
+              "name": "Cam Taylor-Britt",
+              "jersey": 29,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361196.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": true
+        },
+        {
+          "slotKey": "nb",
+          "slotLabel": "NICKEL CB",
+          "baselineChain": [
+            {
+              "playerId": "4682909",
+              "name": "Justin Walley",
+              "jersey": 27,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4682909.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "5153072",
+              "name": "Kapena Gushiken",
+              "jersey": 34,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5153072.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4682909",
+              "name": "Justin Walley",
+              "jersey": 27,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4682909.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "5153072",
+              "name": "Kapena Gushiken",
+              "jersey": 34,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5153072.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "unitName": "Special Teams",
+      "rows": [
+        {
+          "slotKey": "pk",
+          "slotLabel": "PK",
+          "baselineChain": [
+            {
+              "playerId": "4571557",
+              "name": "Spencer Shrader",
+              "jersey": 3,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4571557.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4571557",
+              "name": "Spencer Shrader",
+              "jersey": 3,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4571557.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "p",
+          "slotLabel": "P",
+          "baselineChain": [
+            {
+              "playerId": "3914922",
+              "name": "Rigoberto Sanchez",
+              "jersey": 8,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3914922.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "3914922",
+              "name": "Rigoberto Sanchez",
+              "jersey": 8,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3914922.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "h",
+          "slotLabel": "H",
+          "baselineChain": [
+            {
+              "playerId": "3914922",
+              "name": "Rigoberto Sanchez",
+              "jersey": 8,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3914922.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "3914922",
+              "name": "Rigoberto Sanchez",
+              "jersey": 8,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3914922.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "pr",
+          "slotLabel": "PR",
+          "baselineChain": [
+            {
+              "playerId": "4429684",
+              "name": "Anthony Gould",
+              "jersey": 6,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429684.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4061956",
+              "name": "Ashton Dulin",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4061956.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4429684",
+              "name": "Anthony Gould",
+              "jersey": 6,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429684.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4061956",
+              "name": "Ashton Dulin",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4061956.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        },
+        {
+          "slotKey": "kr",
+          "slotLabel": "KR",
+          "baselineChain": [
+            {
+              "playerId": "4686468",
+              "name": "Seth McGowan",
+              "jersey": 20,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686468.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 38,
+              "statusBadge": "38% • Long Shot",
+              "isAvailable": false
+            },
+            {
+              "playerId": "4429684",
+              "name": "Anthony Gould",
+              "jersey": 6,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429684.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4683151",
+              "name": "Deion Burks",
+              "jersey": 80,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683151.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4061956",
+              "name": "Ashton Dulin",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4061956.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "4429684",
+              "name": "Anthony Gould",
+              "jersey": 6,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429684.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4683151",
+              "name": "Deion Burks",
+              "jersey": 80,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683151.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4061956",
+              "name": "Ashton Dulin",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4061956.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4686468",
+              "name": "Seth McGowan",
+              "jersey": 20,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686468.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 38,
+              "statusBadge": "38% • Long Shot",
+              "isAvailable": false,
+              "demotedDueToInjury": true
+            }
+          ],
+          "starterPromoted": true
+        },
+        {
+          "slotKey": "ls",
+          "slotLabel": "LS",
+          "baselineChain": [
+            {
+              "playerId": "2566045",
+              "name": "Luke Rhodes",
+              "jersey": 46,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2566045.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
+              "isAvailable": true
+            }
+          ],
+          "projectedActiveChain": [
+            {
+              "playerId": "2566045",
+              "name": "Luke Rhodes",
+              "jersey": 46,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2566045.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
+              "isAvailable": true
+            }
+          ],
+          "starterPromoted": false
+        }
+      ]
+    }
+  ]
+}

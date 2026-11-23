@@ -16378,12 +16378,13 @@ await testAsync(
       writeSameOriginSharedGeminiKey
     } = await import('../src/services/sharedApiKeyStore.js');
 
-    // 1. Strict 32-team + 49ers2 + nfl allowlist (zero leakage to www.joshal.com SmugMug or lookalikes)
-    assert.equal(ALLOWED_NFL_TEAM_SLUGS.length, 34, 'Must include all 32 NFL teams + 49ers2 + nfl');
-    for (const slug of ['49ers', '49ers2', 'lions', 'bills', 'chiefs', 'eagles', 'cowboys', 'packers', 'nfl']) {
+    // 1. Strict 32-team + nfl allowlist (zero leakage to www.joshal.com SmugMug, retired 49ers2 canary, or lookalikes)
+    assert.equal(ALLOWED_NFL_TEAM_SLUGS.length, 33, 'Must include all 32 NFL teams + nfl (with 49ers2 canary removed)');
+    for (const slug of ['49ers', 'lions', 'bills', 'chiefs', 'eagles', 'cowboys', 'packers', 'vikings', 'nfl']) {
       assert.equal(isAllowedNflTeamHostname(`${slug}.joshal.com`), true, `${slug}.joshal.com must be allowlisted`);
     }
     for (const blocked of [
+      '49ers2.joshal.com',
       'www.joshal.com',
       'workouts.joshal.com',
       'whisky.joshal.com',
@@ -17010,6 +17011,92 @@ test('Draft Recap highlight video resolver enforces strict player-identity match
       isCachedDraftVideoValid(u.highlightVideo, { name: u.name, college: u.college, position: u.position, teamNickname: '49ers', draftYear: 2026 }),
       `49ers priority UDFA ${u.name} highlightVideo failed player-identity validation: ${u.highlightVideo?.title}`
     );
+  }
+});
+
+test('Cross-team Matchup Unit Rankings focus opposing team in 32-team leaderboard modal & inline opposing players open native dossiers', async () => {
+  const { resolveLeaderboardModalModel } = await import('../src/engine/statsLeaderboardEngine.js');
+  const { setActiveTeamConfig, getTeamByAbbr } = await import('../src/config/teamRegistry.js');
+  const sfScheduleMatchup = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/schedule-matchup.json'), 'utf8'));
+  const sfRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/roster.json'), 'utf8'));
+  const sfHealth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/health.json'), 'utf8'));
+  const sfMeta = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/meta.json'), 'utf8'));
+  const appDataSf = {
+    meta: sfMeta,
+    roster: sfRoster,
+    health: sfHealth,
+    scheduleMatchup: sfScheduleMatchup,
+    news: { rawStream: [] }
+  };
+
+  // 1. Same-origin fast-path in browser prioritizes local /data/teams/{slug} before cross-origin fallback
+  const minBrowserUrls = buildTeamDataBaseUrls('MIN', { browserOrigin: 'https://49ers.joshal.com' });
+  assert.equal(minBrowserUrls[0], 'https://49ers.joshal.com/data/teams/vikings');
+  assert.equal(minBrowserUrls[1], 'https://vikings.joshal.com/data/teams/vikings');
+  const sfBrowserUrls = buildTeamDataBaseUrls('SF', { browserOrigin: 'https://vikings.joshal.com' });
+  assert.equal(sfBrowserUrls[0], 'https://vikings.joshal.com/data');
+  assert.equal(sfBrowserUrls[1], 'https://49ers.joshal.com/data');
+
+  // 2. Matchup Unit Rankings renders data-focus-team="SF" for 49ers pills and data-focus-team="<OPP>" for opponent pills
+  const oppAbbr = String(sfScheduleMatchup.upcomingMatchup?.oppAbbr || 'MIN').toUpperCase();
+  const matchupHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'matchup',
+    appData: appDataSf,
+    userPrefs: {},
+    matchupStatsUnit: 'offense'
+  });
+  const statsCardIdx = matchupHtml.indexOf('id="matchupTeamStatsCard"');
+  assert.ok(statsCardIdx > 0, 'Matchup must render #matchupTeamStatsCard');
+  const statsSlice = matchupHtml.slice(statsCardIdx, statsCardIdx + 12000);
+  assert.ok(
+    statsSlice.includes('data-focus-team="SF"'),
+    'Matchup Unit Rankings left column must emit data-focus-team="SF"'
+  );
+  assert.ok(
+    statsSlice.includes(`data-focus-team="${oppAbbr}"`),
+    `Matchup Unit Rankings right column must emit data-focus-team="${oppAbbr}"`
+  );
+
+  // 3. resolveLeaderboardModalModel highlights ONLY the clicked opposing team when focusTeamAbbr is passed
+  const firstCoreKey = sfScheduleMatchup.teamStats?.units?.[0]?.coreRows?.[0]?.key || 'off_pts_game';
+  const oppModal = resolveLeaderboardModalModel({
+    appData: appDataSf,
+    scope: 'team',
+    key: firstCoreKey,
+    focusTeamAbbr: oppAbbr
+  });
+  assert.ok(oppModal && oppModal.rows.length === 32);
+  assert.equal(oppModal.focusTeamAbbr, oppAbbr);
+  const hlOppRows = oppModal.rows.filter(r => r.isHighlighted);
+  assert.equal(hlOppRows.length, 1, 'Exactly one team must be highlighted when focusing opponent');
+  assert.equal(hlOppRows[0].id, oppAbbr, `Opposing team ${oppAbbr} must be highlighted, NOT SF`);
+
+  const sfModal = resolveLeaderboardModalModel({
+    appData: appDataSf,
+    scope: 'team',
+    key: firstCoreKey,
+    focusTeamAbbr: 'SF'
+  });
+  assert.equal(sfModal.rows.find(r => r.isHighlighted)?.id, 'SF', 'Clicking active team must highlight SF');
+
+  // 4. Non-SF active team (DET) focusing its opponent highlights opponent, NOT SF or DET
+  try {
+    setActiveTeamConfig(getTeamByAbbr('DET'));
+    const detModalOpp = resolveLeaderboardModalModel({
+      appData: { ...appDataSf, meta: { ...sfMeta, teamAbbr: 'DET' } },
+      scope: 'team',
+      key: firstCoreKey,
+      focusTeamAbbr: 'CHI'
+    });
+    assert.equal(detModalOpp.rows.find(r => r.isHighlighted)?.id, 'CHI', 'Non-SF site clicking CHI rank must highlight CHI');
+    const detModalSelf = resolveLeaderboardModalModel({
+      appData: { ...appDataSf, meta: { ...sfMeta, teamAbbr: 'DET' } },
+      scope: 'team',
+      key: firstCoreKey
+    });
+    assert.equal(detModalSelf.rows.find(r => r.isHighlighted)?.id, 'DET', 'Non-SF site default rank must highlight DET');
+  } finally {
+    setActiveTeamConfig(getTeamByAbbr('SF'));
   }
 });
 

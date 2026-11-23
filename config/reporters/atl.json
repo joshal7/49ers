@@ -1,0 +1,225 @@
+{
+  "teamAbbr": "ATL",
+  "podiumSubjectIds": [
+    "kevin_stefanski",
+    "ian_cunningham",
+    "tommy_rees",
+    "jeff_ulbrich"
+  ],
+  "outlets": [
+    {
+      "id": "falcons_official",
+      "name": "AtlantaFalcons.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.atlantafalcons.com/news/"
+    },
+    {
+      "id": "espn_atl",
+      "name": "ESPN Atlanta Falcons Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons"
+    },
+    {
+      "id": "the_falcoholic",
+      "name": "The Falcoholic (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.thefalcoholic.com/"
+    },
+    {
+      "id": "the_athletic_atlanta_public_beat_wire_at",
+      "name": "The Athletic Atlanta (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/JoshTheAthletic"
+    },
+    {
+      "id": "atlanta_journal_constitution_public_beat",
+      "name": "Atlanta Journal-Constitution (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/DOrlandoAJC"
+    },
+    {
+      "id": "locked_on_falcons_atl",
+      "name": "Locked On Falcons",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/falcfans"
+    },
+    {
+      "id": "falcons_film_draft_atl",
+      "name": "Falcons Film & Draft",
+      "tier": 2,
+      "type": "video_film",
+      "url": "https://x.com/CarasikS"
+    },
+    {
+      "id": "fox_5_atlanta_atl",
+      "name": "FOX 5 Atlanta",
+      "tier": 2,
+      "type": "beat",
+      "url": "https://x.com/MilesGarrettTV"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "kevin_stefanski",
+      "name": "Kevin Stefanski",
+      "handle": "@AtlantaFalcons",
+      "outletId": "falcons_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AtlantaFalcons",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "ian_cunningham",
+      "name": "Ian Cunningham",
+      "handle": "@AtlantaFalcons",
+      "outletId": "falcons_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AtlantaFalcons",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "marc_raimondi",
+      "name": "Marc Raimondi",
+      "handle": "@marcraimondi",
+      "outletId": "espn_atl",
+      "role": "ESPN NFL Nation Falcons Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/marcraimondi",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "josh_kendall",
+      "name": "Josh Kendall",
+      "handle": "@JoshTheAthletic",
+      "outletId": "the_athletic_atlanta_public_beat_wire_at",
+      "role": "Falcons Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JoshTheAthletic",
+      "bskyHandle": "joshtheathletic.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "d_orlando_ledbetter",
+      "name": "D. Orlando Ledbetter",
+      "handle": "@DOrlandoAJC",
+      "outletId": "atlanta_journal_constitution_public_beat",
+      "role": "Lead Falcons Beat Writer (AJC)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/DOrlandoAJC",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "tori_mcelhaney",
+      "name": "Tori McElhaney",
+      "handle": "@tori_mcelhaney",
+      "outletId": "falcons_official",
+      "role": "Managing Editor & Team Reporter (AtlantaFalcons.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/tori_mcelhaney",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "aaron_freeman",
+      "name": "Aaron Freeman",
+      "handle": "@falcfans",
+      "outletId": "locked_on_falcons_atl",
+      "role": "Host & Analytics Analyst (Locked On Falcons)",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/falcfans",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "scott_carasik",
+      "name": "Scott Carasik",
+      "handle": "@CarasikS",
+      "outletId": "falcons_film_draft_atl",
+      "role": "Falcons All-22 & Cap Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/CarasikS",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "terrin_waack",
+      "name": "Terrin Waack",
+      "handle": "@TerrinWaack",
+      "outletId": "falcons_official",
+      "role": "Digital Team Reporter (AtlantaFalcons.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/TerrinWaack",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "miles_garrett",
+      "name": "Miles Garrett",
+      "handle": "@MilesGarrettTV",
+      "outletId": "fox_5_atlanta_atl",
+      "role": "Falcons Beat Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/MilesGarrettTV",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "falcons_pr",
+      "name": "Atlanta Falcons PR",
+      "handle": "@FalconsPR",
+      "outletId": "falcons_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/FalconsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

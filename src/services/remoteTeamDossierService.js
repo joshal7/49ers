@@ -77,7 +77,6 @@ const RAW_NFL_TEAMS = [
 const EXTRA_ABBR_ALIASES = {
   sfo: 'SF',
   niners: 'SF',
-  '49ers2': 'SF',
   la: 'LAR',
   stl: 'LAR',
   arz: 'ARI',
@@ -195,7 +194,7 @@ export function buildTeamSiteOrigin(teamInput) {
   return team ? team.origin : null;
 }
 
-export function buildTeamDataBaseUrls(teamInput, { baseUrlOverride = null } = {}) {
+export function buildTeamDataBaseUrls(teamInput, { baseUrlOverride = null, browserOrigin = null } = {}) {
   const team = resolveNflTeamMeta(teamInput);
   if (!team) return [];
   const effectiveOverride =
@@ -214,13 +213,33 @@ export function buildTeamDataBaseUrls(teamInput, { baseUrlOverride = null } = {}
     }
     return [`${tmpl}/${team.slug}`];
   }
-  if (team.abbr === 'SF') {
-    return ['https://49ers.joshal.com/data'];
+
+  const urls = [];
+  const resolvedBrowserOrigin =
+    typeof browserOrigin === 'string' && /^https?:\/\//i.test(browserOrigin.trim())
+      ? browserOrigin.trim().replace(/\/+$/, '')
+      : typeof window !== 'undefined' &&
+          window.location?.origin &&
+          /^https?:$/i.test(window.location?.protocol || '')
+        ? window.location.origin.replace(/\/+$/, '')
+        : '';
+
+  if (resolvedBrowserOrigin) {
+    const sameOriginPath =
+      team.abbr === 'SF'
+        ? `${resolvedBrowserOrigin}/data`
+        : `${resolvedBrowserOrigin}/data/teams/${team.slug}`;
+    urls.push(sameOriginPath);
   }
-  return [
-    `https://${team.slug}.joshal.com/data/teams/${team.slug}`,
-    `https://${team.slug}.joshal.com/data`
-  ];
+
+  if (team.abbr === 'SF') {
+    urls.push('https://49ers.joshal.com/data');
+  } else {
+    urls.push(`https://${team.slug}.joshal.com/data/teams/${team.slug}`);
+    urls.push(`https://${team.slug}.joshal.com/data`);
+  }
+
+  return Array.from(new Set(urls));
 }
 
 export function getRemoteTeamSheetThemeVars(teamInput, themeMode = 'dark') {

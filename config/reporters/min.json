@@ -1,0 +1,246 @@
+{
+  "teamAbbr": "MIN",
+  "podiumSubjectIds": [
+    "kevin_oconnell",
+    "nolan_teasley",
+    "wes_phillips",
+    "brian_flores"
+  ],
+  "outlets": [
+    {
+      "id": "vikings_official",
+      "name": "Vikings.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.vikings.com/news/"
+    },
+    {
+      "id": "espn_min",
+      "name": "ESPN Minnesota Vikings Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings"
+    },
+    {
+      "id": "daily_norseman",
+      "name": "Daily Norseman (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.dailynorseman.com/"
+    },
+    {
+      "id": "the_athletic_minnesota_public_beat_wire_",
+      "name": "The Athletic Minnesota (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/alec_lewis"
+    },
+    {
+      "id": "star_tribune_public_beat_wire_min",
+      "name": "Star Tribune (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/BenGoessling"
+    },
+    {
+      "id": "purple_insider_min",
+      "name": "Purple Insider",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/MatthewColler"
+    },
+    {
+      "id": "locked_on_vikings_min",
+      "name": "Locked On Vikings",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/LukeBraunNFL"
+    },
+    {
+      "id": "pioneer_press_min",
+      "name": "Pioneer Press",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/DaneMizutani"
+    },
+    {
+      "id": "vikings_on_si_min",
+      "name": "Vikings On SI",
+      "tier": 2,
+      "type": "beat",
+      "url": "https://x.com/WillRagatz"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "kevin_oconnell",
+      "name": "Kevin O'Connell",
+      "handle": "@Vikings",
+      "outletId": "vikings_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Vikings",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "nolan_teasley",
+      "name": "Nolan Teasley",
+      "handle": "@Vikings",
+      "outletId": "vikings_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Vikings",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "kevin_seifert",
+      "name": "Kevin Seifert",
+      "handle": "@SeifertESPN",
+      "outletId": "espn_min",
+      "role": "ESPN NFL Nation Vikings Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/SeifertESPN",
+      "bskyHandle": "seifertespnnfl.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "alec_lewis",
+      "name": "Alec Lewis",
+      "handle": "@alec_lewis",
+      "outletId": "the_athletic_minnesota_public_beat_wire_",
+      "role": "Vikings Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/alec_lewis",
+      "bskyHandle": "aleclewis.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "ben_goessling",
+      "name": "Ben Goessling",
+      "handle": "@BenGoessling",
+      "outletId": "star_tribune_public_beat_wire_min",
+      "role": "Lead Vikings Beat Writer (Star Tribune)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/BenGoessling",
+      "bskyHandle": "bengoessling.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "andrew_krammer",
+      "name": "Andrew Krammer",
+      "handle": "@Andrew_Krammer",
+      "outletId": "star_tribune_public_beat_wire_min",
+      "role": "Vikings Beat Writer (Star Tribune)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Andrew_Krammer",
+      "bskyHandle": "andrewkrammer.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "matthew_coller",
+      "name": "Matthew Coller",
+      "handle": "@MatthewColler",
+      "outletId": "purple_insider_min",
+      "role": "Founder & Vikings Beat Analyst (Purple Insider)",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/MatthewColler",
+      "bskyHandle": "matthewcoller.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "luke_braun",
+      "name": "Luke Braun",
+      "handle": "@LukeBraunNFL",
+      "outletId": "locked_on_vikings_min",
+      "role": "Vikings Film & Analytics Host (Locked On)",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/LukeBraunNFL",
+      "bskyHandle": "lukebraunnfl.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "dane_mizutani",
+      "name": "Dane Mizutani",
+      "handle": "@DaneMizutani",
+      "outletId": "pioneer_press_min",
+      "role": "Vikings Beat Reporter (St. Paul Pioneer Press)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/DaneMizutani",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "will_ragatz",
+      "name": "Will Ragatz",
+      "handle": "@WillRagatz",
+      "outletId": "vikings_on_si_min",
+      "role": "Vikings Beat Writer",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/WillRagatz",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "craig_peters",
+      "name": "Craig Peters",
+      "handle": "@craigpetersNFL",
+      "outletId": "vikings_official",
+      "role": "Senior Editor (Vikings.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/craigpetersNFL",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "vikings_pr",
+      "name": "Minnesota Vikings PR",
+      "handle": "@VikingsPR",
+      "outletId": "vikings_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/VikingsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

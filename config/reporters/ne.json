@@ -1,0 +1,246 @@
+{
+  "teamAbbr": "NE",
+  "podiumSubjectIds": [
+    "mike_vrabel",
+    "eliot_wolf",
+    "josh_mcdaniels",
+    "zak_kuhr"
+  ],
+  "outlets": [
+    {
+      "id": "patriots_official",
+      "name": "Patriots.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.patriots.com/news/"
+    },
+    {
+      "id": "espn_ne",
+      "name": "ESPN New England Patriots Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots"
+    },
+    {
+      "id": "pats_pulpit",
+      "name": "Pats Pulpit (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.patspulpit.com/"
+    },
+    {
+      "id": "the_athletic_boston_public_beat_wire_ne",
+      "name": "The Athletic Boston (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/ChadGraff"
+    },
+    {
+      "id": "nbc_sports_boston_ne",
+      "name": "NBC Sports Boston",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/PhilAPerry"
+    },
+    {
+      "id": "boston_herald_public_beat_wire_ne",
+      "name": "Boston Herald (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/AndrewCallahan_"
+    },
+    {
+      "id": "patriots_com_ne",
+      "name": "Patriots.com",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/ezlazar"
+    },
+    {
+      "id": "boston_sports_journal_ne",
+      "name": "Boston Sports Journal",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/GregABedard"
+    },
+    {
+      "id": "patriots_cap_ne",
+      "name": "Patriots Cap",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/patscap"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "mike_vrabel",
+      "name": "Mike Vrabel",
+      "handle": "@Patriots",
+      "outletId": "patriots_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Patriots",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "eliot_wolf",
+      "name": "Eliot Wolf",
+      "handle": "@Patriots",
+      "outletId": "patriots_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Patriots",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "mike_reiss",
+      "name": "Mike Reiss",
+      "handle": "@MikeReiss",
+      "outletId": "espn_ne",
+      "role": "ESPN NFL Nation Patriots Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/MikeReiss",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "chad_graff",
+      "name": "Chad Graff",
+      "handle": "@ChadGraff",
+      "outletId": "the_athletic_boston_public_beat_wire_ne",
+      "role": "Patriots Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ChadGraff",
+      "bskyHandle": "chadgraff.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "phil_perry",
+      "name": "Phil Perry",
+      "handle": "@PhilAPerry",
+      "outletId": "nbc_sports_boston_ne",
+      "role": "Patriots Insider & Film Analyst (NBCS Boston)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/PhilAPerry",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "andrew_callahan",
+      "name": "Andrew Callahan",
+      "handle": "@AndrewCallahan_",
+      "outletId": "boston_herald_public_beat_wire_ne",
+      "role": "Patriots Beat Writer (Boston Herald)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AndrewCallahan_",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "doug_kyed",
+      "name": "Doug Kyed",
+      "handle": "@DougKyed",
+      "outletId": "boston_herald_public_beat_wire_ne",
+      "role": "Patriots Beat & Roster Analyst",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/DougKyed",
+      "bskyHandle": "dougkyed.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "evan_lazar",
+      "name": "Evan Lazar",
+      "handle": "@ezlazar",
+      "outletId": "patriots_com_ne",
+      "role": "Patriots Staff Writer & All-22 Film Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ezlazar",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "greg_bedard",
+      "name": "Greg Bedard",
+      "handle": "@GregABedard",
+      "outletId": "boston_sports_journal_ne",
+      "role": "Patriots All-22 Film & Scheme Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/GregABedard",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "miguel_benzan",
+      "name": "Miguel Benzan",
+      "handle": "@patscap",
+      "outletId": "patriots_cap_ne",
+      "role": "Independent Patriots Salary Cap Specialist",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/patscap",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "mike_dussault",
+      "name": "Mike Dussault",
+      "handle": "@MikeDussault",
+      "outletId": "patriots_official",
+      "role": "Staff Writer (Patriots.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/MikeDussault",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "patriots_pr",
+      "name": "New England Patriots PR",
+      "handle": "@PatriotsPR",
+      "outletId": "patriots_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/PatriotsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

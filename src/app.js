@@ -99,18 +99,7 @@ import {
   fetchRemoteTeamBundle,
   getCachedRemoteTeamBundle,
   clearRemoteTeamCache
-} from './services/remoteTeamDossierService.js?v=2';
-
-import {
-  resolveNflTeamMeta,
-  getRemoteTeamSheetThemeVars,
-  findPlayerInTeamRoster,
-  buildOpponentSeedPlayer,
-  mergeRemoteAndLocalOpponentPlayer,
-  fetchRemoteTeamBundle,
-  getCachedRemoteTeamBundle,
-  clearRemoteTeamCache
-} from './services/remoteTeamDossierService.js?v=1';
+} from './services/remoteTeamDossierService.js?v=3';
 
 import {
   esc,
@@ -1459,7 +1448,8 @@ function renderStatRankModal() {
     appData: remoteLeaderboardAppData || state.appData,
     scope: state.rankModal.scope,
     key: state.rankModal.key,
-    playerId: state.rankModal.playerId
+    playerId: state.rankModal.playerId,
+    focusTeamAbbr: state.rankModal.focusTeamAbbr || null
   });
 
   if (!model || !model.rows?.length) {
@@ -1495,7 +1485,7 @@ function renderStatRankModal() {
             : `<strong>${esc(r.title)}</strong>`;
 
     rowsHtml.push(`
-      <div class="rank-modal-row ${r.isHighlighted ? 'highlighted' : ''}" ${r.isHighlighted ? 'data-rank-highlight="true"' : ''} data-rank-num="${r.rank}">
+      <div class="rank-modal-row ${r.isHighlighted ? 'highlighted' : ''}" ${r.isHighlighted ? 'data-rank-highlight="true"' : ''} data-rank-num="${r.rank}"${model.scope === 'team' ? ` data-rank-team="${esc(r.id)}"` : ''}>
         <div class="rank-modal-left">
           <span class="badge ${rankBadgeClass(scaled32)} mono rank-modal-num">#${r.rank}</span>
           ${visualThumb}
@@ -3051,9 +3041,10 @@ function bindEvents() {
         const scope = btn.getAttribute('data-rank-scope') || 'team';
         const key = btn.getAttribute('data-rank-key') || '';
         const playerId = btn.getAttribute('data-player-id') || state.sheetPlayerId || null;
+        const focusTeamAbbr = btn.getAttribute('data-focus-team') || null;
         if (key) {
           closeJargonPopover();
-          state.rankModal = { scope, key, playerId };
+          state.rankModal = { scope, key, playerId, focusTeamAbbr };
           renderStatRankModal();
         }
         break;

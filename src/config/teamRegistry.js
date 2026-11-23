@@ -4,7 +4,7 @@
  * Single source of truth shared across:
  *   - Browser PWA (`src/app.js`, `src/services/*`, `src/engine/*`, `src/views/*`)
  *   - Service Worker (`sw.js`)
- *   - Multi-Tenant Cloudflare Edge Worker & HTMLRewriter (`worker/canary-worker.js`, `worker/index.js`)
+ *   - Multi-Tenant Cloudflare Edge Worker & HTMLRewriter (`worker/nfl-teams-worker.js`, `worker/index.js`)
  *   - Two-Stage Data Ingestion Pipeline (`scripts/fetch-team-data.mjs`, `scripts/build-team-icons.mjs`)
  *
  * Zero-Regression Invariants for `49ers.joshal.com`:
@@ -233,7 +233,7 @@ function makeTeamEntry(raw) {
 export const ALL_NFL_TEAMS = [
   // ============================ NFC WEST ============================
   makeTeamEntry({
-    abbr: 'SF', slug: '49ers', aliases: ['49ers2', 'niners', 'sfo'],
+    abbr: 'SF', slug: '49ers', aliases: ['niners', 'sfo'],
     espnId: 25, espnAbbr: 'sf', otcSlug: 'san-francisco-49ers', cbsAbbr: 'SF', pfrAbbr: 'sfo',
     city: 'San Francisco', nickname: '49ers', stadium: "Levi's Stadium",
     brandName: '49ers Faithful', shortTitle: '49ers',
@@ -266,7 +266,40 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#002244', lightPrimaryBright: '#0A3B6E',
       lightSecondary: '#2F6B12', lightSecondaryBright: '#21500B',
       crestPrimary: '#002244', crestSecondary: '#69BE28'
-    })
+    }),
+    coachesSeed: { hc: "Mike Macdonald", oc: "Brian Fleury", dc: "Aden Durde", gm: "John Schneider" },
+    beatPodcastShows: [
+      {
+        "id": "seahawks_locked_on_seahawks",
+        "collectionId": 1151621299,
+        "name": "Locked On Seahawks",
+        "fullTitle": "Locked On Seahawks - Daily Podcast On The Seattle Seahawks",
+        "hosts": "Locked On Podcast Network, Corbin Smith, Rob Rang",
+        "network": "Locked On Podcast Network, Corbin Smith, Rob Rang",
+        "feedUrl": "https://rss.pdrl.fm/099859/feeds.simplecast.com/nxLgqRTF",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-seahawks-daily-podcast-on-the-seattle-seahawks/id1151621299?uo=4"
+      },
+      {
+        "id": "seahawks_seattle_overload",
+        "collectionId": 1479116026,
+        "name": "Seattle Overload",
+        "fullTitle": "Seattle Overload",
+        "hosts": "Seattle Overload",
+        "network": "Seattle Overload",
+        "feedUrl": "https://www.spreaker.com/show/5141915/episodes/feed",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/seattle-overload/id1479116026?uo=4"
+      },
+      {
+        "id": "seahawks_daily_seahawks_podcast",
+        "collectionId": 1153170207,
+        "name": "Daily Seahawks Podcast",
+        "fullTitle": "Daily Seahawks Podcast: HB Mornings & Real Hawk Talk",
+        "hosts": "Brian Nemhauser",
+        "network": "Brian Nemhauser",
+        "feedUrl": "https://feeds.simplecast.com/9EKSl0eW",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/daily-seahawks-podcast-hb-mornings-real-hawk-talk/id1153170207?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'LAR', slug: 'rams', aliases: ['la-rams'],
@@ -282,7 +315,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#003594', lightPrimaryBright: '#0047C2',
       lightSecondary: '#8A6900', lightSecondaryBright: '#6B5000',
       crestPrimary: '#003594', crestSecondary: '#FFA300'
-    })
+    }),
+    coachesSeed: { hc: "Sean McVay", oc: "Nathan Scheelhaase", dc: "Chris Shula", gm: "Les Snead" },
+    beatPodcastShows: [
+      {
+        "id": "rams_locked_on_rams",
+        "collectionId": 1148968947,
+        "name": "Locked On Rams",
+        "fullTitle": "Locked On Rams - Daily Podcast On The Los Angeles Rams",
+        "hosts": "Locked On Podcast Network, Doug McKain, Travis Rodgers",
+        "network": "Locked On Podcast Network, Doug McKain, Travis Rodgers",
+        "feedUrl": "https://rss.pdrl.fm/3fd73b/feeds.simplecast.com/a4Q6EDeU",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-rams-daily-podcast-on-the-los-angeles-rams/id1148968947?uo=4"
+      },
+      {
+        "id": "rams_11_personnel",
+        "collectionId": 1477535034,
+        "name": "11 Personnel",
+        "fullTitle": "11 Personnel: A show about the Los Angeles Rams",
+        "hosts": "The Athletic",
+        "network": "The Athletic",
+        "feedUrl": "https://feeds.acast.com/public/shows/6838b33f5b56407fa4a8fd2e",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/11-personnel-a-show-about-the-los-angeles-rams/id1477535034?uo=4"
+      },
+      {
+        "id": "rams_rams_revealed",
+        "collectionId": 1445232369,
+        "name": "Rams Revealed",
+        "fullTitle": "Rams Revealed",
+        "hosts": "Rams Revealed: A LA Rams Podcast",
+        "network": "Rams Revealed: A LA Rams Podcast",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/103243cb-c6ba-4495-9778-aeac015c4e45/5440af2a-32e6-4f66-b05a-aeac015c4e53/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/rams-revealed/id1445232369?uo=4"
+      },
+      {
+        "id": "rams_rams_brothers",
+        "collectionId": 1446481503,
+        "name": "Rams Brothers",
+        "fullTitle": "Rams Brothers: The Pod, An LA Rams Podcast",
+        "hosts": "Nick Vespe, Dene Vespe",
+        "network": "Nick Vespe, Dene Vespe",
+        "feedUrl": "https://feeds.simplecast.com/tsCGHzbj",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/rams-brothers-the-pod-an-la-rams-podcast/id1446481503?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'ARI', slug: 'cardinals', aliases: ['cards'],
@@ -298,7 +374,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#97233F', lightPrimaryBright: '#B02345',
       lightSecondary: '#8A6008', lightSecondaryBright: '#6C4A04',
       crestPrimary: '#97233F', crestSecondary: '#FFB612'
-    })
+    }),
+    coachesSeed: { hc: "Mike LaFleur", oc: "Nathaniel Hackett", dc: "Nick Rallis", gm: "Monti Ossenfort" },
+    beatPodcastShows: [
+      {
+        "id": "cardinals_locked_on_cardinals",
+        "collectionId": 1161791386,
+        "name": "Locked On Cardinals",
+        "fullTitle": "Locked On Cardinals - Daily Podcast On The Arizona Cardinals",
+        "hosts": "Locked On Podcast Network, Alex Clancy",
+        "network": "Locked On Podcast Network, Alex Clancy",
+        "feedUrl": "https://rss.pdrl.fm/21b2e1/feeds.simplecast.com/SRxnlfNZ",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-cardinals-daily-podcast-on-the-arizona-cardinals/id1161791386?uo=4"
+      },
+      {
+        "id": "cardinals_arizona_cardinals_podcasts",
+        "collectionId": 333230043,
+        "name": "Arizona Cardinals Podcasts",
+        "fullTitle": "Arizona Cardinals Podcasts",
+        "hosts": "Arizona Cardinals",
+        "network": "Arizona Cardinals",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/484044ef-7968-4466-8867-aeac01359d01/ad6ea3ae-0e78-456a-979a-aeac01359d14/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/arizona-cardinals-podcasts/id333230043?uo=4"
+      },
+      {
+        "id": "cardinals_phnx_arizona_cardinals_podcast",
+        "collectionId": 1584495230,
+        "name": "PHNX Arizona Cardinals Podcast",
+        "fullTitle": "PHNX Arizona Cardinals Podcast",
+        "hosts": "ALLCITY Network, PHNX Sports",
+        "network": "ALLCITY Network, PHNX Sports",
+        "feedUrl": "https://rss.pdrl.fm/76e100/feeds.simplecast.com/stOiuixb",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/phnx-arizona-cardinals-podcast/id1584495230?uo=4"
+      },
+      {
+        "id": "cardinals_seein_red",
+        "collectionId": 1896892518,
+        "name": "SEEIN’ RED",
+        "fullTitle": "SEEIN’ RED: Arizona Cardinals Talk from an NFL Vet & Lifelong Fan",
+        "hosts": "Seein' RED Podcast",
+        "network": "Seein' RED Podcast",
+        "feedUrl": "https://anchor.fm/s/10e4a6028/podcast/rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/seein-red-arizona-cardinals-talk-from-an-nfl-vet/id1896892518?uo=4"
+      }
+    ]
   }),
 
   // ============================ NFC NORTH ============================
@@ -388,7 +507,40 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#4F2683', lightPrimaryBright: '#61329E',
       lightSecondary: '#8A6700', lightSecondaryBright: '#6B4F00',
       crestPrimary: '#4F2683', crestSecondary: '#FFC62F'
-    })
+    }),
+    coachesSeed: { hc: "Kevin O'Connell", oc: "Wes Phillips", dc: "Brian Flores", gm: "Nolan Teasley" },
+    beatPodcastShows: [
+      {
+        "id": "vikings_locked_on_vikings",
+        "collectionId": 1144153403,
+        "name": "Locked On Vikings",
+        "fullTitle": "Locked On Vikings - Daily Podcast On The Minnesota Vikings",
+        "hosts": "Locked On Podcast Network, Luke Braun",
+        "network": "Locked On Podcast Network, Luke Braun",
+        "feedUrl": "https://rss.pdrl.fm/dbd095/feeds.simplecast.com/sa0QprVo",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-vikings-daily-podcast-on-the-minnesota-vikings/id1144153403?uo=4"
+      },
+      {
+        "id": "vikings_purple_insider",
+        "collectionId": 1513529873,
+        "name": "Purple Insider",
+        "fullTitle": "Purple Insider - a Minnesota Vikings and NFL podcast",
+        "hosts": "Matthew Coller, Bleav",
+        "network": "Matthew Coller, Bleav",
+        "feedUrl": "https://feeds.simplecast.com/PuzMMWua",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/purple-insider-a-minnesota-vikings-and-nfl-podcast/id1513529873?uo=4"
+      },
+      {
+        "id": "vikings_purple_daily",
+        "collectionId": 923544550,
+        "name": "Purple Daily",
+        "fullTitle": "Purple Daily | a Minnesota Vikings podcast",
+        "hosts": "SKOR North",
+        "network": "SKOR North",
+        "feedUrl": "https://rss.art19.com/purple-daily",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/purple-daily-a-minnesota-vikings-podcast/id923544550?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'GB', slug: 'packers', aliases: ['pack', 'gnb'],
@@ -404,7 +556,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#203731', lightPrimaryBright: '#2B4E45',
       lightSecondary: '#8A6300', lightSecondaryBright: '#6B4B00',
       crestPrimary: '#203731', crestSecondary: '#FFB612'
-    })
+    }),
+    coachesSeed: { hc: "Matt LaFleur", oc: "Adam Stenavich", dc: "Jonathan Gannon", gm: "Brian Gutekunst" },
+    beatPodcastShows: [
+      {
+        "id": "packers_locked_on_packers",
+        "collectionId": 1144508840,
+        "name": "Locked On Packers",
+        "fullTitle": "Locked On Packers - Daily Podcast On The Green Bay Packers",
+        "hosts": "Peter Bukowski, Locked On Podcast Network",
+        "network": "Peter Bukowski, Locked On Podcast Network",
+        "feedUrl": "https://rss.pdrl.fm/5b095f/feeds.simplecast.com/FkBDUQLt",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-packers-daily-podcast-on-the-green-bay-packers/id1144508840?uo=4"
+      },
+      {
+        "id": "packers_packers_unscripted",
+        "collectionId": 1039516531,
+        "name": "Packers Unscripted",
+        "fullTitle": "Packers Unscripted",
+        "hosts": "Green Bay Packers",
+        "network": "Green Bay Packers",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/3862fdb6-c358-40eb-88b2-aea8004103a7/b8766a57-277c-4d7e-965e-aea8004103b9/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/packers-unscripted/id1039516531?uo=4"
+      },
+      {
+        "id": "packers_pack",
+        "collectionId": 1414100645,
+        "name": "Pack",
+        "fullTitle": "Pack-A-Day: Your Daily Packers Podcast",
+        "hosts": "Blue Wire, Andy Herman",
+        "network": "Blue Wire, Andy Herman",
+        "feedUrl": "https://feeds.simplecast.com/wX3kDX_W",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/pack-a-day-your-daily-packers-podcast/id1414100645?uo=4"
+      },
+      {
+        "id": "packers_packernet_podcast",
+        "collectionId": 1275596861,
+        "name": "Packernet Podcast",
+        "fullTitle": "Packernet Podcast: Daily Green Bay Packers Podcast",
+        "hosts": "AC Sports",
+        "network": "AC Sports",
+        "feedUrl": "https://feeds.libsyn.com/545942/rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/packernet-podcast-daily-green-bay-packers-podcast/id1275596861?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'CHI', slug: 'bears', aliases: ['da-bears'],
@@ -420,7 +615,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#0B162A', lightPrimaryBright: '#1B2E52',
       lightSecondary: '#B8360A', lightSecondaryBright: '#962B06',
       crestPrimary: '#0B162A', crestSecondary: '#C83803'
-    })
+    }),
+    coachesSeed: { hc: "Ben Johnson", oc: "Press Taylor", dc: "Dennis Allen", gm: "Ryan Poles" },
+    beatPodcastShows: [
+      {
+        "id": "bears_locked_on_bears",
+        "collectionId": 1141591437,
+        "name": "Locked On Bears",
+        "fullTitle": "Locked On Bears - Daily Podcast On The Chicago Bears",
+        "hosts": "Locked On Podcast Network, Lorin Cox",
+        "network": "Locked On Podcast Network, Lorin Cox",
+        "feedUrl": "https://rss.pdrl.fm/16e145/feeds.simplecast.com/yvyasWU5",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bears-daily-podcast-on-the-chicago-bears/id1141591437?uo=4"
+      },
+      {
+        "id": "bears_chicago_bears_podcasts",
+        "collectionId": 848457125,
+        "name": "Chicago Bears Podcasts",
+        "fullTitle": "Chicago Bears Podcasts",
+        "hosts": "Chicago Bears",
+        "network": "Chicago Bears",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/4f703a36-2fa9-4d42-b09a-aeac01327730/b3c8eeec-ff0b-46a5-b7e4-aeac0132773e/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/chicago-bears-podcasts/id848457125?uo=4"
+      },
+      {
+        "id": "bears_chgo_chicago_bears_podcast",
+        "collectionId": 1039910852,
+        "name": "CHGO Chicago Bears Podcast",
+        "fullTitle": "CHGO Chicago Bears Podcast",
+        "hosts": "ALLCITY Network, CHGO Sports",
+        "network": "ALLCITY Network, CHGO Sports",
+        "feedUrl": "https://feeds.simplecast.com/oSbdDATR",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/chgo-chicago-bears-podcast/id1039910852?uo=4"
+      },
+      {
+        "id": "bears_the_chicago_bears_podcast",
+        "collectionId": 1683659497,
+        "name": "The Chicago Bears Podcast",
+        "fullTitle": "The Chicago Bears Podcast",
+        "hosts": "ESPN Chicago",
+        "network": "ESPN Chicago",
+        "feedUrl": "https://rss.amperwave.net/v2/feed/good-karma/wmvp-am-the_chicago_bears_podcast/itunes_akrgV",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-chicago-bears-podcast/id1683659497?uo=4"
+      }
+    ]
   }),
 
   // ============================ NFC EAST ============================
@@ -438,7 +676,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#004C54', lightPrimaryBright: '#00646E',
       lightSecondary: '#4B575C', lightSecondaryBright: '#354045',
       crestPrimary: '#004C54', crestSecondary: '#A5ACAF'
-    })
+    }),
+    coachesSeed: { hc: "Nick Sirianni", oc: "Sean Mannion", dc: "Vic Fangio", gm: "Howie Roseman" },
+    beatPodcastShows: [
+      {
+        "id": "eagles_locked_on_eagles",
+        "collectionId": 1139903017,
+        "name": "Locked On Eagles",
+        "fullTitle": "Locked On Eagles - Daily Podcast On The Philadelphia Eagles",
+        "hosts": "Locked On Podcast Network, Louie DiBiase, Gino Cammilleri",
+        "network": "Locked On Podcast Network, Louie DiBiase, Gino Cammilleri",
+        "feedUrl": "https://rss.pdrl.fm/32c77c/feeds.simplecast.com/yy6iqCPY",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-eagles-daily-podcast-on-the-philadelphia-eagles/id1139903017?uo=4"
+      },
+      {
+        "id": "eagles_phly_philadelphia_eagles_podcast",
+        "collectionId": 1706944557,
+        "name": "PHLY Philadelphia Eagles Podcast",
+        "fullTitle": "PHLY Philadelphia Eagles Podcast",
+        "hosts": "ALLCITY Network, PHLY Sports",
+        "network": "ALLCITY Network, PHLY Sports",
+        "feedUrl": "https://feeds.simplecast.com/rR8B4DDE",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/phly-philadelphia-eagles-podcast/id1706944557?uo=4"
+      },
+      {
+        "id": "eagles_eagle_eye",
+        "collectionId": 1376641140,
+        "name": "Eagle Eye",
+        "fullTitle": "Eagle Eye: A Philadelphia Eagles Podcast",
+        "hosts": "NBC Sports Philadelphia",
+        "network": "NBC Sports Philadelphia",
+        "feedUrl": "https://feeds.simplecast.com/_ENNUG3a",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/eagle-eye-a-philadelphia-eagles-podcast/id1376641140?uo=4"
+      },
+      {
+        "id": "eagles_eagle_eye_in_the_sky_podcast",
+        "collectionId": 1012041038,
+        "name": "Eagle Eye In The Sky Podcast",
+        "fullTitle": "Eagle Eye In The Sky Podcast",
+        "hosts": "Philadelphia Eagles",
+        "network": "Philadelphia Eagles",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/691b6a17-8656-4fee-9fbd-aeac01480e8b/5a091549-1020-4a08-beb5-aeac01480e9e/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/eagle-eye-in-the-sky-podcast/id1012041038?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'DAL', slug: 'cowboys', aliases: ['boys'],
@@ -454,7 +735,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#041E42', lightPrimaryBright: '#0B356E',
       lightSecondary: '#4E5B6B', lightSecondaryBright: '#374250',
       crestPrimary: '#041E42', crestSecondary: '#869397'
-    })
+    }),
+    coachesSeed: { hc: "Brian Schottenheimer", oc: "Klayton Adams", dc: "Christian Parker", gm: "Jerry Jones" },
+    beatPodcastShows: [
+      {
+        "id": "cowboys_locked_on_cowboys",
+        "collectionId": 1151519475,
+        "name": "Locked On Cowboys",
+        "fullTitle": "Locked On Cowboys - Daily Podcast On The Dallas Cowboys",
+        "hosts": "Landon McCool, Marcus Mosher, Locked On Podcast Network",
+        "network": "Landon McCool, Marcus Mosher, Locked On Podcast Network",
+        "feedUrl": "https://rss.pdrl.fm/3e3416/feeds.simplecast.com/4NoEmSg7",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-cowboys-daily-podcast-on-the-dallas-cowboys/id1151519475?uo=4"
+      },
+      {
+        "id": "cowboys_dallas_cowboys_podcasts",
+        "collectionId": 1421978911,
+        "name": "Dallas Cowboys Podcasts",
+        "fullTitle": "Dallas Cowboys Podcasts",
+        "hosts": "Dallas Cowboys",
+        "network": "Dallas Cowboys",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/efde3178-5a7b-4797-90b2-aeac01489d98/8a52d4bf-df4a-40db-bfca-aeac01489da1/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/dallas-cowboys-podcasts/id1421978911?uo=4"
+      },
+      {
+        "id": "cowboys_love_of_the_star",
+        "collectionId": 1631178784,
+        "name": "Love of the Star",
+        "fullTitle": "Love of the Star: A Dallas Cowboys Podcast",
+        "hosts": "Audacy",
+        "network": "Audacy",
+        "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/love-of-the-star",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/love-of-the-star-a-dallas-cowboys-podcast/id1631178784?uo=4"
+      },
+      {
+        "id": "cowboys_talkin_cowboys",
+        "collectionId": 213508091,
+        "name": "Talkin' Cowboys",
+        "fullTitle": "Talkin' Cowboys",
+        "hosts": "Dallas Cowboys",
+        "network": "Dallas Cowboys",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/daa09c7f-6c6b-44bd-b906-aeac01489de7/f8250829-ef85-42cf-90ff-aeac01489e03/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/talkin-cowboys/id213508091?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'NYG', slug: 'giants', aliases: ['bigblue'],
@@ -470,7 +794,40 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#0B2265', lightPrimaryBright: '#15348F',
       lightSecondary: '#A71930', lightSecondaryBright: '#851023',
       crestPrimary: '#0B2265', crestSecondary: '#A71930'
-    })
+    }),
+    coachesSeed: { hc: "John Harbaugh", oc: "Matt Nagy", dc: "Dennard Wilson", gm: "Joe Schoen" },
+    beatPodcastShows: [
+      {
+        "id": "giants_locked_on_giants",
+        "collectionId": 1144941431,
+        "name": "Locked On Giants",
+        "fullTitle": "Locked On Giants - Daily Podcast On The New York Giants",
+        "hosts": "Locked On Podcast Network",
+        "network": "Locked On Podcast Network",
+        "feedUrl": "https://rss.pdrl.fm/da64a7/feeds.simplecast.com/Iu3ZtP7n",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-giants-daily-podcast-on-the-new-york-giants/id1144941431?uo=4"
+      },
+      {
+        "id": "giants_big_blue_banter",
+        "collectionId": 1387339234,
+        "name": "Big Blue Banter",
+        "fullTitle": "Big Blue Banter: A New York Giants Football Podcast",
+        "hosts": "Blue Wire",
+        "network": "Blue Wire",
+        "feedUrl": "https://feeds.simplecast.com/Zc7GfsBY",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/big-blue-banter-a-new-york-giants-football-podcast/id1387339234?uo=4"
+      },
+      {
+        "id": "giants_big_blue_kickoff_live",
+        "collectionId": 1486876072,
+        "name": "Big Blue Kickoff Live",
+        "fullTitle": "Big Blue Kickoff Live | New York Giants",
+        "hosts": "New York Giants",
+        "network": "New York Giants",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/39ec9424-442e-4f83-b8b1-aea900256654/e0103b25-98cc-437f-9cfc-aea90025666b/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/big-blue-kickoff-live-new-york-giants/id1486876072?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'WAS', slug: 'commanders', aliases: ['wsh', 'washington'],
@@ -486,7 +843,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#5A1414', lightPrimaryBright: '#7A1C1C',
       lightSecondary: '#8A6008', lightSecondaryBright: '#6B4804',
       crestPrimary: '#5A1414', crestSecondary: '#FFB612'
-    })
+    }),
+    coachesSeed: { hc: "Dan Quinn", oc: "David Blough", dc: "Daronte Jones", gm: "Adam Peters" },
+    beatPodcastShows: [
+      {
+        "id": "commanders_locked_on_commanders",
+        "collectionId": 1144183096,
+        "name": "Locked On Commanders",
+        "fullTitle": "Locked On Commanders - Daily Podcast On The Washington Commanders",
+        "hosts": "Locked On Podcast Network, David Harrison",
+        "network": "Locked On Podcast Network, David Harrison",
+        "feedUrl": "https://rss.pdrl.fm/7c3048/feeds.simplecast.com/psq7p3Ar",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-commanders-daily-podcast-on-the-washington/id1144183096?uo=4"
+      },
+      {
+        "id": "commanders_john_keim_report",
+        "collectionId": 1455645619,
+        "name": "John Keim Report",
+        "fullTitle": "John Keim Report",
+        "hosts": "Ampire Media, Bleav",
+        "network": "Ampire Media, Bleav",
+        "feedUrl": "https://feeds.simplecast.com/kSOAGvW5",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/john-keim-report/id1455645619?uo=4"
+      },
+      {
+        "id": "commanders_commanders_log",
+        "collectionId": 1590398841,
+        "name": "Commander's Log",
+        "fullTitle": "Commander's Log: Unofficial Star Trek Chat",
+        "hosts": "Knew Amsterdam Entertainment",
+        "network": "Knew Amsterdam Entertainment",
+        "feedUrl": "https://anchor.fm/s/6fb8b34c/podcast/rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/commanders-log-unofficial-star-trek-chat/id1590398841?uo=4"
+      },
+      {
+        "id": "commanders_the_kevin_sheehan_show",
+        "collectionId": 1435515037,
+        "name": "The Kevin Sheehan Show",
+        "fullTitle": "The Kevin Sheehan Show",
+        "hosts": "Kevin Sheehan, Blue Wire",
+        "network": "Kevin Sheehan, Blue Wire",
+        "feedUrl": "https://feeds.simplecast.com/WN4LInTx",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-kevin-sheehan-show/id1435515037?uo=4"
+      }
+    ]
   }),
 
   // ============================ NFC SOUTH ============================
@@ -504,7 +904,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#A50E22', lightPrimaryBright: '#C4162C',
       lightSecondary: '#5C514A', lightSecondaryBright: '#453C36',
       crestPrimary: '#D50A0A', crestSecondary: '#B1BABF'
-    })
+    }),
+    coachesSeed: { hc: "Todd Bowles", oc: "Zac Robinson", dc: "Todd Bowles", gm: "Jason Licht" },
+    beatPodcastShows: [
+      {
+        "id": "buccaneers_locked_on_bucs",
+        "collectionId": 1139752021,
+        "name": "Locked On Bucs",
+        "fullTitle": "Locked On Bucs – Daily Podcast On The Tampa Bay Buccaneers",
+        "hosts": "Locked On Podcast Network, James Yarcho",
+        "network": "Locked On Podcast Network, James Yarcho",
+        "feedUrl": "https://rss.pdrl.fm/ca31e9/feeds.simplecast.com/mOWpQkH2",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bucs-daily-podcast-on-the-tampa-bay-buccaneers/id1139752021?uo=4"
+      },
+      {
+        "id": "buccaneers_salty_dogs",
+        "collectionId": 1420665229,
+        "name": "Salty Dogs",
+        "fullTitle": "Salty Dogs",
+        "hosts": "Tampa Bay Buccaneers",
+        "network": "Tampa Bay Buccaneers",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/20267f26-3b4d-40d6-a5fd-aea90029f1eb/39bb7413-22e5-4a67-a26e-aea90029f1f9/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/salty-dogs/id1420665229?uo=4"
+      },
+      {
+        "id": "buccaneers_pewter_report_podcast",
+        "collectionId": 1216727537,
+        "name": "Pewter Report Podcast",
+        "fullTitle": "Pewter Report Podcast",
+        "hosts": "Bucs",
+        "network": "Bucs",
+        "feedUrl": "https://feeds.megaphone.fm/RTERE6185627144",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/pewter-report-podcast/id1216727537?uo=4"
+      },
+      {
+        "id": "buccaneers_bucs_players_table",
+        "collectionId": 1436038723,
+        "name": "Bucs Players' Table",
+        "fullTitle": "Bucs Players' Table",
+        "hosts": "Tampa Bay Buccaneers",
+        "network": "Tampa Bay Buccaneers",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/47ba869d-38cf-4f27-ab21-aea90029f19b/a957d84b-925d-4e55-bb16-aea90029f1ae/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/bucs-players-table/id1436038723?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'NO', slug: 'saints', aliases: ['nor', 'whodat'],
@@ -520,7 +963,40 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#1A1A1A', lightPrimaryBright: '#333333',
       lightSecondary: '#806526', lightSecondaryBright: '#634D1A',
       crestPrimary: '#101820', crestSecondary: '#D3BC8D'
-    })
+    }),
+    coachesSeed: { hc: "Kellen Moore", oc: "Doug Nussmeier", dc: "Brandon Staley", gm: "Mickey Loomis" },
+    beatPodcastShows: [
+      {
+        "id": "saints_locked_on_saints",
+        "collectionId": 997872651,
+        "name": "Locked On Saints",
+        "fullTitle": "Locked On Saints - Daily Podcast On The New Orleans Saints",
+        "hosts": "Locked On Podcast Network, Ross Jackson",
+        "network": "Locked On Podcast Network, Ross Jackson",
+        "feedUrl": "https://rss.pdrl.fm/83ac39/feeds.simplecast.com/aKgoC4uX",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-saints-daily-podcast-on-the-new-orleans-saints/id997872651?uo=4"
+      },
+      {
+        "id": "saints_neworleans_football",
+        "collectionId": 1153789570,
+        "name": "NewOrleans.Football",
+        "fullTitle": "NewOrleans.Football: Saints Podcast",
+        "hosts": "NewOrleans.Football",
+        "network": "NewOrleans.Football",
+        "feedUrl": "https://feeds.transistor.fm/neworleans-football-saints-podcast",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/neworleans-football-saints-podcast/id1153789570?uo=4"
+      },
+      {
+        "id": "saints_saints_happy_hour",
+        "collectionId": 1023150373,
+        "name": "Saints Happy Hour",
+        "fullTitle": "Saints Happy Hour",
+        "hosts": "Saints Happy Hour",
+        "network": "Saints Happy Hour",
+        "feedUrl": "https://rss.art19.com/saints-happy-hour",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/saints-happy-hour/id1023150373?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'ATL', slug: 'falcons', aliases: ['dirtybirds'],
@@ -536,7 +1012,20 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#A71930', lightPrimaryBright: '#C21F39',
       lightSecondary: '#4E5559', lightSecondaryBright: '#383E42',
       crestPrimary: '#A71930', crestSecondary: '#A5ACAF'
-    })
+    }),
+    coachesSeed: { hc: "Kevin Stefanski", oc: "Tommy Rees", dc: "Jeff Ulbrich", gm: "Ian Cunningham" },
+    beatPodcastShows: [
+      {
+        "id": "falcons_locked_on_falcons",
+        "collectionId": 1147245791,
+        "name": "Locked On Falcons",
+        "fullTitle": "Locked On Falcons - Daily Podcast On The Atlanta Falcons",
+        "hosts": "Locked On Podcast Network, Aaron Freeman",
+        "network": "Locked On Podcast Network, Aaron Freeman",
+        "feedUrl": "https://rss.pdrl.fm/d31f4c/feeds.simplecast.com/l96cnojt",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-falcons-daily-podcast-on-the-atlanta-falcons/id1147245791?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'CAR', slug: 'panthers', aliases: ['keeppounding'],
@@ -552,7 +1041,30 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#005F91', lightPrimaryBright: '#0072AD',
       lightSecondary: '#4B555E', lightSecondaryBright: '#363E45',
       crestPrimary: '#0085CA', crestSecondary: '#BFC0BF'
-    })
+    }),
+    coachesSeed: { hc: "Dave Canales", oc: "Brad Idzik", dc: "Todd Wash", gm: "Dan Morgan" },
+    beatPodcastShows: [
+      {
+        "id": "panthers_locked_on_panthers",
+        "collectionId": 1150966073,
+        "name": "Locked On Panthers",
+        "fullTitle": "Locked On Panthers - Daily Podcast On The Carolina Panthers",
+        "hosts": "Locked On Podcast Network, Julian Council",
+        "network": "Locked On Podcast Network, Julian Council",
+        "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4"
+      },
+      {
+        "id": "panthers_panthers_playbook",
+        "collectionId": 1697162650,
+        "name": "Panthers Playbook",
+        "fullTitle": "Panthers Playbook",
+        "hosts": "99.9 The Fan | Raleigh, North Carolina",
+        "network": "99.9 The Fan | Raleigh, North Carolina",
+        "feedUrl": "https://feed.cdnstream1.com/zjb/feed/download/99/c9/e8/99c9e89a-3322-4455-8c08-b882e03ba2af.xml",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/panthers-playbook/id1697162650?uo=4"
+      }
+    ]
   }),
 
   // ============================ AFC EAST ============================
@@ -652,7 +1164,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#002244', lightPrimaryBright: '#0D3866',
       lightSecondary: '#B30B2C', lightSecondaryBright: '#8F0722',
       crestPrimary: '#002244', crestSecondary: '#C60C30'
-    })
+    }),
+    coachesSeed: { hc: "Mike Vrabel", oc: "Josh McDaniels", dc: "Zak Kuhr", gm: "Eliot Wolf" },
+    beatPodcastShows: [
+      {
+        "id": "patriots_locked_on_patriots",
+        "collectionId": 1140512627,
+        "name": "Locked On Patriots",
+        "fullTitle": "Locked On Patriots - Daily Podcast On The New England Patriots",
+        "hosts": "Locked On Podcast Network, Mike D’Abate",
+        "network": "Locked On Podcast Network, Mike D’Abate",
+        "feedUrl": "https://rss.pdrl.fm/b4173b/feeds.simplecast.com/wbru9pmV",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-patriots-daily-podcast-on-the-new-england/id1140512627?uo=4"
+      },
+      {
+        "id": "patriots_patriots_unfiltered",
+        "collectionId": 187310910,
+        "name": "Patriots Unfiltered",
+        "fullTitle": "Patriots Unfiltered",
+        "hosts": "New England Patriots",
+        "network": "New England Patriots",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/73e7109b-287b-452a-a1ac-aea9013f8eb9/fe972ea1-2d5b-44c5-ba0c-aea9013f8ec7/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-unfiltered/id187310910?uo=4"
+      },
+      {
+        "id": "patriots_patriots_catch",
+        "collectionId": 1648381074,
+        "name": "Patriots Catch",
+        "fullTitle": "Patriots Catch-22",
+        "hosts": "New England Patriots",
+        "network": "New England Patriots",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/fe294560-4c66-449e-9a9d-af200122c7cd/c0ed4fea-6fcc-49d3-a960-af2001232f20/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-catch-22/id1648381074?uo=4"
+      },
+      {
+        "id": "patriots_patriots_postgame_show",
+        "collectionId": 1120749709,
+        "name": "Patriots Postgame Show",
+        "fullTitle": "Patriots Postgame Show",
+        "hosts": "New England Patriots",
+        "network": "New England Patriots",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/39c85756-0a7b-45d3-b6dc-aea9013a26b8/db4bbad7-5435-46a4-844c-aea9013a26c1/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-postgame-show/id1120749709?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'MIA', slug: 'dolphins', aliases: ['fins'],
@@ -668,7 +1223,40 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#006875', lightPrimaryBright: '#007E8E',
       lightSecondary: '#B83C12', lightSecondaryBright: '#962E0B',
       crestPrimary: '#008E97', crestSecondary: '#FC4C02'
-    })
+    }),
+    coachesSeed: { hc: "Jeff Hafley", oc: "Bobby Slowik", dc: "Sean Duggan", gm: "Jon-Eric Sullivan" },
+    beatPodcastShows: [
+      {
+        "id": "dolphins_locked_on_dolphins",
+        "collectionId": 1137170219,
+        "name": "Locked On Dolphins",
+        "fullTitle": "Locked On Dolphins - Daily Podcast On The Miami Dolphins",
+        "hosts": "Kyle Crabbs, Locked On Podcast Network",
+        "network": "Kyle Crabbs, Locked On Podcast Network",
+        "feedUrl": "https://rss.pdrl.fm/781205/feeds.simplecast.com/f8EFrtWR",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-dolphins-daily-podcast-on-the-miami-dolphins/id1137170219?uo=4"
+      },
+      {
+        "id": "dolphins_drive_time_with_travis_wingfield",
+        "collectionId": 1500281964,
+        "name": "Drive Time with Travis Wingfield",
+        "fullTitle": "Drive Time with Travis Wingfield",
+        "hosts": "Miami Dolphins",
+        "network": "Miami Dolphins",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/4ed207d2-7db7-4799-9aa5-aea90021be63/66d7bdfb-e635-4f56-bf92-aea90021be6c/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/drive-time-with-travis-wingfield/id1500281964?uo=4"
+      },
+      {
+        "id": "dolphins_3_yards_per_carry",
+        "collectionId": 1363764781,
+        "name": "3 Yards Per Carry",
+        "fullTitle": "3 Yards Per Carry - Miami Dolphins",
+        "hosts": "Five Reasons Sports Network",
+        "network": "Five Reasons Sports Network",
+        "feedUrl": "https://feeds.redcircle.com/94143856-5d8a-44d5-8fd4-430ec1776120",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/3-yards-per-carry-miami-dolphins/id1363764781?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'NYJ', slug: 'jets', aliases: ['ganggreen'],
@@ -684,7 +1272,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#125740', lightPrimaryBright: '#187053',
       lightSecondary: '#4A5752', lightSecondaryBright: '#34403B',
       crestPrimary: '#125740', crestSecondary: '#FFFFFF'
-    })
+    }),
+    coachesSeed: { hc: "Aaron Glenn", oc: "Frank Reich", dc: "Brian Duker", gm: "Darren Mougey" },
+    beatPodcastShows: [
+      {
+        "id": "jets_locked_on_jets",
+        "collectionId": 1149033319,
+        "name": "Locked On Jets",
+        "fullTitle": "Locked On Jets - Daily Podcast On The New York Jets",
+        "hosts": "Locked On Podcast Network, John Butchko",
+        "network": "Locked On Podcast Network, John Butchko",
+        "feedUrl": "https://rss.pdrl.fm/118578/feeds.simplecast.com/x5WGS9vX",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-jets-daily-podcast-on-the-new-york-jets/id1149033319?uo=4"
+      },
+      {
+        "id": "jets_play_like_a_jet",
+        "collectionId": 1236901698,
+        "name": "Play Like A Jet",
+        "fullTitle": "Play Like A Jet: New York Jets",
+        "hosts": "Play Like a Jet",
+        "network": "Play Like a Jet",
+        "feedUrl": "https://feeds.megaphone.fm/otjetspod",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/play-like-a-jet-new-york-jets/id1236901698?uo=4"
+      },
+      {
+        "id": "jets_turn_on_the_jets",
+        "collectionId": 1035386921,
+        "name": "Turn On The Jets",
+        "fullTitle": "Turn On The Jets: New York Jets",
+        "hosts": "Turn on the Jets",
+        "network": "Turn on the Jets",
+        "feedUrl": "https://feeds.megaphone.fm/otjets",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/turn-on-the-jets-new-york-jets/id1035386921?uo=4"
+      },
+      {
+        "id": "jets_oklahoma_drill",
+        "collectionId": 1561404614,
+        "name": "Oklahoma Drill",
+        "fullTitle": "Oklahoma Drill | New York Jets & NFL Debates",
+        "hosts": "Jets X-Factor",
+        "network": "Jets X-Factor",
+        "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/3837eb977658089e83bd96856c14287a",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/oklahoma-drill-new-york-jets-nfl-debates/id1561404614?uo=4"
+      }
+    ]
   }),
 
   // ============================ AFC NORTH ============================
@@ -702,7 +1333,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#241773', lightPrimaryBright: '#3825A3',
       lightSecondary: '#856216', lightSecondaryBright: '#664A0E',
       crestPrimary: '#241773', crestSecondary: '#9E7C0C'
-    })
+    }),
+    coachesSeed: { hc: "Jesse Minter", oc: "Declan Doyle", dc: "Anthony Weaver", gm: "Eric DeCosta" },
+    beatPodcastShows: [
+      {
+        "id": "ravens_locked_on_ravens",
+        "collectionId": 1153456714,
+        "name": "Locked On Ravens",
+        "fullTitle": "Locked On Ravens - Daily Podcast On The Baltimore Ravens",
+        "hosts": "Locked On Podcast Network, Kevin Oestreicher",
+        "network": "Locked On Podcast Network, Kevin Oestreicher",
+        "feedUrl": "https://rss.pdrl.fm/e33f24/feeds.simplecast.com/CxbuJ6nL",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-ravens-daily-podcast-on-the-baltimore-ravens/id1153456714?uo=4"
+      },
+      {
+        "id": "ravens_the_ravens_lounge",
+        "collectionId": 1142013759,
+        "name": "The Ravens Lounge",
+        "fullTitle": "The Ravens Lounge",
+        "hosts": "Baltimore Ravens",
+        "network": "Baltimore Ravens",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/ab04e7fc-0340-470c-8ca2-aea70183e095/636a6b83-f979-4aeb-9f44-aea70183e0a3/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-ravens-lounge/id1142013759?uo=4"
+      },
+      {
+        "id": "ravens_the_vault",
+        "collectionId": 1635836036,
+        "name": "The Vault",
+        "fullTitle": "The Vault: A Podcast Covering the Baltimore Ravens",
+        "hosts": "Bleav",
+        "network": "Bleav",
+        "feedUrl": "https://rss.pdrl.fm/0d589c/feeds.simplecast.com/FLv6o1WR",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-vault-a-podcast-covering-the-baltimore-ravens/id1635836036?uo=4"
+      },
+      {
+        "id": "ravens_exit_52_podcast",
+        "collectionId": 1874345406,
+        "name": "Exit 52 Podcast",
+        "fullTitle": "Exit 52 Podcast",
+        "hosts": "Exit 52",
+        "network": "Exit 52",
+        "feedUrl": "https://feeds.soundcloud.com/users/soundcloud:users:1664629343/sounds.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/exit-52-podcast/id1874345406?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'CIN', slug: 'bengals', aliases: ['whodey'],
@@ -718,7 +1392,40 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#B8390E', lightPrimaryBright: '#D44211',
       lightSecondary: '#4B5056', lightSecondaryBright: '#34383D',
       crestPrimary: '#FB4F14', crestSecondary: '#000000'
-    })
+    }),
+    coachesSeed: { hc: "Zac Taylor", oc: "Dan Pitcher", dc: "Al Golden", gm: "Duke Tobin" },
+    beatPodcastShows: [
+      {
+        "id": "bengals_locked_on_bengals",
+        "collectionId": 1159723162,
+        "name": "Locked On Bengals",
+        "fullTitle": "Locked On Bengals - Daily Podcast On The Cincinnati Bengals",
+        "hosts": "Locked On Podcast Network, James Rapien, Jake Liscow",
+        "network": "Locked On Podcast Network, James Rapien, Jake Liscow",
+        "feedUrl": "https://rss.pdrl.fm/8b4258/feeds.simplecast.com/J1A29rxl",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-daily-podcast-on-the-cincinnati-bengals/id1159723162?uo=4"
+      },
+      {
+        "id": "bengals_locked_on_bengals_with_james_rapie",
+        "collectionId": 1648067709,
+        "name": "Locked on Bengals with James Rapien",
+        "fullTitle": "Locked on Bengals with James Rapien",
+        "hosts": "ESPN 1530 (WCKY-AM)",
+        "network": "ESPN 1530 (WCKY-AM)",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/98a2599f-cd9b-4f2a-9be4-b22c00e585f2/a8dd75cd-1409-4a4c-b5dd-b36401390ffc/d57deb35-2769-4a97-bd17-b36401391002/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-with-james-rapien/id1648067709?uo=4"
+      },
+      {
+        "id": "bengals_chatterbox_bengals",
+        "collectionId": 1652732141,
+        "name": "Chatterbox Bengals",
+        "fullTitle": "Chatterbox Bengals: A Cincinnati Bengals NFL Podcast",
+        "hosts": "Chatterbox Sports",
+        "network": "Chatterbox Sports",
+        "feedUrl": "https://feed.podbean.com/boxdlunch/feed.xml",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/chatterbox-bengals-a-cincinnati-bengals-nfl-podcast/id1652732141?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'CLE', slug: 'browns', aliases: ['dawgpound'],
@@ -734,7 +1441,40 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#4A2B11', lightPrimaryBright: '#633B1A',
       lightSecondary: '#B53809', lightSecondaryBright: '#942C05',
       crestPrimary: '#311D00', crestSecondary: '#FF3C00'
-    })
+    }),
+    coachesSeed: { hc: "Todd Monken", oc: "Travis Switzer", dc: "Mike Rutenberg", gm: "Andrew Berry" },
+    beatPodcastShows: [
+      {
+        "id": "browns_locked_on_browns",
+        "collectionId": 1149989450,
+        "name": "Locked On Browns",
+        "fullTitle": "Locked On Browns - Daily Podcast On The Cleveland Browns",
+        "hosts": "Locked On Podcast Network, Spencer German",
+        "network": "Locked On Podcast Network, Spencer German",
+        "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4"
+      },
+      {
+        "id": "browns_orange_and_brown_report",
+        "collectionId": 1624920373,
+        "name": "Orange and Brown Report",
+        "fullTitle": "Orange and Brown Report: A Cleveland Browns Podcast",
+        "hosts": "247Sports, Cleveland Browns, Cleveland, Football",
+        "network": "247Sports, Cleveland Browns, Cleveland, Football",
+        "feedUrl": "https://rss.amperwave.net/v2/feed/audacynetwork/clevelandbrowns",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-report-a-cleveland-browns-podcast/id1624920373?uo=4"
+      },
+      {
+        "id": "browns_orange_and_brown_talk",
+        "collectionId": 1334701895,
+        "name": "Orange and Brown Talk",
+        "fullTitle": "Orange and Brown Talk: Cleveland Browns Podcast",
+        "hosts": "Cleveland.com - Advance Local",
+        "network": "Cleveland.com - Advance Local",
+        "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'PIT', slug: 'steelers', aliases: ['stillers'],
@@ -750,7 +1490,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#1A1A1A', lightPrimaryBright: '#333333',
       lightSecondary: '#8A6300', lightSecondaryBright: '#6B4B00',
       crestPrimary: '#101820', crestSecondary: '#FFB612'
-    })
+    }),
+    coachesSeed: { hc: "Mike McCarthy", oc: "Brian Angelichio", dc: "Patrick Graham", gm: "Omar Khan" },
+    beatPodcastShows: [
+      {
+        "id": "steelers_locked_on_steelers",
+        "collectionId": 1140522532,
+        "name": "Locked On Steelers",
+        "fullTitle": "Locked On Steelers – Daily Podcast On The Pittsburgh Steelers",
+        "hosts": "Locked On Podcast Network, Christopher Carter",
+        "network": "Locked On Podcast Network, Christopher Carter",
+        "feedUrl": "https://rss.pdrl.fm/cd1f3b/feeds.simplecast.com/y_l5uReM",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-steelers-daily-podcast-on-the-pittsburgh/id1140522532?uo=4"
+      },
+      {
+        "id": "steelers_steel_curtain_network",
+        "collectionId": 905962218,
+        "name": "Steel Curtain Network",
+        "fullTitle": "Steel Curtain Network: A Pittsburgh Steelers podcast",
+        "hosts": "FFSN",
+        "network": "FFSN",
+        "feedUrl": "https://feeds.simplecast.com/uX7rw_2p",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/steel-curtain-network-a-pittsburgh-steelers-podcast/id905962218?uo=4"
+      },
+      {
+        "id": "steelers_black_gold_blueprint",
+        "collectionId": 1732507215,
+        "name": "Black & Gold Blueprint",
+        "fullTitle": "Black & Gold Blueprint: A Pittsburgh Steelers Podcast",
+        "hosts": "Roy Countryman",
+        "network": "Roy Countryman",
+        "feedUrl": "https://feeds.megaphone.fm/RRTET9925285595",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/black-gold-blueprint-a-pittsburgh-steelers-podcast/id1732507215?uo=4"
+      },
+      {
+        "id": "steelers_dk_pittsburgh_sports",
+        "collectionId": 1072021022,
+        "name": "DK Pittsburgh Sports",
+        "fullTitle": "DK Pittsburgh Sports: Daily podcasts on Steelers, Penguins, Pirates!",
+        "hosts": "Dejan Kovacevic",
+        "network": "Dejan Kovacevic",
+        "feedUrl": "https://feeds.simplecast.com/OkvCKc09",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/dk-pittsburgh-sports-daily-podcasts-on-steelers-penguins/id1072021022?uo=4"
+      }
+    ]
   }),
 
   // ============================ AFC SOUTH ============================
@@ -768,7 +1551,40 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#03202F', lightPrimaryBright: '#0B3952',
       lightSecondary: '#A71930', lightSecondaryBright: '#871024',
       crestPrimary: '#03202F', crestSecondary: '#A71930'
-    })
+    }),
+    coachesSeed: { hc: "DeMeco Ryans", oc: "Nick Caley", dc: "Matt Burke", gm: "Nick Caserio" },
+    beatPodcastShows: [
+      {
+        "id": "texans_locked_on_texans",
+        "collectionId": 1156158142,
+        "name": "Locked On Texans",
+        "fullTitle": "Locked On Texans - Daily Podcast On The Houston Texans",
+        "hosts": "Coty Davis, Locked On Podcast Network, John Hickman",
+        "network": "Coty Davis, Locked On Podcast Network, John Hickman",
+        "feedUrl": "https://rss.pdrl.fm/de6246/feeds.simplecast.com/eO87ZWbO",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-texans-daily-podcast-on-the-houston-texans/id1156158142?uo=4"
+      },
+      {
+        "id": "texans_texans_on_tap",
+        "collectionId": 1706775831,
+        "name": "Texans on Tap",
+        "fullTitle": "Texans on Tap: A Houston Texans Podcast",
+        "hosts": "Space City Pods, Bleav",
+        "network": "Space City Pods, Bleav",
+        "feedUrl": "https://feeds.simplecast.com/DTDqu9OA",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/texans-on-tap-a-houston-texans-podcast/id1706775831?uo=4"
+      },
+      {
+        "id": "texans_texans_today",
+        "collectionId": 6815401698,
+        "name": "Texans Today",
+        "fullTitle": "Texans Today | Daily Houston Texans Podcast",
+        "hosts": "Fan Arch",
+        "network": "Fan Arch",
+        "feedUrl": "https://feeds.megaphone.fm/BVLLC6295052856",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/texans-today-daily-houston-texans-podcast/id6815401698?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'IND', slug: 'colts', aliases: ['indy'],
@@ -784,7 +1600,40 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#002C5F', lightPrimaryBright: '#00428C',
       lightSecondary: '#4E5861', lightSecondaryBright: '#384047',
       crestPrimary: '#002C5F', crestSecondary: '#A2AAAD'
-    })
+    }),
+    coachesSeed: { hc: "Shane Steichen", oc: "Jim Bob Cooter", dc: "Lou Anarumo", gm: "Ed Dodds" },
+    beatPodcastShows: [
+      {
+        "id": "colts_locked_on_colts",
+        "collectionId": 1151621306,
+        "name": "Locked On Colts",
+        "fullTitle": "Locked On Colts - Daily Podcast On The Indianapolis Colts",
+        "hosts": "Locked On Podcast Network, Jake Arthur, Zach Hicks",
+        "network": "Locked On Podcast Network, Jake Arthur, Zach Hicks",
+        "feedUrl": "https://rss.pdrl.fm/9766e6/feeds.simplecast.com/PpDN4Fbf",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-colts-daily-podcast-on-the-indianapolis-colts/id1151621306?uo=4"
+      },
+      {
+        "id": "colts_colts_corner_with_kevin_bowen",
+        "collectionId": 1294483334,
+        "name": "Colts Corner With Kevin Bowen",
+        "fullTitle": "Colts Corner With Kevin Bowen",
+        "hosts": "Kevin Bowen",
+        "network": "Kevin Bowen",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/78a347aa-3282-4ac5-837c-a72300032082/e8b83751-d6f4-4639-9a5e-af2c0122e642/8dff4d90-7f00-4069-9cce-af2c0122e654/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/colts-corner-with-kevin-bowen/id1294483334?uo=4"
+      },
+      {
+        "id": "colts_the_blue_horseshoe",
+        "collectionId": 1674217156,
+        "name": "The Blue Horseshoe",
+        "fullTitle": "The Blue Horseshoe",
+        "hosts": "Ryan",
+        "network": "Ryan",
+        "feedUrl": "https://anchor.fm/s/e72e530/podcast/rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-blue-horseshoe/id1674217156?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'JAX', slug: 'jaguars', aliases: ['jags', 'jac', 'duval'],
@@ -800,7 +1649,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#006778', lightPrimaryBright: '#007E91',
       lightSecondary: '#7D5C10', lightSecondaryBright: '#614608',
       crestPrimary: '#006778', crestSecondary: '#D7A22A'
-    })
+    }),
+    coachesSeed: { hc: "Liam Coen", oc: "Grant Udinski", dc: "Anthony Campanile", gm: "James Gladstone" },
+    beatPodcastShows: [
+      {
+        "id": "jaguars_locked_on_jaguars",
+        "collectionId": 1149175431,
+        "name": "Locked On Jaguars",
+        "fullTitle": "Locked On Jaguars - Daily Podcast On The Jacksonville Jaguars",
+        "hosts": "Locked On Podcast Network, Tony Wiggins",
+        "network": "Locked On Podcast Network, Tony Wiggins",
+        "feedUrl": "https://rss.pdrl.fm/5b6f8d/feeds.simplecast.com/BgZ7Brxt",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-jaguars-daily-podcast-on-the-jacksonville/id1149175431?uo=4"
+      },
+      {
+        "id": "jaguars_1010_xl_jax_sports_radio",
+        "collectionId": 1011442917,
+        "name": "1010 XL Jax Sports Radio",
+        "fullTitle": "1010 XL Jax Sports Radio",
+        "hosts": "1010 XL Jax Sports Radio",
+        "network": "1010 XL Jax Sports Radio",
+        "feedUrl": "https://feeds.soundcloud.com/users/soundcloud:users:19945124/sounds.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/1010-xl-jax-sports-radio/id1011442917?uo=4"
+      },
+      {
+        "id": "jaguars_jaguars_happy_hour",
+        "collectionId": 1479457037,
+        "name": "Jaguars Happy Hour",
+        "fullTitle": "Jaguars Happy Hour",
+        "hosts": "Jacksonville Jaguars",
+        "network": "Jacksonville Jaguars",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/e1e6fda3-4a7e-4b46-b749-aeac0018242b/84bc3eef-d7dc-4ed0-b953-aeac0018243e/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/jaguars-happy-hour/id1479457037?uo=4"
+      },
+      {
+        "id": "jaguars_duval_daily",
+        "collectionId": 1164993693,
+        "name": "Duval Daily",
+        "fullTitle": "Duval Daily: A Jacksonville Jaguars Podcast",
+        "hosts": "GenJag",
+        "network": "GenJag",
+        "feedUrl": "https://feeds.redcircle.com/ccb9d288-f663-4159-a278-c8fdda18fab5",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/duval-daily-a-jacksonville-jaguars-podcast/id1164993693?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'TEN', slug: 'titans', aliases: ['titanup'],
@@ -816,7 +1708,40 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#0C2340', lightPrimaryBright: '#183C6B',
       lightSecondary: '#A81728', lightSecondaryBright: '#8A101E',
       crestPrimary: '#0C2340', crestSecondary: '#4B92DB'
-    })
+    }),
+    coachesSeed: { hc: "Robert Saleh", oc: "Brian Daboll", dc: "Gus Bradley", gm: "Mike Borgonzi" },
+    beatPodcastShows: [
+      {
+        "id": "titans_locked_on_titans",
+        "collectionId": 1151215065,
+        "name": "Locked On Titans",
+        "fullTitle": "Locked On Titans - Daily Podcast On The Tennessee Titans",
+        "hosts": "Locked On Podcast Network, Tyler Rowland",
+        "network": "Locked On Podcast Network, Tyler Rowland",
+        "feedUrl": "https://rss.pdrl.fm/54f99a/feeds.simplecast.com/ZHgqzawD",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-titans-daily-podcast-on-the-tennessee-titans/id1151215065?uo=4"
+      },
+      {
+        "id": "titans_titans_podcast_network",
+        "collectionId": 1245825506,
+        "name": "Titans Podcast Network",
+        "fullTitle": "Titans Podcast Network | Official Podcasts of the Tennessee Titans",
+        "hosts": "Tennessee Titans",
+        "network": "Tennessee Titans",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/31142dcb-0076-4343-b172-aeac0126b451/a3093306-f091-44f3-ab3a-aeac0126b469/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/titans-podcast-network-official-podcasts-of/id1245825506?uo=4"
+      },
+      {
+        "id": "titans_no_nonsense",
+        "collectionId": 1474123006,
+        "name": "No Nonsense",
+        "fullTitle": "No Nonsense: A Tennessee Titans Podcast",
+        "hosts": "No Nonsense Podcast",
+        "network": "No Nonsense Podcast",
+        "feedUrl": "https://feeds.redcircle.com/4b5c7458-4737-487f-913c-9c7c781ee887",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/no-nonsense-a-tennessee-titans-podcast/id1474123006?uo=4"
+      }
+    ]
   }),
 
   // ============================ AFC WEST ============================
@@ -834,7 +1759,40 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#B8102A', lightPrimaryBright: '#D41533',
       lightSecondary: '#8A6200', lightSecondaryBright: '#6B4A00',
       crestPrimary: '#E31837', crestSecondary: '#FFB81C'
-    })
+    }),
+    coachesSeed: { hc: "Andy Reid", oc: "Eric Bieniemy", dc: "Steve Spagnuolo", gm: "Brett Veach" },
+    beatPodcastShows: [
+      {
+        "id": "chiefs_locked_on_chiefs",
+        "collectionId": 1141081555,
+        "name": "Locked On Chiefs",
+        "fullTitle": "Locked On Chiefs - Daily Podcast On The Kansas City Chiefs",
+        "hosts": "Chris Clark, Locked On Podcast Network, Ryan Tracy",
+        "network": "Chris Clark, Locked On Podcast Network, Ryan Tracy",
+        "feedUrl": "https://rss.pdrl.fm/194e78/feeds.simplecast.com/9czLVzrJ",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chiefs-daily-podcast-on-the-kansas-city-chiefs/id1141081555?uo=4"
+      },
+      {
+        "id": "chiefs_kc_sports_network",
+        "collectionId": 1530866619,
+        "name": "KC Sports Network",
+        "fullTitle": "KC Sports Network: Kansas City Chiefs Podcasts",
+        "hosts": "KC Sports Network",
+        "network": "KC Sports Network",
+        "feedUrl": "https://rss.pdrl.fm/8d7cde/feeds.simplecast.com/BJf5DYgc",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/kc-sports-network-kansas-city-chiefs-podcasts/id1530866619?uo=4"
+      },
+      {
+        "id": "chiefs_arrowhead_addict",
+        "collectionId": 1454555052,
+        "name": "Arrowhead Addict",
+        "fullTitle": "Arrowhead Addict: A Kansas City Chiefs Podcast",
+        "hosts": "FanSided Podcasts",
+        "network": "FanSided Podcasts",
+        "feedUrl": "https://feeds.redcircle.com/1e82f8a1-8697-44b8-9f41-a45fada500f4",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/arrowhead-addict-a-kansas-city-chiefs-podcast/id1454555052?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'DEN', slug: 'broncos', aliases: ['milehigh'],
@@ -850,7 +1808,30 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#002244', lightPrimaryBright: '#0D3866',
       lightSecondary: '#B8390C', lightSecondaryBright: '#962C07',
       crestPrimary: '#FB4F14', crestSecondary: '#002244'
-    })
+    }),
+    coachesSeed: { hc: "Sean Payton", oc: "Davis Webb", dc: "Vance Joseph", gm: "George Paton" },
+    beatPodcastShows: [
+      {
+        "id": "broncos_locked_on_broncos",
+        "collectionId": 1146588641,
+        "name": "Locked On Broncos",
+        "fullTitle": "Locked On Broncos - Daily Podcast On The Denver Broncos",
+        "hosts": "Locked On Podcast Network, Cody Roark, Sayre Bedinger",
+        "network": "Locked On Podcast Network, Cody Roark, Sayre Bedinger",
+        "feedUrl": "https://rss.pdrl.fm/ed7d56/feeds.simplecast.com/f6CBcmwn",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-broncos-daily-podcast-on-the-denver-broncos/id1146588641?uo=4"
+      },
+      {
+        "id": "broncos_dnvr_denver_broncos_podcast",
+        "collectionId": 1067992218,
+        "name": "DNVR Denver Broncos Podcast",
+        "fullTitle": "DNVR Denver Broncos Podcast",
+        "hosts": "ALLCITY Network, DNVR Sports",
+        "network": "ALLCITY Network, DNVR Sports",
+        "feedUrl": "https://feeds.simplecast.com/w3d46li7",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/dnvr-denver-broncos-podcast/id1067992218?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'LAC', slug: 'chargers', aliases: ['bolts'],
@@ -866,7 +1847,50 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#005F94', lightPrimaryBright: '#0074B5',
       lightSecondary: '#8A6300', lightSecondaryBright: '#6B4B00',
       crestPrimary: '#0080C6', crestSecondary: '#FFC20E'
-    })
+    }),
+    coachesSeed: { hc: "Jim Harbaugh", oc: "Mike McDaniel", dc: "Chris O'Leary", gm: "Joe Hortiz" },
+    beatPodcastShows: [
+      {
+        "id": "chargers_locked_on_chargers",
+        "collectionId": 1151558476,
+        "name": "Locked On Chargers",
+        "fullTitle": "Locked On Chargers - Daily Podcast On The Los Angeles Chargers",
+        "hosts": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
+        "network": "Locked On Podcast Network, David Droegemeier, Daniel Wade",
+        "feedUrl": "https://rss.pdrl.fm/d1cedf/feeds.simplecast.com/A8M6ytRb",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-chargers-daily-podcast-on-the-los-angeles/id1151558476?uo=4"
+      },
+      {
+        "id": "chargers_guilty_as_charged",
+        "collectionId": 1497748763,
+        "name": "Guilty As Charged",
+        "fullTitle": "Guilty As Charged: An LA Chargers Podcast",
+        "hosts": "Blue Wire",
+        "network": "Blue Wire",
+        "feedUrl": "https://feeds.simplecast.com/5NvjSmVV",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/guilty-as-charged-an-la-chargers-podcast/id1497748763?uo=4"
+      },
+      {
+        "id": "chargers_chargers_podcast_network",
+        "collectionId": 1268765985,
+        "name": "Chargers Podcast Network",
+        "fullTitle": "Chargers Podcast Network",
+        "hosts": "Los Angeles Chargers",
+        "network": "Los Angeles Chargers",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/01891723-b9f7-459c-a03c-aeac01364986/46e9a45b-cb89-4c6d-a54a-aeac01364994/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/chargers-podcast-network/id1268765985?uo=4"
+      },
+      {
+        "id": "chargers_the_lightning_round",
+        "collectionId": 999565022,
+        "name": "The Lightning Round",
+        "fullTitle": "The Lightning Round: A Los Angeles Chargers Podcast",
+        "hosts": "FFSN",
+        "network": "FFSN",
+        "feedUrl": "https://feeds.megaphone.fm/bolts-from-the-blue-chargers",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-lightning-round-a-los-angeles-chargers-podcast/id999565022?uo=4"
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'LV', slug: 'raiders', aliases: ['lvr', 'oak', 'silverandblack'],
@@ -882,7 +1906,40 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#14171A', lightPrimaryBright: '#2E343B',
       lightSecondary: '#4E575E', lightSecondaryBright: '#383F45',
       crestPrimary: '#101820', crestSecondary: '#A5ACAF'
-    })
+    }),
+    coachesSeed: { hc: "Klint Kubiak", oc: "Andrew Janocko", dc: "Rob Leonard", gm: "John Spytek" },
+    beatPodcastShows: [
+      {
+        "id": "raiders_locked_on_raiders",
+        "collectionId": 1139751780,
+        "name": "Locked On Raiders",
+        "fullTitle": "Locked On Raiders - Daily Podcast On The Las Vegas Raiders",
+        "hosts": "Locked On Podcast Network, Your Boy Q",
+        "network": "Locked On Podcast Network, Your Boy Q",
+        "feedUrl": "https://rss.pdrl.fm/427f18/feeds.simplecast.com/FW_wEF1P",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-raiders-daily-podcast-on-the-las-vegas-raiders/id1139751780?uo=4"
+      },
+      {
+        "id": "raiders_las_vegas_raiders_insider",
+        "collectionId": 1683302878,
+        "name": "Las Vegas Raiders Insider",
+        "fullTitle": "Las Vegas Raiders Insider: A Raiders podcast network",
+        "hosts": "Pro Football Insiders, Bleav Network",
+        "network": "Pro Football Insiders, Bleav Network",
+        "feedUrl": "https://feeds.simplecast.com/gBQiZMcH",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/las-vegas-raiders-insider-a-raiders-podcast-network/id1683302878?uo=4"
+      },
+      {
+        "id": "raiders_the_autumn_windbags",
+        "collectionId": 1544222518,
+        "name": "The Autumn Windbags",
+        "fullTitle": "The Autumn Windbags: The Best Las Vegas Raiders Podcast Ever!",
+        "hosts": "The Autumn Windbags",
+        "network": "The Autumn Windbags",
+        "feedUrl": "https://feeds.simplecast.com/P5UD4tGc",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-autumn-windbags-the-best-las-vegas-raiders-podcast-ever/id1544222518?uo=4"
+      }
+    ]
   })
 ];
 
@@ -1006,9 +2063,7 @@ export function applyTeamThemeToDocument(teamInput = null) {
   }
   styleEl.textContent = buildTeamCssVarsStyleBlock(team);
 
-  const curHost = typeof window !== 'undefined' ? String(window.location?.hostname || '').toLowerCase() : '';
-  const displayDomain = curHost === '49ers2.joshal.com' ? '49ers2.joshal.com' : team.domain;
-  document.title = `${team.brandName} — ${displayDomain}`;
+  document.title = `${team.brandName} — ${team.domain}`;
   const descEl = document.querySelector('meta[name="description"]');
   if (descEl) {
     descEl.setAttribute(
@@ -1038,42 +2093,42 @@ export function isOfficialTeamHost(hostname = '') {
   const host = String(hostname || '').trim().toLowerCase();
   const m = host.match(/^([a-z0-9-]+)\.joshal\.com$/);
   if (!m) return false;
-  return m[1] === '49ers2' || Boolean(TEAM_BY_SLUG[m[1]]);
+  return Boolean(TEAM_BY_SLUG[m[1]]);
 }
 
 export const NFL_COACHES_SEED = {
-  ARI: { hc: 'Jonathan Gannon', oc: 'Drew Petzing', dc: 'Nick Rallis' },
-  ATL: { hc: 'Kevin Stefanski', oc: 'Tommy Rees', dc: 'Jeff Ulbrich' },
-  BAL: { hc: 'John Harbaugh', oc: 'Todd Monken', dc: 'Zach Orr' },
-  BUF: { hc: 'Joe Brady', oc: 'Pete Carmichael Jr.', dc: 'Jim Leonhard', gm: 'Brandon Beane' },
-  CAR: { hc: 'Dave Canales', oc: 'Brad Idzik', dc: 'Ejiro Evero' },
-  CHI: { hc: 'Ben Johnson', oc: 'Declan Doyle', dc: 'Dennis Allen' },
-  CIN: { hc: 'Zac Taylor', oc: 'Dan Pitcher', dc: 'Al Golden' },
-  CLE: { hc: 'Todd Monken', oc: 'Ken Dorsey', dc: 'Jim Schwartz' },
-  DAL: { hc: 'Brian Schottenheimer', oc: 'Klayton Adams', dc: 'Matt Eberflus' },
-  DEN: { hc: 'Sean Payton', oc: 'Joe Lombardi', dc: 'Vance Joseph' },
-  DET: { hc: 'Dan Campbell', oc: 'Drew Petzing', dc: 'Kelvin Sheppard', gm: 'Brad Holmes' },
-  GB: { hc: 'Matt LaFleur', oc: 'Adam Stenavich', dc: 'Jeff Hafley' },
-  HOU: { hc: 'DeMeco Ryans', oc: 'Nick Caley', dc: 'Matt Burke' },
-  IND: { hc: 'Shane Steichen', oc: 'Jim Bob Cooter', dc: 'Lou Anarumo' },
-  JAX: { hc: 'Liam Coen', oc: 'Grant Udinski', dc: 'Anthony Campanile' },
-  KC: { hc: 'Andy Reid', oc: 'Matt Nagy', dc: 'Steve Spagnuolo' },
-  LAC: { hc: 'Jim Harbaugh', oc: 'Greg Roman', dc: 'Jesse Minter' },
-  LAR: { hc: 'Sean McVay', oc: 'Mike LaFleur', dc: 'Chris Shula' },
-  LV: { hc: 'Klint Kubiak', oc: 'Andrew Janocko', dc: 'Patrick Graham' },
-  MIA: { hc: 'Mike McDaniel', oc: 'Frank Smith', dc: 'Anthony Weaver' },
-  MIN: { hc: "Kevin O'Connell", oc: 'Wes Phillips', dc: 'Brian Flores' },
-  NE: { hc: 'Mike Vrabel', oc: 'Josh McDaniels', dc: 'Terrell Williams' },
-  NO: { hc: 'Kellen Moore', oc: 'Doug Nussmeier', dc: 'Brandon Staley' },
-  NYG: { hc: 'Brian Daboll', oc: 'Mike Kafka', dc: 'Shane Bowen' },
-  NYJ: { hc: 'Aaron Glenn', oc: 'Tanner Engstrand', dc: 'Steve Wilks' },
-  PHI: { hc: 'Nick Sirianni', oc: 'Kevin Patullo', dc: 'Vic Fangio' },
-  PIT: { hc: 'Mike Tomlin', oc: 'Arthur Smith', dc: 'Teryl Austin' },
-  SEA: { hc: 'Mike Macdonald', oc: 'Klint Kubiak', dc: 'Aden Durde' },
-  SF: { hc: 'Kyle Shanahan', oc: 'Klay Kubiak', dc: 'Raheem Morris', gm: 'John Lynch' },
-  TB: { hc: 'Todd Bowles', oc: 'Josh Grizzard', dc: 'Larry Foote' },
-  TEN: { hc: 'Robert Saleh', oc: 'Nick Holz', dc: 'Dennard Wilson' },
-  WAS: { hc: 'Dan Quinn', oc: 'Kliff Kingsbury', dc: 'Joe Whitt Jr.' }
+  ARI: { hc: "Mike LaFleur", oc: "Nathaniel Hackett", dc: "Nick Rallis", gm: "Monti Ossenfort" },
+  ATL: { hc: "Kevin Stefanski", oc: "Tommy Rees", dc: "Jeff Ulbrich", gm: "Ian Cunningham" },
+  BAL: { hc: "Jesse Minter", oc: "Declan Doyle", dc: "Anthony Weaver", gm: "Eric DeCosta" },
+  BUF: { hc: "Joe Brady", oc: "Pete Carmichael Jr.", dc: "Jim Leonhard", gm: "Brandon Beane" },
+  CAR: { hc: "Dave Canales", oc: "Brad Idzik", dc: "Todd Wash", gm: "Dan Morgan" },
+  CHI: { hc: "Ben Johnson", oc: "Press Taylor", dc: "Dennis Allen", gm: "Ryan Poles" },
+  CIN: { hc: "Zac Taylor", oc: "Dan Pitcher", dc: "Al Golden", gm: "Duke Tobin" },
+  CLE: { hc: "Todd Monken", oc: "Travis Switzer", dc: "Mike Rutenberg", gm: "Andrew Berry" },
+  DAL: { hc: "Brian Schottenheimer", oc: "Klayton Adams", dc: "Christian Parker", gm: "Jerry Jones" },
+  DEN: { hc: "Sean Payton", oc: "Davis Webb", dc: "Vance Joseph", gm: "George Paton" },
+  DET: { hc: "Dan Campbell", oc: "Drew Petzing", dc: "Kelvin Sheppard", gm: "Brad Holmes" },
+  GB: { hc: "Matt LaFleur", oc: "Adam Stenavich", dc: "Jonathan Gannon", gm: "Brian Gutekunst" },
+  HOU: { hc: "DeMeco Ryans", oc: "Nick Caley", dc: "Matt Burke", gm: "Nick Caserio" },
+  IND: { hc: "Shane Steichen", oc: "Jim Bob Cooter", dc: "Lou Anarumo", gm: "Ed Dodds" },
+  JAX: { hc: "Liam Coen", oc: "Grant Udinski", dc: "Anthony Campanile", gm: "James Gladstone" },
+  KC: { hc: "Andy Reid", oc: "Eric Bieniemy", dc: "Steve Spagnuolo", gm: "Brett Veach" },
+  LAC: { hc: "Jim Harbaugh", oc: "Mike McDaniel", dc: "Chris O'Leary", gm: "Joe Hortiz" },
+  LAR: { hc: "Sean McVay", oc: "Nathan Scheelhaase", dc: "Chris Shula", gm: "Les Snead" },
+  LV: { hc: "Klint Kubiak", oc: "Andrew Janocko", dc: "Rob Leonard", gm: "John Spytek" },
+  MIA: { hc: "Jeff Hafley", oc: "Bobby Slowik", dc: "Sean Duggan", gm: "Jon-Eric Sullivan" },
+  MIN: { hc: "Kevin O'Connell", oc: "Wes Phillips", dc: "Brian Flores", gm: "Nolan Teasley" },
+  NE: { hc: "Mike Vrabel", oc: "Josh McDaniels", dc: "Zak Kuhr", gm: "Eliot Wolf" },
+  NO: { hc: "Kellen Moore", oc: "Doug Nussmeier", dc: "Brandon Staley", gm: "Mickey Loomis" },
+  NYG: { hc: "John Harbaugh", oc: "Matt Nagy", dc: "Dennard Wilson", gm: "Joe Schoen" },
+  NYJ: { hc: "Aaron Glenn", oc: "Frank Reich", dc: "Brian Duker", gm: "Darren Mougey" },
+  PHI: { hc: "Nick Sirianni", oc: "Sean Mannion", dc: "Vic Fangio", gm: "Howie Roseman" },
+  PIT: { hc: "Mike McCarthy", oc: "Brian Angelichio", dc: "Patrick Graham", gm: "Omar Khan" },
+  SEA: { hc: "Mike Macdonald", oc: "Brian Fleury", dc: "Aden Durde", gm: "John Schneider" },
+  SF: { hc: "Kyle Shanahan", oc: "Klay Kubiak", dc: "Raheem Morris", gm: "John Lynch" },
+  TB: { hc: "Todd Bowles", oc: "Zac Robinson", dc: "Todd Bowles", gm: "Jason Licht" },
+  TEN: { hc: "Robert Saleh", oc: "Brian Daboll", dc: "Gus Bradley", gm: "Mike Borgonzi" },
+  WAS: { hc: "Dan Quinn", oc: "David Blough", dc: "Daronte Jones", gm: "Adam Peters" }
 };
 
 export function getTeamCoaches(teamOrAbbr = null, metaCoaches = null) {

@@ -10,7 +10,7 @@ import {
   renderPlayerAvatarHtml
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
-import { getActiveTeamConfig, getTeamBySlug } from '../config/teamRegistry.js';
+import { ALL_NFL_TEAMS, getActiveTeamConfig } from '../config/teamRegistry.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import {
   buildXBeatListSearchUrl,
@@ -77,36 +77,37 @@ export function renderSettingsSheetHtml({
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:10px">
       <div class="sub-label">Display &amp; Feed</div>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap" data-settings-team-switcher>
-        <div style="min-width:0;flex:1 1 160px">
-          <strong>Team Sites</strong>
-          <div style="font-size:11.5px;color:var(--text-secondary)">Jump cleanly between active NFL team sites</div>
+      <div style="display:flex;flex-direction:column;gap:8px" data-settings-team-switcher>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+          <div style="min-width:0;flex:1 1 160px">
+            <strong>All 32 NFL Team Sites</strong>
+            <div style="font-size:11.5px;color:var(--text-secondary)">Jump to any franchise hub across the NFL</div>
+          </div>
+          <a href="https://nfl.joshal.com" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+            <span>NFL Portal</span>${iconSvg('externalLink', 10)}
+          </a>
         </div>
-        <div class="source-link-strip" style="gap:6px">
-          ${[
-            { slug: 'lions', host: 'lions.joshal.com', query: '?team=lions', label: getTeamBySlug('lions').brandName },
-            { slug: 'bills', host: 'bills.joshal.com', query: '?team=bills', label: getTeamBySlug('bills').brandName },
-            { slug: '49ers2', host: '49ers2.joshal.com', query: '?team=49ers2', label: '49ers2 (A/B)' },
-            { slug: '49ers', host: '49ers.joshal.com', query: '?team=49ers', label: getTeamBySlug('49ers').brandName }
-          ]
-            .map(entry => {
+        <details class="stats-expand-details" style="margin-top:0">
+          <summary class="stats-expand-summary" style="padding:7px 10px;font-size:12px">
+            <span>Switch Team (${ALL_NFL_TEAMS.length})</span>
+            <span class="mono stats-expand-hint">${esc(activeTeam.nickname)}</span>
+          </summary>
+          <div style="padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px">
+            ${(() => {
               const curHost =
                 typeof window !== 'undefined' ? String(window.location?.hostname || '').toLowerCase() : '';
               const isLocal = /^(localhost|127\.0\.0\.1)$/i.test(curHost);
-              const href = isLocal ? entry.query : `https://${entry.host}`;
-              const isCur =
-                entry.slug === '49ers2'
-                  ? curHost === '49ers2.joshal.com' ||
-                    (isLocal && new URLSearchParams(window.location?.search || '').get('team') === '49ers2')
-                  : entry.slug === '49ers'
-                    ? activeTeam.slug === '49ers' &&
-                      curHost !== '49ers2.joshal.com' &&
-                      !(isLocal && new URLSearchParams(window.location?.search || '').get('team') === '49ers2')
-                    : activeTeam.slug === entry.slug;
-              return `<a href="${esc(href)}" class="source-chip-link ${isCur ? 'active' : ''}" style="${isCur ? 'border-color:var(--gold-border);background:var(--gold-soft);color:var(--text-primary)' : ''}"><span>${esc(entry.label)}</span></a>`;
-            })
-            .join('')}
-        </div>
+              return [...ALL_NFL_TEAMS]
+                .sort((a, b) => a.nickname.localeCompare(b.nickname))
+                .map(t => {
+                  const href = isLocal ? `?team=${encodeURIComponent(t.slug)}` : `https://${t.domain}`;
+                  const isCur = activeTeam.slug === t.slug;
+                  return `<a href="${esc(href)}" class="source-chip-link ${isCur ? 'active' : ''}" style="${isCur ? 'border-color:var(--gold-border);background:var(--gold-soft);color:var(--text-primary)' : ''}"><span>${esc(t.nickname)}</span></a>`;
+                })
+                .join('');
+            })()}
+          </div>
+        </details>
       </div>
 
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">

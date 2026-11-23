@@ -1179,6 +1179,10 @@ export function extractLiveInGameInjurySignals(
   if (!windowState?.isActive || !windowState?.hasKickoffStarted) {
     return { byKey, list: [] };
   }
+  const inactiveSet =
+    pregameInactiveKeys instanceof Set
+      ? pregameInactiveKeys
+      : new Set(Array.isArray(pregameInactiveKeys) ? pregameInactiveKeys : []);
 
   const kickoffMs = Number(windowState.kickoffMs);
   if (!Number.isFinite(kickoffMs) || kickoffMs <= 0) {
@@ -1223,7 +1227,7 @@ export function extractLiveInGameInjurySignals(
 
     for (const clause of clauses) {
       const mentionedInClause = matchers.filter(
-        pm => !pregameInactiveKeys.has(pm.key) && doesClauseMentionPlayer(pm, clause, { allowUniqueSurname: true })
+        pm => !inactiveSet.has(pm.key) && doesClauseMentionPlayer(pm, clause, { allowUniqueSurname: true })
       );
 
       // Guard healthy replacement/consolation subjects ("Vederian Lowe in at RT for Colton McKivitz", "Trent Williams came over to hug McKivitz/him")
@@ -1304,7 +1308,7 @@ export function extractLiveInGameInjurySignals(
       const extractedBodyPart = bodyMatch ? formatBodyPartTitle(bodyMatch[1]) : '';
 
       for (const pm of effectivePlayers) {
-        if (pregameInactiveKeys.has(pm.key)) continue;
+        if (inactiveSet.has(pm.key)) continue;
 
         const prev = byKey.get(pm.key) || null;
         // Only recognize a "returned to the game" signal if the player had an in-game injury or explicit return report

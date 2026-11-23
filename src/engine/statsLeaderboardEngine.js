@@ -2696,12 +2696,27 @@ export function resolveCareerTableSchema(position = '') {
 /**
  * Resolve any clicked `#X` badge into a complete scrollable modal view model.
  */
-export function resolveLeaderboardModalModel({ appData, scope = 'team', key = '', playerId = null } = {}) {
+export function resolveLeaderboardModalModel({
+  appData,
+  scope = 'team',
+  key = '',
+  playerId = null,
+  focusTeamAbbr = null
+} = {}) {
   const activeAbbr = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig()).abbr;
   if (scope === 'team') {
     const ts = appData?.scheduleMatchup?.teamStats;
     const metric = ts?.flatByKey?.[key];
     if (!metric || !Array.isArray(metric.leaderboard)) return null;
+
+    const cleanFocusInput = String(focusTeamAbbr || '').trim();
+    const resolvedFocusTeam = cleanFocusInput ? resolveTeamConfig(cleanFocusInput) : null;
+    const highlightedAbbr =
+      resolvedFocusTeam && metric.leaderboard.some(r => r.team === resolvedFocusTeam.abbr)
+        ? resolvedFocusTeam.abbr
+        : metric.leaderboard.some(r => r.team === cleanFocusInput.toUpperCase())
+          ? cleanFocusInput.toUpperCase()
+          : activeAbbr;
 
     const teamsMeta = ts.teams || {};
     const values = metric.leaderboard.map(r => safeNum(r.val));
@@ -2711,6 +2726,7 @@ export function resolveLeaderboardModalModel({ appData, scope = 'team', key = ''
 
     const rows = metric.leaderboard.map(r => {
       const tmInfo = teamsMeta[r.team] || NFL_TEAM_NAMES[r.team] || { name: r.team, record: '' };
+      const teamCfg = resolveTeamConfig(r.team);
       const barPct = metric.higherIsBetter
         ? ((safeNum(r.val) - minV) / span) * 100
         : ((maxV - safeNum(r.val)) / span) * 100;
@@ -2724,9 +2740,11 @@ export function resolveLeaderboardModalModel({ appData, scope = 'team', key = ''
         displayValue: r.disp,
         rawValue: r.val,
         barPct: Math.max(8, Math.min(100, Math.round(barPct))),
-        isHighlighted: r.team === activeAbbr,
+        isHighlighted: r.team === highlightedAbbr,
         sfPlayerId: null,
-        extUrl: `https://www.espn.com/nfl/team/_/name/${r.team === 'WAS' ? 'wsh' : r.team.toLowerCase()}`
+        extUrl: teamCfg?.domain
+          ? `https://${teamCfg.domain}`
+          : `https://www.espn.com/nfl/team/_/name/${r.team === 'WAS' ? 'wsh' : r.team.toLowerCase()}`
       };
     });
 
@@ -2739,10 +2757,16 @@ export function resolveLeaderboardModalModel({ appData, scope = 'team', key = ''
       if (aboveAvg) avgInsertAfterIdx = i;
     }
 
+    const focusMeta = teamsMeta[highlightedAbbr] || NFL_TEAM_NAMES[highlightedAbbr] || null;
+    const focusCue =
+      highlightedAbbr !== activeAbbr && focusMeta?.name ? ` • ${focusMeta.name}` : '';
+
     return {
       scope: 'team',
+      focusTeamAbbr: highlightedAbbr,
+      activeTeamAbbr: activeAbbr,
       title: metric.label,
-      eyebrow: `${ts.seasonYear || 2026} NFL 32-Team Leaderboard • ${metric.higherIsBetter ? 'Higher is Better' : 'Lower is Better'}`,
+      eyebrow: `${ts.seasonYear || 2026} NFL 32-Team Leaderboard${focusCue} • ${metric.higherIsBetter ? 'Higher is Better' : 'Lower is Better'}`,
       avgLabel: `NFL Average: ${metric.leagueAvgDisplay}`,
       avgInsertAfterIdx,
       rows

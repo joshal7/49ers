@@ -1,0 +1,225 @@
+{
+  "teamAbbr": "HOU",
+  "podiumSubjectIds": [
+    "demeco_ryans",
+    "nick_caserio",
+    "nick_caley",
+    "matt_burke"
+  ],
+  "outlets": [
+    {
+      "id": "texans_official",
+      "name": "HoustonTexans.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.houstontexans.com/news/"
+    },
+    {
+      "id": "espn_hou",
+      "name": "ESPN Houston Texans Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/hou/houston-texans"
+    },
+    {
+      "id": "battle_red_blog",
+      "name": "Battle Red Blog (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.battleredblog.com/"
+    },
+    {
+      "id": "kprc_2_houston_hou",
+      "name": "KPRC 2 Houston",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/AaronWilson_NFL"
+    },
+    {
+      "id": "houston_chronicle_public_beat_wire_hou",
+      "name": "Houston Chronicle (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/jonmalexander"
+    },
+    {
+      "id": "houston_football_hou",
+      "name": "Houston Football",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/Cody_Stoots"
+    },
+    {
+      "id": "texans_wire_hou",
+      "name": "Texans Wire",
+      "tier": 2,
+      "type": "video_film",
+      "url": "https://x.com/JohnHCrumpler"
+    },
+    {
+      "id": "locked_on_texans_hou",
+      "name": "Locked On Texans",
+      "tier": 2,
+      "type": "audio_beat",
+      "url": "https://x.com/John_Cot_NFL"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "demeco_ryans",
+      "name": "DeMeco Ryans",
+      "handle": "@HoustonTexans",
+      "outletId": "texans_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/HoustonTexans",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "nick_caserio",
+      "name": "Nick Caserio",
+      "handle": "@HoustonTexans",
+      "outletId": "texans_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/HoustonTexans",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "dj_bien_aime",
+      "name": "DJ Bien-Aime",
+      "handle": "@Djbienaime",
+      "outletId": "espn_hou",
+      "role": "ESPN NFL Nation Texans Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Djbienaime",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "aaron_wilson",
+      "name": "Aaron Wilson",
+      "handle": "@AaronWilson_NFL",
+      "outletId": "kprc_2_houston_hou",
+      "role": "Lead Texans & NFL Transactions Insider",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AaronWilson_NFL",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jonathan_m_alexander",
+      "name": "Jonathan M. Alexander",
+      "handle": "@jonmalexander",
+      "outletId": "houston_chronicle_public_beat_wire_hou",
+      "role": "Lead Texans Beat Writer (Chronicle)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/jonmalexander",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "sam_warren",
+      "name": "Sam Warren",
+      "handle": "@samwarren_3",
+      "outletId": "houston_chronicle_public_beat_wire_hou",
+      "role": "Texans Beat Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/samwarren_3",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "cody_stoots",
+      "name": "Cody Stoots",
+      "handle": "@Cody_Stoots",
+      "outletId": "houston_football_hou",
+      "role": "Texans Beat & Video Analyst",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Cody_Stoots",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "john_crumpler",
+      "name": "John Crumpler",
+      "handle": "@JohnHCrumpler",
+      "outletId": "texans_wire_hou",
+      "role": "Texans Film & Roster Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/JohnHCrumpler",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "john_cot",
+      "name": "John Coté",
+      "handle": "@John_Cot_NFL",
+      "outletId": "locked_on_texans_hou",
+      "role": "Texans Beat & Podcast Analyst",
+      "category": "audio_beat",
+      "styleTag": "daily-audio",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/John_Cot_NFL",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "drew_dougherty",
+      "name": "Drew Dougherty",
+      "handle": "@DrewDoughertyTV",
+      "outletId": "texans_official",
+      "role": "Team Host & Reporter (HoustonTexans.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/DrewDoughertyTV",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "texans_pr",
+      "name": "Houston Texans PR",
+      "handle": "@TexansPR",
+      "outletId": "texans_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/TexansPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

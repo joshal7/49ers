@@ -402,7 +402,7 @@ async function main() {
       const vaultHtml = fs.readFileSync(vaultHtmlPath, 'utf8');
       const headersTxt = fs.readFileSync(headersPath, 'utf8');
       const allowedOrigins = getKeySyncAllowedOrigins();
-      assert.equal(allowedOrigins.length, 34, 'Must allowlist all 32 teams + 49ers2 + nfl');
+      assert.equal(allowedOrigins.length, 33, 'Must allowlist all 32 teams + nfl');
       for (const origin of allowedOrigins) {
         assert.ok(vaultHtml.includes(origin), `key-sync.html must allowlist ${origin}`);
         assert.ok(headersTxt.includes(origin), `_headers CSP frame-ancestors must allowlist ${origin}`);

@@ -1,0 +1,232 @@
+{
+  "teamAbbr": "LAC",
+  "podiumSubjectIds": [
+    "jim_harbaugh",
+    "joe_hortiz",
+    "mike_mcdaniel",
+    "chris_oleary"
+  ],
+  "outlets": [
+    {
+      "id": "chargers_official",
+      "name": "Chargers.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.chargers.com/news/"
+    },
+    {
+      "id": "espn_lac",
+      "name": "ESPN Los Angeles Chargers Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers"
+    },
+    {
+      "id": "bolts_from_the_blue",
+      "name": "Bolts From The Blue (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.boltsfromtheblue.com/"
+    },
+    {
+      "id": "the_athletic_la_public_beat_wire_lac",
+      "name": "The Athletic LA (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/danielrpopper"
+    },
+    {
+      "id": "la_times_public_beat_wire_lac",
+      "name": "LA Times (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/thucnhi21"
+    },
+    {
+      "id": "bolts_from_the_blue_lac",
+      "name": "Bolts From The Blue",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/alexinsdorf99"
+    },
+    {
+      "id": "guilty_as_charged_lac",
+      "name": "Guilty As Charged",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/StevenIHaglund"
+    },
+    {
+      "id": "locked_on_chargers_lac",
+      "name": "Locked On Chargers",
+      "tier": 2,
+      "type": "audio_beat",
+      "url": "https://x.com/DanWSports"
+    },
+    {
+      "id": "the_sporting_tribune_lac",
+      "name": "The Sporting Tribune",
+      "tier": 2,
+      "type": "beat",
+      "url": "https://x.com/RealFRamirez"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "jim_harbaugh",
+      "name": "Jim Harbaugh",
+      "handle": "@chargers",
+      "outletId": "chargers_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/chargers",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "joe_hortiz",
+      "name": "Joe Hortiz",
+      "handle": "@chargers",
+      "outletId": "chargers_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/chargers",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "kris_rhim",
+      "name": "Kris Rhim",
+      "handle": "@krisrhim1",
+      "outletId": "espn_lac",
+      "role": "ESPN NFL Nation Chargers Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/krisrhim1",
+      "bskyHandle": "krisrhim1.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "daniel_popper",
+      "name": "Daniel Popper",
+      "handle": "@danielrpopper",
+      "outletId": "the_athletic_la_public_beat_wire_lac",
+      "role": "Lead Chargers Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/danielrpopper",
+      "bskyHandle": "danielrpopper.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "thuc_nhi_nguyen",
+      "name": "Thuc Nhi Nguyen",
+      "handle": "@thucnhi21",
+      "outletId": "la_times_public_beat_wire_lac",
+      "role": "Chargers Beat Writer (Los Angeles Times)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/thucnhi21",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "alex_insdorf",
+      "name": "Alex Insdorf",
+      "handle": "@alexinsdorf99",
+      "outletId": "bolts_from_the_blue_lac",
+      "role": "Chargers Film & Roster Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/alexinsdorf99",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "steven_haglund",
+      "name": "Steven Haglund",
+      "handle": "@StevenIHaglund",
+      "outletId": "guilty_as_charged_lac",
+      "role": "Chargers Scheme & Analytics Host",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/StevenIHaglund",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "daniel_wade",
+      "name": "Daniel Wade",
+      "handle": "@DanWSports",
+      "outletId": "locked_on_chargers_lac",
+      "role": "Host of Locked On Chargers",
+      "category": "audio_beat",
+      "styleTag": "daily-audio",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/DanWSports",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "eric_smith",
+      "name": "Eric Smith",
+      "handle": "@Eric_L_Smith",
+      "outletId": "chargers_official",
+      "role": "Editorial Director (Chargers.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Eric_L_Smith",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "fernando_ramirez",
+      "name": "Fernando Ramirez",
+      "handle": "@RealFRamirez",
+      "outletId": "the_sporting_tribune_lac",
+      "role": "Chargers Beat Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/RealFRamirez",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "chargers_pr",
+      "name": "Los Angeles Chargers PR",
+      "handle": "@ChargersPR",
+      "outletId": "chargers_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ChargersPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

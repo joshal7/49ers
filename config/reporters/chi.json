@@ -1,0 +1,239 @@
+{
+  "teamAbbr": "CHI",
+  "podiumSubjectIds": [
+    "ben_johnson",
+    "ryan_poles",
+    "press_taylor",
+    "dennis_allen"
+  ],
+  "outlets": [
+    {
+      "id": "bears_official",
+      "name": "ChicagoBears.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.chicagobears.com/news/"
+    },
+    {
+      "id": "espn_chi",
+      "name": "ESPN Chicago Bears Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/chi/chicago-bears"
+    },
+    {
+      "id": "windy_city_gridiron",
+      "name": "Windy City Gridiron (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.windycitygridiron.com/"
+    },
+    {
+      "id": "the_athletic_chicago_public_beat_wire_ch",
+      "name": "The Athletic Chicago (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/kfishbain"
+    },
+    {
+      "id": "chicago_tribune_public_beat_wire_chi",
+      "name": "Chicago Tribune (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/BradBiggs"
+    },
+    {
+      "id": "chgo_bears_chi",
+      "name": "CHGO Bears",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/AdamHoge"
+    },
+    {
+      "id": "chicago_sun_times_chi",
+      "name": "Chicago Sun-Times",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/patrickfinley"
+    },
+    {
+      "id": "da_bears_blog_all_22_chi",
+      "name": "Da Bears Blog / All-22",
+      "tier": 2,
+      "type": "video_film",
+      "url": "https://x.com/robertkschmitz"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "ben_johnson",
+      "name": "Ben Johnson",
+      "handle": "@ChicagoBears",
+      "outletId": "bears_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ChicagoBears",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "ryan_poles",
+      "name": "Ryan Poles",
+      "handle": "@ChicagoBears",
+      "outletId": "bears_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ChicagoBears",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "courtney_cronin",
+      "name": "Courtney Cronin",
+      "handle": "@CourtneyRCronin",
+      "outletId": "espn_chi",
+      "role": "ESPN NFL Nation Bears Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/CourtneyRCronin",
+      "bskyHandle": "courtneyrcronin.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "kevin_fishbain",
+      "name": "Kevin Fishbain",
+      "handle": "@kfishbain",
+      "outletId": "the_athletic_chicago_public_beat_wire_ch",
+      "role": "Bears Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/kfishbain",
+      "bskyHandle": "kfishbain.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "adam_jahns",
+      "name": "Adam Jahns",
+      "handle": "@adamjahns",
+      "outletId": "the_athletic_chicago_public_beat_wire_ch",
+      "role": "Senior Bears Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/adamjahns",
+      "bskyHandle": "adamjahns.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "brad_biggs",
+      "name": "Brad Biggs",
+      "handle": "@BradBiggs",
+      "outletId": "chicago_tribune_public_beat_wire_chi",
+      "role": "Senior Bears Beat Writer (Chicago Tribune)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/BradBiggs",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "adam_hoge",
+      "name": "Adam Hoge",
+      "handle": "@AdamHoge",
+      "outletId": "chgo_bears_chi",
+      "role": "Bears Beat Director & Insider (CHGO)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AdamHoge",
+      "bskyHandle": "adamhoge.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "patrick_finley",
+      "name": "Patrick Finley",
+      "handle": "@patrickfinley",
+      "outletId": "chicago_sun_times_chi",
+      "role": "Bears Beat Reporter (Sun-Times)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/patrickfinley",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "nicholas_moreano",
+      "name": "Nicholas Moreano",
+      "handle": "@NicholasMoreano",
+      "outletId": "chgo_bears_chi",
+      "role": "Bears Beat & Film Reporter (CHGO)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/NicholasMoreano",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "larry_mayer",
+      "name": "Larry Mayer",
+      "handle": "@LarryMayer",
+      "outletId": "bears_official",
+      "role": "Senior Writer (ChicagoBears.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/LarryMayer",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "robert_schmitz",
+      "name": "Robert Schmitz",
+      "handle": "@robertkschmitz",
+      "outletId": "da_bears_blog_all_22_chi",
+      "role": "Bears All-22 Film Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/robertkschmitz",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "bears_pr",
+      "name": "Chicago Bears PR",
+      "handle": "@BearsPR",
+      "outletId": "bears_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/BearsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}
