@@ -1677,12 +1677,19 @@ async function main() {
         const st = diag.getState();
         const savedBrief = st.appData.news.dailyTopNewsBrief;
         const savedSched0 = JSON.parse(JSON.stringify(st.appData.scheduleMatchup.schedule));
+        const savedUpcoming0 = st.appData.scheduleMatchup.upcomingMatchup;
         const savedStream = st.appData.news.rawStream.slice();
 
         const nowMs = Date.now();
         const simKickoffIso = new Date(nowMs - 30 * 60_000).toISOString(); // Kickoff started 30m ago (inside T-90m..Final)
+        st.appData.scheduleMatchup.upcomingMatchup = null;
         st.appData.scheduleMatchup.schedule = [
-          ...savedSched0.filter(g => Number(g.week) !== 99),
+          ...savedSched0.filter(g => {
+            if (Number(g.week) === 99) return false;
+            const gMs = Date.parse(g.dateIso || '');
+            // Isolate from real same-day 49ers games when tests run on actual game nights
+            return !Number.isFinite(gMs) || Math.abs(nowMs - gMs) > 36 * 3_600_000;
+          }),
           {
             id: 'e2e_gd_sim_99',
             seasonType: 'REG',
@@ -1730,7 +1737,7 @@ async function main() {
         const itemIdx = mainHtml.indexOf('Brock Purdy hits George Kittle down the seam');
         const briefIdx = mainHtml.indexOf('data-daily-news-brief');
 
-        window.__e2eGdRestore = { savedBrief, savedSched0, savedStream };
+        window.__e2eGdRestore = { savedBrief, savedSched0, savedUpcoming0, savedStream };
         return { aboveCardIdx, hasRemovedBanner, itemIdx, briefIdx };
       });
       assert(
@@ -1755,6 +1762,8 @@ async function main() {
         simGame.statusDetail = 'Final';
         st.appData.news.dailyTopNewsBrief = {
           ...st.appData.news.dailyTopNewsBrief,
+          headline: '49ers Postgame Recap: Week 99 Takeaways',
+          teamRecord: st.appData?.meta?.teamRecord || st.appData.news.dailyTopNewsBrief?.teamRecord,
           isPostGame: true,
           gameWeek: 99,
           source: 'live-gemini-daily',
@@ -1782,6 +1791,7 @@ async function main() {
         const r = window.__e2eGdRestore;
         st.appData.news.dailyTopNewsBrief = r.savedBrief;
         st.appData.scheduleMatchup.schedule = r.savedSched0;
+        st.appData.scheduleMatchup.upcomingMatchup = r.savedUpcoming0;
         st.appData.news.rawStream = r.savedStream;
         delete window.__e2eGdRestore;
         diag.forceRender();

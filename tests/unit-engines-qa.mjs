@@ -11538,6 +11538,61 @@ await testAsync(
         clusteredCleanVisual.rawUrl.includes('r1748729_2_1296x729_16-9.jpg'),
         'Promoted cluster photo must be the clean ESPN wire photo'
       );
+      assert.equal(
+        classifyEditorialImageRisk({
+          title: "Six Things That Stood Out for the Titans in Sunday's 51-30 Loss",
+          url: 'https://www.tennesseetitans.com/news/six-things-that-stood-out-week-11',
+          imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/titans/xrrpbcgmb54r01wf5ohy.png'
+        }),
+        'lower_third',
+        'Spelled-out listicle graphic card (Six Things That Stood Out) must classify as lower_third'
+      );
+
+      // 5. Texans MNF/TNF exact regression: hard-reject club "HOW TO WATCH" text graphic even when inline-cited,
+      //    and prefer clean full-bleed club `.jpg` game photo over split-screen `.png` template
+      const houCfg = resolveTeamConfig('texans');
+      setActiveTeamConfig(houCfg);
+      const houBrief = {
+        generatedAt: '2026-11-23T03:52:00.000Z',
+        headline: 'Houston Texans Prepare for Ravens Matchup Following Key Divisional Victory',
+        summary: 'Houston prepares for Baltimore after owning home turf on Thursday night.',
+        bullets: [
+          'How to watch Houston vs Baltimore per [houstontexans.com Official](https://www.houstontexans.com/news/how-to-watch-ravens-week-12).',
+          "Head Coach DeMeco Ryans emphasized 'owning the home turf' per [houstontexans.com Official](https://www.houstontexans.com/news/own-our-home-turf-thursday-night-win)."
+        ],
+        sources: [
+          { sid: 'S1', title: 'Houston Texans vs Baltimore Ravens: How to Watch, Listen, & Live Stream', url: 'https://www.houstontexans.com/news/how-to-watch-ravens-week-12', outlet: 'houstontexans.com Official' },
+          { sid: 'S2', title: "'Own Our Home Turf': The Message Behind the Texans' Thursday Night Win", url: 'https://www.houstontexans.com/news/own-our-home-turf-thursday-night-win', outlet: 'houstontexans.com Official' }
+        ]
+      };
+      const houStream = [
+        {
+          id: 'hou_htw',
+          type: 'article',
+          title: houBrief.sources[0].title,
+          url: houBrief.sources[0].url,
+          outletName: 'houstontexans.com Official',
+          publishedAt: '2026-11-22T22:00:00.000Z',
+          storyRank: 20,
+          imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/texans/qko8nivcowj5ayac1kln.png'
+        },
+        {
+          id: 'hou_turf',
+          type: 'article',
+          title: houBrief.sources[1].title,
+          url: houBrief.sources[1].url,
+          outletName: 'houstontexans.com Official',
+          publishedAt: '2026-11-22T18:00:00.000Z',
+          storyRank: 6,
+          imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/texans/r7ykx1jltbnigbwhkvjl.jpg'
+        }
+      ];
+      const houHero = resolveDailyBriefHeroMedia(houBrief, houStream, { teamConfig: houCfg });
+      assert.ok(houHero, 'Texans brief must resolve a hero photo');
+      assert.ok(
+        houHero.rawUrl.includes('r7ykx1jltbnigbwhkvjl.jpg'),
+        `Texans brief must reject HOW TO WATCH banner and pick clean Rivalries celebration photo, got: ${houHero.rawUrl}`
+      );
     } finally {
       setActiveTeamConfig(sfCfg);
     }

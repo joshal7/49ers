@@ -48,7 +48,7 @@ const GENERIC_CLUB_GRAPHIC_TITLE_RE =
 const GENERIC_CLUB_GRAPHIC_URL_RE =
   /(?:[/_-])(?:injury-report|practice-report|game-status|inactives|how-to-watch|where-to-watch|broadcast-info|viewing-guide|power-rankings|depth-chart|roster-moves|transactions|uniform-combination|schedule-release|mailbag|betting-odds)(?:[/_.-]|$)/i;
 const BRANDED_LOWER_THIRD_TITLE_RE =
-  /\b(?:game\s+within\s+the\s+game|what\s+to\s+watch\s+for|quick\s+hits|by\s+the\s+numbers|quote\s+sheet|scouting\s+report|after\s+further\s+review|from\s+the\s+press\s+room|top\s+\d+\s+things|\d+\s+takeaways?|press\s+conference|speaks\s+to\s+the\s+media|meets\s+with\s+the\s+media|talks\s+after|postgame\s+press|on\s+outcome\s+in)\b/i;
+  /\b(?:game\s+within\s+the\s+game|what\s+to\s+watch\s+for|quick\s+hits|by\s+the\s+numbers|quote\s+sheet|scouting\s+report|after\s+further\s+review|from\s+the\s+press\s+room|things\s+that\s+stood\s+out|(?:top\s+)?(?:\d+|two|three|four|five|six|seven|eight|nine|ten)\s+(?:things|takeaways?|observations?|keys|storylines)|press\s+conference|speaks\s+to\s+the\s+media|meets\s+with\s+the\s+media|talks\s+after|postgame\s+press|on\s+outcome\s+in)\b/i;
 const BRIEF_STOP_WORDS = new Set([
   'the', 'and', 'for', 'with', 'from', 'that', 'this', 'into', 'over', 'amid', 'after', 'before',
   'against', 'ahead', 'about', 'while', 'where', 'their', 'they', 'will', 'have', 'been', 'more',
@@ -975,8 +975,11 @@ export function resolveDailyBriefHeroMedia(
     if (hasAccidental49ersPhotoLeak) score -= 55;
 
     // Editorial photo authenticity (clean full-bleed wire/action photography >> branded templates/collages)
+    // Note: Official club `.png` uploads are frequently split-screen ad/title graphics (e.g. "GAME RECAP
+    // POWERED BY LG", "6 THINGS THAT STOOD OUT", BuzzBallz/SAP overlays), whereas DSLR action photos are `.jpg`.
+    const isClubPngTemplateRisk = isOfficialClubPhoto && /\.png(?:\?|$)/i.test(rawUrl);
     if (isOfficialClubPhoto) {
-      score += item.type === 'video' ? 8 : 20;
+      score += item.type === 'video' ? 8 : isClubPngTemplateRisk ? 8 : 20;
     } else if (isEspnWirePhoto) {
       score += 30;
     } else if (isTrustedBeatPhoto) {
