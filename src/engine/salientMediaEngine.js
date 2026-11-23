@@ -20,13 +20,187 @@ const ESPN_HEADSHOT_PATH_RE = /\/i\/headshots\/nfl\/players\/full\/(\d+)\.png/i;
 const ESPN_TEAMLOGO_PATH_RE = /\/i\/teamlogos\/nfl\/500\/([a-z0-9_-]+)\.png/i;
 const ESPN_PHOTO_PATH_RE = /^https:\/\/a\.espncdn\.com(\/photo\/.+)$/i;
 const TWIMG_MEDIA_RE = /^https:\/\/pbs\.twimg\.com\/media\/([A-Za-z0-9_-]+)(?:\.(jpg|jpeg|png|webp))?(?:\?(.*))?$/i;
-const NINERSNATION_IMG_RE = /^https:\/\/platform\.ninersnation\.com\/wp-content\/uploads\/.+$/i;
+const SBNATION_WP_IMG_RE = /^https:\/\/platform\.[a-z0-9-]+\.com\/wp-content\/uploads\/.+$/i;
 const NFL_CLUBS_UPLOAD_RE = /^(https:\/\/static\.clubs\.nfl\.com\/image\/upload\/)(t_[a-z0-9_]+)(\/.+)$/i;
 const APPLE_POD_ART_RE = /^(https:\/\/is\d+-ssl\.mzstatic\.com\/image\/thumb\/.+\/)(\d+x\d+bb\.(?:jpg|jpeg|png))$/i;
 const YT_HQ_THUMB_RE = /^https:\/\/i\.ytimg\.com\/vi\/([A-Za-z0-9_-]{8,15})\/hqdefault\.jpg$/i;
 
 const LOW_SALIENCE_URL_RE =
   /stitcher\/sports|applewatch|1x1|pixel|tracker|spacer|\/teamlogos\/|default_profile|blank\.gif/i;
+
+const ESPN_WIRE_PHOTO_RE = /\/photo\/(\d{4})\/(\d{2})(\d{2})\/r\d+/i;
+const CDN_EMBEDDED_DATE_RE = /\/(?:photo|common|media)\/(\d{4})\/(\d{2})(\d{2})\//i;
+const WP_UPLOADS_DATE_RE = /\/uploads\/(\d{4})\/(\d{2})\//i;
+const CUSTOM_GRAPHIC_URL_RE =
+  /(?:data[_-]?viz|power[_-]?rankings|playoff[_-]?tiers|mock[_-]?draft|unis\d*x?\d*|graphic|collage|infographic|bracket|tracker|arrivals|fashionable|countdown|sleeper|fantasy)/i;
+const SQUARE_OR_PORTRAIT_URL_RE =
+  /(?:[_-]1-1\.(?:jpg|jpeg|png|webp)|(?:^|[_-])(\d{3,4})x\1(?:[_.-]|$)|[_-](?:3-4|2-3|4-5)\.(?:jpg|jpeg|png|webp))/i;
+const WIRE_PHOTO_CREDIT_RE =
+  /\b(?:getty|associated press|ap photo|usa today|imagn|reuters|icon sportswire|nfl photos|wireimage|zuma|sipa)\b/i;
+const LEAGUE_ROUNDUP_TITLE_RE =
+  /\b(?:all-time\s+sack\s+list|week\s+\d{1,2}\s+nfl\s+highlights|nfl\s+week\s+\d{1,2}\s+(?:highlights|arrivals|predictions|latest\s+intel|buzz|winners|losers|grades|trolls)|fashionable\s+arrivals|stacking\s+all\s+32\s+teams|all\s+32\s+(?:teams|picks)|where\s+all\s+32\s+teams|playoff\s+chance\s+tiers|countdown\s+to\s+super\s+bowl|nfl\s+power\s+rankings|draft\s+order\s+projections|fantasy\s+(?:sleepers|tips|rankings|start\s*\/?\s*sit)|mock\s+draft:\s+.*\ball\s+32\b)\b/i;
+const DEPARTED_PLAYER_PHOTO_TITLE_RE =
+  /\b(?:despite\s+trading|after\s+trading|following\s+(?:the\s+)?trade\s+of|traded\s+away|post-[a-z][a-z\s,'&-]{2,42}\btrades?\b|ex-(?:49ers|bears|bengals|bills|broncos|browns|buccaneers|bucs|cardinals|chargers|chiefs|colts|commanders|cowboys|dolphins|eagles|falcons|giants|jaguars|jags|jets|lions|packers|panthers|patriots|pats|raiders|rams|ravens|saints|seahawks|steelers|texans|titans|vikings)\b|former\s+(?:49ers|bears|bengals|bills|broncos|browns|buccaneers|bucs|cardinals|chargers|chiefs|colts|commanders|cowboys|dolphins|eagles|falcons|giants|jaguars|jags|jets|lions|packers|panthers|patriots|pats|raiders|rams|ravens|saints|seahawks|steelers|texans|titans|vikings)\b|departures?\s+of)\b/i;
+const RIVAL_TROLL_TITLE_RE =
+  /\b(?:jab\s+at|poke(?:s|d)?\s+fun\s+at|troll(?:s|ed|ing)?|mocks?|mocked|roast(?:s|ed)?)\b/i;
+const GENERIC_CLUB_GRAPHIC_TITLE_RE =
+  /\b(?:power\s+rankings?|how\s+to\s+watch|where\s+to\s+watch|watch,?\s*listen|tv,?\s*stream|ways\s+to\s+watch|where\s+the\s+[a-z0-9\s]+\s+stand|viewing\s+guide|broadcast\s+info|injury\s+report|practice\s+report|game\s+status(?:\s+report)?|game\s+designations?|inactives?(?:\s+list|\s+report)?|depth\s+chart|roster\s+moves?|transactions?|waiver\s+claims?|uniform\s+combination|release\s+uniform|schedule\s+release|mailbag|wallpaper|sweepstakes|giveaway|foodie\s+passport|small\s+business|community\s+support|mock\s+draft|betting\s+odds|point\s+spreads?|s\d+\s*ep\.?\s*\d+|season\s+\d+\s*,?\s*ep(?:isode)?\.?\s*\d+|the\s+sound\s+of\s+the\s+)\b/i;
+const GENERIC_CLUB_GRAPHIC_URL_RE =
+  /(?:[/_-])(?:injury-report|practice-report|game-status|inactives|how-to-watch|where-to-watch|broadcast-info|viewing-guide|power-rankings|depth-chart|roster-moves|transactions|uniform-combination|schedule-release|mailbag|betting-odds)(?:[/_.-]|$)/i;
+const BRANDED_LOWER_THIRD_TITLE_RE =
+  /\b(?:game\s+within\s+the\s+game|what\s+to\s+watch\s+for|quick\s+hits|by\s+the\s+numbers|quote\s+sheet|scouting\s+report|after\s+further\s+review|top\s+\d+\s+things|\d+\s+takeaways?|press\s+conference|speaks\s+to\s+the\s+media|meets\s+with\s+the\s+media|talks\s+after|postgame\s+press|on\s+outcome\s+in)\b/i;
+const BRIEF_STOP_WORDS = new Set([
+  'the', 'and', 'for', 'with', 'from', 'that', 'this', 'into', 'over', 'amid', 'after', 'before',
+  'against', 'ahead', 'about', 'while', 'where', 'their', 'they', 'will', 'have', 'been', 'more',
+  'most', 'best', 'nfl', 'week', 'game', 'team', 'season', 'football', 'monday', 'sunday',
+  'thursday', 'night', 'hosts', 'faces', 'face', 'enters', 'enter', 'prepares', 'prepare',
+  'daily', 'briefing', 'report', 'update', 'news', 'latest', 'still', 'both', 'than', 'when',
+  'what', 'could', 'would', 'should', 'under', 'through', 'remains', 'remain', 'expected', 'full'
+]);
+
+/**
+ * Selects the highest-quality editorial photograph from an ESPN `article.images` array.
+ * Prefers crisp landscape wire photojournalism (Getty/AP/USA Today `r<digits>`) over
+ * Apple Watch stitcher graphics, 1:1 square crops, or custom ESPN data-viz collages.
+ */
+export function selectBestEspnArticleImage(images = [], { preferLandscape = true } = {}) {
+  const list = Array.isArray(images) ? images : [];
+  if (list.length === 0) return '';
+
+  let bestUrl = '';
+  let bestScore = -Infinity;
+
+  for (let i = 0; i < list.length; i += 1) {
+    const img = list[i];
+    let rawUrl = String(img?.url || '').trim();
+    if (rawUrl.startsWith('http://')) rawUrl = `https://${rawUrl.slice(7)}`;
+    if (!isEditorialPhotoUrl(rawUrl)) continue;
+
+    const imgType = String(img?.type || '').toLowerCase();
+    if (imgType === 'stitcher') continue;
+
+    const name = String(img?.name || '');
+    const credit = String(img?.credit || '');
+    const w = Number(img?.width || 0);
+    const h = Number(img?.height || 0);
+    const ratio = w > 0 && h > 0 ? w / h : 0;
+
+    let score = i === 0 ? 4 : 0;
+
+    // Aspect ratio preference for editorial cards & wide hero banners
+    if (preferLandscape && ratio > 0) {
+      if (ratio >= 1.35 && ratio <= 2.1) score += 28;
+      else if (ratio >= 1.15 && ratio < 1.35) score += 10;
+      else if (ratio >= 0.9 && ratio <= 1.1) score -= 14;
+      else if (ratio < 0.9) score -= 24;
+    } else if (SQUARE_OR_PORTRAIT_URL_RE.test(rawUrl)) {
+      score -= 14;
+    }
+
+    // Authentic wire photojournalism vs custom studio collages / graphics
+    const isWireUrl = ESPN_WIRE_PHOTO_RE.test(rawUrl);
+    const isWireCredit = WIRE_PHOTO_CREDIT_RE.test(credit);
+    if (isWireUrl || isWireCredit) {
+      score += 26;
+    }
+    if (imgType === 'header') {
+      score += 10;
+    } else if (imgType === 'media') {
+      score += 4;
+    }
+
+    const isCustomGraphic =
+      CUSTOM_GRAPHIC_URL_RE.test(rawUrl) ||
+      /\b(?:data\s*viz|graphic|collage|illustration|inline:)\b/i.test(name) ||
+      (/^espn$/i.test(credit.trim()) && !isWireUrl && /a\.espncdn\.com\/photo\//i.test(rawUrl));
+    if (isCustomGraphic) {
+      score -= 26;
+    }
+
+    if (w >= 900) score += 8;
+    else if (w >= 600) score += 4;
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestUrl = rawUrl;
+    }
+  }
+
+  return bestUrl;
+}
+
+function extractPhotoDateMsFromUrl(url = '') {
+  const s = String(url || '');
+  const m = s.match(CDN_EMBEDDED_DATE_RE);
+  if (m) {
+    const yr = Number(m[1]);
+    const mo = Number(m[2]);
+    const dy = Number(m[3]);
+    if (yr >= 2020 && yr <= 2035 && mo >= 1 && mo <= 12 && dy >= 1 && dy <= 31) {
+      return Date.UTC(yr, mo - 1, dy, 12, 0, 0);
+    }
+  }
+  const wp = s.match(WP_UPLOADS_DATE_RE);
+  if (wp) {
+    const yr = Number(wp[1]);
+    const mo = Number(wp[2]);
+    if (yr >= 2020 && yr <= 2035 && mo >= 1 && mo <= 12) {
+      return Date.UTC(yr, mo - 1, 15, 12, 0, 0);
+    }
+  }
+  return null;
+}
+
+function extractInlineCitedUrlsFromBrief(dailyBrief = null) {
+  const urls = new Set();
+  if (!dailyBrief || typeof dailyBrief !== 'object') return urls;
+  const blocks = [
+    String(dailyBrief.summary || ''),
+    ...(Array.isArray(dailyBrief.bullets) ? dailyBrief.bullets : [])
+  ];
+  const mdLinkRe = /\]\((https:\/\/[^)\s]+)\)/gi;
+  for (const blk of blocks) {
+    let m;
+    while ((m = mdLinkRe.exec(String(blk || ''))) !== null) {
+      urls.add(String(m[1]).trim().toLowerCase().replace(/\/+$/, ''));
+    }
+  }
+  return urls;
+}
+
+function tokenizeBriefRelevanceTerms(text = '') {
+  const out = new Set();
+  const matches = String(text || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9'\s-]/g, ' ')
+    .match(/[a-z]{4,}/g);
+  if (!matches) return out;
+  for (const tok of matches) {
+    if (!BRIEF_STOP_WORDS.has(tok)) out.add(tok);
+  }
+  return out;
+}
+
+function buildActiveTeamPhotoMatcher(teamCfg = null) {
+  const cfg = teamCfg || getActiveTeamConfig();
+  const terms = new Set();
+  for (const raw of [cfg?.nickname, cfg?.city, cfg?.fullName, cfg?.slug, ...(cfg?.aliases || [])]) {
+    const clean = String(raw || '').trim().toLowerCase();
+    if (clean.length >= 3) terms.add(clean);
+  }
+  if (cfg?.abbr === 'SF') {
+    terms.add('49ers');
+    terms.add('niners');
+    terms.add('san francisco');
+  }
+  const escaped = Array.from(terms)
+    .sort((a, b) => b.length - a.length)
+    .map(t => escapeRegExp(t));
+  const re = escaped.length ? new RegExp(`\\b(?:${escaped.join('|')})\\b`, 'i') : null;
+  const clubDomain = String(cfg?.clubDomain || '').toLowerCase();
+  const slug = String(cfg?.slug || '').toLowerCase();
+  return { re, clubDomain, slug };
+}
 
 const TEAM_LOGO_SLUGS = {
   ARI: 'ari',
@@ -64,8 +238,9 @@ const TEAM_LOGO_SLUGS = {
   WSH: 'wsh'
 };
 
-// High-precision opponent patterns (non-SF NFL teams) to avoid false matches on player/city names
+// High-precision NFL team patterns (all 32 teams; active team is skipped dynamically)
 const OPPONENT_PATTERNS = [
+  { abbr: 'SF', name: '49ers', re: /\b(?:49ers|niners|san francisco 49ers|vs\.?\s*san francisco|at san francisco|against san francisco)\b/i },
   { abbr: 'DAL', name: 'Cowboys', re: /\b(?:cowboys|dallas cowboys|vs\.?\s*dallas|in dallas|against dallas|beat dallas)\b/i },
   { abbr: 'MIN', name: 'Vikings', re: /\b(?:vikings|minnesota vikings|vs\.?\s*minnesota|at minnesota)\b/i },
   { abbr: 'LAR', name: 'Rams', re: /\b(?:rams|los angeles rams|la rams)\b/i },
@@ -182,8 +357,8 @@ export function optimizeImageUrlForSlot(rawUrl = '', slot = 'thumb') {
     return { src: optimized, fallbackSrc: clean };
   }
 
-  // 5. NinersNation / SB Nation Getty Photos (833 KB -> 37 KB via native WordPress resize params)
-  if (NINERSNATION_IMG_RE.test(clean)) {
+  // 5. SB Nation / WordPress Editorial Photos (833 KB -> 37 KB via native WordPress resize params)
+  if (SBNATION_WP_IMG_RE.test(clean)) {
     const targetW = slot === 'hero' ? 680 : 320;
     try {
       const u = new URL(clean);
@@ -363,37 +538,135 @@ function findSalientRosterPlayer(item = {}, rosterPlayers = [], excludePlayerId 
   return null;
 }
 
-function findClusterEditorialPhoto(item = {}) {
+/**
+ * Classifies whether an item's attached image is likely a pure boilerplate text-banner /
+ * ad graphic ('text_banner', e.g. official club "INJURY REPORT", "HOW TO WATCH",
+ * "POWER RANKINGS PRESENTED BY SAP", "SEASON 5 EP 5", or custom data-viz graphics),
+ * a branded lower-third template / talking-head podium still ('lower_third'), or a
+ * clean full-bleed editorial photograph ('clean').
+ *
+ * Works across both `.jpg` and `.png` because NFL clubs serve opaque Cloudinary hashes
+ * (e.g. `static.clubs.nfl.com/.../bengals/yrwojc9rgvrgxzx5xfun.jpg`) for text banners.
+ */
+export function classifyEditorialImageRisk(item = {}, rawUrl = '') {
+  const url = String(rawUrl || item?.imageUrl || '').trim();
+  const title = String(item?.title || item?.headline || '').trim();
+  const itemUrl = String(item?.url || item?.externalUrl || '').trim();
+  const isClubHosted = /static\.clubs\.nfl\.com\/image\/upload\//i.test(url);
+
+  if (CUSTOM_GRAPHIC_URL_RE.test(url)) {
+    return 'text_banner';
+  }
+  if (GENERIC_CLUB_GRAPHIC_TITLE_RE.test(title) || GENERIC_CLUB_GRAPHIC_URL_RE.test(itemUrl)) {
+    return 'text_banner';
+  }
+  if (
+    BRANDED_LOWER_THIRD_TITLE_RE.test(title) ||
+    (isClubHosted &&
+      item?.type === 'video' &&
+      /\b(?:press\s+conference|speaks|talks|media|sound\s+of|episode|ep\.|recap|hype\s+trailer)\b/i.test(title))
+  ) {
+    return 'lower_third';
+  }
+  return 'clean';
+}
+
+function findClusterEditorialPhoto(
+  item = {},
+  { allowTextBanner = true, allowSquareOrGraphic = true } = {}
+) {
+  const candidates = [];
   if (isEditorialPhotoUrl(item.imageUrl)) {
-    return {
+    candidates.push({
       rawUrl: String(item.imageUrl).trim(),
-      sourceLabel: item.outletName || item.author || `${getActiveTeamConfig().nickname} Beat`
-    };
+      sourceLabel: item.outletName || item.author || `${getActiveTeamConfig().nickname} Beat`,
+      ownerItem: item
+    });
   }
   const confirming = Array.isArray(item.confirmingReports) ? item.confirmingReports : [];
   for (const cr of confirming) {
     if (isEditorialPhotoUrl(cr?.imageUrl)) {
-      return {
+      candidates.push({
         rawUrl: String(cr.imageUrl).trim(),
-        sourceLabel: cr.outletName || cr.author || `${getActiveTeamConfig().nickname} Beat`
-      };
+        sourceLabel: cr.outletName || cr.author || `${getActiveTeamConfig().nickname} Beat`,
+        ownerItem: cr
+      });
     }
+  }
+  if (candidates.length === 0) return null;
+
+  const isAcceptable = c => {
+    const risk = classifyEditorialImageRisk(c.ownerItem, c.rawUrl);
+    if (!allowTextBanner && risk === 'text_banner') return false;
+    if (
+      !allowSquareOrGraphic &&
+      (risk === 'text_banner' ||
+        SQUARE_OR_PORTRAIT_URL_RE.test(c.rawUrl) ||
+        CUSTOM_GRAPHIC_URL_RE.test(c.rawUrl))
+    ) {
+      return false;
+    }
+    return true;
+  };
+
+  // Prefer a clean full-bleed photo over a lower-third or text-banner when clustered reports exist
+  const cleanFirst = candidates.find(
+    c => isAcceptable(c) && classifyEditorialImageRisk(c.ownerItem, c.rawUrl) === 'clean'
+  );
+  if (cleanFirst) {
+    return {
+      rawUrl: cleanFirst.rawUrl,
+      sourceLabel: cleanFirst.sourceLabel,
+      imageRisk: 'clean'
+    };
+  }
+  const lowerThirdNext = candidates.find(
+    c => isAcceptable(c) && classifyEditorialImageRisk(c.ownerItem, c.rawUrl) === 'lower_third'
+  );
+  if (lowerThirdNext) {
+    return {
+      rawUrl: lowerThirdNext.rawUrl,
+      sourceLabel: lowerThirdNext.sourceLabel,
+      imageRisk: 'lower_third'
+    };
+  }
+  const fallbackHit = candidates.find(isAcceptable);
+  if (fallbackHit) {
+    return {
+      rawUrl: fallbackHit.rawUrl,
+      sourceLabel: fallbackHit.sourceLabel,
+      imageRisk: classifyEditorialImageRisk(fallbackHit.ownerItem, fallbackHit.rawUrl)
+    };
   }
   return null;
 }
 
 function classifyTeamEmblemTag(text = '', author = '') {
+  const activeTeam = getActiveTeamConfig();
   const hay = `${text} ${author}`;
-  if (/\b(?:kyle shanahan|shanahan|raheem morris|klay kubiak|kris kocurek|chris foerster|coach|podium|presser)\b/i.test(hay)) {
+  const coaches = activeTeam?.coachesSeed || {};
+  const coachNames = [coaches.hc, coaches.oc, coaches.dc]
+    .filter(Boolean)
+    .map(n => String(n).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const gmName = coaches.gm ? String(coaches.gm).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : '';
+  const coachRe = new RegExp(
+    `\\b(?:${[...coachNames, ...(activeTeam?.abbr === 'SF' ? ['kyle shanahan', 'shanahan', 'raheem morris', 'klay kubiak', 'kris kocurek', 'chris foerster'] : []), 'coach', 'podium', 'presser'].join('|')})\\b`,
+    'i'
+  );
+  if (coachRe.test(hay)) {
     return 'COACH';
   }
-  if (/\b(?:john lynch|lynch|front office|cap space|salary cap|trade deadline|draft)\b/i.test(hay)) {
+  const gmRe = new RegExp(
+    `\\b(?:${[...(gmName ? [gmName] : []), ...(activeTeam?.abbr === 'SF' ? ['john lynch', 'lynch'] : []), 'front office', 'cap space', 'salary cap', 'trade deadline', 'draft'].join('|')})\\b`,
+    'i'
+  );
+  if (gmRe.test(hay)) {
     return 'GM';
   }
   if (/\b(?:all-22|film|tape|scheme|epa|dvoa|pass rush|snap count|yards per play)\b/i.test(hay)) {
     return 'FILM';
   }
-  return '49ERS';
+  return String(activeTeam?.nickname || 'NFL').toUpperCase();
 }
 
 /**
@@ -419,6 +692,9 @@ export function resolveSalientCardVisual(
   const titleOrBody = String(item.title || item.headline || item.fullText || '').trim();
   const excl = excludePlayerId != null && excludePlayerId !== '' ? String(excludePlayerId) : null;
 
+  const activeTeamMedia = getActiveTeamConfig();
+  const teamNickMedia = activeTeamMedia?.nickname || 'NFL';
+
   // Tier 1: True editorial / game / practice photo (lead or cluster confirming report)
   const editorialHit = findClusterEditorialPhoto(item);
   if (editorialHit) {
@@ -429,7 +705,7 @@ export function resolveSalientCardVisual(
         src: opt.src,
         fallbackSrc: opt.fallbackSrc,
         rawUrl: editorialHit.rawUrl,
-        alt: titleOrBody || '49ers news photo',
+        alt: titleOrBody || `${teamNickMedia} news photo`,
         sourceLabel: editorialHit.sourceLabel
       };
     }
@@ -453,7 +729,7 @@ export function resolveSalientCardVisual(
           shortName: rosterMatch?.shortName || '',
           jersey: rosterMatch?.jersey ?? null,
           position: rosterMatch?.position || '',
-          alt: rosterMatch?.name || titleOrBody || '49ers player'
+          alt: rosterMatch?.name || titleOrBody || `${teamNickMedia} player`
         };
       }
     }
@@ -473,7 +749,7 @@ export function resolveSalientCardVisual(
         shortName: matchedPlayer.shortName || matchedPlayer.name,
         jersey: matchedPlayer.jersey ?? null,
         position: matchedPlayer.position || '',
-        alt: `${matchedPlayer.name} (${matchedPlayer.position || '49ers'})`
+        alt: `${matchedPlayer.name} (${matchedPlayer.position || teamNickMedia})`
       };
     }
   }
@@ -517,68 +793,241 @@ export function resolveSalientCardVisual(
 
 /**
  * Resolves the single best editorial hero photograph for the Daily Top News Brief.
- * Strictly requires a real photojournalistic / game image (`isEditorialPhotoUrl`),
- * never stretching a transparent player headshot cutout across a wide 16:9 frame.
+ * Strictly requires a real, team-relevant, timely photojournalistic / game image
+ * (`isEditorialPhotoUrl`), prioritizing inline-cited sources and headline topical match
+ * while rejecting stale evergreen collages, custom data-viz graphics, square 1:1 crops,
+ * and generic league-wide roundups featuring unrelated NFL teams.
  */
-export function resolveDailyBriefHeroMedia(dailyBrief = null, rawStream = [], { rosterPlayers = [] } = {}) {
+export function resolveDailyBriefHeroMedia(
+  dailyBrief = null,
+  rawStream = [],
+  { rosterPlayers = [], nowMs = null, teamConfig = null } = {}
+) {
   const stream = Array.isArray(rawStream) ? rawStream : [];
   if (stream.length === 0) return null;
 
+  const activeTeamCfg = teamConfig || getActiveTeamConfig();
+  const teamMatcher = buildActiveTeamPhotoMatcher(activeTeamCfg);
+  const inlineCitedUrls = extractInlineCitedUrlsFromBrief(dailyBrief);
+  const headlineTerms = tokenizeBriefRelevanceTerms(dailyBrief?.headline || '');
+  const bodyTerms = tokenizeBriefRelevanceTerms(
+    [dailyBrief?.summary || '', ...(Array.isArray(dailyBrief?.bullets) ? dailyBrief.bullets : [])].join(' ')
+  );
+  const parsedBriefGenMs = dailyBrief?.generatedAt ? Date.parse(dailyBrief.generatedAt) : NaN;
+  const refNowMs = Number.isFinite(parsedBriefGenMs)
+    ? parsedBriefGenMs
+    : Number.isFinite(Number(nowMs)) && Number(nowMs) > 0
+      ? Number(nowMs)
+      : Date.now();
+  const rosterIdx = getRosterLookupIndex(rosterPlayers);
+
+  const normalizeKey = u => String(u || '').trim().toLowerCase().replace(/\/+$/, '');
   const byUrl = new Map();
   for (const it of stream) {
-    if (it?.url) byUrl.set(String(it.url).trim().toLowerCase(), it);
-    if (it?.externalUrl) byUrl.set(String(it.externalUrl).trim().toLowerCase(), it);
+    if (it?.url) byUrl.set(normalizeKey(it.url), it);
+    if (it?.externalUrl) byUrl.set(normalizeKey(it.externalUrl), it);
+    if (it?.promotedFromSocialUrl) byUrl.set(normalizeKey(it.promotedFromSocialUrl), it);
   }
 
   const candidateItems = [];
   const seenIds = new Set();
 
-  // 1. Prioritize items explicitly cited in dailyBrief.sources (highest topical salience!)
-  const sources = Array.isArray(dailyBrief?.sources) ? dailyBrief.sources : [];
-  for (const s of sources) {
-    const key = String(s?.url || '').trim().toLowerCase();
-    const matched = key ? byUrl.get(key) : null;
+  // 1. Prioritize URLs explicitly cited inline in dailyBrief.bullets / summary
+  for (const citedKey of inlineCitedUrls) {
+    const matched = byUrl.get(citedKey);
     if (matched && !seenIds.has(matched.id)) {
       seenIds.add(matched.id);
-      candidateItems.push({ item: matched, cited: true });
+      candidateItems.push({ item: matched, bulletCited: true, listedSource: true });
     }
   }
 
-  // 2. Fallback to highest-ranked non-video editorial articles/tweets in rawStream
-  for (const it of stream.slice(0, 40)) {
-    if (!it || seenIds.has(it.id)) continue;
-    seenIds.add(it.id);
-    candidateItems.push({ item: it, cited: false });
+  // 2. Include sources listed in dailyBrief.sources (checking if inline-cited too)
+  const sources = Array.isArray(dailyBrief?.sources) ? dailyBrief.sources : [];
+  for (const s of sources) {
+    const key = normalizeKey(s?.url || '');
+    const matched = key ? byUrl.get(key) : null;
+    if (matched && !seenIds.has(matched.id)) {
+      seenIds.add(matched.id);
+      candidateItems.push({
+        item: matched,
+        bulletCited: inlineCitedUrls.has(key),
+        listedSource: true
+      });
+    }
   }
 
-  // Score editorial photo candidates: prefer cited sources, landscape/editorial domains (49ers.com, NBC, ESPN, NinersNation, Twitter/Bluesky)
+  // 3. Fallback to highest-ranked team editorial articles/tweets in rawStream
+  for (const it of stream.slice(0, 45)) {
+    if (!it || seenIds.has(it.id)) continue;
+    seenIds.add(it.id);
+    const key = normalizeKey(it.url || '');
+    candidateItems.push({
+      item: it,
+      bulletCited: key ? inlineCitedUrls.has(key) : false,
+      listedSource: false
+    });
+  }
+
   let best = null;
-  let bestScore = -1;
-  for (const { item, cited } of candidateItems) {
+  let bestScore = -Infinity;
+
+  for (const { item, bulletCited, listedSource } of candidateItems) {
     if (item.type === 'video' && !isEditorialPhotoUrl(item.imageUrl)) continue;
     const hit = findClusterEditorialPhoto(item);
     if (!hit) continue;
 
-    // Prefer genuine editorial/game photos over YouTube 4:3 hqdefault frames for the hero slot
-    const isYtThumb = /i\.ytimg\.com/i.test(hit.rawUrl);
-    const isProPhotoCdn =
-      /static\.clubs\.nfl\.com|a\.espncdn\.com\/photo|espnmedia-cdn|platform\.ninersnation\.com|cdn\.49erswebzone\.com|nbcsports/i.test(
-        hit.rawUrl
+    const rawUrl = hit.rawUrl;
+    const itemTitle = String(item.title || item.headline || '').trim();
+    const itemSummary = String(item.summary || item.fullText || '').trim();
+    const itemUrlLower = String(item.url || '').toLowerCase();
+    const rawUrlLower = rawUrl.toLowerCase();
+
+    const isOfficialClubPhoto =
+      /static\.clubs\.nfl\.com\/image\/upload\//i.test(rawUrl) &&
+      (!teamMatcher.slug ||
+        rawUrlLower.includes(`/${teamMatcher.slug}/`) ||
+        (teamMatcher.clubDomain && itemUrlLower.includes(teamMatcher.clubDomain)));
+
+    const mentionsActiveTeamInTitle = Boolean(teamMatcher.re && teamMatcher.re.test(itemTitle));
+    const mentionsActiveTeamInBody = Boolean(
+      mentionsActiveTeamInTitle ||
+        (teamMatcher.re && teamMatcher.re.test(itemSummary)) ||
+        (teamMatcher.clubDomain && itemUrlLower.includes(teamMatcher.clubDomain))
+    );
+    const hasRosterMatchInTitle = Boolean(
+      rosterIdx && findSalientRosterPlayer({ title: itemTitle, fullText: '' }, rosterPlayers)
+    );
+    const isTeamSpecificItem = isOfficialClubPhoto || mentionsActiveTeamInTitle || hasRosterMatchInTitle;
+
+    // Detect generic league-wide roundups (e.g. "Week 11 NFL highlights", "all-time sack list",
+    // "NFL Power Rankings", "George Kittle rocks luchador mask") that show unrelated NFL teams
+    const isLeagueRoundup = LEAGUE_ROUNDUP_TITLE_RE.test(itemTitle) || CUSTOM_GRAPHIC_URL_RE.test(rawUrl);
+    if (isLeagueRoundup && !isOfficialClubPhoto && !mentionsActiveTeamInTitle) {
+      continue;
+    }
+
+    // Detect articles/tweets primarily about ANOTHER NFL team without mentioning the active team,
+    // OR rival-led trolling/jab articles where another team is the lead subject ("Bills' jab at Dolphins")
+    const mentionedOtherTeam = detectMentionedOpponentTeam(itemTitle);
+    const isOtherTeamFocused = Boolean(mentionedOtherTeam && !isTeamSpecificItem);
+    const isRivalLedTrollOrSubject = Boolean(
+      mentionedOtherTeam &&
+        !isOfficialClubPhoto &&
+        (RIVAL_TROLL_TITLE_RE.test(itemTitle) ||
+          new RegExp(`^(?:the\\s+)?${escapeRegExp(mentionedOtherTeam.name)}(?:['’]s?|s['’])?\\b`, 'i').test(itemTitle))
+    );
+
+    // Detect departed / traded-away / former-player farewell articles where ESPN often attaches an
+    // archival game photo of the traded player (frequently showing an unrelated earlier opponent)
+    const isDepartedPlayerArticle =
+      !isOfficialClubPhoto && DEPARTED_PLAYER_PHOTO_TITLE_RE.test(`${itemTitle} ${item.imageCaption || ''}`);
+    const isGenericClubGraphic =
+      isOfficialClubPhoto &&
+      /\.png(?:\?|$)/i.test(rawUrl) &&
+      GENERIC_CLUB_GRAPHIC_TITLE_RE.test(itemTitle);
+    const hasAccidental49ersPhotoLeak =
+      activeTeamCfg.abbr !== 'SF' &&
+      !/\b(?:49ers|niners|san francisco)\b/i.test(String(dailyBrief?.headline || '')) &&
+      /\b(?:49ers|niners|san francisco|george kittle|brock purdy|kyle shanahan)\b/i.test(
+        `${item.imageCaption || ''} ${item.imageAlt || ''} ${rawUrl}`
       );
-    const score =
-      (cited ? 55 : 0) +
-      (isProPhotoCdn ? 30 : 12) +
-      (item.type === 'article' ? 14 : 6) +
-      (isYtThumb ? -25 : 0) +
-      Math.min(20, Number(item.storyRank || 0) * 0.15);
+
+    // Source media quality & authenticity
+    const isYtThumb = /i\.ytimg\.com/i.test(rawUrl);
+    const isEspnPhoto = /a\.espncdn\.com\/photo\//i.test(rawUrl);
+    const isEspnWirePhoto = ESPN_WIRE_PHOTO_RE.test(rawUrl);
+    const isEspnMediaStill = /espnmedia-cdn\.akamaized\.net/i.test(rawUrl);
+    const isTrustedBeatPhoto = /platform\.[a-z0-9-]+\.com\/wp-content\/uploads\/|cdn\.49erswebzone\.com|nbcsports|pbs\.twimg\.com\/media\//i.test(
+      rawUrl
+    );
+    const isCustomEspnGraphic = isEspnPhoto && !isEspnWirePhoto;
+    const isExplicitGraphicSlug = CUSTOM_GRAPHIC_URL_RE.test(rawUrl);
+    const isSquareOrPortrait = SQUARE_OR_PORTRAIT_URL_RE.test(rawUrl);
+
+    let score = 0;
+
+    // Citation weight: inline-cited sources outrank passive context-only sources
+    if (bulletCited) score += 34;
+    else if (listedSource) score += 12;
+
+    // Team specificity & off-team protection
+    if (isOfficialClubPhoto) score += 40;
+    else if (isTeamSpecificItem) score += 26;
+    else if (mentionsActiveTeamInBody) score += 8;
+    else score -= 35;
+
+    if (isOtherTeamFocused) score -= 55;
+    if (isRivalLedTrollOrSubject) score -= 52;
+    if (isLeagueRoundup) score -= 45;
+    if (isDepartedPlayerArticle) score -= 38;
+    if (isGenericClubGraphic) score -= 24;
+    if (hasAccidental49ersPhotoLeak) score -= 55;
+
+    // Editorial photo authenticity (real club/wire photography >> custom studio collages/graphics)
+    if (isOfficialClubPhoto) {
+      score += 18;
+    } else if (isEspnWirePhoto) {
+      score += 28;
+    } else if (isTrustedBeatPhoto) {
+      score += 22;
+    } else if (isEspnMediaStill) {
+      score += 14;
+    } else if (isCustomEspnGraphic) {
+      score -= 30;
+    } else {
+      score += 10;
+    }
+
+    if (isExplicitGraphicSlug) score -= 42;
+    if (isSquareOrPortrait) score -= 30;
+    if (isYtThumb) score -= 30;
+
+    // Topical relevance to brief headline (2x weight) & bullets
+    if (headlineTerms.size > 0 || bodyTerms.size > 0) {
+      const itemTerms = tokenizeBriefRelevanceTerms(`${itemTitle} ${itemSummary.slice(0, 180)}`);
+      let headlineHits = 0;
+      for (const t of headlineTerms) {
+        if (itemTerms.has(t)) headlineHits += 1;
+      }
+      let bodyHits = 0;
+      for (const t of bodyTerms) {
+        if (itemTerms.has(t)) bodyHits += 1;
+      }
+      score += Math.min(28, headlineHits * 11) + Math.min(16, bodyHits * 3);
+    }
+
+    // Embedded CDN photo date freshness guard (rewards latest-week photos & catches archival/evergreen photos!)
+    const photoDateMs = extractPhotoDateMsFromUrl(rawUrl);
+    if (photoDateMs != null && Number.isFinite(refNowMs) && photoDateMs <= refNowMs + 2 * 86_400_000) {
+      const ageDays = Math.max(0, (refNowMs - photoDateMs) / 86_400_000);
+      if (ageDays <= 4) score += 20;
+      else if (ageDays <= 7) score += 15;
+      else if (ageDays <= 14) score += 6;
+      else if (ageDays <= 30) score -= 4;
+      else if (ageDays <= 60) score -= 26;
+      else score -= 58;
+    } else if (isOfficialClubPhoto && item.publishedAt && Number.isFinite(refNowMs)) {
+      // Official NFL Club Cloudinary URLs omit /YYYY/MMDD/ in their path; reward fresh club posts fairly
+      const pubMs = Date.parse(item.publishedAt);
+      if (Number.isFinite(pubMs) && pubMs <= refNowMs + 2 * 86_400_000) {
+        const pubAgeDays = Math.max(0, (refNowMs - pubMs) / 86_400_000);
+        if (pubAgeDays <= 7) score += 18;
+        else if (pubAgeDays <= 14) score += 8;
+      }
+    }
+
+    // Format preference & modest storyRank tiebreaker (cannot override photo authenticity or relevance)
+    score += item.type === 'article' ? 10 : item.type === 'video' ? 4 : 6;
+    score += Math.min(10, Number(item.storyRank || 0) * 0.12);
 
     if (score > bestScore) {
       bestScore = score;
-      best = { item, hit };
+      best = { item, hit, score };
     }
   }
 
-  if (!best) return null;
+  // Quality floor: omit the hero banner rather than rendering a stale collage or off-topic league photo
+  if (!best || bestScore < 20) return null;
 
   const opt = optimizeImageUrlForSlot(best.hit.rawUrl, 'hero');
   if (!opt.src) return null;
@@ -586,10 +1035,9 @@ export function resolveDailyBriefHeroMedia(dailyBrief = null, rawStream = [], { 
   // Also collect up to 3 salient players mentioned in the brief headline + bullets for compact visual grounding
   const briefProse = [dailyBrief?.headline || '', ...(dailyBrief?.bullets || [])].join(' ');
   const featuredPlayers = [];
-  const idx = getRosterLookupIndex(rosterPlayers);
-  if (idx && briefProse) {
+  if (rosterIdx && briefProse) {
     const lowerProse = briefProse.toLowerCase();
-    for (const entry of idx.byFullName) {
+    for (const entry of rosterIdx.byFullName) {
       if (lowerProse.includes(entry.fullLower)) {
         featuredPlayers.push(entry.player);
         if (featuredPlayers.length >= 3) break;
@@ -601,8 +1049,8 @@ export function resolveDailyBriefHeroMedia(dailyBrief = null, rawStream = [], { 
     src: opt.src,
     fallbackSrc: opt.fallbackSrc,
     rawUrl: best.hit.rawUrl,
-    alt: best.item.title || dailyBrief?.headline || `${getActiveTeamConfig().nickname} Daily Briefing photo`,
-    creditLabel: best.hit.sourceLabel || best.item.outletName || `${getActiveTeamConfig().nickname} Beat`,
+    alt: best.item.title || dailyBrief?.headline || `${activeTeamCfg.nickname} Daily Briefing photo`,
+    creditLabel: best.hit.sourceLabel || best.item.outletName || `${activeTeamCfg.nickname} Beat`,
     creditUrl: best.item.url || '',
     featuredPlayers
   };

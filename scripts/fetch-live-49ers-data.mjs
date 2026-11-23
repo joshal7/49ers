@@ -150,6 +150,7 @@ import {
   stripHistoricalSfBioSentences,
   toEspnTeamSlug
 } from '../src/engine/linkIntegrity.js';
+import { selectBestEspnArticleImage } from '../src/engine/salientMediaEngine.js';
 import {
   extractBeatAttributionFromText,
   isDirectSocialPostUrl,
@@ -2953,10 +2954,8 @@ async function main() {
     const pubIso = art.published || new Date().toISOString();
     const brk = classifyBreakingItem({ title, summary, publishedAt: pubIso });
 
-    const bestImg =
-      (art.images || []).find(im => im.url && (!im.width || im.width >= 300) && im.type !== 'Media') ||
-      (art.images || []).find(im => im.url);
-    const imageUrl = bestImg?.url || '';
+    const imageUrl = selectBestEspnArticleImage(art.images) || '';
+    const bestImg = (art.images || []).find(im => im?.url === imageUrl) || (art.images || [])[0] || null;
     const imageAlt = cleanSensationalistText(bestImg?.caption || title);
 
     seenStreamUrls.add(safeEspnArtUrl);

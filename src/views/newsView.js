@@ -45,6 +45,7 @@ import {
 } from '../engine/breakingClassifier.js';
 import {
   formatWireSourceDisplayName,
+  isOffTopicLeagueFiller,
   isPaywalledPublisher,
   sanitizeExternalUrl,
   MARKDOWN_HTTPS_INLINE_LINK_SOURCE,
@@ -124,6 +125,23 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
     if (it?.url) rawByUrl.set(String(it.url).trim(), it);
     if (it?.promotedFromSocialUrl) rawByUrl.set(String(it.promotedFromSocialUrl).trim(), it);
   }
+  const inlineCitedUrls = new Set();
+  const proseBlocks = [
+    String(dailyBrief?.summary || ''),
+    ...(Array.isArray(dailyBrief?.bullets) ? dailyBrief.bullets : [])
+  ];
+  const mdCiteRe = /\]\((https:\/\/[^)\s]+)\)/gi;
+  for (const blk of proseBlocks) {
+    let cm;
+    while ((cm = mdCiteRe.exec(String(blk || ''))) !== null) {
+      inlineCitedUrls.add(String(cm[1]).trim().toLowerCase().replace(/\/+$/, ''));
+    }
+  }
+  const rosterNamesLower = Array.isArray(appData?.roster?.players)
+    ? appData.roster.players
+        .map(p => String(p?.name || '').trim().toLowerCase())
+        .filter(n => n.length >= 6)
+    : [];
 
   for (const sl of rawSources) {
     if (!sl) continue;
@@ -189,6 +207,19 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
         ? `${safeUrl}::${cleanTitle.toLowerCase().slice(0, 50)}`
         : safeUrl;
     if (!safeUrl || seen.has(dedupKey) || isPaywalledPublisher(sl.outlet, safeUrl)) continue;
+
+    // Strip uncited off-topic league-wide roundups (e.g. Myles Garrett sack list, George Kittle arrivals)
+    const normOrig = String(sl.url || '').trim().toLowerCase().replace(/\/+$/, '');
+    const normSafe = String(safeUrl).trim().toLowerCase().replace(/\/+$/, '');
+    const isInlineCited = inlineCitedUrls.has(normOrig) || inlineCitedUrls.has(normSafe);
+    if (!isInlineCited) {
+      const titleLower = cleanTitle.toLowerCase();
+      const hasRosterHit = rosterNamesLower.some(nm => titleLower.includes(nm));
+      if (isOffTopicLeagueFiller({ url: safeUrl, title: cleanTitle, summary: '', hasRosterMatch: hasRosterHit })) {
+        continue;
+      }
+    }
+
     seen.add(dedupKey);
 
     safeList.push({
@@ -1326,10 +1357,12 @@ export function renderVideoEmbedOrFacade(
     const safePoster = optPoster.src || rawPoster;
     const posterFallbackAttr = optPoster.fallbackSrc ? `data-fallback-src="${esc(optPoster.fallbackSrc)}"` : '';
     const safeOutUrl = sanitizeExternalUrl(externalWatchUrl, safeStreamUrl) || safeStreamUrl;
+    const activeClubDomain = String(getActiveTeamConfig()?.clubDomain || '49ers.com').trim();
+    const clubDomainRe = new RegExp(activeClubDomain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
     const providerLabel = /x\.com|twimg\.com/i.test(`${safeOutUrl} ${safeStreamUrl}`)
       ? 'X'
-      : /49ers\.com/i.test(`${safeOutUrl} ${safeStreamUrl}`)
-        ? '49ers.com'
+      : clubDomainRe.test(`${safeOutUrl} ${safeStreamUrl}`)
+        ? activeClubDomain
         : /bsky\.app|bsky\.network/i.test(`${safeOutUrl} ${safeStreamUrl}`)
           ? 'Bluesky'
           : /espn/i.test(`${safeOutUrl} ${channel}`)

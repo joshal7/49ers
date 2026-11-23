@@ -6859,6 +6859,17 @@ a.raw-item-thumb.salient-thumb:hover {
   }
 }
 
+@media (min-width: 640px) and (min-height: 520px) {
+  .salient-hero-banner {
+    max-height: 340px;
+  }
+
+  .salient-hero-banner.compact {
+    aspect-ratio: 16 / 9;
+    max-height: 292px;
+  }
+}
+
 @media (max-width: 400px) {
   .raw-item-thumb.salient-thumb.thumb-lg {
     width: 74px;

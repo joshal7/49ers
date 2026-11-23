@@ -405,15 +405,50 @@ export default {
             .catch(() => null)
         ]);
         const items = [];
+        const teamTerms = [team.nickname, team.city, ...(team.aliases || [])]
+          .filter(Boolean)
+          .map(s => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+        const teamMentionRe = teamTerms.length ? new RegExp(`\\b(?:${teamTerms.join('|')})\\b`, 'i') : null;
+        const pickBestWorkerImg = imgs => {
+          const list = Array.isArray(imgs) ? imgs : [];
+          let bestUrl = '';
+          let bestScore = -Infinity;
+          for (let i = 0; i < list.length; i += 1) {
+            const im = list[i];
+            let u = String(im?.url || '').trim();
+            if (u.startsWith('http://')) u = `https://${u.slice(7)}`;
+            if (!u.startsWith('https://')) continue;
+            if (String(im?.type || '').toLowerCase() === 'stitcher') continue;
+            if (/stitcher\/sports|applewatch|\/teamlogos\/|\/i\/headshots\//i.test(u)) continue;
+            const w = Number(im?.width || 0);
+            const h = Number(im?.height || 0);
+            const ratio = w > 0 && h > 0 ? w / h : 0;
+            let sc = i === 0 ? 4 : 0;
+            if (ratio >= 1.35 && ratio <= 2.1) sc += 28;
+            else if (ratio >= 0.9 && ratio <= 1.1) sc -= 14;
+            if (/\/photo\/\d{4}\/\d{4}\/r\d+/i.test(u) || /\b(?:getty|ap\b|associated press|usa today|imagn|reuters)\b/i.test(String(im?.credit || ''))) sc += 26;
+            if (String(im?.type || '').toLowerCase() === 'header') sc += 10;
+            if (/(?:data[_-]?viz|power[_-]?rankings|playoff[_-]?tiers|mock[_-]?draft|graphic|collage)/i.test(u)) sc -= 26;
+            if (sc > bestScore) {
+              bestScore = sc;
+              bestUrl = u;
+            }
+          }
+          return bestUrl;
+        };
         for (const a of espnNews?.articles || []) {
-          if (!a?.headline || !a?.links?.web?.href) continue;
+          if (!a?.headline || !a?.links?.web?.href || a.premium) continue;
+          const teamCats = Array.isArray(a.categories) ? a.categories.filter(c => c?.type === 'team') : [];
+          if (teamCats.length >= 6 && teamMentionRe && !teamMentionRe.test(`${a.headline} ${a.description || ''}`)) {
+            continue;
+          }
           items.push({
             id: `${team.abbr.toLowerCase()}_ew_${a.dataSourceIdentifier || a.id || ''}`,
             type: a.type === 'Media' ? 'video' : 'article',
             title: a.headline,
             summary: a.description || '',
             url: a.links.web.href,
-            imageUrl: a.images?.[0]?.url || '',
+            imageUrl: pickBestWorkerImg(a.images),
             publishedAt: a.published || new Date().toISOString(),
             outletName: 'ESPN',
             author: a.byline || 'ESPN'

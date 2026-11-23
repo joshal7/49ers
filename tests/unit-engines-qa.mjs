@@ -43,7 +43,8 @@ import {
   optimizeImageUrlForSlot,
   resolveSalientCardVisual,
   resolveDailyBriefHeroMedia,
-  resolveAudioEpisodeVisual
+  resolveAudioEpisodeVisual,
+  selectBestEspnArticleImage
 } from '../src/engine/salientMediaEngine.js';
 import {
   JARGON_GLOSSARY,
@@ -11247,6 +11248,134 @@ test('Salient Visual Media Engine: CDN resize transforms, 4-tier visual resoluti
   const homeMatchupMatch = renderedHome.match(/data-dashboard-block="upcoming_matchup"[\s\S]*?<\/article>/);
   assert.ok(homeMatchupMatch && !homeMatchupMatch[0].includes('player-avatar'), 'Home Upcoming Matchup must preserve 0 player avatars');
 });
+
+await testAsync(
+  'Daily Brief Hero Media & ESPN Image Picker: rejects stale evergreen collages, league-wide roundups, stitcher icons, and 1:1 crops across all 32 teams',
+  async () => {
+    const { resolveTeamConfig, setActiveTeamConfig } = await import('../src/config/teamRegistry.js');
+    const { resolveDailyBriefSafeSources } = await import('../src/views/newsView.js');
+
+    // 1. selectBestEspnArticleImage skips stitcher graphics, 1:1 squares, and custom collages in favor of landscape wire photos
+    const pickedDaronte = selectBestEspnArticleImage([
+      {
+        type: 'header',
+        name: 'Daronte Jones [608x342]',
+        width: 608,
+        height: 342,
+        credit: 'ESPN',
+        url: 'https://a.espncdn.com/photo/2026/0904/daronte_jones_608x342.jpg'
+      },
+      {
+        type: 'header',
+        name: 'Daronte Jones photo 1 [1296x1296]',
+        width: 1296,
+        height: 1296,
+        credit: 'Scott Taetsch/Getty Images',
+        url: 'https://a.espncdn.com/photo/2026/0905/r1711664_1296x1296_1-1.jpg'
+      },
+      {
+        type: 'header',
+        name: 'Daronte Jones photo 4 [1296x729]',
+        width: 1296,
+        height: 729,
+        credit: 'Courtesy Daronte Jones',
+        url: 'https://a.espncdn.com/photo/2026/0905/r1711667_1296x729_16-9.jpg'
+      }
+    ]);
+    assert.equal(
+      pickedDaronte,
+      'https://a.espncdn.com/photo/2026/0905/r1711667_1296x729_16-9.jpg',
+      'Must prefer landscape wire photo over custom ESPN collage and 1:1 square crop'
+    );
+
+    const pickedPreview = selectBestEspnArticleImage([
+      {
+        type: 'stitcher',
+        name: 'espn.applewatch.awayhome.1',
+        url: 'https://s.espncdn.com/stitcher/sports/football/nfl/events/401873078.png?templateId=espn.applewatch.awayhome.1'
+      },
+      {
+        type: 'Media',
+        name: 'Commanders vs Bengals preview',
+        width: 576,
+        height: 324,
+        url: 'https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1119/dm_261119_Bengals_Burrow_sick_IA/dm_261119_Bengals_Burrow_sick_IA.jpg'
+      }
+    ]);
+    assert.ok(
+      pickedPreview.includes('espnmedia-cdn.akamaized.net'),
+      'Must skip Apple Watch stitcher graphic and select real landscape media frame'
+    );
+
+    // 2. Commanders MNF regression: never pick stale Sept 4 Daronte Jones collage or league roundups over official Hail Raiser stadium photo
+    const wasCfg = resolveTeamConfig('commanders');
+    const sfCfg = resolveTeamConfig('49ers');
+    try {
+      setActiveTeamConfig(wasCfg);
+      const wasBrief = {
+        generatedAt: '2026-11-23T03:48:02.846Z',
+        headline: 'Washington Hosts Bengals on Monday Night Football Amid Defensive Struggles',
+        summary: 'Washington (3-5-1) enters Monday against the 7-2 Cincinnati Bengals.',
+        bullets: [
+          'Bengals QB Joe Burrow is expected to play [S7](https://www.espn.com/nfl/story/_/id/50544261/burrow-practices-again-full-strength-mnf).',
+          'DC Daronte Jones must pressure Burrow [S3](https://www.espn.com/nfl/story/_/id/49828234/washington-commanders-daronte-jones-2026-defense).',
+          'The Commanders will wear their Hail Raiser uniforms at Northwest Stadium [S6](https://www.commanders.com/news/raucous-hail-raiser-fan-environment-can-make-big-difference-against-bengals).'
+        ],
+        sources: [
+          { sid: 'S1', title: 'How active NFL players continue to redefine all-time sack list', url: 'https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald', outlet: 'ESPN' },
+          { sid: 'S2', title: 'Week 11 NFL highlights: Best plays, moments, touchdowns, more', url: 'https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026', outlet: 'ESPN' },
+          { sid: 'S3', title: "Inside Commanders DC Daronte Jones' unusual coaching journey", url: 'https://www.espn.com/nfl/story/_/id/49828234/washington-commanders-daronte-jones-2026-defense', outlet: 'ESPN' },
+          { sid: 'S4', title: 'NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico', url: 'https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals', outlet: 'ESPN' },
+          { sid: 'S6', title: 'Raucous "Hail Raiser" fan environment can make big difference against Bengals', url: 'https://www.commanders.com/news/raucous-hail-raiser-fan-environment-can-make-big-difference-against-bengals', outlet: 'commanders.com Official' },
+          { sid: 'S7', title: "Back at practice again, Bengals QB Burrow optimistic he'll be at full strength", url: 'https://www.espn.com/nfl/story/_/id/50544261/burrow-practices-again-full-strength-mnf', outlet: 'ESPN' }
+        ]
+      };
+      const wasStream = [
+        { id: 's1', type: 'article', title: wasBrief.sources[0].title, url: wasBrief.sources[0].url, outletName: 'ESPN', storyRank: 13.4, imageUrl: 'https://a.espncdn.com/photo/2026/0828/nfl_data_viz_garrett_cr_16x9_608x342.jpg' },
+        { id: 's2', type: 'article', title: wasBrief.sources[1].title, url: wasBrief.sources[1].url, outletName: 'ESPN', storyRank: 12.6, imageUrl: 'https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg' },
+        { id: 's3', type: 'article', title: wasBrief.sources[2].title, url: wasBrief.sources[2].url, outletName: 'ESPN', storyRank: 9.9, imageUrl: 'https://a.espncdn.com/photo/2026/0904/daronte_jones_608x342.jpg' },
+        { id: 's4', type: 'article', title: wasBrief.sources[3].title, url: wasBrief.sources[3].url, outletName: 'ESPN', storyRank: 9.5, imageUrl: 'https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg' },
+        { id: 's6', type: 'article', title: wasBrief.sources[4].title, url: wasBrief.sources[4].url, outletName: 'commanders.com Official', storyRank: 0.26, imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/commanders/xlt1bjgjfwbmwkizcso1.jpg' },
+        { id: 's7', type: 'article', title: wasBrief.sources[5].title, url: wasBrief.sources[5].url, outletName: 'ESPN', storyRank: 0.25, imageUrl: 'https://a.espncdn.com/photo/2026/1120/r1748742_600x600_1-1.jpg' }
+      ];
+      const resolvedWasHero = resolveDailyBriefHeroMedia(wasBrief, wasStream, { teamConfig: wasCfg });
+      assert.ok(resolvedWasHero, 'Commanders brief must resolve a hero photo');
+      assert.ok(
+        resolvedWasHero.rawUrl.includes('static.clubs.nfl.com') && resolvedWasHero.rawUrl.includes('/commanders/'),
+        `Commanders brief must pick official club Hail Raiser photo, got: ${resolvedWasHero.rawUrl}`
+      );
+      assert.ok(
+        !resolvedWasHero.rawUrl.includes('daronte_jones') && !resolvedWasHero.rawUrl.includes('nfl_data_viz'),
+        'Commanders brief must never pick stale Sept 4 Daronte Jones collage or Myles Garrett data-viz'
+      );
+
+      // 3. When ONLY stale custom collage or league-wide roundups exist, return null instead of showing garbage
+      const onlyGarbageHero = resolveDailyBriefHeroMedia(
+        wasBrief,
+        [wasStream[0], wasStream[1], wasStream[2], wasStream[3]],
+        { teamConfig: wasCfg }
+      );
+      assert.equal(
+        onlyGarbageHero,
+        null,
+        'Must omit hero banner rather than displaying a stale custom collage or league-wide roundup'
+      );
+
+      // 4. resolveDailyBriefSafeSources strips uncited off-topic league roundups while retaining cited opponent articles
+      const safeWasSources = resolveDailyBriefSafeSources(wasBrief, wasStream, null);
+      assert.ok(
+        safeWasSources.some(s => s.url.includes('burrow-practices-again')),
+        'Inline-cited opponent source (Burrow) must be retained in Sources drawer'
+      );
+      assert.ok(
+        !safeWasSources.some(s => s.url.includes('all-sack-list-tracker') || s.url.includes('fashionable-arrivals')),
+        'Uncited off-topic league roundups (Myles Garrett / George Kittle) must be stripped from Sources drawer'
+      );
+    } finally {
+      setActiveTeamConfig(sfCfg);
+    }
+  }
+);
 
 await testAsync(
   'Holistic Link-Drop Tweet -> Direct Article Promotion: bypasses intermediate social hop for 90%+ article link-drops while preserving salient tweets with complementary links',

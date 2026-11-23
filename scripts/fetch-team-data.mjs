@@ -29,6 +29,7 @@ import {
   buildDeterministicCoachingMatchup,
   getTeamByAbbr,
   getTeamCoaches,
+  hasCrossTeam49ersLeak,
   normalizeAnyTeamAbbr,
   resolveTeamConfig,
   setActiveTeamConfig
@@ -89,6 +90,8 @@ import {
   classifyBreakingItem,
   classifyNewsItemCategory,
   formatTweetBodyForDisplay,
+  isOpposingTeamOnlyInjuryOrRosterStory,
+  isOpposingTeamSubjectLead,
   resolveNewsBriefCycleState,
   sortNewsWithBreakingPriority
 } from '../src/engine/breakingClassifier.js';
@@ -100,10 +103,12 @@ import {
   buildOtcPlayerUrl,
   createPlayerIdentityResolver,
   getPlayerLookupKeys,
+  isOffTopicLeagueFiller,
   isPaywalledPublisher,
   normalizePlayerKey,
   sanitizeExternalUrl
 } from '../src/engine/linkIntegrity.js';
+import { selectBestEspnArticleImage } from '../src/engine/salientMediaEngine.js';
 import { cleanSensationalistText, scoreContentSignal } from '../src/engine/antiFluffFilter.js';
 import {
   buildAuthoritativeLiveContextSnapshot,
@@ -804,8 +809,23 @@ ${snapshot.slice(0, 9000)}`;
       if (!parsed?.headline || !Array.isArray(parsed?.bullets) || parsed.bullets.length < 2) continue;
 
       const joined = `${parsed.headline} ${parsed.summary || ''} ${parsed.bullets.join(' ')}`;
+      const oppAbbr = String(appData?.scheduleMatchup?.upcomingMatchup?.oppAbbr || '').toUpperCase();
+      if (hasCrossTeam49ersLeak(joined, team, oppAbbr)) {
+        console.warn(`[ai-brief] ${team.abbr} ${model} rejected due to cross-team 49ers leak`);
+        continue;
+      }
       const guard = validateNoHallucinatedRosterClaims(joined, appData.roster?.players || []);
       const wordCount = joined.split(/\s+/).filter(Boolean).length;
+      const citedUrlSet = new Set();
+      const mdLinkRe = /\]\((https:\/\/[^)\s]+)\)/gi;
+      let lm;
+      while ((lm = mdLinkRe.exec(joined)) !== null) {
+        citedUrlSet.add(String(lm[1]).trim().toLowerCase().replace(/\/+$/, ''));
+      }
+      const orderedSources = [
+        ...sourceCandidates.filter(s => citedUrlSet.has(String(s.url || '').trim().toLowerCase().replace(/\/+$/, ''))),
+        ...sourceCandidates.filter(s => !citedUrlSet.has(String(s.url || '').trim().toLowerCase().replace(/\/+$/, '')))
+      ].slice(0, 10);
       return {
         id: `brief_${team.abbr.toLowerCase()}_${hashShort(cycleState.activeCycleKey)}`,
         cycleKey: cycleState.activeCycleKey,
@@ -822,9 +842,9 @@ ${snapshot.slice(0, 9000)}`;
         headline: String(parsed.headline).trim(),
         summary: String(parsed.summary || '').trim(),
         bullets: parsed.bullets.map(b => String(b || '').trim()).filter(Boolean).slice(0, 6),
-        coveredStoryKeys: sourceCandidates.slice(0, 6).map(s => s.id),
-        coveredUrls: sourceCandidates.slice(0, 6).map(s => s.url).filter(Boolean),
-        sources: sourceCandidates.slice(0, 10).map(s => ({
+        coveredStoryKeys: orderedSources.slice(0, 6).map(s => s.id),
+        coveredUrls: orderedSources.slice(0, 6).map(s => s.url).filter(Boolean),
+        sources: orderedSources.map(s => ({
           sid: s.sid,
           title: s.title,
           url: s.url,
@@ -1981,10 +2001,11 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     const cleanUrl = sanitizeExternalUrl(item?.url || '', null);
     if (!cleanUrl || isPaywalledPublisher(cleanUrl) || seenNewsUrls.has(cleanUrl)) return;
     seenNewsUrls.add(cleanUrl);
+    if (isOpposingTeamOnlyInjuryOrRosterStory(item, team)) return;
     const sig = scoreContentSignal(item.title || '', item.summary || item.fullText || '');
     if (sig.isClickbait) return;
     const pubIso = item.publishedAt || nowIso;
-    const brk = classifyBreakingItem(item, Date.now());
+    const brk = classifyBreakingItem(item, Date.now(), { team, rosterPlayers: players });
     const cat = classifyNewsItemCategory(item);
     rawStream.push({
       ...item,
@@ -2001,20 +2022,51 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     });
   };
 
-  // 9a. ESPN Team News
+  // 9a. ESPN Team News (filter out multi-team league roundups & select best landscape wire photo)
+  const teamTextRe = new RegExp(
+    `\\b(?:${[team.nickname, team.city, ...(team.aliases || [])]
+      .filter(Boolean)
+      .map(s => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('|')})\\b`,
+    'i'
+  );
+  const activeRosterNamesLower = players
+    .filter(p => p.rosterBucket === 'active' || p.rosterBucket === 'ir')
+    .map(p => String(p.name || '').trim().toLowerCase())
+    .filter(n => n.length >= 6);
+
   for (const a of espnNewsRaw?.articles || []) {
     const url = a.links?.web?.href || '';
     const title = String(a.headline || '').trim();
     const summary = String(a.description || '').trim();
-    if (!title || !url) continue;
+    if (!title || !url || a.premium) continue;
+    const combinedLower = `${title} ${summary}`.toLowerCase();
+    const hasTeamMention = teamTextRe.test(title) || teamTextRe.test(summary);
+    const hasRosterMatch =
+      hasTeamMention || activeRosterNamesLower.some(nm => combinedLower.includes(nm));
+    const teamCats = (a.categories || []).filter(c => c?.type === 'team');
+    if (teamCats.length >= 6 && !hasTeamMention && !activeRosterNamesLower.some(nm => title.toLowerCase().includes(nm))) {
+      continue;
+    }
+    if (isOffTopicLeagueFiller({ url, title, summary, hasRosterMatch })) continue;
+    if (!hasTeamMention && isOpposingTeamSubjectLead(title, {}, team)) continue;
     const byline = a.byline || 'ESPN NFL Nation';
-    const rep = resolveReporterFromNameOrHandle(byline);
+    const rep = resolveReporterFromNameOrHandle(byline, team);
+    const resolvedTrustTier = rep?.isOtherTeamBeat ? 3 : rep?.trustTier || 1;
+    const selectedImageUrl = selectBestEspnArticleImage(a.images) || '';
+    const selectedImageObj =
+      (Array.isArray(a.images) ? a.images : []).find(im => {
+        const u = String(im?.url || '').replace(/^http:\/\//i, 'https://').trim();
+        return u && u === selectedImageUrl;
+      }) || a.images?.[0] || null;
+    const imageCaption = String(selectedImageObj?.caption || selectedImageObj?.alt || selectedImageObj?.name || '').trim();
     pushNewsItem({
       id: `${team.abbr.toLowerCase()}_espn_${a.dataSourceIdentifier || hashShort(url)}`,
       type: a.type === 'Media' ? 'video' : 'article',
       title,
       summary,
-      imageUrl: a.images?.[0]?.url || '',
+      imageUrl: selectedImageUrl,
+      imageCaption,
       imageAlt: title,
       publishedAt: a.published || nowIso,
       url,
@@ -2025,7 +2077,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       author: rep?.name || byline,
       authorHandle: rep?.handle || '@ESPNNFL',
       authorProfileUrl: rep?.xUrl || `https://www.espn.com/nfl/team/_/name/${team.espnAbbr}/${team.otcSlug}`,
-      trustTier: 1,
+      trustTier: resolvedTrustTier,
       wireSource: 'espn_team_news'
     });
   }
@@ -2135,6 +2187,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     const link = decodeXmlEntities((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
     const pubRaw = decodeXmlEntities((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
     if (!title || !link || !teamMatchRe.test(`${title} ${desc}`)) continue;
+    if (isOpposingTeamSubjectLead(`${title} ${desc}`, {}, team)) continue;
     const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
     if (!Number.isFinite(pubMs) || Date.now() - pubMs > 10 * 86_400_000) continue;
     const td = formatTweetBodyForDisplay(`${title}: ${desc}`, SHORT_TWEET_FULL_TEXT_LIMIT);
