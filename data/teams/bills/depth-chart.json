@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T22:38:47.984Z",
+  "updatedAt": "2026-11-23T01:02:47.086Z",
   "week": 12,
   "units": [
     {
@@ -915,8 +915,8 @@
               "jersey": 45,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2978313.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
               "isAvailable": false
             },
             {
@@ -958,8 +958,8 @@
               "jersey": 45,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2978313.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1104,8 +1104,8 @@
               "jersey": 27,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3042717.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
               "isAvailable": false
             },
             {
@@ -1137,8 +1137,8 @@
               "jersey": 27,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3042717.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Prac. Squad",
               "isAvailable": false,
               "demotedDueToInjury": true
             },

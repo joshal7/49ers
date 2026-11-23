@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T22:38:44.432Z",
+  "updatedAt": "2026-11-23T01:02:43.431Z",
   "dailyTopNewsBrief": {
     "id": "brief_det_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -7,45 +7,61 @@
     "isPostGame": true,
     "gameWeek": 12,
     "teamRecord": "8-2",
-    "generatedAt": "2026-11-22T22:38:46.965Z",
+    "generatedAt": "2026-11-23T01:02:45.887Z",
     "modelUsed": "gemini-4-hydrogen",
     "thinkingLevel": "XHIGH",
     "source": "deterministic-digest",
-    "wordCount": 72,
+    "wordCount": 108,
     "headline": "Detroit Lions Daily Briefing — Week 12",
     "summary": "Detroit Lions (8-2, 1st in NFC North • #2 Seed in NFC) top verified storylines, injury status, and upcoming matchup intel.",
     "bullets": [
+      "Week 11 NFL highlights: Best plays, moments, touchdowns, more ([NFL Nation](https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026))",
+      "NFL Week 11 arrivals: George Kittle rocks Luchador mask ahead of SNF in Mexico ([ESPN Staff](https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals))",
       "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games ([NFL Nation](https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026))",
       "Khalil Dorsey is back in the game with a club over the hand where he suffered an injured wrist. ([Justin Rogers](https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x))",
-      "Week 11 NFL highlights: Best plays, moments, touchdowns, more ([NFL Nation](https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026))",
-      "HIGHLIGHT: Gibbs strolls to the pylon to score his 15th TD of 2026 season ([detroitlions.com Video](https://www.detroitlions.com/video/highlight-gibbs-strolls-to-the-pylon-to-score-his-15th-td-of-2026-season))",
-      "HIGHLIGHT: Gibbs punches it in from 1-yard out ([detroitlions.com Video](https://www.detroitlions.com/video/highlight-gibbs-punches-it-in-from-1-yard-out))"
+      "Kenny Gainwell: Records 59 total yards in loss: Gainwell rushed four times for 16 yards and brought in four of five targets for 43 yards in the Buccaneers 31-21 loss to the Lions on Sunday. Visit RotoWire.com for more analysis on this update. ([RotoWire NFL Beat](https://www.rotowire.com/football/player/kenny-gainwell-15222))"
     ],
     "coveredStoryKeys": [
+      "det_espn_c66b1cfb0eee8",
+      "det_espn_60efae509e729",
       "det_espn_7435c17a22db1",
       "det_bsky_dae5d18dedb6",
-      "det_espn_c66b1cfb0eee8",
-      "det_vid_c4c9aff587fe",
-      "det_vid_7623bd535cab"
+      "det_roto_4fc110f240f4"
     ],
     "coveredUrls": [
+      "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
+      "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
       "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
       "https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x",
-      "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "https://www.detroitlions.com/video/highlight-gibbs-strolls-to-the-pylon-to-score-his-15th-td-of-2026-season",
-      "https://www.detroitlions.com/video/highlight-gibbs-punches-it-in-from-1-yard-out"
+      "https://www.rotowire.com/football/player/kenny-gainwell-15222"
     ],
     "sources": [
       {
         "sid": "S1",
+        "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+        "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
+        "author": "NFL Nation",
+        "outlet": "ESPN",
+        "publishedAt": "2026-11-23T00:37:43Z"
+      },
+      {
+        "sid": "S2",
+        "title": "NFL Week 11 arrivals: George Kittle rocks Luchador mask ahead of SNF in Mexico",
+        "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
+        "author": "ESPN Staff",
+        "outlet": "ESPN",
+        "publishedAt": "2026-11-23T00:49:16Z"
+      },
+      {
+        "sid": "S3",
         "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
         "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
         "author": "NFL Nation",
         "outlet": "ESPN",
-        "publishedAt": "2026-11-22T22:33:36Z"
+        "publishedAt": "2026-11-23T00:48:39Z"
       },
       {
-        "sid": "S2",
+        "sid": "S4",
         "title": "Khalil Dorsey is back in the game with a club over the hand where he suffered an injured wrist.",
         "url": "https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x",
         "author": "Justin Rogers",
@@ -53,15 +69,15 @@
         "publishedAt": "2026-11-22T19:07:38.614Z"
       },
       {
-        "sid": "S3",
-        "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-        "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-        "author": "NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-22T21:20:56Z"
+        "sid": "S5",
+        "title": "Kenny Gainwell: Records 59 total yards in loss: Gainwell rushed four times for 16 yards and brought in four of five targets for 43 yards in the Buccaneers 31-21 loss to the Lions on Sunday. Visit RotoWire.com for more analysis on this update.",
+        "url": "https://www.rotowire.com/football/player/kenny-gainwell-15222",
+        "author": "RotoWire NFL Beat",
+        "outlet": "RotoWire NFL Beat",
+        "publishedAt": "2026-11-23T00:52:00.000Z"
       },
       {
-        "sid": "S4",
+        "sid": "S6",
         "title": "HIGHLIGHT: Gibbs strolls to the pylon to score his 15th TD of 2026 season",
         "url": "https://www.detroitlions.com/video/highlight-gibbs-strolls-to-the-pylon-to-score-his-15th-td-of-2026-season",
         "author": "detroitlions.com Video",
@@ -69,7 +85,7 @@
         "publishedAt": "2026-11-22T21:10:01.000Z"
       },
       {
-        "sid": "S5",
+        "sid": "S7",
         "title": "HIGHLIGHT: Gibbs punches it in from 1-yard out",
         "url": "https://www.detroitlions.com/video/highlight-gibbs-punches-it-in-from-1-yard-out",
         "author": "detroitlions.com Video",
@@ -77,41 +93,91 @@
         "publishedAt": "2026-11-22T20:54:46.000Z"
       },
       {
-        "sid": "S6",
-        "title": "The Lions beat the Bucs for their 6th straight win, and we all know what's next - a big Thanksgiving showdown with the Chicago Bears www.freep.com/story/sports...",
-        "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wkhwud6s2k",
-        "author": "Dave Birkett",
-        "outlet": "Dave Birkett",
-        "publishedAt": "2026-11-22T21:24:55.500Z"
-      },
-      {
-        "sid": "S7",
+        "sid": "S8",
         "title": "Anybody else worry for a split second the way Jamo landed that front flip in the end zone?",
         "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wfcn2z3s25",
         "author": "Dave Birkett",
         "outlet": "Dave Birkett",
         "publishedAt": "2026-11-22T19:52:28.756Z"
-      },
-      {
-        "sid": "S8",
-        "title": "HIGHLIGHT: 57-yard TD! Goff launches it to Williams for the score",
-        "url": "https://www.detroitlions.com/video/highlight-57-yard-td-goff-launches-it-to-williams-for-the-score",
-        "author": "detroitlions.com Video",
-        "outlet": "detroitlions.com Video",
-        "publishedAt": "2026-11-22T20:00:49.000Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
     {
+      "id": "det_espn_c66b1cfb0eee8",
+      "type": "article",
+      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+      "summary": "Check here for all of the top moments, TDs and analysis from games at the Cowboys, Chiefs, Eagles, Panthers and more.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749754_608x342_16-9.jpg",
+      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+      "publishedAt": "2026-11-23T00:37:43Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
+      "outletId": "espn_det",
+      "outletName": "ESPN",
+      "reporterId": "espn_det",
+      "reporterName": "NFL Nation",
+      "author": "NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/det/detroit-lions",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.506,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 57.3728
+    },
+    {
+      "id": "det_espn_60efae509e729",
+      "type": "article",
+      "title": "NFL Week 11 arrivals: George Kittle rocks Luchador mask ahead of SNF in Mexico",
+      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg",
+      "imageAlt": "NFL Week 11 arrivals: George Kittle rocks Luchador mask ahead of SNF in Mexico",
+      "publishedAt": "2026-11-23T00:49:16Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
+      "outletId": "espn_det",
+      "outletName": "ESPN",
+      "reporterId": "espn_det",
+      "reporterName": "ESPN Staff",
+      "author": "ESPN Staff",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/det/detroit-lions",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 47.8405
+    },
+    {
       "id": "det_espn_7435c17a22db1",
       "type": "article",
       "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
       "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749844_608x342_16-9.jpg",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749880_608x342_16-9.jpg",
       "imageAlt": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-22T22:33:36Z",
+      "publishedAt": "2026-11-23T00:48:39Z",
       "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
       "outletId": "espn_det",
       "outletName": "ESPN",
@@ -135,7 +201,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 56.5689
+      "storyRank": 47.2852
     },
     {
       "id": "det_bsky_dae5d18dedb6",
@@ -159,10 +225,10 @@
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
       "wireSource": "bluesky_live",
-      "isBreaking": true,
+      "isBreaking": false,
       "isInGameInjury": true,
-      "breakingBadge": "LIVE INJURY UPDATE",
-      "breakingPriority": 3.166,
+      "breakingBadge": "INJURY UPDATE",
+      "breakingPriority": 1.483,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -171,7 +237,7 @@
       "isFirstMoverInjuryScoop": true,
       "corroborationCount": 1,
       "storyTier": "in_game_injury",
-      "isUrgentBreaking": true,
+      "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": true,
       "isStalePreGameAvailability": false,
       "injurySeverityScore": 0.48,
@@ -179,40 +245,41 @@
       "playerValueScore": 0.09,
       "playerValueTier": "depth",
       "injuryImpactScore": 0.324,
-      "storyRank": 33.1093
+      "storyRank": 15.529
     },
     {
-      "id": "det_espn_c66b1cfb0eee8",
-      "type": "article",
-      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of the top moments, TDs and analysis from games at the Cowboys, Chiefs, Eagles, Panthers and more.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749754_608x342_16-9.jpg",
-      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-22T21:20:56Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "outletId": "espn_det",
-      "outletName": "ESPN",
-      "reporterId": "espn_det",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/det/detroit-lions",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "id": "det_roto_4fc110f240f4",
+      "type": "tweet",
+      "title": "Kenny Gainwell: Records 59 total yards in loss: Gainwell rushed four times for 16 yards and brought in four of five targets for 43 yards in the Buccaneers 31-21 loss to the Lions on Sunday. Visit RotoWire.com for more analysis on this update.",
+      "fullText": "Kenny Gainwell: Records 59 total yards in loss: Gainwell rushed four times for 16 yards and brought in four of five targets for 43 yards in the Buccaneers 31-21 loss to the Lions on Sunday. Visit RotoWire.com for more analysis on this update.",
+      "isFullTweet": true,
+      "summary": "Gainwell rushed four times for 16 yards and brought in four of five targets for 43 yards in the Buccaneers 31-21 loss to the Lions on Sunday. Visit RotoWire.com for more analysis on this update.",
+      "imageUrl": "",
+      "publishedAt": "2026-11-23T00:52:00.000Z",
+      "url": "https://www.rotowire.com/football/player/kenny-gainwell-15222",
+      "outletId": "rotowire",
+      "outletName": "RotoWire NFL Beat",
+      "reporterId": "rotowire_nfl_beat",
+      "reporterName": "RotoWire NFL Beat",
+      "author": "RotoWire NFL Beat",
+      "authorHandle": "@RotoWireNFL",
+      "authorProfileUrl": "https://www.rotowire.com/football/news.php",
+      "trustTier": 2,
+      "wireSource": "rotowire_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.36,
+      "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "post_game_recap",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 30.2525
+      "storyRank": 13.1896
     },
     {
       "id": "det_vid_c4c9aff587fe",
@@ -236,7 +303,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.332,
+      "breakingPriority": 1.009,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -246,7 +313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 25.4926
+      "storyRank": 10.3457
     },
     {
       "id": "det_vid_7623bd535cab",
@@ -270,7 +337,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.293,
+      "breakingPriority": 0.98,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -280,7 +347,112 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 22.39
+      "storyRank": 9.6678
+    },
+    {
+      "id": "det_bsky_49b3cc757a15",
+      "type": "tweet",
+      "title": "Anybody else worry for a split second the way Jamo landed that front flip in the end zone?",
+      "fullText": "Anybody else worry for a split second the way Jamo landed that front flip in the end zone?",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Dave Birkett post",
+      "publishedAt": "2026-11-22T19:52:28.756Z",
+      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wfcn2z3s25",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "detroit_free_press",
+      "outletName": "Dave Birkett",
+      "reporterId": "dave_birkett",
+      "reporterName": "Dave Birkett",
+      "author": "Dave Birkett",
+      "authorHandle": "@davebirkett",
+      "authorProfileUrl": "https://x.com/davebirkett",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.869,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 8.8895
+    },
+    {
+      "id": "det_vid_009110c13b8e",
+      "type": "video",
+      "title": "HIGHLIGHT: 57-yard TD! Goff launches it to Williams for the score",
+      "summary": "Detroit Lions quarterback Jared Goff connects with wide receiver Jameson Williams for a 57-yard touchdown.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/g85nwnm1iulxcokdkaqf.jpg",
+      "imageAlt": "HIGHLIGHT: 57-yard TD! Goff launches it to Williams for the score",
+      "publishedAt": "2026-11-22T20:00:49.000Z",
+      "url": "https://www.detroitlions.com/video/highlight-57-yard-td-goff-launches-it-to-williams-for-the-score",
+      "externalVideoUrl": "https://www.detroitlions.com/video/highlight-57-yard-td-goff-launches-it-to-williams-for-the-score",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Video",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Video",
+      "author": "detroitlions.com Video",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.883,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 18,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.7935
+    },
+    {
+      "id": "det_vid_01f6b0259c93",
+      "type": "video",
+      "title": "Lions vs. Buccaneers: Locker room celebration",
+      "summary": "Go inside the Lions locker room following their Week 11 victory over the Tampa Bay Buccaneers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/bdmw2ynl1blqhihtklzk.jpg",
+      "imageAlt": "Lions vs. Buccaneers: Locker room celebration",
+      "publishedAt": "2026-11-23T00:19:00.000Z",
+      "url": "https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052",
+      "externalVideoUrl": "https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Video",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Video",
+      "author": "detroitlions.com Video",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.3782
     },
     {
       "id": "det_bsky_76b4702b8f91",
@@ -317,78 +489,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.9029
-    },
-    {
-      "id": "det_bsky_49b3cc757a15",
-      "type": "tweet",
-      "title": "Anybody else worry for a split second the way Jamo landed that front flip in the end zone?",
-      "fullText": "Anybody else worry for a split second the way Jamo landed that front flip in the end zone?",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Dave Birkett post",
-      "publishedAt": "2026-11-22T19:52:28.756Z",
-      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wfcn2z3s25",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "detroit_free_press",
-      "outletName": "Dave Birkett",
-      "reporterId": "dave_birkett",
-      "reporterName": "Dave Birkett",
-      "author": "Dave Birkett",
-      "authorHandle": "@davebirkett",
-      "authorProfileUrl": "https://x.com/davebirkett",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.147,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 17.1489
-    },
-    {
-      "id": "det_vid_009110c13b8e",
-      "type": "video",
-      "title": "HIGHLIGHT: 57-yard TD! Goff launches it to Williams for the score",
-      "summary": "Detroit Lions quarterback Jared Goff connects with wide receiver Jameson Williams for a 57-yard touchdown.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/g85nwnm1iulxcokdkaqf.jpg",
-      "imageAlt": "HIGHLIGHT: 57-yard TD! Goff launches it to Williams for the score",
-      "publishedAt": "2026-11-22T20:00:49.000Z",
-      "url": "https://www.detroitlions.com/video/highlight-57-yard-td-goff-launches-it-to-williams-for-the-score",
-      "externalVideoUrl": "https://www.detroitlions.com/video/highlight-57-yard-td-goff-launches-it-to-williams-for-the-score",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Video",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Video",
-      "author": "detroitlions.com Video",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.166,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 18,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 15.3323
+      "storyRank": 6.0319
     },
     {
       "id": "det_bsky_d9554a8c4310",
@@ -425,40 +526,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.6624
+      "storyRank": 6.0896
     },
     {
-      "id": "det_espn_aea129f88ee07",
+      "id": "det_rss_92d6faf1e8ed",
       "type": "article",
-      "title": "Jared Goff throws 2 TDs, Jahmyr Gibbs runs for 2 more and Lions beat Bucs 31-21 for 6th straight win",
-      "summary": "— The Detroit Lions are finding their groove, leaning on a balanced attack offensively and a steadily improving defense that hasn't been hurt by the losses of",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873072.png?templateId=espn.applewatch.awayhome.1",
-      "imageAlt": "Jared Goff throws 2 TDs, Jahmyr Gibbs runs for 2 more and Lions beat Bucs 31-21 for 6th straight win",
-      "publishedAt": "2026-11-22T22:33:44Z",
-      "url": "https://www.espn.com/nfl/recap?gameId=401873072",
-      "outletId": "espn_det",
-      "outletName": "ESPN",
-      "reporterId": "espn_det",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/det/detroit-lions",
+      "title": "NOTEBOOK: Lions 'on the next one' after Week 11 win over Bucs",
+      "summary": "Tim Twentyman covers all the news from the Detroit Lions’ 31-21 victory over the Tampa Bay Buccaneers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/biey2ekpavyzfbx7af4e.jpg",
+      "imageAlt": "NOTEBOOK: Lions 'on the next one' after Week 11 win over Bucs",
+      "publishedAt": "2026-11-23T00:02:59.000Z",
+      "url": "https://www.detroitlions.com/news/notebook-lions-on-next-one-after-week-11-win-over-tampa-bay-clark-wonnum",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Official",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Official",
+      "author": "detroitlions.com Official",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
       "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "wireSource": "club_official_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 0,
+      "fluffScore": 18,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.1827
+      "storyRank": 5.4489
     },
     {
       "id": "det_bsky_95918640d49f",
@@ -495,74 +596,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.2057
+      "storyRank": 4.9533
     },
     {
-      "id": "det_espn_9463dd92e41c3",
-      "type": "video",
-      "title": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
-      "summary": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/e00e71c3-755b-4a2c-853f-3367f6e4ff36/e00e71c3-755b-4a2c-853f-3367f6e4ff36.jpg",
-      "imageAlt": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
-      "publishedAt": "2026-11-22T21:53:57Z",
-      "url": "https://www.espn.com/video/clip/_/id/50565430/game-highlights",
-      "outletId": "espn_det",
-      "outletName": "ESPN",
-      "reporterId": "espn_det",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/det/detroit-lions",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 7.2729
-    },
-    {
-      "id": "det_vid_a8905329fcc5",
-      "type": "video",
-      "title": "Lions vs. Buccaneers: Full highlights",
-      "summary": "Watch all of the highlights from the Detroit Lions' 31-21 Week 11 victory over the Tampa Bay Buccaneers.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/jfemksyxywhqemtberqt.jpg",
-      "imageAlt": "Lions vs. Buccaneers: Full highlights",
-      "publishedAt": "2026-11-22T21:48:00.000Z",
-      "url": "https://www.detroitlions.com/video/lions-vs-buccaneers-full-highlights-x0977",
-      "externalVideoUrl": "https://www.detroitlions.com/video/lions-vs-buccaneers-full-highlights-x0977",
+      "id": "det_rss_e97a2a128e9b",
+      "type": "article",
+      "title": "FOUR DOWNS: Goff a catalyst for Lions' offense in win over Bucs",
+      "summary": "Four Downs following the Detroit Lions’ 31-21 victory over the Tampa Bay Buccaneers includes Goff leads the way, d-line steps up, Waymo's performance and run game rallies.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/rqt3vxb3or7miqekru96.jpg",
+      "imageAlt": "FOUR DOWNS: Goff a catalyst for Lions' offense in win over Bucs",
+      "publishedAt": "2026-11-22T23:43:49.000Z",
+      "url": "https://www.detroitlions.com/news/four-downs-goff-catalyst-lions-offense-win-over-bucs-gibbs-williams",
       "outletId": "lions_official",
-      "outletName": "detroitlions.com Video",
+      "outletName": "detroitlions.com Official",
       "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Video",
-      "author": "detroitlions.com Video",
+      "reporterName": "detroitlions.com Official",
+      "author": "detroitlions.com Official",
       "authorHandle": "@Lions",
       "authorProfileUrl": "https://www.detroitlions.com/news/",
       "trustTier": 1,
-      "wireSource": "club_video_rss",
+      "wireSource": "club_official_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 0,
+      "fluffScore": 18,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.7304
+      "storyRank": 4.422
     },
     {
       "id": "det_vid_21c8c930060d",
@@ -596,7 +663,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.9722
+      "storyRank": 3.7998
     },
     {
       "id": "det_vid_e304e2423141",
@@ -630,7 +697,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.7888
+      "storyRank": 3.7341
     },
     {
       "id": "det_vid_24ad36508274",
@@ -664,7 +731,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.7545
+      "storyRank": 3.7217
     },
     {
       "id": "det_bsky_91007c4df1f0",
@@ -701,7 +768,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.9998
+      "storyRank": 3.9026
     },
     {
       "id": "det_bsky_d63bbf7a1d83",
@@ -738,7 +805,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.8768
+      "storyRank": 3.857
     },
     {
       "id": "det_bsky_6bb1766a86d4",
@@ -775,7 +842,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.8396
+      "storyRank": 3.843
     },
     {
       "id": "det_vid_45d058a69345",
@@ -809,41 +876,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.3195
-    },
-    {
-      "id": "det_vid_9cc81b3422a9",
-      "type": "video",
-      "title": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers Week 11",
-      "summary": "Detroit Lions running back Jahmyr Gibbs' best plays from his two-touchdown game vs. the Tampa Bay Buccaneers during Week 11 of the 2026 NFL season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/utoruygyzkp5qqfl7s5x.jpg",
-      "imageAlt": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers Week 11",
-      "publishedAt": "2026-11-22T21:36:00.000Z",
-      "url": "https://www.detroitlions.com/video/jahmyr-gibbs-best-plays-from-2-td-game-vs-buccaneers-week-11",
-      "externalVideoUrl": "https://www.detroitlions.com/video/jahmyr-gibbs-best-plays-from-2-td-game-vs-buccaneers-week-11",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Video",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Video",
-      "author": "detroitlions.com Video",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 5.8245
+      "storyRank": 3.5612
     },
     {
       "id": "det_vid_8fc7736e6ca3",
@@ -877,7 +910,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.1173
+      "storyRank": 3.4844
     },
     {
       "id": "det_bsky_70ffea10bca4",
@@ -914,41 +947,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.3419
-    },
-    {
-      "id": "det_vid_23b6812e1771",
-      "type": "video",
-      "title": "Jared Goff's best plays vs. Buccaneers Week 11",
-      "summary": "Detroit Lions quarterback Jared Goff's best plays from his two-touchdown game vs. the Tampa Bay Buccaneers during Week 11 of the 2026 NFL season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/ypuch9v6fe12j4sgfsiw.jpg",
-      "imageAlt": "Jared Goff's best plays vs. Buccaneers Week 11",
-      "publishedAt": "2026-11-22T21:34:51.000Z",
-      "url": "https://www.detroitlions.com/video/jared-goff-s-best-plays-from-2-td-game-vs-buccaneers-week-11",
-      "externalVideoUrl": "https://www.detroitlions.com/video/jared-goff-s-best-plays-from-2-td-game-vs-buccaneers-week-11",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Video",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Video",
-      "author": "detroitlions.com Video",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 5.7486
+      "storyRank": 3.6528
     },
     {
       "id": "det_vid_3e52ba837e92",
@@ -982,7 +981,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8891
+      "storyRank": 3.396
     },
     {
       "id": "det_bsky_ccd54bb8872f",
@@ -1019,7 +1018,243 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8989
+      "storyRank": 3.4763
+    },
+    {
+      "id": "det_vid_f23bb1ec017f",
+      "type": "video",
+      "title": "Campbell on Week 11 performance",
+      "summary": "HC Dan Campbell speaks to the media about the team's performance during their Week 11 victory over the Tampa Bay Buccaneers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/ifellh3dg4qkezs6jen5.jpg",
+      "imageAlt": "Campbell on Week 11 performance",
+      "publishedAt": "2026-11-22T18:10:00.000Z",
+      "url": "https://www.detroitlions.com/video/campbell-on-week-11-performance",
+      "externalVideoUrl": "https://www.detroitlions.com/video/campbell-on-week-11-performance",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Video",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Video",
+      "author": "detroitlions.com Video",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.47
+    },
+    {
+      "id": "det_vid_165fdcb258f4",
+      "type": "video",
+      "title": "Goff on Week 11 win",
+      "summary": "QB Jared Goff speaks to the media about the Lions' Week 11 win and breaks down individual plays during their game vs. the Tampa Bay Buccaneers",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/yvspd94vhflmujbly0nf.jpg",
+      "imageAlt": "Goff on Week 11 win",
+      "publishedAt": "2026-11-22T18:05:00.000Z",
+      "url": "https://www.detroitlions.com/video/goff-on-week-11-win",
+      "externalVideoUrl": "https://www.detroitlions.com/video/goff-on-week-11-win",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Video",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Video",
+      "author": "detroitlions.com Video",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.4187
+    },
+    {
+      "id": "det_vid_5dee2dad24d4",
+      "type": "video",
+      "title": "Clark on defensive performance",
+      "summary": "S Chuck Clark speaks to the media about the team's defensive performance during their Week 11 win against the Tampa Bay Buccaneers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/ybhha2nzb7oqdm3yx1o9.jpg",
+      "imageAlt": "Clark on defensive performance",
+      "publishedAt": "2026-11-22T18:04:00.000Z",
+      "url": "https://www.detroitlions.com/video/clark-on-defensive-performance",
+      "externalVideoUrl": "https://www.detroitlions.com/video/clark-on-defensive-performance",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Video",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Video",
+      "author": "detroitlions.com Video",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.4086
+    },
+    {
+      "id": "det_vid_eb6b9f638b79",
+      "type": "video",
+      "title": "Sewell on Goff",
+      "summary": "T Penei Sewell speaks to the media about QB Jared Goff's skills during the Lions' Week 11 victory over the Tampa Bay Buccaneers and breaks down specific moments in the game.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/vxhkyatcqzrlalp89trl.jpg",
+      "imageAlt": "Sewell on Goff",
+      "publishedAt": "2026-11-22T18:00:57.000Z",
+      "url": "https://www.detroitlions.com/video/sewell-on-goff",
+      "externalVideoUrl": "https://www.detroitlions.com/video/sewell-on-goff",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Video",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Video",
+      "author": "detroitlions.com Video",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.378
+    },
+    {
+      "id": "det_espn_aea129f88ee07",
+      "type": "article",
+      "title": "Jared Goff throws 2 TDs, Jahmyr Gibbs runs for 2 more and Lions beat Bucs 31-21 for 6th straight win",
+      "summary": "— The Detroit Lions are finding their groove, leaning on a balanced attack offensively and a steadily improving defense that hasn't been hurt by the losses of",
+      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873072.png?templateId=espn.applewatch.awayhome.1",
+      "imageAlt": "Jared Goff throws 2 TDs, Jahmyr Gibbs runs for 2 more and Lions beat Bucs 31-21 for 6th straight win",
+      "publishedAt": "2026-11-22T22:33:44Z",
+      "url": "https://www.espn.com/nfl/recap?gameId=401873072",
+      "outletId": "espn_det",
+      "outletName": "ESPN",
+      "reporterId": "espn_det",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/det/detroit-lions",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.7517
+    },
+    {
+      "id": "det_espn_9463dd92e41c3",
+      "type": "video",
+      "title": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
+      "summary": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/e00e71c3-755b-4a2c-853f-3367f6e4ff36/e00e71c3-755b-4a2c-853f-3367f6e4ff36.jpg",
+      "imageAlt": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
+      "publishedAt": "2026-11-22T21:53:57Z",
+      "url": "https://www.espn.com/video/clip/_/id/50565430/game-highlights",
+      "outletId": "espn_det",
+      "outletName": "ESPN",
+      "reporterId": "espn_det",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/det/detroit-lions",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.1514
+    },
+    {
+      "id": "det_vid_a8905329fcc5",
+      "type": "video",
+      "title": "Lions vs. Buccaneers: Full highlights",
+      "summary": "Watch all of the highlights from the Detroit Lions' 31-21 Week 11 victory over the Tampa Bay Buccaneers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/jfemksyxywhqemtberqt.jpg",
+      "imageAlt": "Lions vs. Buccaneers: Full highlights",
+      "publishedAt": "2026-11-22T21:48:00.000Z",
+      "url": "https://www.detroitlions.com/video/lions-vs-buccaneers-full-highlights-x0977",
+      "externalVideoUrl": "https://www.detroitlions.com/video/lions-vs-buccaneers-full-highlights-x0977",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Video",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Video",
+      "author": "detroitlions.com Video",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.0807
     },
     {
       "id": "det_rss_3ea274280813",
@@ -1052,30 +1287,27 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.417
+      "storyRank": 1.7852
     },
     {
-      "id": "det_bsky_ef2779000aac",
-      "type": "tweet",
-      "title": "Lions-Bucs postgame show is live NOW! www.patreon.com/welcometodet...",
-      "fullText": "Lions-Bucs postgame show is live NOW! www.patreon.com/welcometodet...",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:377szmobv24dravpuuu5ihem/bafkreihkvkfaga7qvyjvvopzr34rqde3ecndbfuk537wyukl2g2i7to4sa",
-      "imageAlt": "Nick Baumgardner post",
-      "publishedAt": "2026-11-22T21:09:02.272Z",
-      "url": "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n2wjljrzk22k",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "athletic_det",
-      "outletName": "Nick Baumgardner",
-      "reporterId": "nick_baumgardner",
-      "reporterName": "Nick Baumgardner",
-      "author": "Nick Baumgardner",
-      "authorHandle": "@nickbaumgardner",
-      "authorProfileUrl": "https://x.com/nickbaumgardner",
+      "id": "det_vid_9cc81b3422a9",
+      "type": "video",
+      "title": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers Week 11",
+      "summary": "Detroit Lions running back Jahmyr Gibbs' best plays from his two-touchdown game vs. the Tampa Bay Buccaneers during Week 11 of the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/utoruygyzkp5qqfl7s5x.jpg",
+      "imageAlt": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers Week 11",
+      "publishedAt": "2026-11-22T21:36:00.000Z",
+      "url": "https://www.detroitlions.com/video/jahmyr-gibbs-best-plays-from-2-td-game-vs-buccaneers-week-11",
+      "externalVideoUrl": "https://www.detroitlions.com/video/jahmyr-gibbs-best-plays-from-2-td-game-vs-buccaneers-week-11",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Video",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Video",
+      "author": "detroitlions.com Video",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
       "trustTier": 1,
-      "wireSource": "bluesky_live",
+      "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1084,12 +1316,46 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 92,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0117
+      "storyRank": 1.9497
+    },
+    {
+      "id": "det_vid_23b6812e1771",
+      "type": "video",
+      "title": "Jared Goff's best plays vs. Buccaneers Week 11",
+      "summary": "Detroit Lions quarterback Jared Goff's best plays from his two-touchdown game vs. the Tampa Bay Buccaneers during Week 11 of the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/ypuch9v6fe12j4sgfsiw.jpg",
+      "imageAlt": "Jared Goff's best plays vs. Buccaneers Week 11",
+      "publishedAt": "2026-11-22T21:34:51.000Z",
+      "url": "https://www.detroitlions.com/video/jared-goff-s-best-plays-from-2-td-game-vs-buccaneers-week-11",
+      "externalVideoUrl": "https://www.detroitlions.com/video/jared-goff-s-best-plays-from-2-td-game-vs-buccaneers-week-11",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Video",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Video",
+      "author": "detroitlions.com Video",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.9378
     },
     {
       "id": "det_bsky_acc7c5faee45",
@@ -1126,26 +1392,30 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.2746
+      "storyRank": 1.6504
     },
     {
-      "id": "det_espn_60efae509e729",
-      "type": "article",
-      "title": "NFL Week 11 arrivals: Broncos LB Alex Singleton honors Tom Jackson with jersey",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749785_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 arrivals: Broncos LB Alex Singleton honors Tom Jackson with jersey",
-      "publishedAt": "2026-11-22T21:03:04Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-      "outletId": "espn_det",
-      "outletName": "ESPN",
-      "reporterId": "espn_det",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/det/detroit-lions",
+      "id": "det_bsky_ef2779000aac",
+      "type": "tweet",
+      "title": "Lions-Bucs postgame show is live NOW! www.patreon.com/welcometodet...",
+      "fullText": "Lions-Bucs postgame show is live NOW! www.patreon.com/welcometodet...",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:377szmobv24dravpuuu5ihem/bafkreihkvkfaga7qvyjvvopzr34rqde3ecndbfuk537wyukl2g2i7to4sa",
+      "imageAlt": "Nick Baumgardner post",
+      "publishedAt": "2026-11-22T21:09:02.272Z",
+      "url": "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n2wjljrzk22k",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "athletic_det",
+      "outletName": "Nick Baumgardner",
+      "reporterId": "nick_baumgardner",
+      "reporterName": "Nick Baumgardner",
+      "author": "Nick Baumgardner",
+      "authorHandle": "@nickbaumgardner",
+      "authorProfileUrl": "https://x.com/nickbaumgardner",
       "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "wireSource": "bluesky_live",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1154,12 +1424,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
+      "credibilityScore": 92,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.1685
+      "storyRank": 1.936
     },
     {
       "id": "det_vid_a79420d76426",
@@ -1193,7 +1463,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7014
+      "storyRank": 1.4807
     },
     {
       "id": "det_bsky_f1355f9db30e",
@@ -1230,7 +1500,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.8187
+      "storyRank": 1.5561
     },
     {
       "id": "det_bsky_de8d1f1660b9",
@@ -1267,7 +1537,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3091
+      "storyRank": 1.2362
     },
     {
       "id": "det_vid_31f3890de597",
@@ -1301,7 +1571,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8277
+      "storyRank": 0.9796
     },
     {
       "id": "det_bsky_789d1e0d3c3d",
@@ -1338,7 +1608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6485
+      "storyRank": 0.9375
     },
     {
       "id": "det_bsky_5caee00df2ce",
@@ -1375,7 +1645,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6364
+      "storyRank": 0.9329
     },
     {
       "id": "det_vid_c7355fb69e2e",
@@ -1409,7 +1679,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3374
+      "storyRank": 0.7949
     },
     {
       "id": "det_bsky_d71edc7b2097",
@@ -1446,7 +1716,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.361
+      "storyRank": 0.8219
     },
     {
       "id": "det_bsky_0e00b32b5276",
@@ -1483,7 +1753,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2886
+      "storyRank": 0.1827
     },
     {
       "id": "det_bsky_d870fb1952b8",
@@ -1520,7 +1790,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1908
+      "storyRank": 0.1338
     },
     {
       "id": "det_rss_cd50a8afa84d",
@@ -1553,7 +1823,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1534
+      "storyRank": 0.1084
     },
     {
       "id": "det_rss_e8bb16dbb320",
@@ -1586,7 +1856,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1247
+      "storyRank": 0.0956
     },
     {
       "id": "det_bsky_0f1a6d53713f",
@@ -1623,7 +1893,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0386
+      "storyRank": 0.0341
     },
     {
       "id": "det_bsky_d40259a8fe91",
@@ -1660,41 +1930,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.033
-    },
-    {
-      "id": "det_vid_a6a6493f6a3a",
-      "type": "video",
-      "title": "Lions vs Buccaneers: Week 11 Game Trailer",
-      "summary": "Get ready for the Lions' Week 11 matchup against the Tampa Bay Buccaneers with this game trailer.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/ccadgpr3dw1bemhwjsuy.jpg",
-      "imageAlt": "Lions vs Buccaneers: Week 11 Game Trailer",
-      "publishedAt": "2026-11-21T17:00:00.000Z",
-      "url": "https://www.detroitlions.com/video/lions-vs-buccaneers-week-11-game-trailer",
-      "externalVideoUrl": "https://www.detroitlions.com/video/lions-vs-buccaneers-week-11-game-trailer",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Video",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Video",
-      "author": "detroitlions.com Video",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0316
+      "storyRank": 0.0295
     },
     {
       "id": "det_rss_d13c9787f2ee",
@@ -1727,41 +1963,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0302
-    },
-    {
-      "id": "det_vid_874236f6fa43",
-      "type": "video",
-      "title": "2026 Lions in Germany Recap",
-      "summary": "Take a look back at everything the Detroit Lions did during their 2026 trip to Munich, Germany.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/sma7w3dbczctxhy2macd.jpg",
-      "imageAlt": "2026 Lions in Germany Recap",
-      "publishedAt": "2026-11-21T15:26:00.000Z",
-      "url": "https://www.detroitlions.com/video/2026-lions-in-germany-recap",
-      "externalVideoUrl": "https://www.detroitlions.com/video/2026-lions-in-germany-recap",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Video",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Video",
-      "author": "detroitlions.com Video",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0294
+      "storyRank": 0.0272
     },
     {
       "id": "det_rss_20dd0e7f1bf2",
@@ -1794,7 +1996,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.102
+      "storyRank": 0.093
     },
     {
       "id": "det_tx_3b82b2c77f40",
@@ -1828,7 +2030,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0219
+      "storyRank": 0.0202
     },
     {
       "id": "det_espn_4b15838125df3",
@@ -1861,41 +2063,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
-    },
-    {
-      "id": "det_vid_a712c5f2a95d",
-      "type": "video",
-      "title": "Kerby on returning to play",
-      "summary": "S Kerby Joseph speaks with the media about how he feels emotionally about getting back out on the field for Sunday's game vs. the Buccaneers.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/ejrlwpr1l0c0m4lx2ill.jpg",
-      "imageAlt": "Kerby on returning to play",
-      "publishedAt": "2026-11-20T20:48:24.000Z",
-      "url": "https://www.detroitlions.com/video/kerby-on-returning-to-play",
-      "externalVideoUrl": "https://www.detroitlions.com/video/kerby-on-returning-to-play",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Video",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Video",
-      "author": "detroitlions.com Video",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0616
+      "storyRank": 0.0152
     },
     {
       "id": "det_rss_eea329af076f",
@@ -1928,7 +2096,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0358
+      "storyRank": 0.0337
     },
     {
       "id": "det_espn_e18552bc1fb8c",
@@ -1961,7 +2129,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0607
+      "storyRank": 0.0569
     },
     {
       "id": "det_espn_f9ca15e024182",
@@ -1994,7 +2162,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0583
+      "storyRank": 0.0548
     },
     {
       "id": "det_rss_976be5789ea0",
@@ -2027,75 +2195,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0527
-    },
-    {
-      "id": "det_vid_700d2fa6ad75",
-      "type": "video",
-      "title": "Brunell on Buccaneers defense",
-      "summary": "QB coach Mark Brunell speaks to the media about Tampa Bay QB Baker Mayfield and the Buccaneers' defense as the Lions approach their Week 11 matchup.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/fcn43tbhw8i8cfuil68w.png",
-      "imageAlt": "Brunell on Buccaneers defense",
-      "publishedAt": "2026-11-20T18:15:32.000Z",
-      "url": "https://www.detroitlions.com/video/brunell-on-buccaneers-defense",
-      "externalVideoUrl": "https://www.detroitlions.com/video/brunell-on-buccaneers-defense",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Video",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Video",
-      "author": "detroitlions.com Video",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0144
-    },
-    {
-      "id": "det_vid_76b45df280b9",
-      "type": "video",
-      "title": "Campbell on Clark being named captain",
-      "summary": "HC Dan Campbell speaks to the media about S Chuck Clark being named captain and S Kerby Joseph returning for the Lions' Week 11 matchup vs. the Tampa Bay Buccaneers.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/h3gbffpfgvmlwpxzcpry.jpg",
-      "imageAlt": "Campbell on Clark being named captain",
-      "publishedAt": "2026-11-20T16:46:51.000Z",
-      "url": "https://www.detroitlions.com/video/campbell-on-clark-being-named-captain",
-      "externalVideoUrl": "https://www.detroitlions.com/video/campbell-on-clark-being-named-captain",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Video",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Video",
-      "author": "detroitlions.com Video",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0553
+      "storyRank": 0.0494
     },
     {
       "id": "det_bsky_c9b6abbd9373",
@@ -2132,7 +2232,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0123
     },
     {
       "id": "det_rss_acd6e087c2ff",
@@ -2165,7 +2265,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0101
     },
     {
       "id": "det_bsky_63c1f40089f1",
@@ -2202,7 +2302,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0121
+      "storyRank": 0.0115
     },
     {
       "id": "det_rss_419f73384a5b",
@@ -2235,7 +2335,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0497
+      "storyRank": 0.047
     },
     {
       "id": "det_rss_9b21134f3822",
@@ -2268,7 +2368,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
+      "storyRank": 0.0116
     },
     {
       "id": "det_espn_04aa1b882d37e",
@@ -2301,7 +2401,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.049
+      "storyRank": 0.0463
     },
     {
       "id": "det_bsky_3f1b0a4ff5b2",
@@ -2338,7 +2438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0092
+      "storyRank": 0.0087
     },
     {
       "id": "det_espn_dac2aef086042",
@@ -2371,7 +2471,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0094
+      "storyRank": 0.0089
     },
     {
       "id": "det_rss_1821ee0c9038",
@@ -2404,7 +2504,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0083
+      "storyRank": 0.0079
     },
     {
       "id": "det_bsky_dbbfbbb85625",
@@ -2441,7 +2541,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0216
+      "storyRank": 0.0207
     },
     {
       "id": "det_rss_d1cce69860d7",
@@ -2474,7 +2574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0211
     },
     {
       "id": "det_rss_25efb61590d8",
@@ -2507,7 +2607,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0346
+      "storyRank": 0.0331
     },
     {
       "id": "det_rss_cf4dfa9c1074",
@@ -2540,7 +2640,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084
+      "storyRank": 0.0081
     },
     {
       "id": "det_espn_b95a427d7fb7b",
@@ -2573,7 +2673,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0336
+      "storyRank": 0.0321
     },
     {
       "id": "det_rss_8e38e4f159ba",
@@ -2606,7 +2706,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0062
     },
     {
       "id": "det_rss_c6703f0c98a6",
@@ -2639,7 +2739,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0073
     },
     {
       "id": "det_rss_0203b56d1044",
@@ -2672,40 +2772,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
-    },
-    {
-      "id": "det_rss_2407fb357b5c",
-      "type": "article",
-      "title": "Lions vs. Buccaneers practice report: Nov. 18",
-      "summary": "Lions vs. Buccaneers practice report for Wednesday, November 18.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/ww5amsaplgongzggsp2w.jpg",
-      "imageAlt": "Lions vs. Buccaneers practice report: Nov. 18",
-      "publishedAt": "2026-11-18T21:01:20.000Z",
-      "url": "https://www.detroitlions.com/news/lions-vs-buccaneers-practice-report-nov-18-reed-joseph-rakestraw",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Official",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Official",
-      "author": "detroitlions.com Official",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0152
+      "storyRank": 0.0055
     },
     {
       "id": "det_espn_533c73d43a5d8",
@@ -2738,40 +2805,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
-    },
-    {
-      "id": "det_rss_6454c4032c13",
-      "type": "article",
-      "title": "LIONS DAILY: Goff on TeSlaa: 'The role that he's found in our offense is so important'",
-      "summary": "",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/ksupjm7w70lv2cjdjawy.jpg",
-      "imageAlt": "LIONS DAILY: Goff on TeSlaa: 'The role that he's found in our offense is so important'",
-      "publishedAt": "2026-11-18T15:30:00.000Z",
-      "url": "https://www.detroitlions.com/news/lions-daily-goff-on-teslaa-the-role-that-he-s-found-in-our-offense-is-so-important",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Official",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Official",
-      "author": "detroitlions.com Official",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 36,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0223
     },
     {
       "id": "det_tx_c64f2ecbbd9b",
@@ -2805,7 +2839,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0049
     },
     {
       "id": "det_espn_d51f7983010a2",
@@ -2838,7 +2872,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
+      "storyRank": 0.0171
     },
     {
       "id": "det_espn_51eacdb16eec2",
@@ -2871,7 +2905,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0041
     },
     {
       "id": "det_espn_f82ca0a52a103",
@@ -2904,7 +2938,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0041
     },
     {
       "id": "det_espn_16beeafd3881f",
@@ -2937,7 +2971,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.004
     },
     {
       "id": "det_espn_165c27d62fbe1",
@@ -2970,7 +3004,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0161
     },
     {
       "id": "det_espn_51b53fdbdad19",
@@ -3003,7 +3037,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0155
     },
     {
       "id": "det_tx_62a14fc45972",
@@ -3037,7 +3071,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0038
+      "storyRank": 0.0037
     },
     {
       "id": "det_espn_5fc985167a6ca",
@@ -3070,7 +3104,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0036
     },
     {
       "id": "det_espn_5d2235574621d",
@@ -3103,7 +3137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0036
+      "storyRank": 0.0035
     },
     {
       "id": "det_espn_ee9a3465db613",
@@ -3136,7 +3170,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0138
     },
     {
       "id": "det_espn_7e0b06b35da0e",
@@ -3169,7 +3203,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0135
+      "storyRank": 0.0132
     },
     {
       "id": "det_espn_800d17daf7f00",
@@ -3202,7 +3236,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132
+      "storyRank": 0.0129
     },
     {
       "id": "det_tx_19ed81fc487c",
@@ -3269,7 +3303,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.012
+      "storyRank": 0.0118
     },
     {
       "id": "det_espn_6c60aedbc3d0b",
@@ -3302,7 +3336,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0119
+      "storyRank": 0.0116
     },
     {
       "id": "det_tx_9433f4b6ea06",
@@ -3506,7 +3540,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0006
     },
     {
       "id": "det_rss_649b4939fc76",

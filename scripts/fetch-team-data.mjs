@@ -1046,7 +1046,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   // 2. Parse OverTheCap 5-year salary cap ledger & Player Identity Resolver (homonym-safe)
   const otcParsed = otcHtml
     ? parseOverTheCapHtml(otcHtml, seasonYear, leagueCtx.otcSpaceHtml, team.otcSlug)
-    : { years: {}, otcPlayers: [], otcDirectory: [] };
+    : { years: {}, otcPlayers: [], otcNonActivePlayers: [], otcDirectory: [] };
   const otcYears = otcParsed.years || {};
   const otcById = new Map();
   const otcPlayersByKey = new Map();
@@ -1058,6 +1058,18 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       }
       const nk = normalizePlayerKey(entry.name);
       if (nk && !otcPlayersByKey.has(nk)) otcPlayersByKey.set(nk, entry);
+    }
+  }
+  const otcNonActiveById = new Map();
+  const otcNonActiveByKey = new Map();
+  for (const entry of otcParsed.otcNonActivePlayers || []) {
+    if (entry?.otcId) otcNonActiveById.set(String(entry.otcId), entry);
+    if (entry?.name) {
+      for (const k of getPlayerLookupKeys(entry.name)) {
+        if (!otcNonActiveByKey.has(k)) otcNonActiveByKey.set(k, entry);
+      }
+      const nk = normalizePlayerKey(entry.name);
+      if (nk && !otcNonActiveByKey.has(nk)) otcNonActiveByKey.set(nk, entry);
     }
   }
   const otcDirByKey = new Map();
@@ -1122,6 +1134,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     }
   }
   const players = [];
+  const excludedGhostIds = [];
   const seenIds = new Set();
   for (const grp of espnRosterRaw?.athletes || []) {
     const groupKey = String(grp.position || '');
@@ -1151,6 +1164,12 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       const inlineInj = a.injuries?.[0] || null;
       const offRosRec = officialClubRoster.byKey.get(canonKey) || null;
       const txRec = teamTxAnalysis.byKey.get(canonKey) || null;
+      const otcLookupKeys = getPlayerLookupKeys(fullName);
+      const inOtcTeamPage = Boolean(
+        otcLookupKeys.some(k => otcPlayersByKey.has(k) || otcNonActiveByKey.has(k)) ||
+          otcPlayersByKey.has(nk) ||
+          otcNonActiveByKey.has(nk)
+      );
 
       const rosterDecision = resolveAuthoritativeRosterPlayerStatus({
         espnId: id,
@@ -1164,9 +1183,13 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         espnInj,
         webInj: null,
         inlineInj,
-        recentNewsText: recentTeamNewsText
+        recentNewsText: recentTeamNewsText,
+        inOtcTeamPage
       });
-      if (!rosterDecision.include) continue;
+      if (!rosterDecision.include) {
+        excludedGhostIds.push(id);
+        continue;
+      }
 
       const rosterBucket = rosterDecision.bucket;
       const isReserveLeftSquadOrSusp = rosterDecision.isReserveLeftSquadOrSusp;
@@ -1182,20 +1205,30 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       const nflMeta = resolvedIdentity.nflMeta;
       const gsisId = resolvedIdentity.gsisId;
       const pfrId = resolvedIdentity.pfrId;
-      const otcLookupKeys = getPlayerLookupKeys(fullName);
       const otcEntry =
         (resolvedIdentity.otcId && otcById.get(String(resolvedIdentity.otcId))) ||
         otcLookupKeys.map(k => otcPlayersByKey.get(k)).find(Boolean) ||
         otcPlayersByKey.get(nk) ||
+        null;
+      const otcNonActiveEntry =
+        (resolvedIdentity.otcId && otcNonActiveById.get(String(resolvedIdentity.otcId))) ||
+        otcLookupKeys.map(k => otcNonActiveByKey.get(k)).find(Boolean) ||
+        otcNonActiveByKey.get(nk) ||
         null;
       const otcDir =
         otcLookupKeys.map(k => otcDirByKey.get(k)).find(Boolean) ||
         otcDirByKey.get(nk) ||
         null;
       const contractsByYear = otcEntry?.contractsByYear || {};
-      const capHit2026 = Number(contractsByYear[String(seasonYear)]?.capNumber || 0);
-      const resolvedOtcId = otcEntry?.otcId || otcDir?.otcId || resolvedIdentity.otcId || null;
-      const resolvedOtcSlug = otcEntry?.slug || otcDir?.slug || resolvedIdentity.otcSlug || null;
+      const capHit2026 = Number(
+        contractsByYear[String(seasonYear)]?.capNumber ||
+          otcNonActiveEntry?.chargesByYear?.[String(seasonYear)]?.capNumber ||
+          0
+      );
+      const resolvedOtcId =
+        otcEntry?.otcId || otcNonActiveEntry?.otcId || otcDir?.otcId || resolvedIdentity.otcId || null;
+      const resolvedOtcSlug =
+        otcEntry?.slug || otcNonActiveEntry?.slug || otcDir?.slug || resolvedIdentity.otcSlug || null;
       const otcUrl =
         buildOtcPlayerUrl({
           otcSlug: resolvedOtcSlug,
@@ -1205,6 +1238,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
           fallbackToTeam: false
         }) ||
         otcEntry?.otcUrl ||
+        otcNonActiveEntry?.otcUrl ||
         otcDir?.otcUrl ||
         `https://overthecap.com/salary-cap/${team.otcSlug}`;
 
@@ -1525,19 +1559,22 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
           : ''
       });
 
-      const resolvedHealthStatus = isIrReturnQuestionable
-        ? 'Questionable (IR Return Window)'
-        : irClassification
-          ? irClassification.status
-          : offInjRec
-            ? effectiveGameStatus === 'Active'
-              ? wed === 'Vet Rest'
-                ? 'Active'
-                : 'No Designation (Cleared)'
-              : effectiveGameStatus
-            : isGenuineInjuryReportEntry && rawStatus
-              ? rawStatus
-              : 'Active';
+      const resolvedHealthStatus =
+        rosterBucket === 'practice_squad'
+          ? 'Practice Squad'
+          : isIrReturnQuestionable
+            ? 'Questionable (IR Return Window)'
+            : irClassification
+              ? irClassification.status
+              : offInjRec
+                ? effectiveGameStatus === 'Active'
+                  ? wed === 'Vet Rest'
+                    ? 'Active'
+                    : 'No Designation (Cleared)'
+                  : effectiveGameStatus
+                : isGenuineInjuryReportEntry && rawStatus
+                  ? rawStatus
+                  : 'Active';
 
       // Player-specific non-paywalled ESPN news mentions
       const playerRecentNews = (espnNewsRaw?.articles || [])
@@ -1635,7 +1672,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
           playTier: prob.tier,
           playBadgeLabel: prob.badgeLabel,
           factors: prob.factors || [],
-          archetypeNote: prob.archetypeNote || '',
+          archetypeNote: prob.priorUsed?.archetypeNote || prob.archetypeNote || '',
           weeklyHistory2026
         },
         recentNews: playerRecentNews,
@@ -2252,23 +2289,44 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
 
   const cap26 = otcYears[String(seasonYear)] || { teamCapSpace: 0, deadMoneyTotal: 0 };
   const cap27 = otcYears[String(seasonYear + 1)] || { teamCapSpace: 0, deadMoneyTotal: 0 };
+  const seasonYearKey = String(seasonYear);
   const capPlayers = players
     .filter(p => Object.keys(p.contractsByYear || {}).length > 0)
-    .map(p => ({
-      id: p.id,
-      otcId: p.otcId,
-      otcSlug: p.otcSlug,
-      otcUrl: p.otcUrl,
-      espnUrl: p.espnUrl,
-      pfrUrl: p.pfrUrl,
-      name: p.name,
-      position: p.position,
-      jersey: p.jersey,
-      headshotUrl: p.headshotUrl,
-      unit: p.unit,
-      rosterBucket: p.rosterBucket,
-      contractsByYear: p.contractsByYear
-    }));
+    .map(p => {
+      const cleanedContractsByYear = { ...(p.contractsByYear || {}) };
+      if (p.rosterBucket !== 'active' && cleanedContractsByYear[seasonYearKey]) {
+        delete cleanedContractsByYear[seasonYearKey];
+      }
+      return {
+        id: p.id,
+        otcId: p.otcId,
+        otcSlug: p.otcSlug,
+        otcUrl: p.otcUrl,
+        espnUrl: p.espnUrl,
+        pfrUrl: p.pfrUrl,
+        name: p.name,
+        position: p.position,
+        jersey: p.jersey,
+        headshotUrl: p.headshotUrl,
+        unit: p.unit,
+        rosterBucket: p.rosterBucket,
+        contractsByYear: cleanedContractsByYear
+      };
+    })
+    .filter(p => Object.keys(p.contractsByYear || {}).length > 0)
+    .sort((a, b) => {
+      const capA = a.contractsByYear?.[seasonYearKey]?.capNumber || 0;
+      const capB = b.contractsByYear?.[seasonYearKey]?.capNumber || 0;
+      if (capB !== capA) return capB - capA;
+      const maxA = Math.max(0, ...Object.values(a.contractsByYear || {}).map(y => y?.capNumber || 0));
+      const maxB = Math.max(0, ...Object.values(b.contractsByYear || {}).map(y => y?.capNumber || 0));
+      return maxB - maxA;
+    });
+  for (const [yrKey, yrSummary] of Object.entries(otcYears || {})) {
+    if (yrSummary) {
+      yrSummary.contractedCount = capPlayers.filter(p => Boolean(p.contractsByYear?.[yrKey])).length;
+    }
+  }
 
   const capJson = {
     updatedAt: nowIso,
@@ -2531,6 +2589,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   const rosterJson = {
     updatedAt: nowIso,
     count: players.length,
+    excludedGhostIds,
     departedPlayers,
     positionalLeaderboards,
     peerDirectory,

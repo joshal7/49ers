@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-22T22:38:47.867Z",
+  "updatedAt": "2026-11-23T01:02:46.834Z",
   "windowDays": 7,
-  "totalEpisodes": 23,
+  "totalEpisodes": 21,
   "shows": [
     {
       "id": "locked_on_bills",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/8c06ff/feeds.simplecast.com/LIaoLB9Y",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bills-daily-podcast-on-the-buffalo-bills/id1145479962?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/ee/d8/fb/eed8fb20-1eee-5056-153d-5e961a648130/mza_2064787666452726245.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "cover_1_buffalo",
@@ -49,7 +49,7 @@
       "feedUrl": "https://feeds.megaphone.fm/shoutabuffalobillspodcast",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/shout-a-football-podcast-on-the-buffalo-bills/id1507446314?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/d4/0f/13/d40f1331-2fb1-38d0-1ce9-c751b4e77d95/mza_10564209290691182061.jpeg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     },
     {
       "id": "buffalo_plus",
@@ -496,46 +496,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/buffalo-plus-a-buffalo-bills-podcast/id1516732193?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/SINCL4140657051",
       "audioStreamUrl": "https://traffic.megaphone.fm/SINCL7880612867.mp3"
-    },
-    {
-      "id": "pod_locked_on_bills_1000802151849",
-      "trackId": 1000802151849,
-      "collectionId": 1145479962,
-      "showId": "locked_on_bills",
-      "showName": "Locked On Bills",
-      "showFullTitle": "Locked On Bills - Daily Podcast On The Buffalo Bills",
-      "hosts": "Joe Marino",
-      "network": "Locked On Podcast Network",
-      "title": "TD MACHINE: Josh Allen & James Cook DRIVE Bills' Victory, Breaking Records and Burying the Jets",
-      "summary": "Buffalo Bills crush New York Jets 31-12 as James Cook cements his \"Mr. Fourth Quarter\" reputation with a dominant 157-yard performance. Can Josh Allen’s record-breaking touchdown pace propel the Bills through the season’s toughest stretch? The conversation focused on Allen’s",
-      "publishedAt": "2026-11-16T00:18:45.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/3e/90/fc/3e90fc50-4eb0-e0d6-b4a9-b40db3423b73/mza_16213861112984140930.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/td-machine-josh-allen-james-cook-drive-bills-victory/id1145479962?i=1000802151849&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bills-daily-podcast-on-the-buffalo-bills/id1145479962?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/8c06ff/feeds.simplecast.com/LIaoLB9Y",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/8c06ff/lockedon.simplecastaudio.com/d5c86183-3556-42ef-a0fc-3e82326ec162/episodes/83e87cd1-ac2a-43c3-a44a-35c4a940987d/audio/128/default.mp3?aid=rss_feed&awCollectionId=d5c86183-3556-42ef-a0fc-3e82326ec162&awEpisodeId=83e87cd1-ac2a-43c3-a44a-35c4a940987d&feed=LIaoLB9Y"
-    },
-    {
-      "id": "pod_shout_bills_podcast_1000802142748",
-      "trackId": 1000802142748,
-      "collectionId": 1507446314,
-      "showId": "shout_bills_podcast",
-      "showName": "Shout! Bills Podcast",
-      "showFullTitle": "Shout! A football podcast on the Buffalo Bills with Matt Parrino and Ryan Talbot",
-      "hosts": "Matt Parrino & Ryan Talbot",
-      "network": "Syracuse.com / NYup.com",
-      "title": "James Cook Matches LaDainian Tomlinson as Sleepy Bills Wake Up to Rout the Jets",
-      "summary": "The Bills sleepwalked through the first 30-40 minutes at MetLife Stadium, then James Cook ripped off a 74-yard touchdown down the right sideline and suddenly it was 31-12. Matt Parrino and Ryan Talbot break down Buffalo’s win over the Jets and what it means heading into a ga",
-      "publishedAt": "2026-11-15T22:58:00.000Z",
-      "durationMinutes": 28,
-      "durationDisplay": "28 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/c6/3b/63/c63b63a1-fcbf-4878-5641-652345af8e0f/mza_15925405672240554022.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/james-cook-matches-ladainian-tomlinson-as-sleepy-bills/id1507446314?i=1000802142748&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/shout-a-football-podcast-on-the-buffalo-bills/id1507446314?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/shoutabuffalobillspodcast",
-      "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM2602928987.mp3"
     }
   ]
 }

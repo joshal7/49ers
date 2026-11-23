@@ -1,6 +1,9 @@
 {
-  "updatedAt": "2026-11-22T22:38:47.984Z",
+  "updatedAt": "2026-11-23T01:02:47.086Z",
   "count": 73,
+  "excludedGhostIds": [
+    "4426498"
+  ],
   "departedPlayers": [
     "Matt Milano",
     "Taron Johnson",
@@ -56773,25 +56776,10 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Veteran starter profile (9th NFL season, 98% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
         "weeklyHistory2026": []
       },
-      "recentNews": [
-        {
-          "headline": "Bills' defense feasts in 26-9 win over injury-depleted Dolphins",
-          "summary": "— Greg Rousseau had two sacks, including his team-leading 10th this season, and Buffalo's defense bailed out the Bills' sputtering Josh Allen-led offense in a 26-9 win over the injury-depleted division rival Miami Dolphins on Sunday.",
-          "publishedAt": "2026-11-22T21:22:33Z",
-          "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873070.png?templateId=espn.applewatch.awayhome.1",
-          "url": "https://www.espn.com/nfl/recap?gameId=401873070"
-        },
-        {
-          "headline": "Josh Allen powers Bills past Jets 31-12 for best start in 35 years. New York loses Geno Smith twice",
-          "summary": "— Josh Allen and the Buffalo Bills are off to the franchise's best start in 35 years.",
-          "publishedAt": "2026-11-15T22:44:35Z",
-          "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873054.png?templateId=espn.applewatch.awayhome.1",
-          "url": "https://www.espn.com/nfl/recap?gameId=401873054"
-        }
-      ],
+      "recentNews": [],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "QB",
@@ -57710,7 +57698,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -58270,7 +58258,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Every-down starter workload (99% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
         "weeklyHistory2026": [
           {
             "week": 9,
@@ -58857,7 +58845,7 @@
         "factors": [
           "Officially ruled Out on weekly game status report"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -59403,7 +59391,7 @@
         "factors": [
           "Officially ruled Out on weekly game status report"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -60208,7 +60196,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Every-down starter workload (90% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
         "weeklyHistory2026": [
           {
             "week": 6,
@@ -60347,7 +60335,7 @@
       "college": "SMU",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4039034.png",
-      "capHit2026": 0,
+      "capHit2026": 293472,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -60560,7 +60548,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -60580,13 +60568,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -61146,7 +61134,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": [
           {
             "week": 3,
@@ -62137,7 +62125,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -62867,7 +62855,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (C) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -63504,7 +63492,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (C) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -64120,7 +64108,7 @@
         "factors": [
           "Cleared without restrictive game-day designation"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": [
           {
             "week": 4,
@@ -64992,7 +64980,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Veteran starter profile (10th NFL season, 99% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
         "weeklyHistory2026": [
           {
             "week": 9,
@@ -65656,7 +65644,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -66307,7 +66295,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -66902,7 +66890,7 @@
         "factors": [
           "Cleared without restrictive game-day designation"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": [
           {
             "week": 11,
@@ -67645,7 +67633,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": [
           {
             "week": 1,
@@ -68547,7 +68535,7 @@
         "factors": [
           "Officially ruled Out on weekly game status report"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": [
           {
             "week": 8,
@@ -69437,7 +69425,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Veteran starter profile (8th NFL season, 70% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -70116,7 +70104,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -71019,7 +71007,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Veteran starter profile (8th NFL season, 98% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
         "weeklyHistory2026": [
           {
             "week": 10,
@@ -71859,7 +71847,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": [
           {
             "week": 3,
@@ -72831,7 +72819,7 @@
         "isSeasonEnding": false,
         "isPracticeWindowOpen": false,
         "designatedDateIso": null,
-        "blurbDateIso": null,
+        "blurbDateIso": "2026-11-22T23:56Z",
         "placedBeforeWeek": null,
         "earliestEligibleWeek": null,
         "projectedReturnWeek": null,
@@ -72851,7 +72839,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": [
           {
             "week": 9,
@@ -73112,7 +73100,7 @@
       "college": "San Diego State",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241476.png",
-      "capHit2026": 0,
+      "capHit2026": 568500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -73529,7 +73517,7 @@
         "factors": [
           "Cleared without restrictive game-day designation"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": [
           {
             "week": 8,
@@ -74443,7 +74431,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
         "weeklyHistory2026": [
           {
             "week": 11,
@@ -75185,7 +75173,7 @@
         "factors": [
           "Cleared without restrictive game-day designation"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": [
           {
             "week": 5,
@@ -75986,7 +75974,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": [
           {
             "week": 3,
@@ -76878,7 +76866,7 @@
         "factors": [
           "Officially ruled Out on weekly game status report"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Every-down starter workload (86% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
         "weeklyHistory2026": [
           {
             "week": 4,
@@ -77826,7 +77814,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Every-down starter workload (89% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
         "weeklyHistory2026": [
           {
             "week": 2,
@@ -78617,7 +78605,7 @@
         "factors": [
           "Cleared without restrictive game-day designation"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Every-down starter workload (97% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
         "weeklyHistory2026": [
           {
             "week": 2,
@@ -79296,7 +79284,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -80108,7 +80096,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": [
           {
             "week": 2,
@@ -80914,7 +80902,7 @@
         "factors": [
           "Officially ruled Out on weekly game status report"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -81600,7 +81588,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -82447,7 +82435,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": [
           {
             "week": 4,
@@ -83111,7 +83099,7 @@
         "isSeasonEnding": false,
         "isPracticeWindowOpen": false,
         "designatedDateIso": null,
-        "blurbDateIso": "2026-11-16T18:06Z",
+        "blurbDateIso": null,
         "placedBeforeWeek": null,
         "earliestEligibleWeek": null,
         "projectedReturnWeek": null,
@@ -83131,7 +83119,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": [
           {
             "week": 8,
@@ -83857,7 +83845,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -84606,7 +84594,7 @@
         "factors": [
           "Cleared without restrictive game-day designation"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": [
           {
             "week": 4,
@@ -85332,7 +85320,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": [
           {
             "week": 1,
@@ -86238,7 +86226,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -87071,7 +87059,7 @@
         "factors": [
           "Cleared without restrictive game-day designation"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Veteran starter profile (8th NFL season, 99% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
         "weeklyHistory2026": [
           {
             "week": 11,
@@ -87765,7 +87753,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -88409,7 +88397,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": [
           {
             "week": 5,
@@ -89108,7 +89096,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -90011,7 +89999,7 @@
         "factors": [
           "Cleared without restrictive game-day designation"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": [
           {
             "week": 3,
@@ -90742,7 +90730,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": [
           {
             "week": 6,
@@ -91692,18 +91680,10 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Every-down starter workload (73% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
         "weeklyHistory2026": []
       },
-      "recentNews": [
-        {
-          "headline": "Bills' defense feasts in 26-9 win over injury-depleted Dolphins",
-          "summary": "— Greg Rousseau had two sacks, including his team-leading 10th this season, and Buffalo's defense bailed out the Bills' sputtering Josh Allen-led offense in a 26-9 win over the injury-depleted division rival Miami Dolphins on Sunday.",
-          "publishedAt": "2026-11-22T21:22:33Z",
-          "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873070.png?templateId=espn.applewatch.awayhome.1",
-          "url": "https://www.espn.com/nfl/recap?gameId=401873070"
-        }
-      ],
+      "recentNews": [],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "LB",
@@ -92421,7 +92401,7 @@
         "factors": [
           "Officially ruled Out on weekly game status report"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": [
           {
             "week": 1,
@@ -93210,7 +93190,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -93436,7 +93416,7 @@
       "college": "Washington",
       "draftInfo": "2015 • Rd 1, Pick #25",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2978313.png",
-      "capHit2026": 0,
+      "capHit2026": 247500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -93904,7 +93884,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -93924,13 +93904,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -94581,7 +94561,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": [
           {
             "week": 4,
@@ -94597,7 +94577,15 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "headline": "Bills' defense feasts in 26-9 win over injury-depleted Dolphins",
+          "summary": "— Stingy as Buffalo has been while not allowing a touchdown over the past 15-plus quarters, defensive tackle Deone Walker remains unsatisfied.",
+          "publishedAt": "2026-11-22T23:30:32Z",
+          "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873070.png?templateId=espn.applewatch.awayhome.1",
+          "url": "https://www.espn.com/nfl/recap?gameId=401873070"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "IDL",
@@ -94806,7 +94794,7 @@
       "college": "Arkansas",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4682749.png",
-      "capHit2026": 0,
+      "capHit2026": 282917,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 1,
@@ -95071,7 +95059,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -95091,13 +95079,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -95225,7 +95213,7 @@
       "college": "LSU",
       "draftInfo": "2017 • Rd 1, Pick #27",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3042717.png",
-      "capHit2026": 0,
+      "capHit2026": 220200,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -95693,7 +95681,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -95713,24 +95701,16 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
-      "recentNews": [
-        {
-          "headline": "Will the Bills activate Tre'Davious White this week?",
-          "summary": "Nick Suss discusses the Bills potentially adding Tre'Davious White to the 53-man roster.",
-          "publishedAt": "2026-11-19T23:39:21Z",
-          "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1119/dm_261119_IA_Bills_16x9/dm_261119_IA_Bills_16x9.jpg",
-          "url": "https://www.espn.com/video/clip/_/id/50535321/will-bills-activate-tredavious-white-week"
-        }
-      ],
+      "recentNews": [],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "CB",
@@ -96392,7 +96372,7 @@
         "factors": [
           "Officially ruled Out on weekly game status report"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": [
           {
             "week": 4,
@@ -97139,7 +97119,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -97741,7 +97721,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -98476,7 +98456,7 @@
         "factors": [
           "Off injury report; full active status"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -98561,7 +98541,7 @@
       "college": "Penn State",
       "draftInfo": "2026 • Rd 5, Pick #181",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685347.png",
-      "capHit2026": 0,
+      "capHit2026": 609869,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -98853,7 +98833,7 @@
         "factors": [
           "On Injured Reserve — 21-day practice window not yet opened"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -98887,7 +98867,7 @@
       "college": "Tennessee",
       "draftInfo": "2021 • Rd 3, Pick #77",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242433.png",
-      "capHit2026": 0,
+      "capHit2026": 11750000,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -99508,7 +99488,7 @@
         "factors": [
           "Coaching/beat report confirms player will not be activated from IR this week"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -100068,7 +100048,7 @@
         "factors": [
           "On Injured Reserve — 21-day practice window not yet opened"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (G) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": [
           {
             "week": 3,
@@ -100225,7 +100205,7 @@
       "college": "Virginia Tech",
       "draftInfo": "2025 • Rd 6, Pick #177",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568703.png",
-      "capHit2026": 0,
+      "capHit2026": 221339,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -100553,7 +100533,7 @@
         "factors": [
           "On Injured Reserve — 21-day practice window not yet opened"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -100726,7 +100706,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -100746,13 +100726,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -101065,7 +101045,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -101085,13 +101065,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -101303,7 +101283,7 @@
       "college": "Southern Miss",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429805.png",
-      "capHit2026": 0,
+      "capHit2026": 318334,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 2,
@@ -101568,7 +101548,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -101588,13 +101568,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -101792,7 +101772,7 @@
       "college": "Virginia Tech",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432215.png",
-      "capHit2026": 0,
+      "capHit2026": 247500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -101931,7 +101911,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -101951,13 +101931,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -101991,7 +101971,7 @@
       "college": "Virginia Tech",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4577066.png",
-      "capHit2026": 0,
+      "capHit2026": 247500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -102208,7 +102188,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -102228,13 +102208,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -102268,7 +102248,7 @@
       "college": "East Texas A&M",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4291489.png",
-      "capHit2026": 0,
+      "capHit2026": 183500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -102534,7 +102514,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -102554,13 +102534,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -102594,7 +102574,7 @@
       "college": "Northern Illinois",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4875767.png",
-      "capHit2026": 0,
+      "capHit2026": 233750,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -102733,7 +102713,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -102753,13 +102733,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -102793,7 +102773,7 @@
       "college": "UConn",
       "draftInfo": "2025 • Rd 6, Pick #206",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427843.png",
-      "capHit2026": 0,
+      "capHit2026": 247500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -102932,7 +102912,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -102952,13 +102932,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -102992,7 +102972,7 @@
       "college": "Kentucky",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430270.png",
-      "capHit2026": 0,
+      "capHit2026": 247500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -103131,7 +103111,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -103151,13 +103131,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -103191,7 +103171,7 @@
       "college": "Alabama",
       "draftInfo": "2022 • Rd 2, Pick #47",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241468.png",
-      "capHit2026": 0,
+      "capHit2026": 320511,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 1,
@@ -103534,7 +103514,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -103554,13 +103534,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -103716,7 +103696,7 @@
       "college": "Vanderbilt",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3122168.png",
-      "capHit2026": 0,
+      "capHit2026": 413044,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 2,
@@ -104170,7 +104150,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -104190,13 +104170,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
       "recentNews": [],
@@ -104338,7 +104318,7 @@
       "college": "Iowa",
       "draftInfo": "2020 • Rd 7, Pick #219",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240575.png",
-      "capHit2026": 0,
+      "capHit2026": 413044,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 2,
@@ -104806,7 +104786,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -104826,13 +104806,13 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
-        "archetypeNote": "",
+        "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
       "recentNews": [],

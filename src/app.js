@@ -52,7 +52,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=92';
+} from './services/dataService.js?v=93';
 import {
   SHARED_GEMINI_KEY_STORAGE_KEY,
   publishSharedGeminiApiKey,
@@ -129,8 +129,8 @@ import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
 } from './views/newsView.js?v=93';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=49';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=80';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=50';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=81';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=94';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=67';
 import {
@@ -4907,7 +4907,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=112', { updateViaCache: 'none' })
+        .register('./sw.js?v=113', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

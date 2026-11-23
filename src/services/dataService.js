@@ -4505,6 +4505,14 @@ export function reconcileLiveEspnSfRosterAndDepthChart(
   const players = appData.roster.players;
   const byId = new Map(players.map(p => [String(p.id), p]));
   const byNorm = new Map(players.map(p => [normPlayerNameKey(p.name), p]));
+  const excludedGhostIdSet = new Set(
+    (Array.isArray(appData.roster.excludedGhostIds) ? appData.roster.excludedGhostIds : []).map(id => String(id))
+  );
+  const combinedNewsHayLower = (Array.isArray(combinedEspnArticles) ? combinedEspnArticles : [])
+    .filter(art => art && !art.premium)
+    .map(art => `${art.headline || ''} ${art.description || ''}`)
+    .join(' ')
+    .toLowerCase();
 
   if (Array.isArray(sfRosterRaw?.athletes) && sfRosterRaw.athletes.length > 0) {
     for (const grp of sfRosterRaw.athletes) {
@@ -4550,8 +4558,17 @@ export function reconcileLiveEspnSfRosterAndDepthChart(
           continue;
         }
 
-        // Only auto-inject newly added players who are in ESPN's Active 53 groups or on the live Depth Chart
-        if (espnDefaultBucket !== 'active' && !depthChartIds.has(espnId)) {
+        // Only auto-inject newly added players who are corroborated on the live Depth Chart or breaking news
+        // (prevents retired/stale ESPN active ghosts like 2022 RB Justin Jackson from resurrecting in-browser)
+        const onLiveDepth = depthChartIds.has(espnId);
+        const mentionedInLiveNews = fullName.length >= 5 && combinedNewsHayLower.includes(fullName.toLowerCase());
+        if (excludedGhostIdSet.has(espnId) && !onLiveDepth && !mentionedInLiveNews) {
+          continue;
+        }
+        if (espnDefaultBucket !== 'active' && !onLiveDepth) {
+          continue;
+        }
+        if (players.length >= 40 && !onLiveDepth && !mentionedInLiveNews) {
           continue;
         }
 
@@ -4582,8 +4599,9 @@ export function reconcileLiveEspnSfRosterAndDepthChart(
             break;
           }
         }
+        const activeTeamRos = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
         if (peerEntry) {
-          peerEntry.team = 'SF';
+          peerEntry.team = activeTeamRos.abbr;
           peerEntry.sfPlayerId = espnId;
         }
 
@@ -4596,7 +4614,6 @@ export function reconcileLiveEspnSfRosterAndDepthChart(
           .toLowerCase()
           .replace(/[^a-z0-9]+/g, '-')
           .replace(/^-|-$/g, '');
-        const activeTeamRos = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
         const otcUrl = `https://overthecap.com/salary-cap/${activeTeamRos.otcSlug}`;
 
         const playProb = computePlayerPlayProbability({

@@ -467,7 +467,8 @@ export function resolveAuthoritativeRosterPlayerStatus({
   espnInj = null,
   webInj = null,
   inlineInj = null,
-  recentNewsText = ''
+  recentNewsText = '',
+  inOtcTeamPage = false
 } = {}) {
   const canonKey = canonicalPlayerKey(fullName);
   const probeComment = `${espnInj?.shortComment || ''} ${espnInj?.longComment || ''} ${webInj?.shortComment || ''} ${webInj?.longComment || ''} ${inlineInj?.shortComment || ''}`;
@@ -508,10 +509,10 @@ export function resolveAuthoritativeRosterPlayerStatus({
       /\b(trade|traded|acquir|sign|signed|claim|claimed|waiver|roster|reinstate)\b/i.test(recentNewsText);
 
     const isCorroboratedAddition =
-      espnDefaultBucket === 'active' ||
       onDepthChart ||
       hasActiveTxMove ||
-      mentionedInBreakingAcquisition;
+      mentionedInBreakingAcquisition ||
+      Boolean(inOtcTeamPage);
 
     if (!isCorroboratedAddition) {
       return { include: false, bucket: 'released', isReserveLeftSquadOrSusp: false, statusOverride: null };

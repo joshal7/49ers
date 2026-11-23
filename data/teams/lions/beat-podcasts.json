@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-22T22:38:44.392Z",
+  "updatedAt": "2026-11-23T01:02:42.258Z",
   "windowDays": 7,
-  "totalEpisodes": 17,
+  "totalEpisodes": 16,
   "shows": [
     {
       "id": "locked_on_lions",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/a0cc13/feeds.simplecast.com/ASw0G4io",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-lions-daily-podcast-on-the-detroit-lions/id1140514879?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/6e/cf/76/6ecf76dc-5c50-d1f5-6522-c0beee7beb93/mza_10179336279226318045.jpg/600x600bb.jpg",
-      "episodeCount7d": 7
+      "episodeCount7d": 6
     },
     {
       "id": "pride_of_detroit",
@@ -384,26 +384,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/pride-of-detroit-for-detroit-lions-fans/id1040380210?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/pride-of-detroit-lions",
       "audioStreamUrl": "https://www.podtrac.com/pts/redirect.mp3/pdst.fm/e/pscrb.fm/rss/p/traffic.megaphone.fm/PMC6404815807.mp3"
-    },
-    {
-      "id": "pod_locked_on_lions_1000802147325",
-      "trackId": 1000802147325,
-      "collectionId": 1140514879,
-      "showId": "locked_on_lions",
-      "showName": "Locked On Lions",
-      "showFullTitle": "Locked On Lions - Daily Podcast On The Detroit Lions",
-      "hosts": "Matt Dery",
-      "network": "Locked On Podcast Network",
-      "title": "BREAKING: Detroit Lions DOMINATE in Munich But Face DEVASTATING Aidan Hutchinson News",
-      "summary": "Detroit Lions dominate New England Patriots in Munich 35-10, but Aidan Hutchinson's devastating injury casts a shadow over their fifth straight victory. Can Dan Campbell’s squad sustain its playoff momentum without their defensive leader? Matt Dery breaks down Detroit’s stat",
-      "publishedAt": "2026-11-15T23:50:31.000Z",
-      "durationMinutes": 29,
-      "durationDisplay": "29 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/88/f9/2d/88f92dfe-377d-635e-3d51-155277dd91cc/mza_8291538309655397855.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/breaking-detroit-lions-dominate-in-munich-but-face/id1140514879?i=1000802147325&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-lions-daily-podcast-on-the-detroit-lions/id1140514879?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/a0cc13/feeds.simplecast.com/ASw0G4io",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/a0cc13/lockedon.simplecastaudio.com/05bcf1ce-c643-45f9-b7f9-bd4cf110ab06/episodes/d7fe0296-0808-46c2-a7a5-bd524d857dd0/audio/128/default.mp3?aid=rss_feed&awCollectionId=05bcf1ce-c643-45f9-b7f9-bd4cf110ab06&awEpisodeId=d7fe0296-0808-46c2-a7a5-bd524d857dd0&feed=ASw0G4io"
     }
   ]
 }

@@ -1055,6 +1055,46 @@ await test('Player-Level Parity & Zero Regressions (Spider Charts, Stats, Snaps,
       assert.ok(pk.spiderProfile && pk.spiderProfile.axes?.length >= 6, `${slug} draft pick ${pk.name} missing spiderProfile`);
     }
 
+    // Roster regression guards: OTC non-active salary recovery, zero retired ghosts, zero duplicate active jerseys,
+    // zero cap.json 2026 non-active leaks, 100% consistent Practice Squad 0% badges, and non-empty archetypeNote
+    const cap = JSON.parse(fs.readFileSync(path.join(dir, 'cap.json'), 'utf8'));
+    const activePlayers = players.filter(p => p.rosterBucket === 'active');
+    const psPlayers = players.filter(p => p.rosterBucket === 'practice_squad');
+    const irPlayers = players.filter(p => p.rosterBucket === 'ir');
+
+    assert.ok(psPlayers.length >= 10, `${slug} expected >= 10 practice squad players`);
+    for (const ps of psPlayers) {
+      assert.equal(ps.health?.playProbabilityPct, 0, `${slug} PS player ${ps.name} must have 0% playProbabilityPct`);
+      assert.equal(ps.health?.playBadgeLabel, '0% • Prac. Squad', `${slug} PS player ${ps.name} must show 0% • Prac. Squad`);
+      assert.equal(ps.health?.status, 'Practice Squad', `${slug} PS player ${ps.name} must have status "Practice Squad"`);
+    }
+    for (const p of players) {
+      assert.ok(Boolean(p.health?.archetypeNote), `${slug} ${p.name} missing health.archetypeNote`);
+    }
+    const activeJerseys = new Set();
+    for (const p of activePlayers) {
+      if (p.jersey != null) {
+        assert.ok(!activeJerseys.has(p.jersey), `${slug} duplicate Active 53 jersey #${p.jersey} (${p.name})`);
+        activeJerseys.add(p.jersey);
+      }
+    }
+    const cap26NonActive = (cap.players || []).filter(p => p.contractsByYear?.['2026'] && p.rosterBucket !== 'active');
+    assert.equal(cap26NonActive.length, 0, `${slug} cap.json leaked non-active players into 2026 active cap table: ${cap26NonActive.map(p => p.name).join(', ')}`);
+    assert.ok(irPlayers.every(p => p.capHit2026 > 0), `${slug} all IR players should have OTC 2026 cap charges`);
+
+    if (slug === 'lions') {
+      assert.ok(!players.some(p => p.name === 'Justin Jackson'), 'Retired 2022 ESPN ghost Justin Jackson must be purged from Lions roster');
+      const harper = players.find(p => p.name === 'Thomas Harper');
+      assert.ok(harper && harper.capHit2026 >= 1_000_000, `Lions Thomas Harper must have OTC salary (got ${harper?.capHit2026})`);
+      const joseph = players.find(p => p.name === 'Kerby Joseph');
+      assert.ok(joseph && joseph.capHit2026 >= 5_000_000, `Lions Kerby Joseph must have OTC PUP salary (got ${joseph?.capHit2026})`);
+    }
+    if (slug === 'bills') {
+      const shavers = players.find(p => p.name === 'Tyrell Shavers');
+      assert.ok(shavers && shavers.capHit2026 >= 500_000, `Bills Tyrell Shavers must have OTC PUP salary (got ${shavers?.capHit2026})`);
+      assert.equal(activePlayers.filter(p => !(p.capHit2026 > 0)).length, 0, 'All 53 Bills active players must have salaries');
+    }
+
     // Spotlight check: Jahmyr Gibbs on Lions must have full official Combine spider chart, 2026 + career stats & clean health
     if (slug === 'lions') {
       const gibbs = players.find(p => p.name === 'Jahmyr Gibbs');

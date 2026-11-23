@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T22:38:44.432Z",
+  "updatedAt": "2026-11-23T01:02:43.431Z",
   "week": 12,
   "byeWeek": 6,
   "sourceUrl": "https://www.detroitlions.com/team/injury-report/",
@@ -28,7 +28,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "0% • Out",
-      "archetypeNote": "",
+      "archetypeNote": "Veteran starter profile (9th NFL season, 94% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
@@ -53,7 +53,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "0% • Out",
-      "archetypeNote": "",
+      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
@@ -78,7 +78,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "0% • Out",
-      "archetypeNote": "",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
@@ -103,7 +103,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "0% • Out",
-      "archetypeNote": "",
+      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
@@ -128,7 +128,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "0% • Out",
-      "archetypeNote": "",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
@@ -153,11 +153,36 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "0% • Out",
-      "archetypeNote": "",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
       "beatComment": "inactive"
+    },
+    {
+      "playerId": "4360383",
+      "name": "Kerby Joseph",
+      "position": "S",
+      "jersey": 31,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360383.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Knee",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Joseph was a full participant in his return to the active roster Wednesday. The free safety is set to make his 2026 debut in Week 11 against the Buccaneers, finally reuniting with strong safety Brian Branch after both spent lengthy periods on the Lions' reserve lists."
     },
     {
       "playerId": "4027919",
@@ -178,7 +203,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "",
+      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
@@ -203,7 +228,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "",
+      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
@@ -228,36 +253,11 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Lacy was limited in practice all week due to a shoulder injury, but he's been cleared to play in Sunday's home game. He's expected to take on an elevated role at defensive end in the absence of Aidan Hutchinson, who is out for the rest of the season due to a torn ACL. Lacy has accumulated 12 tackles (four solo) through nine regular-season games."
-    },
-    {
-      "playerId": "4360383",
-      "name": "Kerby Joseph",
-      "position": "S",
-      "jersey": 31,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360383.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Joseph was a full participant in his return to the active roster Wednesday. The free safety is set to make his 2026 debut in Week 11 against the Buccaneers, finally reuniting with strong safety Brian Branch after both spent lengthy periods on the Lions' reserve lists."
     }
   ],
   "irAndReserveTracker": [
