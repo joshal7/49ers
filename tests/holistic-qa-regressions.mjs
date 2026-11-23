@@ -3228,6 +3228,157 @@ test(
   }
 );
 
+await testAsync(
+  'Roster regressions: OTC non-active salary recovery, Practice Squad 0% neutral probability, retired ESPN ghost filter & clean UI fallbacks',
+  async () => {
+    const { parseOverTheCapHtml } = await import('../scripts/lib/otcParser.mjs');
+    const { resolveAuthoritativeRosterPlayerStatus } = await import('../scripts/lib/liveHealthAndRosterResolver.mjs');
+    const { playProbBadgeClass } = await import('../src/views/uiHelpers.js');
+    const { renderRosterCapViewHtml } = await import('../src/views/rosterCapView.js');
+    const { renderPlayerDossierSheetHtml } = await import('../src/views/playerSheetView.js');
+    const { reconcileLiveEspnSfRosterAndDepthChart } = await import('../src/services/dataService.js');
+
+    const sampleOtcHtml = `
+      <div id="y2026">
+        <div>Total Cap Liabilities: $290,000,000 | Team Cap Space: $11,200,000</div>
+        <table class="contracted-players"><tbody></tbody></table>
+        <div class="non-active-table"><h5>Injured Reserve</h5><table class="non-active"><tbody>
+          <tr><td><a href="/player/thomas-harper/12204/">Thomas Harper</a></td><td>$1,075,000</td></tr>
+          <tr><td><strong>TOTAL</strong></td><td><strong>$1,075,000</strong></td></tr>
+        </tbody></table></div>
+        <div class="non-active-table"><h5>Physically Unable to Perform</h5><table class="non-active"><tbody>
+          <tr><td><a href="/player/kerby-joseph/10142/">Kerby Joseph</a></td><td>$5,472,200</td></tr>
+          <tr><td><strong>TOTAL</strong></td><td><strong>$5,472,200</strong></td></tr>
+        </tbody></table></div>
+        <div class="non-active-table"><h5>Commissioner Exempt</h5><table class="non-active"><tbody>
+          <tr><td><a href="/player/brandon-aiyuk/8765/">Brandon Aiyuk</a></td><td>$12,450,790</td></tr>
+          <tr><td><strong>TOTAL</strong></td><td><strong>$12,450,790</strong></td></tr>
+        </tbody></table></div>
+        <div class="non-active-table"><h5>Practice Squad</h5><table class="non-active"><tbody>
+          <tr><td><a href="/player/wesley-grimes/13888/">Wesley Grimes</a></td><td>$247,500</td></tr>
+          <tr><td><strong>TOTAL</strong></td><td><strong>$247,500</strong></td></tr>
+        </tbody></table></div>
+      </div>
+    `;
+    const parsedOtc = parseOverTheCapHtml(sampleOtcHtml, 2026);
+    const nonActiveByName = new Map((parsedOtc.otcNonActivePlayers || []).map(p => [p.name, p]));
+    assert.equal(nonActiveByName.get('Thomas Harper')?.chargesByYear?.['2026']?.capNumber, 1075000);
+    assert.equal(nonActiveByName.get('Kerby Joseph')?.chargesByYear?.['2026']?.capNumber, 5472200);
+    assert.equal(nonActiveByName.get('Brandon Aiyuk')?.chargesByYear?.['2026']?.capNumber, 12450790);
+    assert.equal(nonActiveByName.get('Wesley Grimes')?.chargesByYear?.['2026']?.capNumber, 247500);
+    assert.equal(parsedOtc.years['2026'].exemptTotal, 12450790);
+
+    const ghostDecision = resolveAuthoritativeRosterPlayerStatus({
+      espnId: '3116136',
+      fullName: 'Justin Jackson',
+      groupKey: 'offense',
+      espnDefaultBucket: 'active',
+      offRosRec: null,
+      officialRosterHasData: true,
+      txRec: null,
+      depthChartIds: new Set(['4361741']),
+      recentNewsText: '',
+      inOtcTeamPage: false
+    });
+    assert.equal(ghostDecision.include, false, 'Uncorroborated retired ESPN active ghost must be excluded');
+
+    const psProb = computePlayerPlayProbability({
+      name: 'Wesley Grimes',
+      position: 'WR',
+      rosterBucket: 'practice_squad',
+      gameStatus: 'Active'
+    });
+    assert.equal(psProb.probabilityPct, 0);
+    assert.equal(psProb.tier, 'PRACTICE_SQUAD');
+    assert.equal(psProb.badgeLabel, '0% • Prac. Squad');
+    assert.equal(
+      playProbBadgeClass(psProb.probabilityPct, { rosterBucket: 'practice_squad', playTier: psProb.tier, playBadgeLabel: psProb.badgeLabel }),
+      'badge-neutral'
+    );
+
+    const mockPlayers = [
+      {
+        id: '9001',
+        name: 'New Claim LB',
+        position: 'LB',
+        unit: 'Defense',
+        rosterBucket: 'active',
+        jersey: 90,
+        age: 26,
+        primarySnapPct: 6,
+        capHit2026: 0,
+        contractsByYear: {},
+        spiderProfile: null,
+        health: { status: 'Active', playProbabilityPct: 99, playBadgeLabel: '' }
+      },
+      {
+        id: '9002',
+        name: 'Practice Squad QB',
+        position: 'QB',
+        unit: 'Offense',
+        rosterBucket: 'practice_squad',
+        jersey: 2,
+        age: 24,
+        primarySnapPct: 0,
+        capHit2026: 247500,
+        contractsByYear: {},
+        spiderProfile: { compositeRas: 5.4 },
+        health: { status: 'Practice Squad', playProbabilityPct: 0, playTier: 'PRACTICE_SQUAD', playBadgeLabel: '' }
+      }
+    ];
+    const mockAppData = { roster: { players: mockPlayers }, cap: { years: {}, players: [] }, depthChart: { units: [] } };
+    const rosterHtml = renderRosterCapViewHtml({ subTab: 'roster', appData: mockAppData });
+    assert.ok(rosterHtml.includes('Cap TBD'), 'Active 53-man player with pending OTC contract must show Cap TBD');
+    assert.ok(!rosterHtml.includes('>53-Man<'), 'Salary column must never render redundant 53-Man');
+    assert.ok(rosterHtml.includes('0% • Prac. Squad'), 'Practice squad row with empty badge must fall back to 0% • Prac. Squad');
+    assert.ok(rosterHtml.includes('badge-neutral'), 'Practice squad badge must use neutral styling');
+    assert.ok(rosterHtml.includes('99% • Full Go'), 'Active row with empty badge must fall back to 99% • Full Go');
+    assert.ok(!rosterHtml.includes('RAS <span class="mono">0.0</span>'), 'Player without spiderProfile must not render fake RAS 0.0');
+
+    const activeSheetOverview = renderPlayerDossierSheetHtml({ player: mockPlayers[0], activeTab: 'overview', appData: mockAppData });
+    assert.ok(activeSheetOverview.includes('Cap TBD') && !activeSheetOverview.includes('PS/Min'), 'Active player overview must show Cap TBD, not PS/Min');
+    const activeSheetContract = renderPlayerDossierSheetHtml({ player: mockPlayers[0], activeTab: 'contract', appData: mockAppData });
+    assert.ok(!activeSheetContract.includes('Practice Squad standard weekly'), 'Active player contract tab must not claim Practice Squad agreement');
+
+    const ghostClientApp = {
+      roster: {
+        excludedGhostIds: ['3116136'],
+        players: Array.from({ length: 45 }, (_, idx) => ({
+          id: String(1000 + idx),
+          name: `Active Player ${idx}`,
+          position: 'WR',
+          unit: 'Offense',
+          rosterBucket: 'active',
+          jersey: idx + 1,
+          health: { playProbabilityPct: 99, playBadgeLabel: '99% • Full Go' }
+        }))
+      },
+      depthChart: { units: [] }
+    };
+    reconcileLiveEspnSfRosterAndDepthChart(
+      ghostClientApp,
+      { athletes: [{ position: 'offense', items: [{ id: '3116136', fullName: 'Justin Jackson', position: { abbreviation: 'RB' } }] }] },
+      { depthchart: [] },
+      []
+    );
+    assert.ok(!ghostClientApp.roster.players.some(p => p.id === '3116136'), 'Client live sync must not resurrect excludedGhostIds');
+
+    const liveSfRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+    const liveSfCap = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8'));
+    const sfActiveNoCap = (liveSfRoster.players || []).filter(p => p.rosterBucket === 'active' && !(p.capHit2026 > 0));
+    assert.equal(sfActiveNoCap.length, 0, `49ers active players missing capHit2026: ${sfActiveNoCap.map(p => p.name).join(', ')}`);
+    const sfPsPlayers = (liveSfRoster.players || []).filter(p => p.rosterBucket === 'practice_squad');
+    assert.ok(sfPsPlayers.length >= 10, '49ers must have practice squad players');
+    for (const ps of sfPsPlayers) {
+      assert.equal(ps.health?.playProbabilityPct, 0, `49ers PS player ${ps.name} must have 0% play probability`);
+      assert.equal(ps.health?.playBadgeLabel, '0% • Prac. Squad', `49ers PS player ${ps.name} must show 0% • Prac. Squad`);
+      assert.equal(ps.health?.status, 'Practice Squad', `49ers PS player ${ps.name} must have status "Practice Squad"`);
+    }
+    const sfCapNonActive2026 = (liveSfCap.players || []).filter(p => p.contractsByYear?.['2026'] && p.rosterBucket !== 'active');
+    assert.equal(sfCapNonActive2026.length, 0, '49ers cap.json must not include non-active players in 2026 active cap table');
+  }
+);
+
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);
 if (failed > 0) {
   process.exit(1);

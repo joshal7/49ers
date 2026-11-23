@@ -99,10 +99,12 @@ function parseNonActiveSubtable(tableHtml) {
     }
     if (capCharge !== 0) {
       const hrefMatch = tds[0][1].match(/href="\/player\/([a-z0-9-]+)\/(\d+)\/?"/i);
+      const slug = hrefMatch ? hrefMatch[1].toLowerCase() : null;
+      const otcId = hrefMatch ? hrefMatch[2] : null;
       const otcUrl = hrefMatch
-        ? `https://overthecap.com/player/${hrefMatch[1].toLowerCase()}/${hrefMatch[2]}/`
+        ? `https://overthecap.com/player/${slug}/${otcId}/`
         : null;
-      entries.push({ name, capCharge, ...(otcUrl ? { otcUrl } : {}) });
+      entries.push({ name, capCharge, ...(slug ? { slug } : {}), ...(otcId ? { otcId } : {}), ...(otcUrl ? { otcUrl } : {}) });
     }
   }
   const summed = entries.reduce((acc, x) => acc + x.capCharge, 0);
@@ -130,6 +132,7 @@ export function parseOverTheCapHtml(html, baseYear = 2026, otcSpaceHtml = '') {
 
   const yearsSummary = {};
   const playerContractsByName = new Map();
+  const nonActivePlayersByName = new Map();
 
   // Extract ALL `/player/<slug>/<otcId>/` links anywhere in the OTC HTML (active, IR, PS, dead money, future years)
   const otcDirectoryBySlug = new Map();
@@ -288,13 +291,44 @@ export function parseOverTheCapHtml(html, baseYear = 2026, otcSpaceHtml = '') {
       }
     }
 
-    // Parse Non-Active Roster Cap Charges sub-tables (Dead Money, Practice Squad, Injured Reserve, PUP, Suspended)
+    // Parse Non-Active Roster Cap Charges sub-tables (Dead Money, Practice Squad, Injured Reserve, PUP, NFI, Exempt, Suspended)
     let deadMoneyTotal = 0;
     let deadMoneyPlayers = [];
     let practiceSquadTotal = 0;
     let injuredReserveTotal = 0;
     let pupTotal = 0;
+    let nfiTotal = 0;
+    let exemptTotal = 0;
     let suspendedTotal = 0;
+
+    const recordNonActiveEntries = (entries, subtable, bucket) => {
+      for (const e of entries || []) {
+        const nk = String(e?.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (!nk || !Number.isFinite(Number(e.capCharge)) || Number(e.capCharge) <= 0) continue;
+        if (!nonActivePlayersByName.has(nk)) {
+          nonActivePlayersByName.set(nk, {
+            name: e.name,
+            otcId: e.otcId || null,
+            slug: e.slug || null,
+            otcUrl: e.otcUrl || null,
+            chargesByYear: {}
+          });
+        }
+        const rec = nonActivePlayersByName.get(nk);
+        if (!rec.otcId && e.otcId) rec.otcId = e.otcId;
+        if (!rec.slug && e.slug) rec.slug = e.slug;
+        if (!rec.otcUrl && e.otcUrl) rec.otcUrl = e.otcUrl;
+        const prev = rec.chargesByYear[yr];
+        if (!prev || e.capCharge > prev.capNumber) {
+          rec.chargesByYear[yr] = {
+            year: yrNum,
+            capNumber: e.capCharge,
+            bucket,
+            subtable
+          };
+        }
+      }
+    };
 
     const h5Subtables = [
       ...block.matchAll(/<h5[^>]*>([\s\S]*?)<\/h5>\s*(<table[^>]*class="[^"]*non-active[^"]*"[^>]*>[\s\S]*?<\/table>)/gi)
@@ -309,12 +343,22 @@ export function parseOverTheCapHtml(html, baseYear = 2026, otcSpaceHtml = '') {
           deadMoneyPlayers = parsedSub.entries;
         } else if (heading.includes('practice')) {
           practiceSquadTotal = parsedSub.total;
+          recordNonActiveEntries(parsedSub.entries, 'practice_squad', 'practice_squad');
         } else if (heading.includes('injured')) {
           injuredReserveTotal = parsedSub.total;
+          recordNonActiveEntries(parsedSub.entries, 'injured_reserve', 'ir');
         } else if (heading.includes('physically') || heading.includes('pup')) {
           pupTotal = parsedSub.total;
+          recordNonActiveEntries(parsedSub.entries, 'pup', 'ir');
+        } else if (heading.includes('non-football') || heading.includes('nfi')) {
+          nfiTotal = parsedSub.total;
+          recordNonActiveEntries(parsedSub.entries, 'nfi', 'ir');
+        } else if (heading.includes('exempt')) {
+          exemptTotal = parsedSub.total;
+          recordNonActiveEntries(parsedSub.entries, 'exempt', 'ir');
         } else if (heading.includes('suspend')) {
           suspendedTotal = parsedSub.total;
+          recordNonActiveEntries(parsedSub.entries, 'suspended', 'suspended');
         }
       }
     } else {
@@ -389,8 +433,10 @@ export function parseOverTheCapHtml(html, baseYear = 2026, otcSpaceHtml = '') {
       injuredReserveTotal,
       practiceSquadTotal,
       pupTotal,
+      nfiTotal,
+      exemptTotal,
       suspendedTotal,
-      reserveAndPsTotal: injuredReserveTotal + practiceSquadTotal + pupTotal + suspendedTotal,
+      reserveAndPsTotal: injuredReserveTotal + practiceSquadTotal + pupTotal + nfiTotal + exemptTotal + suspendedTotal,
       topDeadMoneyEntries: deadMoneyPlayers.slice(0, 15),
       contractedCount,
       totalSignedCount: spaceMeta?.totalSignedCount || contractedCount
@@ -400,6 +446,7 @@ export function parseOverTheCapHtml(html, baseYear = 2026, otcSpaceHtml = '') {
   return {
     years: yearsSummary,
     otcPlayers: Array.from(playerContractsByName.values()),
+    otcNonActivePlayers: Array.from(nonActivePlayersByName.values()),
     otcDirectory: Array.from(otcDirectoryBySlug.values())
   };
 }

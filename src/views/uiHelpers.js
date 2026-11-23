@@ -276,7 +276,43 @@ export function formatRelativeAge(isoStr) {
 }
 export const relTime = formatRelativeAge;
 
-export function playProbBadgeClass(pct) {
+export function resolvePlayerPlayBadgeLabel(player = null) {
+  const h = player?.health || {};
+  const explicit = String(h.playBadgeLabel || '').trim();
+  if (explicit) return explicit;
+  const bucket = String(player?.rosterBucket || 'active').toLowerCase();
+  const statusLower = String(h.status || '').toLowerCase();
+  if (bucket === 'practice_squad') {
+    return statusLower.includes('injured') ? '0% • PS (Injured)' : '0% • Prac. Squad';
+  }
+  if (bucket === 'suspended' || statusLower.includes('suspended')) return '0% • Suspended';
+  if (bucket === 'ir') {
+    if (h.isSeasonEnding || statusLower.includes('season')) return '0% • Out for Season';
+    if (statusLower.includes('pup')) return '0% • Reserve/PUP';
+    if (statusLower.includes('roster exemption')) return '0% • Roster Exemption';
+    if (statusLower.includes('left squad')) return '0% • Reinstatement';
+    return '0% • IR';
+  }
+  const pct = Number.isFinite(Number(h.playProbabilityPct)) ? Math.round(Number(h.playProbabilityPct)) : 99;
+  if (pct >= 85) return `${pct}% • Full Go`;
+  if (pct >= 50) return `${pct}% • GTD`;
+  if (pct >= 20) return `${pct}% • Long Shot`;
+  if (pct > 0) return `${pct}% • Doubtful`;
+  return '0% • Out';
+}
+
+export function playProbBadgeClass(pct, meta = null) {
+  const tier = String(meta?.playTier || meta?.tier || '').toUpperCase();
+  const bucket = String(meta?.rosterBucket || '').toLowerCase();
+  const label = String(meta?.playBadgeLabel || meta?.badgeLabel || '').toLowerCase();
+  if (
+    (tier === 'PRACTICE_SQUAD' ||
+      bucket === 'practice_squad' ||
+      /\bprac\.?\s*squad\b|\bpractice\s+squad\b/i.test(label)) &&
+    !/injur|\bout\b|suspend/i.test(label)
+  ) {
+    return 'badge-neutral';
+  }
   const n = Number(pct ?? 0);
   if (n >= 85) return 'badge-positive';
   if (n >= 50) return 'badge-warning';

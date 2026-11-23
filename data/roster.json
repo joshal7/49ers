@@ -56391,7 +56391,7 @@
       "college": "Texas",
       "draftInfo": "2025 • Rd 2, Pick #43",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430835.png",
-      "capHit2026": 0,
+      "capHit2026": 2342478,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -56760,7 +56760,7 @@
       "college": "Lane College",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4394894.png",
-      "capHit2026": 0,
+      "capHit2026": 540000,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -57820,7 +57820,7 @@
       "college": "Ohio",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3920814.png",
-      "capHit2026": 0,
+      "capHit2026": 1075000,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -58914,7 +58914,7 @@
       "college": "Arizona State",
       "draftInfo": "2020 • Rd 1, Pick #25",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
-      "capHit2026": 0,
+      "capHit2026": 12450790,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -59570,7 +59570,7 @@
       "college": "North Carolina Central",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4576069.png",
-      "capHit2026": 0,
+      "capHit2026": 247500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -59836,7 +59836,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -59856,11 +59856,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
@@ -62308,7 +62308,7 @@
       "college": "Indiana",
       "draftInfo": "2025 • Rd 4, Pick #113",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
-      "capHit2026": 0,
+      "capHit2026": 844440,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -63877,7 +63877,7 @@
       "college": "Texas A&M",
       "draftInfo": "2018 • Rd 2, Pick #47",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895856.png",
-      "capHit2026": 0,
+      "capHit2026": 2960000,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 1,
@@ -68667,7 +68667,7 @@
       "college": "Cincinnati",
       "draftInfo": "2021 • Rd 5, Pick #163",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4239088.png",
-      "capHit2026": 0,
+      "capHit2026": 565000,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -68993,7 +68993,7 @@
       "college": "Ole Miss",
       "draftInfo": "2026 • Rd 2, Pick #33",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
-      "capHit2026": 0,
+      "capHit2026": 2432134,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -75707,7 +75707,7 @@
       "college": "Michigan",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428144.png",
-      "capHit2026": 0,
+      "capHit2026": 247500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -75846,7 +75846,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -75866,11 +75866,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Trench/box position (C) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
@@ -79294,7 +79294,7 @@
       "college": "Stanford",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242555.png",
-      "capHit2026": 0,
+      "capHit2026": 330300,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -79433,7 +79433,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -79453,11 +79453,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
@@ -83272,7 +83272,7 @@
       "college": "Oklahoma",
       "draftInfo": "2026 • Rd 4, Pick #107",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685369.png",
-      "capHit2026": 0,
+      "capHit2026": 1010206,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -84389,7 +84389,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -84409,11 +84409,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
@@ -84449,7 +84449,7 @@
       "college": "Louisville",
       "draftInfo": "2024 • Rd 4, Pick #129",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372561.png",
-      "capHit2026": 0,
+      "capHit2026": 1251132,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -84818,7 +84818,7 @@
       "college": "Arizona State",
       "draftInfo": "2022 • Rd 4, Pick #121",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035686.png",
-      "capHit2026": 0,
+      "capHit2026": 123750,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 7,
@@ -85286,7 +85286,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -85306,11 +85306,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
@@ -85765,7 +85765,7 @@
       "college": "Nebraska",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4034862.png",
-      "capHit2026": 0,
+      "capHit2026": 353322,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 1,
@@ -86094,7 +86094,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -86114,11 +86114,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
@@ -88923,7 +88923,7 @@
       "college": "California",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259147.png",
-      "capHit2026": 0,
+      "capHit2026": 2058000,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -89522,7 +89522,7 @@
       "college": "Purdue",
       "draftInfo": "2023 • Rd 7, Pick #255",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4570410.png",
-      "capHit2026": 0,
+      "capHit2026": 347222,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 2,
@@ -89990,7 +89990,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -90010,11 +90010,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
@@ -90242,7 +90242,7 @@
       "college": "Notre Dame",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683155.png",
-      "capHit2026": 0,
+      "capHit2026": 247500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -90381,7 +90381,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -90401,11 +90401,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
@@ -98574,7 +98574,7 @@
       "college": "Prairie View A&M",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3047876.png",
-      "capHit2026": 0,
+      "capHit2026": 265372,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 4,
@@ -99029,7 +99029,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -99049,11 +99049,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": [
@@ -100125,7 +100125,7 @@
       "college": "Penn State",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4699678.png",
-      "capHit2026": 0,
+      "capHit2026": 247500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -100264,7 +100264,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -100284,11 +100284,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
@@ -106914,7 +106914,7 @@
       "college": "Texas A&M",
       "draftInfo": "2024 • Rd 3, Pick #97",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4692680.png",
-      "capHit2026": 0,
+      "capHit2026": 233750,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -107194,7 +107194,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -107214,11 +107214,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
@@ -107254,7 +107254,7 @@
       "college": "Indiana",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696051.png",
-      "capHit2026": 0,
+      "capHit2026": 515000,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -110127,7 +110127,7 @@
       "college": "Illinois",
       "draftInfo": "2021 • Rd 5, Pick #167",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png",
-      "capHit2026": 0,
+      "capHit2026": 3380000,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -112439,7 +112439,7 @@
       "college": "Oklahoma State",
       "draftInfo": "2025 • Rd 3, Pick #75",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4573188.png",
-      "capHit2026": 0,
+      "capHit2026": 1491288,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -112801,7 +112801,7 @@
       "college": "Fordham",
       "draftInfo": "2022 • Rd 6, Pick #187",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4247590.png",
-      "capHit2026": 0,
+      "capHit2026": 565000,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -113064,7 +113064,7 @@
       "college": "Oklahoma",
       "draftInfo": "2018 • Rd 5, Pick #160",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3052667.png",
-      "capHit2026": 0,
+      "capHit2026": 251350,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 7,
@@ -113469,7 +113469,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -113489,11 +113489,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
@@ -116350,7 +116350,7 @@
       "college": "Florida",
       "draftInfo": "2024 • Rd 1, Pick #31",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428209.png",
-      "capHit2026": 0,
+      "capHit2026": 3419563,
       "contractsByYear": {
         "2027": {
           "year": 2027,
@@ -116743,7 +116743,7 @@
       "college": "Georgia",
       "draftInfo": "2023 • Rd 5, Pick #173",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259558.png",
-      "capHit2026": 0,
+      "capHit2026": 183500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 2,
@@ -117211,7 +117211,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -117231,11 +117231,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
@@ -118237,7 +118237,7 @@
       "college": "Maryland",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569497.png",
-      "capHit2026": 0,
+      "capHit2026": 2280000,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -119339,7 +119339,7 @@
       "college": "UTSA",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430104.png",
-      "capHit2026": 0,
+      "capHit2026": 247500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -119542,7 +119542,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -119562,11 +119562,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
@@ -124543,7 +124543,7 @@
       "college": "San José State",
       "draftInfo": "2023 • Rd 4, Pick #129",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4374148.png",
-      "capHit2026": 0,
+      "capHit2026": 192500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 1,
@@ -124696,7 +124696,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -124716,11 +124716,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
@@ -124934,7 +124934,7 @@
       "college": "NC State",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4888723.png",
-      "capHit2026": 0,
+      "capHit2026": 247500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -125073,7 +125073,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -125093,11 +125093,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
@@ -125133,7 +125133,7 @@
       "college": "Notre Dame",
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683114.png",
-      "capHit2026": 0,
+      "capHit2026": 247500,
       "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
@@ -125272,7 +125272,7 @@
         ]
       },
       "health": {
-        "status": "PRACTICE_SQUAD",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -125292,11 +125292,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
@@ -125310,5 +125310,9 @@
         "sections": []
       }
     }
+  ],
+  "excludedGhostIds": [
+    "3129116",
+    "4875123"
   ]
 }

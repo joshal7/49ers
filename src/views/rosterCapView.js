@@ -7,6 +7,7 @@ import {
   escJargon,
   jargonTerm,
   playProbBadgeClass,
+  resolvePlayerPlayBadgeLabel,
   renderPlayerAvatarHtml,
   lookupRosterPlayerByName,
   registerRosterPlayersForInlineLinks
@@ -295,8 +296,23 @@ function renderRosterExplorer({
           filtered.length === 0
             ? `<div style="padding:14px;text-align:center;color:var(--text-muted)">No players match "${esc(rosterSearch)}".</div>`
             : filtered
-                .map(
-                  p => `
+                .map(p => {
+                  const badgeLabel = resolvePlayerPlayBadgeLabel(p);
+                  const badgeCls = playProbBadgeClass(p.health?.playProbabilityPct, {
+                    rosterBucket: p.rosterBucket,
+                    playTier: p.health?.playTier,
+                    playBadgeLabel: badgeLabel
+                  });
+                  const rasVal = Number(p.spiderProfile?.compositeRas || 0);
+                  const capDisplay =
+                    p.capHit2026 > 0
+                      ? formatCompactDollars(p.capHit2026)
+                      : p.rosterBucket === 'practice_squad'
+                        ? 'PS'
+                        : p.rosterBucket === 'ir'
+                          ? 'IR'
+                          : 'Cap TBD';
+                  return `
               <button type="button" class="player-row" data-action="open-player-sheet" data-player-id="${esc(p.id)}">
                 <div class="player-row-left">
                   <div class="jersey-chip mono">${p.jersey !== null && p.jersey !== undefined ? `#${p.jersey}` : '—'}</div>
@@ -319,30 +335,23 @@ function renderRosterExplorer({
                                     : 'IR/Reserve'
                             : 'Prac. Squad'
                       )} ·
-                      Snaps <span class="mono">${p.primarySnapPct}%</span> ·
-                      RAS <span class="mono">${Number(p.spiderProfile?.compositeRas || 0).toFixed(1)}</span>${p.age ? ` · <span class="mono">${p.age}y</span>` : ''}
+                      Snaps <span class="mono">${p.primarySnapPct || 0}%</span>${
+                        rasVal > 0 ? ` · RAS <span class="mono">${rasVal.toFixed(1)}</span>` : ''
+                      }${p.age ? ` · <span class="mono">${p.age}y</span>` : ''}
                     </div>
                   </div>
                 </div>
                 <div class="player-row-right">
                   <span class="mono" style="font-weight:800;font-size:12.5px">
-                    ${
-                      p.capHit2026
-                        ? formatCompactDollars(p.capHit2026)
-                        : p.rosterBucket === 'practice_squad'
-                          ? 'PS'
-                          : p.rosterBucket === 'ir'
-                            ? 'IR'
-                            : '53-Man'
-                    }
+                    ${capDisplay}
                   </span>
-                  <span class="badge ${playProbBadgeClass(p.health?.playProbabilityPct)} mono" style="font-size:10px">
-                    ${esc(p.health?.playBadgeLabel)}
+                  <span class="badge ${badgeCls} mono" style="font-size:10px">
+                    ${esc(badgeLabel)}
                   </span>
                 </div>
               </button>
-            `
-                )
+            `;
+                })
                 .join('')
         }
       </div>

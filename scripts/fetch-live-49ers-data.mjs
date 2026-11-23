@@ -598,6 +598,16 @@ async function main() {
       if (!otcByName.has(k)) otcByName.set(k, op);
     }
   }
+  const otcNonActiveById = new Map();
+  const otcNonActiveByName = new Map();
+  for (const np of otcParsed.otcNonActivePlayers || []) {
+    if (np?.otcId) otcNonActiveById.set(String(np.otcId), np);
+    if (np?.name) {
+      for (const k of getPlayerLookupKeys(np.name)) {
+        if (!otcNonActiveByName.has(k)) otcNonActiveByName.set(k, np);
+      }
+    }
+  }
 
   // Index player stats across 4 most recent seasons by gsis_id and normName
   const seasonStatsByGsis = new Map();
@@ -1005,6 +1015,7 @@ async function main() {
   // 5. Compile Full Roster (`data/roster.json`)
   console.log('[4/6] Compiling full 49ers Roster, Player Dossiers, Dual Depth Chart & Health Engine...');
   const rosterPlayers = [];
+  const excludedGhostIds = [];
   const seenEspnIds = new Set();
   const sfDepthChartIds = new Set();
   for (const dc of espnDepth.depthchart || []) {
@@ -1041,6 +1052,10 @@ async function main() {
       const offRosRec = officialSfRoster.byKey.get(canonKey) || null;
       const espnInjProbe = espnInjByAthleteId.get(espnId) || espnInjByName.get(nk) || null;
       const webInjProbe = sfWebAthleteDetails.get(espnId)?.injury || null;
+      const preLookupKeys = getPlayerLookupKeys(fullName);
+      const inOtcTeamPage = Boolean(
+        preLookupKeys.some(k => otcByName.has(k) || otcNonActiveByName.has(k))
+      );
 
       const rosterDecision = resolveAuthoritativeRosterPlayerStatus({
         espnId,
@@ -1054,10 +1069,12 @@ async function main() {
         espnInj: espnInjProbe,
         webInj: webInjProbe,
         inlineInj: ath.injuries?.[0] || null,
-        recentNewsText: recentSfTeamNewsText
+        recentNewsText: recentSfTeamNewsText,
+        inOtcTeamPage
       });
 
       if (!rosterDecision.include) {
+        excludedGhostIds.push(espnId);
         continue;
       }
 
@@ -1080,10 +1097,17 @@ async function main() {
 
       const otcRecord =
         (otcId && otcById.get(String(otcId))) ||
-        getPlayerLookupKeys(fullName).map(k => otcByName.get(k)).find(Boolean) ||
+        preLookupKeys.map(k => otcByName.get(k)).find(Boolean) ||
+        null;
+      const otcNonActiveRecord =
+        (otcId && otcNonActiveById.get(String(otcId))) ||
+        preLookupKeys.map(k => otcNonActiveByName.get(k)).find(Boolean) ||
         null;
       const contractsByYear = otcRecord?.contractsByYear || {};
-      const capHit2026 = contractsByYear[capPrimaryYrKey]?.capNumber || 0;
+      const capHit2026 =
+        contractsByYear[capPrimaryYrKey]?.capNumber ||
+        otcNonActiveRecord?.chargesByYear?.[capPrimaryYrKey]?.capNumber ||
+        0;
 
       // Season & Career Stats
       const seasonsRaw =
@@ -1561,9 +1585,11 @@ async function main() {
                     ? rawStatus === 'Active'
                       ? 'No Designation (Cleared)'
                       : rawStatus
-                    : bucket === 'active'
-                      ? 'Active'
-                      : bucket.toUpperCase(),
+                    : bucket === 'practice_squad'
+                      ? 'Practice Squad'
+                      : bucket === 'active'
+                        ? 'Active'
+                        : bucket.toUpperCase(),
           injuryType,
           returnDate: returnDateStr,
           isSeasonEnding: Boolean(irClassification?.isSeasonEnding),
@@ -1780,7 +1806,6 @@ async function main() {
       const cleanedContractsByYear = { ...(op.contractsByYear || {}) };
       if (effectiveBucket !== 'active' && cleanedContractsByYear[capPrimaryYrKey]) {
         delete cleanedContractsByYear[capPrimaryYrKey];
-        if (rp) rp.capHit2026 = 0;
       }
       return {
         id: rp?.id || op.otcId,
@@ -5876,11 +5901,19 @@ async function main() {
   const sfDraft2026Rows = draftPicksRows.filter(
     r => r.season === seasonYearStr && (r.team === 'SFO' || r.team === 'SF')
   );
+  let existingSfDraftClass = null;
+  try {
+    const existingSeasonalPath = path.join(ROOT, 'data', 'seasonal.json');
+    if (fs.existsSync(existingSeasonalPath)) {
+      existingSfDraftClass = JSON.parse(fs.readFileSync(existingSeasonalPath, 'utf8'))?.draftClass2026 || null;
+    }
+  } catch {}
   const draft2026Payload = await build2026DraftAndUdfaClass(
     sfDraft2026Rows,
     buildPlayerSpiderProfile,
     lookupAnyPlayerMeta,
-    seasonYear
+    seasonYear,
+    existingSfDraftClass
   );
 
   const targetCombineYear = seasonYear + 1;
@@ -6524,6 +6557,7 @@ async function main() {
   writeCleanJson(path.join(dataDir, 'roster.json'), {
     updatedAt: nowIso,
     count: rosterPlayers.length,
+    excludedGhostIds,
     positionalLeaderboards: finalPositionalLeaderboards,
     peerDirectory: finalPeerDirectory,
     players: rosterPlayers

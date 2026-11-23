@@ -3539,6 +3539,25 @@ export function computePlayerPlayProbability(input = {}) {
     !missedWeeklyIrWindow &&
     (Boolean(input.isIrReturnQuestionable) || (isIrBucketOrStatus && hasOpenIr21DayWindow));
 
+  // Practice Squad players are NOT on the 53-man active game-day roster unless elevated/signed
+  if (rosterBucket === 'practice_squad' && !input.activatedToActiveRoster) {
+    const isPsInjured =
+      statusRaw.includes('injured') ||
+      statusRaw.includes('ps/ir') ||
+      statusRaw === 'practice squad / injured';
+    return {
+      probabilityPct: 0,
+      tier: 'PRACTICE_SQUAD',
+      badgeLabel: isPsInjured ? '0% • PS (Injured)' : '0% • Prac. Squad',
+      priorUsed: prior,
+      factors: [
+        isPsInjured
+          ? 'On Practice Squad / Injured list — ineligible for game day'
+          : 'On Practice Squad — ineligible for game day unless elevated to the 53-man active roster'
+      ]
+    };
+  }
+
   if (
     !isIrReturnQuestionable &&
     (isSeasonEndingFlag ||
@@ -5728,6 +5747,37 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
             p.health.status = 'IR — 21-Day Window Open';
           }
         }
+      }
+      continue;
+    }
+
+    if (p.rosterBucket === 'practice_squad') {
+      const psProb = computePlayerPlayProbability({
+        name: p.name,
+        position: p.position,
+        experienceYears: p.experienceYears ?? null,
+        snapPct: p.primarySnapPct ?? 0,
+        gameStatus: p.health.status,
+        rosterBucket: 'practice_squad'
+      });
+      if (
+        p.health.playProbabilityPct !== psProb.probabilityPct ||
+        p.health.playBadgeLabel !== psProb.badgeLabel ||
+        p.health.playTier !== psProb.tier ||
+        p.health.isOnPracticeReport ||
+        !p.health.status ||
+        /^(?:active|practice_squad|out)$/i.test(String(p.health.status).trim())
+      ) {
+        p.health.status = 'Practice Squad';
+        p.health.isOnPracticeReport = false;
+        p.health.playProbabilityPct = psProb.probabilityPct;
+        p.health.playTier = psProb.tier;
+        p.health.playBadgeLabel = psProb.badgeLabel;
+        p.health.factors = psProb.factors;
+        if (!p.health.archetypeNote && psProb.priorUsed?.archetypeNote) {
+          p.health.archetypeNote = psProb.priorUsed.archetypeNote;
+        }
+        mutated = true;
       }
       continue;
     }

@@ -8,7 +8,7 @@
  * 5. contract  — Multi-Year OverTheCap Breakdown + Pre/Post-June 1 Cut/Trade/Restructure Calculator
  */
 
-import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, rankBadgeClass, renderExpandableSummaryHtml, renderPlayerAvatarHtml, renderSalientThumbHtml, renderTweetLinkedArticleCardHtml, renderMiniMeterHtml } from './uiHelpers.js';
+import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, resolvePlayerPlayBadgeLabel, rankBadgeClass, renderExpandableSummaryHtml, renderPlayerAvatarHtml, renderSalientThumbHtml, renderTweetLinkedArticleCardHtml, renderMiniMeterHtml } from './uiHelpers.js';
 import { resolveSalientCardVisual } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
@@ -549,6 +549,21 @@ function renderOverviewTab(
     : teamContext?.fullName || 'NFL Roster';
   const bucketLabel = String(p.rosterBucket || 'active').replace('_', ' ').toUpperCase();
 
+  const overviewBadgeLabel = resolvePlayerPlayBadgeLabel(p);
+  const overviewBadgeCls = playProbBadgeClass(p.health?.playProbabilityPct, {
+    rosterBucket: p.rosterBucket,
+    playTier: p.health?.playTier,
+    playBadgeLabel: overviewBadgeLabel
+  });
+  const overviewCapLabel =
+    p.capHit2026 > 0
+      ? formatCompactDollars(p.capHit2026)
+      : p.rosterBucket === 'practice_squad'
+        ? 'PS'
+        : p.rosterBucket === 'ir'
+          ? 'IR'
+          : 'Cap TBD';
+
   return `
     <div class="dossier-hero-banner">
       <div style="display:flex;align-items:center;gap:12px;min-width:0">
@@ -558,7 +573,7 @@ function renderOverviewTab(
           <div style="font-size:12px;color:var(--text-secondary)">${esc(heroSubtitleText)}</div>
         </div>
       </div>
-      <span class="badge ${playProbBadgeClass(p.health?.playProbabilityPct)} mono">${esc(p.health?.playBadgeLabel)}</span>
+      <span class="badge ${overviewBadgeCls} mono">${esc(overviewBadgeLabel)}</span>
     </div>
 
     ${
@@ -580,12 +595,12 @@ function renderOverviewTab(
       </div>
       <div class="kpi-box">
         <div class="kpi-label">2026 Snap Share</div>
-        <div class="kpi-val mono">${p.primarySnapPct}%</div>
-        ${renderMiniMeterHtml(p.primarySnapPct, 'gold')}
+        <div class="kpi-val mono">${p.primarySnapPct || 0}%</div>
+        ${renderMiniMeterHtml(p.primarySnapPct || 0, 'gold')}
       </div>
       <div class="kpi-box">
         <div class="kpi-label">2026 Cap Hit</div>
-        <div class="kpi-val mono">${p.capHit2026 ? formatCompactDollars(p.capHit2026) : 'PS/Min'}</div>
+        <div class="kpi-val mono">${overviewCapLabel}</div>
       </div>
     </div>
 
@@ -841,8 +856,24 @@ function renderContractTab(p, txScenario, teamContext = null) {
         </div>
       </div>`;
     }
-    return `<div class="subcard-panel" style="font-size:12.5px">
-      Practice Squad / Non-Top-51 standard weekly agreement (no multi-year guaranteed dead-money exposure).
+    const capChargeLine =
+      p.capHit2026 > 0
+        ? `<div><strong>2026 OverTheCap Charge:</strong> <span class="mono">${formatOtcDollars(p.capHit2026)}</span></div>`
+        : '';
+    const emptyContractCopy =
+      p.rosterBucket === 'practice_squad'
+        ? 'Practice Squad standard weekly agreement (no multi-year guaranteed dead-money exposure).'
+        : p.rosterBucket === 'ir' || p.rosterBucket === 'suspended'
+          ? 'Reserve / IR cap charge (multi-year contract table unavailable while on non-active ledger).'
+          : 'Active 53-man contract pending full multi-year OverTheCap breakdown update.';
+    return `<div class="subcard-panel" style="font-size:12.5px;display:flex;flex-direction:column;gap:8px">
+      ${capChargeLine}
+      <div>${emptyContractCopy}</div>
+      <div>
+        <a href="${esc(fallbackOtcUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link">
+          <span>View on OverTheCap</span>${iconSvg('externalLink', 10)}
+        </a>
+      </div>
     </div>`;
   }
 
@@ -1044,7 +1075,7 @@ function renderHealthTab(
       </div>
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
         <a href="${esc(officialInjuryUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(officialInjuryLabel)}</span>${iconSvg('externalLink', 10)}</a>
-        <span class="badge ${playProbBadgeClass(h.playProbabilityPct)} mono" style="font-size:13px;padding:4px 10px">${esc(h.playBadgeLabel)}</span>
+        <span class="badge ${playProbBadgeClass(h.playProbabilityPct, { rosterBucket: p.rosterBucket, playTier: h.playTier, playBadgeLabel: resolvePlayerPlayBadgeLabel(p) })} mono" style="font-size:13px;padding:4px 10px">${esc(resolvePlayerPlayBadgeLabel(p))}</span>
       </div>
     </div>
 

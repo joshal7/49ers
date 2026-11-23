@@ -34,7 +34,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=91';
+} from './services/dataService.js?v=92';
 import {
   SHARED_GEMINI_KEY_STORAGE_KEY,
   publishSharedGeminiApiKey,
@@ -91,7 +91,7 @@ import {
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
-} from './views/uiHelpers.js?v=52';
+} from './views/uiHelpers.js?v=53';
 import { getJargonEntry } from './engine/jargonGlossary.js?v=50';
 import {
   isAllowedInlineVideoStreamUrl,
@@ -111,9 +111,9 @@ import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
 } from './views/newsView.js?v=92';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=49';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=79';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=92';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=50';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=80';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=93';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=66';
 import {
   renderSettingsSheetHtml,
