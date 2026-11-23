@@ -5664,10 +5664,30 @@ await testAsync('Schedule Gamecast scoping, Rooting Guide week grouping, 4-color
   );
 
   // 5. Verify Matchup View: Availability Index dotted link (no "What this means"), live scorecard parity + deterministic 1 Doubtful · 2 Long Shot · 3 GTD breakout, no redundant Questionable under injuries, Coaching OC/DC & bold headers, and 5 detailed Key Matchups
+  // Anchor upcoming kickoff +48h in the future so pre-game 4-color badge assertions remain deterministic even if tests run during live SNF!
+  const futureMatchupKoIso = new Date(Date.now() + 48 * 3_600_000).toISOString();
+  const preGameMatchupAppData = {
+    ...fullAppData,
+    scheduleMatchup: {
+      ...liveSm,
+      upcomingMatchup: {
+        ...(liveSm.upcomingMatchup || {}),
+        dateIso: futureMatchupKoIso,
+        kickoffIso: futureMatchupKoIso,
+        isGameInProgress: false,
+        liveState: 'pre'
+      },
+      schedule: (liveSm.schedule || []).map(g =>
+        Number(g?.week) === Number(liveSm.upcomingMatchup?.week)
+          ? { ...g, dateIso: futureMatchupKoIso, completed: false, isLive: false, statusState: 'pre' }
+          : g
+      )
+    }
+  };
   const matchupHtml = renderSeasonMatchupViewHtml({
     seasonSub: 'matchup',
     activePhases: ['YEAR_ROUND', 'IN_SEASON'],
-    appData: fullAppData,
+    appData: preGameMatchupAppData,
     activeVideosSet: new Set()
   });
   assert.ok(
@@ -5701,11 +5721,11 @@ await testAsync('Schedule Gamecast scoping, Rooting Guide week grouping, 4-color
   }
   // Deterministic fixture check verifying exact `1 Doubtful · 2 Long Shot · 3 GTD` & `(1 Doubtful · 3 Long Shot · 6 GTD)` scorecard sub-note formatting
   const syntheticScorecardAppData = {
-    ...fullAppData,
+    ...preGameMatchupAppData,
     scheduleMatchup: {
-      ...liveSm,
+      ...preGameMatchupAppData.scheduleMatchup,
       upcomingMatchup: {
-        ...liveSm.upcomingMatchup,
+        ...preGameMatchupAppData.scheduleMatchup.upcomingMatchup,
         opponentHealth: {
           ...liveSm.upcomingMatchup.opponentHealth,
           injuryReport: [
@@ -14197,9 +14217,16 @@ await testAsync(
     );
     assert.equal(signGuardDelta.compactLabel, '↑ +26%', 'Must prefer trajectory-consistent prior-day delta over contradictory stale snapshot');
 
+    const futureRenderKoIso = new Date(Date.now() + 72 * 3_600_000).toISOString();
     const healthHtml = renderSeasonMatchupViewHtml({
       seasonSub: 'health',
-      appData: mockMultiDayApp,
+      appData: {
+        ...mockMultiDayApp,
+        scheduleMatchup: {
+          schedule: [{ week: 11, dateIso: futureRenderKoIso, completed: false }],
+          upcomingMatchup: { week: 11, oppAbbr: 'MIN', oppName: 'Minnesota Vikings', kickoffIso: futureRenderKoIso }
+        }
+      },
       userPrefs: { deltaSnapshots: { healthByPlayer: { '16737': { playProbabilityPct: 42 } } } }
     });
     assert.ok(
@@ -14470,18 +14497,19 @@ await testAsync(
     const oppKeyRichter = canonicalOpponentHealthSnapshotKey(oppMockRows[4], 'MIN');
     assert.equal(oppKeyRichter, 'MIN:4567890', 'Opponent snapshot key must namespace by opponent abbreviation');
 
+    const futureOppDeltaKoIso = new Date(Date.now() + 72 * 3_600_000).toISOString();
     const matchupDeltaApp = {
       meta: { seasonYear: 2026, currentWeek: 11 },
       roster: { players: [] },
       health: { week: 11, byeWeek: 8, practiceReport: [], irAndReserveTracker: [] },
       news: { rawStream: [] },
       scheduleMatchup: {
-        schedule: [{ week: 11, dateIso: kickoffIso, completed: false }],
+        schedule: [{ week: 11, dateIso: futureOppDeltaKoIso, completed: false }],
         upcomingMatchup: {
           week: 11,
           oppAbbr: 'MIN',
           oppName: 'Minnesota Vikings',
-          kickoffIso,
+          kickoffIso: futureOppDeltaKoIso,
           opponentHealth: {
             injuryReport: oppMockRows,
             irReserve: [],
@@ -16852,6 +16880,100 @@ test('Regular-season bye weeks stay REG (never misclassified as POST #1 Seed Fir
   assert.equal(realPostBye.postseasonRound, 'WC_BYE');
   assert.equal(realPostBye.isByeWeek, true);
   assert.equal(realPostBye.week, 19);
+});
+
+import {
+  buildPlayerSearchQueries,
+  isCachedDraftVideoValid,
+  normalizeCollegeSearchAlias,
+  scoreDraftVideoCandidate
+} from '../scripts/lib/draftVideoResolver.mjs';
+
+test('Draft Recap highlight video resolver enforces strict player-identity matching, college aliases & rejects wrong-player fallbacks', () => {
+  // College alias normalization (Mississippi -> Ole Miss, Southern California -> USC, Connecticut -> UConn)
+  assert.equal(normalizeCollegeSearchAlias('Mississippi'), 'Ole Miss');
+  assert.equal(normalizeCollegeSearchAlias('Southern California'), 'USC');
+  assert.equal(normalizeCollegeSearchAlias('Connecticut'), 'UConn');
+  assert.equal(normalizeCollegeSearchAlias('College'), '');
+
+  // Query builder uses Ole Miss for Mississippi and strips apostrophes for alternate query
+  const striblingQueries = buildPlayerSearchQueries({
+    name: "De'Zhaun Stribling",
+    college: 'Mississippi',
+    position: 'WR',
+    teamNickname: '49ers',
+    draftYear: 2026
+  });
+  assert.ok(striblingQueries.some(q => /Ole Miss/i.test(q)), 'Query must normalize Mississippi to Ole Miss');
+  assert.ok(striblingQueries.some(q => /DeZhaun Stribling/i.test(q)), 'Query must include apostrophe-free variant');
+
+  // Strict identity gate: exact player highlight reel scores high
+  const blakePlayer = { name: 'Blake Miller', college: 'Clemson', position: 'OT', teamNickname: 'Lions', teamCity: 'Detroit', draftYear: 2026 };
+  const goodBlake = scoreDraftVideoCandidate(
+    { videoId: '2iYcDntoVvw', title: 'Clemson OT Blake Miller | 2026 NFL Draft Tape', channel: 'ACC Digital Network', duration: '2:13', embeddable: true },
+    blakePlayer
+  );
+  assert.ok(goodBlake >= 100, `Expected strong score for Blake Miller Clemson tape, got ${goodBlake}`);
+
+  // Rejects non-football namesake & Madden gameplay
+  const badMusic = scoreDraftVideoCandidate(
+    { videoId: 'aaaaaaaaaaa', title: 'Blake Miller Official Music Video', channel: 'Music', duration: '3:30', embeddable: true },
+    blakePlayer
+  );
+  assert.equal(badMusic, -Infinity, 'Music video namesake must be rejected');
+
+  const badMadden = scoreDraftVideoCandidate(
+    { videoId: 'bbbbbbbbbbb', title: 'Blake Miller Lions Madden 26 Franchise Mode Rebuild', channel: 'Gamer', duration: '12:00', embeddable: true },
+    blakePlayer
+  );
+  assert.equal(badMadden, -Infinity, 'Madden gameplay video must be rejected');
+
+  // Handles initials (TJ <-> T.J.) and hyphenated / apostrophe names
+  const tjScore = scoreDraftVideoCandidate(
+    { videoId: 'MX2S6SAVYs0', title: 'T.J. Parker 2025 Regular Season Highlights | Clemson Edge', channel: 'ACC Digital Network', duration: '3:43', embeddable: true },
+    { name: 'TJ Parker', college: 'Clemson', position: 'LB', teamNickname: 'Bills', teamCity: 'Buffalo', draftYear: 2026 }
+  );
+  assert.ok(tjScore >= 100, `T.J. Parker must match TJ Parker, got ${tjScore}`);
+
+  // Highlight reel outranks press interview for same player
+  const abneyPlayer = { name: 'Keith Abney II', college: 'Arizona State', position: 'CB', teamNickname: 'Lions', teamCity: 'Detroit', draftYear: 2026 };
+  const abneyHl = scoreDraftVideoCandidate(
+    { videoId: 'JadgtKJjdH0', title: 'Keith Abney II Highlights | Detroit Lions Cornerback | Arizona State | 2026 NFL Draft', channel: 'Under The Radar Prospects', duration: '2:58', embeddable: true },
+    abneyPlayer
+  );
+  const abneyInterview = scoreDraftVideoCandidate(
+    { videoId: '_Xs3SK62aKw', title: 'Keith Abney II on why he hoped to get drafted by Lions', channel: '97.1 The Ticket', duration: '6:07', embeddable: true },
+    abneyPlayer
+  );
+  assert.ok(abneyHl > abneyInterview, `Highlight reel (${abneyHl}) must outrank radio interview (${abneyInterview})`);
+
+  // Legacy Omar Cooper fallback video (cPvdiBVxl-0) is rejected for De'Zhaun Stribling
+  assert.equal(
+    isCachedDraftVideoValid(
+      { videoId: 'cPvdiBVxl-0', title: "De'Zhaun Stribling (Mississippi) — 2026 49ers Draft Fit & Breakdown", channel: 'NBC Sports Bay Area & California', embeddable: true },
+      { name: "De'Zhaun Stribling", college: 'Mississippi', position: 'WR', teamNickname: '49ers', draftYear: 2026 }
+    ),
+    false,
+    'Legacy Omar Cooper videoId cPvdiBVxl-0 must be invalidated when attached to De\'Zhaun Stribling'
+  );
+
+  // Live 49ers data/seasonal.json draftClass2026 must have valid player-matched videos on every pick & priority UDFA
+  const sfSeasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/seasonal.json'), 'utf8'));
+  for (const pk of sfSeasonal.draftClass2026?.picks || []) {
+    assert.ok(pk.highlightVideo?.videoId, `49ers draft pick ${pk.name} missing highlightVideo`);
+    assert.notEqual(pk.highlightVideo.videoId, 'cPvdiBVxl-0', `49ers draft pick ${pk.name} must not use legacy Omar Cooper fallback`);
+    assert.ok(
+      isCachedDraftVideoValid(pk.highlightVideo, { name: pk.name, college: pk.college, position: pk.position, teamNickname: '49ers', draftYear: 2026 }),
+      `49ers draft pick ${pk.name} highlightVideo failed player-identity validation: ${pk.highlightVideo?.title}`
+    );
+  }
+  for (const u of sfSeasonal.draftClass2026?.priorityUdfas || []) {
+    assert.ok(u.highlightVideo?.videoId, `49ers priority UDFA ${u.name} missing highlightVideo`);
+    assert.ok(
+      isCachedDraftVideoValid(u.highlightVideo, { name: u.name, college: u.college, position: u.position, teamNickname: '49ers', draftYear: 2026 }),
+      `49ers priority UDFA ${u.name} highlightVideo failed player-identity validation: ${u.highlightVideo?.title}`
+    );
+  }
 });
 
 console.log(`\n======================================================`);

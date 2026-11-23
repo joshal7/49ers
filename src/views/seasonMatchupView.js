@@ -3654,9 +3654,15 @@ function renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosS
                       }
                     </div>
                   </div>
-                  <span class="badge badge-gold mono">${formatCompactDollars(u.guaranteedTotal)} Guaranteed</span>
+                  ${
+                    Number(u.guaranteedTotal) > 0
+                      ? `<span class="badge badge-gold mono">${formatCompactDollars(u.guaranteedTotal)} Guaranteed</span>`
+                      : u.status
+                        ? `<span class="badge badge-gold mono">${esc(u.status)}</span>`
+                        : ''
+                  }
                 </div>
-                <div style="font-size:12px;color:var(--emerald)">${esc(u.rosterOddsNote)}</div>
+                ${u.rosterOddsNote ? `<div style="font-size:12px;color:var(--emerald)">${esc(u.rosterOddsNote)}</div>` : ''}
                 <div style="font-size:12.5px;color:var(--text-secondary)">${escJargon(u.roleSummary, { excludePlayerId: u.playerId })}</div>
                 ${
                   u.highlightVideo?.videoId

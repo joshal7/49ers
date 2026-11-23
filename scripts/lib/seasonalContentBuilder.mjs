@@ -16,6 +16,7 @@ import {
   stripRedundantAuthorBoilerplate
 } from '../../src/engine/breakingClassifier.js';
 import { sanitizeHallucinatedRosterText, validateNoHallucinatedRosterClaims } from '../../src/engine/groundingValidator.js';
+import { attachDraftClassHighlightVideos } from './draftVideoResolver.mjs';
 import {
   AMBIGUOUS_PLAYER_SURNAMES,
   OTC_TEAM_CAP_URL,
@@ -4108,7 +4109,8 @@ export async function build2026DraftAndUdfaClass(
   sfDraft2026Rows = [],
   spiderBuilder,
   lookupPlayerMeta = () => null,
-  draftYear = 2026
+  draftYear = 2026,
+  existingDraftClass = null
 ) {
   const dy = Number(draftYear) || 2026;
   const teamDraftFallbackUrl = buildPfrTeamDraftUrl('SF', dy);
@@ -4203,7 +4205,6 @@ export async function build2026DraftAndUdfaClass(
       roleSummary: 'Developmental scheme fit targeting athletic traits and special teams snaps.',
       strengths: ['Scheme versatility', 'Special teams floor']
     };
-    const vids = await searchYouTubeVideos(`${name} ${row.college} highlights NFL draft`, 1, { requireEmbeddable: true });
     const spider = spiderBuilder({
       name,
       pfrId: row.pfr_player_id,
@@ -4212,18 +4213,6 @@ export async function build2026DraftAndUdfaClass(
       weightLb: null
     });
     const playerMeta = lookupPlayerMeta(name);
-    const fbVid = meta.fallbackVideo || {
-      videoId: 'cPvdiBVxl-0',
-      title: `${name} (${row.college}) — 2026 49ers Draft Fit & Breakdown`,
-      channel: 'NBC Sports Bay Area & California',
-      duration: '3:42'
-    };
-    const fbCheck = await verifyYouTubeEmbeddable(fbVid.videoId);
-    const chosenVid = vids[0] || {
-      ...fbVid,
-      url: `https://www.youtube.com/watch?v=${fbVid.videoId}`,
-      embeddable: fbCheck.embeddable
-    };
     const nflScoutingUrl = verifiedNfl2026ScoutingByKey.get(normalizePlayerKey(name)) || null;
 
     draftPicks.push({
@@ -4246,12 +4235,14 @@ export async function build2026DraftAndUdfaClass(
       roleSummary: meta.roleSummary,
       strengths: meta.strengths,
       spiderProfile: spider,
-      highlightVideo: {
-        ...chosenVid,
-        url: chosenVid.url || `https://www.youtube.com/watch?v=${chosenVid.videoId}`,
-        embeddable: chosenVid.embeddable !== false,
-        thumbnailUrl: `https://i.ytimg.com/vi/${chosenVid.videoId}/hqdefault.jpg`
-      }
+      highlightVideo: meta.fallbackVideo
+        ? {
+            ...meta.fallbackVideo,
+            url: `https://www.youtube.com/watch?v=${meta.fallbackVideo.videoId}`,
+            embeddable: true,
+            thumbnailUrl: `https://i.ytimg.com/vi/${meta.fallbackVideo.videoId}/hqdefault.jpg`
+          }
+        : null
     });
   }
 
@@ -4276,15 +4267,7 @@ export async function build2026DraftAndUdfaClass(
       baseGuarantee: 215_000,
       rosterOddsNote: '$245K total guaranteed — top-tier UDFA commitment signaling priority Practice Squad / 53-man DL9 retention.',
       roleSummary: "High-effort 1-tech / shade nose developmental anchor groomed in Kris Kocurek's wide-9 camp pipeline.",
-      highlightVideo: {
-        videoId: 'cPvdiBVxl-0',
-        url: 'https://www.youtube.com/watch?v=cPvdiBVxl-0',
-        embeddable: true,
-        title: 'San Francisco 49ers 2026 Rookie Class Breakdown',
-        channel: 'NBC Sports Bay Area & California',
-        duration: '3:42',
-        thumbnailUrl: 'https://i.ytimg.com/vi/cPvdiBVxl-0/hqdefault.jpg'
-      }
+      highlightVideo: null
     },
     {
       season: dy,
@@ -4302,15 +4285,7 @@ export async function build2026DraftAndUdfaClass(
       baseGuarantee: 200_000,
       rosterOddsNote: "$225K total guaranteed — Chris Foerster's priority UDFA interior offensive line pipeline anchor.",
       roleSummary: 'National-champion Michigan pivot cross-training at both center and guard with high-leverage outside-zone reach footwork.',
-      highlightVideo: {
-        videoId: '-y7iLph6cnM',
-        url: 'https://www.youtube.com/watch?v=-y7iLph6cnM',
-        embeddable: true,
-        title: '2026 Zone Offensive Line Rookie Profile',
-        channel: 'NFL on CBS',
-        duration: '2:18',
-        thumbnailUrl: 'https://i.ytimg.com/vi/-y7iLph6cnM/hqdefault.jpg'
-      }
+      highlightVideo: null
     },
     {
       season: dy,
@@ -4332,11 +4307,19 @@ export async function build2026DraftAndUdfaClass(
     }
   ];
 
-  return {
+  const payload = {
     draftYear: dy,
     sourceUrl: teamDraftFallbackUrl,
     otcDraftUrl: 'https://overthecap.com/draft',
     picks: draftPicks,
     priorityUdfas
   };
+
+  await attachDraftClassHighlightVideos(
+    payload,
+    { nickname: '49ers', city: 'San Francisco', domain: '49ers.joshal.com' },
+    { existingDraftClass, concurrency: 4, includeUdfas: true }
+  );
+
+  return payload;
 }
