@@ -3,6 +3,7 @@
  *
  * Endpoints & Scheduled Tasks:
  * - GET  /api/health             -> Health probe & active Gemini reasoning/audio model metadata
+ * - GET  /api/gamecast           -> Edge-cached low-latency ESPN situation (2s TTL) & summary (3s live / 1h final TTL) proxy for Gamecast
  * - GET  /api/live-wire          -> 60s KV-cached CORS-proxied beat RSS, harvested X status posts (incl. MP4 clips) & YouTube Atom feeds
  * - GET  /api/gameday-inactives  -> 90-minute pre-kickoff official club RSS + RotoWire inactives + Top-Tier-Minus-1 Gemini Flash fallback
  * - GET  /api/video-stream       -> Referer-free HTTP Range relay for allowlisted `video.twimg.com` & ESPN MP4 highlight clips (`GET` + `HEAD`)
@@ -1402,7 +1403,7 @@ export default {
     }
   },
 
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const origin = request.headers.get('Origin') || '';
     const cors = corsHeaders(origin, env.ALLOWED_ORIGIN);
 
@@ -1592,6 +1593,82 @@ export default {
         })
       );
       return jsonResponse({ expanded }, 200, cors);
+    }
+
+    if (request.method === 'GET' && url.pathname === '/api/gamecast') {
+      const eventId = String(url.searchParams.get('event') || '').trim();
+      const mode = String(url.searchParams.get('mode') || 'summary').trim().toLowerCase();
+      if (!/^\d{6,12}$/.test(eventId)) {
+        return jsonResponse({ error: 'Invalid numeric ESPN event ID' }, 400, cors);
+      }
+      if (mode !== 'summary' && mode !== 'situation') {
+        return jsonResponse({ error: 'Invalid gamecast mode (use summary or situation)' }, 400, cors);
+      }
+
+      const upstreamUrl =
+        mode === 'situation'
+          ? `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/${encodeURIComponent(eventId)}/competitions/${encodeURIComponent(eventId)}/situation`
+          : `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${encodeURIComponent(eventId)}`;
+
+      const edgeCache = typeof caches !== 'undefined' && caches?.default ? caches.default : null;
+      const cacheKeyUrl = new URL(request.url);
+      cacheKeyUrl.search = `?event=${encodeURIComponent(eventId)}&mode=${encodeURIComponent(mode)}`;
+      const cacheKeyReq = new Request(cacheKeyUrl.toString(), { method: 'GET' });
+
+      if (edgeCache) {
+        try {
+          const hit = await edgeCache.match(cacheKeyReq);
+          if (hit) {
+            const hitHeaders = new Headers(hit.headers);
+            for (const [k, v] of Object.entries(cors)) hitHeaders.set(k, v);
+            hitHeaders.set('X-Gamecast-Cache', 'HIT');
+            return new Response(hit.body, { status: hit.status, headers: hitHeaders });
+          }
+        } catch {}
+      }
+
+      try {
+        const upRes = await fetch(upstreamUrl, {
+          headers: {
+            Accept: 'application/json',
+            'User-Agent': '49ersFaithfulEdge/1.0'
+          },
+          signal: AbortSignal.timeout(mode === 'situation' ? 3000 : 5000)
+        });
+        if (!upRes.ok) {
+          return jsonResponse({ error: `Upstream ESPN returned ${upRes.status}` }, upRes.status >= 400 && upRes.status < 500 ? upRes.status : 502, cors);
+        }
+        const rawText = await upRes.text();
+        let ttlSec = mode === 'situation' ? 2 : 3;
+        if (mode === 'summary') {
+          try {
+            const parsed = JSON.parse(rawText);
+            const st = String(parsed?.header?.competitions?.[0]?.status?.type?.state || '').toLowerCase();
+            if (st === 'post') ttlSec = 3600;
+            else if (st === 'pre') ttlSec = 30;
+            else ttlSec = 3;
+          } catch {
+            ttlSec = 3;
+          }
+        }
+        const outHeaders = new Headers({
+          ...cors,
+          'Content-Type': 'application/json; charset=utf-8',
+          'Cache-Control': `public, max-age=${ttlSec}, s-maxage=${ttlSec}`,
+          'X-Gamecast-Cache': 'MISS',
+          'X-Gamecast-TTL': String(ttlSec)
+        });
+        const responseToReturn = new Response(rawText, { status: 200, headers: outHeaders });
+        if (edgeCache) {
+          const toCache = responseToReturn.clone();
+          const putPromise = edgeCache.put(cacheKeyReq, toCache).catch(() => {});
+          if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(putPromise);
+          else await putPromise;
+        }
+        return responseToReturn;
+      } catch {
+        return jsonResponse({ error: 'Upstream ESPN gamecast unreachable' }, 502, cors);
+      }
     }
 
     if (request.method === 'GET' && url.pathname === '/api/live-wire') {

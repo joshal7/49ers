@@ -8,10 +8,10 @@ const SW_RAW_SUB = SW_SUB_MATCH ? SW_SUB_MATCH[1] : '49ers';
 const SW_TEAM_SLUG = IS_NFL_HUB_HOST ? 'nfl' : SW_RAW_SUB === '49ers' ? '49ers' : SW_RAW_SUB;
 const SW_DATA_BASE = SW_TEAM_SLUG === '49ers' ? './data' : `./data/teams/${SW_TEAM_SLUG}`;
 const CACHE_NAME = IS_NFL_HUB_HOST
-  ? 'nfl-hub-v14'
+  ? 'nfl-hub-v15'
   : SW_TEAM_SLUG === '49ers'
-    ? '49ers-faithful-v166'
-    : `${SW_TEAM_SLUG}-hq-v37`;
+    ? '49ers-faithful-v167'
+    : `${SW_TEAM_SLUG}-hq-v38`;
 const PRESERVED_CACHE_PREFIXES =
   SW_TEAM_SLUG === '49ers'
     ? ['49ers-podcast-studio-audio-']
@@ -29,6 +29,7 @@ const CORE_ASSETS = [
   './src/engine/capSimulator.js',
   './src/engine/injuryProbabilityModel.js',
   './src/engine/gameDayRosterEngine.js',
+  './src/engine/gamecastEngine.js',
   './src/engine/playoffMonteCarlo.js',
   './src/engine/antiFluffFilter.js',
   './src/engine/beatAttributionEngine.js',
@@ -59,6 +60,7 @@ const CORE_ASSETS = [
   './src/views/newsView.js',
   './src/views/rosterCapView.js',
   './src/views/playerSheetView.js',
+  './src/views/gamecastView.js',
   './src/views/seasonMatchupView.js',
   './src/views/audioAiView.js',
   './src/views/settingsArchiveView.js',

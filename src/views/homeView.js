@@ -33,6 +33,7 @@ import {
   resolveCompleteScheduleModel,
   resolveFirstPickMockDatabase
 } from '../engine/seasonStateMachine.js';
+import { isNumericEspnGameId, resolveGamecastGamesList } from '../engine/gamecastEngine.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   isUrgentBreakingBadge,
@@ -483,9 +484,21 @@ function renderSingleDashboardCard({
         irReserve: oppHealth.irReserve || [],
         totalStarters: oppHealth.summary?.totalStarters || 22
       });
-      externalHeaderLink = um.gameUrl
-        ? `<a href="${esc(um.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Gamecast</span>${iconSvg('external', 11)}</a>`
-        : '';
+      const gcHomeInfo = resolveGamecastGamesList(appData, mcSimResult);
+      const homeGamecastTarget =
+        (um.isGameInProgress && isNumericEspnGameId(um.gameId) ? { id: String(um.gameId), isLive: true } : null) ||
+        gcHomeInfo.liveGame ||
+        gcHomeInfo.latestCompleted ||
+        null;
+      externalHeaderLink = homeGamecastTarget
+        ? `<button type="button" class="source-chip-link gc-home-chip-btn ${homeGamecastTarget.isLive ? 'is-live' : ''}" data-action="open-gamecast-game" data-game-id="${esc(homeGamecastTarget.id)}">
+             ${homeGamecastTarget.isLive ? '<span class="gc-live-dot" aria-hidden="true"></span>' : ''}
+             <span>${homeGamecastTarget.isLive ? 'Live Plays &amp; Box' : 'Last Box Score'}</span>
+             ${iconSvg('arrowRight', 10)}
+           </button>`
+        : um.gameUrl
+          ? `<a href="${esc(um.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Gamecast</span>${iconSvg('external', 11)}</a>`
+          : '';
       const activeTeam = getActiveTeamConfig();
       const awayTeamCol = sfIsAway
         ? `<a href="${esc(buildEspnNflTeamUrl(activeTeam.abbr))}" target="_blank" rel="noopener noreferrer" class="sb-team-col" style="text-decoration:none;color:inherit">

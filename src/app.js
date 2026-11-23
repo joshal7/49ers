@@ -61,9 +61,16 @@ import {
   LIVE_WIRE_SOURCE_LABELS,
   hydrateLiveEspnOverlay,
   hydrateLive49ersPodcasts,
+  fetchGamecastForGame,
+  fetchLiveSituationFingerprint,
+  getCachedGamecastModel,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=101';
+} from './services/dataService.js?v=102';
+import {
+  isNumericEspnGameId,
+  resolveGamecastGamesList
+} from './engine/gamecastEngine.js?v=1';
 import {
   SHARED_GEMINI_KEY_STORAGE_KEY,
   appendSharedKeyHandoffToUrl,
@@ -145,14 +152,14 @@ import {
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=49';
 import { iconSvg } from './views/icons.js?v=86';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=92';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=93';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
 } from './views/newsView.js?v=95';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=50';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=82';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=97';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=98';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=69';
 import {
   renderSettingsSheetHtml,
@@ -262,9 +269,27 @@ const state = {
 
   // Season & Temporal state
   seasonSubTab: 'matchup',
+  draftSubTab: 'prep',
+  userPickedSeasonSubDuringLive: false,
   matchupStatsUnit: 'offense',
   schedulePrevExpanded: false,
   expandedRootingWeeks: new Set(),
+  // Gamecast (Live & Historical Box Score / Team Stats / Play-by-Play) state
+  gamecastGameId: null,
+  gamecastTab: null, // 'box' | 'team' | 'pbp' | null (auto: 'pbp' when live, 'box' when final)
+  gamecastBoxTeam: 'team',
+  gamecastBoxUnit: 'all',
+  gamecastPbpFilter: 'all',
+  gamecastPbpQuarter: 'ALL',
+  gamecastPbpOrder: 'newest',
+  gamecastExpandedDrives: new Set(),
+  gamecastFromSchedule: false,
+  gamecastModelsById: new Map(),
+  gamecastLoadingId: null,
+  gamecastSyncing: false,
+  gamecastFieldAnimKey: 0,
+  gamecastLastSituationFp: '',
+  activeGamecastClipKey: '',
   combineSearch: '',
   bigBoardSearch: '',
   bigBoardPosFilter: 'ALL',
@@ -1285,11 +1310,28 @@ function renderMain() {
       });
     } else if (tab === 'season') {
       const mcSimResult =
-        state.seasonSubTab === 'playoffs' || state.seasonSubTab === 'schedule'
+        state.seasonSubTab === 'playoffs' || state.seasonSubTab === 'schedule' || state.seasonSubTab === 'gamecast'
           ? getMonteCarloResult()
           : null;
+      const resolvedGcInfo =
+        state.seasonSubTab === 'gamecast' ? resolveGamecastGamesList(state.appData, mcSimResult) : null;
+      const activeGcId =
+        resolvedGcInfo
+          ? (state.gamecastGameId && resolvedGcInfo.games.some(g => g.id === String(state.gamecastGameId))
+              ? String(state.gamecastGameId)
+              : resolvedGcInfo.defaultGameId)
+          : null;
+      const activeGcMeta = resolvedGcInfo?.games?.find(g => g.id === activeGcId) || null;
+      const activeGcModel =
+        (activeGcId && state.gamecastModelsById.get(activeGcId)) ||
+        (activeGcId && getCachedGamecastModel(activeGcId)) ||
+        null;
+      const resolvedGcTab =
+        state.gamecastTab ||
+        (activeGcModel?.isLive || activeGcMeta?.isLive ? 'pbp' : 'box');
       mainEl.innerHTML = renderSeasonMatchupViewHtml({
         seasonSub: state.seasonSubTab,
+        draftSub: state.draftSubTab,
         appData: state.appData,
         mcSimResult,
         forcedWinners: state.prefs.playoffForcedWinners,
@@ -1314,7 +1356,21 @@ function renderMain() {
         expandedRootingWeeks: state.expandedRootingWeeks,
         matchupStatsUnit: state.matchupStatsUnit,
         userPrefs: state.prefs,
-        reportersById: reportersMap
+        reportersById: reportersMap,
+        gamecastGameId: activeGcId,
+        gamecastTab: resolvedGcTab,
+        gamecastBoxTeam: state.gamecastBoxTeam,
+        gamecastBoxUnit: state.gamecastBoxUnit,
+        gamecastPbpFilter: state.gamecastPbpFilter,
+        gamecastPbpQuarter: state.gamecastPbpQuarter,
+        gamecastPbpOrder: state.gamecastPbpOrder,
+        gamecastExpandedDrives: state.gamecastExpandedDrives,
+        gamecastFromSchedule: state.gamecastFromSchedule,
+        gamecastModel: activeGcModel,
+        gamecastIsLoading: Boolean(activeGcId && state.gamecastLoadingId === activeGcId && !activeGcModel),
+        gamecastIsSyncing: state.gamecastSyncing,
+        gamecastFieldAnimKey: state.gamecastFieldAnimKey,
+        activeGamecastClipKey: state.activeGamecastClipKey
       });
     } else if (tab === 'audio') {
       mainEl.innerHTML = renderAudioAiViewHtml({
@@ -1435,7 +1491,7 @@ function bindInlineVideoFallbacks(videoEl) {
 
 function bindAllMountedInlineVideos() {
   if (typeof document === 'undefined') return;
-  const videos = document.querySelectorAll('.video-iframe-wrap video');
+  const videos = document.querySelectorAll('.video-iframe-wrap video, .gc-inline-clip-stage video');
   for (const v of videos) {
     bindInlineVideoFallbacks(v);
   }
@@ -1443,7 +1499,7 @@ function bindAllMountedInlineVideos() {
 
 function activateInlineVideoElement(vidKey) {
   if (!vidKey || typeof document === 'undefined') return;
-  const videos = document.querySelectorAll('.video-iframe-wrap video');
+  const videos = document.querySelectorAll('.video-iframe-wrap video, .gc-inline-clip-stage video');
   for (const v of videos) {
     if (v.getAttribute('data-vid-key') === vidKey) {
       bindInlineVideoFallbacks(v);
@@ -2179,6 +2235,186 @@ async function triggerDailyTopNewsBriefSync() {
     .catch(() => null);
 }
 
+let gamecastPollTimerId = null;
+let gamecastPollSeq = 0;
+let gamecastSituationTickCount = 0;
+
+function isActiveLiveGamePresent(appData) {
+  if (!appData?.scheduleMatchup) return false;
+  if (appData.scheduleMatchup.upcomingMatchup?.isGameInProgress) return true;
+  return (appData.scheduleMatchup.schedule || []).some(
+    g => g && !g.completed && !g.isByeWeek && (g.statusState === 'in' || g.isLive)
+  );
+}
+
+function stopGamecastLivePoller() {
+  if (gamecastPollTimerId) {
+    clearTimeout(gamecastPollTimerId);
+    gamecastPollTimerId = null;
+  }
+  gamecastPollSeq += 1;
+}
+
+function getActiveGamecastTarget() {
+  if (!state.appData) return { listInfo: null, gameId: null, meta: null };
+  const mcSimResult = getMonteCarloResult();
+  const listInfo = resolveGamecastGamesList(state.appData, mcSimResult);
+  const gameId =
+    (state.gamecastGameId && listInfo.games.some(g => g.id === String(state.gamecastGameId))
+      ? String(state.gamecastGameId)
+      : listInfo.defaultGameId) || null;
+  const meta = listInfo.games.find(g => g.id === gameId) || null;
+  return { listInfo, gameId, meta };
+}
+
+function renderGamecastPreservingScroll() {
+  if (hasActivelyPlayingInlineMedia()) return;
+  const prevY = window.scrollY || 0;
+  renderMain();
+  if (Math.abs((window.scrollY || 0) - prevY) > 4) {
+    window.scrollTo({ top: prevY, behavior: 'instant' });
+  }
+}
+
+async function hydrateGamecastById(meta, { forceRefresh = false, silent = false, pollSeq = null } = {}) {
+  if (!meta?.id || !state.appData) return null;
+  const gameId = String(meta.id);
+  const prevModel = state.gamecastModelsById.get(gameId) || getCachedGamecastModel(gameId) || null;
+  if (!prevModel && !silent) {
+    state.gamecastLoadingId = gameId;
+    renderMain();
+  }
+  if (forceRefresh && !silent) {
+    state.gamecastSyncing = true;
+    renderGamecastPreservingScroll();
+  }
+
+  try {
+    const fetched = await fetchGamecastForGame(meta, {
+      appData: state.appData,
+      prefs: state.prefs,
+      forceRefresh
+    });
+    if (pollSeq != null && pollSeq !== gamecastPollSeq) return null;
+    if (fetched && fetched.gameId === gameId) {
+      const prevPlayId = prevModel?.situation?.lastPlayId || '';
+      const nextPlayId = fetched.situation?.lastPlayId || '';
+      const prevScoreSig = prevModel
+        ? `${prevModel.away?.score}-${prevModel.home?.score}-${prevModel.totalPlays}`
+        : '';
+      const nextScoreSig = `${fetched.away?.score}-${fetched.home?.score}-${fetched.totalPlays}`;
+      const changed = !prevModel || prevPlayId !== nextPlayId || prevScoreSig !== nextScoreSig || prevModel.isFallback !== fetched.isFallback;
+
+      if (nextPlayId && prevPlayId && nextPlayId !== prevPlayId) {
+        state.gamecastFieldAnimKey += 1;
+      }
+      state.gamecastModelsById.set(gameId, fetched);
+      if (state.gamecastLoadingId === gameId) state.gamecastLoadingId = null;
+      state.gamecastSyncing = false;
+
+      if (state.activeNavTab === 'season' && state.seasonSubTab === 'gamecast' && (changed || !silent)) {
+        renderGamecastPreservingScroll();
+      }
+      return fetched;
+    }
+  } catch {
+    // Keep existing cached/fallback model cleanly
+  } finally {
+    if (state.gamecastLoadingId === gameId) state.gamecastLoadingId = null;
+    state.gamecastSyncing = false;
+  }
+  return prevModel;
+}
+
+function scheduleNextGamecastPoll(seq) {
+  if (seq !== gamecastPollSeq) return;
+  if (
+    document.visibilityState !== 'visible' ||
+    state.activeNavTab !== 'season' ||
+    state.seasonSubTab !== 'gamecast' ||
+    !state.appData
+  ) {
+    return;
+  }
+  const { gameId, meta } = getActiveGamecastTarget();
+  if (!gameId || !meta) return;
+  const curModel = state.gamecastModelsById.get(gameId) || getCachedGamecastModel(gameId);
+  const isLiveTarget = Boolean(curModel ? curModel.isLive : meta.isLive);
+  if (!isLiveTarget) return;
+
+  const activeTab = state.gamecastTab || 'pbp';
+  const intervalMs = activeTab === 'pbp' ? 2000 : 6000;
+
+  gamecastPollTimerId = setTimeout(async () => {
+    if (seq !== gamecastPollSeq) return;
+    if (
+      document.visibilityState !== 'visible' ||
+      state.activeNavTab !== 'season' ||
+      state.seasonSubTab !== 'gamecast'
+    ) {
+      return;
+    }
+    const latest = getActiveGamecastTarget();
+    if (!latest.meta || latest.gameId !== gameId) return;
+
+    if (activeTab === 'pbp') {
+      gamecastSituationTickCount += 1;
+      const fp = await fetchLiveSituationFingerprint(gameId, { prefs: state.prefs });
+      if (seq !== gamecastPollSeq) return;
+      const fpChanged = Boolean(fp?.fingerprint && fp.fingerprint !== state.gamecastLastSituationFp);
+      if (fp?.fingerprint) state.gamecastLastSituationFp = fp.fingerprint;
+      if (fpChanged || gamecastSituationTickCount % 5 === 0) {
+        await hydrateGamecastById(latest.meta, { forceRefresh: true, silent: true, pollSeq: seq });
+      }
+    } else {
+      await hydrateGamecastById(latest.meta, { forceRefresh: true, silent: true, pollSeq: seq });
+    }
+    scheduleNextGamecastPoll(seq);
+  }, intervalMs);
+}
+
+function ensureGamecastHydratedAndPolling({ forceRefresh = false } = {}) {
+  stopGamecastLivePoller();
+  if (state.activeNavTab !== 'season' || state.seasonSubTab !== 'gamecast' || !state.appData) {
+    return;
+  }
+  const { gameId, meta } = getActiveGamecastTarget();
+  if (!gameId || !meta) return;
+  state.gamecastGameId = gameId;
+  const seq = gamecastPollSeq;
+  gamecastSituationTickCount = 0;
+
+  hydrateGamecastById(meta, { forceRefresh, silent: false, pollSeq: seq }).then(() => {
+    if (seq === gamecastPollSeq) {
+      scheduleNextGamecastPoll(seq);
+    }
+  });
+}
+
+function openGamecastForGameId(gameId, { fromSchedule = false } = {}) {
+  saveCurrentTabScroll();
+  state.activeNavTab = 'season';
+  state.seasonSubTab = 'gamecast';
+  state.userPickedSeasonSubDuringLive = true;
+  if (isNumericEspnGameId(gameId)) {
+    const cleanId = String(gameId);
+    if (state.gamecastGameId !== cleanId) {
+      state.gamecastGameId = cleanId;
+      state.gamecastExpandedDrives = new Set();
+      state.gamecastPbpQuarter = 'ALL';
+      state.gamecastPbpFilter = 'all';
+      state.activeGamecastClipKey = '';
+      state.gamecastLastSituationFp = '';
+      const targetMeta = getActiveGamecastTarget().meta;
+      state.gamecastTab = targetMeta?.isLive ? 'pbp' : 'box';
+    }
+  }
+  state.gamecastFromSchedule = Boolean(fromSchedule);
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  renderMain();
+  ensureGamecastHydratedAndPolling({ forceRefresh: false });
+}
+
 function bindEvents() {
   // Bottom Nav Tabs (with per-tab scroll memory; tapping active tab scrolls cleanly to top)
   document.querySelectorAll('.nav-tab-btn').forEach(btn => {
@@ -2196,6 +2432,15 @@ function bindEvents() {
         bootOrRecoverAppData({ manual: true });
         return;
       }
+      // Smart Live Auto-Land: during an active live game, tapping Season lands directly on Gamecast
+      if (state.activeNavTab === 'season') {
+        if (isActiveLiveGamePresent(state.appData) && !state.userPickedSeasonSubDuringLive) {
+          state.seasonSubTab = 'gamecast';
+          state.gamecastTab = state.gamecastTab || 'pbp';
+        }
+      } else {
+        stopGamecastLivePoller();
+      }
       if (state.activeNavTab === 'audio' && state.prefs.geminiApiKey) {
         checkAndAutoUpdateBestGeminiModel(state.prefs, () => {
           saveUserPrefs(state.prefs);
@@ -2210,6 +2455,9 @@ function bindEvents() {
         triggerDailyTopNewsBriefSync();
       }
       renderMain();
+      if (state.activeNavTab === 'season' && state.seasonSubTab === 'gamecast') {
+        ensureGamecastHydratedAndPolling({ forceRefresh: false });
+      }
       restoreScrollForCurrentTab({ fallbackTop: 0 });
     });
   });
@@ -2607,11 +2855,132 @@ function bindEvents() {
         break;
 
       case 'jump-season-sub': {
-        const nextSeasonSub = btn.getAttribute('data-season-sub') || 'matchup';
+        const rawNext = btn.getAttribute('data-season-sub') || 'matchup';
+        const nextSeasonSub = rawNext === 'draft_class' ? 'draft_prep' : rawNext;
+        if (rawNext === 'draft_class') state.draftSubTab = 'class';
+        else if (rawNext === 'draft_prep') state.draftSubTab = 'prep';
         if (nextSeasonSub === 'schedule') state.schedulePrevExpanded = false;
         state.activeNavTab = 'season';
         state.seasonSubTab = nextSeasonSub;
+        state.userPickedSeasonSubDuringLive = true;
+        if (nextSeasonSub !== 'gamecast') {
+          state.gamecastFromSchedule = false;
+          stopGamecastLivePoller();
+        }
         window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        if (nextSeasonSub === 'gamecast') {
+          ensureGamecastHydratedAndPolling({ forceRefresh: false });
+        }
+        break;
+      }
+
+      case 'open-gamecast-game': {
+        const targetId = btn.getAttribute('data-game-id') || '';
+        const fromSched = btn.getAttribute('data-from-schedule') === 'true';
+        openGamecastForGameId(targetId, { fromSchedule: fromSched });
+        break;
+      }
+
+      case 'back-to-schedule-from-gamecast': {
+        state.gamecastFromSchedule = false;
+        state.seasonSubTab = 'schedule';
+        state.schedulePrevExpanded = true;
+        stopGamecastLivePoller();
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        renderMain();
+        break;
+      }
+
+      case 'set-gamecast-tab': {
+        const nextTab = btn.getAttribute('data-gamecast-tab') || 'pbp';
+        if (['box', 'team', 'pbp'].includes(nextTab)) {
+          state.gamecastTab = nextTab;
+          state.activeGamecastClipKey = '';
+          renderMain();
+          // Re-tune poll interval immediately (2s on pbp vs 6s on box/team)
+          ensureGamecastHydratedAndPolling({ forceRefresh: false });
+        }
+        break;
+      }
+
+      case 'set-gamecast-box-team': {
+        const nextBoxTeam = btn.getAttribute('data-box-team') === 'opponent' ? 'opponent' : 'team';
+        state.gamecastBoxTeam = nextBoxTeam;
+        renderMain();
+        break;
+      }
+
+      case 'set-gamecast-box-unit': {
+        const nextUnit = btn.getAttribute('data-box-unit') || 'all';
+        state.gamecastBoxUnit = ['all', 'offense', 'defense', 'special_teams'].includes(nextUnit) ? nextUnit : 'all';
+        renderMain();
+        break;
+      }
+
+      case 'set-gamecast-pbp-filter': {
+        const nextFilter = btn.getAttribute('data-pbp-filter') || 'all';
+        state.gamecastPbpFilter = ['all', 'scoring', 'key'].includes(nextFilter) ? nextFilter : 'all';
+        renderMain();
+        break;
+      }
+
+      case 'set-gamecast-pbp-quarter': {
+        state.gamecastPbpQuarter = btn.getAttribute('data-pbp-quarter') || 'ALL';
+        renderMain();
+        break;
+      }
+
+      case 'toggle-gamecast-pbp-order': {
+        state.gamecastPbpOrder = state.gamecastPbpOrder === 'newest' ? 'chrono' : 'newest';
+        renderMain();
+        break;
+      }
+
+      case 'step-gamecast-game': {
+        const delta = Number(btn.getAttribute('data-step') || 0);
+        const { listInfo, gameId } = getActiveGamecastTarget();
+        if (listInfo?.games?.length && gameId && delta) {
+          const idx = listInfo.games.findIndex(g => g.id === gameId);
+          const nextGame = listInfo.games[idx + delta];
+          if (nextGame) {
+            state.gamecastGameId = nextGame.id;
+            state.gamecastExpandedDrives = new Set();
+            state.gamecastPbpQuarter = 'ALL';
+            state.gamecastPbpFilter = 'all';
+            state.activeGamecastClipKey = '';
+            state.gamecastLastSituationFp = '';
+            state.gamecastTab = nextGame.isLive ? 'pbp' : 'box';
+            renderMain();
+            ensureGamecastHydratedAndPolling({ forceRefresh: false });
+          }
+        }
+        break;
+      }
+
+      case 'refresh-gamecast-now': {
+        ensureGamecastHydratedAndPolling({ forceRefresh: true });
+        break;
+      }
+
+      case 'play-gamecast-clip': {
+        const clipKey = btn.getAttribute('data-clip-key') || '';
+        if (clipKey) {
+          state.activeGamecastClipKey = state.activeGamecastClipKey === clipKey ? '' : clipKey;
+          renderGamecastPreservingScroll();
+        }
+        break;
+      }
+
+      case 'close-gamecast-clip': {
+        state.activeGamecastClipKey = '';
+        renderGamecastPreservingScroll();
+        break;
+      }
+
+      case 'set-draft-sub': {
+        const nextDraftSub = btn.getAttribute('data-draft-sub') === 'class' ? 'class' : 'prep';
+        state.draftSubTab = nextDraftSub;
         renderMain();
         break;
       }
@@ -2769,11 +3138,28 @@ function bindEvents() {
         renderSheet();
         saveCurrentTabScroll();
         state.activeNavTab = navTab;
-        if (navTab === 'season' && subTab) state.seasonSubTab = subTab;
-        else if (navTab === 'roster' && subTab) state.rosterSubTab = subTab;
-        else if (navTab === 'audio' && subTab) state.studioSubTab = subTab;
+        if (navTab === 'season' && subTab) {
+          if (subTab === 'draft_class') {
+            state.seasonSubTab = 'draft_prep';
+            state.draftSubTab = 'class';
+          } else {
+            state.seasonSubTab = subTab;
+            if (subTab === 'draft_prep') state.draftSubTab = 'prep';
+          }
+          state.userPickedSeasonSubDuringLive = true;
+        } else if (navTab === 'roster' && subTab) {
+          state.rosterSubTab = subTab;
+        } else if (navTab === 'audio' && subTab) {
+          state.studioSubTab = subTab;
+        }
+        if (!(navTab === 'season' && state.seasonSubTab === 'gamecast')) {
+          stopGamecastLivePoller();
+        }
         window.scrollTo({ top: 0, behavior: 'instant' });
         renderMain();
+        if (navTab === 'season' && state.seasonSubTab === 'gamecast') {
+          ensureGamecastHydratedAndPolling({ forceRefresh: false });
+        }
         break;
       }
 
@@ -2999,13 +3385,23 @@ function bindEvents() {
       }
 
       case 'set-season-sub': {
-        const nextSeasonSub = btn.getAttribute('data-season-sub') || 'matchup';
+        const rawNext = btn.getAttribute('data-season-sub') || 'matchup';
+        const nextSeasonSub = rawNext === 'draft_class' ? 'draft_prep' : rawNext;
+        if (rawNext === 'draft_class') state.draftSubTab = 'class';
         if (nextSeasonSub === 'schedule') state.schedulePrevExpanded = false;
         state.seasonSubTab = nextSeasonSub;
+        state.userPickedSeasonSubDuringLive = true;
+        if (nextSeasonSub !== 'gamecast') {
+          state.gamecastFromSchedule = false;
+          stopGamecastLivePoller();
+        }
         if (nextSeasonSub === 'matchup') {
           triggerDailyMatchupIntelSync();
         }
         renderMain();
+        if (nextSeasonSub === 'gamecast') {
+          ensureGamecastHydratedAndPolling({ forceRefresh: false });
+        }
         break;
       }
 
@@ -4129,6 +4525,20 @@ function bindEvents() {
         };
         saveUserPrefs(state.prefs);
       }
+    } else if (t.getAttribute('data-action') === 'select-gamecast-game') {
+      const nextId = String(t.value || '').trim();
+      if (isNumericEspnGameId(nextId)) {
+        state.gamecastGameId = nextId;
+        state.gamecastExpandedDrives = new Set();
+        state.gamecastPbpQuarter = 'ALL';
+        state.gamecastPbpFilter = 'all';
+        state.activeGamecastClipKey = '';
+        state.gamecastLastSituationFp = '';
+        const targetMeta = getActiveGamecastTarget().meta;
+        state.gamecastTab = targetMeta?.isLive ? 'pbp' : 'box';
+        renderMain();
+        ensureGamecastHydratedAndPolling({ forceRefresh: false });
+      }
     } else if (t.getAttribute('data-action') === 'toggle-reporter') {
       const rid = t.getAttribute('data-reporter-id');
       if (rid) {
@@ -4141,6 +4551,23 @@ function bindEvents() {
       }
     }
   });
+
+  // Persist open/closed Gamecast Play-by-Play drive accordions across 2s live refreshes
+  document.addEventListener(
+    'toggle',
+    e => {
+      const el = e.target;
+      if (!el || el.tagName !== 'DETAILS') return;
+      const driveId = el.getAttribute('data-gamecast-drive-id');
+      if (!driveId) return;
+      if (!(state.gamecastExpandedDrives instanceof Set)) {
+        state.gamecastExpandedDrives = new Set();
+      }
+      if (el.open) state.gamecastExpandedDrives.add(driveId);
+      else state.gamecastExpandedDrives.delete(driveId);
+    },
+    true
+  );
 
   // HTML5 Drag-and-Drop on Dashboard Cards when Layout Mode is active
   document.addEventListener('dragstart', e => {
@@ -4286,7 +4713,7 @@ let queuedManualSync = null; // { focusPlayerId: string | null }
 function hasActivelyPlayingInlineMedia() {
   if (typeof document === 'undefined') return false;
   if (document.querySelector('.video-iframe-wrap iframe')) return true;
-  const videos = document.querySelectorAll('.video-iframe-wrap video');
+  const videos = document.querySelectorAll('.video-iframe-wrap video, .gc-inline-clip-stage video');
   for (const v of videos) {
     if (v.ended) {
       const k = v.getAttribute('data-vid-key');
@@ -4616,6 +5043,25 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
 }
 
 async function handleIncomingSharedLink(locationLike = window.location) {
+  try {
+    const rawParams = new URLSearchParams(String(locationLike?.search || '').replace(/^\?/, ''));
+    const qSub = String(rawParams.get('sub') || '').toLowerCase();
+    const qGameId = String(rawParams.get('gameId') || '').trim();
+    if (qSub === 'gamecast' || (rawParams.get('tab') === 'season' && isNumericEspnGameId(qGameId))) {
+      state.activeNavTab = 'season';
+      state.seasonSubTab = 'gamecast';
+      state.userPickedSeasonSubDuringLive = true;
+      if (isNumericEspnGameId(qGameId)) state.gamecastGameId = qGameId;
+      renderMain();
+      ensureGamecastHydratedAndPolling({ forceRefresh: false });
+    } else if (qSub === 'draft_class') {
+      state.activeNavTab = 'season';
+      state.seasonSubTab = 'draft_prep';
+      state.draftSubTab = 'class';
+      renderMain();
+    }
+  } catch {}
+
   const bbParams = parseBigBoardUrlParams(locationLike?.search || '');
   if (bbParams.hasBigBoardParams) {
     state.bigBoardLens = bbParams.lens;
@@ -5087,6 +5533,7 @@ async function init() {
   // Register recovery & live-sync listeners unconditionally so even an offline cold boot self-heals automatically
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') {
+      stopGamecastLivePoller();
       // Advance persisted visit watermark cleanly after active session (>=15s) so next visit highlights new items
       if (Date.now() - sessionBootMs >= 15_000) {
         state.prefs.lastVisitedAt = new Date().toISOString();
@@ -5096,6 +5543,9 @@ async function init() {
       return;
     }
     if (document.visibilityState === 'visible') {
+      if (state.appData && state.activeNavTab === 'season' && state.seasonSubTab === 'gamecast') {
+        ensureGamecastHydratedAndPolling({ forceRefresh: false });
+      }
       syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
       if (!state.appData) {
         bootOrRecoverAppData({ manual: false });
@@ -5200,7 +5650,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=123', { updateViaCache: 'none' })
+        .register('./sw.js?v=124', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

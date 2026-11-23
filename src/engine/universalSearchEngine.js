@@ -27,6 +27,14 @@ export const QUICK_SECTION_TARGETS = [
     subTab: 'matchup'
   },
   {
+    id: 'sec_gamecast',
+    title: 'Gamecast: Box Score, Game Stats & Play-by-Play',
+    subtitle: 'Game & Season',
+    keywords: 'gamecast live box score boxscore play by play pbp drives scoring plays field win probability game stats',
+    navTab: 'season',
+    subTab: 'gamecast'
+  },
+  {
     id: 'sec_health',
     title: 'Team Health & Injury Report',
     subtitle: 'Game & Season',

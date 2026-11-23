@@ -2644,7 +2644,7 @@ async function main() {
       assert(oppHealthAudit.pctBadges >= 2, `Expected >=2 opponent play likelihood % badges, got ${oppHealthAudit.pctBadges}`);
       assert(oppHealthAudit.injuryLink, 'Missing external ESPN Injuries source link in Opponent Health section');
 
-      for (const sub of ['matchup', 'health', 'schedule', 'trade', 'playoffs', 'draft_prep', 'draft_class', 'stats']) {
+      for (const sub of ['matchup', 'gamecast', 'health', 'schedule', 'stats', 'playoffs', 'trade', 'draft_prep']) {
         await cdp.eval(s => {
           document.querySelector(`[data-action="set-season-sub"][data-season-sub="${s}"]`).click();
         }, sub);
@@ -2886,14 +2886,16 @@ async function main() {
       });
       assert(mcInteractive.hasClearBtn && mcInteractive.cleared, 'Playoff Monte Carlo override toggle/clear failed');
 
-      // Test 2026 Draft Class inline Spider Chart expand/collapse + official NFL.com Scouting Profile links
+      // Test 2026 Draft Class (folded inside Draft) inline Spider Chart expand/collapse + official NFL.com Scouting Profile links
       const draftSpiderOk = await cdp.eval(() => {
-        document.querySelector('[data-action="set-season-sub"][data-season-sub="draft_class"]').click();
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="draft_prep"]').click();
+        document.querySelector('[data-action="set-draft-sub"][data-draft-sub="class"]').click();
         document.querySelector('[data-action="toggle-draft-spider"][data-draft-idx="0"]').click();
         const hasSvg = Boolean(document.querySelector('#mainView svg.spider-svg'));
         const nflScoutingCount = document.querySelectorAll('#mainView a[href^="https://www.nfl.com/prospects/"]').length;
         document.querySelector('[data-action="toggle-draft-spider"][data-draft-idx="0"]').click();
         const hiddenAfter = !document.querySelector('#mainView svg.spider-svg');
+        document.querySelector('[data-action="set-draft-sub"][data-draft-sub="prep"]').click();
         return { hasSvg, hiddenAfter, nflScoutingCount };
       });
       assert(
@@ -4360,10 +4362,13 @@ async function main() {
             }
           }
           if (tab === 'season') {
-            for (const sSub of ['matchup', 'health', 'schedule', 'trade', 'playoffs', 'draft_prep', 'draft_class', 'stats']) {
+            for (const sSub of ['matchup', 'gamecast', 'health', 'schedule', 'stats', 'playoffs', 'trade', 'draft_prep']) {
               document.querySelector(`[data-action="set-season-sub"][data-season-sub="${sSub}"]`)?.click();
               collectAnchors(`season:${sSub}`);
             }
+            document.querySelector('[data-action="set-draft-sub"][data-draft-sub="class"]')?.click();
+            collectAnchors('season:draft_class');
+            document.querySelector('[data-action="set-draft-sub"][data-draft-sub="prep"]')?.click();
           }
         }
 
@@ -4452,7 +4457,7 @@ async function main() {
         const offCycleCount = document.querySelectorAll('.season-tab-btn.off-cycle').length;
         const liveDotCount = document.querySelectorAll('.season-live-dot').length;
         const seasonTabVisited = [];
-        for (const sSub of ['matchup', 'health', 'schedule', 'trade', 'playoffs', 'draft_prep', 'draft_class', 'stats']) {
+        for (const sSub of ['matchup', 'gamecast', 'health', 'schedule', 'stats', 'playoffs', 'trade', 'draft_prep']) {
           document.querySelector(`[data-action="set-season-sub"][data-season-sub="${sSub}"]`)?.click();
           seasonTabVisited.push(sSub);
         }
@@ -4865,16 +4870,16 @@ async function main() {
           `[${vp.name}] Bottom nav order mismatch: ${JSON.stringify(audit.navTabs)}`
         );
 
-        // Assert #2 & #5: Two-bar clustered Game & Season navigation with swapped Stats/Trade, shortened labels & 0px scroll
+        // Assert #2 & #5: Two-bar clustered Game & Season navigation (Matchup/Gamecast/Health/Schedule + Stats/Playoffs/Trade/Draft) & 0px scroll
         assert(audit.barDetails.length === 2, `[${vp.name}] Expected 2 season cluster bars, got ${audit.barDetails.length}`);
         assert(
-          JSON.stringify(audit.barDetails[0].keys) === JSON.stringify(['matchup', 'health', 'schedule', 'stats']) &&
-            JSON.stringify(audit.barDetails[0].labels) === JSON.stringify(['Matchup', 'Health', 'Schedule', 'Stats']),
+          JSON.stringify(audit.barDetails[0].keys) === JSON.stringify(['matchup', 'gamecast', 'health', 'schedule']) &&
+            JSON.stringify(audit.barDetails[0].labels) === JSON.stringify(['Matchup', 'Gamecast', 'Health', 'Schedule']),
           `[${vp.name}] Cluster Bar 1 mismatch: ${JSON.stringify(audit.barDetails[0])}`
         );
         assert(
-          JSON.stringify(audit.barDetails[1].keys) === JSON.stringify(['trade', 'playoffs', 'draft_prep', 'draft_class']) &&
-            JSON.stringify(audit.barDetails[1].labels) === JSON.stringify(['Trade', 'Playoffs', 'Draft', 'Draft Recap']),
+          JSON.stringify(audit.barDetails[1].keys) === JSON.stringify(['stats', 'playoffs', 'trade', 'draft_prep']) &&
+            JSON.stringify(audit.barDetails[1].labels) === JSON.stringify(['Stats', 'Playoffs', 'Trade', 'Draft']),
           `[${vp.name}] Cluster Bar 2 mismatch: ${JSON.stringify(audit.barDetails[1])}`
         );
         assert(
@@ -5510,14 +5515,18 @@ async function main() {
         document.querySelector(`[data-action="set-news-category"][data-category="all"]`)?.click();
         await sleep(40);
 
-        // 3. Game & Season (all 8 sub-views)
+        // 3. Game & Season (all 8 sub-views + folded Draft Class)
         document.querySelector('[data-nav-tab="season"]')?.click();
         await sleep(60);
-        for (const sub of ['matchup', 'health', 'schedule', 'stats', 'trade', 'playoffs', 'draft_prep', 'draft_class']) {
+        for (const sub of ['matchup', 'gamecast', 'health', 'schedule', 'stats', 'playoffs', 'trade', 'draft_prep']) {
           document.querySelector('[data-action="set-season-sub"][data-season-sub="' + sub + '"]')?.click();
           await sleep(45);
           auditVisibleAnchors('season:' + sub);
         }
+        document.querySelector('[data-action="set-draft-sub"][data-draft-sub="class"]')?.click();
+        await sleep(40);
+        auditVisibleAnchors('season:draft_class');
+        document.querySelector('[data-action="set-draft-sub"][data-draft-sub="prep"]')?.click();
 
         // 4. Roster & Cap + Player Dossier 5 tabs
         document.querySelector('[data-nav-tab="roster"]')?.click();
@@ -5648,10 +5657,11 @@ async function main() {
           Boolean(document.querySelector('#combineLeaderboardCard[data-combine-blank="true"]')) ||
           combineLinks >= 20;
 
-        document.querySelector('[data-action="set-season-sub"][data-season-sub="draft_class"]')?.click();
+        document.querySelector('[data-action="set-draft-sub"][data-draft-sub="class"]')?.click();
         await sleep(40);
         scanCurrentDom('season:draft_class');
         const udfaTriggers = document.querySelectorAll('#mainView .inline-player-link[data-action="open-player-sheet"]').length;
+        document.querySelector('[data-action="set-draft-sub"][data-draft-sub="prep"]')?.click();
 
         // 4. Roster & Cap: 11/21 personnel tooltips, Dead Cap player links & Spider Chart NFL Comp links
         document.querySelector('[data-nav-tab="roster"]')?.click();
@@ -6391,13 +6401,13 @@ async function main() {
           document.querySelector('[data-action="close-jargon-popover"]')?.click();
         }
 
-        // Switch to Schedule -> check only 1 Gamecast link in upcoming list
+        // Switch to Schedule -> check only 1 Gamecast / Live Plays action in upcoming list
         document.querySelector('[data-action="set-season-sub"][data-season-sub="schedule"]').click();
         await sleep(100);
         const upcomingWrap = document.querySelector('[data-schedule-upcoming-list]');
         const upcomingGamecastCount = upcomingWrap
-          ? Array.from(upcomingWrap.querySelectorAll('a.source-chip-link')).filter(a =>
-              a.textContent.includes('Gamecast')
+          ? Array.from(upcomingWrap.querySelectorAll('.source-chip-link')).filter(el =>
+              /Gamecast|Live Plays/i.test(el.textContent || '')
             ).length
           : -1;
 
@@ -7182,6 +7192,83 @@ async function main() {
           checkRes.defaultPreventedInChrome === false,
         `Non-iOS browser must NOT hijack 49ers.com video links with x-safari-: ${JSON.stringify(checkRes)}`
       );
+    });
+
+    await runStep('Gamecast E2E: Scorebug, Box Score / Team Stats / Play-by-Play exclusivity, Schedule handoff & 0px overflow', async () => {
+      await cdp.setViewport(375, 812);
+      const gcRes = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        document.querySelector('[data-nav-tab="season"]')?.click();
+        await sleep(40);
+        // 1. Open Schedule -> expand Previous Games -> click in-app Box Score button
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="schedule"]')?.click();
+        await sleep(40);
+        const prevDetails = document.querySelector('[data-schedule-previous-games]');
+        if (prevDetails && !prevDetails.open) prevDetails.open = true;
+        const schedBtn = document.querySelector('[data-action="open-gamecast-game"][data-from-schedule="true"]');
+        const hasSchedGamecastBtn = Boolean(schedBtn);
+        schedBtn?.click();
+        await sleep(60);
+
+        const hasScorebug = Boolean(document.querySelector('[data-gamecast-scorebug]'));
+        const hasBackBtn = Boolean(document.querySelector('[data-action="back-to-schedule-from-gamecast"]'));
+        const hasStickyTabs = Boolean(document.querySelector('[data-gamecast-tabs]'));
+        const gameSelectOptions = document.querySelectorAll('select[data-action="select-gamecast-game"] option').length;
+
+        // 2. Box Score tab: Quarter Scoreboard MUST NOT appear
+        document.querySelector('[data-action="set-gamecast-tab"][data-gamecast-tab="box"]')?.click();
+        await sleep(30);
+        const boxHasQuarter = Boolean(document.querySelector('[data-gamecast-quarter-scoreboard]'));
+        const boxOverflow = document.documentElement.scrollWidth > window.innerWidth + 1;
+
+        // 3. Team Stats tab: Quarter Scoreboard MUST NOT appear
+        document.querySelector('[data-action="set-gamecast-tab"][data-gamecast-tab="team"]')?.click();
+        await sleep(30);
+        const teamHasQuarter = Boolean(document.querySelector('[data-gamecast-quarter-scoreboard]'));
+        const teamOverflow = document.documentElement.scrollWidth > window.innerWidth + 1;
+
+        // 4. Play-by-Play tab: Quarter Scoreboard MUST appear
+        document.querySelector('[data-action="set-gamecast-tab"][data-gamecast-tab="pbp"]')?.click();
+        await sleep(30);
+        const pbpHasQuarter = Boolean(document.querySelector('[data-gamecast-quarter-scoreboard]'));
+        const pbpOverflow = document.documentElement.scrollWidth > window.innerWidth + 1;
+
+        // 5. Return cleanly via <- Sched breadcrumb
+        document.querySelector('[data-action="back-to-schedule-from-gamecast"]')?.click();
+        await sleep(35);
+        const returnedToSchedule = Boolean(document.querySelector('[data-schedule-upcoming-list]'));
+
+        // 6. Narrow 320px Gamecast zero-overflow check
+        return {
+          hasSchedGamecastBtn,
+          hasScorebug,
+          hasBackBtn,
+          hasStickyTabs,
+          gameSelectOptions,
+          boxHasQuarter,
+          boxOverflow,
+          teamHasQuarter,
+          teamOverflow,
+          pbpHasQuarter,
+          pbpOverflow,
+          returnedToSchedule
+        };
+      });
+
+      assert(gcRes.hasSchedGamecastBtn, 'Schedule completed row must render in-app Box Score / Gamecast button');
+      assert(gcRes.hasScorebug && gcRes.hasStickyTabs && gcRes.gameSelectOptions >= 10, `Gamecast chrome incomplete: ${JSON.stringify(gcRes)}`);
+      assert(gcRes.hasBackBtn && gcRes.returnedToSchedule, `Schedule <-> Gamecast back navigation failed: ${JSON.stringify(gcRes)}`);
+      assert(!gcRes.boxHasQuarter && !gcRes.teamHasQuarter, `Quarter scoreboard must be hidden on Box Score & Team Stats: ${JSON.stringify(gcRes)}`);
+      assert(gcRes.pbpHasQuarter, `Quarter scoreboard must render on Play-by-Play: ${JSON.stringify(gcRes)}`);
+      assert(!gcRes.boxOverflow && !gcRes.teamOverflow && !gcRes.pbpOverflow, `Gamecast overflow detected at 375px: ${JSON.stringify(gcRes)}`);
+
+      // Also verify 320x640 narrow mobile overflow on Gamecast
+      await cdp.setViewport(320, 640);
+      await cdp.eval(() => {
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="gamecast"]')?.click();
+      });
+      await cdp.assertNoOverflow('Gamecast at 320x640');
+      await cdp.setViewport(390, 844);
     });
 
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {

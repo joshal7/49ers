@@ -85,6 +85,8 @@ import {
   formatRankDeltaCue,
   formatPlayoffOddsDeltaCue
 } from '../engine/digestExperienceEngine.js';
+import { isNumericEspnGameId, resolveGamecastGamesList } from '../engine/gamecastEngine.js';
+import { renderGamecastViewHtml } from './gamecastView.js';
 
 function buildOppSheetTriggerAttrs(player = {}, teamAbbr = '', { initialTab = 'overview' } = {}) {
   const team = resolveNflTeamMeta(teamAbbr);
@@ -394,28 +396,29 @@ function renderGameDayRosterCard(
 export const SEASON_NAV_CLUSTERS = [
   {
     id: 'gameday_core',
-    ariaLabel: 'Weekly Game and Team Views',
+    ariaLabel: 'Weekly Game and Live Views',
     tabs: [
       { key: 'matchup', icon: 'swords', label: 'Matchup', fullTitle: 'Upcoming Matchup' },
+      { key: 'gamecast', icon: 'football', label: 'Gamecast', fullTitle: 'Live & Historical Gamecast' },
       { key: 'health', icon: 'heartPulse', label: 'Health', fullTitle: 'Team Health' },
-      { key: 'schedule', icon: 'calendar', label: 'Schedule', fullTitle: 'Schedule' },
-      { key: 'stats', icon: 'season', label: 'Stats', fullTitle: 'Team Stats' }
+      { key: 'schedule', icon: 'calendar', label: 'Schedule', fullTitle: 'Schedule' }
     ]
   },
   {
     id: 'seasonal_horizon',
-    ariaLabel: 'Trade, Playoffs and Draft Views',
+    ariaLabel: 'Season Stats, Playoffs, Trade and Draft Views',
     tabs: [
-      { key: 'trade', icon: 'trade', label: 'Trade', fullTitle: 'Trade Window' },
+      { key: 'stats', icon: 'season', label: 'Stats', fullTitle: 'Team Stats' },
       { key: 'playoffs', icon: 'trophy', label: 'Playoffs', fullTitle: 'Playoff Odds' },
-      { key: 'draft_prep', icon: 'compass', label: 'Draft', fullTitle: '2027 NFL Draft' },
-      { key: 'draft_class', icon: 'radar', label: 'Draft Recap', fullTitle: '2026 Draft Recap' }
+      { key: 'trade', icon: 'trade', label: 'Trade', fullTitle: 'Trade Window' },
+      { key: 'draft_prep', icon: 'compass', label: 'Draft', fullTitle: 'NFL Draft & Class Recap' }
     ]
   }
 ];
 
 export function renderSeasonMatchupViewHtml({
   seasonSub = 'matchup',
+  draftSub = 'prep',
   appData,
   mcSimResult,
   forcedWinners = {},
@@ -440,9 +443,33 @@ export function renderSeasonMatchupViewHtml({
   expandedRootingWeeks = null,
   matchupStatsUnit = 'offense',
   userPrefs = null,
-  reportersById = null
+  reportersById = null,
+  // Gamecast state props
+  gamecastGameId = null,
+  gamecastTab = 'pbp',
+  gamecastBoxTeam = 'team',
+  gamecastBoxUnit = 'all',
+  gamecastPbpFilter = 'all',
+  gamecastPbpQuarter = 'ALL',
+  gamecastPbpOrder = 'newest',
+  gamecastExpandedDrives = null,
+  gamecastFromSchedule = false,
+  gamecastModel = null,
+  gamecastIsLoading = false,
+  gamecastIsSyncing = false,
+  gamecastFieldAnimKey = 0,
+  activeGamecastClipKey = ''
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
+
+  const normalizedSeasonSub = seasonSub === 'draft_class' ? 'draft_prep' : seasonSub;
+  const effectiveDraftSub = seasonSub === 'draft_class' ? 'class' : draftSub === 'class' ? 'class' : 'prep';
+  const hasLiveGame = Boolean(
+    appData?.scheduleMatchup?.upcomingMatchup?.isGameInProgress ||
+      (appData?.scheduleMatchup?.schedule || []).some(
+        g => g && !g.completed && !g.isByeWeek && (g.statusState === 'in' || g.isLive)
+      )
+  );
 
   const switcherCard = `
     <div class="card subnav-card season-subnav-card" role="navigation" aria-label="Game and Season Views">
@@ -451,13 +478,17 @@ export function renderSeasonMatchupViewHtml({
         <div class="segmented-control season-cluster-bar" data-season-cluster="${esc(cluster.id)}" role="tablist" aria-label="${esc(cluster.ariaLabel)}">
           ${cluster.tabs
             .map(t => {
-              const isSelected = seasonSub === t.key;
+              const isSelected = normalizedSeasonSub === t.key;
+              const liveDotHtml =
+                t.key === 'gamecast' && hasLiveGame
+                  ? `<span class="gc-nav-live-dot" aria-label="Live game in progress"></span>`
+                  : '';
               return `
             <button type="button" role="tab" aria-selected="${isSelected ? 'true' : 'false'}"
                     title="${esc(t.fullTitle)}"
                     class="pill-btn seg-btn season-tab-btn ${isSelected ? 'active' : ''}"
                     data-action="set-season-sub" data-season-sub="${t.key}">
-              ${iconSvg(t.icon, 13)}
+              ${liveDotHtml || iconSvg(t.icon, 13)}
               <span>${esc(t.label)}</span>
             </button>
           `;
@@ -469,37 +500,86 @@ export function renderSeasonMatchupViewHtml({
     </div>
   `;
 
-  if (seasonSub === 'matchup') return switcherCard + renderUpcomingMatchup(appData, matchupStatsUnit, userPrefs);
-  if (seasonSub === 'health') return switcherCard + renderTeamHealthAndIr(appData, userPrefs, reportersById);
-  if (seasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData, userPrefs);
-  if (seasonSub === 'trade') return switcherCard + renderTradeWindow(appData);
-  if (seasonSub === 'playoffs')
-    return switcherCard + renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRootingWeeks, userPrefs);
-  if (seasonSub === 'schedule') return switcherCard + renderFullSchedule(appData, schedulePrevExpanded, mcSimResult);
-  if (seasonSub === 'draft_prep') {
+  if (normalizedSeasonSub === 'gamecast') {
     return (
       switcherCard +
-      renderDraftPrepAndCombine(appData, {
-        combineSearch,
-        bigBoardSearch,
-        bigBoardPosFilter,
-        bigBoardPositions,
-        bigBoardLens,
-        bigBoardSortField,
-        bigBoardSortDir,
-        bigBoardRange,
-        bigBoardAgreement,
-        bigBoardRankedOnly,
-        bigBoardFilterDrawerOpen,
-        bigBoardExpanded,
-        bigBoardShowAll,
-        bigBoardExpandedIds,
-        bigBoardShareCopied,
-        mcSimResult
+      renderGamecastViewHtml({
+        appData,
+        mcSimResult,
+        selectedGameId: gamecastGameId,
+        gamecastTab,
+        boxTeam: gamecastBoxTeam,
+        boxUnit: gamecastBoxUnit,
+        pbpFilter: gamecastPbpFilter,
+        pbpQuarter: gamecastPbpQuarter,
+        pbpOrder: gamecastPbpOrder,
+        expandedDrives: gamecastExpandedDrives || new Set(),
+        fromSchedule: gamecastFromSchedule,
+        gamecastModel,
+        isLoading: gamecastIsLoading,
+        isSyncing: gamecastIsSyncing,
+        fieldAnimKey: gamecastFieldAnimKey,
+        activeGamecastClipKey,
+        userPrefs
       })
     );
   }
-  return switcherCard + renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosSet);
+  if (normalizedSeasonSub === 'matchup') return switcherCard + renderUpcomingMatchup(appData, matchupStatsUnit, userPrefs);
+  if (normalizedSeasonSub === 'health') return switcherCard + renderTeamHealthAndIr(appData, userPrefs, reportersById);
+  if (normalizedSeasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData, userPrefs);
+  if (normalizedSeasonSub === 'trade') return switcherCard + renderTradeWindow(appData);
+  if (normalizedSeasonSub === 'playoffs')
+    return switcherCard + renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRootingWeeks, userPrefs);
+  if (normalizedSeasonSub === 'schedule') return switcherCard + renderFullSchedule(appData, schedulePrevExpanded, mcSimResult);
+
+  // Unified Draft view (2027 Prep & Board | 2026 Draft Class)
+  const seasonYr = Number(appData?.meta?.seasonYear) || 2026;
+  const nextDraftYr = Number(appData?.seasonal?.draftPrep2027?.draftYear) || seasonYr + 1;
+  const classDraftYr = Number(appData?.seasonal?.draftClass2026?.draftYear) || seasonYr;
+  const draftToggleCard = `
+    <div class="card subnav-card draft-inner-subnav-card" data-draft-sub-switcher>
+      <div class="segmented-control compact-seg" role="tablist" aria-label="Draft Views">
+        <button type="button" role="tab" aria-selected="${effectiveDraftSub === 'prep' ? 'true' : 'false'}"
+                class="pill-btn seg-btn ${effectiveDraftSub === 'prep' ? 'active' : ''}"
+                data-action="set-draft-sub" data-draft-sub="prep">
+          ${iconSvg('compass', 13)}
+          <span>${nextDraftYr} Prep &amp; Board</span>
+        </button>
+        <button type="button" role="tab" aria-selected="${effectiveDraftSub === 'class' ? 'true' : 'false'}"
+                class="pill-btn seg-btn ${effectiveDraftSub === 'class' ? 'active' : ''}"
+                data-action="set-draft-sub" data-draft-sub="class">
+          ${iconSvg('radar', 13)}
+          <span>${classDraftYr} Draft Class</span>
+        </button>
+      </div>
+    </div>
+  `;
+
+  if (effectiveDraftSub === 'class') {
+    return switcherCard + draftToggleCard + renderDraftClassAndUdfas(appData, expandedDraftSpiderIdx, activeVideosSet);
+  }
+  return (
+    switcherCard +
+    draftToggleCard +
+    renderDraftPrepAndCombine(appData, {
+      combineSearch,
+      bigBoardSearch,
+      bigBoardPosFilter,
+      bigBoardPositions,
+      bigBoardLens,
+      bigBoardSortField,
+      bigBoardSortDir,
+      bigBoardRange,
+      bigBoardAgreement,
+      bigBoardRankedOnly,
+      bigBoardFilterDrawerOpen,
+      bigBoardExpanded,
+      bigBoardShowAll,
+      bigBoardExpandedIds,
+      bigBoardShareCopied,
+      mcSimResult
+    })
+  );
 }
 
 function renderTeamRankTriggerHtml(
@@ -875,6 +955,28 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
         <span class="sb-vs-pill mono">${esc(sbCenterPill)}</span>
         ${homeColHtml}
       </div>
+
+      ${(() => {
+        if (um.isGameInProgress && isNumericEspnGameId(um.gameId)) {
+          return `
+            <button type="button" class="gc-handoff-banner is-live" data-action="open-gamecast-game" data-game-id="${esc(um.gameId)}">
+              <span class="gc-handoff-left mono"><span class="gc-live-dot" aria-hidden="true"></span>${esc(um.statusDetail || 'Game is LIVE')}</span>
+              <span class="gc-handoff-cta">Live Play-by-Play &amp; Box Score ${iconSvg('arrowRight', 12)}</span>
+            </button>
+          `;
+        }
+        const gcInfo = resolveGamecastGamesList(appData);
+        const lastComp = gcInfo.latestCompleted;
+        if (lastComp && isNumericEspnGameId(lastComp.id) && !um.completed) {
+          return `
+            <button type="button" class="gc-handoff-banner" data-action="open-gamecast-game" data-game-id="${esc(lastComp.id)}">
+              <span class="gc-handoff-left">Last Game: <strong class="mono">${esc(lastComp.pickerLabel)}</strong></span>
+              <span class="gc-handoff-cta">Box Score &amp; Plays ${iconSvg('arrowRight', 12)}</span>
+            </button>
+          `;
+        }
+        return '';
+      })()}
 
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
         <div class="inline-icon-meta">
@@ -2475,9 +2577,17 @@ function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
               : `<span class="badge ${isPost ? 'badge-gold' : 'badge-neutral'} mono">${esc(g.statusDetail || 'TBD')}</span>`
           }
           ${
-            g.gameUrl && (g.completed || isCurrentGame)
-              ? `<a href="${esc(g.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${g.completed ? 'Box Score' : 'Gamecast'}</span>${iconSvg('externalLink', 10)}</a>`
-              : ''
+            isNumericEspnGameId(g.id) && (g.completed || isCurrentGame || isLiveInGame)
+              ? `<button type="button" class="source-chip-link gc-sched-chip-btn ${isLiveInGame ? 'is-live' : ''}"
+                         data-action="open-gamecast-game"
+                         data-game-id="${esc(g.id)}"
+                         data-from-schedule="true">
+                   <span>${isLiveInGame ? 'Live Plays' : g.completed ? 'Box Score' : 'Gamecast'}</span>
+                   ${iconSvg('arrowRight', 10)}
+                 </button>`
+              : g.gameUrl && (g.completed || isCurrentGame)
+                ? `<a href="${esc(g.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${g.completed ? 'Box Score' : 'Gamecast'}</span>${iconSvg('externalLink', 10)}</a>`
+                : ''
           }
         </div>
       </div>

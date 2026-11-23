@@ -71,6 +71,12 @@ import {
 } from '../engine/gameDayRosterEngine.js';
 import { fetchGeminiFallbackGameDayInactives, resolveReadOnlyPlatformApiBase } from './aiWorkerClient.js';
 import {
+  buildFallbackGamecastFromSchedule,
+  extractFastSituationFingerprint,
+  isNumericEspnGameId,
+  parseEspnSummaryToGamecast
+} from '../engine/gamecastEngine.js';
+import {
   AMBIGUOUS_PLAYER_SURNAMES,
   buildEspnPlayerNewsAnchorUrl,
   buildEspnPlayerUrl,
@@ -3426,6 +3432,7 @@ export async function hydrateLiveEspnGameHighlightsAndPlays(
     if (!res.ok) return 0;
     const summaryRaw = await res.json();
     if (!summaryRaw || typeof summaryRaw !== 'object') return 0;
+    primeGamecastCacheFromSummary(summaryRaw, { gameMeta: targetGame || { id: eventId }, appData });
 
     // Sync live score/clock immediately so the scoreboard stays sub-15s fresh during games
     const hdrComp = summaryRaw?.header?.competitions?.[0];
@@ -6269,6 +6276,7 @@ export async function hydrateLiveEspnOverlay(appData) {
           appData._livePlayedPlayerIds = [...playedInCompletedGameIds];
         }
         if (compSummaryRaw && appData.scheduleMatchup) {
+          primeGamecastCacheFromSummary(compSummaryRaw, { gameMeta: targetGame, appData });
           const parsedRecap = extractCompletedGameRecapSummary(compSummaryRaw, targetGame);
           if (parsedRecap) {
             appData.scheduleMatchup.lastCompletedGameRecap = parsedRecap;
@@ -7914,4 +7922,226 @@ export async function hydrateLive49ersPodcasts(appData) {
   } catch {
     return false;
   }
+}
+
+/* ============================================================================
+ * GAMECAST LOW-LATENCY LIVE & HISTORICAL GAME DATA LAYER
+ * - 2-tier live fetching:
+ *   1) Tiny ~2 KB `situation` trigger poll (2s edge TTL via `/api/gamecast` or direct ESPN core)
+ *   2) Atomic `summary?event=<id>` fetch on play change / 6s box-score cadence (3s live edge TTL)
+ * - Completed games are immutable: cached in memory + bounded 4-game `localStorage` LRU (<2ms reopen)
+ * ============================================================================ */
+
+const GAMECAST_LOCAL_CACHE_KEY = 'joshal_gamecast_cache_v1';
+const GAMECAST_LOCAL_MAX_GAMES = 4;
+const gamecastMemoryCache = new Map(); // key `${teamAbbr}:${gameId}` -> { model, fetchedAtMs }
+const gamecastInFlightMap = new Map(); // key `${teamAbbr}:${gameId}` -> Promise<model>
+
+function buildGamecastCacheKey(gameId, teamAbbr = '') {
+  const abbr = String(teamAbbr || getActiveTeamConfig().abbr || 'SF').toUpperCase();
+  return `${abbr}:${String(gameId || '').trim()}`;
+}
+
+function readLocalGamecastStore() {
+  try {
+    if (typeof localStorage === 'undefined') return {};
+    const raw = localStorage.getItem(GAMECAST_LOCAL_CACHE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeLocalGamecastEntry(cacheKey, model) {
+  if (!model || !model.isFinal || model.isFallback) return;
+  try {
+    if (typeof localStorage === 'undefined') return;
+    const store = readLocalGamecastStore();
+    store[cacheKey] = { savedAtMs: Date.now(), model };
+    const entries = Object.entries(store).sort(
+      (a, b) => Number(b[1]?.savedAtMs || 0) - Number(a[1]?.savedAtMs || 0)
+    );
+    const trimmed = Object.fromEntries(entries.slice(0, GAMECAST_LOCAL_MAX_GAMES));
+    localStorage.setItem(GAMECAST_LOCAL_CACHE_KEY, JSON.stringify(trimmed));
+  } catch {
+    // Ignore storage quota errors gracefully
+  }
+}
+
+export function clearGamecastMemoryCache() {
+  gamecastMemoryCache.clear();
+  gamecastInFlightMap.clear();
+}
+
+export function getCachedGamecastModel(gameId, { teamAbbr = '' } = {}) {
+  if (!isNumericEspnGameId(gameId)) return null;
+  const key = buildGamecastCacheKey(gameId, teamAbbr);
+  const mem = gamecastMemoryCache.get(key);
+  if (mem?.model) return mem.model;
+  const store = readLocalGamecastStore();
+  const persisted = store[key]?.model;
+  if (persisted && persisted.gameId === String(gameId) && persisted.isFinal && !persisted.isFallback) {
+    gamecastMemoryCache.set(key, { model: persisted, fetchedAtMs: Number(store[key]?.savedAtMs || Date.now()) });
+    return persisted;
+  }
+  return null;
+}
+
+export function primeGamecastCacheFromSummary(summaryJson, { gameMeta = {}, appData = null } = {}) {
+  if (!summaryJson || typeof summaryJson !== 'object') return null;
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const parsed = parseEspnSummaryToGamecast(summaryJson, { gameMeta, activeTeam });
+  if (!parsed || !parsed.gameId) return null;
+  const key = buildGamecastCacheKey(parsed.gameId, activeTeam.abbr);
+  gamecastMemoryCache.set(key, { model: parsed, fetchedAtMs: Date.now() });
+  if (parsed.isFinal) {
+    writeLocalGamecastEntry(key, parsed);
+  }
+  return parsed;
+}
+
+function syncGamecastScoresBackToAppData(appData, model) {
+  if (!appData?.scheduleMatchup || !model?.gameId) return;
+  const sfScore = model.activeSide?.score;
+  const oppScore = model.oppSide?.score;
+  const schedule = Array.isArray(appData.scheduleMatchup.schedule) ? appData.scheduleMatchup.schedule : [];
+  const schedRow = schedule.find(g => g && String(g.id || '') === String(model.gameId));
+  if (schedRow && (model.isLive || model.isFinal)) {
+    if (sfScore != null && Number.isFinite(sfScore)) schedRow.sfScore = sfScore;
+    if (oppScore != null && Number.isFinite(oppScore)) schedRow.oppScore = oppScore;
+    schedRow.statusState = model.state;
+    if (model.statusDetail) schedRow.statusDetail = model.statusDetail;
+    schedRow.isLive = model.isLive;
+    if (model.isFinal) {
+      schedRow.completed = true;
+      if (sfScore != null && oppScore != null) {
+        schedRow.result = sfScore > oppScore ? 'W' : sfScore < oppScore ? 'L' : 'T';
+      }
+    }
+  }
+  const um = appData.scheduleMatchup.upcomingMatchup;
+  if (um && String(um.gameId || '') === String(model.gameId) && (model.isLive || model.isFinal)) {
+    if (sfScore != null && Number.isFinite(sfScore)) um.sfScore = sfScore;
+    if (oppScore != null && Number.isFinite(oppScore)) um.oppScore = oppScore;
+    um.liveState = model.state;
+    um.isGameInProgress = model.isLive;
+    if (model.statusDetail) um.statusDetail = model.statusDetail;
+  }
+}
+
+/**
+ * Fetches & parses the full atomic ESPN Gamecast summary (`Box Score`, `Team Stats`, `Play-by-Play`).
+ * Uses Worker edge cache (`/api/gamecast`) when available, falling back directly to ESPN CORS JSON.
+ * Completed games resolve from memory/localStorage in <2ms with 0 network calls unless `forceRefresh`.
+ */
+export async function fetchGamecastForGame(
+  gameMeta,
+  { appData = null, prefs = null, forceRefresh = false } = {}
+) {
+  const gameId = String(gameMeta?.id || '').trim();
+  if (!isNumericEspnGameId(gameId)) return null;
+
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const cacheKey = buildGamecastCacheKey(gameId, activeTeam.abbr);
+
+  if (!forceRefresh) {
+    const cached = getCachedGamecastModel(gameId, { teamAbbr: activeTeam.abbr });
+    if (cached) {
+      const memEntry = gamecastMemoryCache.get(cacheKey);
+      const ageMs = memEntry ? Date.now() - memEntry.fetchedAtMs : Infinity;
+      // Completed games are immutable; live games reuse within 1.5s to coalesce rapid clicks
+      if (cached.isFinal || ageMs < 1500) {
+        return cached;
+      }
+    }
+  }
+
+  if (gamecastInFlightMap.has(cacheKey)) {
+    return gamecastInFlightMap.get(cacheKey);
+  }
+
+  const runFetch = (async () => {
+    const apiBase = resolveReadOnlyPlatformApiBase(prefs || {});
+    const urlsToTry = [];
+    if (apiBase) {
+      urlsToTry.push(`${apiBase}/api/gamecast?event=${encodeURIComponent(gameId)}&mode=summary`);
+    }
+    urlsToTry.push(
+      `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${encodeURIComponent(gameId)}`
+    );
+
+    let summaryJson = null;
+    for (const url of urlsToTry) {
+      try {
+        const res = await fetchSingleWithTimeout(url, { cache: 'no-store' }, 5200);
+        if (!res.ok) continue;
+        const json = await res.json();
+        if (json && typeof json === 'object' && (json.header || json.boxscore || json.drives)) {
+          summaryJson = json;
+          break;
+        }
+      } catch {
+        // Fall through cleanly to next transport or local fallback
+      }
+    }
+
+    if (summaryJson) {
+      const parsed = parseEspnSummaryToGamecast(summaryJson, { gameMeta, activeTeam });
+      if (parsed) {
+        gamecastMemoryCache.set(cacheKey, { model: parsed, fetchedAtMs: Date.now() });
+        if (parsed.isFinal) {
+          writeLocalGamecastEntry(cacheKey, parsed);
+        }
+        if (appData) {
+          syncGamecastScoresBackToAppData(appData, parsed);
+        }
+        return parsed;
+      }
+    }
+
+    // Preserve any existing parsed model before degrading to fallback
+    const prev = gamecastMemoryCache.get(cacheKey)?.model;
+    if (prev) return prev;
+    return buildFallbackGamecastFromSchedule(gameMeta, appData || {});
+  })();
+
+  gamecastInFlightMap.set(cacheKey, runFetch);
+  try {
+    return await runFetch;
+  } finally {
+    gamecastInFlightMap.delete(cacheKey);
+  }
+}
+
+/**
+ * Ultra-lightweight (~2 KB) live situation check for 2-second Play-by-Play polling.
+ * Returns a deterministic fingerprint so we only trigger a full `summary` fetch on actual changes.
+ */
+export async function fetchLiveSituationFingerprint(gameId, { prefs = null } = {}) {
+  const cleanId = String(gameId || '').trim();
+  if (!isNumericEspnGameId(cleanId)) return null;
+
+  const apiBase = resolveReadOnlyPlatformApiBase(prefs || {});
+  const urlsToTry = [];
+  if (apiBase) {
+    urlsToTry.push(`${apiBase}/api/gamecast?event=${encodeURIComponent(cleanId)}&mode=situation`);
+  }
+  urlsToTry.push(
+    `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/${encodeURIComponent(cleanId)}/competitions/${encodeURIComponent(cleanId)}/situation`
+  );
+
+  for (const url of urlsToTry) {
+    try {
+      const res = await fetchSingleWithTimeout(url, { cache: 'no-store' }, 2600);
+      if (!res.ok) continue;
+      const json = await res.json();
+      const fp = extractFastSituationFingerprint(json);
+      if (fp) return fp;
+    } catch {
+      // Silent retry on next 2s tick
+    }
+  }
+  return null;
 }

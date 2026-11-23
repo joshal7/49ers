@@ -313,6 +313,15 @@ import {
 } from '../src/views/audioAiView.js';
 import { SEASON_NAV_CLUSTERS, renderSeasonMatchupViewHtml } from '../src/views/seasonMatchupView.js';
 import {
+  resolveGamecastGamesList,
+  parseEspnSummaryToGamecast,
+  extractFastSituationFingerprint,
+  buildFallbackGamecastFromSchedule,
+  yardsToEndzoneToFieldX,
+  parseSpotTextToFieldX
+} from '../src/engine/gamecastEngine.js';
+import { renderGamecastViewHtml } from '../src/views/gamecastView.js';
+import {
   humanizeNflTextForTts,
   computeConversationalTurnDynamics,
   selectBestBrowserVoices,
@@ -2645,24 +2654,24 @@ test('index.html places Game & Season before Roster & Cap in the 5-tab bottom na
   assert.deepEqual(navTabMatches, ['home', 'news', 'season', 'roster', 'audio']);
 });
 
-test('SEASON_NAV_CLUSTERS groups Matchup/Health/Schedule/Stats in Bar 1 and Trade/Playoffs/Draft/Draft Recap in Bar 2', () => {
+test('SEASON_NAV_CLUSTERS groups Matchup/Gamecast/Health/Schedule in Bar 1 and Stats/Playoffs/Trade/Draft in Bar 2', () => {
   assert.equal(SEASON_NAV_CLUSTERS.length, 2);
   assert.deepEqual(
     SEASON_NAV_CLUSTERS[0].tabs.map(t => ({ key: t.key, label: t.label })),
     [
       { key: 'matchup', label: 'Matchup' },
+      { key: 'gamecast', label: 'Gamecast' },
       { key: 'health', label: 'Health' },
-      { key: 'schedule', label: 'Schedule' },
-      { key: 'stats', label: 'Stats' }
+      { key: 'schedule', label: 'Schedule' }
     ]
   );
   assert.deepEqual(
     SEASON_NAV_CLUSTERS[1].tabs.map(t => ({ key: t.key, label: t.label })),
     [
-      { key: 'trade', label: 'Trade' },
+      { key: 'stats', label: 'Stats' },
       { key: 'playoffs', label: 'Playoffs' },
-      { key: 'draft_prep', label: 'Draft' },
-      { key: 'draft_class', label: 'Draft Recap' }
+      { key: 'trade', label: 'Trade' },
+      { key: 'draft_prep', label: 'Draft' }
     ]
   );
 });
@@ -19937,6 +19946,344 @@ test('Per-player breaking injury dedup: keeps only latest/most-progressed update
   assert.equal(minOld.isUrgentBreaking, false, 'Older Vikings injury tweet must lose urgent breaking status');
   assert.equal(minOld.isInGameInjury, false, 'Older Vikings injury tweet must lose in-game top-pinning');
   assert.equal(minOld.breakingBadge, 'INJURY UPDATE');
+});
+
+console.log('\n=== [Gamecast Engine, Folded Draft & Edge Low-Latency Proxy QA] ===');
+
+test('resolveGamecastGamesList excludes byes/TBD and defaults Live > Latest Completed > Next Upcoming', () => {
+  const scheduleMatchup = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const baseList = resolveGamecastGamesList({ meta: { seasonYear: 2026 }, scheduleMatchup });
+  assert.ok(baseList.games.length >= 10, `Expected playable games with numeric ESPN IDs, got ${baseList.games.length}`);
+  assert.ok(baseList.games.every(g => /^\d{6,12}$/.test(g.id)), 'All Gamecast games must have numeric ESPN IDs');
+  assert.ok(baseList.defaultGame && baseList.defaultGame.completed, 'When no game is live, default Gamecast target must be latest completed game');
+
+  // Inject a live game and confirm it wins default selection
+  const cloned = JSON.parse(JSON.stringify(scheduleMatchup));
+  const upcomingRow = cloned.schedule.find(g => !g.completed && !g.isByeWeek && /^\d+$/.test(String(g.id || '')));
+  assert.ok(upcomingRow, 'Expected upcoming numeric game in schedule');
+  upcomingRow.statusState = 'in';
+  upcomingRow.isLive = true;
+  upcomingRow.sfScore = 20;
+  upcomingRow.oppScore = 17;
+  const liveList = resolveGamecastGamesList({ meta: { seasonYear: 2026 }, scheduleMatchup: cloned });
+  assert.equal(liveList.defaultGameId, String(upcomingRow.id), 'Live game must take default Gamecast priority');
+  assert.ok(liveList.liveGame && liveList.liveGame.isLive);
+});
+
+test('parseEspnSummaryToGamecast parses Box Score, Team Stats, Play-by-Play, Field Geometry, Win Prob & HD Clips accurately', () => {
+  assert.equal(yardsToEndzoneToFieldX(25, 'away'), 75, 'Away at opp 25 maps to x=75 (driving L->R)');
+  assert.equal(yardsToEndzoneToFieldX(25, 'home'), 25, 'Home at opp 25 maps to x=25 (driving R->L)');
+  assert.equal(parseSpotTextToFieldX('MIN 38', 'MIN', 'SF'), 38);
+  assert.equal(parseSpotTextToFieldX('SF 38', 'MIN', 'SF'), 62);
+
+  const mockSummary = {
+    header: {
+      id: '401873077',
+      competitions: [
+        {
+          id: '401873077',
+          status: {
+            displayClock: '6:42',
+            period: 3,
+            type: { state: 'in', completed: false, shortDetail: '6:42 - 3rd' }
+          },
+          competitors: [
+            {
+              id: '25',
+              homeAway: 'home',
+              score: '20',
+              record: [{ type: 'total', summary: '7-3' }],
+              linescores: [{ displayValue: '7' }, { displayValue: '10' }, { displayValue: '3' }],
+              team: { id: '25', abbreviation: 'SF', displayName: 'San Francisco 49ers', name: '49ers', color: 'AA0000' }
+            },
+            {
+              id: '16',
+              homeAway: 'away',
+              score: '17',
+              record: [{ type: 'total', summary: '7-2' }],
+              linescores: [{ displayValue: '7' }, { displayValue: '3' }, { displayValue: '7' }],
+              team: { id: '16', abbreviation: 'MIN', displayName: 'Minnesota Vikings', name: 'Vikings', color: '4F2683' }
+            }
+          ]
+        }
+      ]
+    },
+    situation: {
+      possession: '25',
+      down: 2,
+      distance: 7,
+      yardLine: 38,
+      yardsToEndzone: 38,
+      downDistanceText: '2nd & 7 at MIN 38',
+      shortDownDistanceText: '2nd & 7',
+      possessionText: 'MIN 38',
+      isRedZone: false,
+      homeTimeouts: 3,
+      awayTimeouts: 2,
+      lastPlay: { id: 'p102', text: 'B.Purdy pass deep middle to G.Kittle for 19 yards to MIN 38.' }
+    },
+    winprobability: [
+      { playId: 'p101', homeWinPercentage: 0.62 },
+      { playId: 'p102', homeWinPercentage: 0.71 }
+    ],
+    videos: [
+      {
+        id: 'vid_99',
+        headline: 'George Kittle hauls in 19-yard touchdown grab',
+        description: 'Brock Purdy hits George Kittle for a 19-yard score',
+        links: {
+          source: { HD: { href: 'https://media.video-cdn.espn.com/kittle_td.mp4' } },
+          web: { href: 'https://www.espn.com/video/clip?id=99' }
+        }
+      }
+    ],
+    boxscore: {
+      teams: [
+        {
+          team: { abbreviation: 'SF' },
+          statistics: [
+            { name: 'totalYards', displayValue: '380' },
+            { name: 'yardsPerPlay', displayValue: '6.8' },
+            { name: 'firstDowns', displayValue: '21' },
+            { name: 'firstDownsPassing', displayValue: '12' },
+            { name: 'firstDownsRushing', displayValue: '8' },
+            { name: 'firstDownsPenalty', displayValue: '1' },
+            { name: 'netPassingYards', displayValue: '241' },
+            { name: 'completionAttempts', displayValue: '19/26' },
+            { name: 'rushingYards', displayValue: '139' },
+            { name: 'thirdDownEff', displayValue: '6-10' },
+            { name: 'turnovers', displayValue: '0' },
+            { name: 'totalPenaltiesYards', displayValue: '4-35' },
+            { name: 'possessionTime', displayValue: '26:14' }
+          ]
+        },
+        {
+          team: { abbreviation: 'MIN' },
+          statistics: [
+            { name: 'totalYards', displayValue: '268' },
+            { name: 'yardsPerPlay', displayValue: '5.5' },
+            { name: 'firstDowns', displayValue: '15' },
+            { name: 'netPassingYards', displayValue: '183' },
+            { name: 'completionAttempts', displayValue: '16/25' },
+            { name: 'rushingYards', displayValue: '85' },
+            { name: 'thirdDownEff', displayValue: '4-10' },
+            { name: 'turnovers', displayValue: '2' },
+            { name: 'totalPenaltiesYards', displayValue: '6-52' },
+            { name: 'possessionTime', displayValue: '18:04' }
+          ]
+        }
+      ],
+      players: [
+        {
+          team: { abbreviation: 'SF' },
+          statistics: [
+            {
+              name: 'passing',
+              labels: ['C/ATT', 'YDS', 'AVG', 'TD', 'INT', 'SACKS', 'RTG'],
+              athletes: [
+                {
+                  athlete: { id: '4361741', displayName: 'Brock Purdy', shortName: 'B. Purdy', position: { abbreviation: 'QB' } },
+                  stats: ['19/26', '248', '9.5', '2', '0', '1-7', '128.4']
+                }
+              ],
+              totals: ['19/26', '248', '9.5', '2', '0', '1-7', '']
+            },
+            {
+              name: 'defensive',
+              labels: ['TOT', 'SOLO', 'SACKS', 'TFL', 'PD', 'QB HTS', 'TD'],
+              athletes: [
+                {
+                  athlete: { id: '3121544', displayName: 'Fred Warner', shortName: 'F. Warner', position: { abbreviation: 'LB' } },
+                  stats: ['9', '6', '0.5', '1', '1', '1', '0']
+                }
+              ]
+            }
+          ]
+        },
+        {
+          team: { abbreviation: 'MIN' },
+          statistics: [
+            {
+              name: 'receiving',
+              labels: ['REC', 'YDS', 'AVG', 'TD', 'LONG', 'TGTS'],
+              athletes: [
+                {
+                  athlete: { id: '4262921', displayName: 'Justin Jefferson', shortName: 'J. Jefferson', position: { abbreviation: 'WR' } },
+                  stats: ['7', '102', '14.6', '1', '29', '10']
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    drives: {
+      current: {
+        id: 'drv_live',
+        team: { abbreviation: 'SF', shortDisplayName: '49ers' },
+        description: '5 plays, 37 yards, 2:54',
+        start: { period: { number: 3 }, text: 'SF 25' },
+        plays: [
+          {
+            id: 'p101',
+            period: { number: 3 },
+            clock: { displayValue: '7:20' },
+            statYardage: 4,
+            scoringPlay: false,
+            type: { text: 'Rush' },
+            start: { down: 1, distance: 10, shortDownDistanceText: '1st & 10', possessionText: 'SF 43', yardsToEndzone: 57 },
+            end: { yardsToEndzone: 53 },
+            awayScore: 17,
+            homeScore: 20,
+            text: 'C.McCaffrey right end for 4 yards.'
+          },
+          {
+            id: 'p102',
+            period: { number: 3 },
+            clock: { displayValue: '6:42' },
+            statYardage: 19,
+            scoringPlay: true,
+            type: { text: 'Pass Reception' },
+            start: { down: 2, distance: 6, shortDownDistanceText: '2nd & 6', possessionText: 'SF 47', yardsToEndzone: 57 },
+            end: { yardsToEndzone: 38 },
+            awayScore: 17,
+            homeScore: 20,
+            text: 'B.Purdy pass deep middle to G.Kittle for 19 yards, TOUCHDOWN.'
+          }
+        ]
+      }
+    }
+  };
+
+  const parsed = parseEspnSummaryToGamecast(mockSummary);
+  assert.ok(parsed && parsed.isLive, 'Parsed Gamecast must recognize live state');
+  assert.equal(parsed.home.abbr, 'SF');
+  assert.equal(parsed.away.abbr, 'MIN');
+  assert.equal(parsed.home.hasPossession, true);
+  assert.equal(parsed.home.timeoutsRemaining, 3);
+  assert.equal(parsed.away.timeoutsRemaining, 2);
+  assert.equal(parsed.situation.ballPos0to100, 38, 'Home (SF) at 38 yardsToEndzone maps to x=38 driving toward MIN EZ (0)');
+  assert.equal(parsed.situation.firstDownPos0to100, 31, 'Home 1st down line is 7 yards closer to x=0');
+  assert.equal(parsed.winProb.teamPct, 71);
+  assert.equal(parsed.drivesChrono[0].plays[1].wpDelta, '+9.0%');
+  assert.ok(parsed.drivesChrono[0].plays[1].clip?.mp4Url?.includes('kittle_td.mp4'), 'Scoring play must match HD clip');
+
+  // Inverted lowerBetter Team Stats check (Turnovers: SF 0 vs MIN 2 -> SF leads!)
+  const discGroup = parsed.teamStatsGroups.find(g => g.id === 'discipline');
+  const toRow = discGroup?.rows.find(r => r.key === 'turnovers');
+  assert.ok(toRow && toRow.homeLeads === true && toRow.awayLeads === false, '0 turnovers must lead 2 turnovers');
+
+  // Verify Quarter Scoreboard exclusivity: ONLY on Play-by-Play (directly below Field), NOT on Box Score or Team Stats!
+  const roster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const scheduleMatchup = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const appDataMock = { meta: { seasonYear: 2026 }, roster, scheduleMatchup };
+
+  const boxHtml = renderGamecastViewHtml({ appData: appDataMock, selectedGameId: '401873077', gamecastTab: 'box', gamecastModel: parsed });
+  assert.ok(!boxHtml.includes('data-gamecast-quarter-scoreboard'), 'Box Score must NOT render quarter linescore');
+  assert.ok(!boxHtml.includes('data-gamecast-field'), 'Box Score must NOT render animated field');
+  assert.ok(boxHtml.includes('Brock Purdy') || boxHtml.includes('B. Purdy'), 'Box Score must render Passing rows');
+  assert.ok(boxHtml.includes('data-action="open-player-sheet"'), 'Box Score SF players must open native Player Dossier');
+
+  const teamHtml = renderGamecastViewHtml({ appData: appDataMock, selectedGameId: '401873077', gamecastTab: 'team', gamecastModel: parsed });
+  assert.ok(!teamHtml.includes('data-gamecast-quarter-scoreboard'), 'Team Stats must NOT render quarter linescore');
+  assert.ok(teamHtml.includes('Total Yards') && teamHtml.includes('380'), 'Team Stats must render comparison metrics');
+
+  const pbpHtml = renderGamecastViewHtml({ appData: appDataMock, selectedGameId: '401873077', gamecastTab: 'pbp', gamecastModel: parsed });
+  const fieldPos = pbpHtml.indexOf('data-gamecast-field');
+  const quarterPos = pbpHtml.indexOf('data-gamecast-quarter-scoreboard');
+  assert.ok(fieldPos > 0 && quarterPos > fieldPos, 'Play-by-Play must place Quarter Scoreboard directly BELOW the animated football field');
+  assert.ok(pbpHtml.includes('SF Win Prob 71%'), 'Play-by-Play must render expandable Win Prob meter');
+  assert.ok(pbpHtml.includes('data-action="play-gamecast-clip"'), 'Play-by-Play must surface inline HD highlight clip button');
+});
+
+test('extractFastSituationFingerprint detects play/down/spot changes & folded Draft view supports legacy draft_class route', () => {
+  const fp1 = extractFastSituationFingerprint({
+    lastPlay: { $ref: 'http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401873077/competitions/401873077/plays/1001' },
+    down: 1,
+    distance: 10,
+    yardLine: 45,
+    homeTimeouts: 3,
+    awayTimeouts: 3,
+    isRedZone: false
+  });
+  const fp2 = extractFastSituationFingerprint({
+    lastPlay: { $ref: 'http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401873077/competitions/401873077/plays/1002' },
+    down: 2,
+    distance: 4,
+    yardLine: 51,
+    homeTimeouts: 3,
+    awayTimeouts: 3,
+    isRedZone: false
+  });
+  assert.equal(fp1.lastPlayId, '1001');
+  assert.equal(fp2.lastPlayId, '1002');
+  assert.notEqual(fp1.fingerprint, fp2.fingerprint, 'Situation fingerprint must change when play advances');
+
+  // Legacy seasonSub: 'draft_class' must cleanly route into Draft with 2026 Draft Class active
+  const seasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+  const scheduleMatchup = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const draftClassHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'draft_class',
+    appData: { meta: { seasonYear: 2026 }, seasonal, scheduleMatchup },
+    activeVideosSet: new Set()
+  });
+  assert.ok(draftClassHtml.includes('data-draft-sub-switcher'), 'Draft view must render inner Prep / Draft Class switcher');
+  assert.ok(draftClassHtml.includes('2026 Draft Class'), 'Legacy draft_class route must render 2026 Draft Class content');
+  assert.ok(
+    /data-season-sub="draft_prep"[^>]*aria-selected="true"|aria-selected="true"[^>]*data-season-sub="draft_prep"/.test(draftClassHtml),
+    'Legacy draft_class route must keep Row 2 Draft tab highlighted'
+  );
+
+  // Offline fallback never returns null/blank for a valid schedule game
+  const fallback = buildFallbackGamecastFromSchedule(
+    { id: '401873077', oppAbbr: 'MIN', oppName: 'Minnesota Vikings', homeAway: 'home', completed: false, isLive: false },
+    { meta: { teamRecord: '7-3' }, scheduleMatchup }
+  );
+  assert.ok(fallback && fallback.isFallback && fallback.away.abbr === 'MIN' && fallback.home.abbr === 'SF');
+});
+
+await testAsync('Worker GET /api/gamecast validates numeric event IDs/modes and sets low-latency edge cache TTLs', async () => {
+  const edgeWorker = (await import('../worker/index.js')).default;
+  const badIdRes = await edgeWorker.fetch(new Request('https://49ers.joshal.com/api/gamecast?event=not-an-id&mode=summary'), {});
+  assert.equal(badIdRes.status, 400, 'Non-numeric event ID must return 400');
+
+  const badModeRes = await edgeWorker.fetch(new Request('https://49ers.joshal.com/api/gamecast?event=401873077&mode=hack'), {});
+  assert.equal(badModeRes.status, 400, 'Invalid mode must return 400');
+
+  // Mock global fetch to verify TTLs for situation (2s), live summary (3s), and final summary (3600s)
+  const origFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async url => {
+      const s = String(url);
+      if (s.includes('/situation')) {
+        return new Response(JSON.stringify({ down: 2, distance: 7, lastPlay: { id: '99' } }), { status: 200 });
+      }
+      if (s.includes('event=401873077')) {
+        return new Response(
+          JSON.stringify({ header: { competitions: [{ status: { type: { state: 'in' } } }] } }),
+          { status: 200 }
+        );
+      }
+      return new Response(
+        JSON.stringify({ header: { competitions: [{ status: { type: { state: 'post' } } }] } }),
+        { status: 200 }
+      );
+    };
+
+    const sitRes = await edgeWorker.fetch(new Request('https://49ers.joshal.com/api/gamecast?event=401873077&mode=situation'), {});
+    assert.equal(sitRes.status, 200);
+    assert.equal(sitRes.headers.get('X-Gamecast-TTL'), '2', 'Live situation must use 2s edge cache TTL');
+
+    const liveSumRes = await edgeWorker.fetch(new Request('https://49ers.joshal.com/api/gamecast?event=401873077&mode=summary'), {});
+    assert.equal(liveSumRes.status, 200);
+    assert.equal(liveSumRes.headers.get('X-Gamecast-TTL'), '3', 'Live summary must use 3s edge cache TTL');
+
+    const finalSumRes = await edgeWorker.fetch(new Request('https://49ers.joshal.com/api/gamecast?event=401874392&mode=summary'), {});
+    assert.equal(finalSumRes.status, 200);
+    assert.equal(finalSumRes.headers.get('X-Gamecast-TTL'), '3600', 'Completed summary must use 3600s edge cache TTL');
+  } finally {
+    globalThis.fetch = origFetch;
+  }
 });
 
 console.log(`\n======================================================`);
