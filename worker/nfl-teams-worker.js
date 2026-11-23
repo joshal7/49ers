@@ -871,9 +871,13 @@ export default {
           : [];
         const clubVideosUrl = team.clubRssUrls?.[1] || `https://www.${team.clubDomain}/rss/videos`;
         const xSyndicationHeaders = {
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+          Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9'
         };
 
+        let teamXStatus = 0;
+        let nflXStatus = 0;
         const [
           rssXml,
           clubVideosXml,
@@ -882,6 +886,7 @@ export default {
           liveSummaryJson,
           teamXTimelineHtml,
           nflXTimelineHtml,
+          nflYtRssXml,
           ...sfFeedXmls
         ] = await Promise.all([
           fetch(team.clubRssUrls[0], { signal: AbortSignal.timeout(4500) })
@@ -893,13 +898,14 @@ export default {
           fetch(`https://www.profootballrumors.com/${team.otcSlug}/feed`, { signal: AbortSignal.timeout(4500) })
             .then(r => (r.ok ? r.text() : ''))
             .catch(() => ''),
-          fetch(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${team.espnId}&limit=25`, {
+          // Server-side Worker MUST use `site.api.espn.com` (no CORS needed; `site.web.api.espn.com` WAF blocks Worker IPs)
+          fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${team.espnId}&limit=25`, {
             signal: AbortSignal.timeout(4500)
           })
             .then(r => (r.ok ? r.json() : null))
             .catch(() => null),
           liveEventId
-            ? fetch(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${liveEventId}`, {
+            ? fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${liveEventId}`, {
                 signal: AbortSignal.timeout(4000)
               })
                 .then(r => (r.ok ? r.json() : null))
@@ -910,12 +916,25 @@ export default {
                 headers: xSyndicationHeaders,
                 signal: AbortSignal.timeout(3500)
               })
-                .then(r => (r.ok ? r.text() : ''))
+                .then(r => {
+                  teamXStatus = r.status;
+                  return r.ok ? r.text() : '';
+                })
                 .catch(() => '')
             : Promise.resolve(''),
           liveMode
             ? fetch('https://syndication.twitter.com/srv/timeline-profile/screen-name/NFL', {
                 headers: xSyndicationHeaders,
+                signal: AbortSignal.timeout(3500)
+              })
+                .then(r => {
+                  nflXStatus = r.status;
+                  return r.ok ? r.text() : '';
+                })
+                .catch(() => '')
+            : Promise.resolve(''),
+          liveMode
+            ? fetch('https://www.youtube.com/feeds/videos.xml?channel_id=UCDVYQ4Zhbm3S2dlz7P1GBDg', {
                 signal: AbortSignal.timeout(3500)
               })
                 .then(r => (r.ok ? r.text() : ''))
@@ -996,6 +1015,54 @@ export default {
           if (!xIt?.url || seenUrls.has(xIt.url)) continue;
           seenUrls.add(xIt.url);
           items.push(xIt);
+        }
+
+        // 4a-1. Official NFL YouTube Channel Live Highlights RSS (game highlights, Every Throw, in-game plays)
+        if (nflYtRssXml && nflYtRssXml.includes('<entry>')) {
+          for (const em of nflYtRssXml.matchAll(/<entry\b[\s\S]*?<\/entry>/gi)) {
+            const eb = em[0];
+            const vidId = (eb.match(/<yt:videoId>([A-Za-z0-9_-]{11})<\/yt:videoId>/i) || [])[1] || '';
+            const title = decodeWorkerXml((eb.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '');
+            const desc = decodeWorkerXml((eb.match(/<media:description[^>]*>([\s\S]*?)<\/media:description>/i) || [])[1] || '');
+            const linkHref = (eb.match(/<link[^>]*href="([^"]+)"/i) || [])[1] || (vidId ? `https://www.youtube.com/watch?v=${vidId}` : '');
+            if (!vidId || !title || /\/shorts\//i.test(linkHref)) continue;
+            const blob = `${title} ${desc}`;
+            const blobLower = blob.toLowerCase();
+            let matchesActiveTeam = Boolean(teamMentionRe && teamMentionRe.test(blob));
+            if (!matchesActiveTeam && gameDayMatchers) {
+              for (const fn of gameDayMatchers.fullNames) {
+                if (blobLower.includes(fn)) {
+                  matchesActiveTeam = true;
+                  break;
+                }
+              }
+            }
+            if (!matchesActiveTeam) continue;
+            const ytUrl = `https://www.youtube.com/watch?v=${vidId}`;
+            if (seenUrls.has(ytUrl)) continue;
+            seenUrls.add(ytUrl);
+            const pubRaw = (eb.match(/<published>([\s\S]*?)<\/published>/i) || [])[1] || '';
+            const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
+            if (Number.isFinite(pubMs) && nowEdgeMs - pubMs > 72 * 3_600_000) continue;
+            items.push({
+              id: `yt_nfl_live_${vidId}`,
+              type: 'video',
+              videoId: vidId,
+              title,
+              summary: desc.slice(0, 220),
+              url: ytUrl,
+              imageUrl: `https://i.ytimg.com/vi/${vidId}/hqdefault.jpg`,
+              embeddable: true,
+              isHighlightClip: true,
+              isLiveGameHighlight: liveMode,
+              outletId: 'nfl_official',
+              outletName: 'NFL',
+              author: 'NFL',
+              authorHandle: '@NFL',
+              trustTier: 1,
+              publishedAt: Number.isFinite(pubMs) ? new Date(Math.min(nowEdgeMs, pubMs)).toISOString() : new Date(nowEdgeMs).toISOString()
+            });
+          }
         }
 
         // 4a. Instant Live Game ESPN HD MP4 Highlight Clips (`summary.videos`) when `?event=<id>` is active
@@ -1276,6 +1343,11 @@ export default {
             cacheTtlSec: edgeTtlSec,
             fetchedAt: new Date().toISOString(),
             clubRssAvailable: Boolean(rssXml && rssXml.includes('<item')),
+            sourceDiag: {
+              teamXStatus,
+              nflXStatus,
+              espnSummaryVideos: Array.isArray(liveSummaryJson?.videos) ? liveSummaryJson.videos.length : 0
+            },
             items
           },
           200,
