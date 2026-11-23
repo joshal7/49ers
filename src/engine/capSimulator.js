@@ -1,5 +1,7 @@
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
+
 /**
- * Interactive 49ers Armchair GM Salary Cap Simulator Engine
+ * Interactive Armchair GM Salary Cap Simulator Engine
  * Supports multi-year simulation across this year and the next 4 years (e.g., 2026–2030).
  * Uses real OverTheCap per-player contract structures and NFL CBA rules:
  *  - Pre-June 1 Cut
@@ -274,7 +276,7 @@ export function simulateCapScenario(capData, selectedActions = {}, options = {})
 
   if (updatedCapSpace < 0) {
     warnings.push(
-      `Cap Compliance Warning: Simulated 49ers ledger is $${Math.abs(updatedCapSpace).toLocaleString()} OVER the ${baseYear} salary cap ceiling.`
+      `Cap Compliance Warning: Simulated ${getActiveTeamConfig().nickname} ledger is $${Math.abs(updatedCapSpace).toLocaleString()} OVER the ${baseYear} salary cap ceiling.`
     );
   }
 

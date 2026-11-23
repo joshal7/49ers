@@ -39,14 +39,36 @@ export const NFC_DIVISIONS = {
   CAR: 'NFC South'
 };
 
-export const NFC_DIVISION_NAMES = ['NFC West', 'NFC North', 'NFC East', 'NFC South'];
+export const AFC_DIVISIONS = {
+  BUF: 'AFC East',
+  MIA: 'AFC East',
+  NE: 'AFC East',
+  NYJ: 'AFC East',
+  BAL: 'AFC North',
+  CIN: 'AFC North',
+  CLE: 'AFC North',
+  PIT: 'AFC North',
+  HOU: 'AFC South',
+  IND: 'AFC South',
+  JAX: 'AFC South',
+  TEN: 'AFC South',
+  DEN: 'AFC West',
+  KC: 'AFC West',
+  LV: 'AFC West',
+  LAC: 'AFC West'
+};
 
-const ALL_AFC_TEAMS = [
-  'BUF', 'MIA', 'NE', 'NYJ',
-  'BAL', 'CIN', 'CLE', 'PIT',
-  'HOU', 'IND', 'JAX', 'TEN',
-  'DEN', 'KC', 'LV', 'LAC'
-];
+export const ALL_NFL_DIVISIONS = { ...NFC_DIVISIONS, ...AFC_DIVISIONS };
+export const NFC_DIVISION_NAMES = ['NFC West', 'NFC North', 'NFC East', 'NFC South'];
+export const AFC_DIVISION_NAMES = ['AFC East', 'AFC North', 'AFC South', 'AFC West'];
+
+const ALL_NFC_TEAMS = Object.keys(NFC_DIVISIONS);
+const ALL_AFC_TEAMS = Object.keys(AFC_DIVISIONS);
+
+export function getConferenceForTeam(abbr = 'SF') {
+  const norm = normalizeTeamAbbr(abbr);
+  return AFC_DIVISIONS[norm] ? 'AFC' : 'NFC';
+}
 
 // Modern post-2020 NFL Home-Field Advantage (~1.65 points on 22-Elo/pt scale)
 export const HOME_FIELD_ELO_ADV = 36;
@@ -181,9 +203,14 @@ const EPS = 1e-7;
  */
 export function runPlayoffMonteCarlo(config = {}) {
   const {
+    targetTeam = 'SF',
+    conference = null,
+    conferenceTeams = null,
     nfcTeams = [],
+    otherConferencePowerRatings = null,
     afcPowerRatings = {},
     afcRatings = {},
+    otherConferenceStandings = null,
     afcStandings = {},
     completedGames = [],
     remainingGames = [],
@@ -191,28 +218,45 @@ export function runPlayoffMonteCarlo(config = {}) {
     iterations = 10000,
     seed = 492026
   } = config;
+  const targetAbbr = normalizeTeamAbbr(targetTeam || 'SF');
+  const activeConf = conference
+    ? String(conference).toUpperCase() === 'AFC'
+      ? 'AFC'
+      : 'NFC'
+    : getConferenceForTeam(targetAbbr);
+  const confDivMap = activeConf === 'AFC' ? AFC_DIVISIONS : NFC_DIVISIONS;
+  const divNames = activeConf === 'AFC' ? AFC_DIVISION_NAMES : NFC_DIVISION_NAMES;
+  const otherConfTeamList = activeConf === 'AFC' ? ALL_NFC_TEAMS : ALL_AFC_TEAMS;
+  const activeConfTeams = Array.isArray(conferenceTeams) && conferenceTeams.length > 0 ? conferenceTeams : nfcTeams;
   const resolvedAfcPowerRatings =
-    Object.keys(afcPowerRatings).length > 0 ? afcPowerRatings : afcRatings || {};
+    otherConferencePowerRatings && Object.keys(otherConferencePowerRatings).length > 0
+      ? otherConferencePowerRatings
+      : Object.keys(afcPowerRatings).length > 0
+        ? afcPowerRatings
+        : afcRatings || {};
+  const resolvedOtherStandings =
+    otherConferenceStandings && Object.keys(otherConferenceStandings).length > 0
+      ? otherConferenceStandings
+      : afcStandings || {};
 
-  if (!Array.isArray(nfcTeams) || nfcTeams.length === 0) {
-    return { iterations: 0, sfOdds: null, allTeamOdds: [] };
+  if (!Array.isArray(activeConfTeams) || activeConfTeams.length === 0) {
+    return { iterations: 0, conference: activeConf, targetTeam: targetAbbr, teamOdds: null, sfOdds: null, allTeamOdds: [] };
   }
 
   const rand = mulberry32(seed);
-  const nTeams = nfcTeams.length; // 16 NFC clubs (indices 0..15)
+  const nTeams = activeConfTeams.length; // 16 conference clubs (indices 0..15)
 
-  // Build unified 32-team index space: 0..nTeams-1 = NFC, nTeams..31 = AFC
+  // Build unified 32-team index space: 0..nTeams-1 = target conference, nTeams..31 = opposite conference
   const abbrToIdx = new Map();
-  nfcTeams.forEach((t, idx) => abbrToIdx.set(normalizeTeamAbbr(t.abbr), idx));
+  activeConfTeams.forEach((t, idx) => abbrToIdx.set(normalizeTeamAbbr(t.abbr), idx));
   let nextIdx = nTeams;
-  for (const afcAbbr of ALL_AFC_TEAMS) {
-    const norm = normalizeTeamAbbr(afcAbbr);
+  for (const otherAbbr of otherConfTeamList) {
+    const norm = normalizeTeamAbbr(otherAbbr);
     if (!abbrToIdx.has(norm)) abbrToIdx.set(norm, nextIdx++);
   }
   const totalTeams = nextIdx; // 32
 
   const divIndexOf = new Int8Array(nTeams);
-  const divNames = NFC_DIVISION_NAMES;
   const divRosters = divNames.map(() => []);
 
   const baseW = new Int16Array(totalTeams);
@@ -227,8 +271,8 @@ export function runPlayoffMonteCarlo(config = {}) {
   const basePD = new Float64Array(nTeams);
   const elo = new Float64Array(totalTeams);
 
-  nfcTeams.forEach((t, i) => {
-    const resolvedDiv = NFC_DIVISIONS[normalizeTeamAbbr(t.abbr)] || t.division || 'NFC West';
+  activeConfTeams.forEach((t, i) => {
+    const resolvedDiv = confDivMap[normalizeTeamAbbr(t.abbr)] || t.division || divNames[0];
     const dIdx = Math.max(0, divNames.indexOf(resolvedDiv));
     divIndexOf[i] = dIdx;
     divRosters[dIdx].push(i);
@@ -258,17 +302,17 @@ export function runPlayoffMonteCarlo(config = {}) {
 
   for (const [abbr, idx] of abbrToIdx.entries()) {
     if (idx < nTeams) continue;
-    const afcRec = afcStandings[abbr] || null;
-    elo[idx] = resolvedAfcPowerRatings[abbr] || 1500;
-    if (afcRec) {
-      baseW[idx] = afcRec.wins || 0;
-      baseL[idx] = afcRec.losses || 0;
-      baseT[idx] = afcRec.ties || 0;
+    const st = resolvedOtherStandings[abbr] || null;
+    elo[idx] = Number(resolvedAfcPowerRatings[abbr]) || 1500;
+    if (st) {
+      baseW[idx] = st.wins || 0;
+      baseL[idx] = st.losses || 0;
+      baseT[idx] = st.ties || 0;
     }
   }
 
   // Pre-compute baseline H2H & opponent game counts across all 32 teams (stride = 32)
-  // For NFC club i (0..15) and opponent opp (0..31):
+  // For conference club i (0..15) and opponent opp (0..31):
   //   h2hPts[i * 32 + opp] stores 2 * wins + 1 * ties against `opp` (integer half-wins for exact arithmetic!)
   //   h2hGames[i * 32 + opp] stores games played against `opp`
   //   h2hBeatWins[i * 32 + opp] stores integer wins by `i` over `opp` (for Strength of Victory)
@@ -277,8 +321,8 @@ export function runPlayoffMonteCarlo(config = {}) {
   const baseH2hGames = new Uint8Array(nTeams * STRIDE);
   const baseH2hBeatWins = new Uint8Array(nTeams * STRIDE);
 
-  // Track AFC wins/losses from completedGames if afcStandings wasn't explicitly supplied
-  const hasExplicitAfcStandings = Object.keys(afcStandings || {}).length > 0;
+  // Track other-conference wins/losses from completedGames if explicit standings weren't supplied
+  const hasExplicitAfcStandings = Object.keys(resolvedOtherStandings || {}).length > 0;
 
   for (const cg of completedGames) {
     const hAbbr = normalizeTeamAbbr(cg.home);
@@ -841,7 +885,7 @@ export function runPlayoffMonteCarlo(config = {}) {
     // (Implicitly tracked via iterations - playoffCount below)
   }
 
-  const allTeamOdds = nfcTeams.map((t, i) => {
+  const allTeamOdds = activeConfTeams.map((t, i) => {
     const playoffTotal =
       seedCounts[i][1] +
       seedCounts[i][2] +
@@ -857,7 +901,7 @@ export function runPlayoffMonteCarlo(config = {}) {
       abbr: t.abbr,
       name: t.name,
       logoUrl: t.logoUrl || '',
-      division: NFC_DIVISIONS[normalizeTeamAbbr(t.abbr)] || t.division || 'NFC West',
+      division: confDivMap[normalizeTeamAbbr(t.abbr)] || t.division || divNames[0],
       currentRecord: `${t.wins}-${t.losses}${t.ties ? `-${t.ties}` : ''}`,
       powerRating: Math.round(elo[i]),
       projectedWins: Math.round((winSum[i] / iterations) * 10) / 10,
@@ -885,22 +929,37 @@ export function runPlayoffMonteCarlo(config = {}) {
       b.projectedWins - a.projectedWins
   );
 
-  const sfOdds = allTeamOdds.find(x => normalizeTeamAbbr(x.abbr) === 'SF') || allTeamOdds[0];
+  const teamOdds = allTeamOdds.find(x => normalizeTeamAbbr(x.abbr) === targetAbbr) || allTeamOdds[0];
 
   return {
     iterations,
-    sfOdds,
+    conference: activeConf,
+    targetTeam: targetAbbr,
+    teamOdds,
+    sfOdds: teamOdds,
     allTeamOdds
   };
 }
 
 /**
  * Computes Rooting Guide leverage for upcoming NFL games by measuring the marginal swing in
- * SF #1 Seed Bye %, SF NFC West Division %, and SF Playoff Berth % if HOME wins vs AWAY wins.
- * Supports either `(baseConfig, maxCountNumber)` or `(baseConfig, targetWeekGamesArray)`.
+ * the target club's #1 Seed Bye %, Division %, and Playoff Berth % if HOME wins vs AWAY wins.
+ * Works identically for AFC (`BUF`, `NE`, `KC`, ...) and NFC (`SF`, `DET`, `PHI`, ...).
  */
 export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
-  const nfcSet = new Set((baseConfig?.nfcTeams || []).map(t => normalizeTeamAbbr(t.abbr)));
+  const targetAbbr = normalizeTeamAbbr(baseConfig?.targetTeam || 'SF');
+  const activeConf = baseConfig?.conference
+    ? String(baseConfig.conference).toUpperCase() === 'AFC'
+      ? 'AFC'
+      : 'NFC'
+    : getConferenceForTeam(targetAbbr);
+  const otherConf = activeConf === 'AFC' ? 'NFC' : 'AFC';
+  const targetDivision = ALL_NFL_DIVISIONS[targetAbbr] || (activeConf === 'AFC' ? 'AFC East' : 'NFC West');
+  const confTeamList =
+    Array.isArray(baseConfig?.conferenceTeams) && baseConfig.conferenceTeams.length > 0
+      ? baseConfig.conferenceTeams
+      : baseConfig?.nfcTeams || [];
+  const confSet = new Set(confTeamList.map(t => normalizeTeamAbbr(t.abbr)));
   let candidateGames = [];
   let maxOut = 12;
 
@@ -910,20 +969,20 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
   } else {
     maxOut = Math.max(1, Number(targetOrMaxCount) || 12);
     const rem = Array.isArray(baseConfig?.remainingGames) ? baseConfig.remainingGames : [];
-    const nfcRelevantRem = rem.filter(g => {
+    const confRelevantRem = rem.filter(g => {
       const h = normalizeTeamAbbr(g.home);
       const a = normalizeTeamAbbr(g.away);
-      return nfcSet.has(h) || nfcSet.has(a);
+      return confSet.has(h) || confSet.has(a);
     });
-    const sortedWeeks = [...new Set(nfcRelevantRem.map(g => Number(g.week || 0)).filter(Boolean))].sort(
+    const sortedWeeks = [...new Set(confRelevantRem.map(g => Number(g.week || 0)).filter(Boolean))].sort(
       (a, b) => a - b
     );
     const nextTwoWeeks = new Set(sortedWeeks.slice(0, 2));
-    candidateGames = nfcRelevantRem.filter(g => nextTwoWeeks.has(Number(g.week)));
+    candidateGames = confRelevantRem.filter(g => nextTwoWeeks.has(Number(g.week)));
   }
 
   const teamEloMap = new Map();
-  for (const t of baseConfig?.nfcTeams || []) {
+  for (const t of confTeamList) {
     const ab = normalizeTeamAbbr(t.abbr);
     teamEloMap.set(
       ab,
@@ -939,8 +998,9 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
         })
     );
   }
-  const afcMap = baseConfig?.afcPowerRatings || baseConfig?.afcRatings || {};
-  for (const [k, v] of Object.entries(afcMap)) {
+  const otherMap =
+    baseConfig?.otherConferencePowerRatings || baseConfig?.afcPowerRatings || baseConfig?.afcRatings || {};
+  for (const [k, v] of Object.entries(otherMap)) {
     teamEloMap.set(normalizeTeamAbbr(k), Number(v) || 1500);
   }
 
@@ -950,28 +1010,32 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
     const away = normalizeTeamAbbr(g.away);
     const homeSim = runPlayoffMonteCarlo({
       ...baseConfig,
+      targetTeam: targetAbbr,
+      conference: activeConf,
       forcedWinners: { ...(baseConfig.forcedWinners || {}), [g.id]: 'HOME' },
       iterations: 2500,
       seed: 777
     });
     const awaySim = runPlayoffMonteCarlo({
       ...baseConfig,
+      targetTeam: targetAbbr,
+      conference: activeConf,
       forcedWinners: { ...(baseConfig.forcedWinners || {}), [g.id]: 'AWAY' },
       iterations: 2500,
       seed: 777
     });
 
-    const homeSf = homeSim.sfOdds;
-    const awaySf = awaySim.sfOdds;
-    if (!homeSf || !awaySf) continue;
+    const homeTarget = homeSim.teamOdds || homeSim.sfOdds;
+    const awayTarget = awaySim.teamOdds || awaySim.sfOdds;
+    if (!homeTarget || !awayTarget) continue;
 
-    const byeSwingHome = homeSf.seed1ByePct - awaySf.seed1ByePct;
-    const divSwingHome = homeSf.winDivisionPct - awaySf.winDivisionPct;
-    const playSwingHome = homeSf.makePlayoffsPct - awaySf.makePlayoffsPct;
+    const byeSwingHome = homeTarget.seed1ByePct - awayTarget.seed1ByePct;
+    const divSwingHome = homeTarget.winDivisionPct - awayTarget.winDivisionPct;
+    const playSwingHome = homeTarget.makePlayoffsPct - awayTarget.makePlayoffsPct;
 
-    const is49ersGame = home === 'SF' || away === 'SF';
-    const compositeHomeEdge = is49ersGame
-      ? home === 'SF'
+    const isTargetTeamGame = home === targetAbbr || away === targetAbbr;
+    const compositeHomeEdge = isTargetTeamGame
+      ? home === targetAbbr
         ? 1
         : -1
       : byeSwingHome * 1.2 + divSwingHome * 1.0 + playSwingHome * 0.8;
@@ -987,7 +1051,7 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
     let primaryMetric = '#1 Seed Bye';
     let primaryDeltaPct = byeSwing;
     if (divSwing > primaryDeltaPct) {
-      primaryMetric = 'NFC West';
+      primaryMetric = targetDivision;
       primaryDeltaPct = divSwing;
     }
     if (playSwing > primaryDeltaPct) {
@@ -1003,25 +1067,25 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
     const uncertaintyFactor = 4 * pHome * (1 - pHome);
     const expectedImpactScore = Math.round(maxSwingPct * (0.55 + 0.45 * uncertaintyFactor) * 10) / 10;
 
-    const rootAgainstIsNfcWest = NFC_DIVISIONS[rootAgainst] === 'NFC West';
-    const rootForIsAfc = !nfcSet.has(rootFor);
+    const rootAgainstIsSameDiv = ALL_NFL_DIVISIONS[rootAgainst] === targetDivision;
+    const rootForIsOtherConf = !confSet.has(rootFor);
     let leverageTag = 'Conf. Seeding';
-    let leverageReason = `Shapes NFC conference tiebreakers for ${primaryMetric}`;
-    if (is49ersGame) {
+    let leverageReason = `Shapes ${activeConf} conference tiebreakers for ${primaryMetric}`;
+    if (isTargetTeamGame) {
       leverageTag = 'Direct Control';
-      leverageReason = '49ers head-to-head result directly controls NFC West & #1 Seed Bye trajectory';
-    } else if (rootAgainstIsNfcWest) {
-      leverageTag = 'NFC West Race';
-      leverageReason = `Hands division rival ${rootAgainst} a loss in the NFC West crown & tiebreaker race`;
-    } else if (rootForIsAfc && nfcSet.has(rootAgainst)) {
+      leverageReason = `${targetAbbr} head-to-head result directly controls ${targetDivision} & #1 Seed Bye trajectory`;
+    } else if (rootAgainstIsSameDiv) {
+      leverageTag = `${targetDivision} Race`;
+      leverageReason = `Hands division rival ${rootAgainst} a loss in the ${targetDivision} crown & tiebreaker race`;
+    } else if (rootForIsOtherConf && confSet.has(rootAgainst)) {
       leverageTag = 'Inter-Conf Help';
-      leverageReason = `AFC club ${rootFor} hands NFC contender ${rootAgainst} a loss without adding an NFC rival win`;
+      leverageReason = `${otherConf} club ${rootFor} hands ${activeConf} contender ${rootAgainst} a loss without adding an ${activeConf} rival win`;
     } else if (primaryMetric === '#1 Seed Bye') {
       leverageTag = '#1 Bye Race';
-      leverageReason = `Drops NFC top-seed contender ${rootAgainst} in the #1 Seed Bye chase`;
+      leverageReason = `Drops ${activeConf} top-seed contender ${rootAgainst} in the #1 Seed Bye chase`;
     } else if (maxSwingPct <= 1.2) {
       leverageTag = 'SOV / Tiebreaker';
-      leverageReason = `Strengthens 49ers Strength of Victory (SOV) & common-games tiebreaker vs. ${rootAgainst}`;
+      leverageReason = `Strengthens ${targetAbbr} Strength of Victory (SOV) & common-games tiebreaker vs. ${rootAgainst}`;
     }
 
     results.push({
@@ -1030,7 +1094,8 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
       matchupLabel: `${away} @ ${home}`,
       away,
       home,
-      is49ersGame,
+      isTeamGame: isTargetTeamGame,
+      is49ersGame: isTargetTeamGame,
       recommendedWinner: rootSide,
       rootForTeam: rootFor,
       rootAgainstTeam: rootAgainst,

@@ -1,0 +1,253 @@
+{
+  "teamAbbr": "DAL",
+  "podiumSubjectIds": [
+    "brian_schottenheimer",
+    "jerry_jones",
+    "klayton_adams",
+    "christian_parker"
+  ],
+  "outlets": [
+    {
+      "id": "cowboys_official",
+      "name": "DallasCowboys.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.dallascowboys.com/news/"
+    },
+    {
+      "id": "espn_dal",
+      "name": "ESPN Dallas Cowboys Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys"
+    },
+    {
+      "id": "blogging_the_boys",
+      "name": "Blogging The Boys (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.bloggingtheboys.com/"
+    },
+    {
+      "id": "the_athletic_dallas_public_beat_wire_dal",
+      "name": "The Athletic Dallas (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/jonmachota"
+    },
+    {
+      "id": "dallas_morning_news_public_beat_wire_dal",
+      "name": "Dallas Morning News (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/calvinwatkins"
+    },
+    {
+      "id": "alldlls_cowboys_dal",
+      "name": "ALLDLLS Cowboys",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/clarencehilljr"
+    },
+    {
+      "id": "nfl_network_dal",
+      "name": "NFL Network",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/SlaterNFL"
+    },
+    {
+      "id": "105_3_the_fan_film_dal",
+      "name": "105.3 The Fan / Film",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/BryanBroaddus"
+    },
+    {
+      "id": "fort_worth_star_telegram_dal",
+      "name": "Fort Worth Star-Telegram",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/NickHarrisFWST"
+    },
+    {
+      "id": "the_ticket_sturm_stack_dal",
+      "name": "The Ticket / Sturm Stack",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/SportsSturm"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "brian_schottenheimer",
+      "name": "Brian Schottenheimer",
+      "handle": "@dallascowboys",
+      "outletId": "cowboys_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/dallascowboys",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jerry_jones",
+      "name": "Jerry Jones",
+      "handle": "@dallascowboys",
+      "outletId": "cowboys_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/dallascowboys",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "todd_archer",
+      "name": "Todd Archer",
+      "handle": "@toddarcher",
+      "outletId": "espn_dal",
+      "role": "ESPN NFL Nation Cowboys Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/toddarcher",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jon_machota",
+      "name": "Jon Machota",
+      "handle": "@jonmachota",
+      "outletId": "the_athletic_dallas_public_beat_wire_dal",
+      "role": "Cowboys Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/jonmachota",
+      "bskyHandle": "jonmachota.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "calvin_watkins",
+      "name": "Calvin Watkins",
+      "handle": "@calvinwatkins",
+      "outletId": "dallas_morning_news_public_beat_wire_dal",
+      "role": "Lead Cowboys Beat Writer (DMN)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/calvinwatkins",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "clarence_hill_jr",
+      "name": "Clarence Hill Jr.",
+      "handle": "@clarencehilljr",
+      "outletId": "alldlls_cowboys_dal",
+      "role": "Senior Cowboys Beat Insider",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/clarencehilljr",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jane_slater",
+      "name": "Jane Slater",
+      "handle": "@SlaterNFL",
+      "outletId": "nfl_network_dal",
+      "role": "NFL Network Dallas Cowboys Correspondent",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/SlaterNFL",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "bryan_broaddus",
+      "name": "Bryan Broaddus",
+      "handle": "@BryanBroaddus",
+      "outletId": "105_3_the_fan_film_dal",
+      "role": "Former NFL Scout & Cowboys Film Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/BryanBroaddus",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "nick_harris",
+      "name": "Nick Harris",
+      "handle": "@NickHarrisFWST",
+      "outletId": "fort_worth_star_telegram_dal",
+      "role": "Cowboys Beat Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/NickHarrisFWST",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "bob_sturm",
+      "name": "Bob Sturm",
+      "handle": "@SportsSturm",
+      "outletId": "the_ticket_sturm_stack_dal",
+      "role": "Cowboys All-22 & Analytics Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/SportsSturm",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "patrik_walker",
+      "name": "Patrik Walker",
+      "handle": "@VoiceOfTheStar",
+      "outletId": "cowboys_official",
+      "role": "Staff Writer (DallasCowboys.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/VoiceOfTheStar",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "cowboys_pr",
+      "name": "Dallas Cowboys PR",
+      "handle": "@DallasCowboysPR",
+      "outletId": "cowboys_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/DallasCowboysPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

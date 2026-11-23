@@ -16,6 +16,7 @@ import {
   computeConversationalTurnDynamics,
   selectBestBrowserVoices
 } from '../engine/podcastSpeechEngine.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 
 const SPEEDS = [1.0, 1.25, 1.5, 2.0];
 
@@ -326,11 +327,12 @@ export class PodcastAudioController {
   _setupMediaSession(episode) {
     if (typeof navigator === 'undefined' || !('mediaSession' in navigator) || !episode) return;
     try {
+      const activeTeam = getActiveTeamConfig();
       navigator.mediaSession.metadata = new MediaMetadata({
-        title: episode.title || '49ers Faithful Autopodcast',
-        artist: episode.format || '49ers Faithful',
-        album: 'The Faithful Analytical Briefing',
-        artwork: [{ src: './assets/apple-touch-icon.png', sizes: '512x512', type: 'image/png' }]
+        title: episode.title || `${activeTeam.brandName} Autopodcast`,
+        artist: episode.format || activeTeam.brandName,
+        album: activeTeam.abbr === 'SF' ? 'The Faithful Analytical Briefing' : `${activeTeam.brandName} Briefing`,
+        artwork: [{ src: activeTeam.assets?.appleTouchIconPng || './apple-touch-icon.png', sizes: '512x512', type: 'image/png' }]
       });
 
       navigator.mediaSession.setActionHandler('play', () => this.play());

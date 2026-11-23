@@ -9,6 +9,7 @@ import {
   getPracticeReportLeadDays,
   scopeBeatTextToPlayer
 } from './injuryProbabilityModel.js';
+import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 
 export { getPracticeReportLeadDays };
 
@@ -1178,6 +1179,10 @@ export function extractLiveInGameInjurySignals(
   if (!windowState?.isActive || !windowState?.hasKickoffStarted) {
     return { byKey, list: [] };
   }
+  const inactiveSet =
+    pregameInactiveKeys instanceof Set
+      ? pregameInactiveKeys
+      : new Set(Array.isArray(pregameInactiveKeys) ? pregameInactiveKeys : []);
 
   const kickoffMs = Number(windowState.kickoffMs);
   if (!Number.isFinite(kickoffMs) || kickoffMs <= 0) {
@@ -1222,7 +1227,7 @@ export function extractLiveInGameInjurySignals(
 
     for (const clause of clauses) {
       const mentionedInClause = matchers.filter(
-        pm => !pregameInactiveKeys.has(pm.key) && doesClauseMentionPlayer(pm, clause, { allowUniqueSurname: true })
+        pm => !inactiveSet.has(pm.key) && doesClauseMentionPlayer(pm, clause, { allowUniqueSurname: true })
       );
 
       // Guard healthy replacement/consolation subjects ("Vederian Lowe in at RT for Colton McKivitz", "Trent Williams came over to hug McKivitz/him")
@@ -1303,7 +1308,7 @@ export function extractLiveInGameInjurySignals(
       const extractedBodyPart = bodyMatch ? formatBodyPartTitle(bodyMatch[1]) : '';
 
       for (const pm of effectivePlayers) {
-        if (pregameInactiveKeys.has(pm.key)) continue;
+        if (inactiveSet.has(pm.key)) continue;
 
         const prev = byKey.get(pm.key) || null;
         // Only recognize a "returned to the game" signal if the player had an in-game injury or explicit return report
@@ -2209,9 +2214,10 @@ export function resolveTeamGameDayModel(appData, { is49ers = false, windowState 
       windowInfo: win
     };
   } else if (is49ers) {
+    const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
     model = buildTeamGameDayRosterModel({
-      teamAbbr: 'SF',
-      teamName: 'San Francisco 49ers',
+      teamAbbr: activeTeam.abbr,
+      teamName: activeTeam.fullName,
       activeRosterPlayers: sfActive53,
       injuryReport: appData?.health?._preGamePracticeReport || appData?.health?.practiceReport || [],
       newsItems: combinedNews,
@@ -2681,13 +2687,15 @@ function stripBasicHtml(html = '') {
 export function extractCompletedGameRecapSummary(summaryJson, gameMeta = {}) {
   if (!summaryJson || typeof summaryJson !== 'object') return null;
 
+  const activeTeam = resolveTeamConfig(gameMeta?.teamAbbr || getActiveTeamConfig());
+  const targetAbbr = activeTeam.abbr;
   const comp = summaryJson.header?.competitions?.[0] || {};
   const competitors = Array.isArray(comp.competitors) ? comp.competitors : [];
   const sfComp = competitors.find(
-    c => normalizeCanonicalTeamAbbr(c?.team?.abbreviation || '') === 'SF'
+    c => normalizeCanonicalTeamAbbr(c?.team?.abbreviation || '') === targetAbbr
   );
   const oppComp = competitors.find(
-    c => normalizeCanonicalTeamAbbr(c?.team?.abbreviation || '') !== 'SF'
+    c => normalizeCanonicalTeamAbbr(c?.team?.abbreviation || '') !== targetAbbr
   );
 
   const gameId = String(gameMeta?.id || comp?.id || summaryJson.header?.id || '').trim();
@@ -2733,7 +2741,7 @@ export function extractCompletedGameRecapSummary(summaryJson, gameMeta = {}) {
   const parseTeamBoxStats = teamAbbrTarget => {
     const teamEntry = (summaryJson.boxscore?.teams || []).find(t => {
       const ab = normalizeCanonicalTeamAbbr(t?.team?.abbreviation || '');
-      return teamAbbrTarget === 'SF' ? ab === 'SF' : ab !== 'SF';
+      return teamAbbrTarget === targetAbbr ? ab === targetAbbr : ab !== targetAbbr;
     });
     if (!teamEntry || !Array.isArray(teamEntry.statistics)) return null;
     const map = {};
@@ -2766,13 +2774,13 @@ export function extractCompletedGameRecapSummary(summaryJson, gameMeta = {}) {
     };
   };
 
-  const sfTeamStats = parseTeamBoxStats('SF');
+  const sfTeamStats = parseTeamBoxStats(targetAbbr);
   const oppTeamStats = parseTeamBoxStats('OPP');
 
   const getPlayerGroup = (isSf, groupName) => {
     const teamBox = (summaryJson.boxscore?.players || []).find(p => {
       const ab = normalizeCanonicalTeamAbbr(p?.team?.abbreviation || '');
-      return isSf ? ab === 'SF' : ab !== 'SF';
+      return isSf ? ab === targetAbbr : ab !== targetAbbr;
     });
     return (teamBox?.statistics || []).find(g => g?.name === groupName) || null;
   };

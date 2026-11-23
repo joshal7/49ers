@@ -1,0 +1,260 @@
+{
+  "teamAbbr": "PHI",
+  "podiumSubjectIds": [
+    "nick_sirianni",
+    "howie_roseman",
+    "sean_mannion",
+    "vic_fangio"
+  ],
+  "outlets": [
+    {
+      "id": "eagles_official",
+      "name": "PhiladelphiaEagles.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.philadelphiaeagles.com/news/"
+    },
+    {
+      "id": "espn_phi",
+      "name": "ESPN Philadelphia Eagles Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/phi/philadelphia-eagles"
+    },
+    {
+      "id": "bleeding_green_nation",
+      "name": "Bleeding Green Nation (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.bleedinggreennation.com/"
+    },
+    {
+      "id": "phly_eagles_phi",
+      "name": "PHLY Eagles",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/ZBerm"
+    },
+    {
+      "id": "philadelphia_inquirer_public_beat_wire_p",
+      "name": "Philadelphia Inquirer (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/Jeff_McLane"
+    },
+    {
+      "id": "the_athletic_philadelphia_public_beat_wi",
+      "name": "The Athletic Philadelphia (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/BKubena"
+    },
+    {
+      "id": "nbc_sports_philadelphia_phi",
+      "name": "NBC Sports Philadelphia",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/RoobNBCS"
+    },
+    {
+      "id": "phillyvoice_phi",
+      "name": "PhillyVoice",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/JimmyKempski"
+    },
+    {
+      "id": "phly_eagles_film_phi",
+      "name": "PHLY Eagles Film",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/EaglesXOs"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "nick_sirianni",
+      "name": "Nick Sirianni",
+      "handle": "@Eagles",
+      "outletId": "eagles_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Eagles",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "howie_roseman",
+      "name": "Howie Roseman",
+      "handle": "@Eagles",
+      "outletId": "eagles_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Eagles",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "tim_mcmanus",
+      "name": "Tim McManus",
+      "handle": "@Tim_McManus",
+      "outletId": "espn_phi",
+      "role": "ESPN NFL Nation Eagles Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Tim_McManus",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "zach_berman",
+      "name": "Zach Berman",
+      "handle": "@ZBerm",
+      "outletId": "phly_eagles_phi",
+      "role": "Lead Eagles Beat Reporter (PHLY)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ZBerm",
+      "bskyHandle": "zberm.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "bo_wulf",
+      "name": "Bo Wulf",
+      "handle": "@Bo_Wulf",
+      "outletId": "phly_eagles_phi",
+      "role": "Eagles Beat & Podcast Host (PHLY)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Bo_Wulf",
+      "bskyHandle": "bowulf.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "jeff_mclane",
+      "name": "Jeff McLane",
+      "handle": "@Jeff_McLane",
+      "outletId": "philadelphia_inquirer_public_beat_wire_p",
+      "role": "Senior Eagles Beat Writer (Inquirer)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Jeff_McLane",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "brooks_kubena",
+      "name": "Brooks Kubena",
+      "handle": "@BKubena",
+      "outletId": "the_athletic_philadelphia_public_beat_wi",
+      "role": "Eagles Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/BKubena",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "reuben_frank",
+      "name": "Reuben Frank",
+      "handle": "@RoobNBCS",
+      "outletId": "nbc_sports_philadelphia_phi",
+      "role": "Senior Eagles Insider (NBCS Philly)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/RoobNBCS",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "dave_zangaro",
+      "name": "Dave Zangaro",
+      "handle": "@DZangaroNBCS",
+      "outletId": "nbc_sports_philadelphia_phi",
+      "role": "Eagles Beat Reporter (NBCS Philly)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/DZangaroNBCS",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jimmy_kempski",
+      "name": "Jimmy Kempski",
+      "handle": "@JimmyKempski",
+      "outletId": "phillyvoice_phi",
+      "role": "Eagles Roster & Analytics Writer (PhillyVoice)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JimmyKempski",
+      "bskyHandle": "jimmykempski.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "fran_duffy",
+      "name": "Fran Duffy",
+      "handle": "@EaglesXOs",
+      "outletId": "phly_eagles_film_phi",
+      "role": "All-22 Scheme & Draft Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/EaglesXOs",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "dave_spadaro",
+      "name": "Dave Spadaro",
+      "handle": "@EaglesInsider",
+      "outletId": "eagles_official",
+      "role": "Eagles Insider (PhiladelphiaEagles.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/EaglesInsider",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "eagles_pr",
+      "name": "Philadelphia Eagles PR",
+      "handle": "@EaglesPR",
+      "outletId": "eagles_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/EaglesPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

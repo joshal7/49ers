@@ -1,0 +1,232 @@
+{
+  "teamAbbr": "MIA",
+  "podiumSubjectIds": [
+    "jeff_hafley",
+    "jon_eric_sullivan",
+    "bobby_slowik",
+    "sean_duggan"
+  ],
+  "outlets": [
+    {
+      "id": "dolphins_official",
+      "name": "MiamiDolphins.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.miamidolphins.com/news/"
+    },
+    {
+      "id": "espn_mia",
+      "name": "ESPN Miami Dolphins Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins"
+    },
+    {
+      "id": "the_phinsider",
+      "name": "The Phinsider (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.thephinsider.com/"
+    },
+    {
+      "id": "miami_herald_public_beat_wire_mia",
+      "name": "Miami Herald (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/flasportsbuzz"
+    },
+    {
+      "id": "south_florida_sun_sentinel_mia",
+      "name": "South Florida Sun Sentinel",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/DavidFurones_"
+    },
+    {
+      "id": "palm_beach_post_mia",
+      "name": "Palm Beach Post",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/schadjoe"
+    },
+    {
+      "id": "nfl_network_mia",
+      "name": "NFL Network",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/CameronWolfe"
+    },
+    {
+      "id": "locked_on_dolphins_mia",
+      "name": "Locked On Dolphins",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/GrindingTheTape"
+    },
+    {
+      "id": "3_yards_per_carry_mia",
+      "name": "3 Yards Per Carry",
+      "tier": 2,
+      "type": "video_film",
+      "url": "https://x.com/SiClancy"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "jeff_hafley",
+      "name": "Jeff Hafley",
+      "handle": "@MiamiDolphins",
+      "outletId": "dolphins_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/MiamiDolphins",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jon_eric_sullivan",
+      "name": "Jon-Eric Sullivan",
+      "handle": "@MiamiDolphins",
+      "outletId": "dolphins_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/MiamiDolphins",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "marcel_louis_jacques",
+      "name": "Marcel Louis-Jacques",
+      "handle": "@Marcel_LJ",
+      "outletId": "espn_mia",
+      "role": "ESPN NFL Nation Dolphins Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Marcel_LJ",
+      "bskyHandle": "marcellj.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "barry_jackson",
+      "name": "Barry Jackson",
+      "handle": "@flasportsbuzz",
+      "outletId": "miami_herald_public_beat_wire_mia",
+      "role": "Senior Dolphins Insider (Miami Herald)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/flasportsbuzz",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "david_furones",
+      "name": "David Furones",
+      "handle": "@DavidFurones_",
+      "outletId": "south_florida_sun_sentinel_mia",
+      "role": "Dolphins Beat Writer (Sun Sentinel)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/DavidFurones_",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "joe_schad",
+      "name": "Joe Schad",
+      "handle": "@schadjoe",
+      "outletId": "palm_beach_post_mia",
+      "role": "Dolphins Beat Writer (Palm Beach Post)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/schadjoe",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "cameron_wolfe",
+      "name": "Cameron Wolfe",
+      "handle": "@CameronWolfe",
+      "outletId": "nfl_network_mia",
+      "role": "NFL Network Miami Dolphins Correspondent",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/CameronWolfe",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "travis_wingfield",
+      "name": "Travis Wingfield",
+      "handle": "@WingfieldNFL",
+      "outletId": "dolphins_official",
+      "role": "Team Reporter & Drive Time Host",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/WingfieldNFL",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "kyle_crabbs",
+      "name": "Kyle Crabbs",
+      "handle": "@GrindingTheTape",
+      "outletId": "locked_on_dolphins_mia",
+      "role": "Host & All-22 Film Analyst (Locked On)",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/GrindingTheTape",
+      "bskyHandle": "kylecrabbs.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "simon_clancy",
+      "name": "Simon Clancy",
+      "handle": "@SiClancy",
+      "outletId": "3_yards_per_carry_mia",
+      "role": "Dolphins Scheme & Cap Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/SiClancy",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "dolphins_pr",
+      "name": "Miami Dolphins PR",
+      "handle": "@DolphinsPR",
+      "outletId": "dolphins_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/DolphinsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

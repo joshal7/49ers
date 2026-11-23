@@ -7,6 +7,8 @@
 
 import { normalizeTeamAbbr } from './playoffMonteCarlo.js';
 
+import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
+
 export const NFL_TEAM_NAMES = {
   ARI: { name: 'Arizona Cardinals', shortName: 'Cardinals' },
   ATL: { name: 'Atlanta Falcons', shortName: 'Falcons' },
@@ -263,8 +265,11 @@ export function computeLeagueTeamStatsPayload({
   statsTeamWeek = [],
   espnTeamStatsByAbbr = new Map(),
   teamRecordsMap = new Map(),
-  seasonYear = 2026
+  seasonYear = 2026,
+  teamAbbr = null
 } = {}) {
+  const activeTeam = resolveTeamConfig(teamAbbr || getActiveTeamConfig());
+  const targetAbbr = activeTeam.abbr;
   // 1. Aggregate opponent-paired defensive & coverage totals from weekly nflverse rows
   const oppAggByTeam = new Map();
   for (const row of statsTeamWeek || []) {
@@ -604,7 +609,7 @@ export function computeLeagueTeamStatsPayload({
       disp: e.disp
     }));
 
-    const sfEntry = leaderboard.find(x => x.team === 'SF') || leaderboard[15];
+    const sfEntry = leaderboard.find(x => x.team === targetAbbr) || leaderboard[15];
     const leagueAvgRaw = entries.reduce((acc, x) => acc + x.val, 0) / Math.max(1, entries.length);
     const leagueAvgDisplay = key === 'margin_turnover_diff' ? '0.0' : format(leagueAvgRaw);
 
@@ -624,6 +629,7 @@ export function computeLeagueTeamStatsPayload({
 
   const flatByKey = {};
   const unitsOutput = TEAM_STAT_UNITS_SCHEMA.map(unit => {
+    const resolvedUnitTitle = unit.title.replace(/^49ers\b/, activeTeam.nickname);
     const overallMetric = buildMetricRankingObject(
       {
         key: unit.overallKey,
@@ -631,12 +637,12 @@ export function computeLeagueTeamStatsPayload({
         higherIsBetter: true,
         format: v => `${safeNum(v).toFixed(1)}%`
       },
-      unit.title
+      resolvedUnitTitle
     );
     flatByKey[unit.overallKey] = overallMetric;
 
     const coreRows = unit.coreMetrics.map(m => {
-      const built = buildMetricRankingObject(m, unit.title);
+      const built = buildMetricRankingObject(m, resolvedUnitTitle);
       flatByKey[m.key] = built;
       return built;
     });
@@ -644,7 +650,7 @@ export function computeLeagueTeamStatsPayload({
     const expandedGroups = unit.expandedGroups.map(grp => ({
       groupTitle: grp.groupTitle,
       rows: grp.metrics.map(m => {
-        const built = buildMetricRankingObject(m, `${unit.title} • ${grp.groupTitle}`);
+        const built = buildMetricRankingObject(m, `${resolvedUnitTitle} • ${grp.groupTitle}`);
         flatByKey[m.key] = built;
         return built;
       })
@@ -652,7 +658,7 @@ export function computeLeagueTeamStatsPayload({
 
     return {
       id: unit.id,
-      title: unit.title,
+      title: resolvedUnitTitle,
       shortLabel: unit.shortLabel,
       icon: unit.icon,
       jargonKey: unit.jargonKey,
@@ -722,11 +728,13 @@ export function computeLeagueTeamStatsPayload({
 export function refreshLiveStandingsMetricsInTeamStats(
   teamStats,
   teamStatRankings = null,
-  liveStandingsByAbbr = new Map()
+  liveStandingsByAbbr = new Map(),
+  teamAbbr = null
 ) {
   if (!teamStats?.flatByKey || !Array.isArray(teamStats.units) || !liveStandingsByAbbr || liveStandingsByAbbr.size === 0) {
     return false;
   }
+  const activeAbbr = resolveTeamConfig(teamAbbr || teamStats.teamAbbr || getActiveTeamConfig()).abbr;
 
   const allTeamAbbrs = Object.keys(NFL_TEAM_NAMES);
   const teamsMeta = teamStats.teams || (teamStats.teams = {});
@@ -782,7 +790,7 @@ export function refreshLiveStandingsMetricsInTeamStats(
       val: e.val,
       disp: e.disp
     }));
-    const sfEntry = leaderboard.find(x => x.team === 'SF') || leaderboard[15];
+    const sfEntry = leaderboard.find(x => x.team === activeAbbr) || leaderboard[15];
     const avgRaw = entries.reduce((acc, x) => acc + x.val, 0) / Math.max(1, entries.length);
 
     if (Math.abs(safeNum(targetObj.value) - sfEntry.val) > 1e-4 || targetObj.rank !== sfEntry.rank) {
@@ -1964,8 +1972,11 @@ export function computeLeaguePositionalLeaderboards({
   nflPlayers = [],
   rosterPlayers = [],
   teamStatsPayload = null,
-  seasonYear = 2026
+  seasonYear = 2026,
+  teamAbbr = null
 } = {}) {
+  const activeTeam = resolveTeamConfig(teamAbbr || getActiveTeamConfig());
+  const targetAbbr = activeTeam.abbr;
   const nflByGsis = new Map();
   const nflByPfr = new Map();
   for (const np of nflPlayers || []) {
@@ -2056,7 +2067,7 @@ export function computeLeaguePositionalLeaderboards({
     const sfMatch =
       (gsisId && sfByGsis.get(gsisId)) ||
       (pfrId && sfByPfr.get(pfrId)) ||
-      (team === 'SF' ? sfByName.get(nk) : null) ||
+      (team === targetAbbr ? sfByName.get(nk) : null) ||
       null;
 
     const posAbbr = sfMatch?.position || row.position || nflMeta?.position || 'WR';
@@ -2092,7 +2103,7 @@ export function computeLeaguePositionalLeaderboards({
     const espnId = sfMatch?.id || (nflMeta?.espn_id ? String(nflMeta.espn_id).trim() : '');
     const qbrEntry =
       (espnId && qbr2026ByEspnId.get(String(espnId))) ||
-      qbr2026ByTeamName.get(`${sfMatch ? 'SF' : team}:${nk}`) ||
+      qbr2026ByTeamName.get(`${sfMatch ? targetAbbr : team}:${nk}`) ||
       qbr2026ByTeamName.get(`${team}:${nk}`) ||
       null;
 
@@ -2100,7 +2111,7 @@ export function computeLeaguePositionalLeaderboards({
       uid,
       sfPlayerId: sfMatch?.id || null,
       name: sfMatch?.name || dispName,
-      team: sfMatch ? 'SF' : team,
+      team: sfMatch ? targetAbbr : team,
       pos: posAbbr,
       peerGroup,
       headshotUrl:
@@ -2236,7 +2247,7 @@ export function computeLeaguePositionalLeaderboards({
     const nk = normKeySimple(snapRec.name);
     const sfMatch =
       (pfrId && sfByPfr.get(pfrId)) ||
-      (snapRec.team === 'SF' ? sfByName.get(nk) : null) ||
+      (snapRec.team === targetAbbr ? sfByName.get(nk) : null) ||
       null;
     const uid = sfMatch ? `sf_${sfMatch.id}` : nflMeta?.gsis_id || pfrId || `${snapRec.team}_${nk}`;
     if (unifiedPlayers.has(uid)) continue;
@@ -2250,7 +2261,7 @@ export function computeLeaguePositionalLeaderboards({
       uid,
       sfPlayerId: sfMatch?.id || null,
       name: sfMatch?.name || snapRec.name || nflMeta?.display_name || 'Player',
-      team: sfMatch ? 'SF' : snapRec.team,
+      team: sfMatch ? targetAbbr : snapRec.team,
       pos: posAbbr,
       peerGroup,
       headshotUrl:
@@ -2475,7 +2486,7 @@ export function computeLeaguePositionalLeaderboards({
         if (tmRow) {
           coreRows.push({
             key: tmRow.key,
-            label: `49ers Unit: ${tmRow.label}`,
+            label: `${activeTeam.nickname} Unit: ${tmRow.label}`,
             value: tmRow.value,
             displayValue: tmRow.displayValue,
             rank: tmRow.rank,
@@ -2494,7 +2505,7 @@ export function computeLeaguePositionalLeaderboards({
         if (tmRow) {
           coreRows.push({
             key: tmRow.key,
-            label: `49ers Unit: ${tmRow.label}`,
+            label: `${activeTeam.nickname} Unit: ${tmRow.label}`,
             value: tmRow.value,
             displayValue: tmRow.displayValue,
             rank: tmRow.rank,
@@ -2685,11 +2696,27 @@ export function resolveCareerTableSchema(position = '') {
 /**
  * Resolve any clicked `#X` badge into a complete scrollable modal view model.
  */
-export function resolveLeaderboardModalModel({ appData, scope = 'team', key = '', playerId = null } = {}) {
+export function resolveLeaderboardModalModel({
+  appData,
+  scope = 'team',
+  key = '',
+  playerId = null,
+  focusTeamAbbr = null
+} = {}) {
+  const activeAbbr = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig()).abbr;
   if (scope === 'team') {
     const ts = appData?.scheduleMatchup?.teamStats;
     const metric = ts?.flatByKey?.[key];
     if (!metric || !Array.isArray(metric.leaderboard)) return null;
+
+    const cleanFocusInput = String(focusTeamAbbr || '').trim();
+    const resolvedFocusTeam = cleanFocusInput ? resolveTeamConfig(cleanFocusInput) : null;
+    const highlightedAbbr =
+      resolvedFocusTeam && metric.leaderboard.some(r => r.team === resolvedFocusTeam.abbr)
+        ? resolvedFocusTeam.abbr
+        : metric.leaderboard.some(r => r.team === cleanFocusInput.toUpperCase())
+          ? cleanFocusInput.toUpperCase()
+          : activeAbbr;
 
     const teamsMeta = ts.teams || {};
     const values = metric.leaderboard.map(r => safeNum(r.val));
@@ -2699,6 +2726,7 @@ export function resolveLeaderboardModalModel({ appData, scope = 'team', key = ''
 
     const rows = metric.leaderboard.map(r => {
       const tmInfo = teamsMeta[r.team] || NFL_TEAM_NAMES[r.team] || { name: r.team, record: '' };
+      const teamCfg = resolveTeamConfig(r.team);
       const barPct = metric.higherIsBetter
         ? ((safeNum(r.val) - minV) / span) * 100
         : ((maxV - safeNum(r.val)) / span) * 100;
@@ -2712,9 +2740,11 @@ export function resolveLeaderboardModalModel({ appData, scope = 'team', key = ''
         displayValue: r.disp,
         rawValue: r.val,
         barPct: Math.max(8, Math.min(100, Math.round(barPct))),
-        isHighlighted: r.team === 'SF',
+        isHighlighted: r.team === highlightedAbbr,
         sfPlayerId: null,
-        extUrl: `https://www.espn.com/nfl/team/_/name/${r.team === 'WAS' ? 'wsh' : r.team.toLowerCase()}`
+        extUrl: teamCfg?.domain
+          ? `https://${teamCfg.domain}`
+          : `https://www.espn.com/nfl/team/_/name/${r.team === 'WAS' ? 'wsh' : r.team.toLowerCase()}`
       };
     });
 
@@ -2727,10 +2757,16 @@ export function resolveLeaderboardModalModel({ appData, scope = 'team', key = ''
       if (aboveAvg) avgInsertAfterIdx = i;
     }
 
+    const focusMeta = teamsMeta[highlightedAbbr] || NFL_TEAM_NAMES[highlightedAbbr] || null;
+    const focusCue =
+      highlightedAbbr !== activeAbbr && focusMeta?.name ? ` • ${focusMeta.name}` : '';
+
     return {
       scope: 'team',
+      focusTeamAbbr: highlightedAbbr,
+      activeTeamAbbr: activeAbbr,
       title: metric.label,
-      eyebrow: `${ts.seasonYear || 2026} NFL 32-Team Leaderboard • ${metric.higherIsBetter ? 'Higher is Better' : 'Lower is Better'}`,
+      eyebrow: `${ts.seasonYear || 2026} NFL 32-Team Leaderboard${focusCue} • ${metric.higherIsBetter ? 'Higher is Better' : 'Lower is Better'}`,
       avgLabel: `NFL Average: ${metric.leagueAvgDisplay}`,
       avgInsertAfterIdx,
       rows
@@ -2777,7 +2813,7 @@ export function resolveLeaderboardModalModel({ appData, scope = 'team', key = ''
         val: matchingStat.value,
         meta: {
           name: activePlayer.name,
-          team: 'SF',
+          team: activeAbbr,
           pos: activePlayer.position,
           headshotUrl: activePlayer.headshotUrl || '',
           sfPlayerId: activePlayer.id,

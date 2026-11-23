@@ -1,11 +1,17 @@
-const CACHE_NAME = '49ers-faithful-v139';
-const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-'];
+const SW_HOST = String(self.location?.hostname || '').toLowerCase();
+const SW_SUB_MATCH = SW_HOST.match(/^([a-z0-9-]+)\.joshal\.com$/);
+const SW_RAW_SUB = SW_SUB_MATCH ? SW_SUB_MATCH[1] : '49ers';
+const SW_TEAM_SLUG = SW_RAW_SUB === '49ers' ? '49ers' : SW_RAW_SUB;
+const SW_DATA_BASE = SW_TEAM_SLUG === '49ers' ? './data' : `./data/teams/${SW_TEAM_SLUG}`;
+const CACHE_NAME = SW_TEAM_SLUG === '49ers' ? '49ers-faithful-v148' : `${SW_TEAM_SLUG}-hq-v19`;
+const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-', `${SW_TEAM_SLUG}-podcast-studio-audio-`];
 const NETWORK_TIMEOUT_MS = 7500;
 const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;
 const CORE_ASSETS = [
   './',
   './manifest.json',
   './src/styles.css',
+  './src/config/teamRegistry.js',
   './src/app.js',
   './src/engine/seasonStateMachine.js',
   './src/engine/draftBigBoardEngine.js',
@@ -45,21 +51,24 @@ const CORE_ASSETS = [
   './src/views/seasonMatchupView.js',
   './src/views/audioAiView.js',
   './src/views/settingsArchiveView.js',
-  './data/meta.json',
-  './data/roster.json',
-  './data/depth-chart.json',
-  './data/cap.json',
-  './data/reporters.json',
-  './data/news.json',
-  './data/schedule-matchup.json',
-  './data/health.json',
-  './data/seasonal.json',
-  './data/beat-podcasts.json',
-  './data/podcasts/index.json',
-  './assets/app-icon.svg',
-  './assets/sf-crest.svg',
-  './assets/apple-touch-icon.png',
   './apple-touch-icon.png'
+];
+
+const TEAM_DYNAMIC_ASSETS = [
+  `${SW_DATA_BASE}/meta.json`,
+  `${SW_DATA_BASE}/roster.json`,
+  `${SW_DATA_BASE}/depth-chart.json`,
+  `${SW_DATA_BASE}/cap.json`,
+  `${SW_DATA_BASE}/reporters.json`,
+  `${SW_DATA_BASE}/news.json`,
+  `${SW_DATA_BASE}/schedule-matchup.json`,
+  `${SW_DATA_BASE}/health.json`,
+  `${SW_DATA_BASE}/seasonal.json`,
+  `${SW_DATA_BASE}/beat-podcasts.json`,
+  `${SW_DATA_BASE}/podcasts/index.json`,
+  SW_TEAM_SLUG === '49ers' ? './assets/app-icon.svg' : `./assets/teams/${SW_TEAM_SLUG}/app-icon.svg`,
+  SW_TEAM_SLUG === '49ers' ? './assets/sf-crest.svg' : `./assets/teams/${SW_TEAM_SLUG}/crest.svg`,
+  SW_TEAM_SLUG === '49ers' ? './apple-touch-icon.png' : `./assets/teams/${SW_TEAM_SLUG}/apple-touch-icon.png`
 ];
 
 function fetchWithTimeoutSw(url, init = {}, timeoutMs = NETWORK_TIMEOUT_MS) {
@@ -97,7 +106,7 @@ self.addEventListener('install', event => {
       .open(CACHE_NAME)
       .then(cache =>
         Promise.all(
-          CORE_ASSETS.map(url =>
+          [...CORE_ASSETS, ...TEAM_DYNAMIC_ASSETS].map(url =>
             fetchWithTimeoutSw(url, { cache: 'no-cache' }, 9000)
               .then(async res => {
                 if (!res || !res.ok) return null;

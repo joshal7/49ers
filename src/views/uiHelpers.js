@@ -8,14 +8,102 @@ import { sanitizeExternalUrl, toEspnTeamSlug } from '../engine/linkIntegrity.js'
 import { optimizeImageUrlForSlot } from '../engine/salientMediaEngine.js';
 import { splitSummaryForExpandableDisplay } from '../engine/breakingClassifier.js';
 import { iconSvg } from './icons.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 
 export { jargonTerm, jargonInfoIcon };
 
 let cachedRosterArrayRef = null;
-let cachedRosterTeamAbbr = 'SF';
+let cachedRosterTeamAbbr = null;
+let cachedActiveTeamAbbr = null;
 let inlinePlayerRegex = null;
 let inlinePlayerByLowerPhrase = new Map();
 let rosterByCanonKey = new Map();
+let opponentInlineTeamAbbr = null;
+let opponentInlineByLowerPhrase = new Map();
+let opponentInlineRegex = null;
+
+function buildPlayerPhraseEntries(players = []) {
+  const phraseMap = new Map();
+  const canonMap = new Map();
+  for (const p of players) {
+    if (!p?.name) continue;
+    const full = String(p.name).trim();
+    if (!full.includes(' ') || full.length < 6) continue;
+    const rawId = p.id != null ? String(p.id).trim() : '';
+    const entry = {
+      id: rawId,
+      name: full,
+      position: String(p.position || '').trim(),
+      espnUrl: String(p.espnUrl || '').trim()
+    };
+
+    const ck = normalizePlayerCanon(full);
+    if (ck && !canonMap.has(ck)) canonMap.set(ck, entry);
+
+    const variants = new Set([
+      full,
+      full.replace(/'/g, '’'),
+      full.replace(/’/g, "'")
+    ]);
+    const collapsedFull = full.replace(/\b([A-Za-z])\.\s*([A-Za-z])\.(?=\s|$)/g, '$1$2');
+    if (collapsedFull.includes(' ') && collapsedFull.length >= 6) {
+      variants.add(collapsedFull);
+    }
+    const withoutSuffix = full.replace(/,?\s+\b(?:Jr\.?|Sr\.?|II|III|IV|V)\b\.?$/i, '').trim();
+    if (withoutSuffix.includes(' ') && withoutSuffix.length >= 6) {
+      variants.add(withoutSuffix);
+      variants.add(withoutSuffix.replace(/'/g, '’'));
+      const collapsedNoSuffix = withoutSuffix.replace(/\b([A-Za-z])\.\s*([A-Za-z])\.(?=\s|$)/g, '$1$2');
+      if (collapsedNoSuffix.includes(' ') && collapsedNoSuffix.length >= 6) {
+        variants.add(collapsedNoSuffix);
+      }
+    }
+
+    for (const v of variants) {
+      const lower = v.toLowerCase();
+      if (!phraseMap.has(lower)) {
+        phraseMap.set(lower, { phrase: v, ...entry });
+      }
+    }
+  }
+  return { phraseMap, canonMap };
+}
+
+function buildInlinePhraseRegex(phraseMap) {
+  const sortedPhrases = [...phraseMap.values()]
+    .map(x => x.phrase)
+    .sort((a, b) => b.length - a.length);
+  return sortedPhrases.length > 0
+    ? new RegExp(
+        `(?<![A-Za-z0-9_/'’-])(${sortedPhrases.map(escapeRegexChars).join('|')})(?![A-Za-z0-9_-])`,
+        'gi'
+      )
+    : null;
+}
+
+export function registerOpponentPlayersForInlineLinks(players = null, teamAbbr = null) {
+  const cleanTeam = String(teamAbbr || '').trim().toUpperCase();
+  if (!cleanTeam || !Array.isArray(players) || players.length === 0) {
+    opponentInlineTeamAbbr = null;
+    opponentInlineByLowerPhrase = new Map();
+    opponentInlineRegex = null;
+    return;
+  }
+  const { phraseMap } = buildPlayerPhraseEntries(players);
+  // Active team players always take precedence on name collisions
+  for (const k of inlinePlayerByLowerPhrase.keys()) {
+    phraseMap.delete(k);
+  }
+  opponentInlineTeamAbbr = cleanTeam;
+  opponentInlineByLowerPhrase = phraseMap;
+  opponentInlineRegex = buildInlinePhraseRegex(phraseMap);
+}
+
+export function clearOpponentPlayersForInlineLinks() {
+  opponentInlineTeamAbbr = null;
+  opponentInlineByLowerPhrase = new Map();
+  opponentInlineRegex = null;
+}
 
 function normalizePlayerCanon(name = '') {
   return String(name || '')
@@ -29,21 +117,31 @@ function escapeRegexChars(str = '') {
   return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-export function registerRosterPlayersForInlineLinks(players = null, { teamAbbr = 'SF' } = {}) {
-  const nextTeam = String(teamAbbr || 'SF').trim().toUpperCase() || 'SF';
+export function registerRosterPlayersForInlineLinks(players = null, { teamAbbr = null, activeTeamAbbr = null } = {}) {
+  const resolvedActive = String(activeTeamAbbr || getActiveTeamConfig()?.abbr || 'SF').trim().toUpperCase();
+  const nextTeam = String(teamAbbr || resolvedActive).trim().toUpperCase();
   if (!Array.isArray(players) || players.length === 0) {
-    if (nextTeam !== 'SF') {
+    if (nextTeam !== resolvedActive) {
       cachedRosterArrayRef = null;
       cachedRosterTeamAbbr = nextTeam;
+      cachedActiveTeamAbbr = resolvedActive;
       inlinePlayerRegex = null;
       inlinePlayerByLowerPhrase = new Map();
       rosterByCanonKey = new Map();
     }
     return;
   }
-  if (players === cachedRosterArrayRef && nextTeam === cachedRosterTeamAbbr && inlinePlayerRegex) return;
+  if (
+    players === cachedRosterArrayRef &&
+    nextTeam === cachedRosterTeamAbbr &&
+    resolvedActive === cachedActiveTeamAbbr &&
+    inlinePlayerRegex
+  ) {
+    return;
+  }
   cachedRosterArrayRef = players;
   cachedRosterTeamAbbr = nextTeam;
+  cachedActiveTeamAbbr = resolvedActive;
 
   const phraseMap = new Map();
   const canonMap = new Map();
@@ -112,14 +210,56 @@ export function annotateRosterAndJargonPlainText(
   const text = String(rawText);
   if (!text) return '';
 
-  if (!inlinePlayerRegex) {
-    return annotateJargonPlainText(text, { maxTerms, seenKeys });
-  }
-
   const usedJargon = seenKeys instanceof Set ? seenKeys : new Set();
   const usedPlayers = seenPlayerIds instanceof Set ? seenPlayerIds : new Set();
   const excl = excludePlayerId != null ? String(excludePlayerId) : null;
   let playerCount = 0;
+
+  const annotateGapWithOpponentAndJargon = segment => {
+    if (!segment) return '';
+    if (!opponentInlineRegex || !opponentInlineTeamAbbr || playerCount >= maxPlayers) {
+      return annotateJargonPlainText(segment, { maxTerms, seenKeys: usedJargon });
+    }
+    let segOut = '';
+    let segLastIdx = 0;
+    opponentInlineRegex.lastIndex = 0;
+    let om;
+    while ((om = opponentInlineRegex.exec(segment)) !== null) {
+      const mText = om[1];
+      const oStart = om.index;
+      const oEnd = oStart + mText.length;
+      if (oStart > segLastIdx) {
+        segOut += annotateJargonPlainText(segment.slice(segLastIdx, oStart), {
+          maxTerms,
+          seenKeys: usedJargon
+        });
+      }
+      const oEntry = opponentInlineByLowerPhrase.get(mText.toLowerCase());
+      const oKey = oEntry ? `opp:${opponentInlineTeamAbbr}:${oEntry.id || normalizePlayerCanon(oEntry.name)}` : '';
+      if (oEntry && oKey && !usedPlayers.has(oKey) && playerCount < maxPlayers) {
+        usedPlayers.add(oKey);
+        playerCount += 1;
+        const pidAttr = oEntry.id && /^\d{4,10}$/.test(oEntry.id) ? ` data-opp-player-id="${esc(oEntry.id)}"` : '';
+        const posAttr = oEntry.position ? ` data-opp-player-pos="${esc(oEntry.position)}"` : '';
+        segOut += `<span class="inline-player-link" role="button" tabindex="0" data-action="open-opponent-player-sheet" data-opp-team="${esc(opponentInlineTeamAbbr)}"${pidAttr} data-opp-player-name="${esc(oEntry.name)}"${posAttr} aria-label="Open ${esc(oEntry.name)} dossier">${esc(mText)}</span>`;
+      } else {
+        segOut += annotateJargonPlainText(mText, { maxTerms, seenKeys: usedJargon });
+      }
+      segLastIdx = oEnd;
+    }
+    if (segLastIdx < segment.length) {
+      segOut += annotateJargonPlainText(segment.slice(segLastIdx), {
+        maxTerms,
+        seenKeys: usedJargon
+      });
+    }
+    return segOut;
+  };
+
+  if (!inlinePlayerRegex) {
+    return annotateGapWithOpponentAndJargon(text);
+  }
+
   let lastIdx = 0;
   let out = '';
 
@@ -131,10 +271,7 @@ export function annotateRosterAndJargonPlainText(
     const mEnd = mStart + matchedText.length;
 
     if (mStart > lastIdx) {
-      out += annotateJargonPlainText(text.slice(lastIdx, mStart), {
-        maxTerms,
-        seenKeys: usedJargon
-      });
+      out += annotateGapWithOpponentAndJargon(text.slice(lastIdx, mStart));
     }
 
     const pEntry = inlinePlayerByLowerPhrase.get(matchedText.toLowerCase());
@@ -146,23 +283,20 @@ export function annotateRosterAndJargonPlainText(
     ) {
       usedPlayers.add(pEntry.id);
       playerCount += 1;
-      if (cachedRosterTeamAbbr && cachedRosterTeamAbbr !== 'SF') {
+      if (cachedRosterTeamAbbr && cachedActiveTeamAbbr && cachedRosterTeamAbbr !== cachedActiveTeamAbbr) {
         out += `<span class="inline-player-link" role="button" tabindex="0" data-action="open-opponent-player-sheet" data-opp-team="${esc(cachedRosterTeamAbbr)}" data-opp-player-id="${esc(pEntry.id)}" data-opp-player-name="${esc(pEntry.name)}" aria-label="Open ${esc(pEntry.name)} dossier">${esc(matchedText)}</span>`;
       } else {
         out += `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(pEntry.id)}" aria-label="Open ${esc(pEntry.name)} dossier">${esc(matchedText)}</span>`;
       }
     } else {
-      out += annotateJargonPlainText(matchedText, { maxTerms, seenKeys: usedJargon });
+      out += annotateGapWithOpponentAndJargon(matchedText);
     }
 
     lastIdx = mEnd;
   }
 
   if (lastIdx < text.length) {
-    out += annotateJargonPlainText(text.slice(lastIdx), {
-      maxTerms,
-      seenKeys: usedJargon
-    });
+    out += annotateGapWithOpponentAndJargon(text.slice(lastIdx));
   }
 
   return out;
@@ -170,14 +304,18 @@ export function annotateRosterAndJargonPlainText(
 
 export const escJargon = annotateRosterAndJargonPlainText;
 
-const KNOWN_SOURCE_OUTLET_URLS = {
-  'nfl mock draft db': 'https://www.nflmockdraftdatabase.com/nfl-teams/2027/san-francisco-49ers',
-  'nfl mock draft database': 'https://www.nflmockdraftdatabase.com/nfl-teams/2027/san-francisco-49ers',
-  'cbs sports': 'https://www.cbssports.com/nfl/draft/',
-  'espn': 'https://www.espn.com/nfl/team/_/name/sf/san-francisco-49ers',
-  'overthecap': 'https://overthecap.com/salary-cap/san-francisco-49ers',
-  'tankathon': 'https://www.tankathon.com/nfl/49ers'
-};
+function getKnownSourceOutletUrl(label = '') {
+  const key = String(label || '').trim().toLowerCase();
+  const team = getActiveTeamConfig();
+  if (key === 'nfl mock draft db' || key === 'nfl mock draft database') {
+    return `https://www.nflmockdraftdatabase.com/nfl-teams/2027/${team.otcSlug}`;
+  }
+  if (key === 'cbs sports') return 'https://www.cbssports.com/nfl/draft/';
+  if (key === 'espn') return `https://www.espn.com/nfl/team/_/name/${team.espnAbbr}/${team.otcSlug}`;
+  if (key === 'overthecap') return `https://overthecap.com/salary-cap/${team.otcSlug}`;
+  if (key === 'tankathon') return `https://www.tankathon.com/nfl/${team.slug}`;
+  return null;
+}
 
 export function renderReporterSourceLinksHtml(sourcesInput, fallbackUrl = null) {
   const safeFallback = sanitizeExternalUrl(fallbackUrl, null);
@@ -187,7 +325,7 @@ export function renderReporterSourceLinksHtml(sourcesInput, fallbackUrl = null) 
     return names
       .map(label => {
         const rep = resolveReporterFromNameOrHandle(label);
-        const outletUrl = KNOWN_SOURCE_OUTLET_URLS[label.toLowerCase()] || null;
+        const outletUrl = getKnownSourceOutletUrl(label);
         const href = sanitizeExternalUrl(rep?.xUrl || outletUrl || safeFallback, null);
         return href
           ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:inherit">${esc(label)} ${iconSvg('externalLink', 9)}</a>`
@@ -205,7 +343,7 @@ export function renderReporterSourceLinksHtml(sourcesInput, fallbackUrl = null) 
       const label = tok.trim();
       if (!label) return '';
       const rep = resolveReporterFromNameOrHandle(label);
-      const outletUrl = KNOWN_SOURCE_OUTLET_URLS[label.toLowerCase()] || null;
+      const outletUrl = getKnownSourceOutletUrl(label);
       const href = sanitizeExternalUrl(rep?.xUrl || outletUrl || safeFallback, null);
       return href
         ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:inherit">${esc(label)} ${iconSvg('externalLink', 9)}</a>`
@@ -532,11 +670,11 @@ export function renderSalientThumbHtml(
   let innerHtml = '';
 
   if (visual.kind === 'editorial') {
-    innerHtml = `<img src="${esc(visual.src)}" ${visual.fallbackSrc ? `data-fallback-src="${esc(visual.fallbackSrc)}"` : ''} alt="${esc(visual.alt || '49ers photo')}" width="${dim}" height="${dim}" ${loadAttr} decoding="async" />`;
+    innerHtml = `<img src="${esc(visual.src)}" ${visual.fallbackSrc ? `data-fallback-src="${esc(visual.fallbackSrc)}"` : ''} alt="${esc(visual.alt || `${getActiveTeamConfig().nickname} photo`)}" width="${dim}" height="${dim}" ${loadAttr} decoding="async" />`;
   } else if (visual.kind === 'player') {
     const showJersey = size !== 'sm' && visual.jersey != null && visual.jersey !== '';
     innerHtml = `
-      <img class="salient-player-cutout" src="${esc(visual.src)}" ${visual.fallbackSrc ? `data-fallback-src="${esc(visual.fallbackSrc)}"` : ''} alt="${esc(visual.alt || visual.playerName || '49ers player')}" width="${dim}" height="${dim}" ${loadAttr} decoding="async" />
+      <img class="salient-player-cutout" src="${esc(visual.src)}" ${visual.fallbackSrc ? `data-fallback-src="${esc(visual.fallbackSrc)}"` : ''} alt="${esc(visual.alt || visual.playerName || `${getActiveTeamConfig().nickname} player`)}" width="${dim}" height="${dim}" ${loadAttr} decoding="async" />
       ${showJersey ? `<span class="salient-thumb-chip mono">#${esc(String(visual.jersey))}</span>` : ''}
     `;
   } else if (visual.kind === 'matchup') {
@@ -552,7 +690,7 @@ export function renderSalientThumbHtml(
   } else if (visual.kind === 'team') {
     const crestDim = size === 'sm' ? 24 : size === 'md' ? 30 : 38;
     innerHtml = `
-      <img class="salient-team-emblem" src="${esc(visual.sfLogoSrc)}" ${visual.sfLogoFallback ? `data-fallback-src="${esc(visual.sfLogoFallback)}"` : ''} alt="San Francisco 49ers" width="${crestDim}" height="${crestDim}" loading="lazy" decoding="async" />
+      <img class="salient-team-emblem" src="${esc(visual.sfLogoSrc)}" ${visual.sfLogoFallback ? `data-fallback-src="${esc(visual.sfLogoFallback)}"` : ''} alt="${esc(getActiveTeamConfig().fullName)}" width="${crestDim}" height="${crestDim}" loading="lazy" decoding="async" />
       ${size !== 'sm' && visual.tagLabel ? `<span class="salient-thumb-chip mono">${esc(visual.tagLabel)}</span>` : ''}
     `;
   } else {
@@ -589,7 +727,7 @@ export function renderSalientHeroBannerHtml(
   const wrapCls = `salient-hero-banner ${compact ? 'compact' : ''} ${extraClass}`.trim();
 
   const imgHtml = `
-    <img src="${esc(hero.src)}" ${hero.fallbackSrc ? `data-fallback-src="${esc(hero.fallbackSrc)}"` : ''} alt="${esc(hero.alt || '49ers editorial photo')}" class="salient-hero-img" width="640" height="${compact ? 290 : 360}" ${loadAttr} decoding="async" />
+    <img src="${esc(hero.src)}" ${hero.fallbackSrc ? `data-fallback-src="${esc(hero.fallbackSrc)}"` : ''} alt="${esc(hero.alt || `${getActiveTeamConfig().nickname} editorial photo`)}" class="salient-hero-img" width="640" height="${compact ? 290 : 360}" ${loadAttr} decoding="async" />
     <span class="salient-hero-scrim" aria-hidden="true"></span>
     ${
       badgeText || credit

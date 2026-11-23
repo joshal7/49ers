@@ -37,9 +37,10 @@ function estimateCbaMinSalary(yearNum) {
  * Parses OverTheCap's league-wide /salary-cap-space HTML (if provided) to extract
  * official Base Salary Cap ceilings and exact Effective Cap Space for San Francisco.
  */
-export function parseOtcSalaryCapSpaceHtml(spaceHtml = '') {
+export function parseOtcSalaryCapSpaceHtml(spaceHtml = '', teamOtcSlug = 'san-francisco-49ers') {
   const byYear = {};
   if (!spaceHtml) return byYear;
+  const slugRe = new RegExp(String(teamOtcSlug || 'san-francisco-49ers').replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
 
   for (const m of spaceHtml.matchAll(/id="season-(\d{4})"/g)) {
     const yr = m[1];
@@ -57,7 +58,7 @@ export function parseOtcSalaryCapSpaceHtml(spaceHtml = '') {
 
     let sfRowHtml = null;
     for (const rm of block.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)) {
-      if (/san-francisco-49ers/i.test(rm[1])) {
+      if (slugRe.test(rm[1])) {
         sfRowHtml = rm[1];
         break;
       }
@@ -118,7 +119,7 @@ function parseNonActiveSubtable(tableHtml) {
  * Resolves the 5-year salary cap window dynamically from HTML containers (`id="y2026"` .. `id="y2035"`),
  * anchored to `baseYear` (defaulting to current seasonYear if present, or earliest available container).
  */
-export function parseOverTheCapHtml(html, baseYear = 2026, otcSpaceHtml = '') {
+export function parseOverTheCapHtml(html, baseYear = 2026, otcSpaceHtml = '', teamOtcSlug = 'san-francisco-49ers') {
   const discoveredYears = [...new Set([...html.matchAll(/id="y(\d{4})"/g)].map(m => Number(m[1])))]
     .filter(y => Number.isFinite(y) && y >= 2024 && y <= 2040)
     .sort((a, b) => a - b);
@@ -128,7 +129,7 @@ export function parseOverTheCapHtml(html, baseYear = 2026, otcSpaceHtml = '') {
     : discoveredYears[0] || Number(baseYear) || 2026;
 
   const targetYears = [0, 1, 2, 3, 4].map(offset => String(anchorYear + offset));
-  const spaceByYear = parseOtcSalaryCapSpaceHtml(otcSpaceHtml);
+  const spaceByYear = parseOtcSalaryCapSpaceHtml(otcSpaceHtml, teamOtcSlug);
 
   const yearsSummary = {};
   const playerContractsByName = new Map();

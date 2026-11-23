@@ -5664,10 +5664,30 @@ await testAsync('Schedule Gamecast scoping, Rooting Guide week grouping, 4-color
   );
 
   // 5. Verify Matchup View: Availability Index dotted link (no "What this means"), live scorecard parity + deterministic 1 Doubtful · 2 Long Shot · 3 GTD breakout, no redundant Questionable under injuries, Coaching OC/DC & bold headers, and 5 detailed Key Matchups
+  // Anchor upcoming kickoff +48h in the future so pre-game 4-color badge assertions remain deterministic even if tests run during live SNF!
+  const futureMatchupKoIso = new Date(Date.now() + 48 * 3_600_000).toISOString();
+  const preGameMatchupAppData = {
+    ...fullAppData,
+    scheduleMatchup: {
+      ...liveSm,
+      upcomingMatchup: {
+        ...(liveSm.upcomingMatchup || {}),
+        dateIso: futureMatchupKoIso,
+        kickoffIso: futureMatchupKoIso,
+        isGameInProgress: false,
+        liveState: 'pre'
+      },
+      schedule: (liveSm.schedule || []).map(g =>
+        Number(g?.week) === Number(liveSm.upcomingMatchup?.week)
+          ? { ...g, dateIso: futureMatchupKoIso, completed: false, isLive: false, statusState: 'pre' }
+          : g
+      )
+    }
+  };
   const matchupHtml = renderSeasonMatchupViewHtml({
     seasonSub: 'matchup',
     activePhases: ['YEAR_ROUND', 'IN_SEASON'],
-    appData: fullAppData,
+    appData: preGameMatchupAppData,
     activeVideosSet: new Set()
   });
   assert.ok(
@@ -5701,11 +5721,11 @@ await testAsync('Schedule Gamecast scoping, Rooting Guide week grouping, 4-color
   }
   // Deterministic fixture check verifying exact `1 Doubtful · 2 Long Shot · 3 GTD` & `(1 Doubtful · 3 Long Shot · 6 GTD)` scorecard sub-note formatting
   const syntheticScorecardAppData = {
-    ...fullAppData,
+    ...preGameMatchupAppData,
     scheduleMatchup: {
-      ...liveSm,
+      ...preGameMatchupAppData.scheduleMatchup,
       upcomingMatchup: {
-        ...liveSm.upcomingMatchup,
+        ...preGameMatchupAppData.scheduleMatchup.upcomingMatchup,
         opponentHealth: {
           ...liveSm.upcomingMatchup.opponentHealth,
           injuryReport: [
@@ -14197,9 +14217,16 @@ await testAsync(
     );
     assert.equal(signGuardDelta.compactLabel, '↑ +26%', 'Must prefer trajectory-consistent prior-day delta over contradictory stale snapshot');
 
+    const futureRenderKoIso = new Date(Date.now() + 72 * 3_600_000).toISOString();
     const healthHtml = renderSeasonMatchupViewHtml({
       seasonSub: 'health',
-      appData: mockMultiDayApp,
+      appData: {
+        ...mockMultiDayApp,
+        scheduleMatchup: {
+          schedule: [{ week: 11, dateIso: futureRenderKoIso, completed: false }],
+          upcomingMatchup: { week: 11, oppAbbr: 'MIN', oppName: 'Minnesota Vikings', kickoffIso: futureRenderKoIso }
+        }
+      },
       userPrefs: { deltaSnapshots: { healthByPlayer: { '16737': { playProbabilityPct: 42 } } } }
     });
     assert.ok(
@@ -14470,18 +14497,19 @@ await testAsync(
     const oppKeyRichter = canonicalOpponentHealthSnapshotKey(oppMockRows[4], 'MIN');
     assert.equal(oppKeyRichter, 'MIN:4567890', 'Opponent snapshot key must namespace by opponent abbreviation');
 
+    const futureOppDeltaKoIso = new Date(Date.now() + 72 * 3_600_000).toISOString();
     const matchupDeltaApp = {
       meta: { seasonYear: 2026, currentWeek: 11 },
       roster: { players: [] },
       health: { week: 11, byeWeek: 8, practiceReport: [], irAndReserveTracker: [] },
       news: { rawStream: [] },
       scheduleMatchup: {
-        schedule: [{ week: 11, dateIso: kickoffIso, completed: false }],
+        schedule: [{ week: 11, dateIso: futureOppDeltaKoIso, completed: false }],
         upcomingMatchup: {
           week: 11,
           oppAbbr: 'MIN',
           oppName: 'Minnesota Vikings',
-          kickoffIso,
+          kickoffIso: futureOppDeltaKoIso,
           opponentHealth: {
             injuryReport: oppMockRows,
             irReserve: [],
@@ -16350,11 +16378,13 @@ await testAsync(
       writeSameOriginSharedGeminiKey
     } = await import('../src/services/sharedApiKeyStore.js');
 
-    assert.equal(ALLOWED_NFL_TEAM_SLUGS.length, 34, 'Must include all 32 NFL teams + 49ers2 + nfl');
-    for (const slug of ['49ers', '49ers2', 'lions', 'bills', 'chiefs', 'eagles', 'cowboys', 'packers', 'nfl']) {
+    // 1. Strict 32-team + nfl allowlist (zero leakage to www.joshal.com SmugMug, retired 49ers2 canary, or lookalikes)
+    assert.equal(ALLOWED_NFL_TEAM_SLUGS.length, 33, 'Must include all 32 NFL teams + nfl (with 49ers2 canary removed)');
+    for (const slug of ['49ers', 'lions', 'bills', 'chiefs', 'eagles', 'cowboys', 'packers', 'vikings', 'nfl']) {
       assert.equal(isAllowedNflTeamHostname(`${slug}.joshal.com`), true, `${slug}.joshal.com must be allowlisted`);
     }
     for (const blocked of [
+      '49ers2.joshal.com',
       'www.joshal.com',
       'workouts.joshal.com',
       'whisky.joshal.com',
@@ -16368,27 +16398,42 @@ await testAsync(
       assert.equal(isAllowedNflTeamHostname(blocked), false, `${blocked} must NEVER be allowlisted`);
     }
 
-    assert.equal(
-      shouldUseCrossSubdomainVault({ hostname: '49ers.joshal.com', origin: 'https://49ers.joshal.com' }),
-      true
-    );
+    // 2. Remote vault activation guard (active on official team hosts, silent on localhost/pages.dev/nfl portal itself)
     assert.equal(
       shouldUseCrossSubdomainVault({ hostname: 'lions.joshal.com', origin: 'https://lions.joshal.com' }),
       true
     );
     assert.equal(
+      shouldUseCrossSubdomainVault({ hostname: '49ers.joshal.com', origin: 'https://49ers.joshal.com' }),
+      true
+    );
+    assert.equal(
       shouldUseCrossSubdomainVault({ hostname: 'nfl.joshal.com', origin: 'https://nfl.joshal.com' }),
-      false
+      false,
+      'nfl.joshal.com must not iframe itself'
     );
     assert.equal(
       shouldUseCrossSubdomainVault({ hostname: '127.0.0.1', origin: 'http://127.0.0.1:8080' }),
-      false
+      false,
+      'Localhost must stay offline-safe without external vault requests unless explicitly overridden'
+    );
+    assert.equal(
+      shouldUseCrossSubdomainVault({
+        hostname: '127.0.0.1',
+        origin: 'http://127.0.0.1:4101',
+        vaultUrlOverride: 'http://127.0.0.1:4100/key-sync.html'
+      }),
+      true,
+      'Explicit cross-origin vault override must be supported for E2E verification'
     );
 
+    // 3. Pure reconciliation matrix (all 6 state transitions)
+    // 3a. Both empty -> noop
     const rEmpty = reconcileGeminiKeyState({ geminiApiKey: '', geminiApiKeyUpdatedAt: 0 }, null, 1000);
     assert.equal(rEmpty.action, 'noop');
     assert.equal(rEmpty.changed, false);
 
+    // 3b. Pre-feature existing 49ers.joshal.com user (updatedAt=0) + empty vault -> auto-backfill!
     const rBackfill = reconcileGeminiKeyState(
       { geminiApiKey: 'AIzaLegacy49ersKey', verifiedGeminiModel: 'gemini-4-hydrogen', geminiApiKeyUpdatedAt: 0 },
       null,
@@ -16397,15 +16442,21 @@ await testAsync(
     assert.equal(rBackfill.action, 'push_local');
     assert.equal(rBackfill.shouldPushToShared, true);
     assert.equal(rBackfill.recordToPush.k, 'AIzaLegacy49ersKey');
+    assert.equal(rBackfill.recordToPush.t, 2000);
 
+    // 3c. Fresh Team B (Bills) opens with empty localStorage -> automatically inherits key from vault!
     const rApply = reconcileGeminiKeyState(
       { geminiApiKey: '', verifiedGeminiModel: '', geminiApiKeyUpdatedAt: 0 },
       { v: 1, k: 'AIzaLegacy49ersKey', m: 'gemini-4-hydrogen', t: 2000, c: 0 },
       2500
     );
     assert.equal(rApply.action, 'apply_shared');
+    assert.equal(rApply.changed, true);
     assert.equal(rApply.apiKey, 'AIzaLegacy49ersKey');
+    assert.equal(rApply.verifiedModel, 'gemini-4-hydrogen');
+    assert.equal(rApply.updatedAt, 2000);
 
+    // 3d. Key rotated on Team B (t=3000) -> Team A (t=2000) automatically upgrades to new key!
     const rRotate = reconcileGeminiKeyState(
       { geminiApiKey: 'AIzaLegacy49ersKey', verifiedGeminiModel: 'gemini-3.8-flash', geminiApiKeyUpdatedAt: 2000 },
       { v: 1, k: 'AIzaRotatedNewKey', m: 'gemini-4-hydrogen', t: 3000, c: 0 },
@@ -16413,23 +16464,38 @@ await testAsync(
     );
     assert.equal(rRotate.action, 'apply_shared');
     assert.equal(rRotate.apiKey, 'AIzaRotatedNewKey');
+    assert.equal(rRotate.verifiedModel, 'gemini-4-hydrogen');
 
+    // 3e. Explicit Clear Tombstone (c=1, t=4000) clears Team A (t=3000) AND pre-feature Team C (t=0) — zero zombie resurrection!
     const rClear = reconcileGeminiKeyState(
       { geminiApiKey: 'AIzaRotatedNewKey', verifiedGeminiModel: 'gemini-4-hydrogen', geminiApiKeyUpdatedAt: 3000 },
       { v: 1, k: '', m: '', t: 4000, c: 1 },
       4500
     );
     assert.equal(rClear.action, 'apply_clear');
+    assert.equal(rClear.changed, true);
     assert.equal(rClear.apiKey, '');
+    assert.equal(rClear.shouldPushToShared, false);
 
+    const rClearLegacy = reconcileGeminiKeyState(
+      { geminiApiKey: 'AIzaOldPreFeatureKey', verifiedGeminiModel: '', geminiApiKeyUpdatedAt: 0 },
+      { v: 1, k: '', m: '', t: 4000, c: 1 },
+      4500
+    );
+    assert.equal(rClearLegacy.action, 'apply_clear');
+    assert.equal(rClearLegacy.apiKey, '');
+
+    // 3f. Re-connecting new key AFTER clear tombstone (t=5000 > 4000) wins cleanly!
     const rReconnect = reconcileGeminiKeyState(
       { geminiApiKey: 'AIzaReconnectedKey', verifiedGeminiModel: 'gemini-4-hydrogen', geminiApiKeyUpdatedAt: 5000 },
       { v: 1, k: '', m: '', t: 4000, c: 1 },
       5500
     );
     assert.equal(rReconnect.action, 'push_local');
+    assert.equal(rReconnect.shouldPushToShared, true);
     assert.equal(rReconnect.recordToPush.k, 'AIzaReconnectedKey');
 
+    // 4. Same-origin storage end-to-end simulation (Lions -> Bills -> Clear -> Lions)
     const map = new Map();
     const memStorage = {
       getItem: k => (map.has(k) ? map.get(k) : null),
@@ -16852,6 +16918,186 @@ test('Regular-season bye weeks stay REG (never misclassified as POST #1 Seed Fir
   assert.equal(realPostBye.postseasonRound, 'WC_BYE');
   assert.equal(realPostBye.isByeWeek, true);
   assert.equal(realPostBye.week, 19);
+});
+
+import {
+  buildPlayerSearchQueries,
+  isCachedDraftVideoValid,
+  normalizeCollegeSearchAlias,
+  scoreDraftVideoCandidate
+} from '../scripts/lib/draftVideoResolver.mjs';
+
+test('Draft Recap highlight video resolver enforces strict player-identity matching, college aliases & rejects wrong-player fallbacks', () => {
+  // College alias normalization (Mississippi -> Ole Miss, Southern California -> USC, Connecticut -> UConn)
+  assert.equal(normalizeCollegeSearchAlias('Mississippi'), 'Ole Miss');
+  assert.equal(normalizeCollegeSearchAlias('Southern California'), 'USC');
+  assert.equal(normalizeCollegeSearchAlias('Connecticut'), 'UConn');
+  assert.equal(normalizeCollegeSearchAlias('College'), '');
+
+  // Query builder uses Ole Miss for Mississippi and strips apostrophes for alternate query
+  const striblingQueries = buildPlayerSearchQueries({
+    name: "De'Zhaun Stribling",
+    college: 'Mississippi',
+    position: 'WR',
+    teamNickname: '49ers',
+    draftYear: 2026
+  });
+  assert.ok(striblingQueries.some(q => /Ole Miss/i.test(q)), 'Query must normalize Mississippi to Ole Miss');
+  assert.ok(striblingQueries.some(q => /DeZhaun Stribling/i.test(q)), 'Query must include apostrophe-free variant');
+
+  // Strict identity gate: exact player highlight reel scores high
+  const blakePlayer = { name: 'Blake Miller', college: 'Clemson', position: 'OT', teamNickname: 'Lions', teamCity: 'Detroit', draftYear: 2026 };
+  const goodBlake = scoreDraftVideoCandidate(
+    { videoId: '2iYcDntoVvw', title: 'Clemson OT Blake Miller | 2026 NFL Draft Tape', channel: 'ACC Digital Network', duration: '2:13', embeddable: true },
+    blakePlayer
+  );
+  assert.ok(goodBlake >= 100, `Expected strong score for Blake Miller Clemson tape, got ${goodBlake}`);
+
+  // Rejects non-football namesake & Madden gameplay
+  const badMusic = scoreDraftVideoCandidate(
+    { videoId: 'aaaaaaaaaaa', title: 'Blake Miller Official Music Video', channel: 'Music', duration: '3:30', embeddable: true },
+    blakePlayer
+  );
+  assert.equal(badMusic, -Infinity, 'Music video namesake must be rejected');
+
+  const badMadden = scoreDraftVideoCandidate(
+    { videoId: 'bbbbbbbbbbb', title: 'Blake Miller Lions Madden 26 Franchise Mode Rebuild', channel: 'Gamer', duration: '12:00', embeddable: true },
+    blakePlayer
+  );
+  assert.equal(badMadden, -Infinity, 'Madden gameplay video must be rejected');
+
+  // Handles initials (TJ <-> T.J.) and hyphenated / apostrophe names
+  const tjScore = scoreDraftVideoCandidate(
+    { videoId: 'MX2S6SAVYs0', title: 'T.J. Parker 2025 Regular Season Highlights | Clemson Edge', channel: 'ACC Digital Network', duration: '3:43', embeddable: true },
+    { name: 'TJ Parker', college: 'Clemson', position: 'LB', teamNickname: 'Bills', teamCity: 'Buffalo', draftYear: 2026 }
+  );
+  assert.ok(tjScore >= 100, `T.J. Parker must match TJ Parker, got ${tjScore}`);
+
+  // Highlight reel outranks press interview for same player
+  const abneyPlayer = { name: 'Keith Abney II', college: 'Arizona State', position: 'CB', teamNickname: 'Lions', teamCity: 'Detroit', draftYear: 2026 };
+  const abneyHl = scoreDraftVideoCandidate(
+    { videoId: 'JadgtKJjdH0', title: 'Keith Abney II Highlights | Detroit Lions Cornerback | Arizona State | 2026 NFL Draft', channel: 'Under The Radar Prospects', duration: '2:58', embeddable: true },
+    abneyPlayer
+  );
+  const abneyInterview = scoreDraftVideoCandidate(
+    { videoId: '_Xs3SK62aKw', title: 'Keith Abney II on why he hoped to get drafted by Lions', channel: '97.1 The Ticket', duration: '6:07', embeddable: true },
+    abneyPlayer
+  );
+  assert.ok(abneyHl > abneyInterview, `Highlight reel (${abneyHl}) must outrank radio interview (${abneyInterview})`);
+
+  // Legacy Omar Cooper fallback video (cPvdiBVxl-0) is rejected for De'Zhaun Stribling
+  assert.equal(
+    isCachedDraftVideoValid(
+      { videoId: 'cPvdiBVxl-0', title: "De'Zhaun Stribling (Mississippi) — 2026 49ers Draft Fit & Breakdown", channel: 'NBC Sports Bay Area & California', embeddable: true },
+      { name: "De'Zhaun Stribling", college: 'Mississippi', position: 'WR', teamNickname: '49ers', draftYear: 2026 }
+    ),
+    false,
+    'Legacy Omar Cooper videoId cPvdiBVxl-0 must be invalidated when attached to De\'Zhaun Stribling'
+  );
+
+  // Live 49ers data/seasonal.json draftClass2026 must have valid player-matched videos on every pick & priority UDFA
+  const sfSeasonal = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/seasonal.json'), 'utf8'));
+  for (const pk of sfSeasonal.draftClass2026?.picks || []) {
+    assert.ok(pk.highlightVideo?.videoId, `49ers draft pick ${pk.name} missing highlightVideo`);
+    assert.notEqual(pk.highlightVideo.videoId, 'cPvdiBVxl-0', `49ers draft pick ${pk.name} must not use legacy Omar Cooper fallback`);
+    assert.ok(
+      isCachedDraftVideoValid(pk.highlightVideo, { name: pk.name, college: pk.college, position: pk.position, teamNickname: '49ers', draftYear: 2026 }),
+      `49ers draft pick ${pk.name} highlightVideo failed player-identity validation: ${pk.highlightVideo?.title}`
+    );
+  }
+  for (const u of sfSeasonal.draftClass2026?.priorityUdfas || []) {
+    assert.ok(u.highlightVideo?.videoId, `49ers priority UDFA ${u.name} missing highlightVideo`);
+    assert.ok(
+      isCachedDraftVideoValid(u.highlightVideo, { name: u.name, college: u.college, position: u.position, teamNickname: '49ers', draftYear: 2026 }),
+      `49ers priority UDFA ${u.name} highlightVideo failed player-identity validation: ${u.highlightVideo?.title}`
+    );
+  }
+});
+
+test('Cross-team Matchup Unit Rankings focus opposing team in 32-team leaderboard modal & inline opposing players open native dossiers', async () => {
+  const { resolveLeaderboardModalModel } = await import('../src/engine/statsLeaderboardEngine.js');
+  const { setActiveTeamConfig, getTeamByAbbr } = await import('../src/config/teamRegistry.js');
+  const sfScheduleMatchup = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/schedule-matchup.json'), 'utf8'));
+  const sfRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/roster.json'), 'utf8'));
+  const sfHealth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/health.json'), 'utf8'));
+  const sfMeta = JSON.parse(fs.readFileSync(path.join(rootDir, 'data/meta.json'), 'utf8'));
+  const appDataSf = {
+    meta: sfMeta,
+    roster: sfRoster,
+    health: sfHealth,
+    scheduleMatchup: sfScheduleMatchup,
+    news: { rawStream: [] }
+  };
+
+  // 1. Same-origin fast-path in browser prioritizes local /data/teams/{slug} before cross-origin fallback
+  const minBrowserUrls = buildTeamDataBaseUrls('MIN', { browserOrigin: 'https://49ers.joshal.com' });
+  assert.equal(minBrowserUrls[0], 'https://49ers.joshal.com/data/teams/vikings');
+  assert.equal(minBrowserUrls[1], 'https://vikings.joshal.com/data/teams/vikings');
+  const sfBrowserUrls = buildTeamDataBaseUrls('SF', { browserOrigin: 'https://vikings.joshal.com' });
+  assert.equal(sfBrowserUrls[0], 'https://vikings.joshal.com/data');
+  assert.equal(sfBrowserUrls[1], 'https://49ers.joshal.com/data');
+
+  // 2. Matchup Unit Rankings renders data-focus-team="SF" for 49ers pills and data-focus-team="<OPP>" for opponent pills
+  const oppAbbr = String(sfScheduleMatchup.upcomingMatchup?.oppAbbr || 'MIN').toUpperCase();
+  const matchupHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'matchup',
+    appData: appDataSf,
+    userPrefs: {},
+    matchupStatsUnit: 'offense'
+  });
+  const statsCardIdx = matchupHtml.indexOf('id="matchupTeamStatsCard"');
+  assert.ok(statsCardIdx > 0, 'Matchup must render #matchupTeamStatsCard');
+  const statsSlice = matchupHtml.slice(statsCardIdx, statsCardIdx + 12000);
+  assert.ok(
+    statsSlice.includes('data-focus-team="SF"'),
+    'Matchup Unit Rankings left column must emit data-focus-team="SF"'
+  );
+  assert.ok(
+    statsSlice.includes(`data-focus-team="${oppAbbr}"`),
+    `Matchup Unit Rankings right column must emit data-focus-team="${oppAbbr}"`
+  );
+
+  // 3. resolveLeaderboardModalModel highlights ONLY the clicked opposing team when focusTeamAbbr is passed
+  const firstCoreKey = sfScheduleMatchup.teamStats?.units?.[0]?.coreRows?.[0]?.key || 'off_pts_game';
+  const oppModal = resolveLeaderboardModalModel({
+    appData: appDataSf,
+    scope: 'team',
+    key: firstCoreKey,
+    focusTeamAbbr: oppAbbr
+  });
+  assert.ok(oppModal && oppModal.rows.length === 32);
+  assert.equal(oppModal.focusTeamAbbr, oppAbbr);
+  const hlOppRows = oppModal.rows.filter(r => r.isHighlighted);
+  assert.equal(hlOppRows.length, 1, 'Exactly one team must be highlighted when focusing opponent');
+  assert.equal(hlOppRows[0].id, oppAbbr, `Opposing team ${oppAbbr} must be highlighted, NOT SF`);
+
+  const sfModal = resolveLeaderboardModalModel({
+    appData: appDataSf,
+    scope: 'team',
+    key: firstCoreKey,
+    focusTeamAbbr: 'SF'
+  });
+  assert.equal(sfModal.rows.find(r => r.isHighlighted)?.id, 'SF', 'Clicking active team must highlight SF');
+
+  // 4. Non-SF active team (DET) focusing its opponent highlights opponent, NOT SF or DET
+  try {
+    setActiveTeamConfig(getTeamByAbbr('DET'));
+    const detModalOpp = resolveLeaderboardModalModel({
+      appData: { ...appDataSf, meta: { ...sfMeta, teamAbbr: 'DET' } },
+      scope: 'team',
+      key: firstCoreKey,
+      focusTeamAbbr: 'CHI'
+    });
+    assert.equal(detModalOpp.rows.find(r => r.isHighlighted)?.id, 'CHI', 'Non-SF site clicking CHI rank must highlight CHI');
+    const detModalSelf = resolveLeaderboardModalModel({
+      appData: { ...appDataSf, meta: { ...sfMeta, teamAbbr: 'DET' } },
+      scope: 'team',
+      key: firstCoreKey
+    });
+    assert.equal(detModalSelf.rows.find(r => r.isHighlighted)?.id, 'DET', 'Non-SF site default rank must highlight DET');
+  } finally {
+    setActiveTeamConfig(getTeamByAbbr('SF'));
+  }
 });
 
 console.log(`\n======================================================`);

@@ -1,0 +1,225 @@
+{
+  "teamAbbr": "CAR",
+  "podiumSubjectIds": [
+    "dave_canales",
+    "dan_morgan",
+    "brad_idzik",
+    "todd_wash"
+  ],
+  "outlets": [
+    {
+      "id": "panthers_official",
+      "name": "Panthers.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.panthers.com/news/"
+    },
+    {
+      "id": "espn_car",
+      "name": "ESPN Carolina Panthers Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/car/carolina-panthers"
+    },
+    {
+      "id": "cat_scratch_reader",
+      "name": "Cat Scratch Reader (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.catscratchreader.com/"
+    },
+    {
+      "id": "the_athletic_carolina_public_beat_wire_c",
+      "name": "The Athletic Carolina (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/josephperson"
+    },
+    {
+      "id": "charlotte_observer_public_beat_wire_car",
+      "name": "Charlotte Observer (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/mike_e_kaye"
+    },
+    {
+      "id": "fox_sports_radio_1340_car",
+      "name": "FOX Sports Radio 1340",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/Sheena_Marie3"
+    },
+    {
+      "id": "panthers_beat_car",
+      "name": "Panthers Beat",
+      "tier": 2,
+      "type": "video_film",
+      "url": "https://x.com/BookofEllis"
+    },
+    {
+      "id": "locked_on_panthers_car",
+      "name": "Locked On Panthers",
+      "tier": 2,
+      "type": "audio_beat",
+      "url": "https://x.com/JulianCouncil"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "dave_canales",
+      "name": "Dave Canales",
+      "handle": "@Panthers",
+      "outletId": "panthers_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Panthers",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "dan_morgan",
+      "name": "Dan Morgan",
+      "handle": "@Panthers",
+      "outletId": "panthers_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Panthers",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "david_newton",
+      "name": "David Newton",
+      "handle": "@DNewtonespn",
+      "outletId": "espn_car",
+      "role": "ESPN NFL Nation Panthers Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/DNewtonespn",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "joe_person",
+      "name": "Joe Person",
+      "handle": "@josephperson",
+      "outletId": "the_athletic_carolina_public_beat_wire_c",
+      "role": "Lead Panthers Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/josephperson",
+      "bskyHandle": "josephperson.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "mike_kaye",
+      "name": "Mike Kaye",
+      "handle": "@mike_e_kaye",
+      "outletId": "charlotte_observer_public_beat_wire_car",
+      "role": "Panthers Beat Writer (Charlotte Observer)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/mike_e_kaye",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "darin_gantt",
+      "name": "Darin Gantt",
+      "handle": "@daringantt",
+      "outletId": "panthers_official",
+      "role": "Senior Writer (Panthers.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/daringantt",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "sheena_quick",
+      "name": "Sheena Quick",
+      "handle": "@Sheena_Marie3",
+      "outletId": "fox_sports_radio_1340_car",
+      "role": "Panthers Beat Reporter & Insider",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Sheena_Marie3",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "ellis_williams",
+      "name": "Ellis Williams",
+      "handle": "@BookofEllis",
+      "outletId": "panthers_beat_car",
+      "role": "Panthers Analytics & Roster Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/BookofEllis",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "julian_council",
+      "name": "Julian Council",
+      "handle": "@JulianCouncil",
+      "outletId": "locked_on_panthers_car",
+      "role": "Host of Locked On Panthers",
+      "category": "audio_beat",
+      "styleTag": "daily-audio",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/JulianCouncil",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "kassidy_hill",
+      "name": "Kassidy Hill",
+      "handle": "@KassidyGHill",
+      "outletId": "panthers_official",
+      "role": "Team Reporter (Panthers.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/KassidyGHill",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "panthers_pr",
+      "name": "Carolina Panthers PR",
+      "handle": "@PanthersPR",
+      "outletId": "panthers_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/PanthersPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

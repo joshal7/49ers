@@ -3,11 +3,29 @@
  */
 
 import {
+  applyTeamThemeToDocument,
+  getActiveTeamConfig,
+  resolveTeamFromHostname,
+  setActiveTeamConfig
+} from './config/teamRegistry.js';
+
+const ACTIVE_TEAM =
+  typeof window !== 'undefined' && window.location
+    ? setActiveTeamConfig(
+        window.__ACTIVE_TEAM_SLUG__ ||
+          resolveTeamFromHostname(window.location.hostname, window.location.search)
+      )
+    : getActiveTeamConfig();
+if (typeof document !== 'undefined') {
+  applyTeamThemeToDocument(ACTIVE_TEAM);
+}
+
+import {
   ALL_DASHBOARD_BLOCKS,
   evaluateSeasonState,
   resolveHomeDashboardState
-} from './engine/seasonStateMachine.js?v=61';
-import { simulateCapScenario } from './engine/capSimulator.js?v=65';
+} from './engine/seasonStateMachine.js?v=64';
+import { simulateCapScenario } from './engine/capSimulator.js?v=66';
 import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js?v=65';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
 import {
@@ -34,7 +52,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=93';
+} from './services/dataService.js?v=96';
 import {
   SHARED_GEMINI_KEY_STORAGE_KEY,
   publishSharedGeminiApiKey,
@@ -59,7 +77,7 @@ import {
   shouldTriggerDailyTopNewsBriefRefresh,
   refreshDailyTopNewsBriefIfDue,
   clearDailyNewsBriefAttemptLock
-} from './services/aiWorkerClient.js?v=86';
+} from './services/aiWorkerClient.js?v=88';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -70,7 +88,7 @@ import {
   extractIncomingSharedRoute,
   shareItemNatively,
   shareAudioFileNatively
-} from './services/shareService.js?v=60';
+} from './services/shareService.js?v=61';
 
 import {
   resolveNflTeamMeta,
@@ -81,7 +99,7 @@ import {
   fetchRemoteTeamBundle,
   getCachedRemoteTeamBundle,
   clearRemoteTeamCache
-} from './services/remoteTeamDossierService.js?v=1';
+} from './services/remoteTeamDossierService.js?v=3';
 
 import {
   esc,
@@ -106,21 +124,21 @@ import {
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=49';
 import { iconSvg } from './views/icons.js?v=85';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=90';
+import { renderHomeDashboardHtml } from './views/homeView.js?v=92';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=92';
+} from './views/newsView.js?v=94';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=50';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=81';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=93';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=66';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=82';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=97';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=67';
 import {
   renderSettingsSheetHtml,
   renderUniversalSearchSheetHtml,
   renderUniversalSearchResultsHtml,
   renderUniversalSearchScopeBarHtml
-} from './views/settingsArchiveView.js?v=88';
+} from './views/settingsArchiveView.js?v=89';
 import {
   normalizeNewsSortMode,
   computeCatchUpState,
@@ -130,7 +148,7 @@ import {
   normalizeSearchText
 } from './engine/digestExperienceEngine.js?v=91';
 
-const RECENT_SEARCHES_KEY = '49ers_faithful_recent_searches_v1';
+const RECENT_SEARCHES_KEY = ACTIVE_TEAM.storageKeys?.recentSearches || '49ers_faithful_recent_searches_v1';
 
 function loadRecentSearches() {
   try {
@@ -422,7 +440,9 @@ function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', clean);
   const metaTheme = document.getElementById('metaThemeColor');
   if (metaTheme) {
-    metaTheme.setAttribute('content', clean === 'light' ? '#F7F5F0' : '#0B0D10');
+    const lightColor = ACTIVE_TEAM.themes?.light?.themeColor || '#F7F5F0';
+    const darkColor = ACTIVE_TEAM.themes?.dark?.themeColor || '#0B0D10';
+    metaTheme.setAttribute('content', clean === 'light' ? lightColor : darkColor);
   }
   const metaStatusBar = document.getElementById('metaStatusBarStyle');
   if (metaStatusBar) {
@@ -919,7 +939,7 @@ async function sendTestQuietAlert() {
     renderSheet({ preserveScroll: true });
     return;
   }
-  const title = '49ers Faithful · Quiet Alert Test';
+  const title = `${ACTIVE_TEAM.brandName} · Quiet Alert Test`;
   const body = 'High-signal alerts only (Tier-1 breaking & 5:00 PM PT daily brief). Zero score spam.';
   try {
     const reg = await navigator.serviceWorker?.ready;
@@ -968,6 +988,8 @@ function getMonteCarloResult() {
   cachedMonteCarloKey = key;
   cachedMonteCarloResult = runPlayoffMonteCarlo({
     ...inputs,
+    targetTeam: ACTIVE_TEAM.abbr,
+    conference: ACTIVE_TEAM.conference,
     forcedWinners: overrides,
     iterations: 10000,
     seed: 492026
@@ -1083,7 +1105,7 @@ function syncLiveWireButtonsDom() {
 }
 
 const TAB_HEADER_TITLES = {
-  home: '49ers Faithful',
+  home: ACTIVE_TEAM.brandName || '49ers Faithful',
   news: 'News & Film',
   season: 'Game & Season',
   roster: 'Roster & Cap',
@@ -1091,23 +1113,23 @@ const TAB_HEADER_TITLES = {
 };
 
 function formatCompactHeaderStanding(rawSummary = '') {
+  const fallbackDiv = ACTIVE_TEAM.division || 'NFC West';
   const clean = String(rawSummary || '')
     .replace(/\s+/g, ' ')
     .trim();
-  if (!clean) return 'NFC West';
-  // Condense verbose standing strings ("1st in NFC West • #1 Seed in NFC" -> "1st NFC West · #1 Seed")
+  if (!clean) return fallbackDiv;
   const parts = clean
     .split(/\s*[•·]\s*/)
     .map(part =>
       part
-        .replace(/\bin\s+NFC\s+West\b/i, 'NFC West')
-        .replace(/\bWild\s*Card\s+in\s+NFC\b/i, 'Seed')
-        .replace(/\bSeed\s+in\s+NFC\b/i, 'Seed')
-        .replace(/\bin\s+NFC\b/i, 'NFC')
+        .replace(/\bin\s+((?:NFC|AFC)\s+(?:North|South|East|West))\b/i, '$1')
+        .replace(/\bWild\s*Card\s+in\s+(?:NFC|AFC)\b/i, 'Seed')
+        .replace(/\bSeed\s+in\s+(?:NFC|AFC)\b/i, 'Seed')
+        .replace(/\bin\s+(NFC|AFC)\b/i, '$1')
         .trim()
     )
     .filter(p => p && !/^outside\s+playoffs$/i.test(p) && !/^eliminated$/i.test(p));
-  return parts.length > 0 ? parts.slice(0, 2).join(' · ') : 'NFC West';
+  return parts.length > 0 ? parts.slice(0, 2).join(' · ') : fallbackDiv;
 }
 
 function renderHeader() {
@@ -1118,7 +1140,7 @@ function renderHeader() {
   }
   const titleEl = document.getElementById('headerTitleText');
   if (titleEl) {
-    titleEl.textContent = TAB_HEADER_TITLES[activeTab] || '49ers Faithful';
+    titleEl.textContent = TAB_HEADER_TITLES[activeTab] || ACTIVE_TEAM.brandName || '49ers Faithful';
   }
   if (!state.appData) {
     syncTopHeaderHeight();
@@ -1129,7 +1151,7 @@ function renderHeader() {
   const subStatus = document.getElementById('headerSubStatus');
   if (recPill) recPill.textContent = m.teamRecord || '—';
   if (subStatus) {
-    const compactStanding = formatCompactHeaderStanding(m.standingSummary || 'NFC West');
+    const compactStanding = formatCompactHeaderStanding(m.standingSummary || ACTIVE_TEAM.division || 'NFC West');
     const syncAge = formatRelativeAge(state.lastWireSyncAt || m.updatedAt);
     subStatus.innerHTML = `<span class="header-standing-text">${esc(compactStanding)}</span><span class="header-sub-sep" aria-hidden="true">·</span><span class="header-live-sync" title="Live data synced ${esc(syncAge)}"><span class="live-pulse-dot" aria-hidden="true"></span><span><span class="header-sync-verb">Synced </span>${esc(syncAge)}</span></span>`;
   }
@@ -1426,7 +1448,8 @@ function renderStatRankModal() {
     appData: remoteLeaderboardAppData || state.appData,
     scope: state.rankModal.scope,
     key: state.rankModal.key,
-    playerId: state.rankModal.playerId
+    playerId: state.rankModal.playerId,
+    focusTeamAbbr: state.rankModal.focusTeamAbbr || null
   });
 
   if (!model || !model.rows?.length) {
@@ -1455,14 +1478,14 @@ function renderStatRankModal() {
     const nameHtml =
       r.is49erTeammate && r.sfPlayerId
         ? `<button type="button" class="inline-player-link" style="background:none;border:0;padding:0;font:inherit;text-align:left" data-action="open-player-from-rank-modal" data-player-id="${esc(r.sfPlayerId)}"><strong>${esc(r.title)}</strong></button>`
-        : oppRowTeam && oppRowTeam.abbr !== 'SF'
+        : oppRowTeam && oppRowTeam.abbr !== ACTIVE_TEAM.abbr
           ? `<button type="button" class="inline-player-link" style="background:none;border:0;padding:0;font:inherit;text-align:left" data-action="open-opponent-player-from-rank-modal" data-opp-team="${esc(oppRowTeam.abbr)}" data-opp-player-name="${esc(r.title)}"${r.playerPos ? ` data-opp-player-pos="${esc(r.playerPos)}"` : ''}${r.espnUrl ? ` data-opp-espn-url="${esc(r.espnUrl)}"` : ''}><strong>${esc(r.title)}</strong></button>`
           : r.extUrl
             ? `<a href="${esc(r.extUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(r.title)}</strong></a>`
             : `<strong>${esc(r.title)}</strong>`;
 
     rowsHtml.push(`
-      <div class="rank-modal-row ${r.isHighlighted ? 'highlighted' : ''}" ${r.isHighlighted ? 'data-rank-highlight="true"' : ''} data-rank-num="${r.rank}">
+      <div class="rank-modal-row ${r.isHighlighted ? 'highlighted' : ''}" ${r.isHighlighted ? 'data-rank-highlight="true"' : ''} data-rank-num="${r.rank}"${model.scope === 'team' ? ` data-rank-team="${esc(r.id)}"` : ''}>
         <div class="rank-modal-left">
           <span class="badge ${rankBadgeClass(scaled32)} mono rank-modal-num">#${r.rank}</span>
           ${visualThumb}
@@ -1633,7 +1656,7 @@ const REMOTE_SHEET_THEME_VAR_KEYS = [
 function applyRemoteTeamThemeToSheet(teamMeta = null) {
   const sheetEl = document.getElementById('bottomSheetContainer');
   if (!sheetEl) return;
-  if (!teamMeta || teamMeta.abbr === 'SF') {
+  if (!teamMeta || teamMeta.abbr === ACTIVE_TEAM.abbr) {
     sheetEl.removeAttribute('data-remote-team');
     sheetEl.removeAttribute('data-remote-team-slug');
     for (const k of REMOTE_SHEET_THEME_VAR_KEYS) {
@@ -1662,12 +1685,12 @@ async function openOpponentPlayerSheet({
   const teamMeta = resolveNflTeamMeta(teamAbbr);
   if (!teamMeta) return;
 
-  // If the resolved team is SF, open native local 49ers dossier directly
-  if (teamMeta.abbr === 'SF') {
-    const sfPlayers = state.appData?.roster?.players || [];
+  // If the resolved team is the currently active team site, open local dossier directly
+  if (teamMeta.abbr === ACTIVE_TEAM.abbr) {
+    const localPlayers = state.appData?.roster?.players || [];
     const localPlayer =
       (playerId && getPlayerById(playerId)) ||
-      findPlayerInTeamRoster(sfPlayers, { playerId, name: playerName, position });
+      findPlayerInTeamRoster(localPlayers, { playerId, name: playerName, position });
     if (localPlayer) {
       state.sheetRemoteContext = null;
       state.sheetMode = 'player';
@@ -1806,7 +1829,10 @@ function renderSheet({ preserveScroll = false } = {}) {
   syncLiveWireButtonsDom();
 
   preserveFocusAroundRender(() => {
-    registerRosterPlayersForInlineLinks(state.appData?.roster?.players, { teamAbbr: 'SF' });
+    registerRosterPlayersForInlineLinks(state.appData?.roster?.players, {
+      teamAbbr: ACTIVE_TEAM.abbr,
+      activeTeamAbbr: ACTIVE_TEAM.abbr
+    });
     if (state.sheetMode === 'player' && state.sheetRemoteContext?.teamMeta) {
       const remoteCtx = state.sheetRemoteContext;
       applyRemoteTeamThemeToSheet(remoteCtx.teamMeta);
@@ -1815,6 +1841,7 @@ function renderSheet({ preserveScroll = false } = {}) {
         remoteBundle: remoteCtx.bundle,
         seedPlayer: remoteCtx.seedPlayer,
         teamMeta: remoteCtx.teamMeta,
+        activeTeamAbbr: ACTIVE_TEAM.abbr,
         localNewsRawStream: state.appData?.news?.rawStream || []
       });
       const player = merged.player;
@@ -1826,7 +1853,8 @@ function renderSheet({ preserveScroll = false } = {}) {
       if (title) title.textContent = player ? player.name : 'Player Dossier';
       try {
         registerRosterPlayersForInlineLinks(merged.appData?.roster?.players || [], {
-          teamAbbr: remoteCtx.teamMeta.abbr
+          teamAbbr: remoteCtx.teamMeta.abbr,
+          activeTeamAbbr: ACTIVE_TEAM.abbr
         });
         body.innerHTML = renderPlayerDossierSheetHtml({
           player,
@@ -1846,7 +1874,10 @@ function renderSheet({ preserveScroll = false } = {}) {
           }
         });
       } finally {
-        registerRosterPlayersForInlineLinks(state.appData?.roster?.players, { teamAbbr: 'SF' });
+        registerRosterPlayersForInlineLinks(state.appData?.roster?.players, {
+          teamAbbr: ACTIVE_TEAM.abbr,
+          activeTeamAbbr: ACTIVE_TEAM.abbr
+        });
       }
       if (openStatExpanders && openStatExpanders.size > 0) {
         body.querySelectorAll('details[data-player-stats-expander]').forEach(el => {
@@ -1900,7 +1931,7 @@ function renderSheet({ preserveScroll = false } = {}) {
       if (!preserveScroll) body.scrollTop = 0;
     } else if (state.sheetMode === 'search') {
       applyRemoteTeamThemeToSheet(null);
-      if (eyebrow) eyebrow.textContent = '49ers Faithful';
+      if (eyebrow) eyebrow.textContent = ACTIVE_TEAM.brandName;
       if (title) title.textContent = 'Search';
       const filteredRawItems = getFilteredRawItemsForSearch();
       body.innerHTML = renderUniversalSearchSheetHtml({
@@ -3010,9 +3041,10 @@ function bindEvents() {
         const scope = btn.getAttribute('data-rank-scope') || 'team';
         const key = btn.getAttribute('data-rank-key') || '';
         const playerId = btn.getAttribute('data-player-id') || state.sheetPlayerId || null;
+        const focusTeamAbbr = btn.getAttribute('data-focus-team') || null;
         if (key) {
           closeJargonPopover();
-          state.rankModal = { scope, key, playerId };
+          state.rankModal = { scope, key, playerId, focusTeamAbbr };
           renderStatRankModal();
         }
         break;
@@ -3235,8 +3267,8 @@ function bindEvents() {
           const shareUrl = await buildShareablePodcastUrl(ep, window.location, state.prefs);
           window.__lastSharedUrl = shareUrl;
           const shareRes = await shareItemNatively({
-            title: `49ers Faithful Podcast: ${ep.title}`,
-            text: `Listen to "${ep.title}" (${formatTimeMmSs(ep.durationSec)}) on 49ers Faithful:`,
+            title: `${ACTIVE_TEAM.brandName} Podcast: ${ep.title}`,
+            text: `Listen to "${ep.title}" (${formatTimeMmSs(ep.durationSec)}) on ${ACTIVE_TEAM.brandName}:`,
             url: shareUrl
           });
           if (shareRes.method === 'clipboard') {
@@ -3267,8 +3299,8 @@ function bindEvents() {
             if (audioFile) {
               await shareAudioFileNatively({
                 file: audioFile,
-                title: `49ers Faithful Podcast: ${ep.title}`,
-                text: `${ep.title} (${formatTimeMmSs(ep.durationSec)}) — 49ers Faithful`
+                title: `${ACTIVE_TEAM.brandName} Podcast: ${ep.title}`,
+                text: `${ep.title} (${formatTimeMmSs(ep.durationSec)}) — ${ACTIVE_TEAM.brandName}`
               });
             }
           } finally {
@@ -3286,8 +3318,8 @@ function bindEvents() {
           const shareUrl = await buildShareableAnalysisUrl(rep, window.location);
           window.__lastSharedUrl = shareUrl;
           const shareRes = await shareItemNatively({
-            title: `49ers Scouting & Cap Brief: ${rep.title}`,
-            text: `Read "${rep.title}" on 49ers Faithful:`,
+            title: `${ACTIVE_TEAM.nickname} Scouting & Cap Brief: ${rep.title}`,
+            text: `Read "${rep.title}" on ${ACTIVE_TEAM.brandName}:`,
             url: shareUrl
           });
           if (shareRes.method === 'clipboard') {
@@ -3460,7 +3492,7 @@ function bindEvents() {
             estLabel: waitEst.estLabel,
             modelLabel: modelInfo.displayLabel,
             message: 'Step 1 of 3: Deep research on the topic…',
-            subDetail: 'Querying live 49ers beat wire, ESPN headlines & 88-player roster/EPA/cap ledger.'
+            subDetail: `Querying live ${ACTIVE_TEAM.nickname} beat wire, ESPN headlines & 88-player roster/EPA/cap ledger.`
           };
           renderMain();
           const episode = await generateOnDemandAutopodcast({
@@ -4510,7 +4542,7 @@ function renderFeedLoadErrorState(err, { isRetrying = false } = {}) {
   mainEl.innerHTML = `
     <div class="card" data-feed-error-card="true">
       <div class="card-eyebrow" style="color:var(--crimson)">Feed Connection Interrupted</div>
-      <h2 class="card-title">Reconnecting 49ers Data Feeds</h2>
+      <h2 class="card-title">Reconnecting ${esc(ACTIVE_TEAM.nickname)} Data Feeds</h2>
       <p style="font-size:13px;color:var(--text-secondary);margin:6px 0 12px">${esc(friendlyDetail)}</p>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <button type="button" class="btn-primary" data-action="retry-load-feeds" ${isRetrying ? 'disabled' : ''}>

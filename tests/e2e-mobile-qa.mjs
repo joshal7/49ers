@@ -869,7 +869,7 @@ async function main() {
       });
 
       assert(pwaInfo.appleCapable === 'yes', 'Missing apple-mobile-web-app-capable=yes');
-      assert(pwaInfo.appleTitle === '49ers HQ', `Unexpected apple title: ${pwaInfo.appleTitle}`);
+      assert(pwaInfo.appleTitle === '49ers' || pwaInfo.appleTitle === '49ers HQ', `Unexpected apple title: ${pwaInfo.appleTitle}`);
       assert(pwaInfo.manifestDisplay === 'standalone', 'Manifest display must be standalone');
       assert(pwaInfo.manifestIcons >= 2, 'Manifest must define icons');
       assert(pwaInfo.iconStatus === 200, 'apple-touch-icon.png did not return HTTP 200');
@@ -3420,7 +3420,9 @@ async function main() {
           preClickHint8m,
           missingKeyErrText,
           focusedKeyInput,
-          noConnectedClutterBanner
+          noConnectedClutterBanner,
+          geminiKeyNotice: st.geminiKeyNotice || '',
+          hasSavedKey: Boolean(st.prefs.geminiApiKey)
         };
       }, PORT);
 
@@ -4963,63 +4965,111 @@ async function main() {
 
       // 1. Sticky Col 1 + Narrow Opponent Table + Post-Game Week Rollover Blank W/T/F Audit
       const tableAndRolloverAudit = await cdp.eval(() => {
-        document.querySelector('[data-nav-tab="season"]').click();
-        document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]').click();
-        const sfWrap = document.querySelector('[data-health-table="sf"]');
-        const sfTable = sfWrap?.querySelector('table');
-        const sfTh = sfTable?.querySelector('thead th.sticky-first-col');
-        const sfTd = sfTable?.querySelector('tbody td.sticky-first-col');
-        const sfThStyle = sfTh ? window.getComputedStyle(sfTh) : null;
-        const sfTdStyle = sfTd ? window.getComputedStyle(sfTd) : null;
-        const sfSticky =
-          sfThStyle?.position === 'sticky' && sfTdStyle?.position === 'sticky' && sfThStyle?.left === '0px';
-        const sfWidth = Math.round(sfTable?.scrollWidth || 0);
-        const sfBeforeLeft = Math.round(sfTd?.getBoundingClientRect().left || 0);
-        if (sfWrap) sfWrap.scrollLeft = 60;
-        const sfAfterLeft = Math.round(sfTd?.getBoundingClientRect().left || 0);
-        if (sfWrap) sfWrap.scrollLeft = 0;
-        const sfNoGamedayOutsideWindow = !document.querySelector('[data-gameday-roster-block="sf"]');
-        const sfPracCells = Array.from(sfTable?.querySelectorAll('tbody tr td:nth-child(3)') || []).map(c =>
-          c.textContent.trim()
-        );
+        const st = window.__49ersDiagnostics.getState();
+        const sm = st.appData.scheduleMatchup;
+        const nextGame = sm.schedule.find(g => !g.completed);
+        const origDateIso = nextGame?.dateIso;
+        const origStatusState = nextGame?.statusState;
+        const origStatusDetail = nextGame?.statusDetail;
+        const origIsLive = nextGame?.isLive;
+        const origKickoffIso = sm.upcomingMatchup?.kickoffIso;
+        const origUmDateIso = sm.upcomingMatchup?.dateIso;
+        const origLiveState = sm.upcomingMatchup?.liveState;
+        const origIsInProg = sm.upcomingMatchup?.isGameInProgress;
+        const origUmStatusDetail = sm.upcomingMatchup?.statusDetail;
+        const origLiveGameDay = st.appData.liveGameDay;
+        const futureOutsideKo = new Date(Date.now() + 72 * 3600_000).toISOString();
+        try {
+          if (nextGame) {
+            nextGame.dateIso = futureOutsideKo;
+            nextGame.statusState = 'pre';
+            nextGame.statusDetail = 'Scheduled';
+            nextGame.isLive = false;
+          }
+          if (sm.upcomingMatchup) {
+            sm.upcomingMatchup.kickoffIso = futureOutsideKo;
+            sm.upcomingMatchup.dateIso = futureOutsideKo;
+            sm.upcomingMatchup.liveState = 'pre';
+            sm.upcomingMatchup.isGameInProgress = false;
+            sm.upcomingMatchup.statusDetail = 'Scheduled';
+          }
+          st.appData.liveGameDay = null;
+          document.querySelector('[data-nav-tab="season"]').click();
+          document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]').click();
+          window.__49ersDiagnostics.forceRender();
+          const sfWrap = document.querySelector('[data-health-table="sf"]');
+          const sfTable = sfWrap?.querySelector('table');
+          const sfTh = sfTable?.querySelector('thead th.sticky-first-col');
+          const sfTd = sfTable?.querySelector('tbody td.sticky-first-col');
+          const sfThStyle = sfTh ? window.getComputedStyle(sfTh) : null;
+          const sfTdStyle = sfTd ? window.getComputedStyle(sfTd) : null;
+          const sfSticky =
+            sfThStyle?.position === 'sticky' && sfTdStyle?.position === 'sticky' && sfThStyle?.left === '0px';
+          const sfWidth = Math.round(sfTable?.scrollWidth || 0);
+          const sfBeforeLeft = Math.round(sfTd?.getBoundingClientRect().left || 0);
+          if (sfWrap) sfWrap.scrollLeft = 60;
+          const sfAfterLeft = Math.round(sfTd?.getBoundingClientRect().left || 0);
+          if (sfWrap) sfWrap.scrollLeft = 0;
+          const sfNoGamedayOutsideWindow = !document.querySelector('[data-gameday-roster-block="sf"]');
+          const sfPracCells = Array.from(sfTable?.querySelectorAll('tbody tr td:nth-child(3)') || []).map(c =>
+            c.textContent.trim()
+          );
 
-        document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
-        const oppWrap = document.querySelector('[data-health-table="opp"]');
-        const oppTable = oppWrap?.querySelector('table');
-        const oppTh = oppTable?.querySelector('thead th.sticky-first-col');
-        const oppTd = oppTable?.querySelector('tbody td.sticky-first-col');
-        const oppThStyle = oppTh ? window.getComputedStyle(oppTh) : null;
-        const oppTdStyle = oppTd ? window.getComputedStyle(oppTd) : null;
-        const oppSticky =
-          oppThStyle?.position === 'sticky' && oppTdStyle?.position === 'sticky' && oppThStyle?.left === '0px';
-        const oppWidth = Math.round(oppTable?.scrollWidth || 0);
-        const oppSubLines = Array.from(oppTable?.querySelectorAll('.sticky-player-sub') || []).map(el =>
-          el.textContent.trim()
-        );
-        const oppNoGamedayOutsideWindow = !document.querySelector('[data-gameday-roster-block="opp"]');
-        const oppPracCells = Array.from(oppTable?.querySelectorAll('tbody tr td:nth-child(3)') || []).map(c =>
-          c.textContent.trim()
-        );
+          document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]').click();
+          window.__49ersDiagnostics.forceRender();
+          const oppWrap = document.querySelector('[data-health-table="opp"]');
+          const oppTable = oppWrap?.querySelector('table');
+          const oppTh = oppTable?.querySelector('thead th.sticky-first-col');
+          const oppTd = oppTable?.querySelector('tbody td.sticky-first-col');
+          const oppThStyle = oppTh ? window.getComputedStyle(oppTh) : null;
+          const oppTdStyle = oppTd ? window.getComputedStyle(oppTd) : null;
+          const oppSticky =
+            oppThStyle?.position === 'sticky' && oppTdStyle?.position === 'sticky' && oppThStyle?.left === '0px';
+          const oppWidth = Math.round(oppTable?.scrollWidth || 0);
+          const oppSubLines = Array.from(oppTable?.querySelectorAll('.sticky-player-sub') || []).map(el =>
+            el.textContent.trim()
+          );
+          const oppNoGamedayOutsideWindow = !document.querySelector('[data-gameday-roster-block="opp"]');
+          const oppPracCells = Array.from(oppTable?.querySelectorAll('tbody tr td:nth-child(3)') || []).map(c =>
+            c.textContent.trim()
+          );
 
-        const kickoffIso = window.__49ersDiagnostics.getState().appData.scheduleMatchup.upcomingMatchup.kickoffIso || '';
-        const hoursUntilKo = (Date.parse(kickoffIso) - Date.now()) / 3600_000;
-        const isEarlyWeek = hoursUntilKo > 98;
+          const kickoffIso = origKickoffIso || '';
+          const hoursUntilKo = (Date.parse(kickoffIso) - Date.now()) / 3600_000;
+          const isEarlyWeek = hoursUntilKo > 98;
 
-        return {
-          sfSticky,
-          oppSticky,
-          sfPinnedDuringScroll: Math.abs(sfAfterLeft - sfBeforeLeft) <= 1,
-          sfWidth,
-          oppWidth,
-          widthDelta: Math.abs(oppWidth - sfWidth),
-          oppHasPosAndImportance:
-            oppSubLines.length > 0 && oppSubLines.every(s => /•\s*(Starter|Rotation|Depth|\d+% snaps)/.test(s)),
-          sfNoGamedayOutsideWindow,
-          oppNoGamedayOutsideWindow,
-          isEarlyWeek,
-          sfPracCells,
-          oppPracCells
-        };
+          return {
+            sfSticky,
+            oppSticky,
+            sfPinnedDuringScroll: Math.abs(sfAfterLeft - sfBeforeLeft) <= 1,
+            sfWidth,
+            oppWidth,
+            widthDelta: Math.abs(oppWidth - sfWidth),
+            oppHasPosAndImportance:
+              oppSubLines.length > 0 && oppSubLines.every(s => /•\s*(Starter|Rotation|Depth|\d+% snaps)/.test(s)),
+            sfNoGamedayOutsideWindow,
+            oppNoGamedayOutsideWindow,
+            isEarlyWeek,
+            sfPracCells,
+            oppPracCells
+          };
+        } finally {
+          if (nextGame) {
+            nextGame.dateIso = origDateIso;
+            nextGame.statusState = origStatusState;
+            nextGame.statusDetail = origStatusDetail;
+            nextGame.isLive = origIsLive;
+          }
+          if (sm.upcomingMatchup) {
+            sm.upcomingMatchup.kickoffIso = origKickoffIso;
+            sm.upcomingMatchup.dateIso = origUmDateIso;
+            sm.upcomingMatchup.liveState = origLiveState;
+            sm.upcomingMatchup.isGameInProgress = origIsInProg;
+            sm.upcomingMatchup.statusDetail = origUmStatusDetail;
+          }
+          st.appData.liveGameDay = origLiveGameDay;
+          window.__49ersDiagnostics.forceRender();
+        }
       });
 
       assert(tableAndRolloverAudit.sfSticky, `49ers Team Health Col 1 must be position: sticky; left: 0px (got ${JSON.stringify(tableAndRolloverAudit)})`);
@@ -5051,13 +5101,27 @@ async function main() {
         const sm = st.appData.scheduleMatchup;
         const nextGame = sm.schedule.find(g => !g.completed);
         const savedDateIso = nextGame.dateIso;
+        const savedStatusState = nextGame.statusState;
+        const savedStatusDetail = nextGame.statusDetail;
+        const savedIsLive = nextGame.isLive;
         const savedUmKickoff = sm.upcomingMatchup.kickoffIso;
+        const savedUmDateIso = sm.upcomingMatchup.dateIso;
+        const savedUmLiveState = sm.upcomingMatchup.liveState;
+        const savedUmInProg = sm.upcomingMatchup.isGameInProgress;
+        const savedUmStatusDetail = sm.upcomingMatchup.statusDetail;
         const savedLiveGameDay = st.appData.liveGameDay;
 
         try {
           const koIn45m = new Date(Date.now() + 45 * 60_000).toISOString();
           nextGame.dateIso = koIn45m;
+          nextGame.statusState = 'pre';
+          nextGame.statusDetail = 'Scheduled';
+          nextGame.isLive = false;
           sm.upcomingMatchup.kickoffIso = koIn45m;
+          sm.upcomingMatchup.dateIso = koIn45m;
+          sm.upcomingMatchup.liveState = 'pre';
+          sm.upcomingMatchup.isGameInProgress = false;
+          sm.upcomingMatchup.statusDetail = 'Scheduled';
           st.appData.liveGameDay = {
             sf: {
               officialPosted: true,
@@ -5098,7 +5162,12 @@ async function main() {
             document.querySelectorAll('[data-health-table="sf"] tbody td:nth-child(4) .badge')
           ).map(b => b.textContent.trim());
           const sfZeroStaleQuestionable = sfBadges.every(
-            b => b.includes('In (Active)') || b.includes('Out (Inactive)') || b === 'Active • GTD'
+            b =>
+              b.includes('In (Active)') ||
+              b.includes('Out (Inactive)') ||
+              b.includes('(In-Game)') ||
+              b === '0% • IR' ||
+              b === 'Active • GTD'
           );
 
           // Check Matchup Opponent Block at T-45m (directly above Opponent Practice Participation table!)
@@ -5179,8 +5248,14 @@ async function main() {
         } finally {
           nextGame.completed = false;
           nextGame.dateIso = savedDateIso;
+          nextGame.statusState = savedStatusState;
+          nextGame.statusDetail = savedStatusDetail;
+          nextGame.isLive = savedIsLive;
           sm.upcomingMatchup.kickoffIso = savedUmKickoff;
-          sm.upcomingMatchup.dateIso = savedUmKickoff;
+          sm.upcomingMatchup.dateIso = savedUmDateIso;
+          sm.upcomingMatchup.liveState = savedUmLiveState;
+          sm.upcomingMatchup.isGameInProgress = savedUmInProg;
+          sm.upcomingMatchup.statusDetail = savedUmStatusDetail;
           st.appData.liveGameDay = savedLiveGameDay;
           window.__49ersDiagnostics.forceRender();
         }
@@ -5775,12 +5850,14 @@ async function main() {
 
         prevSummary?.click();
         await sleep(40);
-        const expandsOnClick = Boolean(prevDetails && prevDetails.open === true);
-        const prevVisibleWhenExpanded = prevRows.length > 0 && prevRows.every(r => r.getClientRects().length > 0);
+        const livePrevDetails = document.querySelector('[data-schedule-previous-games]');
+        const livePrevRows = [...document.querySelectorAll('[data-schedule-previous-list] [data-schedule-game-row="previous"]')];
+        const expandsOnClick = Boolean(livePrevDetails && livePrevDetails.open === true);
+        const prevVisibleWhenExpanded = livePrevRows.length > 0 && livePrevRows.every(r => r.getClientRects().length > 0);
 
-        prevSummary?.click();
+        document.querySelector('[data-schedule-previous-summary]')?.click();
         await sleep(40);
-        const collapsesAgain = Boolean(prevDetails && prevDetails.open === false);
+        const collapsesAgain = Boolean(document.querySelector('[data-schedule-previous-games]')?.open === false);
         const preRowCountInPrev = document.querySelectorAll('[data-schedule-previous-list] [data-schedule-season-type="PRE"]').length;
         const hasUnclinchedTracker = Boolean(document.querySelector('[data-schedule-postseason-tracker="unclinched"]'));
 
@@ -6338,11 +6415,47 @@ async function main() {
         if (!target) return { skipped: true };
 
         const savedKickoff = state.appData.scheduleMatchup.upcomingMatchup.kickoffIso;
+        const savedUmDateIso = state.appData.scheduleMatchup.upcomingMatchup.dateIso;
+        const savedUmLiveState = state.appData.scheduleMatchup.upcomingMatchup.liveState;
+        const savedUmInProg = state.appData.scheduleMatchup.upcomingMatchup.isGameInProgress;
+        const savedUmStatusDetail = state.appData.scheduleMatchup.upcomingMatchup.statusDetail;
+        const umWeekNum = Number(state.appData.scheduleMatchup.upcomingMatchup.week || 0);
+        const nextUncompletedGame =
+          (state.appData.scheduleMatchup.schedule || []).find(
+            g => !g.isByeWeek && umWeekNum && Number(g.week) === umWeekNum
+          ) ||
+          (state.appData.scheduleMatchup.schedule || []).find(g => !g.completed && !g.isByeWeek);
+        const savedNextGameDate = nextUncompletedGame?.dateIso;
+        const savedNextGameState = nextUncompletedGame?.statusState;
+        const savedNextGameDetail = nextUncompletedGame?.statusDetail;
+        const savedNextGameIsLive = nextUncompletedGame?.isLive;
+        const savedLiveGameDay = state.appData.liveGameDay;
+        const savedGameDayRoster = state.appData.health?.gameDayRoster;
+        const savedPracticeReport = state.appData.health?.practiceReport;
+        const savedIrTracker = state.appData.health?.irAndReserveTracker;
         const testKickoffIso = '2026-11-23T01:20:00Z';
+        const futureOutsideGameDayIso = new Date(Date.now() + 72 * 3600_000).toISOString();
         state.appData.scheduleMatchup.upcomingMatchup.kickoffIso = testKickoffIso;
+        state.appData.scheduleMatchup.upcomingMatchup.dateIso = testKickoffIso;
+        state.appData.scheduleMatchup.upcomingMatchup.liveState = 'pre';
+        state.appData.scheduleMatchup.upcomingMatchup.isGameInProgress = false;
+        state.appData.scheduleMatchup.upcomingMatchup.statusDetail = 'Scheduled';
+        if (nextUncompletedGame) {
+          nextUncompletedGame.statusState = 'pre';
+          nextUncompletedGame.statusDetail = 'Scheduled';
+          nextUncompletedGame.isLive = false;
+        }
+        state.appData.liveGameDay = null;
+        if (state.appData.health) {
+          state.appData.health.gameDayRoster = null;
+        }
 
         // 1. Pre-deadline Wednesday open 21-day window (`> 0% • GTD`)
         mod.reconcileRosterAndHealthWithNews(state.appData, { nowMs: Date.parse('2026-11-18T20:00:00Z') });
+        // Keep game-day window inactive during DOM render even if E2E runs during live Sunday Night Football
+        state.appData.scheduleMatchup.upcomingMatchup.kickoffIso = futureOutsideGameDayIso;
+        state.appData.scheduleMatchup.upcomingMatchup.dateIso = futureOutsideGameDayIso;
+        if (nextUncompletedGame) nextUncompletedGame.dateIso = futureOutsideGameDayIso;
         document.querySelector('[data-nav-tab="season"]')?.click();
         document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]')?.click();
         window.__49ersDiagnostics.forceRender();
@@ -6380,7 +6493,12 @@ async function main() {
         document.getElementById('closeSheetBtn')?.click();
 
         // 2. Post-Saturday 4:00 PM ET activation deadline -> reverts to `0% • IR` and leaves `#weeklyInjuryReportCard`!
+        state.appData.scheduleMatchup.upcomingMatchup.kickoffIso = testKickoffIso;
+        state.appData.scheduleMatchup.upcomingMatchup.dateIso = testKickoffIso;
         mod.reconcileRosterAndHealthWithNews(state.appData, { nowMs: Date.parse('2026-11-21T21:10:00Z') });
+        state.appData.scheduleMatchup.upcomingMatchup.kickoffIso = futureOutsideGameDayIso;
+        state.appData.scheduleMatchup.upcomingMatchup.dateIso = futureOutsideGameDayIso;
+        if (nextUncompletedGame) nextUncompletedGame.dateIso = futureOutsideGameDayIso;
         document.querySelector('[data-nav-tab="season"]')?.click();
         document.querySelector('[data-action="set-season-sub"][data-season-sub="health"]')?.click();
         window.__49ersDiagnostics.forceRender();
@@ -6393,6 +6511,24 @@ async function main() {
 
         // Restore live state
         state.appData.scheduleMatchup.upcomingMatchup.kickoffIso = savedKickoff;
+        state.appData.scheduleMatchup.upcomingMatchup.dateIso = savedUmDateIso;
+        state.appData.scheduleMatchup.upcomingMatchup.liveState = savedUmLiveState;
+        state.appData.scheduleMatchup.upcomingMatchup.isGameInProgress = savedUmInProg;
+        state.appData.scheduleMatchup.upcomingMatchup.statusDetail = savedUmStatusDetail;
+        if (nextUncompletedGame) {
+          nextUncompletedGame.dateIso = savedNextGameDate;
+          nextUncompletedGame.statusState = savedNextGameState;
+          nextUncompletedGame.statusDetail = savedNextGameDetail;
+          nextUncompletedGame.isLive = savedNextGameIsLive;
+        }
+        state.appData.liveGameDay = savedLiveGameDay;
+        if (state.appData.health) {
+          state.appData.health.gameDayRoster = savedGameDayRoster;
+          if (savedGameDayRoster?.isActive) {
+            state.appData.health.practiceReport = savedPracticeReport;
+            state.appData.health.irAndReserveTracker = savedIrTracker;
+          }
+        }
         mod.reconcileRosterAndHealthWithNews(state.appData);
         window.__49ersDiagnostics.forceRender();
 

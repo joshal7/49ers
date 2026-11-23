@@ -1,0 +1,225 @@
+{
+  "teamAbbr": "IND",
+  "podiumSubjectIds": [
+    "shane_steichen",
+    "ed_dodds",
+    "jim_bob_cooter",
+    "lou_anarumo"
+  ],
+  "outlets": [
+    {
+      "id": "colts_official",
+      "name": "Colts.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.colts.com/news/"
+    },
+    {
+      "id": "espn_ind",
+      "name": "ESPN Indianapolis Colts Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/ind/indianapolis-colts"
+    },
+    {
+      "id": "stampede_blue",
+      "name": "Stampede Blue (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.stampedeblue.com/"
+    },
+    {
+      "id": "the_athletic_indy_public_beat_wire_ind",
+      "name": "The Athletic Indy (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/RomeovilleKid"
+    },
+    {
+      "id": "indianapolis_star_public_beat_wire_ind",
+      "name": "Indianapolis Star (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/JoelAErickson"
+    },
+    {
+      "id": "107_5_the_fan_ind",
+      "name": "107.5 The Fan",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/KBowen1070"
+    },
+    {
+      "id": "locked_on_colts_ind",
+      "name": "Locked On Colts",
+      "tier": 2,
+      "type": "audio_beat",
+      "url": "https://x.com/JakeArthurNFL"
+    },
+    {
+      "id": "a_to_z_sports_indy_ind",
+      "name": "A to Z Sports Indy",
+      "tier": 2,
+      "type": "beat",
+      "url": "https://x.com/TheDestinAdams"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "shane_steichen",
+      "name": "Shane Steichen",
+      "handle": "@Colts",
+      "outletId": "colts_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Colts",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "ed_dodds",
+      "name": "Ed Dodds",
+      "handle": "@Colts",
+      "outletId": "colts_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Colts",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "stephen_holder",
+      "name": "Stephen Holder",
+      "handle": "@HolderStephen",
+      "outletId": "espn_ind",
+      "role": "ESPN NFL Nation Colts Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/HolderStephen",
+      "bskyHandle": "holderstephen.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "james_boyd",
+      "name": "James Boyd",
+      "handle": "@RomeovilleKid",
+      "outletId": "the_athletic_indy_public_beat_wire_ind",
+      "role": "Colts Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/RomeovilleKid",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "joel_a_erickson",
+      "name": "Joel A. Erickson",
+      "handle": "@JoelAErickson",
+      "outletId": "indianapolis_star_public_beat_wire_ind",
+      "role": "Lead Colts Beat Writer (IndyStar)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JoelAErickson",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "nate_atkins",
+      "name": "Nate Atkins",
+      "handle": "@NateAtkins_",
+      "outletId": "indianapolis_star_public_beat_wire_ind",
+      "role": "Colts Beat Reporter (IndyStar)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/NateAtkins_",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "kevin_bowen",
+      "name": "Kevin Bowen",
+      "handle": "@KBowen1070",
+      "outletId": "107_5_the_fan_ind",
+      "role": "Colts Insider & Colts Corner Host",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/KBowen1070",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jake_arthur",
+      "name": "Jake Arthur",
+      "handle": "@JakeArthurNFL",
+      "outletId": "locked_on_colts_ind",
+      "role": "Colts Beat & Locked On Co-Host",
+      "category": "audio_beat",
+      "styleTag": "daily-audio",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/JakeArthurNFL",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jj_stankevitz",
+      "name": "JJ Stankevitz",
+      "handle": "@JJStankevitz",
+      "outletId": "colts_official",
+      "role": "Senior Writer (Colts.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JJStankevitz",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "destin_adams",
+      "name": "Destin Adams",
+      "handle": "@TheDestinAdams",
+      "outletId": "a_to_z_sports_indy_ind",
+      "role": "Colts Draft & Roster Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/TheDestinAdams",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "colts_pr",
+      "name": "Indianapolis Colts PR",
+      "handle": "@ColtsPR",
+      "outletId": "colts_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ColtsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

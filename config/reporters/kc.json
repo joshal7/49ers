@@ -1,0 +1,246 @@
+{
+  "teamAbbr": "KC",
+  "podiumSubjectIds": [
+    "andy_reid",
+    "brett_veach",
+    "eric_bieniemy",
+    "steve_spagnuolo"
+  ],
+  "outlets": [
+    {
+      "id": "chiefs_official",
+      "name": "Chiefs.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.chiefs.com/news/"
+    },
+    {
+      "id": "espn_kc",
+      "name": "ESPN Kansas City Chiefs Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/kc/kansas-city-chiefs"
+    },
+    {
+      "id": "arrowhead_pride",
+      "name": "Arrowhead Pride (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.arrowheadpride.com/"
+    },
+    {
+      "id": "kansas_city_star_public_beat_wire_kc",
+      "name": "Kansas City Star (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/jessenewell"
+    },
+    {
+      "id": "arrowhead_pride_kc",
+      "name": "Arrowhead Pride",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/pgsween"
+    },
+    {
+      "id": "a_to_z_sports_kc_kc",
+      "name": "A to Z Sports KC",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/goldmctNFL"
+    },
+    {
+      "id": "chief_in_the_north_kc",
+      "name": "Chief in the North",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/RealMNchiefsfan"
+    },
+    {
+      "id": "locked_on_chiefs_kc",
+      "name": "Locked On Chiefs",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/RyanTracyNFL"
+    },
+    {
+      "id": "kc_sports_network_kc",
+      "name": "KC Sports Network",
+      "tier": 2,
+      "type": "video_film",
+      "url": "https://x.com/kent_swanson"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "andy_reid",
+      "name": "Andy Reid",
+      "handle": "@Chiefs",
+      "outletId": "chiefs_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Chiefs",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "brett_veach",
+      "name": "Brett Veach",
+      "handle": "@Chiefs",
+      "outletId": "chiefs_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Chiefs",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "nate_taylor",
+      "name": "Nate Taylor",
+      "handle": "@ByNateTaylor",
+      "outletId": "espn_kc",
+      "role": "ESPN / Senior Chiefs Beat Writer",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ByNateTaylor",
+      "bskyHandle": "bynatesaylor.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "jesse_newell",
+      "name": "Jesse Newell",
+      "handle": "@jessenewell",
+      "outletId": "kansas_city_star_public_beat_wire_kc",
+      "role": "Lead Chiefs Beat Writer (KC Star)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/jessenewell",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "sam_mcdowell",
+      "name": "Sam McDowell",
+      "handle": "@SamMcDowell11",
+      "outletId": "kansas_city_star_public_beat_wire_kc",
+      "role": "Chiefs Columnist & Beat",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/SamMcDowell11",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "pete_sweeney",
+      "name": "Pete Sweeney",
+      "handle": "@pgsween",
+      "outletId": "arrowhead_pride_kc",
+      "role": "Managing Editor & Beat Reporter (Arrowhead Pride)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/pgsween",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "charles_goldman",
+      "name": "Charles Goldman",
+      "handle": "@goldmctNFL",
+      "outletId": "a_to_z_sports_kc_kc",
+      "role": "Chiefs Beat & Roster Analyst",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/goldmctNFL",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "seth_keysor",
+      "name": "Seth Keysor",
+      "handle": "@RealMNchiefsfan",
+      "outletId": "chief_in_the_north_kc",
+      "role": "Chiefs All-22 Film Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/RealMNchiefsfan",
+      "bskyHandle": "realmnchiefsfan.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "ryan_tracy",
+      "name": "Ryan Tracy",
+      "handle": "@RyanTracyNFL",
+      "outletId": "locked_on_chiefs_kc",
+      "role": "Chiefs Roster, Cap & Draft Host (Locked On)",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/RyanTracyNFL",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "matt_mcmullen",
+      "name": "Matt McMullen",
+      "handle": "@KCChiefs_Matt",
+      "outletId": "chiefs_official",
+      "role": "Senior Team Reporter (Chiefs.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/KCChiefs_Matt",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "kent_swanson",
+      "name": "Kent Swanson",
+      "handle": "@kent_swanson",
+      "outletId": "kc_sports_network_kc",
+      "role": "Chiefs Film & Analytics Host (KCSN)",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/kent_swanson",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "chiefs_pr",
+      "name": "Kansas City Chiefs PR",
+      "handle": "@ChiefsPR",
+      "outletId": "chiefs_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ChiefsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

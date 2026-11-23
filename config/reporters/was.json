@@ -1,0 +1,225 @@
+{
+  "teamAbbr": "WAS",
+  "podiumSubjectIds": [
+    "dan_quinn",
+    "adam_peters",
+    "david_blough",
+    "daronte_jones"
+  ],
+  "outlets": [
+    {
+      "id": "commanders_official",
+      "name": "Commanders.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.commanders.com/news/"
+    },
+    {
+      "id": "espn_was",
+      "name": "ESPN Washington Commanders Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/wsh/washington-commanders"
+    },
+    {
+      "id": "hogs_haven",
+      "name": "Hogs Haven (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.hogshaven.com/"
+    },
+    {
+      "id": "the_athletic_dc_public_beat_wire_was",
+      "name": "The Athletic DC (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/BenStandig"
+    },
+    {
+      "id": "washington_post_public_beat_wire_was",
+      "name": "Washington Post (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/NickiJhabvala"
+    },
+    {
+      "id": "nbc4_washington_was",
+      "name": "NBC4 Washington",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/JPFinlayNBCS"
+    },
+    {
+      "id": "mark_bullock_film_was",
+      "name": "Mark Bullock Film",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/MarkBullockNFL"
+    },
+    {
+      "id": "locked_on_commanders_was",
+      "name": "Locked On Commanders",
+      "tier": 2,
+      "type": "audio_beat",
+      "url": "https://x.com/DHarrison82"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "dan_quinn",
+      "name": "Dan Quinn",
+      "handle": "@Commanders",
+      "outletId": "commanders_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Commanders",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "adam_peters",
+      "name": "Adam Peters",
+      "handle": "@Commanders",
+      "outletId": "commanders_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Commanders",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "john_keim",
+      "name": "John Keim",
+      "handle": "@john_keim",
+      "outletId": "espn_was",
+      "role": "ESPN NFL Nation Commanders Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/john_keim",
+      "bskyHandle": "johnkeim.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "ben_standig",
+      "name": "Ben Standig",
+      "handle": "@BenStandig",
+      "outletId": "the_athletic_dc_public_beat_wire_was",
+      "role": "Commanders Senior Insider (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/BenStandig",
+      "bskyHandle": "benstandig.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "nicki_jhabvala",
+      "name": "Nicki Jhabvala",
+      "handle": "@NickiJhabvala",
+      "outletId": "washington_post_public_beat_wire_was",
+      "role": "Lead Commanders Beat Writer (WaPo)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/NickiJhabvala",
+      "bskyHandle": "nickijhabvala.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "jp_finlay",
+      "name": "JP Finlay",
+      "handle": "@JPFinlayNBCS",
+      "outletId": "nbc4_washington_was",
+      "role": "Commanders Beat Reporter & Host",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JPFinlayNBCS",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "sam_fortier",
+      "name": "Sam Fortier",
+      "handle": "@Sam4TR",
+      "outletId": "washington_post_public_beat_wire_was",
+      "role": "Commanders Beat Writer (WaPo)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Sam4TR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "mark_bullock",
+      "name": "Mark Bullock",
+      "handle": "@MarkBullockNFL",
+      "outletId": "mark_bullock_film_was",
+      "role": "Commanders All-22 Film Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/MarkBullockNFL",
+      "bskyHandle": "markbullocknfl.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "david_harrison",
+      "name": "David Harrison",
+      "handle": "@DHarrison82",
+      "outletId": "locked_on_commanders_was",
+      "role": "Host of Locked On Commanders",
+      "category": "audio_beat",
+      "styleTag": "daily-audio",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/DHarrison82",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "zach_selby",
+      "name": "Zach Selby",
+      "handle": "@ZachSelbyWC",
+      "outletId": "commanders_official",
+      "role": "Senior Writer (Commanders.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ZachSelbyWC",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "commanders_pr",
+      "name": "Washington Commanders PR",
+      "handle": "@CommandersPR",
+      "outletId": "commanders_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/CommandersPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

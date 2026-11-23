@@ -1,0 +1,218 @@
+{
+  "teamAbbr": "CLE",
+  "podiumSubjectIds": [
+    "todd_monken",
+    "andrew_berry",
+    "travis_switzer",
+    "mike_rutenberg"
+  ],
+  "outlets": [
+    {
+      "id": "browns_official",
+      "name": "ClevelandBrowns.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.clevelandbrowns.com/news/"
+    },
+    {
+      "id": "espn_cle",
+      "name": "ESPN Cleveland Browns Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/cle/cleveland-browns"
+    },
+    {
+      "id": "dawgs_by_nature",
+      "name": "Dawgs By Nature (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.dawgsbynature.com/"
+    },
+    {
+      "id": "the_athletic_cleveland_public_beat_wire_",
+      "name": "The Athletic Cleveland (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/AkronJackson"
+    },
+    {
+      "id": "cleveland_com_plain_dealer_cle",
+      "name": "Cleveland.com / Plain Dealer",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/MaryKayCabot"
+    },
+    {
+      "id": "brownszone_chronicle_telegram_cle",
+      "name": "BrownsZone / Chronicle-Telegram",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/ScottPetrak"
+    },
+    {
+      "id": "orange_and_brown_report_cle",
+      "name": "Orange and Brown Report",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/jake_burns18"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "todd_monken",
+      "name": "Todd Monken",
+      "handle": "@Browns",
+      "outletId": "browns_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Browns",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "andrew_berry",
+      "name": "Andrew Berry",
+      "handle": "@Browns",
+      "outletId": "browns_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Browns",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "daniel_oyefusi",
+      "name": "Daniel Oyefusi",
+      "handle": "@DanielOyefusi",
+      "outletId": "espn_cle",
+      "role": "ESPN NFL Nation Browns Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/DanielOyefusi",
+      "bskyHandle": "danieloyefusi.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "zac_jackson",
+      "name": "Zac Jackson",
+      "handle": "@AkronJackson",
+      "outletId": "the_athletic_cleveland_public_beat_wire_",
+      "role": "Browns Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AkronJackson",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "mary_kay_cabot",
+      "name": "Mary Kay Cabot",
+      "handle": "@MaryKayCabot",
+      "outletId": "cleveland_com_plain_dealer_cle",
+      "role": "Lead Browns Beat Insider (Cleveland.com)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/MaryKayCabot",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "scott_petrak",
+      "name": "Scott Petrak",
+      "handle": "@ScottPetrak",
+      "outletId": "brownszone_chronicle_telegram_cle",
+      "role": "Browns Beat Writer",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ScottPetrak",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "ashley_bastock",
+      "name": "Ashley Bastock",
+      "handle": "@AshleyBastock42",
+      "outletId": "cleveland_com_plain_dealer_cle",
+      "role": "Browns Beat Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AshleyBastock42",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jake_burns",
+      "name": "Jake Burns",
+      "handle": "@jake_burns18",
+      "outletId": "orange_and_brown_report_cle",
+      "role": "Browns All-22 Film Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/jake_burns18",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jack_duffin",
+      "name": "Jack Duffin",
+      "handle": "@JackDuffin",
+      "outletId": "orange_and_brown_report_cle",
+      "role": "Browns Salary Cap & Roster Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JackDuffin",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "andrew_gribble",
+      "name": "Andrew Gribble",
+      "handle": "@Andrew_Gribble",
+      "outletId": "browns_official",
+      "role": "Senior Writer (ClevelandBrowns.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Andrew_Gribble",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "browns_pr",
+      "name": "Cleveland Browns PR",
+      "handle": "@BrownsPR",
+      "outletId": "browns_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/BrownsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

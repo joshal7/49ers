@@ -1,0 +1,246 @@
+{
+  "teamAbbr": "NYG",
+  "podiumSubjectIds": [
+    "john_harbaugh",
+    "joe_schoen",
+    "matt_nagy",
+    "dennard_wilson"
+  ],
+  "outlets": [
+    {
+      "id": "giants_official",
+      "name": "Giants.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.giants.com/news/"
+    },
+    {
+      "id": "espn_nyg",
+      "name": "ESPN New York Giants Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/nyg/new-york-giants"
+    },
+    {
+      "id": "big_blue_view",
+      "name": "Big Blue View (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.bigblueview.com/"
+    },
+    {
+      "id": "the_athletic_ny_public_beat_wire_nyg",
+      "name": "The Athletic NY (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/DDuggan21"
+    },
+    {
+      "id": "the_record_northjersey_com_nyg",
+      "name": "The Record / NorthJersey.com",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/art_stapleton"
+    },
+    {
+      "id": "sny_nyg",
+      "name": "SNY",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/Connor_J_Hughes"
+    },
+    {
+      "id": "new_york_post_nyg",
+      "name": "New York Post",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/rydunleavy"
+    },
+    {
+      "id": "ny_daily_news_nyg",
+      "name": "NY Daily News",
+      "tier": 2,
+      "type": "beat",
+      "url": "https://x.com/PLeonardNYDN"
+    },
+    {
+      "id": "big_blue_banter_nyg",
+      "name": "Big Blue Banter",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/nickfalato"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "john_harbaugh",
+      "name": "John Harbaugh",
+      "handle": "@Giants",
+      "outletId": "giants_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Giants",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "joe_schoen",
+      "name": "Joe Schoen",
+      "handle": "@Giants",
+      "outletId": "giants_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Giants",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jordan_raanan",
+      "name": "Jordan Raanan",
+      "handle": "@JordanRaanan",
+      "outletId": "espn_nyg",
+      "role": "ESPN NFL Nation Giants Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JordanRaanan",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "dan_duggan",
+      "name": "Dan Duggan",
+      "handle": "@DDuggan21",
+      "outletId": "the_athletic_ny_public_beat_wire_nyg",
+      "role": "Giants Beat & Cap Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/DDuggan21",
+      "bskyHandle": "dduggan21.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "art_stapleton",
+      "name": "Art Stapleton",
+      "handle": "@art_stapleton",
+      "outletId": "the_record_northjersey_com_nyg",
+      "role": "Giants Beat Columnist (USA Today Network)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/art_stapleton",
+      "bskyHandle": "artstapleton.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "connor_hughes",
+      "name": "Connor Hughes",
+      "handle": "@Connor_J_Hughes",
+      "outletId": "sny_nyg",
+      "role": "NY Giants & Jets Senior Insider (SNY)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Connor_J_Hughes",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "ryan_dunleavy",
+      "name": "Ryan Dunleavy",
+      "handle": "@rydunleavy",
+      "outletId": "new_york_post_nyg",
+      "role": "Giants Beat Reporter (NY Post)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/rydunleavy",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "pat_leonard",
+      "name": "Pat Leonard",
+      "handle": "@PLeonardNYDN",
+      "outletId": "ny_daily_news_nyg",
+      "role": "Giants Beat Columnist",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/PLeonardNYDN",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "nick_falato",
+      "name": "Nick Falato",
+      "handle": "@nickfalato",
+      "outletId": "big_blue_banter_nyg",
+      "role": "Giants All-22 Film & Draft Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/nickfalato",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "dan_schneier",
+      "name": "Dan Schneier",
+      "handle": "@DanSchneierNFL",
+      "outletId": "big_blue_banter_nyg",
+      "role": "Giants Scheme Analyst & Podcast Co-Host",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/DanSchneierNFL",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "dan_salomone",
+      "name": "Dan Salomone",
+      "handle": "@Dan_Salomone",
+      "outletId": "giants_official",
+      "role": "Managing Editor (Giants.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Dan_Salomone",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "giants_pr",
+      "name": "New York Giants PR",
+      "handle": "@NYGiantsPR",
+      "outletId": "giants_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/NYGiantsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

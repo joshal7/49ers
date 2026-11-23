@@ -1,0 +1,21 @@
+# Cloudflare Pages Production Config for All 32 NFL Team Sites (`*.joshal.com` -> `nfl-teams.pages.dev`)
+#
+# 100% FREE TIER — ZERO CREDIT CARD REQUIRED (NO R2):
+# - Keeps `joshal.com` DNS 100% on GoDaddy (`www.joshal.com` SmugMug, `joshal.com`,
+#   `whisky.joshal.com`, `whiskey.joshal.com`, `email`/MX, `nfl.joshal.com`, `workouts.joshal.com` untouched).
+# - Uses ONLY Cloudflare Pages Free + Workers KV Free (hard free-tier caps; cannot auto-bill).
+# - Live team JSON feeds ship directly as Pages Static Assets (`dist-nfl-teams/data/` + `dist-nfl-teams/data/teams/...`)
+#   with unlimited free static bandwidth and 0 Functions invocations.
+
+name = "nfl-teams"
+pages_build_output_dir = "../../dist-nfl-teams"
+compatibility_date = "2026-11-01"
+
+[[kv_namespaces]]
+binding = "SHARED_CACHE"
+id = "7562e055d295422fbb209adc711aba32"
+
+[vars]
+ALL_TEAMS = "ALL"
+GEMINI_DEFAULT_FREE_MODEL = "gemini-4-hydrogen"
+GEMINI_THINKING_LEVEL = "XHIGH"

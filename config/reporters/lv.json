@@ -1,0 +1,218 @@
+{
+  "teamAbbr": "LV",
+  "podiumSubjectIds": [
+    "klint_kubiak",
+    "john_spytek",
+    "andrew_janocko",
+    "rob_leonard"
+  ],
+  "outlets": [
+    {
+      "id": "raiders_official",
+      "name": "Raiders.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.raiders.com/news/"
+    },
+    {
+      "id": "espn_lv",
+      "name": "ESPN Las Vegas Raiders Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/lv/las-vegas-raiders"
+    },
+    {
+      "id": "silver_and_black_pride",
+      "name": "Silver And Black Pride (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.silverandblackpride.com/"
+    },
+    {
+      "id": "the_athletic_las_vegas_public_beat_wire_",
+      "name": "The Athletic Las Vegas (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/tashanreed"
+    },
+    {
+      "id": "las_vegas_review_journal_lv",
+      "name": "Las Vegas Review-Journal",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/VinnyBonsignore"
+    },
+    {
+      "id": "locked_on_raiders_lv",
+      "name": "Locked On Raiders",
+      "tier": 1,
+      "type": "audio_beat",
+      "url": "https://x.com/YourBoyQ254"
+    },
+    {
+      "id": "tape_dont_lie_lv",
+      "name": "Tape Don't Lie",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/TheMarcJohnNFL"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "klint_kubiak",
+      "name": "Klint Kubiak",
+      "handle": "@Raiders",
+      "outletId": "raiders_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Raiders",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "john_spytek",
+      "name": "John Spytek",
+      "handle": "@Raiders",
+      "outletId": "raiders_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Raiders",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "ryan_mcfadden",
+      "name": "Ryan McFadden",
+      "handle": "@ryanmcfadden_",
+      "outletId": "espn_lv",
+      "role": "ESPN NFL Nation Raiders Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ryanmcfadden_",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "tashan_reed",
+      "name": "Tashan Reed",
+      "handle": "@tashanreed",
+      "outletId": "the_athletic_las_vegas_public_beat_wire_",
+      "role": "Lead Raiders Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/tashanreed",
+      "bskyHandle": "tashanreed.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "vic_tafur",
+      "name": "Vic Tafur",
+      "handle": "@VicTafur",
+      "outletId": "the_athletic_las_vegas_public_beat_wire_",
+      "role": "Senior Raiders Columnist (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/VicTafur",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "vincent_bonsignore",
+      "name": "Vincent Bonsignore",
+      "handle": "@VinnyBonsignore",
+      "outletId": "las_vegas_review_journal_lv",
+      "role": "Lead Raiders Beat Insider (LVRJ)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/VinnyBonsignore",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "adam_hill",
+      "name": "Adam Hill",
+      "handle": "@AdamHillLVRJ",
+      "outletId": "las_vegas_review_journal_lv",
+      "role": "Raiders Beat Writer (LVRJ)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AdamHillLVRJ",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "your_boy_q",
+      "name": "Your Boy Q",
+      "handle": "@YourBoyQ254",
+      "outletId": "locked_on_raiders_lv",
+      "role": "Host of Locked On Raiders",
+      "category": "audio_beat",
+      "styleTag": "daily-audio",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/YourBoyQ254",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "marcus_johnson",
+      "name": "Marcus Johnson",
+      "handle": "@TheMarcJohnNFL",
+      "outletId": "tape_dont_lie_lv",
+      "role": "Raiders All-22 Film Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/TheMarcJohnNFL",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "eddie_paskal",
+      "name": "Eddie Paskal",
+      "handle": "@EddiePaskal",
+      "outletId": "raiders_official",
+      "role": "Team Reporter & Host (Raiders.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/EddiePaskal",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "raiders_pr",
+      "name": "Las Vegas Raiders PR",
+      "handle": "@RAIDERS_PR",
+      "outletId": "raiders_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/RAIDERS_PR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

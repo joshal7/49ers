@@ -19,6 +19,7 @@
  *   fallback if a remote subdomain is temporarily unreachable or offline.
  */
 
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 const REMOTE_TEAM_CACHE_TTL_MS = 5 * 60 * 1000;
 const REMOTE_TEAM_FAIL_COOLDOWN_MS = 20 * 1000;
 const DEFAULT_REMOTE_FETCH_TIMEOUT_MS = 7500;
@@ -76,7 +77,6 @@ const RAW_NFL_TEAMS = [
 const EXTRA_ABBR_ALIASES = {
   sfo: 'SF',
   niners: 'SF',
-  '49ers2': 'SF',
   la: 'LAR',
   stl: 'LAR',
   arz: 'ARI',
@@ -194,7 +194,7 @@ export function buildTeamSiteOrigin(teamInput) {
   return team ? team.origin : null;
 }
 
-export function buildTeamDataBaseUrls(teamInput, { baseUrlOverride = null } = {}) {
+export function buildTeamDataBaseUrls(teamInput, { baseUrlOverride = null, browserOrigin = null } = {}) {
   const team = resolveNflTeamMeta(teamInput);
   if (!team) return [];
   const effectiveOverride =
@@ -213,13 +213,33 @@ export function buildTeamDataBaseUrls(teamInput, { baseUrlOverride = null } = {}
     }
     return [`${tmpl}/${team.slug}`];
   }
-  if (team.abbr === 'SF') {
-    return ['https://49ers.joshal.com/data'];
+
+  const urls = [];
+  const resolvedBrowserOrigin =
+    typeof browserOrigin === 'string' && /^https?:\/\//i.test(browserOrigin.trim())
+      ? browserOrigin.trim().replace(/\/+$/, '')
+      : typeof window !== 'undefined' &&
+          window.location?.origin &&
+          /^https?:$/i.test(window.location?.protocol || '')
+        ? window.location.origin.replace(/\/+$/, '')
+        : '';
+
+  if (resolvedBrowserOrigin) {
+    const sameOriginPath =
+      team.abbr === 'SF'
+        ? `${resolvedBrowserOrigin}/data`
+        : `${resolvedBrowserOrigin}/data/teams/${team.slug}`;
+    urls.push(sameOriginPath);
   }
-  return [
-    `https://${team.slug}.joshal.com/data/teams/${team.slug}`,
-    `https://${team.slug}.joshal.com/data`
-  ];
+
+  if (team.abbr === 'SF') {
+    urls.push('https://49ers.joshal.com/data');
+  } else {
+    urls.push(`https://${team.slug}.joshal.com/data/teams/${team.slug}`);
+    urls.push(`https://${team.slug}.joshal.com/data`);
+  }
+
+  return Array.from(new Set(urls));
 }
 
 export function getRemoteTeamSheetThemeVars(teamInput, themeMode = 'dark') {
@@ -662,9 +682,11 @@ export function mergeRemoteAndLocalOpponentPlayer({
   remoteBundle = null,
   seedPlayer = null,
   teamMeta = null,
+  activeTeamAbbr = null,
   localNewsRawStream = []
 } = {}) {
   const team = resolveNflTeamMeta(teamMeta || remoteBundle?.team);
+  const currentActiveAbbr = String(activeTeamAbbr || getActiveTeamConfig()?.abbr || 'SF').toUpperCase();
   const remoteAppData = remoteBundle?.appData || null;
   const remoteRawStream = Array.isArray(remoteAppData?.news?.rawStream)
     ? remoteAppData.news.rawStream
@@ -770,7 +792,7 @@ export function mergeRemoteAndLocalOpponentPlayer({
   const teamBeatHandles = extractTopTeamBeatHandles(remoteBundle?.reportersJson, 6);
   const teamContext = team
     ? {
-        isRemoteTeam: team.abbr !== 'SF',
+        isRemoteTeam: team.abbr !== currentActiveAbbr,
         abbr: team.abbr,
         slug: team.slug,
         domain: team.domain,

@@ -1,0 +1,246 @@
+{
+  "teamAbbr": "DEN",
+  "podiumSubjectIds": [
+    "sean_payton",
+    "george_paton",
+    "davis_webb",
+    "vance_joseph"
+  ],
+  "outlets": [
+    {
+      "id": "broncos_official",
+      "name": "DenverBroncos.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.denverbroncos.com/news/"
+    },
+    {
+      "id": "espn_den",
+      "name": "ESPN Denver Broncos Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/den/denver-broncos"
+    },
+    {
+      "id": "mile_high_report",
+      "name": "Mile High Report (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.milehighreport.com/"
+    },
+    {
+      "id": "the_athletic_denver_public_beat_wire_den",
+      "name": "The Athletic Denver (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/NickKosmider"
+    },
+    {
+      "id": "denver_post_public_beat_wire_den",
+      "name": "Denver Post (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/ParkerJGabriel"
+    },
+    {
+      "id": "9news_denver_den",
+      "name": "9NEWS Denver",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/mikeklis9news"
+    },
+    {
+      "id": "dnvr_broncos_den",
+      "name": "DNVR Broncos",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/ZacStevensDNVR"
+    },
+    {
+      "id": "locked_on_broncos_den",
+      "name": "Locked On Broncos",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/CodyRoarkNFL"
+    },
+    {
+      "id": "denver_sports_104_3_den",
+      "name": "Denver Sports 104.3",
+      "tier": 2,
+      "type": "beat",
+      "url": "https://x.com/MaseDenver"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "sean_payton",
+      "name": "Sean Payton",
+      "handle": "@Broncos",
+      "outletId": "broncos_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Broncos",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "george_paton",
+      "name": "George Paton",
+      "handle": "@Broncos",
+      "outletId": "broncos_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Broncos",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jeff_legwold",
+      "name": "Jeff Legwold",
+      "handle": "@Jeff_Legwold",
+      "outletId": "espn_den",
+      "role": "ESPN NFL Nation Broncos Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Jeff_Legwold",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "nick_kosmider",
+      "name": "Nick Kosmider",
+      "handle": "@NickKosmider",
+      "outletId": "the_athletic_denver_public_beat_wire_den",
+      "role": "Broncos Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/NickKosmider",
+      "bskyHandle": "nickkosmider.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "parker_gabriel",
+      "name": "Parker Gabriel",
+      "handle": "@ParkerJGabriel",
+      "outletId": "denver_post_public_beat_wire_den",
+      "role": "Lead Broncos Beat Writer (Denver Post)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ParkerJGabriel",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "luca_evans",
+      "name": "Luca Evans",
+      "handle": "@bylucaevans",
+      "outletId": "denver_post_public_beat_wire_den",
+      "role": "Broncos Beat Reporter (Denver Post)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/bylucaevans",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "mike_klis",
+      "name": "Mike Klis",
+      "handle": "@mikeklis9news",
+      "outletId": "9news_denver_den",
+      "role": "Senior Broncos Insider (9NEWS)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/mikeklis9news",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "zac_stevens",
+      "name": "Zac Stevens",
+      "handle": "@ZacStevensDNVR",
+      "outletId": "dnvr_broncos_den",
+      "role": "Broncos Beat & DNVR Co-Host",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ZacStevensDNVR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "cody_roark",
+      "name": "Cody Roark",
+      "handle": "@CodyRoarkNFL",
+      "outletId": "locked_on_broncos_den",
+      "role": "Host & Film Analyst (Locked On Broncos)",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/CodyRoarkNFL",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "aric_dilalla",
+      "name": "Aric DiLalla",
+      "handle": "@AricDiLalla",
+      "outletId": "broncos_official",
+      "role": "Lead Writer (DenverBroncos.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AricDiLalla",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "andrew_mason",
+      "name": "Andrew Mason",
+      "handle": "@MaseDenver",
+      "outletId": "denver_sports_104_3_den",
+      "role": "Veteran Broncos Beat & Cap Analyst",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/MaseDenver",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "broncos_pr",
+      "name": "Denver Broncos PR",
+      "handle": "@BroncosPR",
+      "outletId": "broncos_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/BroncosPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

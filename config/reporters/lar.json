@@ -1,0 +1,218 @@
+{
+  "teamAbbr": "LAR",
+  "podiumSubjectIds": [
+    "sean_mcvay",
+    "les_snead",
+    "nathan_scheelhaase",
+    "chris_shula"
+  ],
+  "outlets": [
+    {
+      "id": "rams_official",
+      "name": "TheRams.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.therams.com/news/"
+    },
+    {
+      "id": "espn_lar",
+      "name": "ESPN Los Angeles Rams Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/lar/los-angeles-rams"
+    },
+    {
+      "id": "turf_show_times",
+      "name": "Turf Show Times (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.turfshowtimes.com/"
+    },
+    {
+      "id": "the_athletic_la_public_beat_wire_lar",
+      "name": "The Athletic LA (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/JourdanRodrigue"
+    },
+    {
+      "id": "la_times_public_beat_wire_lar",
+      "name": "LA Times (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/LATimesklein"
+    },
+    {
+      "id": "rams_wire_lar",
+      "name": "Rams Wire",
+      "tier": 2,
+      "type": "beat",
+      "url": "https://x.com/camdasilva"
+    },
+    {
+      "id": "oc_register_rams_beat_lar",
+      "name": "OC Register Rams Beat",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/AdamGrosbard"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "sean_mcvay",
+      "name": "Sean McVay",
+      "handle": "@RamsNFL",
+      "outletId": "rams_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/RamsNFL",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "les_snead",
+      "name": "Les Snead",
+      "handle": "@RamsNFL",
+      "outletId": "rams_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/RamsNFL",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "sarah_barshop",
+      "name": "Sarah Barshop",
+      "handle": "@sarahbarshop",
+      "outletId": "espn_lar",
+      "role": "ESPN NFL Nation Rams Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/sarahbarshop",
+      "bskyHandle": "sarahbarshop.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "jourdan_rodrigue",
+      "name": "Jourdan Rodrigue",
+      "handle": "@JourdanRodrigue",
+      "outletId": "the_athletic_la_public_beat_wire_lar",
+      "role": "Senior Rams Beat & Scheme Analyst (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/JourdanRodrigue",
+      "bskyHandle": "jourdanrodrigue.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "gary_klein",
+      "name": "Gary Klein",
+      "handle": "@LATimesklein",
+      "outletId": "la_times_public_beat_wire_lar",
+      "role": "Rams Beat Writer (Los Angeles Times)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/LATimesklein",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "stu_jackson",
+      "name": "Stu Jackson",
+      "handle": "@StuJRams",
+      "outletId": "rams_official",
+      "role": "Senior Staff Writer (TheRams.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/StuJRams",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "cameron_dasilva",
+      "name": "Cameron DaSilva",
+      "handle": "@camdasilva",
+      "outletId": "rams_wire_lar",
+      "role": "Managing Editor (Rams Wire)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/camdasilva",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "adam_grosbard",
+      "name": "Adam Grosbard",
+      "handle": "@AdamGrosbard",
+      "outletId": "oc_register_rams_beat_lar",
+      "role": "Rams Beat Reporter (SCNG)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/AdamGrosbard",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "rich_hammond",
+      "name": "Rich Hammond",
+      "handle": "@Rich_Hammond",
+      "outletId": "the_athletic_la_public_beat_wire_lar",
+      "role": "Rams Analyst & 11 Personnel Co-Host",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/Rich_Hammond",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "j_b_long",
+      "name": "J.B. Long",
+      "handle": "@JB_Long",
+      "outletId": "rams_official",
+      "role": "Voice of the Rams & Official Host",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 89,
+      "trustTier": 2,
+      "xUrl": "https://x.com/JB_Long",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "rams_pr",
+      "name": "Los Angeles Rams PR",
+      "handle": "@TheLARamsPR",
+      "outletId": "rams_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/TheLARamsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

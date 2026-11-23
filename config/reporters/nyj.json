@@ -1,0 +1,225 @@
+{
+  "teamAbbr": "NYJ",
+  "podiumSubjectIds": [
+    "aaron_glenn",
+    "darren_mougey",
+    "frank_reich",
+    "brian_duker"
+  ],
+  "outlets": [
+    {
+      "id": "jets_official",
+      "name": "NewYorkJets.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.newyorkjets.com/news/"
+    },
+    {
+      "id": "espn_nyj",
+      "name": "ESPN New York Jets Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets"
+    },
+    {
+      "id": "gang_green_nation",
+      "name": "Gang Green Nation (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.ganggreennation.com/"
+    },
+    {
+      "id": "the_athletic_ny_public_beat_wire_nyj",
+      "name": "The Athletic NY (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/ZackBlatt"
+    },
+    {
+      "id": "sny_nyj",
+      "name": "SNY",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/Connor_J_Hughes"
+    },
+    {
+      "id": "new_york_post_nyj",
+      "name": "New York Post",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/BrianCoz"
+    },
+    {
+      "id": "nj_advance_media_nyj",
+      "name": "NJ Advance Media",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/andy_vasquez"
+    },
+    {
+      "id": "jets_x_factor_nyj",
+      "name": "Jets X-Factor",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/Joerb31"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "aaron_glenn",
+      "name": "Aaron Glenn",
+      "handle": "@nyjets",
+      "outletId": "jets_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/nyjets",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "darren_mougey",
+      "name": "Darren Mougey",
+      "handle": "@nyjets",
+      "outletId": "jets_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/nyjets",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "rich_cimini",
+      "name": "Rich Cimini",
+      "handle": "@RichCimini",
+      "outletId": "espn_nyj",
+      "role": "ESPN NFL Nation Jets Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/RichCimini",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "zack_rosenblatt",
+      "name": "Zack Rosenblatt",
+      "handle": "@ZackBlatt",
+      "outletId": "the_athletic_ny_public_beat_wire_nyj",
+      "role": "Jets Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/ZackBlatt",
+      "bskyHandle": "zackblatt.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "connor_hughes",
+      "name": "Connor Hughes",
+      "handle": "@Connor_J_Hughes",
+      "outletId": "sny_nyj",
+      "role": "NY Jets Senior Insider (SNY)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Connor_J_Hughes",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "brian_costello",
+      "name": "Brian Costello",
+      "handle": "@BrianCoz",
+      "outletId": "new_york_post_nyj",
+      "role": "Lead Jets Beat Writer (NY Post)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/BrianCoz",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "andy_vasquez",
+      "name": "Andy Vasquez",
+      "handle": "@andy_vasquez",
+      "outletId": "nj_advance_media_nyj",
+      "role": "Jets Beat Reporter (NJ.com)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/andy_vasquez",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "joe_blewett",
+      "name": "Joe Blewett",
+      "handle": "@Joerb31",
+      "outletId": "jets_x_factor_nyj",
+      "role": "Jets All-22 Film Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Joerb31",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "michael_nania",
+      "name": "Michael Nania",
+      "handle": "@Michael_Nania",
+      "outletId": "jets_x_factor_nyj",
+      "role": "Jets Analytics & EPA Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Michael_Nania",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "eric_allen",
+      "name": "Eric Allen",
+      "handle": "@eallenjets",
+      "outletId": "jets_official",
+      "role": "Senior Reporter (NewYorkJets.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/eallenjets",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "jets_pr",
+      "name": "New York Jets PR",
+      "handle": "@nyjetsPR",
+      "outletId": "jets_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/nyjetsPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

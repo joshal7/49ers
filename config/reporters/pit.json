@@ -1,0 +1,218 @@
+{
+  "teamAbbr": "PIT",
+  "podiumSubjectIds": [
+    "mike_mccarthy",
+    "omar_khan",
+    "brian_angelichio",
+    "patrick_graham"
+  ],
+  "outlets": [
+    {
+      "id": "steelers_official",
+      "name": "Steelers.com / Official Team",
+      "tier": 1,
+      "type": "official",
+      "url": "https://www.steelers.com/news/"
+    },
+    {
+      "id": "espn_pit",
+      "name": "ESPN Pittsburgh Steelers Beat",
+      "tier": 1,
+      "type": "national_beat",
+      "url": "https://www.espn.com/nfl/team/_/name/pit/pittsburgh-steelers"
+    },
+    {
+      "id": "behind_the_steel_curtain",
+      "name": "Behind The Steel Curtain (SB Nation)",
+      "tier": 2,
+      "type": "blog_analysis",
+      "url": "https://www.behindthesteelcurtain.com/"
+    },
+    {
+      "id": "the_athletic_pittsburgh_public_beat_wire",
+      "name": "The Athletic Pittsburgh (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/MikeDeFabo"
+    },
+    {
+      "id": "pittsburgh_post_gazette_public_beat_wire",
+      "name": "Pittsburgh Post-Gazette (Public Beat Wire)",
+      "tier": 1,
+      "type": "beat",
+      "url": "https://x.com/gerrydulac"
+    },
+    {
+      "id": "steelers_depot_pit",
+      "name": "Steelers Depot",
+      "tier": 1,
+      "type": "video_film",
+      "url": "https://x.com/Alex_Kozora"
+    },
+    {
+      "id": "locked_on_steelers_pit",
+      "name": "Locked On Steelers",
+      "tier": 1,
+      "type": "audio_beat",
+      "url": "https://x.com/CarterCritiques"
+    }
+  ],
+  "reporters": [
+    {
+      "id": "mike_mccarthy",
+      "name": "Mike McCarthy",
+      "handle": "@steelers",
+      "outletId": "steelers_official",
+      "role": "Head Coach Podium & Injury Pressers",
+      "category": "official",
+      "styleTag": "factual-scheme",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/steelers",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "omar_khan",
+      "name": "Omar Khan",
+      "handle": "@steelers",
+      "outletId": "steelers_official",
+      "role": "General Manager & Front Office Pressers",
+      "category": "official",
+      "styleTag": "front-office-intel",
+      "baseScore": 98,
+      "trustTier": 1,
+      "xUrl": "https://x.com/steelers",
+      "bskyHandle": null,
+      "isPodiumSubject": true,
+      "defaultEnabled": true
+    },
+    {
+      "id": "brooke_pryor",
+      "name": "Brooke Pryor",
+      "handle": "@bepryor",
+      "outletId": "espn_pit",
+      "role": "ESPN NFL Nation Steelers Reporter",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/bepryor",
+      "bskyHandle": "bepryor.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "mike_defabo",
+      "name": "Mike DeFabo",
+      "handle": "@MikeDeFabo",
+      "outletId": "the_athletic_pittsburgh_public_beat_wire",
+      "role": "Steelers Beat Writer (The Athletic)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/MikeDeFabo",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "gerry_dulac",
+      "name": "Gerry Dulac",
+      "handle": "@gerrydulac",
+      "outletId": "pittsburgh_post_gazette_public_beat_wire",
+      "role": "Senior Steelers Insider (Post-Gazette)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/gerrydulac",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "ray_fittipaldo",
+      "name": "Ray Fittipaldo",
+      "handle": "@rayfitt1",
+      "outletId": "pittsburgh_post_gazette_public_beat_wire",
+      "role": "Steelers Beat Writer (Post-Gazette)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/rayfitt1",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "brian_batko",
+      "name": "Brian Batko",
+      "handle": "@BrianBatko",
+      "outletId": "pittsburgh_post_gazette_public_beat_wire",
+      "role": "Steelers Beat Reporter (Post-Gazette)",
+      "category": "beat",
+      "styleTag": "practice-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/BrianBatko",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "alex_kozora",
+      "name": "Alex Kozora",
+      "handle": "@Alex_Kozora",
+      "outletId": "steelers_depot_pit",
+      "role": "Steelers All-22 Film & Training Camp Analyst",
+      "category": "film_analyst",
+      "styleTag": "cap-all22-scheme",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/Alex_Kozora",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "chris_carter",
+      "name": "Chris Carter",
+      "handle": "@CarterCritiques",
+      "outletId": "locked_on_steelers_pit",
+      "role": "Post-Gazette & Locked On Steelers Host",
+      "category": "audio_beat",
+      "styleTag": "daily-audio",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/CarterCritiques",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "dale_lolley",
+      "name": "Dale Lolley",
+      "handle": "@dlolley_pgh",
+      "outletId": "steelers_official",
+      "role": "Contributing Editor (Steelers.com)",
+      "category": "official",
+      "styleTag": "official-injury-beat",
+      "baseScore": 95,
+      "trustTier": 1,
+      "xUrl": "https://x.com/dlolley_pgh",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
+      "id": "steelers_pr",
+      "name": "Pittsburgh Steelers PR",
+      "handle": "@SteelersPR",
+      "outletId": "steelers_official",
+      "role": "Official Roster Moves, IR & Inactives Wire",
+      "category": "official",
+      "styleTag": "official-transactions",
+      "baseScore": 99,
+      "trustTier": 1,
+      "xUrl": "https://x.com/SteelersPR",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    }
+  ]
+}

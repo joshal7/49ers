@@ -237,38 +237,56 @@ export function estimateRichHillPickValue(overallPick) {
 }
 
 /**
- * Parses San Francisco's live upcoming draft pick inventory directly from
- * `https://www.tankathon.com/nfl/49ers` HTML (`Current Draft Picks` section).
+ * Parses any NFL team's live upcoming draft pick inventory directly from
+ * `https://www.tankathon.com/nfl/<team-slug>` HTML (`Current Draft Picks` section),
+ * including standard, traded, and compensatory (`Comp`) picks.
  */
-export function parseTankathonTeamPicksHtml(html = '') {
+export function parseTankathonTeamPicksHtml(html = '', teamAbbr = 'SF') {
   if (!html || typeof html !== 'string') return [];
   const sectionIdx = html.indexOf('Current Draft Picks');
   if (sectionIdx < 0) return [];
-  const slice = html.slice(sectionIdx, sectionIdx + 12000);
+  const endIdx = html.indexOf('Mock Draft Selections', sectionIdx);
+  const slice = html.slice(sectionIdx, endIdx > sectionIdx ? endIdx : sectionIdx + 14000);
+  const normAbbr = a => {
+    const u = String(a || '').trim().toUpperCase();
+    if (u === 'WSH') return 'WAS';
+    if (u === 'JAC') return 'JAX';
+    return u;
+  };
+  const ownTeam = normAbbr(teamAbbr || 'SF');
 
   const picks = [];
   const cardRe =
-    /<div class="pick-card-round">\s*(\d+)\.(\d+)\s*<\/div>\s*(\d+)\s*<\/div>[\s\S]{0,420}?<div class="abbreviation">\s*([A-Z]{2,3})\s*<\/div>/gi;
+    /<div class="pick-card-round">\s*(\d+)\.(\d+)(\s*Comp)?\s*<\/div>\s*(\d+)\s*<\/div>[\s\S]{0,420}?<div class="abbreviation">\s*([A-Z]{2,3})\s*<\/div>/gi;
 
   let m;
   while ((m = cardRe.exec(slice)) !== null) {
     const round = Number(m[1]);
-    const overall = Number(m[3]);
-    const origAbbr = String(m[4] || 'SF').trim().toUpperCase();
+    const isComp = Boolean(m[3] && /comp/i.test(m[3]));
+    const overall = Number(m[4]);
+    const origAbbr = normAbbr(m[5] || ownTeam);
     if (!Number.isFinite(round) || !Number.isFinite(overall)) continue;
 
-    const origin =
-      origAbbr === 'SF'
-        ? round === 1
-          ? 'Own Pick (Live Contender Slot)'
-          : 'Own Pick'
-        : `From ${origAbbr} (Acquired via Trade)`;
+    let origin;
+    if (isComp) {
+      origin = origAbbr === ownTeam ? 'Compensatory Pick' : `From ${origAbbr} (Compensatory)`;
+    } else if (origAbbr === ownTeam) {
+      origin =
+        round === 1
+          ? overall >= 20
+            ? 'Own Pick (Live Contender Slot)'
+            : 'Own Pick (Projected Slot)'
+          : 'Own Pick';
+    } else {
+      origin = `From ${origAbbr} (Acquired via Trade)`;
+    }
 
     picks.push({
       round,
       projectedOverall: overall,
       origin,
       fromTeam: origAbbr,
+      isComp,
       valueRichHill: estimateRichHillPickValue(overall)
     });
   }

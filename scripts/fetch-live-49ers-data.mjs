@@ -4179,9 +4179,6 @@ async function main() {
     LV: ['LV', 'OAK'],
     LAR: ['LAR', 'LA', 'STL'],
     LAC: ['LAC', 'SD'],
-    ARI: ['ARI', 'PHO'],
-    IND: ['IND', 'BAL'],
-    TEN: ['TEN', 'HOU'],
     WAS: ['WAS', 'WSH']
   };
   const PFR_FRANCHISE_CODES = {
