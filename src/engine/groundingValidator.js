@@ -5,6 +5,7 @@
  */
 
 import { KNOWN_FORMER_49ERS_COACHES } from './linkIntegrity.js';
+import { getActiveTeamConfig, getTeamCoaches, resolveTeamConfig } from '../config/teamRegistry.js';
 
 function normPlayerKey(name = '') {
   return String(name || '')
@@ -63,8 +64,23 @@ export const KNOWN_FORMER_OR_RETIRED_49ERS = [
 ];
 
 /**
- * Returns the list of former/retired players that are confirmed NOT on the live 49ers roster.
+ * Returns the list of former/retired players that are confirmed NOT on the live team roster.
+ * For `SF`, uses the hand-verified 49ers list plus any auto-derived `departedPlayers`.
+ * For other NFL teams (`DET`, `BUF`, etc.), uses the team's auto-derived `departedPlayers`.
  */
+export function getDisallowedFormerPlayers(rosterPlayers = [], options = {}) {
+  const team = resolveTeamConfig(options?.team || getActiveTeamConfig());
+  const liveSet = new Set((rosterPlayers || []).map(p => normPlayerKey(p?.name || p)));
+  const extraDeparted = Array.isArray(options?.departedPlayers)
+    ? options.departedPlayers.map(p => (typeof p === 'string' ? p : p?.name)).filter(Boolean)
+    : [];
+  const baseList =
+    team.abbr === 'SF'
+      ? [...new Set([...KNOWN_FORMER_OR_RETIRED_49ERS, ...extraDeparted])]
+      : [...new Set(extraDeparted)];
+  return baseList.filter(name => !liveSet.has(normPlayerKey(name)));
+}
+
 export function getDisallowedFormer49ers(rosterPlayers = []) {
   const liveSet = new Set((rosterPlayers || []).map(p => normPlayerKey(p?.name || p)));
   return KNOWN_FORMER_OR_RETIRED_49ERS.filter(name => !liveSet.has(normPlayerKey(name)));
@@ -75,12 +91,17 @@ export function getDisallowedFormer49ers(rosterPlayers = []) {
  * zero retired or departed former 49ers are falsely referenced as current active 49ers players,
  * while permitting accurate historical, 2026 dead-cap, opponent, or external trade-target references.
  */
-export function validateNoHallucinatedRosterClaims(text = '', rosterPlayers = []) {
+export function validateNoHallucinatedRosterClaims(text = '', rosterPlayers = [], options = {}) {
   const hay = String(text || '');
   if (!hay.trim()) return { valid: true, ok: true, violations: [] };
 
-  const disallowed = [...getDisallowedFormer49ers(rosterPlayers), ...KNOWN_FORMER_49ERS_COACHES];
-  const formerCoachSet = new Set(KNOWN_FORMER_49ERS_COACHES);
+  const team = resolveTeamConfig(options?.team || getActiveTeamConfig());
+  const isSf = team.abbr === 'SF';
+  const disallowed = isSf
+    ? [...getDisallowedFormerPlayers(rosterPlayers, { team, departedPlayers: options?.departedPlayers }), ...KNOWN_FORMER_49ERS_COACHES]
+    : getDisallowedFormerPlayers(rosterPlayers, { team, departedPlayers: options?.departedPlayers });
+  if (disallowed.length === 0) return { valid: true, ok: true, violations: [] };
+  const formerCoachSet = isSf ? new Set(KNOWN_FORMER_49ERS_COACHES) : new Set();
   const violations = [];
   const historicalOrExternalContextRe =
     /\b(retired|former|departed|ex-49er|no longer|not currently on|not on the active|not on the 2026|not on the live|waived|released|signed elsewhere|free agency departure|dead\s*cap|dead\s*money|post-june|void\s*year|trade\s*target|trade\s*candidate|trade\s*fit|seller|patriots|new\s*england|raiders|las\s*vegas|rams|los\s*angeles|chargers|cowboys|dallas|eagles|philadelphia|commanders|washington|giants|new\s*york|jets|lions|detroit|buccaneers|tampa|panthers|carolina|cardinals|arizona|chiefs|kansas\s*city|broncos|denver|bills|buffalo|dolphins|miami|ravens|baltimore|bengals|cincinnati|browns|cleveland|steelers|pittsburgh|saints|new\s*orleans|colts|indianapolis|vikings|minnesota|texans|houston|falcons|atlanta|bears|chicago|titans|tennessee|jaguars|jacksonville|seahawks|seattle|packers|green\s*bay)\b/i;
@@ -167,14 +188,28 @@ const FORMER_49ER_POSITION_GROUP = {
  * Replaces any accidental stale/retired player reference in generated text with
  * verified active 49ers players at the matching position group from `rosterPlayers`.
  */
-export function sanitizeHallucinatedRosterText(text = '', rosterPlayers = []) {
+export function sanitizeHallucinatedRosterText(text = '', rosterPlayers = [], options = {}) {
   let out = String(text || '');
   if (!out) return out;
 
-  const check = validateNoHallucinatedRosterClaims(out, rosterPlayers);
+  const team = resolveTeamConfig(options?.team || getActiveTeamConfig());
+  const check = validateNoHallucinatedRosterClaims(out, rosterPlayers, {
+    team,
+    departedPlayers: options?.departedPlayers
+  });
   if (check.valid) return out;
 
   const active = (rosterPlayers || []).filter(p => p.rosterBucket === 'active');
+  if (team.abbr !== 'SF') {
+    const activeStarterFallback = active[0]?.name || `${team.nickname} rotation`;
+    for (const badName of check.violations) {
+      const escaped = badName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/['’]/g, "['’]?");
+      const re = new RegExp(`\\b${escaped}\\b`, 'gi');
+      out = out.replace(re, activeStarterFallback);
+    }
+    return out;
+  }
+
   const activeEdges = active
     .filter(p => ['DE', 'EDGE', 'OLB'].includes(p.position) && !/bosa/i.test(p.name))
     .map(p => p.name);
@@ -204,12 +239,16 @@ export function sanitizeHallucinatedRosterText(text = '', rosterPlayers = []) {
 }
 
 /**
- * Parses a Vegas betting spread string (e.g. "SF -2.5", "SF -3.0", "MIN -2.5", "SF +4.5", "PK")
- * into San Francisco's point margin, market-implied win probability, and an explicit
+ * Parses a Vegas betting spread string (e.g. "SF -2.5", "BUF -3.5", "DET -6.5", "PK")
+ * into the active team's point margin, market-implied win probability, and an explicit
  * tone-calibration directive so AI briefs, podcasts, and matchup breakdowns never over-hype
- * San Francisco in tight or competitive games.
+ * the team in tight or competitive games.
  */
-export function describeSpreadCalibration(spreadStr = '', oppName = '', oppRecord = '') {
+export function describeSpreadCalibration(spreadStr = '', oppName = '', oppRecord = '', teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  const teamCity = team.city || 'San Francisco';
+  const teamNick = team.nickname || '49ers';
+  const teamAbbr = team.abbr || 'SF';
   const raw = String(spreadStr || '').trim();
   const oppLabel = oppName
     ? `${oppName}${oppRecord && oppRecord !== '—' ? ` (${oppRecord})` : ''}`
@@ -235,10 +274,15 @@ export function describeSpreadCalibration(spreadStr = '', oppName = '', oppRecor
       const teamToken = String(m[1] || '').toUpperCase();
       const val = parseFloat(m[2]);
       if (Number.isFinite(val)) {
-        if (!teamToken || teamToken === 'SF' || teamToken === 'SFO') {
-          sfMargin = -val; // "SF -2.5" -> +2.5 SF margin; "SF +3.5" -> -3.5 SF margin
+        const isOurToken =
+          !teamToken ||
+          teamToken === teamAbbr ||
+          teamToken === String(team.espnAbbr || '').toUpperCase() ||
+          teamToken === String(team.pfrAbbr || '').toUpperCase();
+        if (isOurToken) {
+          sfMargin = -val; // e.g., "BUF -3.5" -> +3.5 team margin; "BUF +3.5" -> -3.5 team margin
         } else {
-          sfMargin = val; // "MIN -2.5" -> -2.5 SF margin; "MIN +2.5" -> +2.5 SF margin
+          sfMargin = val; // e.g., "KC -2.5" -> -2.5 team margin
         }
       }
     }
@@ -263,16 +307,16 @@ export function describeSpreadCalibration(spreadStr = '', oppName = '', oppRecor
 
   let tier = 'toss_up';
   let tierLabel = 'Tight Coin-Flip / One-Score Game';
-  let directive = `give roughly equal (~50/50) analytical weight to BOTH how San Francisco can win AND how ${oppLabel} can legitimately beat San Francisco; never sound effusive or treat a ${absMargin.toFixed(1).replace(/\.0$/, '')}-point line like a mismatch.`;
+  let directive = `give roughly equal (~50/50) analytical weight to BOTH how ${teamCity} can win AND how ${oppLabel} can legitimately beat ${teamCity}; never sound effusive or treat a ${absMargin.toFixed(1).replace(/\.0$/, '')}-point line like a mismatch.`;
 
   if (sfMargin >= 7.0) {
     tier = 'clear_favorite';
     tierLabel = 'Clear Favorite (Still Test Failure Modes)';
-    directive = `acknowledge San Francisco's statistical advantage while still crediting ${oppLabel}'s best units/stars and spelling out San Francisco's real failure modes and bottom-half NFL metrics.`;
+    directive = `acknowledge ${teamCity}'s statistical advantage while still crediting ${oppLabel}'s best units/stars and spelling out ${teamCity}'s real failure modes and bottom-half NFL metrics.`;
   } else if (sfMargin > 3.5) {
     tier = 'moderate_favorite';
     tierLabel = 'Moderate Favorite (Competitive Test)';
-    directive = `weigh San Francisco's edge candidly alongside ${oppLabel}'s clearest upset script, top unit advantages, and San Francisco's verified vulnerabilities.`;
+    directive = `weigh ${teamCity}'s edge candidly alongside ${oppLabel}'s clearest upset script, top unit advantages, and ${teamCity}'s verified vulnerabilities.`;
   } else if (sfMargin >= -3.5) {
     tier = 'toss_up';
     tierLabel =
@@ -281,15 +325,15 @@ export function describeSpreadCalibration(spreadStr = '', oppName = '', oppRecor
         : sfMargin < 0
           ? 'Tight One-Score Underdog / Near Coin-Flip'
           : 'True Pick-Em Coin-Flip';
-    directive = `treat this strictly as a competitive one-score coin-flip (~${impliedSfWinPct}% SF / ~${100 - impliedSfWinPct}% opp implied); devote roughly equal (~50/50) analytical weight to BOTH teams' strengths, vulnerabilities, and paths to win—avoid any effusive or one-sided 49ers framing.`;
+    directive = `treat this strictly as a competitive one-score coin-flip (~${impliedSfWinPct}% ${teamAbbr} / ~${100 - impliedSfWinPct}% opp implied); devote roughly equal (~50/50) analytical weight to BOTH teams' strengths, vulnerabilities, and paths to win—avoid any effusive or one-sided ${teamNick} framing.`;
   } else if (sfMargin > -7.0) {
     tier = 'moderate_underdog';
     tierLabel = 'Moderate Underdog';
-    directive = `candidly explain why the market favors ${oppLabel} (~${100 - impliedSfWinPct}% implied win prob) and identify the specific tactical swings San Francisco needs to pull the upset.`;
+    directive = `candidly explain why the market favors ${oppLabel} (~${100 - impliedSfWinPct}% implied win prob) and identify the specific tactical swings ${teamCity} needs to pull the upset.`;
   } else {
     tier = 'clear_underdog';
     tierLabel = 'Clear Underdog';
-    directive = `be transparent about why ${oppLabel} is heavily favored (~${100 - impliedSfWinPct}% implied win prob) and focus realistically on San Francisco's narrow upset conditions.`;
+    directive = `be transparent about why ${oppLabel} is heavily favored (~${100 - impliedSfWinPct}% implied win prob) and focus realistically on ${teamCity}'s narrow upset conditions.`;
   }
 
   return {
@@ -298,7 +342,7 @@ export function describeSpreadCalibration(spreadStr = '', oppName = '', oppRecor
     impliedSfWinPct,
     tier,
     tierLabel,
-    guidanceLine: `Market Spread ${raw} (~${impliedSfWinPct}% implied SF win prob — ${tierLabel} vs. ${oppLabel}): ${directive}`
+    guidanceLine: `Market Spread ${raw} (~${impliedSfWinPct}% implied ${teamAbbr} win prob — ${tierLabel} vs. ${oppLabel}): ${directive}`
   };
 }
 
@@ -343,6 +387,9 @@ export function classifySymmetricUnitAdvantage(
  * San Francisco's flaws and the opponent's top-10 units side-by-side.
  */
 export function buildBalancedLeagueComparisonBlock(appData = {}, { compact = false } = {}) {
+  const team = resolveTeamConfig(appData?.meta?.teamAbbr || appData?.meta?.teamSlug || getActiveTeamConfig());
+  const teamAbbr = team.abbr || 'SF';
+  const teamNickUp = String(team.nickname || '49ers').toUpperCase();
   const sm = appData?.scheduleMatchup || {};
   const um = sm.upcomingMatchup || {};
   const oppAbbr = String(um.oppAbbr || '').toUpperCase();
@@ -352,11 +399,11 @@ export function buildBalancedLeagueComparisonBlock(appData = {}, { compact = fal
 
   // 1. Spread & Market Calibration
   if (um.oppName || um.betting?.spread) {
-    const cal = describeSpreadCalibration(um.betting?.spread || '', oppName, um.oppRecord || '');
+    const cal = describeSpreadCalibration(um.betting?.spread || '', oppName, um.oppRecord || '', team);
     lines.push(`SPREAD & TONE CALIBRATION: ${cal.guidanceLine}`);
   }
 
-  // 2. Extract 32-team SF & Opponent unit ranks
+  // 2. Extract 32-team Active Team & Opponent unit ranks
   const allRows = [];
   for (const u of units) {
     for (const r of u.coreRows || []) allRows.push(r);
@@ -374,7 +421,7 @@ export function buildBalancedLeagueComparisonBlock(appData = {}, { compact = fal
   for (const r of allRows) {
     if (!r?.key || seenKeys.has(r.key) || !Array.isArray(r.leaderboard)) continue;
     seenKeys.add(r.key);
-    const sf = r.leaderboard.find(x => x.team === 'SF');
+    const sf = r.leaderboard.find(x => x.team === teamAbbr);
     const op = oppAbbr && oppAbbr !== 'TBD' && oppAbbr !== 'BYE'
       ? r.leaderboard.find(x => x.team === oppAbbr)
       : null;
@@ -388,7 +435,7 @@ export function buildBalancedLeagueComparisonBlock(appData = {}, { compact = fal
       }
       if (op && Number.isFinite(Number(op.rank))) {
         const oppRank = Number(op.rank);
-        const diff = sfRank - oppRank; // positive => opponent ranks better than SF
+        const diff = sfRank - oppRank; // positive => opponent ranks better than active team
         if (oppRank <= 10 || diff >= 6) {
           if (diff >= 4 || (oppRank <= 5 && diff >= 0)) {
             oppAdvantages.push({
@@ -425,7 +472,7 @@ export function buildBalancedLeagueComparisonBlock(appData = {}, { compact = fal
 
   if (sfWeaknesses.length > 0) {
     lines.push(
-      `49ERS LEAGUE-WIDE VULNERABILITIES (BOTTOM-HALF NFL RANKS — DO NOT OMIT): ${sfWeaknesses
+      `${teamNickUp} LEAGUE-WIDE VULNERABILITIES (BOTTOM-HALF NFL RANKS — DO NOT OMIT): ${sfWeaknesses
         .slice(0, maxWeak)
         .map(w => `${w.label} #${w.rank} (${w.disp})`)
         .join(' | ')}`
@@ -433,7 +480,7 @@ export function buildBalancedLeagueComparisonBlock(appData = {}, { compact = fal
   }
   if (sfStrengths.length > 0) {
     lines.push(
-      `49ERS LEAGUE-WIDE STRENGTHS (TOP-8 NFL RANKS): ${sfStrengths
+      `${teamNickUp} LEAGUE-WIDE STRENGTHS (TOP-8 NFL RANKS): ${sfStrengths
         .slice(0, compact ? 6 : 8)
         .map(s => `${s.label} #${s.rank} (${s.disp})`)
         .join(' | ')}`
@@ -441,17 +488,17 @@ export function buildBalancedLeagueComparisonBlock(appData = {}, { compact = fal
   }
   if (oppAdvantages.length > 0) {
     lines.push(
-      `${oppName.toUpperCase()} MAJOR STATISTICAL ADVANTAGES OVER SF (GIVE FULL CREDIT): ${oppAdvantages
+      `${oppName.toUpperCase()} MAJOR STATISTICAL ADVANTAGES OVER ${teamAbbr} (GIVE FULL CREDIT): ${oppAdvantages
         .slice(0, maxAdv)
-        .map(a => `${a.label}: ${oppAbbr} #${a.oppRank} (${a.oppDisp}) vs SF #${a.sfRank} (${a.sfDisp})`)
+        .map(a => `${a.label}: ${oppAbbr} #${a.oppRank} (${a.oppDisp}) vs ${teamAbbr} #${a.sfRank} (${a.sfDisp})`)
         .join(' | ')}`
     );
   }
   if (sfAdvantages.length > 0) {
     lines.push(
-      `49ERS MAJOR STATISTICAL ADVANTAGES OVER ${oppAbbr}: ${sfAdvantages
+      `${teamNickUp} MAJOR STATISTICAL ADVANTAGES OVER ${oppAbbr}: ${sfAdvantages
         .slice(0, maxAdv)
-        .map(a => `${a.label}: SF #${a.sfRank} (${a.sfDisp}) vs ${oppAbbr} #${a.oppRank} (${a.oppDisp})`)
+        .map(a => `${a.label}: ${teamAbbr} #${a.sfRank} (${a.sfDisp}) vs ${oppAbbr} #${a.oppRank} (${a.oppDisp})`)
         .join(' | ')}`
     );
   }
@@ -483,7 +530,7 @@ export function buildBalancedLeagueComparisonBlock(appData = {}, { compact = fal
     const lowEnd = [...pr.sources].sort((a, b) => Number(b.rank) - Number(a.rank))[0];
     const highEnd = [...pr.sources].sort((a, b) => Number(a.rank) - Number(b.rank))[0];
     lines.push(
-      `NATIONAL POWER RANKINGS CONSENSUS: SF #${pr.consensusRank} avg (${pr.rangeShort || `#${pr.consensusRank}`} across ${pr.sources.length} verified models — highest: ${highEnd?.shortName || highEnd?.outlet} #${highEnd?.rank}, most skeptical: ${lowEnd?.shortName || lowEnd?.outlet} #${lowEnd?.rank}).`
+      `NATIONAL POWER RANKINGS CONSENSUS: ${teamAbbr} #${pr.consensusRank} avg (${pr.rangeShort || `#${pr.consensusRank}`} across ${pr.sources.length} verified models — highest: ${highEnd?.shortName || highEnd?.outlet} #${highEnd?.rank}, most skeptical: ${lowEnd?.shortName || lowEnd?.outlet} #${lowEnd?.rank}).`
     );
   }
 
@@ -496,9 +543,63 @@ export function buildBalancedLeagueComparisonBlock(appData = {}, { compact = fal
  */
 export function buildLiveGroundingSystemPrompt(appData = null) {
   const meta = appData?.meta || {};
+  const team = resolveTeamConfig(meta.teamAbbr || meta.teamSlug || getActiveTeamConfig());
   const rosterPlayers = appData?.roster?.players || [];
-  const disallowedSample = getDisallowedFormer49ers(rosterPlayers).slice(0, 22).join(', ');
+  const departedPlayers = appData?.roster?.departedPlayers || [];
   const syncStamp = meta.updatedAt || new Date().toISOString();
+
+  if (team.abbr !== 'SF') {
+    const disallowedSample = getDisallowedFormerPlayers(rosterPlayers, { team, departedPlayers })
+      .slice(0, 22)
+      .join(', ');
+    const coaches = meta.coaches || team.coachesSeed || {};
+    const coachLine = [
+      coaches.hc ? `Head Coach ${coaches.hc}` : null,
+      coaches.oc ? `Offensive Coordinator ${coaches.oc}` : null,
+      coaches.dc ? `Defensive Coordinator ${coaches.dc}` : null,
+      coaches.gm ? `GM ${coaches.gm}` : null
+    ]
+      .filter(Boolean)
+      .join('; ');
+    const tendencies = meta.schemeTendencies || null;
+    const tendencyNote = tendencies
+      ? ` Live ${meta.seasonYear || 2026} play-calling profile: ${[
+          tendencies.passRatePct != null ? `${tendencies.passRatePct}% pass rate` : null,
+          tendencies.shotgunPct != null ? `${tendencies.shotgunPct}% shotgun` : null,
+          tendencies.playActionPct != null ? `${tendencies.playActionPct}% play-action` : null,
+          tendencies.noHuddlePct != null ? `${tendencies.noHuddlePct}% no-huddle` : null
+        ]
+          .filter(Boolean)
+          .join(', ')}.`
+      : '';
+    const cap26 = appData?.cap?.years?.[String(meta.seasonYear || 2026)] || {};
+    const cap27 = appData?.cap?.years?.[String(Number(meta.seasonYear || 2026) + 1)] || {};
+    const topBeatNames = (appData?.reporters?.reporters || [])
+      .filter(r => !r.isPodiumSubject && Number(r.trustTier || 2) === 1)
+      .slice(0, 12)
+      .map(r => r.name)
+      .join(', ');
+
+    return [
+      `You are an independent Lead Football Intelligence Analyst for "${team.brandName}", a high-IQ ${team.fullName} briefing platform.`,
+      'UNHURRIED HIGH-THINKING MANDATE — PRIORITIZE ACCURACY & ANALYTICAL QUALITY OVER GENERATION TIME:',
+      '0. Achieve 100% factual accuracy, exact CBA cap arithmetic, and coaching-tape analytical depth with focused, non-repetitive internal reasoning: consult the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT first, run at most 1–2 targeted Google Search queries ONLY if a post-snapshot external fact is genuinely needed, and avoid redundant internal re-drafting loops.',
+      `1. NEVER rely on stale pre-trained model weights for roster membership, retired players, trades, free-agent signings, coaching staff, win-loss-tie records, draft pick inventory, or injury designations. Anchor strictly to the AUTHORITATIVE LIVE REAL-TIME DATA SNAPSHOT (synced ${syncStamp}) and live Google Search Grounding.`,
+      '2. COACHING, CAP & DRAFT RULES OF TRUTH:',
+      `   - Coaching Staff (${meta.seasonYear || 2026} verified): ${coachLine || `Verify current ${team.fullName} coaching staff against the live snapshot.`}${tendencyNote} Never cite former coaches as still on the ${team.nickname} staff.`,
+      `   - Multi-Year CBA Cap Math (WHEN CAP/CONTRACTS ARE RELEVANT): Anchor strictly to ${team.fullName}'s live OverTheCap numbers in the snapshot (${meta.seasonYear || 2026} cap space: ${cap26.capSpace != null ? `$${Number(cap26.capSpace).toFixed(2)}M` : 'see snapshot'}; ${Number(meta.seasonYear || 2026) + 1} cap space: ${cap27.capSpace != null ? `$${Number(cap27.capSpace).toFixed(2)}M` : 'see snapshot'}) under CBA Article 13 1-for-1 rollover. Do NOT shoehorn unprompted salary-cap boilerplate into injury or game recaps where no contract move occurred.`,
+      `   - Draft Capital & Trades: Anchor strictly to ${team.abbr}'s exact draft pick list and completed trades in the snapshot.`,
+      disallowedSample
+        ? `3. NEVER attribute retired, cut, or departed former ${team.nickname} to the active ${team.nickname} rotation (non-rostered names include: ${disallowedSample}). You may reference them ONLY in verified historical, dead-cap, opponent, or external trade-target context.`
+        : `3. Verify every ${team.nickname} player mentioned against the provided LIVE ${team.nickname.toUpperCase()} ROSTER list before citing them in current-season rotations.`,
+      `4. FAIR, BALANCED & NON-HOMER ASSESSMENT MANDATE: Evaluate ${team.city} with the exact same sober, league-wide objectivity as an independent national NFL analyst—never as a cheerleader or team PR voice. Use third-person team references ("${team.city}", "the ${team.nickname}", "they"), not first-person fan pronouns ("we/us/our"). Always benchmark ${team.nickname} units against all 32 teams (pairing strengths with bottom-half NFL vulnerabilities), give full analytical credit to opponent coordinators, top-10 units, and star players, and calibrate matchup confidence strictly to the Vegas spread / implied win probability.`,
+      '5. INTERNAL MULTI-PASS SELF-AUDIT BEFORE EMITTING A SINGLE WORD: Efficiently cross-check every player name, injury status, 32-team rank, contract figure, pick slot, scheme concept, and playoff probability against the live snapshot—and strip any homer exaggeration or one-sided matchup bias—before outputting.',
+      '6. EDITORIAL CHARTER: Zero clickbait, zero rage-bait, zero homer hype, zero filler throat-clearing. Separate Verified Facts, All-22 Film Mechanics (personnel groupings, protection slides, coverage shells, EPA/play, CPOE), and CBA Salary Cap Math.',
+      `7. Cite originating beat reporters (${topBeatNames || 'verified team beat reporters, Adam Schefter, Ian Rapoport, Tom Pelissero'}) or open datasets (nflverse, OverTheCap, Tankathon, NextGen Stats).`
+    ].join('\n');
+  }
+
+  const disallowedSample = getDisallowedFormer49ers(rosterPlayers).slice(0, 22).join(', ');
 
   return [
     'You are an independent Lead Football Intelligence Analyst for "49ers Faithful", a private, high-IQ San Francisco 49ers briefing platform.',
@@ -643,19 +744,28 @@ export function buildAuthoritativeLiveContextSnapshot(appData = {}, { compactFor
     )
     .join('\n');
 
-  const disallowed = getDisallowedFormer49ers(rosterPlayers).slice(0, 20).join(', ');
+  const team = resolveTeamConfig(meta.teamAbbr || meta.teamSlug || getActiveTeamConfig());
+  const coaches = getTeamCoaches(team, meta.coaches);
+  const teamNickUp = String(team.nickname || '49ers').toUpperCase();
+  const teamOdds = mcSim.teamOdds || mcSim.sfOdds || {};
+  const departedPlayers = appData?.roster?.departedPlayers || [];
+  const disallowed = getDisallowedFormerPlayers(rosterPlayers, { team, departedPlayers }).slice(0, 20).join(', ');
   const balancedLeagueBlock = buildBalancedLeagueComparisonBlock(appData, {
     compact: compactForDossier
   });
+  const coachingStaffLine =
+    team.abbr === 'SF'
+      ? `COACHING STAFF: HC ${coaches.hc} | OC ${coaches.oc} | DC ${coaches.dc} (Wide-9 4-3 / Nickel 4-2-5 disguised split-safety)`
+      : `COACHING STAFF: HC ${coaches.hc} | OC ${coaches.oc} | DC ${coaches.dc}${coaches.gm ? ` | GM ${coaches.gm}` : ''}`;
 
   return [
     `LIVE TIMESTAMP: ${meta.updatedAt || new Date().toISOString()}`,
-    `COACHING STAFF: HC Kyle Shanahan | DC Raheem Morris (Wide-9 4-3 / Nickel 4-2-5 disguised split-safety)`,
-    `SEASON & RECORD: ${meta.seasonYear || 2026} NFL Season • Week ${meta.currentWeek || 9} • 49ers Record: ${meta.teamRecord || '6-1'} (${meta.standingSummary || 'NFC West'}, Point Diff: ${meta.pointDifferential || ''})`,
-    `CALIBRATED 10,000-RUN PLAYOFF SIMULATION (EMPIRICAL-BAYES + EPA + SOS + NFL SEC. 16 TIEBREAKERS): SF Projected Wins: ${sfOdds.projectedWins ?? 12.0} | Playoff Berth: ${sfOdds.makePlayoffsPct ?? 93.0}% | Win NFC West: ${sfOdds.winDivisionPct ?? 82.6}% | #1 Seed First-Round Bye: ${sfOdds.seed1ByePct ?? 34.5}%${topNfcContenders ? `\n  NFC Race Context: ${topNfcContenders}` : ''}`,
+    coachingStaffLine,
+    `SEASON & RECORD: ${meta.seasonYear || 2026} NFL Season • Week ${meta.currentWeek || 9} • ${team.nickname} Record: ${meta.teamRecord || '—'} (${meta.standingSummary || team.division}, Point Diff: ${meta.pointDifferential || ''})`,
+    `CALIBRATED 10,000-RUN PLAYOFF SIMULATION (EMPIRICAL-BAYES + EPA + SOS + NFL SEC. 16 TIEBREAKERS): ${team.abbr} Projected Wins: ${teamOdds.projectedWins ?? '—'} | Playoff Berth: ${teamOdds.makePlayoffsPct ?? '—'}% | Win ${team.division}: ${teamOdds.winDivisionPct ?? '—'}% | #1 Seed First-Round Bye: ${teamOdds.seed1ByePct ?? '—'}%${topNfcContenders ? `\n  ${team.conference} Race Context: ${topNfcContenders}` : ''}`,
     `UPCOMING MATCHUP: Week ${matchup.week || meta.currentWeek || 9} ${matchup.homeAway === 'away' ? '@' : 'vs.'} ${matchup.oppName || ''} (${matchup.oppRecord || ''}) | Kickoff: ${matchup.kickoffDisplay || ''} | Venue: ${matchup.venue || ''} | Spread: ${matchup.betting?.spread || ''} | Total: ${matchup.betting?.overUnder || ''}`,
     balancedLeagueBlock,
-    `SALARY CAP & MULTI-YEAR HORIZON (OVERTHECAP LIVE): ${seasonYr} Gross Cap Space: $${(cap26.teamCapSpace || 0).toLocaleString()} | ${seasonYr} Effective Space: $${(cap26.effectiveCapSpace || 0).toLocaleString()} | ${seasonYr} Dead Money: $${curDeadMoney.toLocaleString()} | ${nextYr} Projected Cap Space: $${(cap27.teamCapSpace || 0).toLocaleString()} (Article 13 rollover of ${seasonYr} surplus is required to offset ${nextYr} deficit)`,
+    `SALARY CAP & MULTI-YEAR HORIZON (OVERTHECAP LIVE): ${seasonYr} Gross Cap Space: $${(cap26.teamCapSpace || 0).toLocaleString()} | ${seasonYr} Effective Space: $${(cap26.effectiveCapSpace || 0).toLocaleString()} | ${seasonYr} Dead Money: $${curDeadMoney.toLocaleString()} | ${nextYr} Projected Cap Space: $${(cap27.teamCapSpace || 0).toLocaleString()} (Article 13 rollover applies to ${seasonYr} → ${nextYr})`,
     pickLines
       ? `${nextYr} DRAFT PICK INVENTORY (${pickInventory.length} PICKS TOTAL): ${pickLines}${tradedPicksNote ? `\n  Traded Away Note: ${tradedPicksNote}` : ''}`
       : '',
@@ -677,11 +787,11 @@ export function buildAuthoritativeLiveContextSnapshot(appData = {}, { compactFor
     !compactForDossier || includeTradeMatrix ? (targetLines ? `TRADE WINDOW VERIFIED TARGET CANDIDATES:\n${targetLines}` : '') : '',
     !compactForDossier || includeTradeMatrix ? (pitfallLines ? `TRADE WINDOW PITFALLS & TRAPS TO AVOID:\n${pitfallLines}` : '') : '',
     depthStarterSummary ? `PROJECTED STARTING LINEUP SNAPSHOT:\n${depthStarterSummary}` : '',
-    activeRosterLines ? `AUTHORITATIVE LIVE 49ERS ACTIVE 53-MAN ROSTER (USE ONLY THESE PLAYERS FOR ACTIVE ROTATIONS):\n${activeRosterLines}` : '',
-    irNames ? `49ERS INJURED RESERVE / OUT LIST: ${irNames}` : '',
+    activeRosterLines ? `AUTHORITATIVE LIVE ${teamNickUp} ACTIVE 53-MAN ROSTER (USE ONLY THESE PLAYERS FOR ACTIVE ROTATIONS):\n${activeRosterLines}` : '',
+    irNames ? `${teamNickUp} INJURED RESERVE / OUT LIST: ${irNames}` : '',
     injuryLines ? `UP-TO-THE-MINUTE WEEK ${meta.currentWeek || 9} INJURY & PRACTICE REPORT:\n${injuryLines}` : '',
     !compactForDossier && latestWireLines ? `LATEST LIVE BEAT TWEETS & NEWS WIRE:\n${latestWireLines}` : '',
-    disallowed ? `DO NOT CITE AS ACTIVE 49ERS (RETIRED / DEPARTED): ${disallowed}` : ''
+    disallowed ? `DO NOT CITE AS ACTIVE ${teamNickUp} (RETIRED / DEPARTED): ${disallowed}` : ''
   ]
     .filter(Boolean)
     .join('\n\n');

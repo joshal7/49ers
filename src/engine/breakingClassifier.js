@@ -33,6 +33,7 @@ import {
   stripAggregatorBoilerplate
 } from './linkIntegrity.js';
 import { isEditorialPhotoUrl } from './salientMediaEngine.js';
+import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 
 export const SHORT_TWEET_FULL_TEXT_LIMIT = 320;
 export const WIRE_ARTICLE_EXCERPT_MAX_CHARS = 280;
@@ -4592,11 +4593,11 @@ export function isBreakingItemCoveredInBrief(item = {}, dailyBrief = null, nowMs
 
 export const GAME_DAY_ABOVE_BRIEF_LEAD_MS = 90 * 60_000; // 90 minutes prior to kickoff
 
-export function getPacificClockParts(nowMs = Date.now()) {
+export function getTeamClockParts(nowMs = Date.now(), timeZone = 'America/Los_Angeles') {
   const safeMs = Number.isFinite(nowMs) ? nowMs : Date.now();
   try {
     const parts = new Intl.DateTimeFormat('en-US', {
-      timeZone: 'America/Los_Angeles',
+      timeZone: timeZone || 'America/Los_Angeles',
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
@@ -4624,6 +4625,10 @@ export function getPacificClockParts(nowMs = Date.now()) {
       minute: d.getUTCMinutes()
     };
   }
+}
+
+export function getPacificClockParts(nowMs = Date.now()) {
+  return getTeamClockParts(nowMs, 'America/Los_Angeles');
 }
 
 export function formatGameBriefCycleSlug(game = {}) {
@@ -4741,12 +4746,22 @@ export function resolveNewsBriefCycleState(
   peakHourPt = 17
 ) {
   const ts = Number.isFinite(nowMs) ? nowMs : Date.now();
-  const { dateKey: todayPt, hour24: hourPt } = getPacificClockParts(ts);
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const teamTz = activeTeam.timezone || 'America/Los_Angeles';
+  const tzSuffix =
+    teamTz === 'America/Los_Angeles'
+      ? 'PT'
+      : /New_York|Detroit|Indiana/i.test(teamTz)
+        ? 'ET'
+        : /Chicago/i.test(teamTz)
+          ? 'CT'
+          : 'MT';
+  const { dateKey: todayPt, hour24: hourPt } = getTeamClockParts(ts, teamTz);
   const prevDayAnchorMs = ts - (hourPt + 3) * 3_600_000;
-  const { dateKey: prevDatePt } = getPacificClockParts(prevDayAnchorMs);
+  const { dateKey: prevDatePt } = getTeamClockParts(prevDayAnchorMs, teamTz);
 
   const fallbackCycleKey =
-    hourPt >= peakHourPt ? `${todayPt}@${peakHourPt}PT` : `${prevDatePt}@${peakHourPt}PT`;
+    hourPt >= peakHourPt ? `${todayPt}@${peakHourPt}${tzSuffix}` : `${prevDatePt}@${peakHourPt}${tzSuffix}`;
 
   const games = collectScheduleGamesForBrief(appData);
   if (games.length === 0) {
@@ -4764,7 +4779,7 @@ export function resolveNewsBriefCycleState(
 
   const evalGameState = entry => {
     const { game, koMs } = entry;
-    const gameDatePt = getPacificClockParts(koMs).dateKey;
+    const gameDatePt = getTeamClockParts(koMs, teamTz).dateKey;
     const slug = formatGameBriefCycleSlug(game);
     const postGameCycleKey = `${gameDatePt}@postgame-${slug}`;
     const statusStr = String(game.statusDetail || '');
@@ -4815,12 +4830,12 @@ export function resolveNewsBriefCycleState(
   const evaluated = games.map(evalGameState);
 
   const resolvePriorCycleBeforeDate = gameKoMs => {
-    const { hour24: gHour } = getPacificClockParts(gameKoMs);
+    const { hour24: gHour } = getTeamClockParts(gameKoMs, teamTz);
     const priorAnchorMs = gameKoMs - (gHour + 3) * 3_600_000;
-    const priorDatePt = getPacificClockParts(priorAnchorMs).dateKey;
+    const priorDatePt = getTeamClockParts(priorAnchorMs, teamTz).dateKey;
     const priorGame = evaluated.find(e => e.gameDatePt === priorDatePt && e.koMs < gameKoMs);
     if (priorGame) return priorGame.postGameCycleKey;
-    return `${priorDatePt}@${peakHourPt}PT`;
+    return `${priorDatePt}@${peakHourPt}${tzSuffix}`;
   };
 
   // 1. Check if a game is scheduled today (or currently in its live/OT/delayed post-whistle window across midnight PT)

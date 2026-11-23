@@ -15,6 +15,7 @@ import {
 import { iconSvg } from './icons.js';
 import { formatOtcDollars, formatCompactDollars } from '../engine/capSimulator.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 
 export const ROSTER_SORT_FIELDS = [
   { key: 'jersey', label: 'Roster Number', shortLabel: 'Roster #', defaultDir: 'asc' },
@@ -286,8 +287,8 @@ function renderRosterExplorer({
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-bottom:8px">
         <span><strong>${filtered.length}</strong> players</span>
         <div class="source-link-strip">
-          <a href="https://www.espn.com/nfl/team/roster/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Roster</span>${iconSvg('externalLink', 10)}</a>
-          <a href="https://www.49ers.com/team/players-roster/" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>49ers.com</span>${iconSvg('externalLink', 10)}</a>
+          <a href="https://www.espn.com/nfl/team/roster/_/name/${esc(getActiveTeamConfig().espnAbbr)}/${esc(getActiveTeamConfig().otcSlug)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Roster</span>${iconSvg('externalLink', 10)}</a>
+          <a href="${esc(getActiveTeamConfig().clubRosterUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>${esc(getActiveTeamConfig().clubDomain)}</span>${iconSvg('externalLink', 10)}</a>
         </div>
       </div>
 
@@ -429,8 +430,8 @@ function renderDualDepthChart({ appData, depthMode }) {
         </button>
       </div>
       <div class="source-link-strip" style="justify-content:flex-end">
-        <a href="https://www.espn.com/nfl/team/depth/_/name/sf/san-francisco-49ers" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Depth</span>${iconSvg('externalLink', 10)}</a>
-        <a href="https://www.ourlads.com/nfldepthcharts/depthchart/SF" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Ourlads</span>${iconSvg('externalLink', 10)}</a>
+        <a href="https://www.espn.com/nfl/team/depth/_/name/${esc(getActiveTeamConfig().espnAbbr)}/${esc(getActiveTeamConfig().otcSlug)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Depth</span>${iconSvg('externalLink', 10)}</a>
+        <a href="https://www.ourlads.com/nfldepthcharts/depthchart/${esc(getActiveTeamConfig().abbr)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Ourlads</span>${iconSvg('externalLink', 10)}</a>
       </div>
     </div>
   `;
@@ -588,8 +589,9 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
   const deadPct = Math.min(100 - activePct, (deadCapForBar / yrCeiling) * 100);
   const spacePct = Math.max(0, 100 - activePct - deadPct);
 
-  const otcTeamUrl = appData?.cap?.sourceUrl || 'https://overthecap.com/salary-cap/san-francisco-49ers';
-  const spotracUrl = appData?.cap?.spotracUrl || 'https://www.spotrac.com/nfl/san-francisco-49ers/cap/';
+  const activeTeamCap = getActiveTeamConfig();
+  const otcTeamUrl = appData?.cap?.sourceUrl || `https://overthecap.com/salary-cap/${activeTeamCap.otcSlug}`;
+  const spotracUrl = appData?.cap?.spotracUrl || `https://www.spotrac.com/nfl/${activeTeamCap.otcSlug}/cap/`;
   const nflpaUrl = appData?.cap?.nflpaUrl || 'https://nflpa.com/reports/public-salary-cap-report';
 
   // Fallback player list if simCapResult wasn't computed for selectedYrKey
@@ -732,7 +734,7 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
           </div>
         </div>
         <button type="button" class="btn-ghost" data-action="analyze-topic-jump"
-                data-prompt="Analyze the 49ers ${esc(firstYrKey)}-${esc(horizonEndKey)} salary cap rollover strategy, option bonus proration on Purdy and Bosa, and multi-year cap flexibility">
+                data-prompt="${esc(activeTeamCap.abbr === 'SF' ? `Analyze the 49ers ${firstYrKey}-${horizonEndKey} salary cap rollover strategy, option bonus proration on Purdy and Bosa, and multi-year cap flexibility` : `Analyze the ${activeTeamCap.fullName} ${firstYrKey}-${horizonEndKey} salary cap rollover strategy, top veteran restructures, dead money cliffs, and multi-year cap flexibility`)}">
           ${iconSvg('sparkles', 13)}
           <span>AI Cap Audit</span>
         </button>

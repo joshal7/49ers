@@ -1,0 +1,22 @@
+# Cloudflare Pages Config for Canary Multi-Tenant Sites (`lions.joshal.com` & `bills.joshal.com`)
+#
+# 100% FREE TIER — ZERO CREDIT CARD REQUIRED (NO R2):
+# - Keeps `joshal.com` DNS 100% on GoDaddy (`www.joshal.com` SmugMug, `joshal.com`,
+#   `whisky.joshal.com`, `whiskey.joshal.com`, `email`/MX, `49ers.joshal.com`, `workouts.joshal.com` untouched).
+# - Uses ONLY Cloudflare Pages Free + Workers KV Free (hard free-tier caps; cannot auto-bill).
+# - Live team JSON feeds ship directly as Pages Static Assets (`dist-canary/data/teams/...`)
+#   with unlimited free static bandwidth and 0 Functions invocations.
+# - Isolated inside `worker/pages-canary/wrangler.toml` so `worker/wrangler.toml` (`49ers-worker`) is untouched.
+
+name = "nfl-hq-canary"
+pages_build_output_dir = "../../dist-canary"
+compatibility_date = "2026-11-01"
+
+[[kv_namespaces]]
+binding = "SHARED_CACHE"
+id = "7562e055d295422fbb209adc711aba32"
+
+[vars]
+CANARY_TEAMS = "SF,DET,BUF"
+GEMINI_DEFAULT_FREE_MODEL = "gemini-4-hydrogen"
+GEMINI_THINKING_LEVEL = "XHIGH"

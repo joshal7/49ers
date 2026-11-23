@@ -19,6 +19,7 @@
  *   fallback if a remote subdomain is temporarily unreachable or offline.
  */
 
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 const REMOTE_TEAM_CACHE_TTL_MS = 5 * 60 * 1000;
 const REMOTE_TEAM_FAIL_COOLDOWN_MS = 20 * 1000;
 const DEFAULT_REMOTE_FETCH_TIMEOUT_MS = 7500;
@@ -662,9 +663,11 @@ export function mergeRemoteAndLocalOpponentPlayer({
   remoteBundle = null,
   seedPlayer = null,
   teamMeta = null,
+  activeTeamAbbr = null,
   localNewsRawStream = []
 } = {}) {
   const team = resolveNflTeamMeta(teamMeta || remoteBundle?.team);
+  const currentActiveAbbr = String(activeTeamAbbr || getActiveTeamConfig()?.abbr || 'SF').toUpperCase();
   const remoteAppData = remoteBundle?.appData || null;
   const remoteRawStream = Array.isArray(remoteAppData?.news?.rawStream)
     ? remoteAppData.news.rawStream
@@ -770,7 +773,7 @@ export function mergeRemoteAndLocalOpponentPlayer({
   const teamBeatHandles = extractTopTeamBeatHandles(remoteBundle?.reportersJson, 6);
   const teamContext = team
     ? {
-        isRemoteTeam: team.abbr !== 'SF',
+        isRemoteTeam: team.abbr !== currentActiveAbbr,
         abbr: team.abbr,
         slug: team.slug,
         domain: team.domain,

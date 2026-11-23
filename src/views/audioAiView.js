@@ -17,6 +17,7 @@ import {
   resolveAudioEpisodeVisual
 } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 import { formatTimeMmSs } from '../components/audioPlayer.js';
 import { hasCachedEpisodeAudioSync } from '../services/podcastAudioStore.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
@@ -423,7 +424,7 @@ export function renderAudioAiViewHtml({
 
   const modeSwitcher = `
     <div class="card subnav-card">
-      <div class="segmented-control compact-seg-3" role="tablist" aria-label="Audio, 49ers Podcasts, and Deep Analysis Modes">
+      <div class="segmented-control compact-seg-3" role="tablist" aria-label="Audio, ${esc(getActiveTeamConfig().nickname)} Podcasts, and Deep Analysis Modes">
         <button type="button" class="pill-btn seg-btn ${studioSub === 'beat_podcasts' ? 'active' : ''}" data-action="set-studio-sub" data-studio-sub="beat_podcasts">
           ${iconSvg('audio', 13)}
           <span>Podcasts (${recentBeatEpisodes.length})</span>
@@ -551,17 +552,20 @@ function renderBeatPodcastsDirectory({
   showFilter = 'all',
   updatedAt = ''
 }) {
+  const activeTeam = getActiveTeamConfig();
   const defaultShows =
     shows.length > 0
       ? shows
-      : [
-          { id: 'the_gold_standard', name: 'The Gold Standard', hosts: 'Rob "Stats" Guerrera & Levin Black' },
-          { id: '49ers_talk', name: '49ers Talk', hosts: 'Matt Maiocco & Jennifer Lee Chan' },
-          { id: '49ers_plus_minus', name: '49ers +/-', hosts: 'Tim Kawakami & Matt Barrows' },
-          { id: 'dieter_and_hutch', name: 'Dieter and Hutch', hosts: 'Dieter Kurtenbach & Jake Hutchinson' },
-          { id: 'locked_on_49ers', name: 'Locked On 49ers', hosts: 'Brian Peacock & Eric Crocker' },
-          { id: 'lombardi_lounge', name: 'Lombardi Lounge', hosts: 'David Lombardi' }
-        ];
+      : activeTeam.abbr !== 'SF' && activeTeam.beatPodcastShows?.length > 0
+        ? activeTeam.beatPodcastShows
+        : [
+            { id: 'the_gold_standard', name: 'The Gold Standard', hosts: 'Rob "Stats" Guerrera & Levin Black' },
+            { id: '49ers_talk', name: '49ers Talk', hosts: 'Matt Maiocco & Jennifer Lee Chan' },
+            { id: '49ers_plus_minus', name: '49ers +/-', hosts: 'Tim Kawakami & Matt Barrows' },
+            { id: 'dieter_and_hutch', name: 'Dieter and Hutch', hosts: 'Dieter Kurtenbach & Jake Hutchinson' },
+            { id: 'locked_on_49ers', name: 'Locked On 49ers', hosts: 'Brian Peacock & Eric Crocker' },
+            { id: 'lombardi_lounge', name: 'Lombardi Lounge', hosts: 'David Lombardi' }
+          ];
 
   const headerCard = `
     <section class="card">
@@ -570,7 +574,7 @@ function renderBeatPodcastsDirectory({
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('audio', 18)}</div>
           <div class="card-title-group">
             <div class="card-eyebrow">Last 7 Days</div>
-            <h2 class="card-title">49ers Beat Podcasts</h2>
+            <h2 class="card-title">${esc(activeTeam.nickname)} Beat Podcasts</h2>
           </div>
         </div>
         <div class="podcast-view-toggle" role="group" aria-label="Organize Podcasts By">
@@ -654,7 +658,7 @@ function renderBeatPodcastsDirectory({
                 }
               </a>
               <div class="card-title-group">
-                <div class="card-eyebrow">${renderReporterSourceLinksHtml(show.hosts || show.network || '49ers Podcast')}</div>
+                <div class="card-eyebrow">${renderReporterSourceLinksHtml(show.hosts || show.network || `${activeTeam.nickname} Podcast`)}</div>
                 <h3 class="card-title"><a href="${esc(showLaunch.href)}" ${showTargetAttrs} style="color:inherit;text-decoration:none">${esc(show.name)}</a></h3>
               </div>
             </div>
@@ -710,11 +714,12 @@ function renderPodcastStudio({
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const wkLabel = um.week ? `Week ${um.week}` : `Week ${appData?.meta?.currentWeek || ''}`.trim();
   const oppShort = (um.oppName || 'Opponent').split(' ').slice(-1)[0] || 'Matchup';
+  const activeTeamPod = getActiveTeamConfig();
   const topicChips = [
-    `${wkLabel} 49ers vs. ${oppShort}: Balanced Matchup, Spread & Keys for Both Teams`.trim(),
-    '49ers Wide Receivers: Injury Timeline, Target Share & Cap Math',
-    '49ers Pass Rush & Pass Defense Reality Check vs. League Benchmarks',
-    `Calibrated #1 NFC Seed Odds (${appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds?.seed1ByePct ?? 34.5}%) & Conference Contenders`
+    `${wkLabel} ${activeTeamPod.nickname} vs. ${oppShort}: Balanced Matchup, Spread & Keys for Both Teams`.trim(),
+    `${activeTeamPod.nickname} Passing Game & Receiver Room: Injury Timeline, Target Share & Cap Math`,
+    `${activeTeamPod.nickname} Pass Rush & Defense Reality Check vs. League Benchmarks`,
+    `Calibrated #1 ${activeTeamPod.conference} Seed Odds (${appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds?.seed1ByePct ?? 0}%) & Conference Contenders`
   ];
 
   const isActiveExpanded = Boolean(activeEp && expandedTranscriptIds.has(activeEp.id));
@@ -833,8 +838,8 @@ function renderPodcastStudio({
         <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px">
           ${
             activeEp.isSharedImport
-              ? `Shared by <strong>${esc(activeEp.createdBy || '49ers Faithful')}</strong> • ${esc(activeEp.format || 'Two-Host Analytical Banter')} • No API key needed to listen`
-              : `${esc(activeEp.format || 'Two-Host Analytical Banter')} • ${esc(activeEp.presetLabel || 'Studio Pod')} • Created by ${esc(activeEp.createdBy || '49ers Faithful')}`
+              ? `Shared by <strong>${esc(activeEp.createdBy || getActiveTeamConfig().brandName)}</strong> • ${esc(activeEp.format || 'Two-Host Analytical Banter')} • No API key needed to listen`
+              : `${esc(activeEp.format || 'Two-Host Analytical Banter')} • ${esc(activeEp.presetLabel || 'Studio Pod')} • Created by ${esc(activeEp.createdBy || getActiveTeamConfig().brandName)}`
           }
         </div>
 
@@ -856,7 +861,7 @@ function renderPodcastStudio({
                    </button>`
                 : ''
             }
-            <button type="button" class="icon-btn share-action-btn" data-action="share-podcast" data-episode-id="${esc(activeEp.id)}" aria-label="Share podcast link" title="Share link to play on 49ers.joshal.com">
+            <button type="button" class="icon-btn share-action-btn" data-action="share-podcast" data-episode-id="${esc(activeEp.id)}" aria-label="Share podcast link" title="Share link to play on ${esc(getActiveTeamConfig().domain)}">
               ${iconSvg(isActiveSharedToast ? 'check' : 'share', 14)}
               <span>${isActiveSharedToast ? 'Link Copied' : 'Share'}</span>
             </button>
@@ -924,7 +929,7 @@ function renderPodcastStudio({
       </div>
 
       <textarea id="podTopicInput" class="textarea-input" rows="3" style="margin-bottom:10px"
-                placeholder="e.g., Wide receivers, or Nick Bosa & Purdy 2027 cap structure"
+                placeholder="${esc(getActiveTeamConfig().abbr === 'SF' ? 'e.g., Wide receivers, or Nick Bosa & Purdy 2027 cap structure' : `e.g., ${getActiveTeamConfig().nickname} offense vs. two-high shells, or 2027 cap flexibility`)}"
                 aria-label="Podcast Topic">${esc(podTopicDraft)}</textarea>
 
       ${
@@ -1001,7 +1006,7 @@ function renderPodcastStudio({
                       ${renderSourceChips(ep.sourceLinks || [])}
                       <div class="podcast-action-row" style="margin-top:4px">
                         <div class="podcast-secondary-actions">
-                          <button type="button" class="icon-btn share-action-btn" data-action="share-podcast" data-episode-id="${esc(ep.id)}" aria-label="Share ${esc(ep.title)}" title="Share link to play on 49ers.joshal.com">
+                          <button type="button" class="icon-btn share-action-btn" data-action="share-podcast" data-episode-id="${esc(ep.id)}" aria-label="Share ${esc(ep.title)}" title="Share link to play on ${esc(getActiveTeamConfig().domain)}">
                             ${iconSvg(isCopied ? 'check' : 'share', 13)}
                             <span>${isCopied ? 'Link Copied' : 'Share'}</span>
                           </button>
@@ -1065,11 +1070,12 @@ function renderDeepAnalysisRunner({
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
   const wkLabel = um.week ? `Week ${um.week}` : 'upcoming';
   const oppLabel = um.oppName || 'opponent';
+  const activeTeamAnalysis = getActiveTeamConfig();
   const quickPrompts = [
-    `Balanced ${wkLabel} 49ers vs. ${oppLabel} scouting breakdown: unit edges, vulnerabilities & paths to win for both teams`,
-    'Deep dive on 49ers Wide Receivers: active depth, IR/Out timelines, target share & 2027 cap math',
-    'Assess 49ers 2026 trade window needs, realistic seller targets, 9/18ths rental math & 2027 -$31.54M cap horizon',
-    'Honest league-wide check on 49ers pass rush, pass defense & special teams weaknesses vs. NFC contenders'
+    `Balanced ${wkLabel} ${activeTeamAnalysis.nickname} vs. ${oppLabel} scouting breakdown: unit edges, vulnerabilities & paths to win for both teams`,
+    `Deep dive on ${activeTeamAnalysis.nickname} offensive playmakers: active depth, IR/Out timelines, target share & 2027 cap math`,
+    `Assess ${activeTeamAnalysis.nickname} 2026 trade & roster needs, realistic targets, draft capital & multi-year OverTheCap flexibility`,
+    `Honest league-wide check on ${activeTeamAnalysis.nickname} pass rush, pass defense & special teams vs. ${activeTeamAnalysis.conference} contenders`
   ];
 
   const sharedHeroReport = sharedAnalysisHighlightId
@@ -1084,7 +1090,7 @@ function renderDeepAnalysisRunner({
           <div class="card-header-left">
             <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('sparkles', 18)}</div>
             <div class="card-title-group">
-              <div class="card-eyebrow">Shared Scouting &amp; Cap Report • By ${esc(sharedHeroReport.createdBy || '49ers Faithful')}</div>
+              <div class="card-eyebrow">Shared Scouting &amp; Cap Report • By ${esc(sharedHeroReport.createdBy || getActiveTeamConfig().brandName)}</div>
               <h3 class="card-title">${esc(sharedHeroReport.title)}</h3>
             </div>
           </div>
@@ -1134,7 +1140,7 @@ function renderDeepAnalysisRunner({
       </div>
 
       <textarea id="analysisPromptInput" class="textarea-input" rows="3" style="margin-bottom:10px"
-                placeholder="Ask any nuanced 49ers position room, film, EPA, injury, cap, trade, or draft question…"
+                placeholder="Ask any nuanced ${esc(getActiveTeamConfig().nickname)} position room, film, EPA, injury, cap, trade, or draft question…"
                 aria-label="Deep Analysis Question">${esc(analysisPromptDraft)}</textarea>
 
       ${
@@ -1176,7 +1182,7 @@ function renderDeepAnalysisRunner({
                         <span class="badge badge-gold">${esc(rep.category)}</span>
                         <div class="podcast-secondary-actions">
                           <span class="mono" style="font-size:11px;color:var(--text-muted)">By ${esc(rep.createdBy)} • ${formatRelativeAge(rep.createdAt)}</span>
-                          <button type="button" class="icon-btn share-action-btn" data-action="share-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Share analysis link" title="Share link on 49ers.joshal.com">
+                          <button type="button" class="icon-btn share-action-btn" data-action="share-analysis" data-analysis-id="${esc(rep.id)}" aria-label="Share analysis link" title="Share link on ${esc(getActiveTeamConfig().domain)}">
                             ${iconSvg(isCopied ? 'check' : 'share', 13)}
                             <span>${isCopied ? 'Link Copied' : 'Share'}</span>
                           </button>

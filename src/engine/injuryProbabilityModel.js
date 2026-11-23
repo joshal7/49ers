@@ -19,6 +19,7 @@ import {
   sanitizeExternalUrl,
   buildEspnPlayerNewsAnchorUrl
 } from './linkIntegrity.js';
+import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 import {
   buildXPlayerScoopSearchUrl,
   extractBeatAttributionFromText,
@@ -1229,7 +1230,7 @@ export function detectOpen21DayIrWindowFromHistory({
         `${item.author || ''} ${item.reporterName || ''} ${fullBody}`
       );
       const isOfficial =
-        item.outletId === '49ers_official' ||
+        (typeof item.outletId === 'string' && /_official$/i.test(item.outletId)) ||
         item.wireSource === 'official_transactions' ||
         item.wireSource === 'espn_player_wire' ||
         item.wireSource === 'rotowire_rss';
@@ -1770,7 +1771,7 @@ export function evaluateCorroboratedNewsInjurySignal({
     const hasInlineTier1Probe = VERIFIED_TIER1_REPORTER_NAMES_RE.test(
       `${item.author || ''} ${item.reporterName || ''} ${fullBody}`
     );
-    const isOfficialSourceProbe = item.outletId === '49ers_official' || item.wireSource === 'official_transactions';
+    const isOfficialSourceProbe = /_official$/i.test(String(item.outletId || '')) || item.wireSource === 'official_transactions';
     const isTrustedWireProbe = item.wireSource === 'espn_player_wire' || item.wireSource === 'rotowire_rss';
 
     const scoped = scopeBeatTextToPlayer(fullBody, playerName, rosterPlayerNames);
@@ -2014,7 +2015,7 @@ export function evaluateCorroboratedNewsInjurySignal({
         (!prev.hasCoachQuote && scoped.length > (prev.scopedClause || '').length);
       observationsByReporter.set(repKey, {
         repKey,
-        reporterLabel: item.author || item.reporterName || item.outletName || '49ers Beat',
+        reporterLabel: item.author || item.reporterName || item.outletName || `${getActiveTeamConfig().nickname} Beat`,
         signalType: samePolarityAsPrev && prev.weight > baseWeight ? prev.signalType : signalType,
         direction: samePolarityAsPrev && Math.abs(prev.direction) > Math.abs(direction) ? prev.direction : direction,
         weight: samePolarityAsPrev ? Math.max(baseWeight, prev.weight) : baseWeight,
@@ -2794,7 +2795,14 @@ function normalizeOfficialGameStatusShared(rawStatus = '') {
  * (CORS-enabled `access-control-allow-origin: *` on NFL CDN), returning authoritative
  * Wed / Thu / Fri participation & game statuses for BOTH the San Francisco 49ers and the weekly Opponent.
  */
-export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') {
+export function parseOfficialClubInjuryReportHtml(html = '', oppTeamName = '', teamInput = null) {
+  return parseOfficial49ersInjuryReportHtml(html, oppTeamName, teamInput);
+}
+
+export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '', teamInput = null) {
+  const activeTeam = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  const teamFullLower = activeTeam.fullName.toLowerCase();
+  const teamNickLower = activeTeam.nickname.toLowerCase();
   const sfByKey = new Map();
   const oppByKey = new Map();
   if (!html || typeof html !== 'string') {
@@ -2863,8 +2871,8 @@ export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '') 
   let tableIdx = 0;
   for (const { tableHtml, precedingContext, headers, dayColIndices } of candidateTables) {
     const isSf =
-      precedingContext.includes('san francisco 49ers') &&
-      (!oppMascot || precedingContext.lastIndexOf('49ers') > precedingContext.lastIndexOf(oppMascot));
+      (precedingContext.includes(teamFullLower) || precedingContext.includes(teamNickLower)) &&
+      (!oppMascot || precedingContext.lastIndexOf(teamNickLower) > precedingContext.lastIndexOf(oppMascot));
     const targetMap = isSf || (tableIdx === 0 && !oppMascot) ? sfByKey : oppByKey;
     tableIdx += 1;
 
@@ -3077,7 +3085,7 @@ export function extractLivePracticeParticipationFromWire({
     const hasInlineTier1 = VERIFIED_TIER1_REPORTER_NAMES_RE.test(
       `${item.author || ''} ${item.reporterName || ''} ${fullBody}`
     );
-    const isOfficial = item.outletId === '49ers_official' || item.wireSource === 'official_transactions';
+    const isOfficial = /_official$/i.test(String(item.outletId || '')) || item.wireSource === 'official_transactions';
     const isPlayerWire = item.wireSource === 'espn_player_wire' || item.wireSource === 'rotowire_rss' || item.wireSource === 'bsky_mirror';
     if (trustTier >= 3 && !hasInlineTier1 && !isOfficial && !isPlayerWire) continue;
 
@@ -3606,7 +3614,7 @@ export function computePlayerPlayProbability(input = {}) {
         rosterBucket === 'pup' || statusRaw === 'pup' || statusRaw.includes('physically unable') || statusRaw.includes('reserve / pup');
       badgeLabel = isPupReserve ? '0% • Reserve/PUP' : '0% • IR';
       if (irWindowEval.isSeasonConcluded) {
-        factors.push('49ers season concluded — remains on Injured Reserve entering offseason');
+        factors.push(`${getActiveTeamConfig().nickname} season concluded — remains on Injured Reserve entering offseason`);
       } else if (irWindowEval.is21DayWindowExpired) {
         factors.push('21-day IR practice window expired without 53-man roster activation');
       } else if (missedWeeklyIrWindow) {
@@ -6545,8 +6553,8 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
             nowMs,
             schedule,
             currentWeek,
-            upcomingOppName: 'San Francisco 49ers',
-            upcomingOppAbbr: 'SF',
+            upcomingOppName: resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig()).fullName,
+            upcomingOppAbbr: resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig()).abbr,
             lastCompletedGameKickoffMs,
             corroboratedNewsSignal: oppIrSig
           });
@@ -7337,7 +7345,7 @@ function collectScoredPlayerCandidates(
     if (urlCanon) seenCanonUrls.add(urlCanon);
     if (extCanon) seenCanonUrls.add(extCanon);
 
-    const rawAuthor = cand.author || cand.reporterName || cand.outletName || '49ers Beat';
+    const rawAuthor = cand.author || cand.reporterName || cand.outletName || `${getActiveTeamConfig().nickname} Beat`;
     const authorName = String(rawAuthor).trim().toUpperCase() === 'NFL' ? 'NFL Official' : rawAuthor;
     const authorProfileUrl = sanitizeExternalUrl(
       resolveItemAuthorProfileUrl(cand, safeUrl),

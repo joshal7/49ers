@@ -11,6 +11,7 @@
 import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, resolvePlayerPlayBadgeLabel, rankBadgeClass, renderExpandableSummaryHtml, renderPlayerAvatarHtml, renderSalientThumbHtml, renderTweetLinkedArticleCardHtml, renderMiniMeterHtml } from './uiHelpers.js';
 import { resolveSalientCardVisual } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatDollars, formatOtcDollars, formatCompactDollars, formatCapActionLabel } from '../engine/capSimulator.js';
@@ -72,7 +73,7 @@ export function renderInjuryNewsItemCardHtml(
       : '';
   const defaultBeatFallback = teamContext?.isRemoteTeam
     ? `${teamContext.nickname || teamContext.abbr || 'NFL'} Beat`
-    : '49ers Beat';
+    : `${getActiveTeamConfig().nickname} Beat`;
   const rawAuthorName = n.author || n.reporterName || n.outletName || defaultBeatFallback;
   const authorName = formatWireSourceDisplayName(rawAuthorName, n);
   const resolvedMentionUrl = isTweet
@@ -596,10 +597,13 @@ function renderOverviewTab(
   const safeEspnUrl = sanitizeExternalUrl(p.espnUrl, null);
   const safeOtcUrl = sanitizeExternalUrl(p.otcUrl, null);
   const safePfrUrl = sanitizeExternalUrl(p.pfrUrl, null);
-  const safeXBeatUrl = sanitizeExternalUrl(buildXPlayerScoopSearchUrl(p.name, teamContext), null);
+  const safeXBeatUrl = sanitizeExternalUrl(
+    buildXPlayerScoopSearchUrl(p.name, teamContext?.isRemoteTeam ? teamContext : {}),
+    null
+  );
   const otcFallbackLabel = teamContext?.isRemoteTeam
     ? `OverTheCap ${teamContext.nickname || teamContext.abbr} Cap`
-    : 'OverTheCap 49ers Cap';
+    : `OverTheCap ${getActiveTeamConfig().nickname} Cap`;
   const profileLinks = [
     safeRemoteOrigin && teamContext?.domain
       ? { label: teamContext.domain, url: safeRemoteOrigin, isTeamSite: true }
@@ -623,9 +627,8 @@ function renderOverviewTab(
   ].filter(Boolean);
   const heroSubtitleText = bioParts.length
     ? bioParts.join(' • ')
-    : teamContext?.fullName || 'NFL Roster';
+    : teamContext?.fullName || getActiveTeamConfig().fullName;
   const bucketLabel = String(p.rosterBucket || 'active').replace('_', ' ').toUpperCase();
-
   const overviewBadgeLabel = resolvePlayerPlayBadgeLabel(p);
   const overviewBadgeCls = playProbBadgeClass(p.health?.playProbabilityPct, {
     rosterBucket: p.rosterBucket,
@@ -921,7 +924,9 @@ function renderStatsTab(p, statsMode) {
 function renderContractTab(p, txScenario, teamContext = null) {
   const yrs = Object.values(p.contractsByYear || {}).sort((a, b) => a.year - b.year);
   const fallbackOtcUrl =
-    p.otcUrl || teamContext?.otcCapUrl || 'https://overthecap.com/salary-cap/san-francisco-49ers';
+    p.otcUrl ||
+    (teamContext?.isRemoteTeam ? teamContext.otcCapUrl : null) ||
+    `https://overthecap.com/salary-cap/${getActiveTeamConfig().otcSlug}`;
   if (yrs.length === 0) {
     if (p._isMatchupSeedFallback && teamContext?.isRemoteTeam) {
       return `<div class="subcard-panel" style="font-size:12.5px;display:flex;flex-direction:column;gap:8px">
@@ -1136,13 +1141,16 @@ function renderHealthTab(
     : '';
 
   const noteBody = h.irBeatNote || h.longComment || h.shortComment || '';
+  const activeClub = getActiveTeamConfig();
   const officialInjuryUrl = sanitizeExternalUrl(
-    teamContext?.injuryReportUrl || appData?.health?.sourceUrl || 'https://www.49ers.com/team/injury-report/',
-    'https://www.49ers.com/team/injury-report/'
+    (teamContext?.isRemoteTeam ? teamContext.injuryReportUrl : null) ||
+      appData?.health?.sourceUrl ||
+      activeClub.clubInjuryUrl,
+    activeClub.clubInjuryUrl
   );
   const officialInjuryLabel = teamContext?.isRemoteTeam
     ? `${teamContext.clubDomain || teamContext.abbr} Report`
-    : '49ers.com Report';
+    : `${activeClub.clubDomain} Report`;
 
   return `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">

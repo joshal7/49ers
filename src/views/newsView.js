@@ -24,6 +24,7 @@ import {
   resolveSalientCardVisual
 } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   isUrgentBreakingBadge,
@@ -194,8 +195,8 @@ export function resolveDailyBriefSafeSources(dailyBrief, rawStream = [], appData
       originalUrl: sl.url || safeUrl,
       title: cleanTitle || sl.outlet || 'Open Source',
       url: safeUrl,
-      outlet: sl.outlet || '49ers Beat',
-      author: sl.author || (effectiveHandle ? effectiveHandle : sl.outlet || '49ers Beat'),
+      outlet: sl.outlet || `${getActiveTeamConfig().nickname} Beat`,
+      author: sl.author || (effectiveHandle ? effectiveHandle : sl.outlet || `${getActiveTeamConfig().nickname} Beat`),
       type: isTw ? 'tweet' : 'article',
       publishedAt: sl.publishedAt || null
     });
@@ -469,7 +470,7 @@ export function renderDailyTopNewsBriefHtml(
           </details>
           ${
             !asSubcard
-              ? `<button type="button" class="btn-ghost btn-compact daily-brief-ask-btn" data-action="analyze-topic-jump" data-prompt="${esc(brief.headline || '49ers Top News Deep Dive')}">
+              ? `<button type="button" class="btn-ghost btn-compact daily-brief-ask-btn" data-action="analyze-topic-jump" data-prompt="${esc(brief.headline || `${getActiveTeamConfig().nickname} Top News Deep Dive`)}">
                    ${iconSvg('sparkles', 12)}
                    <span>Ask AI</span>
                  </button>`
@@ -484,7 +485,7 @@ export function renderDailyTopNewsBriefHtml(
       <div class="daily-brief-head">
         <div style="min-width:0;flex:1">
           <div class="card-eyebrow">Top News Brief</div>
-          <h3 class="card-title daily-brief-headline">${escJargon(brief.headline || '49ers Daily Briefing', { maxTerms: 6, maxPlayers: 3, seenKeys: seenJargon })}</h3>
+          <h3 class="card-title daily-brief-headline">${escJargon(brief.headline || `${getActiveTeamConfig().nickname} Daily Briefing`, { maxTerms: 6, maxPlayers: 3, seenKeys: seenJargon })}</h3>
         </div>
         <span class="mono daily-brief-age" data-daily-brief-age title="${esc(briefAgeTooltip || `Generated ${brief.generatedAt || ''}`)}">${esc(ageTiny)}</span>
       </div>
@@ -592,12 +593,13 @@ function renderRelatedStoriesDrawerHtml(
       const crHref = crIsTw
         ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, prioritizedRaw), '#')
         : sanitizeExternalUrl(cr?.url, '#');
-      const crAuthor = formatWireSourceDisplayName(cr?.author || cr?.reporterName || cr?.outletName || '49ers Beat');
+      const crBeatFallback = `${getActiveTeamConfig().nickname} Beat`;
+      const crAuthor = formatWireSourceDisplayName(cr?.author || cr?.reporterName || cr?.outletName || crBeatFallback);
       const crOutlet = formatWireSourceDisplayName(cr?.outletName || '');
       const attribution =
         crAuthor && crOutlet && crAuthor.toLowerCase() !== crOutlet.toLowerCase()
           ? `${crAuthor} • ${crOutlet}`
-          : crAuthor || crOutlet || '49ers Beat';
+          : crAuthor || crOutlet || crBeatFallback;
       const crIsInjuryWire = cr?.wireSource === 'espn_player_wire' || String(cr?.id || '').startsWith('espn_pwire_');
       const typeLabel = crIsTw ? 'Tweet' : crIsVid ? 'Video' : crIsInjuryWire ? 'Injury Wire' : 'Article';
       const badgeCls = crIsTw ? 'badge-gold' : crIsVid ? 'badge-scarlet' : 'badge-neutral';
@@ -720,7 +722,7 @@ export function renderWireItemCardHtml(
   const readKey = getItemReadKey(item);
   const itemAlreadyRead = isItemRead(item, readKeysSet);
 
-  const rawAuthorName = item.author || item.reporterName || item.outletName || '49ers Beat';
+  const rawAuthorName = item.author || item.reporterName || item.outletName || `${getActiveTeamConfig().nickname} Beat`;
   const authorName = formatWireSourceDisplayName(rawAuthorName, item);
   const resolvedItemUrl = isTweet
     ? sanitizeExternalUrl(resolveOriginalTweetUrl(item, prioritizedRaw), null)

@@ -14,6 +14,8 @@
  * - Inside a player's own dossier (`excludePlayerId`), suppresses redundant same-player headshots
  */
 
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
+
 const ESPN_HEADSHOT_PATH_RE = /\/i\/headshots\/nfl\/players\/full\/(\d+)\.png/i;
 const ESPN_TEAMLOGO_PATH_RE = /\/i\/teamlogos\/nfl\/500\/([a-z0-9_-]+)\.png/i;
 const ESPN_PHOTO_PATH_RE = /^https:\/\/a\.espncdn\.com(\/photo\/.+)$/i;
@@ -231,7 +233,9 @@ export function buildOptimizedTeamLogo(abbr = 'SF', slot = 'logo') {
 export function detectMentionedOpponentTeam(text = '') {
   const hay = String(text || '');
   if (!hay) return null;
+  const activeAbbr = getActiveTeamConfig().abbr;
   for (const entry of OPPONENT_PATTERNS) {
+    if (entry.abbr === activeAbbr) continue;
     if (entry.re.test(hay)) {
       return { abbr: entry.abbr, name: entry.name };
     }
@@ -363,7 +367,7 @@ function findClusterEditorialPhoto(item = {}) {
   if (isEditorialPhotoUrl(item.imageUrl)) {
     return {
       rawUrl: String(item.imageUrl).trim(),
-      sourceLabel: item.outletName || item.author || '49ers Beat'
+      sourceLabel: item.outletName || item.author || `${getActiveTeamConfig().nickname} Beat`
     };
   }
   const confirming = Array.isArray(item.confirmingReports) ? item.confirmingReports : [];
@@ -371,7 +375,7 @@ function findClusterEditorialPhoto(item = {}) {
     if (isEditorialPhotoUrl(cr?.imageUrl)) {
       return {
         rawUrl: String(cr.imageUrl).trim(),
-        sourceLabel: cr.outletName || cr.author || '49ers Beat'
+        sourceLabel: cr.outletName || cr.author || `${getActiveTeamConfig().nickname} Beat`
       };
     }
   }
@@ -475,9 +479,10 @@ export function resolveSalientCardVisual(
   }
 
   // Tier 3: Opponent / Matchup Dual-Crest Tile (e.g., Cowboys, Vikings, Rams, Seahawks)
+  const activeTeamVisual = getActiveTeamConfig();
   const opp = detectMentionedOpponentTeam(`${titleOrBody} ${item.fullText || ''} ${item.summary || ''}`);
   if (opp) {
-    const sfLogo = buildOptimizedTeamLogo('SF', 'logo');
+    const sfLogo = buildOptimizedTeamLogo(activeTeamVisual.abbr, 'logo');
     const oppLogo = buildOptimizedTeamLogo(opp.abbr, 'logo');
     return {
       kind: 'matchup',
@@ -487,13 +492,13 @@ export function resolveSalientCardVisual(
       oppName: opp.name,
       oppLogoSrc: oppLogo.src,
       oppLogoFallback: oppLogo.fallbackSrc,
-      alt: `49ers vs ${opp.name}`
+      alt: `${activeTeamVisual.nickname} vs ${opp.name}`
     };
   }
 
-  // Tier 4: Official 49ers Podium / Editorial Crest (skip inside a player's own dossier to avoid noise)
+  // Tier 4: Official Team Podium / Editorial Crest (skip inside a player's own dossier to avoid noise)
   if (allowTeamFallback && !excl) {
-    const sfLogo = buildOptimizedTeamLogo('SF', 'logo');
+    const sfLogo = buildOptimizedTeamLogo(activeTeamVisual.abbr, 'logo');
     const tagLabel = classifyTeamEmblemTag(
       `${titleOrBody} ${item.fullText || ''}`,
       item.author || item.reporterName || ''
@@ -503,7 +508,7 @@ export function resolveSalientCardVisual(
       sfLogoSrc: sfLogo.src,
       sfLogoFallback: sfLogo.fallbackSrc,
       tagLabel,
-      alt: `San Francisco 49ers (${tagLabel})`
+      alt: `${activeTeamVisual.fullName} (${tagLabel})`
     };
   }
 
@@ -596,8 +601,8 @@ export function resolveDailyBriefHeroMedia(dailyBrief = null, rawStream = [], { 
     src: opt.src,
     fallbackSrc: opt.fallbackSrc,
     rawUrl: best.hit.rawUrl,
-    alt: best.item.title || dailyBrief?.headline || '49ers Daily Briefing photo',
-    creditLabel: best.hit.sourceLabel || best.item.outletName || '49ers Beat',
+    alt: best.item.title || dailyBrief?.headline || `${getActiveTeamConfig().nickname} Daily Briefing photo`,
+    creditLabel: best.hit.sourceLabel || best.item.outletName || `${getActiveTeamConfig().nickname} Beat`,
     creditUrl: best.item.url || '',
     featuredPlayers
   };

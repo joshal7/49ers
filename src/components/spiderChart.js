@@ -127,7 +127,7 @@ export function renderSpiderChartHtml(spiderProfile, playerName = '') {
                 const compMetaHtml = `<span class="comp-meta mono">${c.draftYear ? `'${String(c.draftYear).slice(-2)} • ` : ''}${c.similarityPct}% match</span>`;
                 if (sfMatch && sfMatch.name.toLowerCase() !== String(playerName || '').toLowerCase()) {
                   return `
-              <button type="button" class="spider-comp-chip" style="cursor:pointer;text-align:left" data-action="open-player-sheet" data-player-id="${escapeHtml(sfMatch.id)}" aria-label="Open ${escapeHtml(c.name)} 49ers dossier">
+              <button type="button" class="spider-comp-chip" style="cursor:pointer;text-align:left" data-action="open-player-sheet" data-player-id="${escapeHtml(sfMatch.id)}" aria-label="Open ${escapeHtml(c.name)} player dossier">
                 <span class="comp-name" style="color:var(--gold-bright)">${escapeHtml(c.name)}</span>
                 ${compMetaHtml}
               </button>

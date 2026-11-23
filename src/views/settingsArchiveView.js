@@ -10,6 +10,7 @@ import {
   renderPlayerAvatarHtml
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
+import { getActiveTeamConfig, getTeamBySlug } from '../config/teamRegistry.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import {
   buildXBeatListSearchUrl,
@@ -57,19 +58,65 @@ export function renderSettingsSheetHtml({
     r => !q || r.name.toLowerCase().includes(q) || r.handle.toLowerCase().includes(q) || r.role.toLowerCase().includes(q)
   );
 
+  const activeTeam = getActiveTeamConfig();
+  const darkThemeName = activeTeam.themes?.dark?.name || "Levi's Night Game";
+  const lightThemeName = activeTeam.themes?.light?.name || "'94 Throwback";
+  const darkBtnLabel = activeTeam.abbr === 'SF' ? 'Night Game Dark' : `${darkThemeName} (Dark)`;
+  const lightBtnLabel = activeTeam.abbr === 'SF' ? "'94 White & Gold" : `${lightThemeName} (Light)`;
+  const briefCutoffLabel =
+    activeTeam.timezone === 'America/Los_Angeles'
+      ? '5:00 PM PT'
+      : /New_York|Detroit|Indiana/i.test(activeTeam.timezone || '')
+        ? '5:00 PM ET'
+        : /Chicago/i.test(activeTeam.timezone || '')
+          ? '5:00 PM CT'
+          : '5:00 PM MT';
+
   return `
     <!-- Theme & Feed Preferences -->
     <div class="subcard-panel" style="display:flex;flex-direction:column;gap:10px">
       <div class="sub-label">Display &amp; Feed</div>
 
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap" data-settings-team-switcher>
+        <div style="min-width:0;flex:1 1 160px">
+          <strong>Team Sites</strong>
+          <div style="font-size:11.5px;color:var(--text-secondary)">Jump cleanly between active NFL team sites</div>
+        </div>
+        <div class="source-link-strip" style="gap:6px">
+          ${[
+            { slug: 'lions', host: 'lions.joshal.com', query: '?team=lions', label: getTeamBySlug('lions').brandName },
+            { slug: 'bills', host: 'bills.joshal.com', query: '?team=bills', label: getTeamBySlug('bills').brandName },
+            { slug: '49ers2', host: '49ers2.joshal.com', query: '?team=49ers2', label: '49ers2 (A/B)' },
+            { slug: '49ers', host: '49ers.joshal.com', query: '?team=49ers', label: getTeamBySlug('49ers').brandName }
+          ]
+            .map(entry => {
+              const curHost =
+                typeof window !== 'undefined' ? String(window.location?.hostname || '').toLowerCase() : '';
+              const isLocal = /^(localhost|127\.0\.0\.1)$/i.test(curHost);
+              const href = isLocal ? entry.query : `https://${entry.host}`;
+              const isCur =
+                entry.slug === '49ers2'
+                  ? curHost === '49ers2.joshal.com' ||
+                    (isLocal && new URLSearchParams(window.location?.search || '').get('team') === '49ers2')
+                  : entry.slug === '49ers'
+                    ? activeTeam.slug === '49ers' &&
+                      curHost !== '49ers2.joshal.com' &&
+                      !(isLocal && new URLSearchParams(window.location?.search || '').get('team') === '49ers2')
+                    : activeTeam.slug === entry.slug;
+              return `<a href="${esc(href)}" class="source-chip-link ${isCur ? 'active' : ''}" style="${isCur ? 'border-color:var(--gold-border);background:var(--gold-soft);color:var(--text-primary)' : ''}"><span>${esc(entry.label)}</span></a>`;
+            })
+            .join('')}
+        </div>
+      </div>
+
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
         <div style="min-width:0;flex:1 1 170px">
           <strong>App Theme</strong>
-          <div style="font-size:11.5px;color:var(--text-secondary)">Levi's Night Game (Dark) vs. '94 Throwback (Light)</div>
+          <div style="font-size:11.5px;color:var(--text-secondary)">${esc(darkThemeName)} (Dark) vs. ${esc(lightThemeName)} (Light)</div>
         </div>
         <button type="button" class="btn-secondary" style="white-space:nowrap;flex-shrink:0" data-action="toggle-theme">
           ${iconSvg(userPrefs.theme === 'light' ? 'moon' : 'sun', 14)}
-          <span>${userPrefs.theme === 'light' ? 'Night Game Dark' : "'94 White & Gold"}</span>
+          <span>${esc(userPrefs.theme === 'light' ? darkBtnLabel : lightBtnLabel)}</span>
         </button>
       </div>
 
@@ -140,7 +187,7 @@ export function renderSettingsSheetHtml({
 
         <label style="display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer">
           <div>
-            <strong style="font-size:12.5px">Daily 5:00 PM PT Top-News Brief</strong>
+            <strong style="font-size:12.5px">Daily ${esc(briefCutoffLabel)} Top-News Brief</strong>
             <div style="font-size:11px;color:var(--text-secondary)">One daily digest ping when the synthesized briefing drops</div>
           </div>
           <input type="checkbox" data-action="toggle-push-channel" data-push-channel="dailyBriefReady"
@@ -254,16 +301,16 @@ export function renderSettingsSheetHtml({
       <div class="sub-label" style="margin:0">Direct X Beat Lists</div>
       <div style="font-size:11.5px;color:var(--text-secondary)">Live X searches synced with your enabled reporters below.</div>
       <div class="x-beat-launch-strip" aria-label="Live X Beat Search">
-        <a href="${esc(buildXBeatListSearchUrl('trusted', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 49ers Beat Reporters, Columnists &amp; Official Team handles from Settings">
+        <a href="${esc(buildXBeatListSearchUrl('trusted', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 ${esc(activeTeam.nickname)} Beat Reporters, Columnists &amp; Official Team handles from Settings">
           <span>Trusted Beat</span>${iconSvg('externalLink', 10)}
         </a>
-        <a href="${esc(buildXBeatListSearchUrl('film', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 49ers Film, Analytics &amp; Podcast Analysts from Settings">
+        <a href="${esc(buildXBeatListSearchUrl('film', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 ${esc(activeTeam.nickname)} Film, Analytics &amp; Podcast Analysts from Settings">
           <span>Film &amp; Analysts</span>${iconSvg('externalLink', 10)}
         </a>
-        <a href="${esc(buildXBeatListSearchUrl('injuries', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="Live 49ers sideline, practice &amp; warmup injury updates across Tier 1–3 beat voices">
+        <a href="${esc(buildXBeatListSearchUrl('injuries', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="Live ${esc(activeTeam.nickname)} sideline, practice &amp; warmup injury updates across Tier 1–3 beat voices">
           <span>Injury Scoops</span>${iconSvg('externalLink', 10)}
         </a>
-        <a href="${esc(buildXBeatListSearchUrl('insiders', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 National NFL Insiders, Draft Evaluators &amp; League Analysts scoped to 49ers">
+        <a href="${esc(buildXBeatListSearchUrl('insiders', { reporters, userPrefs }))}" target="_blank" rel="noopener noreferrer" class="source-chip-link x-beat-chip" title="All enabled Tier 1–3 National NFL Insiders, Draft Evaluators &amp; League Analysts scoped to ${esc(activeTeam.nickname)}">
           <span>NFL Insiders</span>${iconSvg('externalLink', 10)}
         </a>
       </div>
@@ -729,7 +776,7 @@ export function renderUniversalSearchResultsHtml({
              }
              ${
                res.query
-                 ? `<button type="button" class="btn-secondary" data-action="analyze-topic-jump" data-prompt="${esc(`49ers deep dive on ${res.query}`)}">
+                 ? `<button type="button" class="btn-secondary" data-action="analyze-topic-jump" data-prompt="${esc(`${getActiveTeamConfig().nickname} deep dive on ${res.query}`)}">
                       ${iconSvg('sparkles', 13)}
                       <span>Ask AI about &ldquo;${esc(res.query.slice(0, 32))}&rdquo;</span>
                     </button>`
@@ -791,7 +838,7 @@ export function renderUniversalSearchSheetHtml({
                  autocapitalize="off"
                  spellcheck="false"
                  enterkeyhint="search"
-                 aria-label="Search 49ers Faithful" />
+                 aria-label="Search ${esc(getActiveTeamConfig().brandName)}" />
           <button type="button" id="universalSearchClearBtn" class="search-clear-btn" data-action="clear-universal-search" aria-label="Clear search" ${hasQuery || hasSource ? '' : 'hidden'}>${iconSvg('close', 13)}</button>
         </div>
 
