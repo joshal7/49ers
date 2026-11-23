@@ -2674,7 +2674,7 @@ function renderMockDbPlayerCardHtml(p, activeLens = 'consensus') {
         <summary class="compact-details-summary">
           <span>Drill Down: Scouting &amp; Site Notes (${p.siteCount})</span>
           <span class="mono" style="font-size:10.5px;color:var(--gold-bright)">${
-            p.shanahanLynchFitScore ? `SF Fit ${p.shanahanLynchFitScore}/100 • ` : ''
+            p.shanahanLynchFitScore ? `${esc(getActiveTeamConfig().abbr)} Fit ${p.shanahanLynchFitScore}/100 • ` : ''
           }Pick ${esc(p.pickRangeLabel)}</span>
         </summary>
         <div class="mock-db-drill-body">
@@ -2908,12 +2908,12 @@ function renderBigBoardProspectItemHtml(
             .join('')}
           ${
             b.shanahanLynchFitScore
-              ? `<span class="badge badge-positive mono">SF Fit ${b.shanahanLynchFitScore}/100</span>`
+              ? `<span class="badge badge-positive mono">${esc(getActiveTeamConfig().abbr)} Fit ${b.shanahanLynchFitScore}/100</span>`
               : ''
           }
           ${
             mockHit
-              ? `<span class="badge badge-gold mono">Mocked to SF (${mockHit.siteCount} ${mockHit.siteCount === 1 ? 'site' : 'sites'})</span>`
+              ? `<span class="badge badge-gold mono">Mocked to ${esc(getActiveTeamConfig().abbr)} (${mockHit.siteCount} ${mockHit.siteCount === 1 ? 'site' : 'sites'})</span>`
               : ''
           }
         </div>
@@ -3008,8 +3008,11 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
     consensusBigBoard: dp.consensusBigBoard || []
   });
   const mockSitesByKey = new Map(mockDb.players.map(p => [p.playerKey, p]));
+  const activeDraftTeam = getActiveTeamConfig();
+  const mockDbSourceHit = (dp.sources || []).find(s => /nflmockdraftdatabase\.com/i.test(String(s?.url || '')));
   const mockDbTeamUrl =
-    sanitizeExternalUrl(dp.sources?.[0]?.url, null) || buildMockDraftTeamUrl(nextDraftYr);
+    sanitizeExternalUrl(mockDbSourceHit?.url || '', null) ||
+    buildMockDraftTeamUrl(nextDraftYr, activeDraftTeam.otcSlug || 'san-francisco-49ers');
   const primaryMockPlayers = mockDb.players.slice(0, 5);
   const overflowMockPlayers = mockDb.players.slice(5);
 
@@ -3110,7 +3113,7 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
               <tr>
                 <td>Rd ${p.round}</td><td>#${p.projectedOverall}</td>
                 <td style="font-family:var(--font-sans)">${esc(p.origin)}</td>
-                <td>${p.valueRichHill}</td>
+                <td>${Number.isFinite(Number(p.valueRichHill)) ? Number(p.valueRichHill) : '—'}</td>
               </tr>
             `
               )

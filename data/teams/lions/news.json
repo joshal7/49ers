@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T01:23:50.195Z",
+  "updatedAt": "2026-11-23T01:26:59.667Z",
   "dailyTopNewsBrief": {
     "id": "brief_det_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -7,7 +7,7 @@
     "isPostGame": true,
     "gameWeek": 12,
     "teamRecord": "8-2",
-    "generatedAt": "2026-11-23T01:23:53.107Z",
+    "generatedAt": "2026-11-23T01:27:02.107Z",
     "modelUsed": "gemini-4-hydrogen",
     "thinkingLevel": "XHIGH",
     "source": "deterministic-digest",
@@ -50,7 +50,7 @@
         "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
         "author": "NFL Nation",
         "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:19:55Z"
+        "publishedAt": "2026-11-23T01:21:25Z"
       },
       {
         "sid": "S3",
@@ -125,7 +125,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.532,
+      "breakingPriority": 1.522,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -135,7 +135,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 66.3836
+      "storyRank": 62.9261
     },
     {
       "id": "det_espn_7435c17a22db1",
@@ -144,7 +144,7 @@
       "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 11.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749880_608x342_16-9.jpg",
       "imageAlt": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-23T01:19:55Z",
+      "publishedAt": "2026-11-23T01:21:25Z",
       "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
       "outletId": "espn_det",
       "outletName": "ESPN",
@@ -168,7 +168,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 58.0715
+      "storyRank": 56.0458
     },
     {
       "id": "det_espn_60efae509e729",
@@ -201,7 +201,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 40.1218
+      "storyRank": 38.091
     },
     {
       "id": "det_bsky_dae5d18dedb6",
@@ -228,7 +228,7 @@
       "isBreaking": false,
       "isInGameInjury": true,
       "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.436,
+      "breakingPriority": 1.429,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -245,7 +245,7 @@
       "playerValueScore": 0.09,
       "playerValueTier": "depth",
       "injuryImpactScore": 0.324,
-      "storyRank": 14.5903
+      "storyRank": 14.459
     },
     {
       "id": "det_vid_c4c9aff587fe",
@@ -269,7 +269,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.969,
+      "breakingPriority": 0.963,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -279,7 +279,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.4272
+      "storyRank": 9.3023
     },
     {
       "id": "det_vid_7623bd535cab",
@@ -303,7 +303,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.941,
+      "breakingPriority": 0.935,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -313,7 +313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.8486
+      "storyRank": 8.7368
     },
     {
       "id": "det_bsky_49b3cc757a15",
@@ -340,7 +340,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.835,
+      "breakingPriority": 0.83,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -350,7 +350,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.2546
+      "storyRank": 8.1667
     },
     {
       "id": "det_vid_009110c13b8e",
@@ -374,7 +374,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.848,
+      "breakingPriority": 0.843,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -384,7 +384,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.2249
+      "storyRank": 7.1463
     },
     {
       "id": "det_vid_01f6b0259c93",
@@ -418,7 +418,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.6871
+      "storyRank": 5.4913
     },
     {
       "id": "det_bsky_76b4702b8f91",
@@ -455,7 +455,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.4382
+      "storyRank": 5.3582
     },
     {
       "id": "det_bsky_d9554a8c4310",
@@ -492,7 +492,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.5488
+      "storyRank": 5.4752
     },
     {
       "id": "det_rss_92d6faf1e8ed",
@@ -525,7 +525,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3359
+      "storyRank": 4.203
     },
     {
       "id": "det_bsky_95918640d49f",
@@ -562,7 +562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.569
+      "storyRank": 4.516
     },
     {
       "id": "det_rss_e97a2a128e9b",
@@ -595,7 +595,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6228
+      "storyRank": 3.5247
     },
     {
       "id": "det_vid_21c8c930060d",
@@ -629,7 +629,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5406
+      "storyRank": 3.5045
     },
     {
       "id": "det_vid_e304e2423141",
@@ -663,7 +663,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4823
+      "storyRank": 3.4472
     },
     {
       "id": "det_vid_24ad36508274",
@@ -697,7 +697,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4713
+      "storyRank": 3.4364
     },
     {
       "id": "det_bsky_91007c4df1f0",
@@ -734,7 +734,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.644
+      "storyRank": 3.6079
     },
     {
       "id": "det_bsky_d63bbf7a1d83",
@@ -771,7 +771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6033
+      "storyRank": 3.5679
     },
     {
       "id": "det_bsky_6bb1766a86d4",
@@ -808,7 +808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5909
+      "storyRank": 3.5557
     },
     {
       "id": "det_vid_45d058a69345",
@@ -842,7 +842,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3284
+      "storyRank": 3.2959
     },
     {
       "id": "det_vid_8fc7736e6ca3",
@@ -876,7 +876,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.26
+      "storyRank": 3.2286
     },
     {
       "id": "det_bsky_70ffea10bca4",
@@ -913,7 +913,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4211
+      "storyRank": 3.3887
     },
     {
       "id": "det_vid_3e52ba837e92",
@@ -947,7 +947,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.181
+      "storyRank": 3.1509
     },
     {
       "id": "det_bsky_ccd54bb8872f",
@@ -984,7 +984,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.263
+      "storyRank": 3.2331
     },
     {
       "id": "det_vid_f23bb1ec017f",
@@ -1018,7 +1018,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2617
+      "storyRank": 3.2325
     },
     {
       "id": "det_vid_165fdcb258f4",
@@ -1052,7 +1052,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2155
+      "storyRank": 3.1869
     },
     {
       "id": "det_vid_5dee2dad24d4",
@@ -1086,7 +1086,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2064
+      "storyRank": 3.178
     },
     {
       "id": "det_vid_eb6b9f638b79",
@@ -1120,7 +1120,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.1789
+      "storyRank": 3.1509
     },
     {
       "id": "det_espn_aea129f88ee07",
@@ -1153,7 +1153,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4019
+      "storyRank": 2.3563
     },
     {
       "id": "det_espn_9463dd92e41c3",
@@ -1186,7 +1186,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9174
+      "storyRank": 1.8862
     },
     {
       "id": "det_vid_a8905329fcc5",
@@ -1220,7 +1220,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8592
+      "storyRank": 1.8296
     },
     {
       "id": "det_rss_3ea274280813",
@@ -1253,7 +1253,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6013
+      "storyRank": 1.5766
     },
     {
       "id": "det_vid_9cc81b3422a9",
@@ -1287,7 +1287,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7505
+      "storyRank": 1.7238
     },
     {
       "id": "det_vid_23b6812e1771",
@@ -1321,7 +1321,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7407
+      "storyRank": 1.7142
     },
     {
       "id": "det_bsky_acc7c5faee45",
@@ -1358,7 +1358,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4959
+      "storyRank": 1.475
     },
     {
       "id": "det_bsky_ef2779000aac",
@@ -1395,7 +1395,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7549
+      "storyRank": 1.7304
     },
     {
       "id": "det_vid_a79420d76426",
@@ -1429,7 +1429,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3455
+      "storyRank": 1.3271
     },
     {
       "id": "det_bsky_f1355f9db30e",
@@ -1466,7 +1466,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4159
+      "storyRank": 1.3969
     },
     {
       "id": "det_bsky_de8d1f1660b9",
@@ -1503,7 +1503,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.15
+      "storyRank": 1.138
     },
     {
       "id": "det_vid_31f3890de597",
@@ -1537,7 +1537,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9114
+      "storyRank": 0.9019
     },
     {
       "id": "det_bsky_789d1e0d3c3d",
@@ -1574,7 +1574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.877
+      "storyRank": 0.8686
     },
     {
       "id": "det_bsky_5caee00df2ce",
@@ -1611,7 +1611,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8729
+      "storyRank": 0.8645
     },
     {
       "id": "det_vid_c7355fb69e2e",
@@ -1645,7 +1645,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7467
+      "storyRank": 0.7399
     },
     {
       "id": "det_bsky_d71edc7b2097",
@@ -1682,7 +1682,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7733
+      "storyRank": 0.7665
     },
     {
       "id": "det_bsky_0e00b32b5276",
@@ -1719,7 +1719,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1727
+      "storyRank": 0.1713
     },
     {
       "id": "det_bsky_d870fb1952b8",
@@ -1756,7 +1756,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1279
+      "storyRank": 0.127
     },
     {
       "id": "det_rss_cd50a8afa84d",
@@ -1789,7 +1789,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1037
+      "storyRank": 0.1031
     },
     {
       "id": "det_rss_e8bb16dbb320",
@@ -1822,7 +1822,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0923
+      "storyRank": 0.0918
     },
     {
       "id": "det_bsky_0f1a6d53713f",
@@ -1859,7 +1859,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0335
+      "storyRank": 0.0334
     },
     {
       "id": "det_bsky_d40259a8fe91",
@@ -1962,7 +1962,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0918
+      "storyRank": 0.0916
     },
     {
       "id": "det_tx_3b82b2c77f40",
@@ -2128,7 +2128,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0543
+      "storyRank": 0.0542
     },
     {
       "id": "det_rss_976be5789ea0",
@@ -2161,7 +2161,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.049
+      "storyRank": 0.0489
     },
     {
       "id": "det_bsky_c9b6abbd9373",
@@ -2771,7 +2771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0221
     },
     {
       "id": "det_tx_c64f2ecbbd9b",
@@ -3003,7 +3003,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.0154
     },
     {
       "id": "det_tx_62a14fc45972",

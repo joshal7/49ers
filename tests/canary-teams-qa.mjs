@@ -1453,6 +1453,130 @@ await test('buildFranchiseHeadToHeadHistory handles ties, modern relocations, ze
   assert.ok(!lionsMatchupHtml.includes('historical game log available via Pro-Football-Reference above'), 'Matchup HTML must not show empty fallback when games exist');
 });
 
+await test('Multi-Team Draft Prep Above Big Board Parity (Needs, Full Pick Inventory + Comp + Rich Hill, Live Consensus Mocks, Zero SF Leaks)', async () => {
+  const { parseTankathonTeamPicksHtml } = await import('../scripts/lib/aiSynthesisEngine.mjs');
+  const {
+    buildTradedPicksNote,
+    parseMddbTeamPageHtml,
+    sanitizeTeamNeutralArchetypeNote
+  } = await import('../scripts/lib/teamDraftIntelBuilder.mjs');
+  const { resolveFirstPickMockDatabase } = await import('../src/engine/seasonStateMachine.js');
+
+  // 1. Unit test Tankathon parser with own, traded, and compensatory picks
+  const sampleTkHtml = `
+    <h2>Current Draft Picks</h2>
+    <div class="pick-card"><div class="pick-card-round">1.32 </div>32</div><div class="abbreviation">BUF</div>
+    <div class="pick-card"><div class="pick-card-round">4.36 Comp</div>137</div><div class="abbreviation">BUF</div>
+    <div class="pick-card"><div class="pick-card-round">5.1 </div>138</div><div class="abbreviation">TEN</div>
+    <h2>Mock Draft Selections</h2>
+  `;
+  const parsedPicks = parseTankathonTeamPicksHtml(sampleTkHtml, 'BUF');
+  assert.equal(parsedPicks.length, 3, 'Tankathon parser must capture own, comp, and traded picks');
+  assert.equal(parsedPicks[0].origin, 'Own Pick (Live Contender Slot)');
+  assert.equal(parsedPicks[0].valueRichHill, 184);
+  assert.equal(parsedPicks[1].isComp, true);
+  assert.equal(parsedPicks[1].origin, 'Compensatory Pick');
+  assert.ok(Number.isFinite(parsedPicks[1].valueRichHill) && parsedPicks[1].valueRichHill > 0);
+  assert.equal(parsedPicks[2].origin, 'From TEN (Acquired via Trade)');
+  assert.equal(parsedPicks[2].fromTeam, 'TEN');
+
+  const note = buildTradedPicksNote({ team: { abbr: 'BUF', city: 'Buffalo', fullName: 'Buffalo Bills' }, draftYear: 2027, pickInventory: parsedPicks });
+  assert.ok(note.startsWith('3 Total Picks:'), `Expected accurate count prefix, got: ${note}`);
+  assert.ok(note.includes('via TEN') && note.includes('compensatory pick'), `Note must cite acquired and comp picks: ${note}`);
+
+  // 2. Unit test archetype sanitizer strips all SF-specific coaches/players/schemes
+  const dirtyNotes = [
+    'Penetrating front-four disruptor built for Kris Kocurek\'s attack-style Wide-9 rotation.',
+    'Prototypical Iowa wide-zone center/guard with rapid reach-block footwork to succeed Jake Brendel or upgrade Left Guard.',
+    'Rangy sideline-to-sideline coverage linebacker in the Fred Warner seam-carry mold.',
+    '6\'3" vertical field-stretcher with above-the-rim catch radius for Shanahan play-action shot plays.',
+    '6\'7" 12-personnel matchup tight end alongside George Kittle.'
+  ];
+  for (const dn of dirtyNotes) {
+    const clean = sanitizeTeamNeutralArchetypeNote(dn, { abbr: 'DET', nickname: 'Lions', city: 'Detroit' });
+    assert.ok(!/Kocurek|Wide-9|Jake Brendel|Fred Warner|Shanahan|George Kittle|49ers|\bSF\b/i.test(clean), `Sanitizer leaked SF phrase: ${clean}`);
+  }
+
+  // 3. Unit test MDDB team parser extracts Must Address needs and clean siteName without analyst leakage
+  const sampleMddb = `
+    <a href="/mock-drafts/2027/espn-2027-jordan-reid?date=2026-11-18">
+      <span class="font-semibold">ESPN <span class="font-normal"> By Jordan Reid</span></span>
+      <div class="whitespace-nowrap">11/18/26</div>
+    </a>
+    <div><span class="text-base font-black">30</span>
+      <a href="/colleges/2027/mississippi-state-bulldogs">Mississippi State</a>
+      <a href="/players/2027/kelley-jones">Kelley Jones</a>
+      <span class="font-bold bg-blue-50">CB</span>
+    </div>
+    <h2>2027 Team Needs</h2><div>Must Address</div><span>CB</span><span>S</span><span>EDGE</span><span>IOL</span><div>Strong Need</div>
+  `;
+  const parsedMddb = parseMddbTeamPageHtml(sampleMddb, { team: { abbr: 'DET', nickname: 'Lions', fullName: 'Detroit Lions' }, draftYear: 2027 });
+  assert.deepEqual(parsedMddb.mustAddressNeeds, ['CB', 'S', 'EDGE', 'IOL']);
+  assert.equal(parsedMddb.mockEntries.length, 1);
+  assert.equal(parsedMddb.mockEntries[0].siteName, 'ESPN');
+  assert.equal(parsedMddb.mockEntries[0].analyst, 'Jordan Reid');
+  assert.equal(parsedMddb.mockEntries[0].projectedPick, 30);
+
+  // 4. Live generated Bills & Lions seasonal.json & rendered Draft HTML verification
+  const forbiddenDraftLeakRe = /\b(49ers|San Francisco|Shanahan|Lynch|Raheem Morris|Kris Kocurek|Wide-9|Fred Warner|Trent Williams|Jake Brendel|George Kittle|Nick Bosa|Brock Purdy|SF Fit|Mocked to SF|undefined)\b/i;
+
+  for (const slug of ['lions', 'bills']) {
+    const team = getTeamBySlug(slug);
+    setActiveTeamConfig(team);
+    const dir = path.join(ROOT, 'data', 'teams', slug);
+    const seasonal = JSON.parse(fs.readFileSync(path.join(dir, 'seasonal.json'), 'utf8'));
+    const meta = JSON.parse(fs.readFileSync(path.join(dir, 'meta.json'), 'utf8'));
+    const scheduleMatchup = JSON.parse(fs.readFileSync(path.join(dir, 'schedule-matchup.json'), 'utf8'));
+    const dp = seasonal.draftPrep2027;
+
+    assert.ok(dp, `${slug} missing draftPrep2027`);
+    assert.ok(Array.isArray(dp.sources) && dp.sources.length >= 3, `${slug} draftPrep2027.sources must have >= 3 links`);
+    assert.equal(dp.sources[0].label, 'NFL Mock Draft Database', `${slug} first draft source must be NFL Mock Draft Database`);
+    assert.ok(dp.sources[0].url.includes(`/teams/2027/${team.otcSlug}`), `${slug} MDDB URL must use /teams/2027/${team.otcSlug}, got ${dp.sources[0].url}`);
+    assert.ok(!dp.sources[0].url.includes('/nfl-teams/'), `${slug} MDDB URL must NOT use broken /nfl-teams/ path`);
+    assert.ok(dp.sources.some(s => /NFL Combine Tracker/i.test(s.label)), `${slug} must include NFL Combine Tracker link`);
+
+    assert.ok(Array.isArray(dp.topNeeds2027) && dp.topNeeds2027.length === 4, `${slug} must have 4 topNeeds2027, got ${dp.topNeeds2027?.length}`);
+    for (const need of dp.topNeeds2027) {
+      assert.ok(need.pos && need.horizon && need.horizon.length >= 30, `${slug} need #${need.rank} incomplete`);
+    }
+
+    assert.ok(Array.isArray(dp.pickInventory) && dp.pickInventory.length >= 5, `${slug} pickInventory must have full draft picks (>=5), got ${dp.pickInventory?.length}`);
+    for (const pk of dp.pickInventory) {
+      assert.ok(Number.isFinite(pk.round) && pk.round >= 1 && pk.round <= 7, `${slug} invalid pick round`);
+      assert.ok(Number.isFinite(pk.projectedOverall) && pk.projectedOverall >= 1 && pk.projectedOverall <= 262, `${slug} invalid overall pick`);
+      assert.ok(Number.isFinite(pk.valueRichHill) && pk.valueRichHill > 0, `${slug} pick Rd ${pk.round} #${pk.projectedOverall} missing valid valueRichHill`);
+      assert.ok(Boolean(pk.origin), `${slug} pick missing origin`);
+    }
+    assert.ok(dp.tradedPicksNote.startsWith(`${dp.pickInventory.length} Total Picks:`), `${slug} tradedPicksNote must reflect live pick count, got: ${dp.tradedPicksNote}`);
+    assert.ok(!dp.tradedPicksNote.includes('3-Lens 250+ Prospect Big Board'), `${slug} tradedPicksNote must NOT be generic placeholder`);
+
+    const resolvedMock = resolveFirstPickMockDatabase(dp.firstPickMockDatabase || [], {
+      appData: { seasonal, meta },
+      now: new Date(),
+      draftYear: dp.draftYear,
+      projectedPick: dp.pickInventory[0]?.projectedOverall,
+      consensusBigBoard: dp.consensusBigBoard || []
+    });
+    assert.ok(resolvedMock.totalFreshSites >= 8, `${slug} Consensus Mock Draft should have >= 8 fresh sites, got ${resolvedMock.totalFreshSites}`);
+    assert.ok(resolvedMock.players.length >= 4, `${slug} Consensus Mock Draft should have >= 4 projected players`);
+    for (const entry of dp.firstPickMockDatabase || []) {
+      assert.ok(!/\bBy\s+[A-Z]/i.test(entry.siteName || ''), `${slug} mock siteName leaked "By <Analyst>": ${entry.siteName}`);
+    }
+
+    assert.ok(Array.isArray(dp.consensusMockTargets) && dp.consensusMockTargets.length >= 3, `${slug} must have >= 3 Scheme Fit Clusters`);
+
+    const draftHtml = renderSeasonMatchupViewHtml({ appData: { seasonal, meta, scheduleMatchup }, seasonSub: 'draft_prep' });
+    assert.ok(draftHtml.includes('data-mock-db-list'), `${slug} Draft view must render populated Consensus Mock Draft list`);
+    assert.ok(!draftHtml.includes('data-mock-db-empty'), `${slug} Draft view must NOT show empty mock state`);
+    assert.ok(draftHtml.includes(`${team.abbr} Fit`), `${slug} Draft view must label fit scores with "${team.abbr} Fit"`);
+    assert.ok(draftHtml.includes(`Mocked to ${team.abbr}`), `${slug} Draft view must label mocked prospects with "Mocked to ${team.abbr}"`);
+    const leak = draftHtml.match(forbiddenDraftLeakRe);
+    assert.equal(leak, null, `${slug} rendered Draft Prep HTML leaked forbidden string "${leak?.[0]}"`);
+  }
+  setActiveTeamConfig('SF');
+});
+
 // Restore default SF active team singleton
 setActiveTeamConfig('SF');
 

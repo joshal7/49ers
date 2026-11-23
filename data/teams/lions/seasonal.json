@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T01:23:50.195Z",
+  "updatedAt": "2026-11-23T01:26:59.667Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T21:00:00Z",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 4:00 PM ET",
@@ -20,7 +20,7 @@
       },
       {
         "metric": "2027 Draft Pick Inventory",
-        "figure": "8 Picks (Rd 1, Rd 2, Rd 3, Rd 4, Rd 5, Rd 6, Rd 7-LAC, Rd 7)",
+        "figure": "10 Picks (Rd 1, Rd 2, Rd 3, Rd 4, Rd 5, Rd 6, Rd 6, Rd 7-LAC, Rd 7, Rd 7)",
         "strategicImpact": "Full Day 1–2 pick control gives DET flexibility to package Day-3 selections or stay aggressive in 2027 offseason talks."
       }
     ],
@@ -249,7 +249,7 @@
             "url": "https://overthecap.com/player/quentin-johnston/10845/"
           }
         ],
-        "whyAvoid": "DET currently holds 8 picks in 2027; trading away top-100 selections removes cost-controlled 4-year starters essential for sustaining roster depth and cap flexibility."
+        "whyAvoid": "DET currently holds 10 picks in 2027; trading away top-100 selections removes cost-controlled 4-year starters essential for sustaining roster depth and cap flexibility."
       }
     ],
     "tieredRumors": [
@@ -271,7 +271,7 @@
         "tier": "Tier 2 • Draft Capital & Horizon",
         "sources": "Tankathon Lions",
         "sourceUrl": "https://www.tankathon.com/nfl/lions",
-        "summary": "With the 2026 in-season trade deadline passed, Lions hold 8 projected 2027 draft picks to target Off-Ball Linebacker & Cornerback via March trade talks or the 2027 NFL Draft.",
+        "summary": "With the 2026 in-season trade deadline passed, Lions hold 10 projected 2027 draft picks to target Off-Ball Linebacker & Cornerback via March trade talks or the 2027 NFL Draft.",
         "credibilityPct": 92
       }
     ]
@@ -4290,7 +4290,7 @@
   },
   "draftPrep2027": {
     "draftYear": 2027,
-    "bigBoardUrl": "https://www.tankathon.com/nfl/lions",
+    "bigBoardUrl": "https://www.nflmockdraftdatabase.com/big-boards/2027/consensus-big-board-2027",
     "bigBoardMeta": {
       "totalProspects": 260,
       "refreshCadence": "Weekly (Jan–Mar) • Twice Weekly (April)",
@@ -4370,92 +4370,376 @@
     },
     "sources": [
       {
-        "label": "Tankathon Lions",
+        "label": "NFL Mock Draft Database",
+        "url": "https://www.nflmockdraftdatabase.com/teams/2027/detroit-lions"
+      },
+      {
+        "label": "Tankathon Lions Draft Order",
         "url": "https://www.tankathon.com/nfl/lions"
       },
       {
-        "label": "NFL Mock Draft Database",
-        "url": "https://www.nflmockdraftdatabase.com/nfl-teams/2027/detroit-lions"
+        "label": "NFL Combine Tracker",
+        "url": "https://www.nfl.com/combine/"
+      },
+      {
+        "label": "RAS Athletic Database",
+        "url": "https://ras.football/"
       }
     ],
-    "tradedPicksNote": "Live 2027 Detroit Lions Tankathon draft ledger (8 projected picks) & 3-Lens 250+ Prospect Big Board.",
+    "tradedPicksNote": "10 Total Picks: Detroit holds all seven of its original 2027 draft picks, holds acquired Rd 7 #223 (via LAC), and is projected for 2 compensatory picks (Rd 6 #217 and Rd 7 #254).",
     "pickInventory": [
       {
         "round": 1,
         "projectedOverall": 30,
-        "origin": "Own Pick",
-        "notes": "DET Own Round 1 (#30 projected)"
+        "origin": "Own Pick (Live Contender Slot)",
+        "fromTeam": "DET",
+        "isComp": false,
+        "valueRichHill": 196
       },
       {
         "round": 2,
         "projectedOverall": 61,
         "origin": "Own Pick",
-        "notes": "DET Own Round 2 (#61 projected)"
+        "fromTeam": "DET",
+        "isComp": false,
+        "valueRichHill": 86
       },
       {
         "round": 3,
         "projectedOverall": 94,
         "origin": "Own Pick",
-        "notes": "DET Own Round 3 (#94 projected)"
+        "fromTeam": "DET",
+        "isComp": false,
+        "valueRichHill": 41
       },
       {
         "round": 4,
         "projectedOverall": 130,
         "origin": "Own Pick",
-        "notes": "DET Own Round 4 (#130 projected)"
+        "fromTeam": "DET",
+        "isComp": false,
+        "valueRichHill": 18
       },
       {
         "round": 5,
         "projectedOverall": 167,
         "origin": "Own Pick",
-        "notes": "DET Own Round 5 (#167 projected)"
+        "fromTeam": "DET",
+        "isComp": false,
+        "valueRichHill": 9
       },
       {
         "round": 6,
         "projectedOverall": 208,
         "origin": "Own Pick",
-        "notes": "DET Own Round 6 (#208 projected)"
+        "fromTeam": "DET",
+        "isComp": false,
+        "valueRichHill": 4
+      },
+      {
+        "round": 6,
+        "projectedOverall": 217,
+        "origin": "Compensatory Pick",
+        "fromTeam": "DET",
+        "isComp": true,
+        "valueRichHill": 3
       },
       {
         "round": 7,
         "projectedOverall": 223,
-        "origin": "Via LAC",
-        "notes": "Acquired from LAC (#223 projected)"
+        "origin": "From LAC (Acquired via Trade)",
+        "fromTeam": "LAC",
+        "isComp": false,
+        "valueRichHill": 3
       },
       {
         "round": 7,
         "projectedOverall": 251,
         "origin": "Own Pick",
-        "notes": "DET Own Round 7 (#251 projected)"
+        "fromTeam": "DET",
+        "isComp": false,
+        "valueRichHill": 1
+      },
+      {
+        "round": 7,
+        "projectedOverall": 254,
+        "origin": "Compensatory Pick",
+        "fromTeam": "DET",
+        "isComp": true,
+        "valueRichHill": 1
       }
     ],
     "topNeeds2027": [
       {
         "rank": 1,
-        "position": "Off-Ball Linebacker (Run Fit & Coverage)",
-        "priority": "High",
-        "rationale": "Active attrition: Jack Campbell (IR), Damone Clark (IR), Jimmy Rolder (IR), Devin White (IR) sidelined. Points Allowed ranks #15 (22.0/g). 2027 impending UFA exposure: DJ Wonnum."
+        "pos": "CB (Boundary / Nickel Coverage)",
+        "horizon": "Critical — Expiring 2027 contract exposure (Roger McCreary and Rock Ya-Sin (30)) puts a premium on rookie-scale reinforcement alongside D.J. Reed."
       },
       {
         "rank": 2,
-        "position": "Cornerback (Outside & Nickel Coverage)",
-        "priority": "Moderate-High",
-        "rationale": "Active attrition: Avonte Maddox (IR), Keith Abney II (Out), Ennis Rakestraw Jr. (Out), D.J. Reed (Out) sidelined. Points Allowed ranks #15 (22.0/g). 2027 impending UFA exposure: Roger McCreary, Rock Ya-Sin."
+        "pos": "S (Deep-Half Range & Split-Safety Depth)",
+        "horizon": "High — Pending 2027 free agency / contract decisions around Chuck Clark (31) and Brian Branch make rookie-contract reinforcement a top priority."
       },
       {
         "rank": 3,
-        "position": "Interior Offensive Line (Guard & Center)",
-        "priority": "Moderate",
-        "rationale": "Active attrition: Ben Bartch (IR), Cade Mays (IR) sidelined. 2027 impending UFA exposure: Juice Scruggs."
+        "pos": "EDGE (Pass-Rush Wave & Edge Depth)",
+        "horizon": "High — Adding high-upside rotational depth behind Aidan Hutchinson (IR) and Derrick Moore stabilizes Lions' 2027 unit."
       },
       {
         "rank": 4,
-        "position": "Edge Rusher (4-Man Pass Rush)",
-        "priority": "Opportunistic",
-        "rationale": "Active attrition: Aidan Hutchinson (IR), Payton Turner (IR) sidelined."
+        "pos": "IOL (Interior Pass Protection & Guard/Center)",
+        "horizon": "Moderate-High — Expiring 2027 contract exposure (Juice Scruggs) puts a premium on rookie-scale reinforcement alongside Tate Ratledge."
       }
     ],
-    "firstPickMockDatabase": [],
+    "firstPickMockDatabase": [
+      {
+        "siteId": "tankathon",
+        "siteName": "Tankathon",
+        "analyst": "Tankathon Live Mock",
+        "url": "https://www.tankathon.com/nfl/mock_draft",
+        "publishedAt": "2026-11-23T01:26:59.667Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "Zereoue Williams",
+        "pos": "OT",
+        "school": "Utah",
+        "note": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon."
+      },
+      {
+        "siteId": "walterfootball",
+        "siteName": "WalterFootball",
+        "analyst": "Walter Cherepinsky",
+        "url": "https://walterfootball.com/draft2027_1.php",
+        "publishedAt": "2026-11-23T01:26:59.667Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "Andrew Marshall",
+        "pos": "CB",
+        "school": "Nebraska",
+        "note": "The Lions have major problems defending the pass, so they'll need to add talent to their secondary."
+      },
+      {
+        "siteId": "nfl_mocks",
+        "siteName": "NFL Mocks",
+        "analyst": "Tarringo Basile-Vaughan",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/nfl-mocks-2027-tarringo-basile-vaughan?date=2026-11-22",
+        "publishedAt": "2026-11-22T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "KJ Bolden",
+        "pos": "S",
+        "school": "Georgia",
+        "note": "Instinctual range safety capable of disguising two-high rotations and spinning down over the slot in modern split-safety schemes."
+      },
+      {
+        "siteId": "pro_football_network",
+        "siteName": "Pro Football Network",
+        "analyst": "Ian Cummings",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/pro-football-network-2027-ian-cummings?date=2026-11-21",
+        "publishedAt": "2026-11-21T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "Audavion Collins",
+        "pos": "CB",
+        "school": "Penn State",
+        "note": "Zone-intelligent defensive back suited for disguised split-safety coverage shells."
+      },
+      {
+        "siteId": "draftblaster",
+        "siteName": "DraftBlaster",
+        "analyst": "",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/draftblaster-2027?date=2026-11-21",
+        "publishedAt": "2026-11-21T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "Yhonzae Pierre",
+        "pos": "EDGE",
+        "school": "Alabama",
+        "note": "Long SEC edge setter with heavy hands in run support and counter-spin pass-rush upside."
+      },
+      {
+        "siteId": "fansided",
+        "siteName": "FanSided",
+        "analyst": "Cody Williams",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/fansided-2027-cody-williams?date=2026-11-20",
+        "publishedAt": "2026-11-20T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "Kade Pieper",
+        "pos": "IOL",
+        "school": "Iowa",
+        "note": "Prototypical Iowa wide-zone center/guard with rapid reach-block footwork with immediate guard/center starter upside."
+      },
+      {
+        "siteId": "a_to_z_sports",
+        "siteName": "A to Z Sports",
+        "analyst": "",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/a-to-z-sports-2027?date=2026-11-19",
+        "publishedAt": "2026-11-19T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "Greg Johnson",
+        "pos": "IOL",
+        "school": "Minnesota",
+        "note": "Athletic zone-scheme interior offensive lineman with elite second-level climb angles and anchor."
+      },
+      {
+        "siteId": "sb_nation",
+        "siteName": "SB Nation",
+        "analyst": "Mark Schofield",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/sb-nation-2027-mark-schofield?date=2026-11-19",
+        "publishedAt": "2026-11-19T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "Will Heldt",
+        "pos": "EDGE",
+        "school": "Clemson",
+        "note": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation."
+      },
+      {
+        "siteId": "athlon_sports",
+        "siteName": "Athlon Sports",
+        "analyst": "Luke Easterling",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/athlon-sports-2027-luke-easterling?date=2026-11-19",
+        "publishedAt": "2026-11-19T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "Kelley Jones",
+        "pos": "CB",
+        "school": "Mississippi State",
+        "note": "6'4\" boundary corner matching X-receivers with length and split-safety zone awareness."
+      },
+      {
+        "siteId": "nfl_draft_diamonds",
+        "siteName": "NFL Draft Diamonds",
+        "analyst": "",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/nfl-draft-diamonds-2027?date=2026-11-19",
+        "publishedAt": "2026-11-19T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "Kelley Jones",
+        "pos": "CB",
+        "school": "Mississippi State",
+        "note": "6'4\" boundary corner matching X-receivers with length and split-safety zone awareness."
+      },
+      {
+        "siteId": "fantasy_life",
+        "siteName": "Fantasy Life",
+        "analyst": "Kody Malstrom",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/fantasy-life-2027-kody-malstrom?date=2026-11-18",
+        "publishedAt": "2026-11-18T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "KJ Bolden",
+        "pos": "S",
+        "school": "Georgia",
+        "note": "Instinctual range safety capable of disguising two-high rotations and spinning down over the slot in modern split-safety schemes."
+      },
+      {
+        "siteId": "espn",
+        "siteName": "ESPN",
+        "analyst": "Jordan Reid",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/espn-2027-jordan-reid?date=2026-11-18",
+        "publishedAt": "2026-11-18T12:00:00Z",
+        "projectedPick": 28,
+        "round": 1,
+        "playerName": "Kelley Jones",
+        "pos": "CB",
+        "school": "Mississippi State",
+        "note": "6'4\" boundary corner matching X-receivers with length and split-safety zone awareness."
+      },
+      {
+        "siteId": "drafttek",
+        "siteName": "DraftTek",
+        "analyst": "DraftTek Consensus Model",
+        "url": "https://www.drafttek.com/2027-NFL-Mock-Draft/2027-NFL-Mock-Draft-Round-1.asp",
+        "publishedAt": "2026-11-18T12:00:00.000Z",
+        "projectedPick": 22,
+        "round": 1,
+        "playerName": "Jamari Johnson",
+        "pos": "TE",
+        "school": "Oregon",
+        "note": "Dynamic move/inline hybrid tight end built for play-action bootlegs, motion, and YAC crossers."
+      },
+      {
+        "siteId": "nfl_spin_zone",
+        "siteName": "NFL Spin Zone",
+        "analyst": "Sayre Bedinger",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/nfl-spin-zone-2027-sayre-bedinger?date=2026-11-17",
+        "publishedAt": "2026-11-17T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "Jamari Johnson",
+        "pos": "TE",
+        "school": "Oregon",
+        "note": "Dynamic move/inline hybrid tight end built for play-action bootlegs, motion, and YAC crossers."
+      },
+      {
+        "siteId": "twsn",
+        "siteName": "TWSN",
+        "analyst": "Steve Bradshaw",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/twsn-2027-steve-bradshaw?date=2026-11-16",
+        "publishedAt": "2026-11-16T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "KJ Bolden",
+        "pos": "S",
+        "school": "Georgia",
+        "note": "Instinctual range safety capable of disguising two-high rotations and spinning down over the slot in modern split-safety schemes."
+      },
+      {
+        "siteId": "cbs_sports",
+        "siteName": "CBS Sports",
+        "analyst": "Josh Edwards",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/cbs-2027-josh-edwards?date=2026-11-16",
+        "publishedAt": "2026-11-16T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "Kelley Jones",
+        "pos": "CB",
+        "school": "Mississippi State",
+        "note": "6'4\" boundary corner matching X-receivers with length and split-safety zone awareness."
+      },
+      {
+        "siteId": "sports_illustrated",
+        "siteName": "Sports Illustrated",
+        "analyst": "Justin Melo",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/si-2027-justin-melo?date=2026-11-16",
+        "publishedAt": "2026-11-16T12:00:00Z",
+        "projectedPick": 30,
+        "round": 1,
+        "playerName": "KJ Bolden",
+        "pos": "S",
+        "school": "Georgia",
+        "note": "Instinctual range safety capable of disguising two-high rotations and spinning down over the slot in modern split-safety schemes."
+      },
+      {
+        "siteId": "rotoballer",
+        "siteName": "RotoBaller",
+        "analyst": "Chris Gregory",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/rotoballer-2027-chris-gregory?date=2026-11-16",
+        "publishedAt": "2026-11-16T12:00:00Z",
+        "projectedPick": 27,
+        "round": 1,
+        "playerName": "David Stone",
+        "pos": "DL",
+        "school": "Oklahoma",
+        "note": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation."
+      },
+      {
+        "siteId": "sparkscouting",
+        "siteName": "SparkScouting",
+        "analyst": "Bill Sparks",
+        "url": "https://www.nflmockdraftdatabase.com/mock-drafts/2027/sparkscouting-2027-bill-sparks?date=2026-11-13",
+        "publishedAt": "2026-11-13T12:00:00Z",
+        "projectedPick": 27,
+        "round": 1,
+        "playerName": "Jamari Johnson",
+        "pos": "TE",
+        "school": "Oregon",
+        "note": "Dynamic move/inline hybrid tight end built for play-action bootlegs, motion, and YAC crossers."
+      }
+    ],
     "consensusBigBoard": [
       {
         "consensusRank": 1,
@@ -4579,7 +4863,7 @@
           "drafttek": 2
         },
         "shanahanLynchFitScore": 96,
-        "archetypeNote": "Explosive Wide-9 arc bender with elite sub-1.58s get-off, ankle flexion, and speed-to-power conversion.",
+        "archetypeNote": "Explosive edge arc bender with elite sub-1.58s get-off, ankle flexion, and speed-to-power conversion.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/colin-simmons",
         "profileUrl": "https://sticktothemodel.com/player/colin-simmons",
@@ -4885,7 +5169,7 @@
           "drafttek": 8
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Rangy sideline-to-sideline coverage linebacker in the Fred Warner seam-carry mold.",
+        "archetypeNote": "Rangy sideline-to-sideline coverage linebacker with elite three-down seam-carry coverage range.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/chris-cole",
         "profileUrl": "https://sticktothemodel.com/player/chris-cole",
@@ -4936,7 +5220,7 @@
           "drafttek": 11
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Penetrating 3-technique interior disruptor built for Kris Kocurek's vertical attack front.",
+        "archetypeNote": "Penetrating 3-technique interior disruptor built for an aggressive vertical attack front.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/will-echoles",
         "profileUrl": "https://sticktothemodel.com/player/will-echoles",
@@ -5242,7 +5526,7 @@
           "drafttek": 23
         },
         "shanahanLynchFitScore": 95,
-        "archetypeNote": "6'7\" pass-pro technician with smooth kick-slide recovery and high-upside blindside starter traits behind Trent Williams.",
+        "archetypeNote": "6'7\" pass-pro technician with smooth kick-slide recovery and high-upside blindside starter traits with long-term blindside starter upside.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/trevor-goosby",
         "profileUrl": "https://sticktothemodel.com/player/trevor-goosby",
@@ -5293,7 +5577,7 @@
           "drafttek": 21
         },
         "shanahanLynchFitScore": 91,
-        "archetypeNote": "Dynamic move/inline hybrid tight end built for Shanahan bootlegs, motion, and YAC crossers.",
+        "archetypeNote": "Dynamic move/inline hybrid tight end built for play-action bootlegs, motion, and YAC crossers.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/jamari-johnson",
         "profileUrl": "https://sticktothemodel.com/player/jamari-johnson",
@@ -5395,7 +5679,7 @@
           "drafttek": 40
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "6'3\" vertical field-stretcher with above-the-rim catch radius for Shanahan play-action shot plays.",
+        "archetypeNote": "6'3\" vertical field-stretcher with above-the-rim catch radius for vertical play-action shot plays.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/cam-coleman",
         "profileUrl": "https://sticktothemodel.com/player/cam-coleman",
@@ -5446,7 +5730,7 @@
           "drafttek": 26
         },
         "shanahanLynchFitScore": 95,
-        "archetypeNote": "Prototypical Iowa wide-zone center/guard with rapid reach-block footwork to succeed Jake Brendel or upgrade Left Guard.",
+        "archetypeNote": "Prototypical Iowa wide-zone center/guard with rapid reach-block footwork with immediate guard/center starter upside.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/kade-pieper",
         "profileUrl": "https://sticktothemodel.com/player/kade-pieper",
@@ -5497,7 +5781,7 @@
           "drafttek": 39
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/devan-thompkins",
         "profileUrl": "https://sticktothemodel.com/player/devan-thompkins",
@@ -5599,7 +5883,7 @@
           "drafttek": 52
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/lance-heard",
         "profileUrl": "https://sticktothemodel.com/player/lance-heard",
@@ -5700,7 +5984,7 @@
           "drafttek": 35
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "6'7\" 12-personnel matchup tight end with basketball box-out radius in the red zone alongside George Kittle.",
+        "archetypeNote": "6'7\" 12-personnel matchup tight end with basketball box-out radius in the red zone in 12-personnel packages.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/treydez-green",
         "profileUrl": "https://sticktothemodel.com/player/treydez-green",
@@ -5802,7 +6086,7 @@
           "drafttek": 41
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Explosive Notre Dame edge rusher with long levers and closing juice opposite Nick Bosa.",
+        "archetypeNote": "Explosive Notre Dame edge rusher with long levers and closing juice to elevate the pass-rush front.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/boubacar-traore",
         "profileUrl": "https://sticktothemodel.com/player/boubacar-traore",
@@ -5954,7 +6238,7 @@
           "drafttek": 36
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/will-heldt",
         "profileUrl": "https://sticktothemodel.com/player/will-heldt",
@@ -6104,7 +6388,7 @@
           "drafttek": 20
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/amauri-washington",
         "profileUrl": "https://sticktothemodel.com/player/amauri-washington",
@@ -6206,7 +6490,7 @@
           "drafttek": 42
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/david-stone",
         "profileUrl": "https://sticktothemodel.com/player/david-stone",
@@ -6408,7 +6692,7 @@
           "drafttek": 13
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Instinctual range safety capable of disguising two-high rotations and spinning down over the slot in modern NFL split-safety schemes.",
+        "archetypeNote": "Instinctual range safety capable of disguising two-high rotations and spinning down over the slot in modern split-safety schemes.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/kj-bolden",
         "profileUrl": "https://sticktothemodel.com/player/kj-bolden",
@@ -6459,7 +6743,7 @@
           "drafttek": 31
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/aj-holmes-jr",
         "profileUrl": "https://sticktothemodel.com/player/aj-holmes-jr",
@@ -6661,7 +6945,7 @@
           "drafttek": 17
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/matayo-uiagalelei",
         "profileUrl": "https://sticktothemodel.com/player/matayo-uiagalelei",
@@ -6712,7 +6996,7 @@
           "drafttek": 96
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/zereoue-williams",
         "profileUrl": "https://sticktothemodel.com/player/zereoue-williams",
@@ -6813,7 +7097,7 @@
           "drafttek": 25
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/ahmad-moten-sr",
         "profileUrl": "https://sticktothemodel.com/player/ahmad-moten-sr",
@@ -6964,7 +7248,7 @@
           "drafttek": 47
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/melvin-siani",
         "profileUrl": "https://sticktothemodel.com/player/melvin-siani",
@@ -7013,7 +7297,7 @@
           "drafttek": 33
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "High-motor Wide-9 speed rusher with bend around the arc and backside pursuit speed.",
+        "archetypeNote": "High-motor edge speed rusher with bend around the arc and backside pursuit speed.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/damon-wilson-ii",
         "profileUrl": "https://sticktothemodel.com/player/damon-wilson-ii",
@@ -7165,7 +7449,7 @@
           "drafttek": 43
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": " nimble Big Ten blindside tackle ideal for outside-zone reach blocks and pass-set mirror.",
+        "archetypeNote": "nimble Big Ten blindside tackle ideal for outside-zone reach blocks and pass-set mirror.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/carter-smith",
         "profileUrl": "https://sticktothemodel.com/player/carter-smith",
@@ -7313,7 +7597,7 @@
           "drafttek": 82
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/tavion-gadson",
         "profileUrl": "https://sticktothemodel.com/player/tavion-gadson",
@@ -7413,7 +7697,7 @@
           "drafttek": 44
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/john-henry-daley",
         "profileUrl": "https://sticktothemodel.com/player/john-henry-daley",
@@ -7463,7 +7747,7 @@
           "drafttek": 32
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/kenyatta-jackson-jr",
         "profileUrl": "https://sticktothemodel.com/player/kenyatta-jackson-jr",
@@ -7563,7 +7847,7 @@
           "drafttek": 45
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/jordan-ross",
         "profileUrl": "https://sticktothemodel.com/player/jordan-ross",
@@ -7613,7 +7897,7 @@
           "drafttek": 58
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/austin-siereveld",
         "profileUrl": "https://sticktothemodel.com/player/austin-siereveld",
@@ -7664,7 +7948,7 @@
           "drafttek": 79
         },
         "shanahanLynchFitScore": 91,
-        "archetypeNote": "Explosive SEC separator offering vertical speed and YAC burst to inject youth into SF's WR room.",
+        "archetypeNote": "Explosive SEC separator offering vertical speed and YAC burst to inject youth into Lions' WR room.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/ryan-williams-alabama",
         "profileUrl": "https://sticktothemodel.com/player/ryan-williams-alabama",
@@ -7713,7 +7997,7 @@
           "drafttek": 49
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/quincy-rhodes-jr",
         "profileUrl": "https://sticktothemodel.com/player/quincy-rhodes-jr",
@@ -7813,7 +8097,7 @@
           "drafttek": 48
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/justin-scott",
         "profileUrl": "https://sticktothemodel.com/player/justin-scott",
@@ -8014,7 +8298,7 @@
           "drafttek": 70
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/bear-alexander",
         "profileUrl": "https://sticktothemodel.com/player/bear-alexander",
@@ -8163,7 +8447,7 @@
           "drafttek": 60
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/clev-lubin",
         "profileUrl": "https://sticktothemodel.com/player/clev-lubin",
@@ -8361,7 +8645,7 @@
           "drafttek": 133
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/elijah-paige",
         "profileUrl": "https://sticktothemodel.com/player/elijah-paige",
@@ -8706,7 +8990,7 @@
           "drafttek": 73
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/teitum-tuioti",
         "profileUrl": "https://sticktothemodel.com/player/teitum-tuioti",
@@ -8907,7 +9191,7 @@
           "drafttek": 144
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/sebastian-cheeks",
         "profileUrl": "https://sticktothemodel.com/player/sebastian-cheeks",
@@ -9057,7 +9341,7 @@
           "cbs": 52
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/jesse-perry",
         "profileUrl": "https://sticktothemodel.com/player/jesse-perry",
@@ -9257,7 +9541,7 @@
           "drafttek": 55
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/princewill-umanmielen",
         "profileUrl": "https://sticktothemodel.com/player/princewill-umanmielen",
@@ -9307,7 +9591,7 @@
           "drafttek": 129
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/horace-lockett",
         "profileUrl": "https://sticktothemodel.com/player/horace-lockett",
@@ -9357,7 +9641,7 @@
           "drafttek": 135
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/earnest-greene-iii",
         "profileUrl": "https://sticktothemodel.com/player/earnest-greene-iii",
@@ -9506,7 +9790,7 @@
           "drafttek": 167
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/niki-prongos",
         "profileUrl": "https://sticktothemodel.com/player/niki-prongos",
@@ -9656,7 +9940,7 @@
           "drafttek": 81
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/samson-okunlola",
         "profileUrl": "https://sticktothemodel.com/player/samson-okunlola",
@@ -9705,7 +9989,7 @@
           "drafttek": 85
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/pj-williams",
         "profileUrl": "https://sticktothemodel.com/player/pj-williams",
@@ -9755,7 +10039,7 @@
           "drafttek": 196
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/sahir-west",
         "profileUrl": "https://sticktothemodel.com/player/sahir-west",
@@ -9804,7 +10088,7 @@
           "drafttek": 91
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/jide-abasiri",
         "profileUrl": "https://sticktothemodel.com/player/jide-abasiri",
@@ -9954,7 +10238,7 @@
           "drafttek": 123
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/francis-brewu",
         "profileUrl": "https://sticktothemodel.com/player/francis-brewu",
@@ -10003,7 +10287,7 @@
           "drafttek": 105
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/drew-azzopardi",
         "profileUrl": "https://sticktothemodel.com/player/drew-azzopardi",
@@ -10053,7 +10337,7 @@
           "drafttek": 88
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/jayden-jackson",
         "profileUrl": "https://sticktothemodel.com/player/jayden-jackson",
@@ -10103,7 +10387,7 @@
           "drafttek": 66
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/jacarrius-peak",
         "profileUrl": "https://sticktothemodel.com/player/jacarrius-peak",
@@ -10201,7 +10485,7 @@
           "drafttek": 84
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/anthony-smith",
         "profileUrl": "https://sticktothemodel.com/player/anthony-smith",
@@ -10399,7 +10683,7 @@
           "drafttek": 229
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/dom-nichols",
         "profileUrl": "https://sticktothemodel.com/player/dom-nichols",
@@ -10991,7 +11275,7 @@
           "drafttek": 219
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/xavier-atkins",
         "profileUrl": "https://sticktothemodel.com/player/xavier-atkins",
@@ -11139,7 +11423,7 @@
           "drafttek": 109
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/brandon-baker",
         "profileUrl": "https://sticktothemodel.com/player/brandon-baker",
@@ -11238,7 +11522,7 @@
           "drafttek": 184
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/kameryn-crawford",
         "profileUrl": "https://sticktothemodel.com/player/kameryn-crawford",
@@ -11581,7 +11865,7 @@
           "drafttek": 99
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/wendell-gregory",
         "profileUrl": "https://sticktothemodel.com/player/wendell-gregory",
@@ -11630,7 +11914,7 @@
           "drafttek": 126
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/emmanuel-oyebadejo",
         "profileUrl": "https://sticktothemodel.com/player/emmanuel-oyebadejo",
@@ -11874,7 +12158,7 @@
           "drafttek": 120
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/tyrique-tucker",
         "profileUrl": "https://sticktothemodel.com/player/tyrique-tucker",
@@ -11972,7 +12256,7 @@
           "drafttek": 118
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/taylor-wein",
         "profileUrl": "https://sticktothemodel.com/player/taylor-wein",
@@ -12021,7 +12305,7 @@
           "drafttek": 112
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/anto-saka",
         "profileUrl": "https://sticktothemodel.com/player/anto-saka",
@@ -12119,7 +12403,7 @@
           "drafttek": 125
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/mateen-ibirogba",
         "profileUrl": "https://sticktothemodel.com/player/mateen-ibirogba",
@@ -12315,7 +12599,7 @@
           "drafttek": 131
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/adam-trick",
         "profileUrl": "https://sticktothemodel.com/player/adam-trick",
@@ -12756,7 +13040,7 @@
           "drafttek": 137
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/payton-pierce",
         "profileUrl": "https://sticktothemodel.com/player/payton-pierce",
@@ -12952,7 +13236,7 @@
           "drafttek": 138
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/kip-lewis",
         "profileUrl": "https://sticktothemodel.com/player/kip-lewis",
@@ -13001,7 +13285,7 @@
           "drafttek": 164
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/miquise-humphrey-grace",
         "profileUrl": "https://sticktothemodel.com/player/miquise-humphrey-grace",
@@ -13634,7 +13918,7 @@
           "drafttek": 171
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/blake-frazier",
         "profileUrl": "https://sticktothemodel.com/player/blake-frazier",
@@ -13683,7 +13967,7 @@
           "drafttek": 237
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/kemari-copeland",
         "profileUrl": "https://sticktothemodel.com/player/kemari-copeland",
@@ -13876,7 +14160,7 @@
           "drafttek": 162
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/tobi-osunsanmi",
         "profileUrl": "https://sticktothemodel.com/player/tobi-osunsanmi",
@@ -13924,7 +14208,7 @@
           "drafttek": 163
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/cj-fite",
         "profileUrl": "https://sticktothemodel.com/player/cj-fite",
@@ -14363,7 +14647,7 @@
           "drafttek": 268
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/cody-sigler",
         "profileUrl": "https://sticktothemodel.com/player/cody-sigler",
@@ -14411,7 +14695,7 @@
           "drafttek": 172
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/mario-landino",
         "profileUrl": "https://sticktothemodel.com/player/mario-landino",
@@ -14459,7 +14743,7 @@
           "drafttek": 173
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/maraad-watson",
         "profileUrl": "https://sticktothemodel.com/player/maraad-watson",
@@ -14604,7 +14888,7 @@
           "drafttek": 247
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/hero-kanu",
         "profileUrl": "https://sticktothemodel.com/player/hero-kanu",
@@ -14652,7 +14936,7 @@
           "drafttek": 177
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/howard-sampson",
         "profileUrl": "https://sticktothemodel.com/player/howard-sampson",
@@ -14846,7 +15130,7 @@
           "drafttek": 180
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/ezra-christensen",
         "profileUrl": "https://sticktothemodel.com/player/ezra-christensen",
@@ -15087,7 +15371,7 @@
           "drafttek": 185
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/rolijah-hardy",
         "profileUrl": "https://sticktothemodel.com/player/rolijah-hardy",
@@ -15328,7 +15612,7 @@
           "drafttek": 191
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/terrance-green",
         "profileUrl": "https://sticktothemodel.com/player/terrance-green",
@@ -15905,7 +16189,7 @@
           "drafttek": 345
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/tawfiq-thomas",
         "profileUrl": "https://sticktothemodel.com/player/tawfiq-thomas",
@@ -16097,7 +16381,7 @@
           "drafttek": 211
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/qua-russaw",
         "profileUrl": "https://sticktothemodel.com/player/qua-russaw",
@@ -16145,7 +16429,7 @@
           "drafttek": 213
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/xavier-chaplin",
         "profileUrl": "https://sticktothemodel.com/player/xavier-chaplin",
@@ -16193,7 +16477,7 @@
           "drafttek": 215
         },
         "shanahanLynchFitScore": 93,
-        "archetypeNote": "Outside-zone athletic tackle profile aligned with SF's long-term blindside succession horizon.",
+        "archetypeNote": "Outside-zone athletic tackle profile aligned with Lions' long-term blindside succession horizon.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/andrew-sprague",
         "profileUrl": "https://sticktothemodel.com/player/andrew-sprague",
@@ -16337,7 +16621,7 @@
           "drafttek": 220
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/tyree-weathersby",
         "profileUrl": "https://sticktothemodel.com/player/tyree-weathersby",
@@ -16529,7 +16813,7 @@
           "drafttek": 224
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/james-smith",
         "profileUrl": "https://sticktothemodel.com/player/james-smith",
@@ -17057,7 +17341,7 @@
           "drafttek": 238
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/john-curry",
         "profileUrl": "https://sticktothemodel.com/player/john-curry",
@@ -17201,7 +17485,7 @@
           "drafttek": 241
         },
         "shanahanLynchFitScore": 92,
-        "archetypeNote": "Penetrating front-four disruptor built for Kris Kocurek's attack-style Wide-9 rotation.",
+        "archetypeNote": "Penetrating front-four disruptor built for an aggressive attacking four-man pass-rush rotation.",
         "nflScoutingUrl": null,
         "scoutingReportUrl": "https://sticktothemodel.com/player/dominick-mckinley",
         "profileUrl": "https://sticktothemodel.com/player/dominick-mckinley",
@@ -17282,7 +17566,128 @@
         "pffUrl": "https://www.pff.com/draft/big-board"
       }
     ],
-    "consensusMockTargets": [],
+    "consensusMockTargets": [
+      {
+        "rank": 1,
+        "name": "Kelley Jones / Audavion Collins",
+        "pos": "CB",
+        "school": "Mississippi State / Penn State",
+        "heightWeight": "6'4\" • 195 lbs / 5'11\" • 183 lbs",
+        "mockFrequencyToSfPct": 26,
+        "shanahanLynchFitScore": 95,
+        "sourceUrl": "https://sticktothemodel.com/player/kelley-jones",
+        "prospectLinks": [
+          {
+            "name": "Kelley Jones",
+            "pos": "CB",
+            "school": "Mississippi State",
+            "url": "https://sticktothemodel.com/player/kelley-jones"
+          },
+          {
+            "name": "Audavion Collins",
+            "pos": "CB",
+            "school": "Penn State",
+            "url": "https://sticktothemodel.com/player/audavion-collins"
+          }
+        ],
+        "archetypeTraits": "6'4\" boundary corner matching X-receivers with length and split-safety zone awareness.",
+        "sourcesMocking": [
+          "Athlon Sports",
+          "NFL Draft Diamonds",
+          "ESPN",
+          "CBS Sports"
+        ]
+      },
+      {
+        "rank": 2,
+        "name": "KJ Bolden / Tae Johnson",
+        "pos": "S",
+        "school": "Georgia / Notre Dame",
+        "heightWeight": "6'0\" • 195 lbs / 6'2\" • 200 lbs",
+        "mockFrequencyToSfPct": 21,
+        "shanahanLynchFitScore": 93,
+        "sourceUrl": "https://sticktothemodel.com/player/kj-bolden",
+        "prospectLinks": [
+          {
+            "name": "KJ Bolden",
+            "pos": "S",
+            "school": "Georgia",
+            "url": "https://sticktothemodel.com/player/kj-bolden"
+          },
+          {
+            "name": "Tae Johnson",
+            "pos": "S",
+            "school": "Notre Dame",
+            "url": "https://sticktothemodel.com/player/tae-johnson"
+          }
+        ],
+        "archetypeTraits": "Instinctual range safety capable of disguising two-high rotations and spinning down over the slot in modern split-safety schemes.",
+        "sourcesMocking": [
+          "NFL Mocks",
+          "Fantasy Life",
+          "TWSN",
+          "Sports Illustrated"
+        ]
+      },
+      {
+        "rank": 3,
+        "name": "Yhonzae Pierre / Will Heldt",
+        "pos": "EDGE",
+        "school": "Alabama / Clemson",
+        "heightWeight": "6'4\" • 251 lbs / 6'6\" • 260 lbs",
+        "mockFrequencyToSfPct": 11,
+        "shanahanLynchFitScore": 91,
+        "sourceUrl": "https://sticktothemodel.com/player/yhonzae-pierre",
+        "prospectLinks": [
+          {
+            "name": "Yhonzae Pierre",
+            "pos": "EDGE",
+            "school": "Alabama",
+            "url": "https://sticktothemodel.com/player/yhonzae-pierre"
+          },
+          {
+            "name": "Will Heldt",
+            "pos": "EDGE",
+            "school": "Clemson",
+            "url": "https://sticktothemodel.com/player/will-heldt"
+          }
+        ],
+        "archetypeTraits": "Long SEC edge setter with heavy hands in run support and counter-spin pass-rush upside.",
+        "sourcesMocking": [
+          "DraftBlaster",
+          "SB Nation"
+        ]
+      },
+      {
+        "rank": 4,
+        "name": "Greg Johnson / Kade Pieper",
+        "pos": "IOL",
+        "school": "Minnesota / Iowa",
+        "heightWeight": "6'6\" • 325 lbs / 6'4\" • 290 lbs",
+        "mockFrequencyToSfPct": 11,
+        "shanahanLynchFitScore": 89,
+        "sourceUrl": "https://sticktothemodel.com/player/greg-johnson",
+        "prospectLinks": [
+          {
+            "name": "Greg Johnson",
+            "pos": "IOL",
+            "school": "Minnesota",
+            "url": "https://sticktothemodel.com/player/greg-johnson"
+          },
+          {
+            "name": "Kade Pieper",
+            "pos": "IOL",
+            "school": "Iowa",
+            "url": "https://sticktothemodel.com/player/kade-pieper"
+          }
+        ],
+        "archetypeTraits": "Athletic zone-scheme interior offensive lineman with elite second-level climb angles and anchor.",
+        "sourcesMocking": [
+          "A to Z Sports",
+          "FanSided"
+        ]
+      }
+    ],
     "combineLeaderboard": []
   },
   "draftClass2026": {
