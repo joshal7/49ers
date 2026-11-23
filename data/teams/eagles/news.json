@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:46:40.727Z",
+  "updatedAt": "2026-11-23T06:24:53.947Z",
   "dailyTopNewsBrief": {
     "id": "brief_phi_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -107,11 +107,46 @@
   "clusteredBriefs": [],
   "rawStream": [
     {
+      "id": "phi_espn_c66b1cfb0eee8",
+      "type": "article",
+      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
+      "imageCaption": "George Kittle spike [608x342]",
+      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+      "publishedAt": "2026-11-23T04:50:41Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
+      "outletId": "espn_phi",
+      "outletName": "ESPN",
+      "reporterId": "espn_phi",
+      "reporterName": "NFL Nation",
+      "author": "NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/phi/philadelphia-eagles",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.318,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 26.0589
+    },
+    {
       "id": "phi_espn_9d62099864e19",
       "type": "video",
       "title": "Eagles snap 7-game slide with win over Steelers",
       "summary": "Tim McManus on the Eagles' 19-16 Week 11 win over the Steelers.",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_IA_Eagles_16x9/dm_261122_IA_Eagles_16x9.jpg",
+      "imageCaption": "Tim McManus on the Eagles' 19-16 Week 11 win over the Steelers.",
       "imageAlt": "Eagles snap 7-game slide with win over Steelers",
       "publishedAt": "2026-11-23T03:07:04Z",
       "url": "https://www.espn.com/video/clip/_/id/50569074/eagles-snap-7-game-slide-win-steelers",
@@ -137,73 +172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.3632
-    },
-    {
-      "id": "phi_espn_c66b1cfb0eee8",
-      "type": "article",
-      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
-      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-23T01:42:13Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "outletId": "espn_phi",
-      "outletName": "ESPN",
-      "reporterId": "espn_phi",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/phi/philadelphia-eagles",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.079,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.1356
-    },
-    {
-      "id": "phi_espn_1c585d6bd3e60",
-      "type": "article",
-      "title": "Judging overreactions to NFL Week 11: Joe Brady's Bills impact, Eagles' chances",
-      "summary": "Is Brady the coach that can vault the Bills over the top? Is an NFC East three-peat still in play in Philly? We overreact to Week 11 NFL action.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749873_608x342_16-9.jpg",
-      "imageAlt": "Judging overreactions to NFL Week 11: Joe Brady's Bills impact, Eagles' chances",
-      "publishedAt": "2026-11-23T02:41:09Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50563318/week-11-overreactions-2026-graziano-bills-eagles-nfc-east",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "dan_graziano",
-      "reporterName": "Dan Graziano",
-      "author": "Dan Graziano",
-      "authorHandle": "@DanGrazianoESPN",
-      "authorProfileUrl": "https://x.com/DanGrazianoESPN",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 88,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 11.7968
+      "storyRank": 8.1827
     },
     {
       "id": "phi_espn_169b3e6e25074",
@@ -211,6 +180,7 @@
       "title": "Eagles' Riq Woolen benched after missed tackles vs. Steelers",
       "summary": "Eagles cornerback Riq Woolen was benched in favor of veteran Jonathan Jones late in the first half of Sunday's 19-16 win over the Steelers.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749902_600x400_3-2.jpg",
+      "imageCaption": "Riq Woolen [600x400]",
       "imageAlt": "Eagles' Riq Woolen benched after missed tackles vs. Steelers",
       "publishedAt": "2026-11-23T00:14:53Z",
       "url": "https://www.espn.com/nfl/story/_/id/50567158/eagles-riq-woolen-benched-missed-tackles-vs-steelers",
@@ -226,7 +196,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.912,
+      "breakingPriority": 0.775,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -236,7 +206,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.9009
+      "storyRank": 6.6389
+    },
+    {
+      "id": "phi_espn_1c585d6bd3e60",
+      "type": "article",
+      "title": "Judging overreactions to NFL Week 11: Joe Brady's Bills impact, Eagles' chances",
+      "summary": "Is Brady the coach that can vault the Bills over the top? Is an NFC East three-peat still in play in Philly? We overreact to Week 11 NFL action.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749873_608x342_16-9.jpg",
+      "imageCaption": "Joe Brady for OVERREACTIONS [608x342]",
+      "imageAlt": "Judging overreactions to NFL Week 11: Joe Brady's Bills impact, Eagles' chances",
+      "publishedAt": "2026-11-23T02:41:09Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50563318/week-11-overreactions-2026-graziano-bills-eagles-nfc-east",
+      "outletId": "espn_national",
+      "outletName": "ESPN",
+      "reporterId": "dan_graziano",
+      "reporterName": "Dan Graziano",
+      "author": "Dan Graziano",
+      "authorHandle": "@DanGrazianoESPN",
+      "authorProfileUrl": "https://x.com/DanGrazianoESPN",
+      "trustTier": 2,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 88,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.271
     },
     {
       "id": "phi_vid_e655b444fae1",
@@ -260,7 +264,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.807,
+      "breakingPriority": 0.686,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -270,7 +274,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.1067
+      "storyRank": 5.5245
     },
     {
       "id": "phi_rss_1b6fe26e2148",
@@ -293,7 +297,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.79,
+      "breakingPriority": 0.671,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -303,14 +307,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.848
+      "storyRank": 5.3569
     },
     {
       "id": "phi_espn_251a69cf49add",
       "type": "article",
       "title": "Eagles snap 7-game losing streak and keep Steelers winless in Philly since 1965 with 19-16 victory",
       "summary": "— Joe Milton made a perfect throw to DeVonta Smith and the wide receiver rolled out of bounds to get the first down that closed out the Philadelphia Eagles' first win since September.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873076.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/ad48625335584e4aa01dfffeda38b12f931/ad48625335584e4aa01dfffeda38b12f931.jpg",
+      "imageCaption": "DK Metcalf ejected after altercations with Eagles",
       "imageAlt": "Eagles snap 7-game losing streak and keep Steelers winless in Philly since 1965 with 19-16 victory",
       "publishedAt": "2026-11-22T22:54:32Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873076",
@@ -326,7 +331,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.781,
+      "breakingPriority": 0.664,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -336,7 +341,75 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.7307
+      "storyRank": 5.2804
+    },
+    {
+      "id": "phi_vid_6b449f0ed759",
+      "type": "video",
+      "title": "Joe Milton Press Conference: November 22, 2026",
+      "summary": "QB Joe Milton discusses the Philadelphia Eagles' 19-16 win over the Pittsburgh Steelers in Week 11, trusting WR DeVonta Smith, playing against QB Aaron Rodgers, and more.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/eagles/o3ssgxhfyy4yeegd5doz.png",
+      "imageAlt": "Joe Milton Press Conference: November 22, 2026",
+      "publishedAt": "2026-11-22T22:40:00.000Z",
+      "url": "https://www.philadelphiaeagles.com/video/joe-milton-press-conference-november-22-2026-eagles-steelers-week-11",
+      "externalVideoUrl": "https://www.philadelphiaeagles.com/video/joe-milton-press-conference-november-22-2026-eagles-steelers-week-11",
+      "outletId": "eagles_official",
+      "outletName": "philadelphiaeagles.com Video",
+      "reporterId": "eagles_official",
+      "reporterName": "philadelphiaeagles.com Video",
+      "author": "philadelphiaeagles.com Video",
+      "authorHandle": "@Eagles",
+      "authorProfileUrl": "https://www.philadelphiaeagles.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.646,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.0858
+    },
+    {
+      "id": "phi_vid_6f5f8c4475a5",
+      "type": "video",
+      "title": "Nick Sirianni Press Conference: November 22, 2026",
+      "summary": "Head Coach Nick Sirianni discusses breaking the seven-game losing streak against the Steelers, turning to WR DeVonta Smith, the defensive performance, and more after Week 11's 19-16 win.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/eagles/h5ento1nvojgenth77g3.png",
+      "imageAlt": "Nick Sirianni Press Conference: November 22, 2026",
+      "publishedAt": "2026-11-22T22:32:36.000Z",
+      "url": "https://www.philadelphiaeagles.com/video/nick-sirianni-press-conference-november-22-2026-eagles-steelers-week-11",
+      "externalVideoUrl": "https://www.philadelphiaeagles.com/video/nick-sirianni-press-conference-november-22-2026-eagles-steelers-week-11",
+      "outletId": "eagles_official",
+      "outletName": "philadelphiaeagles.com Video",
+      "reporterId": "eagles_official",
+      "reporterName": "philadelphiaeagles.com Video",
+      "author": "philadelphiaeagles.com Video",
+      "authorHandle": "@Eagles",
+      "authorProfileUrl": "https://www.philadelphiaeagles.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.636,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.9915
     },
     {
       "id": "phi_espn_65d16fc1c609b",
@@ -344,6 +417,7 @@
       "title": "Steelers' DK Metcalf ejected for trying to poke Eagles' Cooper DeJean in eye",
       "summary": "Steelers wide receiver DK Metcalf was ejected in the third quarter of Sunday's game against the Eagles for unsportsmanlike conduct.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749752_1296x729_16-9.jpg",
+      "imageCaption": "DK Metcalf is held back by Steelers teammate Pat Freiermuth in the third quarter Sunday. Metcalf was ejected from the game.",
       "imageAlt": "Steelers' DK Metcalf ejected for trying to poke Eagles' Cooper DeJean in eye",
       "publishedAt": "2026-11-23T00:43:19Z",
       "url": "https://www.espn.com/nfl/story/_/id/50564475/steelers-wr-dk-metcalf-ejected-game-eagles",
@@ -369,75 +443,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.1143
-    },
-    {
-      "id": "phi_vid_6b449f0ed759",
-      "type": "video",
-      "title": "Joe Milton Press Conference: November 22, 2026",
-      "summary": "QB Joe Milton discusses the Philadelphia Eagles' 19-16 win over the Pittsburgh Steelers in Week 11, trusting WR DeVonta Smith, playing against QB Aaron Rodgers, and more.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/eagles/o3ssgxhfyy4yeegd5doz.png",
-      "imageAlt": "Joe Milton Press Conference: November 22, 2026",
-      "publishedAt": "2026-11-22T22:40:00.000Z",
-      "url": "https://www.philadelphiaeagles.com/video/joe-milton-press-conference-november-22-2026-eagles-steelers-week-11",
-      "externalVideoUrl": "https://www.philadelphiaeagles.com/video/joe-milton-press-conference-november-22-2026-eagles-steelers-week-11",
-      "outletId": "eagles_official",
-      "outletName": "philadelphiaeagles.com Video",
-      "reporterId": "eagles_official",
-      "reporterName": "philadelphiaeagles.com Video",
-      "author": "philadelphiaeagles.com Video",
-      "authorHandle": "@Eagles",
-      "authorProfileUrl": "https://www.philadelphiaeagles.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.76,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 6.4354
-    },
-    {
-      "id": "phi_vid_6f5f8c4475a5",
-      "type": "video",
-      "title": "Nick Sirianni Press Conference: November 22, 2026",
-      "summary": "Head Coach Nick Sirianni discusses breaking the seven-game losing streak against the Steelers, turning to WR DeVonta Smith, the defensive performance, and more after Week 11's 19-16 win.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/eagles/h5ento1nvojgenth77g3.png",
-      "imageAlt": "Nick Sirianni Press Conference: November 22, 2026",
-      "publishedAt": "2026-11-22T22:32:36.000Z",
-      "url": "https://www.philadelphiaeagles.com/video/nick-sirianni-press-conference-november-22-2026-eagles-steelers-week-11",
-      "externalVideoUrl": "https://www.philadelphiaeagles.com/video/nick-sirianni-press-conference-november-22-2026-eagles-steelers-week-11",
-      "outletId": "eagles_official",
-      "outletName": "philadelphiaeagles.com Video",
-      "reporterId": "eagles_official",
-      "reporterName": "philadelphiaeagles.com Video",
-      "author": "philadelphiaeagles.com Video",
-      "authorHandle": "@Eagles",
-      "authorProfileUrl": "https://www.philadelphiaeagles.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.749,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 6.2936
+      "storyRank": 4.3719
     },
     {
       "id": "phi_vid_f8e6c569f84b",
@@ -461,7 +467,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.689,
+      "breakingPriority": 0.585,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -471,7 +477,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.5598
+      "storyRank": 4.4938
     },
     {
       "id": "phi_bsky_e3cbd5b32322",
@@ -508,7 +514,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.7243
+      "storyRank": 3.5328
+    },
+    {
+      "id": "phi_nfltr_8b0c7fbeab18",
+      "type": "article",
+      "title": "NFC Notes: Jonathan Greenard, Jerry Jones, Commanders, Cowboys, Eagles",
+      "summary": "Commanders Commanders LB Frankie Luvu was fined $17,911 for unnecessary roughness. Cowboys Cowboys owner Jerry Jones was asked about the incident in which a fan died after falling during a fight at AT&#38;T Stadium. “I just got that informa",
+      "imageUrl": "",
+      "imageAlt": "NFC Notes: Jonathan Greenard, Jerry Jones, Commanders, Cowboys, Eagles",
+      "publishedAt": "2026-11-22T23:02:15.000Z",
+      "url": "https://nfltraderumors.co/nfc-notes-jonathan-greenard-jerry-jones-commanders-cowboys-eagles/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.7916
     },
     {
       "id": "phi_espn_65acffaa13e73",
@@ -516,6 +555,7 @@
       "title": "Pittsburgh Steelers vs. Philadelphia Eagles: Game Highlights",
       "summary": "Pittsburgh Steelers vs. Philadelphia Eagles: Game Highlights",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/a64030ba-32d6-4958-a7a8-19757868d95a/a64030ba-32d6-4958-a7a8-19757868d95a.jpg",
+      "imageCaption": "Pittsburgh Steelers vs. Philadelphia Eagles: Game Highlights",
       "imageAlt": "Pittsburgh Steelers vs. Philadelphia Eagles: Game Highlights",
       "publishedAt": "2026-11-22T21:33:40Z",
       "url": "https://www.espn.com/video/clip/_/id/50565318/game-highlights",
@@ -541,7 +581,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.1472
+      "storyRank": 2.5277
     },
     {
       "id": "phi_bsky_586886a5d401",
@@ -578,7 +618,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9199
+      "storyRank": 2.3597
     },
     {
       "id": "phi_bsky_fce1c057ab43",
@@ -615,7 +655,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8508
+      "storyRank": 2.3115
     },
     {
       "id": "phi_vid_12d8c493f8b7",
@@ -649,7 +689,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.863
+      "storyRank": 2.3299
     },
     {
       "id": "phi_vid_77ff032c08a7",
@@ -683,7 +723,44 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8566
+      "storyRank": 2.3254
+    },
+    {
+      "id": "phi_bsky_702e85392e2e",
+      "type": "tweet",
+      "title": "Sorry, this is Alfred Hitchcock",
+      "fullText": "Sorry, this is Alfred Hitchcock",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5zqelflo4aelscngmcf6yh3g/bafkreibi4qouhe3igjykd66k7mavknl7btqwmawmtlddtvkjsirjbjp5zi",
+      "imageAlt": "Bo Wulf post",
+      "publishedAt": "2026-11-22T20:41:26.099Z",
+      "url": "https://bsky.app/profile/bowulf.bsky.social/post/3n2wi26eu5s2l",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "phly_eagles_phi",
+      "outletName": "Bo Wulf",
+      "reporterId": "bo_wulf",
+      "reporterName": "Bo Wulf",
+      "author": "Bo Wulf",
+      "authorHandle": "@Bo_Wulf",
+      "authorProfileUrl": "https://x.com/Bo_Wulf",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.1733
     },
     {
       "id": "phi_bsky_3215aae9a1b4",
@@ -720,7 +797,44 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6542
+      "storyRank": 2.1728
+    },
+    {
+      "id": "phi_bsky_89391d5eff4d",
+      "type": "tweet",
+      "title": "Jonathan Jones also down. Kelee Ringo was in to finish that last Steelers series, and Riq was back in there after getting benched earlier.",
+      "fullText": "Jonathan Jones also down. Kelee Ringo was in to finish that last Steelers series, and Riq was back in there after getting benched earlier.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jimmy Kempski post",
+      "publishedAt": "2026-11-22T20:39:27.671Z",
+      "url": "https://bsky.app/profile/jimmykempski.bsky.social/post/3n2whwnfhrk2d",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "phillyvoice_phi",
+      "outletName": "Jimmy Kempski",
+      "reporterId": "jimmy_kempski",
+      "reporterName": "Jimmy Kempski",
+      "author": "Jimmy Kempski",
+      "authorHandle": "@JimmyKempski",
+      "authorProfileUrl": "https://x.com/JimmyKempski",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.1639
     },
     {
       "id": "phi_bsky_fb458a417bf6",
@@ -757,7 +871,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6334
+      "storyRank": 2.1581
     },
     {
       "id": "phi_bsky_b56450a9a34d",
@@ -794,7 +908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5353
+      "storyRank": 2.0879
     },
     {
       "id": "phi_vid_eb9268147491",
@@ -828,7 +942,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5084
+      "storyRank": 2.0767
     },
     {
       "id": "phi_vid_3ffd0880c7ea",
@@ -862,7 +976,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4893
+      "storyRank": 2.0628
     },
     {
       "id": "phi_vid_c6f55aa7f86f",
@@ -896,7 +1010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1434
+      "storyRank": 1.8079
     },
     {
       "id": "phi_vid_eedbb7b9fdd3",
@@ -930,7 +1044,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1305
+      "storyRank": 1.7982
     },
     {
       "id": "phi_vid_783b0337d4e2",
@@ -964,7 +1078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.099
+      "storyRank": 1.7746
     },
     {
       "id": "phi_vid_c65be2079bc9",
@@ -998,7 +1112,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.036
+      "storyRank": 1.7272
     },
     {
       "id": "phi_vid_d15ef16baab5",
@@ -1032,7 +1146,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0274
+      "storyRank": 1.7207
     },
     {
       "id": "phi_vid_6bb292d07eb5",
@@ -1066,7 +1180,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0051
+      "storyRank": 1.7038
     },
     {
       "id": "phi_vid_c4d2ce385d49",
@@ -1100,7 +1214,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9657
+      "storyRank": 1.6739
     },
     {
       "id": "phi_rss_07426cb6e369",
@@ -1133,7 +1247,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0115
+      "storyRank": 0.7815
     },
     {
       "id": "phi_vid_d7dffbca04ad",
@@ -1167,7 +1281,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7559
+      "storyRank": 0.6106
     },
     {
       "id": "phi_vid_a933e078d12b",
@@ -1201,7 +1315,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.691
+      "storyRank": 0.565
     },
     {
       "id": "phi_vid_70a04d504e40",
@@ -1235,7 +1349,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6708
+      "storyRank": 0.5506
     },
     {
       "id": "phi_vid_ed64c94f9e8f",
@@ -1269,7 +1383,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6613
+      "storyRank": 0.5438
     },
     {
       "id": "phi_vid_fe704d28451f",
@@ -1303,7 +1417,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4779
+      "storyRank": 0.4009
+    },
+    {
+      "id": "phi_vid_bafb972eeba2",
+      "type": "video",
+      "title": "Highlight: Saquon Barkley rushes for a 38-yard TD vs. Steelers",
+      "summary": "Saquon Barkley rushes for a 38-yard touchdown in the first quarter against the Steelers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/eagles/tvdxrvyg4bhbxdunfup7.jpg",
+      "imageAlt": "Highlight: Saquon Barkley rushes for a 38-yard TD vs. Steelers",
+      "publishedAt": "2026-11-22T18:46:59.000Z",
+      "url": "https://www.philadelphiaeagles.com/video/highlight-saquon-barkley-rushes-for-a-38-yard-td-vs-steelers",
+      "externalVideoUrl": "https://www.philadelphiaeagles.com/video/highlight-saquon-barkley-rushes-for-a-38-yard-td-vs-steelers",
+      "outletId": "eagles_official",
+      "outletName": "philadelphiaeagles.com Video",
+      "reporterId": "eagles_official",
+      "reporterName": "philadelphiaeagles.com Video",
+      "author": "philadelphiaeagles.com Video",
+      "authorHandle": "@Eagles",
+      "authorProfileUrl": "https://www.philadelphiaeagles.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4444
     },
     {
       "id": "phi_vid_3a219ad58899",
@@ -1337,7 +1485,44 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5124
+      "storyRank": 0.4344
+    },
+    {
+      "id": "phi_bsky_6785c1fa8e8b",
+      "type": "tweet",
+      "title": "How does this Steelers team have 6 wins?",
+      "fullText": "How does this Steelers team have 6 wins?",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jimmy Kempski post",
+      "publishedAt": "2026-11-22T18:32:13.484Z",
+      "url": "https://bsky.app/profile/jimmykempski.bsky.social/post/3n2wat4ukzs26",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "phillyvoice_phi",
+      "outletName": "Jimmy Kempski",
+      "reporterId": "jimmy_kempski",
+      "reporterName": "Jimmy Kempski",
+      "author": "Jimmy Kempski",
+      "authorHandle": "@JimmyKempski",
+      "authorProfileUrl": "https://x.com/JimmyKempski",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4192
     },
     {
       "id": "phi_rss_cfc755001db3",
@@ -1370,7 +1555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.07
+      "storyRank": 0.0627
     },
     {
       "id": "phi_vid_a89d0e48e12c",
@@ -1404,7 +1589,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0623
+      "storyRank": 0.0562
     },
     {
       "id": "phi_vid_5d4f04d07fb9",
@@ -1438,7 +1623,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2316
+      "storyRank": 0.2102
     },
     {
       "id": "phi_rss_e188ea0b8445",
@@ -1471,7 +1656,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0422
+      "storyRank": 0.039
     },
     {
       "id": "phi_rss_cbdb2df9095f",
@@ -1504,7 +1689,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1138
+      "storyRank": 0.1072
+    },
+    {
+      "id": "phi_pfr_fea353b6f3d5",
+      "type": "article",
+      "title": "Eagles Place LB Zack Baun, WR Dontayvion Wicks On IR",
+      "summary": "The injuries continue to pile up for the 2-7 Eagles. Linebacker Zack Baun and wide receiver Dontayvion Wicks are heading to IR, per Mike Garafolo of NFL Network. Both players will miss at least four games. Baun suffered a back injury in a l",
+      "imageUrl": "",
+      "publishedAt": "2026-11-21T21:04:06.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/eagles-place-lb-zack-baun-wr-dontayvion-wicks-on-ir",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/philadelphia-eagles",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0944
     },
     {
       "id": "phi_bsky_ed388f9550cd",
@@ -1541,7 +1758,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.09
+      "storyRank": 0.0855
     },
     {
       "id": "phi_espn_0718def9cfa00",
@@ -1549,6 +1766,7 @@
       "title": "Edge Jonathan Greenard loves to makes plays, despite Eagles' standing",
       "summary": "Greenard speaks on his injury-filled season and outlook for the second half of the year.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748553_1296x729_16-9.jpg",
+      "imageCaption": "Greenard celebrates feeling good in his body, \"I can finally run to the ball.\"",
       "imageAlt": "Edge Jonathan Greenard loves to makes plays, despite Eagles' standing",
       "publishedAt": "2026-11-21T11:00:15Z",
       "url": "https://www.espn.com/nfl/story/_/id/50541401/eagles-jonathan-greenard-loves-make-plays-record",
@@ -1574,7 +1792,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0782
+      "storyRank": 0.0747
     },
     {
       "id": "phi_tx_ee41d3dbe722",
@@ -1608,7 +1826,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.071
+      "storyRank": 0.068
     },
     {
       "id": "phi_vid_265062f4456b",
@@ -1642,7 +1860,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0504
+      "storyRank": 0.0487
     },
     {
       "id": "phi_vid_e5f5c612c6eb",
@@ -1676,7 +1894,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0487
+      "storyRank": 0.0471
     },
     {
       "id": "phi_vid_7ebb224a9a3d",
@@ -1710,7 +1928,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0475
+      "storyRank": 0.0459
     },
     {
       "id": "phi_rss_1e86b8172cc5",
@@ -1743,14 +1961,47 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0369
+      "storyRank": 0.0359
+    },
+    {
+      "id": "phi_pfr_f35732548dcc",
+      "type": "article",
+      "title": "Eagles&#8217; Nick Sirianni Gives Vote Of Confidence To OC Sean Mannion",
+      "summary": "Thanks in part to an offense that was among the NFL&#8217;s best, the Eagles steamrolled the rest of the league en route to a Super Bowl title in 2024. The Eagles&#8217; resounding success cost them offensive coordinator Kellen Moore, who l",
+      "imageUrl": "",
+      "publishedAt": "2026-11-20T04:15:31.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/eagles-nick-sirianni-gives-vote-of-confidence-to-oc-sean-mannion",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/philadelphia-eagles",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.031
     },
     {
       "id": "phi_espn_9e4cfc2967553",
       "type": "article",
       "title": "The Steelers last won in Philadelphia in 1965. Can they top an Eagles team on 7-game losing streak?",
       "summary": "— Perhaps the Steelers should have stayed attached at the hip pads with the Eagles — as they were when they merged for the 1943 season to form the Steagles — to avoid such an ignominious losing streak in Philadelphia.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873076.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/ad48625335584e4aa01dfffeda38b12f931/ad48625335584e4aa01dfffeda38b12f931.jpg",
+      "imageCaption": "DK Metcalf ejected after altercations with Eagles",
       "imageAlt": "The Steelers last won in Philadelphia in 1965. Can they top an Eagles team on 7-game losing streak?",
       "publishedAt": "2026-11-20T00:22:33Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873076",
@@ -1776,7 +2027,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0338
+      "storyRank": 0.0329
     },
     {
       "id": "phi_vid_479f447b27a8",
@@ -1810,7 +2061,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0326
+      "storyRank": 0.0318
     },
     {
       "id": "phi_vid_f30d505830e7",
@@ -1844,7 +2095,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0323
+      "storyRank": 0.0315
     },
     {
       "id": "phi_rss_bb524a096426",
@@ -1877,7 +2128,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.031
+      "storyRank": 0.0303
     },
     {
       "id": "phi_vid_e63a2c87c7cc",
@@ -1911,7 +2162,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0308
+      "storyRank": 0.0301
     },
     {
       "id": "phi_rss_6c92dbf20b71",
@@ -1944,7 +2195,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0293
+      "storyRank": 0.0286
     },
     {
       "id": "phi_espn_df9f970e6038b",
@@ -1952,6 +2203,7 @@
       "title": "Eagles' Sirianni sticking with Milton as QB1, Mannion as offensive playcaller",
       "summary": "QB Joe Milton will start again for the Eagles on Sunday and Sean Mannion will remain as the offensive playcaller against the Steelers, coach Nick Sirianni said.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1118/r1747744_1296x729_16-9.jpg",
+      "imageCaption": "Joe Milton [1296x729]",
       "imageAlt": "Eagles' Sirianni sticking with Milton as QB1, Mannion as offensive playcaller",
       "publishedAt": "2026-11-19T11:37:28Z",
       "url": "https://www.espn.com/nfl/story/_/id/50522640/eagles-stick-milton-qb1-mannion-offensive-playcaller",
@@ -1977,7 +2229,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0272
+      "storyRank": 0.0266
     },
     {
       "id": "phi_vid_d0d168aebda7",
@@ -2011,7 +2263,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0222
     },
     {
       "id": "phi_vid_b8ecfdea55d6",
@@ -2045,7 +2297,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0225
+      "storyRank": 0.0221
     },
     {
       "id": "phi_vid_f36b654546c5",
@@ -2079,7 +2331,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0223
+      "storyRank": 0.0219
     },
     {
       "id": "phi_rss_46942edbaa11",
@@ -2112,7 +2364,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0223
+      "storyRank": 0.0218
     },
     {
       "id": "phi_rss_e9cca7ca3152",
@@ -2145,7 +2397,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0217
+      "storyRank": 0.0213
     },
     {
       "id": "phi_vid_0e92f769454c",
@@ -2179,7 +2431,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0211
+      "storyRank": 0.0208
     },
     {
       "id": "phi_vid_aac6f1027731",
@@ -2213,7 +2465,72 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0211
+      "storyRank": 0.0207
+    },
+    {
+      "id": "phi_pfr_bad1c2a1568d",
+      "type": "article",
+      "title": "Eagles QB Joe Milton To Start In Week 11",
+      "summary": "Fresh off a bye, the Eagles will not make another quarterback change in Week 11. Joe Milton will start against the Steelers on Sunday, head coach Nick Sirianni announced (via Adam Schefter of ESPN). After starter Jalen Hurts went down for t",
+      "imageUrl": "",
+      "publishedAt": "2026-11-18T17:39:25.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/eagles-qb-joe-milton-to-start-in-week-11",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/philadelphia-eagles",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0181
+    },
+    {
+      "id": "phi_rss_840a2a949b7c",
+      "type": "article",
+      "title": "More than a faithful companion: The story of Jason and Woodrow",
+      "summary": "Learn how paws4people and the Robert Irvine Foundation paired military veteran Jason Gaver with his service dog, Woodrow.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/eagles/ycto6loehwsp7hyqaleh.png",
+      "imageAlt": "More than a faithful companion: The story of Jason and Woodrow",
+      "publishedAt": "2026-11-18T15:15:00.000Z",
+      "url": "https://www.philadelphiaeagles.com/news/more-than-a-faithful-companion-paws4people-robert-irvine-foundation-eagles-2026-salute-to-service",
+      "outletId": "eagles_official",
+      "outletName": "philadelphiaeagles.com Official",
+      "reporterId": "eagles_official",
+      "reporterName": "philadelphiaeagles.com Official",
+      "author": "philadelphiaeagles.com Official",
+      "authorHandle": "@Eagles",
+      "authorProfileUrl": "https://www.philadelphiaeagles.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.02
     },
     {
       "id": "phi_rss_a163c0dfa2fd",
@@ -2246,7 +2563,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0203
+      "storyRank": 0.02
     },
     {
       "id": "phi_espn_2174513a3461e",
@@ -2254,6 +2571,7 @@
       "title": "2027 NFL draft: Dolphins, Titans, Eagles, Jets, Chargers in race for No. 1 pick",
       "summary": "Five NFL teams have at least 5% odds to land the No. 1 pick in 2027, per ESPN's Football Power Index: the Dolphins, Titans, Eagles, Jets and Chargers.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747125_608x342_16-9.jpg",
+      "imageCaption": "Jeff Hafley",
       "imageAlt": "2027 NFL draft: Dolphins, Titans, Eagles, Jets, Chargers in race for No. 1 pick",
       "publishedAt": "2026-11-18T13:32:42Z",
       "url": "https://www.espn.com/nfl/draft2027/story/_/id/50510863/2027-nfl-draft-top-pick-dolphins-titans-eagles-jets-chargers",
@@ -2279,7 +2597,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.02
+      "storyRank": 0.0196
     },
     {
       "id": "phi_tx_1a514ec76ca1",
@@ -2313,7 +2631,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
+      "storyRank": 0.0183
     },
     {
       "id": "phi_rss_ffbcd523e0bf",
@@ -2346,7 +2664,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0172
+      "storyRank": 0.0169
     },
     {
       "id": "phi_rss_a9d84d1d6c67",
@@ -2379,7 +2697,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.0162
     },
     {
       "id": "phi_rss_66fce53cd39b",
@@ -2412,7 +2730,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.015
     },
     {
       "id": "phi_tx_8ef202957915",
@@ -2446,7 +2764,103 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0141
+    },
+    {
+      "id": "phi_pfr_7159479bf80f",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/16/26",
+      "summary": "Today&#8217;s practice squad moves: Indianapolis Colts Signed: WR Samori Toure Las Vegas Raiders Signed: QB Brett Rypien Released: DE Bralen Trice Philadelphia Eagles Signed: RB Jaydon Blue, LB Chance Campbell, TE Hayden Rucci Released: DB ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T01:04:36.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-16-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/philadelphia-eagles",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0116
+    },
+    {
+      "id": "phi_pfr_e6aa64d4de47",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/16/26",
+      "summary": "Today&#8217;s minor moves: Carolina Panthers Signed to active roster: CB Marco Wilson Waived: LB Nick Hampton Detroit Lions Claimed off waivers (from Cowboys): LB Tyrus Wheat Indianapolis Colts Signed to active roster: CB Johnathan Edwards ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T00:52:07.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-16-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/philadelphia-eagles",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0116
+    },
+    {
+      "id": "phi_pfr_76dc8f44aa8b",
+      "type": "article",
+      "title": "Eagles Waive WR Marquise Brown",
+      "summary": "NOVEMBER 16: Brown is back in free agency after clearing waivers Monday, NFL.com&#8217;s Mike Garafolo reports. Neither he nor offensive lineman Fred Johnson drew any claims. NOVEMBER 14: Brown and the Eagles reached a non-injury settlement",
+      "imageUrl": "",
+      "publishedAt": "2026-11-16T22:22:30.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/eagles-to-waive-wr-marquise-brown",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/philadelphia-eagles",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0113
     },
     {
       "id": "phi_rss_67dfe477bfa1",
@@ -2479,7 +2893,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0127
     },
     {
       "id": "phi_bsky_45b782422525",
@@ -2516,7 +2930,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0115
+      "storyRank": 0.0114
     },
     {
       "id": "phi_tx_ac5c19ec7b7d",
@@ -2550,7 +2964,108 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0115
+      "storyRank": 0.0113
+    },
+    {
+      "id": "phi_bsky_9f2f4d12860b",
+      "type": "tweet",
+      "title": "I understand the instinct to think Cure Auto Insurance CEO Eric Poe is only on those commercials “interviewing” athletes because he insisted on it, but I’m sorry, screen presence like that is too magnetic to ignore.",
+      "fullText": "I understand the instinct to think Cure Auto Insurance CEO Eric Poe is only on those commercials “interviewing” athletes because he insisted on it, but I’m sorry, screen presence like that is too magnetic to ignore.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Bo Wulf post",
+      "publishedAt": "2026-11-15T20:15:42.425Z",
+      "url": "https://bsky.app/profile/bowulf.bsky.social/post/3n2etdpx6xc2s",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "phly_eagles_phi",
+      "outletName": "Bo Wulf",
+      "reporterId": "bo_wulf",
+      "reporterName": "Bo Wulf",
+      "author": "Bo Wulf",
+      "authorHandle": "@Bo_Wulf",
+      "authorProfileUrl": "https://x.com/Bo_Wulf",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.01
+    },
+    {
+      "id": "phi_pfr_083f83255c95",
+      "type": "article",
+      "title": "Riq Woolen Preferred To Remain With Eagles; Dallas Goedert Drew Trade Interest",
+      "summary": "The Eagles agreed to one trade involving a rental on Tuesday, with a swap for edge rusher Arnold Ebiketie being worked out. That Bengals deal fell through, though, and no other players on expiring contracts wound up being dealt. One of thos",
+      "imageUrl": "",
+      "publishedAt": "2026-11-15T04:58:38.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/riq-woolen-preferred-to-remain-with-eagles-dallas-goedert-drew-trade-interest",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/philadelphia-eagles",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0081
+    },
+    {
+      "id": "phi_pfr_7cb59f18ee05",
+      "type": "article",
+      "title": "Bills Pursued Jordan Davis, Jessie Bates Before Trade Deadline",
+      "summary": "Not only are the 7-1 Bills and 6-2 Jaguars among the teams vying for the No. 1 seed in the AFC, but they also chased a couple of the same targets ahead of Tuesday&#8217;s trade deadline. Before the Jaguars acquired defensive tackle Jordan D",
+      "imageUrl": "",
+      "publishedAt": "2026-11-14T20:40:24.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/bills-pursued-jordan-davis-jessie-bates-before-trade-deadline",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/philadelphia-eagles",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0019
     },
     {
       "id": "phi_rss_0b15cc1347d7",
@@ -2583,7 +3098,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0074
     },
     {
       "id": "phi_tx_a15fd95077f5",
@@ -2617,7 +3132,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0069
+      "storyRank": 0.0068
     },
     {
       "id": "phi_rss_a24c50dbcb2f",
@@ -2684,7 +3199,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0055
     },
     {
       "id": "phi_rss_1f27c01e3f79",
@@ -2717,7 +3232,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.005
     },
     {
       "id": "phi_rss_9630a53df547",
@@ -2750,7 +3265,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0048
+      "storyRank": 0.0047
     },
     {
       "id": "phi_tx_5a94756bdb47",
@@ -3295,6 +3810,40 @@
       "storyRank": 0.001
     },
     {
+      "id": "phi_vid_f0bdab0c3865",
+      "type": "video",
+      "title": "Highlight: Saquon Barkley rushes for a 3-yard TD vs. Giants",
+      "summary": "Saquon Barkley rushes for a 3-yard touchdown in the first quarter against the Giants.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/eagles/qttcu3ic9aw0mxxm8myi.jpg",
+      "imageAlt": "Highlight: Saquon Barkley rushes for a 3-yard TD vs. Giants",
+      "publishedAt": "2026-11-08T18:48:48.000Z",
+      "url": "https://www.philadelphiaeagles.com/video/highlight-saquon-barkley-rushes-for-a-3-yard-td-vs-giants-x5156",
+      "externalVideoUrl": "https://www.philadelphiaeagles.com/video/highlight-saquon-barkley-rushes-for-a-3-yard-td-vs-giants-x5156",
+      "outletId": "eagles_official",
+      "outletName": "philadelphiaeagles.com Video",
+      "reporterId": "eagles_official",
+      "reporterName": "philadelphiaeagles.com Video",
+      "author": "philadelphiaeagles.com Video",
+      "authorHandle": "@Eagles",
+      "authorProfileUrl": "https://www.philadelphiaeagles.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.001
+    },
+    {
       "id": "phi_vid_be995a9e0241",
       "type": "video",
       "title": "Highlight: Joe Milton's 19-yard scramble brings Eagles into Giants territory",
@@ -3564,7 +4113,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0034
+      "storyRank": 0.0033
     },
     {
       "id": "phi_vid_90c8c17ab08a",
@@ -3836,7 +4385,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.0027
     },
     {
       "id": "phi_vid_18c3d63976d1",
@@ -3972,7 +4521,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0025
     },
     {
       "id": "phi_vid_c538088f843c",
@@ -4007,108 +4556,6 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0025
-    },
-    {
-      "id": "phi_vid_e41e42aa7ddd",
-      "type": "video",
-      "title": "Eagles Players Press Conferences: November 1, 2026",
-      "summary": "Watch WR Makai Lemon discuss his growth in the offense after the Eagles' 27-10 loss to the Commanders. Also hear from DT Jalen Carter (2:13), T Jordan Mailata (4:27), and RB Saquon Barkley (7:45). Footage used courtesy o",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/eagles/qigmoi7r7q2q3z8ni8ww.png",
-      "imageAlt": "Eagles Players Press Conferences: November 1, 2026",
-      "publishedAt": "2026-11-02T05:39:22.000Z",
-      "url": "https://www.philadelphiaeagles.com/video/eagles-players-press-conferences-november-1-2026-commanders-sunday-night-football",
-      "externalVideoUrl": "https://www.philadelphiaeagles.com/video/eagles-players-press-conferences-november-1-2026-commanders-sunday-night-football",
-      "outletId": "eagles_official",
-      "outletName": "philadelphiaeagles.com Video",
-      "reporterId": "eagles_official",
-      "reporterName": "philadelphiaeagles.com Video",
-      "author": "philadelphiaeagles.com Video",
-      "authorHandle": "@Eagles",
-      "authorProfileUrl": "https://www.philadelphiaeagles.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
-    },
-    {
-      "id": "phi_vid_5cbdaa52656c",
-      "type": "video",
-      "title": "Nick Sirianni Press Conference: November 1, 2026",
-      "summary": "Watch Head Coach Nick Sirianni discuss his faith in the coaching staff, the use of RB Saquon Barkley, fixing the details, and more after the Eagles' 27-10 on Sunday Night Football to the Commanders.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/eagles/dahlfalyqrffwyweupmv.png",
-      "imageAlt": "Nick Sirianni Press Conference: November 1, 2026",
-      "publishedAt": "2026-11-02T05:35:10.000Z",
-      "url": "https://www.philadelphiaeagles.com/video/nick-sirianni-press-conference-november-1-2026-eagles-commanders-sunday-night-football",
-      "externalVideoUrl": "https://www.philadelphiaeagles.com/video/nick-sirianni-press-conference-november-1-2026-eagles-commanders-sunday-night-football",
-      "outletId": "eagles_official",
-      "outletName": "philadelphiaeagles.com Video",
-      "reporterId": "eagles_official",
-      "reporterName": "philadelphiaeagles.com Video",
-      "author": "philadelphiaeagles.com Video",
-      "authorHandle": "@Eagles",
-      "authorProfileUrl": "https://www.philadelphiaeagles.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
-    },
-    {
-      "id": "phi_vid_9bd1e3a686ae",
-      "type": "video",
-      "title": "Tanner McKee Press Conference: November 1, 2026",
-      "summary": "Hear from QB Tanner McKee following the Philadelphia Eagles' 17-10 loss to the Washington Commanders in Week 8 of NFL action.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/eagles/huhv3tapedalh8mlev4t.png",
-      "imageAlt": "Tanner McKee Press Conference: November 1, 2026",
-      "publishedAt": "2026-11-02T05:23:45.000Z",
-      "url": "https://www.philadelphiaeagles.com/video/tanner-mckee-press-conference-november-1-2026-eagles-commanders",
-      "externalVideoUrl": "https://www.philadelphiaeagles.com/video/tanner-mckee-press-conference-november-1-2026-eagles-commanders",
-      "outletId": "eagles_official",
-      "outletName": "philadelphiaeagles.com Video",
-      "reporterId": "eagles_official",
-      "reporterName": "philadelphiaeagles.com Video",
-      "author": "philadelphiaeagles.com Video",
-      "authorHandle": "@Eagles",
-      "authorProfileUrl": "https://www.philadelphiaeagles.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
     },
     {
       "id": "phi_rss_8ee7e0022eeb",

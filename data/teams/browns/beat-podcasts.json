@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T03:51:40.069Z",
+  "updatedAt": "2026-11-23T06:25:28.651Z",
   "windowDays": 7,
-  "totalEpisodes": 11,
+  "totalEpisodes": 10,
   "shows": [
     {
       "id": "browns_locked_on_browns",
@@ -37,7 +37,7 @@
       "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e4/71/36/e4713632-fd35-6f67-ed8d-fb9c5e5690b1/mza_5063397547146275556.jpeg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     }
   ],
   "episodes": [
@@ -240,26 +240,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4",
       "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/bc2558/lockedon.simplecastaudio.com/7969d75c-8081-4d02-9f33-3da05de0f18c/episodes/e5175a8a-6833-44d7-a930-729e2055c995/audio/128/default.mp3?aid=rss_feed&awCollectionId=7969d75c-8081-4d02-9f33-3da05de0f18c&awEpisodeId=e5175a8a-6833-44d7-a930-729e2055c995&feed=KHgFdYZS"
-    },
-    {
-      "id": "pod_browns_orange_and_brown_talk_1000802174766",
-      "trackId": 1000802174766,
-      "collectionId": 1334701895,
-      "showId": "browns_orange_and_brown_talk",
-      "showName": "Orange and Brown Talk",
-      "showFullTitle": "Orange and Brown Talk: Cleveland Browns Podcast",
-      "hosts": "Cleveland.com - Advance Local",
-      "network": "Cleveland.com - Advance Local",
-      "title": "How the Browns pulled off a 27-24 comeback win over the Texans: Postgame podcast",
-      "summary": "The Browns use another fourth-quarter, game-winning drive to beat the Texans on Sunday, 27-24. They moved to 6-4 on the season and are in the thick of the AFC playoff picture. Mary Kay Cabot, Ashley Bastock and Dan Labbe recapped the win on the postgame edition of the Orange",
-      "publishedAt": "2026-11-16T04:03:00.000Z",
-      "durationMinutes": 36,
-      "durationDisplay": "36 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e4/71/36/e4713632-fd35-6f67-ed8d-fb9c5e5690b1/mza_5063397547146275556.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/how-the-browns-pulled-off-a-27-24-comeback-win/id1334701895?i=1000802174766&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
-      "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM7405570125.mp3"
     }
   ]
 }

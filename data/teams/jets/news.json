@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:50:35.331Z",
+  "updatedAt": "2026-11-23T06:25:21.995Z",
   "dailyTopNewsBrief": {
     "id": "brief_nyj_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -107,6 +107,74 @@
   "clusteredBriefs": [],
   "rawStream": [
     {
+      "id": "nyj_espn_c66b1cfb0eee8",
+      "type": "article",
+      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
+      "imageCaption": "George Kittle spike [608x342]",
+      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+      "publishedAt": "2026-11-23T04:50:41Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
+      "outletId": "espn_nyj",
+      "outletName": "ESPN",
+      "reporterId": "espn_nyj",
+      "reporterName": "NFL Nation",
+      "author": "NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.317,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 25.9542
+    },
+    {
+      "id": "nyj_espn_1128fafbe8116",
+      "type": "video",
+      "title": "Jets snap 5-game losing streak",
+      "summary": "Rich Cimini details the Jets' offensive changes in their win against the Chargers.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_16x9_Jets_IA_1/dm_261122_16x9_Jets_IA_1.jpg",
+      "imageCaption": "Rich Cimini details the Jets' offensive changes in their win against the Chargers.",
+      "imageAlt": "Jets snap 5-game losing streak",
+      "publishedAt": "2026-11-23T04:16:35Z",
+      "url": "https://www.espn.com/video/clip/_/id/50569793/jets-snap-5-game-losing-streak",
+      "outletId": "espn_nyj",
+      "outletName": "ESPN",
+      "reporterId": "espn_nyj",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 12.7079
+    },
+    {
       "id": "nyj_rss_a5d03cedd99a",
       "type": "article",
       "title": "Jets-Chargers Game Recap | Offense Powers Green & White to 27-24 Victory in Los Angeles",
@@ -120,14 +188,14 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.254,
+      "breakingPriority": 1.064,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -137,7 +205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 21.1906
+      "storyRank": 12.6473
     },
     {
       "id": "nyj_vid_1c8dc106f686",
@@ -154,14 +222,14 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.249,
+      "breakingPriority": 1.06,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -171,73 +239,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 20.8814
-    },
-    {
-      "id": "nyj_rss_3bb5d93bfc1c",
-      "type": "article",
-      "title": "QB Geno Smith Engineers 3 Long Drives, All Ending in TDs in Jets Victory",
-      "summary": "2 Scoring Tosses to Veteran WR Sterling Shepard and 1 to RB Breece Hall",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/jgwzujozhtzvfxrkeafk.png",
-      "imageAlt": "QB Geno Smith Engineers 3 Long Drives, All Ending in TDs in Jets Victory",
-      "publishedAt": "2026-11-23T02:59:00.000Z",
-      "url": "https://www.newyorkjets.com/news/geno-smith-jets-engineers-3-touchdown-drives-in-victory-over-chargers-11-22-2026",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Official",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Official",
-      "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.4695
-    },
-    {
-      "id": "nyj_rss_d637a94a7f03",
-      "type": "article",
-      "title": "California Native David Bailey Sacks Justin Herbert Twice in Return to the West Coast",
-      "summary": "HC Aaron Glenn: ‘Anytime He’s on the Field, He Gives Us A Chance For Something Big to Happen’",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/qojokpvpwlt7qcjjmthp.png",
-      "imageAlt": "California Native David Bailey Sacks Justin Herbert Twice in Return to the West Coast",
-      "publishedAt": "2026-11-23T02:58:00.000Z",
-      "url": "https://www.newyorkjets.com/news/california-native-david-bailey-sacks-justin-herbert-twice-in-return-to-the-west-coast-11-22-2026",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Official",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Official",
-      "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.3653
+      "storyRank": 12.5213
     },
     {
       "id": "nyj_vid_b4f9333aabd7",
@@ -254,14 +256,14 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.085,
+      "breakingPriority": 0.921,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -271,40 +273,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.327
-    },
-    {
-      "id": "nyj_espn_c66b1cfb0eee8",
-      "type": "article",
-      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
-      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-23T01:42:13Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.079,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.1356
+      "storyRank": 9.0725
     },
     {
       "id": "nyj_vid_a51846fa1380",
@@ -321,14 +290,14 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.075,
+      "breakingPriority": 0.912,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -338,7 +307,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.9865
+      "storyRank": 8.8975
     },
     {
       "id": "nyj_vid_50479ba87f64",
@@ -355,14 +324,14 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.064,
+      "breakingPriority": 0.903,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -372,14 +341,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.6609
+      "storyRank": 8.7284
     },
     {
       "id": "nyj_espn_7a956123b6c0f",
       "type": "article",
       "title": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
       "summary": "— Mired in a losing season, New York Jets quarterback Geno Smith's efficiency has been largely overlooked with the offense lagging. Sterling Shepard helped change that Sunday, catching two touchdown passes from Smith and potentially earning himself a...",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873074.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/1d994fc4-f225-4162-8d60-60fca59a2886/1d994fc4-f225-4162-8d60-60fca59a2886.jpg",
+      "imageCaption": "New York Jets vs. Los Angeles Chargers: Game Highlights",
       "imageAlt": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
       "publishedAt": "2026-11-23T01:31:34Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873074",
@@ -395,7 +365,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.057,
+      "breakingPriority": 0.897,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -405,7 +375,73 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.4455
+      "storyRank": 8.6155
+    },
+    {
+      "id": "nyj_rss_3bb5d93bfc1c",
+      "type": "article",
+      "title": "QB Geno Smith Engineers 3 Long Drives, All Ending in TDs in Jets Victory",
+      "summary": "2 Scoring Tosses to Veteran WR Sterling Shepard and 1 to RB Breece Hall",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/jgwzujozhtzvfxrkeafk.png",
+      "imageAlt": "QB Geno Smith Engineers 3 Long Drives, All Ending in TDs in Jets Victory",
+      "publishedAt": "2026-11-23T02:59:00.000Z",
+      "url": "https://www.newyorkjets.com/news/geno-smith-jets-engineers-3-touchdown-drives-in-victory-over-chargers-11-22-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Official",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Official",
+      "author": "newyorkjets.com Official",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.8146
+    },
+    {
+      "id": "nyj_rss_d637a94a7f03",
+      "type": "article",
+      "title": "California Native David Bailey Sacks Justin Herbert Twice in Return to the West Coast",
+      "summary": "HC Aaron Glenn: ‘Anytime He’s on the Field, He Gives Us A Chance For Something Big to Happen’",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/qojokpvpwlt7qcjjmthp.png",
+      "imageAlt": "California Native David Bailey Sacks Justin Herbert Twice in Return to the West Coast",
+      "publishedAt": "2026-11-23T02:58:00.000Z",
+      "url": "https://www.newyorkjets.com/news/california-native-david-bailey-sacks-justin-herbert-twice-in-return-to-the-west-coast-11-22-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Official",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Official",
+      "author": "newyorkjets.com Official",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.7733
     },
     {
       "id": "nyj_vid_1dcc7ccfb742",
@@ -422,7 +458,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -439,7 +475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.923
+      "storyRank": 6.7523
     },
     {
       "id": "nyj_vid_781eded9fcfa",
@@ -456,14 +492,14 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.945,
+      "breakingPriority": 0.802,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -473,7 +509,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.5839
+      "storyRank": 7.0323
     },
     {
       "id": "nyj_vid_55b01d73747f",
@@ -490,14 +526,14 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.934,
+      "breakingPriority": 0.793,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -507,7 +543,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.3501
+      "storyRank": 6.8955
     },
     {
       "id": "nyj_vid_e943a6ea6583",
@@ -524,14 +560,14 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.927,
+      "breakingPriority": 0.787,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -541,7 +577,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.196
+      "storyRank": 6.8047
+    },
+    {
+      "id": "nyj_pft_0b84fdf8c9d7",
+      "type": "article",
+      "title": "New York Jets get 'much-needed' win vs. Los Angeles Chargers",
+      "summary": "Mike Florio breaks down the Jets' win over the Chargers in Week 11, discussing Gang Green snapping a five-game losing streak in Los Angeles.",
+      "imageUrl": "https://link.theplatform.com/s/BxmELC/media/FrzZXCddy3ho?auto=true",
+      "imageAlt": "New York Jets get 'much-needed' win vs. Los Angeles Chargers",
+      "publishedAt": "2026-11-23T02:44:56.000Z",
+      "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/new-york-jets-get-much-needed-win-vs-los-angeles-chargers",
+      "outletId": "profootballtalk",
+      "outletName": "ProFootballTalk",
+      "reporterId": "profootballtalk",
+      "reporterName": "ProFootballTalk",
+      "author": "ProFootballTalk",
+      "authorHandle": "@ProFootballTalk",
+      "authorProfileUrl": "https://x.com/ProFootballTalk",
+      "trustTier": 2,
+      "wireSource": "pft_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 88,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.376
     },
     {
       "id": "nyj_vid_0547d711edca",
@@ -558,14 +627,14 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.918,
+      "breakingPriority": 0.779,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -575,7 +644,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.0234
+      "storyRank": 6.7023
     },
     {
       "id": "nyj_vid_8b67cdc18a11",
@@ -592,14 +661,14 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.826,
+      "breakingPriority": 0.701,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -609,7 +678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.3866
+      "storyRank": 5.6964
     },
     {
       "id": "nyj_espn_b338a34b45093",
@@ -617,6 +686,7 @@
       "title": "New York Jets vs. Los Angeles Chargers: Game Highlights",
       "summary": "New York Jets vs. Los Angeles Chargers: Game Highlights",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/1d994fc4-f225-4162-8d60-60fca59a2886/1d994fc4-f225-4162-8d60-60fca59a2886.jpg",
+      "imageCaption": "New York Jets vs. Los Angeles Chargers: Game Highlights",
       "imageAlt": "New York Jets vs. Los Angeles Chargers: Game Highlights",
       "publishedAt": "2026-11-23T00:08:00Z",
       "url": "https://www.espn.com/video/clip/_/id/50567126/game-highlights",
@@ -642,7 +712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.2651
+      "storyRank": 3.8742
     },
     {
       "id": "nyj_vid_339de467d943",
@@ -659,7 +729,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -676,7 +746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0675
+      "storyRank": 3.7563
     },
     {
       "id": "nyj_vid_0e7a2abab344",
@@ -693,7 +763,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -710,7 +780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.4791
+      "storyRank": 3.3962
     },
     {
       "id": "nyj_vid_9ee1840115e0",
@@ -727,7 +797,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -744,7 +814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3402
+      "storyRank": 3.3091
     },
     {
       "id": "nyj_vid_f2c1e3043b39",
@@ -761,7 +831,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -778,7 +848,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9115
+      "storyRank": 3.035
     },
     {
       "id": "nyj_vid_21897e5647d3",
@@ -795,7 +865,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -812,7 +882,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4972
+      "storyRank": 2.7621
     },
     {
       "id": "nyj_vid_d6a3c86d1f93",
@@ -829,7 +899,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -846,7 +916,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4305
+      "storyRank": 2.7174
     },
     {
       "id": "nyj_vid_e2432142377d",
@@ -863,7 +933,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -880,7 +950,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.383
+      "storyRank": 2.6854
     },
     {
       "id": "nyj_vid_2bcefb871101",
@@ -897,7 +967,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -914,7 +984,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2716
+      "storyRank": 2.6099
     },
     {
       "id": "nyj_vid_6640b35ea189",
@@ -931,7 +1001,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -948,7 +1018,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0339
+      "storyRank": 2.4467
     },
     {
       "id": "nyj_vid_f54fc9c7b273",
@@ -965,7 +1035,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -982,7 +1052,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6416
+      "storyRank": 1.6485
+    },
+    {
+      "id": "nyj_vid_be97321b561c",
+      "type": "video",
+      "title": "David Bailey, Breece Hall, Sterling Shepard & More React to the Win Over the Chargers | Press Pass",
+      "summary": "Hear postgame interviews with David Bailey, Breece Hall, Sterling Shepard, Garrett Wilson and Demario Davis following the road win over the Chargers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/it687sfmsbbagwmx8box.png",
+      "imageAlt": "David Bailey, Breece Hall, Sterling Shepard & More React to the Win Over the Chargers | Press Pass",
+      "publishedAt": "2026-11-23T01:04:28.000Z",
+      "url": "https://www.newyorkjets.com/video/jets-postgame-player-interviews-david-bailey-breece-hall-sterling-chepard-garrett-wilson-demario-davis-11-22-2026",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/jets-postgame-player-interviews-david-bailey-breece-hall-sterling-chepard-garrett-wilson-demario-davis-11-22-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Video",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Video",
+      "author": "newyorkjets.com Video",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.1779
     },
     {
       "id": "nyj_vid_039b34071c50",
@@ -999,7 +1103,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1016,7 +1120,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5773
+      "storyRank": 0.4823
+    },
+    {
+      "id": "nyj_pfr_7f7e0286912c",
+      "type": "article",
+      "title": "Jets May Pursue Vikings HC Kevin O&#8217;Connell; Sean McDermott Seen As Likely Hire?",
+      "summary": "Aaron Glenn may be allowed to finish his second year as the Jets’ head coach, but barring a dramatic turnaround for his 2-8 club, he could receive his walking papers at season’s end. Unsurprisingly, there is already a great deal of speculat",
+      "imageUrl": "",
+      "publishedAt": "2026-11-22T18:48:28.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jets-may-pursue-vikings-hc-kevin-oconnell-sean-mcdermott-seen-as-likely-hire",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-york-jets",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3907
     },
     {
       "id": "nyj_espn_f6aa6be9753b2",
@@ -1024,6 +1160,7 @@
       "title": "Why the Jets' next two games have major implications on the 2027 draft",
       "summary": "At two wins, New York will play two of the three remaining one-win teams in Weeks 11 and 12.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1115/r1745932_608x342_16-9.jpg",
+      "imageCaption": "Top QB prospect Drew Mestemaker will get a long look from the Jets in the 2027 draft.",
       "imageAlt": "Why the Jets' next two games have major implications on the 2027 draft",
       "publishedAt": "2026-11-22T11:00:01Z",
       "url": "https://www.espn.com/nfl/story/_/id/50543176/jets-face-chargers-dolphins-impact-2027-draft",
@@ -1049,7 +1186,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2491
+      "storyRank": 0.2248
     },
     {
       "id": "nyj_rss_0306813751a4",
@@ -1065,7 +1202,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1082,7 +1219,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1189
+      "storyRank": 0.1118
     },
     {
       "id": "nyj_vid_1e8c978e0b02",
@@ -1099,7 +1236,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1116,7 +1253,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1188
+      "storyRank": 0.1117
     },
     {
       "id": "nyj_rss_0b6036be5203",
@@ -1132,7 +1269,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1149,7 +1286,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1187
+      "storyRank": 0.1116
     },
     {
       "id": "nyj_rss_e5977f344fc3",
@@ -1165,7 +1302,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1182,7 +1319,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1186
+      "storyRank": 0.1115
     },
     {
       "id": "nyj_rss_4e3b603ab89b",
@@ -1198,7 +1335,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1215,7 +1352,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1184
+      "storyRank": 0.1114
     },
     {
       "id": "nyj_rss_d8928294853f",
@@ -1231,7 +1368,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1248,7 +1385,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1184
+      "storyRank": 0.1113
     },
     {
       "id": "nyj_vid_175440c61e1a",
@@ -1265,7 +1402,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1282,7 +1419,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1183
+      "storyRank": 0.1112
     },
     {
       "id": "nyj_vid_68a83fd60589",
@@ -1299,14 +1436,14 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.124,
+      "breakingPriority": 0.113,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -1316,7 +1453,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2067
+      "storyRank": 0.1954
     },
     {
       "id": "nyj_rss_01cc2c98060e",
@@ -1332,7 +1469,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1349,7 +1486,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1181
+      "storyRank": 0.1111
     },
     {
       "id": "nyj_rss_a538ed41729f",
@@ -1365,7 +1502,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1382,7 +1519,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1139
+      "storyRank": 0.1073
     },
     {
       "id": "nyj_vid_ae518ccb67cc",
@@ -1399,7 +1536,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1416,7 +1553,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0898
+      "storyRank": 0.0853
     },
     {
       "id": "nyj_vid_f136c422cd3c",
@@ -1433,7 +1570,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1450,7 +1587,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0836
+      "storyRank": 0.0797
     },
     {
       "id": "nyj_tx_252526788649",
@@ -1467,7 +1604,7 @@
       "reporterId": "jets_official",
       "reporterName": "New York Jets Official",
       "author": "New York Jets Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -1484,7 +1621,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.071
+      "storyRank": 0.068
     },
     {
       "id": "nyj_espn_3e3b9e9f984f4",
@@ -1492,6 +1629,7 @@
       "title": "Jets QB Geno Smith (ankle) cleared to start vs. Chargers",
       "summary": "Jets quarterback Geno Smith made it through the practice week with no setbacks and was cleared to face the Chargers.",
       "imageUrl": "https://a.espncdn.com/photo/2026/0929/r1723258_1296x729_16-9.jpg",
+      "imageCaption": "New York Jets quarterback Geno Smith has thrown for 783 yards and four touchdowns in three games.",
       "imageAlt": "Jets QB Geno Smith (ankle) cleared to start vs. Chargers",
       "publishedAt": "2026-11-20T22:13:34Z",
       "url": "https://www.espn.com/nfl/story/_/id/50543665/jets-qb-geno-smith-ankle-cleared-start-vs-chargers",
@@ -1517,14 +1655,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.054
+      "storyRank": 0.0521
     },
     {
       "id": "nyj_espn_45b75505a0499",
       "type": "article",
       "title": "Reeling Jets head to LA to face Chargers, who are coming off their first win of the season",
       "summary": "— The New York Jets and Los Angeles Chargers are in the same predicament, but the conversation around the two teams could not be more different heading into their matchup on Sunday.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873074.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/1d994fc4-f225-4162-8d60-60fca59a2886/1d994fc4-f225-4162-8d60-60fca59a2886.jpg",
+      "imageCaption": "New York Jets vs. Los Angeles Chargers: Game Highlights",
       "imageAlt": "Reeling Jets head to LA to face Chargers, who are coming off their first win of the season",
       "publishedAt": "2026-11-20T22:11:32Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873074",
@@ -1550,7 +1689,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.054
+      "storyRank": 0.0521
     },
     {
       "id": "nyj_vid_53fa4cfc90e9",
@@ -1567,7 +1706,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1584,7 +1723,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.049
+      "storyRank": 0.0474
     },
     {
       "id": "nyj_vid_b626bd9776a0",
@@ -1601,7 +1740,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1618,7 +1757,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0458
+      "storyRank": 0.0444
     },
     {
       "id": "nyj_rss_276a2ff60e7e",
@@ -1634,7 +1773,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1651,7 +1790,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0449
+      "storyRank": 0.0435
     },
     {
       "id": "nyj_rss_f406ce5af207",
@@ -1667,7 +1806,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1684,7 +1823,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0787
+      "storyRank": 0.0769
     },
     {
       "id": "nyj_vid_4b52985a1f2a",
@@ -1701,7 +1840,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1718,7 +1857,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0316
+      "storyRank": 0.0308
     },
     {
       "id": "nyj_vid_db06aa68662e",
@@ -1735,7 +1874,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1752,7 +1891,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0315
+      "storyRank": 0.0308
     },
     {
       "id": "nyj_vid_dcf0525fbb45",
@@ -1769,7 +1908,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1786,7 +1925,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.0293
     },
     {
       "id": "nyj_vid_6c51c16c1d55",
@@ -1803,7 +1942,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1820,7 +1959,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0298
+      "storyRank": 0.0291
     },
     {
       "id": "nyj_vid_71897d8bc7cb",
@@ -1837,7 +1976,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1854,7 +1993,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0297
+      "storyRank": 0.0291
     },
     {
       "id": "nyj_vid_f237629dd526",
@@ -1871,7 +2010,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -1888,7 +2027,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0278
+      "storyRank": 0.0272
     },
     {
       "id": "nyj_rss_8983edebfd21",
@@ -1904,7 +2043,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1921,7 +2060,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
+      "storyRank": 0.0219
     },
     {
       "id": "nyj_rss_89d67790886c",
@@ -1937,7 +2076,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1954,7 +2093,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0562
+      "storyRank": 0.0552
     },
     {
       "id": "nyj_rss_295e945511b9",
@@ -1970,7 +2109,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1987,7 +2126,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0218
+      "storyRank": 0.0214
+    },
+    {
+      "id": "nyj_pfr_950c6989c7d9",
+      "type": "article",
+      "title": "Jets Designate DT David Onyemata For Return",
+      "summary": "The Jets brought in veteran defensive tackle David Onyemata on a one-year, $10.5MM deal during the offseason, but a groin injury has shelved him for most of 2026. Onyemata has been on IR since he underwent core muscle surgery in late Septem",
+      "imageUrl": "",
+      "publishedAt": "2026-11-18T19:59:25.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jets-designate-dt-david-onyemata-for-return",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-york-jets",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0187
     },
     {
       "id": "nyj_vid_d958e24d2849",
@@ -2004,7 +2175,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2021,7 +2192,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0215
+      "storyRank": 0.0211
     },
     {
       "id": "nyj_vid_e4615a76e97c",
@@ -2038,41 +2209,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0213
-    },
-    {
-      "id": "nyj_vid_cce89a1f68a0",
-      "type": "video",
-      "title": "Aaron Glenn Press Conference (11/18) | Week 11",
-      "summary": "Coach Glenn offers an injury update on Geno Smith leading up to Sunday's game at the Chargers.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/yhnz4b4g1dtqnz68v2bh.jpg",
-      "imageAlt": "Aaron Glenn Press Conference (11/18) | Week 11",
-      "publishedAt": "2026-11-18T17:05:00.000Z",
-      "url": "https://www.newyorkjets.com/video/aaron-glenn-jets-press-conference-11-18-2026",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/aaron-glenn-jets-press-conference-11-18-2026",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Video",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Video",
-      "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2092,11 +2229,46 @@
       "storyRank": 0.0209
     },
     {
+      "id": "nyj_vid_cce89a1f68a0",
+      "type": "video",
+      "title": "Aaron Glenn Press Conference (11/18) | Week 11",
+      "summary": "Coach Glenn offers an injury update on Geno Smith leading up to Sunday's game at the Chargers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/yhnz4b4g1dtqnz68v2bh.jpg",
+      "imageAlt": "Aaron Glenn Press Conference (11/18) | Week 11",
+      "publishedAt": "2026-11-18T17:05:00.000Z",
+      "url": "https://www.newyorkjets.com/video/aaron-glenn-jets-press-conference-11-18-2026",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/aaron-glenn-jets-press-conference-11-18-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Video",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Video",
+      "author": "newyorkjets.com Video",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0205
+    },
+    {
       "id": "nyj_espn_2174513a3461e",
       "type": "article",
       "title": "2027 NFL draft: Dolphins, Titans, Eagles, Jets, Chargers in race for No. 1 pick",
       "summary": "Five NFL teams have at least 5% odds to land the No. 1 pick in 2027, per ESPN's Football Power Index: the Dolphins, Titans, Eagles, Jets and Chargers.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747125_608x342_16-9.jpg",
+      "imageCaption": "Jeff Hafley",
       "imageAlt": "2027 NFL draft: Dolphins, Titans, Eagles, Jets, Chargers in race for No. 1 pick",
       "publishedAt": "2026-11-18T13:32:42Z",
       "url": "https://www.espn.com/nfl/draft2027/story/_/id/50510863/2027-nfl-draft-top-pick-dolphins-titans-eagles-jets-chargers",
@@ -2122,7 +2294,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0799
+      "storyRank": 0.0785
     },
     {
       "id": "nyj_tx_97d7ff984bf1",
@@ -2139,7 +2311,7 @@
       "reporterId": "jets_official",
       "reporterName": "New York Jets Official",
       "author": "New York Jets Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -2156,7 +2328,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
+      "storyRank": 0.0183
     },
     {
       "id": "nyj_vid_e2a43cee5058",
@@ -2173,7 +2345,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2190,7 +2362,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.016
     },
     {
       "id": "nyj_tx_52271b30ec9a",
@@ -2207,7 +2379,7 @@
       "reporterId": "jets_official",
       "reporterName": "New York Jets Official",
       "author": "New York Jets Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -2224,7 +2396,71 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0141
+    },
+    {
+      "id": "nyj_pfr_2c89d4273656",
+      "type": "article",
+      "title": "Jets&#8217; Aaron Glenn Ceded Play-Calling Duties In Week 10; Latest On HC&#8217;s Job Security",
+      "summary": "With the Jets riding a four-game losing streak and having struggled defensively heading into Week 10, Aaron Glenn left the door open to a change in play-calling duties. That did indeed take place on Sunday. When speaking to the media Monday",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T05:17:19.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jets-aaron-glenn-ceded-play-calling-duties-in-week-10-latest-on-hcs-job-security",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-york-jets",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0121
+    },
+    {
+      "id": "nyj_pfr_4e58b0d73c70",
+      "type": "article",
+      "title": "Jets&#8217; Geno Smith Avoids Major Injury; Aaron Glenn Not Planning QB Change",
+      "summary": "On the wrong end of a couple of big hits against the Bills in Week 10, Jets quarterback Geno Smith did not return after suffering an ankle injury in the third quarter. Rookie fourth-round pick Cade Klubnik played the rest of the Jets&#8217;",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T04:19:02.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jets-geno-smith-avoids-major-injury-aaron-glenn-not-planning-qb-change",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-york-jets",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.012
     },
     {
       "id": "nyj_espn_38ff0ea9dae38",
@@ -2232,6 +2468,7 @@
       "title": "Sources: Jets QB Geno Smith avoided major ankle injury, testing shows",
       "summary": "Imaging tests performed on Jets quarterback Geno Smith's injured left ankle did not reveal any major concerns, sources said Monday.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1746913_1296x729_16-9.jpg",
+      "imageCaption": "Geno Smith [1296x729]",
       "imageAlt": "Sources: Jets QB Geno Smith avoided major ankle injury, testing shows",
       "publishedAt": "2026-11-17T01:08:09Z",
       "url": "https://www.espn.com/nfl/story/_/id/50506147/jets-qb-geno-smith-avoided-major-ankle-injury",
@@ -2257,7 +2494,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
+      "storyRank": 0.0132
     },
     {
       "id": "nyj_espn_0882cb13220d2",
@@ -2265,6 +2502,7 @@
       "title": "Jets Aaron Glenn ceded defensive playcalling to DC Brian Duker on Sunday",
       "summary": "Amid a prolonged defensive slide, Aaron Glenn handed the playcalling duties Sunday to defensive coordinator Brian Duker, Glenn revealed Monday.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746660_1296x729_16-9.jpg",
+      "imageCaption": "Aaron Glenn [1296x729]",
       "imageAlt": "Jets Aaron Glenn ceded defensive playcalling to DC Brian Duker on Sunday",
       "publishedAt": "2026-11-16T17:13:57Z",
       "url": "https://www.espn.com/nfl/story/_/id/50502248/jets-aaron-glenn-ceded-defensive-playcalling-sunday",
@@ -2290,7 +2528,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0123
     },
     {
       "id": "nyj_espn_0d7fbd850dab3",
@@ -2298,6 +2536,7 @@
       "title": "Geno Smith remains Jets' QB1 despite ankle injury, coach Aaron Glenn says",
       "summary": "Geno Smith is undergoing tests on his injured left ankle, creating uncertainty about his status for the Jets' Week 11 game against the Chargers.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1115/r1746260_1296x729_16-9.jpg",
+      "imageCaption": "Geno Smith [1296x729]",
       "imageAlt": "Geno Smith remains Jets' QB1 despite ankle injury, coach Aaron Glenn says",
       "publishedAt": "2026-11-16T17:11:33Z",
       "url": "https://www.espn.com/nfl/story/_/id/50502082/geno-smith-remains-jets-qb1-injury-aaron-glenn-says",
@@ -2323,7 +2562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0123
     },
     {
       "id": "nyj_vid_e43120d93511",
@@ -2340,7 +2579,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2357,7 +2596,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
+      "storyRank": 0.0121
     },
     {
       "id": "nyj_vid_0f6f38aa6f91",
@@ -2374,7 +2613,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2391,7 +2630,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0122
+      "storyRank": 0.0121
     },
     {
       "id": "nyj_vid_da9ec76bfabb",
@@ -2408,7 +2647,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2425,7 +2664,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0122
+      "storyRank": 0.012
     },
     {
       "id": "nyj_vid_164c711df927",
@@ -2442,7 +2681,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2459,7 +2698,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.012
+      "storyRank": 0.0118
+    },
+    {
+      "id": "nyj_vid_f566afdf5dd9",
+      "type": "video",
+      "title": "WR Garrett Wilson's Best Plays from 106-Yard Performance vs. Bills",
+      "summary": "Watch WR Garrett Wilson's best plays from his 106-yard game against the Bills in Week 10.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/hypyel2tiqrdr628bscm.png",
+      "imageAlt": "WR Garrett Wilson's Best Plays from 106-Yard Performance vs. Bills",
+      "publishedAt": "2026-11-15T23:05:00.000Z",
+      "url": "https://www.newyorkjets.com/video/garrett-wilson-best-plays-106-yard-performance-vs-bills-11-15-2026",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/garrett-wilson-best-plays-106-yard-performance-vs-bills-11-15-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Video",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Video",
+      "author": "newyorkjets.com Video",
+      "authorHandle": "@nyjets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0026
     },
     {
       "id": "nyj_vid_d207f7ee05e3",
@@ -2476,7 +2749,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2493,7 +2766,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0105
     },
     {
       "id": "nyj_vid_42cffb6530c4",
@@ -2510,7 +2783,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2527,7 +2800,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0105
     },
     {
       "id": "nyj_vid_4b825c392e5a",
@@ -2544,7 +2817,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2561,7 +2834,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0105
     },
     {
       "id": "nyj_vid_2a30bdb19235",
@@ -2578,7 +2851,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2595,7 +2868,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0105
     },
     {
       "id": "nyj_vid_d5deccc670ab",
@@ -2612,7 +2885,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2629,7 +2902,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0104
     },
     {
       "id": "nyj_vid_e3502d9391a7",
@@ -2646,7 +2919,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2663,7 +2936,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0104
     },
     {
       "id": "nyj_vid_65c99fb019d3",
@@ -2680,7 +2953,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2697,7 +2970,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0104
     },
     {
       "id": "nyj_vid_fa9e47b9591d",
@@ -2714,7 +2987,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2731,7 +3004,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0104
     },
     {
       "id": "nyj_vid_8a143a25d729",
@@ -2748,7 +3021,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2765,7 +3038,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0104
     },
     {
       "id": "nyj_vid_54547f1268f0",
@@ -2782,7 +3055,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2799,7 +3072,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0103
     },
     {
       "id": "nyj_vid_b84a8d7a80db",
@@ -2816,7 +3089,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2833,7 +3106,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0103
     },
     {
       "id": "nyj_vid_ace7c803d812",
@@ -2850,7 +3123,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2867,7 +3140,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0103
     },
     {
       "id": "nyj_vid_abb1710d3899",
@@ -2884,7 +3157,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2901,7 +3174,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0103
     },
     {
       "id": "nyj_vid_126a47e0ca4c",
@@ -2918,7 +3191,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2935,7 +3208,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0102
     },
     {
       "id": "nyj_vid_5766b481b9ae",
@@ -2952,7 +3225,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -2969,7 +3242,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0102
     },
     {
       "id": "nyj_vid_2a9d1d29ecd0",
@@ -2986,7 +3259,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3003,7 +3276,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0102
     },
     {
       "id": "nyj_vid_505a9cb069b3",
@@ -3020,7 +3293,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3037,7 +3310,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0102
     },
     {
       "id": "nyj_vid_4e8ee83448b3",
@@ -3054,7 +3327,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3071,7 +3344,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0101
+      "storyRank": 0.01
     },
     {
       "id": "nyj_vid_23b3f37fddb0",
@@ -3088,7 +3361,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3122,7 +3395,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3139,7 +3412,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0087
     },
     {
       "id": "nyj_vid_2d9bf881db6f",
@@ -3156,7 +3429,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3173,7 +3446,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0087
     },
     {
       "id": "nyj_vid_0012ab78d437",
@@ -3190,7 +3463,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3207,7 +3480,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0087
+    },
+    {
+      "id": "nyj_pfr_03b5124b42ba",
+      "type": "article",
+      "title": "Jets Trade S Andre Cisco To Lions",
+      "summary": "NOVEMBER 14: The Lions and the Jets had originally agreed on a 2028 sixth-rounder as compensation for Cisco, per The Athletic&#8217;s Jonathan Jones. The former club requested that the pick be moved back a year due to a &#8220;minor&#8221; ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-14T16:15:41.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jets-to-trade-s-andre-cisco-to-lions",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-york-jets",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0074
     },
     {
       "id": "nyj_vid_d7c8ef672a4d",
@@ -3224,7 +3529,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3241,7 +3546,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084
+      "storyRank": 0.0083
     },
     {
       "id": "nyj_vid_38558ebc4e9d",
@@ -3258,7 +3563,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3292,7 +3597,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3309,7 +3614,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0073
     },
     {
       "id": "nyj_vid_fa9e91b04567",
@@ -3326,7 +3631,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3346,6 +3651,38 @@
       "storyRank": 0.0072
     },
     {
+      "id": "nyj_pfr_2c02575a2356",
+      "type": "article",
+      "title": "Chiefs, 49ers Showed Trade Interest In Jets WR Garrett Wilson",
+      "summary": "Garrett Wilson was once again floated as a potential trade candidate with the Jets not in position to contend in 2026. New York&#8217;s stance on the fifth-year receiver nevertheless remained consistent, and he is still in the fold. As expe",
+      "imageUrl": "",
+      "publishedAt": "2026-11-13T04:59:55.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/chiefs-49ers-showed-trade-interest-in-jets-wr-garrett-wilson",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-york-jets",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0059
+    },
+    {
       "id": "nyj_vid_25bcd819407f",
       "type": "video",
       "title": "Jets Press Pass | Demario Davis, Geno Smith, Minkah Fitzpatrick & Breece Hall Talk Bills Matchup",
@@ -3360,7 +3697,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3394,7 +3731,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3428,7 +3765,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3462,7 +3799,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3496,7 +3833,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3530,7 +3867,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3564,7 +3901,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3598,7 +3935,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3632,7 +3969,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3649,7 +3986,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0061
     },
     {
       "id": "nyj_vid_ec99fc125901",
@@ -3666,7 +4003,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3683,7 +4020,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0056
     },
     {
       "id": "nyj_vid_25862059e334",
@@ -3700,7 +4037,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3734,7 +4071,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3751,7 +4088,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0055
     },
     {
       "id": "nyj_vid_2f00d6036138",
@@ -3768,7 +4105,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3785,7 +4122,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0055
     },
     {
       "id": "nyj_vid_d2fcd608ecf5",
@@ -3802,7 +4139,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3822,6 +4159,70 @@
       "storyRank": 0.0054
     },
     {
+      "id": "nyj_pfr_cddbfe65ed51",
+      "type": "article",
+      "title": "Jaguars Made &#8216;Significant Offer&#8217; For Jets DE Will McDonald",
+      "summary": "The Jaguars made a “significant offer” to the Jets for edge rusher Will McDonald before completing their blockbuster trades for safety Jessie Bates and defensive tackle Jordan Davis on Monday, per Sports Illustrated&#8217;s Albert Breer. Ev",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T19:05:50.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jaguars-made-significant-offer-for-jets-de-will-mcdonald",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-york-jets",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0043
+    },
+    {
+      "id": "nyj_pfr_b66d2b592264",
+      "type": "article",
+      "title": "Jets Expected To Trade CB Nahshon Wright",
+      "summary": "The Jets were hoping they landed a starting cornerback for a bargain when they signed Nahshon Wright to a one-year, $3.5MM contract this offseason. Nine weeks into the season, however, he has appeared in just three games with all 22 snaps c",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T18:12:47.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jets-expected-to-trade-cb-nahshon-wright",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-york-jets",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0043
+    },
+    {
       "id": "nyj_vid_f8389ebdb23b",
       "type": "video",
       "title": "David Bailey's Best Plays During the First 9 Weeks of the 2026 Season",
@@ -3836,7 +4237,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3856,6 +4257,70 @@
       "storyRank": 0.0048
     },
     {
+      "id": "nyj_pfr_9f2df6f7f37f",
+      "type": "article",
+      "title": "Jets DE Will McDonald Requests Trade",
+      "summary": "Will McDonald has long been attached to trade speculation. If the fourth-year edge rusher has his way, he will soon be departing the Jets. McDonald has requested a trade, Ian Rapoport of NFL Network reports. To no surprise, a lack of playin",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T05:17:45.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jets-de-will-mcdonald-requests-trade",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-york-jets",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0041
+    },
+    {
+      "id": "nyj_pfr_51a26703f335",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/9/26",
+      "summary": "A few Monday practice squad transactions ahead of the trade deadline: New England Patriots Released: LB Jose Ramirez New York Jets Signed: OLB Mykal Walker Tennessee Titans Signed: LB Jimmy Ciarlo Released: CB Derrick Canteen The Titans hos",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T02:12:08.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-9-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-york-jets",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.004
+    },
+    {
       "id": "nyj_vid_5f7aebbdf349",
       "type": "video",
       "title": "LB Demario Davis Media Availability (11/9) | Week 10",
@@ -3870,7 +4335,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3904,7 +4369,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3938,7 +4403,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -3972,7 +4437,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -4006,7 +4471,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -4040,7 +4505,7 @@
       "reporterId": "jets_official",
       "reporterName": "New York Jets Official",
       "author": "New York Jets Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -4057,7 +4522,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0042
     },
     {
       "id": "nyj_vid_d421c9164df7",
@@ -4074,7 +4539,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -4108,7 +4573,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -4142,7 +4607,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -4176,7 +4641,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -4210,7 +4675,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -4244,7 +4709,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -4278,7 +4743,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -4295,7 +4760,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.004
     },
     {
       "id": "nyj_vid_3098edc6783f",
@@ -4312,7 +4777,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -4329,7 +4794,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.004
     },
     {
       "id": "nyj_vid_94fc18784a44",
@@ -4346,7 +4811,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -4363,7 +4828,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.004
     },
     {
       "id": "nyj_vid_1efa4a417a71",
@@ -4380,7 +4845,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Video",
       "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -4414,7 +4879,7 @@
       "reporterId": "jets_official",
       "reporterName": "New York Jets Official",
       "author": "New York Jets Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -4448,7 +4913,7 @@
       "reporterId": "jets_official",
       "reporterName": "New York Jets Official",
       "author": "New York Jets Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -4465,7 +4930,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.0027
     },
     {
       "id": "nyj_tx_49e5c37ce5db",
@@ -4482,7 +4947,7 @@
       "reporterId": "jets_official",
       "reporterName": "New York Jets Official",
       "author": "New York Jets Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -4499,7 +4964,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0025
     },
     {
       "id": "nyj_rss_84628e44865c",
@@ -4515,7 +4980,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -4548,7 +5013,7 @@
       "reporterId": "jets_official",
       "reporterName": "newyorkjets.com Official",
       "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
+      "authorHandle": "@nyjets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",

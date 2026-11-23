@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:47:40.915Z",
+  "updatedAt": "2026-11-23T06:24:58.752Z",
   "sources": [
     {
       "label": "ESPN Giants Schedule",
@@ -11,6 +11,114 @@
     }
   ],
   "schedule": [
+    {
+      "id": "401873280",
+      "seasonType": "PRE",
+      "preseasonWeek": 2,
+      "week": -2,
+      "weekLabel": "PRE 2",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873280/vikings-giants",
+      "dateIso": "2026-08-15T17:00Z",
+      "statusDetail": "Final",
+      "statusState": "post",
+      "isLive": false,
+      "completed": true,
+      "result": "L",
+      "sfScore": 10,
+      "oppScore": 13,
+      "homeAway": "home",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
+      "opponent": {
+        "abbr": "MIN",
+        "name": "Minnesota Vikings",
+        "shortName": "Vikings",
+        "record": "7-3",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
+        "isTbd": false
+      },
+      "venue": {
+        "name": "MetLife Stadium",
+        "city": "East Rutherford",
+        "state": "NJ",
+        "country": "USA",
+        "isInternational": false,
+        "surface": "Turf"
+      },
+      "broadcast": "NFL TV",
+      "roundBadgeLabel": "Preseason"
+    },
+    {
+      "id": "401873292",
+      "seasonType": "PRE",
+      "preseasonWeek": 3,
+      "week": -1,
+      "weekLabel": "PRE 3",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873292/giants-dolphins",
+      "dateIso": "2026-08-22T20:00Z",
+      "statusDetail": "Final",
+      "statusState": "post",
+      "isLive": false,
+      "completed": true,
+      "result": "W",
+      "sfScore": 26,
+      "oppScore": 3,
+      "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
+      "opponent": {
+        "abbr": "MIA",
+        "name": "Miami Dolphins",
+        "shortName": "Dolphins",
+        "record": "1-9",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
+        "isTbd": false
+      },
+      "venue": {
+        "name": "Hard Rock Stadium",
+        "city": "Miami Gardens",
+        "state": "FL",
+        "country": "USA",
+        "isInternational": false,
+        "surface": "Turf"
+      },
+      "broadcast": "NFL TV",
+      "roundBadgeLabel": "Preseason"
+    },
+    {
+      "id": "401873303",
+      "seasonType": "PRE",
+      "preseasonWeek": 4,
+      "week": -1,
+      "weekLabel": "PRE 4",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873303/giants-jets",
+      "dateIso": "2026-08-28T23:30Z",
+      "statusDetail": "Final",
+      "statusState": "post",
+      "isLive": false,
+      "completed": true,
+      "result": "W",
+      "sfScore": 23,
+      "oppScore": 6,
+      "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
+      "opponent": {
+        "abbr": "NYJ",
+        "name": "New York Jets",
+        "shortName": "Jets",
+        "record": "3-8",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png",
+        "isTbd": false
+      },
+      "venue": {
+        "name": "MetLife Stadium",
+        "city": "East Rutherford",
+        "state": "NJ",
+        "country": "USA",
+        "isInternational": false,
+        "surface": "Turf"
+      },
+      "broadcast": "NFL TV",
+      "roundBadgeLabel": "Preseason"
+    },
     {
       "id": "401872930",
       "seasonType": "REG",
@@ -443,7 +551,7 @@
         "abbr": "SF",
         "name": "San Francisco 49ers",
         "shortName": "49ers",
-        "record": "8-1",
+        "record": "9-1",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
         "isTbd": false
       },
@@ -781,7 +889,7 @@
         "abbr": "MIN",
         "name": "Minnesota Vikings",
         "shortName": "Vikings",
-        "record": "7-2",
+        "record": "7-3",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png"
       },
       "NE": {
@@ -837,7 +945,7 @@
         "abbr": "SF",
         "name": "San Francisco 49ers",
         "shortName": "49ers",
-        "record": "8-1",
+        "record": "9-1",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png"
       },
       "TB": {
@@ -1037,172 +1145,172 @@
           "unitTitle": "Giants Offense",
           "higherIsBetter": true,
           "rank": 14,
-          "value": 46.9,
-          "displayValue": "46.9%",
-          "leagueAvg": 46.1031,
-          "leagueAvgDisplay": "46.1%",
+          "value": 46.6,
+          "displayValue": "46.6%",
+          "leagueAvg": 45.7906,
+          "leagueAvgDisplay": "45.8%",
           "leaderboard": [
             {
               "team": "SF",
               "rank": 1,
-              "val": 99.9,
-              "disp": "99.9%"
+              "val": 100,
+              "disp": "100.0%"
             },
             {
               "team": "CIN",
               "rank": 2,
-              "val": 91.4,
-              "disp": "91.4%"
+              "val": 90.8,
+              "disp": "90.8%"
             },
             {
               "team": "BUF",
               "rank": 3,
-              "val": 82.8,
-              "disp": "82.8%"
+              "val": 82.2,
+              "disp": "82.2%"
             },
             {
               "team": "JAX",
               "rank": 4,
-              "val": 80.3,
-              "disp": "80.3%"
+              "val": 79.8,
+              "disp": "79.8%"
             },
             {
               "team": "DAL",
               "rank": 5,
-              "val": 79.4,
-              "disp": "79.4%"
+              "val": 78.9,
+              "disp": "78.9%"
             },
             {
               "team": "DET",
               "rank": 6,
-              "val": 73.4,
-              "disp": "73.4%"
+              "val": 72.9,
+              "disp": "72.9%"
             },
             {
               "team": "KC",
               "rank": 7,
-              "val": 72.5,
-              "disp": "72.5%"
+              "val": 72.1,
+              "disp": "72.1%"
             },
             {
               "team": "CHI",
               "rank": 8,
-              "val": 64.9,
-              "disp": "64.9%"
+              "val": 64.6,
+              "disp": "64.6%"
             },
             {
               "team": "LAR",
               "rank": 9,
-              "val": 63.2,
-              "disp": "63.2%"
+              "val": 62.8,
+              "disp": "62.8%"
             },
             {
               "team": "HOU",
               "rank": 10,
-              "val": 56,
-              "disp": "56.0%"
+              "val": 55.6,
+              "disp": "55.6%"
             },
             {
               "team": "CAR",
               "rank": 11,
-              "val": 51.8,
-              "disp": "51.8%"
+              "val": 51.5,
+              "disp": "51.5%"
             },
             {
               "team": "LV",
               "rank": 12,
-              "val": 49.1,
-              "disp": "49.1%"
+              "val": 48.7,
+              "disp": "48.7%"
             },
             {
               "team": "NE",
               "rank": 13,
-              "val": 48.4,
-              "disp": "48.4%"
+              "val": 48.2,
+              "disp": "48.2%"
             },
             {
               "team": "NYG",
               "rank": 14,
-              "val": 46.9,
-              "disp": "46.9%"
+              "val": 46.6,
+              "disp": "46.6%"
             },
             {
               "team": "GB",
               "rank": 15,
-              "val": 44.9,
-              "disp": "44.9%"
+              "val": 44.7,
+              "disp": "44.7%"
             },
             {
               "team": "BAL",
               "rank": 16,
-              "val": 42.5,
-              "disp": "42.5%"
+              "val": 42.3,
+              "disp": "42.3%"
             },
             {
               "team": "SEA",
               "rank": 17,
-              "val": 41.5,
-              "disp": "41.5%"
+              "val": 41.3,
+              "disp": "41.3%"
             },
             {
               "team": "NO",
               "rank": 18,
-              "val": 39.7,
-              "disp": "39.7%"
+              "val": 39.4,
+              "disp": "39.4%"
             },
             {
               "team": "WAS",
               "rank": 19,
-              "val": 37.6,
-              "disp": "37.6%"
+              "val": 37.4,
+              "disp": "37.4%"
             },
             {
               "team": "PIT",
               "rank": 20,
-              "val": 37.1,
-              "disp": "37.1%"
+              "val": 36.9,
+              "disp": "36.9%"
             },
             {
               "team": "DEN",
               "rank": 21,
-              "val": 33.6,
-              "disp": "33.6%"
+              "val": 33.4,
+              "disp": "33.4%"
             },
             {
               "team": "NYJ",
               "rank": 22,
-              "val": 32.7,
-              "disp": "32.7%"
+              "val": 32.5,
+              "disp": "32.5%"
             },
             {
               "team": "TB",
               "rank": 23,
-              "val": 29.7,
-              "disp": "29.7%"
+              "val": 29.5,
+              "disp": "29.5%"
             },
             {
               "team": "CLE",
               "rank": 24,
-              "val": 27.8,
-              "disp": "27.8%"
+              "val": 27.6,
+              "disp": "27.6%"
             },
             {
               "team": "ATL",
               "rank": 25,
-              "val": 27.2,
-              "disp": "27.2%"
+              "val": 27,
+              "disp": "27.0%"
             },
             {
               "team": "TEN",
               "rank": 26,
-              "val": 24.1,
-              "disp": "24.1%"
+              "val": 24,
+              "disp": "24.0%"
             },
             {
               "team": "ARI",
               "rank": 27,
-              "val": 22.4,
-              "disp": "22.4%"
+              "val": 22.3,
+              "disp": "22.3%"
             },
             {
               "team": "MIA",
@@ -1213,20 +1321,20 @@
             {
               "team": "IND",
               "rank": 29,
-              "val": 19.4,
-              "disp": "19.4%"
+              "val": 19.3,
+              "disp": "19.3%"
             },
             {
               "team": "MIN",
               "rank": 30,
-              "val": 18.2,
-              "disp": "18.2%"
+              "val": 16.2,
+              "disp": "16.2%"
             },
             {
               "team": "PHI",
               "rank": 31,
-              "val": 11.6,
-              "disp": "11.6%"
+              "val": 11.5,
+              "disp": "11.5%"
             },
             {
               "team": "LAC",
@@ -1245,20 +1353,20 @@
             "rank": 15,
             "value": 22.6,
             "displayValue": "22.6",
-            "leagueAvg": 23.1912,
+            "leagueAvg": 23.1731,
             "leagueAvgDisplay": "23.2",
             "leaderboard": [
               {
-                "team": "BUF",
+                "team": "SF",
                 "rank": 1,
-                "val": 31.3,
-                "disp": "31.3"
+                "val": 31.6,
+                "disp": "31.6"
               },
               {
-                "team": "SF",
+                "team": "BUF",
                 "rank": 2,
-                "val": 31.2222,
-                "disp": "31.2"
+                "val": 31.3,
+                "disp": "31.3"
               },
               {
                 "team": "CIN",
@@ -1399,22 +1507,22 @@
                 "disp": "19.7"
               },
               {
-                "team": "MIN",
-                "rank": 26,
-                "val": 19.5556,
-                "disp": "19.6"
-              },
-              {
                 "team": "IND",
-                "rank": 27,
+                "rank": 26,
                 "val": 19.1818,
                 "disp": "19.2"
               },
               {
                 "team": "CLE",
-                "rank": 28,
+                "rank": 27,
                 "val": 18.8,
                 "disp": "18.8"
+              },
+              {
+                "team": "MIN",
+                "rank": 28,
+                "val": 18.6,
+                "disp": "18.6"
               },
               {
                 "team": "ARI",
@@ -4753,10 +4861,10 @@
           "unitTitle": "Giants Defense",
           "higherIsBetter": true,
           "rank": 9,
-          "value": 51.5,
-          "displayValue": "51.5%",
-          "leagueAvg": 43.2094,
-          "leagueAvgDisplay": "43.2%",
+          "value": 54,
+          "displayValue": "54.0%",
+          "leagueAvg": 45.125,
+          "leagueAvgDisplay": "45.1%",
           "leaderboard": [
             {
               "team": "MIN",
@@ -4767,176 +4875,176 @@
             {
               "team": "SEA",
               "rank": 2,
-              "val": 81.3,
-              "disp": "81.3%"
+              "val": 84.9,
+              "disp": "84.9%"
             },
             {
               "team": "LAR",
               "rank": 3,
-              "val": 80.1,
-              "disp": "80.1%"
+              "val": 83.3,
+              "disp": "83.3%"
             },
             {
               "team": "JAX",
               "rank": 4,
-              "val": 75.9,
-              "disp": "75.9%"
+              "val": 79.7,
+              "disp": "79.7%"
             },
             {
               "team": "TB",
               "rank": 5,
-              "val": 74.5,
-              "disp": "74.5%"
+              "val": 77.1,
+              "disp": "77.1%"
             },
             {
               "team": "KC",
               "rank": 6,
-              "val": 71.8,
-              "disp": "71.8%"
+              "val": 75.7,
+              "disp": "75.7%"
             },
             {
               "team": "CHI",
               "rank": 7,
-              "val": 64.7,
-              "disp": "64.7%"
+              "val": 67.6,
+              "disp": "67.6%"
             },
             {
               "team": "PIT",
               "rank": 8,
-              "val": 53.9,
-              "disp": "53.9%"
+              "val": 56.8,
+              "disp": "56.8%"
             },
             {
               "team": "NYG",
               "rank": 9,
-              "val": 51.5,
-              "disp": "51.5%"
+              "val": 54,
+              "disp": "54.0%"
             },
             {
               "team": "BUF",
               "rank": 10,
-              "val": 50.1,
-              "disp": "50.1%"
+              "val": 52.7,
+              "disp": "52.7%"
             },
             {
               "team": "GB",
               "rank": 11,
-              "val": 49.8,
-              "disp": "49.8%"
-            },
-            {
-              "team": "CLE",
-              "rank": 12,
-              "val": 47.7,
-              "disp": "47.7%"
+              "val": 52.1,
+              "disp": "52.1%"
             },
             {
               "team": "SF",
-              "rank": 13,
-              "val": 47.1,
-              "disp": "47.1%"
+              "rank": 12,
+              "val": 52.1,
+              "disp": "52.1%"
             },
             {
-              "team": "HOU",
-              "rank": 14,
-              "val": 44.1,
-              "disp": "44.1%"
+              "team": "CLE",
+              "rank": 13,
+              "val": 50,
+              "disp": "50.0%"
             },
             {
               "team": "DEN",
+              "rank": 14,
+              "val": 46.4,
+              "disp": "46.4%"
+            },
+            {
+              "team": "HOU",
               "rank": 15,
-              "val": 43.8,
-              "disp": "43.8%"
+              "val": 46.3,
+              "disp": "46.3%"
             },
             {
               "team": "CIN",
               "rank": 16,
-              "val": 40.8,
-              "disp": "40.8%"
+              "val": 43.2,
+              "disp": "43.2%"
             },
             {
               "team": "DET",
               "rank": 17,
-              "val": 39,
-              "disp": "39.0%"
+              "val": 41.2,
+              "disp": "41.2%"
             },
             {
               "team": "LAC",
               "rank": 18,
-              "val": 37.8,
-              "disp": "37.8%"
+              "val": 38.7,
+              "disp": "38.7%"
             },
             {
               "team": "IND",
               "rank": 19,
-              "val": 33.3,
-              "disp": "33.3%"
+              "val": 34.1,
+              "disp": "34.1%"
             },
             {
               "team": "BAL",
               "rank": 20,
-              "val": 31.8,
-              "disp": "31.8%"
+              "val": 32.7,
+              "disp": "32.7%"
             },
             {
               "team": "WAS",
               "rank": 21,
-              "val": 31.1,
-              "disp": "31.1%"
+              "val": 32.6,
+              "disp": "32.6%"
             },
             {
               "team": "ATL",
               "rank": 22,
-              "val": 30.7,
-              "disp": "30.7%"
+              "val": 31.9,
+              "disp": "31.9%"
             },
             {
-              "team": "CAR",
+              "team": "PHI",
               "rank": 23,
-              "val": 29.6,
-              "disp": "29.6%"
+              "val": 31.2,
+              "disp": "31.2%"
             },
             {
-              "team": "NYJ",
+              "team": "NE",
               "rank": 24,
-              "val": 29.5,
-              "disp": "29.5%"
+              "val": 30.9,
+              "disp": "30.9%"
             },
             {
               "team": "MIA",
               "rank": 25,
-              "val": 29.4,
-              "disp": "29.4%"
+              "val": 30.8,
+              "disp": "30.8%"
             },
             {
-              "team": "PHI",
+              "team": "NYJ",
               "rank": 26,
-              "val": 29.4,
-              "disp": "29.4%"
+              "val": 30.8,
+              "disp": "30.8%"
             },
             {
-              "team": "NE",
+              "team": "CAR",
               "rank": 27,
-              "val": 29.2,
-              "disp": "29.2%"
+              "val": 30.5,
+              "disp": "30.5%"
             },
             {
               "team": "NO",
               "rank": 28,
-              "val": 26.7,
-              "disp": "26.7%"
+              "val": 27.9,
+              "disp": "27.9%"
             },
             {
               "team": "ARI",
               "rank": 29,
-              "val": 14.5,
-              "disp": "14.5%"
+              "val": 14.6,
+              "disp": "14.6%"
             },
             {
               "team": "TEN",
               "rank": 30,
-              "val": 11.3,
-              "disp": "11.3%"
+              "val": 11.5,
+              "disp": "11.5%"
             },
             {
               "team": "LV",
@@ -4947,8 +5055,8 @@
             {
               "team": "DAL",
               "rank": 32,
-              "val": 2.6,
-              "disp": "2.6%"
+              "val": 3,
+              "disp": "3.0%"
             }
           ]
         },
@@ -4958,17 +5066,17 @@
             "label": "Points Allowed / Game",
             "unitTitle": "Giants Defense",
             "higherIsBetter": false,
-            "rank": 11,
+            "rank": 12,
             "value": 21.4,
             "displayValue": "21.4",
-            "leagueAvg": 23.0236,
-            "leagueAvgDisplay": "23.0",
+            "leagueAvg": 23.0524,
+            "leagueAvgDisplay": "23.1",
             "leaderboard": [
               {
                 "team": "MIN",
                 "rank": 1,
-                "val": 14,
-                "disp": "14.0"
+                "val": 16.1,
+                "disp": "16.1"
               },
               {
                 "team": "KC",
@@ -5007,40 +5115,40 @@
                 "disp": "20.1"
               },
               {
-                "team": "BUF",
+                "team": "SF",
                 "rank": 8,
+                "val": 20.6,
+                "disp": "20.6"
+              },
+              {
+                "team": "BUF",
+                "rank": 9,
                 "val": 20.8,
                 "disp": "20.8"
               },
               {
                 "team": "TB",
-                "rank": 9,
+                "rank": 10,
                 "val": 20.9,
                 "disp": "20.9"
               },
               {
                 "team": "DEN",
-                "rank": 10,
+                "rank": 11,
                 "val": 21,
                 "disp": "21.0"
               },
               {
                 "team": "NYG",
-                "rank": 11,
+                "rank": 12,
                 "val": 21.4,
                 "disp": "21.4"
               },
               {
                 "team": "CIN",
-                "rank": 12,
+                "rank": 13,
                 "val": 21.4444,
                 "disp": "21.4"
-              },
-              {
-                "team": "SF",
-                "rank": 13,
-                "val": 21.7778,
-                "disp": "21.8"
               },
               {
                 "team": "CLE",
@@ -10742,8 +10850,8 @@
           "rank": 16,
           "value": 49.8,
           "displayValue": "49.8%",
-          "leagueAvg": 48.8094,
-          "leagueAvgDisplay": "48.8%",
+          "leagueAvg": 48.7344,
+          "leagueAvgDisplay": "48.7%",
           "leaderboard": [
             {
               "team": "JAX",
@@ -10760,8 +10868,8 @@
             {
               "team": "SF",
               "rank": 3,
-              "val": 85.2,
-              "disp": "85.2%"
+              "val": 87.8,
+              "disp": "87.8%"
             },
             {
               "team": "CIN",
@@ -10782,16 +10890,16 @@
               "disp": "70.3%"
             },
             {
-              "team": "MIN",
-              "rank": 7,
-              "val": 69.7,
-              "disp": "69.7%"
-            },
-            {
               "team": "DET",
-              "rank": 8,
+              "rank": 7,
               "val": 68.1,
               "disp": "68.1%"
+            },
+            {
+              "team": "MIN",
+              "rank": 8,
+              "val": 64.7,
+              "disp": "64.7%"
             },
             {
               "team": "TB",
@@ -11153,8 +11261,8 @@
             "rank": 16,
             "value": 1.2,
             "displayValue": "+1.2",
-            "leagueAvg": 0.1676,
-            "leagueAvgDisplay": "+0.2",
+            "leagueAvg": 0.1207,
+            "leagueAvgDisplay": "+0.1",
             "leaderboard": [
               {
                 "team": "JAX",
@@ -11163,25 +11271,25 @@
                 "disp": "+12.0"
               },
               {
-                "team": "KC",
+                "team": "SF",
                 "rank": 2,
+                "val": 11,
+                "disp": "+11.0"
+              },
+              {
+                "team": "KC",
+                "rank": 3,
                 "val": 10.8,
                 "disp": "+10.8"
               },
               {
                 "team": "BUF",
-                "rank": 3,
+                "rank": 4,
                 "val": 10.5,
                 "disp": "+10.5"
               },
               {
                 "team": "CIN",
-                "rank": 4,
-                "val": 9.4444,
-                "disp": "+9.4"
-              },
-              {
-                "team": "SF",
                 "rank": 5,
                 "val": 9.4444,
                 "disp": "+9.4"
@@ -11205,28 +11313,28 @@
                 "disp": "+6.1"
               },
               {
-                "team": "MIN",
-                "rank": 9,
-                "val": 5.5556,
-                "disp": "+5.6"
-              },
-              {
                 "team": "SEA",
-                "rank": 10,
+                "rank": 9,
                 "val": 4.8,
                 "disp": "+4.8"
               },
               {
                 "team": "HOU",
-                "rank": 11,
+                "rank": 10,
                 "val": 3.7,
                 "disp": "+3.7"
               },
               {
                 "team": "DEN",
-                "rank": 12,
+                "rank": 11,
                 "val": 2.6,
                 "disp": "+2.6"
+              },
+              {
+                "team": "MIN",
+                "rank": 12,
+                "val": 2.5,
+                "disp": "+2.5"
               },
               {
                 "team": "DAL",
@@ -12597,172 +12705,172 @@
         "unitTitle": "Giants Offense",
         "higherIsBetter": true,
         "rank": 14,
-        "value": 46.9,
-        "displayValue": "46.9%",
-        "leagueAvg": 46.1031,
-        "leagueAvgDisplay": "46.1%",
+        "value": 46.6,
+        "displayValue": "46.6%",
+        "leagueAvg": 45.7906,
+        "leagueAvgDisplay": "45.8%",
         "leaderboard": [
           {
             "team": "SF",
             "rank": 1,
-            "val": 99.9,
-            "disp": "99.9%"
+            "val": 100,
+            "disp": "100.0%"
           },
           {
             "team": "CIN",
             "rank": 2,
-            "val": 91.4,
-            "disp": "91.4%"
+            "val": 90.8,
+            "disp": "90.8%"
           },
           {
             "team": "BUF",
             "rank": 3,
-            "val": 82.8,
-            "disp": "82.8%"
+            "val": 82.2,
+            "disp": "82.2%"
           },
           {
             "team": "JAX",
             "rank": 4,
-            "val": 80.3,
-            "disp": "80.3%"
+            "val": 79.8,
+            "disp": "79.8%"
           },
           {
             "team": "DAL",
             "rank": 5,
-            "val": 79.4,
-            "disp": "79.4%"
+            "val": 78.9,
+            "disp": "78.9%"
           },
           {
             "team": "DET",
             "rank": 6,
-            "val": 73.4,
-            "disp": "73.4%"
+            "val": 72.9,
+            "disp": "72.9%"
           },
           {
             "team": "KC",
             "rank": 7,
-            "val": 72.5,
-            "disp": "72.5%"
+            "val": 72.1,
+            "disp": "72.1%"
           },
           {
             "team": "CHI",
             "rank": 8,
-            "val": 64.9,
-            "disp": "64.9%"
+            "val": 64.6,
+            "disp": "64.6%"
           },
           {
             "team": "LAR",
             "rank": 9,
-            "val": 63.2,
-            "disp": "63.2%"
+            "val": 62.8,
+            "disp": "62.8%"
           },
           {
             "team": "HOU",
             "rank": 10,
-            "val": 56,
-            "disp": "56.0%"
+            "val": 55.6,
+            "disp": "55.6%"
           },
           {
             "team": "CAR",
             "rank": 11,
-            "val": 51.8,
-            "disp": "51.8%"
+            "val": 51.5,
+            "disp": "51.5%"
           },
           {
             "team": "LV",
             "rank": 12,
-            "val": 49.1,
-            "disp": "49.1%"
+            "val": 48.7,
+            "disp": "48.7%"
           },
           {
             "team": "NE",
             "rank": 13,
-            "val": 48.4,
-            "disp": "48.4%"
+            "val": 48.2,
+            "disp": "48.2%"
           },
           {
             "team": "NYG",
             "rank": 14,
-            "val": 46.9,
-            "disp": "46.9%"
+            "val": 46.6,
+            "disp": "46.6%"
           },
           {
             "team": "GB",
             "rank": 15,
-            "val": 44.9,
-            "disp": "44.9%"
+            "val": 44.7,
+            "disp": "44.7%"
           },
           {
             "team": "BAL",
             "rank": 16,
-            "val": 42.5,
-            "disp": "42.5%"
+            "val": 42.3,
+            "disp": "42.3%"
           },
           {
             "team": "SEA",
             "rank": 17,
-            "val": 41.5,
-            "disp": "41.5%"
+            "val": 41.3,
+            "disp": "41.3%"
           },
           {
             "team": "NO",
             "rank": 18,
-            "val": 39.7,
-            "disp": "39.7%"
+            "val": 39.4,
+            "disp": "39.4%"
           },
           {
             "team": "WAS",
             "rank": 19,
-            "val": 37.6,
-            "disp": "37.6%"
+            "val": 37.4,
+            "disp": "37.4%"
           },
           {
             "team": "PIT",
             "rank": 20,
-            "val": 37.1,
-            "disp": "37.1%"
+            "val": 36.9,
+            "disp": "36.9%"
           },
           {
             "team": "DEN",
             "rank": 21,
-            "val": 33.6,
-            "disp": "33.6%"
+            "val": 33.4,
+            "disp": "33.4%"
           },
           {
             "team": "NYJ",
             "rank": 22,
-            "val": 32.7,
-            "disp": "32.7%"
+            "val": 32.5,
+            "disp": "32.5%"
           },
           {
             "team": "TB",
             "rank": 23,
-            "val": 29.7,
-            "disp": "29.7%"
+            "val": 29.5,
+            "disp": "29.5%"
           },
           {
             "team": "CLE",
             "rank": 24,
-            "val": 27.8,
-            "disp": "27.8%"
+            "val": 27.6,
+            "disp": "27.6%"
           },
           {
             "team": "ATL",
             "rank": 25,
-            "val": 27.2,
-            "disp": "27.2%"
+            "val": 27,
+            "disp": "27.0%"
           },
           {
             "team": "TEN",
             "rank": 26,
-            "val": 24.1,
-            "disp": "24.1%"
+            "val": 24,
+            "disp": "24.0%"
           },
           {
             "team": "ARI",
             "rank": 27,
-            "val": 22.4,
-            "disp": "22.4%"
+            "val": 22.3,
+            "disp": "22.3%"
           },
           {
             "team": "MIA",
@@ -12773,20 +12881,20 @@
           {
             "team": "IND",
             "rank": 29,
-            "val": 19.4,
-            "disp": "19.4%"
+            "val": 19.3,
+            "disp": "19.3%"
           },
           {
             "team": "MIN",
             "rank": 30,
-            "val": 18.2,
-            "disp": "18.2%"
+            "val": 16.2,
+            "disp": "16.2%"
           },
           {
             "team": "PHI",
             "rank": 31,
-            "val": 11.6,
-            "disp": "11.6%"
+            "val": 11.5,
+            "disp": "11.5%"
           },
           {
             "team": "LAC",
@@ -12804,20 +12912,20 @@
         "rank": 15,
         "value": 22.6,
         "displayValue": "22.6",
-        "leagueAvg": 23.1912,
+        "leagueAvg": 23.1731,
         "leagueAvgDisplay": "23.2",
         "leaderboard": [
           {
-            "team": "BUF",
+            "team": "SF",
             "rank": 1,
-            "val": 31.3,
-            "disp": "31.3"
+            "val": 31.6,
+            "disp": "31.6"
           },
           {
-            "team": "SF",
+            "team": "BUF",
             "rank": 2,
-            "val": 31.2222,
-            "disp": "31.2"
+            "val": 31.3,
+            "disp": "31.3"
           },
           {
             "team": "CIN",
@@ -12958,22 +13066,22 @@
             "disp": "19.7"
           },
           {
-            "team": "MIN",
-            "rank": 26,
-            "val": 19.5556,
-            "disp": "19.6"
-          },
-          {
             "team": "IND",
-            "rank": 27,
+            "rank": 26,
             "val": 19.1818,
             "disp": "19.2"
           },
           {
             "team": "CLE",
-            "rank": 28,
+            "rank": 27,
             "val": 18.8,
             "disp": "18.8"
+          },
+          {
+            "team": "MIN",
+            "rank": 28,
+            "val": 18.6,
+            "disp": "18.6"
           },
           {
             "team": "ARI",
@@ -16287,10 +16395,10 @@
         "unitTitle": "Giants Defense",
         "higherIsBetter": true,
         "rank": 9,
-        "value": 51.5,
-        "displayValue": "51.5%",
-        "leagueAvg": 43.2094,
-        "leagueAvgDisplay": "43.2%",
+        "value": 54,
+        "displayValue": "54.0%",
+        "leagueAvg": 45.125,
+        "leagueAvgDisplay": "45.1%",
         "leaderboard": [
           {
             "team": "MIN",
@@ -16301,176 +16409,176 @@
           {
             "team": "SEA",
             "rank": 2,
-            "val": 81.3,
-            "disp": "81.3%"
+            "val": 84.9,
+            "disp": "84.9%"
           },
           {
             "team": "LAR",
             "rank": 3,
-            "val": 80.1,
-            "disp": "80.1%"
+            "val": 83.3,
+            "disp": "83.3%"
           },
           {
             "team": "JAX",
             "rank": 4,
-            "val": 75.9,
-            "disp": "75.9%"
+            "val": 79.7,
+            "disp": "79.7%"
           },
           {
             "team": "TB",
             "rank": 5,
-            "val": 74.5,
-            "disp": "74.5%"
+            "val": 77.1,
+            "disp": "77.1%"
           },
           {
             "team": "KC",
             "rank": 6,
-            "val": 71.8,
-            "disp": "71.8%"
+            "val": 75.7,
+            "disp": "75.7%"
           },
           {
             "team": "CHI",
             "rank": 7,
-            "val": 64.7,
-            "disp": "64.7%"
+            "val": 67.6,
+            "disp": "67.6%"
           },
           {
             "team": "PIT",
             "rank": 8,
-            "val": 53.9,
-            "disp": "53.9%"
+            "val": 56.8,
+            "disp": "56.8%"
           },
           {
             "team": "NYG",
             "rank": 9,
-            "val": 51.5,
-            "disp": "51.5%"
+            "val": 54,
+            "disp": "54.0%"
           },
           {
             "team": "BUF",
             "rank": 10,
-            "val": 50.1,
-            "disp": "50.1%"
+            "val": 52.7,
+            "disp": "52.7%"
           },
           {
             "team": "GB",
             "rank": 11,
-            "val": 49.8,
-            "disp": "49.8%"
-          },
-          {
-            "team": "CLE",
-            "rank": 12,
-            "val": 47.7,
-            "disp": "47.7%"
+            "val": 52.1,
+            "disp": "52.1%"
           },
           {
             "team": "SF",
-            "rank": 13,
-            "val": 47.1,
-            "disp": "47.1%"
+            "rank": 12,
+            "val": 52.1,
+            "disp": "52.1%"
           },
           {
-            "team": "HOU",
-            "rank": 14,
-            "val": 44.1,
-            "disp": "44.1%"
+            "team": "CLE",
+            "rank": 13,
+            "val": 50,
+            "disp": "50.0%"
           },
           {
             "team": "DEN",
+            "rank": 14,
+            "val": 46.4,
+            "disp": "46.4%"
+          },
+          {
+            "team": "HOU",
             "rank": 15,
-            "val": 43.8,
-            "disp": "43.8%"
+            "val": 46.3,
+            "disp": "46.3%"
           },
           {
             "team": "CIN",
             "rank": 16,
-            "val": 40.8,
-            "disp": "40.8%"
+            "val": 43.2,
+            "disp": "43.2%"
           },
           {
             "team": "DET",
             "rank": 17,
-            "val": 39,
-            "disp": "39.0%"
+            "val": 41.2,
+            "disp": "41.2%"
           },
           {
             "team": "LAC",
             "rank": 18,
-            "val": 37.8,
-            "disp": "37.8%"
+            "val": 38.7,
+            "disp": "38.7%"
           },
           {
             "team": "IND",
             "rank": 19,
-            "val": 33.3,
-            "disp": "33.3%"
+            "val": 34.1,
+            "disp": "34.1%"
           },
           {
             "team": "BAL",
             "rank": 20,
-            "val": 31.8,
-            "disp": "31.8%"
+            "val": 32.7,
+            "disp": "32.7%"
           },
           {
             "team": "WAS",
             "rank": 21,
-            "val": 31.1,
-            "disp": "31.1%"
+            "val": 32.6,
+            "disp": "32.6%"
           },
           {
             "team": "ATL",
             "rank": 22,
-            "val": 30.7,
-            "disp": "30.7%"
+            "val": 31.9,
+            "disp": "31.9%"
           },
           {
-            "team": "CAR",
+            "team": "PHI",
             "rank": 23,
-            "val": 29.6,
-            "disp": "29.6%"
+            "val": 31.2,
+            "disp": "31.2%"
           },
           {
-            "team": "NYJ",
+            "team": "NE",
             "rank": 24,
-            "val": 29.5,
-            "disp": "29.5%"
+            "val": 30.9,
+            "disp": "30.9%"
           },
           {
             "team": "MIA",
             "rank": 25,
-            "val": 29.4,
-            "disp": "29.4%"
+            "val": 30.8,
+            "disp": "30.8%"
           },
           {
-            "team": "PHI",
+            "team": "NYJ",
             "rank": 26,
-            "val": 29.4,
-            "disp": "29.4%"
+            "val": 30.8,
+            "disp": "30.8%"
           },
           {
-            "team": "NE",
+            "team": "CAR",
             "rank": 27,
-            "val": 29.2,
-            "disp": "29.2%"
+            "val": 30.5,
+            "disp": "30.5%"
           },
           {
             "team": "NO",
             "rank": 28,
-            "val": 26.7,
-            "disp": "26.7%"
+            "val": 27.9,
+            "disp": "27.9%"
           },
           {
             "team": "ARI",
             "rank": 29,
-            "val": 14.5,
-            "disp": "14.5%"
+            "val": 14.6,
+            "disp": "14.6%"
           },
           {
             "team": "TEN",
             "rank": 30,
-            "val": 11.3,
-            "disp": "11.3%"
+            "val": 11.5,
+            "disp": "11.5%"
           },
           {
             "team": "LV",
@@ -16481,8 +16589,8 @@
           {
             "team": "DAL",
             "rank": 32,
-            "val": 2.6,
-            "disp": "2.6%"
+            "val": 3,
+            "disp": "3.0%"
           }
         ]
       },
@@ -16491,17 +16599,17 @@
         "label": "Points Allowed / Game",
         "unitTitle": "Giants Defense",
         "higherIsBetter": false,
-        "rank": 11,
+        "rank": 12,
         "value": 21.4,
         "displayValue": "21.4",
-        "leagueAvg": 23.0236,
-        "leagueAvgDisplay": "23.0",
+        "leagueAvg": 23.0524,
+        "leagueAvgDisplay": "23.1",
         "leaderboard": [
           {
             "team": "MIN",
             "rank": 1,
-            "val": 14,
-            "disp": "14.0"
+            "val": 16.1,
+            "disp": "16.1"
           },
           {
             "team": "KC",
@@ -16540,40 +16648,40 @@
             "disp": "20.1"
           },
           {
-            "team": "BUF",
+            "team": "SF",
             "rank": 8,
+            "val": 20.6,
+            "disp": "20.6"
+          },
+          {
+            "team": "BUF",
+            "rank": 9,
             "val": 20.8,
             "disp": "20.8"
           },
           {
             "team": "TB",
-            "rank": 9,
+            "rank": 10,
             "val": 20.9,
             "disp": "20.9"
           },
           {
             "team": "DEN",
-            "rank": 10,
+            "rank": 11,
             "val": 21,
             "disp": "21.0"
           },
           {
             "team": "NYG",
-            "rank": 11,
+            "rank": 12,
             "val": 21.4,
             "disp": "21.4"
           },
           {
             "team": "CIN",
-            "rank": 12,
+            "rank": 13,
             "val": 21.4444,
             "disp": "21.4"
-          },
-          {
-            "team": "SF",
-            "rank": 13,
-            "val": 21.7778,
-            "disp": "21.8"
           },
           {
             "team": "CLE",
@@ -22234,8 +22342,8 @@
         "rank": 16,
         "value": 49.8,
         "displayValue": "49.8%",
-        "leagueAvg": 48.8094,
-        "leagueAvgDisplay": "48.8%",
+        "leagueAvg": 48.7344,
+        "leagueAvgDisplay": "48.7%",
         "leaderboard": [
           {
             "team": "JAX",
@@ -22252,8 +22360,8 @@
           {
             "team": "SF",
             "rank": 3,
-            "val": 85.2,
-            "disp": "85.2%"
+            "val": 87.8,
+            "disp": "87.8%"
           },
           {
             "team": "CIN",
@@ -22274,16 +22382,16 @@
             "disp": "70.3%"
           },
           {
-            "team": "MIN",
-            "rank": 7,
-            "val": 69.7,
-            "disp": "69.7%"
-          },
-          {
             "team": "DET",
-            "rank": 8,
+            "rank": 7,
             "val": 68.1,
             "disp": "68.1%"
+          },
+          {
+            "team": "MIN",
+            "rank": 8,
+            "val": 64.7,
+            "disp": "64.7%"
           },
           {
             "team": "TB",
@@ -22644,8 +22752,8 @@
         "rank": 16,
         "value": 1.2,
         "displayValue": "+1.2",
-        "leagueAvg": 0.1676,
-        "leagueAvgDisplay": "+0.2",
+        "leagueAvg": 0.1207,
+        "leagueAvgDisplay": "+0.1",
         "leaderboard": [
           {
             "team": "JAX",
@@ -22654,25 +22762,25 @@
             "disp": "+12.0"
           },
           {
-            "team": "KC",
+            "team": "SF",
             "rank": 2,
+            "val": 11,
+            "disp": "+11.0"
+          },
+          {
+            "team": "KC",
+            "rank": 3,
             "val": 10.8,
             "disp": "+10.8"
           },
           {
             "team": "BUF",
-            "rank": 3,
+            "rank": 4,
             "val": 10.5,
             "disp": "+10.5"
           },
           {
             "team": "CIN",
-            "rank": 4,
-            "val": 9.4444,
-            "disp": "+9.4"
-          },
-          {
-            "team": "SF",
             "rank": 5,
             "val": 9.4444,
             "disp": "+9.4"
@@ -22696,28 +22804,28 @@
             "disp": "+6.1"
           },
           {
-            "team": "MIN",
-            "rank": 9,
-            "val": 5.5556,
-            "disp": "+5.6"
-          },
-          {
             "team": "SEA",
-            "rank": 10,
+            "rank": 9,
             "val": 4.8,
             "disp": "+4.8"
           },
           {
             "team": "HOU",
-            "rank": 11,
+            "rank": 10,
             "val": 3.7,
             "disp": "+3.7"
           },
           {
             "team": "DEN",
-            "rank": 12,
+            "rank": 11,
             "val": 2.6,
             "disp": "+2.6"
+          },
+          {
+            "team": "MIN",
+            "rank": 12,
+            "val": 2.5,
+            "disp": "+2.5"
           },
           {
             "team": "DAL",
@@ -24087,8 +24195,8 @@
       "key": "def_pts_allowed_game",
       "label": "Points Allowed / Game",
       "value": "21.4",
-      "rank": 11,
-      "leagueAvg": "23.0",
+      "rank": 12,
+      "leagueAvg": "23.1",
       "higherIsBetter": false
     },
     {
@@ -24148,11 +24256,51 @@
       "higherIsBetter": false
     },
     {
+      "key": "explosive_plays_game",
+      "label": "Explosive Plays / Game",
+      "value": "6.0",
+      "rank": 11,
+      "leagueAvg": "5.7",
+      "higherIsBetter": true
+    },
+    {
+      "key": "rush_yds_game",
+      "label": "Rushing Yards / Game",
+      "value": "112.6 yds",
+      "rank": 18,
+      "leagueAvg": "112.6 yds",
+      "higherIsBetter": true
+    },
+    {
+      "key": "def_epa_allowed_game",
+      "label": "Def. EPA Allowed / Game",
+      "value": "-0.57",
+      "rank": 9,
+      "leagueAvg": "+0.53",
+      "higherIsBetter": false
+    },
+    {
       "key": "def_sacks_game",
       "label": "Defensive Sacks / Game",
       "value": "1.89",
       "rank": 24,
       "leagueAvg": "2.38",
+      "higherIsBetter": true
+    },
+    {
+      "key": "def_tfl_game",
+      "label": "Tackles For Loss (TFL) / Gm",
+      "value": "3.89",
+      "rank": 27,
+      "leagueAvg": "4.83",
+      "higherIsBetter": true
+    },
+    {
+      "key": "def_takeaways_game",
+      "label": "Def. Takeaways / Game",
+      "value": "1.33",
+      "rank": 16,
+      "leagueAvg": "1.30",
       "higherIsBetter": true
     }
   ],
@@ -24369,7 +24517,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-23T05:41:29.496Z"
+    "fetchedAtIso": "2026-11-23T06:24:59.014Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24715,6 +24863,272 @@
         }
       ],
       "byOpponent": {
+        "MIN": {
+          "allTimeRecord": "Giants vs. Vikings",
+          "recentRecord": "2-6 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2025-12-21): MIN won NYG 13, MIN 16 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=nyg&tm2=min&yr=all",
+          "recentGames": [
+            {
+              "season": 2025,
+              "date": "2025-12-21",
+              "venue": "Home",
+              "scoreDisplay": "NYG 13, MIN 16",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772911"
+            },
+            {
+              "season": 2024,
+              "date": "2024-09-08",
+              "venue": "Home",
+              "scoreDisplay": "NYG 6, MIN 28",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671712"
+            },
+            {
+              "season": 2022,
+              "date": "2023-01-15",
+              "venue": "Away",
+              "scoreDisplay": "NYG 31, MIN 24",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401438001"
+            },
+            {
+              "season": 2022,
+              "date": "2022-12-24",
+              "venue": "Away",
+              "scoreDisplay": "NYG 24, MIN 27",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437923"
+            },
+            {
+              "season": 2019,
+              "date": "2019-10-06",
+              "venue": "Home",
+              "scoreDisplay": "NYG 10, MIN 28",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401127971"
+            },
+            {
+              "season": 2016,
+              "date": "2016-10-03",
+              "venue": "Away",
+              "scoreDisplay": "NYG 10, MIN 24",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400874677"
+            },
+            {
+              "season": 2015,
+              "date": "2015-12-27",
+              "venue": "Away",
+              "scoreDisplay": "NYG 17, MIN 49",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400791565"
+            },
+            {
+              "season": 2013,
+              "date": "2013-10-21",
+              "venue": "Home",
+              "scoreDisplay": "NYG 23, MIN 7",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/331021019"
+            }
+          ]
+        },
+        "MIA": {
+          "allTimeRecord": "Giants vs. Dolphins",
+          "recentRecord": "4-3 in last 7 meetings",
+          "lastMeetingNote": "Most recent meeting (2023-10-08): MIA won NYG 16, MIA 31 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=nyg&tm2=mia&yr=all",
+          "recentGames": [
+            {
+              "season": 2023,
+              "date": "2023-10-08",
+              "venue": "Away",
+              "scoreDisplay": "NYG 16, MIA 31",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547465"
+            },
+            {
+              "season": 2021,
+              "date": "2021-12-05",
+              "venue": "Away",
+              "scoreDisplay": "NYG 9, MIA 20",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401326516"
+            },
+            {
+              "season": 2019,
+              "date": "2019-12-15",
+              "venue": "Home",
+              "scoreDisplay": "NYG 36, MIA 20",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401128060"
+            },
+            {
+              "season": 2015,
+              "date": "2015-12-14",
+              "venue": "Away",
+              "scoreDisplay": "NYG 31, MIA 24",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400791641"
+            },
+            {
+              "season": 2011,
+              "date": "2011-10-30",
+              "venue": "Home",
+              "scoreDisplay": "NYG 20, MIA 17",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/311030019"
+            },
+            {
+              "season": 2007,
+              "date": "2007-10-28",
+              "venue": "Neutral",
+              "scoreDisplay": "NYG 13, MIA 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/271028015"
+            },
+            {
+              "season": 2003,
+              "date": "2003-10-05",
+              "venue": "Home",
+              "scoreDisplay": "NYG 10, MIA 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/231005019"
+            }
+          ]
+        },
+        "NYJ": {
+          "allTimeRecord": "Giants vs. Jets",
+          "recentRecord": "4-3 in last 7 meetings",
+          "lastMeetingNote": "Most recent meeting (2023-10-29): NYJ won NYG 10, NYJ 13 in OT (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=nyg&tm2=nyj&yr=all",
+          "recentGames": [
+            {
+              "season": 2023,
+              "date": "2023-10-29",
+              "venue": "Home",
+              "scoreDisplay": "NYG 10, NYJ 13",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547498"
+            },
+            {
+              "season": 2019,
+              "date": "2019-11-10",
+              "venue": "Away",
+              "scoreDisplay": "NYG 27, NYJ 34",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401127952"
+            },
+            {
+              "season": 2015,
+              "date": "2015-12-06",
+              "venue": "Home",
+              "scoreDisplay": "NYG 20, NYJ 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400791572"
+            },
+            {
+              "season": 2011,
+              "date": "2011-12-24",
+              "venue": "Away",
+              "scoreDisplay": "NYG 29, NYJ 14",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/311224020"
+            },
+            {
+              "season": 2007,
+              "date": "2007-10-07",
+              "venue": "Home",
+              "scoreDisplay": "NYG 35, NYJ 24",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/271007019"
+            },
+            {
+              "season": 2003,
+              "date": "2003-11-02",
+              "venue": "Away",
+              "scoreDisplay": "NYG 31, NYJ 28",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/231102020"
+            },
+            {
+              "season": 1999,
+              "date": "1999-12-05",
+              "venue": "Home",
+              "scoreDisplay": "NYG 41, NYJ 28",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/191205019"
+            }
+          ]
+        },
         "DAL": {
           "allTimeRecord": "Giants vs. Cowboys",
           "recentRecord": "3-5 in last 8 meetings",

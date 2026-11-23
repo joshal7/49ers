@@ -398,8 +398,8 @@ export function optimizeImageUrlForSlot(rawUrl = '', slot = 'thumb') {
   return { src: clean, fallbackSrc: '' };
 }
 
-export function buildOptimizedTeamLogo(abbr = 'SF', slot = 'logo') {
-  const clean = String(abbr || 'SF').toUpperCase().trim();
+export function buildOptimizedTeamLogo(abbr = '', slot = 'logo') {
+  const clean = String(abbr || getActiveTeamConfig()?.abbr || 'SF').toUpperCase().trim();
   const slug = TEAM_LOGO_SLUGS[clean] || clean.toLowerCase();
   const raw = `https://a.espncdn.com/i/teamlogos/nfl/500/${encodeURIComponent(slug)}.png`;
   return optimizeImageUrlForSlot(raw, slot);
@@ -645,10 +645,18 @@ function classifyTeamEmblemTag(text = '', author = '') {
   const activeTeam = getActiveTeamConfig();
   const hay = `${text} ${author}`;
   const coaches = activeTeam?.coachesSeed || {};
-  const coachNames = [coaches.hc, coaches.oc, coaches.dc]
-    .filter(Boolean)
-    .map(n => String(n).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  const gmName = coaches.gm ? String(coaches.gm).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : '';
+  const extractCoachPatterns = names =>
+    names
+      .filter(Boolean)
+      .flatMap(n => {
+        const clean = String(n).trim();
+        const last = clean.split(/\s+/).slice(-1)[0] || '';
+        const out = [clean.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')];
+        if (last.length >= 5) out.push(last.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+        return out;
+      });
+  const coachNames = extractCoachPatterns([coaches.hc, coaches.oc, coaches.dc]);
+  const gmNames = extractCoachPatterns([coaches.gm]);
   const coachRe = new RegExp(
     `\\b(?:${[...coachNames, ...(activeTeam?.abbr === 'SF' ? ['kyle shanahan', 'shanahan', 'raheem morris', 'klay kubiak', 'kris kocurek', 'chris foerster'] : []), 'coach', 'podium', 'presser'].join('|')})\\b`,
     'i'
@@ -657,7 +665,7 @@ function classifyTeamEmblemTag(text = '', author = '') {
     return 'COACH';
   }
   const gmRe = new RegExp(
-    `\\b(?:${[...(gmName ? [gmName] : []), ...(activeTeam?.abbr === 'SF' ? ['john lynch', 'lynch'] : []), 'front office', 'cap space', 'salary cap', 'trade deadline', 'draft'].join('|')})\\b`,
+    `\\b(?:${[...gmNames, ...(activeTeam?.abbr === 'SF' ? ['john lynch', 'lynch'] : []), 'front office', 'cap space', 'salary cap', 'trade deadline', 'draft'].join('|')})\\b`,
     'i'
   );
   if (gmRe.test(hay)) {

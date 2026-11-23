@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T03:47:25.603Z",
+  "updatedAt": "2026-11-23T06:24:55.555Z",
   "windowDays": 7,
-  "totalEpisodes": 32,
+  "totalEpisodes": 31,
   "shows": [
     {
       "id": "cowboys_locked_on_cowboys",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/3e3416/feeds.simplecast.com/4NoEmSg7",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-cowboys-daily-podcast-on-the-dallas-cowboys/id1151519475?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/8a/b2/65/8ab2655d-bb8d-f9aa-3e51-32812fe16309/mza_3488372169603760881.jpg/600x600bb.jpg",
-      "episodeCount7d": 9
+      "episodeCount7d": 8
     },
     {
       "id": "cowboys_dallas_cowboys_podcasts",
@@ -672,26 +672,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/talkin-cowboys/id213508091?uo=4",
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/daa09c7f-6c6b-44bd-b906-aeac01489de7/f8250829-ef85-42cf-90ff-aeac01489e03/podcast.rss",
       "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/daa09c7f-6c6b-44bd-b906-aeac01489de7/e8199829-33d9-4b62-aec7-b5040106f9a9/audio.mp3?utm_source=Podcast&in_playlist=f8250829-ef85-42cf-90ff-aeac01489e03"
-    },
-    {
-      "id": "pod_cowboys_locked_on_cowboys_1000802175479",
-      "trackId": 1000802175479,
-      "collectionId": 1151519475,
-      "showId": "cowboys_locked_on_cowboys",
-      "showName": "Locked On Cowboys",
-      "showFullTitle": "Locked On Cowboys - Daily Podcast On The Dallas Cowboys",
-      "hosts": "Landon McCool, Marcus Mosher, Locked On Podcast Network",
-      "network": "Landon McCool, Marcus Mosher, Locked On Podcast Network",
-      "title": "TERRIBLE: Dallas Cowboys Have An ALL-TIME BAD Performance vs. 49ers | Any Silver Linings From Loss?",
-      "summary": "The Dallas Cowboys nearly outgun the San Francisco 49ers, but a historic defensive collapse turns a competitive game into a 46-40 loss. Can Dallas fix its coaching crisis before the season slips away? Marcus Mosher and Landon McCool break down Dak Prescott’s 343-yard, five-t",
-      "publishedAt": "2026-11-16T04:06:06.000Z",
-      "durationMinutes": 28,
-      "durationDisplay": "28 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/9f/83/8f/9f838f21-8de1-5659-c641-8462afce8a4c/mza_14368543137286904098.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/terrible-dallas-cowboys-have-an-all-time-bad/id1151519475?i=1000802175479&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-cowboys-daily-podcast-on-the-dallas-cowboys/id1151519475?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/3e3416/feeds.simplecast.com/4NoEmSg7",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/3e3416/lockedon.simplecastaudio.com/2323c1f1-284a-42c4-972d-4a4a829eac66/episodes/7135ca6b-9c0b-4c3b-8eb5-41c4459fe8b0/audio/128/default.mp3?aid=rss_feed&awCollectionId=2323c1f1-284a-42c4-972d-4a4a829eac66&awEpisodeId=7135ca6b-9c0b-4c3b-8eb5-41c4459fe8b0&feed=4NoEmSg7"
     }
   ]
 }

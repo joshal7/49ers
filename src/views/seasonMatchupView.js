@@ -51,6 +51,7 @@ import {
   BIG_BOARD_OFFENSE_POSITIONS,
   BIG_BOARD_DEFENSE_POSITIONS,
   BIG_BOARD_RANGE_OPTIONS,
+  getBigBoardRangeOptions,
   BIG_BOARD_AGREEMENT_OPTIONS,
   formatShortBoardDate,
   queryBigBoardProspects
@@ -220,9 +221,12 @@ function formatOppImportanceTag(op) {
 
 function renderGameDayRosterCard(
   gameDayModel,
-  { is49ers = false, asSubcard = false, teamName = '49ers', teamAbbr = 'SF', teamLogoUrl = null } = {}
+  { is49ers = false, asSubcard = false, teamName = '', teamAbbr = '', teamLogoUrl = null } = {}
 ) {
   if (!gameDayModel?.isActive) return '';
+  const fallbackTeam = getActiveTeamConfig();
+  teamName = teamName || fallbackTeam.nickname || 'Team';
+  teamAbbr = teamAbbr || fallbackTeam.abbr || 'NFL';
 
   const inactives = gameDayModel.inactives || [];
   const activesByUnit = gameDayModel.activesByUnit || {
@@ -903,7 +907,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
     <section class="card" id="opponentHealthSection">
       <div class="card-header">
         <div class="card-header-left">
-          ${renderTeamLogoHtml(um.oppAbbr || 'LV', um.oppLogoUrl, 28)}
+          ${renderTeamLogoHtml(um.oppAbbr || 'OPP', um.oppLogoUrl, 28)}
           <div class="card-title-group">
             <h3 class="card-title">${esc(um.oppName)} Health</h3>
           </div>
@@ -1232,7 +1236,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
               <div class="card-eyebrow">Coaching Matchup</div>
               <h3 class="card-title">${escJargon(um.coachingMatchup?.headline, { maxTerms: 12, maxPlayers: 0, seenKeys: seenCoachJargon })}</h3>
             </div>
-            ${aiDatePt ? `<span class="badge badge-gold mono" data-daily-ai-matchup-badge title="Refreshed daily (${esc(aiDatePt)} PT)">Daily AI Brief</span>` : ''}
+            ${aiDatePt ? `<span class="badge badge-gold mono" data-daily-ai-matchup-badge title="Refreshed daily (${esc(aiDatePt)})">Daily AI Brief</span>` : ''}
           </div>
           <p class="coaching-thesis-copy">${escJargon(um.coachingMatchup?.summary, { maxTerms: 20, maxPlayers: 0, seenKeys: seenCoachJargon })}</p>
           <ul class="brief-bullets coaching-bullets">
@@ -1439,7 +1443,7 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
           <div class="card-icon-badge" aria-hidden="true">${iconSvg('heartPulse', 18)}</div>
           <div class="card-title-group">
             <div class="card-eyebrow">${jargonTerm('DNP', 'dnp')} · ${jargonTerm('LP', 'lp')} · ${jargonTerm('FP', 'fp')}</div>
-            <h2 class="card-title">Week ${h.week || 9} Injury Report</h2>
+            <h2 class="card-title">${h.week ? `Week ${esc(String(h.week))} ` : 'Weekly '}Injury Report</h2>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
@@ -1542,7 +1546,7 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
     </section>
 
     <section class="card" id="injuredReserveCard">
-      <div class="card-eyebrow">Week ${h.byeWeek || 8} Bye Excluded</div>
+      <div class="card-eyebrow">${h.byeWeek ? `Week ${esc(String(h.byeWeek))} Bye Excluded` : 'Bye Week Excluded'}</div>
       <h3 class="card-title" style="margin-bottom:8px">Injured Reserve (${(h.irAndReserveTracker || []).length})</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${(h.irAndReserveTracker || [])
@@ -2482,7 +2486,7 @@ function renderScheduleGameRowHtml(g, { isCurrentGame = false } = {}) {
       <div class="inline-icon-meta" style="margin-top:4px">
         ${iconSvg('stadium', 13)}
         <span>${esc(g.venue?.name || 'Venue TBD')}${venueCityPart}${venueSurfacePart}
-        ${g.spreadLineSf != null && !g.completed ? ` • Line: <strong class="mono">SF ${g.spreadLineSf > 0 ? '+' : ''}${g.spreadLineSf}</strong>` : ''}</span>
+        ${g.spreadLineSf != null && !g.completed ? ` • Line: <strong class="mono">${esc(getActiveTeamConfig().abbr)} ${g.spreadLineSf > 0 ? '+' : ''}${g.spreadLineSf}</strong>` : ''}</span>
       </div>
       ${
         g.venue?.internationalNote
@@ -2800,7 +2804,7 @@ function renderLensRankCellHtml(lensObj) {
 function renderBigBoardProspectItemHtml(
   b,
   {
-    sfPickOverall = 31,
+    sfPickOverall = null,
     activeLens = 'consensus',
     mockSitesByKey = null,
     isOpen = false
@@ -2820,7 +2824,8 @@ function renderBigBoardProspectItemHtml(
   const consBadgeCls =
     consRank <= 12 ? 'badge-positive' : consRank <= 32 ? 'badge-gold' : 'badge-neutral';
 
-  const inSfRange = consRank >= Math.max(1, sfPickOverall - 11) && consRank <= sfPickOverall + 14;
+  const hasPickWindow = Number.isFinite(Number(sfPickOverall)) && Number(sfPickOverall) > 0;
+  const inSfRange = hasPickWindow && consRank >= Math.max(1, Number(sfPickOverall) - 11) && consRank <= Number(sfPickOverall) + 14;
   const spreadVal = b.spread;
   const spreadCls =
     spreadVal === null
@@ -3046,7 +3051,7 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
   const dp = appData?.seasonal?.draftPrep2027 || {};
   const seasonYr = Number(appData?.meta?.seasonYear) || 2026;
   const nextDraftYr = Number(dp.draftYear) || seasonYr + 1;
-  const sfFirstPickOverall = Number(dp.pickInventory?.[0]?.projectedOverall) || 31;
+  const sfFirstPickOverall = Number(dp.pickInventory?.[0]?.projectedOverall) || null;
 
   // 1. Resolve 49ers First-Pick Mock Draft Database (1-month in-season vs 1-week post-elimination)
   const mockDb = resolveFirstPickMockDatabase(dp.firstPickMockDatabase || [], {
@@ -3433,7 +3438,7 @@ function renderDraftPrepAndCombine(appData, opts = {}) {
           <div class="bb-drawer-group">
             <div class="bb-drawer-label">Draft Range &amp; Capital Tier</div>
             <div class="bb-drawer-chips">
-              ${BIG_BOARD_RANGE_OPTIONS.map(ro => `
+              ${getBigBoardRangeOptions().map(ro => `
                 <button type="button" class="pill-btn big-board-pos-pill ${boardQuery.range === ro.key ? 'active' : ''}"
                         data-action="set-big-board-range" data-range="${ro.key}">
                   ${esc(ro.label)}

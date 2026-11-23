@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T03:49:30.105Z",
+  "updatedAt": "2026-11-23T06:25:11.547Z",
   "windowDays": 7,
-  "totalEpisodes": 11,
+  "totalEpisodes": 13,
   "shows": [
     {
       "id": "panthers_locked_on_panthers",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/1d/a1/17/1da1178e-87ed-440c-a844-2a2471ca7a8f/mza_4393349406579144163.jpg/600x600bb.jpg",
-      "episodeCount7d": 9
+      "episodeCount7d": 8
     },
     {
       "id": "panthers_panthers_playbook",
@@ -26,6 +26,18 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/panthers-playbook/id1697162650?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/0c/37/09/0c37094d-1056-f0cd-c7f0-2d7e2756f82a/mza_7731964394525295609.png/600x600bb.jpg",
       "episodeCount7d": 2
+    },
+    {
+      "id": "panthers_bleav_in_carolina_panthers",
+      "collectionId": 1515076603,
+      "name": "Bleav in Panthers",
+      "fullTitle": "Bleav in Carolina Panthers",
+      "hosts": "Bleav Network",
+      "network": "Bleav",
+      "feedUrl": "https://feeds.simplecast.com/heiTBv_K",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/bleav-in-carolina-panthers/id1515076603?uo=4",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/db/ce/4a/dbce4a87-7aa0-ea42-e707-b20fa4fda730/mza_14263913440936147916.jpg/600x600bb.jpg",
+      "episodeCount7d": 3
     }
   ],
   "episodes": [
@@ -48,6 +60,26 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
       "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/a57c8984-5f1d-4c47-8308-8975ae0249b2/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=a57c8984-5f1d-4c47-8308-8975ae0249b2&feed=3JTeh8Y2"
+    },
+    {
+      "id": "pod_panthers_bleav_in_carolina_panthers_1000803487577",
+      "trackId": 1000803487577,
+      "collectionId": 1515076603,
+      "showId": "panthers_bleav_in_carolina_panthers",
+      "showName": "Bleav in Panthers",
+      "showFullTitle": "Bleav in Carolina Panthers",
+      "hosts": "Bleav Network",
+      "network": "Bleav",
+      "title": "Panthers DEFEAT Ravens 35-33, LIVE Postgame Reaction Show",
+      "summary": "Hosted by Jonathan Stewart and Desmond Johnson The Carolina Panthers beat the Baltimore Ravens 35–33 in a Week 11 comeback that featured seven lead changes. On the November 22, 2026 episode of Bleav in Panthers, former Panthers running back Jonathan Stewart and co-host Desmo",
+      "publishedAt": "2026-11-22T23:41:00.000Z",
+      "durationMinutes": 55,
+      "durationDisplay": "55 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/db/ce/4a/dbce4a87-7aa0-ea42-e707-b20fa4fda730/mza_14263913440936147916.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/panthers-defeat-ravens-35-33-live-postgame-reaction-show/id1515076603?i=1000803487577&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/bleav-in-carolina-panthers/id1515076603?uo=4",
+      "feedUrl": "https://feeds.simplecast.com/heiTBv_K",
+      "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/1385/injector.simplecastaudio.com/92fae91c-74fb-45cd-af61-ad255fe2bc9f/episodes/bae5f6f6-580f-4158-a2a3-d1e343207373/audio/128/default.mp3?aid=rss_feed&awCollectionId=92fae91c-74fb-45cd-af61-ad255fe2bc9f&awEpisodeId=bae5f6f6-580f-4158-a2a3-d1e343207373&feed=heiTBv_K"
     },
     {
       "id": "pod_panthers_panthers_playbook_1000803482458",
@@ -210,6 +242,46 @@
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/94bc9905-18f6-42f2-b2a7-6d505b7d572d/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=94bc9905-18f6-42f2-b2a7-6d505b7d572d&feed=3JTeh8Y2"
     },
     {
+      "id": "pod_panthers_bleav_in_carolina_panthers_1000802582249",
+      "trackId": 1000802582249,
+      "collectionId": 1515076603,
+      "showId": "panthers_bleav_in_carolina_panthers",
+      "showName": "Bleav in Panthers",
+      "showFullTitle": "Bleav in Carolina Panthers",
+      "hosts": "Bleav Network",
+      "network": "Bleav",
+      "title": "Panthers vs Ravens Preview | Can Panthers Make It Two In a Row?",
+      "summary": "Desmond Johnson and Jonathan Stewart break down the Carolina Panthers' recent performance, analyzing the team's evolving offensive identity and defensive improvements. They discuss key player contributions, upcoming schedule challenges, and the potential impact of returning ",
+      "publishedAt": "2026-11-17T19:35:00.000Z",
+      "durationMinutes": 34,
+      "durationDisplay": "34 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/e6/f0/a9/e6f0a959-bf08-a3f0-2ce5-e4e0269218c0/mza_8684086409621718036.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/panthers-vs-ravens-preview-can-panthers-make-it-two-in-a-row/id1515076603?i=1000802582249&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/bleav-in-carolina-panthers/id1515076603?uo=4",
+      "feedUrl": "https://feeds.simplecast.com/heiTBv_K",
+      "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/1385/injector.simplecastaudio.com/92fae91c-74fb-45cd-af61-ad255fe2bc9f/episodes/1a3494b1-a5cc-4bab-b450-d73d0e03f1e6/audio/128/default.mp3?aid=rss_feed&awCollectionId=92fae91c-74fb-45cd-af61-ad255fe2bc9f&awEpisodeId=1a3494b1-a5cc-4bab-b450-d73d0e03f1e6&feed=heiTBv_K"
+    },
+    {
+      "id": "pod_panthers_bleav_in_carolina_panthers_1000802496907",
+      "trackId": 1000802496907,
+      "collectionId": 1515076603,
+      "showId": "panthers_bleav_in_carolina_panthers",
+      "showName": "Bleav in Panthers",
+      "showFullTitle": "Bleav in Carolina Panthers",
+      "hosts": "Bleav Network",
+      "network": "Bleav",
+      "title": "Panthers SURVIVE Saints on Walk Off FG, 20-17",
+      "summary": "Desmond Johnson and Jonathan Stewart break down the Carolina Panthers' recent performance, analyzing the team's evolving offensive identity and defensive improvements. They discuss key player contributions, upcoming schedule challenges, and the potential impact of returning ",
+      "publishedAt": "2026-11-17T14:50:00.000Z",
+      "durationMinutes": 42,
+      "durationDisplay": "42 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/b4/21/10/b42110d6-67bd-a954-a044-7d9b148b8536/mza_15862857640572274042.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/panthers-survive-saints-on-walk-off-fg-20-17/id1515076603?i=1000802496907&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/bleav-in-carolina-panthers/id1515076603?uo=4",
+      "feedUrl": "https://feeds.simplecast.com/heiTBv_K",
+      "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/1385/injector.simplecastaudio.com/92fae91c-74fb-45cd-af61-ad255fe2bc9f/episodes/80fe424b-9f16-4122-b812-f3fb74479861/audio/128/default.mp3?aid=rss_feed&awCollectionId=92fae91c-74fb-45cd-af61-ad255fe2bc9f&awEpisodeId=80fe424b-9f16-4122-b812-f3fb74479861&feed=heiTBv_K"
+    },
+    {
       "id": "pod_panthers_locked_on_panthers_1000802312549",
       "trackId": 1000802312549,
       "collectionId": 1150966073,
@@ -228,26 +300,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
       "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/0849beb3-f610-485f-b679-8a8a0704d290/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=0849beb3-f610-485f-b679-8a8a0704d290&feed=3JTeh8Y2"
-    },
-    {
-      "id": "pod_panthers_locked_on_panthers_1000802173865",
-      "trackId": 1000802173865,
-      "collectionId": 1150966073,
-      "showId": "panthers_locked_on_panthers",
-      "showName": "Locked On Panthers",
-      "showFullTitle": "Locked On Panthers - Daily Podcast On The Carolina Panthers",
-      "hosts": "Locked On Podcast Network, Julian Council",
-      "network": "Locked On Podcast Network, Julian Council",
-      "title": "PANTHERS SQUAD SHOW: Carolina Takes Control of NFC South",
-      "summary": "Carolina Panthers seize control of the NFC South as Chuba Hubbard dominates in a clutch 20-17 win over the New Orleans Saints. Can Bryce Young and this surging squad sustain their momentum for a playoff push? The conversation focused on Hubbard’s versatility—totaling 92 rush",
-      "publishedAt": "2026-11-16T04:00:00.000Z",
-      "durationMinutes": 62,
-      "durationDisplay": "62 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/45/21/7a/45217afa-de51-468f-7ffe-986126f9429f/mza_16437092304842148540.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/panthers-squad-show-carolina-takes-control-of-nfc-south/id1150966073?i=1000802173865&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/6a1dd217-2137-4b3c-90f8-7a7f7ee3a125/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=6a1dd217-2137-4b3c-90f8-7a7f7ee3a125&feed=3JTeh8Y2"
     }
   ]
 }

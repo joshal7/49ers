@@ -815,14 +815,17 @@ async function collectEdgeLiveWire(
         if (!r.ok) return;
         const xml = await r.text();
         const entries = xml.match(/<entry\b[\s\S]*?<\/entry>/gi) || [];
-        for (const entry of entries.slice(0, 6)) {
+        let emitted = 0;
+        for (const entry of entries.slice(0, 15)) {
+          if (emitted >= 6) break;
           const videoId = ((entry.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i) || [])[1] || '').trim();
           const title = decodeBasic((entry.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
           const pubRaw = ((entry.match(/<published>([^<]+)<\/published>/i) || [])[1] || '').trim();
-          if (!videoId || !title || /#shorts\b/i.test(title)) continue;
+          if (!videoId || !title || /#shorts\b/i.test(title) || /youtube\.com\/shorts\//i.test(entry)) continue;
           if (ch.sfOnly && !sfRe.test(stripNonSfContextsEdge(title))) continue;
           const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
           if (Number.isFinite(pubMs) && nowEdgeMs - pubMs > 10 * 86_400_000) continue;
+          emitted++;
           items.push({
             id: `edge_yt_${videoId}`,
             type: 'video',

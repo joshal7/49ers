@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:49:59.153Z",
+  "updatedAt": "2026-11-23T06:25:16.335Z",
   "windowDays": 7,
   "totalEpisodes": 11,
   "shows": [
@@ -30,7 +30,7 @@
     {
       "id": "patriots_patriots_catch",
       "collectionId": 1648381074,
-      "name": "Patriots Catch",
+      "name": "Patriots Catch-22",
       "fullTitle": "Patriots Catch-22",
       "hosts": "New England Patriots",
       "network": "New England Patriots",
@@ -118,7 +118,7 @@
       "trackId": 1000802962608,
       "collectionId": 1648381074,
       "showId": "patriots_patriots_catch",
-      "showName": "Patriots Catch",
+      "showName": "Patriots Catch-22",
       "showFullTitle": "Patriots Catch-22",
       "hosts": "New England Patriots",
       "network": "New England Patriots",
@@ -218,7 +218,7 @@
       "trackId": 1000802513856,
       "collectionId": 1648381074,
       "showId": "patriots_patriots_catch",
-      "showName": "Patriots Catch",
+      "showName": "Patriots Catch-22",
       "showFullTitle": "Patriots Catch-22",
       "hosts": "New England Patriots",
       "network": "New England Patriots",

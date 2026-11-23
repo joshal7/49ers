@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:53:35.277Z",
+  "updatedAt": "2026-11-23T06:25:39.047Z",
   "dailyTopNewsBrief": {
     "id": "brief_jax_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -107,13 +107,47 @@
   "clusteredBriefs": [],
   "rawStream": [
     {
+      "id": "jax_rss_94eafd3789f6",
+      "type": "article",
+      "title": "Five Key Plays That Shaped Jaguars' Week 11 Loss to Giants",
+      "summary": "Correspondent John Shipley examines five key plays from the Jaguars’ 23-18 loss to the New York Giants in a 2026 Week 11 game at MetLife Stadium in East Rutherford, N.J., Sunday",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/qfy5jre4xnyqk8rskfev.jpg",
+      "imageAlt": "Five Key Plays That Shaped Jaguars' Week 11 Loss to Giants",
+      "publishedAt": "2026-11-23T05:11:30.000Z",
+      "url": "https://www.jaguars.com/news/five-key-plays-that-shaped-jaguars-week-11-loss-to-giants",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Official",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Official",
+      "author": "jaguars.com Official",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.37,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 31.3609
+    },
+    {
       "id": "jax_espn_b3a9797a78b4c",
       "type": "article",
       "title": "NFL says no-TD call for WR Parker Washington in Jaguars' loss was correct",
       "summary": "The NFL said Sunday that on-field officials were correct in ruling that Parker Washington did not make a critical touchdown catch in the fourth quarter.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749991_600x600_1-1.jpg",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/841a6f5558c94145bee0dd6538d535f51194/841a6f5558c94145bee0dd6538d535f51194.jpg",
+      "imageCaption": "Should this Parker Washington incompletion have been ruled a TD?",
       "imageAlt": "NFL says no-TD call for WR Parker Washington in Jaguars' loss was correct",
-      "publishedAt": "2026-11-23T03:43:13Z",
+      "publishedAt": "2026-11-23T04:50:40Z",
       "url": "https://www.espn.com/nfl/story/_/id/50569248/nfl-no-td-call-jaguars-parker-washington-was-correct",
       "outletId": "espn_jax",
       "outletName": "ESPN",
@@ -127,7 +161,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.362,
+      "breakingPriority": 1.316,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -137,31 +171,64 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 30.5169
+      "storyRank": 25.8869
     },
     {
-      "id": "jax_roto_fc8536d7f261",
-      "type": "tweet",
-      "title": "Jakobi Meyers: Season-high yardage total in loss: Meyers brought in four of 10 targets for 85 yards in the Jaguars' 23-18 loss to the Giants on Sunday. Visit RotoWire.com for more analysis on this update.",
-      "fullText": "Jakobi Meyers: Season-high yardage total in loss: Meyers brought in four of 10 targets for 85 yards in the Jaguars' 23-18 loss to the Giants on Sunday. Visit RotoWire.com for more analysis on this update.",
-      "isFullTweet": true,
-      "summary": "Meyers brought in four of 10 targets for 85 yards in the Jaguars' 23-18 loss to the Giants on Sunday. Visit RotoWire.com for more analysis on this update.",
-      "imageUrl": "",
-      "publishedAt": "2026-11-23T02:46:00.000Z",
-      "url": "https://www.rotowire.com/football/player/jakobi-meyers-13517",
-      "outletId": "rotowire",
-      "outletName": "RotoWire NFL Beat",
-      "reporterId": "rotowire_nfl_beat",
-      "reporterName": "RotoWire NFL Beat",
-      "author": "RotoWire NFL Beat",
-      "authorHandle": "@RotoWireNFL",
-      "authorProfileUrl": "https://www.rotowire.com/football/news.php",
-      "trustTier": 2,
-      "wireSource": "rotowire_rss",
+      "id": "jax_espn_e7bedb68b05b5",
+      "type": "article",
+      "title": "Tracking Jaguars CB/WR Travis Hunter's 2026 season: Snaps on offense, defense",
+      "summary": "Every week, we will look at how many snaps the two-way corner/receiver plays on offense and defense. Is there a trend in his usage?",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1750042_608x342_16-9.jpg",
+      "imageCaption": "Hunter [608x342]",
+      "imageAlt": "Tracking Jaguars CB/WR Travis Hunter's 2026 season: Snaps on offense, defense",
+      "publishedAt": "2026-11-23T04:56:42Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50043976/jacksonville-jaguars-travis-hunter-stats-snaps-tracker",
+      "outletId": "espn_jax",
+      "outletName": "ESPN",
+      "reporterId": "michael_dirocco",
+      "reporterName": "Michael DiRocco",
+      "author": "Michael DiRocco",
+      "authorHandle": "@ESPNdirocco",
+      "authorProfileUrl": "https://x.com/ESPNdirocco",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.22,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 17.7486
+    },
+    {
+      "id": "jax_rss_bcd42a5ee017",
+      "type": "article",
+      "title": "Quick Thoughts After Jaguars' 23-18 Loss to Giants: \"A Reality Check...\"",
+      "summary": "Senior writer John Oehser, senior correspondent Brian Sexton, team reporter Kainani Stevens and correspondent John Shipley offer quick thoughts on the Jaguars’ 23-18 loss to the New York Giants in a 2026 Week 11 game at MetLife Stadium in E",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/nmzsx9njwf2myyhpzir8.jpg",
+      "imageAlt": "Quick Thoughts After Jaguars' 23-18 Loss to Giants: \"A Reality Check...\"",
+      "publishedAt": "2026-11-23T04:01:16.000Z",
+      "url": "https://www.jaguars.com/news/quick-thoughts-after-jaguars-23-18-loss-to-giants-a-reality-check",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Official",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Official",
+      "author": "jaguars.com Official",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.196,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -171,31 +238,63 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 19.7977
+      "storyRank": 17.9127
     },
     {
-      "id": "jax_roto_ec4aad6ff1ff",
-      "type": "tweet",
-      "title": "Trevor Lawrence: Comes up short against Giants: Lawrence completed 25 of 47 passes for 301 yards with one touchdown and two interceptions and rushed three times for seven yards in the Jaguars' 23-18 loss to the Giants on Sunday. He also fumbled twice but recovered. Visit RotoWire.com for more analysis on this update.",
-      "fullText": "Trevor Lawrence: Comes up short against Giants: Lawrence completed 25 of 47 passes for 301 yards with one touchdown and two interceptions and rushed three times for seven yards in the Jaguars' 23-18 loss to the Giants on Sunday. He also fumbled twice but recovered. Visit RotoWire.com for more analysis on this update.",
-      "isFullTweet": true,
-      "summary": "Lawrence completed 25 of 47 passes for 301 yards with one touchdown and two interceptions and rushed three times for seven yards in the Jaguars' 23-18 loss to the Giants on Sunday. He also fumbled twice but recovered. Vi",
+      "id": "jax_pfr_c77858320178",
+      "type": "article",
+      "title": "Jaguars C Robert Hainsey &#8216;Week-To-Week&#8217;",
+      "summary": "The Jaguars were already down two starting offensive linemen heading into Week 11 with left tackle Anton Harrison and right guard Patrick Mekari on injured reserve. It was announced this week that they would be without a third as center Rob",
       "imageUrl": "",
-      "publishedAt": "2026-11-23T02:39:00.000Z",
-      "url": "https://www.rotowire.com/football/player/trevor-lawrence-15357",
-      "outletId": "rotowire",
-      "outletName": "RotoWire NFL Beat",
-      "reporterId": "rotowire_nfl_beat",
-      "reporterName": "RotoWire NFL Beat",
-      "author": "RotoWire NFL Beat",
-      "authorHandle": "@RotoWireNFL",
-      "authorProfileUrl": "https://www.rotowire.com/football/news.php",
+      "publishedAt": "2026-11-23T00:07:36.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jaguars-c-robert-hainsey-week-to-week",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/jacksonville-jaguars",
       "trustTier": 2,
-      "wireSource": "rotowire_rss",
+      "wireSource": "pfr_team_rss",
+      "isBreaking": true,
+      "isInGameInjury": false,
+      "breakingBadge": "INJURY UPDATE",
+      "breakingPriority": 1.591,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_injury",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": true,
+      "isStalePreGameAvailability": false,
+      "storyRank": 11.4611
+    },
+    {
+      "id": "jax_vid_820eb2decc00",
+      "type": "video",
+      "title": "Liam Coen Recaps Loss to Giants in Week 11 | Press Conference",
+      "summary": "Head Coach Liam Coen speaks with the media following a 23-18 loss to the Giants in Week 11 of the 2026 NFL Season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/gcdykc0vr73vxw5y6y66.jpg",
+      "imageAlt": "Liam Coen Recaps Loss to Giants in Week 11 | Press Conference",
+      "publishedAt": "2026-11-23T02:15:19.000Z",
+      "url": "https://www.jaguars.com/video/liam-coen-recaps-loss-to-giants-in-week-11-press-conference",
+      "externalVideoUrl": "https://www.jaguars.com/video/liam-coen-recaps-loss-to-giants-in-week-11-press-conference",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.204,
+      "breakingPriority": 0.976,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -205,7 +304,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.8855
+      "storyRank": 10.2632
     },
     {
       "id": "jax_espn_a5a5edcdd418b",
@@ -213,6 +312,7 @@
       "title": "Making sense of the Jaguars going for two, then kicking a field goal down eight",
       "summary": "The Jaguars made it 23-15 late against the Giants, but their 2-point try failed. They got the ball back ... but kicked a field goal, leaving them down 23-18.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749963_608x342_16-9.jpg",
+      "imageCaption": "Liam Coen for Walder [608x342]",
       "imageAlt": "Making sense of the Jaguars going for two, then kicking a field goal down eight",
       "publishedAt": "2026-11-23T03:32:57Z",
       "url": "https://www.espn.com/nfl/story/_/id/50567915/week-11-jaguars-analytics-decisions-two-point-field-goal",
@@ -238,7 +338,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.0463
+      "storyRank": 9.4586
     },
     {
       "id": "jax_rss_0d940168006a",
@@ -271,41 +371,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.3623
-    },
-    {
-      "id": "jax_vid_820eb2decc00",
-      "type": "video",
-      "title": "Liam Coen Recaps Loss to Giants in Week 11 | Press Conference",
-      "summary": "Head Coach Liam Coen speaks with the media following a 23-18 loss to the Giants in Week 11 of the 2026 NFL Season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/gcdykc0vr73vxw5y6y66.jpg",
-      "imageAlt": "Liam Coen Recaps Loss to Giants in Week 11 | Press Conference",
-      "publishedAt": "2026-11-23T02:15:19.000Z",
-      "url": "https://www.jaguars.com/video/liam-coen-recaps-loss-to-giants-in-week-11-press-conference",
-      "externalVideoUrl": "https://www.jaguars.com/video/liam-coen-recaps-loss-to-giants-in-week-11-press-conference",
-      "outletId": "jaguars_official",
-      "outletName": "jaguars.com Video",
-      "reporterId": "jaguars_official",
-      "reporterName": "jaguars.com Video",
-      "author": "jaguars.com Video",
-      "authorHandle": "@Jaguars",
-      "authorProfileUrl": "https://www.jaguars.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.15,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 15.7752
+      "storyRank": 8.8817
     },
     {
       "id": "jax_rss_a3e5207c371f",
@@ -328,7 +394,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.998,
+      "breakingPriority": 0.846,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -338,7 +404,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.7985
+      "storyRank": 7.7163
     },
     {
       "id": "jax_vid_b72cb21063a0",
@@ -362,7 +428,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.967,
+      "breakingPriority": 0.82,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -372,7 +438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.386
+      "storyRank": 6.8102
     },
     {
       "id": "jax_vid_d77a2ea16762",
@@ -406,7 +472,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.8165
+      "storyRank": 5.2722
     },
     {
       "id": "jax_espn_8d9358e9b946e",
@@ -414,6 +480,7 @@
       "title": "Jacksonville Jaguars vs. New York Giants: Game Highlights",
       "summary": "Jacksonville Jaguars vs. New York Giants: Game Highlights",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1123/6947cfec-369c-485a-9612-5f579aa54d2b/6947cfec-369c-485a-9612-5f579aa54d2b.jpg",
+      "imageCaption": "Jacksonville Jaguars vs. New York Giants: Game Highlights",
       "imageAlt": "Jacksonville Jaguars vs. New York Giants: Game Highlights",
       "publishedAt": "2026-11-23T01:26:45Z",
       "url": "https://www.espn.com/video/clip/_/id/50567972/game-highlights",
@@ -439,7 +506,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.5318
+      "storyRank": 5.1256
     },
     {
       "id": "jax_vid_70a271bafdb9",
@@ -473,7 +540,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8868
+      "storyRank": 4.1409
     },
     {
       "id": "jax_vid_3fbb1905927d",
@@ -507,7 +574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8215
+      "storyRank": 4.105
     },
     {
       "id": "jax_vid_872d3f975566",
@@ -541,7 +608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.7249
+      "storyRank": 4.0516
     },
     {
       "id": "jax_vid_dc174de7af33",
@@ -575,7 +642,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.2256
+      "storyRank": 3.7701
     },
     {
       "id": "jax_vid_fc6fbdda6da0",
@@ -609,7 +676,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.6238
+      "storyRank": 3.4178
     },
     {
       "id": "jax_vid_95371c2d421c",
@@ -643,75 +710,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.475
-    },
-    {
-      "id": "jax_roto_c6e7e714d5b2",
-      "type": "tweet",
-      "title": "J.J. McCarthy: Struggles with accuracy in win: McCarthy completed 18 of 38 passes for 173 yards with a touchdown and no interceptions and rushed seven times for 33 yards in the Giants' 23-18 win over the Jaguars on Sunday. Visit RotoWire.com for more analysis on this update.",
-      "fullText": "J.J. McCarthy: Struggles with accuracy in win: McCarthy completed 18 of 38 passes for 173 yards with a touchdown and no interceptions and rushed seven times for 33 yards in the Giants' 23-18 win over the Jaguars on Sunday. Visit RotoWire.com for more analysis on this update.",
-      "isFullTweet": true,
-      "summary": "McCarthy completed 18 of 38 passes for 173 yards with a touchdown and no interceptions and rushed seven times for 33 yards in the Giants' 23-18 win over the Jaguars on Sunday. Visit RotoWire.com for more analysis on this",
-      "imageUrl": "",
-      "publishedAt": "2026-11-23T02:58:00.000Z",
-      "url": "https://www.rotowire.com/football/player/jj-mccarthy-17689",
-      "outletId": "rotowire",
-      "outletName": "RotoWire NFL Beat",
-      "reporterId": "rotowire_nfl_beat",
-      "reporterName": "RotoWire NFL Beat",
-      "author": "RotoWire NFL Beat",
-      "authorHandle": "@RotoWireNFL",
-      "authorProfileUrl": "https://www.rotowire.com/football/news.php",
-      "trustTier": 2,
-      "wireSource": "rotowire_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.4948
-    },
-    {
-      "id": "jax_roto_dbb12d1031d1",
-      "type": "tweet",
-      "title": "Isaiah Likely: Limited to one catch in win: Likely brought in one of three targets for 35 yards in the Giants' 23-18 win over the Jaguars on Sunday. Visit RotoWire.com for more analysis on this update.",
-      "fullText": "Isaiah Likely: Limited to one catch in win: Likely brought in one of three targets for 35 yards in the Giants' 23-18 win over the Jaguars on Sunday. Visit RotoWire.com for more analysis on this update.",
-      "isFullTweet": true,
-      "summary": "Likely brought in one of three targets for 35 yards in the Giants' 23-18 win over the Jaguars on Sunday. Visit RotoWire.com for more analysis on this update.",
-      "imageUrl": "",
-      "publishedAt": "2026-11-23T02:52:00.000Z",
-      "url": "https://www.rotowire.com/football/player/isaiah-likely-16033",
-      "outletId": "rotowire",
-      "outletName": "RotoWire NFL Beat",
-      "reporterId": "rotowire_nfl_beat",
-      "reporterName": "RotoWire NFL Beat",
-      "author": "RotoWire NFL Beat",
-      "authorHandle": "@RotoWireNFL",
-      "authorProfileUrl": "https://www.rotowire.com/football/news.php",
-      "trustTier": 2,
-      "wireSource": "rotowire_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.3386
+      "storyRank": 3.3285
     },
     {
       "id": "jax_vid_503ba258fdb4",
@@ -745,7 +744,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5976
+      "storyRank": 2.7812
     },
     {
       "id": "jax_vid_7cfee4011001",
@@ -779,7 +778,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0438
+      "storyRank": 2.4159
     },
     {
       "id": "jax_vid_4c3e022c1af3",
@@ -813,7 +812,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9432
+      "storyRank": 2.3478
     },
     {
       "id": "jax_vid_7ca7e6081a9b",
@@ -847,14 +846,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9292
+      "storyRank": 2.3383
     },
     {
       "id": "jax_espn_ba480d36c3298",
       "type": "article",
       "title": "Giants intercept Trevor Lawrence twice and hold on to beat the Jaguars 23-18",
       "summary": "— After J.J. McCarthy and the New York Giants sputtered for much of the fourth quarter, Jaguars coach Liam Coen decided to kick a late field goal because he was confident Jacksonville would get the ball back with a chance to win.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873069.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1123/dm_261123_Giants_beat_Jags_IA/dm_261123_Giants_beat_Jags_IA.jpg",
+      "imageCaption": "Jordan Raanan discusses the Giants' winning mentality after the 23-18 win over the Jaguars in Week 11.",
       "imageAlt": "Giants intercept Trevor Lawrence twice and hold on to beat the Jaguars 23-18",
       "publishedAt": "2026-11-23T02:17:33Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873069",
@@ -880,7 +880,143 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5176
+      "storyRank": 1.5902
+    },
+    {
+      "id": "jax_vid_3e08d2187d15",
+      "type": "video",
+      "title": "Trevor Lawrence Discusses Performance vs. Giants | Press Conference",
+      "summary": "QB Trevor Lawrence speaks with the media following a 23-18 loss to the Giants in Week 11 of the 2026 NFL Season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/v0imstdbk2q84bnko29v.jpg",
+      "imageAlt": "Trevor Lawrence Discusses Performance vs. Giants | Press Conference",
+      "publishedAt": "2026-11-23T02:13:46.000Z",
+      "url": "https://www.jaguars.com/video/trevor-lawrence-discusses-performance-vs-giants-press-conference",
+      "externalVideoUrl": "https://www.jaguars.com/video/trevor-lawrence-discusses-performance-vs-giants-press-conference",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.563
+    },
+    {
+      "id": "jax_vid_a7cbcda81415",
+      "type": "video",
+      "title": "HIGHLIGHT | Lawrence & Washington Connect for 21-Yard Gain",
+      "summary": "QB Trevor Lawrence and WR Parker Washington convert a long third down with a 21-yard completion.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/yduld1kpsfzikobw9jt1.png",
+      "imageAlt": "HIGHLIGHT | Lawrence & Washington Connect for 21-Yard Gain",
+      "publishedAt": "2026-11-23T00:42:08.000Z",
+      "url": "https://www.jaguars.com/video/highlight-lawrence-washington-connect-for-21-yard-gain",
+      "externalVideoUrl": "https://www.jaguars.com/video/highlight-lawrence-washington-connect-for-21-yard-gain",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 18,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.9808
+    },
+    {
+      "id": "jax_vid_effbdb9874fe",
+      "type": "video",
+      "title": "HIGHLIGHT | Lawrence Lofts 21-Yard Pass to Washington",
+      "summary": "QB Trevor Lawrence finds WR Parker Washington on 21-yard pass.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/l66aa8myekypt1kiwzw5.png",
+      "imageAlt": "HIGHLIGHT | Lawrence Lofts 21-Yard Pass to Washington",
+      "publishedAt": "2026-11-22T22:36:51.000Z",
+      "url": "https://www.jaguars.com/video/highlight-lawrence-lofts-21-yard-pass-to-washington",
+      "externalVideoUrl": "https://www.jaguars.com/video/highlight-lawrence-lofts-21-yard-pass-to-washington",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 18,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6688
+    },
+    {
+      "id": "jax_vid_fbe541276b62",
+      "type": "video",
+      "title": "HIGHLIGHT | Lawrence Finds Washington for 16-Yard Gain",
+      "summary": "QB Trevor Lawrence and WR Parker Washington connect on 16-yard catch.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/rv9navkjfgtulgvcsw1h.png",
+      "imageAlt": "HIGHLIGHT | Lawrence Finds Washington for 16-Yard Gain",
+      "publishedAt": "2026-11-22T22:33:20.000Z",
+      "url": "https://www.jaguars.com/video/highlight-lawrence-finds-washington-for-16-yard-gain",
+      "externalVideoUrl": "https://www.jaguars.com/video/highlight-lawrence-finds-washington-for-16-yard-gain",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 18,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6625
     },
     {
       "id": "jax_rss_113c5eb17033",
@@ -913,7 +1049,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6125
+      "storyRank": 0.5078
     },
     {
       "id": "jax_rss_b198f40baffb",
@@ -946,7 +1082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5637
+      "storyRank": 0.472
     },
     {
       "id": "jax_rss_9dc1d1a388a9",
@@ -979,7 +1115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1139
+      "storyRank": 0.1072
     },
     {
       "id": "jax_rss_7e6d2c2ab303",
@@ -1012,7 +1148,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2341
+      "storyRank": 0.2223
     },
     {
       "id": "jax_rss_602a210a8f7c",
@@ -1045,7 +1181,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0866
+      "storyRank": 0.0824
     },
     {
       "id": "jax_tx_0aa205ffea61",
@@ -1079,7 +1215,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.071
+      "storyRank": 0.068
     },
     {
       "id": "jax_rss_5254172d01f1",
@@ -1112,7 +1248,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0535
+      "storyRank": 0.0516
     },
     {
       "id": "jax_rss_0de275c14fa4",
@@ -1145,7 +1281,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0121
     },
     {
       "id": "jax_rss_27c68c924df3",
@@ -1178,7 +1314,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0488
+      "storyRank": 0.0472
     },
     {
       "id": "jax_rss_944ff55ffd87",
@@ -1211,7 +1347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0488
+      "storyRank": 0.0472
     },
     {
       "id": "jax_vid_49002bf02c39",
@@ -1245,7 +1381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0481
+      "storyRank": 0.0466
     },
     {
       "id": "jax_vid_f292d0db0fc8",
@@ -1279,7 +1415,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0463
+      "storyRank": 0.0449
     },
     {
       "id": "jax_espn_77a36bd7f55da",
@@ -1287,6 +1423,7 @@
       "title": "How Bhayshul Tuten became the clear No. 1 running back for the Jaguars",
       "summary": "After a lackluster rookie season, Tuten ranks 14th in NFL in rushing yards entering Sunday's game against the Giants.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1748310_608x342_16-9.jpg",
+      "imageCaption": "Tuten [608x342]",
       "imageAlt": "How Bhayshul Tuten became the clear No. 1 running back for the Jaguars",
       "publishedAt": "2026-11-20T11:00:03Z",
       "url": "https://www.espn.com/nfl/story/_/id/50535497/jacksonville-jaguars-bhayshul-tuten-rb-stats-fantasy",
@@ -1312,7 +1449,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.0404
     },
     {
       "id": "jax_vid_5430544173cf",
@@ -1346,7 +1483,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0342
+      "storyRank": 0.0333
     },
     {
       "id": "jax_vid_701b987a0151",
@@ -1380,7 +1517,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0325
+      "storyRank": 0.0317
     },
     {
       "id": "jax_rss_06a69e1f0e8c",
@@ -1413,14 +1550,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0323
+      "storyRank": 0.0315
     },
     {
       "id": "jax_espn_a929daa3b225b",
       "type": "article",
       "title": "Jaguars visit the Giants in a matchup of two unexpected division leaders",
       "summary": "— John Harbaugh had no time this week for analyzing what has made the Jacksonville Jaguars one of the NFL's top teams.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873069.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1123/dm_261123_Giants_beat_Jags_IA/dm_261123_Giants_beat_Jags_IA.jpg",
+      "imageCaption": "Jordan Raanan discusses the Giants' winning mentality after the 23-18 win over the Jaguars in Week 11.",
       "imageAlt": "Jaguars visit the Giants in a matchup of two unexpected division leaders",
       "publishedAt": "2026-11-19T21:25:07Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873069",
@@ -1446,7 +1584,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.0313
     },
     {
       "id": "jax_rss_fb4cb88134a7",
@@ -1479,7 +1617,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0078
+      "storyRank": 0.0076
+    },
+    {
+      "id": "jax_vid_58d8fef3f0fe",
+      "type": "video",
+      "title": "Hunter & Rodriguez Jr. on Giants Matchups, Trusting in Coaching Staff | Media Availability",
+      "summary": "WR/CB Travis Hunter and RB Chris Rodriguez Jr. speak with the media following practice on Thursday of Week 11 of the 2026 NFL Season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/joyq4rregf0dq8shyypi.jpg",
+      "imageAlt": "Hunter & Rodriguez Jr. on Giants Matchups, Trusting in Coaching Staff | Media Availability",
+      "publishedAt": "2026-11-19T19:19:50.000Z",
+      "url": "https://www.jaguars.com/video/hunter-rodriguez-jr-on-giants-matchups-trusting-in-coaching-staff-media-availability",
+      "externalVideoUrl": "https://www.jaguars.com/video/hunter-rodriguez-jr-on-giants-matchups-trusting-in-coaching-staff-media-availability",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0075
     },
     {
       "id": "jax_vid_cc94fd9a5188",
@@ -1513,7 +1685,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0294
+      "storyRank": 0.0287
     },
     {
       "id": "jax_vid_ede2f79966f1",
@@ -1547,7 +1719,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0289
+      "storyRank": 0.0282
     },
     {
       "id": "jax_rss_2cc77fcc4588",
@@ -1580,7 +1752,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.0226
     },
     {
       "id": "jax_rss_161d71c46973",
@@ -1613,7 +1785,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.0226
     },
     {
       "id": "jax_vid_0df5a8544448",
@@ -1647,7 +1819,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0056
     },
     {
       "id": "jax_rss_f6b522474ebb",
@@ -1680,7 +1852,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0225
+      "storyRank": 0.022
+    },
+    {
+      "id": "jax_vid_c57da1813464",
+      "type": "video",
+      "title": "\"Rise to the Occasion\" vs. Giants in Week 11 | Huddle Up",
+      "summary": "Bucky Brooks joins John Oehser to preview the Week 11 matchup against the New York Giants. This and more on Huddle Up presented by Fields Auto Group.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/gamtdb2rbc78unouz7fo.jpg",
+      "imageAlt": "\"Rise to the Occasion\" vs. Giants in Week 11 | Huddle Up",
+      "publishedAt": "2026-11-18T22:10:14.000Z",
+      "url": "https://www.jaguars.com/video/rise-to-the-occasion-vs-giants-in-week-11-huddle-up",
+      "externalVideoUrl": "https://www.jaguars.com/video/rise-to-the-occasion-vs-giants-in-week-11-huddle-up",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0055
     },
     {
       "id": "jax_vid_57b5d5adb9b8",
@@ -1714,7 +1920,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0889
+      "storyRank": 0.0872
     },
     {
       "id": "jax_vid_c31e4431cb9b",
@@ -1748,7 +1954,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0219
+      "storyRank": 0.0215
     },
     {
       "id": "jax_rss_0c638e001129",
@@ -1781,7 +1987,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0052
     },
     {
       "id": "jax_vid_3ca18fea5057",
@@ -1815,7 +2021,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.021
+      "storyRank": 0.0206
     },
     {
       "id": "jax_rss_2b81b7ac9b6a",
@@ -1848,7 +2054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0209
+      "storyRank": 0.0205
     },
     {
       "id": "jax_vid_6186b56e70aa",
@@ -1882,7 +2088,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0203
     },
     {
       "id": "jax_vid_5de81accb768",
@@ -1916,7 +2122,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.016
     },
     {
       "id": "jax_rss_5ab53244b4f9",
@@ -1949,7 +2155,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0649
+      "storyRank": 0.0639
     },
     {
       "id": "jax_rss_11fa1e130270",
@@ -1982,7 +2188,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0158
     },
     {
       "id": "jax_vid_69e20e633644",
@@ -2016,7 +2222,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0157
     },
     {
       "id": "jax_vid_9d261da0d34e",
@@ -2050,7 +2256,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
+      "storyRank": 0.0038
+    },
+    {
+      "id": "jax_rss_754f2e1275ce",
+      "type": "article",
+      "title": "NFL Power Rankings, Week 11: Staying Strong at No. 1",
+      "summary": "Senior writer John Oehser’s Pre-Week 11 2026 NFL power rankings. And we all know how important these are …",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/u7wdy8lmqdxhrhjml8ll.jpg",
+      "imageAlt": "NFL Power Rankings, Week 11: Staying Strong at No. 1",
+      "publishedAt": "2026-11-17T15:22:58.000Z",
+      "url": "https://www.jaguars.com/news/nfl-power-rankings-week-11-staying-strong-at-no-1",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Official",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Official",
+      "author": "jaguars.com Official",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0152
     },
     {
       "id": "jax_vid_07f0f09f18fd",
@@ -2084,7 +2323,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132
+      "storyRank": 0.013
     },
     {
       "id": "jax_vid_64bd9a30bdce",
@@ -2118,7 +2357,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013
+      "storyRank": 0.0129
     },
     {
       "id": "jax_rss_5a6811c782d7",
@@ -2151,7 +2390,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0375
+      "storyRank": 0.037
     },
     {
       "id": "jax_vid_6b057cc59d1e",
@@ -2185,7 +2424,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0125
     },
     {
       "id": "jax_espn_a01e17df78d79",
@@ -2193,6 +2432,7 @@
       "title": "Jaguars outscoring opponents by 125 points through 10 weeks: Three reasons why",
       "summary": "Sunday's victory over the Titans was Jacksonville's fifth win by 17 or more points this season -- the most in the NFL.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746501_608x342_16-9.jpg",
+      "imageCaption": "Trevor Lawrence [608x342]",
       "imageAlt": "Jaguars outscoring opponents by 125 points through 10 weeks: Three reasons why",
       "publishedAt": "2026-11-16T17:35:23Z",
       "url": "https://www.espn.com/nfl/story/_/id/50498566/jaguars-outscoring-opponents-10-weeks",
@@ -2218,7 +2458,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0123
     },
     {
       "id": "jax_vid_ca452de211d3",
@@ -2252,7 +2492,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0493
+      "storyRank": 0.0487
     },
     {
       "id": "jax_rss_78bf0db46168",
@@ -2285,40 +2525,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0446
-    },
-    {
-      "id": "jax_espn_e7bedb68b05b5",
-      "type": "article",
-      "title": "Tracking Jaguars CB/WR Travis Hunter's 2026 season: Snaps on offense, defense",
-      "summary": "Every week, we will look at how many snaps the two-way corner/receiver plays on offense and defense. Is there a trend in his usage?",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746473_608x342_16-9.jpg",
-      "imageAlt": "Tracking Jaguars CB/WR Travis Hunter's 2026 season: Snaps on offense, defense",
-      "publishedAt": "2026-11-16T02:52:49Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50043976/jacksonville-jaguars-travis-hunter-stats-snaps-tracker",
-      "outletId": "espn_jax",
-      "outletName": "ESPN",
-      "reporterId": "michael_dirocco",
-      "reporterName": "Michael DiRocco",
-      "author": "Michael DiRocco",
-      "authorHandle": "@ESPNdirocco",
-      "authorProfileUrl": "https://x.com/ESPNdirocco",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.011
+      "storyRank": 0.0441
     },
     {
       "id": "jax_rss_eb70edecfc7b",
@@ -2351,7 +2558,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.044
+      "storyRank": 0.0435
     },
     {
       "id": "jax_rss_30ea07ec710c",
@@ -2384,7 +2591,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0313
+      "storyRank": 0.0309
     },
     {
       "id": "jax_rss_ed3d3043a2d7",
@@ -2417,7 +2624,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0432
+      "storyRank": 0.0427
     },
     {
       "id": "jax_vid_9f30f23501b8",
@@ -2451,7 +2658,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0427
+      "storyRank": 0.0422
     },
     {
       "id": "jax_rss_0db832bb08e1",
@@ -2484,7 +2691,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0426
+      "storyRank": 0.0421
+    },
+    {
+      "id": "jax_vid_7eab1b1a757a",
+      "type": "video",
+      "title": "Parker Washington & Trevor Lawrence Discuss Impressive Performance vs. Titans | Press Conference",
+      "summary": "WR Parker Washington and QB Trevor Lawrence speak to the media following 40-23 win over the Tennessee Titans in Week 10 of the 2026 NFL Season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/aqbdelfhgrbzuk2kaxl3.jpg",
+      "imageAlt": "Parker Washington & Trevor Lawrence Discuss Impressive Performance vs. Titans | Press Conference",
+      "publishedAt": "2026-11-15T22:21:39.000Z",
+      "url": "https://www.jaguars.com/video/parker-washington-trevor-lawrence-discuss-impressive-performance-vs-titans-press-conference",
+      "externalVideoUrl": "https://www.jaguars.com/video/parker-washington-trevor-lawrence-discuss-impressive-performance-vs-titans-press-conference",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0302
     },
     {
       "id": "jax_vid_649f5b5e82c3",
@@ -2518,7 +2759,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0424
+      "storyRank": 0.0419
     },
     {
       "id": "jax_vid_27b46054785a",
@@ -2552,7 +2793,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0423
+      "storyRank": 0.0419
+    },
+    {
+      "id": "jax_vid_79c090541c8b",
+      "type": "video",
+      "title": "Trevor Lawrence's Best Plays From 3-TD Game vs. Titans",
+      "summary": "Watch QB Trevor Lawrence's best plays from his 3-TD game during Week 10 of the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/wj3catisgqapemp76m6a.jpg",
+      "imageAlt": "Trevor Lawrence's Best Plays From 3-TD Game vs. Titans",
+      "publishedAt": "2026-11-15T21:57:58.000Z",
+      "url": "https://www.jaguars.com/video/trevor-lawrence-s-best-plays-from-3-td-game-vs-titans",
+      "externalVideoUrl": "https://www.jaguars.com/video/trevor-lawrence-s-best-plays-from-3-td-game-vs-titans",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0301
     },
     {
       "id": "jax_vid_ac3da0fd1ded",
@@ -2586,7 +2861,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0422
+      "storyRank": 0.0418
+    },
+    {
+      "id": "jax_vid_d4d4d5a6413d",
+      "type": "video",
+      "title": "Every Parker Washington Catch From 152-Yard Game vs. Titans",
+      "summary": "Watch every catch by WR Parker Washington from his 152-yard game during Week 10 of the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/mhs5rn4gldfogj2a5gem.jpg",
+      "imageAlt": "Every Parker Washington Catch From 152-Yard Game vs. Titans",
+      "publishedAt": "2026-11-15T21:50:51.000Z",
+      "url": "https://www.jaguars.com/video/every-parker-washington-catch-from-152-yard-game-vs-titans",
+      "externalVideoUrl": "https://www.jaguars.com/video/every-parker-washington-catch-from-152-yard-game-vs-titans",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0301
     },
     {
       "id": "jax_vid_c138ff1abbc0",
@@ -2620,7 +2929,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0094
     },
     {
       "id": "jax_vid_847ae4e2c104",
@@ -2654,7 +2963,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0094
     },
     {
       "id": "jax_vid_5badb7ce9f83",
@@ -2688,7 +2997,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0094
     },
     {
       "id": "jax_vid_a89744cc654f",
@@ -2722,7 +3031,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0094
     },
     {
       "id": "jax_vid_0da1736d4a8d",
@@ -2756,7 +3065,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0094
     },
     {
       "id": "jax_vid_631a932eeccb",
@@ -2790,7 +3099,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0093
     },
     {
       "id": "jax_vid_fffc93f76e0a",
@@ -2824,7 +3133,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0094
+      "storyRank": 0.0093
     },
     {
       "id": "jax_vid_2927e0162c7a",
@@ -2858,7 +3167,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0094
+      "storyRank": 0.0093
+    },
+    {
+      "id": "jax_vid_89de304da6c4",
+      "type": "video",
+      "title": "HIGHLIGHT | Washington Continues to Shine With 32-Yard Catch",
+      "summary": "WR Parker Washington continues impressive first half with 32-yard gain in final 60 seconds before halftime.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/dkttmse0ih9kjw64defm.png",
+      "imageAlt": "HIGHLIGHT | Washington Continues to Shine With 32-Yard Catch",
+      "publishedAt": "2026-11-15T19:49:09.000Z",
+      "url": "https://www.jaguars.com/video/highlight-washington-continues-to-shine-with-32-yard-catch",
+      "externalVideoUrl": "https://www.jaguars.com/video/highlight-washington-continues-to-shine-with-32-yard-catch",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 18,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0023
     },
     {
       "id": "jax_vid_ab2bbb4ceb11",
@@ -2892,7 +3235,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0094
+      "storyRank": 0.0093
     },
     {
       "id": "jax_vid_dcd1e5375ac0",
@@ -2926,7 +3269,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0093
+      "storyRank": 0.0092
+    },
+    {
+      "id": "jax_vid_ce519b4d4c62",
+      "type": "video",
+      "title": "HIGHLIGHT | Washington Takes It off the Defender's Head for 20 Yards",
+      "summary": "WR Parker Washington makes yet another acrobatic catch in the first half against the Titans.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/ipjn2typmko1f8qaddpv.png",
+      "imageAlt": "HIGHLIGHT | Washington Takes It off the Defender's Head for 20 Yards",
+      "publishedAt": "2026-11-15T19:00:13.000Z",
+      "url": "https://www.jaguars.com/video/highlight-washington-takes-it-off-the-defender-s-head-for-20-yards",
+      "externalVideoUrl": "https://www.jaguars.com/video/highlight-washington-takes-it-off-the-defender-s-head-for-20-yards",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 18,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0023
     },
     {
       "id": "jax_vid_dad22f86ec4f",
@@ -2960,7 +3337,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0093
+      "storyRank": 0.0092
     },
     {
       "id": "jax_vid_5da5cea74183",
@@ -2972,6 +3349,40 @@
       "publishedAt": "2026-11-15T18:41:29.000Z",
       "url": "https://www.jaguars.com/video/highlight-washington-s-high-snag-goes-for-33-yards",
       "externalVideoUrl": "https://www.jaguars.com/video/highlight-washington-s-high-snag-goes-for-33-yards",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 18,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0023
+    },
+    {
+      "id": "jax_vid_0b55e54d4064",
+      "type": "video",
+      "title": "HIGHLIGHT | Washington Makes Acrobatic 2-Yard TD Grab",
+      "summary": "QB Trevor Lawrence fires to WR Parker Washington in the back of the end zone for a 2-yard touchdown.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/vuwdbgsx5sihayoiyjsc.png",
+      "imageAlt": "HIGHLIGHT | Washington Makes Acrobatic 2-Yard TD Grab",
+      "publishedAt": "2026-11-15T18:25:39.000Z",
+      "url": "https://www.jaguars.com/video/highlight-washington-makes-acrobatic-2-yard-td-grab",
+      "externalVideoUrl": "https://www.jaguars.com/video/highlight-washington-makes-acrobatic-2-yard-td-grab",
       "outletId": "jaguars_official",
       "outletName": "jaguars.com Video",
       "reporterId": "jaguars_official",
@@ -3028,7 +3439,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0093
+      "storyRank": 0.0092
+    },
+    {
+      "id": "jax_pfr_7cb59f18ee05",
+      "type": "article",
+      "title": "Bills Pursued Jordan Davis, Jessie Bates Before Trade Deadline",
+      "summary": "Not only are the 7-1 Bills and 6-2 Jaguars among the teams vying for the No. 1 seed in the AFC, but they also chased a couple of the same targets ahead of Tuesday&#8217;s trade deadline. Before the Jaguars acquired defensive tackle Jordan D",
+      "imageUrl": "",
+      "publishedAt": "2026-11-14T20:40:24.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/bills-pursued-jordan-davis-jessie-bates-before-trade-deadline",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/jacksonville-jaguars",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0019
     },
     {
       "id": "jax_rss_0e5e12549a7b",
@@ -3061,7 +3504,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0343
+      "storyRank": 0.034
     },
     {
       "id": "jax_rss_1ed9701bd753",
@@ -3094,7 +3537,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0337
+      "storyRank": 0.0334
+    },
+    {
+      "id": "jax_pfr_5ee921d0568e",
+      "type": "article",
+      "title": "Poll: Who Fared Best At Trade Deadline?",
+      "summary": "The NFL&#8217;s 2026 trade deadline is in the books. After last year saw first-round picks exchanged for Sauce Gardner and Quinnen Williams on deadline day, this year&#8217;s loudest fireworks came in the days and weeks leading up to the tr",
+      "imageUrl": "",
+      "publishedAt": "2026-11-14T04:23:24.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/poll-who-fared-best-at-trade-deadline",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/jacksonville-jaguars",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0068
     },
     {
       "id": "jax_rss_a8520af8309e",
@@ -3160,7 +3635,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295
+      "storyRank": 0.0293
     },
     {
       "id": "jax_vid_fda83f67c17e",
@@ -3194,7 +3669,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0289
+      "storyRank": 0.0286
     },
     {
       "id": "jax_vid_517dfbb3851d",
@@ -3228,7 +3703,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0071
+    },
+    {
+      "id": "jax_pfr_2b5016db5b0f",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/12/26",
+      "summary": "Here are Thursday&#8217;s practice squad moves: Baltimore Ravens Signed: G Kyle Hergel Placed on practice squad/injured list: T Gerad Christian-Lichtenhan Jacksonville Jaguars Signed: CB Alijah Huzzie Minnesota Vikings Signed: WR Odell Beck",
+      "imageUrl": "",
+      "publishedAt": "2026-11-13T03:44:12.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-12-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/jacksonville-jaguars",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0058
     },
     {
       "id": "jax_vid_a6d989a2e23b",
@@ -3298,6 +3805,40 @@
       "storyRank": 0.0065
     },
     {
+      "id": "jax_vid_216970707f22",
+      "type": "video",
+      "title": "Thomas Jr., Hunter & Bates on Deadline Reinforcements, Titans Matchup | Media Availability",
+      "summary": "WR Brian Thomas Jr., WR/CB Travis Hunter and S Jessie Bates speak with the media following practice on Thursday of Week 10 of the 2026 NFL Season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/mskulq3cfjftbopoaxbg.jpg",
+      "imageAlt": "Thomas Jr., Hunter & Bates on Deadline Reinforcements, Titans Matchup | Media Availability",
+      "publishedAt": "2026-11-12T20:47:33.000Z",
+      "url": "https://www.jaguars.com/video/thomas-jr-hunter-bates-on-deadline-reinforcements-titans-matchup-media-availability",
+      "externalVideoUrl": "https://www.jaguars.com/video/thomas-jr-hunter-bates-on-deadline-reinforcements-titans-matchup-media-availability",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0184
+    },
+    {
       "id": "jax_vid_9dbd04392e54",
       "type": "video",
       "title": "Campanile & Udinski on Prep for Divisional Matchup with Titans | Press Conference",
@@ -3329,7 +3870,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0252
+      "storyRank": 0.025
     },
     {
       "id": "jax_vid_ff2b9c71f1ce",
@@ -3363,7 +3904,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0063
+      "storyRank": 0.0062
     },
     {
       "id": "jax_rss_9e09c4c8f894",
@@ -3396,7 +3937,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.018
+      "storyRank": 0.0179
     },
     {
       "id": "jax_vid_4f618d20a9c6",
@@ -3430,7 +3971,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0063
+      "storyRank": 0.0062
     },
     {
       "id": "jax_rss_199b02e57d57",
@@ -3530,7 +4071,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0057
     },
     {
       "id": "jax_rss_e73eb014c672",
@@ -3563,7 +4104,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0057
+    },
+    {
+      "id": "jax_vid_b0b7a7c197bc",
+      "type": "video",
+      "title": "Building a Versatile Roster, Taking Care of Business | Huddle Up",
+      "summary": "Bucky Brooks joins John Oehser to preview the Week 10 matchup against the Tennessee Titans. This and more on Huddle Up presented by Fields Auto Group.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/x2hxtxgwdxpfc1iprgkw.jpg",
+      "imageAlt": "Building a Versatile Roster, Taking Care of Business | Huddle Up",
+      "publishedAt": "2026-11-11T22:04:14.000Z",
+      "url": "https://www.jaguars.com/video/building-a-versatile-roster-taking-care-of-business-huddle-up",
+      "externalVideoUrl": "https://www.jaguars.com/video/building-a-versatile-roster-taking-care-of-business-huddle-up",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Video",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Video",
+      "author": "jaguars.com Video",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0057
     },
     {
       "id": "jax_vid_4d4be3c2e078",
@@ -3597,7 +4172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0161
     },
     {
       "id": "jax_vid_6b3e16667848",
@@ -3631,7 +4206,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0055
     },
     {
       "id": "jax_rss_251d230c7330",
@@ -3664,7 +4239,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0055
     },
     {
       "id": "jax_rss_f149545b224e",
@@ -3697,7 +4272,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.022
     },
     {
       "id": "jax_rss_6dd7f2ce2926",
@@ -3763,7 +4338,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0219
     },
     {
       "id": "jax_tx_24dadeae619e",
@@ -3800,6 +4375,38 @@
       "storyRank": 0.0053
     },
     {
+      "id": "jax_pfr_2c71eb6e13f3",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/10/26",
+      "summary": "Today&#8217;s minor moves: Arizona Cardinals Placed on IR: QB Gardner Minshew (story), WR Michael Wilson (story) Baltimore Ravens Released: G Kyle Hergel, TE Nick Vannett Carolina Panthers Released: WR David Moore Denver Broncos Waived: CB ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-11T00:57:43.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-10-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/jacksonville-jaguars",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0045
+    },
+    {
       "id": "jax_rss_51de3e24424e",
       "type": "article",
       "title": "Jaguars GM James Gladstone: \"This Is About Team Building…\"",
@@ -3831,6 +4438,38 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0051
+    },
+    {
+      "id": "jax_pfr_efe8d2d95613",
+      "type": "article",
+      "title": "Cardinals&#8217; Budda Baker Interested In Joining Contender; Bills, Jags Checked In",
+      "summary": "NOVEMBER 10, 5:44pm: The deadline passed without a Baker trade, but the Bills &#8220;made a very strong push&#8221; for him, according to insider Jordan Schultz. Buffalo&#8217;s pursuit of Baker came before the team acquired Hooker from the",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T23:44:03.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/cardinals-budda-baker-interested-in-joining-contender-bills-checking-on-s-market",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/jacksonville-jaguars",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0044
     },
     {
       "id": "jax_rss_ea5f356c2df6",
@@ -3866,6 +4505,38 @@
       "storyRank": 0.005
     },
     {
+      "id": "jax_pfr_cddbfe65ed51",
+      "type": "article",
+      "title": "Jaguars Made &#8216;Significant Offer&#8217; For Jets DE Will McDonald",
+      "summary": "The Jaguars made a “significant offer” to the Jets for edge rusher Will McDonald before completing their blockbuster trades for safety Jessie Bates and defensive tackle Jordan Davis on Monday, per Sports Illustrated&#8217;s Albert Breer. Ev",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T19:05:50.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jaguars-made-significant-offer-for-jets-de-will-mcdonald",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/jacksonville-jaguars",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0043
+    },
+    {
       "id": "jax_rss_4804b26de181",
       "type": "article",
       "title": "Tuesday Insider: \"How Great Do We Want To Be?\"",
@@ -3896,7 +4567,104 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0049
+    },
+    {
+      "id": "jax_pfr_9601a9a072a8",
+      "type": "article",
+      "title": "Cardinals Sign QB Joey Aguilar",
+      "summary": "With a UCL tear likely to end Gardner Minshew&#8217;s season, the Cardinals are adding another quarterback. They are signing Joey Aguilar off the Jaguars&#8217; practice squad, Jeremy Fowler of ESPN reports. This is the latest change in Ari",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T17:15:07.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/cardinals-sign-qb-joey-aguilar",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/jacksonville-jaguars",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0011
+    },
+    {
+      "id": "jax_pfr_fccf354cf0b1",
+      "type": "article",
+      "title": "Jaguars To Retain WR Brian Thomas Jr. Past Deadline",
+      "summary": "As the Jaguars loaded up their roster Monday, they will be a contender for the AFC&#8217;s No. 1 seed &#8212; a perch the franchise has not held since 1999. A seller&#8217;s trade will not happen, despite considerable interest. The Jags hav",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T15:35:23.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jaguars-to-retain-wr-brian-thomas-jr-past-deadline",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/jacksonville-jaguars",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0043
+    },
+    {
+      "id": "jax_rss_71a8634902a0",
+      "type": "article",
+      "title": "NFL Power Rankings, Week 10: Staying Strong at No. 1",
+      "summary": "Senior writer John Oehser’s Pre-Week 10 2026 NFL power rankings. And we all know how important these are …",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/qy7tvvqnpwsdoflh92no.jpg",
+      "imageAlt": "NFL Power Rankings, Week 10: Staying Strong at No. 1",
+      "publishedAt": "2026-11-10T14:57:48.000Z",
+      "url": "https://www.jaguars.com/news/nfl-power-rankings-week-10-staying-strong-at-no-1",
+      "outletId": "jaguars_official",
+      "outletName": "jaguars.com Official",
+      "reporterId": "jaguars_official",
+      "reporterName": "jaguars.com Official",
+      "author": "jaguars.com Official",
+      "authorHandle": "@Jaguars",
+      "authorProfileUrl": "https://www.jaguars.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0049
     },
     {
       "id": "jax_tx_de16f035a8a3",
@@ -3931,6 +4699,70 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0047
+    },
+    {
+      "id": "jax_pfr_7d453f0c24a2",
+      "type": "article",
+      "title": "Jaguars Acquire Jordan Davis From Eagles",
+      "summary": "11:30pm: This agreement is official. As the Jaguars add another high-priced front-seven piece, the Eagles continue to load up their late-2020s draft arsenal over the past five months. 3:50pm: The Jaguars’ two previous trades today now feel ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T05:30:37.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jaguars-to-acquire-dt-jordan-davis-from-eagles",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/jacksonville-jaguars",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0041
+    },
+    {
+      "id": "jax_pfr_8821c90df473",
+      "type": "article",
+      "title": "Jaguars Acquire Jessie Bates From Falcons",
+      "summary": "Jessie Bates is on the move. The Jaguars have worked out a trade with the Falcons for the veteran safety, as first reported by ESPN&#8217;s Adam Schefter. The deal is now official. Jacksonville is sending Atlanta a 2027 second-round pick in",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T05:27:42.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jaguars-to-acquire-s-jessie-bates-from-falcons",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/jacksonville-jaguars",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0041
     },
     {
       "id": "jax_rss_33527788f58b",
@@ -4032,6 +4864,38 @@
       "storyRank": 0.0045
     },
     {
+      "id": "jax_pfr_04d85f86814c",
+      "type": "article",
+      "title": "Saints Trade Davon Godchaux To Jaguars",
+      "summary": "The Jaguars were known to still be in the market for a defensive tackle addition even after acquiring safety Jessie Bates. A deal on that front is indeed in place. Davon Godchaux is being traded from the Saints to Jacksonville, as first rep",
+      "imageUrl": "",
+      "publishedAt": "2026-11-09T18:18:10.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/saints-to-trade-dt-davon-godchaux-to-jaguars",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/jacksonville-jaguars",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0039
+    },
+    {
       "id": "jax_rss_876913c8be65",
       "type": "article",
       "title": "Roster Moves: Jaguars Trade for S Jessie Bates III",
@@ -4096,7 +4960,43 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0042
+    },
+    {
+      "id": "jax_yt_9wZLTOLaWUY",
+      "type": "video",
+      "category": "film",
+      "videoId": "9wZLTOLaWUY",
+      "embeddable": true,
+      "title": "Trevor Lawrence vs the Ravens Week 9, 2026 Analysis",
+      "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
+      "imageUrl": "https://i.ytimg.com/vi/9wZLTOLaWUY/hqdefault.jpg",
+      "imageAlt": "Trevor Lawrence vs the Ravens Week 9, 2026 Analysis",
+      "publishedAt": "2026-11-06T18:57:40.000Z",
+      "url": "https://www.youtube.com/watch?v=9wZLTOLaWUY",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=9wZLTOLaWUY",
+      "outletId": "the_qb_school",
+      "outletName": "The QB School",
+      "reporterId": "the_qb_school",
+      "reporterName": "The QB School",
+      "author": "The QB School",
+      "authorHandle": "@TheQBSchool",
+      "authorProfileUrl": "https://x.com/theqbschool",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 92,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0008
     },
     {
       "id": "jax_tx_c8fe4ef3a192",
@@ -4130,7 +5030,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0025
     },
     {
       "id": "jax_tx_4f824c3caedf",
@@ -4172,6 +5072,7 @@
       "title": "Jaguars rule starting center Robert Hainsey (knee) out for Giants game",
       "summary": "Jaguars center Robert Hainsey will miss Sunday's game against the Giants because of a knee injury, coach Liam Coen said Wednesday.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1118/r1747687_1296x729_16-9.jpg",
+      "imageCaption": "Robert Hainsey [1296x729]",
       "imageAlt": "Jaguars rule starting center Robert Hainsey (knee) out for Giants game",
       "publishedAt": "2026-11-18T16:41:39Z",
       "url": "https://www.espn.com/nfl/story/_/id/50522085/jaguars-rule-center-robert-hainsey-knee-giants-game",

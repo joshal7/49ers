@@ -199,9 +199,9 @@ export function humanizeNflTextForTts(rawText = '') {
     .replace(/\b2i\b/g, 'two-eye')
     .replace(/\bT-E\s+stunt/gi, 'T E stunt');
 
-  // 6. Win-Loss(-Tie) records in football context: "6-1 Niners", "4-4 Las Vegas", "at 6-1", "0-7 Chargers"
+  // 6. Win-Loss(-Tie) records in football context across all 32 NFL clubs
   text = text.replace(
-    /\b(\d{1,2})-(\d{1,2})(?:-(\d))?\b(?=\s+(?:49ers|Niners|San Francisco|Raiders|Las Vegas|Vikings|Minnesota|Bears|Chicago|Lions|Detroit|Packers|Seahawks|Rams|Cardinals|Cowboys|Eagles|Commanders|Chargers|Chiefs|Ravens|Jets|Colts|Dolphins|Falcons|Saints|record|start|team|club|mark)\b)/gi,
+    /\b(\d{1,2})-(\d{1,2})(?:-(\d))?\b(?=\s+(?:49ers|Niners|San Francisco|Seahawks|Seattle|Rams|Cardinals|Arizona|Lions|Detroit|Vikings|Minnesota|Packers|Green Bay|Bears|Chicago|Eagles|Philadelphia|Cowboys|Dallas|Giants|New York|Commanders|Washington|Buccaneers|Bucs|Tampa Bay|Saints|New Orleans|Falcons|Atlanta|Panthers|Carolina|Bills|Buffalo|Dolphins|Miami|Patriots|New England|Jets|Ravens|Baltimore|Bengals|Cincinnati|Browns|Cleveland|Steelers|Pittsburgh|Texans|Houston|Colts|Indianapolis|Jaguars|Jacksonville|Titans|Tennessee|Broncos|Denver|Chiefs|Kansas City|Raiders|Las Vegas|Chargers|Los Angeles|record|start|team|club|mark)\b)/gi,
     (_, w, l, t) =>
       t !== undefined
         ? `${intToSpoken(Number(w))}, ${intToSpoken(Number(l))}, and ${intToSpoken(Number(t))}`

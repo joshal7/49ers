@@ -7,6 +7,7 @@
  * Pure synchronous client engine (< 5ms across 300 prospects) with zero network dependencies.
  */
 
+import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 import {
   normalizePlayerKey,
   slugifyPlayerName,
@@ -107,13 +108,21 @@ export const BIG_BOARD_RANGE_OPTIONS = [
   { key: 'rd1', label: 'Top 32 (Rd 1)' },
   { key: 'day2', label: 'Day 2 (33–100)' },
   { key: 'day3', label: 'Day 3 (101+)' },
-  { key: 'sf_window', label: 'SF Pick Window' },
+  { key: 'sf_window', label: 'Team Pick Window' },
   { key: 't1', label: 'Tier 1 (1–12)' },
   { key: 't2', label: 'Tier 2 (13–32)' },
   { key: 't3', label: 'Tier 3 (33–100)' },
   { key: 't4', label: 'Tier 4 (101–175)' },
   { key: 't5', label: 'Tier 5 (176+)' }
 ];
+
+export function getBigBoardRangeOptions(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  const abbr = team?.abbr || 'Team';
+  return BIG_BOARD_RANGE_OPTIONS.map(opt =>
+    opt.key === 'sf_window' ? { ...opt, label: `${abbr} Pick Window` } : opt
+  );
+}
 
 export const BIG_BOARD_AGREEMENT_OPTIONS = [
   { key: 'all', label: 'All Agreement' },

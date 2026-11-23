@@ -104,7 +104,7 @@ export function validateNoHallucinatedRosterClaims(text = '', rosterPlayers = []
   const formerCoachSet = isSf ? new Set(KNOWN_FORMER_49ERS_COACHES) : new Set();
   const violations = [];
   const historicalOrExternalContextRe =
-    /\b(retired|former|departed|ex-49er|no longer|not currently on|not on the active|not on the 2026|not on the live|waived|released|signed elsewhere|free agency departure|dead\s*cap|dead\s*money|post-june|void\s*year|trade\s*target|trade\s*candidate|trade\s*fit|seller|patriots|new\s*england|raiders|las\s*vegas|rams|los\s*angeles|chargers|cowboys|dallas|eagles|philadelphia|commanders|washington|giants|new\s*york|jets|lions|detroit|buccaneers|tampa|panthers|carolina|cardinals|arizona|chiefs|kansas\s*city|broncos|denver|bills|buffalo|dolphins|miami|ravens|baltimore|bengals|cincinnati|browns|cleveland|steelers|pittsburgh|saints|new\s*orleans|colts|indianapolis|vikings|minnesota|texans|houston|falcons|atlanta|bears|chicago|titans|tennessee|jaguars|jacksonville|seahawks|seattle|packers|green\s*bay)\b/i;
+    /\b(retired|former|departed|ex-49er|no longer|not currently on|not on the active|not on the 2026|not on the live|waived|released|signed elsewhere|free agency departure|dead\s*cap|dead\s*money|post-june|void\s*year|trade\s*target|trade\s*candidate|trade\s*fit|seller|49ers|niners|san\s*francisco|patriots|new\s*england|raiders|las\s*vegas|rams|los\s*angeles|chargers|cowboys|dallas|eagles|philadelphia|commanders|washington|giants|new\s*york|jets|lions|detroit|buccaneers|tampa|panthers|carolina|cardinals|arizona|chiefs|kansas\s*city|broncos|denver|bills|buffalo|dolphins|miami|ravens|baltimore|bengals|cincinnati|browns|cleveland|steelers|pittsburgh|saints|new\s*orleans|colts|indianapolis|vikings|minnesota|texans|houston|falcons|atlanta|bears|chicago|titans|tennessee|jaguars|jacksonville|seahawks|seattle|packers|green\s*bay)\b/i;
   const strictDisallowedOnlyRe =
     /\b(not on the|no longer|former|departed|disallowed|never on|ex-49er|previously)\b/i;
   const externalTeamCoachRoleRe =
@@ -358,8 +358,8 @@ export function classifySymmetricUnitAdvantage(
   {
     tieLabel = 'Even Matchup',
     strengthVsStrengthLabel = 'Strength vs. Strength',
-    sfEdgeLabel = 'SF Edge',
-    sfHeavyLabel = 'SF Heavy Edge',
+    sfEdgeLabel = null,
+    sfHeavyLabel = null,
     oppEdgeLabel = null,
     oppHeavyLabel = null,
     edgeThreshold = 6,
@@ -368,13 +368,16 @@ export function classifySymmetricUnitAdvantage(
 ) {
   const sfR = Number(sfRank);
   const oppR = Number(oppRank);
+  const activeAbbr = getActiveTeamConfig()?.abbr || 'SF';
+  const resolvedSfEdge = sfEdgeLabel || `${activeAbbr} Edge`;
+  const resolvedSfHeavy = sfHeavyLabel || `${activeAbbr} Heavy Edge`;
   const cleanOpp = String(oppAbbr || 'OPP').toUpperCase();
   if (!Number.isFinite(sfR) || !Number.isFinite(oppR)) {
     return tieLabel;
   }
-  const delta = oppR - sfR; // positive => SF ranks better; negative => opponent ranks better
-  if (delta >= heavyThreshold) return sfHeavyLabel;
-  if (delta >= edgeThreshold) return sfEdgeLabel;
+  const delta = oppR - sfR; // positive => active team ranks better; negative => opponent ranks better
+  if (delta >= heavyThreshold) return resolvedSfHeavy;
+  if (delta >= edgeThreshold) return resolvedSfEdge;
   if (delta <= -heavyThreshold) return oppHeavyLabel || `${cleanOpp} Heavy Edge`;
   if (delta <= -edgeThreshold) return oppEdgeLabel || `${cleanOpp} Edge`;
   if (sfR <= 8 && oppR <= 8) return strengthVsStrengthLabel;

@@ -102,7 +102,7 @@ function formatPodcastEpisodeDate(isoStr = '') {
     weekday: 'short',
     month: 'short',
     day: 'numeric',
-    timeZone: 'America/Los_Angeles'
+    timeZone: getActiveTeamConfig()?.timezone || 'America/New_York'
   });
 }
 
@@ -553,19 +553,8 @@ function renderBeatPodcastsDirectory({
   updatedAt = ''
 }) {
   const activeTeam = getActiveTeamConfig();
-  const defaultShows =
-    shows.length > 0
-      ? shows
-      : activeTeam.abbr !== 'SF'
-        ? activeTeam.beatPodcastShows || []
-        : [
-            { id: 'the_gold_standard', name: 'The Gold Standard', hosts: 'Rob "Stats" Guerrera & Levin Black' },
-            { id: '49ers_talk', name: '49ers Talk', hosts: 'Matt Maiocco & Jennifer Lee Chan' },
-            { id: '49ers_plus_minus', name: '49ers +/-', hosts: 'Tim Kawakami & Matt Barrows' },
-            { id: 'dieter_and_hutch', name: 'Dieter and Hutch', hosts: 'Dieter Kurtenbach & Jake Hutchinson' },
-            { id: 'locked_on_49ers', name: 'Locked On 49ers', hosts: 'Brian Peacock & Eric Crocker' },
-            { id: 'lombardi_lounge', name: 'Lombardi Lounge', hosts: 'David Lombardi' }
-          ];
+  const defaultShows = shows.length > 0 ? shows : activeTeam.beatPodcastShows || [];
+  const allShowsLabel = defaultShows.length > 1 ? `All ${defaultShows.length} Shows` : 'All Shows';
 
   const headerCard = `
     <section class="card">
@@ -596,7 +585,7 @@ function renderBeatPodcastsDirectory({
           ? `<div class="pill-bar" aria-label="Filter By Show">
               <button type="button" class="pill-btn ${showFilter === 'all' ? 'active' : ''}"
                       data-action="set-beat-pod-show-filter" data-show-id="all">
-                <span>All 6 Shows</span>
+                <span>${esc(allShowsLabel)}</span>
               </button>
               ${defaultShows
                 .map(s => {

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:48:00.552Z",
+  "updatedAt": "2026-11-23T06:25:01.344Z",
   "dailyTopNewsBrief": {
     "id": "brief_was_1be117de4e67",
     "cycleKey": "2026-11-22@17ET",
@@ -111,9 +111,10 @@
       "type": "article",
       "title": "Inside Commanders DC Daronte Jones' unusual coaching journey",
       "summary": "From living in his car to various college offices, Washington defensive coordinator Daronte Jones has paid his dues.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0904/daronte_jones_608x342.jpg",
+      "imageUrl": "https://a.espncdn.com/photo/2026/0905/r1711666_1296x729_16-9.jpg",
+      "imageCaption": "Jones nearly quit coaching on multiple occasions. But he never gave up.",
       "imageAlt": "Inside Commanders DC Daronte Jones' unusual coaching journey",
-      "publishedAt": "2026-11-23T03:27:37Z",
+      "publishedAt": "2026-11-23T05:27:36Z",
       "url": "https://www.espn.com/nfl/story/_/id/49828234/washington-commanders-daronte-jones-2026-defense",
       "outletId": "espn_was",
       "outletName": "ESPN",
@@ -137,7 +138,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.609
+      "storyRank": 23.7721
     },
     {
       "id": "was_espn_5de022d591c15",
@@ -145,6 +146,7 @@
       "title": "Can the Commanders win in the red zone?",
       "summary": "John Keim lays out the Commanders' path to victory against the Bengals.",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_16x9_Commanders_IA/dm_261122_16x9_Commanders_IA.jpg",
+      "imageCaption": "John Keim lays out the Commanders' path to victory against the Bengals.",
       "imageAlt": "Can the Commanders win in the red zone?",
       "publishedAt": "2026-11-22T23:12:10Z",
       "url": "https://www.espn.com/video/clip/_/id/50566594/can-commanders-win-red-zone",
@@ -170,7 +172,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.2222
+      "storyRank": 3.2377
+    },
+    {
+      "id": "was_nfltr_8b0c7fbeab18",
+      "type": "article",
+      "title": "NFC Notes: Jonathan Greenard, Jerry Jones, Commanders, Cowboys, Eagles",
+      "summary": "Commanders Commanders LB Frankie Luvu was fined $17,911 for unnecessary roughness. Cowboys Cowboys owner Jerry Jones was asked about the incident in which a fan died after falling during a fight at AT&#38;T Stadium. “I just got that informa",
+      "imageUrl": "",
+      "imageAlt": "NFC Notes: Jonathan Greenard, Jerry Jones, Commanders, Cowboys, Eagles",
+      "publishedAt": "2026-11-22T23:02:15.000Z",
+      "url": "https://nfltraderumors.co/nfc-notes-jonathan-greenard-jerry-jones-commanders-cowboys-eagles/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.7625
     },
     {
       "id": "was_rss_01f6724d788b",
@@ -203,7 +238,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2497
+      "storyRank": 0.2377
     },
     {
       "id": "was_espn_f87c443f52946",
@@ -211,6 +246,7 @@
       "title": "Commanders confident in Jayden Daniels",
       "summary": "John Keim breaks down why the Commanders believe in Jayden Daniels.",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1120/dm_261120_Commanders/dm_261120_Commanders.jpg",
+      "imageCaption": "John Keim breaks down why the Commanders believe in Jayden Daniels.",
       "imageAlt": "Commanders confident in Jayden Daniels",
       "publishedAt": "2026-11-20T22:18:02Z",
       "url": "https://www.espn.com/video/clip/_/id/50543810/commanders-confident-jayden-daniels",
@@ -236,7 +272,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2162
+      "storyRank": 0.2087
     },
     {
       "id": "was_vid_371847e77ce2",
@@ -270,7 +306,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1932
+      "storyRank": 0.1869
     },
     {
       "id": "was_vid_868fd7a870ab",
@@ -304,7 +340,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1443
+      "storyRank": 0.1405
     },
     {
       "id": "was_espn_aaf422e5bdbd6",
@@ -312,6 +348,7 @@
       "title": "Bengals offense will be biggest test yet for Commanders' improving defense",
       "summary": "Washington is moving closer to the defense it wants to be. Monday will provide a benchmark for its progress.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1748214_608x342_16-9.jpg",
+      "imageCaption": "Joe Burrow and the Bengals offense leads the NFL in passing yards and is second in points heading into Week 11.",
       "imageAlt": "Bengals offense will be biggest test yet for Commanders' improving defense",
       "publishedAt": "2026-11-20T03:35:34Z",
       "url": "https://www.espn.com/nfl/story/_/id/50532934/commanders-defense-bengals-offense-joe-burrow",
@@ -337,7 +374,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1434
+      "storyRank": 0.1396
     },
     {
       "id": "was_espn_651e8ef177105",
@@ -345,6 +382,7 @@
       "title": "Washington Commanders unveil 'Beer Spear' ahead of 'Hail Raiser' debut on 'MNF'",
       "summary": "The limited-edition collectible vessel can hold 16 ounces of beer, equipped with a gold spear at the end of it.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1748324_608x342_16-9.jpg",
+      "imageCaption": "commanders beer spear [608x342]",
       "imageAlt": "Washington Commanders unveil 'Beer Spear' ahead of 'Hail Raiser' debut on 'MNF'",
       "publishedAt": "2026-11-20T00:29:58Z",
       "url": "https://www.espn.com/nfl/story/_/id/50535323/washington-commanders-beer-spear",
@@ -370,7 +408,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1353
+      "storyRank": 0.1319
     },
     {
       "id": "was_espn_d16f643d07eae",
@@ -378,6 +416,7 @@
       "title": "Sam Hartman's next drive: 'The Bachelor' questions answered",
       "summary": "A guide to the Commanders quarterback's upcoming search for love and how his NFL commitments could shape the season.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1748246_608x342_16-9.jpg",
+      "imageCaption": "What to know about Sam Hartman's casting and plans to juggle football with reality TV.",
       "imageAlt": "Sam Hartman's next drive: 'The Bachelor' questions answered",
       "publishedAt": "2026-11-20T00:28:17Z",
       "url": "https://www.espn.com/nfl/story/_/id/50533430/sam-hartman-bachelor-commanders-quarterback",
@@ -403,14 +442,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1353
+      "storyRank": 0.1319
     },
     {
       "id": "was_espn_cb79942aef2a9",
       "type": "article",
       "title": "Commanders' defense preparing for high-flying Bengals offense",
       "summary": "— Washington Commanders coach Dan Quinn knows the challenge facing his defense for Monday night's game against the Cincinnati Bengals.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873078.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1119/dm_261119_Bengals_Burrow_sick_IA/dm_261119_Bengals_Burrow_sick_IA.jpg",
+      "imageCaption": "Ben Baby breaks down if Joe Burrow missing practice due to illness is a concern.",
       "imageAlt": "Commanders' defense preparing for high-flying Bengals offense",
       "publishedAt": "2026-11-20T00:07:43Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873078",
@@ -436,7 +476,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1344
+      "storyRank": 0.131
     },
     {
       "id": "was_vid_8bf3de41beb0",
@@ -470,7 +510,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1279
+      "storyRank": 0.1248
     },
     {
       "id": "was_vid_7abbb2cfa05f",
@@ -504,7 +544,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1278
+      "storyRank": 0.1247
     },
     {
       "id": "was_vid_4da9e5e64e60",
@@ -538,7 +578,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1277
+      "storyRank": 0.1246
     },
     {
       "id": "was_vid_2b97e2900ee5",
@@ -572,7 +612,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1274
+      "storyRank": 0.1243
     },
     {
       "id": "was_vid_6c27bc8c7330",
@@ -606,7 +646,75 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1274
+      "storyRank": 0.1243
+    },
+    {
+      "id": "was_vid_655b2305edf4",
+      "type": "video",
+      "title": "QB Sam Hartman | 11/19/26",
+      "summary": "Sam Hartman addresses the media after Thursday's practice.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/commanders/wuhe1w4n5zuhkedjqyuk.jpg",
+      "imageAlt": "QB Sam Hartman | 11/19/26",
+      "publishedAt": "2026-11-19T21:01:39.000Z",
+      "url": "https://www.commanders.com/video/qb-sam-hartman-11-19-26",
+      "externalVideoUrl": "https://www.commanders.com/video/qb-sam-hartman-11-19-26",
+      "outletId": "commanders_official",
+      "outletName": "commanders.com Video",
+      "reporterId": "commanders_official",
+      "reporterName": "commanders.com Video",
+      "author": "commanders.com Video",
+      "authorHandle": "@Commanders",
+      "authorProfileUrl": "https://www.commanders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1241
+    },
+    {
+      "id": "was_vid_7d58acbb2a55",
+      "type": "video",
+      "title": "Raising hail on Monday night football and Bengals film room with Fred",
+      "summary": "Raising Hail on Monday Night Football + Bengals Film Room with Fred | Command Center",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/commanders/fe6jfqr9rz50ebh899zr.jpg",
+      "imageAlt": "Raising hail on Monday night football and Bengals film room with Fred",
+      "publishedAt": "2026-11-19T20:36:50.000Z",
+      "url": "https://www.commanders.com/video/raising-hail-on-monday-night-football-and-bengals-film-room-with-fred",
+      "externalVideoUrl": "https://www.commanders.com/video/raising-hail-on-monday-night-football-and-bengals-film-room-with-fred",
+      "outletId": "commanders_official",
+      "outletName": "commanders.com Video",
+      "reporterId": "commanders_official",
+      "reporterName": "commanders.com Video",
+      "author": "commanders.com Video",
+      "authorHandle": "@Commanders",
+      "authorProfileUrl": "https://www.commanders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "film",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0887
     },
     {
       "id": "was_vid_245dd4559853",
@@ -640,7 +748,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1141
+      "storyRank": 0.1113
     },
     {
       "id": "was_tx_41134122dec5",
@@ -674,7 +782,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1029
+      "storyRank": 0.1008
     },
     {
       "id": "was_espn_9af5cff11421f",
@@ -682,6 +790,7 @@
       "title": "Sources: Brandon Aiyuk contacted Jayden Daniels to mend friendship with star QB",
       "summary": "Brandon Aiyuk and Jayden Daniels have patched up their relationship after a falling out earlier this year, sources told ESPN.",
       "imageUrl": "https://a.espncdn.com/photo/2026/0608/r1669910_1296x729_16-9.jpg",
+      "imageCaption": "Brandon Aiyuk (June 8, 2026) [1296x729]",
       "imageAlt": "Sources: Brandon Aiyuk contacted Jayden Daniels to mend friendship with star QB",
       "publishedAt": "2026-11-18T18:50:43Z",
       "url": "https://www.espn.com/nfl/story/_/id/50522814/sources-brandon-aiyuk-mended-friendship-jayden-daniels",
@@ -707,7 +816,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0855
+      "storyRank": 0.0839
     },
     {
       "id": "was_bsky_001e9670cad6",
@@ -744,7 +853,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0779
+      "storyRank": 0.0765
     },
     {
       "id": "was_bsky_afbc0bd2f83e",
@@ -781,7 +890,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.058
+      "storyRank": 0.0572
     },
     {
       "id": "was_tx_b772d320e6a5",
@@ -815,7 +924,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0573
+      "storyRank": 0.0565
     },
     {
       "id": "was_bsky_6fea5cd10196",
@@ -852,7 +961,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0461
+      "storyRank": 0.0455
     },
     {
       "id": "was_bsky_d9c76741c5df",
@@ -889,7 +998,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0381
+      "storyRank": 0.0377
     },
     {
       "id": "was_tx_07c41b7e7a55",
@@ -923,7 +1032,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.024
+      "storyRank": 0.0238
     },
     {
       "id": "was_tx_6c845a741c88",
@@ -957,7 +1066,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.014
     },
     {
       "id": "was_tx_e3de68f9b0e5",

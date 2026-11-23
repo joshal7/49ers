@@ -26,7 +26,7 @@ export const JARGON_GLOSSARY = {
     term: 'YAC (Yards After Catch)',
     category: 'Analytics',
     definition:
-      'Receiving yardage gained after the ball is secured. A staple of Kyle Shanahan’s spacing concepts designed to hit receivers in stride away from leverage.'
+      'Receiving yardage gained after the ball is secured. A staple of modern NFL spacing and motion concepts designed to hit receivers in stride away from leverage.'
   },
   wopr: {
     term: 'WOPR (Weighted Opportunity Rating)',
@@ -205,7 +205,7 @@ export const JARGON_GLOSSARY = {
     term: 'Outside Zone / Wide Zone',
     category: 'Scheme & Film',
     definition:
-      'Signature Shanahan run scheme: linemen reach-block horizontally to stretch the defensive front sideline-to-sideline while the runner presses the edge and makes a one-cut vertical plant.'
+      'Horizontal stretch run scheme where linemen reach-block laterally to stress the defensive front sideline-to-sideline while the runner presses the edge and makes a one-cut vertical plant.'
   },
   duo: {
     term: 'Duo',
@@ -229,7 +229,7 @@ export const JARGON_GLOSSARY = {
     term: '21 Personnel',
     category: 'Scheme & Film',
     definition:
-      'Offensive grouping with 2 Running Backs (RB + FB Kyle Juszczyk), 1 Tight End, and 2 Wide Receivers. Forces defenses to choose between heavy base personnel or lighter nickel.'
+      'Offensive grouping with 2 Running Backs (RB + FB or two RBs), 1 Tight End, and 2 Wide Receivers. Forces defenses to choose between heavy base personnel or lighter nickel.'
   },
   personnel_12: {
     term: '12 Personnel',
@@ -481,7 +481,7 @@ export const JARGON_GLOSSARY = {
     term: 'Explosive Plays (20+ Pass / 10+ Rush)',
     category: 'Analytics',
     definition:
-      'Completions gaining 20+ yards or rushing attempts gaining 10+ yards. Drives drive-scoring probability in Kyle Shanahan’s play-action and wide-zone offense.'
+      'Completions gaining 20+ yards or rushing attempts gaining 10+ yards. Drives drive-scoring probability across modern play-action and vertical passing offenses.'
   },
   sack_rate: {
     term: 'Sacks Allowed Rate',
@@ -619,7 +619,7 @@ export const JARGON_GLOSSARY = {
     term: 'Choice / Option Route',
     category: 'Scheme & Film',
     definition:
-      'Isolating route (run by RBs like Christian McCaffrey or slot technicians like Keenan Allen) where the receiver reads the defender’s hip leverage post-snap to break out, break in, or sit down in an open zone void.'
+      'Isolating option route (run by RBs or slot technicians) where the receiver reads the defender’s hip leverage post-snap to break out, break in, or sit down in an open zone void.'
   },
   dagger: {
     term: 'Dagger Concept',
@@ -727,7 +727,7 @@ export const JARGON_GLOSSARY = {
     term: 'Seam / Deep Over Route',
     category: 'Scheme & Film',
     definition:
-      'Staple Shanahan play-action route: stemming vertically up the interior seam before breaking across the field at 16–22 yards behind linebackers and in front of deep safeties.'
+      'Staple NFL play-action route: stemming vertically up the interior seam before breaking across the field at 16–22 yards behind linebackers and in front of deep safeties.'
   },
   texas_route: {
     term: 'Angle / Texas Route',
@@ -763,7 +763,7 @@ export const JARGON_GLOSSARY = {
     term: 'Four-Man Rush',
     category: 'Scheme & Film',
     definition:
-      'Generating quarterback pressure strictly with four rushers (via Wide-9 speed, interior push, or stunts) while keeping seven defenders in pass coverage.'
+      'Generating quarterback pressure strictly with four rushers (via edge speed, interior push, or stunts) while keeping seven defenders in pass coverage.'
   },
   box_count: {
     term: 'Light Box vs. Stacked Box',
@@ -799,7 +799,7 @@ export const JARGON_GLOSSARY = {
     term: '4-3 Base Defense',
     category: 'Depth Chart & Alignment',
     definition:
-      'Defensive front featuring 4 defensive linemen (two Wide-9 ends, a 1/2i nose tackle, and a 3-tech DT), 3 off-ball linebackers (SAM, MIKE, WILL), and 4 defensive backs, primarily deployed against heavy 21/12/22 run personnel.'
+      'Defensive front featuring 4 defensive linemen (two edge ends, a 1/2i nose tackle, and a 3-tech DT), 3 off-ball linebackers (SAM, MIKE, WILL), and 4 defensive backs, primarily deployed against heavy 21/12/22 run personnel.'
   },
   nickel_4_2_5: {
     term: '4-2-5 Nickel Defense',
@@ -823,7 +823,7 @@ export const JARGON_GLOSSARY = {
     term: 'Z-Receiver (Flanker)',
     category: 'Depth Chart & Alignment',
     definition:
-      'Movement wide receiver aligned off the line of scrimmage; free to run pre-snap jet/orbit motion, condensed bunches, and high-YAC in-breaking routes in Kyle Shanahan’s offense.'
+      'Movement wide receiver aligned off the line of scrimmage; free to run pre-snap jet/orbit motion, condensed bunches, and high-YAC in-breaking routes.'
   },
   slot_wr: {
     term: 'SLWR (Slot Wide Receiver)',
@@ -835,13 +835,13 @@ export const JARGON_GLOSSARY = {
     term: 'Y-Tight End (In-Line Tight End)',
     category: 'Depth Chart & Alignment',
     definition:
-      'Primary tight end attached to the offensive tackle on the line of scrimmage (George Kittle role), anchoring C-gap run blocking and play-action pass protection while threatening vertical seams.'
+      'Primary tight end attached to the offensive tackle on the line of scrimmage, anchoring C-gap run blocking and play-action pass protection while threatening vertical seams.'
   },
   fullback: {
     term: 'FB (Fullback / Move-Back)',
     category: 'Depth Chart & Alignment',
     definition:
-      'Hybrid lead blocker and versatile chess piece in 21 personnel (Kyle Juszczyk role) used to insert extra run gaps, chip Wide-9 edge rushers, and detach to the slot or boundary to create coverage mismatches.'
+      'Hybrid lead blocker and versatile chess piece in 21 personnel used to insert extra run gaps, chip edge rushers, and detach to the slot or boundary to create coverage mismatches.'
   },
   will_lb: {
     term: 'WILL Linebacker (Weakside LB)',
@@ -853,7 +853,7 @@ export const JARGON_GLOSSARY = {
     term: 'MIKE Linebacker (Middle LB)',
     category: 'Depth Chart & Alignment',
     definition:
-      'Defensive quarterback ("green dot" helmet communicator, Fred Warner role) aligned centrally to set front strength, fit interior run gaps, and carry deep middle seams in Tampa-2 and pattern-match zones.'
+      'Defensive quarterback ("green dot" helmet communicator) aligned centrally to set front strength, fit interior run gaps, and carry deep middle seams in Tampa-2 and pattern-match zones.'
   },
   sam_lb: {
     term: 'SAM Linebacker (Strongside LB)',

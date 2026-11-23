@@ -45,6 +45,70 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
+function hexToRgbTriplet(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  return `${r}, ${g}, ${b}`;
+}
+
+export function computeOnPrimaryInk(primaryHex, primaryBrightHex = '') {
+  const whitePrimary = computeContrastRatio('#FFFFFF', primaryHex);
+  const whiteBright = primaryBrightHex ? computeContrastRatio('#FFFFFF', primaryBrightHex) : whitePrimary;
+  const darkPrimary = computeContrastRatio('#0B0D10', primaryHex);
+  const darkBright = primaryBrightHex ? computeContrastRatio('#0B0D10', primaryBrightHex) : darkPrimary;
+  const minWhite = Math.min(whitePrimary, whiteBright);
+  const minDark = Math.min(darkPrimary, darkBright);
+  return minWhite < 4.5 && minDark > minWhite ? '#0B0D10' : '#FFFFFF';
+}
+
+const OURLADS_TEAM_CODE_OVERRIDES = {
+  ARI: 'ARZ',
+  BAL: 'BLT',
+  CLE: 'CLV',
+  HOU: 'HST'
+};
+
+export function getOurladsTeamCode(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  return OURLADS_TEAM_CODE_OVERRIDES[team.abbr] || team.abbr;
+}
+
+const DEFAULT_TEAM_NICKNAME_ALIASES = {
+  SF: ['49ers', 'Niners'],
+  SEA: ['Seahawks', 'Hawks'],
+  LAR: ['Rams'],
+  ARI: ['Cardinals', 'Cards'],
+  DET: ['Lions'],
+  MIN: ['Vikings', 'Vikes'],
+  GB: ['Packers', 'Pack'],
+  CHI: ['Bears'],
+  PHI: ['Eagles', 'Birds'],
+  DAL: ['Cowboys', 'Boys'],
+  NYG: ['Giants', 'G-Men'],
+  WAS: ['Commanders'],
+  TB: ['Buccaneers', 'Bucs'],
+  NO: ['Saints'],
+  ATL: ['Falcons'],
+  CAR: ['Panthers'],
+  BUF: ['Bills', 'Buffalo'],
+  MIA: ['Dolphins', 'Fins', 'Phins'],
+  NE: ['Patriots', 'Pats'],
+  NYJ: ['Jets'],
+  BAL: ['Ravens'],
+  CIN: ['Bengals'],
+  CLE: ['Browns'],
+  PIT: ['Steelers'],
+  HOU: ['Texans'],
+  IND: ['Colts'],
+  JAX: ['Jaguars', 'Jags'],
+  TEN: ['Titans'],
+  DEN: ['Broncos'],
+  KC: ['Chiefs'],
+  LV: ['Raiders'],
+  LAC: ['Chargers', 'Bolts']
+};
+
+const AMBIGUOUS_GENERIC_CITY_TEAMS = new Set(['NYG', 'NYJ', 'LAR', 'LAC', 'WAS', 'CAR', 'TEN', 'ARI', 'MIN']);
+
 export function computeRelativeLuminance(hex) {
   const { r, g, b } = hexToRgb(hex);
   const lin = [r, g, b].map(v => {
@@ -220,10 +284,17 @@ function makeTeamEntry(raw) {
     assets,
     themes: raw.themes,
     coachesSeed: raw.coachesSeed || null,
+    ourladsCode: OURLADS_TEAM_CODE_OVERRIDES[abbr] || abbr,
     keywordRules: {
-      requiredNicknames: raw.requiredNicknames || [raw.nickname],
-      excludeGenericCity: Boolean(raw.excludeGenericCity),
-      searchAliases: raw.searchAliases || [raw.nickname, `${raw.city} ${raw.nickname}`]
+      requiredNicknames: raw.requiredNicknames || DEFAULT_TEAM_NICKNAME_ALIASES[abbr] || [raw.nickname],
+      excludeGenericCity: raw.excludeGenericCity !== undefined ? Boolean(raw.excludeGenericCity) : AMBIGUOUS_GENERIC_CITY_TEAMS.has(abbr),
+      searchAliases:
+        raw.searchAliases || [
+          ...new Set([
+            ...(DEFAULT_TEAM_NICKNAME_ALIASES[abbr] || [raw.nickname]),
+            `${raw.city} ${raw.nickname}`
+          ])
+        ]
     },
     beatPodcastShows: raw.beatPodcastShows || [],
     youtubeFilmChannels: raw.youtubeFilmChannels || []
@@ -250,7 +321,69 @@ export const ALL_NFL_TEAMS = [
       lightPrimary: '#AA0000', lightPrimaryBright: '#B80000',
       lightSecondary: '#8C7034', lightSecondaryBright: '#6B5320',
       crestPrimary: '#AA0000', crestSecondary: '#B3995D'
-    })
+    }),
+    beatPodcastShows: [
+      {
+        id: 'the_gold_standard',
+        collectionId: 1524313515,
+        name: 'The Gold Standard',
+        fullTitle: 'The Gold Standard: San Francisco 49ers Podcast Network',
+        hosts: 'Rob "Stats" Guerrera & Levin Black',
+        network: 'Audacy / Bleav',
+        feedUrl: 'https://rss.amperwave.net/v2/feed/audacynetwork/927bb572b427ed0168d252cd464a874b',
+        appleShowUrl: 'https://podcasts.apple.com/us/podcast/the-gold-standard-san-francisco-49ers-podcast-network/id1524313515'
+      },
+      {
+        id: '49ers_talk',
+        collectionId: 1153457233,
+        name: '49ers Talk',
+        fullTitle: '49ers Talk: A San Francisco 49ers Podcast',
+        hosts: 'Matt Maiocco & Jennifer Lee Chan',
+        network: 'NBC Sports Bay Area',
+        feedUrl: 'https://feeds.simplecast.com/SCmnvidR',
+        appleShowUrl: 'https://podcasts.apple.com/us/podcast/49ers-talk-a-san-francisco-49ers-podcast/id1153457233'
+      },
+      {
+        id: '49ers_plus_minus',
+        collectionId: 1827546443,
+        name: '49ers +/-',
+        fullTitle: '49ers Plus Minus',
+        hosts: 'Tim Kawakami & Matt Barrows',
+        network: 'The San Francisco Standard / Audacy',
+        feedUrl: 'https://rss.amperwave.net/v2/feed/audacynetwork/49ers-plus-minus',
+        appleShowUrl: 'https://podcasts.apple.com/us/podcast/49ers-plus-minus/id1827546443'
+      },
+      {
+        id: 'dieter_and_hutch',
+        collectionId: 1530087532,
+        name: 'Dieter and Hutch',
+        fullTitle: 'Dieter and Hutch',
+        hosts: 'Dieter Kurtenbach & Jake Hutchinson',
+        network: 'Bay Area News Group / KNBR',
+        feedUrl: 'https://feeds.castos.com/85z8',
+        appleShowUrl: 'https://podcasts.apple.com/us/podcast/dieter-and-hutch/id1530087532'
+      },
+      {
+        id: 'locked_on_49ers',
+        collectionId: 1143358718,
+        name: 'Locked On 49ers',
+        fullTitle: 'Locked On 49ers - Daily Podcast On The San Francisco 49ers',
+        hosts: 'Brian Peacock & Eric Crocker',
+        network: 'Locked On Podcast Network',
+        feedUrl: 'https://rss.pdrl.fm/f9f75c/feeds.simplecast.com/P83yLSb_',
+        appleShowUrl: 'https://podcasts.apple.com/us/podcast/locked-on-49ers-daily-podcast-on-the-san-francisco-49ers/id1143358718'
+      },
+      {
+        id: 'lombardi_lounge',
+        collectionId: 1757355831,
+        name: 'Lombardi Lounge',
+        fullTitle: 'The David Lombardi Lounge',
+        hosts: 'David Lombardi',
+        network: 'The SF Standard / Lombardi',
+        feedUrl: 'https://feeds.megaphone.fm/NSM7362508743',
+        appleShowUrl: 'https://podcasts.apple.com/us/podcast/the-david-lombardi-lounge/id1757355831'
+      }
+    ]
   }),
   makeTeamEntry({
     abbr: 'SEA', slug: 'seahawks', aliases: ['hawks'],
@@ -582,7 +715,7 @@ export const ALL_NFL_TEAMS = [
       {
         "id": "packers_pack",
         "collectionId": 1414100645,
-        "name": "Pack",
+        "name": "Pack-A-Day",
         "fullTitle": "Pack-A-Day: Your Daily Packers Podcast",
         "hosts": "Blue Wire, Andy Herman",
         "network": "Blue Wire, Andy Herman",
@@ -867,14 +1000,24 @@ export const ALL_NFL_TEAMS = [
         "appleShowUrl": "https://podcasts.apple.com/us/podcast/john-keim-report/id1455645619?uo=4"
       },
       {
-        "id": "commanders_commanders_log",
-        "collectionId": 1590398841,
-        "name": "Commander's Log",
-        "fullTitle": "Commander's Log: Unofficial Star Trek Chat",
-        "hosts": "Knew Amsterdam Entertainment",
-        "network": "Knew Amsterdam Entertainment",
-        "feedUrl": "https://anchor.fm/s/6fb8b34c/podcast/rss",
-        "appleShowUrl": "https://podcasts.apple.com/us/podcast/commanders-log-unofficial-star-trek-chat/id1590398841?uo=4"
+        "id": "commanders_the_al_galdi_podcast",
+        "collectionId": 1553345193,
+        "name": "The Al Galdi Podcast",
+        "fullTitle": "The Al Galdi Podcast",
+        "hosts": "Al Galdi, Blue Wire",
+        "network": "Blue Wire",
+        "feedUrl": "https://rss.pdrl.fm/411d5a/feeds.simplecast.com/Xn4Ik036",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-al-galdi-podcast/id1553345193?uo=4"
+      },
+      {
+        "id": "commanders_beltway_football",
+        "collectionId": 1151988852,
+        "name": "Beltway Football",
+        "fullTitle": "Beltway Football",
+        "hosts": "JP Finlay, Mitch Tischler, Pete Hailey",
+        "network": "Monumental Sports Network",
+        "feedUrl": "https://rss.art19.com/beltway-football",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/beltway-football/id1151988852?uo=4"
       },
       {
         "id": "commanders_the_kevin_sheehan_show",
@@ -1024,6 +1167,26 @@ export const ALL_NFL_TEAMS = [
         "network": "Locked On Podcast Network, Aaron Freeman",
         "feedUrl": "https://rss.pdrl.fm/d31f4c/feeds.simplecast.com/l96cnojt",
         "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-falcons-daily-podcast-on-the-atlanta-falcons/id1147245791?uo=4"
+      },
+      {
+        "id": "falcons_bleav_in_falcons",
+        "collectionId": 1563021906,
+        "name": "Bleav in Falcons",
+        "fullTitle": "Bleav in Falcons",
+        "hosts": "Bleav Network",
+        "network": "Bleav",
+        "feedUrl": "https://feeds.simplecast.com/GVQXOdsn",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/bleav-in-falcons/id1563021906?uo=4"
+      },
+      {
+        "id": "falcons_outta_your_falcon_mind",
+        "collectionId": 1590954165,
+        "name": "Outta Your Falcon Mind",
+        "fullTitle": "Outta Your Falcon Mind",
+        "hosts": "Outta Your Falcon Mind",
+        "network": "Outta Your Falcon Mind",
+        "feedUrl": "https://anchor.fm/s/6b524804/podcast/rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/outta-your-falcon-mind/id1590954165?uo=4"
       }
     ]
   }),
@@ -1063,6 +1226,16 @@ export const ALL_NFL_TEAMS = [
         "network": "99.9 The Fan | Raleigh, North Carolina",
         "feedUrl": "https://feed.cdnstream1.com/zjb/feed/download/99/c9/e8/99c9e89a-3322-4455-8c08-b882e03ba2af.xml",
         "appleShowUrl": "https://podcasts.apple.com/us/podcast/panthers-playbook/id1697162650?uo=4"
+      },
+      {
+        "id": "panthers_bleav_in_carolina_panthers",
+        "collectionId": 1515076603,
+        "name": "Bleav in Panthers",
+        "fullTitle": "Bleav in Carolina Panthers",
+        "hosts": "Bleav Network",
+        "network": "Bleav",
+        "feedUrl": "https://feeds.simplecast.com/heiTBv_K",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/bleav-in-carolina-panthers/id1515076603?uo=4"
       }
     ]
   }),
@@ -1190,7 +1363,7 @@ export const ALL_NFL_TEAMS = [
       {
         "id": "patriots_patriots_catch",
         "collectionId": 1648381074,
-        "name": "Patriots Catch",
+        "name": "Patriots Catch-22",
         "fullTitle": "Patriots Catch-22",
         "hosts": "New England Patriots",
         "network": "New England Patriots",
@@ -1406,14 +1579,14 @@ export const ALL_NFL_TEAMS = [
         "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-daily-podcast-on-the-cincinnati-bengals/id1159723162?uo=4"
       },
       {
-        "id": "bengals_locked_on_bengals_with_james_rapie",
-        "collectionId": 1648067709,
-        "name": "Locked on Bengals with James Rapien",
-        "fullTitle": "Locked on Bengals with James Rapien",
-        "hosts": "ESPN 1530 (WCKY-AM)",
-        "network": "ESPN 1530 (WCKY-AM)",
-        "feedUrl": "https://www.omnycontent.com/d/playlist/98a2599f-cd9b-4f2a-9be4-b22c00e585f2/a8dd75cd-1409-4a4c-b5dd-b36401390ffc/d57deb35-2769-4a97-bd17-b36401391002/podcast.rss",
-        "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-with-james-rapien/id1648067709?uo=4"
+        "id": "bengals_hear_that_podcast_growlin",
+        "collectionId": 1477129521,
+        "name": "Hear That Podcast Growlin'",
+        "fullTitle": "Hear That Podcast Growlin': A show about the Cincinnati Bengals",
+        "hosts": "Paul Dehner Jr., Jay Morrison",
+        "network": "The Athletic",
+        "feedUrl": "https://feeds.acast.com/public/shows/68374e7f9bd0275f2c49845e",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/hear-that-podcast-growlin-a-show-about-the/id1477129521?uo=4"
       },
       {
         "id": "bengals_chatterbox_bengals",
@@ -1830,6 +2003,16 @@ export const ALL_NFL_TEAMS = [
         "network": "ALLCITY Network, DNVR Sports",
         "feedUrl": "https://feeds.simplecast.com/w3d46li7",
         "appleShowUrl": "https://podcasts.apple.com/us/podcast/dnvr-denver-broncos-podcast/id1067992218?uo=4"
+      },
+      {
+        "id": "broncos_broncos_country_tonight",
+        "collectionId": 1477515380,
+        "name": "Broncos Country Tonight",
+        "fullTitle": "Broncos Country Tonight",
+        "hosts": "Ryan Edwards, Benjamin Allbright",
+        "network": "KOA 850 AM & 94.1 FM",
+        "feedUrl": "https://www.omnycontent.com/d/playlist/98a2599f-cd9b-4f2a-9be4-b22c00e585f2/c3ec75a8-e2e0-4425-97f2-b3ec01744218/750c02de-9fcf-4ebc-bd80-b3ec0174421f/podcast.rss",
+        "appleShowUrl": "https://podcasts.apple.com/us/podcast/broncos-country-tonight/id1477515380?uo=4"
       }
     ]
   }),
@@ -2065,7 +2248,17 @@ export function buildTeamCssVarsStyleBlock(teamInput = null) {
   const team = resolveTeamConfig(teamInput);
   const d = team.themes.dark;
   const l = team.themes.light;
-  return `:root{--bg-primary:${d.bgPrimary};--bg-elevated:${d.bgElevated};--bg-card-alt:${d.bgCardAlt};--bg-input:${d.bgInput};--bg-header:${d.bgHeader};--bg-glass:${d.bgGlass};--scarlet:${d.primary};--scarlet-bright:${d.primaryBright};--scarlet-soft:${d.primarySoft};--gold:${d.secondary};--gold-bright:${d.secondaryBright};--gold-soft:${d.secondarySoft};--gold-border:${d.secondaryBorder};--bg-glow-primary:${d.glowPrimary};--bg-glow-secondary:${d.glowSecondary};}[data-theme="light"]{--bg-primary:${l.bgPrimary};--bg-elevated:${l.bgElevated};--bg-card-alt:${l.bgCardAlt};--bg-input:${l.bgInput};--bg-header:${l.bgHeader};--bg-glass:${l.bgGlass};--scarlet:${l.primary};--scarlet-bright:${l.primaryBright};--scarlet-soft:${l.primarySoft};--gold:${l.secondary};--gold-bright:${l.secondaryBright};--gold-soft:${l.secondarySoft};--gold-border:${l.secondaryBorder};--bg-glow-primary:${l.glowPrimary};--bg-glow-secondary:${l.glowSecondary};}`;
+  const dPrimRgb = hexToRgbTriplet(d.primary);
+  const dPrimBrightRgb = hexToRgbTriplet(d.primaryBright);
+  const dSecRgb = hexToRgbTriplet(d.secondary);
+  const dSecBrightRgb = hexToRgbTriplet(d.secondaryBright);
+  const dOnPrimary = computeOnPrimaryInk(d.primary, d.primaryBright);
+  const lPrimRgb = hexToRgbTriplet(l.primary);
+  const lPrimBrightRgb = hexToRgbTriplet(l.primaryBright);
+  const lSecRgb = hexToRgbTriplet(l.secondary);
+  const lSecBrightRgb = hexToRgbTriplet(l.secondaryBright);
+  const lOnPrimary = computeOnPrimaryInk(l.primary, l.primaryBright);
+  return `:root{--bg-primary:${d.bgPrimary};--bg-elevated:${d.bgElevated};--bg-card-alt:${d.bgCardAlt};--bg-input:${d.bgInput};--bg-header:${d.bgHeader};--bg-glass:${d.bgGlass};--scarlet:${d.primary};--scarlet-bright:${d.primaryBright};--scarlet-soft:${d.primarySoft};--gold:${d.secondary};--gold-bright:${d.secondaryBright};--gold-soft:${d.secondarySoft};--gold-border:${d.secondaryBorder};--bg-glow-primary:${d.glowPrimary};--bg-glow-secondary:${d.glowSecondary};--primary-rgb:${dPrimRgb};--primary-bright-rgb:${dPrimBrightRgb};--secondary-rgb:${dSecRgb};--secondary-bright-rgb:${dSecBrightRgb};--on-primary:${dOnPrimary};--dossier-hero-glow-primary:rgba(${dPrimRgb},0.18);--dossier-hero-glow-secondary:rgba(${dSecRgb},0.12);}[data-theme="light"]{--bg-primary:${l.bgPrimary};--bg-elevated:${l.bgElevated};--bg-card-alt:${l.bgCardAlt};--bg-input:${l.bgInput};--bg-header:${l.bgHeader};--bg-glass:${l.bgGlass};--scarlet:${l.primary};--scarlet-bright:${l.primaryBright};--scarlet-soft:${l.primarySoft};--gold:${l.secondary};--gold-bright:${l.secondaryBright};--gold-soft:${l.secondarySoft};--gold-border:${l.secondaryBorder};--bg-glow-primary:${l.glowPrimary};--bg-glow-secondary:${l.glowSecondary};--primary-rgb:${lPrimRgb};--primary-bright-rgb:${lPrimBrightRgb};--secondary-rgb:${lSecRgb};--secondary-bright-rgb:${lSecBrightRgb};--on-primary:${lOnPrimary};--dossier-hero-glow-primary:rgba(${lPrimRgb},0.12);--dossier-hero-glow-secondary:rgba(${lSecRgb},0.14);}`;
 }
 
 export function applyTeamThemeToDocument(teamInput = null) {
@@ -2096,6 +2289,14 @@ export function applyTeamThemeToDocument(teamInput = null) {
   const appNameEl = document.querySelector('meta[name="application-name"]');
   if (appNameEl) appNameEl.setAttribute('content', team.shortTitle);
 
+  const iconEl = document.querySelector('link[rel="icon"]');
+  if (iconEl && team.assets?.appIconSvg) iconEl.setAttribute('href', team.assets.appIconSvg);
+  document.querySelectorAll('link[rel="apple-touch-icon"], link[rel="apple-touch-icon-precomposed"]').forEach(el => {
+    const sizes = el.getAttribute('sizes');
+    const href = sizes === '180x180' ? team.assets?.appleTouchIcon180Png || team.assets?.appleTouchIconPng : team.assets?.appleTouchIconPng;
+    if (href) el.setAttribute('href', href);
+  });
+
   const crestImg = document.querySelector('.brand-medallion');
   if (crestImg) {
     crestImg.setAttribute('src', team.assets.crestSvg);
@@ -2106,6 +2307,14 @@ export function applyTeamThemeToDocument(teamInput = null) {
   const titleText = document.getElementById('headerTitleText');
   if (titleText && (titleText.textContent === '49ers Faithful' || !titleText.dataset.customTabTitle)) {
     titleText.textContent = team.brandName;
+  }
+  const sheetEyebrow = document.getElementById('sheetEyebrow');
+  if (sheetEyebrow && /49ers Dossier|Player Dossier/i.test(sheetEyebrow.textContent || '')) {
+    sheetEyebrow.textContent = `${team.nickname} Dossier`;
+  }
+  const splashTitle = document.querySelector('main#mainView .card-title');
+  if (splashTitle && /Initializing 49ers Faithful Intelligence/i.test(splashTitle.textContent || '')) {
+    splashTitle.textContent = `Initializing ${team.brandName} Intelligence…`;
   }
 
   const hubBackBtn = document.getElementById('nflHubBackBtn');
@@ -2188,15 +2397,18 @@ export function buildDeterministicCoachingMatchup({
   const coaches = getTeamCoaches(activeTeam, metaCoaches);
   const cleanOppAbbr = String(oppAbbr || '').toUpperCase().trim();
   const oppSeed = cleanOppAbbr && cleanOppAbbr !== 'TBD' && cleanOppAbbr !== 'BYE' ? NFL_COACHES_SEED[cleanOppAbbr] || null : null;
+  const oppSameHcDc = oppSeed?.hc && oppSeed?.dc && oppSeed.hc.toLowerCase() === oppSeed.dc.toLowerCase();
   const oppStaffTitle = oppCoachName
     ? oppCoachName
     : oppSeed
-      ? [
-          oppSeed.hc ? `HC ${oppSeed.hc}` : '',
-          oppSeed.dc ? `DC ${oppSeed.dc}` : ''
-        ]
-          .filter(Boolean)
-          .join(' & ')
+      ? oppSameHcDc
+        ? `HC/DC ${oppSeed.hc}`
+        : [
+            oppSeed.hc ? `HC ${oppSeed.hc}` : '',
+            oppSeed.dc ? `DC ${oppSeed.dc}` : ''
+          ]
+            .filter(Boolean)
+            .join(' & ')
       : `${oppName} Staff`;
   const venueTag = homeAway === 'home' ? activeTeam.stadium : 'Road Test';
   const oppRecTag = oppRecord && oppRecord !== '—' ? ` (${oppRecord})` : '';
@@ -2212,14 +2424,17 @@ export function buildDeterministicCoachingMatchup({
     };
   }
 
-  const ourLead = `${coaches.hc} & DC ${coaches.dc}`;
+  const sameHcDc = coaches.hc && coaches.dc && coaches.hc.toLowerCase() === coaches.dc.toLowerCase();
+  const ourLead = sameHcDc ? `HC/DC ${coaches.hc}` : `${coaches.hc} & DC ${coaches.dc}`;
   const ocLabel = coaches.oc && coaches.oc !== coaches.hc ? `OC ${coaches.oc}` : coaches.hc;
+  const staffSummaryList = sameHcDc ? `HC/DC ${coaches.hc}, ${ocLabel}` : `${coaches.hc}, ${ocLabel}, DC ${coaches.dc}`;
+  const dcLabel = sameHcDc ? `HC/DC ${coaches.hc}` : `DC ${coaches.dc}`;
   return {
     headline: `${ourLead} vs. ${oppStaffTitle} (${venueTag})`,
-    summary: `Week ${week} two-sided coordinator chess match pitting ${activeTeam.fullName}'s staff (${coaches.hc}, ${ocLabel}, DC ${coaches.dc}) against ${oppName}${oppRecTag}—testing both ${activeTeam.city}'s offensive efficiency and its defensive pass-rush and coverage discipline.`,
+    summary: `Week ${week} two-sided coordinator chess match pitting ${activeTeam.fullName}'s staff (${staffSummaryList}) against ${oppName}${oppRecTag}—testing both ${activeTeam.city}'s offensive efficiency and its defensive pass-rush and coverage discipline.`,
     bullets: [
       `Pass-Game Efficiency & Coverage Shell Delta: ${coaches.hc} and ${ocLabel} look to stress ${oppName}'s single-high vs. two-high rotations with pre-snap motion, spacing, and play-action timing, while ${oppName}'s defensive front and coverage disguises aim to compress intermediate throwing windows.`,
-      `Trench Run-Fit & Two-Way Leverage: DC ${coaches.dc} balances pass-rush pressure with two-high/split-safety discipline on early downs, while ${oppName}'s offense tests ${activeTeam.city}'s edge containment, third-down execution, and red-zone stops.`
+      `Trench Run-Fit & Two-Way Leverage: ${dcLabel} balances pass-rush pressure with two-high/split-safety discipline on early downs, while ${oppName}'s offense tests ${activeTeam.city}'s edge containment, third-down execution, and red-zone stops.`
     ]
   };
 }
@@ -2235,7 +2450,7 @@ export function hasCrossTeam49ersLeak(text = '', teamInput = null, oppAbbr = '')
   if (activeTeam.abbr === 'SF' || cleanOpp === 'SF') return false;
   const hay = String(text || '');
   if (!hay) return false;
-  return /\b(?:kyle\s+shanahan|raheem\s+morris|klay\s+kubiak|levi['’]?s\s+stadium|san\s+francisco\s+49ers|49ers\s+faithful)\b/i.test(
+  return /\b(?:kyle\s+shanahan|raheem\s+morris|klay\s+kubiak|john\s+lynch|levi['’]?s\s+stadium|san\s+francisco\s+49ers|49ers\s+faithful|49ers\.joshal\.com|overthecap\.com\/salary-cap\/san-francisco-49ers)\b/i.test(
     hay
   );
 }

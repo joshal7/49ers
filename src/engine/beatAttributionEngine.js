@@ -55,6 +55,7 @@ export const BEAT_REPORTER_DIRECTORY = [
   { id: 'tim_ryan', name: 'Tim Ryan', handle: '@TimRyan99', outletId: 'knbr_radio', outletName: 'KNBR / 49ers Radio', trustTier: 2, credibilityScore: 93, handleAliases: ['@TimRyan49ers'], teamAbbr: 'SF' },
   { id: 'greg_papa', name: 'Greg Papa', handle: '', outletId: 'knbr_radio', outletName: 'KNBR / 49ers Radio', trustTier: 2, credibilityScore: 88, profileUrl: 'https://www.knbr.com/49ers/', teamAbbr: 'SF' },
   { id: 'guy_haberman', name: 'Guy Haberman', handle: '@GuyHaberman', outletId: 'youtube_film', outletName: 'Haberman & Middlekauff', trustTier: 2, credibilityScore: 91, teamAbbr: 'SF' },
+  { id: 'rob_guerrera', name: 'Rob "Stats" Guerrera', handle: '@StatsOnFire', outletId: 'youtube_film', outletName: 'The Gold Standard', trustTier: 2, credibilityScore: 90, aliases: ['rob guerrera'], teamAbbr: 'SF' },
   { id: 'john_chapman', name: 'John Chapman', handle: '@JL_Chapman', outletId: 'youtube_film', outletName: '49ers Rush', trustTier: 2, credibilityScore: 90, teamAbbr: 'SF' },
   { id: 'brian_peacock', name: 'Brian Peacock', handle: '@BDPeacock', outletId: 'youtube_film', outletName: 'Locked On 49ers', trustTier: 2, credibilityScore: 90, teamAbbr: 'SF' },
   { id: 'eric_crocker', name: 'Eric Crocker', handle: '@Crocky209', outletId: 'youtube_film', outletName: 'Locked On 49ers', trustTier: 2, credibilityScore: 91, handleAliases: ['@eric_crocker'], teamAbbr: 'SF' },
@@ -414,10 +415,12 @@ export const BSKY_ACTOR_TO_X_HANDLE = {
   'mattmaiocco.bsky.social': '@MaioccoNBCS',
   'mattbarrows.bsky.social': '@mattbarrows',
   'jenniferleechan.bsky.social': '@jenniferleechan',
+  'eric-branch.bsky.social': '@Eric_Branch',
   'timkawakami.bsky.social': '@timkawakami',
   'nbcs49ers.bsky.social': '@NBCS49ers',
   'nbcsportsbayarea.com': '@NBCSAuthentic',
   '49erswebzone.bsky.social': '@49erswebzone',
+  'statsonfire.bsky.social': '@StatsOnFire',
   'victafur.bsky.social': '@VicTafur',
   'adamscheftermirror.bsky.social': '@AdamSchefter',
   'rapsheet.bsky.social': '@RapSheet',
@@ -607,7 +610,17 @@ export function extractBeatAttributionFromText(rawText = '', fallback = {}) {
 }
 
 const ACUTE_INJURY_OBSERVATION_REGEX =
-  /\b(questionable to return|probable to return|doubtful to return|ruled out|will not return|out for the rest|cleared to return|back in the game|returning to the game|returned to the game|medical tent|blue tent|locker room|carted off|limped off|limping|helped off|athletic trainer|with trainers|examined on the sideline|helmet off|concussion evaluation|concussion protocol|not practicing|not seen at practice|missed practice|side field|rehab field|working on a side|in warmups|pregame warmups|during warmups|non-contact jersey|blue non-contact|walking boot|setback|aggravated|re-aggravated|tweaked|mri|x-ray|high-ankle|meniscus|acl|mcl|achilles|pectoral|activated from injured reserve|activated off ir|activated from ir|21-day practice window|designated to return|placed on injured reserve|placed on ir|didn't activate|did not activate|game-time decision|officially active|officially inactive|full workload|no limitations)\b/i;
+  /\b(questionable to return|probable to return|doubtful to return|ruled out|will not return|out for the rest|cleared to return|medical tent|blue tent|carted off|limped off|limping|helped off|athletic trainer|with trainers|examined on the sideline|helmet off|concussion evaluation|concussion protocol|not practicing|not seen at practice|missed practice|side field|rehab field|working on a side|in warmups|pregame warmups|during warmups|non-contact jersey|blue non-contact|walking boot|setback|aggravated|re-aggravated|tweaked|mri|x-ray|high-ankle|meniscus|acl|mcl|achilles|pectoral|activated from injured reserve|activated off ir|activated from ir|21-day practice window|designated to return|placed on injured reserve|placed on ir|didn't activate|did not activate|game-time decision|officially active|officially inactive|full workload|no limitations)\b/i;
+
+const ACUTE_RETURN_TO_GAME_PHRASE_REGEX =
+  /\b(?:returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|returning to the game|back in the game)\b/i;
+
+const TEAM_COMEBACK_RETURN_EXCLUSION_REGEX =
+  /\b(?:(?:let|lets|letting|get|gets|got|getting|put|puts|putting|bring|brings|brought|bringing|keep|keeps|kept|keeping|pull|pulls|pulled|pulling|lead|leads|led|leading|claw|claws|clawed|clawing|fight|fights|fought|fighting|way|right|still|stay|stays|stayed|staying)\s+(?:[a-z0-9#'’.-]+\s+){0,4}back\s+in\s+the\s+game|(?:them|us|themselves|they(?:'re|’re|\s+are)?|we(?:'re|’re|\s+are)?|(?:the\s+)?(?:offense|defense|team|squad|49ers|niners|cowboys|vikings|dallas|san\s+francisco|minnesota))\s+(?:is\s+|are\s+|'s\s+|’s\s+|'re\s+|’re\s+|right\s+)?(?:back\s+in\s+the\s+game|returning\s+to\s+the\s+game|returned\s+to\s+(?:the\s+)?game))\b/i;
+
+const ACUTE_LOCKER_ROOM_REGEX = /\blocker room\b/i;
+const ROUTINE_HALFTIME_OR_POSTGAME_LOCKER_ROOM_REGEX =
+  /\b(?:at\s+halftime|for\s+halftime|into\s+halftime|for\s+the\s+half|at\s+the\s+half|after\s+the\s+(?:game|win|loss|victory)|locker\s+room\s+(?:interview|speech|celebration))\b/i;
 
 const SPECULATIVE_EXCLUSION_REGEX =
   /\b(mock trade|trade proposal|trade idea|trade pitch|hypothetical|what if|flashback|on this day|\d+\s+years ago|way-too-early|mailbag)\b/i;
@@ -639,7 +652,33 @@ export function isAcuteInjuryOrAvailabilityScoop(text = '') {
   if (!clean || SPECULATIVE_EXCLUSION_REGEX.test(clean) || SECONDARY_OR_TRIVIA_TOPIC_EXCLUSION_REGEX.test(clean)) {
     return false;
   }
-  return ACUTE_INJURY_OBSERVATION_REGEX.test(clean);
+  if (ACUTE_INJURY_OBSERVATION_REGEX.test(clean)) {
+    return true;
+  }
+  if (ACUTE_LOCKER_ROOM_REGEX.test(clean) && !ROUTINE_HALFTIME_OR_POSTGAME_LOCKER_ROOM_REGEX.test(clean)) {
+    return true;
+  }
+  if (ACUTE_RETURN_TO_GAME_PHRASE_REGEX.test(clean)) {
+    if (TEAM_COMEBACK_RETURN_EXCLUSION_REGEX.test(clean)) return false;
+    if (
+      /\b(?:\d+[- ]point\s+(?:lead|deficit)|led\s+[a-z0-9#'’.-]+\s+by\s+\d+|lead(?:s|ing)?\s+by\s+\d+|trail(?:s|ed|ing)?\s+by\s+\d+|cut\s+the\s+(?:lead|deficit)|comeback)\b/i.test(
+        clean
+      ) &&
+      !/\b(?:injur\w*|tent|trainer|concussion|ankle|knee|leg|shoulder|hamstring|calf|groin|rib|evaluated|cleared|sideline)\b/i.test(
+        clean
+      )
+    ) {
+      return false;
+    }
+    // Require singular player subject or medical context for bare "back in the game"
+    if (/\bback\s+in\s+the\s+game\b/i.test(clean) && !/\b(?:returned|returning)\s+to\s+(?:the\s+|tonight['’]?s\s+|sunday['’]?s\s+)?(?:game|action)\b/i.test(clean)) {
+      const hasMedicalCue = /\b(?:injur\w*|tent|trainer|concussion|ankle|knee|leg|shoulder|hamstring|calf|groin|rib|evaluated|cleared|sideline)\b/i.test(clean);
+      const hasPlayerSubject = /(?:^|[.!?;:\n]\s*|\s)(?:[A-Z][a-z'.-]{1,16}(?:\s+[A-Z][a-z'.-]{1,16})?|[Hh]e)(?:\s+(?:is|was|looks|appears|now|already)|['’]s|\s)\s*back\s+in\s+the\s+game\b/.test(clean);
+      return hasMedicalCue || hasPlayerSubject;
+    }
+    return true;
+  }
+  return false;
 }
 
 function classifyWireEventTopic(text = '') {
@@ -930,8 +969,13 @@ export function resolveEnabledDirectXReporters({
   userPrefs = null,
   includeHotTakes = false
 } = {}) {
+  const activeTeam = resolveTeamConfig(ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
   const sourceList =
-    Array.isArray(reporters) && reporters.length > 0 ? reporters : SETTINGS_DIRECT_X_REPORTER_SEEDS;
+    Array.isArray(reporters) && reporters.length > 0
+      ? reporters
+      : activeTeam?.abbr === 'SF'
+        ? SETTINGS_DIRECT_X_REPORTER_SEEDS
+        : [];
   const disabledReps = new Set(userPrefs?.disabledReporterIds || []);
   const disabledOutlets = new Set(userPrefs?.disabledOutlets || []);
   const muteHotTakes = !includeHotTakes && Boolean(userPrefs?.muteHotTakePersonalities);
@@ -958,7 +1002,9 @@ function packXSearchQueryWithinBudget(handles = [], suffixClause = '', maxChars 
     cleanHandles.push(clean);
   }
   if (cleanHandles.length === 0) {
-    cleanHandles.push('49ers');
+    const activeTeam = resolveTeamConfig(ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
+    const fallbackHandle = activeTeam?.abbr === 'SF' ? '49ers' : activeTeam?.slug || 'NFL';
+    cleanHandles.push(fallbackHandle);
   }
 
   const suffix = suffixClause ? ` ${suffixClause.trim()}` : '';
@@ -1311,6 +1357,19 @@ function normalizeComparableHref(raw = '') {
 }
 
 function tokenizeSocialMatchText(raw = '') {
+  const activeTeam = resolveTeamConfig(ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
+  const teamStopTokens = new Set(
+    [
+      '49ers', 'niners', 'francisco', 'shanahan',
+      activeTeam?.nickname,
+      activeTeam?.city,
+      activeTeam?.coachesSeed?.hc,
+      activeTeam?.coachesSeed?.gm
+    ]
+      .filter(Boolean)
+      .flatMap(v => String(v).toLowerCase().split(/\s+/))
+      .filter(w => w.length >= 3)
+  );
   return String(raw || '')
     .toLowerCase()
     .replace(/https?:\/\/\S+/g, ' ')
@@ -1321,7 +1380,8 @@ function tokenizeSocialMatchText(raw = '') {
     .filter(
       w =>
         w.length >= 4 &&
-        !/^(49ers|niners|francisco|today|practice|week|sunday|monday|tuesday|wednesday|thursday|friday|saturday|coach|shanahan|said|says|report|reports|season|team|teams|players|player|have|been|with|from|that|this|they|their|will|after|before|into|more|also)$/.test(
+        !teamStopTokens.has(w) &&
+        !/^(today|practice|week|sunday|monday|tuesday|wednesday|thursday|friday|saturday|coach|said|says|report|reports|season|team|teams|players|player|have|been|with|from|that|this|they|their|will|after|before|into|more|also)$/.test(
           w
         )
     );

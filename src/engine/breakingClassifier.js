@@ -47,23 +47,135 @@ export function isUrgentBreakingBadge(badge = '') {
   return URGENT_BREAKING_BADGES.has(String(badge || '').trim().toUpperCase());
 }
 
-const IN_GAME_INJURY_RETURN_REGEX =
-  /\b(questionable to return|probable to return|doubtful to return|ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded to out|out for the (?:rest|remainder|game|night|day|season|year)|will not return|won['’]?t return|did not return|done for the (?:day|night|game|season|year)|cleared to return|cleared concussion protocol|back in the game|returning to the game|returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|(?:headed|going|went|walked|taken|limped|helped|escorted|carted)\s+(?:off\s+)?(?:to\s+the\s+locker\s+room|(?:into|to|down)\s+the\s+tunnel)|blue medical tent|medical tent|evaluated for (?:a )?concussion|concussion (?:evaluation|protocol)|being evaluated|being checked (?:in|out in) the (?:blue )?(?:medical )?tent|carted (?:off|to|away|from|back|into|down)|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|loaded\s+onto\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming|comes|came|rolling|rolled|heading|headed)?\s*out|(?:bringing|brought|bring|calling|called|motion(?:ed|ing)?|wav(?:ed|ing)?)\s+(?:out\s+the\s+|for\s+the\s+)cart|medical\s+cart|in an air\s*cast|air\s*cast|splint\b|immobiliz\w*|on crutches|walking boot|non-contact (?:injury|knee|ankle|leg)|(?:down|staying\s+down|remained\s+down|still\s+down)\s+on\s+(?:the\s+)?(?:field|turf|grass)|went\s+down\s+(?:hard|clutching|grabbing|holding|with|on\s+the\s+play|after\s+getting\s+rolled)|rolled\s+up\s+on|limped off|limping off|helped off(?: the field)?|walked off with trainers|with athletic trainers|examined by trainers|examined on the sideline|(?:trainers|medical\s+staff)\s+(?:are\s+)?(?:out|rushing|attending|tending|checking|looking\s+at|examining|surrounding)|being\s+tended\s+to|tended\s+to\s+by\s+trainers|receiving\s+medical\s+attention|(?:left|exited) (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s) (?:game|contest|matchup)|(?:lower[- ]|upper[- ]|right\s+|left\s+)?leg\s+injur\w*|gruesome\s+(?:[a-z-]+\s+)?injur\w*|in-game injury|injury update:\s*[a-z])\b/i;
+// Unambiguous in-game injury, medical tent, cart, or return-status phrases.
+// Ambiguous return-to-game idioms ("back in the game", "returning to the game", "returned to the game")
+// and locker-room/tunnel walks are evaluated via `matchesInGameInjuryOrReturn()` so team comeback chatter
+// (e.g. "letting them back in the game", "gets the 49ers right back in the game") and halftime locker-room
+// walks never trigger false `LIVE INJURY UPDATE` badges.
+const IN_GAME_EXPLICIT_INJURY_REGEX =
+  /\b(questionable to return|probable to return|doubtful to return|ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded to out|out for the (?:rest|remainder|game|night|day|season|year)|will not return|won['’]?t return|did not return(?!\s+(?:the\s+|a\s+|that\s+|his\s+)?(?:punt|kick|kickoff|fumble|interception))|done for the (?:day|night|game|season|year)|cleared to return|cleared concussion protocol|blue medical tent|medical tent|evaluated for (?:a )?concussion|concussion (?:evaluation|protocol)|being evaluated|being checked (?:in|out in) the (?:blue )?(?:medical )?tent|carted (?:off|to|away|from|back|into|down)|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|loaded\s+onto\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming|comes|came|rolling|rolled|heading|headed)?\s*out|(?:bringing|brought|bring|calling|called|motion(?:ed|ing)?|wav(?:ed|ing)?)\s+(?:out\s+the\s+|for\s+the\s+)cart|medical\s+cart|in an air\s*cast|air\s*cast|splint\b|immobiliz\w*|on crutches|walking boot|non-contact (?:injury|knee|ankle|leg)|(?:down|staying\s+down|remained\s+down|still\s+down)\s+on\s+(?:the\s+)?(?:field|turf|grass)|went\s+down\s+(?:hard|clutching|grabbing|holding|with|on\s+the\s+play|after\s+getting\s+rolled)|rolled\s+up\s+on|limped off|limping off|helped off(?: the field)?|walked off with trainers|with athletic trainers|examined by trainers|examined on the sideline|(?:trainers|medical\s+staff)\s+(?:are\s+)?(?:out|rushing|attending|tending|checking|looking\s+at|examining|surrounding)|being\s+tended\s+to|tended\s+to\s+by\s+trainers|receiving\s+medical\s+attention|(?:left|exited) (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s) (?:game|contest|matchup)|(?:lower[- ]|upper[- ]|right\s+|left\s+)?leg\s+injur\w*|gruesome\s+(?:[a-z-]+\s+)?injur\w*|in-game injury|injury update:\s*[a-z])\b/i;
+
+const LOCKER_ROOM_OR_TUNNEL_EXIT_REGEX =
+  /\b(?:headed|going|went|walked|taken|limped|helped|escorted|carted)\s+(?:off\s+)?(?:to\s+the\s+locker\s+room|(?:into|to|down)\s+the\s+tunnel)\b/i;
+
+const ROUTINE_HALFTIME_OR_POSTGAME_LOCKER_ROOM_REGEX =
+  /\b(?:at\s+halftime|for\s+halftime|into\s+halftime|before\s+halftime|for\s+the\s+half|at\s+the\s+half|end\s+of\s+the\s+(?:first\s+)?half|after\s+the\s+(?:game|win|loss|victory))\b/i;
+
+const INJURY_OR_MEDICAL_CONTEXT_REGEX =
+  /\b(injur\w*|tent\b|trainer|trainers|medical\s+staff|concussion|ankle|knee|leg\b|shoulder|hamstring|calf|groin|rib|ribs|back\s+(?:spasm|tightness|injury|issue)|wrist|hand\b|finger|thumb|foot\b|toe\b|hip\b|neck\b|head\s+injur\w*|chest|elbow|quad\b|achilles|acl\b|mcl\b|pcl\b|lcl\b|evaluated|cleared|helmet\s+back\s+on|locker\s+room|tunnel|limp(?:ed|ing)?|cart(?:ed)?|air\s*cast|x-rays?|mri\b|shaken\s+up|taped\s+up|hobbled|hobbling)\b/i;
+
+const TEAM_COMEBACK_BACK_IN_GAME_REGEX =
+  /\b(?:(?:let|lets|letting|get|gets|got|getting|put|puts|putting|bring|brings|brought|bringing|keep|keeps|kept|keeping|pull|pulls|pulled|pulling|lead|leads|led|leading|claw|claws|clawed|clawing|fight|fights|fought|fighting|climb|climbs|climbed|climbing|crawl|crawls|crawled|crawling|storm|storms|stormed|storming|march|marches|marched|marching|way|right|still|stay|stays|stayed|staying)\s+(?:[a-z0-9#'’.-]+\s+){0,4}(?:back\s+in\s+the\s+game|back\s+into\s+the\s+game)|(?:them|us|themselves|they(?:'re|’re|\s+are)?|we(?:'re|’re|\s+are)?|(?:the\s+)?(?:offense|defense|special\s+teams|team|squad|unit))\s+(?:is\s+|are\s+|'s\s+|’s\s+|'re\s+|’re\s+|right\s+|firmly\s+|suddenly\s+|now\s+)*(?:back\s+in\s+the\s+(?:game|huddle|lineup)|back\s+on\s+the\s+field|returning\s+to\s+the\s+game|returned\s+to\s+(?:the\s+)?game))\b/i;
+
+const SCORE_OR_LEAD_COMMENTARY_REGEX =
+  /\b(?:\d+[- ]point\s+(?:lead|deficit)|led\s+[a-z0-9#'’.-]+\s+by\s+\d+|lead(?:s|ing)?\s+by\s+\d+|trail(?:s|ed|ing)?\s+by\s+\d+|up\s+by\s+\d+|down\s+by\s+\d+|cut\s+the\s+(?:lead|deficit)|comeback|blow(?:ing|n)?\s+(?:a|the)\s+lead|back\s+to\s+within\s+\d+|score\s+is\s+\d+-\d+|td\s+pass|touchdown\s+pass|pick-?6|strip-?sack|three-and-out|3-and-out)\b/i;
+
+let ALL_NFL_TEAM_SUBJECT_BEFORE_RETURN_REGEX_CACHE = null;
+function getAllNflTeamSubjectBeforeReturnRegex() {
+  if (ALL_NFL_TEAM_SUBJECT_BEFORE_RETURN_REGEX_CACHE) return ALL_NFL_TEAM_SUBJECT_BEFORE_RETURN_REGEX_CACHE;
+  const tokens = new Set(['49ers', 'niners', 'bucs', 'pats', 'jags', 'santa clara', 'indy']);
+  for (const t of ALL_NFL_TEAMS) {
+    if (t.nickname) tokens.add(t.nickname.toLowerCase());
+    if (t.city) tokens.add(t.city.toLowerCase());
+  }
+  const pat = [...tokens]
+    .map(tok => escapeRegexToken(tok).replace(/\\ /g, '\\s+'))
+    .join('|');
+  ALL_NFL_TEAM_SUBJECT_BEFORE_RETURN_REGEX_CACHE = new RegExp(
+    `\\b#?(?:${pat})(?:['’]s?)?\\s+(?:is\\s+|are\\s+|'s\\s+|’s\\s+|'re\\s+|’re\\s+|right\\s+|firmly\\s+|suddenly\\s+|now\\s+)*(?:back\\s+in\\s+the\\s+game|back\\s+on\\s+the\\s+field|returning\\s+to\\s+the\\s+game|returned\\s+to\\s+(?:the\\s+)?game)\\b`,
+    'i'
+  );
+  return ALL_NFL_TEAM_SUBJECT_BEFORE_RETURN_REGEX_CACHE;
+}
+
+const NON_PLAYER_RETURN_SUBJECT_WORDS = new Set([
+  'the', 'a', 'an', 'this', 'that', 'these', 'those', 'they', 'them', 'we', 'us', 'it', 'there', 'here',
+  'now', 'still', 'right', 'just', 'back', 'way', 'getting', 'letting', 'putting', 'bringing', 'keeping',
+  'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'today', 'tonight',
+  'halftime', 'offense', 'defense', 'team', 'squad', 'unit', 'san', 'new', 'los', 'las', 'green', 'bay',
+  'dallas', 'minnesota', 'seattle', 'detroit', 'philadelphia', 'kansas', 'baltimore', 'buffalo',
+  'cincinnati', 'houston', 'denver', 'miami', 'atlanta', 'chicago', 'tampa', 'arizona', 'carolina',
+  'cleveland', 'indianapolis', 'jacksonville', 'pittsburgh', 'tennessee', 'washington', 'francisco',
+  'angeles', 'orleans', 'england', 'vegas', 'york', '49ers', 'niners', 'cowboys', 'vikings', 'seahawks',
+  'rams', 'cardinals', 'chiefs', 'eagles', 'lions', 'packers', 'bears', 'ravens', 'bills', 'bengals',
+  'browns', 'steelers', 'texans', 'colts', 'jaguars', 'titans', 'broncos', 'chargers', 'raiders',
+  'commanders', 'giants', 'falcons', 'panthers', 'saints', 'buccaneers', 'bucs', 'dolphins', 'patriots',
+  'pats', 'jets'
+]);
+
+const EXPLICIT_RETURNED_TO_ACTION_REGEX =
+  /\b(?:returned\s+to\s+(?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|returning\s+to\s+(?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action))\b/i;
+
+const BACK_IN_THE_GAME_PHRASE_REGEX = /\bback\s+in\s+the\s+(?:game|huddle|lineup)\b/i;
+
+const PLAYER_SUBJECT_BACK_IN_GAME_REGEX =
+  /(?:^|[.!?;:\n]\s*|\s)((?:[A-Z][a-z'.-]{1,16}(?:\s+[A-Z][a-z'.-]{1,16})?)|[Hh]e)(?:\s+(?:is|was|looks|appears|heading|headed|now|already|officially)|['’]s|\s)\s*back\s+in\s+the\s+(?:game|huddle|lineup)\b/;
+
+function matchesGuardedPlayerReturnToGame(text = '') {
+  const s = String(text || '').trim();
+  if (!s) return false;
+  const hasReturnedOrReturning = EXPLICIT_RETURNED_TO_ACTION_REGEX.test(s);
+  const hasBackInGame = BACK_IN_THE_GAME_PHRASE_REGEX.test(s);
+  if (!hasReturnedOrReturning && !hasBackInGame) return false;
+
+  const hasMedicalCue = INJURY_OR_MEDICAL_CONTEXT_REGEX.test(s);
+
+  // Reject team/scoreboard comeback idioms ("letting them back in the game", "gets the 49ers right back in the game", "Dallas is back in the game")
+  if (TEAM_COMEBACK_BACK_IN_GAME_REGEX.test(s) || getAllNflTeamSubjectBeforeReturnRegex().test(s)) {
+    return false;
+  }
+  // Reject score/lead/deficit commentary unless paired with explicit medical/injury context
+  if (!hasMedicalCue && SCORE_OR_LEAD_COMMENTARY_REGEX.test(s)) {
+    return false;
+  }
+  // Reject halftime team returns ("returned to the game after halftime") without medical context
+  if (!hasMedicalCue && /\b(?:after|following)\s+halftime\b/i.test(s)) {
+    return false;
+  }
+
+  if (hasReturnedOrReturning) {
+    return true;
+  }
+
+  // For ambiguous "back in the game/huddle/lineup", require either explicit medical context
+  // OR a genuine singular player subject directly preceding the return phrase.
+  if (hasMedicalCue) return true;
+  const subjMatch = s.match(PLAYER_SUBJECT_BACK_IN_GAME_REGEX);
+  if (!subjMatch) return false;
+  const rawSubject = String(subjMatch[1] || '').trim().toLowerCase();
+  const words = rawSubject.split(/\s+/).filter(Boolean);
+  if (words.length === 0) return false;
+  if (words.every(w => NON_PLAYER_RETURN_SUBJECT_WORDS.has(w))) return false;
+  return true;
+}
+
+export function matchesInGameInjuryOrReturn(text = '') {
+  const s = String(text || '').trim();
+  if (!s) return false;
+  if (IN_GAME_EXPLICIT_INJURY_REGEX.test(s)) return true;
+  if (LOCKER_ROOM_OR_TUNNEL_EXIT_REGEX.test(s)) {
+    const isRoutineHalftimeOrPostgame =
+      ROUTINE_HALFTIME_OR_POSTGAME_LOCKER_ROOM_REGEX.test(s) &&
+      !/\b(?:limp(?:ed|ing)?|help(?:ed|ing)?|escort(?:ed|ing)?|cart(?:ed|ing)?|trainer|trainers|medical|injur\w*|ankle|knee|leg|shoulder|concussion|hamstring|rib|hip|head|neck|wrist|hand|foot|air\s*cast)\b/i.test(s);
+    if (!isRoutineHalftimeOrPostgame) return true;
+  }
+  return matchesGuardedPlayerReturnToGame(s);
+}
 
 const MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX =
   /\b(cramps?|cramping|dehydrat(?:ed|ion)|wind knocked out(?: of him)?|knocked the wind out|(?:missed|out for|sat out|sidelined for|exited for)\s+(?:a|one|two|1|2|a couple(?: of)?|a few)\s+(?:play|plays|snap|snaps)|for a play or two|for a couple(?: of)? (?:plays|snaps)|briefly (?:exited|left|shaken up|sidelined)|catching his breath|got his breath back|needed a breather|just a breather|shook it off|stayed in the game|back in on the next (?:play|snap|series|drive)|minor nick|looks like (?:it )?(?:could|might) be|from the broadcast angle|by video|my guess is|fearing the worst|looks bad|didn['’]?t look good|hopefully not|pray(?:ing|ers) for)\b/i;
 
 const SERIOUS_INJURY_ESCALATION_REGEX =
-  /\b(ruled out|downgraded to out|doubtful to return|out for the (?:rest|remainder|game|night|day|season|year)|will not return|won['’]?t return|did not return|done for the (?:day|night|game|season|year)|carted (?:off|to|away|from|back|into|down)|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|loaded\s+onto\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming|comes|came|rolling|rolled|heading|headed)?\s*out|(?:bringing|brought|bring|calling|called|motion(?:ed|ing)?|wav(?:ed|ing)?)\s+(?:out\s+the\s+|for\s+the\s+)cart|medical\s+cart|in an air\s*cast|air\s*cast|splint\b|immobiliz\w*|non-contact (?:injury|knee|ankle|leg)|locker room|(?:into|to|down)\s+the\s+tunnel|concussion (?:evaluation|protocol)|evaluated for (?:a )?concussion|torn (?:acl|achilles|pectoral|meniscus|patellar)|fracture[d]?|broken (?:ankle|leg|arm|foot|collarbone|wrist|hand|rib|ribs|fibula|tibia)|fibula|tibia|gruesome\s+(?:[a-z-]+\s+)?injur\w*|dislocat(?:ed|ion)|on crutches|walking boot|\bmri\b|\bx-rays?\b|ct scan)\b/i;
+  /\b(ruled out|downgraded to out|doubtful to return|out for the (?:rest|remainder|game|night|day|season|year)|will not return|won['’]?t return|did not return(?!\s+(?:the\s+|a\s+|that\s+|his\s+)?(?:punt|kick|kickoff|fumble|interception))|done for the (?:day|night|game|season|year)|carted (?:off|to|away|from|back|into|down)|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|loaded\s+onto\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming|comes|came|rolling|rolled|heading|headed)?\s*out|(?:bringing|brought|bring|calling|called|motion(?:ed|ing)?|wav(?:ed|ing)?)\s+(?:out\s+the\s+|for\s+the\s+)cart|medical\s+cart|in an air\s*cast|air\s*cast|splint\b|immobiliz\w*|non-contact (?:injury|knee|ankle|leg)|locker room|(?:into|to|down)\s+the\s+tunnel|concussion (?:evaluation|protocol)|evaluated for (?:a )?concussion|torn (?:acl|achilles|pectoral|meniscus|patellar)|fracture[d]?|broken (?:ankle|leg|arm|foot|collarbone|wrist|hand|rib|ribs|fibula|tibia)|fibula|tibia|gruesome\s+(?:[a-z-]+\s+)?injur\w*|dislocat(?:ed|ion)|on crutches|walking boot|\bmri\b|\bx-rays?\b|ct scan)\b/i;
 
 const CATASTROPHIC_IN_GAME_INJURY_REGEX =
   /\b(carted (?:off|to|away|from|back|into|down)|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|loaded\s+onto\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming|comes|came|rolling|rolled|heading|headed)?\s*out|(?:bringing|brought|bring|calling|called|motion(?:ed|ing)?|wav(?:ed|ing)?)\s+(?:out\s+the\s+|for\s+the\s+)cart|medical\s+cart|in an air\s*cast|air\s*cast|splint\b|non-contact (?:injury|knee|ankle|leg)|torn (?:acl|achilles|pectoral|patellar)|season-ending|out for (?:the )?(?:rest of (?:the )?)?(?:\d{4} )?season|fracture[d]?|broken (?:ankle|leg|arm|foot|collarbone|wrist|hand|fibula|tibia)|fibula|tibia|gruesome\s+(?:[a-z-]+\s+)?injur\w*|dislocat(?:ed|ion)|ambulance|hospital|immobiliz)\b/i;
 
 const SERIOUS_IN_GAME_INJURY_REGEX =
-  /\b(ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded to out|out for the (?:rest|remainder|game|night|day|season|year)|will not return|won['’]?t return|did not return|done for the (?:day|night|game|season|year)|doubtful to return|unlikely to return|(?:headed|going|went|walked|taken|limped|helped|escorted)\s+(?:off\s+)?(?:to\s+the\s+locker\s+room|(?:into|to|down)\s+the\s+tunnel)|concussion (?:evaluation|protocol)|evaluated for (?:a )?concussion|on crutches|walking boot|high[- ]ankle sprain|out (?:at least )?(?:\d+(?:-\d+)?|multiple|several) weeks)\b/i;
+  /\b(ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded to out|out for the (?:rest|remainder|game|night|day|season|year)|will not return|won['’]?t return|did not return(?!\s+(?:the\s+|a\s+|that\s+|his\s+)?(?:punt|kick|kickoff|fumble|interception))|done for the (?:day|night|game|season|year)|doubtful to return|unlikely to return|(?:headed|going|went|walked|taken|limped|helped|escorted)\s+(?:off\s+)?(?:to\s+the\s+locker\s+room|(?:into|to|down)\s+the\s+tunnel)|concussion (?:evaluation|protocol)|evaluated for (?:a )?concussion|on crutches|walking boot|high[- ]ankle sprain|out (?:at least )?(?:\d+(?:-\d+)?|multiple|several) weeks)\b/i;
 
 const CONFIRMED_IN_GAME_STATUS_REGEX =
-  /\b(ruled out|downgraded to out|questionable to return|doubtful to return|probable to return|out for the (?:rest|remainder|game|night|day|season|year)|will not return|won['’]?t return|did not return|done for the (?:day|night|game|season|year)|cleared to return|cleared concussion protocol|returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|blue medical tent|medical tent|locker room|(?:into|to|down)\s+the\s+tunnel|carted|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming|comes|came|rolling|rolled|heading|headed)?\s*out|(?:bringing|brought|bring|calling|called|motion(?:ed|ing)?|wav(?:ed|ing)?)\s+(?:out\s+the\s+|for\s+the\s+)cart|medical\s+cart|air\s*cast|splint\b|walked off with trainers|helped off(?: the field)?|examined by trainers|(?:trainers|medical\s+staff)\s+(?:are\s+)?(?:out|rushing|attending|tending|checking|examining)|concussion (?:evaluation|protocol)|mri|x-rays?|ct scan|confirmed|diagnosed)\b/i;
+  /\b(ruled out|downgraded to out|questionable to return|doubtful to return|probable to return|out for the (?:rest|remainder|game|night|day|season|year)|will not return|won['’]?t return|did not return(?!\s+(?:the\s+|a\s+|that\s+|his\s+)?(?:punt|kick|kickoff|fumble|interception))|done for the (?:day|night|game|season|year)|cleared to return|cleared concussion protocol|returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|blue medical tent|medical tent|locker room|(?:into|to|down)\s+the\s+tunnel|carted|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming|comes|came|rolling|rolled|heading|headed)?\s*out|(?:bringing|brought|bring|calling|called|motion(?:ed|ing)?|wav(?:ed|ing)?)\s+(?:out\s+the\s+|for\s+the\s+)cart|medical\s+cart|air\s*cast|splint\b|walked off with trainers|helped off(?: the field)?|examined by trainers|(?:trainers|medical\s+staff)\s+(?:are\s+)?(?:out|rushing|attending|tending|checking|examining)|concussion (?:evaluation|protocol)|mri|x-rays?|ct scan|confirmed|diagnosed)\b/i;
 
 const DIAGNOSTIC_SCHEDULED_ONLY_REGEX =
   /\b(scheduled for (?:an? )?(?:mri|x-ray|ct scan|tests?|imaging|further testing)|will undergo (?:an? )?(?:mri|x-ray|ct scan|tests?|imaging)|awaiting (?:an? )?(?:mri|test results?)|to undergo (?:an? )?(?:mri|further testing|tests?)|getting (?:an? )?(?:mri|x-rays?)\s+(?:tomorrow|monday|tuesday|today))\b/i;
@@ -75,7 +187,7 @@ const NEGATED_CATASTROPHIC_INJURY_REGEX =
   /\b(not (?:a )?torn|avoided (?:a )?torn|no torn|did not tear|didn['’]?t tear|acl (?:is )?intact|achilles (?:is )?intact)\b/i;
 
 const POST_GAME_INJURY_FOLLOWUP_REGEX =
-  /\b(suffered a|sustained a|exited (?:tonight|sunday|monday|thursday|saturday|the game)|left (?:tonight|sunday|monday|thursday|saturday|the game)|left with (?:a|an|the(?:\s+same)?)\s+[a-z-]+\s+injury|did(?:n['’]?t|\s+not)\s+return|underwent an mri|scheduled for an mri|\bmri\b|\bx-rays?\b|ct scan|tests showed|initial tests|believed to have avoided|avoided (?:a )?(?:torn|major|serious)|not (?:a )?(?:torn )?acl|acl (?:is )?intact|feared to have|day-to-day|week-to-week|high-ankle|sprain|strain|concussion protocol|torn acl|torn achilles|torn pectoral|meniscus|fracture|out multiple weeks|out several weeks|(?:49ers\s+)?injury\s+update:\s*(?:kyle\s+)?shanahan|shanahan (?:said|noted|confirmed|announced|provided|reveals?)[\s\S]{0,65}\b(?:injury|ankle|knee|foot|back|shoulder|hamstring|calf|quad|groin|rib|wrist|hand|concussion|mri|day-to-day|week-to-week))\b/i;
+  /\b(suffered a|sustained a|exited (?:tonight|sunday|monday|thursday|saturday|the game)|left (?:tonight|sunday|monday|thursday|saturday|the game)|left with (?:a|an|the(?:\s+same)?)\s+[a-z-]+\s+injury|did(?:n['’]?t|\s+not)\s+return(?!\s+(?:the\s+|a\s+|that\s+|his\s+)?(?:punt|kick|kickoff|fumble|interception))|underwent an mri|scheduled for an mri|\bmri\b|\bx-rays?\b|ct scan|tests showed|initial tests|believed to have avoided|avoided (?:a )?(?:torn|major|serious)|not (?:a )?(?:torn )?acl|acl (?:is )?intact|feared to have|day-to-day|week-to-week|high-ankle|sprain|strain|concussion protocol|torn acl|torn achilles|torn pectoral|meniscus|fracture|out multiple weeks|out several weeks|(?:49ers\s+)?injury\s+update:\s*(?:kyle\s+)?shanahan|shanahan (?:said|noted|confirmed|announced|provided|reveals?)[\s\S]{0,65}\b(?:injury|ankle|knee|foot|back|shoulder|hamstring|calf|quad|groin|rib|wrist|hand|concussion|mri|day-to-day|week-to-week))\b/i;
 
 const PRACTICE_WARMUP_INJURY_SCOOP_REGEX =
   /\b(not practicing|not seen at practice|working on a side field|rehab field|blue non-contact|non-contact jersey|walking boot|suffered a setback|aggravated his|underwent an mri|scheduled for an mri|high-ankle sprain|torn acl|torn achilles|torn pectoral|meniscus|21-day practice window|designated (?:dt |wr |rb |cb |lb |te |ol |de |qb |s )?[a-z .'-]{0,28}(?:for|to) return|open(?:ed|s|ing)? [a-z .'-]{0,28}practice window|didn['’]?t activate|did not activate|returns? to practice)\b/i;
@@ -112,7 +224,7 @@ const RETROSPECTIVE_UNEXECUTED_TRADE_REGEX =
   /\b((?:a lot of |multiple |several )?teams['’]? called (?:the 49ers )?(?:about|to inquire)|called (?:the 49ers )?to inquire|inquired about (?:acquiring )?|had [\s\S]{1,36} on (?:their )?trade radar|were eyeing a trade|was eyeing a trade|considered trading for|almost traded for|nearly traded for|trade nixed)\b/i;
 
 const HUMAN_INTEREST_SIDE_NOTE_REGEX =
-  /\b(freely gave|kept his promise|took care of me|jersey (?:no\.|number)|no\.\s*99\b|temporary jersey|wife celebrates|addresses? (?:past )?beef|beef [\s\S]{0,28}(?:squashed|past)|feud resurfaces|social media beef|all good now|makes? strong statement|drops? strong [\s\S]{0,24}statement|gives? true thoughts|face concerning reality|suddenly welcome back|celebrates his|4-word message|drew \d+(?:\.\d+)? million viewers)\b/i;
+  /\b(freely gave|kept his promise|jersey (?:no\.|number)|no\.\s*99\b|temporary jersey|wife celebrates|addresses? (?:past )?beef|beef [\s\S]{0,28}(?:squashed|past)|feud resurfaces|social media beef|4-word message|drew \d+(?:\.\d+)? million viewers)\b/i;
 
 const AGGREGATOR_REWRITE_OUTLET_REGEX = /\b(heavy on [a-z0-9]+|heavy\.com|clutchpoints|athlon|yardbarker|total pro sports)\b/i;
 
@@ -302,7 +414,7 @@ export function classifyNewsItemCategory(item = {}) {
   }
 
   if (
-    IN_GAME_INJURY_RETURN_REGEX.test(lead) ||
+    matchesInGameInjuryOrReturn(lead) ||
     POST_GAME_INJURY_FOLLOWUP_REGEX.test(lead) ||
     PRACTICE_WARMUP_INJURY_SCOOP_REGEX.test(lead) ||
     /\b(injur|practice|questionable|doubtful|ruled out|mri|concussion|achilles|hamstring|ankle|knee)\b/i.test(lead)
@@ -786,7 +898,7 @@ export function isOpposingTeamOnlyInjuryOrRosterStory(item = {}, teamInput = nul
   if (!isOpposingTeamSubjectLead(lead, item, team)) return false;
   return (
     OPPOSING_INJURY_OR_ROSTER_EVENT_REGEX.test(lead) ||
-    IN_GAME_INJURY_RETURN_REGEX.test(lead) ||
+    matchesInGameInjuryOrReturn(lead) ||
     MATERIAL_INJURY_DIAGNOSIS_REGEX.test(lead) ||
     TIER2_ROSTER_OR_STATUS_MOVE_REGEX.test(lead)
   );
@@ -862,20 +974,26 @@ export function computeInGameInjurySeverity(item = {}) {
   if (CATASTROPHIC_INJURY_CHECK(fullForCatastrophic)) {
     return { severityScore: 1.0, severityTier: 'catastrophic' };
   }
+  const isRoutineHalftimeLockerRoom =
+    ROUTINE_HALFTIME_OR_POSTGAME_LOCKER_ROOM_REGEX.test(full) &&
+    !INJURY_OR_MEDICAL_CONTEXT_REGEX.test(full.replace(/\b(?:locker\s+room|tunnel)\b/gi, ''));
   if (
-    SERIOUS_IN_GAME_INJURY_REGEX.test(full) ||
+    (SERIOUS_IN_GAME_INJURY_REGEX.test(full) && !isRoutineHalftimeLockerRoom) ||
     (MATERIAL_INJURY_DIAGNOSIS_REGEX.test(full) && !DIAGNOSTIC_SCHEDULED_ONLY_REGEX.test(lead))
   ) {
     return { severityScore: 0.82, severityTier: 'serious' };
   }
+  const isTeamUnitReturn =
+    TEAM_COMEBACK_BACK_IN_GAME_REGEX.test(full) || getAllNflTeamSubjectBeforeReturnRegex().test(full);
   if (
-    /\b(returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|cleared to return|cleared concussion protocol|is back in the (?:game|huddle|lineup)|back on the field)\b/i.test(
-      full
-    )
+    !isTeamUnitReturn &&
+    (/\b(cleared to return|cleared concussion protocol)\b/i.test(full) ||
+      matchesGuardedPlayerReturnToGame(full) ||
+      (/\bback on the field\b/i.test(full) && !/\b(?:offense|defense|special\s+teams|team|unit|49ers|niners)\b[\s\S]{0,18}\bback on the field\b/i.test(full)))
   ) {
     return { severityScore: 0.48, severityTier: 'moderate' };
   }
-  if (IN_GAME_INJURY_RETURN_REGEX.test(full)) {
+  if (matchesInGameInjuryOrReturn(full)) {
     return { severityScore: 0.55, severityTier: 'moderate' };
   }
   return { severityScore: 0.1, severityTier: 'minor' };
@@ -960,9 +1078,13 @@ export function computePlayerRosterValue(item = {}, rosterPlayers = [], teamInpu
     resolvedSlug = leadSlugs[0] || (isSf ? resolveFallback49ersShorthandSlug(full) : '');
   }
 
-  // When rosterPlayers IS loaded on a non-SF team and NO active player matched, stay conservative (0.35)
-  // so unrecognized/opposing players never accidentally cross the >= 0.50 urgent threshold.
-  let valueScore = !isSf && pool.length > 0 && !matchedRosterObj ? 0.35 : 0.58;
+  // When no active player is identified (e.g., team-level game chatter with zero player subject,
+  // or full roster loaded without a match), stay conservative (0.35) so unrecognized/non-player items
+  // never accidentally cross the >= 0.50 urgent `LIVE INJURY UPDATE` threshold.
+  const noPlayerIdentified = !matchedRosterObj && !resolvedSlug && !item?.mentionedPlayers?.length;
+  const fullRosterMiss = pool.length >= 20 && !matchedRosterObj;
+  let valueScore =
+    noPlayerIdentified || fullRosterMiss || (!isSf && pool.length > 0 && !matchedRosterObj) ? 0.35 : 0.58;
   let playerName = matchedRosterObj?.name || item?.mentionedPlayers?.[0]?.name || '';
 
   if (matchedRosterObj) {
@@ -1089,7 +1211,7 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     !isSecondaryOrCommentary &&
     !isOpposingTeamOnlySubject &&
     !isMinorOrSpeculativeInjury &&
-    IN_GAME_INJURY_RETURN_REGEX.test(inGameClaimText);
+    matchesInGameInjuryOrReturn(inGameClaimText);
   const matchesMaterialInjuryDiagnosis =
     !isSpeculative &&
     !isSecondaryOrCommentary &&
@@ -1222,7 +1344,9 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
       }
     }
 
-    if (matchesPostGameInjury && !isMinorOrSpeculativeInjury && !isDiagnosticScheduledOnly && effectiveTrustTier <= 2) {
+    const isTrackedTeamBeat = Boolean(repEntry && !repEntry.isOtherTeamBeat);
+
+    if (matchesPostGameInjury && !isMinorOrSpeculativeInjury && !isDiagnosticScheduledOnly && (effectiveTrustTier <= 2 || isTrackedTeamBeat)) {
       return {
         isBreaking: true,
         isUrgentBreaking: false,
@@ -1234,7 +1358,7 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
       };
     }
 
-    if (matchesCredibleTradeRumor && effectiveTrustTier <= 2) {
+    if (matchesCredibleTradeRumor && (effectiveTrustTier <= 2 || isTrackedTeamBeat)) {
       return {
         isBreaking: true,
         isUrgentBreaking: false,
@@ -1242,6 +1366,25 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
         storyTier: 'trade_intel',
         breakingPriority: 2.25,
         breakingBadge: 'TRADE INTEL',
+        ageHours
+      };
+    }
+
+    // Live in-game highlight clips & instant scoring plays (e.g. George Kittle TD highlight) rocket above routine chatter
+    const isLiveHighlightOrScoringPlay =
+      Boolean(item.isLiveGameHighlight) ||
+      item.wireSource === 'espn_live_highlights' ||
+      item.wireSource === 'espn_live_scoring_plays' ||
+      item.wireSource === '49ers_official_videos_rss' ||
+      (Boolean(item.isHighlightClip) && Boolean(item.videoStreamUrl || item.externalVideoUrl || item.videoId));
+    if (isLiveHighlightOrScoringPlay && !isSpeculative) {
+      return {
+        isBreaking: false,
+        isUrgentBreaking: false,
+        isInGameInjury: false,
+        storyTier: 'live_in_game_highlight',
+        breakingPriority: 2.35,
+        breakingBadge: null,
         ageHours
       };
     }
@@ -1353,11 +1496,12 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
   //     Non-material remarks ("scheduled for an MRI tomorrow", "we'll see Wednesday") fall through to calm Section 5/7.
   const isPreFinishedGameItem =
     ctx?.postGame48h && Number.isFinite(ctx.completedKickoffMs) && Number.isFinite(pubMs) && pubMs < ctx.completedKickoffMs;
+  const isVerifiedTeamBeatReporter = Boolean(repEntry && !repEntry.isOtherTeamBeat);
   if (
     matchesMaterialInjuryDiagnosis &&
     !isPreFinishedGameItem &&
     ageHours <= 24 &&
-    effectiveTrustTier <= 2 &&
+    (effectiveTrustTier <= 2 || isVerifiedTeamBeatReporter) &&
     !(matchesPreGameAvailabilityNoise && !/\b(?:mri|x-ray|ct scan|acl|achilles|intact|avoided|negative|fracture|broken|surgery|concussion protocol|grade\s+[123]|multiple weeks|several weeks|\d+(?:-\d+)?\s+weeks?)\b/i.test(leadClaim))
   ) {
     const withinBreakingWindow = ageHours <= 4.5;
@@ -1395,8 +1539,8 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     }
   }
 
-  // 6. CREDIBLE FORWARD-LOOKING INSIDER TRADE INTEL (only while window open, Tier 1-2 insiders)
-  if (matchesCredibleTradeRumor && ageHours <= 18 && effectiveTrustTier <= 2) {
+  // 6. CREDIBLE FORWARD-LOOKING INSIDER TRADE INTEL (only while window open, tracked beat & national insiders)
+  if (matchesCredibleTradeRumor && ageHours <= 18 && (effectiveTrustTier <= 2 || isVerifiedTeamBeatReporter)) {
     return {
       isBreaking: true,
       isUrgentBreaking: false,
@@ -1537,12 +1681,13 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
       }
       return 430 + impact * 65 - Math.min(40, clusterAnchorAge * 12);
     }
+    if (item.storyTier === 'live_in_game_highlight') return 385 - Math.min(55, clusterAnchorAge * 16);
     if (item.storyTier === 'live_in_game') return 360 - Math.min(50, clusterAnchorAge * 14);
     if (item.storyTier === 'tier1_major' && clusterAnchorAge <= 6) return 420 - clusterAnchorAge * 12;
   }
 
   const storyTier = item.storyTier || 'standard';
-  let eventMagnitude = 46;
+  let eventMagnitude = 48;
   let gravity = 1.38;
   const tau = ctx?.inGame ? 0.45 : ctx?.postGameImmediate ? 1.02 : 1.08;
 
@@ -1571,6 +1716,10 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
       eventMagnitude = 92;
       gravity = 1.34;
       break;
+    case 'live_in_game_highlight':
+      eventMagnitude = 90;
+      gravity = 1.28;
+      break;
     case 'post_game_recap':
       eventMagnitude = 76;
       gravity = 1.34;
@@ -1588,20 +1737,20 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
       gravity = 1.30;
       break;
     case 'side_note':
-      eventMagnitude = 26;
-      gravity = 1.64;
+      eventMagnitude = 34;
+      gravity = 1.52;
       break;
     default: {
       const lead = extractPrimaryClaimText(item);
       if (HUMAN_INTEREST_SIDE_NOTE_REGEX.test(lead) || RETROSPECTIVE_UNEXECUTED_TRADE_REGEX.test(lead)) {
-        eventMagnitude = 26;
-        gravity = 1.64;
+        eventMagnitude = 34;
+        gravity = 1.52;
       } else if (/\b(injury report|practice report|returns? to practice|miss practice)\b/i.test(lead)) {
         eventMagnitude = 78;
         gravity = 1.30;
       } else {
-        eventMagnitude = 48;
-        gravity = 1.42;
+        eventMagnitude = 50;
+        gravity = 1.40;
       }
       break;
     }
@@ -1615,13 +1764,16 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
   const isRewriteAggregator = AGGREGATOR_REWRITE_OUTLET_REGEX.test(
     `${item.outletName || ''} ${item.url || ''}`
   );
+  // Balanced authority weighting: avoid burying Tier 2 & Tier 3 team beat voices behind Tier 1 reporters
   const authorityBonus = isRewriteAggregator
-    ? -12
-    : trustTier === 1
-      ? 14
-      : trustTier === 2
-        ? 6
-        : -7;
+    ? -10
+    : repAuthEntry?.isOtherTeamBeat
+      ? -2
+      : trustTier === 1
+        ? 7
+        : trustTier === 2
+          ? 6
+          : 3;
 
   const totalSources = Math.max(
     1,
@@ -2109,7 +2261,7 @@ export function sortNewsWithBreakingPriority(
       const aMs = resolveEffectivePublishTimestampMs(a, nowMs) || 0;
       const bMs = resolveEffectivePublishTimestampMs(b, nowMs) || 0;
 
-      // Within a near-tied StoryRank band on items published within 30m, honor First-Mover, Trust-Tier & X-over-Bluesky
+      // Within a near-tied StoryRank band on items published within 30m, honor First-Mover, breaking Trust-Tier & X-over-Bluesky
       if (Math.abs(rankDiff) < 1.2 && Math.abs(bMs - aMs) <= 30 * 60_000) {
         if (Math.abs(bMs - aMs) <= 15 * 60_000) {
           if (a.isFirstMoverInjuryScoop && !b.isFirstMoverInjuryScoop && (a.corroborationCount || 1) === 1) {
@@ -2118,8 +2270,10 @@ export function sortNewsWithBreakingPriority(
           if (b.isFirstMoverInjuryScoop && !a.isFirstMoverInjuryScoop && (b.corroborationCount || 1) === 1) {
             return 1;
           }
-          const tierDiff = (a.trustTier || 2) - (b.trustTier || 2);
-          if (tierDiff !== 0) return tierDiff;
+          if (a.isBreaking || b.isBreaking || a.isInGameInjury || b.isInGameInjury) {
+            const tierDiff = (a.trustTier || 2) - (b.trustTier || 2);
+            if (tierDiff !== 0) return tierDiff;
+          }
         }
         const aIsX = isDirectXStatusUrl(a.url);
         const bIsX = isDirectXStatusUrl(b.url);
@@ -2170,14 +2324,32 @@ function isPureInjuryCard(item) {
   );
 }
 
+function resolveAuthorDiversityKey(item = {}) {
+  const raw = String(item?.reporterId || item?.authorHandle || item?.reporterName || item?.author || '')
+    .toLowerCase()
+    .replace(/^@/, '')
+    .trim();
+  if (!raw || /^(49ers beat|49ers beat wire|espn|nfl|49ers\.com official|san francisco 49ers)$/i.test(raw)) {
+    return '';
+  }
+  return raw;
+}
+
 /**
- * Ensures injury prioritization never completely crowds out other salient news (trades/roster moves,
- * All-22 film breakdowns, or standout 1-on-1 player interviews) outside live game action, while never
- * artificially promoting low-signal side notes above genuine team news.
+ * Ensures injury prioritization and high-frequency individual reporters never crowd out
+ * diverse Tier 1/2/3 beat voices, trades/roster moves, All-22 film breakdowns, or standout
+ * human-interest stories in `Top` mode, while never displacing urgent live breaking news.
  */
 export function balanceFeedTopSalience(
   items = [],
-  { nowMs = Date.now(), gameContext = null, appData = null, maxConsecutiveInjuries = 2 } = {}
+  {
+    nowMs = Date.now(),
+    gameContext = null,
+    appData = null,
+    maxConsecutiveInjuries = 2,
+    maxConsecutiveSameAuthor = 2,
+    maxAuthorInTopWindow = 3
+  } = {}
 ) {
   if (!Array.isArray(items) || items.length <= maxConsecutiveInjuries) return items;
   const ctx = gameContext || (appData ? resolveGameNewsContext(appData, nowMs) : null);
@@ -2186,6 +2358,33 @@ export function balanceFeedTopSalience(
   const remaining = [...items];
   const result = [];
   let consecutiveInj = 0;
+  let lastAuthorKey = '';
+  let consecutiveAuthor = 0;
+  const topAuthorCounts = new Map();
+
+  const recordPicked = picked => {
+    result.push(picked);
+    if (isPureInjuryCard(picked)) {
+      consecutiveInj += 1;
+    } else {
+      consecutiveInj = 0;
+    }
+    const aKey = resolveAuthorDiversityKey(picked);
+    if (aKey) {
+      if (aKey === lastAuthorKey) {
+        consecutiveAuthor += 1;
+      } else {
+        lastAuthorKey = aKey;
+        consecutiveAuthor = 1;
+      }
+      if (result.length <= 18) {
+        topAuthorCounts.set(aKey, (topAuthorCounts.get(aKey) || 0) + 1);
+      }
+    } else {
+      lastAuthorKey = '';
+      consecutiveAuthor = 0;
+    }
+  };
 
   while (remaining.length > 0) {
     if (consecutiveInj >= maxConsecutiveInjuries && result.length < 10) {
@@ -2210,7 +2409,7 @@ export function balanceFeedTopSalience(
           (cand.breakingPriority || 0) > 0 ||
           cand.category === 'roster' ||
           cand.category === 'film' ||
-          Number(cand.signalScore || 0) >= 48 ||
+          Number(cand.signalScore || 0) >= 35 ||
           SALIENT_INTERVIEW_OR_FEATURE_REGEX.test(text) ||
           CREDIBLE_FORWARD_TRADE_RUMOR_REGEX.test(text) ||
           TIER1_MAJOR_BREAKING_EVENT_REGEX.test(text)
@@ -2219,19 +2418,44 @@ export function balanceFeedTopSalience(
 
       if (nonInjIdx >= 0) {
         const [picked] = remaining.splice(nonInjIdx, 1);
-        result.push(picked);
-        consecutiveInj = 0;
+        recordPicked(picked);
+        continue;
+      }
+    }
+
+    // Enforce balanced reporter distribution in Top 18 (prevent one prolific reporter like Matt Maiocco
+    // from monopolizing consecutive slots when fresh Tier 1/2/3 beat posts are waiting right below)
+    const head = remaining[0];
+    const headAuthor = resolveAuthorDiversityKey(head);
+    const headIsUrgent = isUrgentBreakingBadge(head?.breakingBadge);
+    const headOverConsecutive =
+      Boolean(headAuthor) && headAuthor === lastAuthorKey && consecutiveAuthor >= maxConsecutiveSameAuthor;
+    const headOverTopCap =
+      Boolean(headAuthor) && result.length < 18 && (topAuthorCounts.get(headAuthor) || 0) >= maxAuthorInTopWindow;
+
+    if (!headIsUrgent && (headOverConsecutive || headOverTopCap) && result.length < 22) {
+      const headPubMs = resolveEffectivePublishTimestampMs(head, nowMs) || 0;
+      const altIdx = remaining.findIndex((cand, idx) => {
+        if (idx === 0 || idx > 16 || cand?.isClickbait) return false;
+        if (cand?.storyTier === 'side_note') return false;
+        if (consecutiveInj >= maxConsecutiveInjuries && isPureInjuryCard(cand)) return false;
+        const candAuthor = resolveAuthorDiversityKey(cand);
+        if (candAuthor && candAuthor === headAuthor) return false;
+        if (candAuthor && (topAuthorCounts.get(candAuthor) || 0) >= maxAuthorInTopWindow) return false;
+        const candPubMs = resolveEffectivePublishTimestampMs(cand, nowMs) || 0;
+        // Keep temporal coherence: only pull forward an alternate voice within 36h of the displaced item
+        if (headPubMs && candPubMs && headPubMs - candPubMs > 36 * 3_600_000) return false;
+        return true;
+      });
+      if (altIdx > 0) {
+        const [picked] = remaining.splice(altIdx, 1);
+        recordPicked(picked);
         continue;
       }
     }
 
     const next = remaining.shift();
-    result.push(next);
-    if (isPureInjuryCard(next)) {
-      consecutiveInj += 1;
-    } else {
-      consecutiveInj = 0;
-    }
+    recordPicked(next);
   }
 
   return result;
@@ -2263,24 +2487,32 @@ export function computeInjuryProgressionLevel(item = {}) {
     return 5;
   }
   if (
-    /\b(ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded to out|out for the (?:rest|remainder|game|night|day)|will not return|won['’]?t return|did not return|done for the (?:day|night|game)|returned to (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)?\s*(?:game|action)|cleared to return|cleared concussion protocol|is back in the (?:game|huddle|lineup)|back on the field)\b/i.test(
+    /\b(ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded to out|out for the (?:rest|remainder|game|night|day)|will not return|won['’]?t return|did not return(?!\s+(?:the\s+|a\s+|that\s+|his\s+)?(?:punt|kick|kickoff|fumble|interception))|done for the (?:day|night|game)|cleared to return|cleared concussion protocol)\b/i.test(
       full
-    )
+    ) ||
+    matchesGuardedPlayerReturnToGame(full) ||
+    (/\bback on the field\b/i.test(full) &&
+      !TEAM_COMEBACK_BACK_IN_GAME_REGEX.test(full) &&
+      !getAllNflTeamSubjectBeforeReturnRegex().test(full))
   ) {
     return 4;
   }
   if (/\b(doubtful to return|carted (?:off|to the locker room|away)|in an air cast|air cast|on crutches|walking boot|unlikely to return)\b/i.test(full)) {
     return 3;
   }
+  const isRoutineHalftimeWalk =
+    ROUTINE_HALFTIME_OR_POSTGAME_LOCKER_ROOM_REGEX.test(full) &&
+    !INJURY_OR_MEDICAL_CONTEXT_REGEX.test(full.replace(/\b(?:locker\s+room|tunnel)\b/gi, ''));
   if (
-    /\b(questionable to return|probable to return|concussion (?:evaluation|protocol)|evaluated for (?:a )?concussion|(?:headed|going|went|walked|taken) to the locker room)\b/i.test(
+    (/\b(questionable to return|probable to return|concussion (?:evaluation|protocol)|evaluated for (?:a )?concussion|(?:headed|going|went|walked|taken) to the locker room)\b/i.test(
       full
-    ) ||
-    (IN_GAME_INJURY_RETURN_REGEX.test(full) && Boolean(extractNamedInjuryBodyPart(full)))
+    ) &&
+      !isRoutineHalftimeWalk) ||
+    (matchesInGameInjuryOrReturn(full) && Boolean(extractNamedInjuryBodyPart(full)))
   ) {
     return 2;
   }
-  if (IN_GAME_INJURY_RETURN_REGEX.test(full)) {
+  if (matchesInGameInjuryOrReturn(full)) {
     return 1;
   }
   return 0;
@@ -2349,9 +2581,24 @@ function cleanWireSummaryForMatching(raw = '') {
     .trim();
 }
 
+function getActiveTeamStopwords() {
+  const active = getActiveTeamConfig();
+  const extra = new Set();
+  if (active) {
+    for (const raw of [active.nickname, active.city, active.slug, active.abbr, ...(active.keywordRules?.requiredNicknames || [])]) {
+      for (const part of String(raw || '').toLowerCase().split(/\s+/)) {
+        const clean = part.replace(/[^a-z0-9-]/g, '');
+        if (clean.length >= 3) extra.add(clean);
+      }
+    }
+  }
+  return extra;
+}
+
 function normalizeStemToken(tok = '') {
   let w = tok.toLowerCase().replace(/^#+/, '').replace(/['’]s$/i, '').replace(/[^a-z0-9-]/g, '');
-  if (w.length <= 2 || CLUSTER_STOPWORDS.has(w)) return '';
+  const teamStops = getActiveTeamStopwords();
+  if (w.length <= 2 || CLUSTER_STOPWORDS.has(w) || teamStops.has(w)) return '';
   if (/^(acquiring|acquired|acquires|acquisition)$/.test(w)) return 'acquire';
   if (/^(trading|traded|trades)$/.test(w)) return 'trade';
   if (/^(explains|explained|explaining|discusses|discussed|reveals|revealed)$/.test(w)) return 'explain';
@@ -2431,14 +2678,26 @@ function extractEntitySet(item = {}) {
     set.add(`pname:${leadSlug}`);
   }
   const lead = extractPrimaryClaimText(item).toLowerCase();
-  if (/\bshanahan\b/.test(lead)) set.add('coach:shanahan');
-  if (/\blynch\b/.test(lead)) set.add('fo:lynch');
-  if (/\bjerry rice\b/.test(lead)) set.add('alum:jerryrice');
-  if (/\bcowboys|dallas\b/.test(lead)) set.add('opp:dal');
-  if (/\braiders|las vegas\b/.test(lead)) set.add('opp:lv');
-  if (/\bseahawks|seattle\b/.test(lead)) set.add('opp:sea');
-  if (/\brams\b/.test(lead)) set.add('opp:lar');
-  if (/\bcolts|indianapolis|indy\b/.test(lead)) set.add('opp:ind');
+  const activeEntTeam = getActiveTeamConfig();
+  const activeCoachesEnt = activeEntTeam?.coachesSeed || {};
+  if (activeEntTeam?.abbr === 'SF') {
+    if (/\bshanahan\b/.test(lead)) set.add('coach:shanahan');
+    if (/\blynch\b/.test(lead)) set.add('fo:lynch');
+    if (/\bjerry rice\b/.test(lead)) set.add('alum:jerryrice');
+  } else {
+    for (const [role, full] of [['coach', activeCoachesEnt.hc], ['fo', activeCoachesEnt.gm]]) {
+      const surname = String(full || '').trim().split(/\s+/).slice(-1)[0]?.toLowerCase();
+      if (surname && surname.length >= 4 && new RegExp(`\\b${escapeRegexToken(surname)}\\b`, 'i').test(lead)) {
+        set.add(`${role}:${surname}`);
+      }
+    }
+  }
+  for (const t of ALL_NFL_TEAMS) {
+    if (t.abbr === activeEntTeam?.abbr) continue;
+    if (new RegExp(`\\b${escapeRegexToken(t.nickname.toLowerCase())}\\b`, 'i').test(lead)) {
+      set.add(`opp:${t.abbr.toLowerCase()}`);
+    }
+  }
   return set;
 }
 
@@ -2486,13 +2745,30 @@ function extractOfficialSpeakerKey(item = {}) {
   const lead = extractPrimaryClaimText(item);
   const sub = isArticle && !isDigest ? cleanWireSummaryForMatching(item?.summary || '').slice(0, 175) : '';
   const probe = `${lead} ${sub}`.toLowerCase();
-  if (/\b(?:john\s+)?lynch\b/.test(probe)) return 'fo:lynch';
-  if (/\b(?:kyle\s+)?shanahan\b/.test(probe)) return 'coach:shanahan';
-  if (/\b(?:robert\s+)?saleh\b/.test(probe)) return 'coord:saleh';
-  if (/\b(?:klint\s+)?kubiak\b/.test(probe)) return 'coord:kubiak';
-  if (/\b(?:brandon\s+)?staley\b/.test(probe)) return 'coord:staley';
-  if (/\b(?:nick\s+)?sorensen\b/.test(probe)) return 'coord:sorensen';
-  if (/\b(?:chris\s+)?foerster\b/.test(probe)) return 'coord:foerster';
+  const activeSpkTeam = getActiveTeamConfig();
+  if (activeSpkTeam?.abbr === 'SF') {
+    if (/\b(?:john\s+)?lynch\b/.test(probe)) return 'fo:lynch';
+    if (/\b(?:kyle\s+)?shanahan\b/.test(probe)) return 'coach:shanahan';
+    if (/\b(?:raheem\s+)?morris\b/.test(probe)) return 'coord:morris';
+    if (/\b(?:klay\s+)?kubiak\b/.test(probe)) return 'coord:kubiak';
+    if (/\b(?:robert\s+)?saleh\b/.test(probe)) return 'coord:saleh';
+    if (/\b(?:brandon\s+)?staley\b/.test(probe)) return 'coord:staley';
+    if (/\b(?:nick\s+)?sorensen\b/.test(probe)) return 'coord:sorensen';
+    if (/\b(?:chris\s+)?foerster\b/.test(probe)) return 'coord:foerster';
+    return null;
+  }
+  const c = activeSpkTeam?.coachesSeed || {};
+  for (const [prefix, full] of [['fo', c.gm], ['coach', c.hc], ['coord', c.oc], ['coord', c.dc]]) {
+    const clean = String(full || '').trim();
+    if (!clean) continue;
+    const parts = clean.split(/\s+/);
+    const last = parts[parts.length - 1] || '';
+    const fullPat = escapeRegexToken(clean.toLowerCase()).replace(/\\ /g, '\\s+');
+    const pat = last.length >= 5 ? `(?:${fullPat}|${escapeRegexToken(last.toLowerCase())})` : fullPat;
+    if (new RegExp(`\\b${pat}\\b`, 'i').test(probe)) {
+      return `${prefix}:${last.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+    }
+  }
   return null;
 }
 
@@ -2602,6 +2878,16 @@ function buildStorySignatureKey(item = {}) {
   if (!lead) return null;
   const lower = lead.toLowerCase();
 
+  const activeSigTeam = getActiveTeamConfig();
+  const isSfSig = activeSigTeam?.abbr === 'SF';
+  const teamNamesPat = isSfSig
+    ? '49ers|san francisco|niners'
+    : [activeSigTeam?.fullName, activeSigTeam?.nickname, ...(activeSigTeam?.keywordRules?.requiredNicknames || []), ...(activeSigTeam?.keywordRules?.excludeGenericCity ? [] : [activeSigTeam?.city])]
+        .filter(Boolean)
+        .map(x => escapeRegexToken(String(x).toLowerCase()))
+        .join('|') || 'nfl';
+  const hcSurname = String(activeSigTeam?.coachesSeed?.hc || 'shanahan').trim().split(/\s+/).slice(-1)[0]?.toLowerCase() || 'coach';
+
   const primaryPlayer = item?.mentionedPlayers?.[0];
   const leadSlugs = extractLeadProperNameSlugs(lead);
   const pKey = primaryPlayer?.name
@@ -2611,7 +2897,7 @@ function buildStorySignatureKey(item = {}) {
         .replace(/[^a-z0-9]/g, '')
     : primaryPlayer?.id
       ? String(primaryPlayer.id).toLowerCase().replace(/[^a-z0-9]/g, '')
-      : leadSlugs[0] || resolveFallback49ersShorthandSlug(lead);
+      : leadSlugs[0] || (isSfSig ? resolveFallback49ersShorthandSlug(lead) : null);
 
   const collectPlayerSlugs = () => {
     const combined = new Set();
@@ -2655,22 +2941,23 @@ function buildStorySignatureKey(item = {}) {
     if (pKey) return `${pKey}::retro_trade_inquiry`;
   }
 
-  // 5. Podium / Coach explaining why 49ers traded for / what newly acquired player brings
+  // 5. Podium / Coach explaining why team traded for / what newly acquired player brings
   if (
     pKey &&
-    /\bshanahan\b/.test(lower) &&
-    /\b(explains? why|reveals? what|discusses? addition|pumped['’]? about|what [\s\S]{1,25} brings|shares? #?49ers injury updates?,? discusses)\b/.test(
-      lower
-    )
+    new RegExp(`\\b${escapeRegexToken(hcSurname)}\\b`, 'i').test(lower) &&
+    new RegExp(
+      `\\b(explains? why|reveals? what|discusses? addition|pumped['’]? about|what [\\s\\S]{1,25} brings|shares? #?(?:${teamNamesPat}) injury updates?,? discusses)\\b`,
+      'i'
+    ).test(lower)
   ) {
-    return `${pKey}::shanahan_podium_fit`;
+    return `${pKey}::coach_podium_fit`;
   }
 
-  // 5b. Newly acquired player introductory locker-room reaction ("energized / thrilled / super excited to be back in the Bay / with the 49ers")
+  // 5b. Newly acquired player introductory locker-room reaction
   if (
     pKey &&
     /\b(energized|thrilled|super excited|excited to be (?:back|with|here)|head is ['"“]?spinning)\b/.test(lower) &&
-    /\b(trade|49ers|niners|bay)\b/.test(lower)
+    new RegExp(`\\b(trade|${teamNamesPat}${isSfSig ? '|bay' : ''})\\b`, 'i').test(lower)
   ) {
     return `${pKey}::player_arrival_reaction`;
   }
@@ -2679,9 +2966,10 @@ function buildStorySignatureKey(item = {}) {
   if (
     !SECONDARY_COMMENTARY_OR_REACTION_REGEX.test(lead) &&
     !RETROSPECTIVE_UNEXECUTED_TRADE_REGEX.test(lead) &&
-    /\b(\btrade[!:]|trade alert|agree[sd]? to (?:a )?trade|completing a trade|sending [\s\S]{1,50}to (?:the )?(?:49ers|san francisco|niners)|heading to (?:the )?(?:49ers|san francisco|niners)|(?:49ers|san francisco|niners) (?:officially )?(?:trade[sd]? for|acquire[sd]?|acquiring|have (?:officially )?acquired|announced? [\s\S]{0,35}(?:acquired|trade))|officially announce [\s\S]{0,30}trade|49ers roster move:\s*acquired|swap draft pick)\b/i.test(
-      lead
-    )
+    new RegExp(
+      `\\b(\\btrade[!:]|trade alert|agree[sd]? to (?:a )?trade|completing a trade|sending [\\s\\S]{1,50}to (?:the )?(?:${teamNamesPat})|heading to (?:the )?(?:${teamNamesPat})|(?:${teamNamesPat}) (?:officially )?(?:trade[sd]? for|acquire[sd]?|acquiring|have (?:officially )?acquired|announced? [\\s\\S]{0,35}(?:acquired|trade))|officially announce [\\s\\S]{0,30}trade|(?:${teamNamesPat}) roster move:\\s*acquired|swap draft pick)\\b`,
+      'i'
+    ).test(lead)
   ) {
     // Match the player whose name actually appears in the lead trade headline, normalizing by name slug so matched vs unmatched player objects still share one key!
     const leadMentioned = (item?.mentionedPlayers || []).find(mp => {
@@ -2875,7 +3163,7 @@ function scoreClusterLeadQuality(item = {}) {
   const isConversationalAside = /^(?:if it helps|pretty interesting|fwiw|fun fact)\b/i.test(titleText);
   const isRewriteAgg = AGGREGATOR_REWRITE_OUTLET_REGEX.test(`${item.outletName || ''} ${item.url || ''}`);
 
-  const tierScore = isRewriteAgg ? 8 : trustTier === 1 ? 34 : trustTier === 2 ? 24 : 4;
+  const tierScore = isRewriteAgg ? 8 : trustTier === 1 ? 26 : trustTier === 2 ? 24 : 18;
   const formatScore = isPlayerBioBlurb
     ? 6
     : isArticle
@@ -2893,6 +3181,7 @@ function scoreClusterLeadQuality(item = {}) {
   const urgencyBonus = isUrgentBreakingBadge(item.breakingBadge) ? 20 : item.breakingBadge ? 6 : 0;
   const xPlatformBonus = isDirectXStatusUrl(item.url) ? 12 : isBlueskyPostUrl(item.url) ? -4 : 0;
   const nativeStreamBonus = item.videoStreamUrl && /^https:\/\//i.test(String(item.videoStreamUrl)) ? 8 : 0;
+  const youtubeVideoBonus = !nativeStreamBonus && item.videoId ? 7 : 0;
   return (
     tierScore +
     formatScore +
@@ -2902,7 +3191,8 @@ function scoreClusterLeadQuality(item = {}) {
     primaryMoveBonus +
     urgencyBonus +
     xPlatformBonus +
-    nativeStreamBonus
+    nativeStreamBonus +
+    youtubeVideoBonus
   );
 }
 
@@ -3998,7 +4288,7 @@ export function isArticleLinkDropTweet(item = {}) {
   const hasStandaloneBreakingFact =
     TIER1_MAJOR_BREAKING_EVENT_REGEX.test(strippedTweet) ||
     TIER2_ROSTER_OR_STATUS_MOVE_REGEX.test(strippedTweet) ||
-    IN_GAME_INJURY_RETURN_REGEX.test(strippedTweet) ||
+    matchesInGameInjuryOrReturn(strippedTweet) ||
     POST_GAME_INJURY_FOLLOWUP_REGEX.test(strippedTweet) ||
     PRACTICE_WARMUP_INJURY_SCOOP_REGEX.test(strippedTweet) ||
     PRE_GAME_PLAY_AVAILABILITY_REGEX.test(strippedTweet);

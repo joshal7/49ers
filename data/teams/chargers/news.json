@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:55:00.006Z",
+  "updatedAt": "2026-11-23T06:25:48.813Z",
   "dailyTopNewsBrief": {
     "id": "brief_lac_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -112,6 +112,7 @@
       "title": "Chargers' Justin Herbert lands in concussion protocol",
       "summary": "Quarterback Justin Herbert is in the concussion protocol, the Chargers said after Sunday's 27-24 loss to the Jets in Inglewood, California.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749912_600x600_1-1.jpg",
+      "imageCaption": "Herbert  [600x600]",
       "imageAlt": "Chargers' Justin Herbert lands in concussion protocol",
       "publishedAt": "2026-11-23T01:00:45Z",
       "url": "https://www.espn.com/nfl/story/_/id/50567478/chargers-justin-herbert-lands-concussion-protocol",
@@ -124,10 +125,10 @@
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
       "trustTier": 1,
       "wireSource": "espn_team_news",
-      "isBreaking": true,
+      "isBreaking": false,
       "isInGameInjury": true,
-      "breakingBadge": "LIVE INJURY UPDATE",
-      "breakingPriority": 3.421,
+      "breakingBadge": "INJURY UPDATE",
+      "breakingPriority": 1.674,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -136,15 +137,15 @@
       "isFirstMoverInjuryScoop": true,
       "corroborationCount": 1,
       "storyTier": "in_game_injury",
-      "isUrgentBreaking": true,
+      "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": true,
       "isStalePreGameAvailability": false,
-      "storyRank": 27.9549,
       "injurySeverityScore": 0.82,
       "injurySeverityTier": "serious",
       "playerValueScore": 1,
       "playerValueTier": "franchise",
-      "injuryImpactScore": 0.892
+      "injuryImpactScore": 0.892,
+      "storyRank": 16.2045
     },
     {
       "id": "lac_rss_75dbbcd77d80",
@@ -160,7 +161,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -177,14 +178,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 19.8135
+      "storyRank": 10.0188
     },
     {
       "id": "lac_espn_7a956123b6c0f",
       "type": "article",
       "title": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
       "summary": "— Mired in a losing season, New York Jets quarterback Geno Smith's efficiency has been largely overlooked with the offense lagging. Sterling Shepard helped change that Sunday, catching two touchdown passes from Smith and potentially earning himself a...",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873074.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/1d994fc4-f225-4162-8d60-60fca59a2886/1d994fc4-f225-4162-8d60-60fca59a2886.jpg",
+      "imageCaption": "New York Jets vs. Los Angeles Chargers: Game Highlights",
       "imageAlt": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
       "publishedAt": "2026-11-23T01:31:34Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873074",
@@ -200,7 +202,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.057,
+      "breakingPriority": 0.897,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -210,7 +212,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.4455
+      "storyRank": 8.6009
     },
     {
       "id": "lac_vid_6eb08188d239",
@@ -227,14 +229,14 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Video",
       "author": "chargers.com Video",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.966,
+      "breakingPriority": 0.82,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -244,7 +246,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.0493
+      "storyRank": 7.2901
     },
     {
       "id": "lac_vid_feb773895762",
@@ -261,14 +263,14 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Video",
       "author": "chargers.com Video",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.932,
+      "breakingPriority": 0.79,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -278,7 +280,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.2997
+      "storyRank": 6.8561
+    },
+    {
+      "id": "lac_pft_0b84fdf8c9d7",
+      "type": "article",
+      "title": "New York Jets get 'much-needed' win vs. Los Angeles Chargers",
+      "summary": "Mike Florio breaks down the Jets' win over the Chargers in Week 11, discussing Gang Green snapping a five-game losing streak in Los Angeles.",
+      "imageUrl": "https://link.theplatform.com/s/BxmELC/media/FrzZXCddy3ho?auto=true",
+      "imageAlt": "New York Jets get 'much-needed' win vs. Los Angeles Chargers",
+      "publishedAt": "2026-11-23T02:44:56.000Z",
+      "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/new-york-jets-get-much-needed-win-vs-los-angeles-chargers",
+      "outletId": "profootballtalk",
+      "outletName": "ProFootballTalk",
+      "reporterId": "profootballtalk",
+      "reporterName": "ProFootballTalk",
+      "author": "ProFootballTalk",
+      "authorHandle": "@ProFootballTalk",
+      "authorProfileUrl": "https://x.com/ProFootballTalk",
+      "trustTier": 2,
+      "wireSource": "pft_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 88,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.3617
     },
     {
       "id": "lac_vid_81bb93d097b7",
@@ -295,14 +330,14 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Video",
       "author": "chargers.com Video",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.861,
+      "breakingPriority": 0.73,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -312,7 +347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.9551
+      "storyRank": 6.0454
     },
     {
       "id": "lac_vid_b631fd69169f",
@@ -329,14 +364,14 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Video",
       "author": "chargers.com Video",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.822,
+      "breakingPriority": 0.697,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -346,7 +381,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.336
+      "storyRank": 5.6572
+    },
+    {
+      "id": "lac_nfltr_0d9c4a970421",
+      "type": "article",
+      "title": "AFC Notes: Justin Herbert, Xavier Worthy, Chargers, Chiefs, Patriots",
+      "summary": "Chargers The Chargers got their first win of the season, the last of the 32 franchises to taste victory, and HC John Harbaugh noted the team got their smiles back, even if only temporarily. “I thought it was huge for us to come away with a ",
+      "imageUrl": "",
+      "imageAlt": "AFC Notes: Justin Herbert, Xavier Worthy, Chargers, Chiefs, Patriots",
+      "publishedAt": "2026-11-23T01:30:38.000Z",
+      "url": "https://nfltraderumors.co/afc-notes-justin-herbert-xavier-worthy-chargers-chiefs-patriots/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.5645
     },
     {
       "id": "lac_vid_8e7f0640db83",
@@ -363,7 +431,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Video",
       "author": "chargers.com Video",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -380,7 +448,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.9834
+      "storyRank": 4.2841
     },
     {
       "id": "lac_vid_2bc0232d7d19",
@@ -397,7 +465,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Video",
       "author": "chargers.com Video",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -414,7 +482,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8471
+      "storyRank": 4.2066
     },
     {
       "id": "lac_espn_b338a34b45093",
@@ -422,6 +490,7 @@
       "title": "New York Jets vs. Los Angeles Chargers: Game Highlights",
       "summary": "New York Jets vs. Los Angeles Chargers: Game Highlights",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/1d994fc4-f225-4162-8d60-60fca59a2886/1d994fc4-f225-4162-8d60-60fca59a2886.jpg",
+      "imageCaption": "New York Jets vs. Los Angeles Chargers: Game Highlights",
       "imageAlt": "New York Jets vs. Los Angeles Chargers: Game Highlights",
       "publishedAt": "2026-11-23T00:08:00Z",
       "url": "https://www.espn.com/video/clip/_/id/50567126/game-highlights",
@@ -447,7 +516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.2651
+      "storyRank": 3.8686
     },
     {
       "id": "lac_rss_7bcb5f93799f",
@@ -463,7 +532,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -480,7 +549,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.8142
+      "storyRank": 3.598
     },
     {
       "id": "lac_vid_6038a05948aa",
@@ -497,7 +566,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Video",
       "author": "chargers.com Video",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -514,7 +583,75 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3811
+      "storyRank": 3.3305
+    },
+    {
+      "id": "lac_vid_f3fbd49d03be",
+      "type": "video",
+      "title": "Donte Jackson on Defensive Performance vs Jets: \"We Didn't Execute\"",
+      "summary": "Cornerback Donte Jackson speaks with the media after the Week 11 matchup vs. the New York Jets. He explains the setbacks the defense faced during the game and how they will plan to bounce back in practice this week.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/tzcxvqtr6c03fhdbbopi.png",
+      "imageAlt": "Donte Jackson on Defensive Performance vs Jets: \"We Didn't Execute\"",
+      "publishedAt": "2026-11-23T00:53:56.000Z",
+      "url": "https://www.chargers.com/video/donte-jackson-media-availability-jets-week-11-2026",
+      "externalVideoUrl": "https://www.chargers.com/video/donte-jackson-media-availability-jets-week-11-2026",
+      "outletId": "chargers_official",
+      "outletName": "chargers.com Video",
+      "reporterId": "chargers_official",
+      "reporterName": "chargers.com Video",
+      "author": "chargers.com Video",
+      "authorHandle": "@chargers",
+      "authorProfileUrl": "https://www.chargers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.1315
+    },
+    {
+      "id": "lac_vid_b4691779ce53",
+      "type": "video",
+      "title": "Omarion Hampton on Week 11 vs Jets: \"We All Have Faith in Each Other\"",
+      "summary": "Running back Omarion Hampton meets with he media following the Week 11 matchup against the New York Jets. Hampton discusses the confidence the team has headed into Week 12.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/fjvq92ijaxhxavsqyfde.png",
+      "imageAlt": "Omarion Hampton on Week 11 vs Jets: \"We All Have Faith in Each Other\"",
+      "publishedAt": "2026-11-23T00:35:27.000Z",
+      "url": "https://www.chargers.com/video/omarion-hampton-media-availability-jets-week-11-2026",
+      "externalVideoUrl": "https://www.chargers.com/video/omarion-hampton-media-availability-jets-week-11-2026",
+      "outletId": "chargers_official",
+      "outletName": "chargers.com Video",
+      "reporterId": "chargers_official",
+      "reporterName": "chargers.com Video",
+      "author": "chargers.com Video",
+      "authorHandle": "@chargers",
+      "authorProfileUrl": "https://www.chargers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.06
     },
     {
       "id": "lac_vid_02766a75299a",
@@ -531,7 +668,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Video",
       "author": "chargers.com Video",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
@@ -548,7 +685,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2986
+      "storyRank": 0.9567
     },
     {
       "id": "lac_rss_3b239747f8a2",
@@ -564,7 +701,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -581,7 +718,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4778
+      "storyRank": 0.4074
+    },
+    {
+      "id": "lac_nfltr_84eab115160f",
+      "type": "article",
+      "title": "Speculation In League Circles That Chargers HC Jim Harbaugh Could Resign After 2026?",
+      "summary": "NFL reporter Jason La Canfora writes that some of his sources have begun speculating whether Chargers HC Jim Harbaugh will resign after this season.&#160; Several league executives, some of whom know Harbaugh and his family, have observed t",
+      "imageUrl": "",
+      "imageAlt": "Speculation In League Circles That Chargers HC Jim Harbaugh Could Resign After 2026?",
+      "publishedAt": "2026-11-22T15:39:25.000Z",
+      "url": "https://nfltraderumors.co/speculation-in-league-circles-that-chargers-hc-jim-harbaugh-could-resign-after-2026/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2846
     },
     {
       "id": "lac_rss_f9fe0ab84955",
@@ -597,7 +767,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -614,7 +784,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1138
+      "storyRank": 0.1072
     },
     {
       "id": "lac_tx_dc8ca1358c18",
@@ -631,7 +801,7 @@
       "reporterId": "chargers_official",
       "reporterName": "Los Angeles Chargers Official",
       "author": "Los Angeles Chargers Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -648,14 +818,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.071
+      "storyRank": 0.068
     },
     {
       "id": "lac_espn_45b75505a0499",
       "type": "article",
       "title": "Reeling Jets head to LA to face Chargers, who are coming off their first win of the season",
       "summary": "— The New York Jets and Los Angeles Chargers are in the same predicament, but the conversation around the two teams could not be more different heading into their matchup on Sunday.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873074.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/1d994fc4-f225-4162-8d60-60fca59a2886/1d994fc4-f225-4162-8d60-60fca59a2886.jpg",
+      "imageCaption": "New York Jets vs. Los Angeles Chargers: Game Highlights",
       "imageAlt": "Reeling Jets head to LA to face Chargers, who are coming off their first win of the season",
       "publishedAt": "2026-11-20T22:11:32Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873074",
@@ -681,7 +852,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.054
+      "storyRank": 0.0521
     },
     {
       "id": "lac_espn_948e2e73e7ffb",
@@ -689,6 +860,7 @@
       "title": "Draft buzz: Interest in Oklahoma State's Drew Mestemaker could spur draft trade",
       "summary": "If the Titans or Chargers wind up with the No. 1 selection and stick with their franchise quarterbacks, interest in Oklahoma State's Drew Mestemaker could lead to a team seeking to trade up for the top overall pick.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1111/r1744598_1296x729_16-9.jpg",
+      "imageCaption": "Cowboys QB Drew Mestemaker has Heisman and first-round NFL draft aspirations.",
       "imageAlt": "Draft buzz: Interest in Oklahoma State's Drew Mestemaker could spur draft trade",
       "publishedAt": "2026-11-20T21:59:31Z",
       "url": "https://www.espn.com/nfl/story/_/id/50541939/draft-buzz-mestemaker-spur-auction-no-1-pick",
@@ -714,7 +886,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0537
+      "storyRank": 0.0518
     },
     {
       "id": "lac_rss_3a7eb75c0e3d",
@@ -730,7 +902,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -747,7 +919,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0465
+      "storyRank": 0.045
     },
     {
       "id": "lac_rss_8b388e93598c",
@@ -763,7 +935,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -780,7 +952,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0456
+      "storyRank": 0.0442
     },
     {
       "id": "lac_rss_46516db4cf00",
@@ -796,7 +968,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -813,7 +985,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0455
+      "storyRank": 0.044
     },
     {
       "id": "lac_rss_c1cc7c1b60ef",
@@ -829,7 +1001,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -846,7 +1018,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0339
+      "storyRank": 0.033
     },
     {
       "id": "lac_rss_8bbdcea337d8",
@@ -862,7 +1034,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -879,7 +1051,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0287
+      "storyRank": 0.0281
     },
     {
       "id": "lac_tx_6169ad017cb9",
@@ -896,7 +1068,7 @@
       "reporterId": "chargers_official",
       "reporterName": "Los Angeles Chargers Official",
       "author": "Los Angeles Chargers Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -913,7 +1085,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0258
+      "storyRank": 0.0252
     },
     {
       "id": "lac_rss_f31df52f3571",
@@ -929,7 +1101,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -946,7 +1118,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.021
+      "storyRank": 0.0206
     },
     {
       "id": "lac_espn_2174513a3461e",
@@ -954,6 +1126,7 @@
       "title": "2027 NFL draft: Dolphins, Titans, Eagles, Jets, Chargers in race for No. 1 pick",
       "summary": "Five NFL teams have at least 5% odds to land the No. 1 pick in 2027, per ESPN's Football Power Index: the Dolphins, Titans, Eagles, Jets and Chargers.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747125_608x342_16-9.jpg",
+      "imageCaption": "Jeff Hafley",
       "imageAlt": "2027 NFL draft: Dolphins, Titans, Eagles, Jets, Chargers in race for No. 1 pick",
       "publishedAt": "2026-11-18T13:32:42Z",
       "url": "https://www.espn.com/nfl/draft2027/story/_/id/50510863/2027-nfl-draft-top-pick-dolphins-titans-eagles-jets-chargers",
@@ -979,7 +1152,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.02
+      "storyRank": 0.0196
     },
     {
       "id": "lac_espn_dede4a78d0e8e",
@@ -987,6 +1160,7 @@
       "title": "NFL flexes Raiders-Browns to replace Pats-Chargers in SNF slot for Week 12",
       "summary": "The NFL has flexed the Raiders-Browns Week 12 game into NBC's \"Sunday Night Football\" slot.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746654_1296x729_16-9.jpg",
+      "imageCaption": "Quarterback Fernando Mendoza faces a stiff test in Week 11 on the road against the Broncos.",
       "imageAlt": "NFL flexes Raiders-Browns to replace Pats-Chargers in SNF slot for Week 12",
       "publishedAt": "2026-11-18T11:41:02Z",
       "url": "https://www.espn.com/nfl/story/_/id/50512634/nfl-flexes-raiders-browns-snf-slot-week-12",
@@ -997,7 +1171,7 @@
       "author": "Daniel Oyefusi",
       "authorHandle": "@DanielOyefusi",
       "authorProfileUrl": "https://x.com/DanielOyefusi",
-      "trustTier": 1,
+      "trustTier": 3,
       "wireSource": "espn_team_news",
       "isBreaking": false,
       "isInGameInjury": false,
@@ -1007,12 +1181,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 95,
+      "credibilityScore": 78,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.078
+      "storyRank": 0.052
     },
     {
       "id": "lac_rss_29d09beb402c",
@@ -1028,7 +1202,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1045,7 +1219,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0167
     },
     {
       "id": "lac_rss_3572d2789918",
@@ -1061,7 +1235,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1078,7 +1252,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.016
     },
     {
       "id": "lac_rss_a06ff68c394b",
@@ -1094,7 +1268,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1111,7 +1285,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.016
     },
     {
       "id": "lac_rss_d93418e933e5",
@@ -1127,7 +1301,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1144,7 +1318,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0641
+      "storyRank": 0.0632
     },
     {
       "id": "lac_rss_08b4e9624480",
@@ -1160,7 +1334,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1177,7 +1351,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.0153
     },
     {
       "id": "lac_espn_efb0e6e20d069",
@@ -1185,6 +1359,7 @@
       "title": "Kyle Hamilton says Ravens 'disgracing' standards after losing to 0-8 Chargers",
       "summary": "Pro Bowl safety Kyle Hamilton vented after the Ravens' 23-20 loss to the previously winless Chargers on Monday night, which was one of the most embarrassing defeats in team history.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747000_600x400_3-2.jpg",
+      "imageCaption": "Kyle Hamilton  [600x400]",
       "imageAlt": "Kyle Hamilton says Ravens 'disgracing' standards after losing to 0-8 Chargers",
       "publishedAt": "2026-11-17T14:45:17Z",
       "url": "https://www.espn.com/nfl/story/_/id/50508744/kyle-hamilton-says-ravens-disgracing-standards-loss-previously-winless-chargers",
@@ -1195,7 +1370,7 @@
       "author": "Jamison Hensley",
       "authorHandle": "@jamisonhensley",
       "authorProfileUrl": "https://x.com/jamisonhensley",
-      "trustTier": 1,
+      "trustTier": 3,
       "wireSource": "espn_team_news",
       "isBreaking": false,
       "isInGameInjury": false,
@@ -1205,12 +1380,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 95,
+      "credibilityScore": 78,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0154
+      "storyRank": 0.0103
     },
     {
       "id": "lac_espn_84e1ab5575045",
@@ -1218,6 +1393,7 @@
       "title": "Chargers relieved after beating Ravens for first win of season",
       "summary": "The Chargers beat the Ravens 23-30 on Monday night to earn their first win since Week 16 of last season, bringing a franchise-wide sigh of relief.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1746992_600x400_3-2.jpg",
+      "imageCaption": "Justin Herbert (10) celebrates with fans [600x400]",
       "imageAlt": "Chargers relieved after beating Ravens for first win of season",
       "publishedAt": "2026-11-17T13:22:22Z",
       "url": "https://www.espn.com/nfl/story/_/id/50508438/chargers-relieved-beating-ravens-first-win-season",
@@ -1228,7 +1404,7 @@
       "author": "Jeff Legwold",
       "authorHandle": "@Jeff_Legwold",
       "authorProfileUrl": "https://x.com/Jeff_Legwold",
-      "trustTier": 1,
+      "trustTier": 3,
       "wireSource": "espn_team_news",
       "isBreaking": false,
       "isInGameInjury": false,
@@ -1238,19 +1414,20 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 90,
+      "credibilityScore": 78,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0101
     },
     {
       "id": "lac_espn_354afa31bd8d0",
       "type": "article",
       "title": "Chargers bully the Ravens at the line of scrimmage and earn their first win of the season, 23-20",
       "summary": "— The Los Angeles Chargers finally won a game — with the type of smashmouth performance that has brought Jim Harbaugh so much success during his coaching career.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873065.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1117/ss_20261117_000811190_3746148/ss_20261117_000811190_3746148.jpg",
+      "imageCaption": "Herbert credits Chargers locker room for sticking together",
       "imageAlt": "Chargers bully the Ravens at the line of scrimmage and earn their first win of the season, 23-20",
       "publishedAt": "2026-11-17T06:04:47Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873065",
@@ -1276,7 +1453,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0139
     },
     {
       "id": "lac_espn_13573c069eb2e",
@@ -1284,6 +1461,7 @@
       "title": "Justin Herbert, defense help lift Chargers past Ravens on MNF",
       "summary": "The Chargers' defense stifles Baltimore's running backs, and Justin Herbert steps up in Los Angeles' first win.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1746902_1296x729_16-9.jpg",
+      "imageCaption": "Los Angeles Chargers at Baltimore Ravens photodesk [1296x729]",
       "imageAlt": "Justin Herbert, defense help lift Chargers past Ravens on MNF",
       "publishedAt": "2026-11-17T06:03:19Z",
       "url": "https://www.espn.com/nfl/story/_/id/50506286/ravens-chargers-mnf-herbert-first-win",
@@ -1294,7 +1472,7 @@
       "author": "Jeff Legwold",
       "authorHandle": "@Jeff_Legwold",
       "authorProfileUrl": "https://x.com/Jeff_Legwold",
-      "trustTier": 1,
+      "trustTier": 3,
       "wireSource": "espn_team_news",
       "isBreaking": false,
       "isInGameInjury": false,
@@ -1304,12 +1482,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 90,
+      "credibilityScore": 78,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0094
     },
     {
       "id": "lac_rss_6e6bca638566",
@@ -1325,7 +1503,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1342,7 +1520,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.0137
     },
     {
       "id": "lac_rss_716f62a4f916",
@@ -1358,7 +1536,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1375,7 +1553,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0034
     },
     {
       "id": "lac_rss_d9aecfc18976",
@@ -1391,7 +1569,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1408,7 +1586,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0129
     },
     {
       "id": "lac_rss_86a949fcfcaa",
@@ -1424,7 +1602,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1441,7 +1619,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0129
     },
     {
       "id": "lac_rss_7b2ec8378784",
@@ -1457,7 +1635,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1474,7 +1652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0348
+      "storyRank": 0.0344
     },
     {
       "id": "lac_tx_2da5aeb9ed8a",
@@ -1491,7 +1669,7 @@
       "reporterId": "chargers_official",
       "reporterName": "Los Angeles Chargers Official",
       "author": "Los Angeles Chargers Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -1508,7 +1686,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0115
+      "storyRank": 0.0113
     },
     {
       "id": "lac_rss_7ac50c280c4a",
@@ -1524,7 +1702,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1541,7 +1719,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0085
+      "storyRank": 0.0084
     },
     {
       "id": "lac_rss_d53a5ef57069",
@@ -1557,7 +1735,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1590,7 +1768,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1607,7 +1785,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0075
     },
     {
       "id": "lac_rss_7d7b727f2b92",
@@ -1623,7 +1801,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1640,7 +1818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0071
     },
     {
       "id": "lac_tx_4b35aa807a16",
@@ -1657,7 +1835,7 @@
       "reporterId": "chargers_official",
       "reporterName": "Los Angeles Chargers Official",
       "author": "Los Angeles Chargers Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -1674,7 +1852,43 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0069
+      "storyRank": 0.0068
+    },
+    {
+      "id": "lac_yt_Y34bLuTqs28",
+      "type": "video",
+      "category": "film",
+      "videoId": "Y34bLuTqs28",
+      "embeddable": true,
+      "title": "CJ Stroud vs the Chargers Week 9, 2026 Analysis",
+      "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
+      "imageUrl": "https://i.ytimg.com/vi/Y34bLuTqs28/hqdefault.jpg",
+      "imageAlt": "CJ Stroud vs the Chargers Week 9, 2026 Analysis",
+      "publishedAt": "2026-11-13T02:37:17.000Z",
+      "url": "https://www.youtube.com/watch?v=Y34bLuTqs28",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=Y34bLuTqs28",
+      "outletId": "the_qb_school",
+      "outletName": "The QB School",
+      "reporterId": "the_qb_school",
+      "reporterName": "The QB School",
+      "author": "The QB School",
+      "authorHandle": "@TheQBSchool",
+      "authorProfileUrl": "https://x.com/theqbschool",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 92,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0066
     },
     {
       "id": "lac_rss_7604b2bc93a4",
@@ -1690,7 +1904,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1707,7 +1921,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0065
     },
     {
       "id": "lac_rss_227626f871ef",
@@ -1723,7 +1937,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1756,7 +1970,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1790,7 +2004,7 @@
       "reporterId": "chargers_official",
       "reporterName": "Los Angeles Chargers Official",
       "author": "Los Angeles Chargers Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -1823,7 +2037,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1840,7 +2054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.005
     },
     {
       "id": "lac_rss_44703069be9b",
@@ -1856,7 +2070,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1890,7 +2104,7 @@
       "reporterId": "chargers_official",
       "reporterName": "Los Angeles Chargers Official",
       "author": "Los Angeles Chargers Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -1923,7 +2137,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1940,7 +2154,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
+      "storyRank": 0.0045
     },
     {
       "id": "lac_rss_bacf16460630",
@@ -1956,7 +2170,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -1989,7 +2203,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -2023,7 +2237,7 @@
       "reporterId": "chargers_official",
       "reporterName": "Los Angeles Chargers Official",
       "author": "Los Angeles Chargers Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -2057,7 +2271,7 @@
       "reporterId": "chargers_official",
       "reporterName": "Los Angeles Chargers Official",
       "author": "Los Angeles Chargers Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "official_transactions",
@@ -2090,7 +2304,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -2123,7 +2337,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -2136,8 +2350,6 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 1,
       "storyTier": "stale_pregame",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
@@ -2158,7 +2370,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",
@@ -2191,7 +2403,7 @@
       "reporterId": "chargers_official",
       "reporterName": "chargers.com Official",
       "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
+      "authorHandle": "@chargers",
       "authorProfileUrl": "https://www.chargers.com/news/",
       "trustTier": 1,
       "wireSource": "club_official_rss",

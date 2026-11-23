@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T01:27:03.009Z",
+  "updatedAt": "2026-11-23T06:25:13.985Z",
   "windowDays": 7,
-  "totalEpisodes": 21,
+  "totalEpisodes": 20,
   "shows": [
     {
       "id": "locked_on_bills",
@@ -61,7 +61,7 @@
       "feedUrl": "https://feeds.megaphone.fm/SINCL4140657051",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/buffalo-plus-a-buffalo-bills-podcast/id1516732193?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ed/57/11/ed57113a-56a2-4cd5-7459-ef8fde70753c/mza_81407331130477925.png/600x600bb.jpg",
-      "episodeCount7d": 4
+      "episodeCount7d": 3
     },
     {
       "id": "one_bills_live",
@@ -476,26 +476,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/one-bills-live/id1649776359?uo=4",
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/81b68f85-0c3c-4cd7-a504-aeac01336f91/6f9db0fa-bb9c-4c3f-b0df-aeac01336f9a/podcast.rss",
       "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/81b68f85-0c3c-4cd7-a504-aeac01336f91/7fd98135-5dfc-4905-a953-b504011d5512/audio.mp3?utm_source=Podcast&in_playlist=6f9db0fa-bb9c-4c3f-b0df-aeac01336f9a"
-    },
-    {
-      "id": "pod_buffalo_plus_1000802145076",
-      "trackId": 1000802145076,
-      "collectionId": 1516732193,
-      "showId": "buffalo_plus",
-      "showName": "Buffalo Plus",
-      "showFullTitle": "Buffalo Plus: A Buffalo Bills podcast",
-      "hosts": "Mike Catalana, Jenna Cottrell & Dan Fetes",
-      "network": "Buffalo Plus",
-      "title": "The Bills 'Ground' Jets: JAMES COOK is a STAR and Buffalo's Defense may be LEGIT?!",
-      "summary": "James Cook is proving he is a star as the Bills offense continues to put up over 30 points per game. Buffalo is 8-1 for the 1st time since 1991, but was this their most 'impressive' win of the season? Our podcast hosts break down the latest game tape to analyze how Buffalo i",
-      "publishedAt": "2026-11-16T05:32:00.000Z",
-      "durationMinutes": 25,
-      "durationDisplay": "25 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ed/57/11/ed57113a-56a2-4cd5-7459-ef8fde70753c/mza_81407331130477925.png/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/the-bills-ground-jets-james-cook-is-a-star/id1516732193?i=1000802145076&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/buffalo-plus-a-buffalo-bills-podcast/id1516732193?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/SINCL4140657051",
-      "audioStreamUrl": "https://traffic.megaphone.fm/SINCL7880612867.mp3"
     }
   ]
 }

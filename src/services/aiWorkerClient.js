@@ -135,8 +135,13 @@ const SHARED_AI_SINGLETON =
     unavailableTtsModelsByKey: new Map(),
     inFlightDailyMatchupPromise: null,
     inFlightDailyNewsBriefPromise: null,
+    inFlightDailyNewsBriefKvPromise: null,
+    lastDailyNewsBriefKvCheckMsByKey: new Map(),
     inFlightGameDayInactivesAiPromise: null
   });
+if (!SHARED_AI_SINGLETON.lastDailyNewsBriefKvCheckMsByKey) {
+  SHARED_AI_SINGLETON.lastDailyNewsBriefKvCheckMsByKey = new Map();
+}
 const discoveredCascadeByKey = SHARED_AI_SINGLETON.discoveredCascadeByKey;
 const unavailableModelsByKey = SHARED_AI_SINGLETON.unavailableModelsByKey;
 const unavailableTtsModelsByKey = SHARED_AI_SINGLETON.unavailableTtsModelsByKey;
@@ -2052,6 +2057,7 @@ export async function runOnDemandDeepAnalysis({
     // Cloud Worker Transport (`prefs.workerBaseUrl`)
     // =========================================================================
     const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+    const activeTeamCloud = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
     if (baseUrl) {
       const liveSearchItems = await fetchLiveTopicSignals(cleanPrompt);
       const dossier = compileDeepResearchDossier({
@@ -2061,7 +2067,7 @@ export async function runOnDemandDeepAnalysis({
       });
 
       const res = await fetchWithTimeout(
-        `${baseUrl}/api/analyze`,
+        `${baseUrl}/api/analyze?team=${encodeURIComponent(activeTeamCloud.abbr)}`,
         {
           method: 'POST',
           headers: {
@@ -2069,9 +2075,10 @@ export async function runOnDemandDeepAnalysis({
             'X-Group-Passcode': prefs?.groupPasscode || ''
           },
           body: JSON.stringify({
+            teamAbbr: activeTeamCloud.abbr,
             prompt: rawPrompt,
             category: category || 'Deep Scouting & Cap Dive',
-            author: prefs?.authorName || 'Josh',
+            author: prefs?.authorName || activeTeamCloud.brandName,
             deepResearchPass: false,
             verifyPass: false,
             thinkingLevel: effectiveThinkingLevel,
@@ -2094,7 +2101,10 @@ export async function runOnDemandDeepAnalysis({
         detail: 'Cross-checking active 53-man roster & OverTheCap figures.'
       });
       if (json.item?.markdown) {
-        json.item.markdown = sanitizeHallucinatedRosterText(json.item.markdown, rosterPlayers);
+        json.item.markdown = sanitizeHallucinatedRosterText(json.item.markdown, rosterPlayers, {
+          team: activeTeamCloud,
+          departedPlayers: appData?.roster?.departedPlayers || []
+        });
       }
       await tracker.ensureMinimumVisualStageDwell(1150);
       tracker.complete(
@@ -2280,6 +2290,7 @@ export async function generateOnDemandAutopodcast({
     // =========================================================================
     // Cloud Worker Transport (`prefs.workerBaseUrl`)
     // =========================================================================
+    const activeTeamPodCloud = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
     if (baseUrl) {
       const liveSearchItems = await fetchLiveTopicSignals(cleanTopic);
       const dossier = compileDeepResearchDossier({
@@ -2289,7 +2300,7 @@ export async function generateOnDemandAutopodcast({
       });
 
       const res = await fetchWithTimeout(
-        `${baseUrl}/api/podcast`,
+        `${baseUrl}/api/podcast?team=${encodeURIComponent(activeTeamPodCloud.abbr)}`,
         {
           method: 'POST',
           headers: {
@@ -2297,10 +2308,11 @@ export async function generateOnDemandAutopodcast({
             'X-Group-Passcode': prefs?.groupPasscode || ''
           },
           body: JSON.stringify({
+            teamAbbr: activeTeamPodCloud.abbr,
             topic: cleanTopic,
             durationMinutes: mins,
             format,
-            author: prefs?.authorName || 'Josh',
+            author: prefs?.authorName || activeTeamPodCloud.brandName,
             deepResearchPass: false,
             verifyPass: false,
             thinkingLevel: effectiveThinkingLevel,
@@ -2320,7 +2332,10 @@ export async function generateOnDemandAutopodcast({
       if (cloudEp && Array.isArray(cloudEp.transcript)) {
         cloudEp.transcript = cloudEp.transcript.map(seg => ({
           ...seg,
-          text: sanitizeHallucinatedRosterText(seg.text || '', rosterPlayers)
+          text: sanitizeHallucinatedRosterText(seg.text || '', rosterPlayers, {
+            team: activeTeamPodCloud,
+            departedPlayers: appData?.roster?.departedPlayers || []
+          })
         }));
       }
 
@@ -3193,7 +3208,12 @@ function isRawSnapCountThreadFragment(text = '') {
  * Selects up to `maxSources` verified, non-paywalled, StoryRank-prioritized tweets & articles
  * (`S1..S18`) from `appData.news.rawStream` to ground and inline-link the Daily Top News Brief.
  */
-export function selectTopNewsBriefSourceCandidates(appData, maxSources = 18, nowMs = Date.now()) {
+export function selectTopNewsBriefSourceCandidates(
+  appData,
+  maxSources = 18,
+  nowMs = Date.now(),
+  { maxPublishedMs = null } = {}
+) {
   const rawStream = Array.isArray(appData?.news?.rawStream) ? appData.news.rawStream : [];
   if (rawStream.length === 0) return [];
 
@@ -3212,7 +3232,7 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 18, now
       .filter(k => k.length >= 16)
   );
 
-  const filteredBase = afterAvail.filter(it => {
+  const filteredAll = afterAvail.filter(it => {
     if (!it || it.type === 'video' || Boolean(it.videoId) || it.isClickbait) return false;
     const ttl = String(it.title || '');
     const sum = String(it.summary || '');
@@ -3242,6 +3262,16 @@ export function selectTopNewsBriefSourceCandidates(appData, maxSources = 18, now
     }
     return Boolean(sanitizeExternalUrl(it.url, null)) && !isPaywalledPublisher(it.outletName, it.url);
   });
+
+  // Optional upper publish-time ceiling (used during pre-game hold rebuilds so live game-day items never leak into the prior brief)
+  const boundedByCutoff = Number.isFinite(maxPublishedMs)
+    ? filteredAll.filter(it => {
+        const pMs = it.publishedAt ? Date.parse(it.publishedAt) : NaN;
+        return Number.isFinite(pMs) && pMs <= maxPublishedMs;
+      })
+    : [];
+  const filteredBase =
+    Number.isFinite(maxPublishedMs) && boundedByCutoff.length >= 2 ? boundedByCutoff : filteredAll;
 
   // During the 24h post-game window, if >=2 post-kickoff reports exist, exclude stale pre-kickoff previews
   // so the post-game & Monday morning briefs anchor strictly on actual game outcome, X pressers & post-game injuries!
@@ -3645,7 +3675,7 @@ export function buildDailyTopNewsBriefPrompt(
     '3. MACRO BEFORE MICRO (PROPORTIONATE CALLOUTS): Never fixate on minor backups, isolated mid-game tweets, or practice trivia at the expense of the big picture, team-wide performance, star players, or glaring unit flaws.',
     '4. TARGET LENGTH & STRUCTURE (NO REDUNDANT TOP SUMMARY PARAGRAPH): Write ~185–240 visible words total across `headline` + 3 to 5 dynamic `bullets` (choose 3, 4, or 5 bullets organically to fit today\'s distinct high-value angles—e.g., 4–5 tight bullets for a packed game recap, 3–4 bullets on a focused news day). Do NOT include a separate summary paragraph; every bullet must add non-redundant information.',
     '5. COMPLETE JOURNALISTIC PROSE & MINIMAL-DISTRACTION CITATIONS (`[S#]`): Write crisp, complete sentences with exact numbers. Place separate bare `[S1]` `[S2]` markers right before punctuation (NEVER group inside one bracket like `[S1, S2]`, NEVER write reporter/outlet names or "per [S1]" in prose, NEVER use teaser phrases like "latest on..."/"click here", rhetorical questions, emojis, or ellipses "...").',
-    '6. SUBTOPIC NAMING: Each bullet object in `bullets` MUST have a specific, descriptive 2–4 word `"subtopic"` naming that exact angle (e.g., `"Cowboys Shootout Win"`, `"McCaffrey & Purdy Shine"`, `"Weaponry & Debuts"`, `"Defense (Run Stop vs. Air Raid)"`, `"Looking Ahead"`, `"Secondary Injury Watch"`) and `"body"` containing the 1–3 sentence analysis with `[S#]` citations. NEVER write generic placeholder labels such as `"Bold Subtopic"`, `"Subtopic"`, or `"Topic Title"`.',
+    `6. SUBTOPIC NAMING: Each bullet object in \`bullets\` MUST have a specific, descriptive 2–4 word \`"subtopic"\` naming that exact angle (e.g., ${activeTeam.abbr === 'SF' ? '"Cowboys Shootout Win", "McCaffrey & Purdy Shine"' : '"Statement Road Win", "Offense Fires on All Cylinders"'}, "Weaponry & Debuts", "Defense (Run Stop vs. Pass)", "Looking Ahead", "Secondary Injury Watch") and \`"body"\` containing the 1–3 sentence analysis with \`[S#]\` citations. NEVER write generic placeholder labels such as \`"Bold Subtopic"\`, \`"Subtopic"\`, or \`"Topic Title"\`.`,
     '7. Output ONLY valid raw JSON matching: {"headline":"Crisp 9-15 word headline","bullets":[{"subtopic":"Specific 2-4 Word Subtopic","body":"Factual sentences with inline [S1] markers."}],"citedSourceIds":["S1","S2"]}.'
   ]
     .filter(Boolean)
@@ -4045,7 +4075,9 @@ export function parseAndSanitizeDailyTopNewsBrief(
  * - Offseason / Active Transaction Days: Cap restructures, trades, signings, and draft developments when genuinely newsworthy.
  */
 export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(), meta = {}) {
-  const candidates = selectTopNewsBriefSourceCandidates(appData, 18, nowMs);
+  const candidates = selectTopNewsBriefSourceCandidates(appData, 18, nowMs, {
+    maxPublishedMs: meta.maxPublishedMs ?? null
+  });
   const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
   const m = appData?.meta || {};
   const um = appData?.scheduleMatchup?.upcomingMatchup || {};
@@ -4762,8 +4794,8 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
         if (firstSent.length >= 36 && !DANGLING_TAIL_RE.test(firstSent)) {
           usedRefSet.add(unusedLead.refId);
           citedIds.push(unusedLead.refId);
-          const subLabel = /nfc|rams|seahawks|cardinals|vikings|lions|eagles|playoff|seed/i.test(rawLeadTxt)
-            ? 'NFC & Opponent Watch'
+          const subLabel = /nfc|afc|division|rival|playoff|seed|wild\s*card/i.test(rawLeadTxt)
+            ? `${teamConf || 'Conference'} & Opponent Watch`
             : 'Around the Beat';
           dynamicBullets.push(`${subLabel}: ${firstSent} [${unusedLead.refId}].`);
         }
@@ -4782,6 +4814,31 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
         : Number(wk) || null;
   const deterministicSource = meta.source || 'pipeline-grounded';
 
+  // Never stamp a multi-day-old `meta.updatedAt` onto a freshly synthesized deterministic brief
+  const resolveDeterministicGeneratedAtIso = () => {
+    if (meta.generatedAt) return meta.generatedAt;
+    const candTimes = candidates
+      .map(c => (c?.publishedAt ? Date.parse(c.publishedAt) : NaN))
+      .filter(t => Number.isFinite(t) && t <= nowMs);
+    const newestCandMs = candTimes.length > 0 ? Math.max(...candTimes) : NaN;
+    if (Number.isFinite(meta.maxPublishedMs)) {
+      const boundedMs = Number.isFinite(newestCandMs)
+        ? Math.min(nowMs, meta.maxPublishedMs, newestCandMs)
+        : Math.min(nowMs, meta.maxPublishedMs);
+      return new Date(boundedMs).toISOString();
+    }
+    const metaUpdMs = m.updatedAt ? Date.parse(m.updatedAt) : NaN;
+    if (
+      Number.isFinite(metaUpdMs) &&
+      Math.abs(nowMs - metaUpdMs) <= 12 * 3_600_000 &&
+      (!Number.isFinite(newestCandMs) || newestCandMs - metaUpdMs <= 4 * 3_600_000)
+    ) {
+      return m.updatedAt;
+    }
+    return new Date(nowMs).toISOString();
+  };
+  const resolvedGeneratedAt = resolveDeterministicGeneratedAtIso();
+
   const built = parseAndSanitizeDailyTopNewsBrief(
     {
       headline,
@@ -4792,7 +4849,7 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
     candidates,
     appData,
     {
-      generatedAt: meta.generatedAt || m.updatedAt || new Date(nowMs).toISOString(),
+      generatedAt: resolvedGeneratedAt,
       cycleKey: effectiveCycleKey,
       isPostGame: effectiveIsPostGame,
       gameWeek: effectiveGameWeek,
@@ -4810,7 +4867,7 @@ export function buildDeterministicDailyTopNewsBrief(appData, nowMs = Date.now(),
       isPostGame: effectiveIsPostGame,
       gameWeek: effectiveGameWeek,
       teamRecord: rec,
-      generatedAt: meta.generatedAt || m.updatedAt || new Date(nowMs).toISOString(),
+      generatedAt: resolvedGeneratedAt,
       modelUsed: meta.modelUsed || 'deterministic-grounded',
       thinkingLevel: meta.thinkingLevel ?? 'NONE',
       source: deterministicSource,
@@ -4893,6 +4950,98 @@ function safeDeleteLocalKey(key) {
   }
 }
 
+function isAiDailyBriefSource(brief) {
+  return brief?.source === 'live-gemini-daily' || brief?.source === 'pipeline-gemini-daily';
+}
+
+function normalizeWorkerReturnedCycleKey(rawKey = '') {
+  return String(rawKey || '').trim().replace(/-v\d+$/i, '');
+}
+
+function parseCycleDateOrderKey(cycleKey = '') {
+  const m = String(cycleKey || '').match(/^(\d{4}-\d{2}-\d{2})@(.+)$/);
+  if (!m) return null;
+  const datePart = m[1];
+  const suffix = m[2].toLowerCase();
+  // Post-game cycle on Day D is chronologically AFTER the regular 5 PM cycle on Day D-1 and at/after Day D's daily cycle
+  const rank = suffix.startsWith('postgame') ? 2 : 1;
+  return `${datePart}#${rank}`;
+}
+
+/**
+ * Resolves which Daily Top-News Brief to retain when a background upstream bundle refresh
+ * (`fetchFresherUpstreamData` / `loadAll49ersData`) arrives while the browser already holds a
+ * live hydrated or Shared-KV brief. Guarantees an older-cycle static JSON bundle can NEVER
+ * overwrite a newer, non-stale AI or live brief!
+ */
+export function mergeDailyTopNewsBriefOnUpstreamRefresh(
+  prevBrief,
+  nextBrief,
+  nextData,
+  nowMs = Date.now()
+) {
+  if (!prevBrief || typeof prevBrief !== 'object' || !Array.isArray(prevBrief.bullets) || prevBrief.bullets.length < 2) {
+    return nextBrief || null;
+  }
+  const hasValidNext = Boolean(
+    nextBrief && typeof nextBrief === 'object' && Array.isArray(nextBrief.bullets) && nextBrief.bullets.length >= 2
+  );
+  const prevNonStale = !isDailyBriefStaleForLiveState(prevBrief, nextData, nowMs);
+  if (!prevNonStale) {
+    return hasValidNext ? nextBrief : prevBrief;
+  }
+  if (!hasValidNext) {
+    return prevBrief;
+  }
+
+  const nextNonStale = !isDailyBriefStaleForLiveState(nextBrief, nextData, nowMs);
+  if (!nextNonStale) {
+    return prevBrief;
+  }
+
+  const cycleState = resolveNewsBriefCycleState(nowMs, nextData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
+  const activeCycle = cycleState.activeCycleKey;
+  const prevIsAi = isAiDailyBriefSource(prevBrief);
+  const nextIsAi = isAiDailyBriefSource(nextBrief);
+  const nextIsCanonicalActive =
+    nextBrief.cycleKey === activeCycle && nextBrief.source === 'pipeline-gemini-daily';
+  if (nextIsCanonicalActive) {
+    return nextBrief;
+  }
+
+  const prevMs = Date.parse(prevBrief.generatedAt || '') || 0;
+  const nextMs = Date.parse(nextBrief.generatedAt || '') || 0;
+
+  // Same cycle: preserve live/cached AI over deterministic fallback, or newer AI over older AI
+  if (prevBrief.cycleKey && prevBrief.cycleKey === nextBrief.cycleKey) {
+    if (prevIsAi && (!nextIsAi || prevMs >= nextMs)) {
+      return prevBrief;
+    }
+    if (!nextIsAi && prevMs > nextMs) {
+      return prevBrief;
+    }
+    return nextBrief;
+  }
+
+  // Different cycles: NEVER let an older-cycle upstream brief clobber a newer-cycle prevBrief!
+  if (prevBrief.cycleKey === activeCycle && nextBrief.cycleKey !== activeCycle) {
+    return prevBrief;
+  }
+  if (nextBrief.cycleKey === activeCycle && prevBrief.cycleKey !== activeCycle) {
+    return nextBrief;
+  }
+
+  const prevOrd = parseCycleDateOrderKey(prevBrief.cycleKey);
+  const nextOrd = parseCycleDateOrderKey(nextBrief.cycleKey);
+  if (prevOrd && nextOrd && prevOrd !== nextOrd) {
+    return prevOrd > nextOrd ? prevBrief : nextBrief;
+  }
+  if (prevMs > nextMs) {
+    return prevBrief;
+  }
+  return nextBrief;
+}
+
 export function hydrateCachedDailyTopNewsBrief(appData, nowMs = Date.now()) {
   if (!appData?.news) return false;
   if (appData.news.dailyTopNewsBrief) {
@@ -4942,30 +5091,71 @@ export function hydrateCachedDailyTopNewsBrief(appData, nowMs = Date.now()) {
     safeWriteLocalJson(briefCacheKey, cached);
   }
 
-  // During Game-Day Hold ([T-90m, Final + buffer)), preserve the active pre-game brief so new game-day news stacks cleanly above it
+  // During Game-Day Hold ([T-90m, Final + buffer)), preserve the active pre-game brief so new game-day news stacks cleanly above it —
+  // NEVER stay trapped on a multi-day-old static `data/news.json` brief when a fresher cached brief or pre-game wire exists!
   if (cycleState.isGameDayHold) {
     const cachedHasBullets = Boolean(cached && Array.isArray(cached.bullets) && cached.bullets.length >= 2);
-    const cachedIsAi =
-      cached?.source === 'live-gemini-daily' || cached?.source === 'pipeline-gemini-daily';
+    const cachedIsAi = isAiDailyBriefSource(cached);
     const upstreamIsCanonicalAi =
       upstream?.cycleKey === activeCycle && upstream?.source === 'pipeline-gemini-daily';
-    const cachedNewerThanUpstream =
-      (Date.parse(cached?.generatedAt || '') || 0) >= (Date.parse(upstream?.generatedAt || '') || 0);
+    const upstreamGenMs = Date.parse(upstream?.generatedAt || '') || 0;
+    const cachedGenMs = Date.parse(cached?.generatedAt || '') || 0;
+    const cachedNewerThanUpstream = cachedGenMs >= upstreamGenMs;
+    const cachedOrd = parseCycleDateOrderKey(cached?.cycleKey);
+    const upstreamOrd = parseCycleDateOrderKey(upstream?.cycleKey);
+    const cachedCycleNewer = Boolean(cachedOrd && (!upstreamOrd || cachedOrd > upstreamOrd));
+
     if (
       cachedHasBullets &&
+      !cachedStale &&
       !upstreamIsCanonicalAi &&
-      (cached.cycleKey === activeCycle || (cachedIsAi && !cachedStale && cachedNewerThanUpstream))
+      (cached.cycleKey === activeCycle ||
+        (cachedIsAi && cachedNewerThanUpstream) ||
+        (cachedCycleNewer && cachedGenMs > upstreamGenMs))
     ) {
+      const changed =
+        appData.news.dailyTopNewsBrief?.id !== cached.id ||
+        appData.news.dailyTopNewsBrief?.generatedAt !== cached.generatedAt;
       appData.news.dailyTopNewsBrief = cached;
-      return true;
+      return changed;
     }
-    if (!appData.news.dailyTopNewsBrief) {
-      appData.news.dailyTopNewsBrief = buildDeterministicDailyTopNewsBrief(appData, nowMs, {
-        cycleKey: activeCycle,
-        isPostGame: false,
-        source: 'live-deterministic-fallback'
-      });
-      return true;
+
+    const preGameCutoffMs = Number.isFinite(cycleState.targetKickoffMs)
+      ? cycleState.targetKickoffMs - 90 * 60_000
+      : nowMs;
+    const upstreamStaleHold = upstream ? isDailyBriefStaleForLiveState(upstream, appData, nowMs) : true;
+    const upstreamBehindActiveCycle = Boolean(
+      upstream &&
+        upstream.cycleKey !== activeCycle &&
+        (upstreamStaleHold || (upstreamGenMs > 0 && preGameCutoffMs - upstreamGenMs >= 30 * 3_600_000))
+    );
+
+    if (!upstream || upstreamBehindActiveCycle) {
+      const rawStream = Array.isArray(appData.news.rawStream) ? appData.news.rawStream : [];
+      const preGameFresherCount = rawStream.filter(it => {
+        if (!it || it.type === 'video' || Boolean(it.videoId) || it.isClickbait) return false;
+        const pMs = it.publishedAt ? Date.parse(it.publishedAt) : NaN;
+        if (!Number.isFinite(pMs) || pMs > preGameCutoffMs) return false;
+        if (preGameCutoffMs - pMs > 42 * 3_600_000) return false;
+        return !upstreamGenMs || pMs >= upstreamGenMs + 6 * 3_600_000;
+      }).length;
+
+      // Rebuild strictly from verified pre-game sources (< T-90m) when upstream is missing or days behind activeCycle
+      // and genuine newer pre-game wire items exist (never fabricate a fresh timestamp from stale static articles!)
+      if (!upstream || preGameFresherCount >= 2) {
+        const prevId = appData.news.dailyTopNewsBrief?.id || '';
+        const prevGen = appData.news.dailyTopNewsBrief?.generatedAt || '';
+        const rebuiltHold = buildDeterministicDailyTopNewsBrief(appData, nowMs, {
+          cycleKey: activeCycle,
+          isPostGame: false,
+          maxPublishedMs: preGameCutoffMs,
+          source: 'live-deterministic-fallback'
+        });
+        if (rebuiltHold && Array.isArray(rebuiltHold.bullets) && rebuiltHold.bullets.length >= 2) {
+          appData.news.dailyTopNewsBrief = rebuiltHold;
+          return rebuiltHold.id !== prevId || rebuiltHold.generatedAt !== prevGen;
+        }
+      }
     }
     return false;
   }
@@ -5104,14 +5294,204 @@ export function clearDailyMatchupIntelAttemptLock(teamInput = null) {
 }
 
 /**
+ * Fast, 0-credit read-only lookup against Shared Worker KV (`/api/daily-news-brief?allowLatest=1`)
+ * that runs immediately on boot, game-day hold, and visibility resume WITHOUT waiting for
+ * `initialLiveHydrationPromise` or `triggerDailyMatchupIntelSync()`.
+ */
+export async function hydrateDailyTopNewsBriefFromSharedKv({
+  appData,
+  prefs = {},
+  nowMs = Date.now(),
+  force = false
+} = {}) {
+  if (!appData?.news) {
+    return { updated: false, reason: 'no_news_state' };
+  }
+  const baseUrl = resolveReadOnlyPlatformApiBase(prefs);
+  if (!baseUrl) {
+    return { updated: false, reason: 'no_worker_base' };
+  }
+
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const briefCacheKey = getDailyNewsBriefCacheKey(activeTeam);
+  const briefAttemptKey = getDailyNewsBriefAttemptKey(activeTeam);
+  const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
+  const activeCycle = cycleState.activeCycleKey;
+  const existing = appData.news.dailyTopNewsBrief;
+
+  if (
+    !force &&
+    existing &&
+    existing.cycleKey === activeCycle &&
+    isAiDailyBriefSource(existing) &&
+    Array.isArray(existing.bullets) &&
+    existing.bullets.length >= 2 &&
+    !isDailyBriefStaleForLiveState(existing, appData, nowMs)
+  ) {
+    return { updated: false, fromCache: true, cycleKey: activeCycle };
+  }
+
+  const throttleKey = `${activeTeam.abbr}:${activeCycle}`;
+  const lastCheckMs = SHARED_AI_SINGLETON.lastDailyNewsBriefKvCheckMsByKey.get(throttleKey) || 0;
+  if (!force && lastCheckMs > 0 && nowMs - lastCheckMs < DAILY_NEWS_BRIEF_KV_RECHECK_MS) {
+    return { updated: false, throttled: true, cycleKey: activeCycle };
+  }
+
+  if (SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvPromise) {
+    return SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvPromise;
+  }
+
+  SHARED_AI_SINGLETON.lastDailyNewsBriefKvCheckMsByKey.set(throttleKey, nowMs);
+  SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvPromise = (async () => {
+    try {
+      const workerCycleKey = `${activeCycle}-v5`;
+      const kvGetRes = await fetchWithTimeout(
+        `${baseUrl}/api/daily-news-brief?team=${encodeURIComponent(activeTeam.abbr)}&cycleKey=${encodeURIComponent(workerCycleKey)}&allowLatest=1`,
+        {
+          method: 'GET',
+          cache: 'no-store',
+          headers: {
+            'X-Group-Passcode': prefs?.groupPasscode || ''
+          }
+        },
+        5500
+      );
+      if (!kvGetRes.ok) {
+        return { updated: false, reason: 'kv_http_error', status: kvGetRes.status, cycleKey: activeCycle };
+      }
+      const kvJson = await kvGetRes.json();
+      if (!kvJson?.cached || (!kvJson.data && !kvJson.rawText)) {
+        return { updated: false, reason: 'kv_miss', cycleKey: activeCycle };
+      }
+
+      const isLatestFallback = Boolean(kvJson.latestFallback);
+      const returnedCycle = normalizeWorkerReturnedCycleKey(
+        kvJson.cycleKey || kvJson.data?.cycleKey || activeCycle
+      );
+      const resolvedCycleKey = isLatestFallback && returnedCycle ? returnedCycle : activeCycle;
+      const preGameCutoffMs = Number.isFinite(cycleState.targetKickoffMs)
+        ? cycleState.targetKickoffMs - 90 * 60_000
+        : nowMs;
+
+      const streamCandidates = selectTopNewsBriefSourceCandidates(appData, 18, nowMs, {
+        maxPublishedMs: cycleState.isGameDayHold ? preGameCutoffMs : null
+      });
+      const kvSourceCandidates =
+        streamCandidates.length > 0
+          ? streamCandidates
+          : Array.isArray(kvJson.data?.sources)
+            ? kvJson.data.sources.map((s, idx) => ({ ...s, refId: `S${idx + 1}` }))
+            : [];
+
+      const fromKv = parseAndSanitizeDailyTopNewsBrief(
+        kvJson.data || kvJson.rawText,
+        kvSourceCandidates,
+        appData,
+        {
+          cycleKey: resolvedCycleKey,
+          isPostGame: isLatestFallback
+            ? Boolean(kvJson.data?.isPostGame || /@postgame-/i.test(resolvedCycleKey))
+            : cycleState.isPostGameCycle,
+          gameWeek: isLatestFallback
+            ? kvJson.data?.gameWeek
+            : cycleState.targetGame
+              ? Number(cycleState.targetGame.week)
+              : undefined,
+          generatedAt: kvJson.generatedAt || kvJson.data?.generatedAt || new Date(nowMs).toISOString(),
+          modelUsed: kvJson.modelUsed || kvJson.data?.modelUsed || PRIMARY_GEMINI_REASONING_MODEL,
+          source: 'live-gemini-daily'
+        }
+      );
+
+      if (!fromKv || isDailyBriefStaleForLiveState(fromKv, appData, nowMs)) {
+        return { updated: false, reason: 'kv_stale_or_invalid', cycleKey: activeCycle };
+      }
+
+      const kvGenMs = Date.parse(fromKv.generatedAt || '') || 0;
+      if (isLatestFallback) {
+        // Reject stale latest fallback (>60h old) or any brief generated after T-90m during pre-game hold
+        if (!kvGenMs || nowMs - kvGenMs > 60 * 3_600_000) {
+          return { updated: false, reason: 'kv_latest_too_old', cycleKey: activeCycle };
+        }
+        if (cycleState.isGameDayHold && kvGenMs > preGameCutoffMs + 5 * 60_000) {
+          return { updated: false, reason: 'kv_latest_after_gameday_cutoff', cycleKey: activeCycle };
+        }
+        const existingCur = appData.news.dailyTopNewsBrief;
+        const existingGenMs = Date.parse(existingCur?.generatedAt || '') || 0;
+        const existingValidNonStale = Boolean(
+          existingCur &&
+            Array.isArray(existingCur.bullets) &&
+            existingCur.bullets.length >= 2 &&
+            !isDailyBriefStaleForLiveState(existingCur, appData, nowMs)
+        );
+        if (
+          existingValidNonStale &&
+          isAiDailyBriefSource(existingCur) &&
+          (existingCur.cycleKey === activeCycle || existingGenMs >= kvGenMs)
+        ) {
+          return { updated: false, fromCache: true, cycleKey: activeCycle };
+        }
+        if (existingValidNonStale && existingCur.cycleKey === activeCycle && existingGenMs >= kvGenMs) {
+          return { updated: false, fromCache: true, cycleKey: activeCycle };
+        }
+      } else {
+        safeDeleteLocalKey(briefAttemptKey);
+      }
+
+      safeWriteLocalJson(briefCacheKey, fromKv);
+      appData.news.dailyTopNewsBrief = fromKv;
+      return {
+        updated: true,
+        fromSharedWorkerCache: true,
+        latestFallback: isLatestFallback,
+        modelUsed: fromKv.modelUsed,
+        cycleKey: resolvedCycleKey
+      };
+    } catch {
+      return { updated: false, reason: 'kv_fetch_error', cycleKey: activeCycle };
+    } finally {
+      SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvPromise = null;
+    }
+  })();
+
+  return SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvPromise;
+}
+
+/**
  * Lightweight synchronous check used by background wire polling & visibility resume to detect when
- * a new daily or post-game AI Top-News Brief cycle has just become ready to synthesize.
+ * a new daily or post-game AI Top-News Brief cycle has just become ready to synthesize (or when
+ * Shared Worker KV should be polled for 0 credits during a Game-Day Hold).
  */
 export function shouldTriggerDailyTopNewsBriefRefresh(appData, prefs = {}, nowMs = Date.now()) {
   if (!appData?.news || SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise) return false;
   const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();
   const baseUrl = resolveReadOnlyPlatformApiBase(prefs);
   if (!effectiveKey && !baseUrl) return false;
+
+  const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
+  const activeCycle = cycleState.activeCycleKey;
+  const existing = appData.news.dailyTopNewsBrief;
+  const existingIsValidActiveAi = Boolean(
+    existing &&
+      existing.cycleKey === activeCycle &&
+      isAiDailyBriefSource(existing) &&
+      !isDailyBriefStaleForLiveState(existing, appData, nowMs)
+  );
+  if (existingIsValidActiveAi) {
+    return false;
+  }
+
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+
+  // During Game-Day Hold, NEVER spend a Gemini POST credit, but DO allow a 0-credit Shared KV GET
+  // whenever we don't yet hold the active pre-game cycle's AI brief!
+  if (cycleState.isGameDayHold) {
+    if (!baseUrl || SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvPromise) return false;
+    const throttleKey = `${activeTeam.abbr}:${activeCycle}`;
+    const lastKvMs = SHARED_AI_SINGLETON.lastDailyNewsBriefKvCheckMsByKey.get(throttleKey) || 0;
+    return !lastKvMs || nowMs - lastKvMs >= DAILY_NEWS_BRIEF_KV_RECHECK_MS;
+  }
+
   if (
     appData?._awaitingInitialLiveWireSync === true &&
     (typeof navigator === 'undefined' || navigator.onLine !== false)
@@ -5120,21 +5500,6 @@ export function shouldTriggerDailyTopNewsBriefRefresh(appData, prefs = {}, nowMs
   }
   if (isAppDataAwaitingLivePostGameHydration(appData, nowMs)) return false;
 
-  const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
-  if (cycleState.isGameDayHold) return false;
-
-  const activeCycle = cycleState.activeCycleKey;
-  const existing = appData.news.dailyTopNewsBrief;
-  if (
-    existing &&
-    existing.cycleKey === activeCycle &&
-    (existing.source === 'live-gemini-daily' || existing.source === 'pipeline-gemini-daily') &&
-    !isDailyBriefStaleForLiveState(existing, appData, nowMs)
-  ) {
-    return false;
-  }
-
-  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
   const attempt = safeReadLocalJson(getDailyNewsBriefAttemptKey(activeTeam));
   if (isDailyBriefSynthesisCoolingDown(attempt, activeCycle, nowMs)) {
     if (!baseUrl) return false;
@@ -5174,6 +5539,33 @@ export async function refreshDailyTopNewsBriefIfDue({
     return { updated: false, reason: 'no_ai_connection' };
   }
 
+  const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
+  const activeCycle = cycleState.activeCycleKey;
+  const existing = appData.news.dailyTopNewsBrief;
+
+  // During Game-Day Hold (`[T-90m, Final + buffer)`), NEVER spend a Gemini POST credit (save it for post-game),
+  // but ALWAYS check Shared Worker KV (0 credits!) first if we don't already have the active pre-game AI brief!
+  if (!force && cycleState.isGameDayHold) {
+    const hasActiveAi = Boolean(
+      existing &&
+        existing.cycleKey === activeCycle &&
+        isAiDailyBriefSource(existing) &&
+        Array.isArray(existing.bullets) &&
+        existing.bullets.length >= 2 &&
+        !isDailyBriefStaleForLiveState(existing, appData, nowMs)
+    );
+    if (!hasActiveAi && baseUrl) {
+      const kvRes = await hydrateDailyTopNewsBriefFromSharedKv({ appData, prefs, nowMs, force: false });
+      if (kvRes?.updated) {
+        return kvRes;
+      }
+    }
+    const postKvExisting = appData.news.dailyTopNewsBrief;
+    if (postKvExisting && Array.isArray(postKvExisting.bullets) && postKvExisting.bullets.length >= 2) {
+      return { updated: false, reason: 'holding_for_postgame_completion', cycleKey: activeCycle };
+    }
+  }
+
   if (
     !force &&
     appData?._awaitingInitialLiveWireSync === true &&
@@ -5186,28 +5578,14 @@ export async function refreshDailyTopNewsBriefIfDue({
     return { updated: false, reason: 'awaiting_live_postgame_hydration' };
   }
 
-  const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
-  const activeCycle = cycleState.activeCycleKey;
-  const existing = appData.news.dailyTopNewsBrief;
-
   const priorAttempt = safeReadLocalJson(briefAttemptKey);
   const synthesisCoolingDown = !force && isDailyBriefSynthesisCoolingDown(priorAttempt, activeCycle, nowMs);
 
   if (!force) {
-    // Hold the daily AI credit during live games (`[T-90m, Final + buffer)`) so the post-game brief gets it
-    if (
-      cycleState.isGameDayHold &&
-      existing &&
-      Array.isArray(existing.bullets) &&
-      existing.bullets.length >= 2
-    ) {
-      return { updated: false, reason: 'holding_for_postgame_completion', cycleKey: activeCycle };
-    }
-
     if (
       existing &&
       existing.cycleKey === activeCycle &&
-      (existing.source === 'live-gemini-daily' || existing.source === 'pipeline-gemini-daily') &&
+      isAiDailyBriefSource(existing) &&
       Array.isArray(existing.bullets) &&
       existing.bullets.length >= 2 &&
       !isDailyBriefStaleForLiveState(existing, appData, nowMs)
@@ -5251,6 +5629,7 @@ export async function refreshDailyTopNewsBriefIfDue({
           `${baseUrl}/api/daily-news-brief?team=${encodeURIComponent(activeTeam.abbr)}&cycleKey=${encodeURIComponent(workerCycleKey)}`,
           {
             method: 'GET',
+            cache: 'no-store',
             headers: {
               'X-Group-Passcode': prefs?.groupPasscode || ''
             }
@@ -5496,6 +5875,7 @@ export async function fetchGeminiFallbackGameDayInactives({
   prefs = {},
   seasonYear = 2026,
   week = 1,
+  teamAbbr = '',
   oppAbbr = 'OPP',
   oppName = 'Opponent',
   kickoffIso = '',
@@ -5505,7 +5885,7 @@ export async function fetchGeminiFallbackGameDayInactives({
   oppCandidatePlayers = [],
   nowMs = Date.now()
 } = {}) {
-  const activeTeamInact = getActiveTeamConfig();
+  const activeTeamInact = resolveTeamConfig(teamAbbr || getActiveTeamConfig());
   const gdAiCacheKey = getGameDayInactivesAiCacheKey(activeTeamInact);
   const gdAiAttemptKey = getGameDayInactivesAiAttemptKey(activeTeamInact);
   const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();

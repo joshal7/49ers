@@ -5346,10 +5346,11 @@ async function main() {
         const homeExpectedCount = homeBtnMatch ? Number(homeBtnMatch[1]) : -1;
         homeSourcesDetails?.querySelector('summary')?.click();
         const homeSheetOpen = Boolean(homeSourcesDetails?.open);
-        const homeSheetLinks = Array.from(homeSourcesDetails?.querySelectorAll('a[data-brief-source-row]') || []);
-        const homeAllHttpsNewTab = homeSheetLinks.every(
-          a => (a.getAttribute('href') || '').startsWith('https://') && a.getAttribute('target') === '_blank'
-        );
+        const homeSheetRows = Array.from(homeSourcesDetails?.querySelectorAll('[data-brief-source-row]') || []);
+        const homeAllHttpsNewTab = homeSheetRows.every(row => {
+          const a = row.tagName === 'A' ? row : row.querySelector('a[href]');
+          return Boolean(a && (a.getAttribute('href') || '').startsWith('https://') && a.getAttribute('target') === '_blank');
+        });
         homeSourcesDetails?.querySelector('summary')?.click();
 
         document.querySelector('[data-nav-tab="news"]').click();
@@ -5359,7 +5360,7 @@ async function main() {
         const newsExpectedCount = newsBtnMatch ? Number(newsBtnMatch[1]) : -1;
         newsSourcesDetails?.querySelector('summary')?.click();
         const newsSheetOpen = Boolean(newsSourcesDetails?.open);
-        const newsSheetLinksCount = (newsSourcesDetails?.querySelectorAll('a[data-brief-source-row]') || []).length;
+        const newsSheetLinksCount = (newsSourcesDetails?.querySelectorAll('[data-brief-source-row]') || []).length;
         newsSourcesDetails?.querySelector('summary')?.click();
 
         return {
@@ -5376,7 +5377,7 @@ async function main() {
           sheetHasPodcastSection: sheetTxt.includes('Podcast Preferences'),
           homeSheetOpen,
           homeExpectedCount,
-          homeActualCount: homeSheetLinks.length,
+          homeActualCount: homeSheetRows.length,
           homeAllHttpsNewTab,
           newsSheetOpen,
           newsExpectedCount,
@@ -7101,6 +7102,32 @@ async function main() {
       assert(
         homeFallbackOpen && fallbackAudit.open && fallbackAudit.hasFallbackNotice && fallbackAudit.hasRetryBtn,
         `Home opponent player click with unavailable remote team must gracefully show matchup snapshot + Retry: ${JSON.stringify({ homeFallbackOpen, fallbackAudit })}`
+      );
+    });
+
+    await runStep('External 49ers.com video card preserves clean https:// href in standard browser & routes cleanly without errors', async () => {
+      const checkRes = await cdp.eval(() => {
+        const testLink = document.createElement('a');
+        testLink.href = 'https://www.49ers.com/video/shanahan-reflects-on-win-over-vikings-reaches-100-combined-victories';
+        testLink.target = '_blank';
+        testLink.rel = 'noopener noreferrer';
+        testLink.className = 'video-external-card';
+        document.body.appendChild(testLink);
+        let defaultPreventedInChrome = false;
+        const captureGuard = ev => {
+          defaultPreventedInChrome = ev.defaultPrevented;
+          ev.preventDefault(); // prevent headless Chrome from actually opening a popup tab
+        };
+        testLink.addEventListener('click', captureGuard);
+        testLink.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, button: 0 }));
+        const hrefOut = testLink.getAttribute('href');
+        testLink.remove();
+        return { hrefOut, defaultPreventedInChrome };
+      });
+      assert(
+        checkRes.hrefOut === 'https://www.49ers.com/video/shanahan-reflects-on-win-over-vikings-reaches-100-combined-victories' &&
+          checkRes.defaultPreventedInChrome === false,
+        `Non-iOS browser must NOT hijack 49ers.com video links with x-safari-: ${JSON.stringify(checkRes)}`
       );
     });
 

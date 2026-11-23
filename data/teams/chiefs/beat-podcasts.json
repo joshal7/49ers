@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T03:54:22.203Z",
+  "updatedAt": "2026-11-23T06:25:43.121Z",
   "windowDays": 7,
-  "totalEpisodes": 23,
+  "totalEpisodes": 22,
   "shows": [
     {
       "id": "chiefs_locked_on_chiefs",
@@ -37,7 +37,7 @@
       "feedUrl": "https://feeds.redcircle.com/1e82f8a1-8697-44b8-9f41-a45fada500f4",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/arrowhead-addict-a-kansas-city-chiefs-podcast/id1454555052?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts116/v4/96/e9/20/96e920f5-1fd5-0a0f-2847-b25f1fa0ed90/mza_254877229758211130.jpg/600x600bb.jpg",
-      "episodeCount7d": 7
+      "episodeCount7d": 6
     }
   ],
   "episodes": [
@@ -480,26 +480,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/arrowhead-addict-a-kansas-city-chiefs-podcast/id1454555052?uo=4",
       "feedUrl": "https://feeds.redcircle.com/1e82f8a1-8697-44b8-9f41-a45fada500f4",
       "audioStreamUrl": "https://pscrb.fm/rss/p/clrtpod.com/m/mgln.ai/e/274/audio2.redcircle.com/episodes/ef340132-270b-42f0-be09-27e138ce54fe/stream.mp3"
-    },
-    {
-      "id": "pod_chiefs_arrowhead_addict_1000802286493",
-      "trackId": 1000802286493,
-      "collectionId": 1454555052,
-      "showId": "chiefs_arrowhead_addict",
-      "showName": "Arrowhead Addict",
-      "showFullTitle": "Arrowhead Addict: A Kansas City Chiefs Podcast",
-      "hosts": "FanSided Podcasts",
-      "network": "FanSided Podcasts",
-      "title": "Chiefs Defense Shines as Emmett Johnson Has Another Big Day!",
-      "summary": "The Chiefs' defense put together an incredible performance, and Emmett Johnson continued to make his presence felt! Adam Best, Sterling Holmes, and Bransen Gibson break down Kansas City's win over the Falcons, including Steve Spagnuolo dialing up the blitz, George Karlaftis ",
-      "publishedAt": "2026-11-16T04:46:12.000Z",
-      "durationMinutes": 56,
-      "durationDisplay": "56 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts116/v4/96/e9/20/96e920f5-1fd5-0a0f-2847-b25f1fa0ed90/mza_254877229758211130.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/chiefs-defense-shines-as-emmett-johnson-has-another-big-day/id1454555052?i=1000802286493&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/arrowhead-addict-a-kansas-city-chiefs-podcast/id1454555052?uo=4",
-      "feedUrl": "https://feeds.redcircle.com/1e82f8a1-8697-44b8-9f41-a45fada500f4",
-      "audioStreamUrl": "https://pscrb.fm/rss/p/clrtpod.com/m/mgln.ai/e/274/audio2.redcircle.com/episodes/8a213471-9ec3-4c67-b53e-5f3d578a2e7f/stream.mp3"
     }
   ]
 }

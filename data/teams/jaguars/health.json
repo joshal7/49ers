@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-23T03:53:35.277Z",
+  "updatedAt": "2026-11-23T06:25:39.047Z",
   "week": 12,
   "byeWeek": 7,
   "sourceUrl": "https://www.jaguars.com/team/injury-report/",
   "espnInjuryUrl": "https://www.espn.com/nfl/team/injuries/_/name/jax/jacksonville-jaguars",
-  "usedIrDesignations": 0,
-  "remainingIrDesignations": 8,
+  "usedIrDesignations": 1,
+  "remainingIrDesignations": 7,
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
@@ -326,10 +326,10 @@
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "placedBeforeWeek": 2,
-      "earliestEligibleWeek": 6,
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": 10,
       "projectedReturnWeek": "Week 12 Activation Window (Nov 29)",
-      "byeWeekNote": "4-game NFL minimum requirement",
+      "byeWeekNote": "Week 7 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 70,
       "playBadgeLabel": "70% • GTD",
       "beatNote": "Green has strung together six consecutive full practices since being designated to return from injured reserve Nov. 11. He's not quite ready to be activated from IR, so his next chance to play is Week 12 against the Titans on Sunday, Nov. 29. Green is in the final stages of his recovery from an elbow injury that he suffered in Week 1 against the Browns."

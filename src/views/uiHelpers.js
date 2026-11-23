@@ -570,9 +570,9 @@ const TEAM_LOGO_SLUGS = {
   JAX: 'jax'
 };
 
-export function espnTeamLogoUrl(abbr = 'SF', explicitUrl = '') {
+export function espnTeamLogoUrl(abbr = '', explicitUrl = '') {
   if (explicitUrl && /^https:\/\//i.test(explicitUrl)) return explicitUrl;
-  const clean = String(abbr || 'SF').toUpperCase().trim();
+  const clean = String(abbr || getActiveTeamConfig()?.abbr || 'NFL').toUpperCase().trim();
   const slug = TEAM_LOGO_SLUGS[clean] || clean.toLowerCase();
   return `https://a.espncdn.com/i/teamlogos/nfl/500/${encodeURIComponent(slug)}.png`;
 }
@@ -582,7 +582,7 @@ export function playerInitials(name = '') {
     .trim()
     .split(/\s+/)
     .filter(Boolean);
-  if (parts.length === 0) return 'SF';
+  if (parts.length === 0) return getActiveTeamConfig()?.abbr || 'NFL';
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
 }
@@ -616,14 +616,15 @@ export function renderPlayerAvatarHtml(player = {}, size = 40, opts = {}) {
   `;
 }
 
-export function renderTeamLogoHtml(abbr = 'SF', logoUrl = '', size = 24, extraClass = '') {
+export function renderTeamLogoHtml(abbr = '', logoUrl = '', size = 24, extraClass = '') {
+  const activeAbbr = getActiveTeamConfig()?.abbr || 'NFL';
   const cleanAbbr = String(abbr || 'NFL').toUpperCase().trim();
   const isPlaceholderAbbr = /^(?:TBD|NFL|OPP|BYE|NFC|AFC)$/.test(cleanAbbr);
   const hasExplicitHttpLogo = Boolean(logoUrl && /^https:\/\//i.test(String(logoUrl).trim()));
   if (isPlaceholderAbbr && !hasExplicitHttpLogo) {
     return `
       <span class="team-logo-wrap img-error no-logo-img ${extraClass}" style="--logo-size:${Number(size)}px">
-        <span class="team-logo-fallback mono" aria-hidden="true">${esc(cleanAbbr === 'BYE' ? 'SF' : cleanAbbr)}</span>
+        <span class="team-logo-fallback mono" aria-hidden="true">${esc(cleanAbbr === 'BYE' ? activeAbbr : cleanAbbr)}</span>
       </span>
     `;
   }
@@ -679,9 +680,10 @@ export function renderSalientThumbHtml(
     `;
   } else if (visual.kind === 'matchup') {
     const crestDim = size === 'sm' ? 20 : size === 'md' ? 26 : 32;
+    const activeAbbr = getActiveTeamConfig()?.abbr || 'NFL';
     innerHtml = `
       <span class="salient-matchup-crests" aria-hidden="true">
-        <img class="salient-crest sf" src="${esc(visual.sfLogoSrc)}" ${visual.sfLogoFallback ? `data-fallback-src="${esc(visual.sfLogoFallback)}"` : ''} alt="SF" width="${crestDim}" height="${crestDim}" loading="lazy" decoding="async" />
+        <img class="salient-crest sf" src="${esc(visual.sfLogoSrc)}" ${visual.sfLogoFallback ? `data-fallback-src="${esc(visual.sfLogoFallback)}"` : ''} alt="${esc(activeAbbr)}" width="${crestDim}" height="${crestDim}" loading="lazy" decoding="async" />
         <span class="salient-crest-sep"></span>
         <img class="salient-crest opp" src="${esc(visual.oppLogoSrc)}" ${visual.oppLogoFallback ? `data-fallback-src="${esc(visual.oppLogoFallback)}"` : ''} alt="${esc(visual.oppAbbr || 'OPP')}" width="${crestDim}" height="${crestDim}" loading="lazy" decoding="async" />
       </span>

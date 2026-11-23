@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:51:40.629Z",
+  "updatedAt": "2026-11-23T06:25:29.291Z",
   "dailyTopNewsBrief": {
     "id": "brief_cle_1be117de4e67",
     "cycleKey": "2026-11-22@17ET",
@@ -107,6 +107,39 @@
   "clusteredBriefs": [],
   "rawStream": [
     {
+      "id": "cle_nfltr_04251a4d16df",
+      "type": "article",
+      "title": "AFC Notes: Marlon Humphrey, Bengals, Browns, Ravens, Steelers",
+      "summary": "Bengals Bengals DB Jordan Battle was fined $11,941 for unsportsmanlike conduct, and DT Tedarrell Slaton was fined $11,941 for unnecessary roughness. Browns Browns DE Sam Kamara was fined $6,750 for unnecessary roughness. Ravens Ravens CB Ma",
+      "imageUrl": "",
+      "imageAlt": "AFC Notes: Marlon Humphrey, Bengals, Browns, Ravens, Steelers",
+      "publishedAt": "2026-11-22T23:30:28.000Z",
+      "url": "https://nfltraderumors.co/afc-notes-marlon-humphrey-bengals-browns-ravens-steelers/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.9921
+    },
+    {
       "id": "cle_rss_df7bdf487b0f",
       "type": "article",
       "title": "Deshaun Watson plays key part in Browns' success in 2026",
@@ -137,7 +170,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1786
+      "storyRank": 0.1731
+    },
+    {
+      "id": "cle_pfr_49c36ddfbc1c",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/19/26",
+      "summary": "Here are the NFL&#8217;s latest practice squad changes&#8230; Carolina Panthers Signed: T Albert Reese Released: T Da’Metrius Weatherspoon Cleveland Browns Signed: TE Carsen Ryan Los Angeles Chargers Signed: TE Josiah Deguara Released: G Da",
+      "imageUrl": "",
+      "publishedAt": "2026-11-20T01:25:08.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-19-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cleveland-browns",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1177
     },
     {
       "id": "cle_rss_da6a1049b314",
@@ -170,7 +235,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1165
+      "storyRank": 0.1138
+    },
+    {
+      "id": "cle_vid_955de703a1bd",
+      "type": "video",
+      "title": "Take A Minute, Make A Plan",
+      "summary": "Joel Bitonio challenges fans to Win It in a Minute-style games while reminding them that game day starts with a game plan: Take A Minute, Make A Plan, Never Drive Impaired",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/iwkddrxajmthbnxzprlt.jpg",
+      "imageAlt": "Take A Minute, Make A Plan",
+      "publishedAt": "2026-11-19T15:08:45.000Z",
+      "url": "https://www.clevelandbrowns.com/video/take-a-minute-make-a-plan",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/take-a-minute-make-a-plan",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1125
     },
     {
       "id": "cle_rss_40cee557ccdb",
@@ -203,7 +302,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.113
+      "storyRank": 0.1105
     },
     {
       "id": "cle_tx_2b18d9ef167f",
@@ -237,7 +336,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1029
+      "storyRank": 0.1008
     },
     {
       "id": "cle_vid_7fd8af357253",
@@ -271,7 +370,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0896
+      "storyRank": 0.0878
     },
     {
       "id": "cle_vid_de1d31c71801",
@@ -305,7 +404,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.088
+      "storyRank": 0.0863
     },
     {
       "id": "cle_vid_941bac4b7e0d",
@@ -339,7 +438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0878
+      "storyRank": 0.0862
     },
     {
       "id": "cle_vid_1e96d6cfbb37",
@@ -373,7 +472,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0878
+      "storyRank": 0.0861
     },
     {
       "id": "cle_vid_5465c7c7d9a0",
@@ -407,7 +506,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0877
+      "storyRank": 0.0861
     },
     {
       "id": "cle_vid_4ca41f0bb1d8",
@@ -441,7 +540,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0845
+      "storyRank": 0.0829
     },
     {
       "id": "cle_vid_4593c34b6efe",
@@ -475,7 +574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0844
+      "storyRank": 0.0829
     },
     {
       "id": "cle_vid_337db18fc99c",
@@ -509,7 +608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0844
+      "storyRank": 0.0829
     },
     {
       "id": "cle_rss_acfed5a34ee3",
@@ -542,7 +641,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0812
+      "storyRank": 0.0798
     },
     {
       "id": "cle_espn_dede4a78d0e8e",
@@ -550,6 +649,7 @@
       "title": "NFL flexes Raiders-Browns to replace Pats-Chargers in SNF slot for Week 12",
       "summary": "The NFL has flexed the Raiders-Browns Week 12 game into NBC's \"Sunday Night Football\" slot.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746654_1296x729_16-9.jpg",
+      "imageCaption": "Quarterback Fernando Mendoza faces a stiff test in Week 11 on the road against the Broncos.",
       "imageAlt": "NFL flexes Raiders-Browns to replace Pats-Chargers in SNF slot for Week 12",
       "publishedAt": "2026-11-18T11:41:02Z",
       "url": "https://www.espn.com/nfl/story/_/id/50512634/nfl-flexes-raiders-browns-snf-slot-week-12",
@@ -575,7 +675,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.078
+      "storyRank": 0.0766
+    },
+    {
+      "id": "cle_pfr_7952893c8067",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/17/26",
+      "summary": "Here are Tuesday&#8217;s minor moves from around the NFL: Arizona Cardinals Signed to active roster from practice squad: DL Jared Harrison-Hunte, S Wydett Williams Jr. Waived: OL Albert Reese Buffalo Bills Placed on IR: G Ar’maj Reed-Adams ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T23:59:41.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-17-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cleveland-browns",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0587
     },
     {
       "id": "cle_vid_a9cf2336264b",
@@ -609,7 +741,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0164
     },
     {
       "id": "cle_vid_213963beac6c",
@@ -643,7 +775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0667
+      "storyRank": 0.0657
     },
     {
       "id": "cle_vid_4cbad0084c5a",
@@ -677,7 +809,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0667
+      "storyRank": 0.0656
     },
     {
       "id": "cle_rss_df7e5dd9be15",
@@ -710,7 +842,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.066
+      "storyRank": 0.065
     },
     {
       "id": "cle_rss_8c10b0df18fe",
@@ -743,7 +875,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.064
+      "storyRank": 0.0631
     },
     {
       "id": "cle_rss_219539b9d356",
@@ -776,7 +908,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0616
+      "storyRank": 0.0607
+    },
+    {
+      "id": "cle_vid_b0e6b43df4c0",
+      "type": "video",
+      "title": "Deshaun Watson Mic'd Up: Week 10 vs Houston Texans",
+      "summary": "Go on the field with QB Deshaun Watson in Week 10 vs Houston Texans.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/sm2uoowvrlwnmsjqwfxq.jpg",
+      "imageAlt": "Deshaun Watson Mic'd Up: Week 10 vs Houston Texans",
+      "publishedAt": "2026-11-17T14:31:33.000Z",
+      "url": "https://www.clevelandbrowns.com/video/deshaun-watson-mic-d-up-week-10-vs-houston-texans",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/deshaun-watson-mic-d-up-week-10-vs-houston-texans",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0151
     },
     {
       "id": "cle_rss_6e52ac4bc2a5",
@@ -809,7 +975,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0609
+      "storyRank": 0.0601
     },
     {
       "id": "cle_vid_d3f5e06bff50",
@@ -843,7 +1009,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0609
+      "storyRank": 0.06
     },
     {
       "id": "cle_tx_36d9fe70d0d9",
@@ -877,7 +1043,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0573
+      "storyRank": 0.0565
     },
     {
       "id": "cle_vid_95093dcb76cb",
@@ -911,7 +1077,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0523
+      "storyRank": 0.0516
     },
     {
       "id": "cle_rss_53d57b32ba58",
@@ -944,7 +1110,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0522
+      "storyRank": 0.0515
     },
     {
       "id": "cle_rss_1ca6fd9e4e34",
@@ -977,7 +1143,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0521
+      "storyRank": 0.0515
     },
     {
       "id": "cle_vid_adc48a44101a",
@@ -1011,7 +1177,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0521
+      "storyRank": 0.0514
     },
     {
       "id": "cle_vid_b678b498e1ef",
@@ -1045,7 +1211,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0519
+      "storyRank": 0.0513
+    },
+    {
+      "id": "cle_vid_9304f6520303",
+      "type": "video",
+      "title": "KC Concepcion's 6-yd Touchdown run against the Texans - Play Breakdown",
+      "summary": "Join Nathan Zegura in the film room as he breaks down KC Concepcion's touchdown against the Houston Texans!",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/cc5hu5mtlrcmiqkevvsz.jpg",
+      "imageAlt": "KC Concepcion's 6-yd Touchdown run against the Texans - Play Breakdown",
+      "publishedAt": "2026-11-16T21:46:25.000Z",
+      "url": "https://www.clevelandbrowns.com/video/kc-concepcion-s-6-yd-touchdown-run-against-the-texans-play-breakdown",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/kc-concepcion-s-6-yd-touchdown-run-against-the-texans-play-breakdown",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0128
     },
     {
       "id": "cle_rss_d4cfed52a074",
@@ -1078,7 +1278,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0496
+      "storyRank": 0.0489
+    },
+    {
+      "id": "cle_vid_f4c1becf9f15",
+      "type": "video",
+      "title": "\"TOUCHDOWN! JUDKINS!\" Call of the Game | Week 10 vs. Texans",
+      "summary": "Go inside the booth with Andrew Siciliano and Nathan Zegura to hear the moment Quinshon Judkins scored the go-ahead touchdown in the final minute of Week 10's win over the Houston Texans.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/qdtniy9899x9spkmlzas.jpg",
+      "imageAlt": "\"TOUCHDOWN! JUDKINS!\" Call of the Game | Week 10 vs. Texans",
+      "publishedAt": "2026-11-16T15:02:50.000Z",
+      "url": "https://www.clevelandbrowns.com/video/touchdown-judkins-call-of-the-game-week-10-vs-texans",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/touchdown-judkins-call-of-the-game-week-10-vs-texans",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 36,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0097
     },
     {
       "id": "cle_espn_6ec99cf6ff044",
@@ -1086,6 +1320,7 @@
       "title": "Judging overreactions to NFL Week 10: Playoff spin for Vikings, Pats, Browns, more",
       "summary": "Will Kirk Cousins be the difference in the NFC North? The Browns are going to the playoffs ... but not the Patriots? Patrick Mahomes for MVP and Kyle Shanahan for COY?",
       "imageUrl": "https://a.espncdn.com/photo/2026/1115/r1746347_608x342_16-9.jpg",
+      "imageCaption": "Kirk Cousins [608x342]",
       "imageAlt": "Judging overreactions to NFL Week 10: Playoff spin for Vikings, Pats, Browns, more",
       "publishedAt": "2026-11-16T13:48:04Z",
       "url": "https://www.espn.com/nfl/story/_/id/50491464/week-10-overreactions-2026-graziano-cousins-mahomes",
@@ -1096,7 +1331,7 @@
       "author": "Dan Graziano",
       "authorHandle": "@DanGrazianoESPN",
       "authorProfileUrl": "https://x.com/DanGrazianoESPN",
-      "trustTier": 1,
+      "trustTier": 2,
       "wireSource": "espn_team_news",
       "isBreaking": false,
       "isInGameInjury": false,
@@ -1111,7 +1346,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0483
+      "storyRank": 0.0419
     },
     {
       "id": "cle_espn_c8d36fda0adab",
@@ -1119,6 +1354,7 @@
       "title": "Browns' Deshaun Watson relishes 'special' win vs. Texans after engineering rally",
       "summary": "Deshaun Watson, who delivered his sixth game-winning drive of the season, called the 27-24 victory over the Texans, his former team, \"definitely special.\"",
       "imageUrl": "https://a.espncdn.com/photo/2026/1115/r1746366_600x600_1-1.jpg",
+      "imageCaption": "Deshaun Watson [600x600]",
       "imageAlt": "Browns' Deshaun Watson relishes 'special' win vs. Texans after engineering rally",
       "publishedAt": "2026-11-16T03:33:43Z",
       "url": "https://www.espn.com/nfl/story/_/id/50495783/browns-deshaun-watson-savors-special-win-vs-texans",
@@ -1144,7 +1380,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0442
+      "storyRank": 0.0437
     },
     {
       "id": "cle_rss_3f04f235f9df",
@@ -1177,7 +1413,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0436
+      "storyRank": 0.0431
     },
     {
       "id": "cle_rss_46368ec23ef6",
@@ -1210,14 +1446,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0429
+      "storyRank": 0.0425
     },
     {
       "id": "cle_espn_76712f099c79d",
       "type": "article",
       "title": "Deshaun Watson throws for 312 yards against his old team as the Browns rally past the Texans 27-24",
       "summary": "— Deshaun Watson can talk all he wants about how playing the Houston Texans is just another game.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873056.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1115/b0827c8e-90a1-4899-bae9-5037cf8e1560/b0827c8e-90a1-4899-bae9-5037cf8e1560.jpg",
+      "imageCaption": "Houston Texans vs. Cleveland Browns: Game Highlights",
       "imageAlt": "Deshaun Watson throws for 312 yards against his old team as the Browns rally past the Texans 27-24",
       "publishedAt": "2026-11-15T23:18:36Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873056",
@@ -1243,7 +1480,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0427
+      "storyRank": 0.0422
+    },
+    {
+      "id": "cle_vid_00b700dfa0ac",
+      "type": "video",
+      "title": "Deshaun Watson Press Conference | Week 10 vs. Houston Texans",
+      "summary": "Quarterback Deshaun Watson speaks to the media following the 27-24 win over the Houston Texans.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/ntxv5ihsjpmi7cfwxzwd.png",
+      "imageAlt": "Deshaun Watson Press Conference | Week 10 vs. Houston Texans",
+      "publishedAt": "2026-11-15T22:29:09.000Z",
+      "url": "https://www.clevelandbrowns.com/video/deshaun-watson-press-conference-week-10-vs-houston-texans",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/deshaun-watson-press-conference-week-10-vs-houston-texans",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0105
     },
     {
       "id": "cle_vid_38a22ccb5f1f",
@@ -1277,7 +1548,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0424
+      "storyRank": 0.0419
     },
     {
       "id": "cle_vid_4da3aa161d53",
@@ -1311,7 +1582,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0424
+      "storyRank": 0.0419
     },
     {
       "id": "cle_vid_1d41855b927c",
@@ -1345,7 +1616,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0105
     },
     {
       "id": "cle_vid_c462a4bf8e48",
@@ -1379,7 +1650,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0424
+      "storyRank": 0.0419
     },
     {
       "id": "cle_vid_3d0f4555aa51",
@@ -1413,7 +1684,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0105
     },
     {
       "id": "cle_vid_5f28c852095a",
@@ -1447,7 +1718,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0423
+      "storyRank": 0.0418
     },
     {
       "id": "cle_rss_104877e88cce",
@@ -1480,7 +1751,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0421
+      "storyRank": 0.0416
     },
     {
       "id": "cle_vid_c25f147e8e6d",
@@ -1514,7 +1785,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0415
     },
     {
       "id": "cle_vid_117a051f52b9",
@@ -1548,7 +1819,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0415
     },
     {
       "id": "cle_vid_9af7d881b936",
@@ -1582,7 +1853,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0419
+      "storyRank": 0.0414
     },
     {
       "id": "cle_vid_aa619c193975",
@@ -1616,7 +1887,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0103
     },
     {
       "id": "cle_vid_25f13bcf3da5",
@@ -1650,7 +1921,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0418
+      "storyRank": 0.0413
     },
     {
       "id": "cle_vid_206eafaa467b",
@@ -1684,7 +1955,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.0413
     },
     {
       "id": "cle_vid_1e736116d12d",
@@ -1718,7 +1989,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.0413
     },
     {
       "id": "cle_vid_b92ea709b822",
@@ -1752,7 +2023,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.0412
     },
     {
       "id": "cle_vid_e93c10f2e31b",
@@ -1786,7 +2057,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0416
+      "storyRank": 0.0412
     },
     {
       "id": "cle_vid_a12b61a41764",
@@ -1820,7 +2091,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0416
+      "storyRank": 0.0412
     },
     {
       "id": "cle_vid_fdccc6d6a5de",
@@ -1854,7 +2125,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0414
+      "storyRank": 0.041
     },
     {
       "id": "cle_vid_6f36dc9322df",
@@ -1888,7 +2159,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0414
+      "storyRank": 0.041
     },
     {
       "id": "cle_vid_d859a5c2e2bf",
@@ -1922,7 +2193,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0102
     },
     {
       "id": "cle_vid_7e556d6f53e8",
@@ -1956,7 +2227,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0413
+      "storyRank": 0.0409
     },
     {
       "id": "cle_rss_a765ef310778",
@@ -1989,7 +2260,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0413
+      "storyRank": 0.0409
     },
     {
       "id": "cle_vid_7ca5d85e33db",
@@ -2023,7 +2294,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0413
+      "storyRank": 0.0408
     },
     {
       "id": "cle_vid_dafe2dd276de",
@@ -2057,7 +2328,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0413
+      "storyRank": 0.0408
     },
     {
       "id": "cle_vid_282d91be4406",
@@ -2091,7 +2362,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0413
+      "storyRank": 0.0408
     },
     {
       "id": "cle_rss_bfaa6e931953",
@@ -2124,7 +2395,72 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0102
+    },
+    {
+      "id": "cle_rss_f2863d109b7f",
+      "type": "article",
+      "title": "Derek Barnett returns to Week 10 vs. the Texans",
+      "summary": "Barnett sustained a hamstring injury in the first quarter",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/hgz7j9bddyieo2moktp1.jpg",
+      "imageAlt": "Derek Barnett returns to Week 10 vs. the Texans",
+      "publishedAt": "2026-11-15T18:22:21.000Z",
+      "url": "https://www.clevelandbrowns.com/news/derek-barnett-questionable-to-return-vs-the-texans",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Official",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Official",
+      "author": "clevelandbrowns.com Official",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0102
+    },
+    {
+      "id": "cle_pfr_61a6dbaa1f39",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/14/26",
+      "summary": "Here are the minor moves and standard gameday practice squad elevations for Week 10&#8217;s Sunday slate: Arizona Cardinals Activated from IR: TE Hunter Long Elevated: WR Zay Jones Atlanta Falcons Elevated: LB TJ Quinn, S Jammie Robinson Bu",
+      "imageUrl": "",
+      "publishedAt": "2026-11-14T23:21:04.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-14-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cleveland-browns",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0309
     },
     {
       "id": "cle_rss_25cfcf1f9878",
@@ -2157,7 +2493,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0342
+      "storyRank": 0.0339
     },
     {
       "id": "cle_rss_5d035a2f8310",
@@ -2190,7 +2526,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0336
+      "storyRank": 0.0332
     },
     {
       "id": "cle_tx_72372f3a0ba5",
@@ -2224,7 +2560,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.0317
+    },
+    {
+      "id": "cle_pfr_28d3063a158b",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/13/26",
+      "summary": "Here are Friday&#8217;s minor moves: Cleveland Browns Waived from reserve/retired list: LB Markees Watts Houston Texans Waived: RB Dare Ogunbowale Kansas City Chiefs Signed from practice squad: DT Marcus Harris Las Vegas Raiders Waived from",
+      "imageUrl": "",
+      "publishedAt": "2026-11-13T22:45:42.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-13-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cleveland-browns",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0262
     },
     {
       "id": "cle_vid_21a664230767",
@@ -2258,7 +2626,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0301
+      "storyRank": 0.0298
     },
     {
       "id": "cle_rss_8dba0c317895",
@@ -2291,7 +2659,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.0298
     },
     {
       "id": "cle_vid_7668bf5d0e32",
@@ -2325,7 +2693,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0297
+      "storyRank": 0.0295
     },
     {
       "id": "cle_vid_380436eff6fa",
@@ -2359,7 +2727,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295
+      "storyRank": 0.0292
     },
     {
       "id": "cle_vid_6888431e34be",
@@ -2393,7 +2761,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295
+      "storyRank": 0.0292
     },
     {
       "id": "cle_vid_501768cd1f87",
@@ -2427,7 +2795,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0294
+      "storyRank": 0.0292
     },
     {
       "id": "cle_vid_cd72cf46c731",
@@ -2461,7 +2829,75 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0293
+      "storyRank": 0.029
+    },
+    {
+      "id": "cle_vid_57daff761c13",
+      "type": "video",
+      "title": "Duce Staley Press Conference : November 13th, 2026",
+      "summary": "Duce Staley Speaks to the media.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/l6ucy8b71a4cuwfw3tys.jpg",
+      "imageAlt": "Duce Staley Press Conference : November 13th, 2026",
+      "publishedAt": "2026-11-13T16:28:36.000Z",
+      "url": "https://www.clevelandbrowns.com/video/duce-staley-press-conference-november-13th-2026",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/duce-staley-press-conference-november-13th-2026",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0287
+    },
+    {
+      "id": "cle_vid_53bf9241e1ff",
+      "type": "video",
+      "title": "Brandon Lynch Press Conference : November 13th, 2026",
+      "summary": "Defensive Backs coach Brandon Lynch speaks to the media.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/wuxa3mjs13hmagcbricl.jpg",
+      "imageAlt": "Brandon Lynch Press Conference : November 13th, 2026",
+      "publishedAt": "2026-11-13T16:23:03.000Z",
+      "url": "https://www.clevelandbrowns.com/video/brandon-lynch-press-conference-november-13th-2026",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/brandon-lynch-press-conference-november-13th-2026",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0287
     },
     {
       "id": "cle_vid_40c395740653",
@@ -2495,7 +2931,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0289
+      "storyRank": 0.0286
     },
     {
       "id": "cle_rss_36ec0b6e08e4",
@@ -2528,7 +2964,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
+      "storyRank": 0.0258
     },
     {
       "id": "cle_vid_ff663bfa3204",
@@ -2562,7 +2998,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
+      "storyRank": 0.0258
     },
     {
       "id": "cle_vid_f4487902f46a",
@@ -2596,14 +3032,117 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0258
+      "storyRank": 0.0256
+    },
+    {
+      "id": "cle_vid_f65cf540d89b",
+      "type": "video",
+      "title": "Travis Switzer Press Conference : November 12th, 2026",
+      "summary": "Travis Switzer speaks to the media.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/aa4vpyvutfmhd5zo77bk.jpg",
+      "imageAlt": "Travis Switzer Press Conference : November 12th, 2026",
+      "publishedAt": "2026-11-12T20:22:20.000Z",
+      "url": "https://www.clevelandbrowns.com/video/travis-switzer-press-conference-november-12th-2026",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/travis-switzer-press-conference-november-12th-2026",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0255
+    },
+    {
+      "id": "cle_vid_d1d9f6daf7ee",
+      "type": "video",
+      "title": "Byron Storer Press Conference : November 12th, 2026",
+      "summary": "Byron Storer speaks to the media.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/ttm4ixxggnhwfhfn2vcm.jpg",
+      "imageAlt": "Byron Storer Press Conference : November 12th, 2026",
+      "publishedAt": "2026-11-12T20:15:16.000Z",
+      "url": "https://www.clevelandbrowns.com/video/byron-storer-press-conference-november-12th-2026",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/byron-storer-press-conference-november-12th-2026",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0255
+    },
+    {
+      "id": "cle_vid_f546183d0055",
+      "type": "video",
+      "title": "Mike Rutenberg Press Conference : November 12th, 2026",
+      "summary": "Mike Rutenberg speaks to the media.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/lfno7iajdaej0sf8omlu.jpg",
+      "imageAlt": "Mike Rutenberg Press Conference : November 12th, 2026",
+      "publishedAt": "2026-11-12T20:09:51.000Z",
+      "url": "https://www.clevelandbrowns.com/video/mike-rutenberg-press-conference-november-12th-2026",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/mike-rutenberg-press-conference-november-12th-2026",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0255
     },
     {
       "id": "cle_espn_541a118011a1b",
       "type": "article",
       "title": "Deshaun Watson downplays facing Texans as Browns try to stay unbeaten at home, in playoff picture",
       "summary": "— Deshaun Watson isn't buying the hype, insisting that it's no longer a big deal when he plays against his former team, the Houston Texans.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873056.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1115/b0827c8e-90a1-4899-bae9-5037cf8e1560/b0827c8e-90a1-4899-bae9-5037cf8e1560.jpg",
+      "imageCaption": "Houston Texans vs. Cleveland Browns: Game Highlights",
       "imageAlt": "Deshaun Watson downplays facing Texans as Browns try to stay unbeaten at home, in playoff picture",
       "publishedAt": "2026-11-12T20:09:35Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873056",
@@ -2629,7 +3168,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0257
+      "storyRank": 0.0255
     },
     {
       "id": "cle_vid_fc2bdba52fe6",
@@ -2663,7 +3202,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0255
+      "storyRank": 0.0253
     },
     {
       "id": "cle_rss_6facdd5a2c69",
@@ -2696,7 +3235,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0254
+      "storyRank": 0.0252
     },
     {
       "id": "cle_vid_caa2131d094d",
@@ -2730,7 +3269,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0253
+      "storyRank": 0.0251
     },
     {
       "id": "cle_vid_a24a3e83d33f",
@@ -2764,7 +3303,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0253
+      "storyRank": 0.0251
     },
     {
       "id": "cle_vid_53ed79a60c47",
@@ -2798,7 +3337,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0253
+      "storyRank": 0.0251
     },
     {
       "id": "cle_vid_d7a4545cc266",
@@ -2832,7 +3371,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0253
+      "storyRank": 0.0251
     },
     {
       "id": "cle_rss_6ce7498f794e",
@@ -2865,7 +3404,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.0229
     },
     {
       "id": "cle_rss_b25e15e6ba3a",
@@ -2898,7 +3437,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
+      "storyRank": 0.0227
     },
     {
       "id": "cle_vid_f75c5fcc6f2d",
@@ -2932,7 +3471,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
+      "storyRank": 0.0227
     },
     {
       "id": "cle_rss_8d5f6efafc95",
@@ -2965,7 +3504,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
+      "storyRank": 0.0226
     },
     {
       "id": "cle_vid_3b261e2fb96f",
@@ -2999,7 +3538,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0223
+      "storyRank": 0.0221
     },
     {
       "id": "cle_vid_94ab509782f3",
@@ -3033,7 +3572,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0223
+      "storyRank": 0.0221
     },
     {
       "id": "cle_vid_b664078df6fd",
@@ -3067,7 +3606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0221
     },
     {
       "id": "cle_vid_b539e998edb8",
@@ -3101,7 +3640,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0221
     },
     {
       "id": "cle_vid_924070bdbb5e",
@@ -3135,7 +3674,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0221
     },
     {
       "id": "cle_vid_07e4ddc7bd14",
@@ -3169,7 +3708,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0221
     },
     {
       "id": "cle_vid_6543ee56ce5c",
@@ -3203,7 +3742,107 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0054
+    },
+    {
+      "id": "cle_vid_4befc542c3c6",
+      "type": "video",
+      "title": "Lance Zierlein on Texans, 2027 Draft, and More - The Bark Tank - 11.11.26",
+      "summary": "In this episode of \"The Bark Tank,\" powered by Spectrum, NFL Media draft analyst and Houston radio host Lance Zierlein joins host Andrew Siciliano to discuss the Texans' season to this point, the 2027 QB class, and more.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/hmnraa6n4ubdm5fltz3l.jpg",
+      "imageAlt": "Lance Zierlein on Texans, 2027 Draft, and More - The Bark Tank - 11.11.26",
+      "publishedAt": "2026-11-11T14:36:05.000Z",
+      "url": "https://www.clevelandbrowns.com/video/lance-zierlein-on-texans-2027-draft-and-more-the-bark-tank-11-11-26",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/lance-zierlein-on-texans-2027-draft-and-more-the-bark-tank-11-11-26",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0054
+    },
+    {
+      "id": "cle_vid_7d3817ed2590",
+      "type": "video",
+      "title": "\"GO KC!\" Call of the Game | Week 9 vs. Saints",
+      "summary": "Go inside the booth with Andrew Siciliano and Nathan Zegura to hear the moment KC Concepcion broke free for a huge TD, the first of his NFL career, Week 9 in New Orleans.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/fuoqfkncuvjw8y3b16x0.jpg",
+      "imageAlt": "\"GO KC!\" Call of the Game | Week 9 vs. Saints",
+      "publishedAt": "2026-11-11T13:41:02.000Z",
+      "url": "https://www.clevelandbrowns.com/video/go-kc-call-of-the-game-week-9-vs-saints",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/go-kc-call-of-the-game-week-9-vs-saints",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0054
+    },
+    {
+      "id": "cle_pfr_02b898129b94",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/10/26",
+      "summary": "Today&#8217;s practice squad moves: Arizona Cardinals Signed: WR Phillip Dorsett Released: TE Rivaldo Fairweather, RB Jermar Jefferson Atlanta Falcons Signed: C Gus Hartwig, S Delarrin Turner-Yell Released: DE Drake Jackson Baltimore Ravens",
+      "imageUrl": "",
+      "publishedAt": "2026-11-11T01:37:00.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-10-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cleveland-browns",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0179
     },
     {
       "id": "cle_rss_a5863b13c78a",
@@ -3236,7 +3875,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0203
+      "storyRank": 0.0202
     },
     {
       "id": "cle_vid_9b300dc498b5",
@@ -3270,7 +3909,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0201
     },
     {
       "id": "cle_rss_323621ac0a43",
@@ -3303,7 +3942,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0201
+    },
+    {
+      "id": "cle_vid_27ca6c02608c",
+      "type": "video",
+      "title": "Dylan Sampson Mic'd Up: Week 9 at New Orleans Saints",
+      "summary": "Go on the field with RB Dylan Sampson in Week 9 at New Orleans Saints.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/wdhc50fai5xrvgnb49zh.jpg",
+      "imageAlt": "Dylan Sampson Mic'd Up: Week 9 at New Orleans Saints",
+      "publishedAt": "2026-11-10T21:54:02.000Z",
+      "url": "https://www.clevelandbrowns.com/video/dylan-sampson-mic-d-up-week-9-at-new-orleans-saints",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/dylan-sampson-mic-d-up-week-9-at-new-orleans-saints",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.005
     },
     {
       "id": "cle_vid_d841b1ce0f94",
@@ -3337,7 +4010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0195
+      "storyRank": 0.0194
     },
     {
       "id": "cle_tx_e8f0db51c8a6",
@@ -3371,7 +4044,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0189
+      "storyRank": 0.0188
+    },
+    {
+      "id": "cle_pfr_6020f23adaeb",
+      "type": "article",
+      "title": "AFC North Trade Notes: Steelers, Campbell, Bengals, Browns",
+      "summary": "Just like last year, the receiver position is one to watch closely on the trade front as it pertains to the Steelers. A few names in particular have been connected to Pittsburgh regarding the 2026 deadline. Josh Downs has asked to be traded",
+      "imageUrl": "",
+      "publishedAt": "2026-11-09T23:01:43.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/afc-north-trade-notes-steelers-campbell-bengals-browns",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cleveland-browns",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0158
     },
     {
       "id": "cle_vid_7efe8d9ee183",
@@ -3405,7 +4110,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0181
+      "storyRank": 0.018
     },
     {
       "id": "cle_vid_c27155de1a9b",
@@ -3439,7 +4144,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0181
+      "storyRank": 0.018
     },
     {
       "id": "cle_vid_66155ed6681f",
@@ -3473,7 +4178,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.018
+      "storyRank": 0.0179
     },
     {
       "id": "cle_vid_0e9a27003c26",
@@ -3507,7 +4212,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.018
+      "storyRank": 0.0179
     },
     {
       "id": "cle_vid_bb61cd4b5cc5",
@@ -3541,7 +4246,73 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0179
+      "storyRank": 0.0178
+    },
+    {
+      "id": "cle_pfr_5ca20dfa7d8b",
+      "type": "article",
+      "title": "Browns Returning To Deshaun Watson As Starter In Week 10",
+      "summary": "Although Deshaun Watson cleared concussion protocol in time for the Browns&#8217; Week 9 game against the Saints, the team went with Shedeur Sanders after the older passer&#8217;s time in the protocol last week. Cleveland will pivot back to",
+      "imageUrl": "",
+      "publishedAt": "2026-11-09T17:20:28.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/browns-returning-to-deshaun-watson-as-starter-in-week-10",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cleveland-browns",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0155
+    },
+    {
+      "id": "cle_vid_89206c3eb1c0",
+      "type": "video",
+      "title": "Shedeur Sanders Press Conference at Saints: November 8th, 2026",
+      "summary": "Quarterback Shedeur Sanders speaks to the media following the 23-22 loss against the New Orleans Saints.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/iwwwuxx7zhaqagdyzqow.jpg",
+      "imageAlt": "Shedeur Sanders Press Conference at Saints: November 8th, 2026",
+      "publishedAt": "2026-11-08T22:42:00.000Z",
+      "url": "https://www.clevelandbrowns.com/video/shedeur-sanders-press-conference-at-saints-november-8th-2026",
+      "externalVideoUrl": "https://www.clevelandbrowns.com/video/shedeur-sanders-press-conference-at-saints-november-8th-2026",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Video",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Video",
+      "author": "clevelandbrowns.com Video",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0041
     },
     {
       "id": "cle_vid_5a00aea4a7b8",
@@ -3575,7 +4346,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0163
     },
     {
       "id": "cle_vid_511670b6e699",
@@ -3609,7 +4380,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0162
     },
     {
       "id": "cle_vid_451c009a2cf6",
@@ -3677,7 +4448,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.004
     },
     {
       "id": "cle_vid_7fb20b10a9e3",
@@ -3711,7 +4482,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0162
     },
     {
       "id": "cle_vid_23b2c9c06490",
@@ -3745,7 +4516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.004
     },
     {
       "id": "cle_vid_5f8baa6e2363",
@@ -3779,7 +4550,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.0161
     },
     {
       "id": "cle_vid_e2e7736ae6cd",
@@ -3813,7 +4584,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.0161
     },
     {
       "id": "cle_vid_ca28bc59dc01",
@@ -3847,7 +4618,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.0161
     },
     {
       "id": "cle_vid_76c69f0818f7",
@@ -3881,7 +4652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.0161
     },
     {
       "id": "cle_vid_5117131ab892",
@@ -3983,7 +4754,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0161
+      "storyRank": 0.016
     },
     {
       "id": "cle_vid_0746243b45ef",
@@ -4085,7 +4856,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0161
+      "storyRank": 0.016
     },
     {
       "id": "cle_tx_97364b6f776e",
@@ -4119,7 +4890,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.014
     },
     {
       "id": "cle_vid_637555b29425",
@@ -4153,7 +4924,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0136
+      "storyRank": 0.0135
     },
     {
       "id": "cle_vid_558ca86245f0",
@@ -4187,7 +4958,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0136
+      "storyRank": 0.0135
     },
     {
       "id": "cle_vid_fb363ae65b1c",
@@ -4221,7 +4992,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0135
+      "storyRank": 0.0134
     },
     {
       "id": "cle_tx_918f56e11d63",
@@ -4255,7 +5026,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0128
     },
     {
       "id": "cle_tx_5ecfecf50b8f",
@@ -4289,7 +5060,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0119
+      "storyRank": 0.0118
     },
     {
       "id": "cle_tx_f69b18c84670",
@@ -4402,6 +5173,72 @@
       "imageAlt": "Browns announce inactives for Week 10 vs. the Texans",
       "publishedAt": "2026-11-15T16:30:06.000Z",
       "url": "https://www.clevelandbrowns.com/news/browns-announce-inactives-for-week-10-vs-the-texans",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Official",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Official",
+      "author": "clevelandbrowns.com Official",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": -10,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "stale_pregame",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": true,
+      "storyRank": -1000
+    },
+    {
+      "id": "cle_rss_f9b3d2db0d9d",
+      "type": "article",
+      "title": "Denzel Boston questionable for Week 10 vs. the Texans | Injury Report",
+      "summary": "Michael Burton and Ronnie Hickman have been ruled out for Week 10",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/gwgqoqjge3ym6fndoqj1.jpg",
+      "imageAlt": "Denzel Boston questionable for Week 10 vs. the Texans | Injury Report",
+      "publishedAt": "2026-11-13T19:27:34.000Z",
+      "url": "https://www.clevelandbrowns.com/news/denzel-boston-questionable-for-week-10-vs-the-texans-injury-report",
+      "outletId": "browns_official",
+      "outletName": "clevelandbrowns.com Official",
+      "reporterId": "browns_official",
+      "reporterName": "clevelandbrowns.com Official",
+      "author": "clevelandbrowns.com Official",
+      "authorHandle": "@Browns",
+      "authorProfileUrl": "https://www.clevelandbrowns.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": -10,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "stale_pregame",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": true,
+      "storyRank": -1000
+    },
+    {
+      "id": "cle_rss_fd6afc966a83",
+      "type": "article",
+      "title": "Deshaun Watson set to start Week 10 against the Texans",
+      "summary": "Watson was inactive for Week 9 after clearing concussion protocol on Nov. 7",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/browns/vgs0ru3wisimw13ssihx.jpg",
+      "imageAlt": "Deshaun Watson set to start Week 10 against the Texans",
+      "publishedAt": "2026-11-11T14:22:37.000Z",
+      "url": "https://www.clevelandbrowns.com/news/deshaun-watson-set-to-start-week-10-against-the-texans",
       "outletId": "browns_official",
       "outletName": "clevelandbrowns.com Official",
       "reporterId": "browns_official",

@@ -369,9 +369,10 @@ export function renderDailyTopNewsBriefHtml(
       const slug = postM[4].toUpperCase().replace(/^WK/, 'Week ');
       cycleLabel = `Post-Game ${slug} cycle`;
     } else if (dailyM) {
+      const tz = getActiveTeamConfig()?.timezone || 'America/Los_Angeles';
       const dObj = new Date(Date.UTC(Number(dailyM[1]), Number(dailyM[2]) - 1, Number(dailyM[3]), 19, 0, 0));
       const dayLbl = dObj.toLocaleDateString('en-US', {
-        timeZone: 'America/Los_Angeles',
+        timeZone: tz,
         weekday: 'short',
         month: 'short',
         day: 'numeric'
@@ -567,7 +568,7 @@ export function renderWireSignalBadgeHtml(item, isVideo, isTweet) {
     if (!isInterviewClip && /\b(highlights|best plays|top plays|every touchdown|condensed game|outlast|thriller)\b/i.test(title)) {
       return `<span class="badge badge-scarlet">${iconSvg('video', 11)}<span>Highlights</span></span>`;
     }
-    if (/\b(forty niner way|49hours|mic['’]?d up|locker room|from the trenches|recap)\b/i.test(title)) {
+    if (/\b(forty niner way|49hours|inside the den|building the|embedded|hard knocks|sounds of the game|all access|wired|mic['’]?d up|locker room|from the trenches|recap)\b/i.test(title)) {
       return `<span class="badge badge-gold">${iconSvg('video', 11)}<span>Team Video</span></span>`;
     }
     return `<span class="badge badge-scarlet">${iconSvg('video', 11)}<span>Video</span></span>`;
@@ -1231,7 +1232,7 @@ export function renderNewsViewHtml({
       : '';
 
     const cardsHtml = items
-      .slice(0, 65)
+      .slice(0, 120)
       .map((item, idx) => {
         const key = getItemReadKey(item);
         const isNewSinceVisit = catchUp.hasWatermark && catchUp.newItemKeys.has(key);
@@ -1377,7 +1378,7 @@ export function renderVideoEmbedOrFacade(
               ${
                 safePoster
                   ? `<img src="${esc(safePoster)}" ${posterFallbackAttr} alt="${esc(label)}" class="video-thumb-img" loading="lazy" decoding="async" />`
-                  : `<div class="video-thumb-img" style="background:linear-gradient(135deg,#1A080C,#261419);min-height:165px"></div>`
+                  : `<div class="video-thumb-img" style="background:linear-gradient(135deg,var(--bg-card-alt),var(--bg-primary));min-height:165px"></div>`
               }
               <div class="video-thumb-overlay">
                 <span class="video-play-pill">${iconSvg('externalLink', 13)}<span>Watch on ${esc(providerLabel)}</span></span>
@@ -1408,7 +1409,7 @@ export function renderVideoEmbedOrFacade(
           ${
             safePoster
               ? `<img src="${esc(safePoster)}" ${posterFallbackAttr} alt="${esc(label)}" class="video-thumb-img" loading="lazy" decoding="async" />`
-              : `<div class="video-thumb-img" style="background:linear-gradient(135deg,#1A080C,#261419);min-height:165px"></div>`
+              : `<div class="video-thumb-img" style="background:linear-gradient(135deg,var(--bg-card-alt),var(--bg-primary));min-height:165px"></div>`
           }
           <div class="video-thumb-overlay">
             <button type="button" class="video-play-pill" data-action="play-inline-video" data-vid-key="${esc(vidKey)}">
@@ -1452,8 +1453,8 @@ export function renderVideoEmbedOrFacade(
               ? ''
               : `<div class="video-launch-bar">
                   <div style="min-width:0">
-                    <div style="font-weight:700;font-size:12.5px;color:#E5CF96;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(label)}</div>
-                    <div style="font-size:11px;color:#A3AFBF">${esc(channel || 'YouTube')}</div>
+                    <div style="font-weight:700;font-size:12.5px;color:var(--gold-bright);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(label)}</div>
+                    <div style="font-size:11px;color:var(--text-muted)">${esc(channel || 'YouTube')}</div>
                   </div>
                   <span class="source-chip-link"><span>YouTube</span>${iconSvg('externalLink', 11)}</span>
                 </div>`
@@ -1500,8 +1501,8 @@ export function renderVideoEmbedOrFacade(
             </div>`
           : `<div class="video-launch-bar">
               <div style="min-width:0">
-                <div style="font-weight:700;font-size:12.5px;color:#E5CF96;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(label)}</div>
-                <div style="font-size:11px;color:#A3AFBF">${esc(channel || 'YouTube Film & Podium')}</div>
+                <div style="font-weight:700;font-size:12.5px;color:var(--gold-bright);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(label)}</div>
+                <div style="font-size:11px;color:var(--text-muted)">${esc(channel || 'YouTube Film & Podium')}</div>
               </div>
               <a href="${esc(watchUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">YouTube ${iconSvg('externalLink', 12)}</a>
             </div>`

@@ -456,6 +456,7 @@ export function analyzeTeamTransactions(transactions = [], seasonYear = 2026) {
  *   PS/IR ghosts and confirmed releases, the roster is both sub-hour fresh and 100% ghost-free.
  */
 export function resolveAuthoritativeRosterPlayerStatus({
+  teamAbbr = 'SF',
   espnId = '',
   fullName = '',
   groupKey = '',
@@ -487,7 +488,7 @@ export function resolveAuthoritativeRosterPlayerStatus({
   const isRosterExemption = /roster exemption|two-week roster exemption/i.test(probeComment);
   const isReserveLeftSquadOrSusp =
     groupKey === 'suspended' ||
-    canonKey === 'brandonaiyuk' ||
+    (String(teamAbbr || '').toUpperCase() === 'SF' && canonKey === 'brandonaiyuk') ||
     isRosterExemption ||
     /looking to get reinstated|left squad|reserve\/suspended/i.test(probeComment);
 

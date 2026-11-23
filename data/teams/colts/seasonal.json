@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:53:02.299Z",
+  "updatedAt": "2026-11-23T06:25:36.398Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T21:00:00Z",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 4:00 PM ET",
@@ -38,7 +38,7 @@
         "timing": "Trade Deadline Deal (Oct 27, 2026)",
         "costSummary": "2027 third-round draft pick and a 2028 fifth-round draft pick",
         "schemeGrade": "B",
-        "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
+        "sourceUrl": "https://overthecap.com/player/quenton-nelson/6891/",
         "analysis": "Colts traded G Quenton Nelson. to Seattle Seahawks in exchange for 2027 third-round draft pick and a 2028 fifth-round draft pick. Recoups draft capital while preserving 2027 roster and cap flexibility."
       },
       {
@@ -70,7 +70,7 @@
         "timing": "Offseason Trade (Mar 9, 2026)",
         "costSummary": "2026 6th-Round Pick",
         "schemeGrade": "B",
-        "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
+        "sourceUrl": "https://overthecap.com/player/michael-pittman/8774/",
         "analysis": "Colts traded WR Michael Pittman to Pittsburgh Steelers in exchange for 2026 6th-Round Pick. IND also included 2026 7th-Round Pick. Recoups draft capital while preserving 2027 roster and cap flexibility."
       },
       {
@@ -86,7 +86,7 @@
         "timing": "Offseason Trade (Mar 7, 2026)",
         "costSummary": "Zaire Franklin",
         "schemeGrade": "B+",
-        "sourceUrl": "https://overthecap.com/salary-cap/san-francisco-49ers",
+        "sourceUrl": "https://overthecap.com/player/colby-wooden/10940/",
         "analysis": "Colts acquired DE Colby Wooden from Green Bay Packers (11 tackles, 3.0 sacks). Expiring 2026 deal ($0 2027 cap commitment)."
       }
     ],
@@ -341,7 +341,7 @@
         "makePlayoffsPct": 0.7,
         "winDivisionPct": 0.1,
         "seed1ByePct": 0,
-        "wildCardPct": 0.5,
+        "wildCardPct": 0.6,
         "seedDistribution": {
           "1": 0,
           "2": 0,
@@ -351,7 +351,7 @@
           "6": 0.1,
           "7": 0.5
         },
-        "missedPlayoffsPct": 99.3
+        "missedPlayoffsPct": 99.4
       },
       "sfOdds": {
         "abbr": "IND",
@@ -364,7 +364,7 @@
         "makePlayoffsPct": 0.7,
         "winDivisionPct": 0.1,
         "seed1ByePct": 0,
-        "wildCardPct": 0.5,
+        "wildCardPct": 0.6,
         "seedDistribution": {
           "1": 0,
           "2": 0,
@@ -374,7 +374,7 @@
           "6": 0.1,
           "7": 0.5
         },
-        "missedPlayoffsPct": 99.3
+        "missedPlayoffsPct": 99.4
       },
       "allTeamOdds": [
         {
@@ -384,17 +384,17 @@
           "division": "AFC East",
           "currentRecord": "9-1",
           "powerRating": 1574,
-          "projectedWins": 13.1,
+          "projectedWins": 13.2,
           "makePlayoffsPct": 99.9,
-          "winDivisionPct": 98,
-          "seed1ByePct": 45.4,
-          "wildCardPct": 1.9,
+          "winDivisionPct": 97.8,
+          "seed1ByePct": 45.3,
+          "wildCardPct": 2,
           "seedDistribution": {
-            "1": 45.4,
-            "2": 26.1,
-            "3": 16.6,
-            "4": 9.9,
-            "5": 0.5,
+            "1": 45.3,
+            "2": 25.3,
+            "3": 17.9,
+            "4": 9.4,
+            "5": 0.6,
             "6": 0.9,
             "7": 0.5
           },
@@ -409,15 +409,15 @@
           "powerRating": 1577,
           "projectedWins": 12,
           "makePlayoffsPct": 98.6,
-          "winDivisionPct": 54.3,
-          "seed1ByePct": 18.6,
+          "winDivisionPct": 54.2,
+          "seed1ByePct": 18.3,
           "wildCardPct": 44.3,
           "seedDistribution": {
-            "1": 18.6,
-            "2": 16.5,
-            "3": 11.9,
-            "4": 7.3,
-            "5": 32.8,
+            "1": 18.3,
+            "2": 16.3,
+            "3": 12.5,
+            "4": 7.2,
+            "5": 32.9,
             "6": 8.1,
             "7": 3.3
           },
@@ -431,20 +431,20 @@
           "currentRecord": "7-3",
           "powerRating": 1581,
           "projectedWins": 11.3,
-          "makePlayoffsPct": 96.7,
-          "winDivisionPct": 91.6,
-          "seed1ByePct": 5.7,
-          "wildCardPct": 5.2,
+          "makePlayoffsPct": 96.8,
+          "winDivisionPct": 91.9,
+          "seed1ByePct": 5.9,
+          "wildCardPct": 4.8,
           "seedDistribution": {
-            "1": 5.7,
-            "2": 18.5,
-            "3": 27.3,
-            "4": 40,
-            "5": 0.6,
-            "6": 2.2,
-            "7": 2.4
+            "1": 5.9,
+            "2": 17.5,
+            "3": 27.1,
+            "4": 41.4,
+            "5": 0.5,
+            "6": 2,
+            "7": 2.3
           },
-          "missedPlayoffsPct": 3.3
+          "missedPlayoffsPct": 3.2
         },
         {
           "abbr": "DEN",
@@ -455,17 +455,17 @@
           "powerRating": 1524,
           "projectedWins": 11.9,
           "makePlayoffsPct": 96.4,
-          "winDivisionPct": 45.6,
-          "seed1ByePct": 16.4,
-          "wildCardPct": 50.8,
+          "winDivisionPct": 45.7,
+          "seed1ByePct": 16.2,
+          "wildCardPct": 50.7,
           "seedDistribution": {
-            "1": 16.4,
-            "2": 14.1,
-            "3": 10.7,
-            "4": 4.4,
-            "5": 34.7,
-            "6": 10.9,
-            "7": 5.2
+            "1": 16.2,
+            "2": 14.5,
+            "3": 10.9,
+            "4": 4.1,
+            "5": 33.7,
+            "6": 11.5,
+            "7": 5.6
           },
           "missedPlayoffsPct": 3.6
         },
@@ -477,20 +477,20 @@
           "currentRecord": "7-2",
           "powerRating": 1564,
           "projectedWins": 11.9,
-          "makePlayoffsPct": 96.2,
-          "winDivisionPct": 73.9,
-          "seed1ByePct": 13.1,
-          "wildCardPct": 22.3,
+          "makePlayoffsPct": 95.9,
+          "winDivisionPct": 74,
+          "seed1ByePct": 13.3,
+          "wildCardPct": 21.9,
           "seedDistribution": {
-            "1": 13.1,
-            "2": 20.3,
-            "3": 22.6,
-            "4": 17.9,
-            "5": 6.3,
-            "6": 10,
-            "7": 6.1
+            "1": 13.3,
+            "2": 21.8,
+            "3": 21.1,
+            "4": 17.7,
+            "5": 6,
+            "6": 9.9,
+            "7": 6
           },
-          "missedPlayoffsPct": 3.8
+          "missedPlayoffsPct": 4.1
         },
         {
           "abbr": "PIT",
@@ -500,20 +500,20 @@
           "currentRecord": "6-4",
           "powerRating": 1512,
           "projectedWins": 9.7,
-          "makePlayoffsPct": 68.5,
-          "winDivisionPct": 11.5,
-          "seed1ByePct": 0.4,
-          "wildCardPct": 57,
+          "makePlayoffsPct": 69.3,
+          "winDivisionPct": 11.6,
+          "seed1ByePct": 0.6,
+          "wildCardPct": 57.6,
           "seedDistribution": {
-            "1": 0.4,
-            "2": 2.4,
-            "3": 4.8,
-            "4": 3.8,
-            "5": 12.3,
-            "6": 25.4,
-            "7": 19.4
+            "1": 0.6,
+            "2": 2.6,
+            "3": 4.6,
+            "4": 3.9,
+            "5": 13,
+            "6": 25.5,
+            "7": 19.2
           },
-          "missedPlayoffsPct": 31.6
+          "missedPlayoffsPct": 30.7
         },
         {
           "abbr": "CLE",
@@ -523,20 +523,20 @@
           "currentRecord": "6-4",
           "powerRating": 1476,
           "projectedWins": 9.4,
-          "makePlayoffsPct": 61.2,
-          "winDivisionPct": 14.3,
+          "makePlayoffsPct": 60,
+          "winDivisionPct": 14.1,
           "seed1ByePct": 0.2,
-          "wildCardPct": 46.8,
+          "wildCardPct": 45.9,
           "seedDistribution": {
             "1": 0.2,
             "2": 1.7,
-            "3": 5,
-            "4": 7.4,
-            "5": 4.8,
-            "6": 18.8,
-            "7": 23.3
+            "3": 4.7,
+            "4": 7.5,
+            "5": 5.2,
+            "6": 18.2,
+            "7": 22.6
           },
-          "missedPlayoffsPct": 38.8
+          "missedPlayoffsPct": 40
         },
         {
           "abbr": "NE",
@@ -546,20 +546,20 @@
           "currentRecord": "5-5",
           "powerRating": 1484,
           "projectedWins": 8.4,
-          "makePlayoffsPct": 43.7,
-          "winDivisionPct": 2,
+          "makePlayoffsPct": 45,
+          "winDivisionPct": 2.2,
           "seed1ByePct": 0.2,
-          "wildCardPct": 41.7,
+          "wildCardPct": 42.9,
           "seedDistribution": {
             "1": 0.2,
-            "2": 0.3,
+            "2": 0.4,
             "3": 0.7,
             "4": 0.9,
-            "5": 6.8,
-            "6": 15.1,
-            "7": 19.8
+            "5": 6.9,
+            "6": 15.4,
+            "7": 20.6
           },
-          "missedPlayoffsPct": 56.3
+          "missedPlayoffsPct": 55
         },
         {
           "abbr": "HOU",
@@ -569,20 +569,20 @@
           "currentRecord": "4-6",
           "powerRating": 1527,
           "projectedWins": 7.8,
-          "makePlayoffsPct": 23.9,
-          "winDivisionPct": 8.3,
+          "makePlayoffsPct": 23.7,
+          "winDivisionPct": 8,
           "seed1ByePct": 0,
-          "wildCardPct": 15.6,
+          "wildCardPct": 15.7,
           "seedDistribution": {
             "1": 0,
             "2": 0,
-            "3": 0.4,
-            "4": 7.8,
-            "5": 0.9,
-            "6": 4.8,
-            "7": 9.9
+            "3": 0.5,
+            "4": 7.5,
+            "5": 0.8,
+            "6": 4.7,
+            "7": 10.1
           },
-          "missedPlayoffsPct": 76.1
+          "missedPlayoffsPct": 76.4
         },
         {
           "abbr": "LV",
@@ -592,10 +592,10 @@
           "currentRecord": "4-7",
           "powerRating": 1462,
           "projectedWins": 6.9,
-          "makePlayoffsPct": 7.8,
+          "makePlayoffsPct": 7.6,
           "winDivisionPct": 0.1,
           "seed1ByePct": 0,
-          "wildCardPct": 7.7,
+          "wildCardPct": 7.5,
           "seedDistribution": {
             "1": 0,
             "2": 0,
@@ -603,9 +603,9 @@
             "4": 0.1,
             "5": 0.3,
             "6": 2.2,
-            "7": 5.2
+            "7": 5
           },
-          "missedPlayoffsPct": 92.2
+          "missedPlayoffsPct": 92.4
         },
         {
           "abbr": "BAL",
@@ -615,20 +615,20 @@
           "currentRecord": "4-7",
           "powerRating": 1461,
           "projectedWins": 6.5,
-          "makePlayoffsPct": 5.4,
+          "makePlayoffsPct": 5,
           "winDivisionPct": 0.3,
           "seed1ByePct": 0,
-          "wildCardPct": 5.1,
+          "wildCardPct": 4.8,
           "seedDistribution": {
             "1": 0,
             "2": 0,
             "3": 0,
             "4": 0.3,
-            "5": 0.1,
-            "6": 1.6,
-            "7": 3.4
+            "5": 0.2,
+            "6": 1.3,
+            "7": 3.3
           },
-          "missedPlayoffsPct": 94.6
+          "missedPlayoffsPct": 95
         },
         {
           "abbr": "NYJ",
@@ -638,20 +638,20 @@
           "currentRecord": "3-8",
           "powerRating": 1456,
           "projectedWins": 5.7,
-          "makePlayoffsPct": 1,
+          "makePlayoffsPct": 1.1,
           "winDivisionPct": 0,
           "seed1ByePct": 0,
-          "wildCardPct": 1,
+          "wildCardPct": 1.1,
           "seedDistribution": {
             "1": 0,
             "2": 0,
             "3": 0,
             "4": 0,
             "5": 0,
-            "6": 0.1,
+            "6": 0.2,
             "7": 0.9
           },
-          "missedPlayoffsPct": 99
+          "missedPlayoffsPct": 98.9
         },
         {
           "abbr": "IND",
@@ -664,7 +664,7 @@
           "makePlayoffsPct": 0.7,
           "winDivisionPct": 0.1,
           "seed1ByePct": 0,
-          "wildCardPct": 0.5,
+          "wildCardPct": 0.6,
           "seedDistribution": {
             "1": 0,
             "2": 0,
@@ -674,7 +674,30 @@
             "6": 0.1,
             "7": 0.5
           },
-          "missedPlayoffsPct": 99.3
+          "missedPlayoffsPct": 99.4
+        },
+        {
+          "abbr": "TEN",
+          "name": "Tennessee Titans",
+          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
+          "division": "AFC South",
+          "currentRecord": "1-9",
+          "powerRating": 1431,
+          "projectedWins": 3.8,
+          "makePlayoffsPct": 0.1,
+          "winDivisionPct": 0,
+          "seed1ByePct": 0,
+          "wildCardPct": 0,
+          "seedDistribution": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "missedPlayoffsPct": 99.9
         },
         {
           "abbr": "MIA",
@@ -684,29 +707,6 @@
           "currentRecord": "1-9",
           "powerRating": 1428,
           "projectedWins": 3.8,
-          "makePlayoffsPct": 0.1,
-          "winDivisionPct": 0,
-          "seed1ByePct": 0,
-          "wildCardPct": 0.1,
-          "seedDistribution": {
-            "1": 0,
-            "2": 0,
-            "3": 0,
-            "4": 0,
-            "5": 0,
-            "6": 0,
-            "7": 0.1
-          },
-          "missedPlayoffsPct": 99.9
-        },
-        {
-          "abbr": "TEN",
-          "name": "Tennessee Titans",
-          "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
-          "division": "AFC South",
-          "currentRecord": "1-9",
-          "powerRating": 1431,
-          "projectedWins": 3.7,
           "makePlayoffsPct": 0,
           "winDivisionPct": 0,
           "seed1ByePct": 0,
@@ -756,23 +756,23 @@
         "home": "WAS",
         "isTeamGame": false,
         "is49ersGame": false,
-        "recommendedWinner": "HOME",
-        "rootForTeam": "WAS",
-        "rootAgainstTeam": "CIN",
-        "rootFor": "WAS",
-        "rootSide": "HOME",
+        "recommendedWinner": "AWAY",
+        "rootForTeam": "CIN",
+        "rootAgainstTeam": "WAS",
+        "rootFor": "CIN",
+        "rootSide": "AWAY",
         "homeWinProbPct": 42.7,
-        "expectedImpactScore": 0.1,
-        "leverageTag": "Inter-Conf Help",
-        "leverageReason": "NFC club WAS hands AFC contender CIN a loss without adding an AFC rival win",
-        "maxSwingPct": 0.1,
-        "primaryMetric": "AFC South",
-        "primaryDeltaPct": 0.1,
+        "expectedImpactScore": 0.2,
+        "leverageTag": "SOV / Tiebreaker",
+        "leverageReason": "Strengthens IND Strength of Victory (SOV) & common-games tiebreaker vs. WAS",
+        "maxSwingPct": 0.2,
+        "primaryMetric": "Playoff Berth",
+        "primaryDeltaPct": 0.2,
         "seed1SwingPct": 0,
-        "divSwingPct": 0.1,
-        "berthSwingPct": 0,
+        "divSwingPct": 0,
+        "berthSwingPct": 0.2,
         "byeLeveragePct": 0,
-        "divisionLeveragePct": 0.1,
+        "divisionLeveragePct": 0,
         "totalLeverageScore": 0.1
       },
       {
@@ -789,45 +789,18 @@
         "rootFor": "IND",
         "rootSide": "HOME",
         "homeWinProbPct": 44.7,
-        "expectedImpactScore": 0.9,
+        "expectedImpactScore": 1.4,
         "leverageTag": "Direct Control",
         "leverageReason": "IND head-to-head result directly controls AFC South & #1 Seed Bye trajectory",
-        "maxSwingPct": 0.9,
+        "maxSwingPct": 1.4,
         "primaryMetric": "Playoff Berth",
-        "primaryDeltaPct": 0.9,
+        "primaryDeltaPct": 1.4,
         "seed1SwingPct": 0,
-        "divSwingPct": 0.1,
-        "berthSwingPct": 0.9,
+        "divSwingPct": 0.2,
+        "berthSwingPct": 1.4,
         "byeLeveragePct": 0,
-        "divisionLeveragePct": 0.1,
-        "totalLeverageScore": 0.6
-      },
-      {
-        "gameId": "2026_12_TEN_JAX",
-        "week": 12,
-        "matchupLabel": "TEN @ JAX",
-        "away": "TEN",
-        "home": "JAX",
-        "isTeamGame": false,
-        "is49ersGame": false,
-        "recommendedWinner": "AWAY",
-        "rootForTeam": "TEN",
-        "rootAgainstTeam": "JAX",
-        "rootFor": "TEN",
-        "rootSide": "AWAY",
-        "homeWinProbPct": 74.5,
-        "expectedImpactScore": 0.4,
-        "leverageTag": "AFC South Race",
-        "leverageReason": "Hands division rival JAX a loss in the AFC South crown & tiebreaker race",
-        "maxSwingPct": 0.4,
-        "primaryMetric": "AFC South",
-        "primaryDeltaPct": 0.4,
-        "seed1SwingPct": 0,
-        "divSwingPct": 0.4,
-        "berthSwingPct": 0.3,
-        "byeLeveragePct": 0,
-        "divisionLeveragePct": 0.4,
-        "totalLeverageScore": 0.6
+        "divisionLeveragePct": 0.2,
+        "totalLeverageScore": 1
       },
       {
         "gameId": "2026_12_LV_CLE",
@@ -857,6 +830,33 @@
         "totalLeverageScore": 0.2
       },
       {
+        "gameId": "2026_12_TEN_JAX",
+        "week": 12,
+        "matchupLabel": "TEN @ JAX",
+        "away": "TEN",
+        "home": "JAX",
+        "isTeamGame": false,
+        "is49ersGame": false,
+        "recommendedWinner": "AWAY",
+        "rootForTeam": "TEN",
+        "rootAgainstTeam": "JAX",
+        "rootFor": "TEN",
+        "rootSide": "AWAY",
+        "homeWinProbPct": 74.5,
+        "expectedImpactScore": 0.2,
+        "leverageTag": "AFC South Race",
+        "leverageReason": "Hands division rival JAX a loss in the AFC South crown & tiebreaker race",
+        "maxSwingPct": 0.2,
+        "primaryMetric": "AFC South",
+        "primaryDeltaPct": 0.2,
+        "seed1SwingPct": 0,
+        "divSwingPct": 0.2,
+        "berthSwingPct": 0.2,
+        "byeLeveragePct": 0,
+        "divisionLeveragePct": 0.2,
+        "totalLeverageScore": 0.3
+      },
+      {
         "gameId": "2026_12_NE_LAC",
         "week": 12,
         "matchupLabel": "NE @ LAC",
@@ -870,18 +870,18 @@
         "rootFor": "LAC",
         "rootSide": "HOME",
         "homeWinProbPct": 47,
-        "expectedImpactScore": 0.3,
+        "expectedImpactScore": 0.2,
         "leverageTag": "SOV / Tiebreaker",
         "leverageReason": "Strengthens IND Strength of Victory (SOV) & common-games tiebreaker vs. NE",
-        "maxSwingPct": 0.3,
+        "maxSwingPct": 0.2,
         "primaryMetric": "Playoff Berth",
-        "primaryDeltaPct": 0.3,
+        "primaryDeltaPct": 0.2,
         "seed1SwingPct": 0,
         "divSwingPct": 0,
-        "berthSwingPct": 0.3,
+        "berthSwingPct": 0.2,
         "byeLeveragePct": 0,
         "divisionLeveragePct": 0,
-        "totalLeverageScore": 0.2
+        "totalLeverageScore": 0.1
       },
       {
         "gameId": "2026_12_BAL_HOU",
@@ -897,44 +897,17 @@
         "rootFor": "BAL",
         "rootSide": "AWAY",
         "homeWinProbPct": 64.3,
-        "expectedImpactScore": 0.2,
+        "expectedImpactScore": 0.1,
         "leverageTag": "AFC South Race",
         "leverageReason": "Hands division rival HOU a loss in the AFC South crown & tiebreaker race",
-        "maxSwingPct": 0.2,
-        "primaryMetric": "Playoff Berth",
-        "primaryDeltaPct": 0.2,
-        "seed1SwingPct": 0,
-        "divSwingPct": 0.1,
-        "berthSwingPct": 0.2,
-        "byeLeveragePct": 0,
-        "divisionLeveragePct": 0.1,
-        "totalLeverageScore": 0.2
-      },
-      {
-        "gameId": "2026_12_DEN_PIT",
-        "week": 12,
-        "matchupLabel": "DEN @ PIT",
-        "away": "DEN",
-        "home": "PIT",
-        "isTeamGame": false,
-        "is49ersGame": false,
-        "recommendedWinner": "AWAY",
-        "rootForTeam": "DEN",
-        "rootAgainstTeam": "PIT",
-        "rootFor": "DEN",
-        "rootSide": "AWAY",
-        "homeWinProbPct": 53.4,
-        "expectedImpactScore": 0.1,
-        "leverageTag": "SOV / Tiebreaker",
-        "leverageReason": "Strengthens IND Strength of Victory (SOV) & common-games tiebreaker vs. PIT",
         "maxSwingPct": 0.1,
-        "primaryMetric": "Playoff Berth",
+        "primaryMetric": "AFC South",
         "primaryDeltaPct": 0.1,
         "seed1SwingPct": 0,
-        "divSwingPct": 0,
-        "berthSwingPct": 0.1,
+        "divSwingPct": 0.1,
+        "berthSwingPct": 0,
         "byeLeveragePct": 0,
-        "divisionLeveragePct": 0,
+        "divisionLeveragePct": 0.1,
         "totalLeverageScore": 0.1
       },
       {
@@ -954,6 +927,33 @@
         "expectedImpactScore": 0,
         "leverageTag": "#1 Bye Race",
         "leverageReason": "Drops AFC top-seed contender KC in the #1 Seed Bye chase",
+        "maxSwingPct": 0,
+        "primaryMetric": "#1 Seed Bye",
+        "primaryDeltaPct": 0,
+        "seed1SwingPct": 0,
+        "divSwingPct": 0,
+        "berthSwingPct": 0,
+        "byeLeveragePct": 0,
+        "divisionLeveragePct": 0,
+        "totalLeverageScore": 0
+      },
+      {
+        "gameId": "2026_12_DEN_PIT",
+        "week": 12,
+        "matchupLabel": "DEN @ PIT",
+        "away": "DEN",
+        "home": "PIT",
+        "isTeamGame": false,
+        "is49ersGame": false,
+        "recommendedWinner": "HOME",
+        "rootForTeam": "PIT",
+        "rootAgainstTeam": "DEN",
+        "rootFor": "PIT",
+        "rootSide": "HOME",
+        "homeWinProbPct": 53.4,
+        "expectedImpactScore": 0,
+        "leverageTag": "#1 Bye Race",
+        "leverageReason": "Drops AFC top-seed contender DEN in the #1 Seed Bye chase",
         "maxSwingPct": 0,
         "primaryMetric": "#1 Seed Bye",
         "primaryDeltaPct": 0,
@@ -1033,7 +1033,7 @@
       {
         "target": "AFC Playoff Berth",
         "probabilityPct": 0.7,
-        "pathSummary": "0.7% overall playoff berth odds (0.5% via Wild Card seeds #5–#7)."
+        "pathSummary": "0.7% overall playoff berth odds (0.6% via Wild Card seeds #5–#7)."
       }
     ],
     "simulatorInputs": {
@@ -1652,12 +1652,12 @@
         }
       ],
       "otherConferencePowerRatings": {
-        "SF": 1565,
+        "SF": 1577,
         "SEA": 1539,
         "LAR": 1547,
         "ARI": 1416,
         "DET": 1553,
-        "MIN": 1546,
+        "MIN": 1524,
         "GB": 1505,
         "CHI": 1552,
         "PHI": 1445,
@@ -1670,12 +1670,12 @@
         "CAR": 1489
       },
       "afcPowerRatings": {
-        "SF": 1565,
+        "SF": 1577,
         "SEA": 1539,
         "LAR": 1547,
         "ARI": 1416,
         "DET": 1553,
-        "MIN": 1546,
+        "MIN": 1524,
         "GB": 1505,
         "CHI": 1552,
         "PHI": 1445,
@@ -1688,12 +1688,12 @@
         "CAR": 1489
       },
       "afcRatings": {
-        "SF": 1565,
+        "SF": 1577,
         "SEA": 1539,
         "LAR": 1547,
         "ARI": 1416,
         "DET": 1553,
-        "MIN": 1546,
+        "MIN": 1524,
         "GB": 1505,
         "CHI": 1552,
         "PHI": 1445,
@@ -1707,10 +1707,10 @@
       },
       "otherConferenceStandings": {
         "SF": {
-          "wins": 8,
+          "wins": 9,
           "losses": 1,
           "ties": 0,
-          "pointDiff": 85
+          "pointDiff": 110
         },
         "SEA": {
           "wins": 6,
@@ -1738,9 +1738,9 @@
         },
         "MIN": {
           "wins": 7,
-          "losses": 2,
+          "losses": 3,
           "ties": 0,
-          "pointDiff": 50
+          "pointDiff": 25
         },
         "GB": {
           "wins": 6,
@@ -1805,10 +1805,10 @@
       },
       "afcStandings": {
         "SF": {
-          "wins": 8,
+          "wins": 9,
           "losses": 1,
           "ties": 0,
-          "pointDiff": 85
+          "pointDiff": 110
         },
         "SEA": {
           "wins": 6,
@@ -1836,9 +1836,9 @@
         },
         "MIN": {
           "wins": 7,
-          "losses": 2,
+          "losses": 3,
           "ties": 0,
-          "pointDiff": 50
+          "pointDiff": 25
         },
         "GB": {
           "wins": 6,
@@ -3103,7 +3103,15 @@
           "awayScore": 23
         },
         {
-          "id": "401873070",
+          "id": "2026_11_IND_HOU",
+          "week": 11,
+          "home": "HOU",
+          "away": "IND",
+          "homeScore": 26,
+          "awayScore": 3
+        },
+        {
+          "id": "2026_11_MIA_BUF",
           "week": 11,
           "home": "BUF",
           "away": "MIA",
@@ -3111,7 +3119,7 @@
           "awayScore": 9
         },
         {
-          "id": "401873071",
+          "id": "2026_11_NO_CHI",
           "week": 11,
           "home": "CHI",
           "away": "NO",
@@ -3119,7 +3127,7 @@
           "awayScore": 13
         },
         {
-          "id": "401873073",
+          "id": "2026_11_TEN_DAL",
           "week": 11,
           "home": "DAL",
           "away": "TEN",
@@ -3127,7 +3135,7 @@
           "awayScore": 30
         },
         {
-          "id": "401873072",
+          "id": "2026_11_TB_DET",
           "week": 11,
           "home": "DET",
           "away": "TB",
@@ -3135,7 +3143,7 @@
           "awayScore": 21
         },
         {
-          "id": "401873067",
+          "id": "2026_11_ARI_KC",
           "week": 11,
           "home": "KC",
           "away": "ARI",
@@ -3143,7 +3151,7 @@
           "awayScore": 7
         },
         {
-          "id": "401873076",
+          "id": "2026_11_PIT_PHI",
           "week": 11,
           "home": "PHI",
           "away": "PIT",
@@ -3151,7 +3159,7 @@
           "awayScore": 16
         },
         {
-          "id": "401873068",
+          "id": "2026_11_BAL_CAR",
           "week": 11,
           "home": "CAR",
           "away": "BAL",
@@ -3159,7 +3167,7 @@
           "awayScore": 33
         },
         {
-          "id": "401873074",
+          "id": "2026_11_NYJ_LAC",
           "week": 11,
           "home": "LAC",
           "away": "NYJ",
@@ -3167,7 +3175,7 @@
           "awayScore": 27
         },
         {
-          "id": "401873075",
+          "id": "2026_11_LV_DEN",
           "week": 11,
           "home": "DEN",
           "away": "LV",
@@ -3175,7 +3183,7 @@
           "awayScore": 24
         },
         {
-          "id": "401873069",
+          "id": "2026_11_JAX_NYG",
           "week": 11,
           "home": "NYG",
           "away": "JAX",
@@ -3183,22 +3191,15 @@
           "awayScore": 18
         },
         {
-          "id": "401873066",
-          "week": 11,
-          "home": "HOU",
-          "away": "IND",
-          "homeScore": 26,
-          "awayScore": 3
-        }
-      ],
-      "remainingGames": [
-        {
           "id": "2026_11_MIN_SF",
           "week": 11,
           "home": "SF",
           "away": "MIN",
-          "neutral": true
-        },
+          "homeScore": 35,
+          "awayScore": 10
+        }
+      ],
+      "remainingGames": [
         {
           "id": "2026_11_CIN_WAS",
           "week": 11,
@@ -4197,7 +4198,7 @@
         "siteName": "Tankathon",
         "analyst": "Tankathon Live Mock",
         "url": "https://www.tankathon.com/nfl/mock_draft",
-        "publishedAt": "2026-11-23T03:53:02.299Z",
+        "publishedAt": "2026-11-23T06:25:36.398Z",
         "projectedPick": 38,
         "round": 2,
         "playerName": "Darian Mensah",

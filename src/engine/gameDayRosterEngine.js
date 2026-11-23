@@ -2913,9 +2913,10 @@ export function extractCompletedGameRecapSummary(summaryJson, gameMeta = {}) {
     };
   });
 
-  // 5. Key SF Touchdown Plays (for exact distances like 74-yd, 66-yd, 70-yd, 25-yd)
+  // 5. Key Team Touchdown / Scoring Plays (for exact distances)
+  const activeRecapTeam = resolveTeamConfig(gameMeta?.teamAbbr || getActiveTeamConfig());
   const sfScoringPlays = (summaryJson.scoringPlays || [])
-    .filter(sp => normalizeCanonicalTeamAbbr(sp?.team?.abbreviation || '') === 'SF')
+    .filter(sp => normalizeCanonicalTeamAbbr(sp?.team?.abbreviation || '') === activeRecapTeam.abbr)
     .map(sp => ({
       quarter: Number(sp?.period?.number) || null,
       clock: sp?.clock?.displayValue || '',
@@ -2931,7 +2932,6 @@ export function extractCompletedGameRecapSummary(summaryJson, gameMeta = {}) {
     summaryJson.article?.links?.web?.href ||
     (gameId ? `https://www.espn.com/nfl/recap/_/gameId/${encodeURIComponent(gameId)}` : gameMeta?.gameUrl || '');
 
-  const activeRecapTeam = resolveTeamConfig(gameMeta?.teamAbbr || getActiveTeamConfig());
   const activeRecapNickEsc = String(activeRecapTeam?.nickname || '49ers').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   let inGameInjuryNotes = '';
   const injIdx = rawStoryClean.search(new RegExp(`\\bInjuries\\s+${activeRecapNickEsc}\\s*:`, 'i'));

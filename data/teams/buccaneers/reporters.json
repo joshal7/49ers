@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T03:48:13.706Z",
+  "updatedAt": "2026-11-23T06:25:03.021Z",
   "reviewCadenceDays": 14,
-  "nextAutoReviewAt": "2026-12-07T03:48:13.706Z",
+  "nextAutoReviewAt": "2026-12-07T06:25:03.022Z",
   "totalTrackedReporters": 29,
   "podiumSubjectIds": [
     "todd_bowles",
@@ -206,19 +206,19 @@
     {
       "id": "scott_reynolds",
       "name": "Scott Reynolds",
-      "handle": "@PewterReport",
+      "handle": "@ScottPR",
       "outletId": "pewter_report_tb",
       "role": "Publisher & Senior Bucs Analyst",
       "category": "beat",
       "styleTag": "practice-injury-beat",
       "baseScore": 89,
       "trustTier": 2,
-      "xUrl": "https://x.com/PewterReport",
+      "xUrl": "https://x.com/ScottPR",
       "bskyHandle": null,
       "defaultEnabled": true,
       "trustTierLabel": "Tier 2 • Analytical Beat",
       "bskyUrl": null,
-      "profileUrl": "https://x.com/PewterReport",
+      "profileUrl": "https://x.com/ScottPR",
       "outletUrl": "https://x.com/PewterReport",
       "liveWeeklyMentions": 10,
       "popularityScore": 89

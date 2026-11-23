@@ -154,6 +154,7 @@ import {
   buildXBeatListSearchUrl,
   buildXPlayerScoopSearchUrl,
   getReporterTrustTier,
+  isAcuteInjuryOrAvailabilityScoop,
   MAX_X_SEARCH_RAW_QUERY_LENGTH
 } from '../src/engine/beatAttributionEngine.js';
 import {
@@ -212,6 +213,9 @@ import {
   isUrgentBreakingBadge,
   classifyNewsItemCategory,
   classifyBreakingItem,
+  matchesInGameInjuryOrReturn,
+  computeInGameInjurySeverity,
+  computePlayerRosterValue,
   computeInGameInjuryPriority,
   computeInjuryProgressionLevel,
   computeWireStoryRank,
@@ -17752,6 +17756,358 @@ await testAsync('NFL Hub standalone routing, team-isolated cache keys, canonical
   assert.ok(
     lionsSw.fetchedUrls.some(u => u.endsWith('/data/teams/lions/meta.json')),
     'lions.joshal.com SW must continue precaching /data/teams/lions/meta.json'
+  );
+});
+
+test('Team comeback "back in the game" chatter, halftime locker-room walks, and player-less game commentary NEVER trigger LIVE INJURY UPDATE while genuine player injuries & returns still do', () => {
+  const realRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const koIso = '2026-11-23T01:20:00.000Z';
+  const koMs = Date.parse(koIso);
+  const liveNowMs = koMs + 115 * 60_000;
+  const postGameNowMs = koMs + 4 * 3600_000;
+
+  const makeCtxApp = isLive => ({
+    meta: { seasonYear: 2026, currentWeek: 12, teamAbbr: 'SF', teamSlug: '49ers' },
+    roster: realRoster,
+    scheduleMatchup: {
+      schedule: [
+        {
+          id: '401873099',
+          week: 12,
+          seasonType: 'REG',
+          dateIso: koIso,
+          completed: !isLive,
+          statusState: isLive ? 'in' : 'post',
+          statusDetail: isLive ? '3rd - 4:20' : 'Final',
+          opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+        }
+      ],
+      upcomingMatchup: {
+        week: 12,
+        gameId: '401873099',
+        oppAbbr: 'MIN',
+        oppName: 'Minnesota Vikings',
+        dateIso: koIso,
+        kickoffIso: koIso,
+        liveState: isLive ? 'in' : 'post',
+        isGameInProgress: isLive,
+        statusDetail: isLive ? '3rd - 4:20' : 'Final'
+      }
+    }
+  });
+
+  const liveApp = makeCtxApp(true);
+  const postApp = makeCtxApp(false);
+
+  // 1. Exact reported bug: Jennifer Lee Chan's score/lead reminder mentioning "letting them back in the game"
+  const jlcTweet = {
+    id: 'tw_jlc_lead_reminder',
+    type: 'tweet',
+    author: 'Jennifer Lee Chan',
+    authorHandle: '@jenniferleechan',
+    outletName: 'NBC Sports Bay Area',
+    trustTier: 1,
+    title: '#49ers have an 18 point lead, but a quick reminder that they led Dallas by 19 before letting them back in the game.',
+    fullText: '#49ers have an 18 point lead, but a quick reminder that they led Dallas by 19 before letting them back in the game.',
+    publishedAt: new Date(liveNowMs - 58 * 60_000).toISOString()
+  };
+
+  assert.equal(matchesInGameInjuryOrReturn(jlcTweet.fullText), false, 'Jennifer Lee Chan score reminder must NOT match in-game injury return');
+  assert.equal(isAcuteInjuryOrAvailabilityScoop(jlcTweet.fullText), false, 'Jennifer Lee Chan score reminder must NOT match acute injury scoop');
+  assert.equal(classifyNewsItemCategory(jlcTweet), 'beat', 'Jennifer Lee Chan score reminder must classify as beat, not injury');
+  assert.equal(computeInGameInjurySeverity(jlcTweet).severityTier, 'minor', 'Non-injury score reminder must not escalate to moderate/serious severity');
+  assert.equal(computeInjuryProgressionLevel(jlcTweet), 0, 'Non-injury score reminder must have progression level 0');
+  assert.ok(
+    computePlayerRosterValue(jlcTweet, realRoster.players, 'SF').valueScore < 0.5,
+    'Player-less SF tweet must stay below 0.50 urgent threshold'
+  );
+
+  for (const [label, appCtx, refNow] of [
+    ['in-game', liveApp, liveNowMs],
+    ['post-game', postApp, postGameNowMs]
+  ]) {
+    const cls = classifyBreakingItem(jlcTweet, refNow, { appData: appCtx });
+    assert.equal(cls.isInGameInjury, false, `JLC tweet must have isInGameInjury=false (${label})`);
+    assert.equal(cls.breakingBadge, null, `JLC tweet must have null breakingBadge (${label}), got ${cls.breakingBadge}`);
+    assert.equal(cls.isUrgentBreaking, false, `JLC tweet must have isUrgentBreaking=false (${label})`);
+  }
+
+  // 2. Broader false-positive class: team comebacks (even naming a franchise star!), halftime locker room walks, defense back on field, punt return
+  const falsePositiveTweets = [
+    {
+      id: 'fp_purdy_comeback',
+      text: "Brock Purdy's 38-yard TD pass gets the 49ers right back in the game!"
+    },
+    {
+      id: 'fp_min_comeback',
+      text: 'Big strip-sack puts Minnesota right back in the game late in the 3rd quarter.'
+    },
+    {
+      id: 'fp_dallas_subject',
+      text: 'Dallas is back in the game after cutting the deficit to 7.'
+    },
+    {
+      id: 'fp_halftime_locker',
+      text: '49ers headed to the locker room at halftime up 24-6 over Minnesota.'
+    },
+    {
+      id: 'fp_defense_field',
+      text: '49ers defense is back on the field after a quick three-and-out.'
+    },
+    {
+      id: 'fp_punt_return',
+      text: 'Skyy Moore did not return the punt, letting it bounce into the end zone for a touchback.'
+    }
+  ];
+
+  for (const fp of falsePositiveTweets) {
+    const tw = {
+      id: fp.id,
+      type: 'tweet',
+      author: 'Jennifer Lee Chan',
+      authorHandle: '@jenniferleechan',
+      trustTier: 1,
+      title: fp.text,
+      fullText: fp.text,
+      publishedAt: new Date(liveNowMs - 10 * 60_000).toISOString()
+    };
+    const clsLive = classifyBreakingItem(tw, liveNowMs, { appData: liveApp });
+    assert.equal(clsLive.isInGameInjury, false, `${fp.id} must NOT be classified as in-game injury`);
+    assert.equal(clsLive.breakingBadge, null, `${fp.id} must NOT get LIVE INJURY UPDATE badge (got ${clsLive.breakingBadge})`);
+    assert.equal(isAcuteInjuryOrAvailabilityScoop(fp.text), false, `${fp.id} must NOT trigger acute injury scoop`);
+  }
+
+  // 3. Genuine live injuries and genuine player returns from injury MUST STILL get LIVE INJURY UPDATE!
+  const truePositiveTweets = [
+    {
+      id: 'tp_mckivitz_cart',
+      text: 'McKivitz (lower leg) was carted off the field Sunday night against the Vikings.',
+      mentionedPlayers: [{ name: 'Colton McKivitz' }]
+    },
+    {
+      id: 'tp_kittle_tent_back',
+      text: 'George Kittle is back in the game after being checked in the blue medical tent.'
+    },
+    {
+      id: 'tp_kittle_short_back',
+      text: 'George Kittle is back in the game on this drive.'
+    },
+    {
+      id: 'tp_warner_locker',
+      text: 'Fred Warner headed to the locker room with athletic trainers.'
+    },
+    {
+      id: 'tp_cmc_returned',
+      text: 'Christian McCaffrey returned to the game after getting his ankle taped.'
+    }
+  ];
+
+  for (const tp of truePositiveTweets) {
+    const tw = {
+      id: tp.id,
+      type: 'tweet',
+      author: 'Matt Maiocco',
+      authorHandle: '@MaioccoNBCS',
+      trustTier: 1,
+      title: tp.text,
+      fullText: tp.text,
+      mentionedPlayers: tp.mentionedPlayers || [],
+      publishedAt: new Date(liveNowMs - 8 * 60_000).toISOString()
+    };
+    const clsLive = classifyBreakingItem(tw, liveNowMs, { appData: liveApp });
+    assert.equal(clsLive.isInGameInjury, true, `${tp.id} MUST still be classified as isInGameInjury=true`);
+    assert.equal(clsLive.breakingBadge, 'LIVE INJURY UPDATE', `${tp.id} MUST still wear LIVE INJURY UPDATE`);
+  }
+
+  // 4. End-to-end sortNewsWithBreakingPriority confirms McKivitz ranks #1 with LIVE INJURY UPDATE while JLC has zero badge
+  const mckTw = {
+    id: 'tw_mck_live',
+    type: 'tweet',
+    author: 'Eric Branch',
+    authorHandle: '@Eric_Branch',
+    trustTier: 1,
+    title: 'McKivitz (lower leg) was carted off the field Sunday night against the Vikings.',
+    fullText: 'McKivitz (lower leg) was carted off the field Sunday night against the Vikings.',
+    mentionedPlayers: [{ name: 'Colton McKivitz' }],
+    publishedAt: new Date(liveNowMs - 60 * 60_000).toISOString()
+  };
+  const ranked = sortNewsWithBreakingPriority([jlcTweet, mckTw], liveNowMs, { appData: liveApp });
+  assert.equal(ranked[0].id, 'tw_mck_live');
+  assert.equal(ranked[0].breakingBadge, 'LIVE INJURY UPDATE');
+  const jlcRanked = ranked.find(it => it.id === 'tw_jlc_lead_reminder');
+  assert.equal(jlcRanked.breakingBadge, null, 'Ranked Jennifer Lee Chan tweet must have NO LIVE INJURY UPDATE badge');
+  assert.equal(jlcRanked.isInGameInjury, false);
+  assert.equal(jlcRanked.category, 'beat');
+});
+
+await testAsync('iOS Standalone PWA Safari Breakout for 49ers.com/NFL Club Videos, Twin-Video YouTube Preference & Worker Shorts Filter', async () => {
+  const {
+    isExternalClubOrLeagueVideoUrl,
+    isIosStandalonePwa,
+    resolveIosStandaloneExternalVideoBreakoutUrl
+  } = await import('../src/engine/linkIntegrity.js');
+
+  // 1. Club & NFL.com video URL classifier precision (strictly /video or /videos on NFL/club hosts)
+  const validClubVideoUrls = [
+    'https://www.49ers.com/video/shanahan-reflects-on-win-over-vikings-reaches-100-combined-victories',
+    'https://www.49ers.com/video/',
+    'https://49ers.com/videos/brock-purdy-highlights',
+    'https://www.nfl.com/videos/san-francisco-49ers-vs-minnesota-vikings-highlights-week-11',
+    'https://www.seahawks.com/video/postgame-presser',
+    'https://www.chiefs.com/video/mahomes-postgame'
+  ];
+  for (const u of validClubVideoUrls) {
+    assert.equal(isExternalClubOrLeagueVideoUrl(u), true, `Expected club/league video URL match: ${u}`);
+  }
+
+  const nonClubVideoUrls = [
+    'https://www.49ers.com/news/49ers-beat-vikings-mexico-city',
+    'https://www.49ers.com/team/players-roster/',
+    'https://www.youtube.com/watch?v=QYhSfNeQ5QE',
+    'https://youtu.be/QYhSfNeQ5QE',
+    'https://x.com/49ers/status/2120617948138409999',
+    'https://bsky.app/profile/maiocconbcs.bsky.social/post/3l8abc',
+    'https://www.espn.com/nfl/story/_/id/44444444/purdy-carves-up-vikings',
+    'http://www.49ers.com/video/insecure-http',
+    'javascript:alert(1)',
+    ''
+  ];
+  for (const u of nonClubVideoUrls) {
+    assert.equal(isExternalClubOrLeagueVideoUrl(u), false, `Must NOT rewrite non-club-video URL: ${u}`);
+  }
+
+  // 2. iOS 17+ Standalone PWA environment detection
+  const ios18StandaloneEnv = {
+    navigator: {
+      standalone: true,
+      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
+    },
+    window: { matchMedia: () => ({ matches: true }) }
+  };
+  const ios26StandaloneEnv = {
+    navigator: {
+      standalone: true,
+      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 26_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
+    },
+    window: { matchMedia: () => ({ matches: true }) }
+  };
+  const ipadDesktopUaStandaloneEnv = {
+    navigator: {
+      standalone: true,
+      maxTouchPoints: 5,
+      userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)'
+    },
+    window: { matchMedia: () => ({ matches: true }) }
+  };
+  const iosSafariBrowserEnv = {
+    navigator: {
+      standalone: false,
+      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Mobile/15E148 Safari/604.1'
+    },
+    window: { matchMedia: () => ({ matches: false }) }
+  };
+  const ios16StandaloneEnv = {
+    navigator: {
+      standalone: true,
+      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
+    },
+    window: { matchMedia: () => ({ matches: true }) }
+  };
+  const androidStandaloneEnv = {
+    navigator: {
+      userAgent: 'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 Chrome/131.0 Mobile Safari/537.36'
+    },
+    window: { matchMedia: () => ({ matches: true }) }
+  };
+  const macDesktopSafariEnv = {
+    navigator: {
+      maxTouchPoints: 0,
+      userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15'
+    },
+    window: { matchMedia: () => ({ matches: false }) }
+  };
+
+  assert.equal(isIosStandalonePwa(ios18StandaloneEnv), true, 'iOS 18 standalone PWA must be detected');
+  assert.equal(isIosStandalonePwa(ios26StandaloneEnv), true, 'iOS 26 standalone PWA must be detected');
+  assert.equal(isIosStandalonePwa(ipadDesktopUaStandaloneEnv), true, 'iPadOS desktop-UA standalone PWA must be detected');
+  assert.equal(isIosStandalonePwa(iosSafariBrowserEnv), false, 'Regular iOS Safari tab must NOT trigger breakout');
+  assert.equal(isIosStandalonePwa(ios16StandaloneEnv), false, 'iOS <17 must NOT use x-safari-https://');
+  assert.equal(isIosStandalonePwa(androidStandaloneEnv), false, 'Android PWA must NOT use x-safari-https://');
+  assert.equal(isIosStandalonePwa(macDesktopSafariEnv), false, 'Desktop macOS Safari must NOT use x-safari-https://');
+
+  // 3. End-to-end breakout URL resolution
+  const shanahanClubUrl = 'https://www.49ers.com/video/shanahan-reflects-on-win-over-vikings-reaches-100-combined-victories';
+  assert.equal(
+    resolveIosStandaloneExternalVideoBreakoutUrl(shanahanClubUrl, ios18StandaloneEnv),
+    `x-safari-${shanahanClubUrl}`,
+    'iOS 18 standalone PWA must hand off 49ers.com/video/... to full Safari via x-safari-https://'
+  );
+  assert.equal(
+    resolveIosStandaloneExternalVideoBreakoutUrl(`${shanahanClubUrl}?utm_source=rss`, ios26StandaloneEnv),
+    `x-safari-${shanahanClubUrl}`,
+    'Breakout URL must sanitize tracking params before prefixing x-safari-'
+  );
+  assert.equal(
+    resolveIosStandaloneExternalVideoBreakoutUrl(shanahanClubUrl, iosSafariBrowserEnv),
+    null,
+    'Normal mobile Safari must leave 49ers.com/video/... untouched'
+  );
+  assert.equal(
+    resolveIosStandaloneExternalVideoBreakoutUrl('https://www.49ers.com/news/week-11-recap', ios18StandaloneEnv),
+    null,
+    'Regular 49ers.com/news/ articles must stay in in-app SFSafariViewController reader sheet'
+  );
+  assert.equal(
+    resolveIosStandaloneExternalVideoBreakoutUrl('https://www.youtube.com/watch?v=QYhSfNeQ5QE', ios18StandaloneEnv),
+    null,
+    'YouTube videos must NOT use x-safari- so native YouTube app Universal Links continue working'
+  );
+
+  // 4. Twin-video clustering prefers official YouTube videoId over 49ers.com external web player card
+  const clubTwin = {
+    id: 'sf_vid_twin_1',
+    type: 'video',
+    title: "Mike Evans' Best Plays from 109-yard Game vs. Vikings | Week 11",
+    url: 'https://www.49ers.com/video/mike-evans-best-plays-from-109-yard-game-vs-vikings-week-11',
+    externalVideoUrl: 'https://www.49ers.com/video/mike-evans-best-plays-from-109-yard-game-vs-vikings-week-11',
+    embeddable: false,
+    mentionedPlayers: [{ id: 'evans', name: 'Mike Evans' }],
+    outletName: '49ers.com Official',
+    trustTier: 1,
+    signalScore: 84,
+    publishedAt: new Date().toISOString()
+  };
+  const ytTwin = {
+    id: 'edge_yt_MsBhTEttBu0',
+    type: 'video',
+    videoId: 'MsBhTEttBu0',
+    embeddable: false,
+    title: "Mike Evans' Best Plays from 109-yard Game vs. Vikings | Week 11",
+    url: 'https://www.youtube.com/watch?v=MsBhTEttBu0',
+    mentionedPlayers: [{ id: 'evans', name: 'Mike Evans' }],
+    outletName: 'San Francisco 49ers',
+    trustTier: 1,
+    signalScore: 84,
+    publishedAt: new Date().toISOString()
+  };
+  const clusteredTwins = deduplicateAndGroupWireItems([clubTwin, ytTwin], { preserveFormat: 'videos' });
+  assert.equal(clusteredTwins.length, 1, 'Identical 49ers.com + @49ers YouTube clips must merge into one cluster');
+  assert.equal(
+    clusteredTwins[0].videoId,
+    'MsBhTEttBu0',
+    'YouTube twin clip must win lead over external 49ers.com/video web player card'
+  );
+
+  // 5. Worker /api/live-wire skips YouTube /shorts/ entries so game-night Shorts never crowd out full videos
+  const workerSrc = fs.readFileSync(path.join(rootDir, 'worker', 'index.js'), 'utf8');
+  assert.ok(
+    workerSrc.includes('/youtube\\.com\\/shorts\\//i.test(entry)') && workerSrc.includes('entries.slice(0, 15)'),
+    'worker/index.js live-wire YouTube fetcher must scan 15 entries and skip /shorts/ URLs'
+  );
+  const appSrc = fs.readFileSync(path.join(rootDir, 'src', 'app.js'), 'utf8');
+  assert.ok(
+    appSrc.includes('resolveIosStandaloneExternalVideoBreakoutUrl(anchorHit.href)'),
+    'src/app.js delegated click handler must wire resolveIosStandaloneExternalVideoBreakoutUrl'
   );
 });
 

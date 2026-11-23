@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T01:26:59.667Z",
+  "updatedAt": "2026-11-23T06:24:42.121Z",
   "dailyTopNewsBrief": {
     "id": "brief_det_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -7,47 +7,53 @@
     "isPostGame": true,
     "gameWeek": 12,
     "teamRecord": "8-2",
-    "generatedAt": "2026-11-23T01:27:02.107Z",
+    "generatedAt": "2026-11-23T06:24:45.329Z",
     "modelUsed": "gemini-4-hydrogen",
     "thinkingLevel": "XHIGH",
     "source": "deterministic-digest",
-    "wordCount": 80,
+    "wordCount": 99,
     "headline": "Detroit Lions Daily Briefing — Week 12",
     "summary": "Detroit Lions (8-2, 1st in NFC North • #2 Seed in NFC) top verified storylines, injury status, and upcoming matchup intel.",
     "bullets": [
-      "Lions vs. Buccaneers: Locker room celebration ([detroitlions.com Video](https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052))",
+      "Just an absolutely packed \"Locker Room Buzz\" column after Lions' 31-21 win with insight from Kerby Joseph, Chuck Clark, Lacy, Hassanein, Scruggs, McCreary, Britt, Barnes (on Anzalone), Ratledge and Wright: www.detroitfootball.net/p/locker-roo... ([Justin Rogers](https://bsky.app/profile/detroitfootball.net/post/3n2wyfppxmk24))",
+      "Woulda liked to see history there, but also if the record’s gonna fall, it should be in a regular field goal try ￼ ([Dave Birkett](https://bsky.app/profile/davebirkett.bsky.social/post/3n2x5275hx22y))",
       "Khalil Dorsey is back in the game with a club over the hand where he suffered an injured wrist. ([Justin Rogers](https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x))",
-      "NOTEBOOK: Lions 'on the next one' after Week 11 win over Bucs ([detroitlions.com Official](https://www.detroitlions.com/news/notebook-lions-on-next-one-after-week-11-win-over-tampa-bay-clark-wonnum))",
-      "FOUR DOWNS: Goff a catalyst for Lions' offense in win over Bucs ([detroitlions.com Official](https://www.detroitlions.com/news/four-downs-goff-catalyst-lions-offense-win-over-bucs-gibbs-williams))",
-      "Jared Goff throws 2 TDs, Jahmyr Gibbs runs for 2 more and Lions beat Bucs 31-21 for 6th straight win ([ESPN NFL Nation](https://www.espn.com/nfl/recap?gameId=401873072))"
+      "NFC Notes: Micah Parsons, Cam Skattebo, Lions, Packers, Vikings ([NFL Trade Rumors](https://nfltraderumors.co/nfc-notes-micah-parsons-cam-skattebo-lions-packers-vikings/))",
+      "Lions vs. Buccaneers: Locker room celebration ([detroitlions.com Video](https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052))"
     ],
     "coveredStoryKeys": [
-      "det_vid_01f6b0259c93",
+      "det_bsky_a8b66c348752",
+      "det_bsky_df06fbb87619",
       "det_bsky_dae5d18dedb6",
-      "det_rss_92d6faf1e8ed",
-      "det_rss_e97a2a128e9b",
-      "det_espn_aea129f88ee07",
-      "det_bsky_76b4702b8f91"
+      "det_nfltr_24d8d6572d50",
+      "det_vid_01f6b0259c93"
     ],
     "coveredUrls": [
+      "https://bsky.app/profile/detroitfootball.net/post/3n2wyfppxmk24",
+      "https://bsky.app/profile/davebirkett.bsky.social/post/3n2x5275hx22y",
       "https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x",
-      "https://www.detroitlions.com/video/highlight-gibbs-strolls-to-the-pylon-to-score-his-15th-td-of-2026-season",
-      "https://www.detroitlions.com/video/highlight-gibbs-punches-it-in-from-1-yard-out",
-      "https://www.detroitlions.com/video/highlight-57-yard-td-goff-launches-it-to-williams-for-the-score",
-      "https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052",
-      "https://www.detroitlions.com/news/notebook-lions-on-next-one-after-week-11-win-over-tampa-bay-clark-wonnum"
+      "https://nfltraderumors.co/nfc-notes-micah-parsons-cam-skattebo-lions-packers-vikings/",
+      "https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052"
     ],
     "sources": [
       {
         "sid": "S1",
-        "title": "Lions vs. Buccaneers: Locker room celebration",
-        "url": "https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052",
-        "author": "detroitlions.com Video",
-        "outlet": "detroitlions.com Video",
-        "publishedAt": "2026-11-23T00:19:00.000Z"
+        "title": "Just an absolutely packed \"Locker Room Buzz\" column after Lions' 31-21 win with insight from Kerby Joseph, Chuck Clark, Lacy, Hassanein, Scruggs, McCreary, Britt, Barnes (on Anzalone), Ratledge and Wright: www.detroitfootball.net/p/locker-roo...",
+        "url": "https://bsky.app/profile/detroitfootball.net/post/3n2wyfppxmk24",
+        "author": "Justin Rogers",
+        "outlet": "Justin Rogers",
+        "publishedAt": "2026-11-23T01:34:12.543Z"
       },
       {
         "sid": "S2",
+        "title": "Woulda liked to see history there, but also if the record’s gonna fall, it should be in a regular field goal try ￼",
+        "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2x5275hx22y",
+        "author": "Dave Birkett",
+        "outlet": "Dave Birkett",
+        "publishedAt": "2026-11-23T02:57:15.522Z"
+      },
+      {
+        "sid": "S3",
         "title": "Khalil Dorsey is back in the game with a club over the hand where he suffered an injured wrist.",
         "url": "https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x",
         "author": "Justin Rogers",
@@ -55,7 +61,23 @@
         "publishedAt": "2026-11-22T19:07:38.614Z"
       },
       {
-        "sid": "S3",
+        "sid": "S4",
+        "title": "NFC Notes: Micah Parsons, Cam Skattebo, Lions, Packers, Vikings",
+        "url": "https://nfltraderumors.co/nfc-notes-micah-parsons-cam-skattebo-lions-packers-vikings/",
+        "author": "NFL Trade Rumors",
+        "outlet": "NFL Trade Rumors",
+        "publishedAt": "2026-11-23T01:00:09.000Z"
+      },
+      {
+        "sid": "S5",
+        "title": "Lions vs. Buccaneers: Locker room celebration",
+        "url": "https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052",
+        "author": "detroitlions.com Video",
+        "outlet": "detroitlions.com Video",
+        "publishedAt": "2026-11-23T00:19:00.000Z"
+      },
+      {
+        "sid": "S6",
         "title": "NOTEBOOK: Lions 'on the next one' after Week 11 win over Bucs",
         "url": "https://www.detroitlions.com/news/notebook-lions-on-next-one-after-week-11-win-over-tampa-bay-clark-wonnum",
         "author": "detroitlions.com Official",
@@ -63,82 +85,100 @@
         "publishedAt": "2026-11-23T00:02:59.000Z"
       },
       {
-        "sid": "S4",
+        "sid": "S7",
+        "title": "With the Bucs behind them and 6 straight wins in the books, the Lions are looking forward to next week’s showdown with Ben Johnson and the Bears: “It’s one of the biggest games I’ve probably ever played in coming up” www.freep.com/story/sports...",
+        "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wzf4plcs2k",
+        "author": "Dave Birkett",
+        "outlet": "Dave Birkett",
+        "publishedAt": "2026-11-23T01:51:47.099Z"
+      },
+      {
+        "sid": "S8",
         "title": "FOUR DOWNS: Goff a catalyst for Lions' offense in win over Bucs",
         "url": "https://www.detroitlions.com/news/four-downs-goff-catalyst-lions-offense-win-over-bucs-gibbs-williams",
         "author": "detroitlions.com Official",
         "outlet": "detroitlions.com Official",
         "publishedAt": "2026-11-22T23:43:49.000Z"
-      },
-      {
-        "sid": "S5",
-        "title": "Jared Goff throws 2 TDs, Jahmyr Gibbs runs for 2 more and Lions beat Bucs 31-21 for 6th straight win",
-        "url": "https://www.espn.com/nfl/recap?gameId=401873072",
-        "author": "ESPN NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-22T22:33:44Z"
-      },
-      {
-        "sid": "S6",
-        "title": "The Lions beat the Bucs for their 6th straight win, and we all know what's next - a big Thanksgiving showdown with the Chicago Bears www.freep.com/story/sports...",
-        "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wkhwud6s2k",
-        "author": "Dave Birkett",
-        "outlet": "Dave Birkett",
-        "publishedAt": "2026-11-22T21:24:55.500Z"
-      },
-      {
-        "sid": "S7",
-        "title": "Lions-Bucs postgame show is live NOW! www.patreon.com/welcometodet...",
-        "url": "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n2wjljrzk22k",
-        "author": "Nick Baumgardner",
-        "outlet": "Nick Baumgardner",
-        "publishedAt": "2026-11-22T21:09:02.272Z"
-      },
-      {
-        "sid": "S8",
-        "title": "RECAP: Lions vs. Buccaneers",
-        "url": "https://www.detroitlions.com/news/recap-lions-vs-buccaneers-goff-gibbs-williams",
-        "author": "detroitlions.com Official",
-        "outlet": "detroitlions.com Official",
-        "publishedAt": "2026-11-22T21:38:30.000Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
     {
-      "id": "det_vid_01f6b0259c93",
-      "type": "video",
-      "title": "Lions vs. Buccaneers: Locker room celebration",
-      "summary": "Go inside the Lions locker room following their Week 11 victory over the Tampa Bay Buccaneers.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/bdmw2ynl1blqhihtklzk.jpg",
-      "imageAlt": "Lions vs. Buccaneers: Locker room celebration",
-      "publishedAt": "2026-11-23T00:19:00.000Z",
-      "url": "https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052",
-      "externalVideoUrl": "https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Video",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Video",
-      "author": "detroitlions.com Video",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "id": "det_bsky_a8b66c348752",
+      "type": "tweet",
+      "title": "Just an absolutely packed \"Locker Room Buzz\" column after Lions' 31-21 win with insight from Kerby Joseph, Chuck Clark, Lacy, Hassanein, Scruggs, McCreary, Britt, Barnes (on Anzalone), Ratledge and Wright: www.detroitfootball.net/p/locker-roo...",
+      "fullText": "Just an absolutely packed \"Locker Room Buzz\" column after Lions' 31-21 win with insight from Kerby Joseph, Chuck Clark, Lacy, Hassanein, Scruggs, McCreary, Britt, Barnes (on Anzalone), Ratledge and Wright: www.detroitfootball.net/p/locker-roo...",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:mifhdxms7uvx3sb3chvovwr6/bafkreig2pjysy5nuhq5oaznzpljt4iu2na3v2fvefpicd4f6g43rx2s5t4",
+      "imageAlt": "Justin Rogers post",
+      "publishedAt": "2026-11-23T01:34:12.543Z",
+      "url": "https://bsky.app/profile/detroitfootball.net/post/3n2wyfppxmk24",
+      "externalUrl": "https://www.detroitfootball.net/p/locker-room-buzz-josephs-joy-clark",
+      "externalTitle": "Locker Room Buzz: Joseph’s joy, Clark finds another level, Anzalone gets cold shoulder, d-line steps up, and Hassanein draws compliment",
+      "outletId": "detroit_football_network",
+      "outletName": "Justin Rogers",
+      "reporterId": "justin_rogers",
+      "reporterName": "Justin Rogers",
+      "author": "Justin Rogers",
+      "authorHandle": "@Justin_Rogers",
+      "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
-      "wireSource": "club_video_rss",
+      "wireSource": "bluesky_live",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.919,
+      "breakingPriority": 0.903,
       "category": "beat",
-      "signalScore": 70,
+      "signalScore": 77,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
+      "credibilityScore": 97,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
       "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.0446
+      "storyRank": 9.7082
+    },
+    {
+      "id": "det_bsky_df06fbb87619",
+      "type": "tweet",
+      "title": "Woulda liked to see history there, but also if the record’s gonna fall, it should be in a regular field goal try ￼",
+      "fullText": "Woulda liked to see history there, but also if the record’s gonna fall, it should be in a regular field goal try ￼",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Dave Birkett post",
+      "publishedAt": "2026-11-23T02:57:15.522Z",
+      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2x5275hx22y",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "detroit_free_press",
+      "outletName": "Dave Birkett",
+      "reporterId": "dave_birkett",
+      "reporterName": "Dave Birkett",
+      "author": "Dave Birkett",
+      "authorHandle": "@davebirkett",
+      "authorProfileUrl": "https://x.com/davebirkett",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.5305
     },
     {
       "id": "det_bsky_dae5d18dedb6",
@@ -165,7 +205,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.029,
+      "breakingPriority": 0.903,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -182,7 +222,74 @@
       "playerValueScore": 0.09,
       "playerValueTier": "depth",
       "injuryImpactScore": 0.324,
-      "storyRank": 8.7948
+      "storyRank": 7.5447
+    },
+    {
+      "id": "det_nfltr_24d8d6572d50",
+      "type": "article",
+      "title": "NFC Notes: Micah Parsons, Cam Skattebo, Lions, Packers, Vikings",
+      "summary": "Lions Lions EDGE Aidan Hutchinson tore his ACL while celebrating in Week 10. Giants RB Cam Skattebo has built a reputation for his backflip celebration after scoring touchdowns and said Hutchinson&#8217;s injury has made him rethink doing a",
+      "imageUrl": "",
+      "imageAlt": "NFC Notes: Micah Parsons, Cam Skattebo, Lions, Packers, Vikings",
+      "publishedAt": "2026-11-23T01:00:09.000Z",
+      "url": "https://nfltraderumors.co/nfc-notes-micah-parsons-cam-skattebo-lions-packers-vikings/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.846,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.0459
+    },
+    {
+      "id": "det_vid_01f6b0259c93",
+      "type": "video",
+      "title": "Lions vs. Buccaneers: Locker room celebration",
+      "summary": "Go inside the Lions locker room following their Week 11 victory over the Tampa Bay Buccaneers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/bdmw2ynl1blqhihtklzk.jpg",
+      "imageAlt": "Lions vs. Buccaneers: Locker room celebration",
+      "publishedAt": "2026-11-23T00:19:00.000Z",
+      "url": "https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052",
+      "externalVideoUrl": "https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Video",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Video",
+      "author": "detroitlions.com Video",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.781,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.7281
     },
     {
       "id": "det_rss_92d6faf1e8ed",
@@ -205,7 +312,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.892,
+      "breakingPriority": 0.758,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -215,7 +322,44 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.9327
+      "storyRank": 5.9717
+    },
+    {
+      "id": "det_bsky_6a4fc552715e",
+      "type": "tweet",
+      "title": "With the Bucs behind them and 6 straight wins in the books, the Lions are looking forward to next week’s showdown with Ben Johnson and the Bears: “It’s one of the biggest games I’ve probably ever played in coming up” www.freep.com/story/sports...",
+      "fullText": "With the Bucs behind them and 6 straight wins in the books, the Lions are looking forward to next week’s showdown with Ben Johnson and the Bears: “It’s one of the biggest games I’ve probably ever played in coming up” www.freep.com/story/sports...",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Dave Birkett post",
+      "publishedAt": "2026-11-23T01:51:47.099Z",
+      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wzf4plcs2k",
+      "externalUrl": "https://www.freep.com/story/sports/nfl/lions/2026/11/22/detroit-lions-win-over-buccaneers-sets-table-for-thanksgiving-vs-bears/92911914007/",
+      "externalTitle": null,
+      "outletId": "detroit_free_press",
+      "outletName": "Dave Birkett",
+      "reporterId": "dave_birkett",
+      "reporterName": "Dave Birkett",
+      "author": "Dave Birkett",
+      "authorHandle": "@davebirkett",
+      "authorProfileUrl": "https://x.com/davebirkett",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.5252
     },
     {
       "id": "det_rss_e97a2a128e9b",
@@ -238,7 +382,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.859,
+      "breakingPriority": 0.73,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -248,14 +392,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.3977
+      "storyRank": 5.6422
     },
     {
       "id": "det_espn_aea129f88ee07",
       "type": "article",
       "title": "Jared Goff throws 2 TDs, Jahmyr Gibbs runs for 2 more and Lions beat Bucs 31-21 for 6th straight win",
       "summary": "— The Detroit Lions are finding their groove, leaning on a balanced attack offensively and a steadily improving defense that hasn't been hurt by the losses of",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873072.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/e00e71c3-755b-4a2c-853f-3367f6e4ff36/e00e71c3-755b-4a2c-853f-3367f6e4ff36.jpg",
+      "imageCaption": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "imageAlt": "Jared Goff throws 2 TDs, Jahmyr Gibbs runs for 2 more and Lions beat Bucs 31-21 for 6th straight win",
       "publishedAt": "2026-11-22T22:33:44Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873072",
@@ -271,7 +416,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.751,
+      "breakingPriority": 0.638,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -281,7 +426,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.315
+      "storyRank": 5.0077
     },
     {
       "id": "det_bsky_76b4702b8f91",
@@ -308,7 +453,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.658,
+      "breakingPriority": 0.559,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -318,7 +463,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.7168
+      "storyRank": 4.6653
     },
     {
       "id": "det_bsky_ef2779000aac",
@@ -345,7 +490,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.638,
+      "breakingPriority": 0.542,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -355,7 +500,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.4893
+      "storyRank": 4.505
     },
     {
       "id": "det_rss_3ea274280813",
@@ -378,7 +523,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.675,
+      "breakingPriority": 0.574,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -388,7 +533,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0385
+      "storyRank": 4.0909
     },
     {
       "id": "det_vid_c4c9aff587fe",
@@ -412,7 +557,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.639,
+      "breakingPriority": 0.543,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -422,7 +567,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.6799
+      "storyRank": 3.8394
     },
     {
       "id": "det_vid_7623bd535cab",
@@ -446,7 +591,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.621,
+      "breakingPriority": 0.527,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -456,7 +601,44 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5057
+      "storyRank": 3.7156
+    },
+    {
+      "id": "det_bsky_49b3cc757a15",
+      "type": "tweet",
+      "title": "Anybody else worry for a split second the way Jamo landed that front flip in the end zone?",
+      "fullText": "Anybody else worry for a split second the way Jamo landed that front flip in the end zone?",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Dave Birkett post",
+      "publishedAt": "2026-11-22T19:52:28.756Z",
+      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wfcn2z3s25",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "detroit_free_press",
+      "outletName": "Dave Birkett",
+      "reporterId": "dave_birkett",
+      "reporterName": "Dave Birkett",
+      "author": "Dave Birkett",
+      "authorHandle": "@davebirkett",
+      "authorProfileUrl": "https://x.com/davebirkett",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.468,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.8514
     },
     {
       "id": "det_vid_009110c13b8e",
@@ -480,7 +662,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.559,
+      "breakingPriority": 0.475,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 18,
@@ -490,7 +672,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9718
+      "storyRank": 3.3289
     },
     {
       "id": "det_espn_9463dd92e41c3",
@@ -498,6 +680,7 @@
       "title": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "summary": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/e00e71c3-755b-4a2c-853f-3367f6e4ff36/e00e71c3-755b-4a2c-853f-3367f6e4ff36.jpg",
+      "imageCaption": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "imageAlt": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "publishedAt": "2026-11-22T21:53:57Z",
       "url": "https://www.espn.com/video/clip/_/id/50565430/game-highlights",
@@ -523,7 +706,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3348
+      "storyRank": 2.6569
     },
     {
       "id": "det_vid_a8905329fcc5",
@@ -557,7 +740,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2778
+      "storyRank": 2.6182
     },
     {
       "id": "det_bsky_acc7c5faee45",
@@ -594,7 +777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8533
+      "storyRank": 2.3141
     },
     {
       "id": "det_vid_a79420d76426",
@@ -628,7 +811,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6035
+      "storyRank": 2.1176
     },
     {
       "id": "det_bsky_f1355f9db30e",
@@ -665,7 +848,81 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.761
+      "storyRank": 2.2492
+    },
+    {
+      "id": "det_bsky_d9554a8c4310",
+      "type": "tweet",
+      "title": "Penalty, entire state of Florida, 125 yards, game over.",
+      "fullText": "Penalty, entire state of Florida, 125 yards, game over.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Justin Rogers post",
+      "publishedAt": "2026-11-22T20:51:55.066Z",
+      "url": "https://bsky.app/profile/detroitfootball.net/post/3n2wimwe5pk2x",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "detroit_football_network",
+      "outletName": "Justin Rogers",
+      "reporterId": "justin_rogers",
+      "reporterName": "Justin Rogers",
+      "author": "Justin Rogers",
+      "authorHandle": "@Justin_Rogers",
+      "authorProfileUrl": "https://x.com/Justin_Rogers",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 97,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.2252
+    },
+    {
+      "id": "det_bsky_95918640d49f",
+      "type": "tweet",
+      "title": "Bucky Irving returning like nothing happened and ripping off that run is wild work.",
+      "fullText": "Bucky Irving returning like nothing happened and ripping off that run is wild work.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Justin Rogers post",
+      "publishedAt": "2026-11-22T20:03:03.885Z",
+      "url": "https://bsky.app/profile/detroitfootball.net/post/3n2wfvkxp6w2x",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "detroit_football_network",
+      "outletName": "Justin Rogers",
+      "reporterId": "justin_rogers",
+      "reporterName": "Justin Rogers",
+      "author": "Justin Rogers",
+      "authorHandle": "@Justin_Rogers",
+      "authorProfileUrl": "https://x.com/Justin_Rogers",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 97,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.0026
     },
     {
       "id": "det_bsky_de8d1f1660b9",
@@ -702,7 +959,44 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5667
+      "storyRank": 2.1529
+    },
+    {
+      "id": "det_bsky_8fd7122a3b41",
+      "type": "tweet",
+      "title": "49ers have a pretty manageable schedule down the stretch to get the one seed. Not many gimmes, but not as tough as it looked once upon a time",
+      "fullText": "49ers have a pretty manageable schedule down the stretch to get the one seed. Not many gimmes, but not as tough as it looked once upon a time",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:pmh7i3vwlklwb4w2yk4pqe4j/bafkreife2nxtashul2zhdjvj3x5oztyocnefaet7cffr43m4iqui53wdge",
+      "imageAlt": "Dave Birkett post",
+      "publishedAt": "2026-11-23T02:42:36.085Z",
+      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2x47yh6qs2c",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "detroit_free_press",
+      "outletName": "Dave Birkett",
+      "reporterId": "dave_birkett",
+      "reporterName": "Dave Birkett",
+      "author": "Dave Birkett",
+      "authorHandle": "@davebirkett",
+      "authorProfileUrl": "https://x.com/davebirkett",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.7459
     },
     {
       "id": "det_vid_31f3890de597",
@@ -736,7 +1030,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0355
+      "storyRank": 1.7076
     },
     {
       "id": "det_vid_21c8c930060d",
@@ -770,7 +1064,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9962
+      "storyRank": 1.6785
     },
     {
       "id": "det_vid_e304e2423141",
@@ -804,7 +1098,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9742
+      "storyRank": 1.662
     },
     {
       "id": "det_vid_24ad36508274",
@@ -838,7 +1132,44 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.97
+      "storyRank": 1.6589
+    },
+    {
+      "id": "det_bsky_91007c4df1f0",
+      "type": "tweet",
+      "title": "Great play by Goff there. Shoulda been sacked twice, slithered out of it, got his eyes upfield to find Conklin for a 17-yard gain.",
+      "fullText": "Great play by Goff there. Shoulda been sacked twice, slithered out of it, got his eyes upfield to find Conklin for a 17-yard gain.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Dave Birkett post",
+      "publishedAt": "2026-11-22T18:57:05.588Z",
+      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wc7ltxts25",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "detroit_free_press",
+      "outletName": "Dave Birkett",
+      "reporterId": "dave_birkett",
+      "reporterName": "Dave Birkett",
+      "author": "Dave Birkett",
+      "authorHandle": "@davebirkett",
+      "authorProfileUrl": "https://x.com/davebirkett",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.7568
     },
     {
       "id": "det_bsky_d63bbf7a1d83",
@@ -875,7 +1206,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0671
+      "storyRank": 1.7451
     },
     {
       "id": "det_bsky_6bb1766a86d4",
@@ -912,7 +1243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0623
+      "storyRank": 1.7414
     },
     {
       "id": "det_vid_45d058a69345",
@@ -946,7 +1277,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.915
+      "storyRank": 1.6177
     },
     {
       "id": "det_bsky_789d1e0d3c3d",
@@ -983,7 +1314,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0299
+      "storyRank": 1.7171
     },
     {
       "id": "det_vid_8fc7736e6ca3",
@@ -1017,28 +1348,28 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8881
+      "storyRank": 1.5976
     },
     {
-      "id": "det_bsky_5caee00df2ce",
+      "id": "det_bsky_70ffea10bca4",
       "type": "tweet",
-      "title": "Looks like the Lions' LBs are wearing a black wristband with No. 46 for Jack Campbell on it, on their arms. Maybe they've done that before, I haven't noticed it. But Barnes, Rodriguez among those who appear to have it on today.",
-      "fullText": "Looks like the Lions' LBs are wearing a black wristband with No. 46 for Jack Campbell on it, on their arms. Maybe they've done that before, I haven't noticed it. But Barnes, Rodriguez among those who appear to have it on today.",
+      "title": "Booing Alex Anzalone every time he makes a tackle is the new cheering Dan Skipper has reported as eligible.",
+      "fullText": "Booing Alex Anzalone every time he makes a tackle is the new cheering Dan Skipper has reported as eligible.",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "",
-      "imageAlt": "Dave Birkett post",
-      "publishedAt": "2026-11-22T18:43:24.401Z",
-      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wbh4pdg225",
+      "imageAlt": "Justin Rogers post",
+      "publishedAt": "2026-11-22T18:36:43.904Z",
+      "url": "https://bsky.app/profile/detroitfootball.net/post/3n2wb36xhrj2g",
       "externalUrl": null,
       "externalTitle": null,
-      "outletId": "detroit_free_press",
-      "outletName": "Dave Birkett",
-      "reporterId": "dave_birkett",
-      "reporterName": "Dave Birkett",
-      "author": "Dave Birkett",
-      "authorHandle": "@davebirkett",
-      "authorProfileUrl": "https://x.com/davebirkett",
+      "outletId": "detroit_football_network",
+      "outletName": "Justin Rogers",
+      "reporterId": "justin_rogers",
+      "reporterName": "Justin Rogers",
+      "author": "Justin Rogers",
+      "authorHandle": "@Justin_Rogers",
+      "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
       "wireSource": "bluesky_live",
       "isBreaking": false,
@@ -1049,12 +1380,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
+      "credibilityScore": 97,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0233
+      "storyRank": 1.6912
     },
     {
       "id": "det_vid_3e52ba837e92",
@@ -1088,44 +1419,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8568
-    },
-    {
-      "id": "det_bsky_ccd54bb8872f",
-      "type": "tweet",
-      "title": "Khalil Dorsey appears to have injured his wrist on that punchout try. He's getting it taped up on the sideline.",
-      "fullText": "Khalil Dorsey appears to have injured his wrist on that punchout try. He's getting it taped up on the sideline.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Justin Rogers post",
-      "publishedAt": "2026-11-22T18:20:51.900Z",
-      "url": "https://bsky.app/profile/detroitfootball.net/post/3n2wa6t2kbi2z",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "detroit_football_network",
-      "outletName": "Justin Rogers",
-      "reporterId": "justin_rogers",
-      "reporterName": "Justin Rogers",
-      "author": "Justin Rogers",
-      "authorHandle": "@Justin_Rogers",
-      "authorProfileUrl": "https://x.com/Justin_Rogers",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 97,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.9315
+      "storyRank": 1.574
     },
     {
       "id": "det_vid_c7355fb69e2e",
@@ -1159,7 +1453,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7779
+      "storyRank": 1.5142
     },
     {
       "id": "det_vid_f23bb1ec017f",
@@ -1193,7 +1487,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9495
+      "storyRank": 1.662
     },
     {
       "id": "det_vid_165fdcb258f4",
@@ -1227,7 +1521,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9302
+      "storyRank": 1.6473
     },
     {
       "id": "det_vid_5dee2dad24d4",
@@ -1261,44 +1555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9264
-    },
-    {
-      "id": "det_bsky_d71edc7b2097",
-      "type": "tweet",
-      "title": "The Bucs have the 5 ex-Lions out as game captains for the coin toss vs. the Lions: Anzalone, Melifonwu, A'Shawn Robinson, Muhammad and Miles Killebrew. Kerby Joseph was a game captain for the Lions.",
-      "fullText": "The Bucs have the 5 ex-Lions out as game captains for the coin toss vs. the Lions: Anzalone, Melifonwu, A'Shawn Robinson, Muhammad and Miles Killebrew. Kerby Joseph was a game captain for the Lions.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Dave Birkett post",
-      "publishedAt": "2026-11-22T18:02:18.491Z",
-      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2w75mzq6k25",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "detroit_free_press",
-      "outletName": "Dave Birkett",
-      "reporterId": "dave_birkett",
-      "reporterName": "Dave Birkett",
-      "author": "Dave Birkett",
-      "authorHandle": "@davebirkett",
-      "authorProfileUrl": "https://x.com/davebirkett",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.8611
+      "storyRank": 1.6444
     },
     {
       "id": "det_vid_eb6b9f638b79",
@@ -1332,7 +1589,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9148
+      "storyRank": 1.6355
     },
     {
       "id": "det_vid_9cc81b3422a9",
@@ -1366,7 +1623,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.792
+      "storyRank": 0.6357
     },
     {
       "id": "det_vid_23b6812e1771",
@@ -1400,7 +1657,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7894
+      "storyRank": 0.634
     },
     {
       "id": "det_bsky_0e00b32b5276",
@@ -1437,44 +1694,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4296
-    },
-    {
-      "id": "det_bsky_d870fb1952b8",
-      "type": "tweet",
-      "title": "Detroit Lions midseason grades: Offense excels, defense improving www.freep.com/story/sports...",
-      "fullText": "Detroit Lions midseason grades: Offense excels, defense improving www.freep.com/story/sports...",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Dave Birkett post",
-      "publishedAt": "2026-11-22T15:12:28.755Z",
-      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2vvnxdr2c2g",
-      "externalUrl": "https://www.freep.com/story/sports/nfl/lions/2026/11/22/lions-midseason-grades-offense-excels-defense-improving/92875264007/",
-      "externalTitle": null,
-      "outletId": "detroit_free_press",
-      "outletName": "Dave Birkett",
-      "reporterId": "dave_birkett",
-      "reporterName": "Dave Birkett",
-      "author": "Dave Birkett",
-      "authorHandle": "@davebirkett",
-      "authorProfileUrl": "https://x.com/davebirkett",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.3443
+      "storyRank": 0.3699
     },
     {
       "id": "det_rss_cd50a8afa84d",
@@ -1507,7 +1727,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.281
+      "storyRank": 0.2474
     },
     {
       "id": "det_rss_e8bb16dbb320",
@@ -1540,7 +1760,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.269
+      "storyRank": 0.2417
     },
     {
       "id": "det_bsky_0f1a6d53713f",
@@ -1577,7 +1797,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1133
+      "storyRank": 0.1067
+    },
+    {
+      "id": "det_pfr_6d7323d65d58",
+      "type": "article",
+      "title": "Lions Return C Cade Mays To IR",
+      "summary": "After placing center Cade Mays on injured reserve with a designation to return to open the season, the Lions only got him back to the active roster a month ago. He only got to play in two games, but Detroit has already made the move for him",
+      "imageUrl": "",
+      "publishedAt": "2026-11-21T21:17:20.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/lions-return-c-cade-mays-to-ir",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0952
     },
     {
       "id": "det_bsky_d40259a8fe91",
@@ -1614,7 +1866,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0997
+      "storyRank": 0.0943
     },
     {
       "id": "det_rss_d13c9787f2ee",
@@ -1647,7 +1899,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0932
+      "storyRank": 0.0885
     },
     {
       "id": "det_rss_20dd0e7f1bf2",
@@ -1680,7 +1932,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0808
+      "storyRank": 0.0771
     },
     {
       "id": "det_tx_3b82b2c77f40",
@@ -1714,7 +1966,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.071
+      "storyRank": 0.068
     },
     {
       "id": "det_rss_eea329af076f",
@@ -1747,7 +1999,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1228
+      "storyRank": 0.119
     },
     {
       "id": "det_rss_976be5789ea0",
@@ -1780,7 +2032,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0448
+      "storyRank": 0.0433
     },
     {
       "id": "det_bsky_c9b6abbd9373",
@@ -1817,7 +2069,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0448
+      "storyRank": 0.0434
     },
     {
       "id": "det_rss_acd6e087c2ff",
@@ -1850,7 +2102,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0367
+      "storyRank": 0.0355
     },
     {
       "id": "det_bsky_63c1f40089f1",
@@ -1887,7 +2139,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0407
     },
     {
       "id": "det_rss_419f73384a5b",
@@ -1920,7 +2172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0417
     },
     {
       "id": "det_rss_9b21134f3822",
@@ -1953,7 +2205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0426
+      "storyRank": 0.0413
     },
     {
       "id": "det_bsky_3f1b0a4ff5b2",
@@ -1990,14 +2242,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0325
+      "storyRank": 0.0317
     },
     {
       "id": "det_espn_dac2aef086042",
       "type": "article",
       "title": "Lions moving on after Hutchinson joins Campbell on IR and they face Bucs aiming for 6th straight win",
       "summary": "— Dan Campbell does not want to let the Detroit Lions become miserable in the Motor City by lamenting the losses of All-Pro linebacker",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873072.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/e00e71c3-755b-4a2c-853f-3367f6e4ff36/e00e71c3-755b-4a2c-853f-3367f6e4ff36.jpg",
+      "imageCaption": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "imageAlt": "Lions moving on after Hutchinson joins Campbell on IR and they face Bucs aiming for 6th straight win",
       "publishedAt": "2026-11-19T23:23:33Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873072",
@@ -2023,7 +2276,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0332
+      "storyRank": 0.0324
     },
     {
       "id": "det_rss_1821ee0c9038",
@@ -2056,7 +2309,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295
+      "storyRank": 0.0288
     },
     {
       "id": "det_bsky_dbbfbbb85625",
@@ -2093,7 +2346,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0776
+      "storyRank": 0.0759
     },
     {
       "id": "det_rss_d1cce69860d7",
@@ -2126,7 +2379,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0792
+      "storyRank": 0.0774
+    },
+    {
+      "id": "det_rss_25efb61590d8",
+      "type": "article",
+      "title": "10 takeaways from Petzing, Sheppard & Fipp",
+      "summary": "Catch up on all the news from the coordinator media sessions with Drew Petzing, Kelvin Sheppard and Dave Fipp.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/moqetp8ixa8df6izb5z0.jpg",
+      "imageAlt": "10 takeaways from Petzing, Sheppard & Fipp",
+      "publishedAt": "2026-11-19T19:17:27.000Z",
+      "url": "https://www.detroitlions.com/news/10-takeaways-from-petzing-sheppard-fipp-goff-laporta-joseph",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Official",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Official",
+      "author": "detroitlions.com Official",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0302
     },
     {
       "id": "det_rss_cf4dfa9c1074",
@@ -2159,7 +2445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0302
+      "storyRank": 0.0295
     },
     {
       "id": "det_rss_8e38e4f159ba",
@@ -2192,7 +2478,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0232
+      "storyRank": 0.0227
     },
     {
       "id": "det_rss_c6703f0c98a6",
@@ -2225,7 +2511,71 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0068
+      "storyRank": 0.0067
+    },
+    {
+      "id": "det_pfr_70041b3c4411",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/18/26",
+      "summary": "Here are today&#8217;s practice squad transactions: Arizona Cardinals Signed: WR Bub Means Baltimore Ravens Signed: G Michael Jordan Carolina Panthers Signed: OLB Nick Hampton Placed on practice squad/injured list: LB Claudin Cherelus Detro",
+      "imageUrl": "",
+      "publishedAt": "2026-11-19T01:20:47.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-18-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0201
+    },
+    {
+      "id": "det_pfr_d6e9815eec79",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/18/26",
+      "summary": "Wednesday&#8217;s minor moves: Baltimore Ravens Activated from IR: RB Adam Randall Buffalo Bills Activated from reserve/PUP list: WR Tyrell Shavers Denver Broncos Practice window opened: TE Caleb Lohner Detroit Lions Placed on IR: DE Aidan ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-19T00:42:16.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-18-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0199
     },
     {
       "id": "det_rss_0203b56d1044",
@@ -2258,7 +2608,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.0051
+    },
+    {
+      "id": "det_pfr_bb925d5e5526",
+      "type": "article",
+      "title": "Lions Expect S Kerby Joseph To Play In Week 11",
+      "summary": "NOVEMBER 18: Joseph was activated from the PUP list on Wednesday (via ESPN&#8217;s Adam Schefter), clearing the path for his 2026 debut in Week 11. It will be his first game in 406 days and finally reunite him with Branch. The two had forme",
+      "imageUrl": "",
+      "publishedAt": "2026-11-18T21:45:05.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/lions-expect-s-kerby-joseph-to-play-in-week-11",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0191
     },
     {
       "id": "det_tx_c64f2ecbbd9b",
@@ -2292,7 +2674,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
+      "storyRank": 0.0183
+    },
+    {
+      "id": "det_pfr_b8ba66f816a2",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/17/26",
+      "summary": "Several NFL teams made changes to their practice squads on Tuesday. Here are the latest updates: Arizona Cardinals Signed: WR Ronnie Bell, S Jerrick Reed Released: WR James Proche Baltimore Ravens Released: K Harrison Mevis Buffalo Bills Si",
+      "imageUrl": "",
+      "publishedAt": "2026-11-18T04:20:49.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-17-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0154
     },
     {
       "id": "det_espn_51eacdb16eec2",
@@ -2300,6 +2714,7 @@
       "title": "Lions plan for Kerby Joseph to make season debut Sunday, per Dan Campbell",
       "summary": "The Lions are planning for safety Kerby Joseph to make his season debut Sunday when they face the Buccaneers.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747114_1296x729_16-9.jpg",
+      "imageCaption": "Kerby Joseph [1296x729]",
       "imageAlt": "Lions plan for Kerby Joseph to make season debut Sunday, per Dan Campbell",
       "publishedAt": "2026-11-17T16:35:03Z",
       "url": "https://www.espn.com/nfl/story/_/id/50511524/lions-plan-kerby-joseph-make-season-debut-sunday",
@@ -2325,7 +2740,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0157
+      "storyRank": 0.0154
     },
     {
       "id": "det_espn_f82ca0a52a103",
@@ -2333,6 +2748,7 @@
       "title": "Lions' Dan Campbell says Aidan Hutchinson injury won't prompt celebration ban",
       "summary": "Although Aidan Hutchinson's knee injury is a \"gut punch\" to the Lions, Dan Campbell said he won't tell his players to change the way they celebrate.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1115/r1746168_1296x729_16-9.jpg",
+      "imageCaption": "Lions star defensive end Aidan Hutchinson is feared to have suffered a significant knee injury after celebrating a sack in Sunday's victory over the Patriots.",
       "imageAlt": "Lions' Dan Campbell says Aidan Hutchinson injury won't prompt celebration ban",
       "publishedAt": "2026-11-17T16:22:52Z",
       "url": "https://www.espn.com/nfl/story/_/id/50510660/dan-campbell-hutchinson-injury-prompt-celebration-ban",
@@ -2358,7 +2774,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0156
+      "storyRank": 0.0154
     },
     {
       "id": "det_espn_16beeafd3881f",
@@ -2366,6 +2782,7 @@
       "title": "Seven things Solak thinks for NFL Week 11: Takes on four QBs, Lions, Rams, more",
       "summary": "Get ready for Week 11 with what makes Vikings-49ers must-watch football, Joe Burrow's MVP case and how Aidan Hutchinson's injury could impact the Lions.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1746919_608x342_16-9.jpg",
+      "imageCaption": "Burrow [608x342]",
       "imageAlt": "Seven things Solak thinks for NFL Week 11: Takes on four QBs, Lions, Rams, more",
       "publishedAt": "2026-11-17T15:39:31Z",
       "url": "https://www.espn.com/nfl/story/_/id/50505355/week-11-seven-things-solak-thinks-burrow-mvp-rams-lions",
@@ -2391,7 +2808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.0153
     },
     {
       "id": "det_tx_62a14fc45972",
@@ -2425,7 +2842,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0141
+    },
+    {
+      "id": "det_pfr_fa1d7c280908",
+      "type": "article",
+      "title": "Follow-Up Tests Confirm Torn ACL For Lions&#8217; Aidan Hutchinson",
+      "summary": "The Lions&#8217; fear for Aidan Hutchinson has been realized. Follow-up tests Monday confirmed the star pass rusher suffered a torn ACL, The Ringer&#8217;s Tom Pelissero reports. Initial reporting from NFL.com&#8217;s Ian Rapoport and ESPN&",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T05:20:52.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/follow-up-tests-confirm-torn-acl-for-lions-aidan-hutchinson",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0121
     },
     {
       "id": "det_espn_5d2235574621d",
@@ -2433,6 +2882,7 @@
       "title": "Sources: Lions' Aidan Hutchinson out for season with knee injury",
       "summary": "Lions star Aidan Hutchinson is out for the season with what tests showed to be a torn ACL in his right knee, sources told NFL Network.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1115/r1746168_1296x729_16-9.jpg",
+      "imageCaption": "Lions star defensive end Aidan Hutchinson is feared to have suffered a significant knee injury after celebrating a sack in Sunday's victory over the Patriots.",
       "imageAlt": "Sources: Lions' Aidan Hutchinson out for season with knee injury",
       "publishedAt": "2026-11-17T01:10:23Z",
       "url": "https://www.espn.com/nfl/story/_/id/50501291/sources-aidan-hutchinson-season-torn-acl",
@@ -2458,7 +2908,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
+      "storyRank": 0.0132
+    },
+    {
+      "id": "det_pfr_e6aa64d4de47",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/16/26",
+      "summary": "Today&#8217;s minor moves: Carolina Panthers Signed to active roster: CB Marco Wilson Waived: LB Nick Hampton Detroit Lions Claimed off waivers (from Cowboys): LB Tyrus Wheat Indianapolis Colts Signed to active roster: CB Johnathan Edwards ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T00:52:07.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-16-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0116
     },
     {
       "id": "det_espn_7e0b06b35da0e",
@@ -2466,6 +2948,7 @@
       "title": "McAfee can't believe how unlucky Aidan Hutchinson's injury is",
       "summary": "McAfee can't believe how unlucky Aidan Hutchinson's injury is",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1116/ss_20261116_141314907_3745344859/ss_20261116_141314907_3745344859.jpg",
+      "imageCaption": "McAfee can't believe how unlucky Aidan Hutchinson's injury is",
       "imageAlt": "McAfee can't believe how unlucky Aidan Hutchinson's injury is",
       "publishedAt": "2026-11-16T19:25:40Z",
       "url": "https://www.espn.com/video/clip/_/id/50503576/mcafee-believe-how-unlucky-aidan-hutchinson-injury-is",
@@ -2491,7 +2974,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0125
     },
     {
       "id": "det_tx_19ed81fc487c",
@@ -2525,7 +3008,71 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0115
+      "storyRank": 0.0114
+    },
+    {
+      "id": "det_pfr_bebfbaa72044",
+      "type": "article",
+      "title": "Lions DE Aidan Hutchinson Expected To Miss Remainder Of Season",
+      "summary": "The Lions lost Aidan Hutchinson midway through today&#8217;s win. His absence is expected to cover the remainder of the 2026 season. Hutchinson is feared to have suffered a &#8220;significant&#8221; knee injury on Sunday, as first reported ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-16T05:48:48.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/lions-de-aidan-hutchinson-expected-to-miss-remainder-of-season",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0098
+    },
+    {
+      "id": "det_pfr_03b5124b42ba",
+      "type": "article",
+      "title": "Jets Trade S Andre Cisco To Lions",
+      "summary": "NOVEMBER 14: The Lions and the Jets had originally agreed on a 2028 sixth-rounder as compensation for Cisco, per The Athletic&#8217;s Jonathan Jones. The former club requested that the pick be moved back a year due to a &#8220;minor&#8221; ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-14T16:15:41.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jets-to-trade-s-andre-cisco-to-lions",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0074
     },
     {
       "id": "det_tx_9433f4b6ea06",
@@ -2559,7 +3106,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0079
+    },
+    {
+      "id": "det_pfr_ffbd53acab5b",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/11/26",
+      "summary": "Wednesday&#8217;s practice squad transactions: Arizona Cardinals Signed: OL Jamaree Salyer Baltimore Ravens Signed: TE Nick Vannett Buffalo Bills Signed: G Nick Broeker Released: CB AJ Woods Detroit Lions Signed: TE Jackson Meeks Kansas Cit",
+      "imageUrl": "",
+      "publishedAt": "2026-11-12T01:54:57.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-11-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0051
     },
     {
       "id": "det_tx_1d8590a7bb32",
@@ -2596,6 +3175,70 @@
       "storyRank": 0.0053
     },
     {
+      "id": "det_pfr_90318892f002",
+      "type": "article",
+      "title": "Lions Receiving Interest On TE Sam LaPorta, Would Prefer Long-Term Deal",
+      "summary": "Sam LaPorta&#8217;s public contract dispute with the Lions made him a potential trade candidate in October. With less than 24 hours before the deadline for such a move, other teams are indeed circling, according to ESPN&#8217;s Jeremy Fowle",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T01:43:05.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/lions-receiving-interest-on-te-sam-laporta-would-prefer-long-term-deal",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.004
+    },
+    {
+      "id": "det_pfr_d4f80b792259",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/9/26",
+      "summary": "Here are Monday&#8217;s minor moves: Buffalo Bills Elevated: WR Trent Sherfield, S Geno Stone Detroit Lions Waived: TE Jackson Meeks Minnesota Vikings Placed on IR: RB Demond Claiborne Elevated: S Tavierre Thomas New England Patriots Waived",
+      "imageUrl": "",
+      "publishedAt": "2026-11-09T22:00:32.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-9-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0039
+    },
+    {
       "id": "det_tx_9d2a36009286",
       "type": "tweet",
       "title": "Lions roster move: Acquired DB Andre Cisco from the New York Jets for a 2028 sixth-round draft pick. Waived TE Jackson Meeks.",
@@ -2627,7 +3270,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0042
     },
     {
       "id": "det_tx_ccbee66da7b8",
@@ -2695,7 +3338,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.0027
     },
     {
       "id": "det_tx_f505f5bdcb16",
@@ -2729,7 +3372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0025
     },
     {
       "id": "det_rss_649b4939fc76",
@@ -2795,6 +3438,38 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 96,
+      "storyTier": "stale_pregame",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": true,
+      "storyRank": -1000
+    },
+    {
+      "id": "det_pfr_328df6feb8fd",
+      "type": "article",
+      "title": "Lions DE Aidan Hutchinson Ruled Out Of Week 10 Game With Knee Injury",
+      "summary": "Lions DE Aidan Hutchinson sacked Patriots QB Drake Maye to end New England&#8217;s first offensive drive during the clubs&#8217; Week 10 matchup in Munich. Maye injured his ankle on the play and was ruled out for the remainder of the game. ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-15T18:45:52.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/lions-de-aidan-hutchinson-ruled-out-of-week-10-game-with-knee-injury",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": -10,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
       "storyTier": "stale_pregame",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,

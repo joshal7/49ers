@@ -18,6 +18,7 @@ import {
   buildMockDraftTeamUrl,
   sanitizeExternalUrl
 } from '../../src/engine/linkIntegrity.js';
+import { hasCrossTeam49ersLeak } from '../../src/config/teamRegistry.js';
 import {
   estimateRichHillPickValue,
   parseTankathonTeamPicksHtml
@@ -214,8 +215,19 @@ export function sanitizeTeamNeutralArchetypeNote(note = '', team = null) {
     .replace(/\bSan Francisco\b/gi, team?.city || 'the club')
     .replace(/\b49ers['’]?\b/gi, nick)
     .replace(/\bBrock Purdy\b/gi, 'the offense')
+    .replace(/\bKlay Kubiak['’]?s?\b/gi, 'the offensive staff')
+    .replace(/\bJohn Lynch['’]?s?\b/gi, `${nick} front office`)
+    .replace(/\bChristian McCaffrey\b|\bCMC\b/gi, 'the backfield')
+    .replace(/\bBrandon Aiyuk\b|\bRicky Pearsall\b/gi, 'the receiver room')
+    .replace(/\bDominick Puni\b|\bColton McKivitz\b/gi, 'the offensive line')
+    .replace(/\bDeommodore Lenoir\b|\bRenardo Green\b/gi, 'the secondary')
+    .replace(/\bDeForest Buckner\b|\bMykel Williams\b/gi, 'the defensive front')
+    .replace(/\bLevi['’]?s Stadium\b|\bSanta Clara\b/gi, team?.stadium || team?.city || 'the club')
     .replace(/\s+/g, ' ')
     .trim();
+  if (hasCrossTeam49ersLeak(s, team)) {
+    return '';
+  }
   return s;
 }
 
@@ -519,11 +531,12 @@ export function parseLeagueWideMockHtmlsForTeam({
   ];
   const fullEsc = String(team.fullName || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const nickEsc = String(team.nickname || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const cityEsc = String(team.city || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   for (const page of wfPages) {
     if (!page.html || !fullEsc) continue;
     const wfClean = decodeHtmlEntities(page.html.replace(/<[^>]+>/g, ' '));
     const wfRe = new RegExp(
-      `${fullEsc}\\s*:?\\s*([A-Z][A-Za-z'. -]{3,28}?),\\s*(QB|RB|WR|TE|OT|OG|IOL|G|C|OL|DE|DT|DL|EDGE|OLB|ILB|LB|CB|S),\\s*([A-Z][A-Za-z &'.-]{2,26}?)\\s+((?:The\\s+${nickEsc}|${team.city}|This|With|They|If|After)[^.]{15,240}\\.)`
+      `${fullEsc}\\s*:?\\s*([A-Z][A-Za-z'. -]{3,28}?),\\s*(QB|RB|WR|TE|OT|OG|IOL|G|C|OL|DE|DT|DL|EDGE|OLB|ILB|LB|CB|S),\\s*([A-Z][A-Za-z &'.-]{2,26}?)\\s+((?:The\\s+${nickEsc}|${cityEsc}|This|With|They|If|After)[^.]{15,240}\\.)`
     );
     const wm = wfClean.match(wfRe);
     if (wm) {

@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T03:51:13.859Z",
+  "updatedAt": "2026-11-23T06:25:26.403Z",
   "windowDays": 7,
-  "totalEpisodes": 15,
+  "totalEpisodes": 13,
   "shows": [
     {
       "id": "bengals_locked_on_bengals",
@@ -13,18 +13,18 @@
       "feedUrl": "https://rss.pdrl.fm/8b4258/feeds.simplecast.com/J1A29rxl",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-daily-podcast-on-the-cincinnati-bengals/id1159723162?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/30/98/44/30984476-26de-250d-e8e5-f590b3ced6cc/mza_1075762000797244198.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
-      "id": "bengals_locked_on_bengals_with_james_rapie",
-      "collectionId": 1648067709,
-      "name": "Locked on Bengals with James Rapien",
-      "fullTitle": "Locked on Bengals with James Rapien",
-      "hosts": "ESPN 1530 (WCKY-AM)",
-      "network": "ESPN 1530 (WCKY-AM)",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/98a2599f-cd9b-4f2a-9be4-b22c00e585f2/a8dd75cd-1409-4a4c-b5dd-b36401390ffc/d57deb35-2769-4a97-bd17-b36401391002/podcast.rss",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-with-james-rapien/id1648067709?uo=4",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/bc/1d/9d/bc1d9dd1-f1ee-4946-6b24-9e05772ab0a6/mza_8552541563815624439.jpg/600x600bb.jpg",
+      "id": "bengals_hear_that_podcast_growlin",
+      "collectionId": 1477129521,
+      "name": "Hear That Podcast Growlin'",
+      "fullTitle": "Hear That Podcast Growlin': A show about the Cincinnati Bengals",
+      "hosts": "Paul Dehner Jr., Jay Morrison",
+      "network": "The Athletic",
+      "feedUrl": "https://feeds.acast.com/public/shows/68374e7f9bd0275f2c49845e",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/hear-that-podcast-growlin-a-show-about-the/id1477129521?uo=4",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/5a/22/da/5a22da70-8cf6-ee05-bb65-4fb1876603be/mza_9668538325474241716.jpeg/600x600bb.jpg",
       "episodeCount7d": 0
     },
     {
@@ -37,7 +37,7 @@
       "feedUrl": "https://feed.podbean.com/boxdlunch/feed.xml",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/chatterbox-bengals-a-cincinnati-bengals-nfl-podcast/id1652732141?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/4e/10/41/4e104127-83df-0958-d008-6501cb4fa5f5/mza_851835020673573439.jpg/600x600bb.jpg",
-      "episodeCount7d": 7
+      "episodeCount7d": 6
     }
   ],
   "episodes": [
@@ -300,46 +300,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/chatterbox-bengals-a-cincinnati-bengals-nfl-podcast/id1652732141?uo=4",
       "feedUrl": "https://feed.podbean.com/cboxbengals/feed.xml",
       "audioStreamUrl": "https://mcdn.podbean.com/mf/web/evhnd36mayzh3ws9/Victory_Mondey_FINAL_AUDIO8bcww.mp3"
-    },
-    {
-      "id": "pod_bengals_chatterbox_bengals_1000802186316",
-      "trackId": 1000802186316,
-      "collectionId": 1652732141,
-      "showId": "bengals_chatterbox_bengals",
-      "showName": "Chatterbox Bengals",
-      "showFullTitle": "Chatterbox Bengals: A Cincinnati Bengals NFL Podcast",
-      "hosts": "Chatterbox Sports",
-      "network": "Chatterbox Sports",
-      "title": "WEEK 10: Bengals 38, Steelers 18 (Joe Burrow, Cincinnati DOMINATES Pittsburgh Steelers; Control AFC North)",
-      "summary": "The Cincinnati Bengals made a statement on Sunday Night Football, dominating the Pittsburgh Steelers 38-18 in a massive AFC North showdown! Joe Burrow was spectacular, throwing for 409 yards and four touchdowns, while Ja'Marr Chase torched Pittsburgh's defense for 231 receiv",
-      "publishedAt": "2026-11-16T05:40:56.000Z",
-      "durationMinutes": 36,
-      "durationDisplay": "36 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/ee/50/88/ee508894-9357-1b60-85e3-83c1beee2b78/mza_332212777937703409.png/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/week-10-bengals-38-steelers-18-joe-burrow-cincinnati/id1652732141?i=1000802186316&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/chatterbox-bengals-a-cincinnati-bengals-nfl-podcast/id1652732141?uo=4",
-      "feedUrl": "https://feed.podbean.com/boxdlunch/feed.xml",
-      "audioStreamUrl": "https://mcdn.podbean.com/mf/web/2zeqjkb7pfzmkdz3/SteelersCraigPOD.mp3"
-    },
-    {
-      "id": "pod_bengals_locked_on_bengals_1000802184989",
-      "trackId": 1000802184989,
-      "collectionId": 1159723162,
-      "showId": "bengals_locked_on_bengals",
-      "showName": "Locked On Bengals",
-      "showFullTitle": "Locked On Bengals - Daily Podcast On The Cincinnati Bengals",
-      "hosts": "Locked On Podcast Network, James Rapien, Jake Liscow",
-      "network": "Locked On Podcast Network, James Rapien, Jake Liscow",
-      "title": "STATEMENT: Bengals ANNIHILATE Steelers as Ja'Marr Chase ERUPTS and Joe Burrow SHREDS Defense",
-      "summary": "The Cincinnati Bengals completely embarrass the Pittsburgh Steelers on Sunday Night Football, as Joe Burrow, Ja'Marr Chase, and Tee Higgins ignite an explosive offensive showcase on the national stage. The conversation focused on the Bengals’ relentless passing attack, the o",
-      "publishedAt": "2026-11-16T05:25:48.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/8a/b7/81/8ab78182-abca-0c65-4ea2-b426be3c8b75/mza_12456370178071897510.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/statement-bengals-annihilate-steelers-as-jamarr-chase/id1159723162?i=1000802184989&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bengals-daily-podcast-on-the-cincinnati-bengals/id1159723162?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/8b4258/feeds.simplecast.com/J1A29rxl",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/8b4258/lockedon.simplecastaudio.com/cc8b7148-cfe3-4578-a7a0-0bd38215a32f/episodes/f1b3a6c8-c091-4015-bfc2-86011fdb60fc/audio/128/default.mp3?aid=rss_feed&awCollectionId=cc8b7148-cfe3-4578-a7a0-0bd38215a32f&awEpisodeId=f1b3a6c8-c091-4015-bfc2-86011fdb60fc&feed=J1A29rxl"
     }
   ]
 }

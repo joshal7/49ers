@@ -161,13 +161,14 @@ function unmaskVoiceRelayToken(maskedToken = '', episodeId = '') {
  * Builds a shareable `49ers.joshal.com` deep link for any built-in or custom Autopodcast.
  */
 export async function buildShareablePodcastUrl(episode, locationObj, prefs = null) {
-  if (!episode?.id) return `${CANONICAL_SITE_ORIGIN}/`;
   const base = resolveShareBaseUrl(locationObj);
+  if (!episode?.id) return base;
   const idParam = encodeURIComponent(String(episode.id));
 
-  // Pre-built static `.m4a` episodes live in `data/podcasts/index.json` on `49ers.joshal.com`
+  // Pre-built static `.m4a` episodes live in `data/podcasts/index.json` (or `data/teams/<slug>/podcasts/`)
   const isBuiltInStatic =
-    typeof episode.audioUrl === 'string' && episode.audioUrl.startsWith('./data/podcasts/');
+    typeof episode.audioUrl === 'string' &&
+    /^(?:\.\/)?data\/(?:teams\/[a-z0-9-]+\/)?podcasts\//i.test(episode.audioUrl);
   if (isBuiltInStatic) {
     return `${base}?pod=${idParam}`;
   }
@@ -217,8 +218,8 @@ export async function buildShareablePodcastUrl(episode, locationObj, prefs = nul
  * Builds a shareable `49ers.joshal.com` deep link for any AI Scouting & Cap Analysis report.
  */
 export async function buildShareableAnalysisUrl(report, locationObj) {
-  if (!report?.id) return `${CANONICAL_SITE_ORIGIN}/`;
   const base = resolveShareBaseUrl(locationObj);
+  if (!report?.id) return base;
   const idParam = encodeURIComponent(String(report.id));
 
   const isBuiltInStatic = String(report.id).startsWith('sa-');

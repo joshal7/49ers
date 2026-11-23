@@ -11,7 +11,6 @@ import {
 const CLICKBAIT_PATTERNS = [
   /\byou won'?t believe\b/i,
   /\bshock(s|ed|ing)?\s+the\s+(nfl|world|internet)\b/i,
-  /\b(destroys|obliterates|eviscerates|humiliates|claps back|rips into)\b/i,
   /\bfans are (furious|livid|losing their minds|melting down)\b/i,
   /\bsocial media (erupts|goes wild|is losing it)\b/i,
   /\bunfollowed.*instagram\b/i,
@@ -20,12 +19,8 @@ const CLICKBAIT_PATTERNS = [
   /\b(?:wild|insane|massive|crazy)\s+(?:mock\s+)?trade\s+(?:proposal|idea|pitch|scenario)\b/i,
   /\bmock\s+trade\s+(?:proposal|idea|pitch)\b/i,
   /\burges?\s+(?:the\s+)?(?:[a-z0-9]{3,16}|head coach|front office)\s+to\s+(?:bench|trade|cut|move on from)\b/i,
-  /\b(?:twitter|x|nfl\s+world)\s+reacts\s+to\b/i,
-  /\bpanic\s+button\b/i,
-  /\bis\s+it\s+time\s+to\s+(fire|bench)\b/i,
-  /\bhot\s+seat\b/i,
-  /\b(?:super\s+bowl\s+lock|unstoppable\s+juggernaut|nobody\s+can\s+(?:beat|stop)\s+the\s+[a-z0-9]{3,16}|guaranteed\s+(?:win|blowout|victory))\b/i,
-  /!{2,}|\?{2,}/
+  /\b(?:super\s+bowl\s+lock|unstoppable\s+juggernaut|guaranteed\s+(?:win|blowout|victory))\b/i,
+  /\bnobody\s+can\s+(?:beat|stop)\s+the\s+[a-z0-9]{3,16}\b/i
 ];
 
 const ANALYTICAL_SIGNAL_PATTERNS = [
@@ -35,7 +30,8 @@ const ANALYTICAL_SIGNAL_PATTERNS = [
   /\b(dnp|limited participation|full participation|injured reserve|practice window|21-day|questionable|doubtful|concussion protocol|syndesmosis)\b/i,
   /\b(all-22|film|tape|snap count|snaps|pass block|run block)\b/i,
   /\b(trade talks|trade discussions|in talks to acquire|fielding calls|exploring a trade|agreed to terms|contract extension|arrested|charged with|suspended|commissioner'?s exempt|under investigation)\b/i,
-  /\b(1-on-1|one-on-one|sit-down|exclusive interview|locker room|opened up about|spoke candidly|mic'?d up|players'? tribune|candid interview)\b/i
+  /\b(1-on-1|one-on-one|sit-down|exclusive interview|locker room|opened up about|spoke candidly|mic'?d up|players'? tribune|candid interview)\b/i,
+  /\b(warmups?|kickoff|crowd|raucous|big screen|boos|touchdown|\btd\b|highlight|big catch|strip-sack|interception|milestone|career-high|teammates?|rivalry|notebook|takeaways|mailbag|column|podcast|knbr|storyline)\b/i
 ];
 
 const NATIONAL_PRIMARY_INSIDER_IDS = new Set([
@@ -70,12 +66,12 @@ export function scoreContentSignal(title = '', body = '') {
   for (const rx of CLICKBAIT_PATTERNS) {
     const m = combined.match(rx);
     if (m) {
-      fluffScore += 28;
+      fluffScore += 32;
       matchedFlags.push(m[0]);
     }
   }
 
-  // Penalize excessive ALL-CAPS shouting words (5+ uppercase letters, excluding NFL/analytics/outlet acronyms)
+  // Penalize excessive ALL-CAPS shouting words (5+ uppercase letters, excluding NFL/analytics/sports excitement words)
   const allowedAcronyms = new Set([
     'NFL',
     'NFC',
@@ -96,15 +92,44 @@ export function scoreContentSignal(title = '', body = '') {
     'OTAs',
     'UDFA',
     'EDGE',
-    'PFF'
+    'PFF',
+    'KNBR',
+    'TOUCHDOWN',
+    'FINAL',
+    'SCORE',
+    'NINERS',
+    'KITTLE',
+    'PURDY',
+    'WARNER',
+    'BOSA',
+    'WATCH',
+    'FIRST',
+    'INTERCEPTION',
+    'FUMBLE',
+    'PLAYOFFS',
+    'SUPER',
+    'GAMEDAY',
+    'KICKOFF',
+    'HALFTIME',
+    'OVERTIME',
+    'VICTORY',
+    'TRADE',
+    'SIGNED',
+    'ACTIVE',
+    'INACTIVE',
+    'UPDATE',
+    'REPORT',
+    'ALERT',
+    'CLUTCH',
+    'BREAKING'
   ]);
   const shoutWords = (title.match(/\b[A-Z]{5,}\b/g) || []).filter(w => !allowedAcronyms.has(w));
-  if (shoutWords.length >= 1) {
-    fluffScore += shoutWords.length * 18;
+  if (shoutWords.length >= 2) {
+    fluffScore += Math.min(25, shoutWords.length * 10);
     matchedFlags.push(`ALL-CAPS: ${shoutWords.join(', ')}`);
   }
 
-  let signalScore = 35; // neutral beat report baseline
+  let signalScore = 40; // neutral beat & interest-story baseline
   for (const rx of ANALYTICAL_SIGNAL_PATTERNS) {
     const matches = combined.match(new RegExp(rx.source, 'gi'));
     if (matches) {
@@ -128,7 +153,7 @@ export function scoreContentSignal(title = '', body = '') {
   return {
     fluffScore,
     signalScore,
-    isClickbait: fluffScore >= 45 && signalScore < 55,
+    isClickbait: fluffScore >= 60 && signalScore < 50,
     matchedFlags
   };
 }
@@ -288,6 +313,8 @@ export function computeNewsSalienceScore(
   const isPrimaryBeat =
     !isOtherTeamBeat &&
     (NATIONAL_PRIMARY_INSIDER_IDS.has(repId) ||
+      Number(repObj?.trustTier) === 1 ||
+      Number(dirEntry?.trustTier) === 1 ||
       (!dirEntry?.teamAbbr && SF_PRIMARY_BEAT_REPORTER_IDS.has(repId)) ||
       (dirEntry && !dirEntry.isOtherTeamBeat && SF_PRIMARY_BEAT_REPORTER_IDS.has(repId)));
   const trustTier = isOtherTeamBeat
@@ -297,19 +324,21 @@ export function computeNewsSalienceScore(
     Boolean(item.isInGameInjury || item.isFirstMoverInjuryScoop) ||
     isAcuteInjuryOrAvailabilityScoop(`${title} ${body}`);
 
-  if ((repObj?.styleTag === 'opinion-hot-take' || trustTier === 3) && !isAcuteInjuryScoop) {
-    salience -= 12;
+  if (isOtherTeamBeat && !isAcuteInjuryScoop) {
+    salience -= 4;
   } else if (trustTier === 1 || repObj?.styleTag === 'analytics-film' || repObj?.tier === 1 || isPrimaryBeat) {
-    salience += 11;
+    salience += 6;
   } else if (trustTier === 2) {
-    salience += 4;
+    salience += 5;
+  } else if (trustTier === 3) {
+    salience += 1;
   }
 
   if (/\b(heavy on [a-z0-9]+|heavy\.com|clutchpoints|athlon|yardbarker)\b/i.test(`${item.outletName || ''} ${item.url || ''}`)) {
-    salience -= 14;
+    salience -= 10;
   }
   if (item.storyTier === 'side_note') {
-    salience -= 16;
+    salience -= 8;
   }
 
   const corroboration =

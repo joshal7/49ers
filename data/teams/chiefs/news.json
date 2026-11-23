@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:54:22.686Z",
+  "updatedAt": "2026-11-23T06:25:43.858Z",
   "dailyTopNewsBrief": {
     "id": "brief_kc_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -141,6 +141,73 @@
       "storyRank": 63.4894
     },
     {
+      "id": "kc_rss_3409cc53d230",
+      "type": "article",
+      "title": "Chiefs Defeat Cardinals, 34-7, for Third Win in a Row",
+      "summary": "Kansas City built a big lead and didn’t look back on Sunday afternoon",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chiefs/l1kjwuunmmkwo5nuqeyy.png",
+      "imageAlt": "Chiefs Defeat Cardinals, 34-7, for Third Win in a Row",
+      "publishedAt": "2026-11-23T04:47:29.000Z",
+      "url": "https://www.chiefs.com/news/chiefs-defeat-cardinals-34-7-for-third-win-in-a-row",
+      "outletId": "chiefs_official",
+      "outletName": "chiefs.com Official",
+      "reporterId": "chiefs_official",
+      "reporterName": "chiefs.com Official",
+      "author": "chiefs.com Official",
+      "authorHandle": "@Chiefs",
+      "authorProfileUrl": "https://www.chiefs.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.308,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 25.1798
+    },
+    {
+      "id": "kc_espn_e5687dd229cce",
+      "type": "video",
+      "title": "How Travis Kelce made Chiefs and NFL history in win",
+      "summary": "Nate Taylor breaks down Travis Kelce's stellar performance vs. the Cardinals in Week 11.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_Chiefs_beat_Cardinals_IA/dm_261122_Chiefs_beat_Cardinals_IA.jpg",
+      "imageCaption": "Nate Taylor breaks down Travis Kelce's stellar performance vs. the Cardinals in Week 11.",
+      "imageAlt": "How Travis Kelce made Chiefs and NFL history in win",
+      "publishedAt": "2026-11-23T04:52:08Z",
+      "url": "https://www.espn.com/video/clip/_/id/50570086/how-travis-kelce-made-chiefs-nfl-history-win",
+      "outletId": "espn_kc",
+      "outletName": "ESPN",
+      "reporterId": "espn_kc",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/kc/kansas-city-chiefs",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 16.9971
+    },
+    {
       "id": "kc_vid_34020f3b2b85",
       "type": "video",
       "title": "Full Game Highlights From Week 11 | Cardinals vs. Chiefs",
@@ -180,6 +247,7 @@
       "title": "Travis Kelce pads Hall of Fame résumé with two first-half TDs in Chiefs' win",
       "summary": "Travis Kelce passed Rob Gronkowski for third place for the most total touchdowns, including playoffs, by a tight end in league history.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749703_1296x729_16-9.jpg",
+      "imageCaption": "Travis Kelce celebrates his first-quarter touchdown that moved him alone into third all time for touchdowns by a tight end, including playoffs.",
       "imageAlt": "Travis Kelce pads Hall of Fame résumé with two first-half TDs in Chiefs' win",
       "publishedAt": "2026-11-23T01:00:12Z",
       "url": "https://www.espn.com/nfl/story/_/id/50563590/kelce-passes-gronkowski-most-tds-te-including-playoffs",
@@ -195,7 +263,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.995,
+      "breakingPriority": 0.844,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -205,7 +273,72 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.74
+      "storyRank": 7.6817
+    },
+    {
+      "id": "kc_pfr_d043eec79d10",
+      "type": "article",
+      "title": "AFC Injury Rumors: Mahomes, Andrews, Queen",
+      "summary": "The Chiefs saw star quarterback Patrick Mahomes sustain an injury in their Week 9 matchup with the Jets after he was strip-sacked by rookie first-round end David Bailey. He was able to return to the game and lead Kansas City to victory, but",
+      "imageUrl": "",
+      "publishedAt": "2026-11-23T01:49:08.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/afc-injury-rumors-mahomes-andrews-queen",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/kansas-city-chiefs",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.9251
+    },
+    {
+      "id": "kc_nfltr_0d9c4a970421",
+      "type": "article",
+      "title": "AFC Notes: Justin Herbert, Xavier Worthy, Chargers, Chiefs, Patriots",
+      "summary": "Chargers The Chargers got their first win of the season, the last of the 32 franchises to taste victory, and HC John Harbaugh noted the team got their smiles back, even if only temporarily. “I thought it was huge for us to come away with a ",
+      "imageUrl": "",
+      "imageAlt": "AFC Notes: Justin Herbert, Xavier Worthy, Chargers, Chiefs, Patriots",
+      "publishedAt": "2026-11-23T01:30:38.000Z",
+      "url": "https://nfltraderumors.co/afc-notes-justin-herbert-xavier-worthy-chargers-chiefs-patriots/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.566
     },
     {
       "id": "kc_vid_95fb0acb6433",
@@ -229,7 +362,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.705,
+      "breakingPriority": 0.598,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -239,7 +372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.7424
+      "storyRank": 4.6102
     },
     {
       "id": "kc_vid_5b7566e4f779",
@@ -263,7 +396,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.703,
+      "breakingPriority": 0.596,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -273,7 +406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.7257
+      "storyRank": 4.5987
     },
     {
       "id": "kc_vid_7de733124893",
@@ -297,7 +430,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.702,
+      "breakingPriority": 0.595,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -307,7 +440,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.7082
+      "storyRank": 4.5868
     },
     {
       "id": "kc_vid_4317cf4fda95",
@@ -331,7 +464,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.695,
+      "breakingPriority": 0.59,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -341,7 +474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.6346
+      "storyRank": 4.5365
     },
     {
       "id": "kc_vid_74b3e9d8b431",
@@ -365,7 +498,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.585,
+      "breakingPriority": 0.497,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -375,7 +508,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.4959
+      "storyRank": 3.7352
+    },
+    {
+      "id": "kc_pft_72e4a00a196a",
+      "type": "article",
+      "title": "Kansas City Chiefs cruise past Arizona Cardinals in lopsided win",
+      "summary": "Mike Florio unpacks Kansas City's lopsided win over Arizona, highlighting big games from Travis Kelce and Emmett Johnson as the Cardinals continue to slide.",
+      "imageUrl": "https://link.theplatform.com/s/BxmELC/media/8op5ofdpTHIA?auto=true",
+      "imageAlt": "Kansas City Chiefs cruise past Arizona Cardinals in lopsided win",
+      "publishedAt": "2026-11-22T23:15:04.000Z",
+      "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/kansas-city-chiefs-cruise-past-arizona-cardinals-in-lopsided-win",
+      "outletId": "profootballtalk",
+      "outletName": "ProFootballTalk",
+      "reporterId": "profootballtalk",
+      "reporterName": "ProFootballTalk",
+      "author": "ProFootballTalk",
+      "authorHandle": "@ProFootballTalk",
+      "authorProfileUrl": "https://x.com/ProFootballTalk",
+      "trustTier": 2,
+      "wireSource": "pft_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 88,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.8886
     },
     {
       "id": "kc_espn_28d5a1d22625f",
@@ -383,6 +549,7 @@
       "title": "Arizona Cardinals vs. Kansas City Chiefs: Game Highlights",
       "summary": "Arizona Cardinals vs. Kansas City Chiefs: Game Highlights",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/f870fbd9-2404-4e9d-aed7-daf8fc4f5748/f870fbd9-2404-4e9d-aed7-daf8fc4f5748.jpg",
+      "imageCaption": "Arizona Cardinals vs. Kansas City Chiefs: Game Highlights",
       "imageAlt": "Arizona Cardinals vs. Kansas City Chiefs: Game Highlights",
       "publishedAt": "2026-11-22T20:45:56Z",
       "url": "https://www.espn.com/video/clip/_/id/50564550/game-highlights",
@@ -408,7 +575,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7702
+      "storyRank": 2.2602
     },
     {
       "id": "kc_espn_41a32a5a6fecd",
@@ -416,6 +583,7 @@
       "title": "Kansas City Chiefs tight end Travis Kelce's top moments at Arrowhead Stadium",
       "summary": "Kelce's greatest Arrowhead moments include his first catch, lots of playoff magic, and meeting the love of his life, Taylor Swift.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747330_1296x729_16-9.jpg",
+      "imageCaption": "Travis Kelce brought his own aura and energy to Arrowhead Stadium. and Chiefs fans embraced him.",
       "imageAlt": "Kansas City Chiefs tight end Travis Kelce's top moments at Arrowhead Stadium",
       "publishedAt": "2026-11-22T20:33:07Z",
       "url": "https://www.espn.com/nfl/story/_/id/50513358/chiefs-travis-kelce-100-games-arrowhead-taylor-swift",
@@ -441,7 +609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6819
+      "storyRank": 2.1975
     },
     {
       "id": "kc_vid_80437d11f679",
@@ -475,7 +643,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6483
+      "storyRank": 2.1736
     },
     {
       "id": "kc_vid_029139789878",
@@ -509,7 +677,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6001
+      "storyRank": 2.1391
     },
     {
       "id": "kc_vid_cae601cfcb80",
@@ -543,7 +711,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5254
+      "storyRank": 2.0853
     },
     {
       "id": "kc_vid_1a2bbdf08947",
@@ -577,7 +745,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5176
+      "storyRank": 2.0797
     },
     {
       "id": "kc_vid_2c6900fc219a",
@@ -611,7 +779,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4746
+      "storyRank": 2.0486
     },
     {
       "id": "kc_vid_78bb08a0f179",
@@ -645,7 +813,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3094
+      "storyRank": 1.928
     },
     {
       "id": "kc_vid_576b9a38a41e",
@@ -679,7 +847,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2647
+      "storyRank": 1.895
     },
     {
       "id": "kc_vid_9b6bdc6ffedc",
@@ -713,7 +881,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2508
+      "storyRank": 1.8848
     },
     {
       "id": "kc_vid_effaaa6459fb",
@@ -747,7 +915,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2101
+      "storyRank": 1.8547
     },
     {
       "id": "kc_vid_c5349f7f2702",
@@ -781,7 +949,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1644
+      "storyRank": 1.8207
     },
     {
       "id": "kc_vid_86f3c69259ad",
@@ -815,7 +983,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0374
+      "storyRank": 1.7256
     },
     {
       "id": "kc_vid_18826bc1f3d8",
@@ -849,14 +1017,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9892
+      "storyRank": 1.6892
     },
     {
       "id": "kc_espn_fc09dce5056e7",
       "type": "article",
       "title": "Mahomes throws 3 TD passes, Kelce catches 2 of them, as KC routs Cardinals 34-7 for 3rd straight win",
       "summary": "— Patrick Mahomes slinging touchdown passes to Travis Kelce.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873067.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1123/dm_261123_Cardinals_lose_to_Chiefs_QB_IA/dm_261123_Cardinals_lose_to_Chiefs_QB_IA.jpg",
+      "imageCaption": "Josh Weinfuss discusses the Cardinals' QB situation heading into Week 12.",
       "imageAlt": "Mahomes throws 3 TD passes, Kelce catches 2 of them, as KC routs Cardinals 34-7 for 3rd straight win",
       "publishedAt": "2026-11-22T22:10:32Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873067",
@@ -882,7 +1051,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8757
+      "storyRank": 0.6908
     },
     {
       "id": "kc_vid_a7ee55bd30f9",
@@ -916,7 +1085,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8139
+      "storyRank": 0.6492
     },
     {
       "id": "kc_vid_f105a04e428b",
@@ -950,7 +1119,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.797
+      "storyRank": 0.6377
     },
     {
       "id": "kc_vid_259bc6310e5a",
@@ -984,7 +1153,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7631
+      "storyRank": 0.6143
     },
     {
       "id": "kc_vid_50d1ecc603c8",
@@ -1018,7 +1187,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5962
+      "storyRank": 0.4958
     },
     {
       "id": "kc_vid_46e62ceaa150",
@@ -1052,7 +1221,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5362
+      "storyRank": 0.4516
     },
     {
       "id": "kc_rss_01bb067e190b",
@@ -1085,7 +1254,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
+      "storyRank": 0.0217
     },
     {
       "id": "kc_tx_d011a4519bbd",
@@ -1119,7 +1288,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.071
+      "storyRank": 0.068
     },
     {
       "id": "kc_espn_7702197fc064b",
@@ -1127,6 +1296,7 @@
       "title": "Josh Downs prepares for second game as a Chief",
       "summary": "Nate Taylor reports on WR Josh Downs ahead of Week 11.",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1120/dm_261120_SC4U_16x9_Chiefs_IA_11-20/dm_261120_SC4U_16x9_Chiefs_IA_11-20.jpg",
+      "imageCaption": "Nate Taylor reports on WR Josh Downs ahead of Week 11.",
       "imageAlt": "Josh Downs prepares for second game as a Chief",
       "publishedAt": "2026-11-21T04:05:49Z",
       "url": "https://www.espn.com/video/clip/_/id/50546590/josh-downs-prepares-second-game-chief",
@@ -1152,7 +1322,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0633
+      "storyRank": 0.0608
     },
     {
       "id": "kc_vid_987c09c6448e",
@@ -1186,7 +1356,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0577
+      "storyRank": 0.0556
     },
     {
       "id": "kc_rss_193b998d5208",
@@ -1219,7 +1389,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0126
     },
     {
       "id": "kc_rss_febe33cc867c",
@@ -1252,7 +1422,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0304
+      "storyRank": 0.0294
     },
     {
       "id": "kc_rss_1714a58c70b7",
@@ -1285,7 +1455,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0511
+      "storyRank": 0.0493
     },
     {
       "id": "kc_vid_85da192564cb",
@@ -1319,7 +1489,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0507
+      "storyRank": 0.049
     },
     {
       "id": "kc_vid_0d72bceb4121",
@@ -1353,7 +1523,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0505
+      "storyRank": 0.0488
     },
     {
       "id": "kc_vid_c14be70f5283",
@@ -1387,7 +1557,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0503
+      "storyRank": 0.0486
     },
     {
       "id": "kc_vid_30bf2d58803c",
@@ -1421,7 +1591,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0502
+      "storyRank": 0.0485
     },
     {
       "id": "kc_vid_60afb2bafde4",
@@ -1455,7 +1625,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0467
+      "storyRank": 0.0452
     },
     {
       "id": "kc_rss_d688f992df14",
@@ -1488,7 +1658,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0465
+      "storyRank": 0.045
     },
     {
       "id": "kc_rss_08e8237c84ec",
@@ -1521,40 +1691,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0463
-    },
-    {
-      "id": "kc_espn_6e8b34928325d",
-      "type": "article",
-      "title": "NFL offseason free agent and trade acquisitions that have and have not worked",
-      "summary": "Kenneth Walker III and Devin Lloyd look great with their new teams in 2026. But Jaylen Waddle and Alontae Taylor haven't quite found their groove.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1747957_608x342_16-9.jpg",
-      "imageAlt": "NFL offseason free agent and trade acquisitions that have and have not worked",
-      "publishedAt": "2026-11-20T11:42:26Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50525533/2026-offseason-change-scenery-fits-players-new-teams",
-      "outletId": "espn_kc",
-      "outletName": "ESPN",
-      "reporterId": "espn_kc",
-      "reporterName": "Aaron Schatz",
-      "author": "Aaron Schatz",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/kc/kansas-city-chiefs",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0423
+      "storyRank": 0.0448
     },
     {
       "id": "kc_rss_1e185a8016b2",
@@ -1587,14 +1724,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0085
+      "storyRank": 0.0083
     },
     {
       "id": "kc_espn_ebc1b0ad1a476",
       "type": "article",
       "title": "Chiefs are flying high but can ill afford to overlook the lowly Cardinals when they meet Sunday",
       "summary": "— If ever there was a time for an NFL team to overlook somebody, it just might be Sunday afternoon at Arrowhead Stadium, where the Kansas City Chiefs will continue their pursuit of another AFC West title against the injured, downtrodden Arizona...",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873067.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1123/dm_261123_Cardinals_lose_to_Chiefs_QB_IA/dm_261123_Cardinals_lose_to_Chiefs_QB_IA.jpg",
+      "imageCaption": "Josh Weinfuss discusses the Cardinals' QB situation heading into Week 12.",
       "imageAlt": "Chiefs are flying high but can ill afford to overlook the lowly Cardinals when they meet Sunday",
       "publishedAt": "2026-11-19T21:25:04Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873067",
@@ -1620,7 +1758,135 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.0313
+    },
+    {
+      "id": "kc_pfr_70041b3c4411",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/18/26",
+      "summary": "Here are today&#8217;s practice squad transactions: Arizona Cardinals Signed: WR Bub Means Baltimore Ravens Signed: G Michael Jordan Carolina Panthers Signed: OLB Nick Hampton Placed on practice squad/injured list: LB Claudin Cherelus Detro",
+      "imageUrl": "",
+      "publishedAt": "2026-11-19T01:20:47.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-18-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/kansas-city-chiefs",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0201
+    },
+    {
+      "id": "kc_pfr_d6e9815eec79",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/18/26",
+      "summary": "Wednesday&#8217;s minor moves: Baltimore Ravens Activated from IR: RB Adam Randall Buffalo Bills Activated from reserve/PUP list: WR Tyrell Shavers Denver Broncos Practice window opened: TE Caleb Lohner Detroit Lions Placed on IR: DE Aidan ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-19T00:42:16.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-18-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/kansas-city-chiefs",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0199
+    },
+    {
+      "id": "kc_pfr_54906770e9be",
+      "type": "article",
+      "title": "Chiefs Work Out Matt Prater Amid Harrison Butker&#8217;s Kicking Woes",
+      "summary": "The Chiefs are continuing to explore alternative options to struggling kicker Harrison Butker, who has converted a career-low 63.2% of his field goals this season. Kansas City hosted 19-year veteran Matt Prater for a workout on Tuesday, per",
+      "imageUrl": "",
+      "publishedAt": "2026-11-19T00:03:27.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/chiefs-work-out-matt-prater-amid-harrison-butkers-continuing-kicking-woes",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/kansas-city-chiefs",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0197
+    },
+    {
+      "id": "kc_pfr_b919e2b84697",
+      "type": "article",
+      "title": "Chiefs Add T Fred Johnson To P-Squad",
+      "summary": "Five days after the Eagles waived him, offensive tackle Fred Johnson has found a new team. Johnson is joining the Chiefs&#8217; practice squad, according to Ian Rapoport of NFL Network. The team will &#8220;likely&#8221; elevate Johnson to ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-18T17:05:06.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/chiefs-add-t-fred-johnson-to-p-squad",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/kansas-city-chiefs",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.018
     },
     {
       "id": "kc_rss_d149c5c8774f",
@@ -1653,7 +1919,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
+      "storyRank": 0.0201
     },
     {
       "id": "kc_tx_97e3cdda20d3",
@@ -1687,7 +1953,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
+      "storyRank": 0.0183
     },
     {
       "id": "kc_rss_ee0f68c241cd",
@@ -1720,7 +1986,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0151
     },
     {
       "id": "kc_espn_5b9f7bb01f239",
@@ -1728,6 +1994,7 @@
       "title": "Emmett Johnson, Jaxon Smith-Njigba shine in big offensive week for Africa's NFL stars",
       "summary": "Week 10 in the 2026 NFL season was one of the most noteworthy in terms of standout performances from offensive players in the NFL with known African ties.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747030_1296x729_16-9.jpg",
+      "imageCaption": "Emmett Johnson impressed for the Kansas City Chiefs rushes against the Atlanta Falcons in the NFL.",
       "imageAlt": "Emmett Johnson, Jaxon Smith-Njigba shine in big offensive week for Africa's NFL stars",
       "publishedAt": "2026-11-17T11:45:40Z",
       "url": "https://www.espn.com/espn/story/_/id/50509931/emmett-johnson-jaxon-smith-njigba-shine-big-offensive-week-africa-nfl-stars",
@@ -1753,7 +2020,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0149
+      "storyRank": 0.0147
     },
     {
       "id": "kc_tx_6fa51d73531b",
@@ -1787,7 +2054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0141
     },
     {
       "id": "kc_rss_809aaeeddafb",
@@ -1820,7 +2087,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0126
     },
     {
       "id": "kc_rss_3efaf57d9781",
@@ -1853,7 +2120,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0125
+    },
+    {
+      "id": "kc_rss_5f8ea42acf95",
+      "type": "article",
+      "title": "Tickets for Potential Postseason Games at Arrowhead Stadium Set To Go On Sale Wednesday",
+      "summary": "",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chiefs/vyl6qldyav5qpd6nua1h.jpg",
+      "imageAlt": "Tickets for Potential Postseason Games at Arrowhead Stadium Set To Go On Sale Wednesday",
+      "publishedAt": "2026-11-16T16:00:00.000Z",
+      "url": "https://www.chiefs.com/news/tickets-for-potential-postseason-games-at-arrowhead-stadium-set-to-go-on-sale-wednesday-2026",
+      "outletId": "chiefs_official",
+      "outletName": "chiefs.com Official",
+      "reporterId": "chiefs_official",
+      "reporterName": "chiefs.com Official",
+      "author": "chiefs.com Official",
+      "authorHandle": "@Chiefs",
+      "authorProfileUrl": "https://www.chiefs.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0122
     },
     {
       "id": "kc_rss_2addef32f4f5",
@@ -1886,7 +2186,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
+      "storyRank": 0.0121
     },
     {
       "id": "kc_rss_5f7e2ad887d8",
@@ -1919,7 +2219,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0241
+      "storyRank": 0.0238
     },
     {
       "id": "kc_rss_ca3e3f52525b",
@@ -1952,7 +2252,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0086
+    },
+    {
+      "id": "kc_pfr_ba4355b2aff2",
+      "type": "article",
+      "title": "Chiefs RB Kenneth Walker To Miss Week 10 With Groin Injury",
+      "summary": "With Kansas City visiting Atlanta in Week 10, the stage had been set for a battle of elite running backs in the Chiefs&#8217; Kenneth Walker and the Falcons&#8217; Bijan Robinson. However, after injuring his groin in practice on Thursday, W",
+      "imageUrl": "",
+      "publishedAt": "2026-11-14T17:17:18.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/chiefs-rb-kenneth-walker-to-miss-week-10-with-groin-injury",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/kansas-city-chiefs",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0074
     },
     {
       "id": "kc_tx_97818074884c",
@@ -1986,7 +2318,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0079
+    },
+    {
+      "id": "kc_pfr_28d3063a158b",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/13/26",
+      "summary": "Here are Friday&#8217;s minor moves: Cleveland Browns Waived from reserve/retired list: LB Markees Watts Houston Texans Waived: RB Dare Ogunbowale Kansas City Chiefs Signed from practice squad: DT Marcus Harris Las Vegas Raiders Waived from",
+      "imageUrl": "",
+      "publishedAt": "2026-11-13T22:45:42.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-13-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/kansas-city-chiefs",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0066
     },
     {
       "id": "kc_rss_709e0bb1924a",
@@ -2019,7 +2383,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0074
+    },
+    {
+      "id": "kc_pfr_2c02575a2356",
+      "type": "article",
+      "title": "Chiefs, 49ers Showed Trade Interest In Jets WR Garrett Wilson",
+      "summary": "Garrett Wilson was once again floated as a potential trade candidate with the Jets not in position to contend in 2026. New York&#8217;s stance on the fifth-year receiver nevertheless remained consistent, and he is still in the fold. As expe",
+      "imageUrl": "",
+      "publishedAt": "2026-11-13T04:59:55.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/chiefs-49ers-showed-trade-interest-in-jets-wr-garrett-wilson",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/kansas-city-chiefs",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0059
     },
     {
       "id": "kc_rss_3b9e587cce22",
@@ -2030,39 +2426,6 @@
       "imageAlt": "UK & Ireland How, When, and Where to Watch NFL Week 10 (2026): Kansas City Chiefs vs. Atlanta Falcons",
       "publishedAt": "2026-11-12T21:18:01.000Z",
       "url": "https://www.chiefs.com/news/uk-ireland-how-when-and-where-to-watch-nfl-week-10-2026-kansas-city-chiefs-vs-atlanta-falcons",
-      "outletId": "chiefs_official",
-      "outletName": "chiefs.com Official",
-      "reporterId": "chiefs_official",
-      "reporterName": "chiefs.com Official",
-      "author": "chiefs.com Official",
-      "authorHandle": "@Chiefs",
-      "authorProfileUrl": "https://www.chiefs.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
-    },
-    {
-      "id": "kc_rss_8b046357d2ed",
-      "type": "article",
-      "title": "Chiefs Name HNTB the Club's Official Architect",
-      "summary": "Organizations Announce Multi-Year Partnership Leading into New",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chiefs/ifmzt0mpaacnaelk6xxb.png",
-      "imageAlt": "Chiefs Name HNTB the Club's Official Architect",
-      "publishedAt": "2026-11-12T18:00:00.000Z",
-      "url": "https://www.chiefs.com/news/chiefs-name-hntb-the-club-s-official-architect",
       "outletId": "chiefs_official",
       "outletName": "chiefs.com Official",
       "reporterId": "chiefs_official",
@@ -2122,6 +2485,38 @@
       "storyRank": 0.006
     },
     {
+      "id": "kc_pfr_ffbd53acab5b",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/11/26",
+      "summary": "Wednesday&#8217;s practice squad transactions: Arizona Cardinals Signed: OL Jamaree Salyer Baltimore Ravens Signed: TE Nick Vannett Buffalo Bills Signed: G Nick Broeker Released: CB AJ Woods Detroit Lions Signed: TE Jackson Meeks Kansas Cit",
+      "imageUrl": "",
+      "publishedAt": "2026-11-12T01:54:57.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-11-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/kansas-city-chiefs",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0051
+    },
+    {
       "id": "kc_tx_75b684dcc425",
       "type": "tweet",
       "title": "Chiefs roster move: Acquired WR Josh Downs from Indianapolis. Waived WR Nikko Remigio and DE Jack Pyburn.",
@@ -2154,6 +2549,38 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0053
+    },
+    {
+      "id": "kc_pfr_70fc4e592300",
+      "type": "article",
+      "title": "Chiefs To Acquire Josh Downs From Colts",
+      "summary": "Minutes before the trade deadline, the Colts found their Josh Downs buyer. The Chiefs’ depleted wide receiver situation will lead to them sending two 2027 draft picks to the Colts for the contract-year receiver. Kansas City will send 2027 f",
+      "imageUrl": "",
+      "publishedAt": "2026-11-11T05:14:10.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/chiefs-to-acquire-wr-josh-downs-from-colts",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/kansas-city-chiefs",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0046
     },
     {
       "id": "kc_tx_3b74b4cf59f2",
@@ -2289,7 +2716,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.0027
     },
     {
       "id": "kc_tx_297b093c3a37",
@@ -2364,6 +2791,7 @@
       "title": "Chiefs' Kenneth Walker III, two linemen out vs. Cardinals",
       "summary": "Chiefs RB Kenneth Walker III will not play in Sunday's game against the Cardinals after not participating in practice this week due to a groin injury.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1006/r1727003_1296x729_16-9.jpg",
+      "imageCaption": "Chiefs player in white jersey with red helmet and #9 pumping his arms while running with the ball",
       "imageAlt": "Chiefs' Kenneth Walker III, two linemen out vs. Cardinals",
       "publishedAt": "2026-11-20T20:29:34Z",
       "url": "https://www.espn.com/nfl/story/_/id/50543014/chiefs-expect-kenneth-walker-iii-vs-cardinals",

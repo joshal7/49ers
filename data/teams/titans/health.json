@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-23T03:53:50.186Z",
+  "updatedAt": "2026-11-23T06:25:41.513Z",
   "week": 12,
   "byeWeek": 9,
   "sourceUrl": "https://www.tennesseetitans.com/team/injury-report/",
   "espnInjuryUrl": "https://www.espn.com/nfl/team/injuries/_/name/ten/tennessee-titans",
-  "usedIrDesignations": 0,
-  "remainingIrDesignations": 8,
+  "usedIrDesignations": 2,
+  "remainingIrDesignations": 6,
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
@@ -146,7 +146,7 @@
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Ankle (Sprain)",
+      "injuryType": "Ankle",
       "gameStatus": "IR — 21-Day Window Open",
       "playProbabilityPct": 65,
       "priorDayPlayProbabilityPct": null,
@@ -159,7 +159,7 @@
         "Starter / core rotational role increases 53-man roster activation priority (+3%)",
         "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
       ],
-      "beatComment": "Carmona returned to practice Wednesday as a limited participant in what was his first workout with the team since sustaining an ankle sprain in the Titans' Sept. 27 loss to the Giants. The Titans will have a 21-day window to evaluate him in practice, but once Carmona is deemed ready to return from IR, he could step into a starting role at either left or right guard."
+      "beatComment": "21-day practice window opened; eligible for 53-man roster activation (Ankle)."
     },
     {
       "playerId": "4240532",
@@ -370,7 +370,7 @@
       "position": "G",
       "jersey": 66,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710000.png",
-      "injuryType": "Ankle (Sprain)",
+      "injuryType": "Ankle",
       "status": "IR — 21-Day Window Open",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": true,
@@ -378,13 +378,13 @@
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "placedBeforeWeek": 4,
-      "earliestEligibleWeek": 8,
-      "projectedReturnWeek": "Week 12 Activation Window (Nov 29)",
-      "byeWeekNote": "4-game NFL minimum requirement",
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": 10,
+      "projectedReturnWeek": "Week 12 Activation Window",
+      "byeWeekNote": "Week 9 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 65,
       "playBadgeLabel": "65% • GTD",
-      "beatNote": "Carmona returned to practice Wednesday as a limited participant in what was his first workout with the team since sustaining an ankle sprain in the Titans' Sept. 27 loss to the Giants. The Titans will have a 21-day window to evaluate him in practice, but once Carmona is deemed ready to return from IR, he could step into a starting role at either left or right guard."
+      "beatNote": "21-day practice window opened; eligible for 53-man roster activation (Ankle)."
     },
     {
       "playerId": "4431613",
@@ -475,6 +475,28 @@
       "beatNote": "Spears was sidelined for Weeks 7 and 8 due to a knee injury but was cleared to play against the Jaguars in Week 10, when he turned four carries into 28 yards and failed to haul in his lone target. He was initially listed as questionable for Sunday's game against the Cowboys after logging a full practice Friday, but the Titans have determined that a stint on injured reserve is warranted for the fourth-year running back. Spears will be required to miss at least the next four games, so his next chance to play is Week 15 against the Colts on Sunday, Dec. 20. Tony Pollard will continue to be the workhorse running back for the Titans while Julius Chestnut and rookie fifth-rounder Nicholas Singleton provide depth out of the backfield."
     },
     {
+      "playerId": "4569587",
+      "name": "Wan'Dale Robinson",
+      "position": "WR",
+      "jersey": 4,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569587.png",
+      "injuryType": "Ankle",
+      "status": "Injured Reserve",
+      "isSeasonEnding": false,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 11,
+      "earliestEligibleWeek": 15,
+      "projectedReturnWeek": "Est. Week 15 (Dec 20)",
+      "byeWeekNote": "4-game NFL minimum requirement",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • IR",
+      "beatNote": "Placed on Injured Reserve (Ankle) ahead of Week 11; must miss at least 4 games (earliest eligible Week 15)."
+    },
+    {
       "playerId": "4876319",
       "name": "Jackson Slater",
       "position": "G",
@@ -488,10 +510,10 @@
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "placedBeforeWeek": 4,
-      "earliestEligibleWeek": 8,
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": 10,
       "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
+      "byeWeekNote": "Week 9 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
       "beatNote": "4-game minimum satisfied on Injured Reserve (Foot); awaiting 21-day practice window designation."
@@ -605,28 +627,6 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
       "beatNote": "Placed on Injured Reserve (Undisclosed) on Aug 24, 2026; ineligible to return in 2026 under NFL CBA rules."
-    },
-    {
-      "playerId": "4569587",
-      "name": "Wan'Dale Robinson",
-      "position": "WR",
-      "jersey": 4,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569587.png",
-      "injuryType": "Ankle",
-      "status": "Season-Ending IR",
-      "isSeasonEnding": true,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 11,
-      "earliestEligibleWeek": null,
-      "projectedReturnWeek": "Out for Season",
-      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Meanwhile Carnell Tate (shoulder) is slated to practice this week, and his potential return to action this weekend against Dallas figures to impact the playing time of Elic Ayomanor and Chimere Dike. Robinson's looming absence will free up snaps/targets in the slot, with Saleh noting Wednesday that he's looking forward to seeing what rookie slot option Xavier Restrepo can do with added opportunities going forward."
     }
   ]
 }

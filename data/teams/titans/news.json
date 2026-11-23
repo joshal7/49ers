@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:53:50.186Z",
+  "updatedAt": "2026-11-23T06:25:41.513Z",
   "dailyTopNewsBrief": {
     "id": "brief_ten_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -7,35 +7,33 @@
     "isPostGame": true,
     "gameWeek": 12,
     "teamRecord": "1-9",
-    "generatedAt": "2026-11-23T03:53:52.313Z",
+    "generatedAt": "2026-11-23T06:25:42.233Z",
     "modelUsed": "gemini-4-hydrogen",
     "thinkingLevel": "XHIGH",
     "source": "deterministic-digest",
-    "wordCount": 55,
+    "wordCount": 62,
     "headline": "Tennessee Titans Daily Briefing — Week 12",
     "summary": "Tennessee Titans (1-9, 4th in AFC South • #16 Seed in AFC) top verified storylines, injury status, and upcoming matchup intel.",
     "bullets": [
       "Frustrated Robert Saleh calls Titans' effort 'disgusting, embarrassing football' ([Turron Davenport](https://www.espn.com/nfl/story/_/id/50566741/robert-saleh-calls-titans-defensive-effort-disgusting))",
-      "Titans defense crumbles against the Cowboys ([ESPN NFL Nation](https://www.espn.com/video/clip/_/id/50568133/titans-defense-crumbles-cowboys))",
       "Six Things That Stood Out for the Titans in Sunday's 51-30 Loss to the Cowboys ([tennesseetitans.com Official](https://www.tennesseetitans.com/news/six-things-that-stood-out-for-the-titans-in-sunday-s-51-30-loss-to-the-cowboys))",
-      "Cedric Gray Press Conference | Tennessee Titans ([tennesseetitans.com Video](https://www.tennesseetitans.com/video/cedric-gray-press-conference-tennessee-titans-x2661))",
-      "Calvin Ridley Press Conference | Tennessee Titans ([tennesseetitans.com Video](https://www.tennesseetitans.com/video/calvin-ridley-press-conference-tennessee-titans-x1518))"
+      "Titans defense crumbles against the Cowboys ([ESPN NFL Nation](https://www.espn.com/video/clip/_/id/50568133/titans-defense-crumbles-cowboys))",
+      "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9 ([tennesseetitans.com Official](https://www.tennesseetitans.com/news/titans-can-t-slow-down-cowboys-lose-51-23-to-drop-to-1-9))",
+      "AFC Notes: Robert Saleh, Jaylen Harrell, Colts, Texans, Titans ([NFL Trade Rumors](https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/))"
     ],
     "coveredStoryKeys": [
       "ten_espn_e1794280d025b",
-      "ten_espn_706f902194bbf",
       "ten_rss_b210902a3c18",
-      "ten_vid_b22aa2279fdf",
-      "ten_vid_6b255694d5dc",
-      "ten_vid_264ef9d50422"
+      "ten_espn_706f902194bbf",
+      "ten_rss_25cbcc5bd613",
+      "ten_nfltr_97b62337f4f2"
     ],
     "coveredUrls": [
-      "https://www.tennesseetitans.com/video/can-t-miss-play-59-yard-td-carnell-tate-gets-up-from-ground-before-being-touched-for-long-score-game-highlights",
-      "https://www.tennesseetitans.com/video/cam-ward-s-21-yard-connection-with-calvin-ridley-occurs-on-fourth-and-7-in-fourth-quarter-game-highlights",
-      "https://www.espn.com/video/clip/_/id/50568133/titans-defense-crumbles-cowboys",
       "https://www.espn.com/nfl/story/_/id/50566741/robert-saleh-calls-titans-defensive-effort-disgusting",
       "https://www.tennesseetitans.com/news/six-things-that-stood-out-for-the-titans-in-sunday-s-51-30-loss-to-the-cowboys",
-      "https://www.tennesseetitans.com/video/cedric-gray-press-conference-tennessee-titans-x2661"
+      "https://www.espn.com/video/clip/_/id/50568133/titans-defense-crumbles-cowboys",
+      "https://www.tennesseetitans.com/news/titans-can-t-slow-down-cowboys-lose-51-23-to-drop-to-1-9",
+      "https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/"
     ],
     "sources": [
       {
@@ -48,14 +46,6 @@
       },
       {
         "sid": "S2",
-        "title": "Titans defense crumbles against the Cowboys",
-        "url": "https://www.espn.com/video/clip/_/id/50568133/titans-defense-crumbles-cowboys",
-        "author": "ESPN NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:32:08Z"
-      },
-      {
-        "sid": "S3",
         "title": "Six Things That Stood Out for the Titans in Sunday's 51-30 Loss to the Cowboys",
         "url": "https://www.tennesseetitans.com/news/six-things-that-stood-out-for-the-titans-in-sunday-s-51-30-loss-to-the-cowboys",
         "author": "tennesseetitans.com Official",
@@ -63,31 +53,15 @@
         "publishedAt": "2026-11-22T23:32:23.000Z"
       },
       {
+        "sid": "S3",
+        "title": "Titans defense crumbles against the Cowboys",
+        "url": "https://www.espn.com/video/clip/_/id/50568133/titans-defense-crumbles-cowboys",
+        "author": "ESPN NFL Nation",
+        "outlet": "ESPN",
+        "publishedAt": "2026-11-23T01:32:08Z"
+      },
+      {
         "sid": "S4",
-        "title": "Cedric Gray Press Conference | Tennessee Titans",
-        "url": "https://www.tennesseetitans.com/video/cedric-gray-press-conference-tennessee-titans-x2661",
-        "author": "tennesseetitans.com Video",
-        "outlet": "tennesseetitans.com Video",
-        "publishedAt": "2026-11-22T23:59:31.000Z"
-      },
-      {
-        "sid": "S5",
-        "title": "Calvin Ridley Press Conference | Tennessee Titans",
-        "url": "https://www.tennesseetitans.com/video/calvin-ridley-press-conference-tennessee-titans-x1518",
-        "author": "tennesseetitans.com Video",
-        "outlet": "tennesseetitans.com Video",
-        "publishedAt": "2026-11-22T23:59:19.000Z"
-      },
-      {
-        "sid": "S6",
-        "title": "Carnell Tate Press Conference | Tennessee Titans",
-        "url": "https://www.tennesseetitans.com/video/carnell-tate-press-conference-tennessee-titans-x6499",
-        "author": "tennesseetitans.com Video",
-        "outlet": "tennesseetitans.com Video",
-        "publishedAt": "2026-11-22T23:59:05.000Z"
-      },
-      {
-        "sid": "S7",
         "title": "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9",
         "url": "https://www.tennesseetitans.com/news/titans-can-t-slow-down-cowboys-lose-51-23-to-drop-to-1-9",
         "author": "tennesseetitans.com Official",
@@ -95,12 +69,36 @@
         "publishedAt": "2026-11-22T21:03:37.000Z"
       },
       {
-        "sid": "S8",
-        "title": "Can't-Miss Play: 59-yard TD! Carnell Tate Gets Up From Ground Before Being Touched for Long Score | Game Highlights",
-        "url": "https://www.tennesseetitans.com/video/can-t-miss-play-59-yard-td-carnell-tate-gets-up-from-ground-before-being-touched-for-long-score-game-highlights",
+        "sid": "S5",
+        "title": "AFC Notes: Robert Saleh, Jaylen Harrell, Colts, Texans, Titans",
+        "url": "https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/",
+        "author": "NFL Trade Rumors",
+        "outlet": "NFL Trade Rumors",
+        "publishedAt": "2026-11-23T00:30:48.000Z"
+      },
+      {
+        "sid": "S6",
+        "title": "Cedric Gray Press Conference | Tennessee Titans",
+        "url": "https://www.tennesseetitans.com/video/cedric-gray-press-conference-tennessee-titans-x2661",
         "author": "tennesseetitans.com Video",
         "outlet": "tennesseetitans.com Video",
-        "publishedAt": "2026-11-22T20:15:12.000Z"
+        "publishedAt": "2026-11-22T23:59:31.000Z"
+      },
+      {
+        "sid": "S7",
+        "title": "Calvin Ridley Press Conference | Tennessee Titans",
+        "url": "https://www.tennesseetitans.com/video/calvin-ridley-press-conference-tennessee-titans-x1518",
+        "author": "tennesseetitans.com Video",
+        "outlet": "tennesseetitans.com Video",
+        "publishedAt": "2026-11-22T23:59:19.000Z"
+      },
+      {
+        "sid": "S8",
+        "title": "Carnell Tate Press Conference | Tennessee Titans",
+        "url": "https://www.tennesseetitans.com/video/carnell-tate-press-conference-tennessee-titans-x6499",
+        "author": "tennesseetitans.com Video",
+        "outlet": "tennesseetitans.com Video",
+        "publishedAt": "2026-11-22T23:59:05.000Z"
       }
     ]
   },
@@ -111,7 +109,8 @@
       "type": "article",
       "title": "Frustrated Robert Saleh calls Titans' effort 'disgusting, embarrassing football'",
       "summary": "Titans coach Robert Saleh couldn't hide his frustration when he stepped to the podium after Sunday's 51-30 loss to the Cowboys.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749865_600x600_1-1.jpg",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/9191508e-b592-45c3-aa57-2e1a32953f5b/9191508e-b592-45c3-aa57-2e1a32953f5b.jpg",
+      "imageCaption": "Tennessee Titans vs. Dallas Cowboys: Game Highlights",
       "imageAlt": "Frustrated Robert Saleh calls Titans' effort 'disgusting, embarrassing football'",
       "publishedAt": "2026-11-23T00:39:17Z",
       "url": "https://www.espn.com/nfl/story/_/id/50566741/robert-saleh-calls-titans-defensive-effort-disgusting",
@@ -127,7 +126,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.956,
+      "breakingPriority": 0.811,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -137,7 +136,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.8159
+      "storyRank": 7.1591
+    },
+    {
+      "id": "ten_rss_b210902a3c18",
+      "type": "article",
+      "title": "Six Things That Stood Out for the Titans in Sunday's 51-30 Loss to the Cowboys",
+      "summary": "Senior Writer and Editor Jim Wyatt takes a look at six things that stood out from Sunday's game.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/titans/xrrpbcgmb54r01wf5ohy.png",
+      "imageAlt": "Six Things That Stood Out for the Titans in Sunday's 51-30 Loss to the Cowboys",
+      "publishedAt": "2026-11-22T23:32:23.000Z",
+      "url": "https://www.tennesseetitans.com/news/six-things-that-stood-out-for-the-titans-in-sunday-s-51-30-loss-to-the-cowboys",
+      "outletId": "titans_official",
+      "outletName": "tennesseetitans.com Official",
+      "reporterId": "titans_official",
+      "reporterName": "tennesseetitans.com Official",
+      "author": "tennesseetitans.com Official",
+      "authorHandle": "@Titans",
+      "authorProfileUrl": "https://www.tennesseetitans.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.713,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.8401
     },
     {
       "id": "ten_espn_706f902194bbf",
@@ -145,6 +177,7 @@
       "title": "Titans defense crumbles against the Cowboys",
       "summary": "Turron Davenport recaps how the Titans defense was overwhelmed by the Cowboys in Sunday's loss.",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_16x9_Titans_IA/dm_261122_16x9_Titans_IA.jpg",
+      "imageCaption": "Turron Davenport recaps how the Titans defense was overwhelmed by the Cowboys in Sunday's loss.",
       "imageAlt": "Titans defense crumbles against the Cowboys",
       "publishedAt": "2026-11-23T01:32:08Z",
       "url": "https://www.espn.com/video/clip/_/id/50568133/titans-defense-crumbles-cowboys",
@@ -170,17 +203,17 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.7466
+      "storyRank": 5.2356
     },
     {
-      "id": "ten_rss_b210902a3c18",
+      "id": "ten_rss_25cbcc5bd613",
       "type": "article",
-      "title": "Six Things That Stood Out for the Titans in Sunday's 51-30 Loss to the Cowboys",
-      "summary": "Senior Writer and Editor Jim Wyatt takes a look at six things that stood out from Sunday's game.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/titans/xrrpbcgmb54r01wf5ohy.png",
-      "imageAlt": "Six Things That Stood Out for the Titans in Sunday's 51-30 Loss to the Cowboys",
-      "publishedAt": "2026-11-22T23:32:23.000Z",
-      "url": "https://www.tennesseetitans.com/news/six-things-that-stood-out-for-the-titans-in-sunday-s-51-30-loss-to-the-cowboys",
+      "title": "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9",
+      "summary": "The Cowboys scored touchdowns all game, while the Titans kicked too many field goals and didn’t make enough plays on offense, and certainly not on defense.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/titans/fogifi5hbwf7gmhpigwy.png",
+      "imageAlt": "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9",
+      "publishedAt": "2026-11-22T21:03:37.000Z",
+      "url": "https://www.tennesseetitans.com/news/titans-can-t-slow-down-cowboys-lose-51-23-to-drop-to-1-9",
       "outletId": "titans_official",
       "outletName": "tennesseetitans.com Official",
       "reporterId": "titans_official",
@@ -193,7 +226,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.841,
+      "breakingPriority": 0.535,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -203,7 +236,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.6225
+      "storyRank": 4.0525
+    },
+    {
+      "id": "ten_nfltr_97b62337f4f2",
+      "type": "article",
+      "title": "AFC Notes: Robert Saleh, Jaylen Harrell, Colts, Texans, Titans",
+      "summary": "Colts Colts DT Adetomiwa Adebawore was fined $11,941 for unnecessary roughness. Texans Texans WR Nico Collins was fined $14,926 for unsportsmanlike conduct, and DB M.J. Stewart was fined $11,667 for unnecessary roughness. Titans Titans stat",
+      "imageUrl": "",
+      "imageAlt": "AFC Notes: Robert Saleh, Jaylen Harrell, Colts, Texans, Titans",
+      "publishedAt": "2026-11-23T00:30:48.000Z",
+      "url": "https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.6632
     },
     {
       "id": "ten_vid_b22aa2279fdf",
@@ -237,7 +303,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0907
+      "storyRank": 3.7663
     },
     {
       "id": "ten_vid_6b255694d5dc",
@@ -271,7 +337,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0867
+      "storyRank": 3.7639
     },
     {
       "id": "ten_vid_264ef9d50422",
@@ -305,40 +371,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0821
-    },
-    {
-      "id": "ten_rss_25cbcc5bd613",
-      "type": "article",
-      "title": "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9",
-      "summary": "The Cowboys scored touchdowns all game, while the Titans kicked too many field goals and didn’t make enough plays on offense, and certainly not on defense.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/titans/fogifi5hbwf7gmhpigwy.png",
-      "imageAlt": "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9",
-      "publishedAt": "2026-11-22T21:03:37.000Z",
-      "url": "https://www.tennesseetitans.com/news/titans-can-t-slow-down-cowboys-lose-51-23-to-drop-to-1-9",
-      "outletId": "titans_official",
-      "outletName": "tennesseetitans.com Official",
-      "reporterId": "titans_official",
-      "reporterName": "tennesseetitans.com Official",
-      "author": "tennesseetitans.com Official",
-      "authorHandle": "@Titans",
-      "authorProfileUrl": "https://www.tennesseetitans.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.631,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.9389
+      "storyRank": 3.7611
     },
     {
       "id": "ten_vid_3744e8fe47f6",
@@ -362,7 +395,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.575,
+      "breakingPriority": 0.488,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -372,7 +405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.4001
+      "storyRank": 3.6659
     },
     {
       "id": "ten_vid_90cfa997574c",
@@ -406,7 +439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4307
+      "storyRank": 2.7153
     },
     {
       "id": "ten_vid_c1a8803a7484",
@@ -440,7 +473,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.378
+      "storyRank": 2.6799
     },
     {
       "id": "ten_vid_267a6fc2ef7a",
@@ -474,7 +507,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3706
+      "storyRank": 2.6749
     },
     {
       "id": "ten_espn_a430f618eed75",
@@ -482,6 +515,7 @@
       "title": "Tennessee Titans vs. Dallas Cowboys: Game Highlights",
       "summary": "Tennessee Titans vs. Dallas Cowboys: Game Highlights",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/9191508e-b592-45c3-aa57-2e1a32953f5b/9191508e-b592-45c3-aa57-2e1a32953f5b.jpg",
+      "imageCaption": "Tennessee Titans vs. Dallas Cowboys: Game Highlights",
       "imageAlt": "Tennessee Titans vs. Dallas Cowboys: Game Highlights",
       "publishedAt": "2026-11-22T21:27:39Z",
       "url": "https://www.espn.com/video/clip/_/id/50565193/game-highlights",
@@ -507,7 +541,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.095
+      "storyRank": 2.487
     },
     {
       "id": "ten_vid_7f418ed94bb8",
@@ -541,7 +575,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9147
+      "storyRank": 2.3619
     },
     {
       "id": "ten_vid_a7dc92d628ea",
@@ -575,7 +609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4515
+      "storyRank": 2.032
     },
     {
       "id": "ten_vid_79411700a48a",
@@ -609,7 +643,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0685
+      "storyRank": 1.7491
     },
     {
       "id": "ten_vid_65e93fba36ec",
@@ -643,14 +677,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0477
+      "storyRank": 1.7334
     },
     {
       "id": "ten_espn_f0672a0e47f1d",
       "type": "article",
       "title": "Dak Prescott accounts for 5 TDs as the Cowboys roll to a 51-30 victory over the Titans",
       "summary": "— When one touchdown became two and three and so on, all the way to six, Dak Prescott said the conversation was the same for the offense of the Dallas Cowboys: Just keeping doing it.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873073.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/f5613f07-8d2b-400e-92d0-0fe6e4638a3e/f5613f07-8d2b-400e-92d0-0fe6e4638a3e.jpg",
+      "imageCaption": "Dak Prescott runs it himself for a Cowboys touchdown",
       "imageAlt": "Dak Prescott accounts for 5 TDs as the Cowboys roll to a 51-30 victory over the Titans",
       "publishedAt": "2026-11-22T23:05:32Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873073",
@@ -676,7 +711,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0446
+      "storyRank": 0.8009
     },
     {
       "id": "ten_vid_bc21fa31d75a",
@@ -710,7 +745,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6158
+      "storyRank": 0.5102
     },
     {
       "id": "ten_vid_2cd48ed38579",
@@ -744,7 +779,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5996
+      "storyRank": 0.4983
     },
     {
       "id": "ten_vid_fa9647380240",
@@ -778,7 +813,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5283
+      "storyRank": 0.4457
     },
     {
       "id": "ten_espn_63f177509966a",
@@ -786,6 +821,7 @@
       "title": "Police investigating whether Titans DE Harrell assaulted driver before crash",
       "summary": "Police are investigating whether Titans DE Jaylen Harrell assaulted a rideshare driver before a serious car crash that left him hospitalized.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749445_600x400_3-2.jpg",
+      "imageCaption": "Jaylen Harrell [600x400]",
       "imageAlt": "Police investigating whether Titans DE Harrell assaulted driver before crash",
       "publishedAt": "2026-11-22T16:03:48Z",
       "url": "https://www.espn.com/nfl/story/_/id/50558496/police-probing-whether-titans-de-harrell-assaulted-driver",
@@ -811,7 +847,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3865
+      "storyRank": 0.3366
     },
     {
       "id": "ten_rss_e0d9bfa57f29",
@@ -844,7 +880,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.384
+      "storyRank": 0.3347
     },
     {
       "id": "ten_rss_05c8d20f580e",
@@ -877,7 +913,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3402
+      "storyRank": 0.2997
+    },
+    {
+      "id": "ten_pfr_6c647a5657be",
+      "type": "article",
+      "title": "Titans DL Jaylen Harrell In Hospital After &#8216;Serious&#8217; Car Crash",
+      "summary": "8:25pm: As detailed by Kaitlyn Snook and Hadia Moosvi of WTSP, police say Harrell was the passenger in a rideshare vehicle at the time of the accident. Harrell is alleged to have &#8220;assaulted the driver while the vehicle was in motion,&",
+      "imageUrl": "",
+      "publishedAt": "2026-11-22T02:25:43.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/titans-dl-jaylen-harrell-in-hospital-after-serious-car-crash",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.12
     },
     {
       "id": "ten_vid_ad7ac309e329",
@@ -911,7 +979,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1186
+      "storyRank": 0.1115
     },
     {
       "id": "ten_rss_8b7684335991",
@@ -944,7 +1012,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1029
+      "storyRank": 0.0973
     },
     {
       "id": "ten_espn_5cda3e0ea9918",
@@ -952,6 +1020,7 @@
       "title": "Titans DL Jaylen Harrell hospitalized after car accident in Tampa",
       "summary": "Titans defensive lineman Jaylen Harrell was involved in a serious car accident Friday and remains hospitalized, according to the team.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1121/r1749044_600x400_3-2.jpg",
+      "imageCaption": "Jaylen Harrell [600x400]",
       "imageAlt": "Titans DL Jaylen Harrell hospitalized after car accident in Tampa",
       "publishedAt": "2026-11-21T18:31:47Z",
       "url": "https://www.espn.com/nfl/story/_/id/50551434/titans-dl-jaylen-harrell-hospitalized-car-accident-tampa",
@@ -977,7 +1046,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1027
+      "storyRank": 0.0971
     },
     {
       "id": "ten_rss_0e1eacfb59dc",
@@ -1010,7 +1079,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0999
+      "storyRank": 0.0945
     },
     {
       "id": "ten_rss_73814df60ef3",
@@ -1043,7 +1112,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0955
+      "storyRank": 0.0906
     },
     {
       "id": "ten_tx_1409550ea7fe",
@@ -1077,7 +1146,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.071
+      "storyRank": 0.068
     },
     {
       "id": "ten_espn_948e2e73e7ffb",
@@ -1085,6 +1154,7 @@
       "title": "Draft buzz: Interest in Oklahoma State's Drew Mestemaker could spur draft trade",
       "summary": "If the Titans or Chargers wind up with the No. 1 selection and stick with their franchise quarterbacks, interest in Oklahoma State's Drew Mestemaker could lead to a team seeking to trade up for the top overall pick.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1111/r1744598_1296x729_16-9.jpg",
+      "imageCaption": "Cowboys QB Drew Mestemaker has Heisman and first-round NFL draft aspirations.",
       "imageAlt": "Draft buzz: Interest in Oklahoma State's Drew Mestemaker could spur draft trade",
       "publishedAt": "2026-11-20T21:59:31Z",
       "url": "https://www.espn.com/nfl/story/_/id/50541939/draft-buzz-mestemaker-spur-auction-no-1-pick",
@@ -1110,7 +1180,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0537
+      "storyRank": 0.0518
     },
     {
       "id": "ten_rss_882f9fe0a514",
@@ -1143,40 +1213,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0486
-    },
-    {
-      "id": "ten_espn_6e8b34928325d",
-      "type": "article",
-      "title": "NFL offseason free agent and trade acquisitions that have and have not worked",
-      "summary": "Kenneth Walker III and Devin Lloyd look great with their new teams in 2026. But Jaylen Waddle and Alontae Taylor haven't quite found their groove.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1747957_608x342_16-9.jpg",
-      "imageAlt": "NFL offseason free agent and trade acquisitions that have and have not worked",
-      "publishedAt": "2026-11-20T11:42:26Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50525533/2026-offseason-change-scenery-fits-players-new-teams",
-      "outletId": "espn_ten",
-      "outletName": "ESPN",
-      "reporterId": "espn_ten",
-      "reporterName": "Aaron Schatz",
-      "author": "Aaron Schatz",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ten/tennessee-titans",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0423
+      "storyRank": 0.047
     },
     {
       "id": "ten_espn_8f943afa01997",
@@ -1184,6 +1221,7 @@
       "title": "Titans defense crumbling post-Jeffery Simmons, Amani Hooker trades",
       "summary": "The moves Tennessee made might have helped the rebuilding process, but it also impacted the current team.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1118/r1747769_1296x729_16-9.jpg",
+      "imageCaption": "Titans defense [1296x729]",
       "imageAlt": "Titans defense crumbling post-Jeffery Simmons, Amani Hooker trades",
       "publishedAt": "2026-11-20T11:00:10Z",
       "url": "https://www.espn.com/nfl/story/_/id/50523033/titans-defense-post-jeffery-simmons-amani-hooker-trades",
@@ -1209,7 +1247,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.0404
     },
     {
       "id": "ten_espn_0b0bd363f0cef",
@@ -1217,6 +1255,7 @@
       "title": "Titans' Calvin Ridley facing misdemeanor assault charge over airport incident",
       "summary": "Titans wide receiver Calvin Ridley is facing a misdemeanor assault charge as a result of a Nov. 7 incident at Nashville International Airport.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1110/r1743982_600x400_3-2.jpg",
+      "imageCaption": "Calvin Ridley [600x400]",
       "imageAlt": "Titans' Calvin Ridley facing misdemeanor assault charge over airport incident",
       "publishedAt": "2026-11-20T07:46:11Z",
       "url": "https://www.espn.com/nfl/story/_/id/50539065/titans-calvin-ridley-assault-charge-airport-incident",
@@ -1242,14 +1281,47 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.039
+      "storyRank": 0.0379
+    },
+    {
+      "id": "ten_pfr_86c2f355b6ae",
+      "type": "article",
+      "title": "Titans WR Calvin Ridley Facing Misdemeanor Assault Charge",
+      "summary": "Titans wide receiver Calvin Ridley is facing a misdemeanor assault charge stemming from an incident at Nashville International Airport on Nov. 7, Paul Kuharsky of Paul Kuharsky.com reports. Ridley could face up to six months in jail and/or ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-19T22:59:53.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/titans-wr-calvin-ridley-facing-misdemeanor-assault-charge",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0282
     },
     {
       "id": "ten_espn_4a41f7e047c7e",
       "type": "article",
       "title": "Cowboys face last-place Titans with new play-caller on defense and fading playoff hopes",
       "summary": "— The Dallas Cowboys have made their biggest move of the season to try to fix a broken defense, just in time for consecutive games against last-place...",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873073.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/f5613f07-8d2b-400e-92d0-0fe6e4638a3e/f5613f07-8d2b-400e-92d0-0fe6e4638a3e.jpg",
+      "imageCaption": "Dak Prescott runs it himself for a Cowboys touchdown",
       "imageAlt": "Cowboys face last-place Titans with new play-caller on defense and fading playoff hopes",
       "publishedAt": "2026-11-19T21:25:03Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873073",
@@ -1275,7 +1347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.0313
     },
     {
       "id": "ten_rss_083d3c62dbe4",
@@ -1308,7 +1380,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0316
+      "storyRank": 0.0309
+    },
+    {
+      "id": "ten_pfr_5ff13b5ff505",
+      "type": "article",
+      "title": "NFL Trade Deadline Notes: Titans, Giants, Bengals, Reed, Sainristil, Matlock",
+      "summary": "The Giants were among the teams that pursued Jeffery Simmons before the Titans sent the star defensive tackle to Chicago, but Tennessee may have never considered New York as a serious destination. John Harbaugh’s direct phone call to Titans",
+      "imageUrl": "",
+      "publishedAt": "2026-11-19T04:22:16.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-trade-deadline-notes-titans-giants-bengals-reed-sainristil-matlock",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.021
     },
     {
       "id": "ten_rss_1fdaac7ce35c",
@@ -1341,7 +1445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.0227
     },
     {
       "id": "ten_rss_4099da140d1b",
@@ -1374,7 +1478,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.0227
     },
     {
       "id": "ten_rss_4a8c12b4d56e",
@@ -1407,7 +1511,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0221
+      "storyRank": 0.0217
     },
     {
       "id": "ten_espn_d7e6de0a358bd",
@@ -1415,6 +1519,7 @@
       "title": "Titans WR Wan'Dale Robinson out for season with ankle injury",
       "summary": "Titans wide receiver Wan'Dale Robinson will miss the rest of the season due to an ankle injury, coach Robert Saleh said Wednesday.",
       "imageUrl": "https://a.espncdn.com/photo/2026/0814/r1701518_600x400_3-2.jpg",
+      "imageCaption": "Wan'dale Robinson #4 of the Tennessee Titans warms up.",
       "imageAlt": "Titans WR Wan'Dale Robinson out for season with ankle injury",
       "publishedAt": "2026-11-18T19:45:54Z",
       "url": "https://www.espn.com/nfl/story/_/id/50523261/titans-wr-wandale-robinson-season-ankle-injury",
@@ -1440,7 +1545,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0216
+      "storyRank": 0.0212
     },
     {
       "id": "ten_espn_c625d182d5a82",
@@ -1448,6 +1553,7 @@
       "title": "Why Jordan Reid has the Titans taking Jeremiah Smith at No. 1",
       "summary": "Why Jordan Reid has the Titans taking Jeremiah Smith at No. 1",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1118/dm_261118_nfl_smith_to_titans/dm_261118_nfl_smith_to_titans.jpg",
+      "imageCaption": "Why Jordan Reid has the Titans taking Jeremiah Smith at No. 1",
       "imageAlt": "Why Jordan Reid has the Titans taking Jeremiah Smith at No. 1",
       "publishedAt": "2026-11-18T17:49:14Z",
       "url": "https://www.espn.com/video/clip/_/id/50522531/why-jordan-reid-titans-taking-jeremiah-smith-no-1",
@@ -1473,7 +1579,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0211
+      "storyRank": 0.0207
     },
     {
       "id": "ten_rss_3d4799e610b4",
@@ -1506,7 +1612,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0538
+      "storyRank": 0.0529
+    },
+    {
+      "id": "ten_pfr_c34c90c0a050",
+      "type": "article",
+      "title": "Titans WR Wan&#8217;Dale Robinson Out For Season; RG Fernando Carmona Designated For Return",
+      "summary": "Wide receiver Wan&#8217;Dale Robinson’s first season in Tennessee is over after nine games. Titans head coach Robert Saleh announced Robinson will miss the rest of 2026 with an ankle injury (via Paul Kuharsky of PaulKuharsky.com). The team ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-18T17:23:32.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/titans-wr-wandale-robinson-out-for-season",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0181
     },
     {
       "id": "ten_rss_5b1a21dfeba8",
@@ -1539,40 +1677,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0535
-    },
-    {
-      "id": "ten_espn_2174513a3461e",
-      "type": "article",
-      "title": "2027 NFL draft: Dolphins, Titans, Eagles, Jets, Chargers in race for No. 1 pick",
-      "summary": "Five NFL teams have at least 5% odds to land the No. 1 pick in 2027, per ESPN's Football Power Index: the Dolphins, Titans, Eagles, Jets and Chargers.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747125_608x342_16-9.jpg",
-      "imageAlt": "2027 NFL draft: Dolphins, Titans, Eagles, Jets, Chargers in race for No. 1 pick",
-      "publishedAt": "2026-11-18T13:32:42Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/50510863/2027-nfl-draft-top-pick-dolphins-titans-eagles-jets-chargers",
-      "outletId": "espn_ten",
-      "outletName": "ESPN",
-      "reporterId": "espn_ten",
-      "reporterName": "NFL Nation, Jordan Reid and Seth Walder",
-      "author": "NFL Nation, Jordan Reid and Seth Walder",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ten/tennessee-titans",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.02
+      "storyRank": 0.0526
     },
     {
       "id": "ten_tx_24d57b83bc7b",
@@ -1606,7 +1711,71 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
+      "storyRank": 0.0183
+    },
+    {
+      "id": "ten_pfr_c3043104ec6a",
+      "type": "article",
+      "title": "Packers, Broncos Explored Trade For Titans RB Tony Pollard",
+      "summary": "The Titans sold off multiple key players before last week&#8217;s trade deadline – Amani Hooker to the Bills, Jeffery Simmons to the Bears – but ultimately held onto Tony Pollard. The eight-year running back is on an expiring deal and will ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-18T05:40:58.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/packers-broncos-explored-trade-for-titans-tony-pollard",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0157
+    },
+    {
+      "id": "ten_pfr_8563e2e4fb6e",
+      "type": "article",
+      "title": "Titans Place WR Wan’Dale Robinson On IR",
+      "summary": "Wan’Dale Robinson played in each of the first nine games of the 2026 season. The free agent addition&#8217;s debut Titans season will now be interrupted, though. Robinson was placed on injured reserve, Tennessee announced on Tuesday. The fi",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T23:20:57.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/titans-place-wr-wandale-robinson-on-ir",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0146
     },
     {
       "id": "ten_tx_7f62b710ec0f",
@@ -1640,7 +1809,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0141
+    },
+    {
+      "id": "ten_pfr_7159479bf80f",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/16/26",
+      "summary": "Today&#8217;s practice squad moves: Indianapolis Colts Signed: WR Samori Toure Las Vegas Raiders Signed: QB Brett Rypien Released: DE Bralen Trice Philadelphia Eagles Signed: RB Jaydon Blue, LB Chance Campbell, TE Hayden Rucci Released: DB ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T01:04:36.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-16-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0116
     },
     {
       "id": "ten_tx_e990003c9373",
@@ -1674,7 +1875,103 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0115
+      "storyRank": 0.0113
+    },
+    {
+      "id": "ten_pfr_cd01104e0fa2",
+      "type": "article",
+      "title": "Titans WR Calvin Ridley Addresses Airport Incident",
+      "summary": "Last weekend, Calvin Ridley was involved in an incident at Nashville International Airport. The Titans receiver recently spoke to the media and provided clarity on the matter. Ridley explained that the incident stemmed from his attempts to ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-15T03:20:30.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/titans-wr-calvin-ridley-addresses-airport-incident",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.008
+    },
+    {
+      "id": "ten_pfr_a2c38d548132",
+      "type": "article",
+      "title": "Titans Place G Peter Skoronski On IR",
+      "summary": "The Titans have placed standout left guard Peter Skoronski and punter Tommy Townsend on IR, according to Jim Wyatt of the team&#8217;s website. Skoronski is dealing with a hamstring strain, while Townsend has knee and Achilles injuries. Bot",
+      "imageUrl": "",
+      "publishedAt": "2026-11-14T21:03:28.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/titans-place-g-peter-skoronski-on-ir",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0076
+    },
+    {
+      "id": "ten_pfr_7fe2f2953878",
+      "type": "article",
+      "title": "Titans Work Out S Jordan Whitehead",
+      "summary": "The Titans explored options for safety depth after trading Amani Hooker to the Bills before Tuesday&#8217;s deadline. Tennessee hosted Jordan Whitehead, Jerrick Reed, and Xavier Williams for workouts on Friday, per KPRC 2’s Aaron Wilson. To",
+      "imageUrl": "",
+      "publishedAt": "2026-11-14T19:21:06.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/titans-work-out-s-jordan-whitehead",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0075
     },
     {
       "id": "ten_tx_c3b3c71e4eda",
@@ -1708,7 +2005,71 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0079
+    },
+    {
+      "id": "ten_pfr_d05a49816291",
+      "type": "article",
+      "title": "Bills&#8217; Late Push Convinced Titans To Trade S Amani Hooker Before Deadline",
+      "summary": "Finding a starting-caliber safety to pair with Cole Bishop was one of the main items on the Bills&#8217; to-do list entering last offseason. General manager Brandon Beane thought he found the answer when he took a one-year, $3.5MM flier on ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-13T04:24:16.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/bills-late-push-convinced-titans-to-trade-s-amani-hooker-before-deadline",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0059
+    },
+    {
+      "id": "ten_pfr_b3d410e28479",
+      "type": "article",
+      "title": "Giants Inquired About Bijan Robinson",
+      "summary": "Tuesday&#8217;s trade deadline passed without the Giants acquiring a running back, but it wasn&#8217;t for lack of effort on their part. It was already known the Giants had interest in the Colts&#8217; Jonathan Taylor and the Titans&#8217; ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-12T04:40:49.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/giants-inquired-about-bijan-robinson",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tennessee-titans",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "side_note",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0002
     },
     {
       "id": "ten_tx_0b2fced47a7e",
@@ -1810,7 +2171,43 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0042
+    },
+    {
+      "id": "ten_yt_ifp9pDMbD4o",
+      "type": "video",
+      "category": "film",
+      "videoId": "ifp9pDMbD4o",
+      "embeddable": true,
+      "title": "CJ Stroud vs the Titans Week 5, 2026 Analysis",
+      "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
+      "imageUrl": "https://i.ytimg.com/vi/ifp9pDMbD4o/hqdefault.jpg",
+      "imageAlt": "CJ Stroud vs the Titans Week 5, 2026 Analysis",
+      "publishedAt": "2026-10-13T17:49:13.000Z",
+      "url": "https://www.youtube.com/watch?v=ifp9pDMbD4o",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=ifp9pDMbD4o",
+      "outletId": "the_qb_school",
+      "outletName": "The QB School",
+      "reporterId": "the_qb_school",
+      "reporterName": "The QB School",
+      "author": "The QB School",
+      "authorHandle": "@TheQBSchool",
+      "authorProfileUrl": "https://x.com/theqbschool",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 92,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0009
     },
     {
       "id": "ten_rss_eb6b59623c95",

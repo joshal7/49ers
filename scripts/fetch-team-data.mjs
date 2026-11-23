@@ -54,6 +54,7 @@ import {
   fetchLivePowerRankings
 } from './lib/powerRankingsFetcher.mjs';
 import { buildTeamDraftPrep2027 } from './lib/teamDraftIntelBuilder.mjs';
+import { attachDraftClassHighlightVideos } from './lib/draftVideoResolver.mjs';
 import { parseTankathonTeamPicksHtml } from './lib/aiSynthesisEngine.mjs';
 import {
   buildTeamTradeWindow,
@@ -229,10 +230,29 @@ function loadMergedReportersForTeam(team) {
 async function loadSharedLeagueContext(seasonYear = 2026) {
   console.log('[stage-1] Fetching league-wide shared datasets (standings, OTC ceilings, schedule, nflverse players/combine/stats/snaps, live mock drafts, big board)...');
   const nextDraftYear = seasonYear + 1;
-  const [standingsRaw, otcSpaceHtml, rotowireXml, nflverse, tkMockHtml, dtMockHtml, wfMock1Html, wfMock2Html] = await Promise.all([
+  const [
+    standingsRaw,
+    otcSpaceHtml,
+    rotowireXml,
+    pftRssXml,
+    nfltrRssXml,
+    ytNflXml,
+    ytQbSchoolXml,
+    ytKollmannXml,
+    nflverse,
+    tkMockHtml,
+    dtMockHtml,
+    wfMock1Html,
+    wfMock2Html
+  ] = await Promise.all([
     fetchJsonSafe('https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings', 14000),
     fetchTextSafe('https://overthecap.com/salary-cap-space', 14000),
     fetchTextSafe('https://www.rotowire.com/rss/news.php?sport=NFL', 10000),
+    fetchTextSafe('https://www.nbcsports.com/nfl/profootballtalk.rss', 10000),
+    fetchTextSafe('https://nfltraderumors.co/feed/', 10000),
+    fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCDVYQ4Zhbm3S2dlz7P1GBDg', 10000),
+    fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCGfxHp2yuimtLsFaq1r7aIQ', 10000),
+    fetchTextSafe('https://www.youtube.com/feeds/videos.xml?channel_id=UCYzfVBuCfGz-oF3aOCGgOmw', 10000),
     loadSharedNflversePlayerContext(seasonYear),
     fetchTextSafe('https://www.tankathon.com/nfl/mock_draft', 14000),
     fetchTextSafe(`https://www.drafttek.com/${nextDraftYear}-NFL-Mock-Draft/${nextDraftYear}-NFL-Mock-Draft-Round-1.asp`, 14000),
@@ -397,6 +417,13 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     standingsByAbbr,
     otcSpaceHtml,
     rotowireXml,
+    pftRssXml,
+    nfltrRssXml,
+    youtubeFeeds: [
+      { id: 'nfl_official', name: 'NFL', handle: '@NFL', xml: ytNflXml, category: 'highlights', embeddable: false },
+      { id: 'the_qb_school', name: 'The QB School', handle: '@TheQBSchool', xml: ytQbSchoolXml, category: 'film', embeddable: true },
+      { id: 'brett_kollmann', name: 'Brett Kollmann', handle: '@BrettKollmann', xml: ytKollmannXml, category: 'film', embeddable: true }
+    ],
     nflverse,
     leagueTradeCtx,
     powerRankingsPayloads,
@@ -463,8 +490,12 @@ function buildTeamStatsForClub(team, leagueCtx) {
     'rushing_epa_game',
     'yards_per_pass_att',
     'sack_rate_allowed',
-    'def_epa_play_allowed',
-    'def_sacks_game'
+    'explosive_plays_game',
+    'rush_yds_game',
+    'def_epa_allowed_game',
+    'def_sacks_game',
+    'def_tfl_game',
+    'def_takeaways_game'
   ];
   const teamStatRankings = summaryKeys
     .map(k => tpl.flatByKey?.[k])
@@ -720,9 +751,19 @@ const GEMINI_BATCH_TIMEOUT_COUNTS = new Map();
 async function generateGroundedDailyBrief(team, appData, apiKey, { existingBrief = null, forceBrief = false } = {}) {
   const nowMs = Date.now();
   const cycleState = resolveNewsBriefCycleState(nowMs, appData, 17);
+  const existingBriefText = [
+    existingBrief?.headline || '',
+    existingBrief?.summary || '',
+    ...(existingBrief?.bullets || []).map(b => (typeof b === 'string' ? b : `${b?.subtopic || ''} ${b?.body || ''}`))
+  ].join(' ');
+  const oppAbbrBrief = appData.scheduleMatchup?.upcomingMatchup?.oppAbbr || '';
+  const existingBriefMatchesTeam =
+    Boolean(existingBrief?.id) &&
+    String(existingBrief.id).startsWith(`brief_${team.abbr.toLowerCase()}_`) &&
+    !hasCrossTeam49ersLeak(existingBriefText, team, oppAbbrBrief);
   if (
     !forceBrief &&
-    existingBrief &&
+    existingBriefMatchesTeam &&
     existingBrief.source === 'live-gemini-daily' &&
     existingBrief.cycleKey === cycleState.activeCycleKey &&
     existingBrief.headline &&
@@ -911,7 +952,9 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   const [
     espnRosterRaw,
     espnDepthRaw,
-    espnScheduleRaw,
+    espnSchedulePreRaw,
+    espnScheduleRegRaw,
+    espnSchedulePostRaw,
     espnInjuriesRaw,
     espnNewsRaw,
     espnTxRaw,
@@ -922,6 +965,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     tankathonHtml,
     clubNewsRssXml,
     clubVideoRssXml,
+    pfrTeamRssXml,
     cbsInjHtml,
     bskyPosts,
     beatPodcasts,
@@ -929,7 +973,9 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   ] = await Promise.all([
     fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${team.espnId}/roster`),
     fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${team.espnId}/depthcharts`),
-    fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${team.espnId}/schedule`),
+    fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${team.espnId}/schedule?seasontype=1`),
+    fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${team.espnId}/schedule?seasontype=2`),
+    fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${team.espnId}/schedule?seasontype=3`),
     fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${team.espnId}`),
     fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${team.espnId}&limit=25`),
     fetchJsonSafe(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/transactions?team=${team.espnId}&limit=200`),
@@ -940,11 +986,25 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     fetchTextSafe(`https://www.tankathon.com/nfl/${team.slug}`, 14000),
     fetchTextSafe(team.clubRssUrls[0], 10000),
     fetchTextSafe(team.clubRssUrls[1] || `https://www.${team.clubDomain}/rss/videos`, 10000),
+    fetchTextSafe(`https://www.profootballrumors.com/${team.otcSlug}/feed`, 8500),
     fetchTextSafe(buildCbsTeamInjuriesUrl(team.abbr, team.fullName), 10000),
     fetchTeamBlueskyPosts(team, reportersData),
     fetchTeamBeatPodcasts(team),
     fetchTextSafe(`https://www.nflmockdraftdatabase.com/teams/${(leagueCtx.seasonYear || 2026) + 1}/${team.otcSlug}`, 14000)
   ]);
+
+  // Merge Preseason (1) + Regular Season (2) + Postseason (3) schedule events cleanly
+  const mergedScheduleEventMap = new Map();
+  for (const src of [espnSchedulePreRaw, espnScheduleRegRaw, espnSchedulePostRaw]) {
+    for (const ev of src?.events || []) {
+      const k = String(ev?.id || `${ev?.seasonType?.type || 2}_${ev?.week?.number || 0}`);
+      if (!mergedScheduleEventMap.has(k)) mergedScheduleEventMap.set(k, ev);
+    }
+  }
+  const espnScheduleRaw = {
+    ...(espnScheduleRegRaw || espnSchedulePostRaw || espnSchedulePreRaw || {}),
+    events: [...mergedScheduleEventMap.values()]
+  };
 
   const seasonYear = leagueCtx.seasonYear || 2026;
   const nowIso = new Date().toISOString();
@@ -1244,6 +1304,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       );
 
       const rosterDecision = resolveAuthoritativeRosterPlayerStatus({
+        teamAbbr: team.abbr,
         espnId: id,
         fullName,
         groupKey,
@@ -1516,7 +1577,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
               ),
               isActivated: false,
               currentWeek,
-              byeWeek: byeWeek || 8,
+              byeWeek: byeWeek || null,
               seasonYear,
               scheduleEvents: espnScheduleRaw?.events || []
             })
@@ -1609,7 +1670,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         weeklyHistory: weeklyHistory2026,
         earliestEligibleWeek: irClassification?.earliestEligibleWeek ?? null,
         currentWeek,
-        byeWeek: byeWeek || 8,
+        byeWeek: byeWeek || null,
         fantasyStatusAbbr: irFantasyAbbr,
         rosterBucket,
         isPracticeWindowOpen: Boolean(irClassification?.isPracticeWindowOpen),
@@ -1663,7 +1724,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
           headline: cleanSensationalistText(art.headline || ''),
           summary: cleanSensationalistText(art.description || ''),
           publishedAt: art.published || nowIso,
-          imageUrl: (art.images || []).find(im => im.url && (!im.width || im.width >= 240))?.url || art.images?.[0]?.url || '',
+          imageUrl: selectBestEspnArticleImage(art.images) || '',
           url: sanitizeExternalUrl(
             art.links?.web?.href,
             `https://www.espn.com/nfl/team/_/name/${team.espnAbbr}/${team.otcSlug}`
@@ -2115,6 +2176,12 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     });
   }
 
+  // Resolve authentic official club X handle from team reporters directory
+  const officialClubRep = (reportersData?.reporters || []).find(
+    r => r && (r.category === 'official' || /_official$/i.test(String(r.id || ''))) && r.handle
+  );
+  const officialClubHandle = officialClubRep?.handle || `@${team.nickname}`;
+
   // 9b. ESPN Team Transactions
   for (const tx of espnTxRaw?.transactions || []) {
     const desc = String(tx.description || '').trim();
@@ -2139,7 +2206,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       reporterId: `${team.slug}_official`,
       reporterName: `${team.fullName} Official`,
       author: `${team.fullName} Official`,
-      authorHandle: `@${team.nickname}`,
+      authorHandle: officialClubHandle,
       authorProfileUrl: team.clubNewsUrl,
       trustTier: 1,
       wireSource: 'official_transactions'
@@ -2171,7 +2238,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       reporterId: `${team.slug}_official`,
       reporterName: `${team.clubDomain} Official`,
       author: `${team.clubDomain} Official`,
-      authorHandle: `@${team.nickname}`,
+      authorHandle: officialClubHandle,
       authorProfileUrl: team.clubNewsUrl,
       trustTier: 1,
       wireSource: 'club_official_rss'
@@ -2204,15 +2271,156 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       reporterId: `${team.slug}_official`,
       reporterName: `${team.clubDomain} Video`,
       author: `${team.clubDomain} Video`,
-      authorHandle: `@${team.nickname}`,
+      authorHandle: officialClubHandle,
       authorProfileUrl: team.clubNewsUrl,
       trustTier: 1,
       wireSource: 'club_video_rss'
     });
   }
 
-  // 9e. Team-filtered RotoWire NFL RSS
+  // 9e. Team-filtered RotoWire NFL RSS + Pro Football Rumors + ProFootballTalk + NFL Trade Rumors + YouTube Film/Highlights
   const teamMatchRe = new RegExp(`\\b(${team.keywordRules.requiredNicknames.join('|')})\\b`, 'i');
+  const starterNamesForMedia = players
+    .filter(p => p.rosterBucket === 'active' && (p.position === 'QB' || Number(p.primarySnapPct || 0) >= 65))
+    .slice(0, 8)
+    .map(p => String(p.name || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .filter(n => n.length >= 6);
+  const teamOrStarRe =
+    starterNamesForMedia.length > 0
+      ? new RegExp(`\\b(${[...team.keywordRules.requiredNicknames, ...starterNamesForMedia].join('|')})\\b`, 'i')
+      : teamMatchRe;
+
+  // 9e-1. Pro Football Rumors team feed (100% team-scoped)
+  for (const m of (pfrTeamRssXml || '').matchAll(/<item\b[\s\S]*?<\/item>/gi)) {
+    const b = m[0];
+    const title = decodeXmlEntities((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+    const desc = decodeXmlEntities((b.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const link = decodeXmlEntities((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
+    const pubRaw = decodeXmlEntities((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
+    if (!title || !link || isOpposingTeamSubjectLead(`${title} ${desc}`, {}, team)) continue;
+    const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
+    if (!Number.isFinite(pubMs) || Date.now() - pubMs > 14 * 86_400_000) continue;
+    pushNewsItem({
+      id: `${team.abbr.toLowerCase()}_pfr_${hashShort(link)}`,
+      type: 'article',
+      title,
+      summary: desc.slice(0, 240),
+      imageUrl: '',
+      publishedAt: new Date(pubMs).toISOString(),
+      url: link,
+      outletId: 'pro_football_rumors',
+      outletName: 'Pro Football Rumors',
+      reporterId: 'pro_football_rumors',
+      reporterName: 'Pro Football Rumors',
+      author: 'Pro Football Rumors',
+      authorHandle: '@pfrumors',
+      authorProfileUrl: `https://www.profootballrumors.com/${team.otcSlug}`,
+      trustTier: 2,
+      wireSource: 'pfr_team_rss'
+    });
+  }
+
+  // 9e-2. Stage-1 Shared ProFootballTalk & NFL Trade Rumors filtered strictly for this team
+  for (const feedSpec of [
+    {
+      xml: leagueCtx.pftRssXml,
+      prefix: 'pft',
+      outletId: 'profootballtalk',
+      outletName: 'ProFootballTalk',
+      handle: '@ProFootballTalk',
+      profileUrl: 'https://www.nbcsports.com/nfl/profootballtalk',
+      trustTier: 2
+    },
+    {
+      xml: leagueCtx.nfltrRssXml,
+      prefix: 'nfltr',
+      outletId: 'nfl_trade_rumors',
+      outletName: 'NFL Trade Rumors',
+      handle: '@nfltrade_rumors',
+      profileUrl: 'https://nfltraderumors.co/',
+      trustTier: 2
+    }
+  ]) {
+    for (const m of (feedSpec.xml || '').matchAll(/<item\b[\s\S]*?<\/item>/gi)) {
+      const b = m[0];
+      const title = decodeXmlEntities((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+      const desc = decodeXmlEntities((b.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const link = decodeXmlEntities((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
+      const pubRaw = decodeXmlEntities((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
+      if (!title || !link || !teamMatchRe.test(`${title} ${desc}`)) continue;
+      if (isOpposingTeamSubjectLead(title, {}, team)) continue;
+      const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
+      if (!Number.isFinite(pubMs) || Date.now() - pubMs > 12 * 86_400_000) continue;
+      const img = ((b.match(/<media:content[^>]*url="([^"]+)"/i) || b.match(/<enclosure[^>]*url="([^"]+)"/i) || [])[1] || '').replace(/&amp;/g, '&');
+      pushNewsItem({
+        id: `${team.abbr.toLowerCase()}_${feedSpec.prefix}_${hashShort(link)}`,
+        type: 'article',
+        title,
+        summary: desc.slice(0, 240),
+        imageUrl: img,
+        imageAlt: title,
+        publishedAt: new Date(pubMs).toISOString(),
+        url: link,
+        outletId: feedSpec.outletId,
+        outletName: feedSpec.outletName,
+        reporterId: feedSpec.outletId,
+        reporterName: feedSpec.outletName,
+        author: feedSpec.outletName,
+        authorHandle: feedSpec.handle,
+        authorProfileUrl: feedSpec.profileUrl,
+        trustTier: feedSpec.trustTier,
+        wireSource: `${feedSpec.prefix}_rss`
+      });
+    }
+  }
+
+  // 9e-3. Stage-1 Shared YouTube Atom Feeds (NFL Highlights, The QB School, Brett Kollmann) filtered per team
+  for (const ytFeed of leagueCtx.youtubeFeeds || []) {
+    for (const m of (ytFeed.xml || '').matchAll(/<entry\b[\s\S]*?<\/entry>/gi)) {
+      const b = m[0];
+      const videoId = (b.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i) || [])[1]?.trim() || '';
+      const title = decodeXmlEntities((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+      const desc = decodeXmlEntities((b.match(/<media:description>([\s\S]*?)<\/media:description>/i) || [])[1] || '')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const pubRaw = (b.match(/<published>([^<]+)<\/published>/i) || [])[1]?.trim() || '';
+      if (!videoId || !title || !teamOrStarRe.test(`${title} ${desc.slice(0, 220)}`)) continue;
+      if (ytFeed.category !== 'film' && isOpposingTeamSubjectLead(title, {}, team)) continue;
+      const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
+      const maxAgeDays = ytFeed.category === 'film' ? 60 : 21;
+      if (!Number.isFinite(pubMs) || Date.now() - pubMs > maxAgeDays * 86_400_000) continue;
+      const watchUrl = `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
+      pushNewsItem({
+        id: `${team.abbr.toLowerCase()}_yt_${videoId}`,
+        type: 'video',
+        category: ytFeed.category,
+        videoId,
+        embeddable: ytFeed.embeddable,
+        title,
+        summary: desc.slice(0, 220),
+        imageUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+        imageAlt: title,
+        publishedAt: new Date(pubMs).toISOString(),
+        url: watchUrl,
+        externalVideoUrl: watchUrl,
+        outletId: ytFeed.id,
+        outletName: ytFeed.name,
+        reporterId: ytFeed.id,
+        reporterName: ytFeed.name,
+        author: ytFeed.name,
+        authorHandle: ytFeed.handle,
+        authorProfileUrl: `https://www.youtube.com/${ytFeed.handle}`,
+        trustTier: 1,
+        wireSource: 'youtube_atom'
+      });
+    }
+  }
   for (const m of (leagueCtx.rotowireXml || '').matchAll(/<item\b[\s\S]*?<\/item>/gi)) {
     const b = m[0];
     const title = decodeXmlEntities((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
@@ -2662,21 +2870,38 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     nowIso
   });
 
+  const outDir = path.join(ROOT, 'data', 'teams', team.slug);
+  let existingSeasonalDraftClass = null;
+  try {
+    const existingSeasonalPath = path.join(outDir, 'seasonal.json');
+    if (fs.existsSync(existingSeasonalPath)) {
+      existingSeasonalDraftClass = JSON.parse(fs.readFileSync(existingSeasonalPath, 'utf8'))?.draftClass2026 || null;
+    }
+  } catch {}
+  const draftClass2026Obj = {
+    draftYear: seasonYear,
+    sourceUrl: `https://www.pro-football-reference.com/teams/${team.pfrAbbr}/${seasonYear}_draft.htm`,
+    otcDraftUrl: `https://overthecap.com/salary-cap/${team.otcSlug}`,
+    picks: draftPicksFinal,
+    priorityUdfas: priorityUdfasFinal
+  };
+  if (!process.argv.includes('--skip-draft-videos')) {
+    try {
+      await attachDraftClassHighlightVideos(draftClass2026Obj, team, {
+        existingDraftClass: existingSeasonalDraftClass
+      });
+    } catch {}
+  }
+
   const seasonalJson = {
     updatedAt: nowIso,
     tradeWarRoom: tradeIntel.tradeWarRoom,
     playoffPicture,
     draftPrep2027,
-    draftClass2026: {
-      draftYear: seasonYear,
-      sourceUrl: `https://www.pro-football-reference.com/teams/${team.pfrAbbr}/${seasonYear}_draft.htm`,
-      otcDraftUrl: `https://overthecap.com/salary-cap/${team.otcSlug}`,
-      picks: draftPicksFinal,
-      priorityUdfas: priorityUdfasFinal
-    }
+    draftClass2026: draftClass2026Obj
   };
 
-  const usedIrDesignations = Number(teamTxAnalysis?.usedIrDesignations || 0);
+  const usedIrDesignations = Number(teamTxAnalysis?.regularSeasonIrDesignationsCount || 0);
   const healthJson = {
     updatedAt: nowIso,
     week: currentWeek,
@@ -2737,7 +2962,6 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   reconcileRosterAndHealthWithNews(tempAppData);
 
   // Reuse an already-generated live Gemini brief for the exact same cycleKey so hourly refreshes spend 0 extra API calls!
-  const outDir = path.join(ROOT, 'data', 'teams', team.slug);
   let existingBrief = null;
   try {
     const existingNewsPath = path.join(outDir, 'news.json');
@@ -2748,7 +2972,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   } catch {}
   if (!existingBrief && process.env.CI) {
     try {
-      const livePrev = await fetchJsonSafe(`https://${team.domain}/data/news.json`, 4500);
+      const livePrev = await fetchJsonSafe(`https://${team.domain}/data/teams/${team.slug}/news.json`, 4500);
       existingBrief = livePrev?.dailyTopNewsBrief || null;
     } catch {}
   }

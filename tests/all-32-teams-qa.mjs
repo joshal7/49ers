@@ -29,6 +29,10 @@ import path from 'node:path';
 import { spawn } from 'node:child_process';
 import {
   ALL_NFL_TEAMS,
+  buildDeterministicCoachingMatchup,
+  buildTeamCssVarsStyleBlock,
+  computeOnPrimaryInk,
+  getOurladsTeamCode,
   getTeamByAbbr,
   hasCrossTeam49ersLeak,
   isNflHubHost,
@@ -37,6 +41,13 @@ import {
   resolveTeamFromHostname,
   setActiveTeamConfig
 } from '../src/config/teamRegistry.js';
+import { JARGON_GLOSSARY } from '../src/engine/jargonGlossary.js';
+import { buildMockDraftTeamUrl, buildOtcPlayerUrl } from '../src/engine/linkIntegrity.js';
+import { getBigBoardRangeOptions } from '../src/engine/draftBigBoardEngine.js';
+import { classifySymmetricUnitAdvantage } from '../src/engine/groundingValidator.js';
+import { buildDeepScoutingAnalysisMarkdown } from '../src/engine/deepResearchEngine.js';
+import { extractCompletedGameRecapSummary } from '../src/engine/gameDayRosterEngine.js';
+import { resolveShareBaseUrl } from '../src/services/shareService.js';
 import {
   detectMentionedOpponentTeam,
   resolveDailyBriefHeroMedia,
@@ -1053,6 +1064,99 @@ await test('5. Headless Chrome E2E: Standalone NFL Hub (nfl.joshal.com -> ?team=
     chrome.proc.kill('SIGKILL');
     fs.rmSync(chrome.userDataDir, { recursive: true, force: true });
     hubServer.server.close();
+  }
+});
+
+await test('6. Holistic 32-Team Unbiased Parity & Zero-49ers-Bias Scrub Verification (CSS, Podcasts, Ourlads, OTC, Engines, Data)', async () => {
+  try {
+    // 6a. Zero hardcoded 49ers Scarlet/Gold RGBAs outside :root/[data-theme="light"] in src/styles.css
+    const cssText = fs.readFileSync(path.join(ROOT, 'src', 'styles.css'), 'utf8');
+    const cssBody = cssText.slice(cssText.indexOf('*, *::before, *::after {'));
+    const straySfRgba = cssBody.match(/rgba\(\s*(?:170\s*,\s*0\s*,\s*0|212\s*,\s*25\s*,\s*25|179\s*,\s*153\s*,\s*93|229\s*,\s*207\s*,\s*150|231\s*,\s*210\s*,\s*155|140\s*,\s*112\s*,\s*52)\s*,/g) || [];
+    assert.equal(straySfRgba.length, 0, `Found ${straySfRgba.length} hardcoded 49ers RGBA rules in src/styles.css body`);
+
+    // 6b. WCAG --on-primary ink + CSS RGB vars across all 32 teams (Steelers/Raiders/Saints dark ink, SF white ink)
+    assert.equal(computeOnPrimaryInk('#F2B816', '#FFD54F'), '#0B0D10', 'Steelers bright gold must use dark button ink');
+    assert.equal(computeOnPrimaryInk('#A5ACAF', '#CFD6D9'), '#0B0D10', 'Raiders bright silver must use dark button ink');
+    assert.equal(computeOnPrimaryInk('#C4A661', '#E3C884'), '#0B0D10', 'Saints bright gold must use dark button ink');
+    assert.equal(computeOnPrimaryInk('#AA0000', '#D41919'), '#FFFFFF', '49ers scarlet keeps white button ink');
+    for (const t of ALL_NFL_TEAMS) {
+      const varsBlock = buildTeamCssVarsStyleBlock(t);
+      assert.ok(varsBlock.includes('--primary-rgb:'), `${t.abbr}: CSS vars must emit --primary-rgb`);
+      assert.ok(varsBlock.includes('--on-primary:'), `${t.abbr}: CSS vars must emit --on-primary`);
+      assert.ok(Array.isArray(t.beatPodcastShows) && t.beatPodcastShows.length >= 3, `${t.abbr}: must have >= 3 verified beat podcasts (got ${t.beatPodcastShows?.length || 0})`);
+      for (const sh of t.beatPodcastShows) {
+        assert.equal(/star trek/i.test(`${sh.name} ${sh.fullTitle}`), false, `${t.abbr}: non-NFL podcast leaked (${sh.fullTitle})`);
+        assert.notEqual(sh.name, 'Pack', 'GB Pack-A-Day must not be truncated');
+        assert.notEqual(sh.name, 'Patriots Catch', 'NE Patriots Catch-22 must not be truncated');
+      }
+    }
+
+    // 6c. Ourlads legacy code mapping + Tampa Bay HC/DC deduplication
+    assert.equal(getOurladsTeamCode('ARI'), 'ARZ');
+    assert.equal(getOurladsTeamCode('BAL'), 'BLT');
+    assert.equal(getOurladsTeamCode('CLE'), 'CLV');
+    assert.equal(getOurladsTeamCode('HOU'), 'HST');
+    assert.equal(getOurladsTeamCode('SF'), 'SF');
+    const tbMatchup = buildDeterministicCoachingMatchup({ team: 'TB', week: 12, oppAbbr: 'ATL', oppName: 'Atlanta Falcons' });
+    assert.equal(/Todd Bowles\s*&\s*DC\s*Todd Bowles/i.test(tbMatchup.headline), false, `TB coaching headline duplicated Todd Bowles: ${tbMatchup.headline}`);
+
+    // 6d. Jargon Glossary neutrality (zero SF coaches/players in visible glossary definitions)
+    for (const [key, entry] of Object.entries(JARGON_GLOSSARY)) {
+      const def = String(entry?.definition || '');
+      assert.equal(/\b(kyle shanahan|shanahan|kyle juszczyk|george kittle|fred warner|christian mccaffrey)\b/i.test(def), false, `Jargon glossary "${key}" leaked 49ers name: ${def}`);
+    }
+
+    // 6e. Non-SF Engine Parity (Bills / Lions / Steelers): OTC URL, Mock Draft URL, Big Board Window, Unit Edge, Deep Research, Game Recap, Share URL
+    setActiveTeamConfig('BUF');
+    assert.equal(buildOtcPlayerUrl({ playerName: 'Test Player' }), 'https://overthecap.com/salary-cap/buffalo-bills');
+    assert.equal(buildMockDraftTeamUrl(2027), 'https://www.nflmockdraftdatabase.com/teams/2027/buffalo-bills');
+    assert.equal(getBigBoardRangeOptions().find(o => o.key === 'sf_window')?.label, 'BUF Pick Window');
+    assert.equal(classifySymmetricUnitAdvantage(2, 24, 'MIA'), 'BUF Heavy Edge');
+    assert.equal(resolveShareBaseUrl({ hostname: 'bills.joshal.com', origin: 'https://bills.joshal.com', pathname: '/' }), 'https://bills.joshal.com/');
+    const bufMd = buildDeepScoutingAnalysisMarkdown({
+      query: 'Defensive Line pass rush outlook',
+      appData: {
+        meta: { teamAbbr: 'BUF', teamRecord: '9-1', currentWeek: 12, seasonYear: 2026 },
+        roster: { players: [] },
+        cap: { cap2026: { teamCapSpace: 12_000_000 }, cap2027: { teamCapSpace: 25_000_000 } },
+        scheduleMatchup: { upcomingMatchup: { week: 12, oppAbbr: 'MIA', oppName: 'Miami Dolphins' } }
+      }
+    });
+    assert.equal(hasCrossTeam49ersLeak(bufMd, 'BUF', 'MIA'), false, `Bills deep scouting leaked 49ers copy: ${bufMd.slice(0, 260)}`);
+    assert.equal(/35\.16|31\.54|Wide-9|Raheem Morris|Shanahan/i.test(bufMd), false, 'Bills deep scouting leaked SF cap/scheme');
+
+    const bufRecap = extractCompletedGameRecapSummary(
+      {
+        header: { competitions: [{ competitors: [{ team: { abbreviation: 'BUF' }, score: '31' }, { team: { abbreviation: 'MIA' }, score: '14' }] }] },
+        scoringPlays: [
+          { period: { number: 1 }, clock: { displayValue: '8:12' }, team: { abbreviation: 'BUF' }, text: 'Josh Allen 22-yd TD pass' },
+          { period: { number: 2 }, clock: { displayValue: '3:44' }, team: { abbreviation: 'SF' }, text: 'Unrelated play' }
+        ],
+        boxscore: { teams: [], players: [] }
+      },
+      { teamAbbr: 'BUF', week: 11, oppAbbr: 'MIA', oppName: 'Miami Dolphins' }
+    );
+    assert.equal(bufRecap?.sfScoringPlays?.length, 1, 'Bills recap must extract BUF scoring plays, not SF');
+    assert.ok(bufRecap?.sfScoringPlays?.[0]?.text.includes('Josh Allen'));
+
+    // 6f. All 31 non-SF data bundles: ZERO san-francisco-49ers OTC trade URL leaks, non-zero IR designation tracking across league
+    let leagueNonZeroIr = 0;
+    for (const t of ALL_NFL_TEAMS.filter(x => x.abbr !== 'SF')) {
+      const seasonal = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'teams', t.slug, 'seasonal.json'), 'utf8'));
+      const health = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'teams', t.slug, 'health.json'), 'utf8'));
+      const allTradeUrls = [
+        ...(seasonal?.tradeWarRoom?.completed2026Moves || []),
+        ...(seasonal?.tradeWarRoom?.tieredRumors || [])
+      ].map(m => String(m?.sourceUrl || ''));
+      for (const u of allTradeUrls) {
+        assert.equal(/overthecap\.com\/salary-cap\/san-francisco-49ers/i.test(u), false, `${t.abbr}: trade sourceUrl leaked 49ers OTC URL: ${u}`);
+      }
+      if (Number(health?.usedIrDesignations || 0) > 0) leagueNonZeroIr++;
+    }
+    assert.ok(leagueNonZeroIr >= 20, `Expected >=20 non-SF teams with live non-zero usedIrDesignations (got ${leagueNonZeroIr})`);
+  } finally {
+    setActiveTeamConfig('SF');
   }
 });
 

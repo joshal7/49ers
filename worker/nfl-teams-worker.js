@@ -26,8 +26,10 @@ import {
   TEAM_BY_SLUG,
   TEAM_REGISTRY,
   buildTeamCssVarsStyleBlock,
+  getTeamByAbbr,
   hasCrossTeam49ersLeak,
   isNflHubHost,
+  normalizeAnyTeamAbbr,
   resolveExplicitQueryTeam,
   resolveTeamConfig
 } from '../src/config/teamRegistry.js';
@@ -295,6 +297,11 @@ function rewriteHtmlForTeam(response, team, { isHubMode = false } = {}) {
         el.setInnerContent(team.brandName);
       }
     })
+    .on('#sheetEyebrow', {
+      element(el) {
+        el.setInnerContent(`${team.nickname} Dossier`);
+      }
+    })
     .on('main#mainView .card-title', {
       element(el) {
         el.setInnerContent(`Initializing ${team.brandName} Intelligence…`);
@@ -437,9 +444,11 @@ async function callGeminiSinglePass(
   return { ok: false, status: 502, error: lastError };
 }
 
-async function handleCachedEdgeGet(request, cacheTtlSec, fetcherFn) {
+async function handleCachedEdgeGet(request, teamAbbr, cacheTtlSec, fetcherFn) {
   const cache = typeof caches !== 'undefined' ? caches.default : null;
-  const cacheKey = new Request(request.url, { method: 'GET' });
+  const scopedUrl = new URL(request.url);
+  if (teamAbbr) scopedUrl.searchParams.set('__team', String(teamAbbr).toUpperCase());
+  const cacheKey = new Request(scopedUrl.toString(), { method: 'GET' });
   if (cache) {
     const hit = await cache.match(cacheKey);
     if (hit) return hit;
@@ -452,6 +461,43 @@ async function handleCachedEdgeGet(request, cacheTtlSec, fetcherFn) {
     return cloned;
   }
   return resp;
+}
+
+function decodeWorkerXml(str = '') {
+  return String(str || '')
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;|&#x27;/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function parseWorkerRotoWireTeamInactives(html = '', teamCfg = null) {
+  if (!html || !teamCfg) return { officialPosted: false, inactives: [], sourceUrl: 'https://www.rotowire.com/football/inactives.php', sourceLabel: 'RotoWire NFL Inactives' };
+  const nickEsc = String(teamCfg.nickname || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const fullEsc = String(teamCfg.fullName || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const secRe = new RegExp(`(?:${fullEsc}|${nickEsc})[\\s\\S]{0,4500}`, 'i');
+  const m = html.match(secRe);
+  if (!m) return { officialPosted: false, inactives: [], sourceUrl: 'https://www.rotowire.com/football/inactives.php', sourceLabel: 'RotoWire NFL Inactives' };
+  const names = [];
+  const seen = new Set();
+  for (const pm of m[0].matchAll(/\/football\/player\/[^"]+"[^>]*>([^<]{4,40})<\/a>/gi)) {
+    const nm = decodeWorkerXml(pm[1]);
+    if (!nm || seen.has(nm.toLowerCase())) continue;
+    seen.add(nm.toLowerCase());
+    names.push(nm);
+    if (names.length >= 10) break;
+  }
+  return {
+    officialPosted: names.length >= 3,
+    inactives: names,
+    sourceUrl: 'https://www.rotowire.com/football/inactives.php',
+    sourceLabel: 'RotoWire NFL Inactives'
+  };
 }
 
 export default {
@@ -545,9 +591,12 @@ export default {
 
     // 4. Short-TTL Edge-Cached Live Wire (0 KV writes — uses unlimited `caches.default`!)
     if (request.method === 'GET' && url.pathname === '/api/live-wire') {
-      return handleCachedEdgeGet(request, 60, async () => {
-        const [rssXml, espnNews] = await Promise.all([
+      return handleCachedEdgeGet(request, team.abbr, 60, async () => {
+        const [rssXml, pfrXml, espnNews] = await Promise.all([
           fetch(team.clubRssUrls[0], { signal: AbortSignal.timeout(6500) })
+            .then(r => (r.ok ? r.text() : ''))
+            .catch(() => ''),
+          fetch(`https://www.profootballrumors.com/${team.otcSlug}/feed`, { signal: AbortSignal.timeout(5500) })
             .then(r => (r.ok ? r.text() : ''))
             .catch(() => ''),
           fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${team.espnId}&limit=15`, {
@@ -557,7 +606,8 @@ export default {
             .catch(() => null)
         ]);
         const items = [];
-        const teamTerms = [team.nickname, team.city, ...(team.aliases || [])]
+        const seenUrls = new Set();
+        const teamTerms = [team.nickname, ...(team.keywordRules?.excludeGenericCity ? [] : [team.city]), ...(team.keywordRules?.requiredNicknames || []), ...(team.aliases || [])]
           .filter(Boolean)
           .map(s => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
         const teamMentionRe = teamTerms.length ? new RegExp(`\\b(?:${teamTerms.join('|')})\\b`, 'i') : null;
@@ -594,6 +644,7 @@ export default {
           if (teamCats.length >= 6 && teamMentionRe && !teamMentionRe.test(`${a.headline} ${a.description || ''}`)) {
             continue;
           }
+          seenUrls.add(a.links.web.href);
           items.push({
             id: `${team.abbr.toLowerCase()}_ew_${a.dataSourceIdentifier || a.id || ''}`,
             type: a.type === 'Media' ? 'video' : 'article',
@@ -604,6 +655,57 @@ export default {
             publishedAt: a.published || new Date().toISOString(),
             outletName: 'ESPN',
             author: a.byline || 'ESPN'
+          });
+        }
+        // Parse Official Club News RSS into live wire
+        for (const m of (rssXml || '').matchAll(/<item\b[\s\S]*?<\/item>/gi)) {
+          if (items.length >= 35) break;
+          const b = m[0];
+          const title = decodeWorkerXml((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+          const link = decodeWorkerXml((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
+          if (!title || !link || !/^https:\/\//i.test(link) || seenUrls.has(link)) continue;
+          seenUrls.add(link);
+          const summary = decodeWorkerXml((b.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '').slice(0, 220);
+          const pubRaw = decodeWorkerXml((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
+          const img = ((b.match(/<media:content[^>]*url="([^"]+)"/i) || b.match(/<enclosure[^>]*url="([^"]+)"/i) || [])[1] || '').replace(/&amp;/g, '&');
+          const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
+          items.push({
+            id: `${team.abbr.toLowerCase()}_clubrss_${items.length}`,
+            type: 'article',
+            title,
+            summary,
+            url: link,
+            imageUrl: /^https:\/\//i.test(img) ? img : '',
+            publishedAt: Number.isFinite(pubMs) ? new Date(pubMs).toISOString() : new Date().toISOString(),
+            outletId: `${team.slug}_official`,
+            outletName: `${team.clubDomain} Official`,
+            author: `${team.clubDomain} Official`,
+            trustTier: 1
+          });
+        }
+        // Parse Pro Football Rumors team feed into live wire
+        for (const m of (pfrXml || '').matchAll(/<item\b[\s\S]*?<\/item>/gi)) {
+          if (items.length >= 45) break;
+          const b = m[0];
+          const title = decodeWorkerXml((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+          const link = decodeWorkerXml((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
+          if (!title || !link || !/^https:\/\//i.test(link) || seenUrls.has(link)) continue;
+          seenUrls.add(link);
+          const summary = decodeWorkerXml((b.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '').slice(0, 220);
+          const pubRaw = decodeWorkerXml((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
+          const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
+          items.push({
+            id: `${team.abbr.toLowerCase()}_pfrlive_${items.length}`,
+            type: 'article',
+            title,
+            summary,
+            url: link,
+            imageUrl: '',
+            publishedAt: Number.isFinite(pubMs) ? new Date(pubMs).toISOString() : new Date().toISOString(),
+            outletId: 'pro_football_rumors',
+            outletName: 'Pro Football Rumors',
+            author: 'Pro Football Rumors',
+            trustTier: 2
           });
         }
         return jsonResp(
@@ -620,20 +722,63 @@ export default {
       });
     }
 
-    // 5. Short-TTL Edge-Cached Game-Day Inactives (0 KV writes!)
+    // 4b. Shortened URL Expander (0 KV writes — uses unlimited `caches.default`)
+    if (request.method === 'POST' && url.pathname === '/api/expand-urls') {
+      const body = await request.json().catch(() => null);
+      const rawUrls = Array.isArray(body?.urls) ? body.urls.slice(0, 12) : [];
+      const expanded = {};
+      await Promise.all(
+        rawUrls.map(async u => {
+          const clean = String(u || '').trim();
+          if (!/^https:\/\/(?:t\.co|dlvr\.it|bit\.ly|tinyurl\.com|ow\.ly|buff\.ly)\//i.test(clean)) return;
+          try {
+            const res = await fetch(clean, { method: 'HEAD', redirect: 'follow', signal: AbortSignal.timeout(4500) });
+            if (res?.url && /^https:\/\//i.test(res.url)) {
+              expanded[clean] = res.url;
+            }
+          } catch {}
+        })
+      );
+      return jsonResp({ ok: true, expanded }, 200, cors);
+    }
+
+    // 5. Short-TTL Edge-Cached Game-Day Inactives (0 KV writes! Resolves BOTH active team & opponent)
     if (request.method === 'GET' && url.pathname === '/api/gameday-inactives') {
-      return handleCachedEdgeGet(request, 120, async () => {
-        const injJson = await fetch(
-          `https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${team.espnId}`,
-          { signal: AbortSignal.timeout(6500) }
-        )
-          .then(r => (r.ok ? r.json() : null))
-          .catch(() => null);
+      return handleCachedEdgeGet(request, team.abbr, 120, async () => {
+        const teamsParam = String(url.searchParams.get('teams') || team.abbr)
+          .split(',')
+          .map(s => normalizeAnyTeamAbbr(s.trim()))
+          .filter(Boolean);
+        const primaryAbbr = teamsParam[0] || team.abbr;
+        const oppAbbr = teamsParam[1] && teamsParam[1] !== primaryAbbr ? teamsParam[1] : '';
+        const primaryTeam = getTeamByAbbr(primaryAbbr) || team;
+        const oppTeam = oppAbbr ? getTeamByAbbr(oppAbbr) : null;
+
+        const [injJson, rotoHtml] = await Promise.all([
+          fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${primaryTeam.espnId}`, {
+            signal: AbortSignal.timeout(6500)
+          })
+            .then(r => (r.ok ? r.json() : null))
+            .catch(() => null),
+          fetch('https://www.rotowire.com/football/inactives.php', {
+            signal: AbortSignal.timeout(6500),
+            headers: { 'User-Agent': 'Mozilla/5.0 (compatible; NFLFaithfulBot/1.0)' }
+          })
+            .then(r => (r.ok ? r.text() : ''))
+            .catch(() => '')
+        ]);
+
+        const sfInactives = parseWorkerRotoWireTeamInactives(rotoHtml, primaryTeam);
+        const oppInactives = oppTeam ? parseWorkerRotoWireTeamInactives(rotoHtml, oppTeam) : null;
+
         return jsonResp(
           {
             ok: true,
-            teamAbbr: team.abbr,
+            teamAbbr: primaryTeam.abbr,
+            oppAbbr: oppTeam?.abbr || '',
             fetchedAt: new Date().toISOString(),
+            sf: sfInactives,
+            opp: oppInactives,
             injuries: injJson?.injuries || []
           },
           200,
@@ -705,6 +850,10 @@ export default {
         }
 
         if (body.seedData || body.seedRawText) {
+          const seedCheckText = `${body.seedRawText || ''} ${JSON.stringify(body.seedData || '')}`;
+          if (hasCrossTeam49ersLeak(seedCheckText, team)) {
+            return jsonResp({ error: 'Rejected cross-team contamination in daily brief seed' }, 422, cors);
+          }
           const seeded = {
             teamAbbr: team.abbr,
             cycleKey,

@@ -34,13 +34,17 @@ export function renderSpiderChartHtml(spiderProfile, playerName = '') {
   };
 
   // Concentric reference polygons at 25th, 50th (average), 75th, 100th percentiles
+  const gradId = `spiderGrad_${String(playerName || 'p')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .slice(0, 20)}_${n}`;
   const rings = [25, 50, 75, 100].map(level => {
     const pts = axes
       .map((_, i) => pointFor(i, level).map(v => v.toFixed(1)).join(','))
       .join(' ');
     const isAvg = level === 50;
     return `<polygon points="${pts}" fill="none" stroke="${
-      isAvg ? '#B3995D' : 'rgba(179,153,93,0.22)'
+      isAvg ? 'var(--gold)' : 'rgba(var(--secondary-rgb, 179, 153, 93), 0.24)'
     }" stroke-width="${isAvg ? '1.4' : '1'}" ${isAvg ? 'stroke-dasharray="3 3"' : ''}/>`;
   });
 
@@ -78,8 +82,8 @@ export function renderSpiderChartHtml(spiderProfile, playerName = '') {
 
   const dots = axes.map((ax, i) => {
     const [px, py] = pointFor(i, ax.percentile);
-    const dotColor = ax.percentile >= 80 ? '#10B981' : ax.percentile >= 45 ? '#E5CF96' : '#EF4444';
-    return `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="3.8" fill="${dotColor}" stroke="#0B0D10" stroke-width="1.3"/>`;
+    const dotColor = ax.percentile >= 80 ? '#10B981' : ax.percentile >= 45 ? 'var(--gold-bright)' : '#EF4444';
+    return `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="3.8" fill="${dotColor}" stroke="var(--bg-primary, #0B0D10)" stroke-width="1.3"/>`;
   });
 
   const rasScore = Number(spiderProfile.compositeRas || 0).toFixed(2);
@@ -153,7 +157,7 @@ export function renderSpiderChartHtml(spiderProfile, playerName = '') {
       <div class="spider-header">
         <div>
           <div class="sub-label">Positional Athletic Percentiles (${escapeHtml(spiderProfile.posGroup)})</div>
-          <div class="spider-source-note">${escapeHtml(spiderProfile.sourceType)} • Dashed Gold = 50th Pct NFL Avg</div>
+          <div class="spider-source-note">${escapeHtml(spiderProfile.sourceType)} • Dashed Line = 50th Pct NFL Avg</div>
         </div>
         <span class="badge ${rasClass} mono">RAS ${rasScore} / 10</span>
       </div>
@@ -161,14 +165,14 @@ export function renderSpiderChartHtml(spiderProfile, playerName = '') {
       <div class="spider-svg-wrap">
         <svg viewBox="0 0 ${size} ${size}" class="spider-svg" role="img" aria-label="${escapeHtml(playerName)} athletic percentile radar chart">
           <defs>
-            <radialGradient id="sfSpiderGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#D11919" stop-opacity="0.52"/>
-              <stop offset="100%" stop-color="#AA0000" stop-opacity="0.26"/>
+            <radialGradient id="${gradId}" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="var(--scarlet-bright)" stop-opacity="0.52"/>
+              <stop offset="100%" stop-color="var(--scarlet)" stop-opacity="0.26"/>
             </radialGradient>
           </defs>
           ${rings.join('')}
           ${spokes.join('')}
-          <polygon points="${polyPoints}" fill="url(#sfSpiderGrad)" stroke="#E5CF96" stroke-width="2.1"/>
+          <polygon points="${polyPoints}" fill="url(#${gradId})" stroke="var(--gold-bright)" stroke-width="2.1"/>
           ${dots.join('')}
           ${labels.join('')}
         </svg>

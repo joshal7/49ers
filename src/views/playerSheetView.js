@@ -1055,7 +1055,7 @@ function renderHealthTab(
       appData?.meta?.currentWeek ||
       1
   );
-  const byeWeek = Number(appData?.health?.byeWeek || 8);
+  const byeWeek = Number(appData?.health?.byeWeek || 0) || null;
   const isEligibleByStatus = isPlayerEligibleForInjuryNews(p, { currentWeek, byeWeek });
 
   const nowMs = Date.now();

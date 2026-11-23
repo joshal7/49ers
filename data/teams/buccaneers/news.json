@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:48:14.841Z",
+  "updatedAt": "2026-11-23T06:25:04.523Z",
   "dailyTopNewsBrief": {
     "id": "brief_tb_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -127,7 +127,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.79,
+      "breakingPriority": 0.671,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -137,7 +137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.848
+      "storyRank": 5.3544
     },
     {
       "id": "tb_vid_973d82765aee",
@@ -161,7 +161,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.626,
+      "breakingPriority": 0.531,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -171,7 +171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.8826
+      "storyRank": 4.0179
     },
     {
       "id": "tb_vid_0cf27068bbfe",
@@ -195,7 +195,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.573,
+      "breakingPriority": 0.486,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -205,7 +205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3793
+      "storyRank": 3.6554
     },
     {
       "id": "tb_vid_a64b08f04e11",
@@ -239,7 +239,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7193
+      "storyRank": 2.9117
     },
     {
       "id": "tb_vid_c4e37877baf8",
@@ -273,7 +273,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5398
+      "storyRank": 2.7926
     },
     {
       "id": "tb_vid_f0e3a63f825b",
@@ -307,7 +307,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4972
+      "storyRank": 2.7641
     },
     {
       "id": "tb_rss_de56872ef1bc",
@@ -340,7 +340,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4867
+      "storyRank": 2.7571
     },
     {
       "id": "tb_espn_9463dd92e41c3",
@@ -348,6 +348,7 @@
       "title": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "summary": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/e00e71c3-755b-4a2c-853f-3367f6e4ff36/e00e71c3-755b-4a2c-853f-3367f6e4ff36.jpg",
+      "imageCaption": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "imageAlt": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "publishedAt": "2026-11-22T21:53:57Z",
       "url": "https://www.espn.com/video/clip/_/id/50565430/game-highlights",
@@ -373,7 +374,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3348
+      "storyRank": 2.6547
     },
     {
       "id": "tb_vid_2244ed4cf550",
@@ -407,7 +408,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2698
+      "storyRank": 1.9013
     },
     {
       "id": "tb_rss_237ca059efce",
@@ -440,7 +441,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0468
+      "storyRank": 1.7348
     },
     {
       "id": "tb_rss_368f369f4cca",
@@ -473,14 +474,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9112
+      "storyRank": 1.6318
     },
     {
       "id": "tb_espn_aea129f88ee07",
       "type": "article",
       "title": "Jared Goff throws 2 TDs, Jahmyr Gibbs runs for 2 more and Lions beat Bucs 31-21 for 6th straight win",
       "summary": "— The Detroit Lions are finding their groove, leaning on a balanced attack offensively and a steadily improving defense that hasn't been hurt by the losses of",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873072.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/e00e71c3-755b-4a2c-853f-3367f6e4ff36/e00e71c3-755b-4a2c-853f-3367f6e4ff36.jpg",
+      "imageCaption": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "imageAlt": "Jared Goff throws 2 TDs, Jahmyr Gibbs runs for 2 more and Lions beat Bucs 31-21 for 6th straight win",
       "publishedAt": "2026-11-22T22:33:44Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873072",
@@ -506,7 +508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9408
+      "storyRank": 0.7352
     },
     {
       "id": "tb_vid_94a7d70ab992",
@@ -540,7 +542,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7681
+      "storyRank": 0.6188
     },
     {
       "id": "tb_rss_5291c0dcf3cc",
@@ -573,7 +575,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7278
+      "storyRank": 0.5907
     },
     {
       "id": "tb_espn_1e1dd9a4b0dad",
@@ -581,6 +583,7 @@
       "title": "Sources: Bucs' Baker Mayfield has plantar fasciitis, determined to keep playing",
       "summary": "Baker Mayfield is dealing with a painful case of plantar fasciitis, sources told NFL Network, an injury that the Bucs QB is determined to play through.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1102/r1739889_1296x729_16-9.jpg",
+      "imageCaption": "Baker Mayfield [1296x729]",
       "imageAlt": "Sources: Bucs' Baker Mayfield has plantar fasciitis, determined to keep playing",
       "publishedAt": "2026-11-22T16:35:18Z",
       "url": "https://www.espn.com/nfl/story/_/id/50550285/sources-buccaneers-qb-baker-mayfield-plantar-fasciitis",
@@ -606,7 +609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4081
+      "storyRank": 0.354
     },
     {
       "id": "tb_rss_554726f4632d",
@@ -639,7 +642,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3802
+      "storyRank": 0.3319
     },
     {
       "id": "tb_vid_87d7ec130f0a",
@@ -673,7 +676,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3178
+      "storyRank": 0.2818
     },
     {
       "id": "tb_rss_f3683165a33c",
@@ -706,7 +709,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1138
+      "storyRank": 0.1072
     },
     {
       "id": "tb_rss_44ebfb224a14",
@@ -739,7 +742,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1138
+      "storyRank": 0.1072
+    },
+    {
+      "id": "tb_pfr_8c083815b28f",
+      "type": "article",
+      "title": "Buccaneers QB Baker Mayfield To Play In Week 11",
+      "summary": "Buccaneers quarterback Baker Mayfield’s status for Week 11 was up in the air, but ESPN&#8217;s Ian Rapoport says Mayfield will play (Tom Pelissero of The Ringer originally reported the signal-caller would suit up against the Lions unless he",
+      "imageUrl": "",
+      "publishedAt": "2026-11-21T18:17:24.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/buccaneers-qb-baker-mayfield-on-track-to-start-in-week-11",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tampa-bay-buccaneers",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0845
     },
     {
       "id": "tb_tx_3de3f37fe9b8",
@@ -773,7 +808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.071
+      "storyRank": 0.068
     },
     {
       "id": "tb_rss_75abb42efff1",
@@ -806,7 +841,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0499
+      "storyRank": 0.0482
     },
     {
       "id": "tb_vid_7ae55a4fdc85",
@@ -840,7 +875,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0486
+      "storyRank": 0.047
     },
     {
       "id": "tb_rss_fc98f2c92677",
@@ -873,7 +908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0455
+      "storyRank": 0.044
     },
     {
       "id": "tb_rss_d7eb90743a83",
@@ -906,7 +941,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0451
+      "storyRank": 0.0437
     },
     {
       "id": "tb_rss_3e0bd2d6ba22",
@@ -939,7 +974,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0435
+      "storyRank": 0.0422
     },
     {
       "id": "tb_rss_3cb740f68193",
@@ -972,14 +1007,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.0404
     },
     {
       "id": "tb_espn_dac2aef086042",
       "type": "article",
       "title": "Lions moving on after Hutchinson joins Campbell on IR and they face Bucs aiming for 6th straight win",
       "summary": "— Dan Campbell does not want to let the Detroit Lions become miserable in the Motor City by lamenting the losses of All-Pro linebacker",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873072.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/e00e71c3-755b-4a2c-853f-3367f6e4ff36/e00e71c3-755b-4a2c-853f-3367f6e4ff36.jpg",
+      "imageCaption": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
       "imageAlt": "Lions moving on after Hutchinson joins Campbell on IR and they face Bucs aiming for 6th straight win",
       "publishedAt": "2026-11-19T23:23:33Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873072",
@@ -1005,7 +1041,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0332
+      "storyRank": 0.0324
     },
     {
       "id": "tb_rss_7ca4ff45ce41",
@@ -1038,7 +1074,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0323
+      "storyRank": 0.0315
     },
     {
       "id": "tb_rss_a8c3ceb88e82",
@@ -1071,7 +1107,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0795
+      "storyRank": 0.0777
     },
     {
       "id": "tb_vid_a9aa8e043d2b",
@@ -1105,7 +1141,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.0312
     },
     {
       "id": "tb_vid_5bbbfbb66975",
@@ -1139,7 +1175,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0317
+      "storyRank": 0.0309
     },
     {
       "id": "tb_vid_22ae2d5c5c47",
@@ -1173,7 +1209,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0315
+      "storyRank": 0.0308
     },
     {
       "id": "tb_vid_1af94bfae636",
@@ -1207,7 +1243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0077
     },
     {
       "id": "tb_vid_238b0f22dd5b",
@@ -1241,7 +1277,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0302
+      "storyRank": 0.0295
     },
     {
       "id": "tb_rss_04dd3b93edfe",
@@ -1274,7 +1310,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
+      "storyRank": 0.0285
     },
     {
       "id": "tb_vid_f10da9dc5c0a",
@@ -1308,7 +1344,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0274
+      "storyRank": 0.0268
+    },
+    {
+      "id": "tb_rss_5e70146bc6fd",
+      "type": "article",
+      "title": "Alonso's Mia Garcia Named Finalist For NFL Latino Youth Honors Award",
+      "summary": "Alonso High School flag football standout selected as NFC South nominee",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/grrzrvuw99sr21ksetpy.png",
+      "imageAlt": "Alonso's Mia Garcia Named Finalist For NFL Latino Youth Honors Award",
+      "publishedAt": "2026-11-19T10:00:00.000Z",
+      "url": "https://www.buccaneers.com/news/mia-garcia-named-finalist-nfl-latino-youth-honors-award",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.026
     },
     {
       "id": "tb_rss_d573bace9482",
@@ -1341,7 +1410,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
+      "storyRank": 0.0219
     },
     {
       "id": "tb_rss_4c49904bc7a3",
@@ -1374,7 +1443,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0566
+      "storyRank": 0.0556
     },
     {
       "id": "tb_vid_7bbfcab98571",
@@ -1408,7 +1477,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0216
     },
     {
       "id": "tb_vid_7a3dbfb7489c",
@@ -1442,7 +1511,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0203
+      "storyRank": 0.02
     },
     {
       "id": "tb_rss_d025ecec36e8",
@@ -1475,7 +1544,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0198
+      "storyRank": 0.0195
+    },
+    {
+      "id": "tb_pfr_570423ef835d",
+      "type": "article",
+      "title": "Buccaneers QB Baker Mayfield Could Miss Week 11",
+      "summary": "The Buccaneers could be without Baker Mayfield coming out of their Week 10 bye. The veteran quarterback has a foot strain that “seems to be trending” toward keeping him out of Sunday’s matchup in Detroit, per NFL Network’s Ian Rapoport. May",
+      "imageUrl": "",
+      "publishedAt": "2026-11-18T05:10:08.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/buccaneers-qb-baker-mayfield-could-miss-week-11",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tampa-bay-buccaneers",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0156
     },
     {
       "id": "tb_rss_4a89c050d6d3",
@@ -1508,7 +1609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0156
     },
     {
       "id": "tb_rss_a510d7c86754",
@@ -1541,7 +1642,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0157
+      "storyRank": 0.0155
     },
     {
       "id": "tb_rss_54441f423df0",
@@ -1574,7 +1675,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.0153
+    },
+    {
+      "id": "tb_pfr_7159479bf80f",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/16/26",
+      "summary": "Today&#8217;s practice squad moves: Indianapolis Colts Signed: WR Samori Toure Las Vegas Raiders Signed: QB Brett Rypien Released: DE Bralen Trice Philadelphia Eagles Signed: RB Jaydon Blue, LB Chance Campbell, TE Hayden Rucci Released: DB ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T01:04:36.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-16-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tampa-bay-buccaneers",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0116
     },
     {
       "id": "tb_vid_8bf95dfc1bd2",
@@ -1608,7 +1741,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.013
     },
     {
       "id": "tb_rss_126add23431e",
@@ -1641,7 +1774,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0128
     },
     {
       "id": "tb_rss_2db6ff022a09",
@@ -1674,7 +1807,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0127
     },
     {
       "id": "tb_rss_e314669a29ae",
@@ -1707,7 +1840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0127
     },
     {
       "id": "tb_vid_fd399165d73a",
@@ -1744,6 +1877,38 @@
       "storyRank": 0.0032
     },
     {
+      "id": "tb_pfr_444e3a165aeb",
+      "type": "article",
+      "title": "Buccaneers Sign QB Cooper Rush",
+      "summary": "In need of healthy depth at the quarterback spot, the Buccaneers have lined up an addition. Cooper Rush is being added to the fold. Rush signed with Tampa Bay on Monday, per an announcement from his agency. This is a practice squad deal, NF",
+      "imageUrl": "",
+      "publishedAt": "2026-11-16T17:09:35.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/buccaneers-sign-qb-cooper-rush",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tampa-bay-buccaneers",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0108
+    },
+    {
       "id": "tb_tx_0a1b5e64a45c",
       "type": "tweet",
       "title": "Buccaneers roster move: Signed QB Easton Stick from the practice squad to the active roster. Signed QB Cooper Rush and WR David Sills V to the practice squad. Released WR David Sills V. Released CB Brandon Johnson from the practice squad.",
@@ -1775,7 +1940,71 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0115
+      "storyRank": 0.0113
+    },
+    {
+      "id": "tb_pfr_2801768185c8",
+      "type": "article",
+      "title": "Buccaneers Received &#8216;Strong Interest&#8217; In DT A&#8217;Shawn Robinson",
+      "summary": "The Buccaneers&#8217; 1-5 record to start the regular season positioned them as potential sellers ahead of last week&#8217;s trade deadline. A 2-1 stretch after Baker Mayfield&#8217;s return kept their NFC South hopes alive and precluded tr",
+      "imageUrl": "",
+      "publishedAt": "2026-11-16T03:47:11.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/buccaneers-received-strong-interest-in-dt-ashawn-robinson",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tampa-bay-buccaneers",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0096
+    },
+    {
+      "id": "tb_pfr_cccdbcf36e07",
+      "type": "article",
+      "title": "Bucs QB Baker Mayfield&#8217;s Week 11 Availability In Doubt",
+      "summary": "The injury bug continues to bite Bucs quarterback Baker Mayfield in 2026. After missing three games due to the dislocated thumb he suffered in Week 3, the 31-year-old returned in Week 7, but an injury to his foot and ankle area has put his ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-15T17:03:58.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/bucs-qb-baker-mayfields-week-11-availability-in-doubt",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tampa-bay-buccaneers",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0088
     },
     {
       "id": "tb_espn_0094a682d16ef",
@@ -1783,6 +2012,7 @@
       "title": "Sources: Baker Mayfield's status uncertain for Bucs' Week 11 game vs. Lions",
       "summary": "Baker Mayfield's status against the Lions in Week 11 is in question because of an injury he suffered to his foot and ankle area, sources told NFL Network.",
       "imageUrl": "https://a.espncdn.com/photo/2026/0921/r1719853_1296x729_16-9.jpg",
+      "imageCaption": "Baker Mayfield [1296x729]",
       "imageAlt": "Sources: Baker Mayfield's status uncertain for Bucs' Week 11 game vs. Lions",
       "publishedAt": "2026-11-15T16:43:34Z",
       "url": "https://www.espn.com/nfl/story/_/id/50486637/sources-baker-mayfield-status-uncertain-vs-lions",
@@ -1808,7 +2038,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0101
+      "storyRank": 0.01
     },
     {
       "id": "tb_vid_1f1b411076a1",
@@ -1842,7 +2072,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0086
+      "storyRank": 0.0085
     },
     {
       "id": "tb_vid_651af7de1f7c",
@@ -1876,7 +2106,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084
+      "storyRank": 0.0083
     },
     {
       "id": "tb_vid_6cd03fc26adc",
@@ -1910,7 +2140,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0071
     },
     {
       "id": "tb_vid_f7df9496a0ad",
@@ -1944,7 +2174,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.007
+      "storyRank": 0.0069
+    },
+    {
+      "id": "tb_pfr_8c297f35434f",
+      "type": "article",
+      "title": "Bruce Arians Interested In NFL Head Coaching Job",
+      "summary": "Bruce Arians cited health reasons when he stepped down as the Buccaneers&#8217; head coach in 2022 and retired from the NFL for a second time. But successful open-heart surgery has revitalized the 74-year-old&#8217;s interest in returning t",
+      "imageUrl": "",
+      "publishedAt": "2026-11-12T21:38:19.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/bruce-arians-interested-in-nfl-head-coaching-job",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/tampa-bay-buccaneers",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0056
     },
     {
       "id": "tb_vid_cd55225bfbb9",
@@ -2011,7 +2273,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0063
+      "storyRank": 0.0062
     },
     {
       "id": "tb_vid_b3ceeeedf07d",
@@ -2045,7 +2307,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0016
+      "storyRank": 0.0015
     },
     {
       "id": "tb_rss_c4594931e27a",
@@ -2078,7 +2340,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0247
+      "storyRank": 0.0245
     },
     {
       "id": "tb_vid_6b286706aa56",
@@ -2112,7 +2374,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0056
     },
     {
       "id": "tb_vid_df6c70b256f9",
@@ -2246,7 +2508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.005
     },
     {
       "id": "tb_rss_ee960ff0a3c3",
@@ -2313,7 +2575,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0049
     },
     {
       "id": "tb_rss_f3c0e99d980b",
@@ -2449,6 +2711,39 @@
       "storyRank": 0.0045
     },
     {
+      "id": "tb_rss_dda90f35a0a5",
+      "type": "article",
+      "title": "Zyon McCollum's Vision in Zone Leads to Two-Pick Performance in Chicago",
+      "summary": "In Week Nine on Sunday Night Football, cornerback Zyon McCollum secured two interceptions from off coverage with patience and vision. He broke down the plays following the loss at Soldier Field",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/lrstusj8oelxfmwug7df.png",
+      "imageAlt": "Zyon McCollum's Vision in Zone Leads to Two-Pick Performance in Chicago",
+      "publishedAt": "2026-11-09T21:45:00.000Z",
+      "url": "https://www.buccaneers.com/news/zyon-mccollum-vision-zone-leads-two-pick-performance-chicago-week-9-2026",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0011
+    },
+    {
       "id": "tb_rss_7207ea27fa4a",
       "type": "article",
       "title": "Alex Anzalone: 'We Have a Lot to Fight For'",
@@ -2512,7 +2807,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0044
     },
     {
       "id": "tb_vid_00ac70801ea9",
@@ -2546,7 +2841,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0044
     },
     {
       "id": "tb_rss_80cc119cc106",
@@ -2580,39 +2875,6 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0043
-    },
-    {
-      "id": "tb_rss_7a8eb5166cd6",
-      "type": "article",
-      "title": "Bucs Rally But Fall to Bears in Turnover-Riddled Prime-Time Affair",
-      "summary": "Despite intercepting MVP candidate Caleb Williams four times, winning the ground-game battle and throwing for a season-high 226 net passing yards, the Buccaneers lost on Sunday night in Chicago, 27-24 thanks in part to their own miscues",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/kwb1utl1qyuawxr1n2id.jpg",
-      "imageAlt": "Bucs Rally But Fall to Bears in Turnover-Riddled Prime-Time Affair",
-      "publishedAt": "2026-11-09T05:45:00.000Z",
-      "url": "https://www.buccaneers.com/news/bucs-bears-week-9-recap-postgame-report-2026",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
     },
     {
       "id": "tb_vid_6bc67d2e2254",
@@ -2680,7 +2942,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.001
     },
     {
       "id": "tb_vid_8f646fa58b36",
@@ -2749,72 +3011,6 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0042
-    },
-    {
-      "id": "tb_rss_ef514cecd2e9",
-      "type": "article",
-      "title": "Rapid Reaction: Bears 27, Buccaneers 24",
-      "summary": "The Tampa Bay Buccaneers fell to the Chicago Bears 27-24 at Soldier Field in Week Nine during Sunday Night Football",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/saraekuka5faupoqepb9.jpg",
-      "imageAlt": "Rapid Reaction: Bears 27, Buccaneers 24",
-      "publishedAt": "2026-11-09T05:15:00.000Z",
-      "url": "https://www.buccaneers.com/news/bucs-lose-chicago-bears-week-9-2026-score-27-24",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
-    },
-    {
-      "id": "tb_rss_7c560755d495",
-      "type": "article",
-      "title": "5 Notes Against the Bears | Week 9",
-      "summary": "In the Buccaneers’ 27-24 loss to Chicago, five notes stood out for the visiting team",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/cmdbseegjachknhzv4nz.jpg",
-      "imageAlt": "5 Notes Against the Bears | Week 9",
-      "publishedAt": "2026-11-09T04:45:00.000Z",
-      "url": "https://www.buccaneers.com/news/bucs-bears-5-notes-nfl-week-9-2026",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.001
     },
     {
       "id": "tb_vid_b94eac85f2e3",
@@ -2903,39 +3099,6 @@
       "authorProfileUrl": "https://www.buccaneers.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
-    },
-    {
-      "id": "tb_rss_bdea0a080a30",
-      "type": "article",
-      "title": "Bucs vs. Bears SNF Game Blog | Week 9 2026",
-      "summary": "Get all the in-game updates, highlights, stats and analysis for the Tampa Bay Buccaneers' Week 9 game vs. the Chicago Bears",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/bsht86afgzbb4ujkfanb.jpg",
-      "imageAlt": "Bucs vs. Bears SNF Game Blog | Week 9 2026",
-      "publishedAt": "2026-11-09T04:30:00.000Z",
-      "url": "https://www.buccaneers.com/news/bucs-vs-bears-snf-game-blog-week-9-2026",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -3051,7 +3214,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0041
     },
     {
       "id": "tb_vid_94d149c10841",
@@ -3085,7 +3248,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0041
     },
     {
       "id": "tb_vid_4d14dc97df10",
@@ -3119,7 +3282,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0041
     },
     {
       "id": "tb_vid_80f697649488",
@@ -3153,7 +3316,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0041
     },
     {
       "id": "tb_vid_0b0cdc501d9d",
@@ -3187,7 +3350,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0041
     },
     {
       "id": "tb_vid_4b42b8b492d7",
@@ -3221,7 +3384,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0039
     },
     {
       "id": "tb_vid_f92810653d09",
@@ -3391,7 +3554,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.003
     },
     {
       "id": "tb_vid_a2c9b7abf915",
@@ -3595,7 +3758,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0029
+      "storyRank": 0.0028
     },
     {
       "id": "tb_tx_f351b06fca25",
@@ -3629,7 +3792,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.0027
     },
     {
       "id": "tb_vid_6ee9f260610f",
@@ -3768,6 +3931,42 @@
       "storyRank": 0.0024
     },
     {
+      "id": "tb_yt_6evN6yrebQk",
+      "type": "video",
+      "category": "film",
+      "videoId": "6evN6yrebQk",
+      "embeddable": true,
+      "title": "Jalon Daniels vs the Cowboys Week 5, 2026 Analysis",
+      "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
+      "imageUrl": "https://i.ytimg.com/vi/6evN6yrebQk/hqdefault.jpg",
+      "imageAlt": "Jalon Daniels vs the Cowboys Week 5, 2026 Analysis",
+      "publishedAt": "2026-10-09T17:48:15.000Z",
+      "url": "https://www.youtube.com/watch?v=6evN6yrebQk",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=6evN6yrebQk",
+      "outletId": "the_qb_school",
+      "outletName": "The QB School",
+      "reporterId": "the_qb_school",
+      "reporterName": "The QB School",
+      "author": "The QB School",
+      "authorHandle": "@TheQBSchool",
+      "authorProfileUrl": "https://x.com/theqbschool",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 92,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0002
+    },
+    {
       "id": "tb_rss_60dc96f5ea76",
       "type": "article",
       "title": "Bucs-Lions Inactives | Baker Mayfield Will Start",
@@ -3839,6 +4038,7 @@
       "title": "Bucs QB Baker Mayfield hopes to play Sunday despite foot injury: 'I feel ready'",
       "summary": "Buccaneers quarterback Baker Mayfield is hoping to play Sunday against the Lions after he sustained a foot injury two weeks ago against the Chicago Bears.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1748209_1296x729_16-9.jpg",
+      "imageCaption": "Baker Mayfield [1296x729]",
       "imageAlt": "Bucs QB Baker Mayfield hopes to play Sunday despite foot injury: 'I feel ready'",
       "publishedAt": "2026-11-19T21:21:24Z",
       "url": "https://www.espn.com/nfl/story/_/id/50533151/buccaneers-baker-mayfield-hopes-play-foot-injury",

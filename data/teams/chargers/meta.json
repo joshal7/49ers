@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:55:00.006Z",
+  "updatedAt": "2026-11-23T06:25:48.813Z",
   "teamAbbr": "LAC",
   "teamSlug": "chargers",
   "brandName": "Chargers Bolt Up",
@@ -32,7 +32,7 @@
     "prevPostUdfaEnd": "2026-05-17T23:59:59-07:00"
   },
   "teamStatus": {
-    "inPlayoffHunt": true,
+    "inPlayoffHunt": false,
     "playoffSeed": 14,
     "seasonConcluded": false
   },

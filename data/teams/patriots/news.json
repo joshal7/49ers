@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:49:59.672Z",
+  "updatedAt": "2026-11-23T06:25:17.067Z",
   "dailyTopNewsBrief": {
     "id": "brief_ne_1be117de4e67",
     "cycleKey": "2026-11-22@17ET",
@@ -107,11 +107,77 @@
   "clusteredBriefs": [],
   "rawStream": [
     {
+      "id": "ne_nfltr_0d9c4a970421",
+      "type": "article",
+      "title": "AFC Notes: Justin Herbert, Xavier Worthy, Chargers, Chiefs, Patriots",
+      "summary": "Chargers The Chargers got their first win of the season, the last of the 32 franchises to taste victory, and HC John Harbaugh noted the team got their smiles back, even if only temporarily. “I thought it was huge for us to come away with a ",
+      "imageUrl": "",
+      "imageAlt": "AFC Notes: Justin Herbert, Xavier Worthy, Chargers, Chiefs, Patriots",
+      "publishedAt": "2026-11-23T01:30:38.000Z",
+      "url": "https://nfltraderumors.co/afc-notes-justin-herbert-xavier-worthy-chargers-chiefs-patriots/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.5092
+    },
+    {
+      "id": "ne_pfr_d3775005498d",
+      "type": "article",
+      "title": "Pats, Cardinals, Ravens Could Pursue Daniel Jones",
+      "summary": "NOVEMBER 22: Despite having traded for Brissett, the Ravens remain a possible suitor for Jones, per ESPN&#8217;s Adam Schefter and Ian Rapoport. The duo expects Jones &#8212; assuming he clears waivers &#8212; to be patient and wait for the",
+      "imageUrl": "",
+      "publishedAt": "2026-11-22T17:25:06.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/pats-cardinals-could-pursue-daniel-jones",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-england-patriots",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.3397
+    },
+    {
       "id": "ne_espn_99b1e4513f880",
       "type": "article",
       "title": "How Patriots' top 10 earners have fared: A.J. Brown, Christian Gonzalez, more",
       "summary": "The Patriots' 5-5 record reflects what happens when a team's highest-paid players don't perform well. Let's look closer at the top 10 earners in New England.",
       "imageUrl": "https://a.espncdn.com/photo/2026/0910/r1714150_608x342_16-9.jpg",
+      "imageCaption": "A.J. Brown has 11 receptions for 128 yards this season, numbers he used to stack in a single game.",
       "imageAlt": "How Patriots' top 10 earners have fared: A.J. Brown, Christian Gonzalez, more",
       "publishedAt": "2026-11-22T11:59:26Z",
       "url": "https://www.espn.com/nfl/story/_/id/50544188/new-england-patriots-highest-paid-players-2026",
@@ -137,7 +203,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0697
+      "storyRank": 0.961
+    },
+    {
+      "id": "ne_pfr_bf0377c4bade",
+      "type": "article",
+      "title": "Patriots QB Drake Maye Suffers Fractured Fibula; WR A.J. Brown Out Multiple Weeks",
+      "summary": "Drake Maye’s right leg injury has been confirmed as a fractured fibula that will sideline the Patriots quarterback for most, if not all of the rest of the regular season, according to ESPN’s Mike Reiss and Adam Schefter. Surgery will not be",
+      "imageUrl": "",
+      "publishedAt": "2026-11-21T04:00:17.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/patriots-qb-drake-maye-suffers-fractured-fibula-wr-a-j-brown-out-multiple-weeks",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-england-patriots",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2125
     },
     {
       "id": "ne_vid_9ba2db3fb3b7",
@@ -171,7 +269,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2416
+      "storyRank": 0.2325
     },
     {
       "id": "ne_vid_16e155798697",
@@ -205,7 +303,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.232
+      "storyRank": 0.2235
     },
     {
       "id": "ne_espn_281429b2d7a67",
@@ -213,6 +311,7 @@
       "title": "Drake Maye ankle injury: Is the Patriots' season over? Can Tommy DeVito step up?",
       "summary": "If the QB doesn't return in 2026, New England faces an uphill battle against some of the NFL's best teams.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746769_608x342_16-9.jpg",
+      "imageCaption": "Drake Maye [608x342]",
       "imageAlt": "Drake Maye ankle injury: Is the Patriots' season over? Can Tommy DeVito step up?",
       "publishedAt": "2026-11-20T22:06:28Z",
       "url": "https://www.espn.com/nfl/story/_/id/50503981/drake-maye-ankle-injury-patriots-tommy-devito-stats",
@@ -238,7 +337,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2152
+      "storyRank": 0.2076
     },
     {
       "id": "ne_espn_5766af6285303",
@@ -246,6 +345,7 @@
       "title": "Patriots QB Drake Maye has fractured fibula, sources say",
       "summary": "Patriots quarterback Drake Maye has a fractured right fibula, and receiver A.J. Brown has a hamstring injury, sources told ESPN's Mike Reiss and Adam Schefter.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746589_1296x729_16-9.jpg",
+      "imageCaption": "Drake Maye [1296x729]",
       "imageAlt": "Patriots QB Drake Maye has fractured fibula, sources say",
       "publishedAt": "2026-11-20T19:36:45Z",
       "url": "https://www.espn.com/nfl/story/_/id/50542578/patriots-qb-drake-maye-fractured-fibula-sources-say",
@@ -271,7 +371,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2022
+      "storyRank": 0.1955
     },
     {
       "id": "ne_espn_d05c955fa4747",
@@ -279,6 +379,7 @@
       "title": "McAfee & Co. speculate who will replace injured Drake Maye",
       "summary": "McAfee & Co. speculate who will replace injured Drake Maye",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1120/ss_20261120_142826957_3751241/ss_20261120_142826957_3751241.jpg",
+      "imageCaption": "McAfee & Co. speculate who will replace injured Drake Maye",
       "imageAlt": "McAfee & Co. speculate who will replace injured Drake Maye",
       "publishedAt": "2026-11-20T19:36:23Z",
       "url": "https://www.espn.com/video/clip/_/id/50542714/mcafee-co-speculate-replace-injured-drake-maye",
@@ -304,7 +405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2022
+      "storyRank": 0.1954
     },
     {
       "id": "ne_vid_f51a611fe62a",
@@ -338,7 +439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1926
+      "storyRank": 0.1863
     },
     {
       "id": "ne_vid_6d03ffaccfc6",
@@ -372,7 +473,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1913
+      "storyRank": 0.1851
     },
     {
       "id": "ne_vid_ee07477295fd",
@@ -406,7 +507,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1405
+      "storyRank": 0.1368
     },
     {
       "id": "ne_vid_54e8ac100aeb",
@@ -440,7 +541,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0322
+      "storyRank": 0.0315
     },
     {
       "id": "ne_vid_0ec7a6491d4d",
@@ -474,7 +575,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1232
+      "storyRank": 0.1202
     },
     {
       "id": "ne_vid_4dec6b92819b",
@@ -508,7 +609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1223
+      "storyRank": 0.1194
     },
     {
       "id": "ne_vid_0b9ea92bbba6",
@@ -542,7 +643,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1188
+      "storyRank": 0.1161
+    },
+    {
+      "id": "ne_rss_69628bef4d2a",
+      "type": "article",
+      "title": "Robert Kraft, Bill Belichick Advance in Pro Football Hall of Fame Selection Process",
+      "summary": "Robert Kraft and Bill Belichick have advanced in the selection process for the Pro Football Hall of Fame Class of 2027.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/patriots/bilv5jhlvfyjki431jhe.jpg",
+      "imageAlt": "Robert Kraft, Bill Belichick Advance in Pro Football Hall of Fame Selection Process",
+      "publishedAt": "2026-11-19T17:00:00.000Z",
+      "url": "https://www.patriots.com/news/robert-kraft-bill-belichick-advance-in-pro-football-hall-of-fame-selection-process",
+      "outletId": "patriots_official",
+      "outletName": "patriots.com Official",
+      "reporterId": "patriots_official",
+      "reporterName": "patriots.com Official",
+      "author": "patriots.com Official",
+      "authorHandle": "@Patriots",
+      "authorProfileUrl": "https://www.patriots.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.116
     },
     {
       "id": "ne_vid_23123a36b00a",
@@ -576,7 +710,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1176
+      "storyRank": 0.1149
     },
     {
       "id": "ne_rss_5e63bd85dc30",
@@ -609,7 +743,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1078
+      "storyRank": 0.1054
     },
     {
       "id": "ne_vid_be20fae64efc",
@@ -643,7 +777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0853
+      "storyRank": 0.0837
     },
     {
       "id": "ne_vid_8b314dfe91e5",
@@ -677,7 +811,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0853
+      "storyRank": 0.0837
     },
     {
       "id": "ne_espn_dede4a78d0e8e",
@@ -685,6 +819,7 @@
       "title": "NFL flexes Raiders-Browns to replace Pats-Chargers in SNF slot for Week 12",
       "summary": "The NFL has flexed the Raiders-Browns Week 12 game into NBC's \"Sunday Night Football\" slot.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746654_1296x729_16-9.jpg",
+      "imageCaption": "Quarterback Fernando Mendoza faces a stiff test in Week 11 on the road against the Broncos.",
       "imageAlt": "NFL flexes Raiders-Browns to replace Pats-Chargers in SNF slot for Week 12",
       "publishedAt": "2026-11-18T11:41:02Z",
       "url": "https://www.espn.com/nfl/story/_/id/50512634/nfl-flexes-raiders-browns-snf-slot-week-12",
@@ -710,7 +845,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.078
+      "storyRank": 0.0766
     },
     {
       "id": "ne_rss_945fcd3e5ab0",
@@ -743,7 +878,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0651
+      "storyRank": 0.0641
     },
     {
       "id": "ne_vid_8eb36f22f7d0",
@@ -777,7 +912,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0646
+      "storyRank": 0.0636
     },
     {
       "id": "ne_vid_59cc8967a48d",
@@ -811,7 +946,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0643
+      "storyRank": 0.0633
     },
     {
       "id": "ne_rss_d529e83f8748",
@@ -844,7 +979,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0642
+      "storyRank": 0.0632
     },
     {
       "id": "ne_vid_e22bb780778a",
@@ -878,7 +1013,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0626
+      "storyRank": 0.0616
     },
     {
       "id": "ne_espn_d75fd66268b58",
@@ -886,6 +1021,7 @@
       "title": "Stephen A. lays out his concerns about Pats, Mike Vrabel",
       "summary": "Stephen A. lays out his concerns about Pats, Mike Vrabel",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1117/ss_20261117_104928374_3746307655/ss_20261117_104928374_3746307655.jpg",
+      "imageCaption": "Stephen A. lays out his concerns about Pats, Mike Vrabel",
       "imageAlt": "Stephen A. lays out his concerns about Pats, Mike Vrabel",
       "publishedAt": "2026-11-17T16:04:51Z",
       "url": "https://www.espn.com/video/clip/_/id/50511349/stephen-lays-concerns-pats-mike-vrabel",
@@ -911,7 +1047,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0623
+      "storyRank": 0.0614
+    },
+    {
+      "id": "ne_pfr_08f8828837ae",
+      "type": "article",
+      "title": "Patriots Fear QB Drake Maye Suffered Ankle Fracture",
+      "summary": "Drake Maye was injured on the Patriots&#8217; first drive during their loss to the Lions in Munich. The third-year quarterback did not return to the game, and it remains to be seen if he will be available again in 2026. New England fears Ma",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T05:44:46.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/patriots-fear-qb-drake-maye-suffered-ankle-fracture",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-england-patriots",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0485
     },
     {
       "id": "ne_espn_5fc985167a6ca",
@@ -919,6 +1087,7 @@
       "title": "Sources: Patriots fear Drake Maye has broken ankle, could miss rest of season",
       "summary": "The Patriots are concerned that Drake Maye sustained a fractured ankle, sources told ESPN, an injury that could sideline the star QB for the rest of the season.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746589_1296x729_16-9.jpg",
+      "imageCaption": "Drake Maye [1296x729]",
       "imageAlt": "Sources: Patriots fear Drake Maye has broken ankle, could miss rest of season",
       "publishedAt": "2026-11-17T05:13:42Z",
       "url": "https://www.espn.com/nfl/story/_/id/50500352/patriots-qb-drake-maye-leg-miss-extended-sources-say",
@@ -944,7 +1113,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0558
+      "storyRank": 0.055
+    },
+    {
+      "id": "ne_pfr_3002795b87da",
+      "type": "article",
+      "title": "Patriots To Explore QB Market?",
+      "summary": "With Drake Maye facing a prolonged absence, the Patriots may be seeking some reinforcement at the quarterback position. According to Jordan Schultz, the Patriots are expected to explore the QB market during their bye week. [RELATED: Patriot",
+      "imageUrl": "",
+      "publishedAt": "2026-11-16T23:35:12.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/patriots-to-explore-qb-market",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-england-patriots",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0457
     },
     {
       "id": "ne_rss_56b591a8b159",
@@ -977,7 +1178,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0513
+      "storyRank": 0.0506
     },
     {
       "id": "ne_vid_4720d77be885",
@@ -1011,7 +1212,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0503
+      "storyRank": 0.0496
     },
     {
       "id": "ne_vid_94ca9a2dc64b",
@@ -1045,7 +1246,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0488
+      "storyRank": 0.0482
     },
     {
       "id": "ne_espn_0c9d65e63adaa",
@@ -1053,6 +1254,7 @@
       "title": "Concerns for four NFL teams on playoff bubble: Cowboys, Raiders, Texans, Patriots",
       "summary": "The Cowboys' defense got lit up, the Patriots lost Drake Maye, the Raiders are adjusting to Fernando Mendoza, and the Texans can't find support for C.J. Stroud.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746460_1296x729_16-9.jpg",
+      "imageCaption": "Barnwell Cowboys [1296x729]",
       "imageAlt": "Concerns for four NFL teams on playoff bubble: Cowboys, Raiders, Texans, Patriots",
       "publishedAt": "2026-11-16T14:49:42Z",
       "url": "https://www.espn.com/nfl/story/_/id/50491459/week-10-playoff-bubble-cowboys-raiders-texans-patriots",
@@ -1078,7 +1280,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0487
+      "storyRank": 0.0481
     },
     {
       "id": "ne_espn_6ec99cf6ff044",
@@ -1086,6 +1288,7 @@
       "title": "Judging overreactions to NFL Week 10: Playoff spin for Vikings, Pats, Browns, more",
       "summary": "Will Kirk Cousins be the difference in the NFC North? The Browns are going to the playoffs ... but not the Patriots? Patrick Mahomes for MVP and Kyle Shanahan for COY?",
       "imageUrl": "https://a.espncdn.com/photo/2026/1115/r1746347_608x342_16-9.jpg",
+      "imageCaption": "Kirk Cousins [608x342]",
       "imageAlt": "Judging overreactions to NFL Week 10: Playoff spin for Vikings, Pats, Browns, more",
       "publishedAt": "2026-11-16T13:48:04Z",
       "url": "https://www.espn.com/nfl/story/_/id/50491464/week-10-overreactions-2026-graziano-cousins-mahomes",
@@ -1096,7 +1299,7 @@
       "author": "Dan Graziano",
       "authorHandle": "@DanGrazianoESPN",
       "authorProfileUrl": "https://x.com/DanGrazianoESPN",
-      "trustTier": 1,
+      "trustTier": 2,
       "wireSource": "espn_team_news",
       "isBreaking": false,
       "isInGameInjury": false,
@@ -1111,7 +1314,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0483
+      "storyRank": 0.0419
     },
     {
       "id": "ne_espn_e217e534e6b7b",
@@ -1119,6 +1322,7 @@
       "title": "Patriots need to fix defensive effort -- especially if Drake Maye misses time",
       "summary": "New England has given up 80 points over the past two games. The bye week will allow the team to reset.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746427_608x342_16-9.jpg",
+      "imageCaption": "Patriots NFL [608x342]",
       "imageAlt": "Patriots need to fix defensive effort -- especially if Drake Maye misses time",
       "publishedAt": "2026-11-16T12:43:00Z",
       "url": "https://www.espn.com/nfl/story/_/id/50497417/patriots-defense-struggles-lions-drake-maye",
@@ -1144,7 +1348,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0478
+      "storyRank": 0.0473
+    },
+    {
+      "id": "ne_pfr_27ac80b58367",
+      "type": "article",
+      "title": "Patriots QB Drake Maye Ruled Out Of Week 10 Game With Lower Leg Injury",
+      "summary": "Patriots quarterback Drake Maye left the team&#8217;s Week 10 matchup against the Lions in Munich due to what was originally deemed an ankle injury. He was subsequently ruled out for the remainder of the game, and head coach Mike Vrabel con",
+      "imageUrl": "",
+      "publishedAt": "2026-11-16T05:19:34.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/patriots-qb-drake-maye-ruled-out-of-week-10-game-with-lower-leg-injury",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-england-patriots",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0389
     },
     {
       "id": "ne_vid_219df85406f0",
@@ -1178,7 +1414,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0423
+      "storyRank": 0.0418
     },
     {
       "id": "ne_vid_d5f08a29c745",
@@ -1212,7 +1448,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0413
+      "storyRank": 0.0408
     },
     {
       "id": "ne_vid_506c975e5036",
@@ -1246,7 +1482,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0411
+      "storyRank": 0.0407
     },
     {
       "id": "ne_vid_96028bcb07ef",
@@ -1280,7 +1516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0411
+      "storyRank": 0.0407
     },
     {
       "id": "ne_vid_214edb76c5d2",
@@ -1314,7 +1550,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0409
+      "storyRank": 0.0405
     },
     {
       "id": "ne_vid_a0f5735e061f",
@@ -1348,7 +1584,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0408
+      "storyRank": 0.0404
     },
     {
       "id": "ne_vid_ca049beb894a",
@@ -1382,7 +1618,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
+      "storyRank": 0.0101
     },
     {
       "id": "ne_vid_55a93d100d0d",
@@ -1416,7 +1652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
+      "storyRank": 0.0101
     },
     {
       "id": "ne_vid_08becf5a6883",
@@ -1450,7 +1686,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0404
+      "storyRank": 0.0399
     },
     {
       "id": "ne_vid_6e00f5e8c463",
@@ -1484,7 +1720,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0402
+      "storyRank": 0.0398
     },
     {
       "id": "ne_vid_2d5ca4ee6e3b",
@@ -1518,7 +1754,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0101
+      "storyRank": 0.0099
     },
     {
       "id": "ne_vid_917cd65448ee",
@@ -1552,7 +1788,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.04
+      "storyRank": 0.0396
     },
     {
       "id": "ne_vid_2f2a08865732",
@@ -1586,7 +1822,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.04
+      "storyRank": 0.0396
     },
     {
       "id": "ne_vid_56ab07df9f5f",
@@ -1620,7 +1856,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.01
+      "storyRank": 0.0099
     },
     {
       "id": "ne_vid_40dc8e78c697",
@@ -1654,7 +1890,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.04
+      "storyRank": 0.0395
     },
     {
       "id": "ne_vid_208491e3a8d6",
@@ -1688,7 +1924,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0399
+      "storyRank": 0.0395
     },
     {
       "id": "ne_vid_5e2f6749a210",
@@ -1722,7 +1958,71 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
+      "storyRank": 0.0098
+    },
+    {
+      "id": "ne_pfr_1ff8775a6f08",
+      "type": "article",
+      "title": "Patriots WR A.J. Brown, RB Rhamondre Stevenson To Play In Week",
+      "summary": "NOVEMBER 15: Good news for the Patriots. Both Brown and Stevenson are active for the team&#8217;s Week 10 matchup with the Lions in Munich. ESPN&#8217;s Adam Schefter was first to report that both players were expected to suit up. NOVEMBER ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-15T13:32:25.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/patriots-wr-a-j-brown-could-miss-week-10-with-knee-issue",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-england-patriots",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0343
+    },
+    {
+      "id": "ne_pfr_bde372ef1501",
+      "type": "article",
+      "title": "Patriots Activate OL Greg Van Roten, FB Reggie Gilliam Off IR",
+      "summary": "The Patriots are getting some relief on the offensive side of the ball as they announced today that offensive lineman Greg Van Roten and fullback Reggie Gilliam will be activated off injured reserve. Running back TreVeyon Henderson has fina",
+      "imageUrl": "",
+      "publishedAt": "2026-11-14T21:08:47.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/patriots-activate-ol-greg-van-roten-fb-reggie-gilliam-off-ir",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-england-patriots",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0304
     },
     {
       "id": "ne_vid_bade9e625463",
@@ -1756,7 +2056,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0338
+      "storyRank": 0.0334
     },
     {
       "id": "ne_vid_0cb1105b8508",
@@ -1790,7 +2090,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0337
+      "storyRank": 0.0334
     },
     {
       "id": "ne_vid_21d3cb2fb73a",
@@ -1824,7 +2124,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0337
+      "storyRank": 0.0334
     },
     {
       "id": "ne_tx_8058cefb28f6",
@@ -1858,7 +2158,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.0317
     },
     {
       "id": "ne_vid_02335b5bc759",
@@ -1892,7 +2192,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0309
+      "storyRank": 0.0306
     },
     {
       "id": "ne_vid_87387fa9f3c2",
@@ -1926,7 +2226,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0294
+      "storyRank": 0.0291
     },
     {
       "id": "ne_vid_bf27b738b0a4",
@@ -1960,7 +2260,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
+      "storyRank": 0.0289
     },
     {
       "id": "ne_vid_06fed3487d8a",
@@ -1994,7 +2294,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0289
+      "storyRank": 0.0287
     },
     {
       "id": "ne_vid_5127992a264d",
@@ -2028,7 +2328,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0283
+      "storyRank": 0.0281
     },
     {
       "id": "ne_vid_f1f67547e0ed",
@@ -2062,7 +2362,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0267
+      "storyRank": 0.0264
     },
     {
       "id": "ne_vid_02243ab9834a",
@@ -2096,7 +2396,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0261
+      "storyRank": 0.0259
     },
     {
       "id": "ne_vid_c51a20d72053",
@@ -2130,7 +2430,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0261
+      "storyRank": 0.0259
     },
     {
       "id": "ne_vid_ae0c72e40dd3",
@@ -2164,7 +2464,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
+      "storyRank": 0.0258
     },
     {
       "id": "ne_vid_6455ba67700c",
@@ -2198,7 +2498,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
+      "storyRank": 0.0258
     },
     {
       "id": "ne_vid_18899d2dc4d3",
@@ -2232,7 +2532,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0258
+      "storyRank": 0.0256
     },
     {
       "id": "ne_vid_ccac409f880f",
@@ -2266,7 +2566,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0256
+      "storyRank": 0.0253
     },
     {
       "id": "ne_vid_3bab09651966",
@@ -2300,7 +2600,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0255
+      "storyRank": 0.0253
     },
     {
       "id": "ne_tx_3b3255156ab4",
@@ -2334,7 +2634,203 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0212
+      "storyRank": 0.0211
+    },
+    {
+      "id": "ne_yt_ONCSUG9i00M",
+      "type": "video",
+      "category": "film",
+      "videoId": "ONCSUG9i00M",
+      "embeddable": true,
+      "title": "Jordan Love vs the Patriots Week 9, 2026 Analysis",
+      "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
+      "imageUrl": "https://i.ytimg.com/vi/ONCSUG9i00M/hqdefault.jpg",
+      "imageAlt": "Jordan Love vs the Patriots Week 9, 2026 Analysis",
+      "publishedAt": "2026-11-10T20:26:35.000Z",
+      "url": "https://www.youtube.com/watch?v=ONCSUG9i00M",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=ONCSUG9i00M",
+      "outletId": "the_qb_school",
+      "outletName": "The QB School",
+      "reporterId": "the_qb_school",
+      "reporterName": "The QB School",
+      "author": "The QB School",
+      "authorHandle": "@TheQBSchool",
+      "authorProfileUrl": "https://x.com/theqbschool",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 92,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0199
+    },
+    {
+      "id": "ne_pfr_0f168483863a",
+      "type": "article",
+      "title": "NFL Restructures: Madubuike, Ravens, Henry, Patriots, Panthers",
+      "summary": "With hours to go until the 2026 trade deadline &#8212; well, we&#8217;ve been told that was the case, yet zero trades have happened today &#8212; teams have cleared some cap space via restructures. Here are the latest conversions: The Raven",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T17:20:07.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-restructures-madubuike-ravens-henry-patriots-panthers",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-england-patriots",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0172
+    },
+    {
+      "id": "ne_pfr_0ff08781d192",
+      "type": "article",
+      "title": "Patriots RB Rhamondre Stevenson Might Miss Time With Knee Injury",
+      "summary": "The Patriots have been without second-year running back TreVeyon Henderson for a couple weeks now, and according ESPN&#8217;s Adam Schefter, they could also lose starter Rhamondre Stevenson &#8220;for a short period of time.&#8221; Schefter",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T02:28:27.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/patriots-rb-rhamondre-stevenson-might-miss-time-with-knee-injury",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-england-patriots",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0161
+    },
+    {
+      "id": "ne_pfr_51a26703f335",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/9/26",
+      "summary": "A few Monday practice squad transactions ahead of the trade deadline: New England Patriots Released: LB Jose Ramirez New York Jets Signed: OLB Mykal Walker Tennessee Titans Signed: LB Jimmy Ciarlo Released: CB Derrick Canteen The Titans hos",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T02:12:08.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-9-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-england-patriots",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0161
+    },
+    {
+      "id": "ne_pfr_d4f80b792259",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/9/26",
+      "summary": "Here are Monday&#8217;s minor moves: Buffalo Bills Elevated: WR Trent Sherfield, S Geno Stone Detroit Lions Waived: TE Jackson Meeks Minnesota Vikings Placed on IR: RB Demond Claiborne Elevated: S Tavierre Thomas New England Patriots Waived",
+      "imageUrl": "",
+      "publishedAt": "2026-11-09T22:00:32.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-9-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-england-patriots",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0158
+    },
+    {
+      "id": "ne_pfr_eabc700aaa05",
+      "type": "article",
+      "title": "DT Rumors: Eagles, Pats, Panthers, Colts",
+      "summary": "The Eagles shelled out significant long-term commitments to defensive tackles Jalen Carter (four years, $152MM) and Jordan Davis (three years, $78MM) during the offseason, which could make retaining impending free agent D-tackle Moro Ojomo ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-09T19:46:45.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/dt-rumors-eagles-pats-panthers-colts",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-england-patriots",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0156
     },
     {
       "id": "ne_tx_336e12a9315c",
@@ -2368,7 +2864,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0169
     },
     {
       "id": "ne_tx_50d98b4a659c",
@@ -2402,7 +2898,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.014
     },
     {
       "id": "ne_tx_3fb66dae5c4e",
@@ -2436,7 +2932,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0119
+      "storyRank": 0.0118
     },
     {
       "id": "ne_tx_bd90b82a4f80",

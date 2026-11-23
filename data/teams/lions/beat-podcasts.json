@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T01:26:58.991Z",
+  "updatedAt": "2026-11-23T06:24:41.380Z",
   "windowDays": 7,
-  "totalEpisodes": 16,
+  "totalEpisodes": 15,
   "shows": [
     {
       "id": "locked_on_lions",
@@ -25,7 +25,7 @@
       "feedUrl": "https://feeds.megaphone.fm/pride-of-detroit-lions",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/pride-of-detroit-for-detroit-lions-fans/id1040380210?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/88/c9/7a/88c97a7a-9c2e-efce-49c6-52316c9989c7/mza_10034499116683220726.jpeg/600x600bb.jpg",
-      "episodeCount7d": 3
+      "episodeCount7d": 2
     },
     {
       "id": "detroit_lions_podcast",
@@ -364,26 +364,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-detroit-lions-podcast/id1003655963?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/TTEOS7469992862",
       "audioStreamUrl": "https://traffic.megaphone.fm/TTEOS7309254175.mp3"
-    },
-    {
-      "id": "pod_pride_of_detroit_1000802182453",
-      "trackId": 1000802182453,
-      "collectionId": 1040380210,
-      "showId": "pride_of_detroit",
-      "showName": "Pride of Detroit PODcast",
-      "showFullTitle": "Pride of Detroit: for Detroit Lions fans",
-      "hosts": "Jeremy Reisman, Erik Schlitt & Ryan Mathews",
-      "network": "SB Nation / Vox Media",
-      "title": "Lions vs Patriots Recap: Gibbs & St. Brown Shine + Hutchinson Injury News",
-      "summary": "Meko, Ryan, and Erik recap the Lions’ dominant 35-10 win over the Patriots in Munich, Jahmyr Gibbs’ explosive performance, and Detroit’s improving defense. Plus, how will the Lions overcome Aidan Hutchinson’s injury, and what does it mean for their NFC North outlook at 7-2? ",
-      "publishedAt": "2026-11-16T05:00:00.000Z",
-      "durationMinutes": 79,
-      "durationDisplay": "79 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/88/c9/7a/88c97a7a-9c2e-efce-49c6-52316c9989c7/mza_10034499116683220726.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/lions-vs-patriots-recap-gibbs-st-brown-shine-hutchinson/id1040380210?i=1000802182453&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/pride-of-detroit-for-detroit-lions-fans/id1040380210?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/pride-of-detroit-lions",
-      "audioStreamUrl": "https://www.podtrac.com/pts/redirect.mp3/pdst.fm/e/pscrb.fm/rss/p/traffic.megaphone.fm/PMC6404815807.mp3"
     }
   ]
 }

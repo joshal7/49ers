@@ -52,7 +52,7 @@ import {
   resolveGameNewsContext,
   sortNewsWithBreakingPriority,
   filterOutCompletedGameAvailabilityItems
-} from './engine/breakingClassifier.js?v=66';
+} from './engine/breakingClassifier.js?v=67';
 import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=60';
 import {
   loadAll49ersData,
@@ -86,10 +86,12 @@ import {
   refreshDailyMatchupIntelIfDue,
   clearDailyMatchupIntelAttemptLock,
   hydrateCachedDailyTopNewsBrief,
+  hydrateDailyTopNewsBriefFromSharedKv,
+  mergeDailyTopNewsBriefOnUpstreamRefresh,
   shouldTriggerDailyTopNewsBriefRefresh,
   refreshDailyTopNewsBriefIfDue,
   clearDailyNewsBriefAttemptLock
-} from './services/aiWorkerClient.js?v=89';
+} from './services/aiWorkerClient.js?v=90';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -125,8 +127,9 @@ import {
 import { getJargonEntry } from './engine/jargonGlossary.js?v=50';
 import {
   isAllowedInlineVideoStreamUrl,
+  resolveIosStandaloneExternalVideoBreakoutUrl,
   sanitizeExternalUrl
-} from './engine/linkIntegrity.js?v=69';
+} from './engine/linkIntegrity.js?v=70';
 import {
   BIG_BOARD_SORT_FIELDS,
   parseBigBoardUrlParams,
@@ -922,7 +925,7 @@ async function toggleQuietPushAlerts() {
           body: JSON.stringify({
             subscription: sub.toJSON(),
             channels: pushPrefs.channels,
-            author: state.prefs.authorName || 'Faithful'
+            author: state.prefs.authorName || ACTIVE_TEAM.brandName
           })
         });
         if (saveRes.ok) {
@@ -952,17 +955,26 @@ async function sendTestQuietAlert() {
     return;
   }
   const title = `${ACTIVE_TEAM.brandName} · Quiet Alert Test`;
-  const body = 'High-signal alerts only (Tier-1 breaking & 5:00 PM PT daily brief). Zero score spam.';
+  const tzDailyLabel =
+    ACTIVE_TEAM.timezone === 'America/Los_Angeles'
+      ? '5:00 PM PT'
+      : ACTIVE_TEAM.timezone === 'America/Denver' || ACTIVE_TEAM.timezone === 'America/Phoenix'
+        ? '6:00 PM MT'
+        : ACTIVE_TEAM.timezone === 'America/Chicago'
+          ? '7:00 PM CT'
+          : '8:00 PM ET';
+  const body = `High-signal alerts only (Tier-1 breaking & ${tzDailyLabel} daily brief). Zero score spam.`;
+  const alertIcon = ACTIVE_TEAM.assets?.appleTouchIconPng || './apple-touch-icon.png';
   try {
     const reg = await navigator.serviceWorker?.ready;
     if (reg?.showNotification) {
       await reg.showNotification(title, {
         body,
-        icon: './apple-touch-icon.png',
-        tag: '49ers-quiet-test'
+        icon: alertIcon,
+        tag: `${ACTIVE_TEAM.slug}-quiet-test`
       });
     } else {
-      new Notification(title, { body, icon: './apple-touch-icon.png' });
+      new Notification(title, { body, icon: alertIcon });
     }
     state.pushStatusNotice = 'Test alert sent.';
   } catch {
@@ -1367,7 +1379,7 @@ function renderInlineVideoErrorFallback(videoEl) {
           ${
             poster
               ? `<img src="${esc(poster)}" alt="Video thumbnail" class="video-thumb-img" decoding="async" />`
-              : `<div class="video-thumb-img" style="background:linear-gradient(135deg,#1A080C,#261419);min-height:165px"></div>`
+              : `<div class="video-thumb-img" style="background:linear-gradient(135deg,var(--bg-card-alt),var(--bg-primary));min-height:165px"></div>`
           }
           <div class="video-thumb-overlay">
             <span class="video-play-pill">${iconSvg('externalLink', 13)}<span>Watch Clip on ${esc(provider)}</span></span>
@@ -1586,9 +1598,13 @@ function updateUniversalSearchLiveDom({ resetScroll = true, syncInputValue = fal
     if (syncInputValue && inp.value !== state.universalSearchQuery) {
       inp.value = state.universalSearchQuery;
     }
+    const startingQbJersey = (state.appData?.roster?.players || []).find(
+      p => p && String(p.position || '').toUpperCase() === 'QB' && p.jersey != null
+    )?.jersey;
+    const jerseyHint = startingQbJersey != null ? `#${startingQbJersey}` : ACTIVE_TEAM.abbr === 'SF' ? '#13' : '#jersey';
     inp.placeholder = res.activeSource
       ? `Search words in ${res.activeSource.name}…`
-      : 'Search players, #13, beat writers, words in tweets/articles…';
+      : `Search players, ${jerseyHint}, beat writers, words in tweets/articles…`;
   }
 
   const clearBtn = document.getElementById('universalSearchClearBtn');
@@ -2104,6 +2120,25 @@ async function triggerDailyMatchupIntelSync() {
     .catch(() => null);
 }
 
+async function triggerFastSharedKvBriefHydration() {
+  if (!state.appData) return null;
+  return hydrateDailyTopNewsBriefFromSharedKv({
+    appData: state.appData,
+    prefs: state.prefs
+  })
+    .then(res => {
+      if (
+        res?.updated &&
+        !hasActivelyPlayingInlineMedia() &&
+        (state.activeNavTab === 'home' || state.activeNavTab === 'news')
+      ) {
+        renderMain();
+      }
+      return res;
+    })
+    .catch(() => null);
+}
+
 async function triggerDailyTopNewsBriefSync() {
   if (!state.appData) return null;
   await awaitInitialLiveHydrationBounded(15000);
@@ -2155,6 +2190,7 @@ function bindEvents() {
         triggerDailyMatchupIntelSync();
       }
       if (state.activeNavTab === 'news' || state.activeNavTab === 'home') {
+        triggerFastSharedKvBriefHydration();
         triggerDailyTopNewsBriefSync();
       }
       renderMain();
@@ -2386,7 +2422,26 @@ function bindEvents() {
       if (rk) markReadKey(rk);
     }
     const btn = e.target.closest('[data-action]');
-    if (anchorHit && (!btn || btn.contains(anchorHit))) return;
+    if (anchorHit && (!btn || btn.contains(anchorHit))) {
+      // On iOS 17+ installed Home Screen PWAs (standalone mode), opening NFL club/league
+      // video pages (`49ers.com/video/...`, `nfl.com/videos/...`) via `target="_blank"`
+      // opens them inside `SFSafariViewController`, where NFL's TheoPlayer/Anvato + IMA
+      // pre-roll player stalls on an infinite spinner. Hand off directly to Safari via
+      // `x-safari-https://` so playback works reliably while keeping the PWA intact.
+      if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && (e.button === 0 || e.button == null)) {
+        const breakoutUrl = resolveIosStandaloneExternalVideoBreakoutUrl(anchorHit.href);
+        if (breakoutUrl) {
+          e.preventDefault();
+          try {
+            window.location.href = breakoutUrl;
+          } catch {
+            window.open(anchorHit.href, '_blank', 'noopener,noreferrer');
+          }
+          return;
+        }
+      }
+      return;
+    }
     if (!btn) return;
     if (anchorHit) e.preventDefault();
     const action = btn.getAttribute('data-action');
@@ -3510,7 +3565,7 @@ function bindEvents() {
             estLabel: waitEst.estLabel,
             modelLabel: modelInfo.displayLabel,
             message: 'Step 1 of 3: Deep research on the topic…',
-            subDetail: `Querying live ${ACTIVE_TEAM.nickname} beat wire, ESPN headlines & 88-player roster/EPA/cap ledger.`
+            subDetail: `Querying live ${ACTIVE_TEAM.nickname} beat wire, ESPN headlines & ${state.appData?.roster?.players?.length || 90}-player roster/EPA/cap ledger.`
           };
           renderMain();
           const episode = await generateOnDemandAutopodcast({
@@ -3621,7 +3676,7 @@ function bindEvents() {
             estLabel: waitEst.estLabel,
             modelLabel: modelInfo.displayLabel,
             message: 'Step 1 of 3: Deep research on the topic…',
-            subDetail: 'Querying live ESPN NFL Nation, Bluesky beat wire & 88-player roster/EPA/cap ledger.'
+            subDetail: `Querying live ESPN NFL Nation, Bluesky beat wire & ${state.appData?.roster?.players?.length || 90}-player roster/EPA/cap ledger.`
           };
           renderMain();
           const report = await runOnDemandDeepAnalysis({
@@ -4053,34 +4108,13 @@ function mergeRuntimeStateIntoUpstreamBundle(prevData, nextData) {
       );
     }
   }
-  // Preserve a non-stale AI Daily Brief over a deterministic fallback (`pipeline-grounded`) for the same cycle,
-  // regardless of timestamp; canonical `pipeline-gemini-daily` from upstream always wins for 100% Phone & Web parity.
+  // Preserve a newer/non-stale live or KV Daily Brief whenever an older-cycle or non-canonical upstream JSON bundle reloads
   const prevBrief = prevData.news?.dailyTopNewsBrief;
   const nextBrief = nextData.news?.dailyTopNewsBrief;
   if (prevBrief?.generatedAt && nextData.news) {
-    const prevMs = Date.parse(prevBrief.generatedAt) || 0;
-    const nextMs = Date.parse(nextBrief?.generatedAt || '') || 0;
-    const prevNonStale = !isDailyBriefStaleForLiveState(prevBrief, nextData, Date.now());
-    const prevIsAi =
-      prevBrief.source === 'live-gemini-daily' || prevBrief.source === 'pipeline-gemini-daily';
-    const nextIsCanonicalSameCycle =
-      nextBrief &&
-      nextBrief.cycleKey === prevBrief.cycleKey &&
-      nextBrief.source === 'pipeline-gemini-daily' &&
-      !isDailyBriefStaleForLiveState(nextBrief, nextData, Date.now());
-    const nextIsAiSameCycle =
-      nextBrief &&
-      nextBrief.cycleKey === prevBrief.cycleKey &&
-      (nextBrief.source === 'pipeline-gemini-daily' || nextBrief.source === 'live-gemini-daily') &&
-      !isDailyBriefStaleForLiveState(nextBrief, nextData, Date.now());
-    if (
-      prevNonStale &&
-      prevIsAi &&
-      !nextIsCanonicalSameCycle &&
-      (!nextBrief ||
-        (prevBrief.cycleKey === nextBrief.cycleKey && (!nextIsAiSameCycle || prevMs > nextMs)))
-    ) {
-      nextData.news.dailyTopNewsBrief = prevBrief;
+    const mergedBrief = mergeDailyTopNewsBriefOnUpstreamRefresh(prevBrief, nextBrief, nextData, Date.now());
+    if (mergedBrief) {
+      nextData.news.dailyTopNewsBrief = mergedBrief;
     }
   }
   if (Array.isArray(prevData._livePlayedPlayerIds) && !nextData._livePlayedPlayerIds) {
@@ -4674,6 +4708,10 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
           if (state.activeNavTab === 'audio') renderMain();
         });
       }
+
+      // Instant 0-credit Shared Worker KV hydration (runs immediately on boot, including during Game-Day Hold,
+      // without waiting 15–60s behind live wire hydration or Matchup Intel synthesis)
+      triggerFastSharedKvBriefHydration();
 
       // Sequenced 1/day Gemini 4 Hydrogen (XHIGH) Matchup Intel + 5:00 PM PT Top News Brief refreshes (no split budget)
       triggerDailyMatchupIntelSync().finally(() => triggerDailyTopNewsBriefSync());

@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T03:52:12.379Z",
+  "updatedAt": "2026-11-23T06:25:31.141Z",
   "windowDays": 7,
-  "totalEpisodes": 29,
+  "totalEpisodes": 28,
   "shows": [
     {
       "id": "steelers_locked_on_steelers",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/cd1f3b/feeds.simplecast.com/y_l5uReM",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-steelers-daily-podcast-on-the-pittsburgh/id1140522532?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/cc/b2/4c/ccb24c5f-7d57-d782-12b3-b4de95266b7d/mza_4050704953803715613.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 7
     },
     {
       "id": "steelers_steel_curtain_network",
@@ -612,26 +612,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-steelers-daily-podcast-on-the-pittsburgh/id1140522532?uo=4",
       "feedUrl": "https://rss.pdrl.fm/cd1f3b/feeds.simplecast.com/y_l5uReM",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/cd1f3b/lockedon.simplecastaudio.com/d3024f78-38ca-429c-bc85-4ba27de4a8a7/episodes/05c741d1-e869-477f-b35f-8138e1e2fed1/audio/128/default.mp3?aid=rss_feed&awCollectionId=d3024f78-38ca-429c-bc85-4ba27de4a8a7&awEpisodeId=05c741d1-e869-477f-b35f-8138e1e2fed1&feed=y_l5uReM"
-    },
-    {
-      "id": "pod_steelers_locked_on_steelers_1000802190903",
-      "trackId": 1000802190903,
-      "collectionId": 1140522532,
-      "showId": "steelers_locked_on_steelers",
-      "showName": "Locked On Steelers",
-      "showFullTitle": "Locked On Steelers – Daily Podcast On The Pittsburgh Steelers",
-      "hosts": "Locked On Podcast Network, Christopher Carter",
-      "network": "Locked On Podcast Network, Christopher Carter",
-      "title": "STEELERS SQUAD SHOW: Bengals EXPOSE Pittsburgh — How WORRIED Should Steelers Fans Be?",
-      "summary": "Two weeks to prepare. Too few answers. What happened to the Pittsburgh Steelers? Host Tyler Feldman is joined by Christopher Carter of the Pittsburgh Post-Gazette and Locked On Steelers to break down Pittsburgh’s 38-18 loss to the Cincinnati Bengals on this LIVE postgame edi",
-      "publishedAt": "2026-11-16T06:10:03.000Z",
-      "durationMinutes": 59,
-      "durationDisplay": "59 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/81/1d/7a/811d7a9c-c0e6-4557-dfd3-fff8e828c1eb/mza_7490463620326075855.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/steelers-squad-show-bengals-expose-pittsburgh-how-worried/id1140522532?i=1000802190903&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-steelers-daily-podcast-on-the-pittsburgh/id1140522532?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/cd1f3b/feeds.simplecast.com/y_l5uReM",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/cd1f3b/lockedon.simplecastaudio.com/d3024f78-38ca-429c-bc85-4ba27de4a8a7/episodes/1d0e0b34-c975-4f12-9174-b82d9c620c40/audio/128/default.mp3?aid=rss_feed&awCollectionId=d3024f78-38ca-429c-bc85-4ba27de4a8a7&awEpisodeId=1d0e0b34-c975-4f12-9174-b82d9c620c40&feed=y_l5uReM"
     }
   ]
 }

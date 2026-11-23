@@ -815,10 +815,11 @@ export function resolveCompleteScheduleModel(appData = {}, mcSimResult = null) {
   if (isEliminatedRegularSeason) {
     postGames = postGames.filter(g => g.completed);
   } else if (hasClinchedPlayoffs) {
+    const activeSchedTeam = getActiveTeamConfig();
     const sfLogoUrl =
       appData?.scheduleMatchup?.upcomingMatchup?.sfLogoUrl ||
       regGames[0]?.sfLogoUrl ||
-      'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png';
+      `https://a.espncdn.com/i/teamlogos/nfl/500/${activeSchedTeam?.espnAbbr || 'sf'}.png`;
 
     // 1. Handle #1 NFC Seed First-Round Bye + automatic Divisional Round qualification at Levi's Stadium
     if (hasClinchedSeed1Bye) {
@@ -1387,9 +1388,9 @@ export function resolveFirstPickMockDatabase(mockEntries = [], options = {}) {
   const draftYear = Number(options.draftYear || dp.draftYear) || (Number(options.appData?.meta?.seasonYear) || 2026) + 1;
   const firstPickInv = (options.pickInventory || dp.pickInventory || [])[0] || {
     round: 1,
-    projectedOverall: 31
+    projectedOverall: null
   };
-  const projectedFirstPickOverall = Number(options.projectedPick || firstPickInv.projectedOverall) || 31;
+  const projectedFirstPickOverall = Number(options.projectedPick || firstPickInv.projectedOverall) || 16;
   const projectedFirstPickRound = Number(firstPickInv.round) || 1;
 
   const boardList = Array.isArray(options.consensusBigBoard)

@@ -144,6 +144,7 @@ function renderSingleDashboardCard({
   sessionLastVisitedAt = null,
   nowMs = Date.now()
 }) {
+  const activeTeam = getActiveTeamConfig();
   let bodyHtml = '';
   let deepDiveAttr = '';
   let externalHeaderLink = '';
@@ -692,7 +693,8 @@ function renderSingleDashboardCard({
       const curSeasonYr = Number(appData?.meta?.seasonYear) || 2026;
       const nextSeasonYr = curSeasonYr + 1;
       const nextShortYr = `'${String(nextSeasonYr).slice(-2)}`;
-      const deadlineLabel = tw.deadlineShortDisplay || (curSeasonYr === 2026 ? 'Tue Nov 10 • 1PM PT' : 'Tue Post-Wk 9 • 1PM PT');
+      const tzLabel = activeTeam.timezone === 'America/Los_Angeles' ? '1PM PT' : activeTeam.timezone === 'America/Denver' || activeTeam.timezone === 'America/Phoenix' ? '2PM MT' : activeTeam.timezone === 'America/Chicago' ? '3PM CT' : '4PM ET';
+      const deadlineLabel = tw.deadlineShortDisplay || (curSeasonYr === 2026 ? `Tue Nov 10 • ${tzLabel}` : `Tue Post-Wk 9 • ${tzLabel}`);
       const { recentTrades } = partitionCompletedTradesByWindow(
         tw.completed2026Moves || [],
         appData?.meta?.updatedAt || Date.now(),
@@ -738,7 +740,7 @@ function renderSingleDashboardCard({
             : ''
         }
         <div style="font-size:12px;color:var(--text-secondary)">
-          <strong>Top Remaining Watch:</strong> ${esc(tw.topNeeds?.[0]?.positionGroup || 'WR / 12-Personnel TE & Left Guard')}
+          <strong>Top Remaining Watch:</strong> ${esc(tw.topNeeds?.[0]?.positionGroup || 'Evaluating roster needs')}
         </div>
       `;
       deepDiveAttr = `data-action="jump-season-sub" data-season-sub="trade"`;
@@ -747,9 +749,9 @@ function renderSingleDashboardCard({
 
     case 'playoff_picture': {
       const sf = mcSimResult?.sfOdds || appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
-      const berthPct = sf.makePlayoffsPct ?? 93.0;
-      const divPct = sf.winDivisionPct ?? 82.6;
-      const byePct = sf.seed1ByePct ?? 34.5;
+      const berthPct = sf.makePlayoffsPct ?? 0;
+      const divPct = sf.winDivisionPct ?? 0;
+      const byePct = sf.seed1ByePct ?? 0;
       const baseSf = appData?.seasonal?.playoffPicture?.baselineSimulation?.sfOdds || {};
       const refSf =
         Object.keys(userPrefs?.playoffForcedWinners || {}).length > 0
@@ -767,7 +769,7 @@ function renderSingleDashboardCard({
             ${renderMiniMeterHtml(berthPct, 'emerald')}
           </div>
           <div class="kpi-box">
-            <div class="kpi-label">Win NFC West</div>
+            <div class="kpi-label">Win ${esc(activeTeam.division || 'Division')}</div>
             <div class="kpi-val mono" style="color:var(--gold-bright)">${divPct}%${divDelta ? ` <span class="delta-chip ${divDelta.tone}">${esc(divDelta.text)}</span>` : ''}</div>
             ${renderMiniMeterHtml(divPct, 'gold')}
           </div>
@@ -810,7 +812,7 @@ function renderSingleDashboardCard({
     case 'draft_live_udfa': {
       const dc = appData?.seasonal?.draftClass2026 || {};
       const curDraftYr = Number(dc.draftYear) || Number(appData?.meta?.seasonYear) || 2026;
-      const dcUrl = sanitizeExternalUrl(dc.sourceUrl, null) || buildPfrTeamDraftUrl('SF', curDraftYr);
+      const dcUrl = sanitizeExternalUrl(dc.sourceUrl, null) || buildPfrTeamDraftUrl(activeTeam.abbr, curDraftYr);
       const pickAvatars = (dc.picks || [])
         .slice(0, 6)
         .map(pk => ({ id: pk.playerId, name: pk.name, position: pk.position, jersey: pk.jersey, headshotUrl: pk.headshotUrl }));

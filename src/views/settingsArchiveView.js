@@ -368,7 +368,7 @@ export function renderSettingsSheetHtml({
           .map(r => {
             const enabled = !disabledReps.has(r.id);
             const repLink = sanitizeExternalUrl(r.xUrl || r.profileUrl, null);
-            const repLinkLabel = r.handle || (r.outletId === 'knbr_radio' ? 'KNBR 680' : 'Profile');
+            const repLinkLabel = r.handle || r.outletName || 'Profile';
             const tier = Number(r.trustTier) || getReporterTrustTier(r.id);
             const tierCls = tier === 1 ? 'badge-gold' : 'badge-neutral';
             const tierShort = tier === 1 ? 'Tier 1 Trusted' : tier === 2 ? 'Tier 2 Beat/Film' : 'Tier 3 Viable';
@@ -845,6 +845,10 @@ export function renderUniversalSearchSheetHtml({
   });
   const hasQuery = Boolean(res.query);
   const hasSource = Boolean(res.activeSource);
+  const startingQbJersey = (appData?.roster?.players || []).find(
+    p => p && String(p.position || '').toUpperCase() === 'QB' && p.jersey != null
+  )?.jersey;
+  const searchJerseyHint = startingQbJersey != null ? `#${startingQbJersey}` : getActiveTeamConfig().abbr === 'SF' ? '#13' : '#jersey';
 
   return `
     <div class="universal-search-wrap" data-universal-search>
@@ -853,7 +857,7 @@ export function renderUniversalSearchSheetHtml({
           ${iconSvg('search', 16, 'search-input-icon')}
           <input type="search" id="universalSearchInput" class="text-input has-lead-icon search-has-clear"
                  style="font-size:16px"
-                 placeholder="${hasSource ? `Search words in ${esc(res.activeSource.name)}…` : 'Search players, #13, beat writers, words in tweets/articles…'}"
+                 placeholder="${hasSource ? `Search words in ${esc(res.activeSource.name)}…` : `Search players, ${esc(searchJerseyHint)}, beat writers, words in tweets/articles…`}"
                  value="${esc(query)}"
                  autocomplete="off"
                  autocorrect="off"

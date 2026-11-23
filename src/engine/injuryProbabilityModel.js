@@ -1832,11 +1832,36 @@ export function evaluateCorroboratedNewsInjurySignal({
       continue;
     }
 
+    const activeCoachTeam = getActiveTeamConfig();
+    const activeHc = String(activeCoachTeam?.coachesSeed?.hc || '').trim();
+    const activeGm = String(activeCoachTeam?.coachesSeed?.gm || '').trim();
+    const activeCoachNames = [
+      activeHc,
+      activeHc.split(/\s+/).slice(-1)[0],
+      activeGm,
+      activeGm.split(/\s+/).slice(-1)[0]
+    ]
+      .filter(n => n && n.length >= 4)
+      .map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const coachLeaderPat = [
+      'kyle shanahan',
+      'coach shanahan',
+      'shanahan',
+      'head coach',
+      'john lynch',
+      'gm john lynch',
+      ...activeCoachNames,
+      'coach\\s+[a-z][a-z\'.-]{1,18}(?:\\s+[a-z][a-z\'.-]{1,18})?'
+    ].join('|');
     const hasCoachQuote =
-      /\b(?:kyle shanahan|coach shanahan|shanahan|head coach|john lynch|gm john lynch|coach\s+[a-z][a-z'.-]{1,18}(?:\s+[a-z][a-z'.-]{1,18})?)\b[^.]{0,80}\b(?:said|says|relayed|explained|announced|indicated|noted|told|expects?|hopeful|optimistic|encouraged|provided|revealed|reveals|confirms?|confirmed|ruled|rules|stated|shared|added|called)\b|\b(?:coach kyle shanahan|shanahan|john lynch)\s+(?:said|confirms?|confirmed|ruled)\b|\bper (?:head )?coach\b/i.test(
-        scoped
-      ) ||
-      (/\b(?:shanahan|john lynch|head coach|coach\s+[a-z][a-z'.-]{1,18}(?:\s+[a-z][a-z'.-]{1,18})?)\s+(?:said|confirms?|confirmed|ruled|provided\s+an?\s+injury\s+update|reveals\s+latest)\b/i.test(fullBody) &&
+      new RegExp(
+        `\\b(?:${coachLeaderPat})\\b[^.]{0,80}\\b(?:said|says|relayed|explained|announced|indicated|noted|told|expects?|hopeful|optimistic|encouraged|provided|revealed|reveals|confirms?|confirmed|ruled|rules|stated|shared|added|called)\\b|\\bper (?:head )?coach\\b`,
+        'i'
+      ).test(scoped) ||
+      (new RegExp(
+        `\\b(?:${coachLeaderPat})\\s+(?:said|confirms?|confirmed|ruled|provided\\s+an?\\s+injury\\s+update|reveals\\s+latest)\\b`,
+        'i'
+      ).test(fullBody) &&
         !SPECULATIVE_CLAUSE_GUARD_RE.test(scoped));
 
     if (!hasCoachQuote && SPECULATIVE_CLAUSE_GUARD_RE.test(scoped)) {
@@ -7044,7 +7069,7 @@ const INJURY_CONTRASTIVE_COLOR_RE =
   /\b(?:(?:didn't|did\s+not|not)\s+practic(?:e|ing)[^.;]{0,35}\b(?:but|though|although|however)\b|\b(?:but|though|although)\s+(?:was\s+)?(?:spotted|seen|working|running|sprinting)|that\s+explains\s+why|considering\s+he\s+logged)\b/i;
 
 const INJURY_MEDICAL_DIAGNOSTIC_OR_QUOTE_RE =
-  /\b(\bmri\b|x-rays?|ct\s+scan|surgery|meniscus|high-ankle|concussion\s+protocol|shanahan\s+(?:said|noted|revealed|relayed|confirmed|indicated|announced|provided)|shanahan[\s\S]{0,35}(?:injury\s+update|reveals\s+latest)|(?:left|unable\s+to\s+finish[\s\S]{0,18})\s+(?:with|w\/)\s*(?:a|an|his|the\s+same)\s+[a-z-]+\s+injury|lynch\s+(?:said|noted|confirmed)|said\s+(?:monday|wednesday|thursday|friday|after)|day[-\s]+to[-\s]+day|week[-\s]+to[-\s]+week|21-day\s+practice\s+window|opened\s+(?:the\s+|his\s+|[a-z']+s?\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+)?practice\s+window|designated\b[^.;]{0,55}\bto\s+return|not\s+expecting\b[^.;]{0,45}\bthis\s+week)\b/i;
+  /\b(\bmri\b|x-rays?|ct\s+scan|surgery|meniscus|high-ankle|concussion\s+protocol|(?:head\s+coach|coach\s+[a-z'.-]+|[a-z'.-]{4,})\s+(?:said|noted|revealed|relayed|confirmed|indicated|announced|provided)|(?:left|unable\s+to\s+finish[\s\S]{0,18})\s+(?:with|w\/)\s*(?:a|an|his|the\s+same)\s+[a-z-]+\s+injury|said\s+(?:monday|wednesday|thursday|friday|after)|day[-\s]+to[-\s]+day|week[-\s]+to[-\s]+week|21-day\s+practice\s+window|opened\s+(?:the\s+|his\s+|[a-z']+s?\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+)?practice\s+window|designated\b[^.;]{0,55}\bto\s+return|not\s+expecting\b[^.;]{0,45}\bthis\s+week)\b/i;
 
 const INJURY_STATUS_MILESTONE_RE =
   /\b(opened\s+(?:the\s+|his\s+|[a-z']+s?\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+)?practice\s+window|designated\b[^.;]{0,55}\bto\s+return|activated\s+from|placed\s+on\s+(?:injured\s+reserve|ir\b)|back\s+on\s+the\s+practice\s+field|returned\s+to\s+(?:on-field\s+)?practice|cleared\s+(?:the\s+)?concussion\s+protocol|suffered\s+a\s+setback|aggravated|ruled\s+out|downgraded\s+to\s+out|out\s+for\s+(?:the\s+(?:rest|remainder|game|night|day|season|year)|tonight|today)|done\s+for\s+(?:the\s+)?(?:game|night|day|season|year)|questionable\s+to\s+return|doubtful\s+to\s+return|will\s+not\s+return|won['’]?t\s+return|air\s*cast|carted(?:\s+(?:off|away|to|from|into|down|back))?|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming\s+)?out|locker\s+room|tunnel|blue\s+(?:medical\s+)?tent|medical\s+tent|returned\s+to\s+(?:the\s+|tonight['’]?s\s+)?(?:game|action)|cleared\s+to\s+return)\b/i;
@@ -7053,7 +7078,7 @@ const PLAYER_LONG_TERM_OR_IR_TIMELINE_RE =
   /\b(injured\s+reserve|\bir\b|21-day|practice\s+window|designate[sd]?\s+[\s\S]{0,28}return|season-ending|out\s+for\s+(?:the\s+)?(?:rest\s+of\s+(?:the\s+)?)?(?:\d{4}\s+)?season|done\s+for\s+the\s+(?:season|year)|air\s*cast|fibula|tibia|surgery|surgical|torn\s+(?:acl|achilles|pectoral|meniscus|patellar)|fracture|broken|out\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|miss\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|high-ankle\s+sprain)\b/i;
 
 const COMPLETED_GAME_AVAILABILITY_BLURB_RE =
-  /\b(won['’]?t\s+play|will\s+not\s+play|ruled\s+out|expected\s+to\s+play|game-time\s+decision|inactives?\b|officially\s+(?:active|inactive)|declared\s+inactive|among\s+.*inactives|before\s+[a-z]+\s+game|game\s+status\s+vs\.?\s+[a-z]{2,12}|still\s+missing\s+starters|did\s+not\s+practice|didn['’]?t\s+practice|doesn['’]?t\s+practice|not\s+practicing|not\s+seen\s+at\s+(?:#?49ers\s+)?practice|seen\s+but\s+not\s+part(?:i)?cipating|pre\s+practice\s+report|participation\s+report|no\s+practice|did\s+not\s+participate\s+in\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|limited\s+(?:in|at)\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|observer\s+for\s+(?:wednesday|thursday|friday)['’]?s?\s+session|ahead\s+of\s+(?:sunday|monday|thursday|saturday|week\s+\d+)['’]?s?\s*(?:game|tilt|matchup|contest|clash)?|ahead\s+of\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+game\s+(?:at|against|vs\.?)|ahead\s+of\s+(?:sunday['’]?s\s+)?[a-z]+\s+game|available\s+for\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+(?:game|tilt|matchup|contest)|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|doubtful\s+for\s+(?:sunday|monday|thursday|saturday)|ruled\s+out\s+for\s+(?:sunday|monday|thursday|saturday)|suit\s+up\s+(?:sunday|monday|thursday|saturday|versus|vs\.?|against)|(?:good|ready|confident[\s\S]{0,45}good)\s+to\s+(?:go|play)|in\s+order\s+to\s+play|hinting\s+at\s+some\s+good\s+news|continue\s+to\s+miss\s+practice|miss\s+second\s+consecutive\s+practice)\b/i;
+  /\b(won['’]?t\s+play|will\s+not\s+play|ruled\s+out|expected\s+to\s+play|game-time\s+decision|inactives?\b|officially\s+(?:active|inactive)|declared\s+inactive|among\s+.*inactives|before\s+[a-z]+\s+game|game\s+status\s+vs\.?\s+[a-z]{2,12}|still\s+missing\s+starters|did\s+not\s+practice|didn['’]?t\s+practice|doesn['’]?t\s+practice|not\s+practicing|not\s+seen\s+at\s+(?:#?[a-z0-9]+\s+)?practice|seen\s+but\s+not\s+part(?:i)?cipating|pre\s+practice\s+report|participation\s+report|no\s+practice|did\s+not\s+participate\s+in\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|limited\s+(?:in|at)\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|observer\s+for\s+(?:wednesday|thursday|friday)['’]?s?\s+session|ahead\s+of\s+(?:sunday|monday|thursday|saturday|week\s+\d+)['’]?s?\s*(?:game|tilt|matchup|contest|clash)?|ahead\s+of\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+game\s+(?:at|against|vs\.?)|ahead\s+of\s+(?:sunday['’]?s\s+)?[a-z]+\s+game|available\s+for\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+(?:game|tilt|matchup|contest)|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|doubtful\s+for\s+(?:sunday|monday|thursday|saturday)|ruled\s+out\s+for\s+(?:sunday|monday|thursday|saturday)|suit\s+up\s+(?:sunday|monday|thursday|saturday|versus|vs\.?|against)|(?:good|ready|confident[\s\S]{0,45}good)\s+to\s+(?:go|play)|in\s+order\s+to\s+play|hinting\s+at\s+some\s+good\s+news|continue\s+to\s+miss\s+practice|miss\s+second\s+consecutive\s+practice)\b/i;
 
 const PRIOR_WEEK_SIDELINE_TENT_RE =
   /\b(questionable\s+to\s+return|doubtful\s+to\s+return|will\s+not\s+return|no\s+announced\s+injury\s+yet|into\s+the\s+blue\s+tent|blue\s+medical\s+tent|medical\s+tent|limping\s+towards\s+the\s+bench|sitting\s+on\s+the\s+bench)\b/i;
@@ -7210,7 +7235,10 @@ function buildUnifiedWireEnrichedItem(
     Number(item.trustTier) ||
     repEntry?.trustTier ||
     (VERIFIED_TIER1_REPORTER_NAMES_RE.test(fullBody) ? 1 : 2);
-  const isOfficial = item.outletId === '49ers_official' || item.wireSource === 'official_transactions';
+  const isOfficial =
+    item.outletId === '49ers_official' ||
+    /_official$/i.test(String(item.outletId || '')) ||
+    item.wireSource === 'official_transactions';
   const trustTier = isOfficial ? 1 : resolvedTier;
 
   const enriched = suppressBreaking

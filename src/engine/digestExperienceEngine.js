@@ -646,12 +646,32 @@ const PRESSER_VERB_RE =
   /\b(said|says|told reporters|on\s+(?:the\s+)?podium|press conference|presser|conference call|spoke\s+(?:with|to)\s+reporters|confirmed|announced|updated|explained|noted|expects|optimistic|hopeful|ruled\s+out|day-to-day|week-to-week|addressed|discussed)\b/i;
 
 function normalizePresserTopicFingerprint(text = '') {
+  const active = getActiveTeamConfig();
+  const teamStops = new Set(
+    [
+      'kyle', 'shanahan', 'john', 'lynch', '49ers', 'niners',
+      active?.nickname,
+      active?.city,
+      active?.coachesSeed?.hc,
+      active?.coachesSeed?.gm
+    ]
+      .filter(Boolean)
+      .flatMap(v => String(v).toLowerCase().split(/\s+/))
+      .filter(w => w.length >= 3)
+  );
   return String(text || '')
     .toLowerCase()
     .replace(/https?:\/\/\S+/g, '')
     .replace(/[^a-z0-9\s]/g, ' ')
     .split(/\s+/)
-    .filter(w => w.length >= 4 && !/^(?:kyle|shanahan|john|lynch|49ers|niners|said|says|with|that|this|from|have|will|about|their|after|week|game|today|sunday|monday|wednesday|thursday|friday)$/.test(w))
+    .filter(
+      w =>
+        w.length >= 4 &&
+        !teamStops.has(w) &&
+        !/^(?:said|says|with|that|this|from|have|will|about|their|after|week|game|today|sunday|monday|wednesday|thursday|friday)$/.test(
+          w
+        )
+    )
     .slice(0, 6);
 }
 

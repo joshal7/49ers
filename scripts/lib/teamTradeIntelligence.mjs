@@ -112,7 +112,9 @@ function ordinal(n) {
 
 function teamLogoUrl(abbr = '') {
   const norm = normalizeAnyTeamAbbr(abbr);
-  return norm ? `https://a.espncdn.com/i/teamlogos/nfl/500/${norm.toLowerCase()}.png` : '';
+  if (!norm) return '';
+  const espnCode = getTeamByAbbr(norm)?.espnAbbr || norm.toLowerCase();
+  return `https://a.espncdn.com/i/teamlogos/nfl/500/${espnCode}.png`;
 }
 
 function possessive(name = '') {
@@ -832,7 +834,9 @@ function buildCompletedTradesForTeam({
 
     const otcUrl =
       rosterMatch?.otcUrl ||
-      (nflP?.otc_id ? buildOtcPlayerUrl(displayName, nflP.otc_id) : null) ||
+      (nflP?.otc_id
+        ? buildOtcPlayerUrl({ otcId: nflP.otc_id, playerName: displayName, fallbackToTeam: false })
+        : null) ||
       deal.sourceUrl ||
       `https://www.${team.clubDomain}/team/transactions/`;
 
@@ -975,7 +979,7 @@ function buildTeamTopNeeds({
     let statScore = 0;
     const statNotes = [];
     const passEpa = rankByKey.get('passing_epa_game');
-    const sacksAllowed = rankByKey.get('sacks_allowed_rate');
+    const sacksAllowed = rankByKey.get('sack_rate_allowed') || rankByKey.get('sacks_allowed_rate');
     const defSacks = rankByKey.get('def_sacks_game');
     const ptsAllowed = rankByKey.get('def_pts_allowed_game');
     const toDiff = rankByKey.get('margin_turnover_diff');
@@ -1497,7 +1501,11 @@ export function buildTeamTradeWindow({
   const deadlineTimeLabel =
     team.timezone === 'America/Los_Angeles'
       ? `Tuesday, Nov 10, ${seasonYear} • 1:00 PM PT`
-      : `Tuesday, Nov 10, ${seasonYear} • 4:00 PM ET`;
+      : team.timezone === 'America/Denver' || team.timezone === 'America/Phoenix'
+        ? `Tuesday, Nov 10, ${seasonYear} • 2:00 PM MT`
+        : team.timezone === 'America/Chicago'
+          ? `Tuesday, Nov 10, ${seasonYear} • 3:00 PM CT`
+          : `Tuesday, Nov 10, ${seasonYear} • 4:00 PM ET`;
 
   return {
     tradeWarRoom: {

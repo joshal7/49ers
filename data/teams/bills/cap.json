@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T01:27:03.604Z",
+  "updatedAt": "2026-11-23T06:25:14.719Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/buffalo-bills",
   "spotracUrl": "https://www.spotrac.com/nfl/buffalo-bills/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 301071601,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 296873388,
+      "totalCapLiabilities": 296980411,
       "top51": 236049761,
-      "teamCapSpace": 4198213,
-      "otcRawTeamCapSpace": 4198213,
-      "effectiveCapSpace": 4198213,
-      "activeCapSpending": 245074900,
-      "offenseSpend": 150508305,
-      "defenseSpend": 88996052,
+      "teamCapSpace": 4091190,
+      "otcRawTeamCapSpace": 4091190,
+      "effectiveCapSpace": 4091190,
+      "activeCapSpending": 245168173,
+      "offenseSpend": 150446778,
+      "defenseSpend": 89150852,
       "specialSpend": 5570543,
-      "deadMoneyTotal": 51798488,
-      "injuredReserveTotal": 12359869,
-      "practiceSquadTotal": 4191272,
-      "pupTotal": 568500,
+      "deadMoneyTotal": 51812238,
+      "injuredReserveTotal": 13112863,
+      "practiceSquadTotal": 4222322,
+      "pupTotal": 0,
       "nfiTotal": 221339,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 17340980,
+      "reserveAndPsTotal": 17556524,
       "topDeadMoneyEntries": [
         {
           "name": "Matt Milano",
@@ -134,8 +134,8 @@
           "otcUrl": "https://overthecap.com/player/mitch-wishnowsky/7901/"
         }
       ],
-      "contractedCount": 52,
-      "totalSignedCount": 75
+      "contractedCount": 53,
+      "totalSignedCount": 74
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 375400517,
       "teamCapSpace": -48857631,
       "otcRawTeamCapSpace": -48857631,
-      "effectiveCapSpace": -56600395,
+      "effectiveCapSpace": -56602280,
       "activeCapSpending": 375400517,
       "offenseSpend": 218055548,
       "defenseSpend": 149044426,
@@ -258,7 +258,7 @@
     }
   },
   "blueprint": {
-    "summary": "Buffalo Bills hold $4.20M in 2026 OverTheCap space and $-48.86M projected for 2027."
+    "summary": "Buffalo Bills hold $4.09M in 2026 OverTheCap space and $-48.86M projected for 2027."
   },
   "players": [
     {
@@ -7750,6 +7750,64 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 112000
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4241476",
+      "otcId": "11469",
+      "otcSlug": "tyrell-shavers",
+      "otcUrl": "https://overthecap.com/player/tyrell-shavers/11469/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4241476/tyrell-shavers",
+      "pfrUrl": "https://www.pro-football-reference.com/players/S/ShavTy00.htm",
+      "name": "Tyrell Shavers",
+      "position": "WR",
+      "jersey": 14,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241476.png",
+      "unit": "Offense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1075000,
+          "proratedSigning": 3500,
+          "proratedOption": 0,
+          "proratedBonus": 3500,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 795167,
+          "transactions": {
+            "cut": {
+              "deadMoney": 3500,
+              "capSavings": 791667
+            },
+            "june_1_cut": {
+              "deadMoney": 3500,
+              "capSavings": 791667
+            },
+            "trade": {
+              "deadMoney": 3500,
+              "capSavings": 791667
+            },
+            "june_1_trade": {
+              "deadMoney": 3500,
+              "capSavings": 791667
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 56000
             }
           }
         }

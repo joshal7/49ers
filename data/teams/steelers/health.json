@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-23T03:52:12.650Z",
+  "updatedAt": "2026-11-23T06:25:31.769Z",
   "week": 12,
   "byeWeek": 9,
   "sourceUrl": "https://www.steelers.com/team/injury-report/",
   "espnInjuryUrl": "https://www.espn.com/nfl/team/injuries/_/name/pit/pittsburgh-steelers",
-  "usedIrDesignations": 0,
-  "remainingIrDesignations": 8,
+  "usedIrDesignations": 5,
+  "remainingIrDesignations": 3,
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
@@ -353,10 +353,10 @@
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "placedBeforeWeek": 3,
-      "earliestEligibleWeek": 7,
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": 10,
       "projectedReturnWeek": "Week 12 Activation Window (Nov 27)",
-      "byeWeekNote": "4-game NFL minimum requirement",
+      "byeWeekNote": "Week 9 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 62,
       "playBadgeLabel": "62% • GTD",
       "beatNote": "Dunker went to IR with a sprained MCL back in late September, but it now looks like he's close to being available again. The move opens a 21-day window during which Pittsburgh can officially activate him before he'd have to go back on the shelf for the remainder of the campaign."

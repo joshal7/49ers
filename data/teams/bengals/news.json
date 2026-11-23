@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:51:14.276Z",
+  "updatedAt": "2026-11-23T06:25:26.854Z",
   "dailyTopNewsBrief": {
     "id": "brief_cin_1be117de4e67",
     "cycleKey": "2026-11-22@17ET",
@@ -107,6 +107,39 @@
   "clusteredBriefs": [],
   "rawStream": [
     {
+      "id": "cin_nfltr_04251a4d16df",
+      "type": "article",
+      "title": "AFC Notes: Marlon Humphrey, Bengals, Browns, Ravens, Steelers",
+      "summary": "Bengals Bengals DB Jordan Battle was fined $11,941 for unsportsmanlike conduct, and DT Tedarrell Slaton was fined $11,941 for unnecessary roughness. Browns Browns DE Sam Kamara was fined $6,750 for unnecessary roughness. Ravens Ravens CB Ma",
+      "imageUrl": "",
+      "imageAlt": "AFC Notes: Marlon Humphrey, Bengals, Browns, Ravens, Steelers",
+      "publishedAt": "2026-11-22T23:30:28.000Z",
+      "url": "https://nfltraderumors.co/afc-notes-marlon-humphrey-bengals-browns-ravens-steelers/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.9925
+    },
+    {
       "id": "cin_rss_275db86ef0d5",
       "type": "article",
       "title": "Week 11 Injury Report | Bengals at Commanders",
@@ -137,7 +170,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0183
+      "storyRank": 0.9637
     },
     {
       "id": "cin_rss_a2032f75f0e5",
@@ -170,7 +203,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.505
+      "storyRank": 0.4736
+    },
+    {
+      "id": "cin_pfr_e4b84b9ab405",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/21/26",
+      "summary": "Today&#8217;s minor moves and standard gameday practice squad elevations for the Week 11 Sunday slate: Arizona Cardinals Elevated: WR Zay Jones Baltimore Ravens Elevated: DT David Olajiga, TE Nick Vannett Buffalo Bills Elevated: LB Shaq Tho",
+      "imageUrl": "",
+      "publishedAt": "2026-11-21T23:23:18.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-21-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cincinnati-bengals",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4155
     },
     {
       "id": "cin_rss_6b922444df43",
@@ -203,7 +268,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2534
+      "storyRank": 0.241
     },
     {
       "id": "cin_espn_9d6002f560b98",
@@ -211,6 +276,7 @@
       "title": "Back at practice again, Bengals QB Burrow optimistic he'll be at full strength",
       "summary": "A full participant at practice for the second straight day despite the bug that he has battled, Bengals quarterback Joe Burrow is optimistic that he'll be at full strength when Cincinnati plays the Washington Commanders on \"Monday Night Football.\"",
       "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748742_600x600_1-1.jpg",
+      "imageCaption": "Joe Burrow [600x600]",
       "imageAlt": "Back at practice again, Bengals QB Burrow optimistic he'll be at full strength",
       "publishedAt": "2026-11-21T12:51:42Z",
       "url": "https://www.espn.com/nfl/story/_/id/50544261/burrow-practices-again-full-strength-mnf",
@@ -236,7 +302,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3322
+      "storyRank": 0.3166
     },
     {
       "id": "cin_espn_dbd410faaebfd",
@@ -244,6 +310,7 @@
       "title": "Why Amarius Mims is an underrated key to Bengals' success",
       "summary": "Joe Burrow is on an MVP trajectory, and a big reason is his OL, led by Amarius Mims.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748729_2_1296x729_16-9.jpg",
+      "imageCaption": "The Bengals' passing attack would not be the league's best without the development of right tackle Amarius Mims, who's enjoying an All-Pro-level season.",
       "imageAlt": "Why Amarius Mims is an underrated key to Bengals' success",
       "publishedAt": "2026-11-21T11:00:10Z",
       "url": "https://www.espn.com/nfl/story/_/id/50543897/bengals-amarius-mims-pass-protection-joe-burrow",
@@ -269,7 +336,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3121
+      "storyRank": 0.298
     },
     {
       "id": "cin_tx_b46be06177f4",
@@ -303,7 +370,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2836
+      "storyRank": 0.2716
     },
     {
       "id": "cin_espn_158c100220c9c",
@@ -311,6 +378,7 @@
       "title": "Joe Burrow, Bengals gearing up for MNF",
       "summary": "Ben Baby previews Joe Burrow's mindset heading into Monday night against the Commanders.",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1120/dm_261120_16x9_Bengals_IA_1/dm_261120_16x9_Bengals_IA_1.jpg",
+      "imageCaption": "Ben Baby previews Joe Burrow's mindset heading into Monday night against the Commanders.",
       "imageAlt": "Joe Burrow, Bengals gearing up for MNF",
       "publishedAt": "2026-11-21T01:08:04Z",
       "url": "https://www.espn.com/video/clip/_/id/50545144/joe-burrow-bengals-gearing-mnf",
@@ -336,7 +404,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2328
+      "storyRank": 0.2242
     },
     {
       "id": "cin_rss_966698422764",
@@ -369,7 +437,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2248
+      "storyRank": 0.2167
     },
     {
       "id": "cin_espn_89019748dbff1",
@@ -377,6 +445,7 @@
       "title": "Why Stephen A. thinks 'special' Joe Burrow is the MVP front-runner",
       "summary": "Why Stephen A. thinks 'special' Joe Burrow is the MVP front-runner",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1120/ss_20261120_110328687_3750993/ss_20261120_110328687_3750993.jpg",
+      "imageCaption": "Why Stephen A. thinks 'special' Joe Burrow is the MVP front-runner",
       "imageAlt": "Why Stephen A. thinks 'special' Joe Burrow is the MVP front-runner",
       "publishedAt": "2026-11-20T16:14:39Z",
       "url": "https://www.espn.com/video/clip/_/id/50541578/why-stephen-thinks-special-joe-burrow-mvp-front-runner",
@@ -402,7 +471,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1868
+      "storyRank": 0.1808
     },
     {
       "id": "cin_vid_c6cb8e97b49a",
@@ -436,7 +505,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1434
+      "storyRank": 0.139
     },
     {
       "id": "cin_espn_aaf422e5bdbd6",
@@ -444,6 +513,7 @@
       "title": "Bengals offense will be biggest test yet for Commanders' improving defense",
       "summary": "Washington is moving closer to the defense it wants to be. Monday will provide a benchmark for its progress.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1748214_608x342_16-9.jpg",
+      "imageCaption": "Joe Burrow and the Bengals offense leads the NFL in passing yards and is second in points heading into Week 11.",
       "imageAlt": "Bengals offense will be biggest test yet for Commanders' improving defense",
       "publishedAt": "2026-11-20T03:35:34Z",
       "url": "https://www.espn.com/nfl/story/_/id/50532934/commanders-defense-bengals-offense-joe-burrow",
@@ -454,7 +524,7 @@
       "author": "John Keim",
       "authorHandle": "@john_keim",
       "authorProfileUrl": "https://x.com/john_keim",
-      "trustTier": 1,
+      "trustTier": 3,
       "wireSource": "espn_team_news",
       "isBreaking": false,
       "isInGameInjury": false,
@@ -464,12 +534,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 92,
+      "credibilityScore": 78,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0973
+      "storyRank": 0.0947
     },
     {
       "id": "cin_rss_d194e765ab1e",
@@ -502,14 +572,47 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1358
+      "storyRank": 0.1323
+    },
+    {
+      "id": "cin_pfr_998734380091",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/19/26",
+      "summary": "Here&#8217;s a look at Thursday&#8217;s minor NFL moves&#8230; Cincinnati Bengals Designated for return from IR: LB Swayze Bozeman Green Bay Packers Waived: RB Pierre Strong Houston Texans Activated from IR: CB Jaylin Smith Indianapolis Col",
+      "imageUrl": "",
+      "publishedAt": "2026-11-20T00:25:27.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-19-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cincinnati-bengals",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1156
     },
     {
       "id": "cin_espn_cb79942aef2a9",
       "type": "article",
       "title": "Commanders' defense preparing for high-flying Bengals offense",
       "summary": "— Washington Commanders coach Dan Quinn knows the challenge facing his defense for Monday night's game against the Cincinnati Bengals.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873078.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1119/dm_261119_Bengals_Burrow_sick_IA/dm_261119_Bengals_Burrow_sick_IA.jpg",
+      "imageCaption": "Ben Baby breaks down if Joe Burrow missing practice due to illness is a concern.",
       "imageAlt": "Commanders' defense preparing for high-flying Bengals offense",
       "publishedAt": "2026-11-20T00:07:43Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873078",
@@ -535,7 +638,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1344
+      "storyRank": 0.131
     },
     {
       "id": "cin_espn_3100a2ec21ffb",
@@ -543,6 +646,7 @@
       "title": "Bengals, Reds pay tribute to Fiona the hippo after her death",
       "summary": "The world-famous hippopotamus passed away Thursday after ingesting a hat that made its way into her enclosure.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1748294_1296x729_16-9.jpg",
+      "imageCaption": "Fiona the hippo [1296x729]",
       "imageAlt": "Bengals, Reds pay tribute to Fiona the hippo after her death",
       "publishedAt": "2026-11-19T23:23:55Z",
       "url": "https://www.espn.com/nfl/story/_/id/50534625/cincinnati-bengals-reds-fiona-hippo",
@@ -568,7 +672,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1327
+      "storyRank": 0.1293
     },
     {
       "id": "cin_rss_539af0a08512",
@@ -601,7 +705,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1248
+      "storyRank": 0.1218
+    },
+    {
+      "id": "cin_pfr_94720f0c1304",
+      "type": "article",
+      "title": "Bengals CB DJ Turner Could Sign Market-Topping Free Agent Deal",
+      "summary": "DJ Turner has remained a key figure on the Bengals&#8217; defense in 2026. The pending free agent is in store for a considerable raise once his rookie deal expires as a result. Turner set new career highs across the board in 2025, notching ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-19T18:10:37.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/bengals-cb-dj-turner-could-sign-market-topping-free-agent-deal",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cincinnati-bengals",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1038
     },
     {
       "id": "cin_espn_21cb53a2a360a",
@@ -609,6 +745,7 @@
       "title": "Can the Bengals succeed in the postseason with a pass-heavy offense?",
       "summary": "Can the Bengals succeed in the postseason with a pass-heavy offense?",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1119/ss_20261119_102319092_3749413/ss_20261119_102319092_3749413.jpg",
+      "imageCaption": "Can the Bengals succeed in the postseason with a pass-heavy offense?",
       "imageAlt": "Can the Bengals succeed in the postseason with a pass-heavy offense?",
       "publishedAt": "2026-11-19T15:48:55Z",
       "url": "https://www.espn.com/video/clip/_/id/50531470/can-bengals-succeed-postseason-pass-heavy-offense",
@@ -634,7 +771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1164
+      "storyRank": 0.1137
     },
     {
       "id": "cin_rss_a0cbea489c8b",
@@ -667,7 +804,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1094
+      "storyRank": 0.107
     },
     {
       "id": "cin_tx_9b4ccc5012a1",
@@ -701,7 +838,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1029
+      "storyRank": 0.1008
+    },
+    {
+      "id": "cin_pfr_5ff13b5ff505",
+      "type": "article",
+      "title": "NFL Trade Deadline Notes: Titans, Giants, Bengals, Reed, Sainristil, Matlock",
+      "summary": "The Giants were among the teams that pursued Jeffery Simmons before the Titans sent the star defensive tackle to Chicago, but Tennessee may have never considered New York as a serious destination. John Harbaugh’s direct phone call to Titans",
+      "imageUrl": "",
+      "publishedAt": "2026-11-19T04:22:16.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-trade-deadline-notes-titans-giants-bengals-reed-sainristil-matlock",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cincinnati-bengals",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0839
     },
     {
       "id": "cin_rss_8188f9c9591f",
@@ -734,7 +903,43 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0888
+      "storyRank": 0.0871
+    },
+    {
+      "id": "cin_yt_JaLnda9w_-0",
+      "type": "video",
+      "category": "film",
+      "videoId": "JaLnda9w_-0",
+      "embeddable": true,
+      "title": "Joe Burrow vs the Steelers Week 10, 2026 Analysis",
+      "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
+      "imageUrl": "https://i.ytimg.com/vi/JaLnda9w_-0/hqdefault.jpg",
+      "imageAlt": "Joe Burrow vs the Steelers Week 10, 2026 Analysis",
+      "publishedAt": "2026-11-18T19:56:46.000Z",
+      "url": "https://www.youtube.com/watch?v=JaLnda9w_-0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=JaLnda9w_-0",
+      "outletId": "the_qb_school",
+      "outletName": "The QB School",
+      "reporterId": "the_qb_school",
+      "reporterName": "The QB School",
+      "author": "The QB School",
+      "authorHandle": "@TheQBSchool",
+      "authorProfileUrl": "https://x.com/theqbschool",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 92,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0213
     },
     {
       "id": "cin_rss_830bc3c40d1a",
@@ -767,7 +972,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0856
+      "storyRank": 0.0841
     },
     {
       "id": "cin_rss_826218c3e0bb",
@@ -800,7 +1005,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0834
+      "storyRank": 0.0819
     },
     {
       "id": "cin_rss_e2b8ffb3d441",
@@ -833,7 +1038,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0829
+      "storyRank": 0.0814
     },
     {
       "id": "cin_rss_03315193464a",
@@ -866,7 +1071,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0797
+      "storyRank": 0.0783
     },
     {
       "id": "cin_rss_46370a4abb81",
@@ -899,7 +1104,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0644
+      "storyRank": 0.0634
     },
     {
       "id": "cin_rss_57dec68869af",
@@ -932,7 +1137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0629
+      "storyRank": 0.062
     },
     {
       "id": "cin_rss_d03b0d3e53d7",
@@ -965,7 +1170,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0534
+      "storyRank": 0.0527
     },
     {
       "id": "cin_espn_506b45659a6ac",
@@ -973,6 +1178,7 @@
       "title": "Can the Bengals keep winning while throwing so much?",
       "summary": "Can the Bengals keep winning while throwing so much?",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1116/ss_20261116_151106972_3745381/ss_20261116_151106972_3745381.jpg",
+      "imageCaption": "Can the Bengals keep winning while throwing so much?",
       "imageAlt": "Can the Bengals keep winning while throwing so much?",
       "publishedAt": "2026-11-16T20:17:29Z",
       "url": "https://www.espn.com/video/clip/_/id/50504016/can-bengals-keep-winning-throwing-much",
@@ -998,7 +1204,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0512
+      "storyRank": 0.0506
     },
     {
       "id": "cin_rss_321f4e576b51",
@@ -1031,7 +1237,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0512
+      "storyRank": 0.0505
     },
     {
       "id": "cin_espn_e5fd59ec53e69",
@@ -1039,6 +1245,7 @@
       "title": "How an NFL referee crew worked two games in one day",
       "summary": "An inside look at the 14-hour day of four referees who worked an afternoon game in Indianapolis and the Sunday night game in Cincinnati.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746562_800x450_16-9.jpg",
+      "imageCaption": "NFL referee Don Willard (58).",
       "imageAlt": "How an NFL referee crew worked two games in one day",
       "publishedAt": "2026-11-16T18:12:44Z",
       "url": "https://www.espn.com/nfl/story/_/id/50497412/nfl-referee-ref-crew-two-games",
@@ -1064,7 +1271,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0503
+      "storyRank": 0.0496
     },
     {
       "id": "cin_rss_8124ed3cead3",
@@ -1097,7 +1304,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.049
+      "storyRank": 0.0484
     },
     {
       "id": "cin_rss_f51bee98db4a",
@@ -1130,7 +1337,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0463
+      "storyRank": 0.0458
     },
     {
       "id": "cin_rss_db6541c582e3",
@@ -1163,7 +1370,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0455
+      "storyRank": 0.0449
     },
     {
       "id": "cin_rss_cc2f84ae26bd",
@@ -1196,7 +1403,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0425
+      "storyRank": 0.042
     },
     {
       "id": "cin_rss_24b23c5e83a6",
@@ -1229,7 +1436,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0303
+      "storyRank": 0.03
     },
     {
       "id": "cin_rss_31dc8aa88e59",
@@ -1262,7 +1469,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0208
+      "storyRank": 0.0206
     },
     {
       "id": "cin_rss_da8d4467e2e7",
@@ -1295,7 +1502,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0296
+      "storyRank": 0.0294
     },
     {
       "id": "cin_rss_6414de2565c8",
@@ -1328,7 +1535,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0073
     },
     {
       "id": "cin_vid_51c6479c6726",
@@ -1362,7 +1569,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.0229
     },
     {
       "id": "cin_rss_1b6a3753a052",
@@ -1395,7 +1602,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0284
+      "storyRank": 0.0282
+    },
+    {
+      "id": "cin_pfr_52bcbe982234",
+      "type": "article",
+      "title": "Zac Taylor Addresses Bengals&#8217; Failed Arnold Ebiketie Trade",
+      "summary": "Rewarding teams for losing free agents &#8212; as long as the plus/minus ratio aligns &#8212; the compensatory pick system is closely monitored by teams as they navigate the FA market. Unrestricted free agents only counting against teams co",
+      "imageUrl": "",
+      "publishedAt": "2026-11-13T05:16:02.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/zac-taylor-addresses-bengals-failed-arnold-ebiketie-trade",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cincinnati-bengals",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0236
     },
     {
       "id": "cin_rss_491f936b6281",
@@ -1428,7 +1667,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0263
+      "storyRank": 0.026
+    },
+    {
+      "id": "cin_pfr_1561cde18b08",
+      "type": "article",
+      "title": "Bengals Open Practice Windows For Andrei Iosivas, Brian Parker II, Jalen Davis",
+      "summary": "A trio of players will return to practice today for the Bengals. Receiver Andrei Iosivas, guard Brian Parker II and cornerback Jalen Davis have each seen their practice windows opened, per a team announcement. Iosivas and Davis are among th",
+      "imageUrl": "",
+      "publishedAt": "2026-11-12T18:00:03.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/bengals-open-practice-windows-for-andrei-iosivas-brian-parker-ii-jalen-davis",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cincinnati-bengals",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0221
     },
     {
       "id": "cin_tx_9f2de53e630a",
@@ -1462,7 +1733,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.024
+      "storyRank": 0.0238
     },
     {
       "id": "cin_rss_3ba6486b593a",
@@ -1495,7 +1766,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0234
+      "storyRank": 0.0232
     },
     {
       "id": "cin_rss_7d69db5feb8e",
@@ -1528,7 +1799,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.0228
     },
     {
       "id": "cin_rss_59635a0bcb86",
@@ -1561,7 +1832,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0227
+      "storyRank": 0.0226
     },
     {
       "id": "cin_rss_3e9ebef42bb9",
@@ -1594,7 +1865,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0219
+    },
+    {
+      "id": "cin_pfr_a9d66a1dad7b",
+      "type": "article",
+      "title": "Eagles-Bengals Arnold Ebiketie Trade Called Off",
+      "summary": "11:00pm: The trade has now been called off, per multiple reports. The impact on the 2027 compensatory pick formula appears to be the reason why. Rapoport confirms the deal was not finalized prior to this latest update, which presumably cons",
+      "imageUrl": "",
+      "publishedAt": "2026-11-11T05:00:07.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/eagles-to-trade-arnold-ebiketie-to-bengals",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cincinnati-bengals",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0182
     },
     {
       "id": "cin_rss_9049effb7319",
@@ -1627,7 +1930,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.0205
     },
     {
       "id": "cin_rss_55f1d644b745",
@@ -1660,7 +1963,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0049
     },
     {
       "id": "cin_rss_8d0aa00ac5ed",
@@ -1693,7 +1996,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0195
+      "storyRank": 0.0194
     },
     {
       "id": "cin_rss_3875de572a91",
@@ -1726,7 +2029,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0048
+    },
+    {
+      "id": "cin_pfr_bb77f5a86976",
+      "type": "article",
+      "title": "Cardinals Signing QB Josh Johnson",
+      "summary": "With their quarterbacks room now devoid of healthy experience, the Cardinals have signed veteran backup Josh Johnson to their 53-man roster off the Bengals&#8217; practice squad, per ESPN&#8217;s Adam Schefter. It&#8217;s rare for the 40-ye",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T00:07:12.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/cardinals-signing-qb-josh-johnson",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cincinnati-bengals",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.004
     },
     {
       "id": "cin_rss_5f23d218c554",
@@ -1759,7 +2094,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0182
+      "storyRank": 0.0181
+    },
+    {
+      "id": "cin_pfr_6020f23adaeb",
+      "type": "article",
+      "title": "AFC North Trade Notes: Steelers, Campbell, Bengals, Browns",
+      "summary": "Just like last year, the receiver position is one to watch closely on the trade front as it pertains to the Steelers. A few names in particular have been connected to Pittsburgh regarding the 2026 deadline. Josh Downs has asked to be traded",
+      "imageUrl": "",
+      "publishedAt": "2026-11-09T23:01:43.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/afc-north-trade-notes-steelers-campbell-bengals-browns",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/cincinnati-bengals",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0158
     },
     {
       "id": "cin_rss_38441dc2629f",
@@ -1792,7 +2159,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0177
+      "storyRank": 0.0176
     },
     {
       "id": "cin_vid_b6467bc7593c",
@@ -1826,7 +2193,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0106
     },
     {
       "id": "cin_tx_823d09596493",

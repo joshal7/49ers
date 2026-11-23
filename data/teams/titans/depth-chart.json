@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:53:50.186Z",
+  "updatedAt": "2026-11-23T06:25:41.513Z",
   "week": 12,
   "units": [
     {
@@ -125,7 +125,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569587.png",
               "baselineRank": 2,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • Out for Season",
+              "statusBadge": "0% • IR",
               "isAvailable": false
             }
           ],
@@ -147,7 +147,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569587.png",
               "baselineRank": 2,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • Out for Season",
+              "statusBadge": "0% • IR",
               "isAvailable": false,
               "demotedDueToInjury": true
             }

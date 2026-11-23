@@ -15,7 +15,7 @@ import {
 import { iconSvg } from './icons.js';
 import { formatOtcDollars, formatCompactDollars } from '../engine/capSimulator.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
-import { getActiveTeamConfig } from '../config/teamRegistry.js';
+import { getActiveTeamConfig, getOurladsTeamCode } from '../config/teamRegistry.js';
 
 export const ROSTER_SORT_FIELDS = [
   { key: 'jersey', label: 'Roster Number', shortLabel: 'Roster #', defaultDir: 'asc' },
@@ -431,7 +431,7 @@ function renderDualDepthChart({ appData, depthMode }) {
       </div>
       <div class="source-link-strip" style="justify-content:flex-end">
         <a href="https://www.espn.com/nfl/team/depth/_/name/${esc(getActiveTeamConfig().espnAbbr)}/${esc(getActiveTeamConfig().otcSlug)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Depth</span>${iconSvg('externalLink', 10)}</a>
-        <a href="https://www.ourlads.com/nfldepthcharts/depthchart/${esc(getActiveTeamConfig().abbr)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Ourlads</span>${iconSvg('externalLink', 10)}</a>
+        <a href="https://www.ourlads.com/nfldepthcharts/depthchart/${esc(getOurladsTeamCode())}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>Ourlads</span>${iconSvg('externalLink', 10)}</a>
       </div>
     </div>
   `;

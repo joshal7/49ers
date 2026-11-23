@@ -12,31 +12,42 @@
  * cut-short audio self-heals automatically on next play.
  */
 
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
+
 const DB_NAME = '49ers_faithful_podcast_audio_v1';
 const STORE_NAME = 'episode_wavs';
 const DB_VERSION = 1;
 export const PODCAST_AUDIO_CACHE_NAME = '49ers-podcast-studio-audio-v1';
 const MAX_STORED_EPISODES = 16;
 
+function getTeamPodcastCacheName() {
+  const team = getActiveTeamConfig();
+  return team?.storageKeys?.podcastCache || PODCAST_AUDIO_CACHE_NAME;
+}
+
 const memoryBlobFallback = new Map();
 const objectUrlCache = new Map();
 let dbPromise = null;
 
 function buildCacheStorageAudioRequestUrl(episodeId) {
+  const team = getActiveTeamConfig();
   const origin =
     typeof self !== 'undefined' &&
     self.location?.origin &&
     self.location.origin !== 'null' &&
     /^https?:\/\//i.test(self.location.origin)
       ? self.location.origin
-      : 'https://49ers.joshal.com';
-  return `${origin}/__podcast_studio_audio__/${encodeURIComponent(String(episodeId))}.wav`;
+      : team?.domain
+        ? `https://${team.domain}`
+        : 'https://49ers.joshal.com';
+  const teamPrefix = team?.abbr && team.abbr !== 'SF' ? `${team.slug}_` : '';
+  return `${origin}/__podcast_studio_audio__/${encodeURIComponent(`${teamPrefix}${String(episodeId)}`)}.wav`;
 }
 
 async function openAudioCacheStorage() {
   if (typeof caches === 'undefined' || typeof caches.open !== 'function') return null;
   try {
-    return await caches.open(PODCAST_AUDIO_CACHE_NAME);
+    return await caches.open(getTeamPodcastCacheName());
   } catch {
     return null;
   }
@@ -457,12 +468,13 @@ export async function exportEpisodeShareableAudioFile(episode, kbps = 64) {
   const rawBlob = await getEpisodeAudioBlob(episode.id, Number(episode.durationSec || 0));
   if (!rawBlob) return null;
 
+  const fallbackSlug = `${getActiveTeamConfig()?.slug || 'nfl'}-podcast`;
   const safeSlug =
-    String(episode.title || '49ers-podcast')
+    String(episode.title || fallbackSlug)
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '')
-      .slice(0, 48) || '49ers-podcast';
+      .slice(0, 48) || fallbackSlug;
 
   try {
     const arrBuf = await rawBlob.arrayBuffer();

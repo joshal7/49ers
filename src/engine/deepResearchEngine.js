@@ -15,7 +15,7 @@ import {
 } from './groundingValidator.js';
 import { isStaleCompletedGameAvailabilityItem, resolveGameNewsContext } from './breakingClassifier.js';
 import { AMBIGUOUS_PLAYER_SURNAMES } from './linkIntegrity.js';
-import { getActiveTeamConfig, getTeamCoaches, resolveTeamConfig } from '../config/teamRegistry.js';
+import { ALL_NFL_TEAMS, getActiveTeamConfig, getTeamCoaches, resolveTeamConfig } from '../config/teamRegistry.js';
 
 export const POSITION_GROUP_DEFINITIONS = [
   {
@@ -25,6 +25,8 @@ export const POSITION_GROUP_DEFINITIONS = [
     positions: ['WR'],
     regex: /\b(wide\s*rec(?:ei|ie)vers?|rec(?:ei|ie)vers?|wideouts?|wrs?|pass\s*catchers?|perimeter\s*weapons?|x\s*rec(?:ei|ie)ver|slot\s*rec(?:ei|ie)ver)\b/i,
     schemeNote:
+      'Modern NFL passing attacks rely on perimeter dig/glance route leverage, pre-snap motion releases, spacing versatility, and yards-after-catch physicality against two-high shells.',
+    sfSchemeNote:
       "Kyle Shanahan's motion-heavy 21 and 11 personnel passing structure relies on high-effort perimeter dig/glance route leverage, condensed-split motion releases, and yards-after-catch physicality against two-high shells."
   },
   {
@@ -34,15 +36,19 @@ export const POSITION_GROUP_DEFINITIONS = [
     positions: ['QB'],
     regex: /\b(quarter\s*backs?|qbs?|signal\s*callers?|under\s*center|passing\s*game)\b/i,
     schemeNote:
+      'Play-action timing, middle-of-field anticipation throws, and pre-snap motion/protection checks demand elite processing speed, CPOE accuracy, and low pressure-to-sack conversion.',
+    sfSchemeNote:
       "Shanahan's play-action boot, middle-of-field anticipation throws, and pre-snap motion alert checks demand elite processing speed, CPOE accuracy, and low pressure-to-sack conversion."
   },
   {
     id: 'RB',
-    label: 'Running Back & Fullback Backfield',
+    label: 'Running Back & Backfield',
     singular: 'running back',
     positions: ['RB', 'FB'],
     regex: /\b(running\s*backs?|rbs?|full\s*backs?|fbs?|backfield|tailbacks?|ground\s*game|run\s*game)\b/i,
     schemeNote:
+      'Zone and gap-scheme rushing efficiency paired with pass-protection reliability and checkdown/choice-route receiving mismatches out of the backfield.',
+    sfSchemeNote:
       'Outside-zone wide stretch married to duo/inside-zone split-flow blocks and choice-route backfield mismatches out of 21 personnel.'
   },
   {
@@ -52,7 +58,7 @@ export const POSITION_GROUP_DEFINITIONS = [
     positions: ['TE'],
     regex: /\b(tight\s*ends?|tes?|12\s*personnel|move\s*tight\s*end|inline\s*blocking)\b/i,
     schemeNote:
-      'C-gap wham/slice run-game displacement paired with seam/over-route vertical stress against Cover-3 and Quarters linebackers.'
+      'C-gap inline run-game displacement paired with seam/over-route vertical stress against Cover-3 and Quarters linebackers.'
   },
   {
     id: 'OL',
@@ -61,15 +67,18 @@ export const POSITION_GROUP_DEFINITIONS = [
     positions: ['OT', 'OG', 'G', 'T', 'C', 'OL'],
     regex: /\b(offensive\s*line(?:men)?|o[-\s]?line|tackles?|guards?|centers?|left\s*guard|right\s*tackle|left\s*tackle|pass\s*pro(?:tection)?|trenches)\b/i,
     schemeNote:
-      'Lateral outside-zone reach-block athleticism combined with interior half-slide anchor strength against 3-technique and T-E stunt games.'
+      'Run-blocking lateral movement and combo timing combined with interior pass-protection anchor strength against 3-technique and T-E stunt games.'
   },
   {
     id: 'DL',
-    label: 'Defensive Line & Wide-9 Pass Rush',
+    label: 'Defensive Line & Pass Rush',
+    sfLabel: 'Defensive Line & Wide-9 Pass Rush',
     singular: 'defensive lineman',
     positions: ['DE', 'DT', 'DL', 'EDGE', 'NT'],
     regex: /\b(defensive\s*line(?:men)?|d[-\s]?line|pass\s*rush(?:ers?)?|edge\s*rush(?:ers?)?|defensive\s*tackles?|defensive\s*ends?|wide[-\s]?9|stunt\s*geometry|sacks?)\b/i,
     schemeNote:
+      'Four-man pass-rush win rate, edge containment, and interior 3-technique penetration designed to generate consistent pressure without sacrificing seven-in-coverage shells.',
+    sfSchemeNote:
       "DC Raheem Morris's Wide-9 four-man rush pairs explosive edge alignments with interior 3-technique penetraters to force one-on-one guard slides without sacrificing 7-in-coverage shells."
   },
   {
@@ -79,7 +88,7 @@ export const POSITION_GROUP_DEFINITIONS = [
     positions: ['LB', 'ILB', 'OLB', 'MLB'],
     regex: /\b(line\s*backers?|lbs?|mike\s*backer|will\s*backer|second\s*level)\b/i,
     schemeNote:
-      'Sideline-to-sideline run-and-hit range plus deep middle Tampa-2 / Cover-3 Buzz carry responsibilities erasing intermediate seams.'
+      'Sideline-to-sideline run-and-hit range plus deep middle zone carry and hook/curl responsibilities erasing intermediate seams.'
   },
   {
     id: 'DB',
@@ -88,6 +97,8 @@ export const POSITION_GROUP_DEFINITIONS = [
     positions: ['CB', 'S', 'FS', 'SS', 'DB'],
     regex: /\b(secondary|defensive\s*backs?|dbs?|corner\s*backs?|corners?|cbs?|safet(?:y|ies)|nickel|slot\s*corner|coverage\s*shells?)\b/i,
     schemeNote:
+      'Disguised two-high to single-high post-snap safety rotations, pattern-match Quarters/Cover-3 discipline, and physical nickel run support.',
+    sfSchemeNote:
       "Raheem Morris's disguised two-high to late-rotated Cover-3 Buzz, Quarters, and press-bail outside leverage with physical nickel run-support."
   },
   {
@@ -100,6 +111,16 @@ export const POSITION_GROUP_DEFINITIONS = [
       'Hidden-yardage directional hang-time, dynamic kickoff landing-zone discipline, and high-leverage fourth-quarter field-goal execution.'
   }
 ];
+
+function resolveGroupForTeam(group, team) {
+  if (!group) return null;
+  const isSf = resolveTeamConfig(team || getActiveTeamConfig())?.abbr === 'SF';
+  return {
+    ...group,
+    label: isSf && group.sfLabel ? group.sfLabel : group.label,
+    schemeNote: isSf && group.sfSchemeNote ? group.sfSchemeNote : group.schemeNote
+  };
+}
 
 function summarizePlayer2026Stats(player) {
   const s = player?.stats2026;
@@ -233,15 +254,15 @@ export function parseTopicIntent(rawQuery = '', appData = {}) {
   const isTrade = /\b(trade|deadline|seller|buyer|target|acquire|rental|fit)\b/i.test(qLower);
   const isCap = /\b(cap|contract|salary|restructure|rollover|dead\s*money|overthecap|extension|cut)\b/i.test(qLower);
   const isDraft = /\b(draft|2027\s*picks?|prospect|combine|tankathon|mock)\b/i.test(qLower);
-  const isPlayoffs = /\b(playoff|seed|bye|nfc|standings|monte\s*carlo|odds|tiebreaker)\b/i.test(qLower);
+  const isPlayoffs = /\b(playoff|postseason|seed|bye|nfc|afc|wild\s*card|standings|monte\s*carlo|odds|tiebreaker)\b/i.test(qLower);
   const isHealth = /\b(injur(?:y|ies)|health|ir|practice\s*report|questionable|return\s*timeline)\b/i.test(qLower);
   const oppName = appData?.scheduleMatchup?.upcomingMatchup?.oppName || '';
   const oppMascot = oppName.split(' ').slice(-1)[0]?.toLowerCase() || '';
-  const isMatchup =
-    (oppMascot && qLower.includes(oppMascot)) ||
-    /\b(matchup|game\s*plan|preview|week\s*\d+|raiders|seahawks|rams|cardinals|vikings|packers|chiefs|lions)\b/i.test(
-      qLower
-    );
+  const allTeamNicknamesRe = new RegExp(
+    `\\b(matchup|game\\s*plan|preview|week\\s*\\d+|${ALL_NFL_TEAMS.map(t => t.nickname.toLowerCase()).join('|')})\\b`,
+    'i'
+  );
+  const isMatchup = (oppMascot && qLower.includes(oppMascot)) || allTeamNicknamesRe.test(qLower);
 
   return {
     rawQuery: q,
@@ -427,11 +448,12 @@ export function compileDeepResearchDossier({ query = '', appData = {}, liveSearc
   );
   const balancedLeagueBlock = buildBalancedLeagueComparisonBlock(appData, { compact: true });
 
+  const resolvedMatchedGroups = intent.matchedGroups.map(g => resolveGroupForTeam(g, activeTeamDossier));
   // Build text summary for LLM prompts or grounding logs
   const summaryLines = [
     `DEEP RESEARCH DOSSIER FOR TOPIC: "${query}"`,
-    `Primary Focus: ${intent.matchedGroups.map(g => g.label).join(', ') || `Full-Team ${activeTeamDossier.nickname} Roster, Scheme & Cap Synthesis`}`,
-    `Team Standing: ${appData?.meta?.teamRecord || '6-1'} (${appData?.meta?.standingSummary || '1st NFC West'}) | Week ${matchup.week || appData?.meta?.currentWeek || 9} vs. ${matchup.oppName || 'Opponent'} (${matchup.oppRecord || 'NFL'}, Line: ${matchup.betting?.spread || 'TBD'})`,
+    `Primary Focus: ${resolvedMatchedGroups.map(g => g.label).join(', ') || `Full-Team ${activeTeamDossier.nickname} Roster, Scheme & Cap Synthesis`}`,
+    `Team Standing: ${appData?.meta?.teamRecord || '0-0'} (${appData?.meta?.standingSummary || activeTeamDossier.division}) | Week ${matchup.week || appData?.meta?.currentWeek || 1} vs. ${matchup.oppName || 'Opponent'} (${matchup.oppRecord || 'NFL'}, Line: ${matchup.betting?.spread || 'TBD'})`,
     ...(balancedLeagueBlock ? [balancedLeagueBlock] : []),
     `Active Available Contributors (${activeHealthyDossiers.length}):`,
     ...activeHealthyDossiers.map(
@@ -489,12 +511,12 @@ export function compileDeepResearchDossier({ query = '', appData = {}, liveSearc
   }
 
   summaryLines.push(
-    `Multi-Year CBA Cap & Draft Context: 2026 Top-51 Cap Space ${formatCompactDollars(cap26.teamCapSpace || 35_164_858)} (9/18ths midseason trade proration), 2027 Projected Cap Space ${formatCompactDollars(cap27.teamCapSpace ?? -31_540_066)} requiring CBA Article 13 rollover; ${dp.pickInventory?.length || 6} total 2027 draft picks.`
+    `Multi-Year CBA Cap & Draft Context: 2026 Top-51 Cap Space ${formatCompactDollars(cap26.teamCapSpace ?? 0)}, 2027 Projected Cap Space ${formatCompactDollars(cap27.teamCapSpace ?? 0)} with CBA Article 13 rollover; ${dp.pickInventory?.length || 0} total 2027 draft picks.`
   );
 
   return {
-    intent,
-    primaryGroup: intent.matchedGroups[0] || null,
+    intent: { ...intent, matchedGroups: resolvedMatchedGroups },
+    primaryGroup: resolvedMatchedGroups[0] || null,
     activeHealthy: activeHealthyDossiers,
     activeSidelined: activeSidelinedDossiers,
     irReserve: irReserveDossiers,
@@ -537,13 +559,14 @@ export function buildNotebookLmPodcastScript({
   appData = {},
   dossier = null
 } = {}) {
-  const cleanTopic = normalizeDisplayTopic(query) || 'San Francisco 49ers';
+  const team = resolveTeamConfig(appData?.meta?.teamAbbr || appData?.meta?.teamSlug || getActiveTeamConfig());
+  const cleanTopic = normalizeDisplayTopic(query) || team.fullName;
   const d = dossier || compileDeepResearchDossier({ query: cleanTopic, appData });
   const mins = Math.max(2, Math.min(20, Number(durationMinutes || 3)));
   const targetWords = Math.round(mins * 146);
   const solo = format === 'solo';
-  const rec = appData?.meta?.teamRecord || '6-1';
-  const curWk = d.matchup?.week || appData?.meta?.currentWeek || 9;
+  const rec = appData?.meta?.teamRecord || '0-0';
+  const curWk = d.matchup?.week || appData?.meta?.currentWeek || 1;
   const oppName = d.matchup?.oppName || 'the upcoming opponent';
   const oppRecord = d.matchup?.oppRecord && d.matchup.oppRecord !== '—' ? ` (${d.matchup.oppRecord})` : '';
   const spread = d.matchup?.betting?.spread || 'Even';
@@ -553,11 +576,10 @@ export function buildNotebookLmPodcastScript({
       spread,
       oppName,
       d.matchup?.oppRecord || '',
-      appData?.meta?.teamAbbr || getActiveTeamConfig()
+      team
     );
   const groupLabel = d.primaryGroup?.label || cleanTopic;
-  const cap26M = ((d.cap26?.teamCapSpace || 35_164_858) / 1_000_000).toFixed(2);
-  const team = resolveTeamConfig(appData?.meta?.teamAbbr || appData?.meta?.teamSlug || getActiveTeamConfig());
+  const cap26M = ((d.cap26?.teamCapSpace ?? 0) / 1_000_000).toFixed(2);
   const coaches = getTeamCoaches(team, appData?.meta?.coaches);
   const teamBrand = team.brandName || '49ers Faithful';
   const teamCity = team.city || 'San Francisco';
@@ -1011,8 +1033,8 @@ export function buildDeepScoutingAnalysisMarkdown({
   }
 
   // Section 4: Multi-Year CBA Cap, Trade Fits & 2027 Horizon
-  const cap26Space = Number(d.cap26?.teamCapSpace ?? 35_164_858);
-  const cap27Space = Number(d.cap27?.teamCapSpace ?? -31_540_066);
+  const cap26Space = Number(d.cap26?.teamCapSpace ?? 0);
+  const cap27Space = Number(d.cap27?.teamCapSpace ?? 0);
   const postRollover2027 = cap27Space + Math.max(0, cap26Space);
   const capLines = [
     `* **2026 → 2027 CBA Rollover Bridge**: ${teamCity} holds \`${formatCompactDollars(

@@ -9,7 +9,7 @@
  *   3) Dynamically advance with `seasonYear` / `draftYear` and roster transactions.
  */
 
-import { ALL_NFL_TEAMS, getActiveTeamConfig } from '../config/teamRegistry.js';
+import { ALL_NFL_TEAMS, getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 
 const PAYWALLED_HOST_RULES = [
   // Hard-paywalled or subscription-gated sports/news domains & subpaths
@@ -287,7 +287,10 @@ const OFF_TOPIC_LEAGUE_FILLER_URL_REGEX =
   /^https?:\/\/(?:(?:www\.|m\.)?espn\.com\/(?:fantasy\/|espn\/betting\/)|[^/]+\/(?:mlb|nba|nhl|wnba|mls|golf|tennis|soccer)\/)/i;
 
 const OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX =
-  /\b(survivor pool|survivor power rankings|fantasy football d\/st|fantasy spin|fantasy sleepers|fantasy tips|lineup help|waiver wire|week \d+\s+uniforms|best arrivals|nfl week \d+\s+trolls|trick plays in super bowl history|longest field goals in nfl history|redefine all-time sack list|jay-z['’]?s road to the super bowl|nfl practice squad updates)\b/i;
+  /\b(survivor pool|survivor power rankings|fantasy football d\/st|fantasy spin|fantasy sleepers|fantasy tips|lineup help|waiver wire|trick plays in super bowl history|longest field goals in nfl history|redefine all-time sack list|jay-z['’]?s road to the super bowl|nfl practice squad updates)\b/i;
+
+const NON_NFL_OTHER_SPORT_HEADLINE_REGEX =
+  /\b(warriors|lakers|celtics|nba\b|sf giants|san francisco giants|dodgers|mlb\b|sharks|nhl\b|stanley cup|world series|premier league|champions league|pga tour|ufc\b|wwe\b)\b/i;
 
 /**
  * Canonical single-source-of-truth registry of current 49ers leadership & front-office names
@@ -736,18 +739,23 @@ function getTeamWireMatchers(team = null) {
   }
   const cacheKey = active.abbr;
   if (TEAM_WIRE_REGEX_CACHE.has(cacheKey)) return TEAM_WIRE_REGEX_CACHE.get(cacheKey);
+  const includeCity = !active.keywordRules?.excludeGenericCity;
+  const nickList = Array.isArray(active.keywordRules?.requiredNicknames) && active.keywordRules.requiredNicknames.length > 0
+    ? active.keywordRules.requiredNicknames
+    : [active.nickname];
   const tokens = new Set([
     active.fullName,
-    active.nickname,
-    active.city,
+    ...nickList,
+    ...(includeCity ? [active.city] : []),
     active.clubDomain,
     active.coachesSeed?.hc,
     active.coachesSeed?.gm,
     active.stadium
   ].filter(Boolean).map(t => escapeLinkRegex(String(t).trim())));
   const explicitEntityRe = new RegExp(`\\b(${[...tokens].join('|')})\\b`, 'i');
+  const shortParts = [active.fullName, ...nickList, ...(includeCity ? [active.city] : [])].filter(Boolean);
   const teamShortRe = new RegExp(
-    `\\b(${[active.fullName, active.nickname, active.city].filter(Boolean).map(t => escapeLinkRegex(t)).join('|')})\\b`,
+    `\\b(${shortParts.map(t => escapeLinkRegex(t)).join('|')})\\b`,
     'i'
   );
   const otherTokens = [];
@@ -860,7 +868,8 @@ export function isOffTopicLeagueFiller({
   url = '',
   title = '',
   summary = '',
-  hasRosterMatch = false
+  hasRosterMatch = false,
+  isDedicatedTeamBeat = false
 } = {}) {
   const matchers = getTeamWireMatchers();
   const u = String(url || '').trim();
@@ -872,6 +881,13 @@ export function isOffTopicLeagueFiller({
     return true;
   }
   const combinedClean = matchers.isSf ? stripNon49ersEntityContexts(`${t} ${s}`) : `${t} ${s}`;
+  if (isDedicatedTeamBeat) {
+    // Dedicated team beat writers frequently tweet game-day crowd/warmup/locker-room color without repeating "#49ers"
+    if (NON_NFL_OTHER_SPORT_HEADLINE_REGEX.test(t) && !matchers.explicitEntityRe.test(combinedClean) && !hasRosterMatch) {
+      return true;
+    }
+    return false;
+  }
   if (!hasRosterMatch && !matchers.explicitEntityRe.test(combinedClean)) {
     return true;
   }
@@ -1073,14 +1089,23 @@ export function isValidOtcPlayerId(otcId, espnId = null) {
   return num > 0 && num < 500_000;
 }
 
-export function buildOtcPlayerUrl({ otcSlug = null, otcId = null, espnId = null, playerName = '', fallbackToTeam = true } = {}) {
+export function buildOtcPlayerUrl({
+  otcSlug = null,
+  otcId = null,
+  espnId = null,
+  playerName = '',
+  fallbackToTeam = true,
+  teamSlug = null
+} = {}) {
   if (isValidOtcPlayerId(otcId, espnId)) {
     const slug = (otcSlug && String(otcSlug).trim()) || slugifyPlayerName(playerName);
     if (slug) {
       return `https://overthecap.com/player/${slug}/${String(otcId).trim()}/`;
     }
   }
-  return fallbackToTeam ? OTC_TEAM_CAP_URL : null;
+  if (!fallbackToTeam) return null;
+  const resolvedSlug = String(teamSlug || getActiveTeamConfig()?.otcSlug || 'san-francisco-49ers').trim();
+  return `https://overthecap.com/salary-cap/${resolvedSlug}`;
 }
 
 export function isIndividualOtcPlayerUrl(url) {
@@ -1109,9 +1134,10 @@ export function buildOtcPositionUrl(positionSlug = 'wide-receiver', seasonYear =
     : `https://overthecap.com/position/${cleanSlug}`;
 }
 
-export function buildMockDraftTeamUrl(draftYear = 2027, teamSlug = 'san-francisco-49ers') {
+export function buildMockDraftTeamUrl(draftYear = 2027, teamSlug = null) {
   const yr = Number(draftYear) || new Date().getFullYear() + 1;
-  return `https://www.nflmockdraftdatabase.com/teams/${yr}/${teamSlug}`;
+  const slug = String(teamSlug || getActiveTeamConfig()?.otcSlug || 'san-francisco-49ers').trim();
+  return `https://www.nflmockdraftdatabase.com/teams/${yr}/${slug}`;
 }
 
 export function buildMockDraftBigBoardUrl(draftYear = 2027) {
@@ -1363,7 +1389,8 @@ export function createPlayerIdentityResolver({ nflPlayers = [], otcPlayers = [],
         otcId: resolvedOtcId,
         espnId: cleanEspnId,
         playerName: fullName,
-        fallbackToTeam: teamAbbr === 'SF' || teamAbbr === 'SFO'
+        fallbackToTeam: true,
+        teamSlug: resolveTeamConfig(teamAbbr || getActiveTeamConfig())?.otcSlug
       })
     };
   }
@@ -1461,4 +1488,74 @@ export function selectBestXSyndicationMp4(syn) {
     c => c.score <= 5_000_000 && (c.minDim >= 720 || c.score >= 1_500_000)
   );
   return (mobileHdSweetSpot || all[0]).url;
+}
+
+const NFL_CLUB_OR_LEAGUE_VIDEO_HOST_REGEX =
+  /(^|\.)(nfl\.com|49ers\.com|azcardinals\.com|atlantafalcons\.com|baltimoreravens\.com|buffalobills\.com|panthers\.com|chicagobears\.com|bengals\.com|clevelandbrowns\.com|dallascowboys\.com|denverbroncos\.com|detroitlions\.com|packers\.com|houstontexans\.com|colts\.com|jaguars\.com|chiefs\.com|chargers\.com|therams\.com|raiders\.com|miamidolphins\.com|vikings\.com|patriots\.com|neworleanssaints\.com|giants\.com|newyorkjets\.com|philadelphiaeagles\.com|steelers\.com|seahawks\.com|buccaneers\.com|tennesseetitans\.com|commanders\.com)$/i;
+
+/**
+ * Returns true when `rawUrl` points to an official NFL club or NFL.com web video page
+ * (e.g. `https://www.49ers.com/video/...` or `https://www.nfl.com/videos/...`).
+ * These pages use NFL's `rnMediaPlayer` (TheoPlayer + Anvato HLS + Google IMA pre-roll),
+ * which deadlocks on an infinite loading spinner inside iOS standalone PWA's in-app
+ * `SFSafariViewController` but plays cleanly in full Safari.
+ * Explicitly excludes YouTube, X, Bluesky, ESPN, and club `/news/` text articles.
+ */
+export function isExternalClubOrLeagueVideoUrl(rawUrl) {
+  if (typeof rawUrl !== 'string') return false;
+  const trimmed = rawUrl.trim();
+  if (!/^https:\/\//i.test(trimmed)) return false;
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol !== 'https:') return false;
+    const host = parsed.hostname.toLowerCase();
+    if (!NFL_CLUB_OR_LEAGUE_VIDEO_HOST_REGEX.test(host)) return false;
+    return /^\/videos?(?:\/|$)/i.test(parsed.pathname || '');
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Detects an iOS / iPadOS 17+ installed Home Screen PWA running in standalone mode,
+ * where `target="_blank"` external links open in a sandboxed `SFSafariViewController`
+ * and `x-safari-https://` cleanly hands off to the full Safari app.
+ */
+export function isIosStandalonePwa(env = null) {
+  const win = env && 'window' in env ? env.window : typeof window !== 'undefined' ? window : null;
+  const nav =
+    env && 'navigator' in env
+      ? env.navigator
+      : win?.navigator || (typeof navigator !== 'undefined' ? navigator : null);
+  if (!nav) return false;
+
+  const isStandalone = Boolean(
+    nav.standalone === true || win?.matchMedia?.('(display-mode: standalone)')?.matches === true
+  );
+  if (!isStandalone) return false;
+
+  const ua = String(nav.userAgent || '');
+  const isIosUa = /iPhone|iPad|iPod/i.test(ua);
+  const isIpadDesktopUa =
+    /Macintosh/i.test(ua) && (Number(nav.maxTouchPoints) > 1 || nav.standalone === true);
+  if (!isIosUa && !isIpadDesktopUa) return false;
+
+  const osMatch = ua.match(/OS\s+(\d+)[._]/i);
+  if (osMatch) {
+    const major = Number(osMatch[1]);
+    if (Number.isFinite(major) && major < 17) return false;
+  }
+  return true;
+}
+
+/**
+ * Returns `x-safari-https://...` ONLY when running inside an iOS 17+ standalone PWA
+ * and opening an NFL club/league web video page (`49ers.com/video/...`, `nfl.com/videos/...`, etc.).
+ * Returns `null` on all other platforms, browsers, or URLs so standard `<a href>` navigation applies.
+ */
+export function resolveIosStandaloneExternalVideoBreakoutUrl(rawUrl, env = null) {
+  if (!isIosStandalonePwa(env)) return null;
+  const safeUrl = sanitizeExternalUrl(rawUrl, null);
+  if (!safeUrl || !isExternalClubOrLeagueVideoUrl(safeUrl)) return null;
+  return `x-safari-${safeUrl}`;
 }

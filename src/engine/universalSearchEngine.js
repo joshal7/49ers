@@ -62,7 +62,7 @@ export const QUICK_SECTION_TARGETS = [
     id: 'sec_playoffs',
     title: 'Playoff Odds & Rooting Guide',
     subtitle: 'Game & Season',
-    keywords: 'playoffs playoff monte carlo seed bye rooting guide standings clinch nfc west',
+    keywords: 'playoffs playoff monte carlo seed bye rooting guide standings clinch nfc afc division',
     navTab: 'season',
     subTab: 'playoffs'
   },
@@ -298,10 +298,11 @@ const CORE_NFL_LEXICON_WORDS = [
   'Achilles', 'Hamstring', 'Concussion', 'Knee', 'Ankle', 'Shoulder', 'Groin', 'Calf', 'Quad', 'Oblique', 'Back', 'Foot', 'Wrist', 'Rib', 'Turf Toe', 'ACL', 'MCL',
   'Salary Cap', 'Contract', 'Extension', 'Restructure', 'Dead Money', 'Rollover', 'Post-June 1', 'Exemption',
   'Trade', 'Trade Rumors', 'Waived', 'Signed', 'Activated', 'Practice Squad', 'Roster', 'Depth Chart',
-  'Kyle Shanahan', 'John Lynch', 'Klay Kubiak', 'Raheem Morris', 'Robert Saleh',
-  'All-22', 'Film', 'Playbook', 'Play-Action', 'Wide-9', 'Red Zone', 'Third Down', 'Pass Rush', 'Run Game', 'Coverage', 'Blitz', 'Snap Share',
+  'All-22', 'Film', 'Playbook', 'Play-Action', 'Red Zone', 'Third Down', 'Pass Rush', 'Run Game', 'Coverage', 'Blitz', 'Snap Share',
   'Power Rankings', 'Playoffs', 'Standings', 'Rooting Guide', 'Matchup', 'Schedule', 'Draft', 'Big Board', 'Combine', 'Highlights', 'Press Conference', 'Presser'
 ];
+
+const SF_ONLY_LEXICON_WORDS = ['Kyle Shanahan', 'John Lynch', 'Klay Kubiak', 'Raheem Morris', 'Wide-9'];
 
 const STOP_WORDS = new Set([
   'the', 'and', 'for', 'with', 'that', 'this', 'from', 'have', 'will', 'about', 'their', 'into',
@@ -434,6 +435,7 @@ let _cachedLexiconSig = '';
 let _cachedLexicon = null;
 
 function computeLexiconSignature(appData, newsItems, allEpisodes, allAnalyses) {
+  const teamAbbr = appData?.meta?.teamAbbr || getActiveTeamConfig()?.abbr || 'SF';
   const pLen = appData?.roster?.players?.length || 0;
   const rLen = appData?.reporters?.reporters?.length || 0;
   const oLen = appData?.reporters?.outlets?.length || 0;
@@ -443,7 +445,7 @@ function computeLexiconSignature(appData, newsItems, allEpisodes, allAnalyses) {
   const bLen = appData?.beatPodcasts?.episodes?.length || 0;
   const eLen = allEpisodes?.length || 0;
   const aLen = allAnalyses?.length || 0;
-  return `${pLen}|${rLen}|${oLen}|${nLen}|${nFirst}|${nLast}|${bLen}|${eLen}|${aLen}`;
+  return `${teamAbbr}|${pLen}|${rLen}|${oLen}|${nLen}|${nFirst}|${nLast}|${bLen}|${eLen}|${aLen}`;
 }
 
 function addVocabEntry(map, displayText, { kind = 'word', weight = 1, meta = null } = {}) {
@@ -708,7 +710,20 @@ export function buildUniversalSearchLexicon({
     }
   }
 
-  for (const phrase of CORE_NFL_LEXICON_WORDS) {
+  const activeTeamLex = getActiveTeamConfig();
+  const teamSpecificLexWords =
+    activeTeamLex?.abbr === 'SF'
+      ? SF_ONLY_LEXICON_WORDS
+      : [
+          activeTeamLex?.nickname,
+          activeTeamLex?.city,
+          activeTeamLex?.division,
+          appData?.meta?.coaches?.hc || activeTeamLex?.coachesSeed?.hc,
+          appData?.meta?.coaches?.oc || activeTeamLex?.coachesSeed?.oc,
+          appData?.meta?.coaches?.dc || activeTeamLex?.coachesSeed?.dc,
+          appData?.meta?.coaches?.gm || activeTeamLex?.coachesSeed?.gm
+        ].filter(Boolean);
+  for (const phrase of [...CORE_NFL_LEXICON_WORDS, ...teamSpecificLexWords]) {
     addVocabEntry(vocabMap, phrase, { kind: 'word', weight: 14 });
     for (const tok of normalizeSearchText(phrase).split(/\s+/)) {
       if (tok.length >= 3) addVocabEntry(tokenVocabMap, tok, { kind: 'word', weight: 14 });
@@ -764,7 +779,30 @@ const UNIVERSAL_TYPO_AND_ALIAS_MAP = {
   baldy: 'Baldinger',
   pft: 'ProFootballTalk',
   qbschool: 'The QB School',
-  jto: "JT O'Sullivan"
+  jto: "JT O'Sullivan",
+  injry: 'Injury',
+  injurys: 'Injuries',
+  injuris: 'Injuries',
+  achiles: 'Achilles',
+  achillies: 'Achilles',
+  hamsting: 'Hamstring',
+  hamstrng: 'Hamstring',
+  concusion: 'Concussion',
+  quaterback: 'Quarterback',
+  reciever: 'Receiver',
+  linebaker: 'Linebacker',
+  cornerbak: 'Cornerback',
+  playofs: 'Playoffs',
+  schedual: 'Schedule',
+  standigs: 'Standings',
+  restructre: 'Restructure',
+  contrac: 'Contract',
+  podcat: 'Podcast',
+  podcats: 'Podcasts',
+  rankigs: 'Rankings',
+  powerankings: 'Power Rankings',
+  highligts: 'Highlights',
+  analitics: 'Analytics'
 };
 
 function getQuickSectionTargetsForActiveTeam() {
@@ -1242,12 +1280,18 @@ export function matchNewsItemSearchQuery(item = {}, rawQuery = '', { sourceFilte
   const matchedTokens = [...parsed.phrases];
   let score = 0;
 
+  const isSfSearch = getActiveTeamConfig()?.abbr === 'SF';
   for (const tok of parsed.tokens) {
-    const nickExpansion = PLAYER_NICKNAME_ALIASES[tok] ? normalizeSearchText(PLAYER_NICKNAME_ALIASES[tok]) : '';
-    const aliasExpansion = TYPO_AND_ALIAS_MAP[tok] ? normalizeSearchText(TYPO_AND_ALIAS_MAP[tok]) : '';
+    const nickExpansion =
+      isSfSearch && PLAYER_NICKNAME_ALIASES[tok] ? normalizeSearchText(PLAYER_NICKNAME_ALIASES[tok]) : '';
+    const aliasMap = isSfSearch ? TYPO_AND_ALIAS_MAP : UNIVERSAL_TYPO_AND_ALIAS_MAP;
+    const aliasExpansion = aliasMap[tok] ? normalizeSearchText(aliasMap[tok]) : '';
     const tokenVariants = [tok];
     if (nickExpansion) tokenVariants.push(nickExpansion);
-    if (aliasExpansion && aliasExpansion !== tok && ['nbcsba', 'pft', 'qbschool', 'jto', 'baldy', 'shanny'].includes(tok)) {
+    const allowedAliasTokens = isSfSearch
+      ? ['nbcsba', 'pft', 'qbschool', 'jto', 'baldy', 'shanny']
+      : ['pft', 'qbschool', 'jto', 'baldy'];
+    if (aliasExpansion && aliasExpansion !== tok && allowedAliasTokens.includes(tok)) {
       tokenVariants.push(aliasExpansion);
     }
 

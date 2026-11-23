@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:48:30.909Z",
+  "updatedAt": "2026-11-23T06:25:06.998Z",
   "dailyTopNewsBrief": {
     "id": "brief_no_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -107,11 +107,46 @@
   "clusteredBriefs": [],
   "rawStream": [
     {
+      "id": "no_espn_1125cb99eeb13",
+      "type": "article",
+      "title": "Jeffery Simmons gets 3 sacks as the Chicago Bears beat the New Orleans Saints 21-13",
+      "summary": "— Jeffery Simmons delivered once again. That blockbuster trade for the All-Pro defensive tackle is looking like the appropriate price at the moment.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/746b796b-3876-4b3a-9aa8-e2bc6a4faf59/746b796b-3876-4b3a-9aa8-e2bc6a4faf59.jpg",
+      "imageCaption": "Jeffery Simmons gets 3 sacks to help lead Bears past Saints",
+      "imageAlt": "Jeffery Simmons gets 3 sacks as the Chicago Bears beat the New Orleans Saints 21-13",
+      "publishedAt": "2026-11-22T23:25:33Z",
+      "url": "https://www.espn.com/nfl/recap?gameId=401873071",
+      "outletId": "espn_no",
+      "outletName": "ESPN",
+      "reporterId": "espn_no",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.704,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.7385
+    },
+    {
       "id": "no_espn_396db277a8768",
       "type": "article",
       "title": "Tyler Shough voices confidence in Saints, Kellen Moore after 3-7 start",
       "summary": "Two straight losses. Justin Reid being released. Run game a mess. Despite the challenges, there's belief New Orleans can turn things around.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749937_608x342_16-9.jpg",
+      "imageCaption": "Tyler Shough",
       "imageAlt": "Tyler Shough voices confidence in Saints, Kellen Moore after 3-7 start",
       "publishedAt": "2026-11-23T01:25:56Z",
       "url": "https://www.espn.com/nfl/story/_/id/50566404/tyler-shough-confident-new-orleans-saints-kellen-moore",
@@ -137,40 +172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.5001
-    },
-    {
-      "id": "no_espn_1125cb99eeb13",
-      "type": "article",
-      "title": "Jeffery Simmons gets 3 sacks as the Chicago Bears beat the New Orleans Saints 21-13",
-      "summary": "— Jeffery Simmons delivered once again. That blockbuster trade for the All-Pro defensive tackle is looking like the appropriate price at the moment.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873071.png?templateId=espn.applewatch.awayhome.1",
-      "imageAlt": "Jeffery Simmons gets 3 sacks as the Chicago Bears beat the New Orleans Saints 21-13",
-      "publishedAt": "2026-11-22T23:25:33Z",
-      "url": "https://www.espn.com/nfl/recap?gameId=401873071",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.83,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 7.4467
+      "storyRank": 5.1199
     },
     {
       "id": "no_vid_e0c4969f1035",
@@ -194,7 +196,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.72,
+      "breakingPriority": 0.611,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -204,7 +206,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.9201
+      "storyRank": 4.7378
+    },
+    {
+      "id": "no_vid_09daa0a06770",
+      "type": "video",
+      "title": "Kellen Moore recaps loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
+      "summary": "New Orleans Saints head coach Kellen Moore's postgame media availability after the Saints' game against the Chicago Bears in Week 11 of the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/saints/jnd5zke0s34v7xcmrpg8.png",
+      "imageAlt": "Kellen Moore recaps loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
+      "publishedAt": "2026-11-22T21:57:58.000Z",
+      "url": "https://www.neworleanssaints.com/video/kellen-moore-interview-saints-bears-postgame-2026-nfl-week-11",
+      "externalVideoUrl": "https://www.neworleanssaints.com/video/kellen-moore-interview-saints-bears-postgame-2026-nfl-week-11",
+      "outletId": "saints_official",
+      "outletName": "neworleanssaints.com Video",
+      "reporterId": "saints_official",
+      "reporterName": "neworleanssaints.com Video",
+      "author": "neworleanssaints.com Video",
+      "authorHandle": "@Saints",
+      "authorProfileUrl": "https://www.neworleanssaints.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.595,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.5857
     },
     {
       "id": "no_espn_8e379aad64212",
@@ -212,6 +248,7 @@
       "title": "Saints fall to 3-7 after another loss",
       "summary": "Katherine Terrell breaks down another slow start for New Orleans as the Saints suffer their second straight loss in familiar fashion.",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_Saints_fall_to_3_to_7_after_another_loss/dm_261122_Saints_fall_to_3_to_7_after_another_loss.jpg",
+      "imageCaption": "Katherine Terrell breaks down another slow start for New Orleans as the Saints suffer their second straight loss in familiar fashion.",
       "imageAlt": "Saints fall to 3-7 after another loss",
       "publishedAt": "2026-11-23T00:12:21Z",
       "url": "https://www.espn.com/video/clip/_/id/50567218/saints-fall-3-7-another-loss",
@@ -237,41 +274,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.3586
-    },
-    {
-      "id": "no_vid_09daa0a06770",
-      "type": "video",
-      "title": "Kellen Moore recaps loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
-      "summary": "New Orleans Saints head coach Kellen Moore's postgame media availability after the Saints' game against the Chicago Bears in Week 11 of the 2026 NFL season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/saints/jnd5zke0s34v7xcmrpg8.png",
-      "imageAlt": "Kellen Moore recaps loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
-      "publishedAt": "2026-11-22T21:57:58.000Z",
-      "url": "https://www.neworleanssaints.com/video/kellen-moore-interview-saints-bears-postgame-2026-nfl-week-11",
-      "externalVideoUrl": "https://www.neworleanssaints.com/video/kellen-moore-interview-saints-bears-postgame-2026-nfl-week-11",
-      "outletId": "saints_official",
-      "outletName": "neworleanssaints.com Video",
-      "reporterId": "saints_official",
-      "reporterName": "neworleanssaints.com Video",
-      "author": "neworleanssaints.com Video",
-      "authorHandle": "@Saints",
-      "authorProfileUrl": "https://www.neworleanssaints.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.701,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 5.6969
+      "storyRank": 3.9326
     },
     {
       "id": "no_bsky_72c42ae3c473",
@@ -308,7 +311,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0369
+      "storyRank": 3.7187
+    },
+    {
+      "id": "no_nfltr_ad344f030532",
+      "type": "article",
+      "title": "NFC Notes: Tyler Shough, Justin Reid, Falcons, Panthers, Saints",
+      "summary": "Falcons Falcons DT Brandon Dorlus was fined $7,114 for unsportsmanlike conduct and $7,114 for a hit on a quarterback; DB DeMarcco Hellams was fined $6,509 for unnecessary roughness, and LB Harold Perkins was fined $5,203 for unnecessary rou",
+      "imageUrl": "",
+      "imageAlt": "NFC Notes: Tyler Shough, Justin Reid, Falcons, Panthers, Saints",
+      "publishedAt": "2026-11-23T00:00:00.000Z",
+      "url": "https://nfltraderumors.co/nfc-notes-tyler-shough-justin-reid-falcons-panthers-saints/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.316
     },
     {
       "id": "no_rss_950a7da3f86c",
@@ -341,7 +377,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.0025
+      "storyRank": 3.096
     },
     {
       "id": "no_rss_07aed2ae212b",
@@ -374,7 +410,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9899
+      "storyRank": 2.4176
     },
     {
       "id": "no_vid_bd813d571fed",
@@ -408,7 +444,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9784
+      "storyRank": 2.4095
     },
     {
       "id": "no_vid_33a661dea616",
@@ -442,7 +478,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9631
+      "storyRank": 2.3989
     },
     {
       "id": "no_espn_0935ab3a4d4c7",
@@ -450,6 +486,7 @@
       "title": "New Orleans Saints vs. Chicago Bears: Game Highlights",
       "summary": "New Orleans Saints vs. Chicago Bears: Game Highlights",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/6cdf6369-82e7-446d-b0fd-63104fb4bff0/6cdf6369-82e7-446d-b0fd-63104fb4bff0.jpg",
+      "imageCaption": "New Orleans Saints vs. Chicago Bears: Game Highlights",
       "imageAlt": "New Orleans Saints vs. Chicago Bears: Game Highlights",
       "publishedAt": "2026-11-22T21:10:30Z",
       "url": "https://www.espn.com/video/clip/_/id/50565012/game-highlights",
@@ -475,7 +512,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.954
+      "storyRank": 2.3925
     },
     {
       "id": "no_vid_db68365ed0d9",
@@ -509,7 +546,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7856
+      "storyRank": 2.2742
     },
     {
       "id": "no_vid_cc53160489d2",
@@ -543,7 +580,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7668
+      "storyRank": 2.2608
     },
     {
       "id": "no_vid_4a336b092557",
@@ -577,7 +614,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5088
+      "storyRank": 2.076
     },
     {
       "id": "no_vid_ae6bbb46993e",
@@ -611,7 +648,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3634
+      "storyRank": 1.97
     },
     {
       "id": "no_vid_2d11597ec563",
@@ -645,7 +682,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3569
+      "storyRank": 1.9653
     },
     {
       "id": "no_rss_96c66cd3fddf",
@@ -678,7 +715,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3408
+      "storyRank": 1.9534
     },
     {
       "id": "no_rss_c23cb2a580f4",
@@ -711,7 +748,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9112
+      "storyRank": 1.6317
     },
     {
       "id": "no_vid_5d1bbce9c2b3",
@@ -745,7 +782,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7994
+      "storyRank": 0.6403
     },
     {
       "id": "no_rss_a7d540437de6",
@@ -778,7 +815,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3441
+      "storyRank": 0.3031
     },
     {
       "id": "no_rss_db34683c7a1e",
@@ -811,7 +848,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3333
+      "storyRank": 0.2944
     },
     {
       "id": "no_rss_745271f094d1",
@@ -844,7 +881,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1061
+      "storyRank": 0.1003
+    },
+    {
+      "id": "no_pfr_936170570699",
+      "type": "article",
+      "title": "Saints Sign K Charlie Smyth To 2-Year Deal",
+      "summary": "The Saints signed practice squad kicker Charlie Smyth to their active roster on Saturday, per NewOrleans.Football. With the promotion comes a two-year contract that extends through the 2027 season, according to Pro Football Ireland&#8217;s ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-21T17:03:12.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/saints-sign-k-charlie-smyth-to-2-year-deal",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-orleans-saints",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0806
     },
     {
       "id": "no_rss_ccd9d4d4881f",
@@ -877,7 +946,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0898
+      "storyRank": 0.0854
     },
     {
       "id": "no_rss_6616b3f11065",
@@ -910,7 +979,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0874
+      "storyRank": 0.0832
     },
     {
       "id": "no_rss_51faef4cb6e3",
@@ -943,7 +1012,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0866
+      "storyRank": 0.0824
     },
     {
       "id": "no_tx_9e15c8a8f6fc",
@@ -977,7 +1046,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.071
+      "storyRank": 0.068
+    },
+    {
+      "id": "no_pfr_5ea63e9a9ab7",
+      "type": "article",
+      "title": "Saints, S Justin Reid Agree To Part Ways",
+      "summary": "NOVEMBER 20, 5:15pm: Reid was waived with a non-football injury settlement, KRPC2&#8217;s Aaron Wilson notes. NOVEMBER 20, 3:45pm: The Saints officially waived Reid on Friday, per ESPN&#8217;s Katherine Terrell. Teams will have 24 hours to ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-20T23:15:05.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/saints-s-justin-reid-agree-to-part-ways",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-orleans-saints",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0469
     },
     {
       "id": "no_espn_19fe7eac860bf",
@@ -985,6 +1086,7 @@
       "title": "Justin Reid posts Saints farewell as team releases safety",
       "summary": "The Saints have granted Justin Reid's request to be released, with the safety posting on social media: \"In life and sports, things don't always go the way you planned or hoped they would.\"",
       "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748648_1296x729_16-9.jpg",
+      "imageCaption": "261108 justin reid photo [1296x729]",
       "imageAlt": "Justin Reid posts Saints farewell as team releases safety",
       "publishedAt": "2026-11-20T22:05:55Z",
       "url": "https://www.espn.com/nfl/story/_/id/50543025/justin-reid-posts-saints-farewell-team-works-release",
@@ -1010,7 +1112,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0539
+      "storyRank": 0.052
     },
     {
       "id": "no_rss_d4e3e8769efa",
@@ -1043,7 +1145,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0515
+      "storyRank": 0.0497
     },
     {
       "id": "no_rss_ddae5a380caa",
@@ -1076,7 +1178,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0445
+      "storyRank": 0.0431
     },
     {
       "id": "no_tx_0846df3dd9ed",
@@ -1110,7 +1212,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0391
+      "storyRank": 0.038
     },
     {
       "id": "no_espn_d0772fb94d2eb",
@@ -1118,6 +1220,7 @@
       "title": "Saints, Justin Reid 'working through' potential release",
       "summary": "Saints and safety Justin Reid are \"working through some things\" regarding the veteran safety's potential release, defensive coordinator Brandon Staley said Thursday.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1025/r1735922_2_600x400_3-2.jpg",
+      "imageCaption": "Jaylen Warren of the Pittsburgh Steelers runs with the ball under pressure from Justin Reid of the New Orleans Saints photodesk [600x400]",
       "imageAlt": "Saints, Justin Reid 'working through' potential release",
       "publishedAt": "2026-11-20T00:35:00Z",
       "url": "https://www.espn.com/nfl/story/_/id/50534340/saints-justin-reid-working-potential-release",
@@ -1143,7 +1246,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0339
+      "storyRank": 0.0331
     },
     {
       "id": "no_rss_4239d4cd898a",
@@ -1176,14 +1279,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0329
+      "storyRank": 0.0321
     },
     {
       "id": "no_espn_892218accf6db",
       "type": "article",
       "title": "Pass rush part of the focus for the Saints and Bears going into Sunday's game",
       "summary": "— Carl Granderson and Chase Young form a potent 1-2 punch on defense for the New Orleans Saints. Jeffery Simmons is a force on the defensive line for the Chicago Bears.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873071.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/746b796b-3876-4b3a-9aa8-e2bc6a4faf59/746b796b-3876-4b3a-9aa8-e2bc6a4faf59.jpg",
+      "imageCaption": "Jeffery Simmons gets 3 sacks to help lead Bears past Saints",
       "imageAlt": "Pass rush part of the focus for the Saints and Bears going into Sunday's game",
       "publishedAt": "2026-11-19T21:25:05Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873071",
@@ -1209,7 +1313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.0313
     },
     {
       "id": "no_rss_1805e2b119f5",
@@ -1242,7 +1346,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.079
+      "storyRank": 0.0772
     },
     {
       "id": "no_bsky_c4092348f5f5",
@@ -1279,7 +1383,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0309
+      "storyRank": 0.0301
     },
     {
       "id": "no_rss_4e5f8ee84867",
@@ -1312,7 +1416,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0284
+      "storyRank": 0.0278
     },
     {
       "id": "no_rss_9b6a4764e309",
@@ -1345,7 +1449,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0071
+      "storyRank": 0.0069
     },
     {
       "id": "no_tx_883206c01c9d",
@@ -1379,7 +1483,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0258
+      "storyRank": 0.0252
     },
     {
       "id": "no_bsky_c6f9cfe9e2c8",
@@ -1416,7 +1520,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0217
     },
     {
       "id": "no_rss_629fbb0969bb",
@@ -1449,7 +1553,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
+      "storyRank": 0.0224
     },
     {
       "id": "no_espn_238c25f897c51",
@@ -1457,6 +1561,7 @@
       "title": "Three-win Saints, Kellen Moore face defining stretch of games",
       "summary": "Starting with the Bears on Sunday, the head coach's tenure and the team's season sits at a crucial crossroads.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1118/r1747364_608x342_16-9.jpg",
+      "imageCaption": "Saints QB Tyler Shough and coach Kellen Moore have eight games to turn their 2026 season around.",
       "imageAlt": "Three-win Saints, Kellen Moore face defining stretch of games",
       "publishedAt": "2026-11-18T13:39:56Z",
       "url": "https://www.espn.com/nfl/story/_/id/50514927/3-win-new-orleans-saints-kellen-moore-defining-games",
@@ -1482,7 +1587,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.02
+      "storyRank": 0.0196
     },
     {
       "id": "no_tx_7e596c49d737",
@@ -1516,7 +1621,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
+      "storyRank": 0.0183
     },
     {
       "id": "no_espn_51b53fdbdad19",
@@ -1524,6 +1629,7 @@
       "title": "2027 NFL draft order projections for Round 1, chances for top pick, more",
       "summary": "ESPN's Football Power Index projects the 2027 NFL draft order for Round 1, complete with each team's chances to pick in the top five, in the top 10 and at No. 1.",
       "imageUrl": "https://a.espncdn.com/photo/2026/0601/r1666608_608x342_16-9.jpg",
+      "imageCaption": "LEAD: Dolphins Rebuild [608x342]",
       "imageAlt": "2027 NFL draft order projections for Round 1, chances for top pick, more",
       "publishedAt": "2026-11-17T11:41:00Z",
       "url": "https://www.espn.com/nfl/draft2027/story/_/id/49794361/2027-nfl-draft-order-projections-first-round-picks",
@@ -1549,7 +1655,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0149
+      "storyRank": 0.0147
     },
     {
       "id": "no_bsky_51dde1ef0958",
@@ -1586,7 +1692,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0123
     },
     {
       "id": "no_bsky_561d493564d5",
@@ -1623,7 +1729,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0103
     },
     {
       "id": "no_bsky_1242c8c33c94",
@@ -1660,7 +1766,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0085
+      "storyRank": 0.0084
+    },
+    {
+      "id": "no_pfr_622d654d91ae",
+      "type": "article",
+      "title": "Saints Activate Travis Etienne, Place Christen Miller On IR",
+      "summary": "3:05pm: The Saints have activated Etienne and placed defensive tackle Christen Miller on IR, per Nick Underhill of NewOrleans.Football. Miller, who is dealing with a knee injury, will miss at least four games. The rookie second-rounder has ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-14T21:05:46.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/saints-plan-to-activate-travis-etienne",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-orleans-saints",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0076
     },
     {
       "id": "no_tx_da2cd9b8ca0e",
@@ -1694,7 +1832,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0079
+    },
+    {
+      "id": "no_pfr_273e94b7c2eb",
+      "type": "article",
+      "title": "Saints Designate RB Travis Etienne For Return; Cesar Ruiz Moving To C",
+      "summary": "Despite sitting with a 3-5 record, the Saints will play a game for the NFC South lead Sunday. Barring a tie, a 4-5 New Orleans or Carolina team will be in sole possession of first place exiting Week 10. The Saints may have some additional f",
+      "imageUrl": "",
+      "publishedAt": "2026-11-11T23:14:16.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/saints-designate-rb-travis-etienne-for-return-cesar-ruiz-moving-to-c",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-orleans-saints",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.005
     },
     {
       "id": "no_tx_b54718f71448",
@@ -1731,6 +1901,74 @@
       "storyRank": 0.0053
     },
     {
+      "id": "no_yt_KJsodIWoLDE",
+      "type": "video",
+      "category": "film",
+      "videoId": "KJsodIWoLDE",
+      "embeddable": true,
+      "title": "Shedeur Sanders vs the Saints Week 9 Analysis",
+      "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
+      "imageUrl": "https://i.ytimg.com/vi/KJsodIWoLDE/hqdefault.jpg",
+      "imageAlt": "Shedeur Sanders vs the Saints Week 9 Analysis",
+      "publishedAt": "2026-11-10T20:31:03.000Z",
+      "url": "https://www.youtube.com/watch?v=KJsodIWoLDE",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=KJsodIWoLDE",
+      "outletId": "the_qb_school",
+      "outletName": "The QB School",
+      "reporterId": "the_qb_school",
+      "reporterName": "The QB School",
+      "author": "The QB School",
+      "authorHandle": "@TheQBSchool",
+      "authorProfileUrl": "https://x.com/theqbschool",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 92,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.005
+    },
+    {
+      "id": "no_pfr_4b25833897b6",
+      "type": "article",
+      "title": "Saints C Erik McCoy To Miss Time With Biceps Injury",
+      "summary": "Saints center Erik McCoy is set to miss time after suffering a biceps injury in Week 9, head coach Kellen Moore announced (via Katherine Terrell of ESPN). While it&#8217;s unknown if McCoy will land on IR, Moore said he expects him to avoid",
+      "imageUrl": "",
+      "publishedAt": "2026-11-10T18:05:43.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/saints-c-erik-mccoy-to-miss-time-with-biceps-injury",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-orleans-saints",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0043
+    },
+    {
       "id": "no_tx_e73ca8862538",
       "type": "tweet",
       "title": "Saints roster move: Signed TEs Matt Lauter and Treyton Welch to the practice squad. Placed TE Stone Smartt on practice squad injured reserve. Released RB Jarquez Hunter from the practice squad.",
@@ -1765,6 +2003,38 @@
       "storyRank": 0.0047
     },
     {
+      "id": "no_pfr_04d85f86814c",
+      "type": "article",
+      "title": "Saints Trade Davon Godchaux To Jaguars",
+      "summary": "The Jaguars were known to still be in the market for a defensive tackle addition even after acquiring safety Jessie Bates. A deal on that front is indeed in place. Davon Godchaux is being traded from the Saints to Jacksonville, as first rep",
+      "imageUrl": "",
+      "publishedAt": "2026-11-09T18:18:10.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/saints-to-trade-dt-davon-godchaux-to-jaguars",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/new-orleans-saints",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0039
+    },
+    {
       "id": "no_tx_633be3bdcd1d",
       "type": "tweet",
       "title": "Saints roster move: Acquired a 2028 sixth-round draft pick from Jacksonville Jaguars for NT Davon Godchaux.",
@@ -1796,7 +2066,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0042
     },
     {
       "id": "no_tx_ac8bd8819c5b",
@@ -1864,7 +2134,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.0027
     },
     {
       "id": "no_tx_d7259fcfb9ec",
@@ -1898,7 +2168,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0025
     },
     {
       "id": "no_rss_fd615257e35f",

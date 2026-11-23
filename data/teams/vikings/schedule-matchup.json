@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:45:09.605Z",
+  "updatedAt": "2026-11-23T06:24:47.077Z",
   "sources": [
     {
       "label": "ESPN Vikings Schedule",
@@ -11,6 +11,114 @@
     }
   ],
   "schedule": [
+    {
+      "id": "401873280",
+      "seasonType": "PRE",
+      "preseasonWeek": 2,
+      "week": -2,
+      "weekLabel": "PRE 2",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873280/vikings-giants",
+      "dateIso": "2026-08-15T17:00Z",
+      "statusDetail": "Final",
+      "statusState": "post",
+      "isLive": false,
+      "completed": true,
+      "result": "W",
+      "sfScore": 13,
+      "oppScore": 10,
+      "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
+      "opponent": {
+        "abbr": "NYG",
+        "name": "New York Giants",
+        "shortName": "Giants",
+        "record": "6-3-1",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
+        "isTbd": false
+      },
+      "venue": {
+        "name": "MetLife Stadium",
+        "city": "East Rutherford",
+        "state": "NJ",
+        "country": "USA",
+        "isInternational": false,
+        "surface": "Turf"
+      },
+      "broadcast": "NFL TV",
+      "roundBadgeLabel": "Preseason"
+    },
+    {
+      "id": "401873291",
+      "seasonType": "PRE",
+      "preseasonWeek": 3,
+      "week": -1,
+      "weekLabel": "PRE 3",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873291/ravens-vikings",
+      "dateIso": "2026-08-22T17:00Z",
+      "statusDetail": "Final",
+      "statusState": "post",
+      "isLive": false,
+      "completed": true,
+      "result": "L",
+      "sfScore": 3,
+      "oppScore": 13,
+      "homeAway": "home",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
+      "opponent": {
+        "abbr": "BAL",
+        "name": "Baltimore Ravens",
+        "shortName": "Ravens",
+        "record": "4-7",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/bal.png",
+        "isTbd": false
+      },
+      "venue": {
+        "name": "U.S. Bank Stadium",
+        "city": "Minneapolis",
+        "state": "MN",
+        "country": "USA",
+        "isInternational": false,
+        "surface": "Turf"
+      },
+      "broadcast": "NFL TV",
+      "roundBadgeLabel": "Preseason"
+    },
+    {
+      "id": "401873614",
+      "seasonType": "PRE",
+      "preseasonWeek": 4,
+      "week": -1,
+      "weekLabel": "PRE 4",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873614/vikings-broncos",
+      "dateIso": "2026-08-29T01:00Z",
+      "statusDetail": "Final",
+      "statusState": "post",
+      "isLive": false,
+      "completed": true,
+      "result": "L",
+      "sfScore": 6,
+      "oppScore": 34,
+      "homeAway": "away",
+      "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
+      "opponent": {
+        "abbr": "DEN",
+        "name": "Denver Broncos",
+        "shortName": "Broncos",
+        "record": "8-2",
+        "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/den.png",
+        "isTbd": false
+      },
+      "venue": {
+        "name": "Empower Field at Mile High",
+        "city": "Denver",
+        "state": "CO",
+        "country": "USA",
+        "isInternational": false,
+        "surface": "Turf"
+      },
+      "broadcast": "NFL TV",
+      "roundBadgeLabel": "Preseason"
+    },
     {
       "id": "401872927",
       "seasonType": "REG",
@@ -358,22 +466,22 @@
       "preseasonWeek": null,
       "week": 11,
       "weekLabel": "Wk 11",
-      "gameUrl": "https://www.espn.com/nfl/game?gameId=401873077",
+      "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873077/vikings-49ers",
       "dateIso": "2026-11-23T01:20Z",
-      "statusDetail": "1:48 - 3rd",
-      "statusState": "in",
-      "isLive": true,
-      "completed": false,
-      "result": null,
-      "sfScore": null,
-      "oppScore": null,
+      "statusDetail": "Final",
+      "statusState": "post",
+      "isLive": false,
+      "completed": true,
+      "result": "L",
+      "sfScore": 10,
+      "oppScore": 35,
       "homeAway": "away",
       "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
       "opponent": {
         "abbr": "SF",
         "name": "San Francisco 49ers",
         "shortName": "49ers",
-        "record": "8-1",
+        "record": "9-1",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
         "isTbd": false
       },
@@ -781,7 +889,7 @@
         "abbr": "MIN",
         "name": "Minnesota Vikings",
         "shortName": "Vikings",
-        "record": "7-2",
+        "record": "7-3",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png"
       },
       "NE": {
@@ -837,7 +945,7 @@
         "abbr": "SF",
         "name": "San Francisco 49ers",
         "shortName": "49ers",
-        "record": "8-1",
+        "record": "9-1",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png"
       },
       "TB": {
@@ -1037,172 +1145,172 @@
           "unitTitle": "Vikings Offense",
           "higherIsBetter": true,
           "rank": 30,
-          "value": 18.2,
-          "displayValue": "18.2%",
-          "leagueAvg": 46.1031,
-          "leagueAvgDisplay": "46.1%",
+          "value": 16.2,
+          "displayValue": "16.2%",
+          "leagueAvg": 45.7906,
+          "leagueAvgDisplay": "45.8%",
           "leaderboard": [
             {
               "team": "SF",
               "rank": 1,
-              "val": 99.9,
-              "disp": "99.9%"
+              "val": 100,
+              "disp": "100.0%"
             },
             {
               "team": "CIN",
               "rank": 2,
-              "val": 91.4,
-              "disp": "91.4%"
+              "val": 90.8,
+              "disp": "90.8%"
             },
             {
               "team": "BUF",
               "rank": 3,
-              "val": 82.8,
-              "disp": "82.8%"
+              "val": 82.2,
+              "disp": "82.2%"
             },
             {
               "team": "JAX",
               "rank": 4,
-              "val": 80.3,
-              "disp": "80.3%"
+              "val": 79.8,
+              "disp": "79.8%"
             },
             {
               "team": "DAL",
               "rank": 5,
-              "val": 79.4,
-              "disp": "79.4%"
+              "val": 78.9,
+              "disp": "78.9%"
             },
             {
               "team": "DET",
               "rank": 6,
-              "val": 73.4,
-              "disp": "73.4%"
+              "val": 72.9,
+              "disp": "72.9%"
             },
             {
               "team": "KC",
               "rank": 7,
-              "val": 72.5,
-              "disp": "72.5%"
+              "val": 72.1,
+              "disp": "72.1%"
             },
             {
               "team": "CHI",
               "rank": 8,
-              "val": 64.9,
-              "disp": "64.9%"
+              "val": 64.6,
+              "disp": "64.6%"
             },
             {
               "team": "LAR",
               "rank": 9,
-              "val": 63.2,
-              "disp": "63.2%"
+              "val": 62.8,
+              "disp": "62.8%"
             },
             {
               "team": "HOU",
               "rank": 10,
-              "val": 56,
-              "disp": "56.0%"
+              "val": 55.6,
+              "disp": "55.6%"
             },
             {
               "team": "CAR",
               "rank": 11,
-              "val": 51.8,
-              "disp": "51.8%"
+              "val": 51.5,
+              "disp": "51.5%"
             },
             {
               "team": "LV",
               "rank": 12,
-              "val": 49.1,
-              "disp": "49.1%"
+              "val": 48.7,
+              "disp": "48.7%"
             },
             {
               "team": "NE",
               "rank": 13,
-              "val": 48.4,
-              "disp": "48.4%"
+              "val": 48.2,
+              "disp": "48.2%"
             },
             {
               "team": "NYG",
               "rank": 14,
-              "val": 46.9,
-              "disp": "46.9%"
+              "val": 46.6,
+              "disp": "46.6%"
             },
             {
               "team": "GB",
               "rank": 15,
-              "val": 44.9,
-              "disp": "44.9%"
+              "val": 44.7,
+              "disp": "44.7%"
             },
             {
               "team": "BAL",
               "rank": 16,
-              "val": 42.5,
-              "disp": "42.5%"
+              "val": 42.3,
+              "disp": "42.3%"
             },
             {
               "team": "SEA",
               "rank": 17,
-              "val": 41.5,
-              "disp": "41.5%"
+              "val": 41.3,
+              "disp": "41.3%"
             },
             {
               "team": "NO",
               "rank": 18,
-              "val": 39.7,
-              "disp": "39.7%"
+              "val": 39.4,
+              "disp": "39.4%"
             },
             {
               "team": "WAS",
               "rank": 19,
-              "val": 37.6,
-              "disp": "37.6%"
+              "val": 37.4,
+              "disp": "37.4%"
             },
             {
               "team": "PIT",
               "rank": 20,
-              "val": 37.1,
-              "disp": "37.1%"
+              "val": 36.9,
+              "disp": "36.9%"
             },
             {
               "team": "DEN",
               "rank": 21,
-              "val": 33.6,
-              "disp": "33.6%"
+              "val": 33.4,
+              "disp": "33.4%"
             },
             {
               "team": "NYJ",
               "rank": 22,
-              "val": 32.7,
-              "disp": "32.7%"
+              "val": 32.5,
+              "disp": "32.5%"
             },
             {
               "team": "TB",
               "rank": 23,
-              "val": 29.7,
-              "disp": "29.7%"
+              "val": 29.5,
+              "disp": "29.5%"
             },
             {
               "team": "CLE",
               "rank": 24,
-              "val": 27.8,
-              "disp": "27.8%"
+              "val": 27.6,
+              "disp": "27.6%"
             },
             {
               "team": "ATL",
               "rank": 25,
-              "val": 27.2,
-              "disp": "27.2%"
+              "val": 27,
+              "disp": "27.0%"
             },
             {
               "team": "TEN",
               "rank": 26,
-              "val": 24.1,
-              "disp": "24.1%"
+              "val": 24,
+              "disp": "24.0%"
             },
             {
               "team": "ARI",
               "rank": 27,
-              "val": 22.4,
-              "disp": "22.4%"
+              "val": 22.3,
+              "disp": "22.3%"
             },
             {
               "team": "MIA",
@@ -1213,20 +1321,20 @@
             {
               "team": "IND",
               "rank": 29,
-              "val": 19.4,
-              "disp": "19.4%"
+              "val": 19.3,
+              "disp": "19.3%"
             },
             {
               "team": "MIN",
               "rank": 30,
-              "val": 18.2,
-              "disp": "18.2%"
+              "val": 16.2,
+              "disp": "16.2%"
             },
             {
               "team": "PHI",
               "rank": 31,
-              "val": 11.6,
-              "disp": "11.6%"
+              "val": 11.5,
+              "disp": "11.5%"
             },
             {
               "team": "LAC",
@@ -1242,23 +1350,23 @@
             "label": "Points / Game",
             "unitTitle": "Vikings Offense",
             "higherIsBetter": true,
-            "rank": 26,
-            "value": 19.5556,
-            "displayValue": "19.6",
-            "leagueAvg": 23.1912,
+            "rank": 28,
+            "value": 18.6,
+            "displayValue": "18.6",
+            "leagueAvg": 23.1731,
             "leagueAvgDisplay": "23.2",
             "leaderboard": [
               {
-                "team": "BUF",
+                "team": "SF",
                 "rank": 1,
-                "val": 31.3,
-                "disp": "31.3"
+                "val": 31.6,
+                "disp": "31.6"
               },
               {
-                "team": "SF",
+                "team": "BUF",
                 "rank": 2,
-                "val": 31.2222,
-                "disp": "31.2"
+                "val": 31.3,
+                "disp": "31.3"
               },
               {
                 "team": "CIN",
@@ -1399,22 +1507,22 @@
                 "disp": "19.7"
               },
               {
-                "team": "MIN",
-                "rank": 26,
-                "val": 19.5556,
-                "disp": "19.6"
-              },
-              {
                 "team": "IND",
-                "rank": 27,
+                "rank": 26,
                 "val": 19.1818,
                 "disp": "19.2"
               },
               {
                 "team": "CLE",
-                "rank": 28,
+                "rank": 27,
                 "val": 18.8,
                 "disp": "18.8"
+              },
+              {
+                "team": "MIN",
+                "rank": 28,
+                "val": 18.6,
+                "disp": "18.6"
               },
               {
                 "team": "ARI",
@@ -4755,8 +4863,8 @@
           "rank": 1,
           "value": 91.7,
           "displayValue": "91.7%",
-          "leagueAvg": 43.2094,
-          "leagueAvgDisplay": "43.2%",
+          "leagueAvg": 45.125,
+          "leagueAvgDisplay": "45.1%",
           "leaderboard": [
             {
               "team": "MIN",
@@ -4767,176 +4875,176 @@
             {
               "team": "SEA",
               "rank": 2,
-              "val": 81.3,
-              "disp": "81.3%"
+              "val": 84.9,
+              "disp": "84.9%"
             },
             {
               "team": "LAR",
               "rank": 3,
-              "val": 80.1,
-              "disp": "80.1%"
+              "val": 83.3,
+              "disp": "83.3%"
             },
             {
               "team": "JAX",
               "rank": 4,
-              "val": 75.9,
-              "disp": "75.9%"
+              "val": 79.7,
+              "disp": "79.7%"
             },
             {
               "team": "TB",
               "rank": 5,
-              "val": 74.5,
-              "disp": "74.5%"
+              "val": 77.1,
+              "disp": "77.1%"
             },
             {
               "team": "KC",
               "rank": 6,
-              "val": 71.8,
-              "disp": "71.8%"
+              "val": 75.7,
+              "disp": "75.7%"
             },
             {
               "team": "CHI",
               "rank": 7,
-              "val": 64.7,
-              "disp": "64.7%"
+              "val": 67.6,
+              "disp": "67.6%"
             },
             {
               "team": "PIT",
               "rank": 8,
-              "val": 53.9,
-              "disp": "53.9%"
+              "val": 56.8,
+              "disp": "56.8%"
             },
             {
               "team": "NYG",
               "rank": 9,
-              "val": 51.5,
-              "disp": "51.5%"
+              "val": 54,
+              "disp": "54.0%"
             },
             {
               "team": "BUF",
               "rank": 10,
-              "val": 50.1,
-              "disp": "50.1%"
+              "val": 52.7,
+              "disp": "52.7%"
             },
             {
               "team": "GB",
               "rank": 11,
-              "val": 49.8,
-              "disp": "49.8%"
-            },
-            {
-              "team": "CLE",
-              "rank": 12,
-              "val": 47.7,
-              "disp": "47.7%"
+              "val": 52.1,
+              "disp": "52.1%"
             },
             {
               "team": "SF",
-              "rank": 13,
-              "val": 47.1,
-              "disp": "47.1%"
+              "rank": 12,
+              "val": 52.1,
+              "disp": "52.1%"
             },
             {
-              "team": "HOU",
-              "rank": 14,
-              "val": 44.1,
-              "disp": "44.1%"
+              "team": "CLE",
+              "rank": 13,
+              "val": 50,
+              "disp": "50.0%"
             },
             {
               "team": "DEN",
+              "rank": 14,
+              "val": 46.4,
+              "disp": "46.4%"
+            },
+            {
+              "team": "HOU",
               "rank": 15,
-              "val": 43.8,
-              "disp": "43.8%"
+              "val": 46.3,
+              "disp": "46.3%"
             },
             {
               "team": "CIN",
               "rank": 16,
-              "val": 40.8,
-              "disp": "40.8%"
+              "val": 43.2,
+              "disp": "43.2%"
             },
             {
               "team": "DET",
               "rank": 17,
-              "val": 39,
-              "disp": "39.0%"
+              "val": 41.2,
+              "disp": "41.2%"
             },
             {
               "team": "LAC",
               "rank": 18,
-              "val": 37.8,
-              "disp": "37.8%"
+              "val": 38.7,
+              "disp": "38.7%"
             },
             {
               "team": "IND",
               "rank": 19,
-              "val": 33.3,
-              "disp": "33.3%"
+              "val": 34.1,
+              "disp": "34.1%"
             },
             {
               "team": "BAL",
               "rank": 20,
-              "val": 31.8,
-              "disp": "31.8%"
+              "val": 32.7,
+              "disp": "32.7%"
             },
             {
               "team": "WAS",
               "rank": 21,
-              "val": 31.1,
-              "disp": "31.1%"
+              "val": 32.6,
+              "disp": "32.6%"
             },
             {
               "team": "ATL",
               "rank": 22,
-              "val": 30.7,
-              "disp": "30.7%"
+              "val": 31.9,
+              "disp": "31.9%"
             },
             {
-              "team": "CAR",
+              "team": "PHI",
               "rank": 23,
-              "val": 29.6,
-              "disp": "29.6%"
+              "val": 31.2,
+              "disp": "31.2%"
             },
             {
-              "team": "NYJ",
+              "team": "NE",
               "rank": 24,
-              "val": 29.5,
-              "disp": "29.5%"
+              "val": 30.9,
+              "disp": "30.9%"
             },
             {
               "team": "MIA",
               "rank": 25,
-              "val": 29.4,
-              "disp": "29.4%"
+              "val": 30.8,
+              "disp": "30.8%"
             },
             {
-              "team": "PHI",
+              "team": "NYJ",
               "rank": 26,
-              "val": 29.4,
-              "disp": "29.4%"
+              "val": 30.8,
+              "disp": "30.8%"
             },
             {
-              "team": "NE",
+              "team": "CAR",
               "rank": 27,
-              "val": 29.2,
-              "disp": "29.2%"
+              "val": 30.5,
+              "disp": "30.5%"
             },
             {
               "team": "NO",
               "rank": 28,
-              "val": 26.7,
-              "disp": "26.7%"
+              "val": 27.9,
+              "disp": "27.9%"
             },
             {
               "team": "ARI",
               "rank": 29,
-              "val": 14.5,
-              "disp": "14.5%"
+              "val": 14.6,
+              "disp": "14.6%"
             },
             {
               "team": "TEN",
               "rank": 30,
-              "val": 11.3,
-              "disp": "11.3%"
+              "val": 11.5,
+              "disp": "11.5%"
             },
             {
               "team": "LV",
@@ -4947,8 +5055,8 @@
             {
               "team": "DAL",
               "rank": 32,
-              "val": 2.6,
-              "disp": "2.6%"
+              "val": 3,
+              "disp": "3.0%"
             }
           ]
         },
@@ -4959,16 +5067,16 @@
             "unitTitle": "Vikings Defense",
             "higherIsBetter": false,
             "rank": 1,
-            "value": 14,
-            "displayValue": "14.0",
-            "leagueAvg": 23.0236,
-            "leagueAvgDisplay": "23.0",
+            "value": 16.1,
+            "displayValue": "16.1",
+            "leagueAvg": 23.0524,
+            "leagueAvgDisplay": "23.1",
             "leaderboard": [
               {
                 "team": "MIN",
                 "rank": 1,
-                "val": 14,
-                "disp": "14.0"
+                "val": 16.1,
+                "disp": "16.1"
               },
               {
                 "team": "KC",
@@ -5007,40 +5115,40 @@
                 "disp": "20.1"
               },
               {
-                "team": "BUF",
+                "team": "SF",
                 "rank": 8,
+                "val": 20.6,
+                "disp": "20.6"
+              },
+              {
+                "team": "BUF",
+                "rank": 9,
                 "val": 20.8,
                 "disp": "20.8"
               },
               {
                 "team": "TB",
-                "rank": 9,
+                "rank": 10,
                 "val": 20.9,
                 "disp": "20.9"
               },
               {
                 "team": "DEN",
-                "rank": 10,
+                "rank": 11,
                 "val": 21,
                 "disp": "21.0"
               },
               {
                 "team": "NYG",
-                "rank": 11,
+                "rank": 12,
                 "val": 21.4,
                 "disp": "21.4"
               },
               {
                 "team": "CIN",
-                "rank": 12,
+                "rank": 13,
                 "val": 21.4444,
                 "disp": "21.4"
-              },
-              {
-                "team": "SF",
-                "rank": 13,
-                "val": 21.7778,
-                "disp": "21.8"
               },
               {
                 "team": "CLE",
@@ -10739,11 +10847,11 @@
           "label": "Overall Team Margin Rank",
           "unitTitle": "Overview & Margin",
           "higherIsBetter": true,
-          "rank": 7,
-          "value": 69.7,
-          "displayValue": "69.7%",
-          "leagueAvg": 48.8094,
-          "leagueAvgDisplay": "48.8%",
+          "rank": 8,
+          "value": 64.7,
+          "displayValue": "64.7%",
+          "leagueAvg": 48.7344,
+          "leagueAvgDisplay": "48.7%",
           "leaderboard": [
             {
               "team": "JAX",
@@ -10760,8 +10868,8 @@
             {
               "team": "SF",
               "rank": 3,
-              "val": 85.2,
-              "disp": "85.2%"
+              "val": 87.8,
+              "disp": "87.8%"
             },
             {
               "team": "CIN",
@@ -10782,16 +10890,16 @@
               "disp": "70.3%"
             },
             {
-              "team": "MIN",
-              "rank": 7,
-              "val": 69.7,
-              "disp": "69.7%"
-            },
-            {
               "team": "DET",
-              "rank": 8,
+              "rank": 7,
               "val": 68.1,
               "disp": "68.1%"
+            },
+            {
+              "team": "MIN",
+              "rank": 8,
+              "val": 64.7,
+              "disp": "64.7%"
             },
             {
               "team": "TB",
@@ -11150,11 +11258,11 @@
             "label": "Point Differential / Gm",
             "unitTitle": "Overview & Margin",
             "higherIsBetter": true,
-            "rank": 9,
-            "value": 5.5556,
-            "displayValue": "+5.6",
-            "leagueAvg": 0.1676,
-            "leagueAvgDisplay": "+0.2",
+            "rank": 12,
+            "value": 2.5,
+            "displayValue": "+2.5",
+            "leagueAvg": 0.1207,
+            "leagueAvgDisplay": "+0.1",
             "leaderboard": [
               {
                 "team": "JAX",
@@ -11163,25 +11271,25 @@
                 "disp": "+12.0"
               },
               {
-                "team": "KC",
+                "team": "SF",
                 "rank": 2,
+                "val": 11,
+                "disp": "+11.0"
+              },
+              {
+                "team": "KC",
+                "rank": 3,
                 "val": 10.8,
                 "disp": "+10.8"
               },
               {
                 "team": "BUF",
-                "rank": 3,
+                "rank": 4,
                 "val": 10.5,
                 "disp": "+10.5"
               },
               {
                 "team": "CIN",
-                "rank": 4,
-                "val": 9.4444,
-                "disp": "+9.4"
-              },
-              {
-                "team": "SF",
                 "rank": 5,
                 "val": 9.4444,
                 "disp": "+9.4"
@@ -11205,28 +11313,28 @@
                 "disp": "+6.1"
               },
               {
-                "team": "MIN",
-                "rank": 9,
-                "val": 5.5556,
-                "disp": "+5.6"
-              },
-              {
                 "team": "SEA",
-                "rank": 10,
+                "rank": 9,
                 "val": 4.8,
                 "disp": "+4.8"
               },
               {
                 "team": "HOU",
-                "rank": 11,
+                "rank": 10,
                 "val": 3.7,
                 "disp": "+3.7"
               },
               {
                 "team": "DEN",
-                "rank": 12,
+                "rank": 11,
                 "val": 2.6,
                 "disp": "+2.6"
+              },
+              {
+                "team": "MIN",
+                "rank": 12,
+                "val": 2.5,
+                "disp": "+2.5"
               },
               {
                 "team": "DAL",
@@ -12597,172 +12705,172 @@
         "unitTitle": "Vikings Offense",
         "higherIsBetter": true,
         "rank": 30,
-        "value": 18.2,
-        "displayValue": "18.2%",
-        "leagueAvg": 46.1031,
-        "leagueAvgDisplay": "46.1%",
+        "value": 16.2,
+        "displayValue": "16.2%",
+        "leagueAvg": 45.7906,
+        "leagueAvgDisplay": "45.8%",
         "leaderboard": [
           {
             "team": "SF",
             "rank": 1,
-            "val": 99.9,
-            "disp": "99.9%"
+            "val": 100,
+            "disp": "100.0%"
           },
           {
             "team": "CIN",
             "rank": 2,
-            "val": 91.4,
-            "disp": "91.4%"
+            "val": 90.8,
+            "disp": "90.8%"
           },
           {
             "team": "BUF",
             "rank": 3,
-            "val": 82.8,
-            "disp": "82.8%"
+            "val": 82.2,
+            "disp": "82.2%"
           },
           {
             "team": "JAX",
             "rank": 4,
-            "val": 80.3,
-            "disp": "80.3%"
+            "val": 79.8,
+            "disp": "79.8%"
           },
           {
             "team": "DAL",
             "rank": 5,
-            "val": 79.4,
-            "disp": "79.4%"
+            "val": 78.9,
+            "disp": "78.9%"
           },
           {
             "team": "DET",
             "rank": 6,
-            "val": 73.4,
-            "disp": "73.4%"
+            "val": 72.9,
+            "disp": "72.9%"
           },
           {
             "team": "KC",
             "rank": 7,
-            "val": 72.5,
-            "disp": "72.5%"
+            "val": 72.1,
+            "disp": "72.1%"
           },
           {
             "team": "CHI",
             "rank": 8,
-            "val": 64.9,
-            "disp": "64.9%"
+            "val": 64.6,
+            "disp": "64.6%"
           },
           {
             "team": "LAR",
             "rank": 9,
-            "val": 63.2,
-            "disp": "63.2%"
+            "val": 62.8,
+            "disp": "62.8%"
           },
           {
             "team": "HOU",
             "rank": 10,
-            "val": 56,
-            "disp": "56.0%"
+            "val": 55.6,
+            "disp": "55.6%"
           },
           {
             "team": "CAR",
             "rank": 11,
-            "val": 51.8,
-            "disp": "51.8%"
+            "val": 51.5,
+            "disp": "51.5%"
           },
           {
             "team": "LV",
             "rank": 12,
-            "val": 49.1,
-            "disp": "49.1%"
+            "val": 48.7,
+            "disp": "48.7%"
           },
           {
             "team": "NE",
             "rank": 13,
-            "val": 48.4,
-            "disp": "48.4%"
+            "val": 48.2,
+            "disp": "48.2%"
           },
           {
             "team": "NYG",
             "rank": 14,
-            "val": 46.9,
-            "disp": "46.9%"
+            "val": 46.6,
+            "disp": "46.6%"
           },
           {
             "team": "GB",
             "rank": 15,
-            "val": 44.9,
-            "disp": "44.9%"
+            "val": 44.7,
+            "disp": "44.7%"
           },
           {
             "team": "BAL",
             "rank": 16,
-            "val": 42.5,
-            "disp": "42.5%"
+            "val": 42.3,
+            "disp": "42.3%"
           },
           {
             "team": "SEA",
             "rank": 17,
-            "val": 41.5,
-            "disp": "41.5%"
+            "val": 41.3,
+            "disp": "41.3%"
           },
           {
             "team": "NO",
             "rank": 18,
-            "val": 39.7,
-            "disp": "39.7%"
+            "val": 39.4,
+            "disp": "39.4%"
           },
           {
             "team": "WAS",
             "rank": 19,
-            "val": 37.6,
-            "disp": "37.6%"
+            "val": 37.4,
+            "disp": "37.4%"
           },
           {
             "team": "PIT",
             "rank": 20,
-            "val": 37.1,
-            "disp": "37.1%"
+            "val": 36.9,
+            "disp": "36.9%"
           },
           {
             "team": "DEN",
             "rank": 21,
-            "val": 33.6,
-            "disp": "33.6%"
+            "val": 33.4,
+            "disp": "33.4%"
           },
           {
             "team": "NYJ",
             "rank": 22,
-            "val": 32.7,
-            "disp": "32.7%"
+            "val": 32.5,
+            "disp": "32.5%"
           },
           {
             "team": "TB",
             "rank": 23,
-            "val": 29.7,
-            "disp": "29.7%"
+            "val": 29.5,
+            "disp": "29.5%"
           },
           {
             "team": "CLE",
             "rank": 24,
-            "val": 27.8,
-            "disp": "27.8%"
+            "val": 27.6,
+            "disp": "27.6%"
           },
           {
             "team": "ATL",
             "rank": 25,
-            "val": 27.2,
-            "disp": "27.2%"
+            "val": 27,
+            "disp": "27.0%"
           },
           {
             "team": "TEN",
             "rank": 26,
-            "val": 24.1,
-            "disp": "24.1%"
+            "val": 24,
+            "disp": "24.0%"
           },
           {
             "team": "ARI",
             "rank": 27,
-            "val": 22.4,
-            "disp": "22.4%"
+            "val": 22.3,
+            "disp": "22.3%"
           },
           {
             "team": "MIA",
@@ -12773,20 +12881,20 @@
           {
             "team": "IND",
             "rank": 29,
-            "val": 19.4,
-            "disp": "19.4%"
+            "val": 19.3,
+            "disp": "19.3%"
           },
           {
             "team": "MIN",
             "rank": 30,
-            "val": 18.2,
-            "disp": "18.2%"
+            "val": 16.2,
+            "disp": "16.2%"
           },
           {
             "team": "PHI",
             "rank": 31,
-            "val": 11.6,
-            "disp": "11.6%"
+            "val": 11.5,
+            "disp": "11.5%"
           },
           {
             "team": "LAC",
@@ -12801,23 +12909,23 @@
         "label": "Points / Game",
         "unitTitle": "Vikings Offense",
         "higherIsBetter": true,
-        "rank": 26,
-        "value": 19.5556,
-        "displayValue": "19.6",
-        "leagueAvg": 23.1912,
+        "rank": 28,
+        "value": 18.6,
+        "displayValue": "18.6",
+        "leagueAvg": 23.1731,
         "leagueAvgDisplay": "23.2",
         "leaderboard": [
           {
-            "team": "BUF",
+            "team": "SF",
             "rank": 1,
-            "val": 31.3,
-            "disp": "31.3"
+            "val": 31.6,
+            "disp": "31.6"
           },
           {
-            "team": "SF",
+            "team": "BUF",
             "rank": 2,
-            "val": 31.2222,
-            "disp": "31.2"
+            "val": 31.3,
+            "disp": "31.3"
           },
           {
             "team": "CIN",
@@ -12958,22 +13066,22 @@
             "disp": "19.7"
           },
           {
-            "team": "MIN",
-            "rank": 26,
-            "val": 19.5556,
-            "disp": "19.6"
-          },
-          {
             "team": "IND",
-            "rank": 27,
+            "rank": 26,
             "val": 19.1818,
             "disp": "19.2"
           },
           {
             "team": "CLE",
-            "rank": 28,
+            "rank": 27,
             "val": 18.8,
             "disp": "18.8"
+          },
+          {
+            "team": "MIN",
+            "rank": 28,
+            "val": 18.6,
+            "disp": "18.6"
           },
           {
             "team": "ARI",
@@ -16289,8 +16397,8 @@
         "rank": 1,
         "value": 91.7,
         "displayValue": "91.7%",
-        "leagueAvg": 43.2094,
-        "leagueAvgDisplay": "43.2%",
+        "leagueAvg": 45.125,
+        "leagueAvgDisplay": "45.1%",
         "leaderboard": [
           {
             "team": "MIN",
@@ -16301,176 +16409,176 @@
           {
             "team": "SEA",
             "rank": 2,
-            "val": 81.3,
-            "disp": "81.3%"
+            "val": 84.9,
+            "disp": "84.9%"
           },
           {
             "team": "LAR",
             "rank": 3,
-            "val": 80.1,
-            "disp": "80.1%"
+            "val": 83.3,
+            "disp": "83.3%"
           },
           {
             "team": "JAX",
             "rank": 4,
-            "val": 75.9,
-            "disp": "75.9%"
+            "val": 79.7,
+            "disp": "79.7%"
           },
           {
             "team": "TB",
             "rank": 5,
-            "val": 74.5,
-            "disp": "74.5%"
+            "val": 77.1,
+            "disp": "77.1%"
           },
           {
             "team": "KC",
             "rank": 6,
-            "val": 71.8,
-            "disp": "71.8%"
+            "val": 75.7,
+            "disp": "75.7%"
           },
           {
             "team": "CHI",
             "rank": 7,
-            "val": 64.7,
-            "disp": "64.7%"
+            "val": 67.6,
+            "disp": "67.6%"
           },
           {
             "team": "PIT",
             "rank": 8,
-            "val": 53.9,
-            "disp": "53.9%"
+            "val": 56.8,
+            "disp": "56.8%"
           },
           {
             "team": "NYG",
             "rank": 9,
-            "val": 51.5,
-            "disp": "51.5%"
+            "val": 54,
+            "disp": "54.0%"
           },
           {
             "team": "BUF",
             "rank": 10,
-            "val": 50.1,
-            "disp": "50.1%"
+            "val": 52.7,
+            "disp": "52.7%"
           },
           {
             "team": "GB",
             "rank": 11,
-            "val": 49.8,
-            "disp": "49.8%"
-          },
-          {
-            "team": "CLE",
-            "rank": 12,
-            "val": 47.7,
-            "disp": "47.7%"
+            "val": 52.1,
+            "disp": "52.1%"
           },
           {
             "team": "SF",
-            "rank": 13,
-            "val": 47.1,
-            "disp": "47.1%"
+            "rank": 12,
+            "val": 52.1,
+            "disp": "52.1%"
           },
           {
-            "team": "HOU",
-            "rank": 14,
-            "val": 44.1,
-            "disp": "44.1%"
+            "team": "CLE",
+            "rank": 13,
+            "val": 50,
+            "disp": "50.0%"
           },
           {
             "team": "DEN",
+            "rank": 14,
+            "val": 46.4,
+            "disp": "46.4%"
+          },
+          {
+            "team": "HOU",
             "rank": 15,
-            "val": 43.8,
-            "disp": "43.8%"
+            "val": 46.3,
+            "disp": "46.3%"
           },
           {
             "team": "CIN",
             "rank": 16,
-            "val": 40.8,
-            "disp": "40.8%"
+            "val": 43.2,
+            "disp": "43.2%"
           },
           {
             "team": "DET",
             "rank": 17,
-            "val": 39,
-            "disp": "39.0%"
+            "val": 41.2,
+            "disp": "41.2%"
           },
           {
             "team": "LAC",
             "rank": 18,
-            "val": 37.8,
-            "disp": "37.8%"
+            "val": 38.7,
+            "disp": "38.7%"
           },
           {
             "team": "IND",
             "rank": 19,
-            "val": 33.3,
-            "disp": "33.3%"
+            "val": 34.1,
+            "disp": "34.1%"
           },
           {
             "team": "BAL",
             "rank": 20,
-            "val": 31.8,
-            "disp": "31.8%"
+            "val": 32.7,
+            "disp": "32.7%"
           },
           {
             "team": "WAS",
             "rank": 21,
-            "val": 31.1,
-            "disp": "31.1%"
+            "val": 32.6,
+            "disp": "32.6%"
           },
           {
             "team": "ATL",
             "rank": 22,
-            "val": 30.7,
-            "disp": "30.7%"
+            "val": 31.9,
+            "disp": "31.9%"
           },
           {
-            "team": "CAR",
+            "team": "PHI",
             "rank": 23,
-            "val": 29.6,
-            "disp": "29.6%"
+            "val": 31.2,
+            "disp": "31.2%"
           },
           {
-            "team": "NYJ",
+            "team": "NE",
             "rank": 24,
-            "val": 29.5,
-            "disp": "29.5%"
+            "val": 30.9,
+            "disp": "30.9%"
           },
           {
             "team": "MIA",
             "rank": 25,
-            "val": 29.4,
-            "disp": "29.4%"
+            "val": 30.8,
+            "disp": "30.8%"
           },
           {
-            "team": "PHI",
+            "team": "NYJ",
             "rank": 26,
-            "val": 29.4,
-            "disp": "29.4%"
+            "val": 30.8,
+            "disp": "30.8%"
           },
           {
-            "team": "NE",
+            "team": "CAR",
             "rank": 27,
-            "val": 29.2,
-            "disp": "29.2%"
+            "val": 30.5,
+            "disp": "30.5%"
           },
           {
             "team": "NO",
             "rank": 28,
-            "val": 26.7,
-            "disp": "26.7%"
+            "val": 27.9,
+            "disp": "27.9%"
           },
           {
             "team": "ARI",
             "rank": 29,
-            "val": 14.5,
-            "disp": "14.5%"
+            "val": 14.6,
+            "disp": "14.6%"
           },
           {
             "team": "TEN",
             "rank": 30,
-            "val": 11.3,
-            "disp": "11.3%"
+            "val": 11.5,
+            "disp": "11.5%"
           },
           {
             "team": "LV",
@@ -16481,8 +16589,8 @@
           {
             "team": "DAL",
             "rank": 32,
-            "val": 2.6,
-            "disp": "2.6%"
+            "val": 3,
+            "disp": "3.0%"
           }
         ]
       },
@@ -16492,16 +16600,16 @@
         "unitTitle": "Vikings Defense",
         "higherIsBetter": false,
         "rank": 1,
-        "value": 14,
-        "displayValue": "14.0",
-        "leagueAvg": 23.0236,
-        "leagueAvgDisplay": "23.0",
+        "value": 16.1,
+        "displayValue": "16.1",
+        "leagueAvg": 23.0524,
+        "leagueAvgDisplay": "23.1",
         "leaderboard": [
           {
             "team": "MIN",
             "rank": 1,
-            "val": 14,
-            "disp": "14.0"
+            "val": 16.1,
+            "disp": "16.1"
           },
           {
             "team": "KC",
@@ -16540,40 +16648,40 @@
             "disp": "20.1"
           },
           {
-            "team": "BUF",
+            "team": "SF",
             "rank": 8,
+            "val": 20.6,
+            "disp": "20.6"
+          },
+          {
+            "team": "BUF",
+            "rank": 9,
             "val": 20.8,
             "disp": "20.8"
           },
           {
             "team": "TB",
-            "rank": 9,
+            "rank": 10,
             "val": 20.9,
             "disp": "20.9"
           },
           {
             "team": "DEN",
-            "rank": 10,
+            "rank": 11,
             "val": 21,
             "disp": "21.0"
           },
           {
             "team": "NYG",
-            "rank": 11,
+            "rank": 12,
             "val": 21.4,
             "disp": "21.4"
           },
           {
             "team": "CIN",
-            "rank": 12,
+            "rank": 13,
             "val": 21.4444,
             "disp": "21.4"
-          },
-          {
-            "team": "SF",
-            "rank": 13,
-            "val": 21.7778,
-            "disp": "21.8"
           },
           {
             "team": "CLE",
@@ -22231,11 +22339,11 @@
         "label": "Overall Team Margin Rank",
         "unitTitle": "Overview & Margin",
         "higherIsBetter": true,
-        "rank": 7,
-        "value": 69.7,
-        "displayValue": "69.7%",
-        "leagueAvg": 48.8094,
-        "leagueAvgDisplay": "48.8%",
+        "rank": 8,
+        "value": 64.7,
+        "displayValue": "64.7%",
+        "leagueAvg": 48.7344,
+        "leagueAvgDisplay": "48.7%",
         "leaderboard": [
           {
             "team": "JAX",
@@ -22252,8 +22360,8 @@
           {
             "team": "SF",
             "rank": 3,
-            "val": 85.2,
-            "disp": "85.2%"
+            "val": 87.8,
+            "disp": "87.8%"
           },
           {
             "team": "CIN",
@@ -22274,16 +22382,16 @@
             "disp": "70.3%"
           },
           {
-            "team": "MIN",
-            "rank": 7,
-            "val": 69.7,
-            "disp": "69.7%"
-          },
-          {
             "team": "DET",
-            "rank": 8,
+            "rank": 7,
             "val": 68.1,
             "disp": "68.1%"
+          },
+          {
+            "team": "MIN",
+            "rank": 8,
+            "val": 64.7,
+            "disp": "64.7%"
           },
           {
             "team": "TB",
@@ -22641,11 +22749,11 @@
         "label": "Point Differential / Gm",
         "unitTitle": "Overview & Margin",
         "higherIsBetter": true,
-        "rank": 9,
-        "value": 5.5556,
-        "displayValue": "+5.6",
-        "leagueAvg": 0.1676,
-        "leagueAvgDisplay": "+0.2",
+        "rank": 12,
+        "value": 2.5,
+        "displayValue": "+2.5",
+        "leagueAvg": 0.1207,
+        "leagueAvgDisplay": "+0.1",
         "leaderboard": [
           {
             "team": "JAX",
@@ -22654,25 +22762,25 @@
             "disp": "+12.0"
           },
           {
-            "team": "KC",
+            "team": "SF",
             "rank": 2,
+            "val": 11,
+            "disp": "+11.0"
+          },
+          {
+            "team": "KC",
+            "rank": 3,
             "val": 10.8,
             "disp": "+10.8"
           },
           {
             "team": "BUF",
-            "rank": 3,
+            "rank": 4,
             "val": 10.5,
             "disp": "+10.5"
           },
           {
             "team": "CIN",
-            "rank": 4,
-            "val": 9.4444,
-            "disp": "+9.4"
-          },
-          {
-            "team": "SF",
             "rank": 5,
             "val": 9.4444,
             "disp": "+9.4"
@@ -22696,28 +22804,28 @@
             "disp": "+6.1"
           },
           {
-            "team": "MIN",
-            "rank": 9,
-            "val": 5.5556,
-            "disp": "+5.6"
-          },
-          {
             "team": "SEA",
-            "rank": 10,
+            "rank": 9,
             "val": 4.8,
             "disp": "+4.8"
           },
           {
             "team": "HOU",
-            "rank": 11,
+            "rank": 10,
             "val": 3.7,
             "disp": "+3.7"
           },
           {
             "team": "DEN",
-            "rank": 12,
+            "rank": 11,
             "val": 2.6,
             "disp": "+2.6"
+          },
+          {
+            "team": "MIN",
+            "rank": 12,
+            "val": 2.5,
+            "disp": "+2.5"
           },
           {
             "team": "DAL",
@@ -24078,17 +24186,17 @@
     {
       "key": "off_pts_game",
       "label": "Points / Game",
-      "value": "19.6",
-      "rank": 26,
+      "value": "18.6",
+      "rank": 28,
       "leagueAvg": "23.2",
       "higherIsBetter": true
     },
     {
       "key": "def_pts_allowed_game",
       "label": "Points Allowed / Game",
-      "value": "14.0",
+      "value": "16.1",
       "rank": 1,
-      "leagueAvg": "23.0",
+      "leagueAvg": "23.1",
       "higherIsBetter": false
     },
     {
@@ -24148,31 +24256,71 @@
       "higherIsBetter": false
     },
     {
+      "key": "explosive_plays_game",
+      "label": "Explosive Plays / Game",
+      "value": "4.9",
+      "rank": 26,
+      "leagueAvg": "5.7",
+      "higherIsBetter": true
+    },
+    {
+      "key": "rush_yds_game",
+      "label": "Rushing Yards / Game",
+      "value": "108.6 yds",
+      "rank": 19,
+      "leagueAvg": "112.6 yds",
+      "higherIsBetter": true
+    },
+    {
+      "key": "def_epa_allowed_game",
+      "label": "Def. EPA Allowed / Game",
+      "value": "-7.38",
+      "rank": 1,
+      "leagueAvg": "+0.53",
+      "higherIsBetter": false
+    },
+    {
       "key": "def_sacks_game",
       "label": "Defensive Sacks / Game",
       "value": "4.11",
       "rank": 1,
       "leagueAvg": "2.38",
       "higherIsBetter": true
+    },
+    {
+      "key": "def_tfl_game",
+      "label": "Tackles For Loss (TFL) / Gm",
+      "value": "6.22",
+      "rank": 3,
+      "leagueAvg": "4.83",
+      "higherIsBetter": true
+    },
+    {
+      "key": "def_takeaways_game",
+      "label": "Def. Takeaways / Game",
+      "value": "1.89",
+      "rank": 3,
+      "leagueAvg": "1.30",
+      "higherIsBetter": true
     }
   ],
   "powerRankings": {
-    "weekLabel": "Through Week 10 • Entering Week 11",
+    "weekLabel": "Through Week 10 • Updating After Week 11",
     "consistentThroughWeek": 10,
-    "latestCompletedWeek": 10,
-    "sfCompletedGames": 9,
-    "pastFreshnessCutoff": true,
+    "latestCompletedWeek": 11,
+    "sfCompletedGames": 10,
+    "pastFreshnessCutoff": false,
     "cutoffHours": 24,
-    "cohortStatus": "latest_game_verified",
+    "cohortStatus": "pre_cutoff_prior_week",
     "consensusRank": 10,
-    "averageRank": 9.5,
+    "averageRank": 9.6,
     "medianRank": 9,
-    "previousRank": 11,
+    "previousRank": 12,
     "rangeMin": 8,
     "rangeMax": 12,
     "rangeShort": "#8–#12",
-    "rangeDisplay": "#8–#12 across 6 verified models & polls",
-    "synthesizedTakeaway": "6 verified models & polls place the 7-2 Vikings at #10 consensus (avg #9.5) through Week 10, ranging from #8 (ESPN Panel) to #12 (Inpredictable). All listed models include the Vikings' latest result entering Week 11 vs. 49ers.",
+    "rangeDisplay": "#8–#12 across 5 verified models & polls",
+    "synthesizedTakeaway": "5 verified models & polls place the 7-3 Vikings at #10 consensus (avg #9.6) through Week 10, ranging from #8 (ESPN Panel) to #12 (Inpredictable). Showing the consistent Week 10 cohort while post-game updates publish.",
     "sources": [
       {
         "id": "espn_panel",
@@ -24190,8 +24338,8 @@
         "asOfLabel": "Week 11",
         "verified": true,
         "blurb": "Beat the Packers 30-10. Non-QB MVP at midseason: Edge Andrew Van Ginkel There are multiple options to choose from on the Vikings' elite defense, and it's even reasonable to consider kicker Will…",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
+        "includesLatestGame": false,
+        "freshnessReason": "record_behind"
       },
       {
         "id": "cbs",
@@ -24209,8 +24357,8 @@
         "asOfLabel": "Week 11",
         "verified": true,
         "blurb": "The move to get Kirk Cousins paid off right away as they went to Green Bay and beat up the Packers. The numbers weren't great for him, but he was more than capable of hitting passes down the field,…",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
+        "includesLatestGame": false,
+        "freshnessReason": "week_behind"
       },
       {
         "id": "espn_fpi",
@@ -24222,31 +24370,13 @@
         "delta": "+8",
         "reportedRecord": "7-2",
         "gamesIncluded": 9,
-        "throughWeek": 11,
+        "throughWeek": 10,
         "asOfIso": "2026-11-22T07:00Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
         "blurb": "FPI +3.6 (#30 Off / #2 Def efficiency, 12.3 proj. wins, 6.2% SB odds) at 7-2.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
-        "id": "rbsdm",
-        "outlet": "RBSDM / nflverse Team Ratings",
-        "shortName": "RBSDM",
-        "url": "https://rbsdm.com/#ratings",
-        "rank": 9,
-        "previousRank": 9,
-        "delta": "0",
-        "reportedRecord": "7-3",
-        "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-22T10:09:03Z",
-        "asOfLabel": "Thru Wk 11",
-        "verified": true,
-        "blurb": "Tier 2 (67.1% neutral-field win rating, 12.1 proj. wins) at 7-3 through Week 11.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
+        "includesLatestGame": false,
+        "freshnessReason": "record_behind"
       },
       {
         "id": "nfelo",
@@ -24263,8 +24393,8 @@
         "asOfLabel": "7-2 record",
         "verified": true,
         "blurb": "nfelo 1594 (+4.0 spread value, #31 Off EPA, #9 Net EPA) at 7-2.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
+        "includesLatestGame": false,
+        "freshnessReason": "record_behind"
       },
       {
         "id": "inpredictable",
@@ -24281,8 +24411,8 @@
         "asOfLabel": "November 22",
         "verified": true,
         "blurb": "Betting market rating GPF +1.8 (#17 Offense / #3 Defense) at 7-2 through Week 10.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
+        "includesLatestGame": false,
+        "freshnessReason": "record_behind"
       }
     ],
     "allSources": [
@@ -24387,38 +24517,38 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-23T05:41:29.496Z"
+    "fetchedAtIso": "2026-11-23T06:24:47.428Z"
   },
   "upcomingMatchup": {
-    "week": 11,
-    "gameId": "401873077",
-    "homeAway": "away",
-    "gameUrl": "https://www.espn.com/nfl/game?gameId=401873077",
-    "injurySourceUrl": "https://www.cbssports.com/nfl/teams/SF/san-francisco-49ers/injuries/",
+    "week": 12,
+    "gameId": "401873084",
+    "homeAway": "home",
+    "gameUrl": "https://www.espn.com/nfl/game/_/gameId/401873084/falcons-vikings",
+    "injurySourceUrl": "https://www.cbssports.com/nfl/teams/ATL/atlanta-falcons/injuries/",
     "sfInjuryReportUrl": "https://www.vikings.com/team/injury-report/",
     "statsSourceUrl": "https://www.espn.com/nfl/team/stats/_/name/min/minnesota-vikings",
-    "dateIso": "2026-11-23T01:20Z",
-    "kickoffIso": "2026-11-23T01:20Z",
-    "kickoffDisplay": "Sun, Nov 22, 7:20 PM CST",
+    "dateIso": "2026-11-29T18:00Z",
+    "kickoffIso": "2026-11-29T18:00Z",
+    "kickoffDisplay": "Sun, Nov 29, 12:00 PM CST",
     "broadcast": "NFL TV",
     "venue": {
-      "name": "Estadio Banorte",
-      "city": "Mexico City",
-      "state": "",
-      "country": "Mexico",
-      "isInternational": true,
+      "name": "U.S. Bank Stadium",
+      "city": "Minneapolis",
+      "state": "MN",
+      "country": "USA",
+      "isInternational": false,
       "surface": "Turf"
     },
-    "sfRecord": "7-2",
+    "sfRecord": "7-3",
     "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png",
-    "oppAbbr": "SF",
-    "oppName": "San Francisco 49ers",
-    "oppLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png",
-    "oppRecord": "8-1",
+    "oppAbbr": "ATL",
+    "oppName": "Atlanta Falcons",
+    "oppLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
+    "oppRecord": "3-7",
     "completed": false,
     "sfScore": null,
     "oppScore": null,
-    "statusDetail": "1:48 - 3rd",
+    "statusDetail": "11/29 - 1:00 PM EST",
     "featuredPlayers": [
       {
         "playerId": "14880",
@@ -24439,15 +24569,6 @@
         "playProbabilityPct": 95
       },
       {
-        "playerId": "4565190",
-        "name": "Dallas Turner",
-        "position": "LB",
-        "jersey": 15,
-        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4565190.png",
-        "primarySnapPct": 82,
-        "playProbabilityPct": 99
-      },
-      {
         "playerId": "3042519",
         "name": "Aaron Jones Sr.",
         "position": "RB",
@@ -24466,423 +24587,63 @@
         "playProbabilityPct": 95
       },
       {
-        "playerId": "3917315",
-        "name": "Kyler Murray",
-        "position": "QB",
-        "jersey": 1,
-        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917315.png",
-        "primarySnapPct": 86,
-        "playProbabilityPct": 0
+        "playerId": "4565190",
+        "name": "Dallas Turner",
+        "position": "LB",
+        "jersey": 15,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4565190.png",
+        "primarySnapPct": 82,
+        "playProbabilityPct": 99
+      },
+      {
+        "playerId": "4262921",
+        "name": "Justin Jefferson",
+        "position": "WR",
+        "jersey": 18,
+        "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4262921.png",
+        "primarySnapPct": 84,
+        "playProbabilityPct": 99
       }
     ],
     "opponentHealth": {
-      "sourceUrl": "https://www.49ers.com/team/injury-report/",
+      "sourceUrl": "https://www.atlantafalcons.com/team/injury-report/",
       "injuryReport": [
         {
-          "playerId": "3916075",
-          "name": "Colton McKivitz",
-          "position": "OT",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916075.png",
-          "injuryType": "Lower Leg",
-          "gameStatus": "Out",
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "beatComment": "McKivitz suffered a gruesome lower left leg injury, and he required an air cast before being carted off the field. In his absence, Vederian Lowe has taken over as the 49ers' right tackle on Sunday night.",
-          "priorDayPlayProbabilityPct": null,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "3043116",
-          "name": "Demarcus Robinson",
-          "position": "WR",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043116.png",
-          "injuryType": "Coach's Decision",
-          "gameStatus": "Out",
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "beatComment": "Robinson will take a seat after appearing in each of the team's last two contests. With Mike Evans returning to action Sunday night after missing three contests with an Achilles injury, Robinson is the odd man out in the 49ers' WR room.",
-          "priorDayPlayProbabilityPct": null,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4430431",
-          "name": "Kurtis Rourke",
-          "position": "QB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430431.png",
-          "injuryType": "Coach's Decision",
-          "gameStatus": "Out",
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "beatComment": "inactive",
-          "priorDayPlayProbabilityPct": null,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4691556",
-          "name": "Enrique Cruz Jr.",
-          "position": "OT",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4691556.png",
-          "injuryType": "Coach's Decision",
-          "gameStatus": "Out",
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "beatComment": "inactive",
-          "priorDayPlayProbabilityPct": null,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4240542",
-          "name": "Nate Hobbs",
-          "position": "CB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png",
-          "injuryType": "Adductor",
-          "gameStatus": "Questionable",
-          "wed": "FP",
-          "thu": "FP",
-          "fri": "FP",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • IR",
-          "beatComment": "The veteran cornerback remains on injured reserve but had been listed as questionable. He had his 21-day practice window opened 17 days ago, so the 49ers will need to make a decision on Hobbs next week. He's yet to play in a game this season.",
-          "priorDayPlayProbabilityPct": 92,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4372561",
-          "name": "Isaac Guerendo",
-          "position": "RB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372561.png",
-          "injuryType": "Pectoral",
-          "gameStatus": "Out",
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "beatComment": "Guerendo has been on the PUP list with a pec injury since training camp, but it now looks like he may be making some progress toward returning to action. Even if he does get back to full strength at some point soon, though, it's not clear how much room there will be for him in a 49ers' backfield that has recently been dominated by veteran Christian McCaffrey and rookie third-rounder Kaelon Black.",
-          "priorDayPlayProbabilityPct": null,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4360438",
-          "name": "Brandon Aiyuk",
-          "position": "WR",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360438.png",
-          "injuryType": "Personal",
-          "gameStatus": "Out",
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Roster Exemption",
-          "beatComment": "After Aiyuk filed his paperwork for reinstatement, San Francisco activated him from the reserve/left squad list Nov. 9. Rosenhaus noted that Aiyuk passed his physical at that time, with MRIs and X-rays on his surgically repaired knee revealing no concerns. The 49ers were granted a two-week roster exemption for Aiyuk that will expire next Monday, and the 28-year-old wideout is expected to be cut loose at that time since San Francisco seemingly hasn't expressed interested in retaining him. While it's unclear what kind of market might exist for Aiyuk's services coming off a lengthy layoff from NFL action, NFL reporter Jordan Schultz relayed earlier this month that at least one NFC team has expressed interest in adding the receiver to its practice squad.",
-          "priorDayPlayProbabilityPct": null,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4685397",
-          "name": "Jordan James",
-          "position": "RB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685397.png",
-          "injuryType": "Calf",
-          "gameStatus": "Questionable",
-          "wed": "-",
-          "thu": "LP",
-          "fri": "LP",
-          "playProbabilityPct": 67,
-          "playBadgeLabel": "67% • GTD",
-          "beatComment": "James is good to go for Week 11 after dealing with a calf injury at practice late in the week. The running back will be available as a depth option in the backfield behind starter Christian McCaffrey and primary backup Kaelon Black versus Minnesota.",
-          "priorDayPlayProbabilityPct": 63,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4039029",
-          "name": "Khalid Kareem",
-          "position": "DE",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4039029.png",
-          "injuryType": "Ankle",
-          "gameStatus": "Questionable",
-          "wed": "LP",
-          "thu": "LP",
-          "fri": "LP",
-          "playProbabilityPct": 78,
-          "playBadgeLabel": "78% • GTD",
-          "beatComment": "Kareem has 12 tackles (six solo) across eight games this season as a rotational lineman and special-teams contributor.",
-          "priorDayPlayProbabilityPct": 78,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "16737",
-          "name": "Mike Evans",
-          "position": "WR",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png",
-          "injuryType": "Achilles",
-          "gameStatus": "Questionable",
-          "wed": "DNP",
-          "thu": "LP",
-          "fri": "LP",
-          "playProbabilityPct": 79,
-          "playBadgeLabel": "79% • GTD",
-          "beatComment": "Evans thus is poised for his first game action since Week 6 versus the Commanders after missing the 49ers' last three contests due to right Achilles tendinitis. As for Evans' potential workload, Jay Glazer reported on Fox NFL Sunday that the wide receiver likely will avoid a strict \"pitch count,\" but San Francisco also plans to \"be smart\" with his snaps. Even a limited Evans is viable for fantasy purposes, but he'll have to contend with RB Christian McCaffrey, WR George Kittle and active WRs Deebo Samuel, Keenan Allen, Jordan Watkins and Jacob Cowing for the attentionA of QB Brock Purdy.",
-          "priorDayPlayProbabilityPct": 77,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4565200",
-          "name": "Upton Stout",
-          "position": "CB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4565200.png",
-          "injuryType": "Shoulder, Neck",
-          "gameStatus": "Questionable",
-          "wed": "LP",
-          "thu": "LP",
-          "fri": "LP",
-          "playProbabilityPct": 80,
-          "playBadgeLabel": "80% • GTD",
-          "beatComment": "",
-          "priorDayPlayProbabilityPct": 80,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "3116097",
-          "name": "Luke Gifford",
+          "playerId": "4037626",
+          "name": "Divine Deablo",
           "position": "LB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3116097.png",
-          "injuryType": "Chest",
-          "gameStatus": "Questionable",
-          "wed": "LP",
-          "thu": "LP",
-          "fri": "LP",
-          "playProbabilityPct": 81,
-          "playBadgeLabel": "81% • GTD",
-          "beatComment": "",
-          "priorDayPlayProbabilityPct": 81,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037626.png",
+          "injuryType": "Forearm",
+          "gameStatus": "Out",
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Out",
+          "beatComment": "out",
+          "priorDayPlayProbabilityPct": null,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
         },
         {
-          "playerId": "3916903",
-          "name": "Dre Greenlaw",
-          "position": "LB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916903.png",
-          "injuryType": "Neck, NIR - Rest",
-          "gameStatus": "Questionable",
-          "wed": "DNP",
-          "thu": "LP",
-          "fri": "LP",
-          "playProbabilityPct": 84,
-          "playBadgeLabel": "84% • GTD",
-          "beatComment": "Greenlaw will be forced to miss Week 11 as a result of a neck injury that forced him to be less than 100 percent at practice throughout the week. In his absence, Garret Wallow and Luke Gifford are both candidates to take over as the team's primary weakside linebacker versus Minnesota.",
-          "priorDayPlayProbabilityPct": 79,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4241464",
-          "name": "Mac Jones",
-          "position": "QB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241464.png",
-          "injuryType": "Illness",
-          "gameStatus": "Questionable",
-          "wed": "LP",
-          "thu": "DNP",
-          "fri": "LP",
-          "playProbabilityPct": 88,
-          "playBadgeLabel": "88% • Cleared",
-          "beatComment": "Jones is good to go for Sunday Night Football after dealing with an illness at practice throughout the week. The quarterback will operate in his primary reserve role behind starter Brock Purdy versus the Vikings in Mexico City.",
-          "priorDayPlayProbabilityPct": 74,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4686308",
-          "name": "C.J. West",
-          "position": "DT",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686308.png",
-          "injuryType": "Knee",
-          "gameStatus": "Questionable",
-          "wed": "FP",
-          "thu": "FP",
-          "fri": "FP",
-          "playProbabilityPct": 93,
-          "playBadgeLabel": "93% • Cleared",
-          "beatComment": "The Niners also removed West's questionable tag, so he should be ready to play Sunday night against Minnesota. West played 41 percent of the defensive snaps during the first two weeks of the season before suffering his knee injury.",
-          "priorDayPlayProbabilityPct": 92,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "",
-          "name": "Christian McCaffrey",
-          "position": "RB",
-          "headshotUrl": "",
-          "injuryType": "NIR - Rest",
-          "gameStatus": "Questionable",
-          "wed": "Vet Rest",
-          "thu": "FP",
-          "fri": "FP",
-          "playProbabilityPct": 93,
-          "playBadgeLabel": "93% • Cleared",
-          "beatComment": "",
-          "priorDayPlayProbabilityPct": 92,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "",
-          "name": "Jon Weeks",
-          "position": "LS",
-          "headshotUrl": "",
-          "injuryType": "Chest",
-          "gameStatus": "Questionable",
-          "wed": "FP",
-          "thu": "FP",
-          "fri": "FP",
-          "playProbabilityPct": 93,
-          "playBadgeLabel": "93% • Cleared",
-          "beatComment": "",
-          "priorDayPlayProbabilityPct": 92,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "",
-          "name": "Trent Williams",
-          "position": "OT",
-          "headshotUrl": "",
-          "injuryType": "NIR - Rest",
-          "gameStatus": "Questionable",
-          "wed": "Vet Rest",
-          "thu": "FP",
-          "fri": "FP",
-          "playProbabilityPct": 93,
-          "playBadgeLabel": "93% • Cleared",
-          "beatComment": "",
-          "priorDayPlayProbabilityPct": 92,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4693644",
-          "name": "Ji'Ayir Brown",
-          "position": "S",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4693644.png",
-          "injuryType": "Ankle",
-          "gameStatus": "Active",
-          "wed": "LP",
-          "thu": "LP",
-          "fri": "FP",
-          "playProbabilityPct": 95,
-          "playBadgeLabel": "95% • Cleared",
-          "beatComment": "Brown opened the week with back-to-back limited practices due to an ankle issue, but his full session Friday was enough for him to avoid an injury tag for Sunday's contest. The fourth-year safety has 51 tackles (28 solo) and three pass defenses in nine regular-season games.",
-          "priorDayPlayProbabilityPct": 78,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4427325",
-          "name": "Renardo Green",
-          "position": "CB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4427325.png",
-          "injuryType": "Back",
-          "gameStatus": "Active",
-          "wed": "LP",
-          "thu": "FP",
-          "fri": "FP",
-          "playProbabilityPct": 95,
-          "playBadgeLabel": "95% • Cleared",
-          "beatComment": "Green was not able to finish the 49ers' win over the Cowboys in Week 10 because of his back injury, but it now seems like he's back to 100 percent. He projects to play a significant role in San Francisco's secondary during Sunday's game against Minnesota.",
-          "priorDayPlayProbabilityPct": 92,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "3057524",
-          "name": "Siran Neal",
-          "position": "S",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3057524.png",
-          "injuryType": "Knee, Foot",
-          "gameStatus": "Active",
-          "wed": "LP",
-          "thu": "FP",
-          "fri": "FP",
-          "playProbabilityPct": 95,
-          "playBadgeLabel": "95% • Cleared",
-          "beatComment": "",
-          "priorDayPlayProbabilityPct": 92,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "",
-          "name": "Mykel Williams",
-          "position": "DE",
-          "headshotUrl": "",
-          "injuryType": "Hand, Ankle",
-          "gameStatus": "Questionable",
-          "wed": "FP",
-          "thu": "FP",
-          "fri": "FP",
-          "playProbabilityPct": 97,
-          "playBadgeLabel": "97% • Cleared",
-          "beatComment": "",
-          "priorDayPlayProbabilityPct": 90,
+          "playerId": "4870612",
+          "name": "Zachariah Branch",
+          "position": "WR",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870612.png",
+          "injuryType": "Hamstring",
+          "gameStatus": "Out",
+          "wed": "-",
+          "thu": "-",
+          "fri": "-",
+          "playProbabilityPct": 0,
+          "playBadgeLabel": "0% • Out",
+          "beatComment": "out",
+          "priorDayPlayProbabilityPct": null,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
         }
       ],
-      "irReserve": [
-        {
-          "playerId": "3895856",
-          "name": "Christian Kirk",
-          "position": "WR",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3895856.png",
-          "injuryType": "Knee - Meniscus",
-          "gameStatus": "Injured Reserve",
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • IR",
-          "beatComment": "After he had missed the 49ers' first six games of the season while recovering from a calf injury, Kirk landed on injured reserve for the second time this season back on Nov. 7 due to a right knee injury sustained in his team debut Week 7 in Atlanta. Since Kirk didn't specify whether he required a partial meniscectomy or a meniscus repair, his exact recovery timeline isn't known. Regardless, he'll have to miss at least two more games while he's on IR."
-        },
-        {
-          "playerId": "4710714",
-          "name": "De'Zhaun Stribling",
-          "position": "WR",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4710714.png",
-          "injuryType": "Ankle",
-          "gameStatus": "Injured Reserve",
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • IR",
-          "beatComment": "This is the first time Stribling has participated in on-field work since suffering a significant ankle injury in the Week 1 win over the Rams. The expectation has been that the rookie could be back by December, so Stribling is progressing toward hitting that goal. Once Stribling progresses to full-team drills, his timeline will get more dialed in. The 49ers have two more games in November, leaving the Week 13 matchup against the Giants as his earliest potential return date."
-        }
-      ]
+      "irReserve": []
     },
     "betting": {
       "spread": "Check ESPN Gamecast",
@@ -24890,101 +24651,367 @@
       "impliedWinProb": "50%"
     },
     "franchiseHistory": {
-      "allTimeRecord": "Vikings vs. 49ers",
-      "recentRecord": "5-3 in last 8 meetings",
-      "lastMeetingNote": "Most recent meeting (2024-09-15): MIN won MIN 23, SF 17 (Home).",
-      "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=min&tm2=sfo&yr=all",
+      "allTimeRecord": "Vikings vs. Falcons",
+      "recentRecord": "6-2 in last 8 meetings",
+      "lastMeetingNote": "Most recent meeting (2025-09-14): ATL won MIN 6, ATL 22 (Home).",
+      "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=min&tm2=atl&yr=all",
       "recentGames": [
         {
-          "season": 2024,
-          "date": "2024-09-15",
+          "season": 2025,
+          "date": "2025-09-14",
           "venue": "Home",
-          "scoreDisplay": "MIN 23, SF 17",
+          "scoreDisplay": "MIN 6, ATL 22",
+          "sfWon": false,
+          "tied": false,
+          "result": "L",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772919"
+        },
+        {
+          "season": 2024,
+          "date": "2024-12-08",
+          "venue": "Home",
+          "scoreDisplay": "MIN 42, ATL 21",
           "sfWon": true,
           "tied": false,
           "result": "W",
           "overtime": false,
-          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671645"
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671648"
         },
         {
           "season": 2023,
-          "date": "2023-10-23",
-          "venue": "Home",
-          "scoreDisplay": "MIN 22, SF 17",
+          "date": "2023-11-05",
+          "venue": "Away",
+          "scoreDisplay": "MIN 31, ATL 28",
           "sfWon": true,
           "tied": false,
           "result": "W",
           "overtime": false,
-          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547495"
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547518"
         },
         {
-          "season": 2021,
-          "date": "2021-11-28",
-          "venue": "Away",
-          "scoreDisplay": "MIN 26, SF 34",
+          "season": 2020,
+          "date": "2020-10-18",
+          "venue": "Home",
+          "scoreDisplay": "MIN 23, ATL 40",
           "sfWon": false,
           "tied": false,
           "result": "L",
           "overtime": false,
-          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401326506"
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401220301"
         },
         {
           "season": 2019,
-          "date": "2020-01-11",
-          "venue": "Away",
-          "scoreDisplay": "MIN 10, SF 27",
-          "sfWon": false,
-          "tied": false,
-          "result": "L",
-          "overtime": false,
-          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401131040"
-        },
-        {
-          "season": 2018,
-          "date": "2018-09-09",
+          "date": "2019-09-08",
           "venue": "Home",
-          "scoreDisplay": "MIN 24, SF 16",
+          "scoreDisplay": "MIN 28, ATL 12",
           "sfWon": true,
           "tied": false,
           "result": "W",
           "overtime": false,
-          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401030715"
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401127961"
+        },
+        {
+          "season": 2017,
+          "date": "2017-12-03",
+          "venue": "Away",
+          "scoreDisplay": "MIN 14, ATL 9",
+          "sfWon": true,
+          "tied": false,
+          "result": "W",
+          "overtime": false,
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400951677"
         },
         {
           "season": 2015,
-          "date": "2015-09-14",
+          "date": "2015-11-29",
           "venue": "Away",
-          "scoreDisplay": "MIN 3, SF 20",
-          "sfWon": false,
-          "tied": false,
-          "result": "L",
-          "overtime": false,
-          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400791600"
-        },
-        {
-          "season": 2012,
-          "date": "2012-09-23",
-          "venue": "Home",
-          "scoreDisplay": "MIN 24, SF 13",
+          "scoreDisplay": "MIN 20, ATL 10",
           "sfWon": true,
           "tied": false,
           "result": "W",
           "overtime": false,
-          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/320923016"
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400791514"
         },
         {
-          "season": 2009,
-          "date": "2009-09-27",
+          "season": 2014,
+          "date": "2014-09-28",
           "venue": "Home",
-          "scoreDisplay": "MIN 27, SF 24",
+          "scoreDisplay": "MIN 41, ATL 28",
           "sfWon": true,
           "tied": false,
           "result": "W",
           "overtime": false,
-          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/290927016"
+          "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400554242"
         }
       ],
       "byOpponent": {
+        "NYG": {
+          "allTimeRecord": "Vikings vs. Giants",
+          "recentRecord": "6-2 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2025-12-21): MIN won MIN 16, NYG 13 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=min&tm2=nyg&yr=all",
+          "recentGames": [
+            {
+              "season": 2025,
+              "date": "2025-12-21",
+              "venue": "Away",
+              "scoreDisplay": "MIN 16, NYG 13",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772911"
+            },
+            {
+              "season": 2024,
+              "date": "2024-09-08",
+              "venue": "Away",
+              "scoreDisplay": "MIN 28, NYG 6",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401671712"
+            },
+            {
+              "season": 2022,
+              "date": "2023-01-15",
+              "venue": "Home",
+              "scoreDisplay": "MIN 24, NYG 31",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401438001"
+            },
+            {
+              "season": 2022,
+              "date": "2022-12-24",
+              "venue": "Home",
+              "scoreDisplay": "MIN 27, NYG 24",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401437923"
+            },
+            {
+              "season": 2019,
+              "date": "2019-10-06",
+              "venue": "Away",
+              "scoreDisplay": "MIN 28, NYG 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401127971"
+            },
+            {
+              "season": 2016,
+              "date": "2016-10-03",
+              "venue": "Home",
+              "scoreDisplay": "MIN 24, NYG 10",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400874677"
+            },
+            {
+              "season": 2015,
+              "date": "2015-12-27",
+              "venue": "Home",
+              "scoreDisplay": "MIN 49, NYG 17",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400791565"
+            },
+            {
+              "season": 2013,
+              "date": "2013-10-21",
+              "venue": "Away",
+              "scoreDisplay": "MIN 7, NYG 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/331021019"
+            }
+          ]
+        },
+        "BAL": {
+          "allTimeRecord": "Vikings vs. Ravens",
+          "recentRecord": "2-5 in last 7 meetings",
+          "lastMeetingNote": "Most recent meeting (2025-11-09): BAL won MIN 19, BAL 27 (Home).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=min&tm2=rav&yr=all",
+          "recentGames": [
+            {
+              "season": 2025,
+              "date": "2025-11-09",
+              "venue": "Home",
+              "scoreDisplay": "MIN 19, BAL 27",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401772876"
+            },
+            {
+              "season": 2021,
+              "date": "2021-11-07",
+              "venue": "Away",
+              "scoreDisplay": "MIN 31, BAL 34",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401326452"
+            },
+            {
+              "season": 2017,
+              "date": "2017-10-22",
+              "venue": "Home",
+              "scoreDisplay": "MIN 24, BAL 16",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400951603"
+            },
+            {
+              "season": 2013,
+              "date": "2013-12-08",
+              "venue": "Away",
+              "scoreDisplay": "MIN 26, BAL 29",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/331208033"
+            },
+            {
+              "season": 2009,
+              "date": "2009-10-18",
+              "venue": "Home",
+              "scoreDisplay": "MIN 33, BAL 31",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/291018016"
+            },
+            {
+              "season": 2005,
+              "date": "2005-12-25",
+              "venue": "Away",
+              "scoreDisplay": "MIN 23, BAL 30",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/251225033"
+            },
+            {
+              "season": 2001,
+              "date": "2002-01-07",
+              "venue": "Away",
+              "scoreDisplay": "MIN 3, BAL 19",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/220107033"
+            }
+          ]
+        },
+        "DEN": {
+          "allTimeRecord": "Vikings vs. Broncos",
+          "recentRecord": "3-4 in last 7 meetings",
+          "lastMeetingNote": "Most recent meeting (2023-11-19): DEN won MIN 20, DEN 21 (Away).",
+          "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=min&tm2=den&yr=all",
+          "recentGames": [
+            {
+              "season": 2023,
+              "date": "2023-11-19",
+              "venue": "Away",
+              "scoreDisplay": "MIN 20, DEN 21",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401547550"
+            },
+            {
+              "season": 2019,
+              "date": "2019-11-17",
+              "venue": "Home",
+              "scoreDisplay": "MIN 27, DEN 23",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401128081"
+            },
+            {
+              "season": 2015,
+              "date": "2015-10-04",
+              "venue": "Away",
+              "scoreDisplay": "MIN 20, DEN 23",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400791719"
+            },
+            {
+              "season": 2011,
+              "date": "2011-12-04",
+              "venue": "Home",
+              "scoreDisplay": "MIN 32, DEN 35",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/311204016"
+            },
+            {
+              "season": 2007,
+              "date": "2007-12-30",
+              "venue": "Away",
+              "scoreDisplay": "MIN 19, DEN 22",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": true,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/271230007"
+            },
+            {
+              "season": 2003,
+              "date": "2003-10-19",
+              "venue": "Home",
+              "scoreDisplay": "MIN 28, DEN 20",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/231019016"
+            },
+            {
+              "season": 1999,
+              "date": "1999-10-31",
+              "venue": "Away",
+              "scoreDisplay": "MIN 23, DEN 20",
+              "sfWon": true,
+              "tied": false,
+              "result": "W",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/191031007"
+            }
+          ]
+        },
         "GB": {
           "allTimeRecord": "Vikings vs. Packers",
           "recentRecord": "6-2 in last 8 meetings",
@@ -25755,10 +25782,32 @@
         },
         "SF": {
           "allTimeRecord": "Vikings vs. 49ers",
-          "recentRecord": "5-3 in last 8 meetings",
-          "lastMeetingNote": "Most recent meeting (2024-09-15): MIN won MIN 23, SF 17 (Home).",
+          "recentRecord": "3-5 in last 8 meetings",
+          "lastMeetingNote": "Most recent meeting (2026-11-23): SF won MIN 10, SF 35 (Away).",
           "pfrQueryUrl": "https://www.pro-football-reference.com/boxscores/game_query.cgi?tm1=min&tm2=sfo&yr=all",
           "recentGames": [
+            {
+              "season": 2026,
+              "date": "2026-11-23",
+              "venue": "Away",
+              "scoreDisplay": "MIN 10, SF 35",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873077/vikings-49ers"
+            },
+            {
+              "season": 2026,
+              "date": "2026-11-22",
+              "venue": "Neutral",
+              "scoreDisplay": "MIN 10, SF 35",
+              "sfWon": false,
+              "tied": false,
+              "result": "L",
+              "overtime": false,
+              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/401873077"
+            },
             {
               "season": 2024,
               "date": "2024-09-15",
@@ -25824,28 +25873,6 @@
               "result": "L",
               "overtime": false,
               "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/400791600"
-            },
-            {
-              "season": 2012,
-              "date": "2012-09-23",
-              "venue": "Home",
-              "scoreDisplay": "MIN 24, SF 13",
-              "sfWon": true,
-              "tied": false,
-              "result": "W",
-              "overtime": false,
-              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/320923016"
-            },
-            {
-              "season": 2009,
-              "date": "2009-09-27",
-              "venue": "Home",
-              "scoreDisplay": "MIN 27, SF 24",
-              "sfWon": true,
-              "tied": false,
-              "result": "W",
-              "overtime": false,
-              "boxscoreUrl": "https://www.espn.com/nfl/game/_/gameId/290927016"
             }
           ]
         },
@@ -26310,11 +26337,11 @@
       }
     },
     "coachingMatchup": {
-      "headline": "Kevin O'Connell & DC Brian Flores vs. HC Kyle Shanahan & DC Raheem Morris (Road Test)",
-      "summary": "Week 11 two-sided coordinator chess match pitting Minnesota Vikings's staff (Kevin O'Connell, OC Wes Phillips, DC Brian Flores) against San Francisco 49ers (8-1)—testing both Minnesota's offensive efficiency and its defensive pass-rush and coverage discipline.",
+      "headline": "Kevin O'Connell & DC Brian Flores vs. HC Kevin Stefanski & DC Jeff Ulbrich (U.S. Bank Stadium)",
+      "summary": "Week 12 two-sided coordinator chess match pitting Minnesota Vikings's staff (Kevin O'Connell, OC Wes Phillips, DC Brian Flores) against Atlanta Falcons (3-7)—testing both Minnesota's offensive efficiency and its defensive pass-rush and coverage discipline.",
       "bullets": [
-        "Pass-Game Efficiency & Coverage Shell Delta: Kevin O'Connell and OC Wes Phillips look to stress San Francisco 49ers's single-high vs. two-high rotations with pre-snap motion, spacing, and play-action timing, while San Francisco 49ers's defensive front and coverage disguises aim to compress intermediate throwing windows.",
-        "Trench Run-Fit & Two-Way Leverage: DC Brian Flores balances pass-rush pressure with two-high/split-safety discipline on early downs, while San Francisco 49ers's offense tests Minnesota's edge containment, third-down execution, and red-zone stops."
+        "Pass-Game Efficiency & Coverage Shell Delta: Kevin O'Connell and OC Wes Phillips look to stress Atlanta Falcons's single-high vs. two-high rotations with pre-snap motion, spacing, and play-action timing, while Atlanta Falcons's defensive front and coverage disguises aim to compress intermediate throwing windows.",
+        "Trench Run-Fit & Two-Way Leverage: DC Brian Flores balances pass-rush pressure with two-high/split-safety discipline on early downs, while Atlanta Falcons's offense tests Minnesota's edge containment, third-down execution, and red-zone stops."
       ]
     },
     "keyMatchupsMatrix": []

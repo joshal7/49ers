@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:50:48.134Z",
+  "updatedAt": "2026-11-23T06:25:24.356Z",
   "dailyTopNewsBrief": {
     "id": "brief_bal_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -112,6 +112,7 @@
       "title": "Are trust issues to blame for the Ravens loss?",
       "summary": "Jamison Hensley on Kyle Hamilton's comments concerning the Ravens loss to the Panthers.",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_16x9_Ravens_IA/dm_261122_16x9_Ravens_IA.jpg",
+      "imageCaption": "Jamison Hensley on Kyle Hamilton's comments concerning the Ravens loss to the Panthers.",
       "imageAlt": "Are trust issues to blame for the Ravens loss?",
       "publishedAt": "2026-11-23T03:23:38Z",
       "url": "https://www.espn.com/video/clip/_/id/50569224/are-trust-issues-blame-ravens-loss",
@@ -137,7 +138,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.5517
+      "storyRank": 8.9611
     },
     {
       "id": "bal_rss_4374fcb620e1",
@@ -160,7 +161,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.868,
+      "breakingPriority": 0.737,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -170,40 +171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.092
-    },
-    {
-      "id": "bal_espn_43feb3a96b1bc",
-      "type": "article",
-      "title": "'Locked into the moment,' Bryce Young rallies first-place Panthers past Ravens",
-      "summary": "In a back-and-forth game laced with lead changes, Bryce Young rallied the Panthers to a 35-33 home win over the Baltimore Ravens on Sunday at Bank of America Stadium, a second straight victory for the 5-5 Panthers that padded lead in the NFC South.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749877_1296x729_16-9.jpg",
-      "imageAlt": "'Locked into the moment,' Bryce Young rallies first-place Panthers past Ravens",
-      "publishedAt": "2026-11-23T01:28:16Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50567146/young-authors-game-winning-drive-first-place-panthers",
-      "outletId": "charlotte_observer_public_beat_wire_car",
-      "outletName": "ESPN",
-      "reporterId": "mike_kaye",
-      "reporterName": "Mike Kaye",
-      "author": "Mike Kaye",
-      "authorHandle": "@mike_e_kaye",
-      "authorProfileUrl": "https://x.com/mike_e_kaye",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 7.5913
+      "storyRank": 6.1373
     },
     {
       "id": "bal_espn_69b128e169263",
@@ -211,6 +179,7 @@
       "title": "Jesse Minter: I take responsibility for latest Ravens loss",
       "summary": "Ravens coach Jesse Minter took accountability after Baltimore's 35-33 setback to the Panthers extended the NFL's longest active losing streak to six games.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749903_2_600x600_1-1.jpg",
+      "imageCaption": "Minter [600x600]",
       "imageAlt": "Jesse Minter: I take responsibility for latest Ravens loss",
       "publishedAt": "2026-11-23T00:50:05Z",
       "url": "https://www.espn.com/nfl/story/_/id/50567139/jesse-minter-take-responsibility-latest-ravens-loss",
@@ -236,7 +205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.3039
+      "storyRank": 4.4702
     },
     {
       "id": "bal_vid_53df5e26b79b",
@@ -260,7 +229,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.71,
+      "breakingPriority": 0.603,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -270,7 +239,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8098
+      "storyRank": 4.6596
+    },
+    {
+      "id": "bal_espn_43feb3a96b1bc",
+      "type": "article",
+      "title": "'Locked into the moment,' Bryce Young rallies first-place Panthers past Ravens",
+      "summary": "In a back-and-forth game laced with lead changes, Bryce Young rallied the Panthers to a 35-33 home win over the Baltimore Ravens on Sunday at Bank of America Stadium, a second straight victory for the 5-5 Panthers that padded lead in the NFC South.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749877_1296x729_16-9.jpg",
+      "imageCaption": "Bryce Young [1296x729]",
+      "imageAlt": "'Locked into the moment,' Bryce Young rallies first-place Panthers past Ravens",
+      "publishedAt": "2026-11-23T01:28:16Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50567146/young-authors-game-winning-drive-first-place-panthers",
+      "outletId": "charlotte_observer_public_beat_wire_car",
+      "outletName": "ESPN",
+      "reporterId": "mike_kaye",
+      "reporterName": "Mike Kaye",
+      "author": "Mike Kaye",
+      "authorHandle": "@mike_e_kaye",
+      "authorProfileUrl": "https://x.com/mike_e_kaye",
+      "trustTier": 3,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 78,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.5015
     },
     {
       "id": "bal_rss_cd23233b5f38",
@@ -303,7 +306,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.519
+      "storyRank": 3.4207
+    },
+    {
+      "id": "bal_nfltr_04251a4d16df",
+      "type": "article",
+      "title": "AFC Notes: Marlon Humphrey, Bengals, Browns, Ravens, Steelers",
+      "summary": "Bengals Bengals DB Jordan Battle was fined $11,941 for unsportsmanlike conduct, and DT Tedarrell Slaton was fined $11,941 for unnecessary roughness. Browns Browns DE Sam Kamara was fined $6,750 for unnecessary roughness. Ravens Ravens CB Ma",
+      "imageUrl": "",
+      "imageAlt": "AFC Notes: Marlon Humphrey, Bengals, Browns, Ravens, Steelers",
+      "publishedAt": "2026-11-22T23:30:28.000Z",
+      "url": "https://nfltraderumors.co/afc-notes-marlon-humphrey-bengals-browns-ravens-steelers/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.025
     },
     {
       "id": "bal_vid_286bbb69c671",
@@ -337,7 +373,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5291
+      "storyRank": 2.7831
     },
     {
       "id": "bal_vid_38b6c9c90f9e",
@@ -371,7 +407,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.5078
+      "storyRank": 2.7689
     },
     {
       "id": "bal_vid_1d82377cdb1a",
@@ -405,7 +441,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4867
+      "storyRank": 2.7548
     },
     {
       "id": "bal_vid_4c9cb15b64f1",
@@ -439,7 +475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4658
+      "storyRank": 2.7408
     },
     {
       "id": "bal_espn_671a45fa034bb",
@@ -447,6 +483,7 @@
       "title": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
       "summary": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/52758d50-ef3b-458d-94bd-b1e783266396/52758d50-ef3b-458d-94bd-b1e783266396.jpg",
+      "imageCaption": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
       "imageAlt": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
       "publishedAt": "2026-11-22T21:40:55Z",
       "url": "https://www.espn.com/video/clip/_/id/50565408/game-highlights",
@@ -472,14 +509,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2122
+      "storyRank": 2.5691
     },
     {
       "id": "bal_espn_a0caad20a15b2",
       "type": "article",
       "title": "Bryce Young, Chuba Hubbard help Panthers add to NFC South lead with 35-33 victory over the Ravens",
       "summary": "— Dave Canales is like most NFL coaches — he wants to keep his team's focus on the next game and avoid any potential outside distractions.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873068.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/52758d50-ef3b-458d-94bd-b1e783266396/52758d50-ef3b-458d-94bd-b1e783266396.jpg",
+      "imageCaption": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
       "imageAlt": "Bryce Young, Chuba Hubbard help Panthers add to NFC South lead with 35-33 victory over the Ravens",
       "publishedAt": "2026-11-23T00:34:34Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873068",
@@ -505,7 +543,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4708
+      "storyRank": 1.0583
+    },
+    {
+      "id": "bal_pfr_d3775005498d",
+      "type": "article",
+      "title": "Pats, Cardinals, Ravens Could Pursue Daniel Jones",
+      "summary": "NOVEMBER 22: Despite having traded for Brissett, the Ravens remain a possible suitor for Jones, per ESPN&#8217;s Adam Schefter and Ian Rapoport. The duo expects Jones &#8212; assuming he clears waivers &#8212; to be patient and wait for the",
+      "imageUrl": "",
+      "publishedAt": "2026-11-22T17:25:06.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/pats-cardinals-could-pursue-daniel-jones",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3369
     },
     {
       "id": "bal_rss_ed6787f68a96",
@@ -538,7 +608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2916
+      "storyRank": 0.2602
     },
     {
       "id": "bal_rss_6deb198b0397",
@@ -571,7 +641,72 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2916
+      "storyRank": 0.2602
+    },
+    {
+      "id": "bal_rss_7426ee678ab7",
+      "type": "article",
+      "title": "Five Things to Know About the Carolina Panthers",
+      "summary": "The Panthers lead the NFC South and are getting healthier on both sides of the ball.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/hxnbhd37lwldj6i6upxs.png",
+      "imageAlt": "Five Things to Know About the Carolina Panthers",
+      "publishedAt": "2026-11-22T12:00:00.000Z",
+      "url": "https://www.baltimoreravens.com/news/carolina-panthers-ravens-opponent-preview-week-11",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Official",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Official",
+      "author": "baltimoreravens.com Official",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0604
+    },
+    {
+      "id": "bal_pfr_e4b84b9ab405",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/21/26",
+      "summary": "Today&#8217;s minor moves and standard gameday practice squad elevations for the Week 11 Sunday slate: Arizona Cardinals Elevated: WR Zay Jones Baltimore Ravens Elevated: DT David Olajiga, TE Nick Vannett Buffalo Bills Elevated: LB Shaq Tho",
+      "imageUrl": "",
+      "publishedAt": "2026-11-21T23:23:18.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-21-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1042
     },
     {
       "id": "bal_rss_7991c38701a6",
@@ -604,7 +739,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1138
+      "storyRank": 0.1072
     },
     {
       "id": "bal_rss_53ee2c8a75f9",
@@ -637,7 +772,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1091
+      "storyRank": 0.1029
+    },
+    {
+      "id": "bal_pfr_7890a695a61a",
+      "type": "article",
+      "title": "Colts Waive QB Daniel Jones",
+      "summary": "NOVEMBER 21: The Ravens asked after Jones before trading for Jacoby Brissett, according to The Ringer&#8217;s Tom Pelissero, offering a &#8220;mid-round pick swap that would’ve returned a pick to Indianapolis if Baltimore made the playoffs.",
+      "imageUrl": "",
+      "publishedAt": "2026-11-21T16:00:28.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/colts-release-qb-daniel-jones",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0194
     },
     {
       "id": "bal_rss_948618da3da1",
@@ -670,7 +837,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0866
+      "storyRank": 0.0824
     },
     {
       "id": "bal_espn_6819f9aff567e",
@@ -678,6 +845,7 @@
       "title": "Carmelo Anthony calls out Ravens' Humphrey over Baltimore 'criminals' remark",
       "summary": "Former NBA star Carmelo Anthony challenged Ravens cornerback Marlon Humphrey to do more than apologize after he said Baltimore was \"best at making criminals.\"",
       "imageUrl": "https://a.espncdn.com/photo/2026/1013/r1729943_600x400_3-2.jpg",
+      "imageCaption": "Carmelo Anthony [600x400]",
       "imageAlt": "Carmelo Anthony calls out Ravens' Humphrey over Baltimore 'criminals' remark",
       "publishedAt": "2026-11-21T13:35:36Z",
       "url": "https://www.espn.com/nfl/story/_/id/50548223/carmelo-anthony-calls-ravens-humphrey-baltimore-remark",
@@ -703,7 +871,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0854
+      "storyRank": 0.0813
     },
     {
       "id": "bal_tx_0329aa061dee",
@@ -737,7 +905,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.071
+      "storyRank": 0.068
     },
     {
       "id": "bal_rss_54cd1deb961c",
@@ -770,7 +938,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0519
+      "storyRank": 0.0501
     },
     {
       "id": "bal_espn_b4e72a2d2eb82",
@@ -778,6 +946,7 @@
       "title": "Can Ravens keep the Marlon Humphrey controversy from becoming a distraction?",
       "summary": "While there's more to the cornerback's story, one Baltimore teammate says: \"We have enough things to worry about.\"",
       "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748551_1296x729_16-9.jpg",
+      "imageCaption": "Marlon Humphrey [1296x729]",
       "imageAlt": "Can Ravens keep the Marlon Humphrey controversy from becoming a distraction?",
       "publishedAt": "2026-11-20T17:12:30Z",
       "url": "https://www.espn.com/nfl/story/_/id/50541178/ravens-avoid-marlon-humphrey-controversy-distraction",
@@ -803,7 +972,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0478
+      "storyRank": 0.0463
     },
     {
       "id": "bal_rss_9eca636d1591",
@@ -836,7 +1005,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0449
+      "storyRank": 0.0435
     },
     {
       "id": "bal_rss_334f8ad65d9b",
@@ -869,14 +1038,47 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
+      "storyRank": 0.0108
+    },
+    {
+      "id": "bal_pfr_61caf6149550",
+      "type": "article",
+      "title": "Ravens Bench CB Marlon Humphrey For Week 11",
+      "summary": "The Ravens have sent Marlon Humphrey home with plans to bench him for Sunday&#8217;s game against the Panthers after the veteran quarterback made disparaging remarks about the city of Baltimore on his podcast on Wednesday. When asked what t",
+      "imageUrl": "",
+      "publishedAt": "2026-11-20T04:33:46.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/ravens-bench-cb-marlon-humphrey-for-week-11",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0312
     },
     {
       "id": "bal_espn_87934e12e2247",
       "type": "article",
       "title": "Panthers aim to hold NFC South lead while Ravens look to keep playoffs hopes alive, end 5-game skid",
       "summary": "— The Carolina Panthers needed a walk-off 54-yard field goal from Ryan Fitzgerald to beat the New Orleans Saints 20-17 last Sunday and remain in first...",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873068.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/52758d50-ef3b-458d-94bd-b1e783266396/52758d50-ef3b-458d-94bd-b1e783266396.jpg",
+      "imageCaption": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
       "imageAlt": "Panthers aim to hold NFC South lead while Ravens look to keep playoffs hopes alive, end 5-game skid",
       "publishedAt": "2026-11-20T00:49:33Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873068",
@@ -902,7 +1104,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0341
+      "storyRank": 0.0332
     },
     {
       "id": "bal_rss_9e2aaa345621",
@@ -935,7 +1137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0325
+      "storyRank": 0.0317
     },
     {
       "id": "bal_rss_e541ddea98f1",
@@ -968,7 +1170,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0795
+      "storyRank": 0.0777
     },
     {
       "id": "bal_rss_a32ca69e8e9a",
@@ -1001,7 +1203,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0308
+      "storyRank": 0.0301
+    },
+    {
+      "id": "bal_rss_21028eb691a2",
+      "type": "article",
+      "title": "Marlon Humphrey Deactivated for Panthers Game",
+      "summary": "Head Coach Jesse Minter said Marlon Humphrey has been sent home this week.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/stcpqkhqcw6eanyepytk.jpg",
+      "imageAlt": "Marlon Humphrey Deactivated for Panthers Game",
+      "publishedAt": "2026-11-19T17:05:51.000Z",
+      "url": "https://www.baltimoreravens.com/news/marlon-humphrey-deactivated-ravens-panthers-game-jesse-minter",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Official",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Official",
+      "author": "baltimoreravens.com Official",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0073
     },
     {
       "id": "bal_rss_872f6427a8f3",
@@ -1034,7 +1269,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0286
+      "storyRank": 0.0279
     },
     {
       "id": "bal_espn_3f608780193bd",
@@ -1042,6 +1277,7 @@
       "title": "Ravens' Humphrey apologizes for quip that Baltimore 'best at making criminals'",
       "summary": "Ravens cornerback Marlon Humphrey apologized Wednesday for the derogatory comment he recently made about Baltimore on his podcast.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1022/r1734719_1296x729_16-9.jpg",
+      "imageCaption": "Marlon Humphrey [1296x729]",
       "imageAlt": "Ravens' Humphrey apologizes for quip that Baltimore 'best at making criminals'",
       "publishedAt": "2026-11-19T03:37:02Z",
       "url": "https://www.espn.com/nfl/story/_/id/50524109/ravens-humphrey-apologizes-criminals-quip-podcast",
@@ -1067,7 +1303,71 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0241
+      "storyRank": 0.0237
+    },
+    {
+      "id": "bal_pfr_70041b3c4411",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/18/26",
+      "summary": "Here are today&#8217;s practice squad transactions: Arizona Cardinals Signed: WR Bub Means Baltimore Ravens Signed: G Michael Jordan Carolina Panthers Signed: OLB Nick Hampton Placed on practice squad/injured list: LB Claudin Cherelus Detro",
+      "imageUrl": "",
+      "publishedAt": "2026-11-19T01:20:47.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-18-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0201
+    },
+    {
+      "id": "bal_pfr_d6e9815eec79",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/18/26",
+      "summary": "Wednesday&#8217;s minor moves: Baltimore Ravens Activated from IR: RB Adam Randall Buffalo Bills Activated from reserve/PUP list: WR Tyrell Shavers Denver Broncos Practice window opened: TE Caleb Lohner Detroit Lions Placed on IR: DE Aidan ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-19T00:42:16.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-18-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0199
     },
     {
       "id": "bal_rss_9c7d97318855",
@@ -1100,7 +1400,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0225
+      "storyRank": 0.0221
     },
     {
       "id": "bal_rss_f611b04f2828",
@@ -1133,7 +1433,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0216
     },
     {
       "id": "bal_espn_6c337abdef9a6",
@@ -1141,6 +1441,7 @@
       "title": "Ravens' Flowers 'super frustrated' by latest late-game fumble",
       "summary": "Ravens wide receiver Zay Flowers said he was \"super frustrated\" after having the ball ripped away around midfield in the final two minutes of a loss to the Chargers on Monday night.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1111/r1744412_600x400_3-2.jpg",
+      "imageCaption": "Zay Flowers will be catching Week 10 passes from the Ravens' fourth different starting quarterback this season.",
       "imageAlt": "Ravens' Flowers 'super frustrated' by latest late-game fumble",
       "publishedAt": "2026-11-18T20:29:38Z",
       "url": "https://www.espn.com/nfl/story/_/id/50523527/ravens-flowers-super-frustrated-latest-late-game-fumble",
@@ -1166,7 +1467,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0219
+      "storyRank": 0.0214
     },
     {
       "id": "bal_rss_a31ce6130ed6",
@@ -1199,7 +1500,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0214
+      "storyRank": 0.021
     },
     {
       "id": "bal_espn_c978d34bfa2c1",
@@ -1207,6 +1508,7 @@
       "title": "The NFL's current worst team? Lamar-less Ravens making that case",
       "summary": "The Ravens have gone 38 days without a win. It has been 24 days since they've had a lead.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1118/r1747658_1296x729_16-9.jpg",
+      "imageCaption": "\"Honestly, we have a two-game stretch before our bye to stay alive,\" Minter said after the Chargers loss.",
       "imageAlt": "The NFL's current worst team? Lamar-less Ravens making that case",
       "publishedAt": "2026-11-18T17:40:53Z",
       "url": "https://www.espn.com/nfl/story/_/id/50521008/nfl-current-worst-team-lamar-jackson-ravens-making-case-week-11",
@@ -1232,7 +1534,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0211
+      "storyRank": 0.0207
     },
     {
       "id": "bal_rss_c07075ffe890",
@@ -1265,7 +1567,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0199
     },
     {
       "id": "bal_rss_7f5d73487c4d",
@@ -1298,7 +1600,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0201
+      "storyRank": 0.0197
     },
     {
       "id": "bal_tx_8da951402c51",
@@ -1332,7 +1634,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
+      "storyRank": 0.0183
+    },
+    {
+      "id": "bal_pfr_b8ba66f816a2",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/17/26",
+      "summary": "Several NFL teams made changes to their practice squads on Tuesday. Here are the latest updates: Arizona Cardinals Signed: WR Ronnie Bell, S Jerrick Reed Released: WR James Proche Baltimore Ravens Released: K Harrison Mevis Buffalo Bills Si",
+      "imageUrl": "",
+      "publishedAt": "2026-11-18T04:20:49.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-17-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0154
     },
     {
       "id": "bal_rss_22e305c9998f",
@@ -1365,7 +1699,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0164
     },
     {
       "id": "bal_rss_41fd1d3fc898",
@@ -1398,7 +1732,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0163
     },
     {
       "id": "bal_rss_1eec177c3bc3",
@@ -1431,7 +1765,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.016
     },
     {
       "id": "bal_rss_7ca05c04872d",
@@ -1464,7 +1798,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0157
     },
     {
       "id": "bal_rss_3b994be874a2",
@@ -1497,7 +1831,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0154
+      "storyRank": 0.0151
     },
     {
       "id": "bal_tx_497265eeb443",
@@ -1531,7 +1865,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0141
     },
     {
       "id": "bal_rss_4d90e06afc26",
@@ -1564,7 +1898,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0143
+      "storyRank": 0.0141
     },
     {
       "id": "bal_rss_c6e88dd7ac66",
@@ -1597,7 +1931,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0139
     },
     {
       "id": "bal_rss_f1b50ef76e46",
@@ -1630,7 +1964,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0139
+    },
+    {
+      "id": "bal_pfr_a4cc4de4dc87",
+      "type": "article",
+      "title": "Chargers Activate TE David Njoku, LB Denzel Perryman",
+      "summary": "The Chargers have activated a pair of notable players ahead of their Monday Night Football matchup with the Ravens. According to NFL Network&#8217;s Ian Rapoport, the team has activated tight end David Njoku and linebacker Denzel Perryman f",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T00:28:45.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/chargers-activate-te-david-njoku-lb-denzel-perryman",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0029
     },
     {
       "id": "bal_rss_09b794e61a9a",
@@ -1663,7 +2029,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0125
+    },
+    {
+      "id": "bal_rss_7523b9d893ee",
+      "type": "article",
+      "title": "Around the AFC North: Joe Burrow on Historic Roll as Bengals Take Division Lead",
+      "summary": "Pittsburgh starting guard Mason McCormick suffers a gruesome-looking ankle injury. Another comeback win leaves the Browns in the thick of postseason contention.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/ulc3gdbhufup3yaklucr.png",
+      "imageAlt": "Around the AFC North: Joe Burrow on Historic Roll as Bengals Take Division Lead",
+      "publishedAt": "2026-11-16T16:56:52.000Z",
+      "url": "https://www.baltimoreravens.com/news/around-afc-north-joe-burrow-bengals-mason-mccormick-steelers-browns",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Official",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Official",
+      "author": "baltimoreravens.com Official",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0031
     },
     {
       "id": "bal_rss_13419a289638",
@@ -1696,7 +2095,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
+      "storyRank": 0.0122
     },
     {
       "id": "bal_rss_606d567b9797",
@@ -1729,7 +2128,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0122
+      "storyRank": 0.012
     },
     {
       "id": "bal_rss_57493b913aa3",
@@ -1762,7 +2161,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0121
+      "storyRank": 0.012
     },
     {
       "id": "bal_tx_f625c9fae3bd",
@@ -1796,7 +2195,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0115
+      "storyRank": 0.0113
+    },
+    {
+      "id": "bal_pfr_bad179ee9831",
+      "type": "article",
+      "title": "Deadline Trade Won&#8217;t Change Ravens&#8217; OL Starters",
+      "summary": "Knowing that the Ravens have lost five centers &#8212; three to injury and two to free agency &#8212; since the end of last year, it&#8217;s not all that shocking to hear that the team has traded for two within that span. Interestingly, tho",
+      "imageUrl": "",
+      "publishedAt": "2026-11-16T00:45:46.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/deadline-trade-wont-change-ravens-ol-starters",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0094
     },
     {
       "id": "bal_rss_4425905e24d1",
@@ -1829,7 +2260,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
+      "storyRank": 0.0098
     },
     {
       "id": "bal_rss_6f673ddd7772",
@@ -1862,7 +2293,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0087
     },
     {
       "id": "bal_rss_e3516e7a326c",
@@ -1895,7 +2326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0086
     },
     {
       "id": "bal_rss_4a22ca3cdd3b",
@@ -1928,7 +2359,72 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084
+      "storyRank": 0.0083
+    },
+    {
+      "id": "bal_pfr_f5a4de6a421a",
+      "type": "article",
+      "title": "Ravens QB Lamar Jackson Undergoes Thumb Surgery; Return Timeline Emerges",
+      "summary": "NOVEMBER 14: Jackson underwent surgery last week, according to ESPN&#8217;s Adam Schefter. His earliest return could come in six weeks – likely a December 20 clash against the Steelers in Week 15 – while a 10-week timeline would sideline hi",
+      "imageUrl": "",
+      "publishedAt": "2026-11-14T14:45:14.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/ravens-qb-lamar-jackson-undergoes-thumb-surgery-return-timeline-emerges",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0073
+    },
+    {
+      "id": "bal_rss_f55ac9abdac8",
+      "type": "article",
+      "title": "Five Things to Know About the Los Angeles Chargers",
+      "summary": "The Chargers are the NFL’s only winless team left entering Week 10.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/s9sl3eqbfvi72rpi8zfl.jpg",
+      "imageAlt": "Five Things to Know About the Los Angeles Chargers",
+      "publishedAt": "2026-11-13T19:08:29.000Z",
+      "url": "https://www.baltimoreravens.com/news/chargers-ravens-opponent-preview-five-things-to-know-week-10",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Official",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Official",
+      "author": "baltimoreravens.com Official",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0018
     },
     {
       "id": "bal_rss_22db26070f13",
@@ -1961,7 +2457,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0071
     },
     {
       "id": "bal_rss_0bf195d4e12a",
@@ -1994,7 +2490,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0071
+    },
+    {
+      "id": "bal_pfr_2b5016db5b0f",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/12/26",
+      "summary": "Here are Thursday&#8217;s practice squad moves: Baltimore Ravens Signed: G Kyle Hergel Placed on practice squad/injured list: T Gerad Christian-Lichtenhan Jacksonville Jaguars Signed: CB Alijah Huzzie Minnesota Vikings Signed: WR Odell Beck",
+      "imageUrl": "",
+      "publishedAt": "2026-11-13T03:44:12.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-12-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0058
     },
     {
       "id": "bal_rss_09c7b1d0313e",
@@ -2061,6 +2589,38 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0065
+    },
+    {
+      "id": "bal_pfr_c71fbd02e419",
+      "type": "article",
+      "title": "Ravens To Sign K Harrison Mevis To Practice Squad",
+      "summary": "With Jake Moody electing to join the Falcons, the Ravens find themselves in need of a new Tyler Loop replacement. Kicker Riley Patterson took part in a workout on Wednesday, and he landed a deal. Patterson is now on Baltimore&#8217;s 53-man",
+      "imageUrl": "",
+      "publishedAt": "2026-11-12T14:59:28.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/ravens-to-sign-k-harrison-mevis-to-practice-squad",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0054
     },
     {
       "id": "bal_rss_9e2ab1a53664",
@@ -2161,6 +2721,38 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.006
+    },
+    {
+      "id": "bal_pfr_ffbd53acab5b",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/11/26",
+      "summary": "Wednesday&#8217;s practice squad transactions: Arizona Cardinals Signed: OL Jamaree Salyer Baltimore Ravens Signed: TE Nick Vannett Buffalo Bills Signed: G Nick Broeker Released: CB AJ Woods Detroit Lions Signed: TE Jackson Meeks Kansas Cit",
+      "imageUrl": "",
+      "publishedAt": "2026-11-12T01:54:57.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-11-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/baltimore-ravens",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0051
     },
     {
       "id": "bal_rss_00003c591e9c",
@@ -2292,7 +2884,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0055
     },
     {
       "id": "bal_rss_b8962a0b5205",
@@ -2325,7 +2917,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0054
     },
     {
       "id": "bal_rss_4dcb53c8a2e0",
@@ -2358,7 +2950,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0054
     },
     {
       "id": "bal_tx_ae856245353d",
@@ -2491,7 +3083,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0049
     },
     {
       "id": "bal_rss_c811d7879366",
@@ -2524,7 +3116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0049
     },
     {
       "id": "bal_rss_b34618f88468",
@@ -2590,7 +3182,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0048
     },
     {
       "id": "bal_tx_908df3fb6a99",
@@ -2657,7 +3249,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0044
+    },
+    {
+      "id": "bal_rss_6115248d1da9",
+      "type": "article",
+      "title": "Around the AFC North: Joe Burrow Gets MVP Talk After Fourth Straight Win",
+      "summary": "The Browns will reportedly start Deshaun Watson at quarterback in Week 10. The Steelers could reportedly trade for Indianapolis Colts wide receiver Josh Downs.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/ravens/yiizscosta9u8jkjeffm.png",
+      "imageAlt": "Around the AFC North: Joe Burrow Gets MVP Talk After Fourth Straight Win",
+      "publishedAt": "2026-11-09T18:17:52.000Z",
+      "url": "https://www.baltimoreravens.com/news/joe-burrow-win-mvp-bengals-todd-monken-proud-shedeur-sanders-first-start-steelers-trade-josh-downs",
+      "outletId": "ravens_official",
+      "outletName": "baltimoreravens.com Official",
+      "reporterId": "ravens_official",
+      "reporterName": "baltimoreravens.com Official",
+      "author": "baltimoreravens.com Official",
+      "authorHandle": "@Ravens",
+      "authorProfileUrl": "https://www.baltimoreravens.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0044
     },
     {
       "id": "bal_rss_a51518e8dab9",
@@ -2724,6 +3349,42 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0044
+    },
+    {
+      "id": "bal_yt_9wZLTOLaWUY",
+      "type": "video",
+      "category": "film",
+      "videoId": "9wZLTOLaWUY",
+      "embeddable": true,
+      "title": "Trevor Lawrence vs the Ravens Week 9, 2026 Analysis",
+      "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
+      "imageUrl": "https://i.ytimg.com/vi/9wZLTOLaWUY/hqdefault.jpg",
+      "imageAlt": "Trevor Lawrence vs the Ravens Week 9, 2026 Analysis",
+      "publishedAt": "2026-11-06T18:57:40.000Z",
+      "url": "https://www.youtube.com/watch?v=9wZLTOLaWUY",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=9wZLTOLaWUY",
+      "outletId": "the_qb_school",
+      "outletName": "The QB School",
+      "reporterId": "the_qb_school",
+      "reporterName": "The QB School",
+      "author": "The QB School",
+      "authorHandle": "@TheQBSchool",
+      "authorProfileUrl": "https://x.com/theqbschool",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 92,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0033
     },
     {
       "id": "bal_tx_ece5c1f79bc1",
@@ -2825,7 +3486,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0025
     },
     {
       "id": "bal_tx_9a390f4f10dd",
@@ -2900,6 +3561,7 @@
       "title": "Ravens rule out DT Nnamdi Madubuike (hamstring) vs Panthers",
       "summary": "Ravens defensive tackle Nnamdi Madubuike has a hamstring injury and has been ruled out for Sunday's game against the Panthers.",
       "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748634_1296x729_16-9.jpg",
+      "imageCaption": "Nnamdi Madubuike",
       "imageAlt": "Ravens rule out DT Nnamdi Madubuike (hamstring) vs Panthers",
       "publishedAt": "2026-11-20T21:59:11Z",
       "url": "https://www.espn.com/nfl/story/_/id/50542891/ravens-rule-dt-nnamdi-madubuike-hamstring-vs-panthers",
@@ -2966,6 +3628,7 @@
       "title": "Ravens send CB Humphrey home, say he'll be inactive after 'criminals' comment",
       "summary": "The Ravens have sent cornerback Marlon Humphrey home from the facility, and he will be inactive for Sunday's game against the Panthers.",
       "imageUrl": "https://a.espncdn.com/photo/2025/0923/r1549909_1296x729_16-9.jpg",
+      "imageCaption": "Ravens cornerback Marlon Humphrey is taking accountability for defensive struggles leading to a 1-2 start for Baltimore.",
       "imageAlt": "Ravens send CB Humphrey home, say he'll be inactive after 'criminals' comment",
       "publishedAt": "2026-11-20T17:08:45Z",
       "url": "https://www.espn.com/nfl/story/_/id/50532199/ravens-send-marlon-humphrey-home-say-inactive",

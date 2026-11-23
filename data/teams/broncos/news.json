@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:54:41.855Z",
+  "updatedAt": "2026-11-23T06:25:46.211Z",
   "dailyTopNewsBrief": {
     "id": "brief_den_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -107,6 +107,278 @@
   "clusteredBriefs": [],
   "rawStream": [
     {
+      "id": "den_vid_a679742d6dd0",
+      "type": "video",
+      "title": "Analysis: Top takeaways from Broncos' Week 11 win vs. the Raiders",
+      "summary": "Watch as lead writer Aric DiLalla shares his top takeaways from the Broncos' 38-24 win over the Las Vegas Raiders in Week 11, as Denver earned its sixth consecutive win.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/uxqrtutacbo5kbtyrrzy.jpg",
+      "imageAlt": "Analysis: Top takeaways from Broncos' Week 11 win vs. the Raiders",
+      "publishedAt": "2026-11-23T06:21:30.000Z",
+      "url": "https://www.denverbroncos.com/video/analysis-top-takeaways-from-broncos-week-11-win-vs-the-raiders",
+      "externalVideoUrl": "https://www.denverbroncos.com/video/analysis-top-takeaways-from-broncos-week-11-win-vs-the-raiders",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Video",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Video",
+      "author": "denverbroncos.com Video",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.567,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 82.9839
+    },
+    {
+      "id": "den_espn_8f2b08b115806",
+      "type": "article",
+      "title": "Broncos coach Sean Payton awards game ball to Tom Jackson's family",
+      "summary": "The Broncos will send a game ball to the wife and daughters of Tom Jackson after the \"Orange Crush\" great died Friday at age 75.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749858_600x400_3-2.jpg",
+      "imageCaption": "Portrait of Tom Jackson taken in Studio B at ESPN Headquarters",
+      "imageAlt": "Broncos coach Sean Payton awards game ball to Tom Jackson's family",
+      "publishedAt": "2026-11-23T05:56:59Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50569388/broncos-coach-sean-payton-game-ball-tom-jackson-family",
+      "outletId": "espn_den",
+      "outletName": "ESPN",
+      "reporterId": "jeff_legwold",
+      "reporterName": "Jeff Legwold",
+      "author": "Jeff Legwold",
+      "authorHandle": "@Jeff_Legwold",
+      "authorProfileUrl": "https://x.com/Jeff_Legwold",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 36.717
+    },
+    {
+      "id": "den_espn_c66b1cfb0eee8",
+      "type": "article",
+      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
+      "imageCaption": "George Kittle spike [608x342]",
+      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+      "publishedAt": "2026-11-23T04:50:41Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
+      "outletId": "espn_den",
+      "outletName": "ESPN",
+      "reporterId": "espn_den",
+      "reporterName": "NFL Nation",
+      "author": "NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.316,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 25.8643
+    },
+    {
+      "id": "den_espn_7e80b45bbb9b9",
+      "type": "article",
+      "title": "Ja'Quan McMillian hoping long-term future is in Denver after latest clutch play",
+      "summary": "After Ja'Quan McMillian made a one-handed, 35-yard pick-six Sunday, his teammates surrounded him with a pay-the-man, count-that-money celebration.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1123/7243759b-f0e0-443e-b952-2d5e5e64afba/7243759b-f0e0-443e-b952-2d5e5e64afba.jpg",
+      "imageCaption": "Broncos seal the win with pick-six late in the fourth quarter",
+      "imageAlt": "Ja'Quan McMillian hoping long-term future is in Denver after latest clutch play",
+      "publishedAt": "2026-11-23T04:46:49Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50569582/broncos-jaquan-mcmillian-comes-clutch-again",
+      "outletId": "espn_den",
+      "outletName": "ESPN",
+      "reporterId": "jeff_legwold",
+      "reporterName": "Jeff Legwold",
+      "author": "Jeff Legwold",
+      "authorHandle": "@Jeff_Legwold",
+      "authorProfileUrl": "https://x.com/Jeff_Legwold",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 16.1956
+    },
+    {
+      "id": "den_vid_8167a3177811",
+      "type": "video",
+      "title": "WATCH: HC Sean Payton presents game ball for Tom Jackson's family",
+      "summary": "Go inside the Broncos' locker room following a Week 11 win over the Raiders to hear from Head Coach Sean Payton, who spoke about awarding a game ball to Ring of Famer Tom Jackson's family.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/yckum7jwspxfl2hcswcf.jpg",
+      "imageAlt": "WATCH: HC Sean Payton presents game ball for Tom Jackson's family",
+      "publishedAt": "2026-11-23T03:52:26.000Z",
+      "url": "https://www.denverbroncos.com/video/watch-hc-sean-payton-presents-game-ball-for-tom-jackson-s-family",
+      "externalVideoUrl": "https://www.denverbroncos.com/video/watch-hc-sean-payton-presents-game-ball-for-tom-jackson-s-family",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Video",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Video",
+      "author": "denverbroncos.com Video",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.176,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 18,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 15.7759
+    },
+    {
+      "id": "den_vid_69164d2cbc20",
+      "type": "video",
+      "title": "QB Bo Nix on the Broncos' 8-2 record: 'We're just finding a way to win'",
+      "summary": "Quarterback Bo Nix speaks to the media about the Broncos' offensive performance vs. the Raiders, playing complementary football and more.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/zky2rp888u9wj6wxpl5u.jpg",
+      "imageAlt": "QB Bo Nix on the Broncos' 8-2 record: 'We're just finding a way to win'",
+      "publishedAt": "2026-11-23T04:18:06.000Z",
+      "url": "https://www.denverbroncos.com/video/qb-bo-nix-on-the-broncos-8-2-record-we-re-just-finding-a-way-to-win",
+      "externalVideoUrl": "https://www.denverbroncos.com/video/qb-bo-nix-on-the-broncos-8-2-record-we-re-just-finding-a-way-to-win",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Video",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Video",
+      "author": "denverbroncos.com Video",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 12.8143
+    },
+    {
+      "id": "den_vid_ccc196205359",
+      "type": "video",
+      "title": "HC Sean Payton following Denver's Week 11 win: 'We're still finding the little things to improve'",
+      "summary": "Head Coach Sean Payton speaks to the media about game-changing plays during Denver's win over the Raiders, honoring Broncos Ring of Fame linebacker Tom Jackson and more.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/z1gqe0ana8y7bobwxit6.jpg",
+      "imageAlt": "HC Sean Payton following Denver's Week 11 win: 'We're still finding the little things to improve'",
+      "publishedAt": "2026-11-23T04:09:32.000Z",
+      "url": "https://www.denverbroncos.com/video/hc-sean-payton-following-denver-s-week-11-win-we-re-still-finding-the-little-things-to-improve",
+      "externalVideoUrl": "https://www.denverbroncos.com/video/hc-sean-payton-following-denver-s-week-11-win-we-re-still-finding-the-little-things-to-improve",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Video",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Video",
+      "author": "denverbroncos.com Video",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 12.0321
+    },
+    {
+      "id": "den_vid_efbf6de8cb6f",
+      "type": "video",
+      "title": "ILB Alex Singleton on the Broncos' defense: 'When the play needs to be made, we're able to make one'",
+      "summary": "Inside linebacker Alex Singleton speaks to the media about honoring Broncos Ring of Fame linebacker Tom Jackson, Denver's defensive performance in Week 11 and more.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/rfhk4snc1bmdyabnqcri.jpg",
+      "imageAlt": "ILB Alex Singleton on the Broncos' defense: 'When the play needs to be made, we're able to make one'",
+      "publishedAt": "2026-11-23T04:03:41.000Z",
+      "url": "https://www.denverbroncos.com/video/ilb-alex-singleton-on-the-broncos-defense-when-the-play-needs-to-be-made-we-re-able-to-make-one",
+      "externalVideoUrl": "https://www.denverbroncos.com/video/ilb-alex-singleton-on-the-broncos-defense-when-the-play-needs-to-be-made-we-re-able-to-make-one",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Video",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Video",
+      "author": "denverbroncos.com Video",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 11.5434
+    },
+    {
       "id": "den_rss_ae8721232b1f",
       "type": "article",
       "title": "HC Sean Payton, Broncos reflect on Ring of Fame LB Tom Jackson's legacy following win over Raiders",
@@ -137,63 +409,64 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 20.8681
+      "storyRank": 10.346
     },
     {
-      "id": "den_espn_8f2b08b115806",
+      "id": "den_pft_435685e3fc8d",
       "type": "article",
-      "title": "Broncos coach Sean Payton awards game ball to Tom Jackson's family",
-      "summary": "The Broncos will send a game ball to the wife and daughters of Tom Jackson after the \"Orange Crush\" great died Friday at age 75.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749858_600x400_3-2.jpg",
-      "imageAlt": "Broncos coach Sean Payton awards game ball to Tom Jackson's family",
-      "publishedAt": "2026-11-23T03:36:22Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50569388/broncos-coach-sean-payton-game-ball-tom-jackson-family",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "jeff_legwold",
-      "reporterName": "Jeff Legwold",
-      "author": "Jeff Legwold",
-      "authorHandle": "@Jeff_Legwold",
-      "authorProfileUrl": "https://x.com/Jeff_Legwold",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "title": "Raiders fall to Broncos but young QB Fernando Mendoza gets valuable reps",
+      "summary": "Mike Florio breaks down the Broncos’ 38-24 win over the Raiders, including encouraging signs from Fernando Mendoza and Ashton Jeanty despite Las Vegas running out of opportunities to revive its playoff hopes.",
+      "imageUrl": "https://link.theplatform.com/s/BxmELC/media/WcITUsO1h_QI?auto=true",
+      "imageAlt": "Raiders fall to Broncos but young QB Fernando Mendoza gets valuable reps",
+      "publishedAt": "2026-11-23T02:39:48.000Z",
+      "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/raiders-fall-to-broncos-but-young-qb-fernando-mendoza-gets-valuable-reps",
+      "outletId": "profootballtalk",
+      "outletName": "ProFootballTalk",
+      "reporterId": "profootballtalk",
+      "reporterName": "ProFootballTalk",
+      "author": "ProFootballTalk",
+      "authorHandle": "@ProFootballTalk",
+      "authorProfileUrl": "https://x.com/ProFootballTalk",
+      "trustTier": 2,
+      "wireSource": "pft_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 1.023,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
+      "credibilityScore": 88,
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.6532
+      "storyRank": 10.465
     },
     {
-      "id": "den_espn_c66b1cfb0eee8",
-      "type": "article",
-      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
-      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-23T01:42:13Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
+      "id": "den_vid_cf589ff44de4",
+      "type": "video",
+      "title": "Full-game highlights: Broncos 38, Raiders 24 | Week 11",
+      "summary": "Watch the top plays from the Broncos' 38-24 win over the Las Vegas Raiders in Week 11.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/eclkmpunnntesavub5ob.jpg",
+      "imageAlt": "Full-game highlights: Broncos 38, Raiders 24 | Week 11",
+      "publishedAt": "2026-11-23T01:21:55.000Z",
+      "url": "https://www.denverbroncos.com/video/full-game-highlights-broncos-38-raiders-24-week-11",
+      "externalVideoUrl": "https://www.denverbroncos.com/video/full-game-highlights-broncos-38-raiders-24-week-11",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Video",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Video",
+      "author": "denverbroncos.com Video",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
       "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.079,
+      "breakingPriority": 0.88,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -203,14 +476,48 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.1356
+      "storyRank": 8.299
+    },
+    {
+      "id": "den_rss_285a16cb2118",
+      "type": "article",
+      "title": "Cover 4: Broncos channel Coleman's 3 touchdowns, McMillian's pick six into 38-24 win over Raiders",
+      "summary": "On an afternoon when the Broncos celebrated the life of the great Tom Jackson, Denver honored its late Ring of Famer with a win over the Raiders.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/n1rt1dutq7bh5zv4modl.jpg",
+      "imageAlt": "Cover 4: Broncos channel Coleman's 3 touchdowns, McMillian's pick six into 38-24 win over Raiders",
+      "publishedAt": "2026-11-23T01:04:22.000Z",
+      "url": "https://www.denverbroncos.com/news/cover-4-broncos-channel-coleman-s-3-touchdowns-mcmillian-s-pick-six-into-38-24-win-over-raiders",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Official",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Official",
+      "author": "denverbroncos.com Official",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.851,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.7929
     },
     {
       "id": "den_espn_dff65d955a316",
       "type": "article",
       "title": "Jonah Coleman powers Broncos past Raiders 38-24 as Denver honors the late Tom Jackson",
       "summary": "— Forty years after his retirement from football and 48 hours after his death at age 75, the Denver Broncos set aside a game ball for Tom Jackson...",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873075.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/f515e9f778244292a3f1b85fe6f4512c1192/f515e9f778244292a3f1b85fe6f4512c1192.jpg",
+      "imageCaption": "Jonah Coleman punches in his third TD of the game for Denver",
       "imageAlt": "Jonah Coleman powers Broncos past Raiders 38-24 as Denver honors the late Tom Jackson",
       "publishedAt": "2026-11-23T02:48:33Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873075",
@@ -236,74 +543,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.4448
-    },
-    {
-      "id": "den_vid_cf589ff44de4",
-      "type": "video",
-      "title": "Full-game highlights: Broncos 38, Raiders 24 | Week 11",
-      "summary": "Watch the top plays from the Broncos' 38-24 win over the Las Vegas Raiders in Week 11.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/eclkmpunnntesavub5ob.jpg",
-      "imageAlt": "Full-game highlights: Broncos 38, Raiders 24 | Week 11",
-      "publishedAt": "2026-11-23T01:21:55.000Z",
-      "url": "https://www.denverbroncos.com/video/full-game-highlights-broncos-38-raiders-24-week-11",
-      "externalVideoUrl": "https://www.denverbroncos.com/video/full-game-highlights-broncos-38-raiders-24-week-11",
-      "outletId": "broncos_official",
-      "outletName": "denverbroncos.com Video",
-      "reporterId": "broncos_official",
-      "reporterName": "denverbroncos.com Video",
-      "author": "denverbroncos.com Video",
-      "authorHandle": "@Broncos",
-      "authorProfileUrl": "https://www.denverbroncos.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.038,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 11.873
-    },
-    {
-      "id": "den_rss_285a16cb2118",
-      "type": "article",
-      "title": "Cover 4: Broncos channel Coleman's 3 touchdowns, McMillian's pick six into 38-24 win over Raiders",
-      "summary": "On an afternoon when the Broncos celebrated the life of the great Tom Jackson, Denver honored its late Ring of Famer with a win over the Raiders.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/n1rt1dutq7bh5zv4modl.jpg",
-      "imageAlt": "Cover 4: Broncos channel Coleman's 3 touchdowns, McMillian's pick six into 38-24 win over Raiders",
-      "publishedAt": "2026-11-23T01:04:22.000Z",
-      "url": "https://www.denverbroncos.com/news/cover-4-broncos-channel-coleman-s-3-touchdowns-mcmillian-s-pick-six-into-38-24-win-over-raiders",
-      "outletId": "broncos_official",
-      "outletName": "denverbroncos.com Official",
-      "reporterId": "broncos_official",
-      "reporterName": "denverbroncos.com Official",
-      "author": "denverbroncos.com Official",
-      "authorHandle": "@Broncos",
-      "authorProfileUrl": "https://www.denverbroncos.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.003,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 10.9424
+      "storyRank": 7.3856
     },
     {
       "id": "den_vid_2d9951a9d2c7",
@@ -327,7 +567,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.963,
+      "breakingPriority": 0.817,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -337,7 +577,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.9739
+      "storyRank": 7.2481
     },
     {
       "id": "den_vid_5a758a31a2c8",
@@ -361,7 +601,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.91,
+      "breakingPriority": 0.771,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -371,7 +611,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.8501
+      "storyRank": 6.5906
     },
     {
       "id": "den_vid_865f071cd414",
@@ -395,7 +635,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.888,
+      "breakingPriority": 0.753,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -405,7 +645,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.4413
+      "storyRank": 6.3444
     },
     {
       "id": "den_espn_e9ee16d94b886",
@@ -413,6 +653,7 @@
       "title": "Mendoza throws 3 TDs, but Raiders fall to Broncos in Denver",
       "summary": "Mendoza throws 3 TDs, but Raiders fall to Broncos in Denver",
       "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1123/974cccdc-04cd-4e6a-b27b-7698ea742463/974cccdc-04cd-4e6a-b27b-7698ea742463.jpg",
+      "imageCaption": "Mendoza throws 3 TDs, but Raiders fall to Broncos in Denver",
       "imageAlt": "Mendoza throws 3 TDs, but Raiders fall to Broncos in Denver",
       "publishedAt": "2026-11-23T00:50:54Z",
       "url": "https://www.espn.com/video/clip/_/id/50567555/mendoza-throws-3-tds-raiders-fall-broncos-denver",
@@ -438,7 +679,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.3275
+      "storyRank": 4.4775
     },
     {
       "id": "den_vid_fc6fc9b48fc3",
@@ -472,7 +713,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0844
+      "storyRank": 3.7616
     },
     {
       "id": "den_vid_268f07dbdabb",
@@ -506,7 +747,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7495
+      "storyRank": 2.9262
     },
     {
       "id": "den_vid_c8e0327825e6",
@@ -540,7 +781,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7481
+      "storyRank": 2.9253
     },
     {
       "id": "den_vid_c397d9649db3",
@@ -574,7 +815,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7349
+      "storyRank": 2.9166
+    },
+    {
+      "id": "den_rss_689c948c89ab",
+      "type": "article",
+      "title": "'The way he played today was special': RB Jonah Coleman posts historic 111-yard, 3 touchdown rushing performance vs. Raiders",
+      "summary": "“As long as we’ve got him running the ball like he did today, I think we’ll be in a pretty good place,” wide receiver Marvin Mims Jr. said of Jonah Coleman following Sunday’s win.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/cg9hs6lacmbxaeufjryn.jpg",
+      "imageAlt": "'The way he played today was special': RB Jonah Coleman posts historic 111-yard, 3 touchdown rushing performance vs. Raiders",
+      "publishedAt": "2026-11-23T03:45:35.000Z",
+      "url": "https://www.denverbroncos.com/news/the-way-he-played-today-was-special-rb-jonah-coleman-posts-historic-111-yard-3-touchdown-rushing-performance-vs-raiders",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Official",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Official",
+      "author": "denverbroncos.com Official",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.5567
     },
     {
       "id": "den_vid_df5721d11a87",
@@ -608,7 +882,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.523
+      "storyRank": 2.7765
     },
     {
       "id": "den_vid_18893caa1dfc",
@@ -642,7 +916,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4349
+      "storyRank": 2.7176
     },
     {
       "id": "den_vid_83c9438b6083",
@@ -676,7 +950,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4248
+      "storyRank": 2.7108
     },
     {
       "id": "den_vid_2a8e35798df4",
@@ -710,14 +984,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4195
+      "storyRank": 2.7072
     },
     {
       "id": "den_espn_798d3aaf63da5",
       "type": "article",
       "title": "Tom Jackson, Broncos star LB and Hall of Fame broadcaster at ESPN, dies at 75",
       "summary": "Tom Jackson, a foundational player on the Broncos \"Orange Crush\" defense and a fixture at ESPN as a Hall of Fame broadcaster, has died. He was 75.",
-      "imageUrl": "https://a.espncdn.com/photo/2015/0707/nfl_e_jackson11_1296x729.jpg",
+      "imageUrl": "https://a.espncdn.com/photo/2019/0914/r597754_600x400_3-2.jpg",
+      "imageCaption": "Tom Jackson, right, worked with Chris Berman for 29 years at ESPN. Berman said Jackson was \"my best friend professionally and personally. If you ever met him or just knew him from watching ESPN, he was your best friend too.\"",
       "imageAlt": "Tom Jackson, Broncos star LB and Hall of Fame broadcaster at ESPN, dies at 75",
       "publishedAt": "2026-11-22T21:32:18Z",
       "url": "https://www.espn.com/nfl/story/_/id/50561778/tom-jackson-broncos-star-espn-legend-dies-75",
@@ -743,7 +1018,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.1352
+      "storyRank": 2.5142
     },
     {
       "id": "den_rss_323f10412688",
@@ -776,7 +1051,72 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0835
+      "storyRank": 2.4786
+    },
+    {
+      "id": "den_rss_64081a77551f",
+      "type": "article",
+      "title": "Statements from Commissioner Roger Goodell, football world on passing of Ring of Famer Tom Jackson",
+      "summary": "“NFL lost a wonderful man with the passing of Tom Jackson,\" Commissioner Roger Goodell said, in part.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/gvchunlt8c3tzlhmfqgh.jpg",
+      "imageAlt": "Statements from Commissioner Roger Goodell, football world on passing of Ring of Famer Tom Jackson",
+      "publishedAt": "2026-11-22T18:16:14.000Z",
+      "url": "https://www.denverbroncos.com/news/statements-from-commissioner-roger-goodell-football-world-on-passing-of-ring-of-famer-tom-jackson",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Official",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Official",
+      "author": "denverbroncos.com Official",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4194
+    },
+    {
+      "id": "den_pfr_276d6e71c3bf",
+      "type": "article",
+      "title": "Former Broncos LB, ESPN Broadcaster Tom Jackson Passes Away",
+      "summary": "Broncos Ring of Fame linebacker and acclaimed broadcaster Tom Jackson passed away on Friday at the age of 75. Jackson’s family informed ESPN, Jackson’s longtime employer, of his passing (via ESPN’s Jeff Legwold). The Broncos selected Jackso",
+      "imageUrl": "",
+      "publishedAt": "2026-11-22T16:39:09.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/former-broncos-lb-espn-broadcaster-tom-jackson-passes-away",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/denver-broncos",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3122
     },
     {
       "id": "den_rss_3268ee7ca9ce",
@@ -809,7 +1149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3509
+      "storyRank": 0.3083
     },
     {
       "id": "den_vid_95d62b99d9ea",
@@ -843,7 +1183,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3477
+      "storyRank": 0.3057
+    },
+    {
+      "id": "den_pfr_e4b84b9ab405",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/21/26",
+      "summary": "Today&#8217;s minor moves and standard gameday practice squad elevations for the Week 11 Sunday slate: Arizona Cardinals Elevated: WR Zay Jones Baltimore Ravens Elevated: DT David Olajiga, TE Nick Vannett Buffalo Bills Elevated: LB Shaq Tho",
+      "imageUrl": "",
+      "publishedAt": "2026-11-21T23:23:18.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-21-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/denver-broncos",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1041
     },
     {
       "id": "den_rss_5027396ce39f",
@@ -876,7 +1248,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1161
+      "storyRank": 0.1092
     },
     {
       "id": "den_rss_b2ad84e303fa",
@@ -909,7 +1281,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0975
+      "storyRank": 0.0924
     },
     {
       "id": "den_tx_e177a0eb4bc5",
@@ -943,7 +1315,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.071
+      "storyRank": 0.068
     },
     {
       "id": "den_rss_7421dff55d5e",
@@ -976,7 +1348,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0626
+      "storyRank": 0.0602
     },
     {
       "id": "den_vid_86e6b1bf873c",
@@ -1010,40 +1382,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0568
-    },
-    {
-      "id": "den_espn_d1e3b828f28c5",
-      "type": "video",
-      "title": "Broncos looking to put pressure on Mendoza",
-      "summary": "Jeff Legwold previews how the Broncos plan to put pressure on Fernando Mendoza.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1120/dm_261120_BRONCOS_DEF_MENDOZA_IA_16x9/dm_261120_BRONCOS_DEF_MENDOZA_IA_16x9.jpg",
-      "imageAlt": "Broncos looking to put pressure on Mendoza",
-      "publishedAt": "2026-11-20T23:46:55Z",
-      "url": "https://www.espn.com/video/clip/_/id/50544585/broncos-looking-put-pressure-mendoza",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0562
+      "storyRank": 0.0547
     },
     {
       "id": "den_vid_c783f99d5678",
@@ -1077,7 +1416,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0547
+      "storyRank": 0.0527
     },
     {
       "id": "den_rss_ca3f58b411ad",
@@ -1110,7 +1449,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0541
+      "storyRank": 0.0522
     },
     {
       "id": "den_vid_b064abc3bbcd",
@@ -1144,7 +1483,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0534
+      "storyRank": 0.0515
+    },
+    {
+      "id": "den_pfr_61055ac33431",
+      "type": "article",
+      "title": "Broncos, CB Ja&#8217;Quan McMillian Held Recent Extension Talks; Discussions Expected To Restart After Season",
+      "summary": "NOVEMBER 20: While McMillian&#8217;s camp and the Broncos have discussed a deal, Chris Tomasson of the Denver Gazette reports no serious contract talks have taken place yet. Given the commitments made to Surtain and now Moss &#8211; along w",
+      "imageUrl": "",
+      "publishedAt": "2026-11-20T20:00:14.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/broncos-cb-jaquan-mcmillian-held-recent-extension-talks-discussions-expected-to-restart-after-season",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/denver-broncos",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0433
     },
     {
       "id": "den_rss_f36e3518ccb4",
@@ -1177,26 +1548,25 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0477
+      "storyRank": 0.0462
     },
     {
-      "id": "den_espn_6e8b34928325d",
+      "id": "den_pfr_cd8e62416f8e",
       "type": "article",
-      "title": "NFL offseason free agent and trade acquisitions that have and have not worked",
-      "summary": "Kenneth Walker III and Devin Lloyd look great with their new teams in 2026. But Jaylen Waddle and Alontae Taylor haven't quite found their groove.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1747957_608x342_16-9.jpg",
-      "imageAlt": "NFL offseason free agent and trade acquisitions that have and have not worked",
-      "publishedAt": "2026-11-20T11:42:26Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50525533/2026-offseason-change-scenery-fits-players-new-teams",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "Aaron Schatz",
-      "author": "Aaron Schatz",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "title": "Broncos, Riley Moss Agree To Extension",
+      "summary": "Riley Moss will not reach free agency after this season. The fourth-year cornerback will instead continue his tenure with the Broncos. Moss agreed to an extension on Thursday, as first reported by NFL Network&#8217;s Ian Rapoport. This is a",
+      "imageUrl": "",
+      "publishedAt": "2026-11-20T04:54:16.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/broncos-riley-moss-agree-to-extension",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/denver-broncos",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -1210,14 +1580,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0423
+      "storyRank": 0.0314
     },
     {
       "id": "den_espn_090c64b75fe77",
       "type": "article",
       "title": "Raiders rookie Fernando Mendoza to face another elite defense in the sack-hungry Broncos",
       "summary": "— Top draft pick Fernando Mendoza's first career road start comes against Denver's dominant defense, one week after he was sacked half a dozen times by the Seattle Seahawks in his",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873075.png?templateId=espn.applewatch.awayhome.1",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/f515e9f778244292a3f1b85fe6f4512c1192/f515e9f778244292a3f1b85fe6f4512c1192.jpg",
+      "imageCaption": "Jonah Coleman punches in his third TD of the game for Denver",
       "imageAlt": "Raiders rookie Fernando Mendoza to face another elite defense in the sack-hungry Broncos",
       "publishedAt": "2026-11-20T01:02:33Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873075",
@@ -1243,7 +1614,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0342
+      "storyRank": 0.0333
     },
     {
       "id": "den_rss_47b74d1f7b70",
@@ -1276,7 +1647,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.034
+      "storyRank": 0.0332
     },
     {
       "id": "den_vid_f74fa6c3dd58",
@@ -1310,7 +1681,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0332
+      "storyRank": 0.0323
     },
     {
       "id": "den_vid_7f39a796444c",
@@ -1344,7 +1715,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0331
+      "storyRank": 0.0323
     },
     {
       "id": "den_vid_b9cb0f3eb3ef",
@@ -1378,7 +1749,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0331
+      "storyRank": 0.0323
     },
     {
       "id": "den_vid_dfdea5c17a7a",
@@ -1412,7 +1783,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0329
+      "storyRank": 0.0321
     },
     {
       "id": "den_rss_36234cfdaf44",
@@ -1445,7 +1816,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0803
+      "storyRank": 0.0785
     },
     {
       "id": "den_espn_b8399061cb798",
@@ -1453,6 +1824,7 @@
       "title": "Broncos sign cornerback Riley Moss to four-year extension",
       "summary": "The Broncos locked up a key piece of their secondary by signing cornerback Riley Moss to a four-year extension.",
       "imageUrl": "https://a.espncdn.com/photo/2026/0803/r1697238_600x400_3-2.jpg",
+      "imageCaption": "Riley Moss [600x400]",
       "imageAlt": "Broncos sign cornerback Riley Moss to four-year extension",
       "publishedAt": "2026-11-19T20:24:17Z",
       "url": "https://www.espn.com/nfl/story/_/id/50532392/broncos-sign-cb-riley-moss-four-year-extension",
@@ -1478,7 +1850,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0315
+      "storyRank": 0.0307
     },
     {
       "id": "den_rss_ee6526fe2bba",
@@ -1511,7 +1883,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0312
+      "storyRank": 0.0305
     },
     {
       "id": "den_tx_503c5762ee5b",
@@ -1545,7 +1917,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0258
+      "storyRank": 0.0252
     },
     {
       "id": "den_rss_818b69c8a450",
@@ -1578,7 +1950,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0234
+      "storyRank": 0.023
     },
     {
       "id": "den_rss_260b32eacd44",
@@ -1611,7 +1983,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0234
+      "storyRank": 0.0229
     },
     {
       "id": "den_vid_3bfcfe0ff88c",
@@ -1645,7 +2017,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0233
+      "storyRank": 0.0229
+    },
+    {
+      "id": "den_pfr_d6e9815eec79",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/18/26",
+      "summary": "Wednesday&#8217;s minor moves: Baltimore Ravens Activated from IR: RB Adam Randall Buffalo Bills Activated from reserve/PUP list: WR Tyrell Shavers Denver Broncos Practice window opened: TE Caleb Lohner Detroit Lions Placed on IR: DE Aidan ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-19T00:42:16.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-18-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/denver-broncos",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0199
     },
     {
       "id": "den_rss_c6ac70d5dc65",
@@ -1678,7 +2082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.0226
     },
     {
       "id": "den_vid_9c1bcf738a9d",
@@ -1712,7 +2116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0056
     },
     {
       "id": "den_vid_0222afdb388c",
@@ -1746,7 +2150,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
+      "storyRank": 0.0223
     },
     {
       "id": "den_vid_726a6a32a7bc",
@@ -1780,7 +2184,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0056
     },
     {
       "id": "den_vid_f08e830dadb9",
@@ -1814,7 +2218,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0222
     },
     {
       "id": "den_rss_a3f5251e1224",
@@ -1847,7 +2251,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0575
+      "storyRank": 0.0565
     },
     {
       "id": "den_rss_49608da2f9ff",
@@ -1880,40 +2284,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0574
+      "storyRank": 0.0564
     },
     {
-      "id": "den_espn_0a4af8b5025b7",
+      "id": "den_pfr_c3043104ec6a",
       "type": "article",
-      "title": "What Broncos are doing to try to make Bo Nix more consistent throughout games",
-      "summary": "Nix has a knack for coming through big late in games, but the Broncos want him to play better earlier to lessen the fourth-quarter drama.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746753_608x342_16-9.jpg",
-      "imageAlt": "What Broncos are doing to try to make Bo Nix more consistent throughout games",
-      "publishedAt": "2026-11-17T12:21:40Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50503491/broncos-qb-bo-nix-more-consistency-all-four-quarters-clutch",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "jeff_legwold",
-      "reporterName": "Jeff Legwold",
-      "author": "Jeff Legwold",
-      "authorHandle": "@Jeff_Legwold",
-      "authorProfileUrl": "https://x.com/Jeff_Legwold",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "title": "Packers, Broncos Explored Trade For Titans RB Tony Pollard",
+      "summary": "The Titans sold off multiple key players before last week&#8217;s trade deadline – Amani Hooker to the Bills, Jeffery Simmons to the Bears – but ultimately held onto Tony Pollard. The eight-year running back is on an expiring deal and will ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-18T05:40:58.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/packers-broncos-explored-trade-for-titans-tony-pollard",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/denver-broncos",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
+      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 90,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.015
+      "storyRank": 0.0157
     },
     {
       "id": "den_rss_9230667b812f",
@@ -1946,7 +2349,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.013
     },
     {
       "id": "den_vid_8b923f729c57",
@@ -1980,7 +2383,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0129
     },
     {
       "id": "den_vid_a972dd387102",
@@ -2014,7 +2417,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0129
     },
     {
       "id": "den_vid_e6c78291ab39",
@@ -2048,7 +2451,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0126
+    },
+    {
+      "id": "den_pfr_9e1824586b5d",
+      "type": "article",
+      "title": "Chargers GM Joe Hortiz Discusses Deadline Process, Trade Talks; Latest On Daiyan Henley Controversy",
+      "summary": "The 0-8 Chargers did not make a single trade in the run-up to Tuesday’s deadline, although they did have a swap involving linebacker Daiyan Henley in place before the Broncos backed out due to concerns over Henley’s knee. According to The A",
+      "imageUrl": "",
+      "publishedAt": "2026-11-16T05:17:10.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/chargers-gm-joe-hortiz-discusses-deadline-process-trade-talks-latest-on-daiyan-henley-controversy",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/denver-broncos",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0024
     },
     {
       "id": "den_vid_93abcc242538",
@@ -2082,7 +2517,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0103
     },
     {
       "id": "den_vid_a7129e969085",
@@ -2116,7 +2551,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0092
+      "storyRank": 0.0091
     },
     {
       "id": "den_vid_84e0f6f42a12",
@@ -2150,7 +2585,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0092
+      "storyRank": 0.0091
     },
     {
       "id": "den_vid_5d48fd87e2c4",
@@ -2217,7 +2652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0086
     },
     {
       "id": "den_vid_0fe20e440741",
@@ -2251,7 +2686,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0077
+      "storyRank": 0.0076
+    },
+    {
+      "id": "den_pfr_bf21c39c087c",
+      "type": "article",
+      "title": "Broncos Received Interest On J.K. Dobbins; Latest On RJ Harvey",
+      "summary": "The past two Broncos games revealed a shift in the team&#8217;s backfield pecking order. Fourth-round rookie Jonah Coleman has taken over as the team&#8217;s lead running back, doing so months after J.K. Dobbins received a sizable raise fro",
+      "imageUrl": "",
+      "publishedAt": "2026-11-13T19:51:21.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/broncos-received-interest-on-j-k-dobbins-latest-on-rj-harvey",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/denver-broncos",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0064
     },
     {
       "id": "den_vid_454ab24700b0",
@@ -2285,7 +2752,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0066
+    },
+    {
+      "id": "den_pfr_7ee2cb9a536c",
+      "type": "article",
+      "title": "Jim Harbaugh Criticizes Broncos&#8217; Handling Of Daiyan Henley Trade",
+      "summary": "Chargers head coach Jim Harbaugh criticized the Broncos on Thursday for backing out of an agreed-upon trade to acquire linebacker Daiyan Henley due to medical concerns. He also called for the NFL to close the &#8220;loophole&#8221; that all",
+      "imageUrl": "",
+      "publishedAt": "2026-11-13T05:26:12.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/jim-harbaugh-criticizes-broncos-handling-of-daiyan-henley-trade",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/denver-broncos",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0059
     },
     {
       "id": "den_vid_8c1057ec4eea",
@@ -2320,6 +2819,38 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0016
+    },
+    {
+      "id": "den_pfr_dabc38535b77",
+      "type": "article",
+      "title": "Broncos-Bolts&#8217; Daiyan Henley Trade Nixed",
+      "summary": "NOVEMBER 12: Health-related concerns were indeed the cause of this deal falling through. ESPN&#8217;s Jeff Legwold reports the Broncos &#8220;discovered an issue&#8221; with one of Henley&#8217;s knees during his physical. Denver attempted ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-12T15:45:41.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/broncos-chargers-daiyan-henley-trade-nixed",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/denver-broncos",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "side_note",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.001
     },
     {
       "id": "den_rss_ae7486cf34a9",
@@ -2452,7 +2983,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0055
     },
     {
       "id": "den_vid_d8d8100e9da0",
@@ -2521,6 +3052,38 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0047
+    },
+    {
+      "id": "den_pfr_2c71eb6e13f3",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/10/26",
+      "summary": "Today&#8217;s minor moves: Arizona Cardinals Placed on IR: QB Gardner Minshew (story), WR Michael Wilson (story) Baltimore Ravens Released: G Kyle Hergel, TE Nick Vannett Carolina Panthers Released: WR David Moore Denver Broncos Waived: CB ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-11T00:57:43.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-10-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/denver-broncos",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0045
     },
     {
       "id": "den_vid_f75db7bc16de",
@@ -2621,7 +3184,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.005
     },
     {
       "id": "den_vid_346590eb5cd2",
@@ -2688,7 +3251,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0049
     },
     {
       "id": "den_vid_bb7eaa850239",
@@ -2722,7 +3285,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0044
     },
     {
       "id": "den_tx_892733be0d0a",
@@ -2757,6 +3320,39 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0047
+    },
+    {
+      "id": "den_rss_d91b75bb7aeb",
+      "type": "article",
+      "title": "Next-Day Notebook: How OLB Nik Bonitto set up his game-winning strip-sack throughout Sunday's win vs. Panthers",
+      "summary": "“I know this could be one of my last rushes, so I’m just trying to make a play for the team,” Bonitto said.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/usz3rdaqpbg5t68xc7ba.jpg",
+      "imageAlt": "Next-Day Notebook: How OLB Nik Bonitto set up his game-winning strip-sack throughout Sunday's win vs. Panthers",
+      "publishedAt": "2026-11-09T20:14:21.000Z",
+      "url": "https://www.denverbroncos.com/news/next-day-notebook-how-olb-nik-bonitto-set-up-his-game-winning-strip-sack-throughout-sunday-s-win-vs-panthers",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Official",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Official",
+      "author": "denverbroncos.com Official",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0011
     },
     {
       "id": "den_vid_b0462746be6d",
@@ -3062,7 +3658,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.004
     },
     {
       "id": "den_vid_5c953559dcd2",
@@ -3096,7 +3692,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.004
     },
     {
       "id": "den_vid_fd4c25130df2",
@@ -3130,7 +3726,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.004
     },
     {
       "id": "den_vid_e991041bbb2f",
@@ -3164,7 +3760,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.004
     },
     {
       "id": "den_vid_ae25acd97e9e",
@@ -3198,7 +3794,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.004
     },
     {
       "id": "den_vid_36d33aa124ad",
@@ -3232,7 +3828,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.004
     },
     {
       "id": "den_vid_c761751f45c8",
@@ -3677,6 +4273,40 @@
       "storyRank": 0.0031
     },
     {
+      "id": "den_vid_a8154a3fd790",
+      "type": "video",
+      "title": "OC Davis Webb on Carolina's defense: 'There'll definitely be some wrinkles'",
+      "summary": "Offensive Coordinator Davis Webb speaks to the media about facing the Panthers, the wrinkles he expects from their defense and more.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/xbfwqymmbth3dsnmutx2.jpg",
+      "imageAlt": "OC Davis Webb on Carolina's defense: 'There'll definitely be some wrinkles'",
+      "publishedAt": "2026-11-06T00:06:23.000Z",
+      "url": "https://www.denverbroncos.com/video/oc-davis-webb-on-carolina-s-defense-there-ll-definitely-be-some-wrinkles",
+      "externalVideoUrl": "https://www.denverbroncos.com/video/oc-davis-webb-on-carolina-s-defense-there-ll-definitely-be-some-wrinkles",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Video",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Video",
+      "author": "denverbroncos.com Video",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0031
+    },
+    {
       "id": "den_vid_11033bd43cc3",
       "type": "video",
       "title": "WATCH: Broncos HC Sean Payton nominated for 2026 Salute to Service Award presented by USAA",
@@ -3912,7 +4542,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.0027
     },
     {
       "id": "den_vid_23e50d491cc7",
@@ -3980,7 +4610,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0025
     },
     {
       "id": "den_vid_da6106abadeb",
@@ -4082,7 +4712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0025
+      "storyRank": 0.0024
     },
     {
       "id": "den_vid_ff18be0802b2",
@@ -4119,38 +4749,76 @@
       "storyRank": 0.0024
     },
     {
-      "id": "den_vid_9b726e30a6ab",
+      "id": "den_yt_5NWd-sCaNhQ",
       "type": "video",
-      "title": "ILB Alex Singleton on Broncos' home-field advantage: 'The crowd's the best in the world'",
-      "summary": "Inside linebacker Alex Singleton speaks following the Broncos' 28-24 win over the Chiefs about the team's home-field advantage, the Broncos' late defensive stand and more.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/pa5qmbl3a7t8ktlec6qk.jpg",
-      "imageAlt": "ILB Alex Singleton on Broncos' home-field advantage: 'The crowd's the best in the world'",
-      "publishedAt": "2026-11-02T04:05:31.000Z",
-      "url": "https://www.denverbroncos.com/video/ilb-alex-singleton-on-broncos-home-field-advantage-the-crowd-s-the-best-in-the-world",
-      "externalVideoUrl": "https://www.denverbroncos.com/video/ilb-alex-singleton-on-broncos-home-field-advantage-the-crowd-s-the-best-in-the-world",
-      "outletId": "broncos_official",
-      "outletName": "denverbroncos.com Video",
-      "reporterId": "broncos_official",
-      "reporterName": "denverbroncos.com Video",
-      "author": "denverbroncos.com Video",
-      "authorHandle": "@Broncos",
-      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "category": "film",
+      "videoId": "5NWd-sCaNhQ",
+      "embeddable": true,
+      "title": "Brock Purdy vs the Broncos Week 4, 2026 Analysis",
+      "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
+      "imageUrl": "https://i.ytimg.com/vi/5NWd-sCaNhQ/hqdefault.jpg",
+      "imageAlt": "Brock Purdy vs the Broncos Week 4, 2026 Analysis",
+      "publishedAt": "2026-10-07T18:27:29.000Z",
+      "url": "https://www.youtube.com/watch?v=5NWd-sCaNhQ",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=5NWd-sCaNhQ",
+      "outletId": "the_qb_school",
+      "outletName": "The QB School",
+      "reporterId": "the_qb_school",
+      "reporterName": "The QB School",
+      "author": "The QB School",
+      "authorHandle": "@TheQBSchool",
+      "authorProfileUrl": "https://x.com/theqbschool",
       "trustTier": 1,
-      "wireSource": "club_video_rss",
+      "wireSource": "youtube_atom",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 86,
+      "credibilityScore": 92,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0008
+    },
+    {
+      "id": "den_yt_ZTZzeuGzTHI",
+      "type": "video",
+      "category": "film",
+      "videoId": "ZTZzeuGzTHI",
+      "embeddable": true,
+      "title": "Daggergate: Bo Nix vs the 49ers Week 4, 2026 Analysis",
+      "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
+      "imageUrl": "https://i.ytimg.com/vi/ZTZzeuGzTHI/hqdefault.jpg",
+      "imageAlt": "Daggergate: Bo Nix vs the 49ers Week 4, 2026 Analysis",
+      "publishedAt": "2026-10-06T21:41:14.000Z",
+      "url": "https://www.youtube.com/watch?v=ZTZzeuGzTHI",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=ZTZzeuGzTHI",
+      "outletId": "the_qb_school",
+      "outletName": "The QB School",
+      "reporterId": "the_qb_school",
+      "reporterName": "The QB School",
+      "author": "The QB School",
+      "authorHandle": "@TheQBSchool",
+      "authorProfileUrl": "https://x.com/theqbschool",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 92,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0002
     },
     {
       "id": "den_rss_5e331ca0b96d",

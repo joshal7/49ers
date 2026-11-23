@@ -8,11 +8,14 @@ const SW_RAW_SUB = SW_SUB_MATCH ? SW_SUB_MATCH[1] : '49ers';
 const SW_TEAM_SLUG = IS_NFL_HUB_HOST ? 'nfl' : SW_RAW_SUB === '49ers' ? '49ers' : SW_RAW_SUB;
 const SW_DATA_BASE = SW_TEAM_SLUG === '49ers' ? './data' : `./data/teams/${SW_TEAM_SLUG}`;
 const CACHE_NAME = IS_NFL_HUB_HOST
-  ? 'nfl-hub-v2'
+  ? 'nfl-hub-v4'
   : SW_TEAM_SLUG === '49ers'
-    ? '49ers-faithful-v154'
-    : `${SW_TEAM_SLUG}-hq-v25`;
-const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-', `${SW_TEAM_SLUG}-podcast-studio-audio-`];
+    ? '49ers-faithful-v156'
+    : `${SW_TEAM_SLUG}-hq-v27`;
+const PRESERVED_CACHE_PREFIXES =
+  SW_TEAM_SLUG === '49ers'
+    ? ['49ers-podcast-studio-audio-']
+    : [`${SW_TEAM_SLUG}-podcast-studio-audio-`];
 const NETWORK_TIMEOUT_MS = 7500;
 const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;
 const CORE_ASSETS = [
@@ -155,7 +158,7 @@ self.addEventListener('activate', event => {
           const nextCache = await caches.open(CACHE_NAME);
           // Carry forward ONLY offline data/media assets that failed to pre-fetch on a flaky cellular SW install.
           // NEVER carry forward stale .js/.css/.html application code across cache versions!
-          for (const assetUrl of CORE_ASSETS) {
+          for (const assetUrl of [...CORE_ASSETS, ...TEAM_DYNAMIC_ASSETS]) {
             if (!/^\.\/(?:data|assets)\//.test(assetUrl) && assetUrl !== './apple-touch-icon.png') {
               continue;
             }
@@ -279,12 +282,26 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Quiet Opt-In Web Push Alerts (Tier-1 Breaking, 5 PM PT Brief, Practice Downgrades)
+// Quiet Opt-In Web Push Alerts (Tier-1 Breaking, Daily Brief, Practice Downgrades)
+function formatSwTeamDisplay(slug = '49ers') {
+  if (slug === '49ers') return '49ers Faithful';
+  if (slug === 'nfl') return 'NFL Hub';
+  return `${slug.charAt(0).toUpperCase()}${slug.slice(1)} HQ`;
+}
+const SW_PUSH_ICON =
+  SW_TEAM_SLUG === '49ers'
+    ? './apple-touch-icon.png'
+    : SW_TEAM_SLUG === 'nfl'
+      ? './nfl-apple-touch-icon.png'
+      : `./assets/teams/${SW_TEAM_SLUG}/apple-touch-icon.png`;
+
 self.addEventListener('push', event => {
+  const teamLabel = formatSwTeamDisplay(SW_TEAM_SLUG);
+  const teamNoun = SW_TEAM_SLUG === '49ers' ? '49ers' : SW_TEAM_SLUG === 'nfl' ? 'NFL' : `${SW_TEAM_SLUG.charAt(0).toUpperCase()}${SW_TEAM_SLUG.slice(1)}`;
   let payload = {
-    title: '49ers Faithful Briefing',
-    body: 'High-signal 49ers update available.',
-    tag: '49ers-quiet-alert',
+    title: `${teamLabel} Briefing`,
+    body: `High-signal ${teamNoun} update available.`,
+    tag: `${SW_TEAM_SLUG}-quiet-alert`,
     url: './'
   };
   try {
@@ -309,8 +326,8 @@ self.addEventListener('push', event => {
   event.waitUntil(
     self.registration.showNotification(payload.title, {
       body: payload.body,
-      icon: './apple-touch-icon.png',
-      badge: './apple-touch-icon.png',
+      icon: SW_PUSH_ICON,
+      badge: SW_PUSH_ICON,
       tag: payload.tag,
       renotify: false,
       data: { url: payload.url }

@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-23T03:55:00.006Z",
+  "updatedAt": "2026-11-23T06:25:48.813Z",
   "week": 12,
   "byeWeek": 7,
   "sourceUrl": "https://www.chargers.com/team/injury-report/",
   "espnInjuryUrl": "https://www.espn.com/nfl/team/injuries/_/name/lac/los-angeles-chargers",
-  "usedIrDesignations": 0,
-  "remainingIrDesignations": 8,
+  "usedIrDesignations": 3,
+  "remainingIrDesignations": 5,
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
@@ -182,7 +182,7 @@
       "factors": [
         "Remains in early stages of NFL 5-Step Concussion Protocol"
       ],
-      "beatComment": "Herbert completed 15 of 21 passes for 131 yards, two touchdowns and no interceptions in Week 11, but he also endured six sacks, fumbled once and added 32 yards and one TD on his eight carries. It's unclear exactly when he picked up the head injury, but he'll be subject to the concussion protocol for further game action. The Chargers take the field next Sunday against the Patriots."
+      "beatComment": "Herbert completed 15 of 21 passes for 131 yards, two touchdowns and no interceptions in Week 11, but he also endured six sacks, fumbled once and added 32 yards and one TD on his eight carries. It's unclear exactly when he picked up the head injury, but he'll be subject to the concussion protocol ahead of further game action. The Chargers take the field next Sunday against the Patriots."
     },
     {
       "playerId": "4411189",
@@ -376,8 +376,8 @@
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "placedBeforeWeek": 3,
-      "earliestEligibleWeek": 8,
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": 10,
       "projectedReturnWeek": "Week 12 Activation Window",
       "byeWeekNote": "Week 7 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 70,

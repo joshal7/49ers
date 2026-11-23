@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T03:48:47.038Z",
+  "updatedAt": "2026-11-23T06:25:08.846Z",
   "windowDays": 7,
   "totalEpisodes": 8,
   "shows": [
@@ -14,6 +14,30 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-falcons-daily-podcast-on-the-atlanta-falcons/id1147245791?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/89/e3/e9/89e3e98b-d74f-56f8-4519-32b82965fc67/mza_17207893521795438404.jpg/600x600bb.jpg",
       "episodeCount7d": 8
+    },
+    {
+      "id": "falcons_bleav_in_falcons",
+      "collectionId": 1563021906,
+      "name": "Bleav in Falcons",
+      "fullTitle": "Bleav in Falcons",
+      "hosts": "Bleav Network",
+      "network": "Bleav",
+      "feedUrl": "https://feeds.simplecast.com/GVQXOdsn",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/bleav-in-falcons/id1563021906?uo=4",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/a8/5a/95/a85a950a-11a1-8778-9033-56016efacb05/mza_12751434438582302513.jpg/600x600bb.jpg",
+      "episodeCount7d": 0
+    },
+    {
+      "id": "falcons_outta_your_falcon_mind",
+      "collectionId": 1590954165,
+      "name": "Outta Your Falcon Mind",
+      "fullTitle": "Outta Your Falcon Mind",
+      "hosts": "Outta Your Falcon Mind",
+      "network": "Outta Your Falcon Mind",
+      "feedUrl": "https://anchor.fm/s/6b524804/podcast/rss",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/outta-your-falcon-mind/id1590954165?uo=4",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts125/v4/44/a1/b7/44a1b7a3-af66-6005-9f62-bb5099f7845e/mza_12217900933610175701.jpg/600x600bb.jpg",
+      "episodeCount7d": 0
     }
   ],
   "episodes": [

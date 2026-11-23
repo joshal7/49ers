@@ -23,7 +23,7 @@
  *    authentic Gemini NotebookLM Audio Overview conversational voice delivery (`Puck` + `Aoede`).
  */
 
-import { getActiveTeamConfig, getTeamCoaches, resolveTeamConfig } from '../config/teamRegistry.js';
+import { ALL_NFL_TEAMS, getActiveTeamConfig, getTeamCoaches, resolveTeamConfig } from '../config/teamRegistry.js';
 
 export const PRIMARY_GEMINI_REASONING_MODEL = 'gemini-4-hydrogen';
 export const PRIMARY_GEMINI_THINKING_LEVEL = 'XHIGH';
@@ -368,9 +368,14 @@ export function prepareConversationalTextForModernNeuralTts(rawText = '', { engi
     .replace(/`/g, '')
     .replace(/\s*•\s*/g, ', ');
 
-  // Expand compact visual shorthand that humans speak as words
+  // Expand compact visual shorthand that humans speak as words (all 32 NFL clubs)
+  const teamCityByAbbr = new Map(ALL_NFL_TEAMS.map(t => [t.abbr, t.city]));
+  const abbrPat = ALL_NFL_TEAMS.map(t => t.abbr).join('|');
   text = text
-    .replace(/\bSF\s+-(\d+(?:\.5)?)\b/g, 'San Francisco minus $1')
+    .replace(new RegExp(`\\b(${abbrPat})\\s+([+-])(\\d+(?:\\.5)?)\\b`, 'g'), (_, abbr, sign, num) => {
+      const city = teamCityByAbbr.get(abbr) || abbr;
+      return `${city} ${sign === '-' ? 'minus' : 'plus'} ${num}`;
+    })
     .replace(/\bO\/U\s*(\d+(?:\.5)?)\b/gi, 'over-under $1')
     .replace(/([~+-]?)\$(\d+(?:\.\d+)?)\s*M(\+?)/gi, (_, pre, num, plus) => {
       const lead = pre === '-' ? 'minus ' : pre === '~' ? 'roughly ' : plus === '+' ? 'over ' : '';
