@@ -24164,15 +24164,15 @@
     "pastFreshnessCutoff": true,
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
-    "consensusRank": 22,
-    "averageRank": 21.8,
+    "consensusRank": 21,
+    "averageRank": 20.5,
     "medianRank": 23,
-    "previousRank": 23,
+    "previousRank": 22,
     "rangeMin": 14,
     "rangeMax": 25,
     "rangeShort": "#14–#25",
-    "rangeDisplay": "#14–#25 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 6-4 Browns at #22 consensus (avg #21.8) through Week 10, ranging from #14 (CBS Sports) to #25 (nfelo). All listed models include the Browns' latest result entering Week 12 vs. Raiders.",
+    "rangeDisplay": "#14–#25 across 6 verified models & polls",
+    "synthesizedTakeaway": "6 verified models & polls place the 6-4 Browns at #21 consensus (avg #20.5) through Week 10, ranging from #14 (CBS Sports) to #25 (nfelo). All listed models include the Browns' latest result entering Week 12 vs. Raiders.",
     "sources": [
       {
         "id": "cbs",
@@ -24190,6 +24190,25 @@
         "asOfLabel": "Week 11",
         "verified": true,
         "blurb": "If the playoffs started today, they would be in the postseason. Can you believe it? Deshaun Watson is playing good football.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "rank": 14,
+        "previousRank": 16,
+        "delta": "+2",
+        "reportedRecord": "6-4",
+        "gamesIncluded": 10,
+        "throughWeek": 10,
+        "forWeek": 11,
+        "asOfIso": "2026-11-17T20:45:39Z",
+        "asOfLabel": "Week 11",
+        "verified": true,
+        "blurb": "Beat the Texans 27-24. Non-QB MVP at midseason: CB Denzel Ward The Browns' defense hasn't taken a big step back without two-time Defensive Player of the Year Myles Garrett or former coordinator Jim…",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24347,11 +24366,28 @@
         "asOfLabel": "Thru Wk 11",
         "verified": true,
         "blurb": "FPI -4.9 (#24 Off / #11 Def efficiency, 8.8 proj. wins, 0.1% SB odds) at 6-4."
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "rank": 14,
+        "previousRank": 16,
+        "delta": "+2",
+        "reportedRecord": "6-4",
+        "gamesIncluded": 10,
+        "throughWeek": 10,
+        "forWeek": 11,
+        "asOfIso": "2026-11-17T20:45:39Z",
+        "asOfLabel": "Week 11",
+        "verified": true,
+        "blurb": "Beat the Texans 27-24. Non-QB MVP at midseason: CB Denzel Ward The Browns' defense hasn't taken a big step back without two-time Defensive Player of the Year Myles Garrett or former coordinator Jim…"
       }
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-23T03:51:40.909Z"
+    "fetchedAtIso": "2026-11-23T05:41:29.496Z"
   },
   "upcomingMatchup": {
     "week": 12,

@@ -24165,14 +24165,14 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 8,
-    "averageRank": 7.6,
+    "averageRank": 7.8,
     "medianRank": 8,
     "previousRank": 10,
     "rangeMin": 4,
     "rangeMax": 12,
     "rangeShort": "#4–#12",
-    "rangeDisplay": "#4–#12 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 6-4 Seahawks at #8 consensus (avg #7.6) through Week 10, ranging from #4 (nfelo) to #12 (CBS Sports). All listed models include the Seahawks' latest result entering Week 12 vs. 49ers.",
+    "rangeDisplay": "#4–#12 across 6 verified models & polls",
+    "synthesizedTakeaway": "6 verified models & polls place the 6-4 Seahawks at #8 consensus (avg #7.8) through Week 10, ranging from #4 (nfelo) to #12 (CBS Sports). All listed models include the Seahawks' latest result entering Week 12 vs. 49ers.",
     "sources": [
       {
         "id": "nfelo",
@@ -24243,6 +24243,25 @@
         "asOfLabel": "November 22",
         "verified": true,
         "blurb": "Betting market rating GPF +3.8 (#13 Offense / #1 Defense) at 6-4 through Week 10.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "rank": 9,
+        "previousRank": 9,
+        "delta": "0",
+        "reportedRecord": "6-4",
+        "gamesIncluded": 10,
+        "throughWeek": 10,
+        "forWeek": 11,
+        "asOfIso": "2026-11-17T20:45:39Z",
+        "asOfLabel": "Week 11",
+        "verified": true,
+        "blurb": "Beat the Raiders 21-13. Non-QB MVP at midseason: WR Jaxon Smith-Njigba Smith-Njigba would be Seattle's undisputed MVP even if quarterbacks weren't excluded, and the historic numbers he's producing…",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24347,11 +24366,28 @@
         "asOfLabel": "Thru Wk 11",
         "verified": true,
         "blurb": "FPI +3.8 (#20 Off / #4 Def efficiency, 10.2 proj. wins, 2.7% SB odds) at 6-4."
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "rank": 9,
+        "previousRank": 9,
+        "delta": "0",
+        "reportedRecord": "6-4",
+        "gamesIncluded": 10,
+        "throughWeek": 10,
+        "forWeek": 11,
+        "asOfIso": "2026-11-17T20:45:39Z",
+        "asOfLabel": "Week 11",
+        "verified": true,
+        "blurb": "Beat the Raiders 21-13. Non-QB MVP at midseason: WR Jaxon Smith-Njigba Smith-Njigba would be Seattle's undisputed MVP even if quarterbacks weren't excluded, and the historic numbers he's producing…"
       }
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-23T03:39:05.427Z"
+    "fetchedAtIso": "2026-11-23T05:41:29.496Z"
   },
   "upcomingMatchup": {
     "week": 12,

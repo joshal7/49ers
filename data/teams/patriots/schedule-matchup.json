@@ -24164,15 +24164,15 @@
     "pastFreshnessCutoff": true,
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
-    "consensusRank": 23,
-    "averageRank": 22.6,
-    "medianRank": 26,
+    "consensusRank": 22,
+    "averageRank": 21.7,
+    "medianRank": 23,
     "previousRank": 16,
     "rangeMin": 14,
     "rangeMax": 27,
     "rangeShort": "#14–#27",
-    "rangeDisplay": "#14–#27 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 5-5 Patriots at #23 consensus (avg #22.6) through Week 10, ranging from #14 (nfelo) to #27 (RBSDM). All listed models include the Patriots' latest result entering Week 12 vs. Chargers.",
+    "rangeDisplay": "#14–#27 across 6 verified models & polls",
+    "synthesizedTakeaway": "6 verified models & polls place the 5-5 Patriots at #22 consensus (avg #21.7) through Week 10, ranging from #14 (nfelo) to #27 (RBSDM). All listed models include the Patriots' latest result entering Week 12 vs. Chargers.",
     "sources": [
       {
         "id": "nfelo",
@@ -24189,6 +24189,25 @@
         "asOfLabel": "5-5 record",
         "verified": true,
         "blurb": "nfelo 1552 (+2.3 spread value, #11 Off EPA, #19 Net EPA) at 5-5.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "rank": 17,
+        "previousRank": 14,
+        "delta": "-3",
+        "reportedRecord": "5-5",
+        "gamesIncluded": 10,
+        "throughWeek": 10,
+        "forWeek": 11,
+        "asOfIso": "2026-11-17T20:45:39Z",
+        "asOfLabel": "Week 11",
+        "verified": true,
+        "blurb": "Lost to the Lions 35-10. Non-QB MVP at midseason: RB Rhamondre Stevenson The six-year veteran is one of the NFL's best pass-protecting running backs, which has exceptional value when defenses have…",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24347,11 +24366,28 @@
         "asOfLabel": "Thru Wk 11",
         "verified": true,
         "blurb": "FPI -5.7 (#15 Off / #23 Def efficiency, 7.3 proj. wins, 0.1% SB odds) at 5-5."
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "rank": 17,
+        "previousRank": 14,
+        "delta": "-3",
+        "reportedRecord": "5-5",
+        "gamesIncluded": 10,
+        "throughWeek": 10,
+        "forWeek": 11,
+        "asOfIso": "2026-11-17T20:45:39Z",
+        "asOfLabel": "Week 11",
+        "verified": true,
+        "blurb": "Lost to the Lions 35-10. Non-QB MVP at midseason: RB Rhamondre Stevenson The six-year veteran is one of the NFL's best pass-protecting running backs, which has exceptional value when defenses have…"
       }
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-23T03:49:59.982Z"
+    "fetchedAtIso": "2026-11-23T05:41:29.496Z"
   },
   "upcomingMatchup": {
     "week": 12,

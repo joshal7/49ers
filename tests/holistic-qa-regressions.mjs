@@ -2982,6 +2982,118 @@ test('Power Rankings: verified live parsers (Inpredictable, nfelo, RBSDM, CBS, E
     Math.round(expectedAvg),
     'Compiled consensusRank must equal exact rounded mean of active verified sources'
   );
+
+  // Case F: Multi-team parser precision — CBS blurb-mention hijack prevention, ARZ/OAK aliases & ESPN Panel 32-team parsing
+  const cbsMultiRowHtml = `
+    <title>Prisco's NFL Week 11 Power Rankings - CBS Sports</title>
+    <script type="application/ld+json">{"dateModified":"2026-11-17T13:34:36+00:00"}</script>
+    <table>
+      <tr class="team-rankings-stats">
+        <td><span class="rank">2</span></td>
+        <td class="cell-left team"><a href="https://www.cbssports.com/nfl/teams/SF/san-francisco-49ers/"><span class="team-name">49ers</span></a></td>
+        <td>The offense was great in the victory over the Cowboys, but the defense gave up 40.</td>
+        <td class="cell-left ">--</td>
+        <td>9-1-0</td>
+      </tr>
+      <tr class="team-rankings-stats">
+        <td><span class="rank">18</span></td>
+        <td class="cell-left team"><a href="https://www.cbssports.com/nfl/teams/DAL/dallas-cowboys/"><span class="team-name">Cowboys</span></a></td>
+        <td>That defense is putrid right now.</td>
+        <td class="cell-left ">--</td>
+        <td>5-6-0</td>
+      </tr>
+    </table>
+  `;
+  const cbsDal = parseCbsSportsHtml(cbsMultiRowHtml, 'DAL');
+  assert.ok(cbsDal, 'CBS Sports parser must match Cowboys row');
+  assert.equal(cbsDal.rank, 18, 'CBS Sports parser must NOT hijack Cowboys to #2 via 49ers blurb mention');
+  assert.ok(/putrid/i.test(cbsDal.blurb), 'CBS Sports Cowboys blurb must come from Cowboys row');
+
+  const inpArzHtml = `
+    <div>As of November 22, 2026</div>
+    <table>
+      <tr>
+        <td>32</td><td>&nbspARZ</td><td>32</td>
+        <td><span>10,20</span></td><td>-8.9</td><td>1,2</td><td>-3.1</td><td>30</td><td>1,2</td><td>-5.8</td><td>25</td><td>1,2</td>
+        <td>3-7</td><td>32</td><td>0.0%</td><td>0,1</td>
+        <td><span onMouseover='tooltip.show("<b>Past Schedule:</b><br />Wk 10: @LA -28",150)'>-2.1</span></td>
+      </tr>
+    </table>
+  `;
+  const inpAri = parseInpredictableHtml(inpArzHtml, 'ARI');
+  assert.ok(inpAri, 'Inpredictable parser must match ARZ alias for ARI Cardinals');
+  assert.equal(inpAri.rank, 32);
+
+  const nfeloOakTeams = nfeloTeams.map(t => (t.team === 'LV' ? { ...t, team: 'OAK', teamNick: 'Raiders' } : t));
+  const nfeloOakHtml = `<script>self.__next_f.push([1,"${JSON.stringify(nfeloOakTeams).replace(/"/g, '\\"')}"])</script>`;
+  const nfeloLv = parseNfeloHtml(nfeloOakHtml, { seasonYear: 2026, teamAbbr: 'LV' });
+  assert.ok(nfeloLv, 'nfelo parser must match OAK alias for LV Raiders');
+  assert.equal(nfeloLv.rank, 30);
+
+  const espnPanelDen = parseEspnPanelArticle(
+    {
+      headline: 'NFL Power Rankings: Stacking all 32 teams for Week 11',
+      url: 'https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11',
+      published: '2026-11-17T20:45:39Z'
+    },
+    '<h2>7. Denver Broncos (7-2)</h2><p><strong>Week 10 result:</strong> Bye<br/><strong>Week 10 ranking:</strong> 5<br/>Non-QB MVP: DT Zach Allen dominates up front.</p><h2>8. San Francisco 49ers (8-1)</h2><p>Fred Warner leads.</p>',
+    'DEN'
+  );
+  assert.ok(espnPanelDen, 'ESPN Panel parser must parse non-SF teams like Denver Broncos');
+  assert.equal(espnPanelDen.rank, 7);
+  assert.equal(espnPanelDen.delta, '-2');
+  assert.equal(espnPanelDen.throughWeek, 10);
+  assert.ok(/Week 10 bye/i.test(espnPanelDen.blurb), 'ESPN Panel bye blurb should format cleanly');
+  assert.equal(/Fred Warner/i.test(espnPanelDen.blurb), false, 'ESPN Panel parser must stop before digit-starting next team name (49ers)');
+
+  // Case G: Multi-team <24h post-game cohort unification (exact Broncos regression!)
+  // Broncos had Week 10 Bye, just finished Week 11 (8-2, 10 games) 4h ago.
+  // Only RBSDM updated to Week 11 (1 fresh < 2); all 5 other outlets are still Week 10 (7-2 / 9 games),
+  // INCLUDING ESPN FPI carrying bogus calendar throughWeek=11, Inpredictable Bye throughWeek=9, nfelo throughWeek=null,
+  // and CBS carrying live-bumped 8-2 record with throughWeek=10!
+  const denScheduleWk11 = [
+    { week: 1, seasonType: 'REG', result: 'L', kickoffIso: '2026-09-13T20:05Z' },
+    { week: 2, seasonType: 'REG', result: 'W', kickoffIso: '2026-09-20T20:05Z' },
+    { week: 3, seasonType: 'REG', result: 'W', kickoffIso: '2026-09-27T20:05Z' },
+    { week: 4, seasonType: 'REG', result: 'L', kickoffIso: '2026-10-04T20:05Z' },
+    { week: 5, seasonType: 'REG', result: 'W', kickoffIso: '2026-10-11T20:05Z' },
+    { week: 6, seasonType: 'REG', result: 'W', kickoffIso: '2026-10-18T20:05Z' },
+    { week: 7, seasonType: 'REG', result: 'W', kickoffIso: '2026-10-25T20:05Z' },
+    { week: 8, seasonType: 'REG', result: 'W', kickoffIso: '2026-11-01T20:05Z' },
+    { week: 9, seasonType: 'REG', result: 'W', kickoffIso: '2026-11-08T21:05Z' },
+    { week: 10, seasonType: 'REG', isBye: true, oppAbbr: 'BYE' },
+    { week: 11, seasonType: 'REG', result: 'W', kickoffIso: '2026-11-22T21:25Z' }
+  ];
+  const denRawSources = [
+    { id: 'rbsdm', outlet: 'RBSDM / nflverse Team Ratings', shortName: 'RBSDM', rank: 13, reportedRecord: '8-2', gamesIncluded: 10, throughWeek: 11, verified: true, blurb: 'Week 11 rating' },
+    { id: 'espn_fpi', outlet: 'ESPN Football Power Index (FPI)', shortName: 'ESPN FPI', rank: 12, reportedRecord: '7-2', gamesIncluded: 9, throughWeek: 11, verified: true, blurb: 'FPI at 7-2.' },
+    { id: 'nfelo', outlet: 'nfelo Quantitative Elo & EPA Power Ratings', shortName: 'nfelo', rank: 11, reportedRecord: '7-2', gamesIncluded: 9, throughWeek: null, verified: true, blurb: 'nfelo at 7-2.' },
+    { id: 'inpredictable', outlet: 'Inpredictable / Betting Market Power Rating', shortName: 'Inpredictable', rank: 10, reportedRecord: '7-2', gamesIncluded: 9, throughWeek: 9, verified: true, blurb: 'GPF at 7-2 through Week 9.' },
+    { id: 'espn_panel', outlet: 'ESPN NFL Power Rankings Panel', shortName: 'ESPN Panel', rank: 7, reportedRecord: '7-2', gamesIncluded: 9, throughWeek: 10, forWeek: 11, verified: true, blurb: 'Week 10 bye.' },
+    { id: 'cbs', outlet: 'CBS Sports NFL Power Rankings', shortName: 'CBS Sports', rank: 5, reportedRecord: '8-2', gamesIncluded: 10, throughWeek: 10, forWeek: 11, verified: true, blurb: 'Coming off the bye.' }
+  ];
+  const denResolved = resolveConsistentPowerRankings(
+    { allSources: denRawSources },
+    denScheduleWk11,
+    { nowMs: Date.parse('2026-11-23T04:00:00Z'), currentWeek: 12, sfRecord: '8-2', teamAbbr: 'DEN' }
+  );
+  assert.equal(denResolved.cohortStatus, 'pre_cutoff_prior_week');
+  assert.equal(denResolved.consistentThroughWeek, 10, 'Prior cohort must resolve to Week 10, NEVER Week 11');
+  assert.equal(denResolved.weekLabel, 'Through Week 10 • Updating After Week 11');
+  assert.equal(denResolved.sources.length, 5, 'All 5 consistent Week 10 models/polls must unite (not collapse to 1 ESPN FPI source!)');
+  assert.equal(denResolved.consensusRank, 9, 'Mean of [5,7,10,11,12] = 9.0 -> #9');
+  assert.ok(/5 verified models & polls place the 8-2 Broncos/i.test(denResolved.synthesizedTakeaway));
+
+  // Case H: Singular verb grammar ("1 verified model places...") + CBS live-record week_behind guard past 24h cutoff
+  const denPostCutoff = resolveConsistentPowerRankings(
+    { allSources: [denRawSources[0], denRawSources[5]] }, // rbsdm (wk 11) + cbs (live rec 8-2, throughWeek 10)
+    denScheduleWk11,
+    { nowMs: Date.parse('2026-11-24T04:00:00Z'), currentWeek: 12, sfRecord: '8-2', teamAbbr: 'DEN' }
+  );
+  assert.equal(denPostCutoff.pastFreshnessCutoff, true);
+  assert.equal(denPostCutoff.sources.length, 1, 'CBS with throughWeek=10 must stay excluded after 24h even if its live record column bumped to 8-2');
+  assert.equal(denPostCutoff.sources[0].id, 'rbsdm');
+  assert.ok(/1 verified model places the 8-2 Broncos/i.test(denPostCutoff.synthesizedTakeaway), 'Singular model count must use "places"');
 });
 
 test('Holistic Regression: Link-drop tweets in compiled data/news.json promote cleanly to direct Articles while preserving salient tweets', () => {

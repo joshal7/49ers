@@ -153,6 +153,14 @@ export function resolveLatestCompletedSfGame(
     ? (regTies > 0 ? `${regWins}-${regLosses}-${regTies}` : `${regWins}-${regLosses}`)
     : null;
 
+  const regCompletedWeeks = allCompleted
+    .filter(g => String(g?.seasonType || 'REG').toUpperCase() !== 'POST')
+    .map(g => Number(g.week) || null)
+    .filter(w => w != null);
+  const allCompletedWeeks = allCompleted
+    .map(g => Number(g.week) || null)
+    .filter(w => w != null);
+
   return {
     latestGame,
     latestGameWeek: latestGame ? Number(latestGame.week) || null : null,
@@ -160,6 +168,8 @@ export function resolveLatestCompletedSfGame(
     sfCompletedGames: allCompleted.length,
     sfCompletedRegGames: regCompleted.length,
     sfCompletedPostGames: postCompleted.length,
+    regCompletedWeeks,
+    allCompletedWeeks,
     sfRecord,
     kickoffMs,
     gameEndMs,
@@ -167,6 +177,62 @@ export function resolveLatestCompletedSfGame(
     pastFreshnessCutoff,
     cutoffHours: safeCutoffHours
   };
+}
+
+/**
+ * Resolves the canonical `throughWeek` for a prior-week source whose `gamesIncluded`
+ * is strictly behind `expectedGames`.
+ *
+ * Uses the team's actual completed schedule so that:
+ *  - Calendar-week inflation (e.g., ESPN FPI reporting `currentSeason.week = 11` while a
+ *    team's FPI record is still 7-2 / 9 games before Week 11) is clamped to the true prior
+ *    week (`nextPlayedWeek - 1 = 10`) instead of falsely claiming Week 11.
+ *  - Record-only models without explicit week labels (e.g., `nfelo`) map cleanly into the
+ *    exact same prior-week cohort (`10`) instead of being orphaned into a separate `gm:9` bucket.
+ *  - Teams coming off a Bye week (e.g., Week 10 Bye where Inpredictable's Past Schedule ends
+ *    at Wk 9 while the team's 9-game record IS its Week 10 body of work) unify cleanly with
+ *    all other Week 10 models (`nextPlayedWeek - 1 = 10`) while genuinely older Week 8/9
+ *    ratings stay isolated in their older week bucket.
+ */
+function resolveScheduleConsistentThroughWeek(gamesIncluded, rawThroughWeek, gameContext) {
+  const expectedWeek = gameContext?.latestGameWeek ?? null;
+  const expectedGames =
+    gameContext?.latestGameSeasonType === 'POST'
+      ? gameContext?.sfCompletedGames ?? 0
+      : gameContext?.sfCompletedRegGames ?? 0;
+  const completedWeeks =
+    gameContext?.latestGameSeasonType === 'POST'
+      ? gameContext?.allCompletedWeeks
+      : gameContext?.regCompletedWeeks;
+
+  if (
+    Array.isArray(completedWeeks) &&
+    gamesIncluded != null &&
+    gamesIncluded >= 1 &&
+    gamesIncluded < completedWeeks.length
+  ) {
+    const lastPlayedWk = completedWeeks[gamesIncluded - 1];
+    const nextPlayedWk = completedWeeks[gamesIncluded];
+    if (
+      Number.isFinite(lastPlayedWk) &&
+      Number.isFinite(nextPlayedWk) &&
+      nextPlayedWk > lastPlayedWk
+    ) {
+      const maxConsistentWk = nextPlayedWk - 1;
+      if (rawThroughWeek == null) return maxConsistentWk;
+      if (rawThroughWeek >= nextPlayedWk) return maxConsistentWk;
+      if (rawThroughWeek >= lastPlayedWk && rawThroughWeek < nextPlayedWk) return maxConsistentWk;
+      return rawThroughWeek;
+    }
+  }
+
+  if (rawThroughWeek != null && expectedWeek != null && rawThroughWeek >= expectedWeek) {
+    return Math.max(0, expectedWeek - 1);
+  }
+  if (rawThroughWeek == null && expectedWeek != null && gamesIncluded != null && gamesIncluded === expectedGames - 1) {
+    return Math.max(0, expectedWeek - 1);
+  }
+  return rawThroughWeek;
 }
 
 /**
@@ -239,27 +305,31 @@ export function evaluatePowerRankingSourceFreshness(source, gameContext) {
       : gameContext.sfCompletedRegGames;
   const expectedWeek = gameContext.latestGameWeek;
 
-  // Check 1: Explicit 49ers W-L-T games count reported by the source itself
+  // Check 1: Explicit team W-L-T games count reported by the source itself
   if (resolvedGamesIncluded != null && expectedGames > 0) {
     if (resolvedGamesIncluded < expectedGames) {
+      const consistentPriorWeek = resolveScheduleConsistentThroughWeek(
+        resolvedGamesIncluded,
+        resolvedThroughWeek,
+        gameContext
+      );
       return {
         includesLatestGame: false,
         reason: 'record_behind',
         resolvedGamesIncluded,
-        resolvedThroughWeek
+        resolvedThroughWeek: consistentPriorWeek
       };
     }
     // Also guard against a source explicitly labeled for an earlier week than expectedWeek
-    // (note: during a 49ers Bye week, expectedWeek is the 49ers' last played week, so
-    // resolvedThroughWeek >= expectedWeek holds true!).
+    // (e.g., CBS Sports "Week 11 Power Rankings" => throughWeek 10 whose live standings widget
+    // already bumped the record column to Week 11 before Week 12 rankings publish; note that
+    // during a Bye week, expectedWeek is the team's last played week so resolvedThroughWeek >= expectedWeek passes!).
     if (
       resolvedThroughWeek != null &&
       expectedWeek != null &&
       resolvedThroughWeek < expectedWeek &&
-      resolvedGamesIncluded === expectedGames
+      resolvedGamesIncluded >= expectedGames
     ) {
-      // Edge case: e.g. ESPN FPI currentSeason.week can stay on Week 10 (through Tue) while
-      // latestGameWeek is 10 => 10 < 10 is false, so it passes! Only fails if truly < expectedWeek.
       return {
         includesLatestGame: false,
         reason: 'week_behind',
@@ -326,17 +396,26 @@ export function evaluatePowerRankingSourceFreshness(source, gameContext) {
  * (used ONLY during the <24h pre-cutoff window when fewer than 2 sources have updated
  * with the latest game yet, so weeks are NEVER mixed).
  */
-function selectHighestConsistentPriorCohort(evaluatedStale) {
+function selectHighestConsistentPriorCohort(evaluatedStale, gameContext = null) {
   if (!evaluatedStale.length) return [];
-  const bucketKey = entry => {
+  const latestWk = gameContext?.latestGameWeek ?? null;
+  const resolveCohortWeek = entry => {
     const wk = entry.freshness.resolvedThroughWeek;
+    if (wk == null) return null;
+    // A source in `evaluatedStale` does NOT include `latestWk`, so its cohort week
+    // can never be >= `latestWk` (guards against calendar-week labels like ESPN FPI).
+    if (latestWk != null && wk >= latestWk) return Math.max(0, latestWk - 1);
+    return wk;
+  };
+  const bucketKey = entry => {
+    const wk = resolveCohortWeek(entry);
     const gm = entry.freshness.resolvedGamesIncluded;
     if (wk != null) return `wk:${wk}`;
     if (gm != null) return `gm:${gm}`;
     return 'unknown';
   };
   const scoreEntry = entry => {
-    const wk = entry.freshness.resolvedThroughWeek ?? -1;
+    const wk = resolveCohortWeek(entry) ?? -1;
     const gm = entry.freshness.resolvedGamesIncluded ?? -1;
     return wk * 100 + gm;
   };
@@ -361,7 +440,11 @@ function selectHighestConsistentPriorCohort(evaluatedStale) {
  * Builds a concise, truthful synthesized takeaway grounded strictly in the active
  * week-consistent sources (no fabricated stats or stale players).
  */
-function buildGroundedPowerTakeaway(activeSources, stats, { sfRecord, consistentThroughWeek, currentWeek, oppShortName, cohortStatus, excludedCount }) {
+function buildGroundedPowerTakeaway(
+  activeSources,
+  stats,
+  { sfRecord, consistentThroughWeek, currentWeek, oppShortName, cohortStatus, excludedCount, teamAbbr = null }
+) {
   if (!activeSources.length) {
     if (cohortStatus === 'awaiting_post_game_updates' && consistentThroughWeek != null) {
       return `All tracked power models and national polls are updating following Week ${consistentThroughWeek}. Prior-week rankings are hidden until post-game updates publish.`;
@@ -372,13 +455,19 @@ function buildGroundedPowerTakeaway(activeSources, stats, { sfRecord, consistent
   const best = activeSources[0];
   const worst = activeSources[activeSources.length - 1];
   const recordClause = sfRecord ? `${sfRecord} ` : '';
-  const wkClause = consistentThroughWeek != null ? ` through Week ${consistentThroughWeek}` : '';
+  const wkClause =
+    consistentThroughWeek != null
+      ? consistentThroughWeek === 0
+        ? ' entering Week 1'
+        : ` through Week ${consistentThroughWeek}`
+      : '';
   const avgStr = stats.averageRank != null ? ` (avg #${stats.averageRank.toFixed(1)})` : '';
   const countLabel = `${activeSources.length} verified ${activeSources.length === 1 ? 'model' : 'models & polls'}`;
+  const verb = activeSources.length === 1 ? 'places' : 'place';
 
-  const activeTeam = resolveTeamConfig(getActiveTeamConfig());
+  const activeTeam = resolveTeamConfig(teamAbbr || getActiveTeamConfig());
   const teamNick = activeTeam.nickname || '49ers';
-  let sentence1 = `${countLabel} place the ${recordClause}${teamNick} at #${stats.consensusRank} consensus${avgStr}${wkClause}`;
+  let sentence1 = `${countLabel} ${verb} the ${recordClause}${teamNick} at #${stats.consensusRank} consensus${avgStr}${wkClause}`;
   if (stats.rangeMin !== stats.rangeMax) {
     sentence1 += `, ranging from #${stats.rangeMin} (${best.shortName || best.outlet}) to #${stats.rangeMax} (${worst.shortName || worst.outlet}).`;
   } else {
@@ -386,8 +475,9 @@ function buildGroundedPowerTakeaway(activeSources, stats, { sfRecord, consistent
   }
 
   const extras = [];
-  if (cohortStatus === 'pre_cutoff_prior_week' && currentWeek) {
-    extras.push(`Showing the consistent Week ${consistentThroughWeek} cohort while post-game updates publish.`);
+  if (cohortStatus === 'pre_cutoff_prior_week' && consistentThroughWeek != null) {
+    const cohortLabel = consistentThroughWeek === 0 ? 'preseason' : `Week ${consistentThroughWeek}`;
+    extras.push(`Showing the consistent ${cohortLabel} cohort while post-game updates publish.`);
   } else if (excludedCount > 0) {
     extras.push(`${excludedCount} outlet${excludedCount === 1 ? '' : 's'} still on an older week ${excludedCount === 1 ? 'is' : 'are'} excluded for week consistency.`);
   } else if (oppShortName && currentWeek && consistentThroughWeek != null && currentWeek > consistentThroughWeek) {
@@ -399,10 +489,10 @@ function buildGroundedPowerTakeaway(activeSources, stats, { sfRecord, consistent
 
 /**
  * Resolves a week-consistent, freshness-enforced Power Rankings snapshot from raw parsed
- * sources + the 49ers' schedule.
+ * sources + the team's schedule.
  *
  * Works identically at build time (Node.js) and in the browser (client render), ensuring
- * that if 24 hours pass after a 49ers game finishes even between data builds, stale
+ * that if 24 hours pass after a team's game finishes even between data builds, stale
  * prior-week sources are automatically disregarded.
  *
  * @param {object|null|undefined} rawPowerRankings
@@ -415,7 +505,8 @@ export function resolveConsistentPowerRankings(rawPowerRankings, schedule = [], 
     cutoffHours = POST_GAME_FRESHNESS_CUTOFF_HOURS,
     currentWeek = null,
     sfRecord = null,
-    oppShortName = null
+    oppShortName = null,
+    teamAbbr = null
   } = options || {};
 
   const raw = rawPowerRankings && typeof rawPowerRankings === 'object' ? rawPowerRankings : {};
@@ -474,12 +565,16 @@ export function resolveConsistentPowerRankings(rawPowerRankings, schedule = [], 
       cohortStatus = 'latest_game_verified';
       consistentThroughWeek = gameContext.latestGameWeek;
     } else if (staleEvaluated.length > 0) {
-      selectedEvaluated = selectHighestConsistentPriorCohort(staleEvaluated);
+      selectedEvaluated = selectHighestConsistentPriorCohort(staleEvaluated, gameContext);
       excludedEvaluated = [];
       cohortStatus = 'pre_cutoff_prior_week';
-      consistentThroughWeek =
+      const rawPriorWk =
         selectedEvaluated[0]?.freshness?.resolvedThroughWeek ??
         (gameContext.latestGameWeek != null ? Math.max(0, gameContext.latestGameWeek - 1) : null);
+      consistentThroughWeek =
+        rawPriorWk != null && gameContext.latestGameWeek != null
+          ? Math.min(rawPriorWk, Math.max(0, gameContext.latestGameWeek - 1))
+          : rawPriorWk;
     } else {
       selectedEvaluated = [];
       excludedEvaluated = [];
@@ -551,7 +646,10 @@ export function resolveConsistentPowerRankings(rawPowerRankings, schedule = [], 
   if (cohortStatus === 'awaiting_post_game_updates' && gameContext.latestGameWeek != null) {
     weekLabel = `Updating After Week ${gameContext.latestGameWeek}`;
   } else if (cohortStatus === 'pre_cutoff_prior_week' && consistentThroughWeek != null) {
-    weekLabel = `Through Week ${consistentThroughWeek} • Updating After Week ${gameContext.latestGameWeek}`;
+    weekLabel =
+      consistentThroughWeek === 0
+        ? `Preseason • Updating After Week ${gameContext.latestGameWeek}`
+        : `Through Week ${consistentThroughWeek} • Updating After Week ${gameContext.latestGameWeek}`;
   } else if (consistentThroughWeek != null) {
     if (currentWeek && Number(currentWeek) > consistentThroughWeek) {
       weekLabel = `Through Week ${consistentThroughWeek} • Entering Week ${currentWeek}`;
@@ -571,7 +669,8 @@ export function resolveConsistentPowerRankings(rawPowerRankings, schedule = [], 
       currentWeek,
       oppShortName,
       cohortStatus,
-      excludedCount: excludedStaleSources.length
+      excludedCount: excludedStaleSources.length,
+      teamAbbr
     }
   );
 

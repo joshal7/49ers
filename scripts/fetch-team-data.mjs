@@ -49,7 +49,10 @@ import {
   loadSharedNflversePlayerContext,
   normPlayerName
 } from './lib/nflversePlayerContext.mjs';
-import { fetchLivePowerRankings } from './lib/powerRankingsFetcher.mjs';
+import {
+  fetchLeaguePowerRankingsPayloads,
+  fetchLivePowerRankings
+} from './lib/powerRankingsFetcher.mjs';
 import { buildTeamDraftPrep2027 } from './lib/teamDraftIntelBuilder.mjs';
 import { parseTankathonTeamPicksHtml } from './lib/aiSynthesisEngine.mjs';
 import {
@@ -356,12 +359,18 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     [...liveScoreboardRemaining.values()]
   );
 
-  const leagueTradeCtx = await loadSharedLeagueTradeContext({
-    seasonYear,
-    standingsByAbbr,
-    otcSpaceHtml,
-    nflverse
-  });
+  const [leagueTradeCtx, powerRankingsPayloads] = await Promise.all([
+    loadSharedLeagueTradeContext({
+      seasonYear,
+      standingsByAbbr,
+      otcSpaceHtml,
+      nflverse
+    }),
+    fetchLeaguePowerRankingsPayloads({
+      seasonYear,
+      currentWeek: currentMaxGp
+    }).catch(() => null)
+  ]);
 
   // Persist compact shared league meta to `data/league/meta.json`
   const leagueDir = path.join(ROOT, 'data', 'league');
@@ -390,6 +399,7 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     rotowireXml,
     nflverse,
     leagueTradeCtx,
+    powerRankingsPayloads,
     completedGames: reconciledLeagueGames.completedGames,
     remainingGames: reconciledLeagueGames.remainingGames,
     baseTeamStatsTemplate: sfMatchup?.teamStats || null,
@@ -2240,13 +2250,24 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   for (const bp of bskyPosts) pushNewsItem(bp);
 
   // 10. Live Power Rankings (teamStats & teamStatRankings already built in Step 5)
+  let previousPowerRankings = null;
+  try {
+    const existingSmPath = path.join(ROOT, 'data', 'teams', team.slug, 'schedule-matchup.json');
+    if (fs.existsSync(existingSmPath)) {
+      previousPowerRankings = JSON.parse(fs.readFileSync(existingSmPath, 'utf8'))?.powerRankings || null;
+    }
+  } catch {
+    previousPowerRankings = null;
+  }
   const powerRankings = await fetchLivePowerRankings({
     teamAbbr: team.abbr,
     seasonYear,
     currentWeek,
     schedule,
     sfRecord: teamStanding.record,
-    oppShortName: nextUnplayed?.opponent?.shortName || nextUnplayed?.opponent?.abbr || null
+    oppShortName: nextUnplayed?.opponent?.shortName || nextUnplayed?.opponent?.abbr || null,
+    previousPowerRankings,
+    sharedPayloads: leagueCtx.powerRankingsPayloads || null
   }).catch(() => ({ consensusRank: null, sources: [], allSources: [], summary: '' }));
 
   // 11. Playoff Monte Carlo (NFC for Lions, AFC for Bills!)
@@ -2758,14 +2779,74 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   fs.writeFileSync(path.join(outDir, 'podcasts', 'index.json'), JSON.stringify(podcastIndexJson, null, 2));
 
   console.log(
-    `[stage-2] Done ${team.abbr} (${team.slug}): record=${meta.teamRecord}, roster=${players.length}, capPlayers=${capPlayers.length}, departed=${departedPlayers.length}, news=${tempAppData.news.rawStream.length}, brief=${tempAppData.news.dailyTopNewsBrief?.source} (${tempAppData.news.dailyTopNewsBrief?.modelUsed}), pods7d=${beatPodcasts.totalEpisodes}, playoffOdds=${playoffPicture.baselineSimulation?.teamOdds?.makePlayoffsPct}%`
+    `[stage-2] Done ${team.abbr} (${team.slug}): record=${meta.teamRecord}, roster=${players.length}, capPlayers=${capPlayers.length}, departed=${departedPlayers.length}, power=${powerRankings.sources?.length || 0}/${powerRankings.allSources?.length || 0} (#${powerRankings.consensusRank ?? '—'}), news=${tempAppData.news.rawStream.length}, brief=${tempAppData.news.dailyTopNewsBrief?.source} (${tempAppData.news.dailyTopNewsBrief?.modelUsed}), pods7d=${beatPodcasts.totalEpisodes}, playoffOdds=${playoffPicture.baselineSimulation?.teamOdds?.makePlayoffsPct}%`
   );
+}
+
+async function refreshPowerRankingsOnlyForTeams(teams, seasonYear = 2026) {
+  const sampleMeta = teams
+    .map(t => {
+      const p = path.join(ROOT, 'data', 'teams', t.slug, 'meta.json');
+      try {
+        return fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : null;
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean);
+  const probeWeek = Math.max(1, ...sampleMeta.map(m => Number(m.currentWeek) || 1));
+  console.log(`[power-rankings-only] Fetching 6 league-wide power rankings sources once (season=${seasonYear}, week~${probeWeek})...`);
+  const sharedPayloads = await fetchLeaguePowerRankingsPayloads({
+    seasonYear,
+    currentWeek: probeWeek
+  });
+  const okCount = [
+    sharedPayloads.inpredictableHtml,
+    sharedPayloads.nfeloHtml,
+    sharedPayloads.rbsdmRatingsJson,
+    sharedPayloads.cbsHtml,
+    sharedPayloads.espnFpiJson,
+    sharedPayloads.espnPanelRaw
+  ].filter(Boolean).length;
+  console.log(`[power-rankings-only] Loaded ${okCount}/6 live upstream league feeds.`);
+
+  const nowMs = Date.now();
+  for (const team of teams) {
+    const outDir = path.join(ROOT, 'data', 'teams', team.slug);
+    const smPath = path.join(outDir, 'schedule-matchup.json');
+    const metaPath = path.join(outDir, 'meta.json');
+    if (!fs.existsSync(smPath)) {
+      console.warn(`[power-rankings-only] Skipping ${team.abbr}: missing ${smPath}`);
+      continue;
+    }
+    const sm = JSON.parse(fs.readFileSync(smPath, 'utf8'));
+    const meta = fs.existsSync(metaPath) ? JSON.parse(fs.readFileSync(metaPath, 'utf8')) : {};
+    const oppFull = sm?.upcomingMatchup?.oppName || '';
+    const oppShort = oppFull ? oppFull.trim().split(/\s+/).pop() : null;
+    setActiveTeamConfig(team);
+    const powerRankings = await fetchLivePowerRankings({
+      teamAbbr: team.abbr,
+      seasonYear: Number(meta.seasonYear) || seasonYear,
+      currentWeek: Number(meta.currentWeek) || probeWeek,
+      schedule: sm.schedule || [],
+      sfRecord: meta.teamRecord || null,
+      oppShortName: oppShort,
+      sharedPayloads,
+      nowMs
+    });
+    sm.powerRankings = powerRankings;
+    fs.writeFileSync(smPath, JSON.stringify(sm, null, 2));
+    console.log(
+      `[power-rankings-only] ${team.abbr.padEnd(3)} (${team.slug.padEnd(10)}): ${powerRankings.sources?.length || 0}/${powerRankings.allSources?.length || 0} active | #${powerRankings.consensusRank ?? '—'} (${powerRankings.rangeShort || '—'}) | ${powerRankings.weekLabel || 'N/A'}`
+    );
+  }
 }
 
 async function main() {
   const args = process.argv.slice(2);
   const runAll = args.includes('--all');
   const missingOnly = args.includes('--missing-only');
+  const powerRankingsOnly = args.includes('--power-rankings-only');
   const teamsArg = args.find(a => a.startsWith('--teams=')) || args.find(a => a.startsWith('--team='));
   let teams = [];
   if (runAll) {
@@ -2781,6 +2862,11 @@ async function main() {
   }
   if (teams.length === 0) {
     console.log('[stage-2] All target teams already built (0 remaining).');
+    return;
+  }
+
+  if (powerRankingsOnly) {
+    await refreshPowerRankingsOnlyForTeams(teams, 2026);
     return;
   }
 

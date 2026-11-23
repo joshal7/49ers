@@ -24172,7 +24172,7 @@
     "rangeMax": 32,
     "rangeShort": "#20–#32",
     "rangeDisplay": "#20–#32 across 3 verified models & polls",
-    "synthesizedTakeaway": "3 verified models & polls place the 3-8 Colts at #27 consensus (avg #27.3) through Week 11, ranging from #20 (ESPN FPI) to #32 (RBSDM). 2 outlets still on an older week are excluded for week consistency.",
+    "synthesizedTakeaway": "3 verified models & polls place the 3-8 Colts at #27 consensus (avg #27.3) through Week 11, ranging from #20 (ESPN FPI) to #32 (RBSDM). 3 outlets still on an older week are excluded for week consistency.",
     "sources": [
       {
         "id": "espn_fpi",
@@ -24310,6 +24310,23 @@
         "asOfLabel": "Thru Wk 11",
         "verified": true,
         "blurb": "FPI -2.9 (#28 Off / #26 Def efficiency, 5.7 proj. wins, 0.0% SB odds) at 3-8."
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "rank": 29,
+        "previousRank": 29,
+        "delta": "0",
+        "reportedRecord": "3-7",
+        "gamesIncluded": 10,
+        "throughWeek": 10,
+        "forWeek": 11,
+        "asOfIso": "2026-11-17T20:45:39Z",
+        "asOfLabel": "Week 11",
+        "verified": true,
+        "blurb": "Beat the Dolphins 24-22. Non-QB MVP at midseason: RB Jonathan Taylor Even amid the Colts' dysfunction, Taylor has managed to be among the NFL's better running backs."
       }
     ],
     "excludedStaleSources": [
@@ -24318,7 +24335,7 @@
         "outlet": "nfelo Quantitative Elo & EPA Power Ratings",
         "shortName": "nfelo",
         "url": "https://nfeloapp.com/nfl-power-ratings/",
-        "throughWeek": null,
+        "throughWeek": 10,
         "reportedRecord": "3-7",
         "asOfLabel": "3-7 record",
         "freshnessReason": "record_behind"
@@ -24332,10 +24349,20 @@
         "reportedRecord": "3-8",
         "asOfLabel": "Week 11",
         "freshnessReason": "week_behind"
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "throughWeek": 10,
+        "reportedRecord": "3-7",
+        "asOfLabel": "Week 11",
+        "freshnessReason": "record_behind"
       }
     ],
-    "disregardedStaleCount": 2,
-    "fetchedAtIso": "2026-11-23T03:53:02.567Z"
+    "disregardedStaleCount": 3,
+    "fetchedAtIso": "2026-11-23T05:41:29.496Z"
   },
   "upcomingMatchup": {
     "week": 12,

@@ -24164,15 +24164,15 @@
     "pastFreshnessCutoff": true,
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
-    "consensusRank": 22,
-    "averageRank": 22.4,
-    "medianRank": 21,
+    "consensusRank": 23,
+    "averageRank": 22.5,
+    "medianRank": 22,
     "previousRank": 22,
     "rangeMin": 20,
     "rangeMax": 27,
     "rangeShort": "#20–#27",
-    "rangeDisplay": "#20–#27 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 3-7 Falcons at #22 consensus (avg #22.4) through Week 10, ranging from #20 (Inpredictable) to #27 (ESPN FPI). All listed models include the Falcons' latest result entering Week 12 vs. Vikings.",
+    "rangeDisplay": "#20–#27 across 6 verified models & polls",
+    "synthesizedTakeaway": "6 verified models & polls place the 3-7 Falcons at #23 consensus (avg #22.5) through Week 10, ranging from #20 (Inpredictable) to #27 (ESPN FPI). All listed models include the Falcons' latest result entering Week 12 vs. Vikings.",
     "sources": [
       {
         "id": "inpredictable",
@@ -24226,6 +24226,25 @@
         "asOfLabel": "Thru Wk 11",
         "verified": true,
         "blurb": "Tier 4 (42.3% neutral-field win rating, 6.0 proj. wins) at 3-7 through Week 11.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "rank": 23,
+        "previousRank": 23,
+        "delta": "0",
+        "reportedRecord": "3-7",
+        "gamesIncluded": 10,
+        "throughWeek": 10,
+        "forWeek": 11,
+        "asOfIso": "2026-11-17T20:45:39Z",
+        "asOfLabel": "Week 11",
+        "verified": true,
+        "blurb": "Lost to the Chiefs 35-13. Non-QB MVP at midseason: RB Bijan Robinson No surprise here. Robinson is third in the league in rushing yards (951) despite going over 80 yards just once in the Falcons'…",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24347,11 +24366,28 @@
         "asOfLabel": "Thru Wk 11",
         "verified": true,
         "blurb": "FPI -5.7 (#27 Off / #25 Def efficiency, 5.2 proj. wins, 0.0% SB odds) at 3-7."
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "rank": 23,
+        "previousRank": 23,
+        "delta": "0",
+        "reportedRecord": "3-7",
+        "gamesIncluded": 10,
+        "throughWeek": 10,
+        "forWeek": 11,
+        "asOfIso": "2026-11-17T20:45:39Z",
+        "asOfLabel": "Week 11",
+        "verified": true,
+        "blurb": "Lost to the Chiefs 35-13. Non-QB MVP at midseason: RB Bijan Robinson No surprise here. Robinson is third in the league in rushing yards (951) despite going over 80 yards just once in the Falcons'…"
       }
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-23T03:48:47.901Z"
+    "fetchedAtIso": "2026-11-23T05:41:29.496Z"
   },
   "upcomingMatchup": {
     "week": 12,

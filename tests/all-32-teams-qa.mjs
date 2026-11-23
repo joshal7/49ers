@@ -243,6 +243,21 @@ await test('2. All 32 teams have valid live 11-file 2026 JSON bundles with zero 
     assert.ok((cap.players || []).length >= 30, `${team.abbr} cap has < 30 contracts (${cap.players?.length})`);
     assert.ok((sm.schedule || []).length >= 16, `${team.abbr} schedule incomplete (${sm.schedule?.length})`);
     assert.ok(sm.teamStats?.units?.length === 4, `${team.abbr} teamStats must have 4 units`);
+    const pwr = sm.powerRankings || {};
+    const pwrAll = Array.isArray(pwr.allSources) ? pwr.allSources : [];
+    const pwrAct = Array.isArray(pwr.sources) ? pwr.sources : [];
+    assert.equal(pwrAll.length, 6, `${team.abbr} powerRankings.allSources must include all 6 verified upstream outlets (got ${pwrAll.map(s => s.id).join(',')})`);
+    assert.ok(pwrAct.length >= 3, `${team.abbr} powerRankings.sources collapsed to ${pwrAct.length} (${pwr.weekLabel || ''})`);
+    assert.equal(
+      /Through Week (\d+)\s*•\s*Updating After Week \1\b/i.test(pwr.weekLabel || ''),
+      false,
+      `${team.abbr} powerRankings has self-contradicting weekLabel: ${pwr.weekLabel}`
+    );
+    assert.equal(
+      /\b1 verified model place\b/i.test(pwr.synthesizedTakeaway || ''),
+      false,
+      `${team.abbr} powerRankings takeaway has subject-verb error: ${pwr.synthesizedTakeaway}`
+    );
     assert.ok(news.dailyTopNewsBrief?.headline, `${team.abbr} missing dailyTopNewsBrief headline`);
     const teamOdds = seasonal.playoffPicture?.baselineSimulation?.teamOdds || seasonal.playoffPicture?.baselineSimulation?.sfOdds;
     assert.ok(typeof teamOdds?.makePlayoffsPct === 'number', `${team.abbr} missing playoff Monte Carlo odds`);
@@ -331,6 +346,27 @@ await test('2. All 32 teams have valid live 11-file 2026 JSON bundles with zero 
     }
   }
   setActiveTeamConfig(getTeamByAbbr('SF'));
+});
+
+await test('2a. Power Rankings form a clean 1..32 rank bijection across all 6 verified sources (zero CBS blurb hijacks or missing aliases)', () => {
+  const expectedIds = ['inpredictable', 'nfelo', 'rbsdm', 'cbs', 'espn_fpi', 'espn_panel'];
+  const ranksBySource = Object.fromEntries(expectedIds.map(id => [id, new Map()]));
+  for (const team of ALL_NFL_TEAMS) {
+    const baseDir = team.abbr === 'SF' ? path.join(ROOT, 'data') : path.join(ROOT, 'data', 'teams', team.slug);
+    const sm = JSON.parse(fs.readFileSync(path.join(baseDir, 'schedule-matchup.json'), 'utf8'));
+    const all = sm.powerRankings?.allSources || [];
+    for (const id of expectedIds) {
+      const hit = all.find(s => s.id === id);
+      assert.ok(hit && Number.isInteger(hit.rank) && hit.rank >= 1 && hit.rank <= 32, `${team.abbr} missing verified ${id} power ranking`);
+      ranksBySource[id].set(team.abbr, hit.rank);
+    }
+  }
+  for (const id of expectedIds) {
+    const m = ranksBySource[id];
+    const uniq = new Set(m.values());
+    assert.equal(m.size, 32, `${id} must cover all 32 NFL teams`);
+    assert.equal(uniq.size, 32, `${id} must have 32 unique ranks (1..32) with zero duplicate/hijacked team rows`);
+  }
 });
 
 await test('2b. Zero accidental 49ers bias across salientMedia, digestExperience, gameDayRecap & universalSearch engines', () => {
@@ -623,7 +659,7 @@ await test('4. Headless Chrome E2E: Cross-team Matchup opposing player dossiers 
     });
 
     // Test across 3 teams: 49ers (SF), Lions (DET), Bills (BUF), plus Vikings (MIN -> testing SF as opponent!)
-    const testTeams = ['49ers', 'lions', 'bills', 'vikings'];
+    const testTeams = ['49ers', 'broncos', 'lions', 'bills', 'vikings'];
     for (const slug of testTeams) {
       const targetTeam = ALL_NFL_TEAMS.find(t => t.slug === slug);
       const dataBase = slug === '49ers' ? 'data' : `data/teams/${slug}`;
@@ -748,6 +784,23 @@ await test('4. Headless Chrome E2E: Cross-team Matchup opposing player dossiers 
       // Close bottom sheet cleanly
       await evalJs(cdp, `(document.getElementById('closeSheetBtn') || document.querySelector('[data-action="close-sheet"]'))?.click()`);
       await waitFor(cdp, `document.getElementById('bottomSheetBackdrop').hidden === true`);
+
+      // Verify Stats -> Power Rankings card renders comprehensive multi-source rankings (zero 1-source collapse!)
+      await evalJs(cdp, `document.querySelector('[data-action="set-season-sub"][data-season-sub="stats"]').click()`);
+      await waitFor(cdp, `Boolean(document.getElementById('powerRankingsCard'))`);
+      const prDom = await evalJs(
+        cdp,
+        `(() => {
+          const card = document.getElementById('powerRankingsCard');
+          const items = [...(card?.querySelectorAll('[data-power-source]') || [])].map(el => el.getAttribute('data-power-source'));
+          const eyebrow = card?.querySelector('.card-eyebrow')?.textContent?.trim() || '';
+          const overflow = document.documentElement.scrollWidth - window.innerWidth;
+          return { count: items.length, items, eyebrow, overflow };
+        })()`
+      );
+      assert.ok(prDom.count >= 5, `${slug}: #powerRankingsCard must display >= 5 consistent verified sources (got ${prDom.count}: ${prDom.items.join(',')})`);
+      assert.equal(/Through Week (\d+)\s*•\s*Updating After Week \1\b/i.test(prDom.eyebrow), false, `${slug}: self-contradicting eyebrow "${prDom.eyebrow}"`);
+      assert.ok(prDom.overflow <= 1, `${slug}: Stats/Power Rankings horizontal overflow ${prDom.overflow}px`);
     }
 
     assert.equal(pageErrors.length, 0, `Uncaught page errors: ${pageErrors.join(' | ')}`);

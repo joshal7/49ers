@@ -24164,15 +24164,15 @@
     "pastFreshnessCutoff": true,
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
-    "consensusRank": 5,
-    "averageRank": 5.4,
-    "medianRank": 5,
+    "consensusRank": 6,
+    "averageRank": 5.5,
+    "medianRank": 5.5,
     "previousRank": 6,
     "rangeMin": 4,
     "rangeMax": 7,
     "rangeShort": "#4–#7",
-    "rangeDisplay": "#4–#7 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 7-2 Bengals at #5 consensus (avg #5.4) through Week 10, ranging from #4 (ESPN FPI) to #7 (RBSDM). All listed models include the Bengals' latest result entering Week 11 vs. Commanders.",
+    "rangeDisplay": "#4–#7 across 6 verified models & polls",
+    "synthesizedTakeaway": "6 verified models & polls place the 7-2 Bengals at #6 consensus (avg #5.5) through Week 10, ranging from #4 (ESPN FPI) to #7 (RBSDM). All listed models include the Bengals' latest result entering Week 11 vs. Commanders.",
     "sources": [
       {
         "id": "espn_fpi",
@@ -24225,6 +24225,25 @@
         "asOfLabel": "7-2 record",
         "verified": true,
         "blurb": "nfelo 1649 (+6.2 spread value, #2 Off EPA, #4 Net EPA) at 7-2.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "rank": 6,
+        "previousRank": 7,
+        "delta": "+1",
+        "reportedRecord": "7-2",
+        "gamesIncluded": 9,
+        "throughWeek": 10,
+        "forWeek": 11,
+        "asOfIso": "2026-11-17T20:45:39Z",
+        "asOfLabel": "Week 11",
+        "verified": true,
+        "blurb": "Beat the Steelers 38-18. Non-QB MVP at midseason: OT Amarius Mims Not even pass block win rate, which is a great metric, does Mims full justice.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24347,11 +24366,28 @@
         "asOfLabel": "Thru Wk 11",
         "verified": true,
         "blurb": "FPI +5.3 (#2 Off / #10 Def efficiency, 13.1 proj. wins, 9.7% SB odds) at 7-2."
+      },
+      {
+        "id": "espn_panel",
+        "outlet": "ESPN NFL Power Rankings Panel",
+        "shortName": "ESPN Panel",
+        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "rank": 6,
+        "previousRank": 7,
+        "delta": "+1",
+        "reportedRecord": "7-2",
+        "gamesIncluded": 9,
+        "throughWeek": 10,
+        "forWeek": 11,
+        "asOfIso": "2026-11-17T20:45:39Z",
+        "asOfLabel": "Week 11",
+        "verified": true,
+        "blurb": "Beat the Steelers 38-18. Non-QB MVP at midseason: OT Amarius Mims Not even pass block win rate, which is a great metric, does Mims full justice."
       }
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-23T03:51:14.536Z"
+    "fetchedAtIso": "2026-11-23T05:41:29.496Z"
   },
   "upcomingMatchup": {
     "week": 11,

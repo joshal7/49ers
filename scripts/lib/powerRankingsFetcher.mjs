@@ -119,15 +119,51 @@ async function fetchWithTimeout(url, { timeoutMs = 12000, headers = {}, fetchImp
 }
 
 /**
+ * Canonical set of upstream team abbreviations used across Inpredictable (`ARZ`, `JAC`, `LA`),
+ * nfelo (`OAK`), RBSDM (`LA`), CBS Sports (`JAC`), and ESPN (`WSH`).
+ */
+const UPSTREAM_CODE_ALIASES = {
+  SF: ['SFO'],
+  ARI: ['ARZ', 'CRD'],
+  JAX: ['JAC'],
+  LV: ['OAK', 'LVR', 'RAI'],
+  LAR: ['LA', 'RAM', 'STL'],
+  LAC: ['SD', 'SDG'],
+  WAS: ['WSH'],
+  GB: ['GNB'],
+  KC: ['KAN'],
+  NE: ['NWE'],
+  NO: ['NOR'],
+  TB: ['TAM'],
+  BAL: ['BLT'],
+  CLE: ['CLV'],
+  HOU: ['HTX', 'HST'],
+  IND: ['CLT'],
+  TEN: ['OTI']
+};
+
+export function getTeamUpstreamCodes(teamInput = 'SF') {
+  const team = resolveTeamConfig(teamInput);
+  const codes = new Set(
+    [
+      team.abbr,
+      team.pfrAbbr,
+      team.espnAbbr,
+      team.cbsAbbr,
+      ...(UPSTREAM_CODE_ALIASES[team.abbr] || [])
+    ]
+      .filter(Boolean)
+      .map(c => String(c).toUpperCase())
+  );
+  return codes;
+}
+
+/**
  * 1. Parse Inpredictable NFL Betting Market Rankings HTML (`stats.inpredictable.com/rankings/nfl.php`)
  */
 export function parseInpredictableHtml(html, teamInput = 'SF') {
   if (!html || typeof html !== 'string') return null;
-  const team = resolveTeamConfig(teamInput);
-  const validCodes = new Set([team.abbr, team.pfrAbbr.toUpperCase(), team.espnAbbr.toUpperCase(), team.cbsAbbr.toUpperCase()]);
-  if (team.abbr === 'SF') validCodes.add('SFO');
-  if (team.abbr === 'LAR') validCodes.add('LA');
-  if (team.abbr === 'WAS') validCodes.add('WSH');
+  const validCodes = getTeamUpstreamCodes(teamInput);
 
   const asOfMatch = html.match(/As of\s+([A-Z][a-z]+\s+\d{1,2},\s*\d{4})/i);
   const asOfIso = asOfMatch ? parseMonthDayYearToIsoDate(asOfMatch[1]) : null;
@@ -245,9 +281,15 @@ export function parseNfeloHtml(html, { seasonYear = null, teamAbbr = 'SF' } = {}
   const teams = [...byTeam.values()];
   if (teams.length < 24) return null;
 
-  const targetCode = resolveTeamConfig(teamAbbr).abbr;
+  const team = resolveTeamConfig(teamAbbr);
+  const validCodes = getTeamUpstreamCodes(team);
+  const nickLower = String(team.nickname || '').trim().toLowerCase();
+  const isTargetTeam = t =>
+    validCodes.has(String(t?.team || '').toUpperCase()) ||
+    (nickLower && String(t?.teamNick || '').trim().toLowerCase() === nickLower);
+
   teams.sort((a, b) => Number(b.nfelo) - Number(a.nfelo));
-  const sfIdx = teams.findIndex(t => String(t.team).toUpperCase() === targetCode);
+  const sfIdx = teams.findIndex(isTargetTeam);
   if (sfIdx === -1) return null;
 
   const sf = teams[sfIdx];
@@ -264,7 +306,7 @@ export function parseNfeloHtml(html, { seasonYear = null, teamAbbr = 'SF' } = {}
         (Number(b.spreadValue) - Number(b.spreadValueWoWChange)) -
         (Number(a.spreadValue) - Number(a.spreadValueWoWChange))
     );
-    const prevIdx = prevSorted.findIndex(t => String(t.team).toUpperCase() === targetCode);
+    const prevIdx = prevSorted.findIndex(isTargetTeam);
     if (prevIdx !== -1) previousRank = prevIdx + 1;
   }
   const delta = previousRank != null ? formatRankDelta(previousRank - rank) : '0';
@@ -315,12 +357,12 @@ export function parseNfeloHtml(html, { seasonYear = null, teamAbbr = 'SF' } = {}
  */
 export function parseRbsdmRatingsJson(ratingsJson, metaJson = null, teamInput = 'SF') {
   if (!ratingsJson || !Array.isArray(ratingsJson.teams) || ratingsJson.teams.length < 24) return null;
-  const targetCode = resolveTeamConfig(teamInput).abbr;
+  const validCodes = getTeamUpstreamCodes(teamInput);
   const teams = ratingsJson.teams.filter(t => t && typeof t.team === 'string' && Number.isFinite(Number(t.win_pct)));
   if (teams.length < 24) return null;
 
   const sortedNow = [...teams].sort((a, b) => Number(b.win_pct) - Number(a.win_pct));
-  const sfIdx = sortedNow.findIndex(t => String(t.team).toUpperCase() === targetCode || (targetCode === 'LAR' && String(t.team).toUpperCase() === 'LA'));
+  const sfIdx = sortedNow.findIndex(t => validCodes.has(String(t.team).toUpperCase()));
   if (sfIdx === -1) return null;
 
   const sf = sortedNow[sfIdx];
@@ -329,7 +371,7 @@ export function parseRbsdmRatingsJson(ratingsJson, metaJson = null, teamInput = 
   let previousRank = null;
   if (teams.every(t => Number.isFinite(Number(t.week_ago_win_pct)))) {
     const sortedPrev = [...teams].sort((a, b) => Number(b.week_ago_win_pct) - Number(a.week_ago_win_pct));
-    const prevIdx = sortedPrev.findIndex(t => String(t.team).toUpperCase() === targetCode || (targetCode === 'LAR' && String(t.team).toUpperCase() === 'LA'));
+    const prevIdx = sortedPrev.findIndex(t => validCodes.has(String(t.team).toUpperCase()));
     if (prevIdx !== -1) previousRank = prevIdx + 1;
   }
   const delta = previousRank != null ? formatRankDelta(previousRank - rank) : '0';
@@ -381,9 +423,10 @@ export function parseRbsdmRatingsJson(ratingsJson, metaJson = null, teamInput = 
 export function parseCbsSportsHtml(html, teamInput = 'SF') {
   if (!html || typeof html !== 'string') return null;
   const team = resolveTeamConfig(teamInput);
-  const escNick = team.nickname.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const escSlug = team.cbsSlug.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const rowRe = new RegExp(`${escSlug}|>${escNick}<|\\b${escNick}\\b`, 'i');
+  const validCodes = getTeamUpstreamCodes(team);
+  const targetSlug = String(team.cbsSlug || '').trim().toLowerCase();
+  const targetNick = String(team.nickname || '').trim().toLowerCase();
+  const targetFull = String(team.fullName || '').trim().toLowerCase();
 
   const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
   const title = titleMatch ? stripTagsClean(titleMatch[1]) : '';
@@ -396,10 +439,23 @@ export function parseCbsSportsHtml(html, teamInput = 'SF') {
 
   const rowMatches = html.match(/<tr[^>]*class="[^"]*team-rankings-stats[^"]*"[^>]*>[\s\S]*?<\/tr>/gi) || [];
   for (const row of rowMatches) {
-    if (!rowRe.test(row)) continue;
-
     const tdMatches = [...row.matchAll(/<td([^>]*)>([\s\S]*?)<\/td>/gi)];
     if (tdMatches.length < 4) continue;
+
+    // Match STRICTLY inside the team identity cell (`tdMatches[1]`) — NEVER the full `<tr>`
+    // or editorial blurb (`tdMatches[2]`), which mentions opponent nicknames (e.g. 49ers blurb
+    // mentioning "Cowboys" previously hijacked Cowboys to #2!).
+    const teamCellHtml = tdMatches[1]?.[2] || '';
+    const teamCellText = stripTagsClean(teamCellHtml).toLowerCase();
+    const hrefMatch = teamCellHtml.match(/\/nfl\/teams\/([a-z]{2,3})\/([a-z0-9-]+)\/?/i);
+    const hrefCode = hrefMatch ? hrefMatch[1].toUpperCase() : '';
+    const hrefSlug = hrefMatch ? hrefMatch[2].toLowerCase() : '';
+    const isRowMatch =
+      (hrefCode && validCodes.has(hrefCode)) ||
+      (hrefSlug && targetSlug && hrefSlug === targetSlug) ||
+      teamCellText === targetNick ||
+      teamCellText === targetFull;
+    if (!isRowMatch) continue;
 
     const rankNum = Number(stripTagsClean(tdMatches[0][2]));
     if (!Number.isInteger(rankNum) || rankNum < 1 || rankNum > 32) continue;
@@ -449,7 +505,7 @@ export function parseCbsSportsHtml(html, teamInput = 'SF') {
  */
 export function parseEspnFpiJson(fpiJson, teamInput = 'SF') {
   if (!fpiJson || !Array.isArray(fpiJson.teams) || fpiJson.teams.length < 24) return null;
-  const team = resolveTeamConfig(teamInput);
+  const validCodes = getTeamUpstreamCodes(teamInput);
 
   const catNames = {};
   for (const cat of fpiJson.categories || []) {
@@ -457,10 +513,7 @@ export function parseEspnFpiJson(fpiJson, teamInput = 'SF') {
       catNames[cat.name] = cat.names;
     }
   }
-  const sfEntry = fpiJson.teams.find(t => {
-    const ab = String(t?.team?.abbreviation || '').toUpperCase();
-    return ab === team.abbr || ab === team.espnAbbr.toUpperCase();
-  });
+  const sfEntry = fpiJson.teams.find(t => validCodes.has(String(t?.team?.abbreviation || '').toUpperCase()));
   if (!sfEntry) return null;
 
   const readCat = name => {
@@ -535,9 +588,11 @@ export function parseEspnFpiJson(fpiJson, teamInput = 'SF') {
 
 /**
  * 6. Parse ESPN Weekly NFL Power Rankings Panel Article (`now.core.api.espn.com/v1/sports/news/<id>`)
+ * Supports ALL 32 NFL franchises (not just SF).
  */
-export function parseEspnPanelArticle(articleMeta = {}, storyHtml = '') {
+export function parseEspnPanelArticle(articleMeta = {}, storyHtml = '', teamInput = 'SF') {
   if (!storyHtml || typeof storyHtml !== 'string') return null;
+  const team = resolveTeamConfig(teamInput);
   const headline = String(articleMeta.headline || '');
   const url = sanitizeExternalUrl(articleMeta.url || '', null);
   if (!url || !/espn\.com\/nfl\/story\//i.test(url)) return null;
@@ -549,31 +604,38 @@ export function parseEspnPanelArticle(articleMeta = {}, storyHtml = '') {
   const throughWeek = forWeek != null && forWeek >= 1 ? forWeek - 1 : null;
 
   const plain = stripTagsClean(storyHtml);
-  // Match "1. San Francisco 49ers (8-1)" or "2. San Francisco 49ers"
-  const sfMatch = plain.match(
-    /(?:^|\s)(\d{1,2})\.\s*San Francisco 49ers\s*(?:\((\d{1,2}-\d{1,2}(?:-\d{1,2})?)\))?([\s\S]{0,650})/i
+  const escFull = String(team.fullName || 'San Francisco 49ers').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Match e.g. "1. San Francisco 49ers (8-1)" or "7. Denver Broncos (7-2)" or "15. New York Giants (5-3-1)"
+  const teamMatch = plain.match(
+    new RegExp(
+      `(?:^|\\s)(\\d{1,2})\\.\\s*${escFull}\\s*(?:\\((\\d{1,2}-\\d{1,2}(?:-\\d{1,2})?)\\))?([\\s\\S]{0,650})`,
+      'i'
+    )
   );
-  if (!sfMatch) return null;
+  if (!teamMatch) return null;
 
-  const rankNum = Number(sfMatch[1]);
+  const rankNum = Number(teamMatch[1]);
   if (!Number.isInteger(rankNum) || rankNum < 1 || rankNum > 32) return null;
 
-  const recParsed = parseRecordGamesCount(sfMatch[2] || '');
-  const tail = sfMatch[3] || '';
+  const recParsed = parseRecordGamesCount(teamMatch[2] || '');
+  const tail = teamMatch[3] || '';
 
-  // Stop tail before next ranked team (e.g., "2. Buffalo Bills")
-  const nextTeamIdx = tail.search(/\s\d{1,2}\.\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,2}\s*\(/);
-  const sfBody = nextTeamIdx > 20 ? tail.slice(0, nextTeamIdx).trim() : tail.trim();
+  // Stop tail before next ranked team (e.g., "2. Buffalo Bills (", "5. San Francisco 49ers (")
+  const nextTeamIdx = tail.search(/\s\d{1,2}\.\s+[A-Z][A-Za-z.]+(?:\s+[A-Za-z0-9']+){1,2}\s*\(/);
+  const teamBody = nextTeamIdx > 20 ? tail.slice(0, nextTeamIdx).trim() : tail.trim();
 
-  const prevRankMatch = sfBody.match(/(?:Week\s+\d+\s+ranking|Previous\s+ranking|Last\s+week)\s*:\s*(\d{1,2})/i);
+  const prevRankMatch = teamBody.match(/(?:Week\s+\d+\s+ranking|Previous\s+ranking|Last\s+week)\s*:\s*(\d{1,2})/i);
   const previousRank = prevRankMatch ? Number(prevRankMatch[1]) : null;
   const delta = previousRank != null ? formatRankDelta(previousRank - rankNum) : '0';
 
-  const resultMatch = sfBody.match(/Week\s+\d+\s+result\s*:\s*([^.]+?)(?=\s+Week\s+\d+\s+ranking|\s+Previous\s+ranking|$)/i);
-  const resultClause = resultMatch ? resultMatch[1].trim() : '';
+  const resultMatch = teamBody.match(/Week\s+\d+\s+result\s*:\s*([^.]+?)(?=\s+Week\s+\d+\s+ranking|\s+Previous\s+ranking|$)/i);
+  const rawResultClause = resultMatch ? resultMatch[1].trim() : '';
+  const resultClause = /^bye$/i.test(rawResultClause)
+    ? (throughWeek != null ? `Week ${throughWeek} bye` : 'Bye week')
+    : rawResultClause;
 
   // Strip structured lead-in fields to get the editorial takeaway sentence
-  const cleanedEditorial = sfBody
+  const cleanedEditorial = teamBody
     .replace(/Week\s+\d+\s+result\s*:[^:]*?(?=Week\s+\d+\s+ranking|Previous\s+ranking|$)/i, '')
     .replace(/(?:Week\s+\d+\s+ranking|Previous\s+ranking)\s*:\s*\d{1,2}\s*/i, '')
     .trim();
@@ -605,10 +667,10 @@ export function parseEspnPanelArticle(articleMeta = {}, storyHtml = '') {
 }
 
 /**
- * Discovers the newest ESPN NFL Power Rankings weekly panel article across provided
- * ESPN news articles + ESPN Search API. Strictly excludes College Football / NBA / Fantasy.
+ * Discovers and fetches the raw newest ESPN NFL Power Rankings weekly panel article ONCE
+ * (usable across all 32 NFL teams). Strictly excludes College Football / NBA / Fantasy.
  */
-async function discoverAndFetchEspnPanel({ seasonYear, currentWeek, espnNewsArticles = [], fetchImpl = globalThis.fetch }) {
+async function discoverEspnPanelRawArticle({ seasonYear, currentWeek, espnNewsArticles = [], fetchImpl = globalThis.fetch }) {
   const candidates = [];
   const pushCandidate = item => {
     const hl = String(item?.headline || item?.displayName || item?.title || '');
@@ -632,9 +694,13 @@ async function discoverAndFetchEspnPanel({ seasonYear, currentWeek, espnNewsArti
 
   for (const a of espnNewsArticles || []) pushCandidate(a);
 
-  // Also query ESPN Search API specifically for current week's NFL Power Rankings
+  // Also query ESPN Search API specifically for current & prior week's NFL Power Rankings
+  // (prior-week fallback guarantees discovery right after Sunday games when currentWeek ticks ahead
+  // before ESPN publishes the next Tuesday panel article).
+  const wkNum = Number(currentWeek) || 1;
   const searchQueries = [
-    `NFL power rankings week ${currentWeek} ${seasonYear}`,
+    `NFL power rankings week ${wkNum} ${seasonYear}`,
+    ...(wkNum > 1 ? [`NFL power rankings week ${wkNum - 1} ${seasonYear}`] : []),
     `NFL power rankings ${seasonYear}`
   ];
   for (const q of searchQueries) {
@@ -671,20 +737,80 @@ async function discoverAndFetchEspnPanel({ seasonYear, currentWeek, espnNewsArti
   const storyJson = JSON.parse(storyRespText);
   const headlineObj = storyJson?.headlines?.[0] || {};
   const storyHtml = headlineObj.story || '';
-  return parseEspnPanelArticle(
-    {
+  if (!storyHtml) return null;
+  return {
+    articleMeta: {
       headline: headlineObj.headline || best.headline,
       url: best.url,
       published: headlineObj.published || best.published
     },
     storyHtml
-  );
+  };
+}
+
+async function discoverAndFetchEspnPanel({
+  seasonYear,
+  currentWeek,
+  espnNewsArticles = [],
+  teamAbbr = 'SF',
+  fetchImpl = globalThis.fetch
+}) {
+  const raw = await discoverEspnPanelRawArticle({ seasonYear, currentWeek, espnNewsArticles, fetchImpl });
+  if (!raw) return null;
+  return parseEspnPanelArticle(raw.articleMeta, raw.storyHtml, teamAbbr);
 }
 
 /**
- * Fetches all 6 live NFL Power Rankings sources in parallel, preserves last verified snapshot
- * on transient per-source network failure (never fabricating ranks), and enforces strict
- * week consistency + 24-hour post-game freshness cutoff via `resolveConsistentPowerRankings`.
+ * Fetches all 6 league-wide NFL Power Rankings upstream payloads ONCE in parallel so
+ * multi-team sweeps (`scripts/fetch-team-data.mjs --all`) parse all 32 teams cleanly
+ * from a single atomic snapshot without making 32x redundant HTTP requests.
+ */
+export async function fetchLeaguePowerRankingsPayloads({
+  seasonYear = 2026,
+  currentWeek = 1,
+  espnNewsArticles = [],
+  fetchImpl = globalThis.fetch
+} = {}) {
+  const safe = async fn => {
+    try {
+      return await fn();
+    } catch {
+      return null;
+    }
+  };
+  const [inpredictableHtml, nfeloHtml, rbsdmRatingsJson, rbsdmMetaJson, cbsHtml, espnFpiJson, espnPanelRaw] =
+    await Promise.all([
+      safe(() => fetchWithTimeout('https://stats.inpredictable.com/rankings/nfl.php', { fetchImpl })),
+      safe(() => fetchWithTimeout('https://www.nfeloapp.com/nfl-power-ratings/', { fetchImpl })),
+      safe(async () => JSON.parse(await fetchWithTimeout('https://rbsdm.com/api/playoff-sim/ratings', { fetchImpl }))),
+      safe(async () => JSON.parse(await fetchWithTimeout('https://rbsdm.com/api/meta', { fetchImpl }))),
+      safe(() => fetchWithTimeout('https://www.cbssports.com/nfl/powerrankings/', { fetchImpl })),
+      safe(async () =>
+        JSON.parse(
+          await fetchWithTimeout(
+            `https://site.web.api.espn.com/apis/fitt/v3/sports/football/nfl/powerindex?region=us&lang=en&season=${seasonYear}&limit=32`,
+            { fetchImpl }
+          )
+        )
+      ),
+      safe(() => discoverEspnPanelRawArticle({ seasonYear, currentWeek, espnNewsArticles, fetchImpl }))
+    ]);
+
+  return {
+    inpredictableHtml,
+    nfeloHtml,
+    rbsdmRatingsJson,
+    rbsdmMetaJson,
+    cbsHtml,
+    espnFpiJson,
+    espnPanelRaw
+  };
+}
+
+/**
+ * Fetches all 6 live NFL Power Rankings sources in parallel (or parses from `sharedPayloads`),
+ * preserves last verified snapshot on transient per-source network failure (never fabricating ranks),
+ * and enforces strict week consistency + 24-hour post-game freshness cutoff via `resolveConsistentPowerRankings`.
  */
 export async function fetchLivePowerRankings({
   teamAbbr = 'SF',
@@ -695,6 +821,7 @@ export async function fetchLivePowerRankings({
   oppShortName = null,
   espnNewsArticles = [],
   previousPowerRankings = null,
+  sharedPayloads = null,
   nowMs = Date.now(),
   cutoffHours = POST_GAME_FRESHNESS_CUTOFF_HOURS,
   fetchImpl = globalThis.fetch
@@ -716,20 +843,27 @@ export async function fetchLivePowerRankings({
     {
       id: 'inpredictable',
       run: async () => {
-        const html = await fetchWithTimeout('https://stats.inpredictable.com/rankings/nfl.php', { fetchImpl });
+        const html =
+          sharedPayloads?.inpredictableHtml ??
+          (await fetchWithTimeout('https://stats.inpredictable.com/rankings/nfl.php', { fetchImpl }));
         return parseInpredictableHtml(html, team);
       }
     },
     {
       id: 'nfelo',
       run: async () => {
-        const html = await fetchWithTimeout('https://www.nfeloapp.com/nfl-power-ratings/', { fetchImpl });
+        const html =
+          sharedPayloads?.nfeloHtml ??
+          (await fetchWithTimeout('https://www.nfeloapp.com/nfl-power-ratings/', { fetchImpl }));
         return parseNfeloHtml(html, { seasonYear, teamAbbr: team.abbr });
       }
     },
     {
       id: 'rbsdm',
       run: async () => {
+        if (sharedPayloads?.rbsdmRatingsJson) {
+          return parseRbsdmRatingsJson(sharedPayloads.rbsdmRatingsJson, sharedPayloads.rbsdmMetaJson || null, team);
+        }
         const [ratingsTxt, metaTxt] = await Promise.all([
           fetchWithTimeout('https://rbsdm.com/api/playoff-sim/ratings', { fetchImpl }),
           fetchWithTimeout('https://rbsdm.com/api/meta', { fetchImpl }).catch(() => null)
@@ -740,13 +874,18 @@ export async function fetchLivePowerRankings({
     {
       id: 'cbs',
       run: async () => {
-        const html = await fetchWithTimeout('https://www.cbssports.com/nfl/powerrankings/', { fetchImpl });
+        const html =
+          sharedPayloads?.cbsHtml ??
+          (await fetchWithTimeout('https://www.cbssports.com/nfl/powerrankings/', { fetchImpl }));
         return parseCbsSportsHtml(html, team);
       }
     },
     {
       id: 'espn_fpi',
       run: async () => {
+        if (sharedPayloads?.espnFpiJson) {
+          return parseEspnFpiJson(sharedPayloads.espnFpiJson, team);
+        }
         const txt = await fetchWithTimeout(
           `https://site.web.api.espn.com/apis/fitt/v3/sports/football/nfl/powerindex?region=us&lang=en&season=${seasonYear}&limit=32`,
           { fetchImpl }
@@ -756,10 +895,22 @@ export async function fetchLivePowerRankings({
     },
     {
       id: 'espn_panel',
-      run: async () =>
-        team.abbr === 'SF'
-          ? discoverAndFetchEspnPanel({ seasonYear, currentWeek, espnNewsArticles, fetchImpl })
-          : null
+      run: async () => {
+        if (sharedPayloads?.espnPanelRaw) {
+          return parseEspnPanelArticle(
+            sharedPayloads.espnPanelRaw.articleMeta,
+            sharedPayloads.espnPanelRaw.storyHtml,
+            team
+          );
+        }
+        return discoverAndFetchEspnPanel({
+          seasonYear,
+          currentWeek,
+          espnNewsArticles,
+          teamAbbr: team.abbr,
+          fetchImpl
+        });
+      }
     }
   ];
 
@@ -791,7 +942,8 @@ export async function fetchLivePowerRankings({
       cutoffHours,
       currentWeek,
       sfRecord,
-      oppShortName
+      oppShortName,
+      teamAbbr: team.abbr
     }
   );
 }
