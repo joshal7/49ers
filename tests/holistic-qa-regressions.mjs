@@ -3304,6 +3304,21 @@ test(
       html.includes('__TEAM_THEME_COLORS__') && html.includes('metaStatusBarStyle'),
       'index.html must hydrate saved dark/light theme & status bar synchronously before first paint'
     );
+    assert.ok(
+      /\.topbar\s*\{[^}]*position:\s*fixed;[^}]*top:\s*0;[^}]*background-color:\s*var\(--bg-header\);[^}]*backdrop-filter:\s*none;/s.test(
+        portalBuilder
+      ),
+      'build-nfl-portal.mjs .topbar must use a full-bleed fixed solid opaque header matching team .top-header (fixes iOS 26 top-edge frost in place)'
+    );
+    assert.equal(
+      portalBuilder.includes('background-attachment: fixed'),
+      false,
+      'build-nfl-portal.mjs must not use background-attachment: fixed on body (triggers iOS 26 top-edge blur)'
+    );
+    assert.ok(
+      /\/nfl-portal\.html[\s\S]{0,400}Cache-Control['"],\s*['"]public, max-age=0, must-revalidate['"]/.test(workerSrc),
+      'nfl-teams-worker.js must serve nfl-portal.html with Cache-Control: public, max-age=0, must-revalidate so updates land immediately in place'
+    );
   }
 );
 

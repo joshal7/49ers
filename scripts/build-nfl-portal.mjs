@@ -32,7 +32,7 @@ const CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
 
 export const PORTAL_CONFERENCES = ['NFC', 'AFC'];
 export const PORTAL_DIVISIONS = ['North', 'South', 'East', 'West'];
-const ASSET_VER = '6';
+const ASSET_VER = '7';
 
 function resolveCurrentSwRegisterUrl() {
   try {
@@ -608,6 +608,7 @@ function buildIndexHtml(grouped) {
   <style>
     :root {
       --bg: #080B10;
+      --bg-header: #080B10;
       --bg-card: rgba(17, 23, 34, 0.84);
       --bg-tile-hover: rgba(255, 255, 255, 0.055);
       --border: rgba(255, 255, 255, 0.08);
@@ -629,6 +630,7 @@ function buildIndexHtml(grouped) {
 
     [data-theme="light"] {
       --bg: #F5F6FA;
+      --bg-header: #F5F6FA;
       --bg-card: rgba(255, 255, 255, 0.94);
       --bg-tile-hover: rgba(15, 23, 42, 0.045);
       --border: rgba(15, 23, 42, 0.08);
@@ -650,31 +652,64 @@ function buildIndexHtml(grouped) {
       -webkit-tap-highlight-color: transparent;
     }
 
-    html, body {
+    html {
       margin: 0;
       padding: 0;
       width: 100%;
-      background: var(--bg);
+      background-color: var(--bg-header);
+      overflow-x: clip;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100dvh;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(60% 45% at 14% 12%, var(--nfc-soft), transparent 72%),
+        radial-gradient(60% 45% at 86% 12%, var(--afc-soft), transparent 72%);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
 
-    body {
-      min-height: 100dvh;
-      background-image:
-        radial-gradient(60% 45% at 14% 0%, var(--nfc-soft), transparent 72%),
-        radial-gradient(60% 45% at 86% 0%, var(--afc-soft), transparent 72%);
-      background-attachment: fixed;
+    /* Full-bleed fixed solid opaque header matching team .top-header (zero iOS 26 Liquid Glass frost) */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 70;
+      width: 100%;
+      background-color: var(--bg-header);
+      background-image: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border-bottom: 1px solid var(--border);
+      padding: calc(env(safe-area-inset-top, 0px) + 5px) max(10px, env(safe-area-inset-right, 0px)) 5px max(10px, env(safe-area-inset-left, 0px));
+      transform: translateZ(0);
+      isolation: isolate;
+    }
+
+    .topbar-inner {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2px;
+      min-height: 26px;
     }
 
     .shell {
       width: 100%;
       max-width: 1160px;
       margin: 0 auto;
-      padding-top: max(7px, env(safe-area-inset-top));
+      padding-top: calc(env(safe-area-inset-top, 0px) + 43px);
       padding-bottom: max(7px, env(safe-area-inset-bottom));
       padding-left: max(10px, env(safe-area-inset-left));
       padding-right: max(10px, env(safe-area-inset-right));
@@ -692,16 +727,6 @@ function buildIndexHtml(grouped) {
       .shell {
         height: 100dvh;
       }
-    }
-
-    /* Top bar: crisp per-team-consistent oval crest + title + subtle theme switch */
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex: 0 0 auto;
-      padding: 0 2px;
-      min-height: 26px;
     }
 
     .brand {
@@ -946,9 +971,12 @@ function buildIndexHtml(grouped) {
       :root {
         --icon-size: clamp(56px, min(16.6vw, 7.25dvh), 72px);
       }
+      .topbar {
+        padding: calc(env(safe-area-inset-top, 0px) + 7px) max(12px, env(safe-area-inset-right, 0px)) 7px max(12px, env(safe-area-inset-left, 0px));
+      }
       .shell {
         gap: 9px;
-        padding-top: max(12px, env(safe-area-inset-top));
+        padding-top: calc(env(safe-area-inset-top, 0px) + 49px);
         padding-bottom: max(12px, env(safe-area-inset-bottom));
         padding-left: max(12px, env(safe-area-inset-left));
         padding-right: max(12px, env(safe-area-inset-right));
@@ -981,8 +1009,11 @@ function buildIndexHtml(grouped) {
       :root {
         --icon-size: 60px;
       }
+      .topbar {
+        padding: calc(env(safe-area-inset-top, 0px) + 4px) max(16px, env(safe-area-inset-right, 0px)) 4px max(16px, env(safe-area-inset-left, 0px));
+      }
       .shell {
-        padding: 10px 16px 18px;
+        padding: calc(env(safe-area-inset-top, 0px) + 44px) max(16px, env(safe-area-inset-right, 0px)) max(18px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
         gap: 10px;
       }
       .conferences,
@@ -1012,12 +1043,15 @@ function buildIndexHtml(grouped) {
         --radius-card: 18px;
         --radius-tile: 18px;
       }
-      .shell {
-        padding: 16px 28px 22px;
-        gap: 14px;
-      }
       .topbar {
+        padding: calc(env(safe-area-inset-top, 0px) + 10px) max(28px, env(safe-area-inset-right, 0px)) 10px max(28px, env(safe-area-inset-left, 0px));
+      }
+      .topbar-inner {
         min-height: 34px;
+      }
+      .shell {
+        padding: calc(env(safe-area-inset-top, 0px) + 68px) 28px 22px;
+        gap: 14px;
       }
       .brand {
         gap: 10px;
@@ -1079,8 +1113,8 @@ function buildIndexHtml(grouped) {
   </style>
 </head>
 <body>
-  <div class="shell">
-    <header class="topbar">
+  <header class="topbar" role="banner">
+    <div class="topbar-inner">
       <div class="brand" aria-label="NFL Team Hub">
         <img class="brand-crest" src="./nfl-crest.svg?v=${ASSET_VER}" alt="" width="34" height="20" decoding="async" fetchpriority="high">
         <h1 class="brand-title">NFL Team Hub</h1>
@@ -1094,8 +1128,10 @@ function buildIndexHtml(grouped) {
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
       </button>
-    </header>
+    </div>
+  </header>
 
+  <div class="shell">
     <main class="conferences">
       ${conferencesHtml}
     </main>

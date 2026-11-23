@@ -1762,7 +1762,7 @@ export default {
         if (portalRes && portalRes.ok) {
           const headers = new Headers(portalRes.headers);
           headers.set('Content-Type', 'text/html; charset=utf-8');
-          headers.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=3600');
+          headers.set('Cache-Control', 'public, max-age=0, must-revalidate');
           headers.set('X-Content-Type-Options', 'nosniff');
           headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
           return new Response(request.method === 'HEAD' ? null : portalRes.body, {

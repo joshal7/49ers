@@ -294,7 +294,13 @@ async function main() {
               }
             }
           }
-          const topbarText = (document.querySelector('.topbar')?.textContent || '').trim();
+          const topbarEl = document.querySelector('.topbar');
+          const topbarText = (topbarEl?.textContent || '').trim();
+          const topbarStyle = topbarEl ? window.getComputedStyle(topbarEl) : null;
+          const topbarRect = topbarEl ? topbarEl.getBoundingClientRect() : null;
+          const bodyStyle = window.getComputedStyle(document.body);
+          const confEl = document.querySelector('.conferences');
+          const confRect = confEl ? confEl.getBoundingClientRect() : null;
           const crestEl = document.querySelector('.brand-crest');
           const crestRect = crestEl ? crestEl.getBoundingClientRect() : null;
           const crestLoaded = Boolean(crestEl && crestEl.complete && crestEl.naturalWidth > 0);
@@ -310,6 +316,14 @@ async function main() {
             nfcRight: nfcRect.right,
             afcLeft: afcRect.left,
             topbarText,
+            topbarPosition: topbarStyle?.position || '',
+            topbarBg: topbarStyle?.backgroundColor || '',
+            topbarBackdrop: topbarStyle?.backdropFilter || 'none',
+            topbarTop: topbarRect ? Math.round(topbarRect.top) : -1,
+            topbarBottom: topbarRect ? Math.round(topbarRect.bottom) : -1,
+            topbarWidth: topbarRect ? Math.round(topbarRect.width) : 0,
+            confTop: confRect ? Math.round(confRect.top) : -1,
+            bodyBgAttachment: bodyStyle?.backgroundAttachment || '',
             crestLoaded,
             crestWidth: crestRect ? Math.round(crestRect.width) : 0,
             crestHeight: crestRect ? Math.round(crestRect.height) : 0,
@@ -326,6 +340,19 @@ async function main() {
 
         assert.equal(metrics.topbarText, 'NFL Team Hub', `Unexpected topbar text: "${metrics.topbarText}"`);
         assert.ok(!/joshal\.com/i.test(metrics.topbarText), `Topbar must not display redundant domain: "${metrics.topbarText}"`);
+        assert.equal(metrics.topbarPosition, 'fixed', `Portal .topbar must be position:fixed to eliminate iOS 26 top-edge frost (got ${metrics.topbarPosition})`);
+        assert.equal(metrics.topbarTop, 0, `Portal .topbar must sit flush at top:0 (got ${metrics.topbarTop})`);
+        assert.ok(metrics.topbarWidth >= metrics.innerWidth - 1, `Portal .topbar must span full viewport width (${metrics.topbarWidth} < ${metrics.innerWidth})`);
+        assert.ok(
+          metrics.topbarBg && !/rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*0(?:\.0+)?\s*\)|transparent/i.test(metrics.topbarBg),
+          `Portal .topbar must have solid opaque background-color (got "${metrics.topbarBg}")`
+        );
+        assert.equal(metrics.topbarBackdrop, 'none', `Portal .topbar must disable backdrop-filter (got "${metrics.topbarBackdrop}")`);
+        assert.ok(metrics.bodyBgAttachment !== 'fixed', `Portal body must not use background-attachment:fixed (got "${metrics.bodyBgAttachment}")`);
+        assert.ok(
+          metrics.confTop >= metrics.topbarBottom,
+          `Portal .conferences (top=${metrics.confTop}) must clear fixed .topbar (bottom=${metrics.topbarBottom})`
+        );
         assert.ok(metrics.crestLoaded, 'Oval .brand-crest SVG failed to load');
         assert.ok(metrics.crestWidth > metrics.crestHeight && metrics.crestWidth >= 32, `Crest should be crisp horizontal oval (${metrics.crestWidth}x${metrics.crestHeight})`);
         assert.equal(metrics.tileCount, 32, 'Expected 32 team tiles');
