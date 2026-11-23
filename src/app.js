@@ -48,11 +48,10 @@ import {
   is49ersGameLiveWindow,
   isCompletedGameAvailabilityCluster,
   isActiveInGameAvailabilityCluster,
-  isDailyBriefStaleForLiveState,
   resolveGameNewsContext,
   sortNewsWithBreakingPriority,
   filterOutCompletedGameAvailabilityItems
-} from './engine/breakingClassifier.js?v=67';
+} from './engine/breakingClassifier.js?v=68';
 import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=60';
 import {
   loadAll49ersData,
@@ -64,7 +63,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=97';
+} from './services/dataService.js?v=98';
 import {
   SHARED_GEMINI_KEY_STORAGE_KEY,
   publishSharedGeminiApiKey,
@@ -91,7 +90,7 @@ import {
   shouldTriggerDailyTopNewsBriefRefresh,
   refreshDailyTopNewsBriefIfDue,
   clearDailyNewsBriefAttemptLock
-} from './services/aiWorkerClient.js?v=90';
+} from './services/aiWorkerClient.js?v=91';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -129,7 +128,7 @@ import {
   isAllowedInlineVideoStreamUrl,
   resolveIosStandaloneExternalVideoBreakoutUrl,
   sanitizeExternalUrl
-} from './engine/linkIntegrity.js?v=70';
+} from './engine/linkIntegrity.js?v=71';
 import {
   BIG_BOARD_SORT_FIELDS,
   parseBigBoardUrlParams,
@@ -143,7 +142,7 @@ import { renderHomeDashboardHtml } from './views/homeView.js?v=92';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=94';
+} from './views/newsView.js?v=95';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=50';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=82';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=97';
@@ -4967,7 +4966,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=115', { updateViaCache: 'none' })
+        .register('./sw.js?v=116', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

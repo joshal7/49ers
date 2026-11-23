@@ -36,7 +36,6 @@ import {
   promoteLinkDropTweetToArticle,
   filterOutCompletedGameAvailabilityItems,
   stripRedundantAuthorBoilerplate,
-  isRedundantProfileSelfLink,
   buildStorySignatureKey,
   resolveNewsBriefCycleState,
   isAppDataAwaitingLivePostGameHydration,
@@ -86,14 +85,10 @@ import {
   rankGeminiTtsModels,
   resolveGeminiThinkingLevelLabel,
   buildGeminiThinkingConfig,
-  DEEP_RESEARCH_STAGE1_SYSTEM_PROMPT,
-  buildStage1DeepResearchUserPrompt,
   getDeepAnalysisStage2SystemPrompt,
   buildStage2AnalysisSynthesisPrompt,
-  buildStage3AnalysisAuditPrompt,
   getNotebookLmStage2SystemPrompt,
   buildStage2NotebookLmScriptPrompt,
-  buildStage2NotebookLmPolishPrompt,
   buildNotebookLmTtsDirectorHeader,
   chunkTurnsForGeminiTts
 } from '../engine/geminiStudioPrompts.js';
@@ -1380,7 +1375,7 @@ export async function fetchLiveTopicSignals(rawTopic = '', teamInput = null) {
 
   const bskyQuery = encodeURIComponent(`${activeTeam.nickname} ${topic.slice(0, 64)}`);
   const bskyUrl = `https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=${bskyQuery}&limit=8`;
-  const espnUrl = `https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${activeTeam.espnId || 25}&limit=10`;
+  const espnUrl = `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${activeTeam.espnId || 25}&limit=10`;
 
   const [bskyJson, espnJson] = await Promise.all([
     fetchJsonWithTimeout(bskyUrl, 3200),

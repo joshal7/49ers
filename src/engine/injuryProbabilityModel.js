@@ -21,7 +21,6 @@ import {
 } from './linkIntegrity.js';
 import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 import {
-  buildXPlayerScoopSearchUrl,
   extractBeatAttributionFromText,
   isBlueskyPostUrl,
   isDirectSocialPostUrl,
@@ -6195,7 +6194,7 @@ export function reconcileRosterAndHealthWithNews(appData = {}, { nowMs = Date.no
           headshotUrl: p.headshotUrl || '',
           injuryType: p.health.injuryType || 'Undisclosed',
           status: p.health.isIrReturnQuestionable
-            ? 'IR — Designated to Return (Questionable)'
+            ? 'IR — 21-Day Window Open (Questionable)'
             : p.health.status || 'Injured Reserve',
           isSeasonEnding: Boolean(p.health.isSeasonEnding),
           isPracticeWindowOpen: Boolean(p.health.isPracticeWindowOpen),

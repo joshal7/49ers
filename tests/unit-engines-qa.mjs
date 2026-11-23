@@ -3298,7 +3298,7 @@ await testAsync('Direct Browser 3-Stage Gemini Pipeline enforces GEMINI_KEY_REQU
         { status: 200, headers: { 'Content-Type': 'application/json' } }
       );
     }
-    if (u.includes('public.api.bsky.app') || u.includes('site.api.espn.com')) {
+    if (u.includes('public.api.bsky.app') || u.includes('espn.com/apis/')) {
       return new Response('{}', { status: 200, headers: { 'Content-Type': 'application/json' } });
     }
     // Simulate preview 400 on gemini-3.8-pro so cascade falls over cleanly to gemini-3.1-pro-preview!
@@ -12832,7 +12832,7 @@ await testAsync('hydrateLiveEspnOverlay protects live ESPN-designated SF injurie
 
     globalThis.fetch = async url => {
       const u = String(url || '');
-      if (u.includes('site.api.espn.com/apis/site/v2/sports/football/nfl/injuries')) {
+      if (u.includes('espn.com/apis/site/v2/sports/football/nfl/injuries')) {
         return {
           ok: true,
           status: 200,
@@ -18836,6 +18836,14 @@ await testAsync(
         nflTeamsWorkerSrc.includes('ninerswire.usatoday.com/feed/') &&
         nflTeamsWorkerSrc.includes('knbr.com/category/49ers/feed/'),
       'worker/nfl-teams-worker.js /api/live-wire must use 15s/25s edge TTL and ingest Niners Wire + KNBR + Tier 1-3 X embeds'
+    );
+    const dataServiceSrc = fs.readFileSync(path.join(rootDir, 'src', 'services', 'dataService.js'), 'utf8');
+    const aiWorkerClientSrc = fs.readFileSync(path.join(rootDir, 'src', 'services', 'aiWorkerClient.js'), 'utf8');
+    assert.ok(
+      !dataServiceSrc.includes('https://site.api.espn.com/apis/') &&
+        !aiWorkerClientSrc.includes('https://site.api.espn.com/apis/') &&
+        dataServiceSrc.includes('https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event='),
+      'Browser-side ESPN live telemetry must use CORS-safe site.web.api.espn.com (never site.api.espn.com)'
     );
   }
 );

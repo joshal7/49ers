@@ -88,7 +88,6 @@ import {
   stripHistoricalSfBioSentences
 } from '../engine/linkIntegrity.js';
 import {
-  buildTargetedOriginalTweetUrl,
   configureBeatAttributionForTeam,
   extractBeatAttributionFromText,
   isDirectSocialPostUrl,
@@ -2246,7 +2245,7 @@ export async function hydrateLiveEspnPlayerBeatWire(
     cohort.map(async player => {
       try {
         const perPlayerLimit = focusIdStr && String(player.id) === focusIdStr ? 10 : manual ? 6 : 4;
-        const apiUrl = `https://site.api.espn.com/apis/fantasy/v2/games/ffl/news/players?playerId=${encodeURIComponent(player.id)}&limit=${perPlayerLimit}`;
+        const apiUrl = `https://site.web.api.espn.com/apis/fantasy/v2/games/ffl/news/players?playerId=${encodeURIComponent(player.id)}&limit=${perPlayerLimit}`;
         const res = await fetchSingleWithTimeout(apiUrl, { cache: 'no-store' }, 6000);
         if (!res.ok) return;
         const payload = await res.json();
@@ -2676,7 +2675,7 @@ export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 
   const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
   try {
     const res = await fetchSingleWithTimeout(
-      `https://site.api.espn.com/apis/site/v2/sports/football/nfl/transactions?team=${activeTeam.espnId}&limit=20`,
+      `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/transactions?team=${activeTeam.espnId}&limit=20`,
       { cache: 'no-store' },
       6500
     );
@@ -2781,17 +2780,17 @@ export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5
   try {
     const [nflNewsRes, sfNewsRes, nflTxRes] = await Promise.all([
       fetchSingleWithTimeout(
-        'https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?limit=35',
+        'https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/news?limit=35',
         { cache: 'no-store' },
         6500
       ).catch(() => null),
       fetchSingleWithTimeout(
-        `https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${activeTeam.espnId}&limit=30`,
+        `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${activeTeam.espnId}&limit=30`,
         { cache: 'no-store' },
         6500
       ).catch(() => null),
       fetchSingleWithTimeout(
-        'https://site.api.espn.com/apis/site/v2/sports/football/nfl/transactions?limit=35',
+        'https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/transactions?limit=35',
         { cache: 'no-store' },
         6500
       ).catch(() => null)
@@ -3335,7 +3334,7 @@ export async function hydrateLiveEspnGameHighlightsAndPlays(
   if (!eventId) return 0;
 
   try {
-    const summaryUrl = `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${encodeURIComponent(String(eventId))}`;
+    const summaryUrl = `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${encodeURIComponent(String(eventId))}`;
     const res = await fetchSingleWithTimeout(summaryUrl, { cache: 'no-store' }, 5000);
     if (!res.ok) return 0;
     const summaryRaw = await res.json();
@@ -4138,7 +4137,7 @@ async function hydrateLiveOpponentGameDayPlayerWire(appData, windowState, oppPoo
     ...cohort.map(async player => {
       try {
         const res = await fetchSingleWithTimeout(
-          `https://site.api.espn.com/apis/fantasy/v2/games/ffl/news/players?playerId=${encodeURIComponent(player.id)}&limit=3`,
+          `https://site.web.api.espn.com/apis/fantasy/v2/games/ffl/news/players?playerId=${encodeURIComponent(player.id)}&limit=3`,
           { cache: 'no-store' },
           4500
         );
@@ -4186,7 +4185,7 @@ async function hydrateLiveOpponentGameDayPlayerWire(appData, windowState, oppPoo
       if (!oppAbbr) return;
       try {
         const res = await fetchSingleWithTimeout(
-          `https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${toEspnTeamSlugClient(oppAbbr)}&limit=10`,
+          `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${toEspnTeamSlugClient(oppAbbr)}&limit=10`,
           { cache: 'no-store' },
           4500
         );
@@ -4515,7 +4514,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
 
   if (oh && (!Array.isArray(oh.activeRoster) || oh.activeRoster.length < 30) && oppAbbr) {
     const oppRosterRaw = await fetchJsonNoStore(
-      `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${toEspnTeamSlugClient(oppAbbr)}/roster`
+      `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/teams/${toEspnTeamSlugClient(oppAbbr)}/roster`
     ).catch(() => null);
     if (oppRosterRaw?.athletes?.length) {
       const starterSet = new Set(
@@ -5495,16 +5494,16 @@ export async function hydrateLiveEspnOverlay(appData) {
     official49ersInjHtml
   ] = await Promise.all([
     fetchCorsJson('https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings').catch(() => null),
-    fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnAbbr}/schedule`).catch(() => null),
-    fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${activeTeam.espnId}`).catch(() => null),
+    fetchCorsJson(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnAbbr}/schedule`).catch(() => null),
+    fetchCorsJson(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${activeTeam.espnId}`).catch(() => null),
     initialOppSlug
       ? fetchCorsJson(
-          `https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${encodeURIComponent(initialOppSlug)}`
+          `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${encodeURIComponent(initialOppSlug)}`
         ).catch(() => null)
       : Promise.resolve(null),
-    fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${activeTeam.espnId}&limit=25`).catch(() => null),
-    fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnId}/roster`).catch(() => null),
-    fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnId}/depthcharts`).catch(() => null),
+    fetchCorsJson(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${activeTeam.espnId}&limit=25`).catch(() => null),
+    fetchCorsJson(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnId}/roster`).catch(() => null),
+    fetchCorsJson(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnId}/depthcharts`).catch(() => null),
     fetchOfficial49ersInjuryReportHtmlClient(Date.now(), activeTeam).catch(() => '')
   ]);
   let oppInjuriesRaw = initialOppInjuriesRaw;
@@ -5700,7 +5699,7 @@ export async function hydrateLiveEspnOverlay(appData) {
       !allEvents.some(e => Number(e.seasonType?.type ?? e.seasonType?.id ?? 0) === 3)
     ) {
       const postRaw = await fetchCorsJson(
-        `https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnAbbr}/schedule?seasontype=3`
+        `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnAbbr}/schedule?seasontype=3`
       ).catch(() => null);
       if (Array.isArray(postRaw?.events) && postRaw.events.length > 0) {
         allEvents.push(...postRaw.events);
@@ -5944,11 +5943,11 @@ export async function hydrateLiveEspnOverlay(appData) {
           if (!isTbdOpponent) {
             const oppSlug = toEspnTeamSlugClient(oppAbbr);
             const [oppRosterRaw, oppDepthRaw, nextOppInjRaw] = await Promise.all([
-              fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${oppSlug}/roster`).catch(() => null),
-              fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/${oppSlug}/depthcharts`).catch(() => null),
+              fetchCorsJson(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/teams/${oppSlug}/roster`).catch(() => null),
+              fetchCorsJson(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/teams/${oppSlug}/depthcharts`).catch(() => null),
               oppAbbr !== initialOppAbbr
                 ? fetchCorsJson(
-                    `https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${encodeURIComponent(oppSlug)}`
+                    `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${encodeURIComponent(oppSlug)}`
                   ).catch(() => null)
                 : Promise.resolve(oppInjuriesRaw)
             ]);
@@ -6073,7 +6072,7 @@ export async function hydrateLiveEspnOverlay(appData) {
 
       if (nextGame.id && !String(nextGame.id).startsWith('post_')) {
         const summaryRaw = await fetchCorsJson(
-          `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${encodeURIComponent(nextGame.id)}`
+          `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${encodeURIComponent(nextGame.id)}`
         ).catch(() => null);
         const pc = summaryRaw?.pickcenter?.[0];
         if (pc && um.betting) {
@@ -6121,7 +6120,7 @@ export async function hydrateLiveEspnOverlay(appData) {
       const overlayTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
       const evIdEnc = encodeURIComponent(String(targetGame.id));
       const [compSummaryRaw, compCoreRosterRaw] = await Promise.all([
-        fetchCorsJson(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${evIdEnc}`).catch(
+        fetchCorsJson(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${evIdEnc}`).catch(
           () => null
         ),
         targetGame.completed
@@ -6746,7 +6745,7 @@ export async function hydrateLiveEspnOverlay(appData) {
                 ? 'Questionable'
                 : rp.health.status;
         } else if (isIrReturnQ && playProb.probabilityPct > 0) {
-          rp.health.status = 'Questionable (IR Return Window)';
+          rp.health.status = 'IR — 21-Day Window Open (Questionable)';
         } else if (rp.rosterBucket === 'ir' && rp.health.isPracticeWindowOpen) {
           rp.health.status = 'IR — 21-Day Window Open';
         }
@@ -7121,7 +7120,7 @@ export async function hydrateLiveEspnOverlay(appData) {
               }
               if (offRec.gameStatus === 'Questionable') {
                 rp.health.isIrReturnQuestionable = true;
-                rp.health.status = 'Questionable (IR Return Window)';
+                rp.health.status = 'IR — 21-Day Window Open (Questionable)';
               } else if (offRec.gameStatus === 'Out') {
                 rp.health.isIrReturnQuestionable = false;
                 rp.health.status = 'IR — 21-Day Window Open';
@@ -7567,7 +7566,7 @@ export async function hydrateLiveOpponentWeeklyPracticeWire(
       if (!pid) return;
       try {
         const res = await fetchSingleWithTimeout(
-          `https://site.api.espn.com/apis/fantasy/v2/games/ffl/news/players?playerId=${encodeURIComponent(pid)}&limit=4`,
+          `https://site.web.api.espn.com/apis/fantasy/v2/games/ffl/news/players?playerId=${encodeURIComponent(pid)}&limit=4`,
           { cache: 'no-store' },
           4500
         );
