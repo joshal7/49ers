@@ -3996,6 +3996,294 @@
           "neutral": false
         }
       ]
+    },
+    "liveScoresByMatchup": {
+      "11_CIN_WAS": {
+        "espnGameId": "401873078",
+        "week": 11,
+        "away": "CIN",
+        "home": "WAS",
+        "awayScore": 0,
+        "homeScore": 0,
+        "state": "pre",
+        "completed": false,
+        "shortDetail": "11/23 - 8:15 PM EST"
+      },
+      "CIN_WAS": {
+        "espnGameId": "401873078",
+        "week": 11,
+        "away": "CIN",
+        "home": "WAS",
+        "awayScore": 0,
+        "homeScore": 0,
+        "state": "pre",
+        "completed": false,
+        "shortDetail": "11/23 - 8:15 PM EST"
+      },
+      "11_IND_HOU": {
+        "espnGameId": "401873066",
+        "week": 11,
+        "away": "IND",
+        "home": "HOU",
+        "awayScore": 3,
+        "homeScore": 26,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "IND_HOU": {
+        "espnGameId": "401873066",
+        "week": 11,
+        "away": "IND",
+        "home": "HOU",
+        "awayScore": 3,
+        "homeScore": 26,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "11_MIA_BUF": {
+        "espnGameId": "401873070",
+        "week": 11,
+        "away": "MIA",
+        "home": "BUF",
+        "awayScore": 9,
+        "homeScore": 26,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "MIA_BUF": {
+        "espnGameId": "401873070",
+        "week": 11,
+        "away": "MIA",
+        "home": "BUF",
+        "awayScore": 9,
+        "homeScore": 26,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "11_NO_CHI": {
+        "espnGameId": "401873071",
+        "week": 11,
+        "away": "NO",
+        "home": "CHI",
+        "awayScore": 13,
+        "homeScore": 21,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "NO_CHI": {
+        "espnGameId": "401873071",
+        "week": 11,
+        "away": "NO",
+        "home": "CHI",
+        "awayScore": 13,
+        "homeScore": 21,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "11_TEN_DAL": {
+        "espnGameId": "401873073",
+        "week": 11,
+        "away": "TEN",
+        "home": "DAL",
+        "awayScore": 30,
+        "homeScore": 51,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "TEN_DAL": {
+        "espnGameId": "401873073",
+        "week": 11,
+        "away": "TEN",
+        "home": "DAL",
+        "awayScore": 30,
+        "homeScore": 51,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "11_TB_DET": {
+        "espnGameId": "401873072",
+        "week": 11,
+        "away": "TB",
+        "home": "DET",
+        "awayScore": 21,
+        "homeScore": 31,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "TB_DET": {
+        "espnGameId": "401873072",
+        "week": 11,
+        "away": "TB",
+        "home": "DET",
+        "awayScore": 21,
+        "homeScore": 31,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "11_ARI_KC": {
+        "espnGameId": "401873067",
+        "week": 11,
+        "away": "ARI",
+        "home": "KC",
+        "awayScore": 7,
+        "homeScore": 34,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "ARI_KC": {
+        "espnGameId": "401873067",
+        "week": 11,
+        "away": "ARI",
+        "home": "KC",
+        "awayScore": 7,
+        "homeScore": 34,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "11_PIT_PHI": {
+        "espnGameId": "401873076",
+        "week": 11,
+        "away": "PIT",
+        "home": "PHI",
+        "awayScore": 16,
+        "homeScore": 19,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "PIT_PHI": {
+        "espnGameId": "401873076",
+        "week": 11,
+        "away": "PIT",
+        "home": "PHI",
+        "awayScore": 16,
+        "homeScore": 19,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "11_BAL_CAR": {
+        "espnGameId": "401873068",
+        "week": 11,
+        "away": "BAL",
+        "home": "CAR",
+        "awayScore": 33,
+        "homeScore": 35,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "BAL_CAR": {
+        "espnGameId": "401873068",
+        "week": 11,
+        "away": "BAL",
+        "home": "CAR",
+        "awayScore": 33,
+        "homeScore": 35,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "11_NYJ_LAC": {
+        "espnGameId": "401873074",
+        "week": 11,
+        "away": "NYJ",
+        "home": "LAC",
+        "awayScore": 27,
+        "homeScore": 24,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "NYJ_LAC": {
+        "espnGameId": "401873074",
+        "week": 11,
+        "away": "NYJ",
+        "home": "LAC",
+        "awayScore": 27,
+        "homeScore": 24,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "11_LV_DEN": {
+        "espnGameId": "401873075",
+        "week": 11,
+        "away": "LV",
+        "home": "DEN",
+        "awayScore": 24,
+        "homeScore": 38,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "LV_DEN": {
+        "espnGameId": "401873075",
+        "week": 11,
+        "away": "LV",
+        "home": "DEN",
+        "awayScore": 24,
+        "homeScore": 38,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "11_JAX_NYG": {
+        "espnGameId": "401873069",
+        "week": 11,
+        "away": "JAX",
+        "home": "NYG",
+        "awayScore": 18,
+        "homeScore": 23,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "JAX_NYG": {
+        "espnGameId": "401873069",
+        "week": 11,
+        "away": "JAX",
+        "home": "NYG",
+        "awayScore": 18,
+        "homeScore": 23,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "11_MIN_SF": {
+        "espnGameId": "401873077",
+        "week": 11,
+        "away": "MIN",
+        "home": "SF",
+        "awayScore": 10,
+        "homeScore": 35,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      },
+      "MIN_SF": {
+        "espnGameId": "401873077",
+        "week": 11,
+        "away": "MIN",
+        "home": "SF",
+        "awayScore": 10,
+        "homeScore": 35,
+        "state": "post",
+        "completed": true,
+        "shortDetail": "Final"
+      }
     }
   },
   "draftPrep2027": {

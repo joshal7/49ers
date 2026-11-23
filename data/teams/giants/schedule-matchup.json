@@ -26461,6 +26461,11 @@
         "Trench Run-Fit & Two-Way Leverage: DC Dennard Wilson balances pass-rush pressure with two-high/split-safety discipline on early downs, while Indianapolis Colts's offense tests New York's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": true,
+      "altitudeFt": 715,
+      "source": "stadium"
+    }
   }
 }

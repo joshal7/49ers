@@ -26515,6 +26515,17 @@
         "Trench Run-Fit & Two-Way Leverage: DC Mike Rutenberg balances pass-rush pressure with two-high/split-safety discipline on early downs, while Las Vegas Raiders's offense tests Cleveland's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": false,
+      "tempF": 43,
+      "windMph": 7,
+      "windDir": "SW",
+      "precipPct": 22,
+      "condition": "Partly Cloudy",
+      "altitudeFt": 580,
+      "source": "open-meteo",
+      "forecastHourUtc": "2026-11-30T01:00"
+    }
   }
 }

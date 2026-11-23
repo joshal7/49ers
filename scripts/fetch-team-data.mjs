@@ -44,9 +44,16 @@ import {
   buildFranchiseHeadToHeadHistory,
   buildScheduleH2hByOpponentMap,
   estimate4YrRookieContractByPick,
+  fetchKickoffOutdoorWeather,
   loadSharedNflversePlayerContext,
-  normPlayerName
+  normPlayerName,
+  resolvePlayerWeeklyLog
 } from './lib/nflversePlayerContext.mjs';
+import { resolveNflStadiumMeta } from '../src/config/nflStadiums.js';
+import {
+  extractLiveScoreboardMap,
+  parseEspnTransactionsToLedger
+} from '../src/engine/teamDeepDiveEngine.js';
 import {
   fetchLeaguePowerRankingsPayloads,
   fetchLivePowerRankings
@@ -336,10 +343,21 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
       )
     )
   );
+  const liveScoresByMatchup = {};
+  const espnWeatherByGameId = new Map();
   for (const sb of sbPayloads) {
+    Object.assign(liveScoresByMatchup, extractLiveScoreboardMap(sb));
     for (const ev of sb?.events || []) {
       const comp = ev.competitions?.[0];
       if (!comp) continue;
+      if (ev.id) {
+        const w = ev.weather || comp.weather || null;
+        espnWeatherByGameId.set(String(ev.id), {
+          indoor: comp.venue?.indoor,
+          tempF: w?.temperature != null ? Math.round(Number(w.temperature)) : null,
+          condition: String(w?.displayValue || '').trim()
+        });
+      }
       const homeC = (comp.competitors || []).find(c => c.homeAway === 'home');
       const awayC = (comp.competitors || []).find(c => c.homeAway === 'away');
       if (!homeC || !awayC) continue;
@@ -428,6 +446,8 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     powerRankingsPayloads,
     completedGames: reconciledLeagueGames.completedGames,
     remainingGames: reconciledLeagueGames.remainingGames,
+    liveScoresByMatchup,
+    espnWeatherByGameId,
     baseTeamStatsTemplate: sfMatchup?.teamStats || null,
     sharedBigBoard: sfSeasonal?.draftPrep2027?.consensusBigBoard || [],
     sharedBigBoardMeta: sfSeasonal?.draftPrep2027?.bigBoardMeta || null,
@@ -1788,6 +1808,12 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
         snapSummary,
         primarySnapPct,
         stats2026,
+        weeklyLog2026: resolvePlayerWeeklyLog(nflCtx?.weeklyPlayerLogsIndex, {
+          gsisId,
+          pfrId,
+          name: fullName,
+          teamAbbr: team.abbr
+        }),
         careerSeasons: dedupSeasons,
         nextGenStats: (gsisId && nflCtx?.ngsByGsis?.get(gsisId)) || null,
         pfrAdvStats: (pfrId && nflCtx?.pfrAdvById?.get(pfrId)) || null,
@@ -2600,6 +2626,36 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     }
   );
 
+  const venueObjForWeather = nextUnplayed?.venue || { name: team.stadium, city: team.city, state: '', country: 'USA' };
+  const venueLabelForWeather = typeof venueObjForWeather === 'string'
+    ? venueObjForWeather
+    : [venueObjForWeather.name, venueObjForWeather.city].filter(Boolean).join(' • ');
+  const homeAbbrForWeather = nextUnplayed?.homeAway === 'away' ? (nextUnplayed?.opponent?.abbr || '') : team.abbr;
+  const stadiumMetaForWeather = resolveNflStadiumMeta({
+    venueName: venueLabelForWeather,
+    homeTeamAbbr: homeAbbrForWeather
+  });
+  let upcomingMatchupWeather = null;
+  if (nextUnplayed && !nextUnplayed.completed && !nextUnplayed.isByeWeek && nextUnplayed.opponent?.abbr !== 'TBD') {
+    const sbW = nextUnplayed.id ? leagueCtx.espnWeatherByGameId?.get(String(nextUnplayed.id)) : null;
+    if (sbW?.indoor === true || (sbW?.indoor !== false && stadiumMetaForWeather?.isIndoor)) {
+      upcomingMatchupWeather = { indoor: true, altitudeFt: stadiumMetaForWeather?.altitudeFt || 0, source: 'stadium' };
+    } else if (sbW && sbW.tempF != null) {
+      upcomingMatchupWeather = {
+        indoor: false,
+        tempF: sbW.tempF,
+        condition: sbW.condition || '',
+        windMph: null,
+        windDir: '',
+        precipPct: null,
+        altitudeFt: stadiumMetaForWeather?.altitudeFt || 0,
+        source: 'espn'
+      };
+    } else if (stadiumMetaForWeather && !stadiumMetaForWeather.isIndoor && nextUnplayed.dateIso) {
+      upcomingMatchupWeather = await fetchKickoffOutdoorWeather(nextUnplayed.dateIso, stadiumMetaForWeather);
+    }
+  }
+
   const upcomingMatchup = {
     week: nextUnplayed?.week || currentWeek,
     gameId: nextUnplayed?.id || '',
@@ -2612,7 +2668,8 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     kickoffIso: nextUnplayed?.dateIso || null,
     kickoffDisplay,
     broadcast: nextUnplayed?.broadcast || 'NFL TV',
-    venue: nextUnplayed?.venue || { name: team.stadium, city: team.city, state: '', country: 'USA' },
+    venue: venueObjForWeather,
+    weather: upcomingMatchupWeather,
     sfRecord: teamStanding.record,
     sfLogoUrl: teamLogoUrl,
     oppAbbr: nextUnplayed?.opponent?.abbr || 'TBD',
@@ -2913,6 +2970,14 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     } catch {}
   }
 
+  const teamTxLedger = parseEspnTransactionsToLedger(espnTxRaw?.transactions || [], {
+    teamRoster: players,
+    seasonYear
+  });
+  if (playoffPicture && leagueCtx.liveScoresByMatchup) {
+    playoffPicture.liveScoresByMatchup = leagueCtx.liveScoresByMatchup;
+  }
+
   const seasonalJson = {
     updatedAt: nowIso,
     tradeWarRoom: tradeIntel.tradeWarRoom,
@@ -2943,6 +3008,8 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     departedPlayers,
     positionalLeaderboards,
     peerDirectory,
+    transactions: teamTxLedger.transactions,
+    psElevations: teamTxLedger.psElevations,
     players
   };
 

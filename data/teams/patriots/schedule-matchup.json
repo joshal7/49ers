@@ -26518,6 +26518,11 @@
         "Trench Run-Fit & Two-Way Leverage: DC Zak Kuhr balances pass-rush pressure with two-high/split-safety discipline on early downs, while Los Angeles Chargers's offense tests New England's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": true,
+      "altitudeFt": 130,
+      "source": "stadium"
+    }
   }
 }

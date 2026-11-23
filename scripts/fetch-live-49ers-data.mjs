@@ -16,6 +16,16 @@ import { fileURLToPath } from 'node:url';
 
 import { parseOverTheCapHtml } from './lib/otcParser.mjs';
 import { buildCombineIndexer } from './lib/combineSpider.mjs';
+import {
+  buildWeeklyPlayerLogsIndex,
+  resolvePlayerWeeklyLog,
+  fetchKickoffOutdoorWeather
+} from './lib/nflversePlayerContext.mjs';
+import { resolveNflStadiumMeta } from '../src/config/nflStadiums.js';
+import {
+  extractLiveScoreboardMap,
+  parseEspnTransactionsToLedger
+} from '../src/engine/teamDeepDiveEngine.js';
 import { fetchLivePowerRankings } from './lib/powerRankingsFetcher.mjs';
 import {
   searchYouTubeVideos,
@@ -480,6 +490,12 @@ async function main() {
 
   // 4. Parse OverTheCap Contracts & Homonym-Safe Player Identity Resolver
   console.log('[3/6] Parsing multi-year OverTheCap contracts & Combine spider percentiles...');
+  const weeklyPlayerLogsIndex = buildWeeklyPlayerLogsIndex({
+    statsPlayerWeek: statsPlayerWeekCurrent,
+    snapsCurrent: snaps2026,
+    gamesRows,
+    seasonYear
+  });
   const otcParsed = parseOverTheCapHtml(otcHtml, seasonYear, otcSpaceHtml);
   const capPrimaryYrKey = otcParsed.years[seasonYearStr]
     ? seasonYearStr
@@ -1542,6 +1558,12 @@ async function main() {
         snapSummary,
         primarySnapPct,
         stats2026: current2026Stats,
+        weeklyLog2026: resolvePlayerWeeklyLog(weeklyPlayerLogsIndex, {
+          gsisId,
+          pfrId,
+          name: fullName,
+          teamAbbr: 'SF'
+        }),
         careerSeasons: dedupSeasons,
         nextGenStats: (gsisId && ngsByGsis.get(gsisId)) || null,
         pfrAdvStats: (pfrId && pfrAdvById.get(pfrId)) || null,
@@ -5487,6 +5509,40 @@ async function main() {
           }
         ];
 
+  const matchupHomeAbbr = sfIsHome ? 'SF' : oppAbbrTarget;
+  const matchupStadiumMeta = resolveNflStadiumMeta({
+    venueName: venueDisplayDynamic,
+    homeTeamAbbr: matchupHomeAbbr
+  });
+  let upcomingMatchupWeather = null;
+  if (!nextScheduledGame?.completed && oppAbbrTarget !== 'TBD' && oppAbbrTarget !== 'BYE') {
+    const sbEventMatch = (espnScoreboard?.events || []).find(
+      ev => String(ev?.id || '') === String(nextScheduledGame?.id || '')
+    );
+    const sbComp = sbEventMatch?.competitions?.[0] || null;
+    const sbIndoor = sbComp?.venue?.indoor;
+    const sbWeather = sbEventMatch?.weather || sbComp?.weather || null;
+    if (sbIndoor === true || (sbIndoor !== false && matchupStadiumMeta?.isIndoor)) {
+      upcomingMatchupWeather = { indoor: true, altitudeFt: matchupStadiumMeta?.altitudeFt || 0, source: 'stadium' };
+    } else if (sbWeather && sbWeather.temperature != null) {
+      upcomingMatchupWeather = {
+        indoor: false,
+        tempF: Math.round(Number(sbWeather.temperature)),
+        condition: String(sbWeather.displayValue || '').trim(),
+        windMph: null,
+        windDir: '',
+        precipPct: null,
+        altitudeFt: matchupStadiumMeta?.altitudeFt || 0,
+        source: 'espn'
+      };
+    } else if (matchupStadiumMeta && !matchupStadiumMeta.isIndoor) {
+      upcomingMatchupWeather = await fetchKickoffOutdoorWeather(
+        nextScheduledGame?.dateIso || kickoffDateObj.toISOString(),
+        matchupStadiumMeta
+      );
+    }
+  }
+
   const upcomingMatchup = {
     week: currentWeek,
     gameId: nextScheduledGame?.id || null,
@@ -5508,6 +5564,7 @@ async function main() {
     kickoffDisplay: kickoffDisplayDynamic,
     broadcast: liveTvNetwork,
     venue: venueDisplayDynamic,
+    weather: upcomingMatchupWeather,
     sfRecord: `${sfStandingsDetail.record} (#${sfStandingsDetail.playoffSeed} Seed in NFC)`,
     sfLogoUrl: teamRecordsMap.get('SF')?.logoUrl || resolveTeamLogoUrl('SF'),
     oppAbbr: oppAbbrTarget,
@@ -6585,6 +6642,12 @@ async function main() {
     }
   }
 
+  const sfTxLedger = parseEspnTransactionsToLedger(espnSfTxJson?.transactions || [], {
+    teamRoster: rosterPlayers,
+    seasonYear
+  });
+  const liveScoreboardMap = extractLiveScoreboardMap(espnScoreboard);
+
   writeCleanJson(path.join(dataDir, 'meta.json'), metaJson);
   writeCleanJson(path.join(dataDir, 'roster.json'), {
     updatedAt: nowIso,
@@ -6592,6 +6655,8 @@ async function main() {
     excludedGhostIds,
     positionalLeaderboards: finalPositionalLeaderboards,
     peerDirectory: finalPeerDirectory,
+    transactions: sfTxLedger.transactions,
+    psElevations: sfTxLedger.psElevations,
     players: rosterPlayers
   });
   writeCleanJson(path.join(dataDir, 'depth-chart.json'), {
@@ -6659,6 +6724,7 @@ async function main() {
       ],
       baselineSimulation: baselineMonteCarlo,
       rootingLeverage,
+      liveScoresByMatchup: liveScoreboardMap,
       seedPathCards: [
         {
           target: '#1 Seed & First-Round Bye',

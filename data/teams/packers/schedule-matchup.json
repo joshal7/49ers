@@ -26498,6 +26498,11 @@
         "Trench Run-Fit & Two-Way Leverage: DC Jonathan Gannon balances pass-rush pressure with two-high/split-safety discipline on early downs, while Los Angeles Rams's offense tests Green Bay's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": true,
+      "altitudeFt": 130,
+      "source": "stadium"
+    }
   }
 }

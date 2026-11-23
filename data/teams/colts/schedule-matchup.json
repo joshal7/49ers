@@ -26476,6 +26476,11 @@
         "Trench Run-Fit & Two-Way Leverage: DC Lou Anarumo balances pass-rush pressure with two-high/split-safety discipline on early downs, while New York Giants's offense tests Indianapolis's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": true,
+      "altitudeFt": 715,
+      "source": "stadium"
+    }
   }
 }

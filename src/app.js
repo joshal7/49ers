@@ -69,7 +69,7 @@ import {
   getCachedGamecastModel,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=103';
+} from './services/dataService.js?v=104';
 import {
   isNumericEspnGameId,
   resolveGamecastGamesList
@@ -160,9 +160,9 @@ import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
 } from './views/newsView.js?v=95';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=50';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=82';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=99';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=51';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=83';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=100';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=69';
 import {
   renderSettingsSheetHtml,
@@ -268,13 +268,21 @@ const state = {
   rosterSort: 'jersey',
   rosterSortDir: 'asc',
   depthMode: 'projected',
+  rosterMovesFilter: 'all',
   capSelectedYear: '2026',
+  capViewMode: 'sim',
+  capFaFilter: 'ALL',
 
   // Season & Temporal state
   seasonSubTab: 'matchup',
   draftSubTab: 'prep',
   userPickedSeasonSubDuringLive: false,
   matchupStatsUnit: 'offense',
+  statsSubMode: 'ranks',
+  teamPlayersCat: 'rec',
+  teamPlayersSortKey: '',
+  teamPlayersSortDir: 'desc',
+  snapMatrixUnit: 'offense',
   schedulePrevExpanded: false,
   expandedRootingWeeks: new Set(),
   playoffStandingsView: 'picture',
@@ -341,6 +349,7 @@ const state = {
   sheetRemoteContext: null, // { teamMeta, query, seedPlayer, bundle, remotePlayer, status, error }
   sheetPlayerTab: 'overview',
   sheetPlayerStatsMode: '2026',
+  sheetPlayerGameLogSub: 'games',
   sheetPlayerTxScenario: 'cut',
   sheetPlayerMentionsSort: 'top',
   reporterSearch: '',
@@ -1363,7 +1372,10 @@ function renderMain() {
         rosterSort: state.rosterSort,
         rosterSortDir: state.rosterSortDir,
         depthMode: state.depthMode,
+        rosterMovesFilter: state.rosterMovesFilter,
         capSelectedYear: activeCapYear,
+        capViewMode: state.capViewMode,
+        capFaFilter: state.capFaFilter,
         appData: state.appData,
         simCapResult: rosterSimCapResult,
         userCapMoves: activeYearMoves
@@ -1422,6 +1434,11 @@ function renderMain() {
         schedulePrevExpanded: state.schedulePrevExpanded,
         expandedRootingWeeks: state.expandedRootingWeeks,
         matchupStatsUnit: state.matchupStatsUnit,
+        statsSubMode: state.statsSubMode,
+        teamPlayersCat: state.teamPlayersCat,
+        teamPlayersSortKey: state.teamPlayersSortKey,
+        teamPlayersSortDir: state.teamPlayersSortDir,
+        snapMatrixUnit: state.snapMatrixUnit,
         userPrefs: state.prefs,
         reportersById: reportersMap,
         gamecastGameId: activeGcId,
@@ -2024,6 +2041,7 @@ function renderSheet({ preserveScroll = false } = {}) {
           player,
           activeTab: state.sheetPlayerTab,
           statsMode: state.sheetPlayerStatsMode,
+          gameLogSub: state.sheetPlayerGameLogSub,
           txScenario: state.sheetPlayerTxScenario,
           mentionsSortMode: state.sheetPlayerMentionsSort,
           rawStream: merged.rawStream,
@@ -2063,6 +2081,7 @@ function renderSheet({ preserveScroll = false } = {}) {
         player,
         activeTab: state.sheetPlayerTab,
         statsMode: state.sheetPlayerStatsMode,
+        gameLogSub: state.sheetPlayerGameLogSub,
         txScenario: state.sheetPlayerTxScenario,
         mentionsSortMode: state.sheetPlayerMentionsSort,
         rawStream: state.appData?.news?.rawStream || [],
@@ -2945,6 +2964,10 @@ function bindEvents() {
       case 'open-gamecast-game': {
         const targetId = btn.getAttribute('data-game-id') || '';
         const fromSched = btn.getAttribute('data-from-schedule') === 'true';
+        if (btn.getAttribute('data-close-sheet') === 'true' && state.sheetMode) {
+          state.sheetMode = null;
+          renderSheet();
+        }
         openGamecastForGameId(targetId, { fromSchedule: fromSched });
         break;
       }
@@ -3317,6 +3340,62 @@ function bindEvents() {
         renderMain();
         break;
 
+      case 'set-roster-moves-filter':
+        state.rosterMovesFilter = btn.getAttribute('data-moves-filter') || 'all';
+        renderMain();
+        break;
+
+      case 'set-cap-view-mode':
+        state.capViewMode = btn.getAttribute('data-cap-mode') === 'fa' ? 'fa' : 'sim';
+        renderMain();
+        break;
+
+      case 'set-cap-fa-filter':
+        state.capFaFilter = btn.getAttribute('data-fa-filter') || 'ALL';
+        renderMain();
+        break;
+
+      case 'set-stats-sub': {
+        const nextStatsSub = btn.getAttribute('data-stats-sub') || 'ranks';
+        state.statsSubMode = ['ranks', 'players', 'snaps'].includes(nextStatsSub) ? nextStatsSub : 'ranks';
+        renderMain();
+        break;
+      }
+
+      case 'set-team-players-cat': {
+        const nextCat = btn.getAttribute('data-players-cat') || 'rec';
+        if (['pass', 'rush', 'rec', 'def'].includes(nextCat)) {
+          state.teamPlayersCat = nextCat;
+          state.teamPlayersSortKey = '';
+          state.teamPlayersSortDir = 'desc';
+          renderMain();
+        }
+        break;
+      }
+
+      case 'set-team-players-sort': {
+        const nextKey = btn.getAttribute('data-sort-key') || '';
+        if (nextKey) {
+          const defaultKey = state.teamPlayersCat === 'def' ? 'tackles' : 'yards';
+          const effectiveCurKey = state.teamPlayersSortKey || defaultKey;
+          if (effectiveCurKey === nextKey) {
+            state.teamPlayersSortKey = nextKey;
+            state.teamPlayersSortDir = state.teamPlayersSortDir === 'desc' ? 'asc' : 'desc';
+          } else {
+            state.teamPlayersSortKey = nextKey;
+            state.teamPlayersSortDir = 'desc';
+          }
+          renderMain();
+        }
+        break;
+      }
+
+      case 'set-snap-matrix-unit': {
+        state.snapMatrixUnit = btn.getAttribute('data-snap-unit') === 'defense' ? 'defense' : 'offense';
+        renderMain();
+        break;
+      }
+
       case 'set-roster-unit':
         state.rosterUnitFilter = btn.getAttribute('data-unit') || 'All';
         renderMain();
@@ -3359,6 +3438,8 @@ function bindEvents() {
           state.sheetMode = 'player';
           state.sheetPlayerId = player.id;
           state.sheetPlayerTab = btn.getAttribute('data-initial-tab') || 'overview';
+          state.sheetPlayerStatsMode = '2026';
+          state.sheetPlayerGameLogSub = 'games';
           state.sheetPlayerMentionsSort = 'top';
           renderSheet();
         }
@@ -3411,6 +3492,11 @@ function bindEvents() {
 
       case 'set-player-stats-mode':
         state.sheetPlayerStatsMode = btn.getAttribute('data-stats-mode') || '2026';
+        renderSheet();
+        break;
+
+      case 'set-player-gamelog-sub':
+        state.sheetPlayerGameLogSub = btn.getAttribute('data-gamelog-sub') === 'splits' ? 'splits' : 'games';
         renderSheet();
         break;
 

@@ -26461,6 +26461,17 @@
         "Trench Run-Fit & Two-Way Leverage: DC Brian Duker balances pass-rush pressure with two-high/split-safety discipline on early downs, while Miami Dolphins's offense tests New York's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": false,
+      "tempF": 78,
+      "windMph": 15,
+      "windDir": "E",
+      "precipPct": 36,
+      "condition": "Cloudy",
+      "altitudeFt": 10,
+      "source": "open-meteo",
+      "forecastHourUtc": "2026-11-29T18:00"
+    }
   }
 }

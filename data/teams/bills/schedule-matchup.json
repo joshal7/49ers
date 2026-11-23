@@ -26489,6 +26489,17 @@
         "Trench Run-Fit & Two-Way Leverage: DC Jim Leonhard balances pass-rush pressure with two-high/split-safety discipline on early downs, while Kansas City Chiefs's offense tests Buffalo's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": false,
+      "tempF": 38,
+      "windMph": 17,
+      "windDir": "E",
+      "precipPct": 90,
+      "condition": "Cloudy",
+      "altitudeFt": 790,
+      "source": "open-meteo",
+      "forecastHourUtc": "2026-11-27T01:00"
+    }
   }
 }

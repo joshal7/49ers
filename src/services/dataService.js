@@ -5,6 +5,10 @@
 import { scoreContentSignal, cleanSensationalistText } from '../engine/antiFluffFilter.js';
 import { normalizeScheduleGameItem, resolveCompleteScheduleModel } from '../engine/seasonStateMachine.js';
 import {
+  extractLiveScoreboardMap,
+  mergeTransactionsLedgers
+} from '../engine/teamDeepDiveEngine.js';
+import {
   canonicalInjuryPlayerKey,
   collapseInitialDots,
   computeOpponentPriorDayPlayProbability,
@@ -2732,7 +2736,7 @@ export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 
   const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
   try {
     const res = await fetchSingleWithTimeout(
-      `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/transactions?team=${activeTeam.espnId}&limit=20`,
+      `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/transactions?team=${activeTeam.espnId}&limit=100`,
       { cache: 'no-store' },
       6500
     );
@@ -2742,6 +2746,15 @@ export async function hydrateLiveTeamTransactionsWire(appData, { maxAgeDays = 7 
     if (txList.length === 0) return 0;
 
     const rosterPlayers = appData.roster?.players || [];
+    // Synchronize the chronological Roster Moves ledger & Practice Squad elevation counter live
+    if (appData.roster) {
+      const mergedLedger = mergeTransactionsLedgers(appData.roster.transactions || [], txList, {
+        teamRoster: rosterPlayers,
+        seasonYear: Number(appData.meta?.seasonYear) || 2026
+      });
+      appData.roster.transactions = mergedLedger.transactions;
+      appData.roster.psElevations = mergedLedger.psElevations;
+    }
     const existingIds = new Set(appData.news.rawStream.map(it => it.id).filter(Boolean));
     const existingUrls = new Set(appData.news.rawStream.map(it => it.url).filter(Boolean));
     const existingTextKeys = new Set(
@@ -5611,7 +5624,8 @@ export async function hydrateLiveEspnOverlay(appData) {
     espnNewsRaw,
     sfRosterRaw,
     sfDepthRaw,
-    official49ersInjHtml
+    official49ersInjHtml,
+    liveScoreboardRaw
   ] = await Promise.all([
     fetchCorsJson('https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings').catch(() => null),
     fetchCorsJson(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnAbbr}/schedule`).catch(() => null),
@@ -5624,8 +5638,19 @@ export async function hydrateLiveEspnOverlay(appData) {
     fetchCorsJson(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${activeTeam.espnId}&limit=25`).catch(() => null),
     fetchCorsJson(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnId}/roster`).catch(() => null),
     fetchCorsJson(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/teams/${activeTeam.espnId}/depthcharts`).catch(() => null),
-    fetchOfficial49ersInjuryReportHtmlClient(Date.now(), activeTeam).catch(() => '')
+    fetchOfficial49ersInjuryReportHtmlClient(Date.now(), activeTeam).catch(() => ''),
+    fetchCorsJson('https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard').catch(() => null)
   ]);
+  if (liveScoreboardRaw?.events?.length && appData.seasonal?.playoffPicture) {
+    const liveSbMap = extractLiveScoreboardMap(liveScoreboardRaw);
+    if (Object.keys(liveSbMap).length > 0) {
+      appData.seasonal.playoffPicture.liveScoresByMatchup = {
+        ...(appData.seasonal.playoffPicture.liveScoresByMatchup || {}),
+        ...liveSbMap
+      };
+      mutated = true;
+    }
+  }
   let oppInjuriesRaw = initialOppInjuriesRaw;
   let combinedEspnArticles = Array.isArray(espnNewsRaw?.articles) ? [...espnNewsRaw.articles] : [];
 
@@ -6237,6 +6262,27 @@ export async function hydrateLiveEspnOverlay(appData) {
         if (pc && um.betting) {
           if (pc.details) um.betting.spread = pc.details;
           if (pc.overUnder) um.betting.overUnder = Number(pc.overUnder);
+        }
+        // Sync live broadcast & official ESPN outdoor kickoff weather (0 extra requests!)
+        const sumComp = summaryRaw?.header?.competitions?.[0];
+        const sumBroadcast =
+          sumComp?.broadcasts?.[0]?.media?.shortName ||
+          sumComp?.broadcasts?.[0]?.names?.[0] ||
+          nextGame.broadcast ||
+          '';
+        if (sumBroadcast) um.broadcast = sumBroadcast;
+        const sumVenueIndoor = summaryRaw?.gameInfo?.venue?.indoor;
+        const sumWeather = summaryRaw?.gameInfo?.weather || null;
+        if (sumVenueIndoor === true) {
+          um.weather = { ...(um.weather || {}), indoor: true, source: 'espn' };
+        } else if (sumWeather && sumWeather.temperature != null) {
+          um.weather = {
+            ...(um.weather || {}),
+            indoor: false,
+            tempF: Math.round(Number(sumWeather.temperature)),
+            condition: String(sumWeather.displayValue || um.weather?.condition || '').trim(),
+            source: 'espn'
+          };
         }
         if (Array.isArray(summaryRaw?.news?.articles) && summaryRaw.news.articles.length > 0) {
           combinedEspnArticles = [...summaryRaw.news.articles, ...combinedEspnArticles];

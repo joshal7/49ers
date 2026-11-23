@@ -26593,6 +26593,17 @@
         "Trench Run-Fit & Two-Way Leverage: DC Todd Wash balances pass-rush pressure with two-high/split-safety discipline on early downs, while Tampa Bay Buccaneers's offense tests Carolina's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": false,
+      "tempF": 71,
+      "windMph": 7,
+      "windDir": "S",
+      "precipPct": 11,
+      "condition": "Cloudy",
+      "altitudeFt": 40,
+      "source": "open-meteo",
+      "forecastHourUtc": "2026-12-01T01:00"
+    }
   }
 }

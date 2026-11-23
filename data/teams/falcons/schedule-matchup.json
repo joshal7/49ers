@@ -26417,6 +26417,11 @@
         "Trench Run-Fit & Two-Way Leverage: DC Jeff Ulbrich balances pass-rush pressure with two-high/split-safety discipline on early downs, while Minnesota Vikings's offense tests Atlanta's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": true,
+      "altitudeFt": 840,
+      "source": "stadium"
+    }
   }
 }

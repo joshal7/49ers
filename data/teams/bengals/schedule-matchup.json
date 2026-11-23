@@ -26498,6 +26498,16 @@
         "Trench Run-Fit & Two-Way Leverage: DC Al Golden balances pass-rush pressure with two-high/split-safety discipline on early downs, while Washington Commanders's offense tests Cincinnati's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": false,
+      "tempF": 57,
+      "condition": "Partly cloudy",
+      "windMph": null,
+      "windDir": "",
+      "precipPct": null,
+      "altitudeFt": 180,
+      "source": "espn"
+    }
   }
 }

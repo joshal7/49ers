@@ -26408,6 +26408,11 @@
         "Trench Run-Fit & Two-Way Leverage: DC Dennis Allen balances pass-rush pressure with two-high/split-safety discipline on early downs, while Detroit Lions's offense tests Chicago's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": true,
+      "altitudeFt": 600,
+      "source": "stadium"
+    }
   }
 }

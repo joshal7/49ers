@@ -7435,6 +7435,199 @@ async function main() {
       await cdp.setViewport(390, 844);
     });
 
+    await runStep('Wave 1 & Wave 2 High-SNR Deep-Dive UX: Game Log left of 2026, Players/Snap Matrix, 1-Line Moves + PS, 2027 FAs & Zero Overflow', async () => {
+      await cdp.setViewport(390, 844);
+
+      // 1. Season -> Stats: Team Ranks (default) -> Players (sortable, no 2x2 Leaders cards) -> Snap Trends (frozen Col 1)
+      const statsDeep = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        document.querySelector('[data-nav-tab="season"]')?.click();
+        await sleep(60);
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="stats"]')?.click();
+        await sleep(80);
+        const defaultHasRanks = Boolean(document.getElementById('teamStatsRankingsCard'));
+
+        document.querySelector('[data-action="set-stats-sub"][data-stats-sub="players"]')?.click();
+        await sleep(80);
+        const playersCard = Boolean(document.getElementById('teamPlayerStatsCard'));
+        const recRowCount = document.querySelectorAll('#teamPlayerStatsCard tbody tr').length;
+        const firstPlayerBefore = document.querySelector('#teamPlayerStatsCard tbody tr td')?.textContent?.trim() || '';
+        document.querySelector('#teamPlayerStatsCard th[data-action="set-team-players-sort"][data-sort-key="yards"]')?.click();
+        await sleep(60);
+        const firstPlayerAfterAsc = document.querySelector('#teamPlayerStatsCard tbody tr td')?.textContent?.trim() || '';
+        document.querySelector('[data-action="set-team-players-cat"][data-players-cat="def"]')?.click();
+        await sleep(60);
+        const defRowCount = document.querySelectorAll('#teamPlayerStatsCard tbody tr').length;
+
+        document.querySelector('[data-action="set-stats-sub"][data-stats-sub="snaps"]')?.click();
+        await sleep(80);
+        const snapCard = Boolean(document.getElementById('weeklySnapMatrixCard'));
+        const snapOffRows = document.querySelectorAll('#weeklySnapMatrixCard tbody tr').length;
+        document.querySelector('[data-action="set-snap-matrix-unit"][data-snap-unit="defense"]')?.click();
+        await sleep(60);
+        const snapDefRows = document.querySelectorAll('#weeklySnapMatrixCard tbody tr').length;
+
+        // Reset back to ranks
+        document.querySelector('[data-action="set-stats-sub"][data-stats-sub="ranks"]')?.click();
+        return {
+          defaultHasRanks,
+          playersCard,
+          recRowCount,
+          sortToggled: firstPlayerBefore !== firstPlayerAfterAsc,
+          defRowCount,
+          snapCard,
+          snapOffRows,
+          snapDefRows
+        };
+      });
+      assert(
+        statsDeep.defaultHasRanks && statsDeep.playersCard && statsDeep.recRowCount >= 3 && statsDeep.defRowCount >= 3 && statsDeep.sortToggled,
+        `Season -> Stats Players sub-view failed: ${JSON.stringify(statsDeep)}`
+      );
+      assert(
+        statsDeep.snapCard && statsDeep.snapOffRows >= 8 && statsDeep.snapDefRows >= 8,
+        `Season -> Stats Snap Matrix failed: ${JSON.stringify(statsDeep)}`
+      );
+      await cdp.assertNoOverflow('Wave 1B Stats Players & Snap Matrix at 390x844');
+
+      // 2. Roster & Cap: 4-pill bar (Roster | Depth | Moves | Cap) with 0px scroll -> Moves -> Cap (Sim default -> 2027 FAs)
+      const rosterDeep = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        document.querySelector('[data-nav-tab="roster"]')?.click();
+        await sleep(60);
+        const topBar = document.querySelector('.roster-top-seg');
+        const topPills = Array.from(document.querySelectorAll('[data-action="set-roster-sub"]')).map(b => b.getAttribute('data-roster-sub'));
+        const topBarNoScroll = topBar ? topBar.scrollWidth <= topBar.clientWidth + 1 : false;
+
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="moves"]')?.click();
+        await sleep(80);
+        const movesRows = document.querySelectorAll('#rosterMovesLedgerCard .moves-ledger-row').length;
+        const psDetails = document.querySelector('[data-ps-elevations-card]');
+        const psStartsClosed = Boolean(psDetails && !psDetails.open);
+        document.querySelector('[data-action="set-roster-moves-filter"][data-moves-filter="ir"]')?.click();
+        await sleep(50);
+        const irMovesRows = document.querySelectorAll('#rosterMovesLedgerCard .moves-ledger-row').length;
+
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="cap"]')?.click();
+        await sleep(80);
+        const capSimDefault = Boolean(document.getElementById('capSimulatorCard'));
+        document.querySelector('[data-action="set-cap-view-mode"][data-cap-mode="fa"]')?.click();
+        await sleep(80);
+        const faCard = Boolean(document.getElementById('upcomingFreeAgentsCard'));
+        const faRows = document.querySelectorAll('#upcomingFreeAgentsCard tbody tr').length;
+        const capMixDetails = document.querySelector('[data-cap-positional-spend]');
+        const capMixStartsClosed = Boolean(capMixDetails && !capMixDetails.open);
+        document.querySelector('[data-action="set-cap-fa-filter"][data-fa-filter="UFA"]')?.click();
+        await sleep(50);
+        const ufaRows = document.querySelectorAll('#upcomingFreeAgentsCard tbody tr').length;
+
+        // Reset cap mode back to sim and roster sub back to roster
+        document.querySelector('[data-action="set-cap-view-mode"][data-cap-mode="sim"]')?.click();
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]')?.click();
+        return {
+          topPills,
+          topBarNoScroll,
+          movesRows,
+          psStartsClosed,
+          irMovesRows,
+          capSimDefault,
+          faCard,
+          faRows,
+          capMixStartsClosed,
+          ufaRows
+        };
+      });
+      assert(
+        JSON.stringify(rosterDeep.topPills) === JSON.stringify(['roster', 'depth', 'moves', 'cap']) && rosterDeep.topBarNoScroll,
+        `Roster 4-pill bar mismatch or overflow: ${JSON.stringify(rosterDeep)}`
+      );
+      assert(
+        rosterDeep.movesRows >= 10 && rosterDeep.psStartsClosed && rosterDeep.irMovesRows >= 1,
+        `Roster -> Moves ledger check failed: ${JSON.stringify(rosterDeep)}`
+      );
+      assert(
+        rosterDeep.capSimDefault && rosterDeep.faCard && rosterDeep.faRows >= 8 && rosterDeep.capMixStartsClosed && rosterDeep.ufaRows >= 5,
+        `Cap -> 2027 Free Agents check failed: ${JSON.stringify(rosterDeep)}`
+      );
+      await cdp.assertNoOverflow('Wave 2A/2B Roster Moves & Free Agents at 390x844');
+
+      // 3. Player Dossier -> Stats: Game Log strictly to the LEFT of 2026, Splits toggle, and 1-tap Gamecast handoff
+      const dossierDeep = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const purdyBtn = Array.from(document.querySelectorAll('.player-row')).find(el =>
+          el.textContent.includes('Brock Purdy')
+        );
+        purdyBtn?.click();
+        await sleep(80);
+        document.querySelector('[data-action="set-player-tab"][data-player-tab="stats"]')?.click();
+        await sleep(80);
+        const modeBtns = Array.from(document.querySelectorAll('#sheetBody [data-action="set-player-stats-mode"]'));
+        const modeOrder = modeBtns.map(b => b.getAttribute('data-stats-mode'));
+        const defaultSelected = modeBtns.find(b => b.getAttribute('aria-selected') === 'true')?.getAttribute('data-stats-mode');
+
+        document.querySelector('#sheetBody [data-action="set-player-stats-mode"][data-stats-mode="gamelog"]')?.click();
+        await sleep(80);
+        const hasSpark = Boolean(document.querySelector('#sheetBody svg.gamelog-spark-svg'));
+        const logRows = document.querySelectorAll('#sheetBody table.gamelog-table tbody tr').length;
+        document.querySelector('#sheetBody [data-action="set-player-gamelog-sub"][data-gamelog-sub="splits"]')?.click();
+        await sleep(60);
+        const splitRows = document.querySelectorAll('#sheetBody .gamelog-split-row').length;
+        document.querySelector('#sheetBody [data-action="set-player-gamelog-sub"][data-gamelog-sub="games"]')?.click();
+        await sleep(60);
+        const jumpableRow = document.querySelector('#sheetBody tr.gamelog-row-link[data-action="open-gamecast-game"]');
+        const hasGamecastJump = Boolean(jumpableRow);
+        jumpableRow?.click();
+        await sleep(100);
+        const sheetClosedAfterJump = Boolean(document.getElementById('bottomSheetBackdrop')?.hidden);
+        const landedOnGamecast = Boolean(document.querySelector('[data-action="set-season-sub"][data-season-sub="gamecast"].active'));
+        return {
+          modeOrder,
+          defaultSelected,
+          hasSpark,
+          logRows,
+          splitRows,
+          hasGamecastJump,
+          sheetClosedAfterJump,
+          landedOnGamecast
+        };
+      });
+      assert(
+        JSON.stringify(dossierDeep.modeOrder) === JSON.stringify(['gamelog', '2026', 'career']) &&
+          dossierDeep.defaultSelected === '2026',
+        `Player Stats tab order must be Game Log | 2026 | Career with 2026 default: ${JSON.stringify(dossierDeep)}`
+      );
+      assert(
+        dossierDeep.hasSpark && dossierDeep.logRows >= 5 && dossierDeep.splitRows >= 3 && dossierDeep.splitRows <= 5,
+        `Player Game Log & Splits failed: ${JSON.stringify(dossierDeep)}`
+      );
+      assert(
+        dossierDeep.hasGamecastJump && dossierDeep.sheetClosedAfterJump && dossierDeep.landedOnGamecast,
+        `Tapping Game Log row must close sheet and open Gamecast: ${JSON.stringify(dossierDeep)}`
+      );
+
+      // 4. Compact 320px portrait & Light theme overflow audit on Moves, Free Agents & Snap Matrix
+      await cdp.setViewport(320, 640);
+      await cdp.eval(async () => {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.querySelector('[data-nav-tab="roster"]')?.click();
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="moves"]')?.click();
+      });
+      await cdp.assertNoOverflow('Moves Light Theme at 320x640');
+      await cdp.eval(() => {
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="cap"]')?.click();
+        document.querySelector('[data-action="set-cap-view-mode"][data-cap-mode="fa"]')?.click();
+      });
+      await cdp.assertNoOverflow('2027 Free Agents Light Theme at 320x640');
+      await cdp.eval(() => {
+        document.querySelector('[data-action="set-cap-view-mode"][data-cap-mode="sim"]')?.click();
+        document.querySelector('[data-nav-tab="season"]')?.click();
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="matchup"]')?.click();
+        document.documentElement.removeAttribute('data-theme');
+      });
+      await cdp.assertNoOverflow('Matchup Ambient Venue/Weather at 320x640');
+      await cdp.setViewport(390, 844);
+    });
+
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {
       assert(
         cdp.consoleErrors.length === 0,

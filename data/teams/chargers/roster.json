@@ -55604,7 +55604,115 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "oSn": 55,
+          "oPct": 100,
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "oSn": 68,
+          "oPct": 100,
+          "sSn": 3,
+          "sPct": 11
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 1,
+          "oSn": 69,
+          "oPct": 100,
+          "sSn": 5,
+          "sPct": 22
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "oSn": 26,
+          "oPct": 37,
+          "sSn": 1,
+          "sPct": 3
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "oSn": 61,
+          "oPct": 100,
+          "sSn": 3,
+          "sPct": 12
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "oSn": 68,
+          "oPct": 94,
+          "sSn": 4,
+          "sPct": 12
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "oSn": 57,
+          "oPct": 100,
+          "sSn": 5,
+          "sPct": 17
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "oSn": 60,
+          "oPct": 100,
+          "sSn": 4,
+          "sPct": 19
+        }
+      ]
     },
     {
       "id": "4040842",
@@ -56221,7 +56329,60 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "oSn": 35,
+          "oPct": 64,
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "oSn": 50,
+          "oPct": 74,
+          "sSn": 3,
+          "sPct": 11
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "sSn": 5,
+          "sPct": 17
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "oSn": 60,
+          "oPct": 100,
+          "sSn": 4,
+          "sPct": 19
+        }
+      ]
     },
     {
       "id": "4035788",
@@ -56695,7 +56856,8 @@
         "peerGroupLabel": "Interior O-Line (G/C)",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "4876658",
@@ -57269,7 +57431,138 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "sSn": 3,
+          "sPct": 11
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "oSn": 9,
+          "oPct": 13,
+          "sSn": 5,
+          "sPct": 22
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "oSn": 49,
+          "oPct": 69,
+          "sSn": 5,
+          "sPct": 14
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "oSn": 67,
+          "oPct": 100,
+          "sSn": 3,
+          "sPct": 10
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "oSn": 68,
+          "oPct": 100,
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "oSn": 61,
+          "oPct": 100,
+          "sSn": 3,
+          "sPct": 12
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "oSn": 72,
+          "oPct": 100,
+          "sSn": 4,
+          "sPct": 12
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "oSn": 57,
+          "oPct": 100,
+          "sSn": 5,
+          "sPct": 17
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "oSn": 60,
+          "oPct": 100,
+          "sSn": 4,
+          "sPct": 19
+        }
+      ]
     },
     {
       "id": "4362477",
@@ -58025,7 +58318,160 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tgt": 1,
+          "recEpa": -1.6,
+          "tkl": 1,
+          "oSn": 10,
+          "oPct": 18,
+          "sSn": 9,
+          "sPct": 38
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tgt": 1,
+          "recEpa": -2.28,
+          "tkl": 1,
+          "oSn": 8,
+          "oPct": 12,
+          "sSn": 7,
+          "sPct": 26
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "oSn": 1,
+          "oPct": 1,
+          "sSn": 4,
+          "sPct": 17
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "rec": 1,
+          "tgt": 1,
+          "recYds": 6,
+          "recEpa": 0.09,
+          "oSn": 3,
+          "oPct": 4,
+          "sSn": 12,
+          "sPct": 34
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "oSn": 10,
+          "oPct": 15,
+          "sSn": 6,
+          "sPct": 20
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "rAtt": 1,
+          "rYds": 4,
+          "rEpa": 0.59,
+          "oSn": 5,
+          "oPct": 7,
+          "sSn": 3,
+          "sPct": 12
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "oSn": 3,
+          "oPct": 5,
+          "sSn": 10,
+          "sPct": 40
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "rec": 1,
+          "tgt": 2,
+          "recYds": 15,
+          "recTd": 1,
+          "recEpa": 2.23,
+          "oSn": 5,
+          "oPct": 7,
+          "sSn": 9,
+          "sPct": 26
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "oSn": 15,
+          "oPct": 26,
+          "sSn": 7,
+          "sPct": 23
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "oSn": 5,
+          "oPct": 8,
+          "sSn": 4,
+          "sPct": 19
+        }
+      ]
     },
     {
       "id": "3914151",
@@ -58508,7 +58954,21 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 4,
+          "tm": "PHI",
+          "opp": "LA",
+          "ha": "home",
+          "res": "L",
+          "pf": 20,
+          "pa": 24,
+          "gid": "401872970",
+          "sSn": 21,
+          "sPct": 70
+        }
+      ]
     },
     {
       "id": "4595342",
@@ -59239,7 +59699,177 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "rec": 2,
+          "tgt": 2,
+          "recYds": 32,
+          "recEpa": 0.16,
+          "oSn": 10,
+          "oPct": 18,
+          "sSn": 8,
+          "sPct": 33
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "rec": 2,
+          "tgt": 2,
+          "recYds": 18,
+          "recTd": 1,
+          "recEpa": 2.15,
+          "oSn": 30,
+          "oPct": 44,
+          "sSn": 11,
+          "sPct": 41
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tgt": 3,
+          "recEpa": -2.77,
+          "oSn": 39,
+          "oPct": 57,
+          "sSn": 1,
+          "sPct": 4
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "rAtt": 1,
+          "rYds": 2,
+          "rEpa": -0.22,
+          "rec": 5,
+          "tgt": 8,
+          "recYds": 36,
+          "recEpa": -3.63,
+          "tkl": 1,
+          "oSn": 39,
+          "oPct": 55
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tgt": 1,
+          "recEpa": -1.31,
+          "oSn": 39,
+          "oPct": 58,
+          "sSn": 10,
+          "sPct": 33
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "rec": 3,
+          "tgt": 5,
+          "recYds": 17,
+          "recEpa": -2.83,
+          "oSn": 33,
+          "oPct": 49,
+          "sSn": 6,
+          "sPct": 25
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "rec": 5,
+          "tgt": 5,
+          "recYds": 52,
+          "recEpa": 1.67,
+          "oSn": 29,
+          "oPct": 48,
+          "sSn": 7,
+          "sPct": 28
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "rec": 2,
+          "tgt": 3,
+          "recYds": 17,
+          "recEpa": -0.48,
+          "oSn": 33,
+          "oPct": 46,
+          "sSn": 11,
+          "sPct": 32
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "rec": 1,
+          "tgt": 1,
+          "recYds": 7,
+          "recEpa": -0.54,
+          "oSn": 12,
+          "oPct": 21,
+          "sSn": 6,
+          "sPct": 20
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "oSn": 23,
+          "oPct": 38,
+          "sSn": 6,
+          "sPct": 29
+        }
+      ]
     },
     {
       "id": "4685382",
@@ -60061,7 +60691,185 @@
             "expandedRows": []
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "rAtt": 12,
+          "rYds": 43,
+          "rTd": 1,
+          "rEpa": -2.53,
+          "oSn": 32,
+          "oPct": 58
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "rAtt": 23,
+          "rYds": 94,
+          "rTd": 1,
+          "rEpa": -7.43,
+          "rec": 2,
+          "tgt": 2,
+          "recYds": 21,
+          "recEpa": 0.74,
+          "oSn": 43,
+          "oPct": 63
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "rAtt": 15,
+          "rYds": 56,
+          "rEpa": -0.39,
+          "tgt": 1,
+          "recEpa": -0.41,
+          "oSn": 29,
+          "oPct": 42
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "rAtt": 9,
+          "rYds": 45,
+          "rTd": 1,
+          "rEpa": 3.1,
+          "rec": 2,
+          "tgt": 2,
+          "recYds": 8,
+          "recEpa": 2.58,
+          "oSn": 25,
+          "oPct": 35
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "rAtt": 14,
+          "rYds": 33,
+          "rEpa": -3.35,
+          "rec": 1,
+          "tgt": 1,
+          "recYds": 6,
+          "recEpa": 0.19,
+          "oSn": 20,
+          "oPct": 30
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "rAtt": 7,
+          "rYds": 18,
+          "rEpa": -1.85,
+          "rec": 4,
+          "tgt": 4,
+          "recYds": 21,
+          "recEpa": -0.03,
+          "oSn": 34,
+          "oPct": 50
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "rAtt": 9,
+          "rYds": 20,
+          "rEpa": -4.05,
+          "rec": 2,
+          "tgt": 3,
+          "recYds": 7,
+          "recEpa": -1,
+          "oSn": 18,
+          "oPct": 30
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "rAtt": 13,
+          "rYds": 60,
+          "rEpa": -2.3,
+          "oSn": 29,
+          "oPct": 40
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "rAtt": 22,
+          "rYds": 105,
+          "rTd": 1,
+          "rEpa": 2.1,
+          "rec": 1,
+          "tgt": 2,
+          "recEpa": -1.2,
+          "oSn": 36,
+          "oPct": 63
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "rAtt": 14,
+          "rYds": 89,
+          "rEpa": 2.55,
+          "rec": 1,
+          "tgt": 1,
+          "recYds": 4,
+          "recEpa": -0.09,
+          "oSn": 33,
+          "oPct": 55
+        }
+      ]
     },
     {
       "id": "5082660",
@@ -60516,7 +61324,46 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "oSn": 67,
+          "oPct": 100
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "oSn": 68,
+          "oPct": 100
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "oSn": 25,
+          "oPct": 35,
+          "sSn": 1,
+          "sPct": 3
+        }
+      ]
     },
     {
       "id": "4686612",
@@ -61287,7 +62134,156 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "rec": 3,
+          "tgt": 6,
+          "recYds": 20,
+          "recEpa": -2.38,
+          "oSn": 41,
+          "oPct": 75,
+          "sSn": 9,
+          "sPct": 38
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "rec": 1,
+          "tgt": 3,
+          "recYds": 53,
+          "recEpa": 2.8,
+          "oSn": 56,
+          "oPct": 82,
+          "sSn": 5,
+          "sPct": 19
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "rec": 6,
+          "tgt": 7,
+          "recYds": 76,
+          "recEpa": 1.72,
+          "oSn": 40,
+          "oPct": 58
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "pAtt": 1,
+          "pEpa": -0.5,
+          "rec": 3,
+          "tgt": 5,
+          "recYds": 60,
+          "recEpa": 1.79,
+          "oSn": 66,
+          "oPct": 93
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "rec": 2,
+          "tgt": 4,
+          "recYds": 16,
+          "recEpa": -0.81,
+          "oSn": 30,
+          "oPct": 45
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "rec": 3,
+          "tgt": 3,
+          "recYds": 31,
+          "recEpa": 2.34,
+          "oSn": 31,
+          "oPct": 51
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "rec": 3,
+          "tgt": 7,
+          "recYds": 6,
+          "recEpa": -2.59,
+          "oSn": 60,
+          "oPct": 83,
+          "sSn": 1,
+          "sPct": 3
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "rec": 5,
+          "tgt": 5,
+          "recYds": 86,
+          "recEpa": 5.03,
+          "oSn": 56,
+          "oPct": 98
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "rec": 2,
+          "tgt": 2,
+          "recYds": 28,
+          "recEpa": 1.37,
+          "oSn": 41,
+          "oPct": 68,
+          "sSn": 6,
+          "sPct": 29
+        }
+      ]
     },
     {
       "id": "4038941",
@@ -62319,7 +63315,223 @@
             "expandedRows": []
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "pCmp": 17,
+          "pAtt": 27,
+          "pYds": 209,
+          "pTd": 1,
+          "pInt": 1,
+          "pSck": 3,
+          "pEpa": -3.57,
+          "rAtt": 5,
+          "rYds": 29,
+          "rEpa": -0.54,
+          "oSn": 55,
+          "oPct": 100
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "pCmp": 15,
+          "pAtt": 27,
+          "pYds": 192,
+          "pTd": 1,
+          "pInt": 2,
+          "pSck": 3,
+          "pEpa": 0.12,
+          "rAtt": 3,
+          "rYds": 2,
+          "rEpa": -3.44,
+          "tkl": 1,
+          "oSn": 68,
+          "oPct": 100
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "pCmp": 20,
+          "pAtt": 34,
+          "pYds": 226,
+          "pTd": 1,
+          "pInt": 1,
+          "pSck": 2,
+          "pEpa": -5.68,
+          "rAtt": 4,
+          "rYds": 17,
+          "rEpa": 1.26,
+          "oSn": 69,
+          "oPct": 100
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "pCmp": 19,
+          "pAtt": 31,
+          "pYds": 189,
+          "pTd": 1,
+          "pInt": 2,
+          "pSck": 4,
+          "pEpa": -7.3,
+          "rAtt": 6,
+          "rYds": 40,
+          "rEpa": 0.38,
+          "tgt": 1,
+          "recEpa": -0.5,
+          "tkl": 1,
+          "oSn": 71,
+          "oPct": 100
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "pCmp": 14,
+          "pAtt": 24,
+          "pYds": 121,
+          "pTd": 1,
+          "pInt": 1,
+          "pSck": 5,
+          "pEpa": -8.55,
+          "rAtt": 6,
+          "rYds": 54,
+          "rEpa": -0.28,
+          "oSn": 67,
+          "oPct": 100
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "pCmp": 22,
+          "pAtt": 37,
+          "pYds": 204,
+          "pInt": 1,
+          "pSck": 4,
+          "pEpa": -11.48,
+          "rAtt": 5,
+          "rYds": 26,
+          "rEpa": 0.94,
+          "oSn": 68,
+          "oPct": 100
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "pCmp": 24,
+          "pAtt": 32,
+          "pYds": 257,
+          "pInt": 2,
+          "pSck": 2,
+          "pEpa": -11.75,
+          "rAtt": 4,
+          "rYds": 15,
+          "rEpa": -0.51,
+          "oSn": 61,
+          "oPct": 100
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "pCmp": 13,
+          "pAtt": 23,
+          "pYds": 193,
+          "pTd": 1,
+          "pInt": 1,
+          "pSck": 8,
+          "pEpa": -4.61,
+          "rAtt": 1,
+          "rYds": 7,
+          "rEpa": 0.11,
+          "oSn": 57,
+          "oPct": 79
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "pCmp": 12,
+          "pAtt": 18,
+          "pYds": 129,
+          "pSck": 2,
+          "pEpa": -1.61,
+          "rAtt": 7,
+          "rYds": 51,
+          "rTd": 1,
+          "rEpa": 2.59,
+          "oSn": 57,
+          "oPct": 100
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "pCmp": 15,
+          "pAtt": 21,
+          "pYds": 131,
+          "pTd": 2,
+          "pSck": 6,
+          "pEpa": 2.6,
+          "rAtt": 8,
+          "rYds": 32,
+          "rTd": 1,
+          "rEpa": 2.85,
+          "oSn": 60,
+          "oPct": 100
+        }
+      ]
     },
     {
       "id": "4429811",
@@ -62752,7 +63964,35 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "oSn": 1,
+          "oPct": 1,
+          "sSn": 6,
+          "sPct": 26
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "oSn": 4,
+          "oPct": 6,
+          "sSn": 14,
+          "sPct": 40
+        }
+      ]
     },
     {
       "id": "4429025",
@@ -63594,7 +64834,161 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "rec": 2,
+          "tgt": 6,
+          "recYds": 17,
+          "recEpa": -1.15,
+          "oSn": 43,
+          "oPct": 78
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "rAtt": 1,
+          "rYds": 7,
+          "rEpa": 0.19,
+          "rec": 1,
+          "tgt": 5,
+          "recYds": 7,
+          "recEpa": -2.07,
+          "oSn": 55,
+          "oPct": 81
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "rec": 3,
+          "tgt": 6,
+          "recYds": 40,
+          "recEpa": 0.16,
+          "oSn": 60,
+          "oPct": 87
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "rAtt": 1,
+          "rYds": -4,
+          "rEpa": -1.05,
+          "rec": 1,
+          "tgt": 2,
+          "recYds": 44,
+          "recEpa": 2.32,
+          "oSn": 53,
+          "oPct": 75
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "rec": 1,
+          "tgt": 3,
+          "recYds": 57,
+          "recEpa": 3.73,
+          "oSn": 56,
+          "oPct": 82
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "rec": 4,
+          "tgt": 4,
+          "recYds": 37,
+          "recEpa": 1.37,
+          "tkl": 2,
+          "oSn": 50,
+          "oPct": 82
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "rAtt": 1,
+          "rYds": 5,
+          "rEpa": 0.09,
+          "rec": 1,
+          "tgt": 4,
+          "recYds": 58,
+          "recTd": 1,
+          "recEpa": 2.36,
+          "tkl": 1,
+          "oSn": 60,
+          "oPct": 83
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "rec": 1,
+          "tgt": 1,
+          "recYds": 6,
+          "recEpa": 0.07,
+          "oSn": 44,
+          "oPct": 77
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "rAtt": 1,
+          "rYds": 1,
+          "rEpa": -0.46,
+          "rec": 1,
+          "tgt": 2,
+          "recYds": 9,
+          "recEpa": -0.33,
+          "oSn": 46,
+          "oPct": 77
+        }
+      ]
     },
     {
       "id": "4241263",
@@ -64484,7 +65878,147 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "oSn": 30,
+          "oPct": 55,
+          "sSn": 13,
+          "sPct": 54
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "rec": 3,
+          "tgt": 3,
+          "recYds": 21,
+          "recEpa": 1.21,
+          "oSn": 42,
+          "oPct": 62,
+          "sSn": 14,
+          "sPct": 52
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "rec": 3,
+          "tgt": 4,
+          "recYds": 37,
+          "recEpa": -1.06,
+          "oSn": 51,
+          "oPct": 76,
+          "sSn": 6,
+          "sPct": 20
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "rec": 3,
+          "tgt": 6,
+          "recYds": 20,
+          "recEpa": -1.29,
+          "oSn": 45,
+          "oPct": 66,
+          "sSn": 5,
+          "sPct": 21
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "rec": 1,
+          "tgt": 4,
+          "recYds": 20,
+          "recEpa": -9.99,
+          "oSn": 38,
+          "oPct": 62,
+          "sSn": 4,
+          "sPct": 16
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "rAtt": 1,
+          "rYds": 3,
+          "rEpa": 0.33,
+          "rec": 3,
+          "tgt": 3,
+          "recYds": 31,
+          "recEpa": 2.29,
+          "oSn": 47,
+          "oPct": 65,
+          "sSn": 13,
+          "sPct": 38
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "rec": 2,
+          "tgt": 3,
+          "recYds": 16,
+          "recEpa": -0.7,
+          "oSn": 41,
+          "oPct": 72,
+          "sSn": 15,
+          "sPct": 50
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "rec": 1,
+          "tgt": 1,
+          "recYds": 8,
+          "recEpa": 0.63,
+          "oSn": 30,
+          "oPct": 50,
+          "sSn": 2,
+          "sPct": 10
+        }
+      ]
     },
     {
       "id": "4430870",
@@ -65236,7 +66770,82 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "rec": 5,
+          "tgt": 9,
+          "recYds": 32,
+          "recEpa": -13.07,
+          "oSn": 59,
+          "oPct": 87,
+          "sSn": 1,
+          "sPct": 4
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 2,
+          "oSn": 2,
+          "oPct": 3,
+          "sSn": 4,
+          "sPct": 16
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "rec": 1,
+          "tgt": 4,
+          "recYds": 50,
+          "recEpa": 2.15,
+          "oSn": 40,
+          "oPct": 56,
+          "sSn": 2,
+          "sPct": 6
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "oSn": 1,
+          "oPct": 2,
+          "sSn": 9,
+          "sPct": 30
+        }
+      ]
     },
     {
       "id": "4373684",
@@ -65922,7 +67531,91 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "oSn": 13,
+          "oPct": 19,
+          "sSn": 6,
+          "sPct": 20
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "oSn": 15,
+          "oPct": 22,
+          "dSn": 2,
+          "dPct": 3,
+          "sSn": 12,
+          "sPct": 50
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "oSn": 22,
+          "oPct": 36,
+          "sSn": 8,
+          "sPct": 32
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "oSn": 29,
+          "oPct": 40,
+          "sSn": 13,
+          "sPct": 38
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "oSn": 28,
+          "oPct": 49,
+          "sSn": 15,
+          "sPct": 50
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "oSn": 19,
+          "oPct": 32,
+          "sSn": 10,
+          "sPct": 48
+        }
+      ]
     },
     {
       "id": "4612826",
@@ -66737,7 +68430,116 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "rec": 5,
+          "tgt": 7,
+          "recYds": 82,
+          "recTd": 1,
+          "recEpa": 5.6,
+          "oSn": 27,
+          "oPct": 49
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "rec": 3,
+          "tgt": 3,
+          "recYds": 35,
+          "recEpa": 3.67,
+          "oSn": 31,
+          "oPct": 46
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "rec": 4,
+          "tgt": 5,
+          "recYds": 66,
+          "recEpa": 4.06,
+          "oSn": 61,
+          "oPct": 88
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tgt": 2,
+          "recEpa": -5.05,
+          "oSn": 24,
+          "oPct": 34
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "rec": 1,
+          "tgt": 1,
+          "recYds": 17,
+          "recEpa": 0.88,
+          "oSn": 8,
+          "oPct": 12
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "rec": 4,
+          "tgt": 6,
+          "recYds": 86,
+          "recEpa": -1.78,
+          "oSn": 55,
+          "oPct": 90
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "rec": 5,
+          "tgt": 8,
+          "recYds": 37,
+          "recTd": 2,
+          "recEpa": 4.75,
+          "oSn": 47,
+          "oPct": 78
+        }
+      ]
     },
     {
       "id": "4596334",
@@ -67663,7 +69465,202 @@
             "expandedRows": []
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "rAtt": 4,
+          "rYds": 9,
+          "rEpa": -1.07,
+          "oSn": 17,
+          "oPct": 31,
+          "sSn": 5,
+          "sPct": 21
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "rAtt": 5,
+          "rYds": 24,
+          "rEpa": -0.09,
+          "rec": 1,
+          "tgt": 1,
+          "recYds": 15,
+          "recEpa": 0.91,
+          "oSn": 17,
+          "oPct": 25,
+          "sSn": 4,
+          "sPct": 15
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "rAtt": 8,
+          "rYds": 52,
+          "rEpa": -0.17,
+          "rec": 3,
+          "tgt": 3,
+          "recYds": -5,
+          "recTd": 1,
+          "recEpa": -0.33,
+          "oSn": 26,
+          "oPct": 38,
+          "sSn": 4,
+          "sPct": 17
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "rAtt": 10,
+          "rYds": 39,
+          "rEpa": -0.53,
+          "rec": 5,
+          "tgt": 6,
+          "recYds": 24,
+          "recEpa": 2.52,
+          "oSn": 26,
+          "oPct": 37,
+          "sSn": 1,
+          "sPct": 3
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "rAtt": 6,
+          "rYds": 11,
+          "rEpa": -1.89,
+          "rec": 3,
+          "tgt": 4,
+          "recYds": 18,
+          "recEpa": 0.3,
+          "oSn": 23,
+          "oPct": 34,
+          "sSn": 6,
+          "sPct": 20
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "rAtt": 2,
+          "rYds": 4,
+          "rEpa": -0.76,
+          "tgt": 1,
+          "recEpa": -0.61,
+          "oSn": 17,
+          "oPct": 25,
+          "sSn": 7,
+          "sPct": 29
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "rAtt": 4,
+          "rYds": 6,
+          "rEpa": -1.29,
+          "rec": 3,
+          "tgt": 3,
+          "recYds": 17,
+          "recEpa": 0.08,
+          "oSn": 19,
+          "oPct": 31,
+          "sSn": 6,
+          "sPct": 24
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "rAtt": 7,
+          "rYds": 33,
+          "rEpa": -2.17,
+          "rec": 3,
+          "tgt": 4,
+          "recYds": 34,
+          "recEpa": 0.52,
+          "oSn": 18,
+          "oPct": 25,
+          "sSn": 6,
+          "sPct": 18
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "rAtt": 3,
+          "rYds": 4,
+          "rEpa": -1.5,
+          "tgt": 1,
+          "recEpa": -0.52,
+          "oSn": 13,
+          "oPct": 23,
+          "sSn": 2,
+          "sPct": 7
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "rec": 1,
+          "tgt": 1,
+          "recYds": 6,
+          "recEpa": 0.36,
+          "oSn": 2,
+          "oPct": 3,
+          "sSn": 2,
+          "sPct": 10
+        }
+      ]
     },
     {
       "id": "3123076",
@@ -68449,7 +70446,66 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "rec": 5,
+          "tgt": 5,
+          "recYds": 58,
+          "recEpa": 0.18,
+          "oSn": 30,
+          "oPct": 55
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "rec": 1,
+          "tgt": 3,
+          "recYds": 9,
+          "recEpa": -3.73,
+          "oSn": 11,
+          "oPct": 16
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "oSn": 19,
+          "oPct": 33
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "rec": 2,
+          "tgt": 4,
+          "recYds": 21,
+          "recEpa": 0.21,
+          "oSn": 25,
+          "oPct": 42
+        }
+      ]
     },
     {
       "id": "4411189",
@@ -68987,7 +71043,33 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "oSn": 20,
+          "oPct": 36,
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "sSn": 4,
+          "sPct": 19
+        }
+      ]
     },
     {
       "id": "4682506",
@@ -69561,7 +71643,140 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "oSn": 55,
+          "oPct": 100,
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "oSn": 68,
+          "oPct": 100,
+          "sSn": 3,
+          "sPct": 11
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "oSn": 69,
+          "oPct": 100,
+          "sSn": 5,
+          "sPct": 22
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "oSn": 71,
+          "oPct": 100,
+          "sSn": 5,
+          "sPct": 14
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "oSn": 67,
+          "oPct": 100,
+          "sSn": 3,
+          "sPct": 10
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "oSn": 68,
+          "oPct": 100,
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "oSn": 61,
+          "oPct": 100,
+          "sSn": 3,
+          "sPct": 12
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "oSn": 69,
+          "oPct": 96,
+          "sSn": 4,
+          "sPct": 12
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "oSn": 57,
+          "oPct": 100,
+          "sSn": 5,
+          "sPct": 17
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "oSn": 60,
+          "oPct": 100
+        }
+      ]
     },
     {
       "id": "5082312",
@@ -70093,7 +72308,33 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "oSn": 11,
+          "oPct": 15,
+          "sSn": 2,
+          "sPct": 6
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "oSn": 3,
+          "oPct": 4
+        }
+      ]
     },
     {
       "id": "4051001",
@@ -70779,7 +73020,140 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "oSn": 55,
+          "oPct": 100,
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "oSn": 57,
+          "oPct": 84,
+          "sSn": 3,
+          "sPct": 11
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "oSn": 69,
+          "oPct": 100,
+          "sSn": 5,
+          "sPct": 22
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "oSn": 71,
+          "oPct": 100,
+          "sSn": 5,
+          "sPct": 14
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "oSn": 67,
+          "oPct": 100,
+          "sSn": 3,
+          "sPct": 10
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "oSn": 68,
+          "oPct": 100,
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "oSn": 61,
+          "oPct": 100,
+          "sSn": 3,
+          "sPct": 12
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "oSn": 42,
+          "oPct": 58,
+          "sSn": 4,
+          "sPct": 12
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "oSn": 57,
+          "oPct": 100,
+          "sSn": 5,
+          "sPct": 17
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "sSn": 4,
+          "sPct": 19
+        }
+      ]
     },
     {
       "id": "4682789",
@@ -71227,7 +73601,113 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "sSn": 5,
+          "sPct": 22
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "oSn": 28,
+          "oPct": 39,
+          "sSn": 5,
+          "sPct": 14
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "oSn": 67,
+          "oPct": 100,
+          "sSn": 3,
+          "sPct": 10
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "oSn": 68,
+          "oPct": 100,
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "oSn": 61,
+          "oPct": 100,
+          "sSn": 3,
+          "sPct": 12
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "oSn": 72,
+          "oPct": 100,
+          "sSn": 4,
+          "sPct": 12
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "oSn": 57,
+          "oPct": 100,
+          "sSn": 5,
+          "sPct": 17
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "oSn": 60,
+          "oPct": 100,
+          "sSn": 4,
+          "sPct": 19
+        }
+      ]
     },
     {
       "id": "4685553",
@@ -71968,7 +74448,36 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "oSn": 10,
+          "oPct": 18
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "rec": 1,
+          "tgt": 3,
+          "recYds": 13,
+          "recEpa": -0.57,
+          "oSn": 12,
+          "oPct": 18
+        }
+      ]
     },
     {
       "id": "4429020",
@@ -72521,7 +75030,25 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "pCmp": 2,
+          "pAtt": 7,
+          "pYds": 24,
+          "pTd": 1,
+          "pEpa": 0.79,
+          "oSn": 15,
+          "oPct": 21
+        }
+      ]
     },
     {
       "id": "4430968",
@@ -73280,7 +75807,203 @@
             "expandedRows": []
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "oSn": 4,
+          "oPct": 7,
+          "sSn": 1,
+          "sPct": 4
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 1,
+          "oSn": 7,
+          "oPct": 10,
+          "sSn": 12,
+          "sPct": 44
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "rAtt": 1,
+          "rYds": 6,
+          "rEpa": 0.59,
+          "rec": 1,
+          "tgt": 3,
+          "recYds": 14,
+          "recEpa": -1.58,
+          "oSn": 17,
+          "oPct": 25,
+          "sSn": 6,
+          "sPct": 26
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "rAtt": 5,
+          "rYds": 25,
+          "rEpa": 0.85,
+          "rec": 2,
+          "tgt": 3,
+          "recYds": 11,
+          "recTd": 1,
+          "recEpa": 1.59,
+          "tkl": 1,
+          "oSn": 25,
+          "oPct": 35,
+          "sSn": 12,
+          "sPct": 34
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "rAtt": 8,
+          "rYds": 57,
+          "rTd": 1,
+          "rEpa": 1.15,
+          "rec": 1,
+          "tgt": 2,
+          "recYds": -1,
+          "recEpa": -1.18,
+          "tkl": 2,
+          "oSn": 28,
+          "oPct": 42,
+          "sSn": 13,
+          "sPct": 43
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "rAtt": 7,
+          "rYds": 21,
+          "rEpa": -1.01,
+          "rec": 3,
+          "tgt": 4,
+          "recYds": 19,
+          "recEpa": 0.91,
+          "oSn": 25,
+          "oPct": 37,
+          "sSn": 13,
+          "sPct": 54
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "rAtt": 8,
+          "rYds": 23,
+          "rEpa": -1.9,
+          "rec": 2,
+          "tgt": 2,
+          "recYds": 7,
+          "recEpa": -0.61,
+          "oSn": 28,
+          "oPct": 46,
+          "sSn": 9,
+          "sPct": 36
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "rAtt": 7,
+          "rYds": 30,
+          "rEpa": -2.21,
+          "rec": 1,
+          "tgt": 3,
+          "recYds": 6,
+          "recEpa": -1.65,
+          "oSn": 28,
+          "oPct": 39,
+          "sSn": 19,
+          "sPct": 56
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "rAtt": 2,
+          "rEpa": -1.16,
+          "rec": 2,
+          "tgt": 2,
+          "recYds": 14,
+          "recEpa": 0.1,
+          "tkl": 1,
+          "oSn": 15,
+          "oPct": 26,
+          "sSn": 20,
+          "sPct": 67
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "rAtt": 7,
+          "rYds": 36,
+          "rEpa": 0.21,
+          "rec": 2,
+          "tgt": 2,
+          "recYds": 18,
+          "recEpa": 2.38,
+          "oSn": 26,
+          "oPct": 43,
+          "sSn": 8,
+          "sPct": 38
+        }
+      ]
     },
     {
       "id": "4426535",
@@ -73903,7 +76626,73 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "rec": 1,
+          "tgt": 1,
+          "recYds": 16,
+          "recEpa": 1.99,
+          "oSn": 43,
+          "oPct": 64,
+          "sSn": 7,
+          "sPct": 23
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "rec": 2,
+          "tgt": 3,
+          "recYds": 21,
+          "recEpa": 2.25,
+          "oSn": 32,
+          "oPct": 47,
+          "sSn": 6,
+          "sPct": 25
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tgt": 1,
+          "recEpa": -1.33,
+          "oSn": 5,
+          "oPct": 9,
+          "sSn": 4,
+          "sPct": 13
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "oSn": 3,
+          "oPct": 5,
+          "sSn": 6,
+          "sPct": 29
+        }
+      ]
     },
     {
       "id": "4039164",
@@ -74351,7 +77140,20 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "dSn": 9,
+          "dPct": 13
+        }
+      ]
     },
     {
       "id": "4372017",
@@ -74973,7 +77775,20 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "sSn": 1,
+          "sPct": 5
+        }
+      ]
     },
     {
       "id": "4682818",
@@ -75659,7 +78474,153 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "dSn": 8,
+          "dPct": 11
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 1,
+          "qbh": 1,
+          "dSn": 14,
+          "dPct": 22,
+          "sSn": 2,
+          "sPct": 7
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 3,
+          "sck": 0.5,
+          "qbh": 1,
+          "dSn": 18,
+          "dPct": 27,
+          "sSn": 4,
+          "sPct": 17
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 2,
+          "dSn": 16,
+          "dPct": 27,
+          "sSn": 7,
+          "sPct": 20
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 1,
+          "dSn": 15,
+          "dPct": 24,
+          "sSn": 7,
+          "sPct": 23
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 2,
+          "tfl": 1,
+          "dSn": 28,
+          "dPct": 46,
+          "sSn": 7,
+          "sPct": 29
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 2,
+          "dSn": 17,
+          "dPct": 31,
+          "sSn": 4,
+          "sPct": 16
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "dSn": 10,
+          "dPct": 14,
+          "sSn": 8,
+          "sPct": 24
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 1,
+          "dSn": 14,
+          "dPct": 20,
+          "sSn": 4,
+          "sPct": 13
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 3,
+          "tfl": 1,
+          "dSn": 14,
+          "dPct": 23,
+          "sSn": 5,
+          "sPct": 24
+        }
+      ]
     },
     {
       "id": "5089178",
@@ -76373,7 +79334,141 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 5,
+          "qbh": 1,
+          "dSn": 40,
+          "dPct": 53,
+          "sSn": 8,
+          "sPct": 33
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 2,
+          "dSn": 35,
+          "dPct": 56,
+          "sSn": 5,
+          "sPct": 19
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "dSn": 38,
+          "dPct": 58,
+          "sSn": 4,
+          "sPct": 17
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 2,
+          "tfl": 1,
+          "dSn": 42,
+          "dPct": 70,
+          "sSn": 7,
+          "sPct": 20
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 2,
+          "tfl": 1,
+          "qbh": 1,
+          "dSn": 28,
+          "dPct": 45,
+          "sSn": 7,
+          "sPct": 23
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 2,
+          "dSn": 27,
+          "dPct": 50,
+          "sSn": 4,
+          "sPct": 16
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 1,
+          "qbh": 1,
+          "dSn": 32,
+          "dPct": 46,
+          "sSn": 8,
+          "sPct": 24
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 1,
+          "dSn": 31,
+          "dPct": 45,
+          "sSn": 5,
+          "sPct": 17
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 6,
+          "dSn": 33,
+          "dPct": 55,
+          "sSn": 5,
+          "sPct": 24
+        }
+      ]
     },
     {
       "id": "2576702",
@@ -77173,7 +80268,117 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 2,
+          "dSn": 23,
+          "dPct": 31,
+          "sSn": 11,
+          "sPct": 46
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 1,
+          "qbh": 1,
+          "dSn": 19,
+          "dPct": 30,
+          "sSn": 8,
+          "sPct": 30
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 1,
+          "dSn": 16,
+          "dPct": 24,
+          "sSn": 8,
+          "sPct": 35
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "dSn": 13,
+          "dPct": 22,
+          "sSn": 13,
+          "sPct": 37
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 1,
+          "dSn": 2,
+          "dPct": 3,
+          "sSn": 3,
+          "sPct": 10
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "sSn": 7,
+          "sPct": 28
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 1,
+          "sSn": 14,
+          "sPct": 41
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "dSn": 3,
+          "dPct": 5,
+          "sSn": 5,
+          "sPct": 24
+        }
+      ]
     },
     {
       "id": "4038946",
@@ -77936,7 +81141,158 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 5,
+          "sck": 0.5,
+          "qbh": 1,
+          "dSn": 15,
+          "dPct": 20,
+          "sSn": 22,
+          "sPct": 92
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 5,
+          "tfl": 1,
+          "dSn": 15,
+          "dPct": 24,
+          "sSn": 24,
+          "sPct": 89
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 6,
+          "pd": 1,
+          "dSn": 24,
+          "dPct": 36,
+          "sSn": 18,
+          "sPct": 78
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 3,
+          "tfl": 1,
+          "sck": 1,
+          "qbh": 1,
+          "dSn": 2,
+          "dPct": 3,
+          "sSn": 30,
+          "sPct": 86
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "dSn": 9,
+          "dPct": 15,
+          "sSn": 27,
+          "sPct": 90
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 4,
+          "dSn": 9,
+          "dPct": 15,
+          "sSn": 22,
+          "sPct": 92
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 2,
+          "dSn": 8,
+          "dPct": 15,
+          "sSn": 22,
+          "sPct": 88
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "dSn": 10,
+          "dPct": 14,
+          "sSn": 30,
+          "sPct": 88
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "dSn": 2,
+          "dPct": 3,
+          "sSn": 25,
+          "sPct": 83
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 4,
+          "sck": 1,
+          "qbh": 1,
+          "dSn": 30,
+          "dPct": 50,
+          "sSn": 17,
+          "sPct": 81
+        }
+      ]
     },
     {
       "id": "4567138",
@@ -78689,7 +82045,141 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 3,
+          "dSn": 45,
+          "dPct": 60,
+          "sSn": 10,
+          "sPct": 42
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 4,
+          "dSn": 36,
+          "dPct": 57,
+          "sSn": 7,
+          "sPct": 26
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 3,
+          "qbh": 1,
+          "dSn": 41,
+          "dPct": 62,
+          "sSn": 9,
+          "sPct": 39
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 3,
+          "sck": 0.5,
+          "qbh": 1,
+          "dSn": 42,
+          "dPct": 70,
+          "sSn": 11,
+          "sPct": 31
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 4,
+          "dSn": 22,
+          "dPct": 35,
+          "sSn": 12,
+          "sPct": 40
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 1,
+          "dSn": 23,
+          "dPct": 38,
+          "sSn": 12,
+          "sPct": 50
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 6,
+          "dSn": 22,
+          "dPct": 41,
+          "sSn": 11,
+          "sPct": 44
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 2,
+          "dSn": 10,
+          "dPct": 14,
+          "sSn": 5,
+          "sPct": 15
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 3,
+          "dSn": 18,
+          "dPct": 30,
+          "sSn": 13,
+          "sPct": 62
+        }
+      ]
     },
     {
       "id": "4427404",
@@ -79430,7 +82920,160 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 6,
+          "pd": 1,
+          "dSn": 63,
+          "dPct": 84,
+          "sSn": 10,
+          "sPct": 42
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 4,
+          "dInt": 1,
+          "pd": 2,
+          "dSn": 49,
+          "dPct": 78,
+          "sSn": 8,
+          "sPct": 30
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 4,
+          "dSn": 56,
+          "dPct": 85,
+          "sSn": 6,
+          "sPct": 26
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 3,
+          "pd": 1,
+          "dSn": 59,
+          "dPct": 98,
+          "sSn": 6,
+          "sPct": 17
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 4,
+          "pd": 1,
+          "dSn": 60,
+          "dPct": 97,
+          "sSn": 6,
+          "sPct": 20
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 4,
+          "dInt": 1,
+          "pd": 1,
+          "dSn": 60,
+          "dPct": 98,
+          "sSn": 6,
+          "sPct": 25
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 3,
+          "dSn": 54,
+          "dPct": 100,
+          "sSn": 5,
+          "sPct": 20
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 4,
+          "dSn": 26,
+          "dPct": 37,
+          "sSn": 5,
+          "sPct": 15
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 5,
+          "pd": 2,
+          "dSn": 69,
+          "dPct": 100,
+          "sSn": 6,
+          "sPct": 20
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 6,
+          "dSn": 57,
+          "dPct": 95,
+          "sSn": 2,
+          "sPct": 10
+        }
+      ]
     },
     {
       "id": "4241597",
@@ -80218,7 +83861,130 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 8,
+          "sck": 0.5,
+          "qbh": 1,
+          "dSn": 67,
+          "dPct": 89
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 3,
+          "dSn": 53,
+          "dPct": 84
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 9,
+          "dSn": 58,
+          "dPct": 88
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 5,
+          "tfl": 1,
+          "qbh": 1,
+          "dSn": 54,
+          "dPct": 90
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 6,
+          "pd": 1,
+          "dSn": 59,
+          "dPct": 95
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 4,
+          "dSn": 55,
+          "dPct": 90
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 5,
+          "dSn": 39,
+          "dPct": 72
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 10,
+          "tfl": 1,
+          "dInt": 1,
+          "pd": 1,
+          "dSn": 61,
+          "dPct": 87
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 11,
+          "tfl": 1,
+          "pd": 1,
+          "dSn": 61,
+          "dPct": 88
+        }
+      ]
     },
     {
       "id": "3843769",
@@ -81004,7 +84770,104 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 2,
+          "dSn": 51,
+          "dPct": 68,
+          "sSn": 1,
+          "sPct": 4
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 5,
+          "tfl": 1,
+          "pd": 1,
+          "dSn": 37,
+          "dPct": 59
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "pd": 1,
+          "dSn": 18,
+          "dPct": 27
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 1,
+          "dSn": 7,
+          "dPct": 12
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 1,
+          "pd": 1,
+          "dSn": 62,
+          "dPct": 89,
+          "sSn": 5,
+          "sPct": 15
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 2,
+          "pd": 1,
+          "dSn": 31,
+          "dPct": 45
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 3,
+          "dSn": 49,
+          "dPct": 82,
+          "sSn": 4,
+          "sPct": 19
+        }
+      ]
     },
     {
       "id": "16195",
@@ -81690,7 +85553,158 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 3,
+          "pd": 1,
+          "dSn": 39,
+          "dPct": 52,
+          "sSn": 4,
+          "sPct": 17
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 6,
+          "dSn": 48,
+          "dPct": 76,
+          "sSn": 9,
+          "sPct": 33
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 2,
+          "pd": 1,
+          "dSn": 37,
+          "dPct": 56,
+          "sSn": 8,
+          "sPct": 35
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 3,
+          "tfl": 1,
+          "dSn": 44,
+          "dPct": 73,
+          "sSn": 11,
+          "sPct": 31
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 5,
+          "dSn": 42,
+          "dPct": 68,
+          "sSn": 10,
+          "sPct": 33
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 5,
+          "dSn": 45,
+          "dPct": 74,
+          "sSn": 9,
+          "sPct": 38
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 7,
+          "dSn": 42,
+          "dPct": 78,
+          "sSn": 8,
+          "sPct": 32
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 5,
+          "tfl": 1,
+          "sck": 0.5,
+          "qbh": 1,
+          "dSn": 45,
+          "dPct": 64,
+          "sSn": 14,
+          "sPct": 41
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 5,
+          "dSn": 46,
+          "dPct": 67,
+          "sSn": 10,
+          "sPct": 33
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 3,
+          "dSn": 32,
+          "dPct": 53,
+          "sSn": 9,
+          "sPct": 43
+        }
+      ]
     },
     {
       "id": "4690171",
@@ -82482,7 +86496,93 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "sSn": 13,
+          "sPct": 57
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 2,
+          "dSn": 9,
+          "dPct": 15,
+          "sSn": 24,
+          "sPct": 69
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 5,
+          "dSn": 34,
+          "dPct": 55,
+          "sSn": 8,
+          "sPct": 27
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 2,
+          "dSn": 16,
+          "dPct": 26,
+          "sSn": 6,
+          "sPct": 25
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 1,
+          "dSn": 20,
+          "dPct": 29,
+          "sSn": 21,
+          "sPct": 70
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 3,
+          "pd": 1,
+          "dSn": 42,
+          "dPct": 70,
+          "sSn": 5,
+          "sPct": 24
+        }
+      ]
     },
     {
       "id": "16710",
@@ -83306,7 +87406,144 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 2,
+          "tfl": 1,
+          "dSn": 51,
+          "dPct": 68
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 3,
+          "tfl": 1,
+          "sck": 1,
+          "qbh": 2,
+          "dSn": 42,
+          "dPct": 67
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 3,
+          "tfl": 1,
+          "sck": 1,
+          "qbh": 2,
+          "dSn": 49,
+          "dPct": 74
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 6,
+          "tfl": 2,
+          "sck": 1,
+          "qbh": 1,
+          "dSn": 40,
+          "dPct": 67
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 1,
+          "dSn": 49,
+          "dPct": 79
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 4,
+          "qbh": 1,
+          "dSn": 45,
+          "dPct": 74
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 2,
+          "dSn": 35,
+          "dPct": 65
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 1,
+          "dSn": 43,
+          "dPct": 61
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 2,
+          "tfl": 1,
+          "dSn": 50,
+          "dPct": 72
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 3,
+          "dSn": 45,
+          "dPct": 75
+        }
+      ]
     },
     {
       "id": "4429190",
@@ -84014,7 +88251,164 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 2,
+          "dSn": 35,
+          "dPct": 47,
+          "sSn": 13,
+          "sPct": 54
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 3,
+          "sck": 0.5,
+          "qbh": 2,
+          "dSn": 31,
+          "dPct": 49,
+          "sSn": 15,
+          "sPct": 56
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 3,
+          "tfl": 1,
+          "sck": 1,
+          "qbh": 1,
+          "dSn": 35,
+          "dPct": 53,
+          "sSn": 6,
+          "sPct": 26
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 6,
+          "dSn": 26,
+          "dPct": 43,
+          "sSn": 18,
+          "sPct": 51
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 8,
+          "tfl": 1,
+          "sck": 1,
+          "qbh": 1,
+          "dSn": 39,
+          "dPct": 63,
+          "sSn": 11,
+          "sPct": 37
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 2,
+          "qbh": 1,
+          "dSn": 38,
+          "dPct": 62,
+          "sSn": 7,
+          "sPct": 29
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 1,
+          "qbh": 1,
+          "dSn": 32,
+          "dPct": 59,
+          "sSn": 3,
+          "sPct": 12
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 2,
+          "tfl": 1,
+          "qbh": 2,
+          "dSn": 52,
+          "dPct": 74,
+          "sSn": 9,
+          "sPct": 26
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 2,
+          "qbh": 1,
+          "dSn": 44,
+          "dPct": 64,
+          "sSn": 5,
+          "sPct": 17
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "dSn": 12,
+          "dPct": 20,
+          "sSn": 2,
+          "sPct": 10
+        }
+      ]
     },
     {
       "id": "4429018",
@@ -84728,7 +89122,138 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 3,
+          "dSn": 27,
+          "dPct": 43,
+          "sSn": 3,
+          "sPct": 11
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 3,
+          "dSn": 33,
+          "dPct": 50,
+          "sSn": 4,
+          "sPct": 17
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 2,
+          "qbh": 1,
+          "dSn": 18,
+          "dPct": 30
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 1,
+          "dSn": 30,
+          "dPct": 48,
+          "sSn": 14,
+          "sPct": 47
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 2,
+          "dSn": 17,
+          "dPct": 28,
+          "sSn": 4,
+          "sPct": 17
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 6,
+          "dSn": 16,
+          "dPct": 30,
+          "sSn": 14,
+          "sPct": 56
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 6,
+          "dSn": 41,
+          "dPct": 59,
+          "sSn": 12,
+          "sPct": 35
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 2,
+          "pd": 1,
+          "dSn": 27,
+          "dPct": 39,
+          "sSn": 6,
+          "sPct": 20
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 3,
+          "dSn": 18,
+          "dPct": 30,
+          "sSn": 10,
+          "sPct": 48
+        }
+      ]
     },
     {
       "id": "4243328",
@@ -85544,7 +90069,119 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 5,
+          "dSn": 53,
+          "dPct": 71,
+          "sSn": 5,
+          "sPct": 21
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 5,
+          "tfl": 1,
+          "dSn": 31,
+          "dPct": 52,
+          "sSn": 1,
+          "sPct": 3
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 7,
+          "dSn": 51,
+          "dPct": 82,
+          "sSn": 1,
+          "sPct": 3
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 7,
+          "dSn": 45,
+          "dPct": 74,
+          "sSn": 1,
+          "sPct": 4
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 1,
+          "dSn": 50,
+          "dPct": 93
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 6,
+          "dSn": 53,
+          "dPct": 76
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 5,
+          "pd": 1,
+          "dSn": 69,
+          "dPct": 100,
+          "sSn": 1,
+          "sPct": 3
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 8,
+          "dSn": 60,
+          "dPct": 100
+        }
+      ]
     },
     {
       "id": "4911489",
@@ -86265,7 +90902,101 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "sSn": 16,
+          "sPct": 70
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "sSn": 23,
+          "sPct": 66
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 3,
+          "sSn": 15,
+          "sPct": 62
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "dSn": 5,
+          "dPct": 9,
+          "sSn": 19,
+          "sPct": 76
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 1,
+          "sck": 0.5,
+          "qbh": 1,
+          "dSn": 21,
+          "dPct": 30,
+          "sSn": 22,
+          "sPct": 65
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 3,
+          "dSn": 11,
+          "dPct": 16,
+          "sSn": 25,
+          "sPct": 83
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 4,
+          "dSn": 14,
+          "dPct": 23,
+          "sSn": 15,
+          "sPct": 71
+        }
+      ]
     },
     {
       "id": "2579621",
@@ -87041,7 +91772,33 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 3,
+          "dSn": 8,
+          "dPct": 12
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 2,
+          "dSn": 18,
+          "dPct": 30
+        }
+      ]
     },
     {
       "id": "4240528",
@@ -87846,7 +92603,156 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 6,
+          "qbh": 1,
+          "dSn": 41,
+          "dPct": 55,
+          "sSn": 7,
+          "sPct": 29
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 7,
+          "dSn": 40,
+          "dPct": 63,
+          "sSn": 14,
+          "sPct": 52
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 5,
+          "dSn": 31,
+          "dPct": 47,
+          "sSn": 8,
+          "sPct": 35
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 5,
+          "dSn": 52,
+          "dPct": 87,
+          "sSn": 12,
+          "sPct": 34
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 6,
+          "qbh": 1,
+          "dSn": 42,
+          "dPct": 68,
+          "sSn": 11,
+          "sPct": 37
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 3,
+          "dSn": 48,
+          "dPct": 79,
+          "sSn": 9,
+          "sPct": 38
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 4,
+          "dSn": 34,
+          "dPct": 63,
+          "sSn": 8,
+          "sPct": 32
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 4,
+          "dSn": 33,
+          "dPct": 47,
+          "sSn": 10,
+          "sPct": 29
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 9,
+          "dInt": 1,
+          "pd": 1,
+          "dSn": 28,
+          "dPct": 41,
+          "sSn": 20,
+          "sPct": 67
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 4,
+          "dSn": 35,
+          "dPct": 58,
+          "sSn": 6,
+          "sPct": 29
+        }
+      ]
     },
     {
       "id": "4838693",
@@ -88533,7 +93439,92 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "dSn": 1,
+          "dPct": 1,
+          "sSn": 13,
+          "sPct": 54
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 2,
+          "dSn": 2,
+          "dPct": 3,
+          "sSn": 15,
+          "sPct": 56
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 2,
+          "dSn": 11,
+          "dPct": 17
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 1,
+          "dSn": 17,
+          "dPct": 28,
+          "sSn": 17,
+          "sPct": 49
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 2,
+          "dSn": 15,
+          "dPct": 21,
+          "sSn": 15,
+          "sPct": 44
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 1,
+          "pd": 1,
+          "dSn": 2,
+          "dPct": 3,
+          "sSn": 9,
+          "sPct": 30
+        }
+      ]
     },
     {
       "id": "4950551",
@@ -89219,7 +94210,155 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 5,
+          "dSn": 27,
+          "dPct": 36,
+          "sSn": 19,
+          "sPct": 79
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 1,
+          "pd": 1,
+          "dSn": 36,
+          "dPct": 57,
+          "sSn": 18,
+          "sPct": 67
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 5,
+          "dInt": 2,
+          "pd": 2,
+          "dSn": 42,
+          "dPct": 64,
+          "sSn": 17,
+          "sPct": 74
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 1,
+          "dSn": 39,
+          "dPct": 65,
+          "sSn": 25,
+          "sPct": 71
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 1,
+          "pd": 1,
+          "dSn": 25,
+          "dPct": 40,
+          "sSn": 23,
+          "sPct": 77
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 3,
+          "dSn": 33,
+          "dPct": 54,
+          "sSn": 19,
+          "sPct": 79
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "dSn": 9,
+          "dPct": 17,
+          "sSn": 15,
+          "sPct": 60
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "pd": 1,
+          "dSn": 41,
+          "dPct": 59,
+          "sSn": 21,
+          "sPct": 62
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 2,
+          "dSn": 24,
+          "dPct": 35,
+          "sSn": 15,
+          "sPct": 50
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 3,
+          "dSn": 15,
+          "dPct": 25,
+          "sSn": 10,
+          "sPct": 48
+        }
+      ]
     },
     {
       "id": "4432571",
@@ -89955,7 +95094,143 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 3,
+          "dSn": 66,
+          "dPct": 88,
+          "sSn": 10,
+          "sPct": 42
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 2,
+          "dSn": 50,
+          "dPct": 79,
+          "sSn": 7,
+          "sPct": 26
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 3,
+          "dSn": 63,
+          "dPct": 95,
+          "sSn": 4,
+          "sPct": 17
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "pd": 2,
+          "dSn": 59,
+          "dPct": 98,
+          "sSn": 6,
+          "sPct": 17
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 5,
+          "pd": 1,
+          "dSn": 58,
+          "dPct": 94,
+          "sSn": 5,
+          "sPct": 17
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 8,
+          "tfl": 1,
+          "dSn": 61,
+          "dPct": 100,
+          "sSn": 4,
+          "sPct": 17
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 3,
+          "dInt": 1,
+          "pd": 1,
+          "dSn": 54,
+          "dPct": 100,
+          "sSn": 4,
+          "sPct": 16
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 5,
+          "dSn": 70,
+          "dPct": 100,
+          "sSn": 10,
+          "sPct": 29
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 4,
+          "pd": 1,
+          "dSn": 68,
+          "dPct": 99,
+          "sSn": 4,
+          "sPct": 13
+        }
+      ]
     },
     {
       "id": "4374269",
@@ -90795,7 +96070,142 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 2,
+          "dSn": 31,
+          "dPct": 41
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 2,
+          "tfl": 1,
+          "qbh": 2,
+          "dSn": 36,
+          "dPct": 57
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "dSn": 36,
+          "dPct": 55
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 5,
+          "qbh": 2,
+          "dSn": 37,
+          "dPct": 62
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 1,
+          "dSn": 38,
+          "dPct": 61,
+          "sSn": 4,
+          "sPct": 13
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 3,
+          "qbh": 1,
+          "dSn": 40,
+          "dPct": 66
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 2,
+          "dSn": 24,
+          "dPct": 44
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 2,
+          "tfl": 1,
+          "qbh": 1,
+          "dSn": 36,
+          "dPct": 51
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 2,
+          "tfl": 1,
+          "qbh": 1,
+          "pd": 1,
+          "dSn": 36,
+          "dPct": 52
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 2,
+          "dSn": 32,
+          "dPct": 53
+        }
+      ]
     },
     {
       "id": "2979860",
@@ -91581,7 +96991,128 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 4,
+          "dSn": 40,
+          "dPct": 53,
+          "sSn": 8,
+          "sPct": 33
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 4,
+          "sck": 0.5,
+          "qbh": 1,
+          "dSn": 25,
+          "dPct": 40,
+          "sSn": 3,
+          "sPct": 11
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "dSn": 17,
+          "dPct": 27,
+          "sSn": 2,
+          "sPct": 7
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "dSn": 31,
+          "dPct": 51,
+          "sSn": 7,
+          "sPct": 29
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 2,
+          "dSn": 37,
+          "dPct": 69,
+          "sSn": 4,
+          "sPct": 16
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 1,
+          "tfl": 1,
+          "dSn": 36,
+          "dPct": 51,
+          "sSn": 8,
+          "sPct": 24
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 5,
+          "tfl": 2,
+          "sck": 2,
+          "qbh": 3,
+          "dSn": 36,
+          "dPct": 52,
+          "sSn": 5,
+          "sPct": 17
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 2,
+          "dSn": 35,
+          "dPct": 58,
+          "sSn": 4,
+          "sPct": 19
+        }
+      ]
     },
     {
       "id": "4431442",
@@ -92357,7 +97888,169 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 5,
+          "qbh": 2,
+          "pd": 1,
+          "dSn": 54,
+          "dPct": 72,
+          "sSn": 7,
+          "sPct": 29
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 1,
+          "qbh": 1,
+          "dSn": 46,
+          "dPct": 73,
+          "sSn": 4,
+          "sPct": 15
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 6,
+          "tfl": 1,
+          "sck": 1.5,
+          "qbh": 2,
+          "dSn": 54,
+          "dPct": 82,
+          "sSn": 4,
+          "sPct": 17
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 6,
+          "tfl": 1,
+          "sck": 0.5,
+          "qbh": 2,
+          "dInt": 1,
+          "pd": 1,
+          "dSn": 51,
+          "dPct": 85,
+          "sSn": 6,
+          "sPct": 17
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 4,
+          "pd": 1,
+          "dSn": 59,
+          "dPct": 95,
+          "sSn": 6,
+          "sPct": 20
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 4,
+          "dSn": 52,
+          "dPct": 85,
+          "sSn": 7,
+          "sPct": 29
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 4,
+          "tfl": 1,
+          "sck": 1,
+          "qbh": 1,
+          "dSn": 49,
+          "dPct": 91,
+          "sSn": 4,
+          "sPct": 16
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 1,
+          "qbh": 1,
+          "dSn": 49,
+          "dPct": 70,
+          "sSn": 8,
+          "sPct": 24
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 1,
+          "qbh": 4,
+          "dSn": 61,
+          "dPct": 88,
+          "sSn": 4,
+          "sPct": 13
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 4,
+          "dSn": 54,
+          "dPct": 90,
+          "sSn": 5,
+          "sPct": 24
+        }
+      ]
     },
     {
       "id": "4431467",
@@ -93036,7 +98729,144 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "sSn": 14,
+          "sPct": 58
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "sSn": 19,
+          "sPct": 70
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "sSn": 14,
+          "sPct": 61
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 1,
+          "dSn": 2,
+          "dPct": 3,
+          "sSn": 24,
+          "sPct": 69
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "tkl": 2,
+          "dSn": 3,
+          "dPct": 5,
+          "sSn": 20,
+          "sPct": 67
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 1,
+          "dSn": 6,
+          "dPct": 10,
+          "sSn": 15,
+          "sPct": 62
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 3,
+          "dSn": 15,
+          "dPct": 28,
+          "sSn": 22,
+          "sPct": 88
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "tkl": 8,
+          "pd": 1,
+          "dSn": 22,
+          "dPct": 31,
+          "sSn": 30,
+          "sPct": 88
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "tkl": 1,
+          "dSn": 12,
+          "dPct": 17,
+          "sSn": 24,
+          "sPct": 80
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 6,
+          "dSn": 37,
+          "dPct": 62,
+          "sSn": 17,
+          "sPct": 81
+        }
+      ]
     },
     {
       "id": "4574105",
@@ -93609,7 +99439,77 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "sSn": 13,
+          "sPct": 43
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 2,
+          "dSn": 17,
+          "dPct": 28,
+          "sSn": 6,
+          "sPct": 25
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 6,
+          "tfl": 2,
+          "dSn": 25,
+          "dPct": 46,
+          "sSn": 6,
+          "sPct": 24
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "dSn": 2,
+          "dPct": 3,
+          "sSn": 1,
+          "sPct": 3
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "dSn": 7,
+          "dPct": 12,
+          "sSn": 8,
+          "sPct": 38
+        }
+      ]
     },
     {
       "id": "4360745",
@@ -94222,7 +100122,93 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "sSn": 16,
+          "sPct": 67
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "sSn": 20,
+          "sPct": 74
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 1,
+          "sSn": 14,
+          "sPct": 61
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "tkl": 1,
+          "sSn": 24,
+          "sPct": 69
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "sSn": 21,
+          "sPct": 70
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 1,
+          "sSn": 16,
+          "sPct": 67
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 2,
+          "sSn": 18,
+          "sPct": 72
+        }
+      ]
     },
     {
       "id": "4362081",
@@ -94971,7 +100957,164 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "patM": 2,
+          "patA": 2,
+          "sSn": 5,
+          "sPct": 21
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "fgA": 1,
+          "patM": 2,
+          "patA": 2,
+          "sSn": 6,
+          "sPct": 22
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "fgM": 3,
+          "fgA": 4,
+          "fgL": 33,
+          "patM": 1,
+          "patA": 1,
+          "sSn": 10,
+          "sPct": 43
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "fgM": 3,
+          "fgA": 3,
+          "fgL": 40,
+          "patM": 2,
+          "patA": 2,
+          "sSn": 11,
+          "sPct": 31
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "fgM": 1,
+          "fgA": 1,
+          "fgL": 42,
+          "patM": 2,
+          "patA": 2,
+          "sSn": 7,
+          "sPct": 23
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "fgM": 2,
+          "fgA": 2,
+          "fgL": 30,
+          "sSn": 5,
+          "sPct": 21
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "fgM": 3,
+          "fgA": 3,
+          "fgL": 46,
+          "sSn": 7,
+          "sPct": 28
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "fgM": 3,
+          "fgA": 3,
+          "fgL": 52,
+          "patM": 1,
+          "patA": 1,
+          "sSn": 10,
+          "sPct": 29
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "fgM": 3,
+          "fgA": 3,
+          "fgL": 38,
+          "patM": 2,
+          "patA": 2,
+          "sSn": 11,
+          "sPct": 37
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "tkl": 1,
+          "fgM": 1,
+          "fgA": 1,
+          "fgL": 52,
+          "patM": 3,
+          "patA": 3,
+          "sSn": 8,
+          "sPct": 38
+        }
+      ]
     },
     {
       "id": "15151",
@@ -95579,7 +101722,124 @@
             "expandedRows": []
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "sSn": 5,
+          "sPct": 21
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "sSn": 8,
+          "sPct": 30
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "sSn": 8,
+          "sPct": 35
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "sSn": 10,
+          "sPct": 29
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "sSn": 9,
+          "sPct": 30
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "tkl": 1,
+          "sSn": 7,
+          "sPct": 29
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "tkl": 1,
+          "sSn": 7,
+          "sPct": 28
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "sSn": 8,
+          "sPct": 24
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "sSn": 11,
+          "sPct": 37
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "sSn": 6,
+          "sPct": 29
+        }
+      ]
     },
     {
       "id": "3126368",
@@ -96230,7 +102490,151 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "ptA": 2,
+          "ptY": 99,
+          "pt20": 1,
+          "sSn": 5,
+          "sPct": 21
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "ptA": 5,
+          "ptY": 258,
+          "pt20": 2,
+          "sSn": 9,
+          "sPct": 33
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "ptA": 3,
+          "ptY": 145,
+          "sSn": 8,
+          "sPct": 35
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "ptA": 5,
+          "ptY": 220,
+          "pt20": 1,
+          "sSn": 10,
+          "sPct": 29
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "ptA": 5,
+          "ptY": 239,
+          "pt20": 2,
+          "sSn": 9,
+          "sPct": 30
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "ptA": 5,
+          "ptY": 237,
+          "pt20": 1,
+          "sSn": 7,
+          "sPct": 29
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "ptA": 4,
+          "ptY": 191,
+          "pt20": 3,
+          "sSn": 7,
+          "sPct": 28
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "ptA": 4,
+          "ptY": 189,
+          "pt20": 1,
+          "sSn": 8,
+          "sPct": 24
+        },
+        {
+          "wk": 10,
+          "opp": "BAL",
+          "ha": "away",
+          "res": "W",
+          "pf": 23,
+          "pa": 20,
+          "gid": "401873065",
+          "ptA": 6,
+          "ptY": 259,
+          "pt20": 2,
+          "sSn": 11,
+          "sPct": 37
+        },
+        {
+          "wk": 11,
+          "opp": "NYJ",
+          "ha": "home",
+          "res": "L",
+          "pf": 24,
+          "pa": 27,
+          "gid": "401873074",
+          "ptA": 2,
+          "ptY": 99,
+          "pt20": 1,
+          "sSn": 6,
+          "sPct": 29
+        }
+      ]
     },
     {
       "id": "3917668",
@@ -97000,7 +103404,81 @@
             "expandedRows": []
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "oSn": 21,
+          "oPct": 38,
+          "sSn": 9,
+          "sPct": 38
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 1,
+          "oSn": 28,
+          "oPct": 41,
+          "sSn": 9,
+          "sPct": 33
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "rec": 3,
+          "tgt": 4,
+          "recYds": 35,
+          "recEpa": 0.84,
+          "oSn": 31,
+          "oPct": 45,
+          "sSn": 8,
+          "sPct": 35
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "oSn": 25,
+          "oPct": 35,
+          "sSn": 11,
+          "sPct": 31
+        },
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "oSn": 13,
+          "oPct": 19,
+          "sSn": 3,
+          "sPct": 10
+        }
+      ]
     },
     {
       "id": "3691739",
@@ -97864,7 +104342,47 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "tkl": 10,
+          "pd": 1,
+          "dSn": 75,
+          "dPct": 100
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "tkl": 7,
+          "dSn": 52,
+          "dPct": 83
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "tkl": 4,
+          "dSn": 66,
+          "dPct": 100
+        }
+      ]
     },
     {
       "id": "4383351",
@@ -98219,7 +104737,8 @@
         "peerGroupLabel": "Quarterbacks",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "4248627",
@@ -98820,7 +105339,49 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "oSn": 29,
+          "oPct": 43,
+          "sSn": 3,
+          "sPct": 11
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "oSn": 69,
+          "oPct": 100,
+          "sSn": 5,
+          "sPct": 22
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "oSn": 43,
+          "oPct": 61,
+          "sSn": 3,
+          "sPct": 9
+        }
+      ]
     },
     {
       "id": "4242283",
@@ -99491,7 +106052,62 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 1,
+          "opp": "ARI",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "gid": "401872926",
+          "oSn": 55,
+          "oPct": 100,
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 2,
+          "opp": "LV",
+          "ha": "home",
+          "res": "L",
+          "pf": 14,
+          "pa": 26,
+          "div": 1,
+          "gid": "401872941",
+          "oSn": 68,
+          "oPct": 100,
+          "sSn": 3,
+          "sPct": 11
+        },
+        {
+          "wk": 3,
+          "opp": "BUF",
+          "ha": "away",
+          "res": "L",
+          "pf": 16,
+          "pa": 24,
+          "gid": "401872953",
+          "oSn": 69,
+          "oPct": 100,
+          "sSn": 5,
+          "sPct": 22
+        },
+        {
+          "wk": 4,
+          "opp": "SEA",
+          "ha": "away",
+          "res": "L",
+          "pf": 23,
+          "pa": 30,
+          "gid": "401872977",
+          "oSn": 60,
+          "oPct": 85,
+          "sSn": 3,
+          "sPct": 9
+        }
+      ]
     },
     {
       "id": "4433914",
@@ -99847,7 +106463,57 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 5,
+          "opp": "DEN",
+          "ha": "home",
+          "res": "L",
+          "pf": 17,
+          "pa": 23,
+          "div": 1,
+          "gid": "401872989",
+          "sSn": 3,
+          "sPct": 10
+        },
+        {
+          "wk": 6,
+          "opp": "KC",
+          "ha": "away",
+          "res": "L",
+          "pf": 6,
+          "pa": 22,
+          "div": 1,
+          "gid": "401873006",
+          "sSn": 2,
+          "sPct": 8
+        },
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "sSn": 3,
+          "sPct": 12
+        },
+        {
+          "wk": 9,
+          "opp": "HOU",
+          "ha": "home",
+          "res": "L",
+          "pf": 22,
+          "pa": 44,
+          "gid": "401873046",
+          "oSn": 9,
+          "oPct": 12,
+          "sSn": 3,
+          "sPct": 9
+        }
+      ]
     },
     {
       "id": "5084965",
@@ -100131,7 +106797,8 @@
         "peerGroupLabel": "Offensive Tackles",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "4685272",
@@ -100330,7 +106997,8 @@
         "peerGroupLabel": "Off-Ball Linebackers",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "3886812",
@@ -100730,7 +107398,8 @@
         "peerGroupLabel": "Quarterbacks",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "4577333",
@@ -101056,7 +107725,8 @@
         "peerGroupLabel": "Off-Ball Linebackers",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "4685841",
@@ -101319,7 +107989,8 @@
         "peerGroupLabel": "Cornerbacks",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "4431212",
@@ -101582,7 +108253,8 @@
         "peerGroupLabel": "Off-Ball Linebackers",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "4567399",
@@ -102079,7 +108751,20 @@
             ]
           }
         ]
-      }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 8,
+          "opp": "LA",
+          "ha": "away",
+          "res": "L",
+          "pf": 9,
+          "pa": 24,
+          "gid": "401873032",
+          "sSn": 5,
+          "sPct": 20
+        }
+      ]
     },
     {
       "id": "4433830",
@@ -102278,7 +108963,8 @@
         "peerGroupLabel": "Wide Receivers",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "4878878",
@@ -102541,7 +109227,8 @@
         "peerGroupLabel": "Running Backs",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "4430114",
@@ -102740,7 +109427,8 @@
         "peerGroupLabel": "Interior O-Line (G/C)",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "4427695",
@@ -103143,7 +109831,8 @@
         "peerGroupLabel": "Cornerbacks",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "4875912",
@@ -103342,7 +110031,8 @@
         "peerGroupLabel": "Wide Receivers",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "5211218",
@@ -103541,7 +110231,8 @@
         "peerGroupLabel": "Offensive Tackles",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
     },
     {
       "id": "5152226",
@@ -103740,7 +110431,1257 @@
         "peerGroupLabel": "Interior DL (DT/NT)",
         "hasActiveStats": false,
         "sections": []
-      }
+      },
+      "weeklyLog2026": []
+    }
+  ],
+  "transactions": [
+    {
+      "date": "2026-11-21",
+      "cat": "ir",
+      "tag": "Activated",
+      "tone": "emerald",
+      "player": "Trey Pipkins form injured reserve",
+      "pos": "OL",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-21",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "Rodney Shelley",
+      "pos": "CB",
+      "playerId": "4838693",
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-21",
+      "cat": "ps",
+      "tag": "PS Elev (1/3)",
+      "tone": "gold",
+      "player": "Jalyn Armour-Davis",
+      "pos": "CB",
+      "playerId": "4372017",
+      "isElevation": true,
+      "elevationNum": 1
+    },
+    {
+      "date": "2026-11-19",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Josiah Deguara",
+      "pos": "TE",
+      "playerId": "3914151",
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-19",
+      "cat": "ps",
+      "tag": "Cut PS",
+      "tone": "neutral",
+      "player": "Daniel Brunskill",
+      "pos": "G",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-16",
+      "cat": "ir",
+      "tag": "Reinstated",
+      "tone": "emerald",
+      "player": "David Njoku",
+      "pos": "TE",
+      "playerId": "3123076",
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-16",
+      "cat": "ir",
+      "tag": "Reinstated",
+      "tone": "emerald",
+      "player": "Denzel Perryman",
+      "pos": "LB",
+      "playerId": "2579621",
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-16",
+      "cat": "ps",
+      "tag": "PS Elev (1/3)",
+      "tone": "gold",
+      "player": "Myles Adams",
+      "pos": "DE",
+      "playerId": "4039164",
+      "isElevation": true,
+      "elevationNum": 1
+    },
+    {
+      "date": "2026-11-16",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "Branson Taylor",
+      "pos": "G",
+      "playerId": "4433914",
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-13",
+      "cat": "ir",
+      "tag": "21d Window",
+      "tone": "emerald",
+      "player": "Trey Pipkins III",
+      "pos": "OT",
+      "playerId": "4411189",
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-11",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Zion Childress",
+      "pos": "CB",
+      "playerId": "4685841",
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-11",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Kyu Blu Kelly",
+      "pos": "CB",
+      "playerId": "4427695",
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-11",
+      "cat": "ps",
+      "tag": "Cut PS",
+      "tone": "neutral",
+      "player": "Gary Jennings",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-10",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Hayden Rucci",
+      "pos": "TE",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-10",
+      "cat": "ps",
+      "tag": "Cut PS",
+      "tone": "neutral",
+      "player": "Evan Svoboda",
+      "pos": "TE",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-05",
+      "cat": "ir",
+      "tag": "21d Window",
+      "tone": "emerald",
+      "player": "David Njoku",
+      "pos": "TE",
+      "playerId": "3123076",
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-05",
+      "cat": "ir",
+      "tag": "21d Window",
+      "tone": "emerald",
+      "player": "Denzel Perryman",
+      "pos": "LB",
+      "playerId": "2579621",
+      "isElevation": false
+    },
+    {
+      "date": "2026-11-02",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Jalyn Armour-Davis",
+      "pos": "CB",
+      "playerId": "4372017",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-31",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "Derwin James Jr.",
+      "pos": "S",
+      "playerId": "3691739",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-31",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Isas Waxter",
+      "pos": "CB",
+      "playerId": "4574105",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-27",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Tejhaun Palmer",
+      "pos": "WR",
+      "playerId": "4875912",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-17",
+      "cat": "ir",
+      "tag": "Activated",
+      "tone": "emerald",
+      "player": "KeAndre Lambert-Smith",
+      "pos": "WR",
+      "playerId": "4430870",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-17",
+      "cat": "signing",
+      "tag": "Released",
+      "tone": "crimson",
+      "player": "Marquez Valdes-Scantling",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-17",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Caleb Murphy",
+      "pos": "LB",
+      "playerId": "4911489",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-15",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "Alec Ingold",
+      "pos": "FB",
+      "playerId": "3917668",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-14",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Jake Browning",
+      "pos": "QB",
+      "playerId": "3886812",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-14",
+      "cat": "signing",
+      "tag": "Move",
+      "tone": "neutral",
+      "player": "Evan Svoboda",
+      "pos": "TE",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-13",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Luke Grimm",
+      "pos": "WR",
+      "playerId": "4433830",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-10",
+      "cat": "ir",
+      "tag": "Reinstated",
+      "tone": "emerald",
+      "player": "Scott Matlock",
+      "pos": "FB",
+      "playerId": "4373684",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-10",
+      "cat": "ir",
+      "tag": "Reinstated",
+      "tone": "emerald",
+      "player": "Branson Taylor",
+      "pos": "G",
+      "playerId": "4433914",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-10",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "Rashawn Slater",
+      "pos": "OT",
+      "playerId": "4242283",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-10",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "Trey Lance",
+      "pos": "QB",
+      "playerId": "4383351",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-10",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "Trevor Penning",
+      "pos": "G",
+      "playerId": "4248627",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-10",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Theo Wease Jr.",
+      "pos": "WR",
+      "playerId": "4426535",
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-10",
+      "cat": "ps",
+      "tag": "PS Elev (1/3)",
+      "tone": "gold",
+      "player": "Daniel Brunskill",
+      "pos": "OL",
+      "playerId": null,
+      "isElevation": true,
+      "elevationNum": 1
+    },
+    {
+      "date": "2026-10-10",
+      "cat": "ps",
+      "tag": "PS Elev (2/3)",
+      "tone": "gold",
+      "player": "Isas Waxter",
+      "pos": "CB",
+      "playerId": "4574105",
+      "isElevation": true,
+      "elevationNum": 2
+    },
+    {
+      "date": "2026-10-09",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "T Rashawn Slater",
+      "pos": "",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-07",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Daniel Burnskill",
+      "pos": "C",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-06",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Daniel Brunskill",
+      "pos": "OT",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-06",
+      "cat": "signing",
+      "tag": "Released",
+      "tone": "crimson",
+      "player": "Jordan Jefferson",
+      "pos": "DL",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-06",
+      "cat": "ir",
+      "tag": "21d Window",
+      "tone": "emerald",
+      "player": "FB/DL Scott Matlock",
+      "pos": "",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-10-06",
+      "cat": "ir",
+      "tag": "21d Window",
+      "tone": "emerald",
+      "player": "Branson Taylor",
+      "pos": "G",
+      "playerId": "4433914",
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-30",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Myles Adams",
+      "pos": "DE",
+      "playerId": "4039164",
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-26",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "T Trey Pipkins",
+      "pos": "",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-26",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "DJ Uiagalelei",
+      "pos": "QB",
+      "playerId": "4429020",
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-24",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Gary Jennings",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-23",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Gary Jennings",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-23",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Marquez Valdes-Scantling",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-23",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "David Njoku",
+      "pos": "TE",
+      "playerId": "3123076",
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-23",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Spencer Triplett",
+      "pos": "L",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-22",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Hayden Rucci",
+      "pos": "TE",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-22",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Gary Jennings",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-19",
+      "cat": "ps",
+      "tag": "PS Elev (1/3)",
+      "tone": "gold",
+      "player": "Isas Waxter",
+      "pos": "CB",
+      "playerId": "4574105",
+      "isElevation": true,
+      "elevationNum": 1
+    },
+    {
+      "date": "2026-09-17",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Kaiir Elam",
+      "pos": "CB",
+      "playerId": "4567399",
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-16",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Marquez Valdes-Scantling",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-16",
+      "cat": "ps",
+      "tag": "Cut PS",
+      "tone": "neutral",
+      "player": "Kaiir Elam",
+      "pos": "CB",
+      "playerId": "4567399",
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-15",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "KeAndre Lambert-Smith",
+      "pos": "WR",
+      "playerId": "4430870",
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-15",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Isas Waxter",
+      "pos": "CB",
+      "playerId": "4574105",
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-15",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Gary Jennings",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-10",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Gary Jennings",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-10",
+      "cat": "ps",
+      "tag": "Cut PS",
+      "tone": "neutral",
+      "player": "Isas Waxter",
+      "pos": "CB",
+      "playerId": "4574105",
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-07",
+      "cat": "ps",
+      "tag": "Signed PS",
+      "tone": "neutral",
+      "player": "Isas Waxter",
+      "pos": "CB",
+      "playerId": "4574105",
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-07",
+      "cat": "ps",
+      "tag": "Cut PS",
+      "tone": "neutral",
+      "player": "Gary Jennings",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-05",
+      "cat": "signing",
+      "tag": "Released",
+      "tone": "crimson",
+      "player": "Kyle Kennard",
+      "pos": "LB",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-02",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Kaiir Elam",
+      "pos": "CB",
+      "playerId": "4567399",
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-02",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Jordan Jefferson",
+      "pos": "DL",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-02",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Theo Wease Jr.",
+      "pos": "WR",
+      "playerId": "4426535",
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-02",
+      "cat": "signing",
+      "tag": "Released",
+      "tone": "crimson",
+      "player": "Jahmeer Carter",
+      "pos": "DL",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-02",
+      "cat": "signing",
+      "tag": "Released",
+      "tone": "crimson",
+      "player": "Devonte Ross",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-09-02",
+      "cat": "signing",
+      "tag": "Released",
+      "tone": "crimson",
+      "player": "Isas Waxter",
+      "pos": "CB",
+      "playerId": "4574105",
+      "isElevation": false
+    },
+    {
+      "date": "2026-08-23",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "Tyler Biadasz",
+      "pos": "C",
+      "playerId": "4035788",
+      "isElevation": false
+    },
+    {
+      "date": "2026-08-20",
+      "cat": "ir",
+      "tag": "Placed IR",
+      "tone": "crimson",
+      "player": "Luke Grimm",
+      "pos": "WR",
+      "playerId": "4433830",
+      "isElevation": false
+    },
+    {
+      "date": "2026-08-18",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Liam Clifford",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-08-18",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Waived/injured WR Luke Grimm",
+      "pos": "",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-08-10",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Andre Carter II",
+      "pos": "LB",
+      "playerId": "4577333",
+      "isElevation": false
+    },
+    {
+      "date": "2026-08-10",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Mante Morrow",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-07-28",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Peter Bowden",
+      "pos": "L",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-07-27",
+      "cat": "signing",
+      "tag": "Released",
+      "tone": "crimson",
+      "player": "Ben Cleveland",
+      "pos": "G",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-07-24",
+      "cat": "ir",
+      "tag": "Reserve",
+      "tone": "amber",
+      "player": "Isaiah World",
+      "pos": "OT",
+      "playerId": "5084965",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-27",
+      "cat": "signing",
+      "tag": "Extended",
+      "tone": "emerald",
+      "player": "Derwin James Jr.",
+      "pos": "S",
+      "playerId": "3691739",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-21",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Jerry Wilson",
+      "pos": "DB",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-14",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Mante' Morrow",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-14",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Peter Bowden",
+      "pos": "L",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-12",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Johnny Pascuzzi",
+      "pos": "TE",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-12",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "David Njoku",
+      "pos": "TE",
+      "playerId": "3123076",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-12",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Myles Purchase",
+      "pos": "DB",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-12",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Laekin Vakalahi",
+      "pos": "OT",
+      "playerId": "5211218",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-12",
+      "cat": "ir",
+      "tag": "Reserve",
+      "tone": "amber",
+      "player": "Laekin Vakalahi",
+      "pos": "OT",
+      "playerId": "5211218",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-12",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Niles King",
+      "pos": "DE",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-12",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Jerry Wilson",
+      "pos": "DB",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-12",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Tanner McLachlan",
+      "pos": "TE",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-12",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Thomas Yassmin",
+      "pos": "TE",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-12",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Waived/injured CB Jeremiah Wilson",
+      "pos": "",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-11",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Jake Slaughter",
+      "pos": "C",
+      "playerId": "4682506",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "T Travis Burke",
+      "pos": "",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Genesis Smith",
+      "pos": "S",
+      "playerId": "4950551",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Nick Barrett",
+      "pos": "DT",
+      "playerId": "4682818",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Logan Taylor",
+      "pos": "G",
+      "playerId": "4682789",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Alex Harkey",
+      "pos": "G",
+      "playerId": "5082660",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Josh Fuga",
+      "pos": "DL",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Waived",
+      "tone": "crimson",
+      "player": "Jordan Oladokun",
+      "pos": "CB",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Noah Avinger",
+      "pos": "",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Devin Grant",
+      "pos": "",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Lander Barton",
+      "pos": "LB",
+      "playerId": "4685272",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Jerand Bradley",
+      "pos": "TE",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Evan Svoboda",
+      "pos": "TE",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Sincere Brown",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Devonte Ross",
+      "pos": "WR",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Jahmeer Carter",
+      "pos": "DL",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Jacobian Guillory",
+      "pos": "DL",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Terry Webb",
+      "pos": "DT",
+      "playerId": "5152226",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Greg Desrosiers",
+      "pos": "RB",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Niles King",
+      "pos": "OLB",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Nadame Tucker",
+      "pos": "OLB",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Rodney Shelley",
+      "pos": "CB",
+      "playerId": "4838693",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Avery Smith",
+      "pos": "CB",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Jeremiah Wilson",
+      "pos": "CB",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "Jacob Spomer",
+      "pos": "C",
+      "playerId": "5082312",
+      "isElevation": false
+    },
+    {
+      "date": "2026-05-08",
+      "cat": "signing",
+      "tag": "Signed 53",
+      "tone": "blue",
+      "player": "T Isaiah World",
+      "pos": "C",
+      "playerId": null,
+      "isElevation": false
+    },
+    {
+      "date": "2026-04-28",
+      "cat": "signing",
+      "tag": "Move",
+      "tone": "neutral",
+      "player": "fifth-year option",
+      "pos": "",
+      "playerId": null,
+      "isElevation": false
+    }
+  ],
+  "psElevations": [
+    {
+      "player": "Isas Waxter",
+      "pos": "CB",
+      "playerId": "4574105",
+      "used": 2,
+      "max": 3,
+      "remaining": 1,
+      "rosterBucket": "active",
+      "lastDate": "2026-10-10"
+    },
+    {
+      "player": "Jalyn Armour-Davis",
+      "pos": "CB",
+      "playerId": "4372017",
+      "used": 1,
+      "max": 3,
+      "remaining": 2,
+      "rosterBucket": "practice_squad",
+      "lastDate": "2026-11-21"
+    },
+    {
+      "player": "Myles Adams",
+      "pos": "DE",
+      "playerId": "4039164",
+      "used": 1,
+      "max": 3,
+      "remaining": 2,
+      "rosterBucket": "practice_squad",
+      "lastDate": "2026-11-16"
+    },
+    {
+      "player": "Daniel Brunskill",
+      "pos": "OL",
+      "playerId": null,
+      "used": 1,
+      "max": 3,
+      "remaining": 2,
+      "rosterBucket": "other",
+      "lastDate": "2026-10-10"
     }
   ]
 }

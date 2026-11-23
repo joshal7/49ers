@@ -26399,6 +26399,17 @@
         "Trench Run-Fit & Two-Way Leverage: DC Brandon Staley balances pass-rush pressure with two-high/split-safety discipline on early downs, while Cincinnati Bengals's offense tests New Orleans's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": false,
+      "tempF": 53,
+      "windMph": 8,
+      "windDir": "W",
+      "precipPct": 12,
+      "condition": "Clear",
+      "altitudeFt": 490,
+      "source": "open-meteo",
+      "forecastHourUtc": "2026-11-29T18:00"
+    }
   }
 }

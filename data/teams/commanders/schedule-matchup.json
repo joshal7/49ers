@@ -26573,6 +26573,16 @@
         "Trench Run-Fit & Two-Way Leverage: DC Daronte Jones balances pass-rush pressure with two-high/split-safety discipline on early downs, while Cincinnati Bengals's offense tests Washington's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": false,
+      "tempF": 57,
+      "condition": "Partly cloudy",
+      "windMph": null,
+      "windDir": "",
+      "precipPct": null,
+      "altitudeFt": 180,
+      "source": "espn"
+    }
   }
 }

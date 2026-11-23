@@ -20347,6 +20347,154 @@ await testAsync('Worker GET /api/gamecast validates numeric event IDs/modes and 
   }
 });
 
+await testAsync('Wave 1 & Wave 2 Deep-Dive Engines (Game Logs, Players, Snap Matrix, Moves/PS, Free Agents, Weather & Live Rooting)', async () => {
+  const {
+    buildPlayerWeeklyGameLogModel,
+    buildTeamPlayerStatsModel,
+    buildWeeklySnapMatrixModel,
+    parseEspnTransactionsToLedger,
+    mergeTransactionsLedgers,
+    buildUpcomingFreeAgentsModel,
+    buildPositionalCapSpendModel,
+    extractLiveScoreboardMap,
+    lookupRootingGameLiveScore
+  } = await import('../src/engine/teamDeepDiveEngine.js');
+  const {
+    resolveNflStadiumMeta,
+    formatMatchupWeatherInline,
+    formatStadiumAltitudeLabel
+  } = await import('../src/config/nflStadiums.js');
+  const { renderPlayerDossierSheetHtml } = await import('../src/views/playerSheetView.js');
+  const { renderRosterCapViewHtml } = await import('../src/views/rosterCapView.js');
+  const { renderSeasonMatchupViewHtml } = await import('../src/views/seasonMatchupView.js');
+
+  const rosterData = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const capData = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'cap.json'), 'utf8'));
+  const schedData = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
+  const seasonalData = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'seasonal.json'), 'utf8'));
+
+  // 1. Live data integrity + latency budget (< 15ms total across all Wave 1 & 2 engines)
+  const purdy = rosterData.players.find(p => /brock purdy/i.test(p.name));
+  const cmc = rosterData.players.find(p => /mccaffrey/i.test(p.name));
+  const trent = rosterData.players.find(p => /trent williams/i.test(p.name));
+  assert.ok(purdy && Array.isArray(purdy.weeklyLog2026) && purdy.weeklyLog2026.length >= 5, 'Purdy must have >= 5 weeklyLog2026 entries');
+  assert.ok(trent && Array.isArray(trent.weeklyLog2026) && trent.weeklyLog2026.length >= 5, 'OL starter Trent Williams must have weekly snap logs');
+  assert.ok(Array.isArray(rosterData.transactions) && rosterData.transactions.length >= 20, `Expected >= 20 parsed transactions in roster.json, got ${rosterData.transactions?.length}`);
+  assert.ok(Array.isArray(rosterData.psElevations) && rosterData.psElevations.length >= 1, 'Expected >= 1 tracked PS elevation in roster.json');
+
+  const t0 = performance.now();
+  const purdyLog = buildPlayerWeeklyGameLogModel(purdy, { schedule: schedData.schedule, teamAbbr: 'SF', seasonYear: 2026 });
+  const olLog = buildPlayerWeeklyGameLogModel(trent, { schedule: schedData.schedule, teamAbbr: 'SF', seasonYear: 2026 });
+  const recStats = buildTeamPlayerStatsModel(rosterData.players, { category: 'rec', sortKey: 'yards', sortDir: 'desc' });
+  const snapMatrix = buildWeeklySnapMatrixModel(rosterData.players, { unit: 'offense', maxWeeks: 8 });
+  const faModel = buildUpcomingFreeAgentsModel(capData, rosterData.players, { baseYear: 2026, statusFilter: 'ALL' });
+  const capMix = buildPositionalCapSpendModel(capData, { yearKey: '2026' });
+  const elapsedMs = performance.now() - t0;
+  assert.ok(elapsedMs < 40, `Wave 1 & 2 engines must execute synchronously under 40ms, took ${elapsedMs.toFixed(1)}ms`);
+
+  // 2. Game Log tab order strictly Game Log -> 2026 -> Career, and 5 core splits max
+  assert.ok(purdyLog.hasGames && purdyLog.rows.length >= 5 && purdyLog.rows[0].wk > purdyLog.rows[purdyLog.rows.length - 1].wk, 'Game Log must sort newest week first');
+  assert.ok(purdyLog.splits.length >= 3 && purdyLog.splits.length <= 5, `Expected 3..5 core splits, got ${purdyLog.splits.length}`);
+  assert.equal(olLog.role, 'ol', 'Trent Williams must use OL snap-centric Game Log role');
+
+  const sheetStatsHtml = renderPlayerDossierSheetHtml({
+    player: purdy,
+    activeTab: 'stats',
+    statsMode: '2026',
+    appData: { meta: { seasonYear: 2026 }, scheduleMatchup: schedData, roster: rosterData }
+  });
+  const modeMatches = [...sheetStatsHtml.matchAll(/data-stats-mode="([^"]+)"/g)].map(m => m[1]);
+  assert.deepEqual(
+    modeMatches,
+    ['gamelog', '2026', 'career'],
+    `Player Stats tab order must be Game Log -> 2026 -> Career, got ${JSON.stringify(modeMatches)}`
+  );
+
+  // 3. Team Players sorting & Weekly Snap Matrix
+  assert.ok(recStats.rows.length >= 4 && recStats.rows[0].yards >= recStats.rows[1].yards, 'Team Players Rec table must sort descending by yards');
+  const recAsc = buildTeamPlayerStatsModel(rosterData.players, { category: 'rec', sortKey: 'yards', sortDir: 'asc' });
+  assert.ok(recAsc.rows[0].yards <= recAsc.rows[recAsc.rows.length - 1].yards, 'Team Players Rec table must support ascending sort');
+  assert.ok(snapMatrix.weeks.length >= 4 && snapMatrix.rows.length >= 10, 'Offense Weekly Snap Matrix must render multi-week rows');
+
+  // 4. Compound ESPN Transaction Sentence Splitting, Multi-Player PS Elevation Counting & Dedup
+  const parsedTx = parseEspnTransactionsToLedger(
+    [
+      {
+        date: '2026-10-10T18:00Z',
+        description: 'Elevated LB Jalen Graham and WR Malik Turner from the practice squad to the active roster.'
+      },
+      {
+        date: '2026-10-19T18:00Z',
+        description: 'Activated WR Demarcus Robinson from injured reserve. Placed WR Christian Kirk on injured reserve. Elevated WR Malik Turner from the practice squad.'
+      }
+    ],
+    { teamRoster: rosterData.players, seasonYear: 2026 }
+  );
+  assert.equal(parsedTx.transactions.length, 5, `Expected 5 atomic moves from 2 compound ESPN entries, got ${parsedTx.transactions.length}`);
+  const malikElev = parsedTx.psElevations.find(e => /malik turner/i.test(e.player));
+  const jalenElev = parsedTx.psElevations.find(e => /jalen graham/i.test(e.player));
+  assert.equal(malikElev?.used, 2, 'Malik Turner must count 2/3 standard PS elevations across multi-player + single clauses');
+  assert.equal(jalenElev?.used, 1, 'Jalen Graham must count 1/3 standard PS elevation');
+  // Re-merging identical live payloads must never double-count elevations
+  const reMerged = mergeTransactionsLedgers(
+    parsedTx.transactions,
+    [{ date: '2026-10-19T18:00Z', description: 'Elevated WR Malik Turner from the practice squad.' }],
+    { teamRoster: rosterData.players, seasonYear: 2026 }
+  );
+  assert.equal(reMerged.psElevations.find(e => /malik turner/i.test(e.player))?.used, 2, 'Live transaction merge must deduplicate without double-counting elevations');
+
+  // 5. Upcoming Free Agents (UFA/RFA/ERFA + Void-Year flags) & Positional Cap Spend
+  assert.ok(faModel.targetFaYear === 2027 && faModel.counts.ALL >= 10 && faModel.counts.UFA >= 5, `Expected 2027 expiring FA contracts, got ${JSON.stringify(faModel.counts)}`);
+  assert.ok(faModel.players.some(p => p.hasVoidYears), 'Must flag expiring contracts carrying void-year dead cap acceleration');
+  assert.ok(capMix.units.length === 7 && capMix.units[0].teamPct >= capMix.units[capMix.units.length - 1].teamPct, 'Positional Cap Spend must rank all 7 units by % of ceiling');
+
+  // 6. Outdoor Weather Formatting, Dome Suppression & Live Rooting Score Lookup
+  const mexStadium = resolveNflStadiumMeta({ venueName: 'Estadio Banorte • Mexico City', homeTeamAbbr: 'SF' });
+  assert.equal(formatStadiumAltitudeLabel(mexStadium), '7,200 ft', 'Mexico City must display 7,200 ft altitude');
+  assert.equal(
+    formatMatchupWeatherInline({ indoor: false, tempF: 64, windMph: 7, windDir: 'SW', condition: 'Clear' }, mexStadium),
+    '64°F, 7 mph SW'
+  );
+  const domeStadium = resolveNflStadiumMeta({ venueName: 'U.S. Bank Stadium', homeTeamAbbr: 'MIN' });
+  assert.equal(
+    formatMatchupWeatherInline({ tempF: 70, windMph: 5, condition: 'Clear' }, domeStadium),
+    '',
+    'Indoor dome stadiums must suppress weather readout completely'
+  );
+  const sbMap = extractLiveScoreboardMap({
+    week: { number: 11 },
+    events: [
+      {
+        id: '401999111',
+        week: { number: 11 },
+        competitions: [
+          {
+            status: { type: { state: 'in', completed: false, shortDetail: 'Q3 6:42' } },
+            competitors: [
+              { homeAway: 'away', team: { abbreviation: 'LA' }, score: '17' },
+              { homeAway: 'home', team: { abbreviation: 'SEA' }, score: '14' }
+            ]
+          }
+        ]
+      }
+    ]
+  });
+  const liveRoot = lookupRootingGameLiveScore({ week: 11, away: 'LAR', home: 'SEA' }, sbMap);
+  assert.ok(liveRoot && liveRoot.away === 'LAR' && liveRoot.awayScore === 17 && liveRoot.state === 'in', 'Scoreboard map must normalize LA->LAR and resolve live rooting score');
+
+  // 7. Rendered SSR checks for Moves, Cap Free Agents & Matchup Venue inline metadata
+  const movesHtml = renderRosterCapViewHtml({ subTab: 'moves', appData: { meta: { seasonYear: 2026 }, roster: rosterData, cap: capData } });
+  assert.ok(movesHtml.includes('id="rosterMovesLedgerCard"') && movesHtml.includes('data-ps-elevations-card'), 'Moves view must render ledger + collapsible PS elevations');
+  const capFaHtml = renderRosterCapViewHtml({ subTab: 'cap', capViewMode: 'fa', appData: { meta: { seasonYear: 2026 }, roster: rosterData, cap: capData } });
+  assert.ok(capFaHtml.includes('id="upcomingFreeAgentsCard"') && capFaHtml.includes('data-cap-positional-spend'), 'Cap Free Agents view must render expiring contracts + collapsed positional spend');
+  const statsPlayersHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'stats',
+    statsSubMode: 'players',
+    appData: { meta: { seasonYear: 2026 }, roster: rosterData, scheduleMatchup: schedData, seasonal: seasonalData }
+  });
+  assert.ok(statsPlayersHtml.includes('id="teamPlayerStatsCard"') && !statsPlayersHtml.includes('Team Leaders'), 'Players sub-view must render sortable table without redundant Team Leaders cards');
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

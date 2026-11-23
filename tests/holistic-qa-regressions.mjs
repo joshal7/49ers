@@ -1871,8 +1871,13 @@ test('Injury News Stack Ranking (Recency + Salience), Immediate Practice Report 
   // Verify ALL 87 players' Overview `Recent Mentions (7d)` (`rankPlayerOverviewMentions`) enforce 100% direct link integrity,
   // primary-subject ranking ahead of secondary ripple mentions/mock drafts, cross-player `espn_pwire_*` isolation, and user mute prefs
   let totalOverviewMentionsChecked = 0;
+  const liveNewsAnchorMs = Date.parse(liveNews.updatedAt || '') || Date.now();
   for (const rp of liveRoster.players || []) {
-    const ovItems = rankPlayerOverviewMentions(rp, { rawStream: liveNews.rawStream, appData: liveBundle });
+    const ovItems = rankPlayerOverviewMentions(rp, {
+      rawStream: liveNews.rawStream,
+      appData: liveBundle,
+      nowMs: liveNewsAnchorMs
+    });
     for (const it of ovItems) {
       totalOverviewMentionsChecked++;
       const href =

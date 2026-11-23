@@ -26344,6 +26344,11 @@
         "Trench Run-Fit & Two-Way Leverage: DC Brian Flores balances pass-rush pressure with two-high/split-safety discipline on early downs, while Atlanta Falcons's offense tests Minnesota's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": true,
+      "altitudeFt": 840,
+      "source": "stadium"
+    }
   }
 }

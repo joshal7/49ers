@@ -26470,6 +26470,17 @@
         "Trench Run-Fit & Two-Way Leverage: DC Anthony Campanile balances pass-rush pressure with two-high/split-safety discipline on early downs, while Tennessee Titans's offense tests Jacksonville's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": false,
+      "tempF": 59,
+      "windMph": 2,
+      "windDir": "E",
+      "precipPct": 7,
+      "condition": "Cloudy",
+      "altitudeFt": 15,
+      "source": "open-meteo",
+      "forecastHourUtc": "2026-11-29T18:00"
+    }
   }
 }

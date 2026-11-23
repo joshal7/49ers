@@ -26609,6 +26609,17 @@
         "tacticalDetail": "This is one of Minnesota's sharpest paths to dictating the game: Andrew Van Ginkel headlines an elite #1 NFL pass rush (4.11 sacks/gm) that attacks protection rules with simulated pressures and edge stunts. Even with Trent Williams anchoring the blindside and Dominick Puni at RG, C Jake Brendel and the interior must sort late blitzers cleanly or drive-killing sacks will swing field position.",
         "filmTell": "Watch whether SF can leave Trent Williams (#71) isolated without TE chip help—or whether Andrew Van Ginkel and simulated interior pressures force George Kittle (#85) to stay in to protect."
       }
-    ]
+    ],
+    "weather": {
+      "indoor": false,
+      "tempF": 63,
+      "windMph": 2,
+      "windDir": "W",
+      "precipPct": 92,
+      "condition": "Rain",
+      "altitudeFt": 7200,
+      "source": "open-meteo",
+      "forecastHourUtc": "2026-11-23T01:00"
+    }
   }
 }

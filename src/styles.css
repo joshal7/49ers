@@ -10091,3 +10091,529 @@ mark.search-hl {
     font-size: 11px;
   }
 }
+
+/* ==========================================================================
+   Wave 1 & Wave 2 High-SNR Deep-Dive Modules (Game Logs, Players, Snap Matrix,
+   1-Line Moves Ledger, 2027 Free Agents, Ambient Matchup Weather/TV & Rooting Live)
+   ========================================================================== */
+
+.badge-info {
+  background: rgba(56, 189, 248, 0.16);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+}
+[data-theme="light"] .badge-info {
+  background: rgba(2, 132, 199, 0.12);
+  color: #0369A1;
+  border-color: rgba(2, 132, 199, 0.25);
+}
+
+.compact-chip-row {
+  gap: 6px;
+}
+.compact-chip-row .pill-btn {
+  padding: 5px 10px;
+  font-size: 11.5px;
+}
+
+/* 4-pill Roster & Cap top bar — zero horizontal scroll on 320px-430px */
+.roster-top-seg {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 3px;
+}
+.roster-top-seg .seg-btn {
+  padding: 6px 4px;
+  font-size: 11.5px;
+  gap: 4px;
+  min-width: 0;
+  justify-content: center;
+}
+@media (max-width: 350px) {
+  .roster-top-seg .seg-btn {
+    font-size: 10.5px;
+    padding: 6px 2px;
+    gap: 3px;
+  }
+  .roster-top-seg .seg-btn svg {
+    width: 11px;
+    height: 11px;
+  }
+}
+
+/* Player Dossier Stats 3-pill bar (Game Log | 2026 | Career) */
+.player-stats-mode-bar .seg-btn {
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+/* Game Log Trend Sparkline & Splits (Wave 1A) */
+.gamelog-summary-card {
+  padding: 11px 12px;
+}
+.gamelog-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.gamelog-sub-meta {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+.gamelog-spark-wrap {
+  margin-top: 8px;
+  padding: 4px 2px 0;
+}
+.gamelog-spark-svg {
+  width: 100%;
+  height: 38px;
+  display: block;
+  overflow: visible;
+}
+.gamelog-spark-line {
+  stroke: var(--gold);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.gamelog-spark-dot {
+  fill: var(--gold-bright);
+}
+.gamelog-spark-dot-last {
+  fill: var(--emerald);
+}
+.gamelog-tap-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.gamelog-table th.sticky-col,
+.gamelog-table td.sticky-col,
+.team-players-table th.sticky-col,
+.team-players-table td.sticky-col,
+.snap-matrix-table th.sticky-col,
+.snap-matrix-table td.sticky-col,
+.cap-fa-table th.sticky-col,
+.cap-fa-table td.sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border-subtle);
+}
+.gamelog-table th.sticky-col,
+.team-players-table th.sticky-col,
+.snap-matrix-table th.sticky-col,
+.cap-fa-table th.sticky-col {
+  background: var(--bg-card-alt);
+  z-index: 3;
+}
+.gamelog-row-link {
+  cursor: pointer;
+}
+.gamelog-row-link:hover td {
+  background: var(--bg-card-alt);
+}
+.gamelog-game-lbl {
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.gamelog-chev {
+  color: var(--gold-bright);
+  font-weight: 800;
+}
+.gamelog-splits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.gamelog-split-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+}
+.gamelog-split-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.gamelog-split-left strong {
+  font-size: 12.5px;
+}
+.gamelog-split-sample {
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+.gamelog-split-right {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.gamelog-split-primary {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Season -> Stats inner switcher, Sortable Team Players & Snap Matrix (Wave 1B) */
+.stats-inner-subnav-card,
+.cap-inner-subnav-card {
+  padding: 7px 8px;
+}
+.team-players-sub-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+.team-players-pos {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  margin-left: 4px;
+  font-weight: 600;
+}
+.sortable-th {
+  cursor: pointer;
+  user-select: none;
+}
+.sortable-th.is-sorted {
+  color: var(--gold-bright);
+}
+.team-players-table td.is-sorted-cell {
+  font-weight: 800;
+}
+.team-players-table td.team-players-accent {
+  color: var(--emerald);
+  font-weight: 700;
+}
+
+/* Weekly Snap Matrix Heat Cells */
+.snap-player-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-width: 118px;
+}
+.snap-player-name-wrap {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.snap-player-meta {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.snap-delta-pill {
+  font-size: 9.5px;
+  padding: 1px 5px;
+  flex-shrink: 0;
+}
+.snap-wk-th {
+  text-align: center !important;
+  min-width: 40px;
+}
+.snap-cell-td {
+  text-align: center !important;
+  padding: 5px 3px !important;
+}
+.snap-heat-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 23px;
+  padding: 0 4px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.snap-heat-high {
+  background: var(--emerald-soft);
+  color: var(--emerald);
+  border: 1px solid rgba(16, 185, 129, 0.32);
+}
+.snap-heat-med {
+  background: var(--gold-soft);
+  color: var(--gold-bright);
+  border: 1px solid var(--gold-border);
+}
+.snap-heat-rot {
+  background: rgba(56, 189, 248, 0.14);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+}
+[data-theme="light"] .snap-heat-rot {
+  background: rgba(2, 132, 199, 0.11);
+  color: #0369A1;
+  border-color: rgba(2, 132, 199, 0.25);
+}
+.snap-heat-low {
+  background: var(--bg-card-alt);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+.snap-heat-empty {
+  color: var(--text-muted);
+  opacity: 0.65;
+}
+.snap-matrix-legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 7px;
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+/* Roster -> Moves 1-Line Ledger & Practice Squad Elevations (Wave 2A) */
+.ps-elev-inline-pill {
+  font-size: 9.5px;
+  padding: 1px 5px;
+  vertical-align: middle;
+}
+.ps-elev-details {
+  padding: 10px 12px;
+}
+.ps-elev-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.ps-elev-summary-preview {
+  font-size: 11px;
+  color: var(--gold-bright);
+  margin-left: auto;
+  padding-right: 4px;
+}
+.ps-elev-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.ps-elev-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+}
+.ps-elev-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+.ps-elev-pos,
+.ps-elev-note {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.ps-elev-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.ps-elev-dots {
+  display: inline-flex;
+  gap: 3px;
+}
+.ps-elev-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+.ps-elev-dot.is-used {
+  background: var(--gold);
+}
+.ps-elev-dot.is-max {
+  background: var(--crimson);
+}
+.ps-elev-count {
+  font-size: 11.5px;
+  font-weight: 800;
+}
+.ps-elev-count.is-max {
+  color: var(--crimson);
+}
+
+.moves-month-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.moves-month-heading {
+  margin: 0 0 5px;
+}
+.moves-ledger-box {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--bg-card-alt);
+}
+.moves-ledger-row {
+  display: grid;
+  grid-template-columns: 44px auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 9px;
+  font-size: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+.moves-ledger-row:first-child {
+  border-top: none;
+}
+.moves-date {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.moves-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+.moves-player-name {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.moves-pos {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* Cap -> Free Agents & Collapsible Positional Cap Mix (Wave 2B) */
+.cap-fa-kpi-grid {
+  margin-bottom: 10px;
+}
+.cap-mix-details {
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.cap-mix-preview {
+  font-size: 11px;
+  color: var(--gold-bright);
+  margin-left: auto;
+  padding-right: 4px;
+}
+.cap-mix-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+}
+.cap-mix-row {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+}
+.cap-mix-label {
+  color: var(--text-secondary);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cap-mix-track {
+  position: relative;
+  height: 9px;
+  border-radius: 99px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-subtle);
+}
+.cap-mix-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--scarlet), var(--gold));
+}
+.cap-mix-avg-tick {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--text-primary);
+  opacity: 0.78;
+}
+.cap-mix-pct {
+  text-align: right;
+  font-weight: 700;
+}
+.cap-mix-footnote {
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+.fa-void-tag {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-size: 9.5px;
+  font-weight: 700;
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+/* Matchup Ambient Weather/TV & Playoffs Rooting Live Score (Wave 2C) */
+.matchup-venue-meta {
+  line-height: 1.4;
+}
+.matchup-meta-sep {
+  color: var(--text-muted);
+  margin: 0 2px;
+}
+.matchup-meta-alt {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+.matchup-meta-wx {
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+.matchup-meta-tv {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+.rooting-live-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.rooting-live-score.is-live {
+  background: var(--crimson-soft);
+  color: var(--crimson);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.rooting-live-score.is-final {
+  background: var(--bg-card-alt);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}

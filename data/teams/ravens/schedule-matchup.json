@@ -26452,6 +26452,11 @@
         "Trench Run-Fit & Two-Way Leverage: DC Anthony Weaver balances pass-rush pressure with two-high/split-safety discipline on early downs, while Houston Texans's offense tests Baltimore's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": true,
+      "altitudeFt": 45,
+      "source": "stadium"
+    }
   }
 }

@@ -26436,6 +26436,11 @@
         "Trench Run-Fit & Two-Way Leverage: DC Vic Fangio balances pass-rush pressure with two-high/split-safety discipline on early downs, while Dallas Cowboys's offense tests Philadelphia's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": true,
+      "altitudeFt": 600,
+      "source": "stadium"
+    }
   }
 }

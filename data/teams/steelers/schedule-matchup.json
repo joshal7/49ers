@@ -26466,6 +26466,17 @@
         "Trench Run-Fit & Two-Way Leverage: DC Patrick Graham balances pass-rush pressure with two-high/split-safety discipline on early downs, while Denver Broncos's offense tests Pittsburgh's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": false,
+      "tempF": 39,
+      "windMph": 12,
+      "windDir": "W",
+      "precipPct": 67,
+      "condition": "Fog",
+      "altitudeFt": 730,
+      "source": "open-meteo",
+      "forecastHourUtc": "2026-11-27T20:00"
+    }
   }
 }

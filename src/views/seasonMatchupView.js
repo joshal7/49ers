@@ -31,6 +31,17 @@ import {
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { getActiveTeamConfig, getTeamCoaches } from '../config/teamRegistry.js';
+import {
+  formatMatchupWeatherInline,
+  formatStadiumAltitudeLabel,
+  resolveNflStadiumMeta
+} from '../config/nflStadiums.js';
+import {
+  TEAM_PLAYER_STATS_CATEGORIES,
+  buildTeamPlayerStatsModel,
+  buildWeeklySnapMatrixModel,
+  lookupRootingGameLiveScore
+} from '../engine/teamDeepDiveEngine.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
@@ -451,6 +462,11 @@ export function renderSeasonMatchupViewHtml({
   schedulePrevExpanded = false,
   expandedRootingWeeks = null,
   matchupStatsUnit = 'offense',
+  statsSubMode = 'ranks', // 'ranks' | 'players' | 'snaps'
+  teamPlayersCat = 'rec',
+  teamPlayersSortKey = '',
+  teamPlayersSortDir = 'desc',
+  snapMatrixUnit = 'offense',
   userPrefs = null,
   reportersById = null,
   // Gamecast state props
@@ -535,7 +551,18 @@ export function renderSeasonMatchupViewHtml({
   }
   if (normalizedSeasonSub === 'matchup') return switcherCard + renderUpcomingMatchup(appData, matchupStatsUnit, userPrefs);
   if (normalizedSeasonSub === 'health') return switcherCard + renderTeamHealthAndIr(appData, userPrefs, reportersById);
-  if (normalizedSeasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData, userPrefs);
+  if (normalizedSeasonSub === 'stats') {
+    return (
+      switcherCard +
+      renderTeamStatsAndPower(appData, userPrefs, {
+        statsSubMode,
+        teamPlayersCat,
+        teamPlayersSortKey,
+        teamPlayersSortDir,
+        snapMatrixUnit
+      })
+    );
+  }
   if (normalizedSeasonSub === 'trade') return switcherCard + renderTradeWindow(appData);
   if (normalizedSeasonSub === 'playoffs')
     return (
@@ -997,9 +1024,30 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
       })()}
 
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-        <div class="inline-icon-meta">
+        <div class="inline-icon-meta matchup-venue-meta" data-matchup-venue-meta>
           ${iconSvg('stadium', 14)}
-          <span>${esc(um.venue)}</span>
+          ${(() => {
+            const rawVenue =
+              typeof um.venue === 'string'
+                ? um.venue
+                : [um.venue?.name, um.venue?.city, um.venue?.surface].filter(Boolean).join(' • ');
+            const homeAbbr = um.homeAway === 'away' ? um.oppAbbr : activeTeamMatchup.abbr;
+            const stMeta = resolveNflStadiumMeta({ venueName: rawVenue, homeTeamAbbr: homeAbbr });
+            const altLbl = formatStadiumAltitudeLabel(stMeta);
+            const wxLbl =
+              !um.completed && !um.isTbd
+                ? formatMatchupWeatherInline(um.weather, stMeta)
+                : '';
+            const tvLbl = String(um.broadcast || '').trim();
+            const showTv = Boolean(tvLbl && !/^tbd$/i.test(tvLbl) && !rawVenue.toLowerCase().includes(tvLbl.toLowerCase()));
+            return `
+              <span>${esc(rawVenue || 'Venue TBD')}${altLbl ? ` <span class="mono matchup-meta-alt">(${esc(altLbl)})</span>` : ''}${
+                wxLbl ? ` <span class="matchup-meta-sep" aria-hidden="true">•</span> <span class="matchup-meta-wx" data-matchup-weather>${esc(wxLbl)}</span>` : ''
+              }${
+                showTv ? ` <span class="matchup-meta-sep" aria-hidden="true">•</span> <span class="mono matchup-meta-tv" data-matchup-broadcast>${esc(tvLbl)}</span>` : ''
+              }</span>
+            `;
+          })()}
         </div>
         <div class="source-link-strip">
           ${
@@ -1741,7 +1789,224 @@ function renderTeamStatsRowsHtml(rows = []) {
     .join('');
 }
 
-function renderTeamStatsAndPower(appData, userPrefs = null) {
+function renderTeamPlayersStatsSubView(appData, { teamPlayersCat = 'rec', teamPlayersSortKey = '', teamPlayersSortDir = 'desc' } = {}) {
+  const players = appData?.roster?.players || [];
+  const seasonYr = Number(appData?.meta?.seasonYear) || 2026;
+  const activeTeam = getActiveTeamConfig();
+  const model = buildTeamPlayerStatsModel(players, {
+    category: teamPlayersCat,
+    sortKey: teamPlayersSortKey,
+    sortDir: teamPlayersSortDir
+  });
+
+  const catChipsHtml = TEAM_PLAYER_STATS_CATEGORIES.map(
+    c => `
+      <button type="button" role="tab" aria-selected="${model.category === c.key ? 'true' : 'false'}"
+              class="pill-btn ${model.category === c.key ? 'active' : ''}"
+              data-action="set-team-players-cat" data-players-cat="${c.key}">${esc(c.label)}</button>
+    `
+  ).join('');
+
+  return `
+    <section class="card team-stats-card" id="teamPlayerStatsCard" data-team-players-view="${esc(model.category)}">
+      <div class="card-header team-stats-header">
+        <div class="card-header-left">
+          <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('football', 15)}</div>
+          <div class="card-title-group">
+            <h2 class="card-title">${esc(String(seasonYr))} ${esc(activeTeam.nickname)} Player Stats</h2>
+            <div class="team-players-sub-hint">Tap column to sort • Tap player for Game Log</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pill-bar compact-chip-row" role="tablist" aria-label="Player Stat Category" style="margin-bottom:8px">
+        ${catChipsHtml}
+      </div>
+
+      ${
+        model.rows.length === 0
+          ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">No ${esc(String(seasonYr))} regular-season stats recorded in this category yet.</div>`
+          : `
+        <div class="table-scroll">
+          <table class="data-table sticky-col-table team-players-table mono">
+            <thead>
+              <tr>
+                <th class="sticky-col" style="font-family:var(--font-sans)">Player</th>
+                ${model.cols
+                  .map(c => {
+                    const isSorted = c.numeric && model.sortKey === c.key;
+                    const arrow = isSorted ? (model.sortDir === 'desc' ? ' ↓' : ' ↑') : '';
+                    return c.numeric
+                      ? `<th class="num-col sortable-th ${isSorted ? 'is-sorted' : ''}" role="button" tabindex="0" data-action="set-team-players-sort" data-sort-key="${esc(c.key)}">${esc(c.label)}${arrow}</th>`
+                      : `<th class="num-col">${esc(c.label)}</th>`;
+                  })
+                  .join('')}
+              </tr>
+            </thead>
+            <tbody>
+              ${model.rows
+                .map(
+                  r => `
+                <tr>
+                  <td class="sticky-col" style="font-family:var(--font-sans)">
+                    <span class="inline-player-link" role="button" tabindex="0"
+                          data-action="open-player-sheet" data-player-id="${esc(r.id)}" data-initial-tab="stats">${esc(r.name)}</span>
+                    <span class="team-players-pos">${esc(r.position)}</span>
+                  </td>
+                  ${model.cols
+                    .map(c => {
+                      const disp = r[`${c.key}Disp`] ?? r[c.key] ?? '—';
+                      const isSorted = model.sortKey === c.key;
+                      const accentCls = c.accent ? 'team-players-accent' : '';
+                      return `<td class="num-col ${isSorted ? 'is-sorted-cell' : ''} ${accentCls}">${esc(String(disp))}</td>`;
+                    })
+                    .join('')}
+                </tr>
+              `
+                )
+                .join('')}
+            </tbody>
+          </table>
+        </div>
+      `
+      }
+    </section>
+  `;
+}
+
+function renderWeeklySnapMatrixSubView(appData, { snapMatrixUnit = 'offense' } = {}) {
+  const players = appData?.roster?.players || [];
+  const activeTeam = getActiveTeamConfig();
+  const model = buildWeeklySnapMatrixModel(players, { unit: snapMatrixUnit, maxWeeks: 8 });
+
+  const heatClass = pct => {
+    if (pct === null || pct === undefined) return 'snap-heat-empty';
+    if (pct >= 85) return 'snap-heat-high';
+    if (pct >= 60) return 'snap-heat-med';
+    if (pct >= 30) return 'snap-heat-rot';
+    return 'snap-heat-low';
+  };
+
+  return `
+    <section class="card team-stats-card" id="weeklySnapMatrixCard" data-snap-matrix-unit="${esc(model.unit)}">
+      <div class="card-header team-stats-header">
+        <div class="card-header-left">
+          <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('layers', 15)}</div>
+          <div class="card-title-group">
+            <h2 class="card-title">${esc(activeTeam.nickname)} Weekly Snap Matrix</h2>
+            <div class="team-players-sub-hint">Track rising roles, rotations &amp; post-injury pitch counts</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pill-bar compact-chip-row" role="tablist" aria-label="Snap Matrix Unit" style="margin-bottom:8px">
+        <button type="button" role="tab" aria-selected="${model.unit === 'offense'}" class="pill-btn ${model.unit === 'offense' ? 'active' : ''}" data-action="set-snap-matrix-unit" data-snap-unit="offense">Offense</button>
+        <button type="button" role="tab" aria-selected="${model.unit === 'defense'}" class="pill-btn ${model.unit === 'defense' ? 'active' : ''}" data-action="set-snap-matrix-unit" data-snap-unit="defense">Defense</button>
+      </div>
+
+      ${
+        model.rows.length === 0 || model.weeks.length === 0
+          ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">Weekly snap counts populate automatically once regular-season games are logged.</div>`
+          : `
+        <div class="table-scroll">
+          <table class="data-table sticky-col-table snap-matrix-table mono">
+            <thead>
+              <tr>
+                <th class="sticky-col" style="font-family:var(--font-sans)">Player • Avg</th>
+                ${model.weeks.map(wk => `<th class="num-col snap-wk-th">W${wk}</th>`).join('')}
+              </tr>
+            </thead>
+            <tbody>
+              ${model.rows
+                .map(r => {
+                  const deltaCls =
+                    r.deltaTone === 'up'
+                      ? 'badge-positive'
+                      : r.deltaTone === 'down'
+                        ? 'badge-danger'
+                        : 'badge-neutral';
+                  return `
+                    <tr>
+                      <td class="sticky-col" style="font-family:var(--font-sans)">
+                        <div class="snap-player-cell">
+                          <div class="snap-player-name-wrap">
+                            <span class="inline-player-link" role="button" tabindex="0"
+                                  data-action="open-player-sheet" data-player-id="${esc(r.id)}" data-initial-tab="stats">${esc(r.name)}</span>
+                            <span class="snap-player-meta mono">${esc(r.position)} · ${r.seasonAvg}%</span>
+                          </div>
+                          ${r.deltaLabel ? `<span class="badge ${deltaCls} mono snap-delta-pill">${esc(r.deltaLabel)}</span>` : ''}
+                        </div>
+                      </td>
+                      ${r.weekCells
+                        .map(
+                          wc => `
+                        <td class="num-col snap-cell-td">
+                          <span class="snap-heat-pill ${heatClass(wc.pct)}">${wc.pct !== null ? `${wc.pct}%` : '—'}</span>
+                        </td>
+                      `
+                        )
+                        .join('')}
+                    </tr>
+                  `;
+                })
+                .join('')}
+            </tbody>
+          </table>
+        </div>
+        <div class="snap-matrix-legend">
+          <span>Scroll weeks → • Col 1 frozen</span>
+          <span>Green ≥85% · Gold ≥60%</span>
+        </div>
+      `
+      }
+    </section>
+  `;
+}
+
+function renderTeamStatsAndPower(
+  appData,
+  userPrefs = null,
+  {
+    statsSubMode = 'ranks',
+    teamPlayersCat = 'rec',
+    teamPlayersSortKey = '',
+    teamPlayersSortDir = 'desc',
+    snapMatrixUnit = 'offense'
+  } = {}
+) {
+  const effectiveStatsSub = ['ranks', 'players', 'snaps'].includes(statsSubMode) ? statsSubMode : 'ranks';
+  const statsSubSwitcher = `
+    <div class="card subnav-card stats-inner-subnav-card" data-stats-sub-switcher>
+      <div class="segmented-control compact-seg" role="tablist" aria-label="Team Stats Views">
+        <button type="button" role="tab" aria-selected="${effectiveStatsSub === 'ranks' ? 'true' : 'false'}"
+                class="pill-btn seg-btn ${effectiveStatsSub === 'ranks' ? 'active' : ''}"
+                data-action="set-stats-sub" data-stats-sub="ranks">
+          <span>Team Ranks</span>
+        </button>
+        <button type="button" role="tab" aria-selected="${effectiveStatsSub === 'players' ? 'true' : 'false'}"
+                class="pill-btn seg-btn ${effectiveStatsSub === 'players' ? 'active' : ''}"
+                data-action="set-stats-sub" data-stats-sub="players">
+          <span>Players</span>
+        </button>
+        <button type="button" role="tab" aria-selected="${effectiveStatsSub === 'snaps' ? 'true' : 'false'}"
+                class="pill-btn seg-btn ${effectiveStatsSub === 'snaps' ? 'active' : ''}"
+                data-action="set-stats-sub" data-stats-sub="snaps">
+          <span>Snap Trends</span>
+        </button>
+      </div>
+    </div>
+  `;
+
+  if (effectiveStatsSub === 'players') {
+    return (
+      statsSubSwitcher +
+      renderTeamPlayersStatsSubView(appData, { teamPlayersCat, teamPlayersSortKey, teamPlayersSortDir })
+    );
+  }
+  if (effectiveStatsSub === 'snaps') {
+    return statsSubSwitcher + renderWeeklySnapMatrixSubView(appData, { snapMatrixUnit });
+  }
+
   const ts = appData?.scheduleMatchup?.teamStats;
   const units = ts?.units || [];
   const ranks = appData?.scheduleMatchup?.teamStatRankings || [];
@@ -1898,7 +2163,9 @@ function renderTeamStatsAndPower(appData, userPrefs = null) {
     </section>
   `;
 
-  return `
+  return (
+    statsSubSwitcher +
+    `
     ${unitCardsHtml}
 
     <section class="card" id="powerRankingsCard">
@@ -1977,7 +2244,8 @@ function renderTeamStatsAndPower(appData, userPrefs = null) {
           : ''
       }
     </section>
-  `;
+  `
+  );
 }
 
 function renderCompletedTradeCardHtml(m, { isOlder = false } = {}) {
@@ -2242,14 +2510,25 @@ function renderTradeWindow(appData) {
   `;
 }
 
-function renderRootingGameRowHtml(g, forcedWinners) {
+function renderRootingGameRowHtml(g, forcedWinners, liveScoresMap = null) {
   const picked = forcedWinners?.[g.gameId] || null;
+  const liveScore = lookupRootingGameLiveScore(g, liveScoresMap);
+  const isLiveNow = liveScore?.state === 'in';
+  const isFinalNow = liveScore?.state === 'post';
+  const liveScoreInlineHtml = liveScore
+    ? `<span class="rooting-live-score mono ${isLiveNow ? 'is-live' : 'is-final'}" data-rooting-live-score>${
+        isLiveNow ? '<span class="gc-live-dot" aria-hidden="true"></span>' : ''
+      }${esc(liveScore.away)} ${liveScore.awayScore}–${liveScore.homeScore} ${esc(liveScore.home)}${
+        liveScore.shortDetail ? ` · ${esc(isFinalNow ? 'Final' : liveScore.shortDetail)}` : ''
+      }</span>`
+    : '';
   return `
     <div class="scenario-game-row">
       <div style="min-width:0">
-        <div style="font-weight:700;font-size:13px">
-          ${esc(g.matchupLabel)}
+        <div style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <span>${esc(g.matchupLabel)}</span>
           ${g.is49ersGame ? `<span class="badge badge-scarlet">${esc(getActiveTeamConfig().nickname)}</span>` : ''}
+          ${liveScoreInlineHtml}
         </div>
         <div style="font-size:11.5px;color:var(--text-secondary)">
           Root for <strong style="color:var(--emerald)">${esc(g.rootForTeam)}</strong> •
@@ -2675,11 +2954,12 @@ function renderPlayoffSimulator(
     if (!byWeek.has(wk)) byWeek.set(wk, []);
     byWeek.get(wk).push(g);
   }
+  const liveScoresMap = pp.liveScoresByMatchup || null;
   const sortedRootingWeeks = [...byWeek.keys()].sort((a, b) => a - b);
   const rootingWeekCardsHtml = sortedRootingWeeks
     .map((wk, idx) => {
       const games = byWeek.get(wk) || [];
-      const rowsHtml = games.map(g => renderRootingGameRowHtml(g, forcedWinners)).join('');
+      const rowsHtml = games.map(g => renderRootingGameRowHtml(g, forcedWinners, liveScoresMap)).join('');
       if (idx === 0) {
         return `
           <div class="subcard-panel rooting-week-card" data-rooting-week="${wk}">

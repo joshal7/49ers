@@ -16,6 +16,7 @@ import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatDollars, formatOtcDollars, formatCompactDollars, formatCapActionLabel } from '../engine/capSimulator.js';
 import { resolveCareerTableSchema } from '../engine/statsLeaderboardEngine.js';
+import { buildPlayerWeeklyGameLogModel } from '../engine/teamDeepDiveEngine.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   isUrgentBreakingBadge,
@@ -404,7 +405,8 @@ function applyLiveGameDayPlayerOverlay(player, appData = null, teamContext = nul
 export function renderPlayerDossierSheetHtml({
   player,
   activeTab = 'overview',
-  statsMode = '2026', // '2026' | 'career'
+  statsMode = '2026', // 'gamelog' | '2026' | 'career'
+  gameLogSub = 'games', // 'games' | 'splits'
   txScenario = 'cut',
   mentionsSortMode = 'top', // 'top' | 'latest'
   rawStream = [],
@@ -467,7 +469,11 @@ export function renderPlayerDossierSheetHtml({
       teamContext
     );
   } else if (activeTab === 'stats') {
-    contentHtml = renderStatsTab(effectivePlayer, statsMode);
+    contentHtml = renderStatsTab(effectivePlayer, statsMode, {
+      gameLogSub,
+      appData,
+      teamContext
+    });
   } else if (activeTab === 'spider') {
     contentHtml = renderSpiderChartHtml(effectivePlayer.spiderProfile, effectivePlayer.name);
   } else if (activeTab === 'contract') {
@@ -736,15 +742,49 @@ function renderPlayerStatTableRowsHtml(rows = [], playerId = '') {
     .join('');
 }
 
-function renderStatsTab(p, statsMode) {
+function renderGameLogSparklineSvg(series = []) {
+  if (!Array.isArray(series) || series.length < 2) return '';
+  const vals = series.map(x => Number(x.val) || 0);
+  const min = Math.min(...vals);
+  const max = Math.max(...vals);
+  const span = Math.max(0.01, max - min);
+  const w = 280;
+  const h = 38;
+  const pad = 6;
+  const pts = vals.map((v, i) => [
+    pad + (i / (vals.length - 1)) * (w - pad * 2),
+    h - pad - ((v - min) / span) * (h - pad * 2)
+  ]);
+  const poly = pts.map(pt => `${pt[0].toFixed(1)},${pt[1].toFixed(1)}`).join(' ');
+  const dots = pts
+    .map(
+      (pt, idx) =>
+        `<circle cx="${pt[0].toFixed(1)}" cy="${pt[1].toFixed(1)}" r="${idx === pts.length - 1 ? 3.4 : 2.2}" class="${idx === pts.length - 1 ? 'gamelog-spark-dot-last' : 'gamelog-spark-dot'}" />`
+    )
+    .join('');
+  return `
+    <div class="gamelog-spark-wrap">
+      <svg viewBox="0 0 ${w} ${h}" class="gamelog-spark-svg" role="img" aria-label="Weekly performance trend">
+        <polyline fill="none" class="gamelog-spark-line" points="${poly}" />
+        ${dots}
+      </svg>
+    </div>
+  `;
+}
+
+function renderStatsTab(p, statsMode, { gameLogSub = 'games', appData = null, teamContext = null } = {}) {
   const seasons = p.careerSeasons || [];
   const profile = p.statProfile2026 || null;
+  const seasonYr = Number(appData?.meta?.seasonYear) || 2026;
+  const teamAbbr = teamContext?.isRemoteTeam ? teamContext.abbr : getActiveTeamConfig().abbr;
+  const scheduleForLog = teamContext?.isRemoteTeam ? [] : appData?.scheduleMatchup?.schedule || [];
 
   const modeToggle = `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-      <div class="segmented-control compact-seg" role="tablist" aria-label="Player Stat View Mode" style="flex:1 1 240px;margin:0">
-        <button type="button" role="tab" aria-selected="${statsMode === '2026' ? 'true' : 'false'}" class="pill-btn seg-btn ${statsMode === '2026' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="2026"><span>2026 Season</span></button>
-        <button type="button" role="tab" aria-selected="${statsMode === 'career' ? 'true' : 'false'}" class="pill-btn seg-btn ${statsMode === 'career' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="career"><span>Career Year-by-Year (${seasons.length})</span></button>
+      <div class="segmented-control compact-seg player-stats-mode-bar" role="tablist" aria-label="Player Stat View Mode" style="flex:1 1 260px;margin:0">
+        <button type="button" role="tab" aria-selected="${statsMode === 'gamelog' ? 'true' : 'false'}" class="pill-btn seg-btn ${statsMode === 'gamelog' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="gamelog"><span>Game Log</span></button>
+        <button type="button" role="tab" aria-selected="${statsMode === '2026' ? 'true' : 'false'}" class="pill-btn seg-btn ${statsMode === '2026' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="2026"><span>${esc(String(seasonYr))}</span></button>
+        <button type="button" role="tab" aria-selected="${statsMode === 'career' ? 'true' : 'false'}" class="pill-btn seg-btn ${statsMode === 'career' ? 'active' : ''}" data-action="set-player-stats-mode" data-stats-mode="career"><span>Career (${seasons.length})</span></button>
       </div>
       <div class="source-link-strip">
         ${p.pfrUrl ? `<a href="${esc(p.pfrUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>PFR Stats</span>${iconSvg('externalLink', 10)}</a>` : ''}
@@ -753,6 +793,133 @@ function renderStatsTab(p, statsMode) {
       </div>
     </div>
   `;
+
+  if (statsMode === 'gamelog') {
+    const logModel = buildPlayerWeeklyGameLogModel(p, {
+      schedule: scheduleForLog,
+      teamAbbr,
+      seasonYear: seasonYr
+    });
+
+    if (!logModel.hasGames) {
+      return `
+        ${modeToggle}
+        <div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">
+          No ${esc(String(seasonYr))} regular-season game logs recorded yet (${esc(p.position || 'Roster')}${p.health?.status ? ` • ${esc(p.health.status)}` : ''}).
+        </div>
+      `;
+    }
+
+    const activeSub = gameLogSub === 'splits' && logModel.splits.length > 0 ? 'splits' : 'games';
+    const sparkSvg = renderGameLogSparklineSvg(logModel.trendSeries);
+
+    return `
+      ${modeToggle}
+      <section class="card gamelog-summary-card" data-player-gamelog="true">
+        <div class="gamelog-header-row">
+          <div>
+            <div class="card-eyebrow">${esc(logModel.trendLabel)}</div>
+            <div class="gamelog-sub-meta">${logModel.rows.length} ${logModel.rows.length === 1 ? 'game' : 'games'} logged</div>
+          </div>
+          ${
+            logModel.splits.length > 0
+              ? `
+            <div class="pill-bar compact-chip-row" role="tablist" aria-label="Game Log Mode" style="margin:0">
+              <button type="button" role="tab" aria-selected="${activeSub === 'games'}" class="pill-btn ${activeSub === 'games' ? 'active' : ''}" data-action="set-player-gamelog-sub" data-gamelog-sub="games">Week-by-Week</button>
+              <button type="button" role="tab" aria-selected="${activeSub === 'splits'}" class="pill-btn ${activeSub === 'splits' ? 'active' : ''}" data-action="set-player-gamelog-sub" data-gamelog-sub="splits">Splits (${logModel.splits.length})</button>
+            </div>
+          `
+              : ''
+          }
+        </div>
+        ${sparkSvg}
+      </section>
+
+      ${
+        activeSub === 'games'
+          ? `
+        <section class="card team-stats-card gamelog-table-card">
+          ${
+            !teamContext?.isRemoteTeam && logModel.rows.some(r => r.espnGameId)
+              ? `<div class="gamelog-tap-hint">Tap any game row to open Box Score &amp; Plays</div>`
+              : ''
+          }
+          <div class="table-scroll">
+            <table class="data-table sticky-col-table gamelog-table mono" data-gamelog-role="${esc(logModel.role)}">
+              <thead>
+                <tr>
+                  ${logModel.headers
+                    .map((h, i) => `<th class="${i === 0 ? 'sticky-col' : i >= 2 ? 'num-col' : ''}">${esc(h)}</th>`)
+                    .join('')}
+                </tr>
+              </thead>
+              <tbody>
+                ${logModel.rows
+                  .map(r => {
+                    const canJump = Boolean(!teamContext?.isRemoteTeam && r.espnGameId);
+                    const resTone = r.res === 'W' ? 'badge-positive' : r.res === 'L' ? 'badge-danger' : 'badge-neutral';
+                    return `
+                      <tr class="${canJump ? 'gamelog-row-link' : ''}" ${
+                        canJump
+                          ? `role="button" tabindex="0" data-action="open-gamecast-game" data-game-id="${esc(r.espnGameId)}" data-close-sheet="true"`
+                          : ''
+                      }>
+                        <td class="sticky-col" style="font-family:var(--font-sans)">
+                          <span class="gamelog-game-lbl">${esc(r.gameLabel)}${canJump ? ' <span class="gamelog-chev" aria-hidden="true">›</span>' : ''}</span>
+                        </td>
+                        <td><span class="badge ${resTone} mono">${esc(r.scoreStr)}</span></td>
+                        ${r.cells
+                          .map((cell, ci) => {
+                            const isLast = ci === r.cells.length - 1;
+                            const valCls =
+                              isLast && r.highlightTone === 'pos'
+                                ? 'val-pos'
+                                : isLast && r.highlightTone === 'neg'
+                                  ? 'val-neg'
+                                  : '';
+                            return `<td class="num-col ${valCls}">${esc(cell)}</td>`;
+                          })
+                          .join('')}
+                      </tr>
+                    `;
+                  })
+                  .join('')}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      `
+          : `
+        <section class="card gamelog-splits-card" data-player-splits="true">
+          <div class="gamelog-splits-list">
+            ${logModel.splits
+              .map(sp => {
+                const badgeCls =
+                  sp.tone === 'emerald'
+                    ? 'badge-positive'
+                    : sp.tone === 'crimson'
+                      ? 'badge-danger'
+                      : 'badge-gold';
+                return `
+                  <div class="subcard-panel gamelog-split-row">
+                    <div class="gamelog-split-left">
+                      <strong>${esc(sp.label)}</strong>
+                      <span class="mono gamelog-split-sample">${esc(sp.sample)}</span>
+                    </div>
+                    <div class="gamelog-split-right mono">
+                      <div class="gamelog-split-primary">${esc(sp.primary)}</div>
+                      <span class="badge ${badgeCls} mono">${esc(sp.badge)}</span>
+                    </div>
+                  </div>
+                `;
+              })
+              .join('')}
+          </div>
+        </section>
+      `
+      }
+    `;
+  }
 
   if (statsMode === 'career') {
     if (seasons.length === 0) {

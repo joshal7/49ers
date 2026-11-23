@@ -26297,6 +26297,11 @@
         "Trench Run-Fit & Two-Way Leverage: DC Matt Burke balances pass-rush pressure with two-high/split-safety discipline on early downs, while Baltimore Ravens's offense tests Houston's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": true,
+      "altitudeFt": 45,
+      "source": "stadium"
+    }
   }
 }

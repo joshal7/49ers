@@ -15,6 +15,7 @@
 
 import zlib from 'node:zlib';
 import { getTeamByAbbr, normalizeAnyTeamAbbr } from '../../src/config/teamRegistry.js';
+import { windDegreesToCompass, wmoCodeToShortCondition } from '../../src/config/nflStadiums.js';
 import {
   aggregateEspnQbr2026,
   aggregateWeeklyNgsStats2026,
@@ -482,6 +483,13 @@ export async function loadSharedNflversePlayerContext(seasonYear = 2026) {
     list.sort((a, b) => a.pick - b.pick);
   }
 
+  const weeklyPlayerLogsIndex = buildWeeklyPlayerLogsIndex({
+    statsPlayerWeek: statsPlayerWeekCurrent,
+    snapsCurrent,
+    gamesRows,
+    seasonYear
+  });
+
   console.log(
     `[stage-1/nflverse] Loaded players=${nflPlayers.length}, combine=${combineRows.length}, stats${seasonYear}=${statsPlayerCurrent.length}, snaps${seasonYear}=${snapsCurrent.length}, draftPicks=${draftPicksRows.length}, games=${gamesRows.length}, pfrMaxWk=${pfrAdvAgg.maxChartedWeek || 0}`
   );
@@ -504,6 +512,7 @@ export async function loadSharedNflversePlayerContext(seasonYear = 2026) {
     snapsByTeamAndName,
     snapsAllTeamsByPfr,
     snapsAllTeamsByName,
+    weeklyPlayerLogsIndex,
     weeklyInjByTeamAndName,
     draftPicksByTeam,
     draftPickByPfrId,
@@ -718,4 +727,342 @@ export function buildScheduleH2hByOpponentMap(
     });
   }
   return byOpponent;
+}
+
+/**
+ * Builds a compact, league-wide per-player weekly log index combining nflverse
+ * `stats_player_week_{seasonYear}` + `snap_counts_{seasonYear}` + `schedules/games.csv`.
+ * Supports all 32 teams and preserves pre-trade weeks for mid-season trade acquisitions.
+ */
+export function buildWeeklyPlayerLogsIndex({
+  statsPlayerWeek = [],
+  snapsCurrent = [],
+  gamesRows = [],
+  seasonYear = 2026
+} = {}) {
+  // 1. Index current-season games for home/away, score, result, division flag, and ESPN gameId
+  const gameByNflverseId = new Map();
+  const gameByTeamWeek = new Map();
+  for (const g of gamesRows || []) {
+    if (!g || Number(g.season) !== Number(seasonYear)) continue;
+    const wk = Number(g.week || 0);
+    if (wk <= 0) continue;
+    const home = normalizeAnyTeamAbbr(g.home_team || '');
+    const away = normalizeAnyTeamAbbr(g.away_team || '');
+    if (!home || !away) continue;
+    const hScore = g.home_score !== '' && g.home_score !== 'NA' ? Number(g.home_score) : null;
+    const aScore = g.away_score !== '' && g.away_score !== 'NA' ? Number(g.away_score) : null;
+    const espnId = g.espn && /^\d{6,}$/.test(String(g.espn).trim()) ? String(g.espn).trim() : '';
+    const isNeutral = String(g.location || '').toLowerCase() === 'neutral';
+    const isDiv = String(g.div_game || '') === '1' || Number(g.div_game) === 1;
+    const meta = { wk, home, away, hScore, aScore, espnId, isNeutral, isDiv };
+    if (g.game_id) gameByNflverseId.set(String(g.game_id), meta);
+    gameByTeamWeek.set(`${home}:${wk}`, meta);
+    gameByTeamWeek.set(`${away}:${wk}`, meta);
+  }
+
+  function resolveGameOutcomeForTeam(teamAbbr, wk, gameId, fallbackOpp = '') {
+    const g = (gameId && gameByNflverseId.get(String(gameId))) || gameByTeamWeek.get(`${teamAbbr}:${wk}`) || null;
+    if (!g) {
+      return {
+        opp: normalizeAnyTeamAbbr(fallbackOpp || '') || String(fallbackOpp || ''),
+        ha: 'home',
+        res: '',
+        pf: null,
+        pa: null,
+        div: false,
+        gid: ''
+      };
+    }
+    const isHome = g.home === teamAbbr;
+    const opp = isHome ? g.away : g.home;
+    const pf = isHome ? g.hScore : g.aScore;
+    const pa = isHome ? g.aScore : g.hScore;
+    const res =
+      Number.isFinite(pf) && Number.isFinite(pa)
+        ? pf > pa
+          ? 'W'
+          : pf < pa
+            ? 'L'
+            : 'T'
+        : '';
+    return {
+      opp,
+      ha: g.isNeutral ? 'neutral' : isHome ? 'home' : 'away',
+      res,
+      pf: Number.isFinite(pf) ? pf : null,
+      pa: Number.isFinite(pa) ? pa : null,
+      div: Boolean(g.isDiv),
+      gid: g.espnId || ''
+    };
+  }
+
+  // 2. Index weekly stats by (gsisId -> Map<wk, entry>) and (normName -> Map<wk, entry>)
+  const statsByGsis = new Map();
+  const statsByName = new Map();
+  for (const r of statsPlayerWeek || []) {
+    if (!r) continue;
+    const st = String(r.season_type || 'REG').toUpperCase();
+    if (st !== 'REG' && st !== 'POST') continue;
+    const wk = Number(r.week || 0);
+    if (wk <= 0) continue;
+    const tm = normalizeAnyTeamAbbr(r.team || r.recent_team || '') || String(r.team || '');
+    const gOut = resolveGameOutcomeForTeam(tm, wk, r.game_id, r.opponent_team);
+    const entry = {
+      wk,
+      tm,
+      opp: gOut.opp,
+      ha: gOut.ha,
+      ...(gOut.res ? { res: gOut.res } : {}),
+      ...(gOut.pf !== null ? { pf: gOut.pf } : {}),
+      ...(gOut.pa !== null ? { pa: gOut.pa } : {}),
+      ...(gOut.div ? { div: 1 } : {}),
+      ...(gOut.gid ? { gid: gOut.gid } : {})
+    };
+
+    const setIfNonZero = (k, val, dec = null) => {
+      const n = num(val, dec);
+      if (n !== 0) entry[k] = n;
+    };
+    setIfNonZero('pCmp', r.completions);
+    setIfNonZero('pAtt', r.attempts);
+    setIfNonZero('pYds', r.passing_yards);
+    setIfNonZero('pTd', r.passing_tds);
+    setIfNonZero('pInt', r.passing_interceptions);
+    setIfNonZero('pSck', r.sacks_suffered);
+    setIfNonZero('pEpa', r.passing_epa, 2);
+    setIfNonZero('rAtt', r.carries);
+    setIfNonZero('rYds', r.rushing_yards);
+    setIfNonZero('rTd', r.rushing_tds);
+    setIfNonZero('rEpa', r.rushing_epa, 2);
+    setIfNonZero('rec', r.receptions);
+    setIfNonZero('tgt', r.targets);
+    setIfNonZero('recYds', r.receiving_yards);
+    setIfNonZero('recTd', r.receiving_tds);
+    setIfNonZero('recEpa', r.receiving_epa, 2);
+    const totTkl = num(r.def_tackles_solo) + num(r.def_tackle_assists) + num(r.def_tackles_with_assist);
+    if (totTkl !== 0) entry.tkl = totTkl;
+    setIfNonZero('tfl', r.def_tackles_for_loss);
+    setIfNonZero('sck', r.def_sacks, 1);
+    setIfNonZero('qbh', r.def_qb_hits);
+    setIfNonZero('dInt', r.def_interceptions);
+    setIfNonZero('pd', r.def_pass_defended);
+    setIfNonZero('fgM', r.fg_made);
+    setIfNonZero('fgA', r.fg_att);
+    setIfNonZero('fgL', r.fg_long);
+    setIfNonZero('patM', r.pat_made);
+    setIfNonZero('patA', r.pat_att);
+    setIfNonZero('ptA', r.pt_att);
+    setIfNonZero('ptY', r.pt_yards);
+    setIfNonZero('pt20', r.pt_inside_20);
+
+    const gsis = String(r.player_id || '').trim();
+    if (gsis) {
+      if (!statsByGsis.has(gsis)) statsByGsis.set(gsis, new Map());
+      statsByGsis.get(gsis).set(wk, entry);
+    }
+    const nk = normPlayerName(r.player_display_name || r.player_name);
+    if (nk) {
+      if (!statsByName.has(nk)) statsByName.set(nk, new Map());
+      // Key by team+week when using name to reduce homonym risk, plus plain week fallback
+      statsByName.get(nk).set(`${tm}:${wk}`, entry);
+      if (!statsByName.get(nk).has(String(wk))) statsByName.get(nk).set(String(wk), entry);
+    }
+  }
+
+  // 3. Index weekly snaps by pfrId and normName
+  const snapsByPfr = new Map();
+  const snapsByName = new Map();
+  for (const s of snapsCurrent || []) {
+    if (!s) continue;
+    if (s.game_type && s.game_type !== 'REG' && s.game_type !== 'POST') continue;
+    const wk = Number(s.week || 0);
+    if (wk <= 0) continue;
+    const tm = normalizeAnyTeamAbbr(s.team || '') || String(s.team || '');
+    const gOut = resolveGameOutcomeForTeam(tm, wk, s.game_id, s.opponent);
+    const oSn = num(s.offense_snaps);
+    const oPct = Math.round(num(s.offense_pct) * 100);
+    const dSn = num(s.defense_snaps);
+    const dPct = Math.round(num(s.defense_pct) * 100);
+    const sSn = num(s.st_snaps);
+    const sPct = Math.round(num(s.st_pct) * 100);
+    if (oSn === 0 && dSn === 0 && sSn === 0 && oPct === 0 && dPct === 0 && sPct === 0) continue;
+
+    const snapObj = {
+      wk,
+      tm,
+      opp: gOut.opp,
+      ha: gOut.ha,
+      ...(gOut.res ? { res: gOut.res } : {}),
+      ...(gOut.pf !== null ? { pf: gOut.pf } : {}),
+      ...(gOut.pa !== null ? { pa: gOut.pa } : {}),
+      ...(gOut.div ? { div: 1 } : {}),
+      ...(gOut.gid ? { gid: gOut.gid } : {}),
+      ...(oSn ? { oSn } : {}),
+      ...(oPct ? { oPct } : {}),
+      ...(dSn ? { dSn } : {}),
+      ...(dPct ? { dPct } : {}),
+      ...(sSn ? { sSn } : {}),
+      ...(sPct ? { sPct } : {})
+    };
+
+    const pfr = String(s.pfr_player_id || '').trim();
+    if (pfr) {
+      if (!snapsByPfr.has(pfr)) snapsByPfr.set(pfr, new Map());
+      snapsByPfr.get(pfr).set(wk, snapObj);
+    }
+    const nk = normPlayerName(s.player);
+    if (nk) {
+      if (!snapsByName.has(nk)) snapsByName.set(nk, new Map());
+      snapsByName.get(nk).set(`${tm}:${wk}`, snapObj);
+      if (!snapsByName.get(nk).has(String(wk))) snapsByName.get(nk).set(String(wk), snapObj);
+    }
+  }
+
+  return { statsByGsis, statsByName, snapsByPfr, snapsByName };
+}
+
+/**
+ * Merges a single player's weekly stats + weekly snap counts into a compact sorted array.
+ */
+export function resolvePlayerWeeklyLog(
+  weeklyIndex,
+  { gsisId = '', pfrId = '', name = '', teamAbbr = 'SF' } = {}
+) {
+  if (!weeklyIndex) return [];
+  const normTeam = normalizeAnyTeamAbbr(teamAbbr || '') || teamAbbr;
+  const nk = normPlayerName(name);
+
+  // Pull stat weeks (prefer exact GSIS ID to avoid homonyms; fallback to team-matched name)
+  const byWeek = new Map();
+  const statMap =
+    (gsisId && weeklyIndex.statsByGsis?.get(String(gsisId))) ||
+    null;
+  if (statMap) {
+    for (const [wk, entry] of statMap.entries()) {
+      byWeek.set(Number(wk), { ...entry });
+    }
+  } else if (nk && weeklyIndex.statsByName?.has(nk)) {
+    const nmMap = weeklyIndex.statsByName.get(nk);
+    for (const [k, entry] of nmMap.entries()) {
+      if (k.includes(':')) {
+        const [kTm, kWk] = k.split(':');
+        if (kTm === normTeam) byWeek.set(Number(kWk), { ...entry });
+      }
+    }
+    if (byWeek.size === 0) {
+      for (const [k, entry] of nmMap.entries()) {
+        if (!k.includes(':')) byWeek.set(Number(k), { ...entry });
+      }
+    }
+  }
+
+  // Merge snap weeks (prefer exact PFR ID; fallback to team-matched name)
+  const snapMap = (pfrId && weeklyIndex.snapsByPfr?.get(String(pfrId))) || null;
+  const applySnapEntry = sObj => {
+    const wk = Number(sObj.wk);
+    const existing = byWeek.get(wk);
+    if (existing) {
+      if (sObj.oSn) existing.oSn = sObj.oSn;
+      if (sObj.oPct) existing.oPct = sObj.oPct;
+      if (sObj.dSn) existing.dSn = sObj.dSn;
+      if (sObj.dPct) existing.dPct = sObj.dPct;
+      if (sObj.sSn) existing.sSn = sObj.sSn;
+      if (sObj.sPct) existing.sPct = sObj.sPct;
+      if (!existing.gid && sObj.gid) existing.gid = sObj.gid;
+    } else {
+      byWeek.set(wk, { ...sObj });
+    }
+  };
+
+  if (snapMap) {
+    for (const sObj of snapMap.values()) applySnapEntry(sObj);
+  } else if (nk && weeklyIndex.snapsByName?.has(nk)) {
+    const nmSnap = weeklyIndex.snapsByName.get(nk);
+    let matchedTeam = false;
+    for (const [k, sObj] of nmSnap.entries()) {
+      if (k.includes(':') && k.startsWith(`${normTeam}:`)) {
+        applySnapEntry(sObj);
+        matchedTeam = true;
+      }
+    }
+    if (!matchedTeam) {
+      for (const [k, sObj] of nmSnap.entries()) {
+        if (!k.includes(':')) applySnapEntry(sObj);
+      }
+    }
+  }
+
+  return [...byWeek.values()]
+    .sort((a, b) => a.wk - b.wk)
+    .map(w => {
+      // Strip redundant `tm` when it matches current team to keep JSON lean
+      const out = { ...w };
+      if (out.tm === normTeam) delete out.tm;
+      return out;
+    });
+}
+
+const openMeteoCache = new Map();
+
+/**
+ * Fetches kickoff-hour outdoor weather forecast from Open-Meteo (free, zero API key, ~150ms)
+ * strictly for outdoor venues within 14 days of kickoff. Returns null for indoor domes or errors.
+ */
+export async function fetchKickoffOutdoorWeather(kickoffIso, stadiumMeta) {
+  if (!kickoffIso || !stadiumMeta || stadiumMeta.isIndoor) return null;
+  const koMs = Date.parse(kickoffIso);
+  if (!Number.isFinite(koMs)) return null;
+  const nowMs = Date.now();
+  const diffDays = (koMs - nowMs) / 86_400_000;
+  // Open-Meteo forecast covers [-1d, +14d]
+  if (diffDays < -1 || diffDays > 14) return null;
+
+  const lat = Number(stadiumMeta.lat);
+  const lon = Number(stadiumMeta.lon);
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+
+  const targetDate = new Date(koMs);
+  const targetHourIso = `${targetDate.toISOString().slice(0, 13)}:00`;
+  const cacheKey = `${lat.toFixed(2)},${lon.toFixed(2)}:${targetHourIso}`;
+  if (openMeteoCache.has(cacheKey)) return openMeteoCache.get(cacheKey);
+
+  try {
+    const url =
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat.toFixed(4)}&longitude=${lon.toFixed(4)}` +
+      `&hourly=temperature_2m,wind_speed_10m,wind_direction_10m,precipitation_probability,weather_code` +
+      `&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=UTC&forecast_days=16`;
+    const res = await fetch(url, {
+      headers: { Accept: 'application/json' },
+      signal: AbortSignal.timeout(4000)
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+    const times = Array.isArray(json?.hourly?.time) ? json.hourly.time : [];
+    const idx = times.indexOf(targetHourIso);
+    if (idx < 0) return null;
+
+    const tempF = Math.round(Number(json.hourly.temperature_2m?.[idx]));
+    if (!Number.isFinite(tempF)) return null;
+    const windMph = Math.round(Number(json.hourly.wind_speed_10m?.[idx] ?? 0));
+    const windDir = windDegreesToCompass(json.hourly.wind_direction_10m?.[idx]);
+    const precipPct = Math.round(Number(json.hourly.precipitation_probability?.[idx] ?? 0));
+    const condition = wmoCodeToShortCondition(json.hourly.weather_code?.[idx]);
+
+    const result = {
+      indoor: false,
+      tempF,
+      windMph: Number.isFinite(windMph) ? windMph : null,
+      windDir,
+      precipPct: Number.isFinite(precipPct) ? precipPct : null,
+      condition,
+      altitudeFt: stadiumMeta.altitudeFt || 0,
+      source: 'open-meteo',
+      forecastHourUtc: targetHourIso
+    };
+    openMeteoCache.set(cacheKey, result);
+    return result;
+  } catch {
+    return null;
+  }
 }

@@ -26331,6 +26331,17 @@
         "Trench Run-Fit & Two-Way Leverage: DC Aden Durde balances pass-rush pressure with two-high/split-safety discipline on early downs, while San Francisco 49ers's offense tests Seattle's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": []
+    "keyMatchupsMatrix": [],
+    "weather": {
+      "indoor": false,
+      "tempF": 58,
+      "windMph": 13,
+      "windDir": "SW",
+      "precipPct": 77,
+      "condition": "Rain",
+      "altitudeFt": 40,
+      "source": "open-meteo",
+      "forecastHourUtc": "2026-11-29T21:00"
+    }
   }
 }

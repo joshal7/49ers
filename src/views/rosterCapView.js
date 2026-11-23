@@ -14,6 +14,10 @@ import {
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
 import { formatOtcDollars, formatCompactDollars } from '../engine/capSimulator.js';
+import {
+  buildPositionalCapSpendModel,
+  buildUpcomingFreeAgentsModel
+} from '../engine/teamDeepDiveEngine.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import { getActiveTeamConfig, getOurladsTeamCode } from '../config/teamRegistry.js';
 
@@ -88,33 +92,40 @@ export function normalizeRosterSort(rawField = 'jersey', rawDir = 'asc') {
 }
 
 export function renderRosterCapViewHtml({
-  subTab = 'roster', // 'roster' | 'depth' | 'cap'
+  subTab = 'roster', // 'roster' | 'depth' | 'moves' | 'cap'
   rosterSearch = '',
   rosterUnitFilter = 'All',
   rosterPosFilter = 'ALL',
   rosterSort = 'jersey',
   rosterSortDir = 'asc',
   depthMode = 'projected', // 'baseline' | 'projected'
+  rosterMovesFilter = 'all', // 'all' | 'ir' | 'signing' | 'ps'
   capSelectedYear = '2026',
+  capViewMode = 'sim', // 'sim' | 'fa'
+  capFaFilter = 'ALL', // 'ALL' | 'UFA' | 'RFA' | 'ERFA'
   appData,
   simCapResult,
   userCapMoves = {}
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const topSwitcher = `
-    <div class="card subnav-card">
-      <div class="pill-bar" role="tablist" aria-label="Roster and Salary Cap Modes">
-        <button type="button" class="pill-btn ${subTab === 'roster' ? 'active' : ''}" data-action="set-roster-sub" data-roster-sub="roster">
-          ${iconSvg('football', 14)}
-          <span>Roster (${appData?.roster?.players?.length || 0})</span>
+    <div class="card subnav-card roster-subnav-card">
+      <div class="segmented-control compact-seg roster-top-seg" role="tablist" aria-label="Roster and Salary Cap Modes">
+        <button type="button" role="tab" aria-selected="${subTab === 'roster' ? 'true' : 'false'}" class="pill-btn seg-btn ${subTab === 'roster' ? 'active' : ''}" data-action="set-roster-sub" data-roster-sub="roster">
+          ${iconSvg('football', 13)}
+          <span>Roster</span>
         </button>
-        <button type="button" class="pill-btn ${subTab === 'depth' ? 'active' : ''}" data-action="set-roster-sub" data-roster-sub="depth">
-          ${iconSvg('layers', 14)}
-          <span>Depth Chart</span>
+        <button type="button" role="tab" aria-selected="${subTab === 'depth' ? 'true' : 'false'}" class="pill-btn seg-btn ${subTab === 'depth' ? 'active' : ''}" data-action="set-roster-sub" data-roster-sub="depth">
+          ${iconSvg('layers', 13)}
+          <span>Depth</span>
         </button>
-        <button type="button" class="pill-btn ${subTab === 'cap' ? 'active' : ''}" data-action="set-roster-sub" data-roster-sub="cap">
-          ${iconSvg('cap', 14)}
-          <span>Cap &amp; GM Sim</span>
+        <button type="button" role="tab" aria-selected="${subTab === 'moves' ? 'true' : 'false'}" class="pill-btn seg-btn ${subTab === 'moves' ? 'active' : ''}" data-action="set-roster-sub" data-roster-sub="moves">
+          ${iconSvg('trade', 13)}
+          <span>Moves</span>
+        </button>
+        <button type="button" role="tab" aria-selected="${subTab === 'cap' ? 'true' : 'false'}" class="pill-btn seg-btn ${subTab === 'cap' ? 'active' : ''}" data-action="set-roster-sub" data-roster-sub="cap">
+          ${iconSvg('cap', 13)}
+          <span>Cap</span>
         </button>
       </div>
     </div>
@@ -136,13 +147,18 @@ export function renderRosterCapViewHtml({
   if (subTab === 'depth') {
     return topSwitcher + renderDualDepthChart({ appData, depthMode });
   }
+  if (subTab === 'moves') {
+    return topSwitcher + renderRosterMovesLedger({ appData, rosterMovesFilter });
+  }
   return (
     topSwitcher +
     renderSalaryCapAndSimulator({
       appData,
       simCapResult,
       userCapMoves,
-      capSelectedYear
+      capSelectedYear,
+      capViewMode,
+      capFaFilter
     })
   );
 }
@@ -305,6 +321,18 @@ function renderRosterExplorer({
                     playBadgeLabel: badgeLabel
                   });
                   const rasVal = Number(p.spiderProfile?.compositeRas || 0);
+                  const psElevMatch =
+                    p.rosterBucket === 'practice_squad'
+                      ? (appData?.roster?.psElevations || []).find(
+                          e =>
+                            (e.playerId && String(e.playerId) === String(p.id)) ||
+                            String(e.player || '').toLowerCase() === String(p.name || '').toLowerCase()
+                        )
+                      : null;
+                  const psElevPillHtml =
+                    psElevMatch && psElevMatch.used > 0
+                      ? ` · <span class="badge ${psElevMatch.used >= 3 ? 'badge-danger' : 'badge-gold'} mono ps-elev-inline-pill">${psElevMatch.used}/3 elev</span>`
+                      : '';
                   const capDisplay =
                     p.capHit2026 > 0
                       ? formatCompactDollars(p.capHit2026)
@@ -335,7 +363,7 @@ function renderRosterExplorer({
                                     ? 'Reserve/Left Sq.'
                                     : 'IR/Reserve'
                             : 'Prac. Squad'
-                      )} ·
+                      )}${psElevPillHtml} ·
                       Snaps <span class="mono">${p.primarySnapPct || 0}%</span>${
                         rasVal > 0 ? ` · RAS <span class="mono">${rasVal.toFixed(1)}</span>` : ''
                       }${p.age ? ` · <span class="mono">${p.age}y</span>` : ''}
@@ -535,7 +563,355 @@ function formatProratedSubLabel(p) {
   return parts.join(' • ');
 }
 
-function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {}, capSelectedYear }) {
+function formatShortTxDate(dateIso = '') {
+  const m = String(dateIso || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) return String(dateIso || '—');
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${months[Math.max(0, Number(m[2]) - 1)] || m[2]} ${Number(m[3])}`;
+}
+
+function formatMonthHeading(dateIso = '') {
+  const m = String(dateIso || '').match(/^(\d{4})-(\d{2})/);
+  if (!m) return 'Season Moves';
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  return `${months[Math.max(0, Number(m[2]) - 1)] || m[2]} ${m[1]}`;
+}
+
+function txToneToBadgeCls(tone = 'neutral') {
+  if (tone === 'emerald') return 'badge-positive';
+  if (tone === 'crimson') return 'badge-danger';
+  if (tone === 'gold') return 'badge-gold';
+  if (tone === 'amber') return 'badge-warning';
+  if (tone === 'blue') return 'badge-info';
+  return 'badge-neutral';
+}
+
+function renderRosterMovesLedger({ appData, rosterMovesFilter = 'all' }) {
+  const activeTeam = getActiveTeamConfig();
+  const seasonYr = Number(appData?.meta?.seasonYear) || 2026;
+  const allMoves = Array.isArray(appData?.roster?.transactions) ? appData.roster.transactions : [];
+  const psElevations = Array.isArray(appData?.roster?.psElevations) ? appData.roster.psElevations : [];
+  const normFilter = ['all', 'ir', 'signing', 'ps'].includes(rosterMovesFilter) ? rosterMovesFilter : 'all';
+  const filtered = normFilter === 'all' ? allMoves : allMoves.filter(m => m.cat === normFilter);
+
+  const grouped = [];
+  for (const m of filtered) {
+    const heading = formatMonthHeading(m.date);
+    let bucket = grouped.find(g => g.heading === heading);
+    if (!bucket) {
+      bucket = { heading, items: [] };
+      grouped.push(bucket);
+    }
+    bucket.items.push(m);
+  }
+
+  const topPsPreview = psElevations
+    .slice(0, 2)
+    .map(e => `${String(e.player || '').split(/\s+/).pop()} ${e.used}/3`)
+    .join(' · ');
+
+  const psCardHtml =
+    psElevations.length > 0
+      ? `
+      <details class="card compact-details ps-elev-details" data-ps-elevations-card>
+        <summary class="compact-details-summary ps-elev-summary">
+          <span>PS Elevations (Max 3)</span>
+          <span class="mono ps-elev-summary-preview">${esc(topPsPreview || `${psElevations.length} tracked`)}</span>
+        </summary>
+        <div class="ps-elev-list">
+          ${psElevations
+            .map(e => {
+              const matched = e.playerId
+                ? { id: e.playerId }
+                : lookupRosterPlayerByName(e.player);
+              const nameHtml = matched?.id
+                ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(matched.id)}">${esc(e.player)}</span>`
+                : `<strong>${esc(e.player)}</strong>`;
+              const dots = [1, 2, 3]
+                .map(
+                  i =>
+                    `<span class="ps-elev-dot ${i <= e.used ? (e.used >= 3 ? 'is-max' : 'is-used') : ''}" aria-hidden="true"></span>`
+                )
+                .join('');
+              const statusNote =
+                e.rosterBucket === 'active'
+                  ? 'Signed 53'
+                  : e.used >= 3
+                    ? 'Max reached'
+                    : `${e.remaining} left`;
+              return `
+                <div class="subcard-panel ps-elev-row">
+                  <div class="ps-elev-left">
+                    ${nameHtml}
+                    ${e.pos ? `<span class="ps-elev-pos">${esc(e.pos)}</span>` : ''}
+                    <span class="ps-elev-note">· ${esc(statusNote)}</span>
+                  </div>
+                  <div class="ps-elev-right">
+                    <span class="ps-elev-dots">${dots}</span>
+                    <span class="mono ps-elev-count ${e.used >= 3 ? 'is-max' : ''}">${e.used}/3</span>
+                  </div>
+                </div>
+              `;
+            })
+            .join('')}
+        </div>
+      </details>
+    `
+      : '';
+
+  return `
+    ${psCardHtml}
+    <section class="card" id="rosterMovesLedgerCard" data-roster-moves-filter="${esc(normFilter)}">
+      <div class="card-header" style="margin-bottom:8px">
+        <div class="card-header-left">
+          <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('trade', 15)}</div>
+          <div class="card-title-group">
+            <h2 class="card-title">${esc(String(seasonYr))} ${esc(activeTeam.nickname)} Roster Moves</h2>
+          </div>
+        </div>
+        <div class="source-link-strip">
+          <a href="https://www.espn.com/nfl/team/transactions/_/name/${esc(activeTeam.espnAbbr)}/${esc(activeTeam.otcSlug)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Moves</span>${iconSvg('externalLink', 10)}</a>
+        </div>
+      </div>
+
+      <div class="pill-bar compact-chip-row" role="tablist" aria-label="Roster Moves Category" style="margin-bottom:10px">
+        ${[
+          ['all', `All (${allMoves.length})`],
+          ['ir', 'IR / Reserve'],
+          ['signing', '53-Man'],
+          ['ps', 'Practice Squad']
+        ]
+          .map(
+            ([k, lbl]) => `
+          <button type="button" role="tab" aria-selected="${normFilter === k}"
+                  class="pill-btn ${normFilter === k ? 'active' : ''}"
+                  data-action="set-roster-moves-filter" data-moves-filter="${k}">${esc(lbl)}</button>
+        `
+          )
+          .join('')}
+      </div>
+
+      ${
+        filtered.length === 0
+          ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">No official ${esc(String(seasonYr))} moves in this category yet.</div>`
+          : `
+        <div class="moves-month-stack">
+          ${grouped
+            .map(
+              grp => `
+            <div class="moves-month-group">
+              <div class="sub-label moves-month-heading">${esc(grp.heading)}</div>
+              <div class="moves-ledger-box">
+                ${grp.items
+                  .map(tx => {
+                    const matched = tx.playerId
+                      ? { id: tx.playerId }
+                      : lookupRosterPlayerByName(tx.player);
+                    const playerHtml = matched?.id
+                      ? `<span class="inline-player-link moves-player-name" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(matched.id)}">${esc(tx.player)}</span>`
+                      : `<span class="moves-player-name">${esc(tx.player)}</span>`;
+                    return `
+                      <div class="moves-ledger-row">
+                        <span class="mono moves-date">${esc(formatShortTxDate(tx.date))}</span>
+                        <span class="badge ${txToneToBadgeCls(tx.tone)} moves-tag">${esc(tx.tag)}</span>
+                        ${playerHtml}
+                        <span class="mono moves-pos">${esc(tx.pos || '')}</span>
+                      </div>
+                    `;
+                  })
+                  .join('')}
+              </div>
+            </div>
+          `
+            )
+            .join('')}
+        </div>
+      `
+      }
+    </section>
+  `;
+}
+
+function renderUpcomingFreeAgentsView({ appData, capSelectedYear, capFaFilter = 'ALL' }) {
+  const activeTeam = getActiveTeamConfig();
+  const baseYrNum = Number(appData?.meta?.seasonYear) || Number(capSelectedYear) || 2026;
+  const baseYrStr = String(baseYrNum);
+  const nextYrStr = String(baseYrNum + 1);
+  const shortBaseYr = `'${baseYrStr.slice(-2)}`;
+  const years = appData?.cap?.years || {};
+  const yrNow = years[baseYrStr] || {};
+  const yrNext = years[nextYrStr] || {};
+
+  const faModel = buildUpcomingFreeAgentsModel(appData?.cap || {}, appData?.roster?.players || [], {
+    baseYear: baseYrNum,
+    statusFilter: capFaFilter
+  });
+  const capMix = buildPositionalCapSpendModel(appData?.cap || {}, { yearKey: baseYrStr });
+  const topUnitsPreview = capMix.units
+    .slice(0, 2)
+    .map(u => `${u.label.split(' ')[0]} ${u.teamPct}%`)
+    .join(' · ');
+
+  return `
+    <div class="kpi-grid cap-fa-kpi-grid">
+      <div class="kpi-box">
+        <div class="kpi-label">${esc(baseYrStr)} Space</div>
+        <div class="kpi-val mono" style="color:${Number(yrNow.teamCapSpace || 0) >= 0 ? 'var(--emerald)' : 'var(--crimson)'}">${formatCompactDollars(yrNow.teamCapSpace || 0)}</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">${esc(nextYrStr)} Proj.</div>
+        <div class="kpi-val mono" style="color:${Number(yrNext.teamCapSpace || 0) >= 0 ? 'var(--gold-bright)' : 'var(--crimson)'}">${formatCompactDollars(yrNext.teamCapSpace || 0)}</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">${esc(nextYrStr)} Expiring</div>
+        <div class="kpi-val mono">${faModel.counts.ALL}</div>
+      </div>
+    </div>
+
+    <details class="card compact-details cap-mix-details" data-cap-positional-spend>
+      <summary class="compact-details-summary">
+        <span>${esc(baseYrStr)} Cap Spend by Unit vs. NFL Avg</span>
+        <span class="mono cap-mix-preview">${esc(topUnitsPreview)}</span>
+      </summary>
+      <div class="cap-mix-list">
+        ${capMix.units
+          .map(u => {
+            const barW = Math.min(100, u.teamPct * 4.2);
+            const avgPos = Math.min(97, u.nflAvgPct * 4.2);
+            return `
+              <div class="cap-mix-row">
+                <span class="cap-mix-label">${esc(u.label)}</span>
+                <div class="cap-mix-track" title="${esc(activeTeam.abbr)} ${u.teamPct}% vs NFL Avg ${u.nflAvgPct}%">
+                  <div class="cap-mix-fill" style="width:${barW.toFixed(1)}%"></div>
+                  <div class="cap-mix-avg-tick" style="left:${avgPos.toFixed(1)}%"></div>
+                </div>
+                <span class="mono cap-mix-pct">${u.teamPct.toFixed(1)}%</span>
+              </div>
+            `;
+          })
+          .join('')}
+        <div class="cap-mix-footnote">Vertical tick = NFL 32-team average % of cap ceiling</div>
+      </div>
+    </details>
+
+    <section class="card" id="upcomingFreeAgentsCard" data-fa-year="${faModel.targetFaYear}" data-fa-filter="${esc(faModel.statusFilter)}">
+      <div class="card-header" style="margin-bottom:8px">
+        <div class="card-header-left">
+          <div class="card-icon-badge compact" aria-hidden="true">${iconSvg('calendar', 15)}</div>
+          <div class="card-title-group">
+            <h2 class="card-title">${faModel.targetFaYear} Expiring Contracts (${faModel.counts.ALL})</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="pill-bar compact-chip-row" role="tablist" aria-label="Free Agent Designation Filter" style="margin-bottom:8px">
+        ${[
+          ['ALL', `All (${faModel.counts.ALL})`],
+          ['UFA', `UFA (${faModel.counts.UFA})`],
+          ['RFA', `RFA (${faModel.counts.RFA})`],
+          ['ERFA', `ERFA (${faModel.counts.ERFA})`]
+        ]
+          .map(
+            ([k, lbl]) => `
+          <button type="button" role="tab" aria-selected="${faModel.statusFilter === k}"
+                  class="pill-btn ${faModel.statusFilter === k ? 'active' : ''}"
+                  data-action="set-cap-fa-filter" data-fa-filter="${k}">${esc(lbl)}</button>
+        `
+          )
+          .join('')}
+      </div>
+
+      ${
+        faModel.players.length === 0
+          ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">No expiring ${esc(faModel.statusFilter)} contracts found for ${faModel.targetFaYear}.</div>`
+          : `
+        <div class="table-scroll">
+          <table class="data-table sticky-col-table cap-fa-table mono">
+            <thead>
+              <tr>
+                <th class="sticky-col" style="font-family:var(--font-sans)">Player</th>
+                <th style="text-align:center">Type</th>
+                <th class="num-col">Snap%</th>
+                <th class="num-col">Age</th>
+                <th class="num-col">${esc(shortBaseYr)} Cap</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${faModel.players
+                .map(p => {
+                  const typeCls =
+                    p.faStatus === 'UFA'
+                      ? 'badge-danger'
+                      : p.faStatus === 'RFA'
+                        ? 'badge-info'
+                        : 'badge-gold';
+                  const snapStr = p.rosterBucket === 'ir' && p.snapPct === 0 ? 'IR' : `${p.snapPct}%`;
+                  const snapCls = p.snapPct >= 65 ? 'val-pos' : '';
+                  const nameEl = p.id
+                    ? `<span class="inline-player-link" role="button" tabindex="0" data-action="open-player-sheet" data-player-id="${esc(p.id)}" data-initial-tab="contract">${esc(p.name)}</span>`
+                    : `<strong>${esc(p.name)}</strong>`;
+                  return `
+                    <tr>
+                      <td class="sticky-col" style="font-family:var(--font-sans)">
+                        ${nameEl}
+                        <span class="team-players-pos">${esc(p.position)}</span>
+                        ${p.hasVoidYears ? `<span class="fa-void-tag mono" title="Carries void-year dead cap acceleration">Void</span>` : ''}
+                      </td>
+                      <td style="text-align:center"><span class="badge ${typeCls} mono">${esc(p.faStatus)}</span></td>
+                      <td class="num-col ${snapCls}">${esc(snapStr)}</td>
+                      <td class="num-col">${p.age != null ? p.age : '—'}</td>
+                      <td class="num-col">${formatCompactDollars(p.capHit)}</td>
+                    </tr>
+                  `;
+                })
+                .join('')}
+            </tbody>
+          </table>
+        </div>
+      `
+      }
+    </section>
+  `;
+}
+
+function renderSalaryCapAndSimulator({
+  appData,
+  simCapResult,
+  userCapMoves = {},
+  capSelectedYear,
+  capViewMode = 'sim',
+  capFaFilter = 'ALL'
+}) {
+  const effectiveCapMode = capViewMode === 'fa' ? 'fa' : 'sim';
+  const baseSeasonYr = Number(appData?.meta?.seasonYear) || 2026;
+  const faYearLabel = baseSeasonYr + 1;
+  const capModeToggleHtml = `
+    <div class="card subnav-card cap-inner-subnav-card" data-cap-mode-switcher>
+      <div class="segmented-control compact-seg" role="tablist" aria-label="Salary Cap View Mode">
+        <button type="button" role="tab" aria-selected="${effectiveCapMode === 'sim' ? 'true' : 'false'}"
+                class="pill-btn seg-btn ${effectiveCapMode === 'sim' ? 'active' : ''}"
+                data-action="set-cap-view-mode" data-cap-mode="sim">
+          <span>GM Simulator</span>
+        </button>
+        <button type="button" role="tab" aria-selected="${effectiveCapMode === 'fa' ? 'true' : 'false'}"
+                class="pill-btn seg-btn ${effectiveCapMode === 'fa' ? 'active' : ''}"
+                data-action="set-cap-view-mode" data-cap-mode="fa">
+          <span>${faYearLabel} Free Agents</span>
+        </button>
+      </div>
+    </div>
+  `;
+
+  if (effectiveCapMode === 'fa') {
+    return (
+      capModeToggleHtml +
+      renderUpcomingFreeAgentsView({ appData, capSelectedYear, capFaFilter })
+    );
+  }
+
   const years = appData?.cap?.years || {};
   const sortedYrKeys = Object.keys(years).sort().slice(0, 5);
   const firstYrKey = sortedYrKeys[0] || String(appData?.meta?.seasonYear || 2026);
@@ -722,7 +1098,9 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
     )
     .join('');
 
-  return `
+  return (
+    capModeToggleHtml +
+    `
     <!-- OverTheCap 5-Year Cap Summary (This Year + Next 4 Years) -->
     <section class="card" id="capHorizonSummaryCard">
       <div class="card-header">
@@ -1019,5 +1397,6 @@ function renderSalaryCapAndSimulator({ appData, simCapResult, userCapMoves = {},
         </table>
       </div>
     </section>
-  `;
+  `
+  );
 }
