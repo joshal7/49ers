@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:24:42.121Z",
+  "updatedAt": "2026-11-23T06:33:48.354Z",
   "dailyTopNewsBrief": {
     "id": "brief_det_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -7,7 +7,7 @@
     "isPostGame": true,
     "gameWeek": 12,
     "teamRecord": "8-2",
-    "generatedAt": "2026-11-23T06:24:45.329Z",
+    "generatedAt": "2026-11-23T06:33:54.593Z",
     "modelUsed": "gemini-4-hydrogen",
     "thinkingLevel": "XHIGH",
     "source": "deterministic-digest",
@@ -17,22 +17,22 @@
     "bullets": [
       "Just an absolutely packed \"Locker Room Buzz\" column after Lions' 31-21 win with insight from Kerby Joseph, Chuck Clark, Lacy, Hassanein, Scruggs, McCreary, Britt, Barnes (on Anzalone), Ratledge and Wright: www.detroitfootball.net/p/locker-roo... ([Justin Rogers](https://bsky.app/profile/detroitfootball.net/post/3n2wyfppxmk24))",
       "Woulda liked to see history there, but also if the record’s gonna fall, it should be in a regular field goal try ￼ ([Dave Birkett](https://bsky.app/profile/davebirkett.bsky.social/post/3n2x5275hx22y))",
-      "Khalil Dorsey is back in the game with a club over the hand where he suffered an injured wrist. ([Justin Rogers](https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x))",
       "NFC Notes: Micah Parsons, Cam Skattebo, Lions, Packers, Vikings ([NFL Trade Rumors](https://nfltraderumors.co/nfc-notes-micah-parsons-cam-skattebo-lions-packers-vikings/))",
+      "Khalil Dorsey is back in the game with a club over the hand where he suffered an injured wrist. ([Justin Rogers](https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x))",
       "Lions vs. Buccaneers: Locker room celebration ([detroitlions.com Video](https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052))"
     ],
     "coveredStoryKeys": [
       "det_bsky_a8b66c348752",
       "det_bsky_df06fbb87619",
-      "det_bsky_dae5d18dedb6",
       "det_nfltr_24d8d6572d50",
+      "det_bsky_dae5d18dedb6",
       "det_vid_01f6b0259c93"
     ],
     "coveredUrls": [
       "https://bsky.app/profile/detroitfootball.net/post/3n2wyfppxmk24",
       "https://bsky.app/profile/davebirkett.bsky.social/post/3n2x5275hx22y",
-      "https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x",
       "https://nfltraderumors.co/nfc-notes-micah-parsons-cam-skattebo-lions-packers-vikings/",
+      "https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x",
       "https://www.detroitlions.com/video/lions-vs-buccaneers-locker-room-celebration-x3052"
     ],
     "sources": [
@@ -54,19 +54,19 @@
       },
       {
         "sid": "S3",
-        "title": "Khalil Dorsey is back in the game with a club over the hand where he suffered an injured wrist.",
-        "url": "https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x",
-        "author": "Justin Rogers",
-        "outlet": "Justin Rogers",
-        "publishedAt": "2026-11-22T19:07:38.614Z"
-      },
-      {
-        "sid": "S4",
         "title": "NFC Notes: Micah Parsons, Cam Skattebo, Lions, Packers, Vikings",
         "url": "https://nfltraderumors.co/nfc-notes-micah-parsons-cam-skattebo-lions-packers-vikings/",
         "author": "NFL Trade Rumors",
         "outlet": "NFL Trade Rumors",
         "publishedAt": "2026-11-23T01:00:09.000Z"
+      },
+      {
+        "sid": "S4",
+        "title": "Khalil Dorsey is back in the game with a club over the hand where he suffered an injured wrist.",
+        "url": "https://bsky.app/profile/detroitfootball.net/post/3n2wcshqcb52x",
+        "author": "Justin Rogers",
+        "outlet": "Justin Rogers",
+        "publishedAt": "2026-11-22T19:07:38.614Z"
       },
       {
         "sid": "S5",
@@ -86,19 +86,19 @@
       },
       {
         "sid": "S7",
-        "title": "With the Bucs behind them and 6 straight wins in the books, the Lions are looking forward to next week’s showdown with Ben Johnson and the Bears: “It’s one of the biggest games I’ve probably ever played in coming up” www.freep.com/story/sports...",
-        "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wzf4plcs2k",
-        "author": "Dave Birkett",
-        "outlet": "Dave Birkett",
-        "publishedAt": "2026-11-23T01:51:47.099Z"
-      },
-      {
-        "sid": "S8",
         "title": "FOUR DOWNS: Goff a catalyst for Lions' offense in win over Bucs",
         "url": "https://www.detroitlions.com/news/four-downs-goff-catalyst-lions-offense-win-over-bucs-gibbs-williams",
         "author": "detroitlions.com Official",
         "outlet": "detroitlions.com Official",
         "publishedAt": "2026-11-22T23:43:49.000Z"
+      },
+      {
+        "sid": "S8",
+        "title": "With the Bucs behind them and 6 straight wins in the books, the Lions are looking forward to next week’s showdown with Ben Johnson and the Bears: “It’s one of the biggest games I’ve probably ever played in coming up” www.freep.com/story/sports...",
+        "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n2wzf4plcs2k",
+        "author": "Dave Birkett",
+        "outlet": "Dave Birkett",
+        "publishedAt": "2026-11-23T01:51:47.099Z"
       }
     ]
   },
@@ -129,9 +129,9 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.903,
+      "breakingPriority": 0.887,
       "category": "beat",
-      "signalScore": 77,
+      "signalScore": 100,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 97,
@@ -141,7 +141,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.7082
+      "storyRank": 9.2045
     },
     {
       "id": "det_bsky_df06fbb87619",
@@ -178,7 +178,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.5305
+      "storyRank": 6.8194
+    },
+    {
+      "id": "det_nfltr_24d8d6572d50",
+      "type": "article",
+      "title": "NFC Notes: Micah Parsons, Cam Skattebo, Lions, Packers, Vikings",
+      "summary": "Lions Lions EDGE Aidan Hutchinson tore his ACL while celebrating in Week 10. Giants RB Cam Skattebo has built a reputation for his backflip celebration after scoring touchdowns and said Hutchinson&#8217;s injury has made him rethink doing a",
+      "imageUrl": "",
+      "imageAlt": "NFC Notes: Micah Parsons, Cam Skattebo, Lions, Packers, Vikings",
+      "publishedAt": "2026-11-23T01:00:09.000Z",
+      "url": "https://nfltraderumors.co/nfc-notes-micah-parsons-cam-skattebo-lions-packers-vikings/",
+      "outletId": "nfl_trade_rumors",
+      "outletName": "NFL Trade Rumors",
+      "reporterId": "nfl_trade_rumors",
+      "reporterName": "NFL Trade Rumors",
+      "author": "NFL Trade Rumors",
+      "authorHandle": "@nfltrade_rumors",
+      "authorProfileUrl": "https://nfltraderumors.co/",
+      "trustTier": 2,
+      "wireSource": "nfltr_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.831,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.828
     },
     {
       "id": "det_bsky_dae5d18dedb6",
@@ -205,7 +238,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 0.903,
+      "breakingPriority": 0.891,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -222,40 +255,7 @@
       "playerValueScore": 0.09,
       "playerValueTier": "depth",
       "injuryImpactScore": 0.324,
-      "storyRank": 7.5447
-    },
-    {
-      "id": "det_nfltr_24d8d6572d50",
-      "type": "article",
-      "title": "NFC Notes: Micah Parsons, Cam Skattebo, Lions, Packers, Vikings",
-      "summary": "Lions Lions EDGE Aidan Hutchinson tore his ACL while celebrating in Week 10. Giants RB Cam Skattebo has built a reputation for his backflip celebration after scoring touchdowns and said Hutchinson&#8217;s injury has made him rethink doing a",
-      "imageUrl": "",
-      "imageAlt": "NFC Notes: Micah Parsons, Cam Skattebo, Lions, Packers, Vikings",
-      "publishedAt": "2026-11-23T01:00:09.000Z",
-      "url": "https://nfltraderumors.co/nfc-notes-micah-parsons-cam-skattebo-lions-packers-vikings/",
-      "outletId": "nfl_trade_rumors",
-      "outletName": "NFL Trade Rumors",
-      "reporterId": "nfl_trade_rumors",
-      "reporterName": "NFL Trade Rumors",
-      "author": "NFL Trade Rumors",
-      "authorHandle": "@nfltrade_rumors",
-      "authorProfileUrl": "https://nfltraderumors.co/",
-      "trustTier": 2,
-      "wireSource": "nfltr_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.846,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 7.0459
+      "storyRank": 7.1368
     },
     {
       "id": "det_vid_01f6b0259c93",
@@ -279,7 +279,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.781,
+      "breakingPriority": 0.768,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -289,7 +289,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.7281
+      "storyRank": 6.0489
     },
     {
       "id": "det_rss_92d6faf1e8ed",
@@ -312,17 +312,50 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.758,
+      "breakingPriority": 0.744,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.9717
+      "storyRank": 5.7635
+    },
+    {
+      "id": "det_rss_e97a2a128e9b",
+      "type": "article",
+      "title": "FOUR DOWNS: Goff a catalyst for Lions' offense in win over Bucs",
+      "summary": "Four Downs following the Detroit Lions’ 31-21 victory over the Tampa Bay Buccaneers includes Goff leads the way, d-line steps up, Waymo's performance and run game rallies.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/rqt3vxb3or7miqekru96.jpg",
+      "imageAlt": "FOUR DOWNS: Goff a catalyst for Lions' offense in win over Bucs",
+      "publishedAt": "2026-11-22T23:43:49.000Z",
+      "url": "https://www.detroitlions.com/news/four-downs-goff-catalyst-lions-offense-win-over-bucs-gibbs-williams",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Official",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Official",
+      "author": "detroitlions.com Official",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.717,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.4516
     },
     {
       "id": "det_bsky_6a4fc552715e",
@@ -359,40 +392,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.5252
-    },
-    {
-      "id": "det_rss_e97a2a128e9b",
-      "type": "article",
-      "title": "FOUR DOWNS: Goff a catalyst for Lions' offense in win over Bucs",
-      "summary": "Four Downs following the Detroit Lions’ 31-21 victory over the Tampa Bay Buccaneers includes Goff leads the way, d-line steps up, Waymo's performance and run game rallies.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/rqt3vxb3or7miqekru96.jpg",
-      "imageAlt": "FOUR DOWNS: Goff a catalyst for Lions' offense in win over Bucs",
-      "publishedAt": "2026-11-22T23:43:49.000Z",
-      "url": "https://www.detroitlions.com/news/four-downs-goff-catalyst-lions-offense-win-over-bucs-gibbs-williams",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Official",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Official",
-      "author": "detroitlions.com Official",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.73,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 18,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 5.6422
+      "storyRank": 5.071
     },
     {
       "id": "det_espn_aea129f88ee07",
@@ -416,7 +416,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.638,
+      "breakingPriority": 0.627,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -426,7 +426,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0077
+      "storyRank": 4.5274
+    },
+    {
+      "id": "det_rss_3ea274280813",
+      "type": "article",
+      "title": "RECAP: Lions vs. Buccaneers",
+      "summary": "Tim Twentyman recaps the Detroit Lions’ 31-21 victory over the Tampa Bay Buccaneers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/fgrqmqcab75rhbmvbaaz.jpg",
+      "imageAlt": "RECAP: Lions vs. Buccaneers",
+      "publishedAt": "2026-11-22T21:38:30.000Z",
+      "url": "https://www.detroitlions.com/news/recap-lions-vs-buccaneers-goff-gibbs-williams",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Official",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Official",
+      "author": "detroitlions.com Official",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.564,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.9747
     },
     {
       "id": "det_bsky_76b4702b8f91",
@@ -453,7 +486,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.559,
+      "breakingPriority": 0.549,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -463,7 +496,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.6653
+      "storyRank": 4.2589
     },
     {
       "id": "det_bsky_ef2779000aac",
@@ -490,7 +523,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.542,
+      "breakingPriority": 0.532,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -500,40 +533,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.505
-    },
-    {
-      "id": "det_rss_3ea274280813",
-      "type": "article",
-      "title": "RECAP: Lions vs. Buccaneers",
-      "summary": "Tim Twentyman recaps the Detroit Lions’ 31-21 victory over the Tampa Bay Buccaneers.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/fgrqmqcab75rhbmvbaaz.jpg",
-      "imageAlt": "RECAP: Lions vs. Buccaneers",
-      "publishedAt": "2026-11-22T21:38:30.000Z",
-      "url": "https://www.detroitlions.com/news/recap-lions-vs-buccaneers-goff-gibbs-williams",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Official",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Official",
-      "author": "detroitlions.com Official",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.574,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 18,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.0909
+      "storyRank": 4.1147
     },
     {
       "id": "det_vid_c4c9aff587fe",
@@ -557,17 +557,17 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.543,
+      "breakingPriority": 0.533,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.8394
+      "storyRank": 3.7339
     },
     {
       "id": "det_vid_7623bd535cab",
@@ -591,17 +591,51 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.527,
+      "breakingPriority": 0.518,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7156
+      "storyRank": 3.6153
+    },
+    {
+      "id": "det_vid_009110c13b8e",
+      "type": "video",
+      "title": "HIGHLIGHT: 57-yard TD! Goff launches it to Williams for the score",
+      "summary": "Detroit Lions quarterback Jared Goff connects with wide receiver Jameson Williams for a 57-yard touchdown.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/g85nwnm1iulxcokdkaqf.jpg",
+      "imageAlt": "HIGHLIGHT: 57-yard TD! Goff launches it to Williams for the score",
+      "publishedAt": "2026-11-22T20:00:49.000Z",
+      "url": "https://www.detroitlions.com/video/highlight-57-yard-td-goff-launches-it-to-williams-for-the-score",
+      "externalVideoUrl": "https://www.detroitlions.com/video/highlight-57-yard-td-goff-launches-it-to-williams-for-the-score",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Video",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Video",
+      "author": "detroitlions.com Video",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.467,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.2439
     },
     {
       "id": "det_bsky_49b3cc757a15",
@@ -628,7 +662,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.468,
+      "breakingPriority": 0.46,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -638,41 +672,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.8514
-    },
-    {
-      "id": "det_vid_009110c13b8e",
-      "type": "video",
-      "title": "HIGHLIGHT: 57-yard TD! Goff launches it to Williams for the score",
-      "summary": "Detroit Lions quarterback Jared Goff connects with wide receiver Jameson Williams for a 57-yard touchdown.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/g85nwnm1iulxcokdkaqf.jpg",
-      "imageAlt": "HIGHLIGHT: 57-yard TD! Goff launches it to Williams for the score",
-      "publishedAt": "2026-11-22T20:00:49.000Z",
-      "url": "https://www.detroitlions.com/video/highlight-57-yard-td-goff-launches-it-to-williams-for-the-score",
-      "externalVideoUrl": "https://www.detroitlions.com/video/highlight-57-yard-td-goff-launches-it-to-williams-for-the-score",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Video",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Video",
-      "author": "detroitlions.com Video",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.475,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 18,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.3289
+      "storyRank": 3.5253
     },
     {
       "id": "det_espn_9463dd92e41c3",
@@ -706,7 +706,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6569
+      "storyRank": 2.5102
     },
     {
       "id": "det_vid_a8905329fcc5",
@@ -740,7 +740,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6182
+      "storyRank": 2.4747
     },
     {
       "id": "det_bsky_acc7c5faee45",
@@ -777,7 +777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3141
+      "storyRank": 2.1874
     },
     {
       "id": "det_vid_a79420d76426",
@@ -804,14 +804,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1176
+      "storyRank": 2.2224
     },
     {
       "id": "det_bsky_f1355f9db30e",
@@ -848,7 +848,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2492
+      "storyRank": 2.1278
     },
     {
       "id": "det_bsky_d9554a8c4310",
@@ -885,7 +885,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2252
+      "storyRank": 2.1057
     },
     {
       "id": "det_bsky_95918640d49f",
@@ -922,7 +922,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0026
+      "storyRank": 1.9006
     },
     {
       "id": "det_bsky_de8d1f1660b9",
@@ -959,7 +959,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1529
+      "storyRank": 2.074
     },
     {
       "id": "det_bsky_8fd7122a3b41",
@@ -996,7 +996,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7459
+      "storyRank": 1.5865
     },
     {
       "id": "det_vid_31f3890de597",
@@ -1023,14 +1023,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7076
+      "storyRank": 1.8027
     },
     {
       "id": "det_vid_21c8c930060d",
@@ -1057,14 +1057,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6785
+      "storyRank": 1.7727
     },
     {
       "id": "det_vid_e304e2423141",
@@ -1091,14 +1091,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.662
+      "storyRank": 1.7558
     },
     {
       "id": "det_vid_24ad36508274",
@@ -1125,14 +1125,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6589
+      "storyRank": 1.7526
     },
     {
       "id": "det_bsky_91007c4df1f0",
@@ -1169,7 +1169,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7568
+      "storyRank": 1.6731
     },
     {
       "id": "det_bsky_d63bbf7a1d83",
@@ -1206,7 +1206,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7451
+      "storyRank": 1.6622
     },
     {
       "id": "det_bsky_6bb1766a86d4",
@@ -1243,7 +1243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7414
+      "storyRank": 1.6589
     },
     {
       "id": "det_vid_45d058a69345",
@@ -1270,14 +1270,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6177
+      "storyRank": 1.7102
     },
     {
       "id": "det_bsky_789d1e0d3c3d",
@@ -1314,7 +1314,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7171
+      "storyRank": 1.6363
     },
     {
       "id": "det_vid_8fc7736e6ca3",
@@ -1341,14 +1341,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5976
+      "storyRank": 1.6894
     },
     {
       "id": "det_bsky_70ffea10bca4",
@@ -1385,7 +1385,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6912
+      "storyRank": 1.6122
     },
     {
       "id": "det_vid_3e52ba837e92",
@@ -1412,14 +1412,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.574
+      "storyRank": 1.6651
     },
     {
       "id": "det_vid_c7355fb69e2e",
@@ -1446,14 +1446,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5142
+      "storyRank": 1.6034
     },
     {
       "id": "det_vid_f23bb1ec017f",
@@ -1487,7 +1487,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.662
+      "storyRank": 1.5905
     },
     {
       "id": "det_vid_165fdcb258f4",
@@ -1521,7 +1521,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6473
+      "storyRank": 1.5768
     },
     {
       "id": "det_vid_5dee2dad24d4",
@@ -1555,7 +1555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6444
+      "storyRank": 1.574
     },
     {
       "id": "det_vid_eb6b9f638b79",
@@ -1589,7 +1589,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6355
+      "storyRank": 1.5658
     },
     {
       "id": "det_vid_9cc81b3422a9",
@@ -1623,7 +1623,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6357
+      "storyRank": 0.6014
     },
     {
       "id": "det_vid_23b6812e1771",
@@ -1657,7 +1657,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.634
+      "storyRank": 0.5998
     },
     {
       "id": "det_bsky_0e00b32b5276",
@@ -1694,7 +1694,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3699
+      "storyRank": 0.3538
     },
     {
       "id": "det_rss_cd50a8afa84d",
@@ -1720,14 +1720,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 36,
+      "fluffScore": 20,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2474
+      "storyRank": 0.2613
     },
     {
       "id": "det_rss_e8bb16dbb320",
@@ -1760,7 +1760,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2417
+      "storyRank": 0.2342
     },
     {
       "id": "det_bsky_0f1a6d53713f",
@@ -1797,7 +1797,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1067
+      "storyRank": 0.1047
     },
     {
       "id": "det_pfr_6d7323d65d58",
@@ -1829,7 +1829,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0952
+      "storyRank": 0.1051
     },
     {
       "id": "det_bsky_d40259a8fe91",
@@ -1866,7 +1866,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0943
+      "storyRank": 0.0928
     },
     {
       "id": "det_rss_d13c9787f2ee",
@@ -1899,7 +1899,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0885
+      "storyRank": 0.0874
     },
     {
       "id": "det_rss_20dd0e7f1bf2",
@@ -1932,7 +1932,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0771
+      "storyRank": 0.0764
     },
     {
       "id": "det_tx_3b82b2c77f40",
@@ -1966,7 +1966,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.068
+      "storyRank": 0.0676
     },
     {
       "id": "det_rss_eea329af076f",
@@ -1999,7 +1999,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.119
+      "storyRank": 0.1099
     },
     {
       "id": "det_rss_976be5789ea0",
@@ -2025,14 +2025,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0433
+      "storyRank": 0.0479
     },
     {
       "id": "det_bsky_c9b6abbd9373",
@@ -2069,7 +2069,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0434
+      "storyRank": 0.0433
     },
     {
       "id": "det_rss_acd6e087c2ff",
@@ -2095,14 +2095,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 36,
+      "fluffScore": 20,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0355
+      "storyRank": 0.0389
     },
     {
       "id": "det_bsky_63c1f40089f1",
@@ -2131,7 +2131,7 @@
       "breakingBadge": null,
       "breakingPriority": 0,
       "category": "beat",
-      "signalScore": 70,
+      "signalScore": 72,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 96,
@@ -2139,7 +2139,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0407
+      "storyRank": 0.0409
     },
     {
       "id": "det_rss_419f73384a5b",
@@ -2172,7 +2172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.0418
     },
     {
       "id": "det_rss_9b21134f3822",
@@ -2205,7 +2205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0413
+      "storyRank": 0.0414
     },
     {
       "id": "det_bsky_3f1b0a4ff5b2",
@@ -2276,7 +2276,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0324
+      "storyRank": 0.0325
     },
     {
       "id": "det_rss_1821ee0c9038",
@@ -2302,14 +2302,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0288
+      "storyRank": 0.032
     },
     {
       "id": "det_bsky_dbbfbbb85625",
@@ -2346,7 +2346,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0759
+      "storyRank": 0.07
     },
     {
       "id": "det_rss_d1cce69860d7",
@@ -2379,7 +2379,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0774
+      "storyRank": 0.0716
     },
     {
       "id": "det_rss_25efb61590d8",
@@ -2412,7 +2412,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0302
+      "storyRank": 0.0303
     },
     {
       "id": "det_rss_cf4dfa9c1074",
@@ -2445,7 +2445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295
+      "storyRank": 0.0297
     },
     {
       "id": "det_rss_8e38e4f159ba",
@@ -2471,14 +2471,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 36,
+      "fluffScore": 20,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0227
+      "storyRank": 0.025
     },
     {
       "id": "det_rss_c6703f0c98a6",
@@ -2511,7 +2511,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0068
     },
     {
       "id": "det_pfr_70041b3c4411",
@@ -2543,7 +2543,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0201
+      "storyRank": 0.0228
     },
     {
       "id": "det_pfr_d6e9815eec79",
@@ -2575,7 +2575,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0226
     },
     {
       "id": "det_rss_0203b56d1044",
@@ -2601,14 +2601,14 @@
       "breakingPriority": 0,
       "category": "film",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0057
     },
     {
       "id": "det_pfr_bb925d5e5526",
@@ -2640,7 +2640,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0191
+      "storyRank": 0.0217
     },
     {
       "id": "det_tx_c64f2ecbbd9b",
@@ -2674,7 +2674,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.0186
     },
     {
       "id": "det_pfr_b8ba66f816a2",
@@ -2706,7 +2706,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0154
+      "storyRank": 0.0175
     },
     {
       "id": "det_espn_51eacdb16eec2",
@@ -2740,7 +2740,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0154
+      "storyRank": 0.0157
     },
     {
       "id": "det_espn_f82ca0a52a103",
@@ -2774,7 +2774,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0154
+      "storyRank": 0.0157
     },
     {
       "id": "det_espn_16beeafd3881f",
@@ -2808,7 +2808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0155
     },
     {
       "id": "det_tx_62a14fc45972",
@@ -2842,7 +2842,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0144
     },
     {
       "id": "det_pfr_fa1d7c280908",
@@ -2874,7 +2874,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0121
+      "storyRank": 0.0138
     },
     {
       "id": "det_espn_5d2235574621d",
@@ -2908,7 +2908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132
+      "storyRank": 0.0135
     },
     {
       "id": "det_pfr_e6aa64d4de47",
@@ -2940,7 +2940,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0132
     },
     {
       "id": "det_espn_7e0b06b35da0e",
@@ -2974,7 +2974,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0128
     },
     {
       "id": "det_tx_19ed81fc487c",
@@ -3008,7 +3008,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0114
+      "storyRank": 0.0116
     },
     {
       "id": "det_pfr_bebfbaa72044",
@@ -3040,7 +3040,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0098
+      "storyRank": 0.0112
     },
     {
       "id": "det_pfr_03b5124b42ba",
@@ -3072,7 +3072,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0085
     },
     {
       "id": "det_tx_9433f4b6ea06",
@@ -3106,7 +3106,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0082
     },
     {
       "id": "det_pfr_ffbd53acab5b",
@@ -3138,7 +3138,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0059
     },
     {
       "id": "det_tx_1d8590a7bb32",
@@ -3172,7 +3172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0054
     },
     {
       "id": "det_pfr_90318892f002",
@@ -3204,7 +3204,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0047
     },
     {
       "id": "det_pfr_d4f80b792259",
@@ -3236,7 +3236,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
+      "storyRank": 0.0046
     },
     {
       "id": "det_tx_9d2a36009286",
@@ -3270,7 +3270,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0044
     },
     {
       "id": "det_tx_ccbee66da7b8",
@@ -3304,7 +3304,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0036
     },
     {
       "id": "det_tx_c7a7b3d0a258",
@@ -3338,7 +3338,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0029
     },
     {
       "id": "det_tx_f505f5bdcb16",
@@ -3372,7 +3372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0025
+      "storyRank": 0.0027
     },
     {
       "id": "det_rss_649b4939fc76",
@@ -3398,7 +3398,7 @@
       "breakingPriority": -10,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "stale_pregame",

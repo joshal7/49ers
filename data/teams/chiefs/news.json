@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:25:43.858Z",
+  "updatedAt": "2026-11-23T06:36:50.921Z",
   "dailyTopNewsBrief": {
     "id": "brief_kc_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -138,7 +138,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 63.4894
+      "storyRank": 58.6512
     },
     {
       "id": "kc_rss_3409cc53d230",
@@ -161,7 +161,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.308,
+      "breakingPriority": 1.28,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -171,41 +171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 25.1798
-    },
-    {
-      "id": "kc_espn_e5687dd229cce",
-      "type": "video",
-      "title": "How Travis Kelce made Chiefs and NFL history in win",
-      "summary": "Nate Taylor breaks down Travis Kelce's stellar performance vs. the Cardinals in Week 11.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_Chiefs_beat_Cardinals_IA/dm_261122_Chiefs_beat_Cardinals_IA.jpg",
-      "imageCaption": "Nate Taylor breaks down Travis Kelce's stellar performance vs. the Cardinals in Week 11.",
-      "imageAlt": "How Travis Kelce made Chiefs and NFL history in win",
-      "publishedAt": "2026-11-23T04:52:08Z",
-      "url": "https://www.espn.com/video/clip/_/id/50570086/how-travis-kelce-made-chiefs-nfl-history-win",
-      "outletId": "espn_kc",
-      "outletName": "ESPN",
-      "reporterId": "espn_kc",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/kc/kansas-city-chiefs",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 16.9971
+      "storyRank": 21.2578
     },
     {
       "id": "kc_vid_34020f3b2b85",
@@ -239,7 +205,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 15.8723
+      "storyRank": 14.6628
+    },
+    {
+      "id": "kc_espn_e5687dd229cce",
+      "type": "video",
+      "title": "How Travis Kelce made Chiefs and NFL history in win",
+      "summary": "Nate Taylor breaks down Travis Kelce's stellar performance vs. the Cardinals in Week 11.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_Chiefs_beat_Cardinals_IA/dm_261122_Chiefs_beat_Cardinals_IA.jpg",
+      "imageCaption": "Nate Taylor breaks down Travis Kelce's stellar performance vs. the Cardinals in Week 11.",
+      "imageAlt": "How Travis Kelce made Chiefs and NFL history in win",
+      "publishedAt": "2026-11-23T04:52:08Z",
+      "url": "https://www.espn.com/video/clip/_/id/50570086/how-travis-kelce-made-chiefs-nfl-history-win",
+      "outletId": "espn_kc",
+      "outletName": "ESPN",
+      "reporterId": "espn_kc",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/kc/kansas-city-chiefs",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 14.5001
     },
     {
       "id": "kc_espn_248304034486e",
@@ -263,7 +263,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.844,
+      "breakingPriority": 0.826,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -273,7 +273,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.6817
+      "storyRank": 6.8376
     },
     {
       "id": "kc_pfr_d043eec79d10",
@@ -305,7 +305,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.9251
+      "storyRank": 5.0398
     },
     {
       "id": "kc_nfltr_0d9c4a970421",
@@ -338,7 +338,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.566
+      "storyRank": 4.6883
     },
     {
       "id": "kc_vid_95fb0acb6433",
@@ -362,7 +362,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.598,
+      "breakingPriority": 0.585,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -372,7 +372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.6102
+      "storyRank": 4.1533
     },
     {
       "id": "kc_vid_5b7566e4f779",
@@ -396,7 +396,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.596,
+      "breakingPriority": 0.584,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -406,7 +406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5987
+      "storyRank": 4.1432
     },
     {
       "id": "kc_vid_7de733124893",
@@ -430,7 +430,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.595,
+      "breakingPriority": 0.582,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -440,7 +440,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5868
+      "storyRank": 4.1327
     },
     {
       "id": "kc_vid_4317cf4fda95",
@@ -464,7 +464,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.59,
+      "breakingPriority": 0.577,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -474,7 +474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5365
+      "storyRank": 4.0882
     },
     {
       "id": "kc_vid_74b3e9d8b431",
@@ -498,7 +498,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.497,
+      "breakingPriority": 0.486,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -508,7 +508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7352
+      "storyRank": 3.3778
     },
     {
       "id": "kc_pft_72e4a00a196a",
@@ -541,7 +541,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8886
+      "storyRank": 3.0208
     },
     {
       "id": "kc_espn_28d5a1d22625f",
@@ -575,7 +575,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2602
+      "storyRank": 2.1357
     },
     {
       "id": "kc_espn_41a32a5a6fecd",
@@ -609,7 +609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1975
+      "storyRank": 2.0783
     },
     {
       "id": "kc_vid_80437d11f679",
@@ -643,7 +643,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1736
+      "storyRank": 2.0564
     },
     {
       "id": "kc_vid_029139789878",
@@ -677,7 +677,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1391
+      "storyRank": 2.0247
     },
     {
       "id": "kc_vid_cae601cfcb80",
@@ -711,7 +711,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0853
+      "storyRank": 1.9753
     },
     {
       "id": "kc_vid_1a2bbdf08947",
@@ -745,7 +745,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0797
+      "storyRank": 1.9702
     },
     {
       "id": "kc_vid_2c6900fc219a",
@@ -779,7 +779,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0486
+      "storyRank": 1.9416
     },
     {
       "id": "kc_vid_78bb08a0f179",
@@ -813,7 +813,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.928
+      "storyRank": 1.8306
     },
     {
       "id": "kc_vid_576b9a38a41e",
@@ -847,7 +847,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.895
+      "storyRank": 1.8002
     },
     {
       "id": "kc_vid_9b6bdc6ffedc",
@@ -881,7 +881,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8848
+      "storyRank": 1.7908
     },
     {
       "id": "kc_vid_effaaa6459fb",
@@ -915,7 +915,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8547
+      "storyRank": 1.763
     },
     {
       "id": "kc_vid_c5349f7f2702",
@@ -949,7 +949,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8207
+      "storyRank": 1.7316
     },
     {
       "id": "kc_vid_86f3c69259ad",
@@ -983,7 +983,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7256
+      "storyRank": 1.6437
     },
     {
       "id": "kc_vid_18826bc1f3d8",
@@ -1017,7 +1017,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6892
+      "storyRank": 1.6099
     },
     {
       "id": "kc_espn_fc09dce5056e7",
@@ -1051,7 +1051,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6908
+      "storyRank": 0.6486
     },
     {
       "id": "kc_vid_a7ee55bd30f9",
@@ -1085,7 +1085,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6492
+      "storyRank": 0.6107
     },
     {
       "id": "kc_vid_f105a04e428b",
@@ -1119,7 +1119,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6377
+      "storyRank": 0.6002
     },
     {
       "id": "kc_vid_259bc6310e5a",
@@ -1153,7 +1153,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6143
+      "storyRank": 0.579
     },
     {
       "id": "kc_vid_50d1ecc603c8",
@@ -1187,7 +1187,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4958
+      "storyRank": 0.4703
     },
     {
       "id": "kc_vid_46e62ceaa150",
@@ -1221,7 +1221,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4516
+      "storyRank": 0.4296
     },
     {
       "id": "kc_rss_01bb067e190b",
@@ -1254,7 +1254,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0217
+      "storyRank": 0.0215
     },
     {
       "id": "kc_tx_d011a4519bbd",
@@ -1288,7 +1288,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.068
+      "storyRank": 0.0675
     },
     {
       "id": "kc_espn_7702197fc064b",
@@ -1322,7 +1322,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0608
+      "storyRank": 0.0604
     },
     {
       "id": "kc_vid_987c09c6448e",
@@ -1356,7 +1356,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0556
+      "storyRank": 0.0554
     },
     {
       "id": "kc_rss_193b998d5208",
@@ -1422,7 +1422,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0294
+      "storyRank": 0.0272
     },
     {
       "id": "kc_rss_1714a58c70b7",
@@ -1455,7 +1455,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0493
+      "storyRank": 0.0492
     },
     {
       "id": "kc_vid_85da192564cb",
@@ -1489,7 +1489,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.049
+      "storyRank": 0.0489
     },
     {
       "id": "kc_vid_0d72bceb4121",
@@ -1523,7 +1523,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0488
+      "storyRank": 0.0487
     },
     {
       "id": "kc_vid_c14be70f5283",
@@ -1557,7 +1557,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0486
+      "storyRank": 0.0485
     },
     {
       "id": "kc_vid_30bf2d58803c",
@@ -1591,7 +1591,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0485
+      "storyRank": 0.0484
     },
     {
       "id": "kc_vid_60afb2bafde4",
@@ -1625,7 +1625,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0452
+      "storyRank": 0.0451
     },
     {
       "id": "kc_rss_d688f992df14",
@@ -1658,7 +1658,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.045
+      "storyRank": 0.0449
     },
     {
       "id": "kc_rss_08e8237c84ec",
@@ -1758,7 +1758,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0313
+      "storyRank": 0.0314
     },
     {
       "id": "kc_pfr_70041b3c4411",
@@ -1790,7 +1790,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0201
+      "storyRank": 0.0228
     },
     {
       "id": "kc_pfr_d6e9815eec79",
@@ -1822,7 +1822,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0226
     },
     {
       "id": "kc_pfr_54906770e9be",
@@ -1854,7 +1854,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0197
+      "storyRank": 0.0224
     },
     {
       "id": "kc_pfr_b919e2b84697",
@@ -1886,7 +1886,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.018
+      "storyRank": 0.0204
     },
     {
       "id": "kc_rss_d149c5c8774f",
@@ -1919,7 +1919,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0201
+      "storyRank": 0.0203
     },
     {
       "id": "kc_tx_97e3cdda20d3",
@@ -1953,7 +1953,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.0186
     },
     {
       "id": "kc_rss_ee0f68c241cd",
@@ -1986,7 +1986,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0151
+      "storyRank": 0.0153
     },
     {
       "id": "kc_espn_5b9f7bb01f239",
@@ -2020,7 +2020,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147
+      "storyRank": 0.0149
     },
     {
       "id": "kc_tx_6fa51d73531b",
@@ -2054,7 +2054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0144
     },
     {
       "id": "kc_rss_809aaeeddafb",
@@ -2087,7 +2087,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0128
     },
     {
       "id": "kc_rss_3efaf57d9781",
@@ -2120,7 +2120,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0128
     },
     {
       "id": "kc_rss_5f8ea42acf95",
@@ -2153,7 +2153,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0122
+      "storyRank": 0.0124
     },
     {
       "id": "kc_rss_2addef32f4f5",
@@ -2186,7 +2186,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0121
+      "storyRank": 0.0124
     },
     {
       "id": "kc_rss_5f7e2ad887d8",
@@ -2219,7 +2219,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0238
+      "storyRank": 0.0221
     },
     {
       "id": "kc_rss_ca3e3f52525b",
@@ -2252,7 +2252,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0086
+      "storyRank": 0.0089
     },
     {
       "id": "kc_pfr_ba4355b2aff2",
@@ -2284,7 +2284,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0085
     },
     {
       "id": "kc_tx_97818074884c",
@@ -2318,7 +2318,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0081
     },
     {
       "id": "kc_pfr_28d3063a158b",
@@ -2350,7 +2350,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0076
     },
     {
       "id": "kc_rss_709e0bb1924a",
@@ -2383,7 +2383,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0076
     },
     {
       "id": "kc_pfr_2c02575a2356",
@@ -2415,7 +2415,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0068
     },
     {
       "id": "kc_rss_3b9e587cce22",
@@ -2448,7 +2448,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0066
     },
     {
       "id": "kc_tx_21a721bd802f",
@@ -2482,7 +2482,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.006
+      "storyRank": 0.0061
     },
     {
       "id": "kc_pfr_ffbd53acab5b",
@@ -2514,7 +2514,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0059
     },
     {
       "id": "kc_tx_75b684dcc425",
@@ -2548,7 +2548,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0054
     },
     {
       "id": "kc_pfr_70fc4e592300",
@@ -2580,7 +2580,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
+      "storyRank": 0.0053
     },
     {
       "id": "kc_tx_3b74b4cf59f2",
@@ -2614,7 +2614,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
+      "storyRank": 0.0049
     },
     {
       "id": "kc_tx_39e7074ecdf8",
@@ -2648,7 +2648,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0036
     },
     {
       "id": "kc_tx_787871f97810",
@@ -2682,7 +2682,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0031
     },
     {
       "id": "kc_tx_9cd60577432d",
@@ -2716,7 +2716,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0029
     },
     {
       "id": "kc_tx_297b093c3a37",
@@ -2750,7 +2750,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0025
     },
     {
       "id": "kc_rss_2060c522dd71",

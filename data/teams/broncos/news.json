@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:25:46.211Z",
+  "updatedAt": "2026-11-23T06:37:01.031Z",
   "dailyTopNewsBrief": {
     "id": "brief_den_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -107,6 +107,39 @@
   "clusteredBriefs": [],
   "rawStream": [
     {
+      "id": "den_rss_c125faaf0ab0",
+      "type": "article",
+      "title": "Broncos Postgame Notebook: Evan Engram, Marvin Mims Jr. make key plays, Ja'Quan McMillian seals win vs. Raiders",
+      "summary": "\"We don’t win without guys like that,” quarterback Bo Nix said of Engram. “Guys that just keep stepping up and they may not be able to do it every week just because we have a lot of guys that we want to get involved. On a day like today aga",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/l0nktz3qktzxw3wylsxl.jpg",
+      "imageAlt": "Broncos Postgame Notebook: Evan Engram, Marvin Mims Jr. make key plays, Ja'Quan McMillian seals win vs. Raiders",
+      "publishedAt": "2026-11-23T06:25:01.000Z",
+      "url": "https://www.denverbroncos.com/news/broncos-postgame-notebook-evan-engram-marvin-mims-jr-make-key-plays-ja-quan-mcmillian-seals-win-vs-raiders",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Official",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Official",
+      "author": "denverbroncos.com Official",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.544,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 66.019
+    },
+    {
       "id": "den_vid_a679742d6dd0",
       "type": "video",
       "title": "Analysis: Top takeaways from Broncos' Week 11 win vs. the Raiders",
@@ -128,7 +161,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.567,
+      "breakingPriority": 1.533,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -138,7 +171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 82.9839
+      "storyRank": 61.9998
     },
     {
       "id": "den_espn_8f2b08b115806",
@@ -172,7 +205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 36.717
+      "storyRank": 28.9606
     },
     {
       "id": "den_espn_c66b1cfb0eee8",
@@ -196,7 +229,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.316,
+      "breakingPriority": 1.287,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -206,7 +239,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 25.8643
+      "storyRank": 21.7855
+    },
+    {
+      "id": "den_vid_8167a3177811",
+      "type": "video",
+      "title": "WATCH: HC Sean Payton presents game ball for Tom Jackson's family",
+      "summary": "Go inside the Broncos' locker room following a Week 11 win over the Raiders to hear from Head Coach Sean Payton, who spoke about awarding a game ball to Ring of Famer Tom Jackson's family.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/yckum7jwspxfl2hcswcf.jpg",
+      "imageAlt": "WATCH: HC Sean Payton presents game ball for Tom Jackson's family",
+      "publishedAt": "2026-11-23T03:52:26.000Z",
+      "url": "https://www.denverbroncos.com/video/watch-hc-sean-payton-presents-game-ball-for-tom-jackson-s-family",
+      "externalVideoUrl": "https://www.denverbroncos.com/video/watch-hc-sean-payton-presents-game-ball-for-tom-jackson-s-family",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Video",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Video",
+      "author": "denverbroncos.com Video",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.151,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 14.6078
     },
     {
       "id": "den_espn_7e80b45bbb9b9",
@@ -240,41 +307,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.1956
-    },
-    {
-      "id": "den_vid_8167a3177811",
-      "type": "video",
-      "title": "WATCH: HC Sean Payton presents game ball for Tom Jackson's family",
-      "summary": "Go inside the Broncos' locker room following a Week 11 win over the Raiders to hear from Head Coach Sean Payton, who spoke about awarding a game ball to Ring of Famer Tom Jackson's family.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/yckum7jwspxfl2hcswcf.jpg",
-      "imageAlt": "WATCH: HC Sean Payton presents game ball for Tom Jackson's family",
-      "publishedAt": "2026-11-23T03:52:26.000Z",
-      "url": "https://www.denverbroncos.com/video/watch-hc-sean-payton-presents-game-ball-for-tom-jackson-s-family",
-      "externalVideoUrl": "https://www.denverbroncos.com/video/watch-hc-sean-payton-presents-game-ball-for-tom-jackson-s-family",
-      "outletId": "broncos_official",
-      "outletName": "denverbroncos.com Video",
-      "reporterId": "broncos_official",
-      "reporterName": "denverbroncos.com Video",
-      "author": "denverbroncos.com Video",
-      "authorHandle": "@Broncos",
-      "authorProfileUrl": "https://www.denverbroncos.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.176,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 18,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 15.7759
+      "storyRank": 13.8624
     },
     {
       "id": "den_vid_69164d2cbc20",
@@ -308,7 +341,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.8143
+      "storyRank": 11.1608
     },
     {
       "id": "den_vid_ccc196205359",
@@ -342,7 +375,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.0321
+      "storyRank": 10.5249
     },
     {
       "id": "den_vid_efbf6de8cb6f",
@@ -376,7 +409,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.5434
+      "storyRank": 10.1255
+    },
+    {
+      "id": "den_pft_435685e3fc8d",
+      "type": "article",
+      "title": "Raiders fall to Broncos but young QB Fernando Mendoza gets valuable reps",
+      "summary": "Mike Florio breaks down the Broncos’ 38-24 win over the Raiders, including encouraging signs from Fernando Mendoza and Ashton Jeanty despite Las Vegas running out of opportunities to revive its playoff hopes.",
+      "imageUrl": "https://link.theplatform.com/s/BxmELC/media/WcITUsO1h_QI?auto=true",
+      "imageAlt": "Raiders fall to Broncos but young QB Fernando Mendoza gets valuable reps",
+      "publishedAt": "2026-11-23T02:39:48.000Z",
+      "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/raiders-fall-to-broncos-but-young-qb-fernando-mendoza-gets-valuable-reps",
+      "outletId": "profootballtalk",
+      "outletName": "ProFootballTalk",
+      "reporterId": "profootballtalk",
+      "reporterName": "ProFootballTalk",
+      "author": "ProFootballTalk",
+      "authorHandle": "@ProFootballTalk",
+      "authorProfileUrl": "https://x.com/ProFootballTalk",
+      "trustTier": 2,
+      "wireSource": "pft_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.001,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 88,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 9.937
     },
     {
       "id": "den_rss_ae8721232b1f",
@@ -409,40 +475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.346
-    },
-    {
-      "id": "den_pft_435685e3fc8d",
-      "type": "article",
-      "title": "Raiders fall to Broncos but young QB Fernando Mendoza gets valuable reps",
-      "summary": "Mike Florio breaks down the Broncos’ 38-24 win over the Raiders, including encouraging signs from Fernando Mendoza and Ashton Jeanty despite Las Vegas running out of opportunities to revive its playoff hopes.",
-      "imageUrl": "https://link.theplatform.com/s/BxmELC/media/WcITUsO1h_QI?auto=true",
-      "imageAlt": "Raiders fall to Broncos but young QB Fernando Mendoza gets valuable reps",
-      "publishedAt": "2026-11-23T02:39:48.000Z",
-      "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/raiders-fall-to-broncos-but-young-qb-fernando-mendoza-gets-valuable-reps",
-      "outletId": "profootballtalk",
-      "outletName": "ProFootballTalk",
-      "reporterId": "profootballtalk",
-      "reporterName": "ProFootballTalk",
-      "author": "ProFootballTalk",
-      "authorHandle": "@ProFootballTalk",
-      "authorProfileUrl": "https://x.com/ProFootballTalk",
-      "trustTier": 2,
-      "wireSource": "pft_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.023,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 88,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 10.465
+      "storyRank": 9.1391
     },
     {
       "id": "den_vid_cf589ff44de4",
@@ -466,7 +499,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.88,
+      "breakingPriority": 0.861,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -476,40 +509,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.299
-    },
-    {
-      "id": "den_rss_285a16cb2118",
-      "type": "article",
-      "title": "Cover 4: Broncos channel Coleman's 3 touchdowns, McMillian's pick six into 38-24 win over Raiders",
-      "summary": "On an afternoon when the Broncos celebrated the life of the great Tom Jackson, Denver honored its late Ring of Famer with a win over the Raiders.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/n1rt1dutq7bh5zv4modl.jpg",
-      "imageAlt": "Cover 4: Broncos channel Coleman's 3 touchdowns, McMillian's pick six into 38-24 win over Raiders",
-      "publishedAt": "2026-11-23T01:04:22.000Z",
-      "url": "https://www.denverbroncos.com/news/cover-4-broncos-channel-coleman-s-3-touchdowns-mcmillian-s-pick-six-into-38-24-win-over-raiders",
-      "outletId": "broncos_official",
-      "outletName": "denverbroncos.com Official",
-      "reporterId": "broncos_official",
-      "reporterName": "denverbroncos.com Official",
-      "author": "denverbroncos.com Official",
-      "authorHandle": "@Broncos",
-      "authorProfileUrl": "https://www.denverbroncos.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.851,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 7.7929
+      "storyRank": 7.3688
     },
     {
       "id": "den_espn_dff65d955a316",
@@ -543,7 +543,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.3856
+      "storyRank": 6.6513
+    },
+    {
+      "id": "den_rss_285a16cb2118",
+      "type": "article",
+      "title": "Cover 4: Broncos channel Coleman's 3 touchdowns, McMillian's pick six into 38-24 win over Raiders",
+      "summary": "On an afternoon when the Broncos celebrated the life of the great Tom Jackson, Denver honored its late Ring of Famer with a win over the Raiders.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/n1rt1dutq7bh5zv4modl.jpg",
+      "imageAlt": "Cover 4: Broncos channel Coleman's 3 touchdowns, McMillian's pick six into 38-24 win over Raiders",
+      "publishedAt": "2026-11-23T01:04:22.000Z",
+      "url": "https://www.denverbroncos.com/news/cover-4-broncos-channel-coleman-s-3-touchdowns-mcmillian-s-pick-six-into-38-24-win-over-raiders",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Official",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Official",
+      "author": "denverbroncos.com Official",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.833,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.9323
     },
     {
       "id": "den_vid_2d9951a9d2c7",
@@ -567,7 +600,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.817,
+      "breakingPriority": 0.799,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -577,7 +610,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.2481
+      "storyRank": 6.4606
     },
     {
       "id": "den_vid_5a758a31a2c8",
@@ -601,7 +634,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.771,
+      "breakingPriority": 0.755,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -611,7 +644,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.5906
+      "storyRank": 5.8894
     },
     {
       "id": "den_vid_865f071cd414",
@@ -635,7 +668,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.753,
+      "breakingPriority": 0.737,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -645,7 +678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.3444
+      "storyRank": 5.6747
     },
     {
       "id": "den_espn_e9ee16d94b886",
@@ -679,7 +712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.4775
+      "storyRank": 4.1277
     },
     {
       "id": "den_vid_fc6fc9b48fc3",
@@ -713,7 +746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7616
+      "storyRank": 3.4919
     },
     {
       "id": "den_vid_268f07dbdabb",
@@ -747,7 +780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9262
+      "storyRank": 2.7413
     },
     {
       "id": "den_vid_c8e0327825e6",
@@ -781,7 +814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9253
+      "storyRank": 2.7405
     },
     {
       "id": "den_vid_c397d9649db3",
@@ -815,7 +848,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.9166
+      "storyRank": 2.7327
     },
     {
       "id": "den_rss_689c948c89ab",
@@ -848,7 +881,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5567
+      "storyRank": 2.2601
     },
     {
       "id": "den_vid_df5721d11a87",
@@ -882,7 +915,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7765
+      "storyRank": 2.6058
     },
     {
       "id": "den_vid_18893caa1dfc",
@@ -916,7 +949,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7176
+      "storyRank": 2.5524
     },
     {
       "id": "den_vid_83c9438b6083",
@@ -950,7 +983,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7108
+      "storyRank": 2.5461
     },
     {
       "id": "den_vid_2a8e35798df4",
@@ -984,7 +1017,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7072
+      "storyRank": 2.5429
     },
     {
       "id": "den_espn_798d3aaf63da5",
@@ -1018,7 +1051,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5142
+      "storyRank": 2.3674
     },
     {
       "id": "den_rss_323f10412688",
@@ -1051,7 +1084,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4786
+      "storyRank": 2.335
     },
     {
       "id": "den_rss_64081a77551f",
@@ -1084,7 +1117,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4194
+      "storyRank": 0.3997
     },
     {
       "id": "den_pfr_276d6e71c3bf",
@@ -1116,7 +1149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3122
+      "storyRank": 0.335
     },
     {
       "id": "den_rss_3268ee7ca9ce",
@@ -1149,7 +1182,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3083
+      "storyRank": 0.2962
     },
     {
       "id": "den_vid_95d62b99d9ea",
@@ -1183,7 +1216,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3057
+      "storyRank": 0.2938
     },
     {
       "id": "den_pfr_e4b84b9ab405",
@@ -1215,7 +1248,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1041
+      "storyRank": 0.1146
     },
     {
       "id": "den_rss_5027396ce39f",
@@ -1248,7 +1281,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1092
+      "storyRank": 0.1074
     },
     {
       "id": "den_rss_b2ad84e303fa",
@@ -1281,7 +1314,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0924
+      "storyRank": 0.0911
     },
     {
       "id": "den_tx_e177a0eb4bc5",
@@ -1315,7 +1348,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.068
+      "storyRank": 0.0675
     },
     {
       "id": "den_rss_7421dff55d5e",
@@ -1348,7 +1381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0602
+      "storyRank": 0.0598
     },
     {
       "id": "den_vid_86e6b1bf873c",
@@ -1382,7 +1415,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0547
+      "storyRank": 0.0545
     },
     {
       "id": "den_vid_c783f99d5678",
@@ -1416,7 +1449,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0527
+      "storyRank": 0.0525
     },
     {
       "id": "den_rss_ca3f58b411ad",
@@ -1449,7 +1482,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0522
+      "storyRank": 0.052
     },
     {
       "id": "den_vid_b064abc3bbcd",
@@ -1483,7 +1516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0515
+      "storyRank": 0.0513
     },
     {
       "id": "den_pfr_61055ac33431",
@@ -1515,7 +1548,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0433
+      "storyRank": 0.0485
     },
     {
       "id": "den_rss_f36e3518ccb4",
@@ -1548,7 +1581,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0462
+      "storyRank": 0.0461
     },
     {
       "id": "den_pfr_cd8e62416f8e",
@@ -1580,7 +1613,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0314
+      "storyRank": 0.0353
     },
     {
       "id": "den_espn_090c64b75fe77",
@@ -1614,7 +1647,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0333
+      "storyRank": 0.0335
     },
     {
       "id": "den_rss_47b74d1f7b70",
@@ -1647,7 +1680,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0332
+      "storyRank": 0.0333
     },
     {
       "id": "den_vid_f74fa6c3dd58",
@@ -1681,7 +1714,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0323
+      "storyRank": 0.0325
     },
     {
       "id": "den_vid_7f39a796444c",
@@ -1715,7 +1748,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0323
+      "storyRank": 0.0325
     },
     {
       "id": "den_vid_b9cb0f3eb3ef",
@@ -1749,7 +1782,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0323
+      "storyRank": 0.0324
     },
     {
       "id": "den_vid_dfdea5c17a7a",
@@ -1783,7 +1816,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0321
+      "storyRank": 0.0322
     },
     {
       "id": "den_rss_36234cfdaf44",
@@ -1816,7 +1849,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0785
+      "storyRank": 0.0725
     },
     {
       "id": "den_espn_b8399061cb798",
@@ -1850,7 +1883,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0307
+      "storyRank": 0.0309
     },
     {
       "id": "den_rss_ee6526fe2bba",
@@ -1883,7 +1916,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0305
+      "storyRank": 0.0306
     },
     {
       "id": "den_tx_503c5762ee5b",
@@ -1917,7 +1950,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0252
+      "storyRank": 0.0254
     },
     {
       "id": "den_rss_818b69c8a450",
@@ -1950,7 +1983,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.0232
     },
     {
       "id": "den_rss_260b32eacd44",
@@ -1975,7 +2008,7 @@
       "breakingBadge": null,
       "breakingPriority": 0,
       "category": "beat",
-      "signalScore": 70,
+      "signalScore": 72,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
@@ -1983,7 +2016,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
+      "storyRank": 0.0234
     },
     {
       "id": "den_vid_3bfcfe0ff88c",
@@ -2017,7 +2050,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
+      "storyRank": 0.0231
     },
     {
       "id": "den_pfr_d6e9815eec79",
@@ -2049,7 +2082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0226
     },
     {
       "id": "den_rss_c6ac70d5dc65",
@@ -2082,7 +2115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0229
     },
     {
       "id": "den_vid_9c1bcf738a9d",
@@ -2116,7 +2149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0057
     },
     {
       "id": "den_vid_0222afdb388c",
@@ -2150,7 +2183,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0223
+      "storyRank": 0.0226
     },
     {
       "id": "den_vid_726a6a32a7bc",
@@ -2218,7 +2251,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0225
     },
     {
       "id": "den_rss_a3f5251e1224",
@@ -2251,7 +2284,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0565
+      "storyRank": 0.0522
     },
     {
       "id": "den_rss_49608da2f9ff",
@@ -2284,7 +2317,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0564
+      "storyRank": 0.0521
     },
     {
       "id": "den_pfr_c3043104ec6a",
@@ -2316,7 +2349,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0157
+      "storyRank": 0.0178
     },
     {
       "id": "den_rss_9230667b812f",
@@ -2341,7 +2374,7 @@
       "breakingBadge": null,
       "breakingPriority": 0,
       "category": "beat",
-      "signalScore": 70,
+      "signalScore": 72,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
@@ -2349,7 +2382,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013
+      "storyRank": 0.0133
     },
     {
       "id": "den_vid_8b923f729c57",
@@ -2383,7 +2416,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0132
     },
     {
       "id": "den_vid_a972dd387102",
@@ -2417,7 +2450,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0132
     },
     {
       "id": "den_vid_e6c78291ab39",
@@ -2451,7 +2484,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0128
     },
     {
       "id": "den_pfr_9e1824586b5d",
@@ -2483,7 +2516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0028
     },
     {
       "id": "den_vid_93abcc242538",
@@ -2517,7 +2550,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0105
     },
     {
       "id": "den_vid_a7129e969085",
@@ -2544,14 +2577,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0091
+      "storyRank": 0.0103
     },
     {
       "id": "den_vid_84e0f6f42a12",
@@ -2578,14 +2611,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0091
+      "storyRank": 0.0103
     },
     {
       "id": "den_vid_5d48fd87e2c4",
@@ -2652,7 +2685,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0086
+      "storyRank": 0.0088
     },
     {
       "id": "den_vid_0fe20e440741",
@@ -2679,14 +2712,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0086
     },
     {
       "id": "den_pfr_bf21c39c087c",
@@ -2718,7 +2751,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0074
     },
     {
       "id": "den_vid_454ab24700b0",
@@ -2745,14 +2778,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0075
     },
     {
       "id": "den_pfr_7ee2cb9a536c",
@@ -2784,7 +2817,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0068
     },
     {
       "id": "den_vid_8c1057ec4eea",
@@ -2850,7 +2883,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0024
     },
     {
       "id": "den_rss_ae7486cf34a9",
@@ -2883,7 +2916,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0061
     },
     {
       "id": "den_vid_f9b1cf413157",
@@ -2910,14 +2943,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0058
     },
     {
       "id": "den_rss_13973988e249",
@@ -2950,7 +2983,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0058
     },
     {
       "id": "den_rss_a4b756fdecd4",
@@ -2983,7 +3016,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0057
     },
     {
       "id": "den_vid_d8d8100e9da0",
@@ -3017,7 +3050,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0057
     },
     {
       "id": "den_vid_c077a0674295",
@@ -3044,14 +3077,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
+      "storyRank": 0.0054
     },
     {
       "id": "den_pfr_2c71eb6e13f3",
@@ -3083,7 +3116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0052
     },
     {
       "id": "den_vid_f75db7bc16de",
@@ -3151,7 +3184,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0052
     },
     {
       "id": "den_rss_9c7a782d2fa1",
@@ -3184,7 +3217,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0052
     },
     {
       "id": "den_vid_346590eb5cd2",
@@ -3218,7 +3251,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0051
     },
     {
       "id": "den_rss_04da857032e8",
@@ -3251,7 +3284,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0051
     },
     {
       "id": "den_vid_bb7eaa850239",
@@ -3278,14 +3311,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0044
+      "storyRank": 0.0051
     },
     {
       "id": "den_tx_892733be0d0a",
@@ -3319,7 +3352,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
+      "storyRank": 0.0049
     },
     {
       "id": "den_rss_d91b75bb7aeb",
@@ -3344,7 +3377,7 @@
       "breakingBadge": null,
       "breakingPriority": 0,
       "category": "beat",
-      "signalScore": 70,
+      "signalScore": 72,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
@@ -3352,7 +3385,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0012
     },
     {
       "id": "den_vid_b0462746be6d",
@@ -3386,7 +3419,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0044
+      "storyRank": 0.0046
     },
     {
       "id": "den_vid_bece5b77adfc",
@@ -3413,14 +3446,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0011
     },
     {
       "id": "den_vid_868f2ffd9c9f",
@@ -3454,7 +3487,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0043
     },
     {
       "id": "den_vid_83f7a6be1e3e",
@@ -3488,7 +3521,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0043
     },
     {
       "id": "den_vid_a8d290e9e613",
@@ -3522,7 +3555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0043
     },
     {
       "id": "den_vid_3a37736404ba",
@@ -3556,7 +3589,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0043
     },
     {
       "id": "den_vid_ef70e4c70a40",
@@ -3590,7 +3623,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_4a712ef1cb33",
@@ -3624,7 +3657,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_bd484e2e423f",
@@ -3658,7 +3691,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_5c953559dcd2",
@@ -3692,7 +3725,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_fd4c25130df2",
@@ -3726,7 +3759,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_e991041bbb2f",
@@ -3760,7 +3793,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_ae25acd97e9e",
@@ -3794,7 +3827,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_36d33aa124ad",
@@ -3828,7 +3861,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_c761751f45c8",
@@ -3862,7 +3895,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_eb7bbbf58346",
@@ -3896,7 +3929,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_07e563ca9ba9",
@@ -3930,7 +3963,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_f76656ebfb1c",
@@ -3964,7 +3997,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_052ab401995b",
@@ -3998,7 +4031,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_36e3fb1212c2",
@@ -4032,7 +4065,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0041
     },
     {
       "id": "den_tx_7615fde204a5",
@@ -4066,7 +4099,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0036
     },
     {
       "id": "den_vid_9142f1fe408c",
@@ -4100,7 +4133,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0034
+      "storyRank": 0.0035
     },
     {
       "id": "den_vid_0f162145fe9b",
@@ -4134,7 +4167,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0034
+      "storyRank": 0.0035
     },
     {
       "id": "den_vid_dac55e55e40d",
@@ -4168,7 +4201,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0034
+      "storyRank": 0.0035
     },
     {
       "id": "den_vid_c07213d7478e",
@@ -4202,7 +4235,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.0033
     },
     {
       "id": "den_vid_b9ee1bd557cf",
@@ -4236,7 +4269,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.0033
     },
     {
       "id": "den_vid_b235eed19265",
@@ -4270,7 +4303,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.0033
     },
     {
       "id": "den_vid_a8154a3fd790",
@@ -4304,7 +4337,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.0033
     },
     {
       "id": "den_vid_11033bd43cc3",
@@ -4331,14 +4364,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.0032
     },
     {
       "id": "den_vid_3212edee5558",
@@ -4372,7 +4405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0029
+      "storyRank": 0.003
     },
     {
       "id": "den_vid_539778831461",
@@ -4406,7 +4439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0029
+      "storyRank": 0.003
     },
     {
       "id": "den_vid_305fe6149a95",
@@ -4440,7 +4473,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0029
+      "storyRank": 0.003
     },
     {
       "id": "den_vid_5b96ddbede49",
@@ -4474,7 +4507,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0008
     },
     {
       "id": "den_vid_76d29cdeebec",
@@ -4508,7 +4541,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0029
+      "storyRank": 0.003
     },
     {
       "id": "den_tx_d2fc79330ae1",
@@ -4542,7 +4575,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0029
     },
     {
       "id": "den_vid_23e50d491cc7",
@@ -4576,7 +4609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0028
     },
     {
       "id": "den_tx_ed325de4fe8e",
@@ -4610,7 +4643,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0025
+      "storyRank": 0.0027
     },
     {
       "id": "den_vid_da6106abadeb",
@@ -4637,14 +4670,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0023
+      "storyRank": 0.0026
     },
     {
       "id": "den_vid_dbdfc143fbbb",
@@ -4712,7 +4745,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0026
     },
     {
       "id": "den_vid_ff18be0802b2",
@@ -4746,7 +4779,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0025
     },
     {
       "id": "den_yt_5NWd-sCaNhQ",

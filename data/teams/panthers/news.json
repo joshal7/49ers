@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:25:11.876Z",
+  "updatedAt": "2026-11-23T06:35:11.166Z",
   "dailyTopNewsBrief": {
     "id": "brief_car_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -127,7 +127,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.888,
+      "breakingPriority": 0.871,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -137,7 +137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.436
+      "storyRank": 7.5209
     },
     {
       "id": "car_espn_a0caad20a15b2",
@@ -161,7 +161,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.804,
+      "breakingPriority": 0.789,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -171,7 +171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.0608
+      "storyRank": 6.3234
     },
     {
       "id": "car_rss_fd398ed90b3d",
@@ -194,7 +194,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.792,
+      "breakingPriority": 0.777,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -204,7 +204,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.8851
+      "storyRank": 6.1698
     },
     {
       "id": "car_vid_9b13fd275a56",
@@ -228,7 +228,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.753,
+      "breakingPriority": 0.739,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -238,7 +238,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.3488
+      "storyRank": 5.6997
     },
     {
       "id": "car_rss_8ac185499b78",
@@ -271,7 +271,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.438
+      "storyRank": 4.9959
     },
     {
       "id": "car_espn_43feb3a96b1bc",
@@ -305,7 +305,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.1655
+      "storyRank": 4.7557
     },
     {
       "id": "car_vid_a017549fca6b",
@@ -329,7 +329,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.649,
+      "breakingPriority": 0.637,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -339,7 +339,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.1253
+      "storyRank": 4.6214
     },
     {
       "id": "car_rss_a30b944b05d7",
@@ -372,41 +372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.2971
-    },
-    {
-      "id": "car_vid_af33434fbec6",
-      "type": "video",
-      "title": "Bryce Young: 'We found a way'",
-      "summary": "Watch Panthers quarterback Bryce Young speak after the Panthers' 35-33 win over the Ravens. Young credited the offensive line, walked through his first time not taking the snap on the trick-play touchdown to Mitchell Eva",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/sx5vexdj5isfplvae13s.jpg",
-      "imageAlt": "Bryce Young: 'We found a way'",
-      "publishedAt": "2026-11-22T21:54:30.000Z",
-      "url": "https://www.panthers.com/video/bryce-young-we-found-a-way",
-      "externalVideoUrl": "https://www.panthers.com/video/bryce-young-we-found-a-way",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.591,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.5475
+      "storyRank": 3.9849
     },
     {
       "id": "car_espn_a394f7cfaad73",
@@ -440,7 +406,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.1098
+      "storyRank": 3.8176
+    },
+    {
+      "id": "car_vid_af33434fbec6",
+      "type": "video",
+      "title": "Bryce Young: 'We found a way'",
+      "summary": "Watch Panthers quarterback Bryce Young speak after the Panthers' 35-33 win over the Ravens. Young credited the offensive line, walked through his first time not taking the snap on the trick-play touchdown to Mitchell Eva",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/sx5vexdj5isfplvae13s.jpg",
+      "imageAlt": "Bryce Young: 'We found a way'",
+      "publishedAt": "2026-11-22T21:54:30.000Z",
+      "url": "https://www.panthers.com/video/bryce-young-we-found-a-way",
+      "externalVideoUrl": "https://www.panthers.com/video/bryce-young-we-found-a-way",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.58,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.1093
     },
     {
       "id": "car_vid_59efcb601c84",
@@ -464,7 +464,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.579,
+      "breakingPriority": 0.568,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -474,40 +474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.4385
-    },
-    {
-      "id": "car_rss_8fb5f9205d08",
-      "type": "article",
-      "title": "Bryce Young leads another game-winning drive, and doesn't back down",
-      "summary": "His teammates already respected his cool demeanor in pressure situations. But standing up to Ravens pass-rusher Trey Hendrickson earned him a little more street cred in a place he already has plenty.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/tpymwkteoaflovho9sa9.jpg",
-      "imageAlt": "Bryce Young leads another game-winning drive, and doesn't back down",
-      "publishedAt": "2026-11-22T23:46:05.000Z",
-      "url": "https://www.panthers.com/news/bryce-young-leads-another-game-winning-drive-and-doesn-t-back-down-ravens-panthers-trey-hendrickson",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Official",
-      "author": "panthers.com Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.6168
+      "storyRank": 4.0125
     },
     {
       "id": "car_nfltr_ad344f030532",
@@ -540,7 +507,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3151
+      "storyRank": 3.4617
+    },
+    {
+      "id": "car_rss_8fb5f9205d08",
+      "type": "article",
+      "title": "Bryce Young leads another game-winning drive, and doesn't back down",
+      "summary": "His teammates already respected his cool demeanor in pressure situations. But standing up to Ravens pass-rusher Trey Hendrickson earned him a little more street cred in a place he already has plenty.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/tpymwkteoaflovho9sa9.jpg",
+      "imageAlt": "Bryce Young leads another game-winning drive, and doesn't back down",
+      "publishedAt": "2026-11-22T23:46:05.000Z",
+      "url": "https://www.panthers.com/news/bryce-young-leads-another-game-winning-drive-and-doesn-t-back-down-ravens-panthers-trey-hendrickson",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Official",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Official",
+      "author": "panthers.com Official",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.3752
     },
     {
       "id": "car_vid_c27ff9f4fbf0",
@@ -574,7 +574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8048
+      "storyRank": 2.6397
     },
     {
       "id": "car_espn_671a45fa034bb",
@@ -608,7 +608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5704
+      "storyRank": 2.4257
     },
     {
       "id": "car_vid_98a78189114f",
@@ -642,7 +642,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5189
+      "storyRank": 2.3786
     },
     {
       "id": "car_vid_ef5ef268347c",
@@ -676,7 +676,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5109
+      "storyRank": 2.3713
     },
     {
       "id": "car_vid_c427d6592483",
@@ -710,7 +710,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4737
+      "storyRank": 2.3373
     },
     {
       "id": "car_rss_6732d6e86cda",
@@ -743,7 +743,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4376
+      "storyRank": 2.3041
     },
     {
       "id": "car_vid_dd8fec097253",
@@ -777,7 +777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2861
+      "storyRank": 2.165
     },
     {
       "id": "car_vid_c72a71a3a624",
@@ -811,7 +811,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.185
+      "storyRank": 2.072
     },
     {
       "id": "car_vid_35e54fa4670e",
@@ -845,7 +845,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.152
+      "storyRank": 2.0417
     },
     {
       "id": "car_vid_6459bf5de92d",
@@ -879,7 +879,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1062
+      "storyRank": 1.9994
     },
     {
       "id": "car_vid_c5620c6507e1",
@@ -913,7 +913,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9371
+      "storyRank": 1.8432
     },
     {
       "id": "car_vid_fbe90a7561de",
@@ -947,7 +947,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8525
+      "storyRank": 1.7649
     },
     {
       "id": "car_vid_72cdf8f47c00",
@@ -981,7 +981,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.807
+      "storyRank": 1.7227
     },
     {
       "id": "car_vid_4b29b7d81124",
@@ -1015,7 +1015,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8023
+      "storyRank": 0.7518
     },
     {
       "id": "car_vid_eb7a0e3e84b6",
@@ -1049,7 +1049,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6709
+      "storyRank": 0.6323
     },
     {
       "id": "car_vid_a3c9b329be84",
@@ -1083,7 +1083,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6631
+      "storyRank": 0.6252
     },
     {
       "id": "car_vid_d34beade6205",
@@ -1117,7 +1117,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5246
+      "storyRank": 0.4981
     },
     {
       "id": "car_vid_1ac0650c51dc",
@@ -1151,7 +1151,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4739
+      "storyRank": 0.4512
     },
     {
       "id": "car_vid_cd5c42354e6c",
@@ -1185,7 +1185,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4617
+      "storyRank": 0.4399
     },
     {
       "id": "car_vid_099570d74cf7",
@@ -1219,7 +1219,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4583
+      "storyRank": 0.4367
     },
     {
       "id": "car_vid_27d9b5aa5cc5",
@@ -1253,7 +1253,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4496
+      "storyRank": 0.4287
     },
     {
       "id": "car_vid_31e5fd30ff4b",
@@ -1287,7 +1287,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4343
+      "storyRank": 0.4145
     },
     {
       "id": "car_rss_fbccbf606be5",
@@ -1320,7 +1320,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2427
+      "storyRank": 0.235
     },
     {
       "id": "car_rss_2b883cbe693b",
@@ -1353,7 +1353,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2427
+      "storyRank": 0.235
+    },
+    {
+      "id": "car_pfr_d2f9242efa19",
+      "type": "article",
+      "title": "Panthers Activate CB Michael Jackson",
+      "summary": "NOVEMBER 21: As expected, the Panthers have announced that Jackson will come off IR and be activated to the 53-man roster. He&#8217;ll join rookie fourth-rounder Will Lee III in the secondary after Lee missed the team&#8217;s past two conte",
+      "imageUrl": "",
+      "publishedAt": "2026-11-21T21:10:27.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/panthers-cb-michael-jackson-rb-jonathon-brooks-return-to-practice",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/carolina-panthers",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.1045
     },
     {
       "id": "car_rss_ea7c31d97ed5",
@@ -1386,39 +1418,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1072
-    },
-    {
-      "id": "car_pfr_d2f9242efa19",
-      "type": "article",
-      "title": "Panthers Activate CB Michael Jackson",
-      "summary": "NOVEMBER 21: As expected, the Panthers have announced that Jackson will come off IR and be activated to the 53-man roster. He&#8217;ll join rookie fourth-rounder Will Lee III in the secondary after Lee missed the team&#8217;s past two conte",
-      "imageUrl": "",
-      "publishedAt": "2026-11-21T21:10:27.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/panthers-cb-michael-jackson-rb-jonathon-brooks-return-to-practice",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/carolina-panthers",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0948
+      "storyRank": 0.1055
     },
     {
       "id": "car_rss_6ec009715afa",
@@ -1451,7 +1451,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0952
+      "storyRank": 0.0939
     },
     {
       "id": "car_rss_b5a4768c1332",
@@ -1484,7 +1484,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0797
+      "storyRank": 0.0789
     },
     {
       "id": "car_tx_ca63ef20e1c7",
@@ -1518,7 +1518,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.068
+      "storyRank": 0.0675
     },
     {
       "id": "car_pfr_3b3fb834c85c",
@@ -1550,7 +1550,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0486
+      "storyRank": 0.0543
     },
     {
       "id": "car_vid_a1aeb9ffe8a2",
@@ -1584,7 +1584,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0525
+      "storyRank": 0.0523
     },
     {
       "id": "car_vid_20945585ad9f",
@@ -1618,7 +1618,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0519
+      "storyRank": 0.0517
     },
     {
       "id": "car_rss_f070453fa303",
@@ -1651,7 +1651,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0494
+      "storyRank": 0.0493
     },
     {
       "id": "car_rss_e9ff18aba127",
@@ -1684,7 +1684,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0475
+      "storyRank": 0.0474
     },
     {
       "id": "car_vid_49d8e704f97e",
@@ -1851,7 +1851,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.038
+      "storyRank": 0.0381
     },
     {
       "id": "car_pfr_49c36ddfbc1c",
@@ -1883,7 +1883,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0295
+      "storyRank": 0.0332
     },
     {
       "id": "car_espn_87934e12e2247",
@@ -1917,7 +1917,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0332
+      "storyRank": 0.0334
     },
     {
       "id": "car_vid_4419ed9cb671",
@@ -1951,7 +1951,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0331
+      "storyRank": 0.0332
     },
     {
       "id": "car_rss_beb1d7a2f99c",
@@ -1984,7 +1984,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0322
+      "storyRank": 0.0323
     },
     {
       "id": "car_rss_dd07f435b07e",
@@ -2017,7 +2017,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0315
+      "storyRank": 0.0317
     },
     {
       "id": "car_vid_e7a02f9fc49f",
@@ -2084,7 +2084,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0757
+      "storyRank": 0.0699
     },
     {
       "id": "car_rss_4973f21825c8",
@@ -2117,7 +2117,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0296
+      "storyRank": 0.0298
     },
     {
       "id": "car_vid_b044ba01dc5e",
@@ -2151,7 +2151,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0073
     },
     {
       "id": "car_espn_08adec8a8d5e8",
@@ -2185,7 +2185,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0276
+      "storyRank": 0.0278
     },
     {
       "id": "car_tx_430e9a7908b8",
@@ -2219,7 +2219,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0252
+      "storyRank": 0.0254
     },
     {
       "id": "car_pfr_70041b3c4411",
@@ -2251,7 +2251,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0201
+      "storyRank": 0.0228
     },
     {
       "id": "car_vid_d64f96036e30",
@@ -2285,7 +2285,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0057
     },
     {
       "id": "car_rss_9fb281f48c69",
@@ -2318,7 +2318,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0221
+      "storyRank": 0.0223
     },
     {
       "id": "car_espn_56fa8c933b33e",
@@ -2352,7 +2352,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0221
+      "storyRank": 0.0223
     },
     {
       "id": "car_rss_493be180f59f",
@@ -2385,7 +2385,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0218
+      "storyRank": 0.022
     },
     {
       "id": "car_vid_bd21355dbe4d",
@@ -2419,7 +2419,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054
+      "storyRank": 0.0055
     },
     {
       "id": "car_vid_d9ec1c240871",
@@ -2453,7 +2453,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0217
+      "storyRank": 0.022
     },
     {
       "id": "car_vid_33ecf741a614",
@@ -2487,7 +2487,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0216
+      "storyRank": 0.0219
     },
     {
       "id": "car_rss_665779ecc63c",
@@ -2520,7 +2520,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0215
+      "storyRank": 0.0218
     },
     {
       "id": "car_vid_6a5148b0a1e0",
@@ -2554,7 +2554,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0054
     },
     {
       "id": "car_rss_8360d252b67b",
@@ -2587,7 +2587,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0543
+      "storyRank": 0.0502
     },
     {
       "id": "car_rss_ef2038fd35ed",
@@ -2620,7 +2620,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0211
+      "storyRank": 0.0213
     },
     {
       "id": "car_rss_3cc88065f8f0",
@@ -2653,7 +2653,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0207
     },
     {
       "id": "car_rss_33987dd203b2",
@@ -2720,7 +2720,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.0186
     },
     {
       "id": "car_pfr_b8ba66f816a2",
@@ -2752,7 +2752,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0154
+      "storyRank": 0.0175
     },
     {
       "id": "car_rss_b5f57ec14c5e",
@@ -2785,7 +2785,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.0165
     },
     {
       "id": "car_rss_570cf3fa45e4",
@@ -2818,7 +2818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0161
+      "storyRank": 0.0164
     },
     {
       "id": "car_vid_35c82a63bfe7",
@@ -2852,7 +2852,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0162
     },
     {
       "id": "car_espn_d96b7d2d50e3e",
@@ -2886,7 +2886,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0162
     },
     {
       "id": "car_rss_88b3e3d96e2f",
@@ -2919,7 +2919,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0162
     },
     {
       "id": "car_rss_628869fc7cc9",
@@ -2952,7 +2952,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0152
+      "storyRank": 0.0154
     },
     {
       "id": "car_tx_b20a95911bdc",
@@ -2986,7 +2986,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0144
     },
     {
       "id": "car_pfr_e6aa64d4de47",
@@ -3018,7 +3018,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0132
     },
     {
       "id": "car_vid_8536f74477bb",
@@ -3052,7 +3052,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0134
     },
     {
       "id": "car_vid_4248927144fb",
@@ -3086,7 +3086,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013
+      "storyRank": 0.0133
     },
     {
       "id": "car_vid_5735fd992714",
@@ -3120,7 +3120,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0131
     },
     {
       "id": "car_rss_f6fa875c4a71",
@@ -3153,7 +3153,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.0032
     },
     {
       "id": "car_rss_e70e8afe965f",
@@ -3186,7 +3186,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0126
+      "storyRank": 0.0128
     },
     {
       "id": "car_vid_d6ece2c56a5b",
@@ -3220,7 +3220,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0128
     },
     {
       "id": "car_vid_7aedb7ddcf52",
@@ -3254,7 +3254,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0127
     },
     {
       "id": "car_rss_ad4799ccc4ba",
@@ -3287,7 +3287,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0117
+      "storyRank": 0.012
     },
     {
       "id": "car_tx_52989f9e15d7",
@@ -3321,7 +3321,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0113
+      "storyRank": 0.0116
     },
     {
       "id": "car_rss_776c9c2d57a2",
@@ -3354,7 +3354,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0111
     },
     {
       "id": "car_vid_97203fd04504",
@@ -3388,7 +3388,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0109
     },
     {
       "id": "car_rss_03a843d0f523",
@@ -3421,7 +3421,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0108
     },
     {
       "id": "car_rss_683cab27283d",
@@ -3454,7 +3454,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0108
     },
     {
       "id": "car_vid_7d5561fc7486",
@@ -3488,7 +3488,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0108
     },
     {
       "id": "car_rss_6273d3d9867a",
@@ -3521,7 +3521,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0108
     },
     {
       "id": "car_vid_dcced0a86257",
@@ -3555,7 +3555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0107
     },
     {
       "id": "car_vid_fa91153a3386",
@@ -3589,7 +3589,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0107
     },
     {
       "id": "car_vid_8cc564c3d9a8",
@@ -3623,7 +3623,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0107
     },
     {
       "id": "car_vid_3e892c89dd0c",
@@ -3657,7 +3657,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0107
     },
     {
       "id": "car_vid_ce0a1400fc92",
@@ -3691,7 +3691,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0027
     },
     {
       "id": "car_vid_69902921d39b",
@@ -3725,7 +3725,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0107
     },
     {
       "id": "car_vid_7a5663a25304",
@@ -3759,7 +3759,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0027
     },
     {
       "id": "car_rss_397b85aa9c66",
@@ -3792,7 +3792,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0106
     },
     {
       "id": "car_vid_a92764b56ad0",
@@ -3826,7 +3826,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0106
     },
     {
       "id": "car_vid_b4823e29f249",
@@ -3860,7 +3860,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0027
     },
     {
       "id": "car_vid_68578c77e170",
@@ -3894,7 +3894,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0105
     },
     {
       "id": "car_vid_066673177a01",
@@ -3928,7 +3928,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
+      "storyRank": 0.0105
     },
     {
       "id": "car_vid_42d45d54a680",
@@ -3962,7 +3962,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
+      "storyRank": 0.0105
     },
     {
       "id": "car_vid_93d4ae0db6cd",
@@ -4030,7 +4030,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
+      "storyRank": 0.0104
     },
     {
       "id": "car_vid_9f602e6af9ee",
@@ -4064,7 +4064,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0101
+      "storyRank": 0.0104
     },
     {
       "id": "car_rss_55f878e7c7a9",
@@ -4097,7 +4097,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0097
+      "storyRank": 0.0099
     },
     {
       "id": "car_rss_48352baea165",
@@ -4130,7 +4130,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0097
+      "storyRank": 0.0099
     },
     {
       "id": "car_rss_83b0da0c7421",
@@ -4163,7 +4163,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0089
     },
     {
       "id": "car_pfr_0d754fafaca8",
@@ -4195,7 +4195,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0086
     },
     {
       "id": "car_rss_d81b0cc7a187",
@@ -4228,7 +4228,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0085
+      "storyRank": 0.0088
     },
     {
       "id": "car_rss_2f3f8067e075",
@@ -4261,7 +4261,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0083
+      "storyRank": 0.0085
     },
     {
       "id": "car_tx_e1a102cbfd05",
@@ -4295,7 +4295,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0081
     },
     {
       "id": "car_vid_03f4afdcbe8c",
@@ -4329,7 +4329,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0076
     },
     {
       "id": "car_vid_6ac648a8b34c",
@@ -4363,7 +4363,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.0075
     },
     {
       "id": "car_rss_8045086699db",
@@ -4396,7 +4396,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.0075
     },
     {
       "id": "car_vid_a1469cab5035",
@@ -4430,7 +4430,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0075
     },
     {
       "id": "car_rss_a48781986465",
@@ -4463,7 +4463,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0074
     },
     {
       "id": "car_rss_bba45035fc82",
@@ -4496,7 +4496,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0018
+      "storyRank": 0.0019
     },
     {
       "id": "car_rss_f8b553511c58",
@@ -4529,7 +4529,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0071
+      "storyRank": 0.0073
     },
     {
       "id": "car_rss_1a730ed0bc1d",
@@ -4562,7 +4562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "car_vid_90a6a750e969",
@@ -4596,7 +4596,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "car_vid_d4f2e20a8a85",
@@ -4630,7 +4630,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0016
+      "storyRank": 0.0017
     },
     {
       "id": "car_rss_202fd505e75a",
@@ -4663,7 +4663,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0066
     },
     {
       "id": "car_rss_4d01894b03b3",
@@ -4696,7 +4696,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0181
+      "storyRank": 0.0167
     },
     {
       "id": "car_vid_609ab0768531",
@@ -4763,7 +4763,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0064
     },
     {
       "id": "car_vid_124fbd6db75a",
@@ -4797,7 +4797,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0059
     },
     {
       "id": "car_vid_827154354513",
@@ -4831,7 +4831,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0059
     },
     {
       "id": "car_rss_3ee6f04a2ed3",
@@ -4864,7 +4864,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0059
     },
     {
       "id": "car_rss_d539ab81aada",
@@ -4897,7 +4897,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0058
     },
     {
       "id": "car_vid_665e7dff3b34",
@@ -4931,7 +4931,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0015
     },
     {
       "id": "car_vid_18ac409b271a",
@@ -4965,7 +4965,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0058
     },
     {
       "id": "car_vid_2dae1e00083f",
@@ -4999,7 +4999,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0058
     },
     {
       "id": "car_vid_3acde5e0dece",
@@ -5033,7 +5033,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0058
     },
     {
       "id": "car_rss_a43cdf39dd95",
@@ -5066,7 +5066,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0148
     },
     {
       "id": "car_rss_bd4e550579f7",
@@ -5099,7 +5099,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0057
     },
     {
       "id": "car_rss_6b76c4ab2858",
@@ -5132,7 +5132,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0057
     },
     {
       "id": "car_rss_8feb35a97666",
@@ -5199,7 +5199,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0054
     },
     {
       "id": "car_pfr_02b898129b94",
@@ -5231,7 +5231,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0052
     },
     {
       "id": "car_pfr_2c71eb6e13f3",
@@ -5263,7 +5263,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0052
     },
     {
       "id": "car_rss_f792c43dd51c",
@@ -5296,7 +5296,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0052
     },
     {
       "id": "car_rss_24e2d6a16bd5",
@@ -5329,7 +5329,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0052
     },
     {
       "id": "car_rss_3ed717b36821",
@@ -5362,7 +5362,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0051
     },
     {
       "id": "car_rss_58352f1009ed",
@@ -5395,7 +5395,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0051
     },
     {
       "id": "car_vid_07cbee83707d",
@@ -5429,7 +5429,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0051
     },
     {
       "id": "car_pfr_0f168483863a",
@@ -5461,7 +5461,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.005
     },
     {
       "id": "car_tx_0f81cd5c118d",
@@ -5495,7 +5495,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
+      "storyRank": 0.0049
     },
     {
       "id": "car_rss_ab8404b93fda",
@@ -5528,7 +5528,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0047
     },
     {
       "id": "car_vid_2b85081751e2",
@@ -5562,7 +5562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0046
     },
     {
       "id": "car_rss_a9f607ca1ccc",
@@ -5595,7 +5595,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0046
     },
     {
       "id": "car_pfr_eabc700aaa05",
@@ -5627,7 +5627,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
+      "storyRank": 0.0045
     },
     {
       "id": "car_pfr_09b9dcb81ff3",
@@ -5659,7 +5659,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
+      "storyRank": 0.0045
     },
     {
       "id": "car_vid_eb7533635138",
@@ -5693,7 +5693,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0044
+      "storyRank": 0.0046
     },
     {
       "id": "car_rss_e8119eb4d087",
@@ -5726,7 +5726,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0044
     },
     {
       "id": "car_vid_4a6533212da7",
@@ -5760,7 +5760,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0011
     },
     {
       "id": "car_vid_bf2e2193ac17",
@@ -5794,7 +5794,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0042
     },
     {
       "id": "car_vid_edb3591283b8",
@@ -5828,7 +5828,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0011
     },
     {
       "id": "car_vid_82a8420f5c5b",
@@ -5862,7 +5862,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0042
     },
     {
       "id": "car_vid_485a8502bee6",
@@ -5896,7 +5896,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0042
     },
     {
       "id": "car_vid_43ae5f92e302",
@@ -5964,7 +5964,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "car_vid_6b7e509c3966",
@@ -5998,7 +5998,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "car_vid_91679e61b7e6",
@@ -6032,7 +6032,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "car_vid_aec3feda6973",
@@ -6100,7 +6100,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "car_vid_e11c81d53ada",
@@ -6168,7 +6168,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "car_vid_fb6920194abe",
@@ -6236,7 +6236,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "car_vid_89bc0c7a9faa",
@@ -6304,7 +6304,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "car_vid_2049a35adf06",
@@ -6372,7 +6372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0036
     },
     {
       "id": "car_vid_812a40003e4b",
@@ -6406,7 +6406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0034
+      "storyRank": 0.0035
     },
     {
       "id": "car_vid_747cb5c91552",
@@ -6440,7 +6440,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0034
+      "storyRank": 0.0035
     },
     {
       "id": "car_vid_d3407c44e0e4",
@@ -6474,7 +6474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.0035
     },
     {
       "id": "car_tx_52463b5ccbda",
@@ -6508,7 +6508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0033
     },
     {
       "id": "car_vid_1f274237a88c",
@@ -6576,7 +6576,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.0032
     },
     {
       "id": "car_vid_891c8e225421",
@@ -6644,7 +6644,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.003
     },
     {
       "id": "car_vid_ec038bfdab90",
@@ -6678,7 +6678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.003
     },
     {
       "id": "car_tx_9fdfcf4a3aab",
@@ -6712,7 +6712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0029
     },
     {
       "id": "car_vid_3f6c5c39f8bd",
@@ -6780,7 +6780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0025
+      "storyRank": 0.0027
     },
     {
       "id": "car_tx_2f40afc6afe9",
@@ -6814,7 +6814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0025
     },
     {
       "id": "car_rss_da688cc105e1",

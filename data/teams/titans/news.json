@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:25:41.513Z",
+  "updatedAt": "2026-11-23T06:36:44.622Z",
   "dailyTopNewsBrief": {
     "id": "brief_ten_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -7,33 +7,33 @@
     "isPostGame": true,
     "gameWeek": 12,
     "teamRecord": "1-9",
-    "generatedAt": "2026-11-23T06:25:42.233Z",
+    "generatedAt": "2026-11-23T06:36:49.471Z",
     "modelUsed": "gemini-4-hydrogen",
     "thinkingLevel": "XHIGH",
     "source": "deterministic-digest",
-    "wordCount": 62,
+    "wordCount": 58,
     "headline": "Tennessee Titans Daily Briefing — Week 12",
     "summary": "Tennessee Titans (1-9, 4th in AFC South • #16 Seed in AFC) top verified storylines, injury status, and upcoming matchup intel.",
     "bullets": [
       "Frustrated Robert Saleh calls Titans' effort 'disgusting, embarrassing football' ([Turron Davenport](https://www.espn.com/nfl/story/_/id/50566741/robert-saleh-calls-titans-defensive-effort-disgusting))",
       "Six Things That Stood Out for the Titans in Sunday's 51-30 Loss to the Cowboys ([tennesseetitans.com Official](https://www.tennesseetitans.com/news/six-things-that-stood-out-for-the-titans-in-sunday-s-51-30-loss-to-the-cowboys))",
       "Titans defense crumbles against the Cowboys ([ESPN NFL Nation](https://www.espn.com/video/clip/_/id/50568133/titans-defense-crumbles-cowboys))",
-      "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9 ([tennesseetitans.com Official](https://www.tennesseetitans.com/news/titans-can-t-slow-down-cowboys-lose-51-23-to-drop-to-1-9))",
-      "AFC Notes: Robert Saleh, Jaylen Harrell, Colts, Texans, Titans ([NFL Trade Rumors](https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/))"
+      "AFC Notes: Robert Saleh, Jaylen Harrell, Colts, Texans, Titans ([NFL Trade Rumors](https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/))",
+      "Cedric Gray Press Conference | Tennessee Titans ([tennesseetitans.com Video](https://www.tennesseetitans.com/video/cedric-gray-press-conference-tennessee-titans-x2661))"
     ],
     "coveredStoryKeys": [
       "ten_espn_e1794280d025b",
       "ten_rss_b210902a3c18",
       "ten_espn_706f902194bbf",
-      "ten_rss_25cbcc5bd613",
-      "ten_nfltr_97b62337f4f2"
+      "ten_nfltr_97b62337f4f2",
+      "ten_vid_b22aa2279fdf"
     ],
     "coveredUrls": [
       "https://www.espn.com/nfl/story/_/id/50566741/robert-saleh-calls-titans-defensive-effort-disgusting",
       "https://www.tennesseetitans.com/news/six-things-that-stood-out-for-the-titans-in-sunday-s-51-30-loss-to-the-cowboys",
       "https://www.espn.com/video/clip/_/id/50568133/titans-defense-crumbles-cowboys",
-      "https://www.tennesseetitans.com/news/titans-can-t-slow-down-cowboys-lose-51-23-to-drop-to-1-9",
-      "https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/"
+      "https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/",
+      "https://www.tennesseetitans.com/video/cedric-gray-press-conference-tennessee-titans-x2661"
     ],
     "sources": [
       {
@@ -62,14 +62,6 @@
       },
       {
         "sid": "S4",
-        "title": "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9",
-        "url": "https://www.tennesseetitans.com/news/titans-can-t-slow-down-cowboys-lose-51-23-to-drop-to-1-9",
-        "author": "tennesseetitans.com Official",
-        "outlet": "tennesseetitans.com Official",
-        "publishedAt": "2026-11-22T21:03:37.000Z"
-      },
-      {
-        "sid": "S5",
         "title": "AFC Notes: Robert Saleh, Jaylen Harrell, Colts, Texans, Titans",
         "url": "https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/",
         "author": "NFL Trade Rumors",
@@ -77,7 +69,7 @@
         "publishedAt": "2026-11-23T00:30:48.000Z"
       },
       {
-        "sid": "S6",
+        "sid": "S5",
         "title": "Cedric Gray Press Conference | Tennessee Titans",
         "url": "https://www.tennesseetitans.com/video/cedric-gray-press-conference-tennessee-titans-x2661",
         "author": "tennesseetitans.com Video",
@@ -85,7 +77,7 @@
         "publishedAt": "2026-11-22T23:59:31.000Z"
       },
       {
-        "sid": "S7",
+        "sid": "S6",
         "title": "Calvin Ridley Press Conference | Tennessee Titans",
         "url": "https://www.tennesseetitans.com/video/calvin-ridley-press-conference-tennessee-titans-x1518",
         "author": "tennesseetitans.com Video",
@@ -93,12 +85,20 @@
         "publishedAt": "2026-11-22T23:59:19.000Z"
       },
       {
-        "sid": "S8",
+        "sid": "S7",
         "title": "Carnell Tate Press Conference | Tennessee Titans",
         "url": "https://www.tennesseetitans.com/video/carnell-tate-press-conference-tennessee-titans-x6499",
         "author": "tennesseetitans.com Video",
         "outlet": "tennesseetitans.com Video",
         "publishedAt": "2026-11-22T23:59:05.000Z"
+      },
+      {
+        "sid": "S8",
+        "title": "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9",
+        "url": "https://www.tennesseetitans.com/news/titans-can-t-slow-down-cowboys-lose-51-23-to-drop-to-1-9",
+        "author": "tennesseetitans.com Official",
+        "outlet": "tennesseetitans.com Official",
+        "publishedAt": "2026-11-22T21:03:37.000Z"
       }
     ]
   },
@@ -126,7 +126,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.811,
+      "breakingPriority": 0.794,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -136,7 +136,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.1591
+      "storyRank": 6.3874
     },
     {
       "id": "ten_rss_b210902a3c18",
@@ -159,7 +159,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.713,
+      "breakingPriority": 0.698,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -169,7 +169,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8401
+      "storyRank": 5.2369
     },
     {
       "id": "ten_espn_706f902194bbf",
@@ -203,40 +203,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.2356
-    },
-    {
-      "id": "ten_rss_25cbcc5bd613",
-      "type": "article",
-      "title": "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9",
-      "summary": "The Cowboys scored touchdowns all game, while the Titans kicked too many field goals and didn’t make enough plays on offense, and certainly not on defense.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/titans/fogifi5hbwf7gmhpigwy.png",
-      "imageAlt": "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9",
-      "publishedAt": "2026-11-22T21:03:37.000Z",
-      "url": "https://www.tennesseetitans.com/news/titans-can-t-slow-down-cowboys-lose-51-23-to-drop-to-1-9",
-      "outletId": "titans_official",
-      "outletName": "tennesseetitans.com Official",
-      "reporterId": "titans_official",
-      "reporterName": "tennesseetitans.com Official",
-      "author": "tennesseetitans.com Official",
-      "authorHandle": "@Titans",
-      "authorProfileUrl": "https://www.tennesseetitans.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.535,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.0525
+      "storyRank": 4.7977
     },
     {
       "id": "ten_nfltr_97b62337f4f2",
@@ -269,7 +236,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6632
+      "storyRank": 3.7979
     },
     {
       "id": "ten_vid_b22aa2279fdf",
@@ -303,7 +270,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7663
+      "storyRank": 3.4982
     },
     {
       "id": "ten_vid_6b255694d5dc",
@@ -337,7 +304,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7639
+      "storyRank": 3.4961
     },
     {
       "id": "ten_vid_264ef9d50422",
@@ -371,7 +338,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7611
+      "storyRank": 3.4936
+    },
+    {
+      "id": "ten_rss_25cbcc5bd613",
+      "type": "article",
+      "title": "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9",
+      "summary": "The Cowboys scored touchdowns all game, while the Titans kicked too many field goals and didn’t make enough plays on offense, and certainly not on defense.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/titans/fogifi5hbwf7gmhpigwy.png",
+      "imageAlt": "Titans Can't Slow Down Cowboys, Lose 51-30 to Drop to 1-9",
+      "publishedAt": "2026-11-22T21:03:37.000Z",
+      "url": "https://www.tennesseetitans.com/news/titans-can-t-slow-down-cowboys-lose-51-23-to-drop-to-1-9",
+      "outletId": "titans_official",
+      "outletName": "tennesseetitans.com Official",
+      "reporterId": "titans_official",
+      "reporterName": "tennesseetitans.com Official",
+      "author": "tennesseetitans.com Official",
+      "authorHandle": "@Titans",
+      "authorProfileUrl": "https://www.tennesseetitans.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.524,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.6607
     },
     {
       "id": "ten_vid_3744e8fe47f6",
@@ -395,7 +395,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.488,
+      "breakingPriority": 0.477,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -405,7 +405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6659
+      "storyRank": 3.3171
     },
     {
       "id": "ten_vid_90cfa997574c",
@@ -439,7 +439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7153
+      "storyRank": 2.5514
     },
     {
       "id": "ten_vid_c1a8803a7484",
@@ -473,7 +473,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6799
+      "storyRank": 2.5193
     },
     {
       "id": "ten_vid_267a6fc2ef7a",
@@ -507,7 +507,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6749
+      "storyRank": 2.5147
     },
     {
       "id": "ten_espn_a430f618eed75",
@@ -541,7 +541,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.487
+      "storyRank": 2.3437
     },
     {
       "id": "ten_vid_7f418ed94bb8",
@@ -575,7 +575,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3619
+      "storyRank": 2.2294
     },
     {
       "id": "ten_vid_a7dc92d628ea",
@@ -609,7 +609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.032
+      "storyRank": 1.9268
     },
     {
       "id": "ten_vid_79411700a48a",
@@ -643,7 +643,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7491
+      "storyRank": 1.6658
     },
     {
       "id": "ten_vid_65e93fba36ec",
@@ -677,7 +677,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7334
+      "storyRank": 1.6513
     },
     {
       "id": "ten_espn_f0672a0e47f1d",
@@ -711,7 +711,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8009
+      "storyRank": 0.7484
     },
     {
       "id": "ten_vid_bc21fa31d75a",
@@ -745,7 +745,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5102
+      "storyRank": 0.4837
     },
     {
       "id": "ten_vid_2cd48ed38579",
@@ -779,7 +779,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4983
+      "storyRank": 0.4728
     },
     {
       "id": "ten_vid_fa9647380240",
@@ -813,7 +813,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4457
+      "storyRank": 0.4242
     },
     {
       "id": "ten_espn_63f177509966a",
@@ -847,7 +847,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3366
+      "storyRank": 0.3229
     },
     {
       "id": "ten_rss_e0d9bfa57f29",
@@ -880,7 +880,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3347
+      "storyRank": 0.321
     },
     {
       "id": "ten_rss_05c8d20f580e",
@@ -913,7 +913,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2997
+      "storyRank": 0.2883
     },
     {
       "id": "ten_pfr_6c647a5657be",
@@ -945,7 +945,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.12
+      "storyRank": 0.1316
     },
     {
       "id": "ten_vid_ad7ac309e329",
@@ -979,7 +979,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1115
+      "storyRank": 0.1096
     },
     {
       "id": "ten_rss_8b7684335991",
@@ -1012,7 +1012,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0973
+      "storyRank": 0.0959
     },
     {
       "id": "ten_espn_5cda3e0ea9918",
@@ -1046,7 +1046,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0971
+      "storyRank": 0.0957
     },
     {
       "id": "ten_rss_0e1eacfb59dc",
@@ -1079,7 +1079,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0945
+      "storyRank": 0.0932
     },
     {
       "id": "ten_rss_73814df60ef3",
@@ -1112,7 +1112,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0906
+      "storyRank": 0.0894
     },
     {
       "id": "ten_tx_1409550ea7fe",
@@ -1146,7 +1146,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.068
+      "storyRank": 0.0675
     },
     {
       "id": "ten_espn_948e2e73e7ffb",
@@ -1180,7 +1180,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0518
+      "storyRank": 0.0517
     },
     {
       "id": "ten_rss_882f9fe0a514",
@@ -1213,7 +1213,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.047
+      "storyRank": 0.0469
     },
     {
       "id": "ten_espn_8f943afa01997",
@@ -1247,7 +1247,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0404
+      "storyRank": 0.0405
     },
     {
       "id": "ten_espn_0b0bd363f0cef",
@@ -1313,7 +1313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0282
+      "storyRank": 0.0318
     },
     {
       "id": "ten_espn_4a41f7e047c7e",
@@ -1347,7 +1347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0313
+      "storyRank": 0.0314
     },
     {
       "id": "ten_rss_083d3c62dbe4",
@@ -1380,7 +1380,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0309
+      "storyRank": 0.031
     },
     {
       "id": "ten_pfr_5ff13b5ff505",
@@ -1412,7 +1412,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.021
+      "storyRank": 0.0237
     },
     {
       "id": "ten_rss_1fdaac7ce35c",
@@ -1445,7 +1445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0227
+      "storyRank": 0.0229
     },
     {
       "id": "ten_rss_4099da140d1b",
@@ -1478,7 +1478,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0227
+      "storyRank": 0.0229
     },
     {
       "id": "ten_rss_4a8c12b4d56e",
@@ -1511,7 +1511,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0217
+      "storyRank": 0.0219
     },
     {
       "id": "ten_espn_d7e6de0a358bd",
@@ -1545,7 +1545,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0212
+      "storyRank": 0.0215
     },
     {
       "id": "ten_espn_c625d182d5a82",
@@ -1579,7 +1579,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.021
     },
     {
       "id": "ten_rss_3d4799e610b4",
@@ -1612,7 +1612,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0529
+      "storyRank": 0.0489
     },
     {
       "id": "ten_pfr_c34c90c0a050",
@@ -1644,7 +1644,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0181
+      "storyRank": 0.0205
     },
     {
       "id": "ten_rss_5b1a21dfeba8",
@@ -1677,7 +1677,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0526
+      "storyRank": 0.0486
     },
     {
       "id": "ten_tx_24d57b83bc7b",
@@ -1711,7 +1711,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.0186
     },
     {
       "id": "ten_pfr_c3043104ec6a",
@@ -1743,7 +1743,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0157
+      "storyRank": 0.0178
     },
     {
       "id": "ten_pfr_8563e2e4fb6e",
@@ -1775,7 +1775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0166
     },
     {
       "id": "ten_tx_7f62b710ec0f",
@@ -1809,7 +1809,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0144
     },
     {
       "id": "ten_pfr_7159479bf80f",
@@ -1841,7 +1841,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0132
     },
     {
       "id": "ten_tx_e990003c9373",
@@ -1875,7 +1875,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0113
+      "storyRank": 0.0116
     },
     {
       "id": "ten_pfr_cd01104e0fa2",
@@ -1907,7 +1907,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0091
     },
     {
       "id": "ten_pfr_a2c38d548132",
@@ -1939,7 +1939,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0087
     },
     {
       "id": "ten_pfr_7fe2f2953878",
@@ -1971,7 +1971,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0086
     },
     {
       "id": "ten_tx_c3b3c71e4eda",
@@ -2005,7 +2005,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0081
     },
     {
       "id": "ten_pfr_d05a49816291",
@@ -2037,7 +2037,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0068
     },
     {
       "id": "ten_pfr_b3d410e28479",
@@ -2069,7 +2069,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0002
+      "storyRank": 0.0006
     },
     {
       "id": "ten_tx_0b2fced47a7e",
@@ -2103,7 +2103,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0054
     },
     {
       "id": "ten_tx_298074f502b0",
@@ -2137,7 +2137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
+      "storyRank": 0.0049
     },
     {
       "id": "ten_tx_a8cf31efefac",
@@ -2171,7 +2171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0044
     },
     {
       "id": "ten_yt_ifp9pDMbD4o",
@@ -2207,7 +2207,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0009
+      "storyRank": 0.001
     },
     {
       "id": "ten_rss_eb6b59623c95",

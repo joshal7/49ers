@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:25:09.494Z",
+  "updatedAt": "2026-11-23T06:35:04.119Z",
   "dailyTopNewsBrief": {
     "id": "brief_atl_1be117de4e67",
     "cycleKey": "2026-11-22@17ET",
@@ -137,7 +137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.278
+      "storyRank": 3.425
     },
     {
       "id": "atl_espn_faaa82c8f2010",
@@ -171,7 +171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3078
+      "storyRank": 0.3049
     },
     {
       "id": "atl_espn_60665e84e7b6e",
@@ -205,7 +205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1793
+      "storyRank": 0.1792
     },
     {
       "id": "atl_pfr_c0947bbebf2d",
@@ -237,7 +237,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1573
+      "storyRank": 0.1762
     },
     {
       "id": "atl_espn_7cc8fe35ab6f7",
@@ -271,7 +271,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1065
+      "storyRank": 0.1074
     },
     {
       "id": "atl_vid_db08ba1e6bae",
@@ -298,14 +298,46 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0582
+      "storyRank": 0.0655
+    },
+    {
+      "id": "atl_pfr_3573f91ee6d8",
+      "type": "article",
+      "title": "Falcons Extend CB C.J. Henderson",
+      "summary": "NOVEMBER 17: Henderson&#8217;s new contract has a base value of $13MM, as detailed by Over the Cap. $7MM in incentives are present to reach the $20MM maximum. Henderson landed $7.12MM in full guarantees, including a $4MM signing bonus. His ",
+      "imageUrl": "",
+      "publishedAt": "2026-11-17T20:20:57.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/falcons-extend-cb-c-j-henderson",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0642
     },
     {
       "id": "atl_vid_e30bc25c2aa0",
@@ -332,14 +364,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.058
+      "storyRank": 0.0652
     },
     {
       "id": "atl_vid_a26fb306bec3",
@@ -373,7 +405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0641
+      "storyRank": 0.0651
     },
     {
       "id": "atl_vid_afcbfd238320",
@@ -400,38 +432,6 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0579
-    },
-    {
-      "id": "atl_pfr_3573f91ee6d8",
-      "type": "article",
-      "title": "Falcons Extend CB C.J. Henderson",
-      "summary": "NOVEMBER 17: Henderson&#8217;s new contract has a base value of $13MM, as detailed by Over the Cap. $7MM in incentives are present to reach the $20MM maximum. Henderson landed $7.12MM in full guarantees, including a $4MM signing bonus. His ",
-      "imageUrl": "",
-      "publishedAt": "2026-11-17T20:20:57.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/falcons-extend-cb-c-j-henderson",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
@@ -439,7 +439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0564
+      "storyRank": 0.0651
     },
     {
       "id": "atl_rss_e8b1b614b76a",
@@ -472,7 +472,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.0158
     },
     {
       "id": "atl_rss_3d8d94980edb",
@@ -505,7 +505,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0604
+      "storyRank": 0.0614
     },
     {
       "id": "atl_vid_d2e49f1f9ee6",
@@ -539,7 +539,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0523
+      "storyRank": 0.0533
     },
     {
       "id": "atl_vid_9038f9cf61b8",
@@ -573,7 +573,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0514
+      "storyRank": 0.0524
     },
     {
       "id": "atl_espn_3ed26fa45e367",
@@ -607,7 +607,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.05
+      "storyRank": 0.051
     },
     {
       "id": "atl_vid_b1a09eb2ea39",
@@ -641,7 +641,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0499
+      "storyRank": 0.0509
     },
     {
       "id": "atl_rss_f66fa5406769",
@@ -674,7 +674,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0489
+      "storyRank": 0.0499
     },
     {
       "id": "atl_espn_9f020e3e0ae5a",
@@ -708,7 +708,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0423
+      "storyRank": 0.0433
     },
     {
       "id": "atl_espn_848ebddeec81d",
@@ -742,7 +742,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0422
+      "storyRank": 0.0431
     },
     {
       "id": "atl_vid_d5056d939b60",
@@ -776,7 +776,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0429
     },
     {
       "id": "atl_vid_1f2b2f4bb4b4",
@@ -810,7 +810,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0429
     },
     {
       "id": "atl_vid_9710be269fe8",
@@ -844,7 +844,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.0426
     },
     {
       "id": "atl_rss_630fa9ab4ad4",
@@ -877,7 +877,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0415
+      "storyRank": 0.0425
     },
     {
       "id": "atl_vid_1de5cb6af681",
@@ -911,7 +911,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0414
+      "storyRank": 0.0424
     },
     {
       "id": "atl_vid_0b127ce6a8c5",
@@ -945,7 +945,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0106
     },
     {
       "id": "atl_vid_e4c4e1c496c5",
@@ -979,7 +979,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0414
+      "storyRank": 0.0423
     },
     {
       "id": "atl_vid_71a21c3f0953",
@@ -1013,7 +1013,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0106
     },
     {
       "id": "atl_vid_71e11d547e1a",
@@ -1047,7 +1047,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0413
+      "storyRank": 0.0422
     },
     {
       "id": "atl_vid_6849242723fa",
@@ -1081,7 +1081,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0106
     },
     {
       "id": "atl_vid_6cc4c7aa99fd",
@@ -1115,7 +1115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0105
     },
     {
       "id": "atl_vid_0c9f955ba5a3",
@@ -1149,7 +1149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0411
+      "storyRank": 0.0421
     },
     {
       "id": "atl_vid_5946fb31e919",
@@ -1183,7 +1183,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
+      "storyRank": 0.0105
     },
     {
       "id": "atl_vid_498940465f1e",
@@ -1217,7 +1217,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0409
+      "storyRank": 0.0418
     },
     {
       "id": "atl_pfr_61a6dbaa1f39",
@@ -1249,7 +1249,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0309
+      "storyRank": 0.0355
     },
     {
       "id": "atl_rss_e4947d5197cf",
@@ -1282,7 +1282,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0346
+      "storyRank": 0.0355
     },
     {
       "id": "atl_pfr_7cb59f18ee05",
@@ -1314,7 +1314,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0087
     },
     {
       "id": "atl_tx_5b421c082348",
@@ -1348,7 +1348,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0317
+      "storyRank": 0.0326
     },
     {
       "id": "atl_rss_7d49c666a330",
@@ -1381,7 +1381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0294
+      "storyRank": 0.0302
     },
     {
       "id": "atl_vid_b5e7e908e1df",
@@ -1415,7 +1415,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
+      "storyRank": 0.03
     },
     {
       "id": "atl_rss_c83616257292",
@@ -1448,7 +1448,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0813
+      "storyRank": 0.0753
     },
     {
       "id": "atl_rss_1413d95dc2ce",
@@ -1481,7 +1481,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0283
+      "storyRank": 0.0292
     },
     {
       "id": "atl_rss_4ea0b1f46176",
@@ -1514,7 +1514,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0283
+      "storyRank": 0.0292
     },
     {
       "id": "atl_tx_01180c486c8b",
@@ -1548,7 +1548,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0273
+      "storyRank": 0.0281
     },
     {
       "id": "atl_rss_ef1def40a3e1",
@@ -1581,7 +1581,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0262
+      "storyRank": 0.027
     },
     {
       "id": "atl_rss_7ff7091046f3",
@@ -1614,7 +1614,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0724
+      "storyRank": 0.067
     },
     {
       "id": "atl_vid_7b464d4d545d",
@@ -1648,7 +1648,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0253
+      "storyRank": 0.0261
     },
     {
       "id": "atl_rss_43c5cdd7d26f",
@@ -1681,7 +1681,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0245
+      "storyRank": 0.0253
     },
     {
       "id": "atl_pfr_b3d410e28479",
@@ -1713,7 +1713,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0009
+      "storyRank": 0.0022
     },
     {
       "id": "atl_vid_ed78d5a4dce9",
@@ -1747,7 +1747,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.0238
     },
     {
       "id": "atl_pfr_276dcb2e0086",
@@ -1779,7 +1779,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0233
     },
     {
       "id": "atl_vid_158cc9299cd7",
@@ -1813,7 +1813,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0059
     },
     {
       "id": "atl_rss_6cef9df7b9fc",
@@ -1846,7 +1846,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0234
     },
     {
       "id": "atl_rss_726dcffeda07",
@@ -1879,7 +1879,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0647
+      "storyRank": 0.0599
     },
     {
       "id": "atl_rss_12604ad7fac4",
@@ -1912,7 +1912,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0233
     },
     {
       "id": "atl_rss_ac3bd81a97c1",
@@ -1945,7 +1945,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
+      "storyRank": 0.0231
     },
     {
       "id": "atl_rss_56485a7a2ee5",
@@ -1978,7 +1978,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0223
+      "storyRank": 0.023
     },
     {
       "id": "atl_vid_14e310a16f42",
@@ -2012,7 +2012,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0229
     },
     {
       "id": "atl_rss_377400c9cc49",
@@ -2045,7 +2045,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0219
+      "storyRank": 0.0226
     },
     {
       "id": "atl_tx_74e210c1510b",
@@ -2079,7 +2079,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0211
+      "storyRank": 0.0218
     },
     {
       "id": "atl_pfr_02b898129b94",
@@ -2111,7 +2111,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0179
+      "storyRank": 0.0208
     },
     {
       "id": "atl_rss_e977be8203e5",
@@ -2144,7 +2144,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.02
+      "storyRank": 0.0207
     },
     {
       "id": "atl_pfr_676d61ed02ff",
@@ -2176,7 +2176,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
+      "storyRank": 0.0203
     },
     {
       "id": "atl_vid_dd655223124f",
@@ -2210,7 +2210,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0198
+      "storyRank": 0.0205
     },
     {
       "id": "atl_rss_d77b9114a23a",
@@ -2243,7 +2243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0198
+      "storyRank": 0.0205
     },
     {
       "id": "atl_rss_fb7977b08381",
@@ -2276,7 +2276,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0051
     },
     {
       "id": "atl_pfr_a1961bb949cc",
@@ -2308,7 +2308,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0172
+      "storyRank": 0.0199
     },
     {
       "id": "atl_rss_f2f796faf1fe",
@@ -2341,7 +2341,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0193
+      "storyRank": 0.02
     },
     {
       "id": "atl_tx_f528c4fe1b37",
@@ -2375,7 +2375,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0188
+      "storyRank": 0.0195
     },
     {
       "id": "atl_pfr_8821c90df473",
@@ -2407,7 +2407,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0189
     },
     {
       "id": "atl_rss_2826f0a942e9",
@@ -2440,7 +2440,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.018
+      "storyRank": 0.0186
     },
     {
       "id": "atl_rss_1ddac499f485",
@@ -2473,7 +2473,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0179
+      "storyRank": 0.0185
     },
     {
       "id": "atl_vid_d60ab025a824",
@@ -2507,7 +2507,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0178
+      "storyRank": 0.0184
     },
     {
       "id": "atl_vid_2dd4f631a635",
@@ -2541,7 +2541,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0178
+      "storyRank": 0.0184
     },
     {
       "id": "atl_rss_952a334268a1",
@@ -2574,7 +2574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0177
+      "storyRank": 0.0184
     },
     {
       "id": "atl_rss_6bba2484a82d",
@@ -2607,7 +2607,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
+      "storyRank": 0.0183
     },
     {
       "id": "atl_tx_fc5a0725e987",
@@ -2641,7 +2641,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0175
     },
     {
       "id": "atl_vid_64a8458d4d33",
@@ -2675,7 +2675,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0169
     },
     {
       "id": "atl_vid_b85f1a807407",
@@ -2709,7 +2709,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "atl_vid_3046ec4d8817",
@@ -2743,7 +2743,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0161
+      "storyRank": 0.0167
     },
     {
       "id": "atl_vid_12fcf6f1a764",
@@ -2777,7 +2777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0166
     },
     {
       "id": "atl_vid_581f35a285b7",
@@ -2811,7 +2811,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0041
     },
     {
       "id": "atl_vid_3f230acb5302",
@@ -2845,7 +2845,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0165
     },
     {
       "id": "atl_vid_facbf2e4b5d6",
@@ -2879,7 +2879,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0165
     },
     {
       "id": "atl_vid_b5a12ab9561d",
@@ -2913,7 +2913,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0165
     },
     {
       "id": "atl_vid_cd650e6ba285",
@@ -2947,7 +2947,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0165
     },
     {
       "id": "atl_vid_25734f1e86df",
@@ -2981,7 +2981,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0165
     },
     {
       "id": "atl_vid_532f3a87fc73",
@@ -3015,7 +3015,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0164
     },
     {
       "id": "atl_vid_305223f824da",
@@ -3049,7 +3049,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0164
     },
     {
       "id": "atl_vid_8e3114def61f",
@@ -3083,7 +3083,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0164
     },
     {
       "id": "atl_vid_993aede9b36b",
@@ -3117,7 +3117,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0164
     },
     {
       "id": "atl_vid_72d70aaf36b0",
@@ -3151,7 +3151,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
+      "storyRank": 0.0041
     },
     {
       "id": "atl_vid_a598e1c89a04",
@@ -3185,7 +3185,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0164
     },
     {
       "id": "atl_vid_6f5cdf3017db",
@@ -3219,7 +3219,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0164
     },
     {
       "id": "atl_vid_45f6f7e2d239",
@@ -3253,7 +3253,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
+      "storyRank": 0.015
     },
     {
       "id": "atl_tx_a874b8a93a5c",
@@ -3279,7 +3279,7 @@
       "breakingBadge": null,
       "breakingPriority": 0,
       "category": "roster",
-      "signalScore": 80,
+      "signalScore": 85,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
@@ -3287,7 +3287,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
+      "storyRank": 0.0153
     },
     {
       "id": "atl_vid_9393787fe4f4",
@@ -3321,7 +3321,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.0034
     },
     {
       "id": "atl_vid_8f23f97c2b87",
@@ -3355,7 +3355,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132
+      "storyRank": 0.0137
     },
     {
       "id": "atl_vid_16e3c14ecc40",
@@ -3389,7 +3389,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0122
+      "storyRank": 0.0127
     },
     {
       "id": "atl_vid_b7e44187b261",
@@ -3423,7 +3423,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.0029
     },
     {
       "id": "atl_vid_fa6b5bd3de56",
@@ -3457,7 +3457,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
+      "storyRank": 0.0116
     },
     {
       "id": "atl_tx_c91c06ccefd8",
@@ -3491,7 +3491,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.011
+      "storyRank": 0.0114
     },
     {
       "id": "atl_vid_a438972cd715",
@@ -3525,7 +3525,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0027
     },
     {
       "id": "atl_tx_e6a3054673a8",
@@ -3559,7 +3559,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
+      "storyRank": 0.0106
     },
     {
       "id": "atl_vid_6bcda9879ba0",
@@ -3593,7 +3593,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0098
+      "storyRank": 0.0103
     },
     {
       "id": "atl_tx_5a4232db5c59",
@@ -3627,7 +3627,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0099
     },
     {
       "id": "atl_vid_cd29c305142f",
@@ -3661,7 +3661,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0099
     },
     {
       "id": "atl_rss_f8489ea8b6c2",

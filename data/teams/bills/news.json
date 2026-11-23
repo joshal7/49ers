@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:25:14.719Z",
+  "updatedAt": "2026-11-23T06:35:17.766Z",
   "dailyTopNewsBrief": {
     "id": "brief_buf_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -7,7 +7,7 @@
     "isPostGame": true,
     "gameWeek": 12,
     "teamRecord": "9-1",
-    "generatedAt": "2026-11-23T06:25:15.440Z",
+    "generatedAt": "2026-11-23T06:35:21.761Z",
     "modelUsed": "gemini-4-hydrogen",
     "thinkingLevel": "XHIGH",
     "source": "deterministic-digest",
@@ -86,19 +86,19 @@
       },
       {
         "sid": "S7",
+        "title": "Bills' Grand Theft Auto VI-themed jab at Dolphins tops NFL Week 11 trolls",
+        "url": "https://www.espn.com/nfl/story/_/id/50567903/nfl-week-11-trolls",
+        "author": "Anthony Gharib",
+        "outlet": "ESPN",
+        "publishedAt": "2026-11-23T02:40:14Z"
+      },
+      {
+        "sid": "S8",
         "title": "DJ Moore Speaks to the Media After Bills Win Over Miami Dolphins! | Buffalo Bills",
         "url": "https://www.buffalobills.com/video/dj-moore-speaks-to-the-media-after-bills-win-over-miami-dolphins-buffalo-bills",
         "author": "buffalobills.com Video",
         "outlet": "buffalobills.com Video",
         "publishedAt": "2026-11-22T23:39:09.000Z"
-      },
-      {
-        "sid": "S8",
-        "title": "Tommy Doman Jr. Speaks to the Media About Successful Fake Punt! | Buffalo Bills",
-        "url": "https://www.buffalobills.com/video/tommy-doman-jr-speaks-to-the-media-about-successful-fake-punt-buffalo-bills",
-        "author": "buffalobills.com Video",
-        "outlet": "buffalobills.com Video",
-        "publishedAt": "2026-11-22T23:39:05.000Z"
       }
     ]
   },
@@ -125,7 +125,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.237,
+      "breakingPriority": 1.213,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -135,7 +135,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 20.1384
+      "storyRank": 17.3679
     },
     {
       "id": "buf_bsky_0f0c19b87955",
@@ -162,7 +162,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.051,
+      "breakingPriority": 1.031,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -172,7 +172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.4279
+      "storyRank": 11.9146
     },
     {
       "id": "buf_bsky_193fb2acd929",
@@ -199,7 +199,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.712,
+      "breakingPriority": 0.705,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -209,7 +209,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.6229
+      "storyRank": 10.0897
     },
     {
       "id": "buf_vid_d94ff8153fba",
@@ -233,7 +233,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.003,
+      "breakingPriority": 0.984,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -243,7 +243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.9371
+      "storyRank": 9.6731
     },
     {
       "id": "buf_bsky_408d7ae87430",
@@ -280,7 +280,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.4068
+      "storyRank": 7.534
     },
     {
       "id": "buf_espn_1c585d6bd3e60",
@@ -314,7 +314,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.2602
+      "storyRank": 6.366
+    },
+    {
+      "id": "buf_espn_70ee274fda6b3",
+      "type": "article",
+      "title": "Bills' Grand Theft Auto VI-themed jab at Dolphins tops NFL Week 11 trolls",
+      "summary": "NFL teams remained petty in Week 11, led by a post from the Buffalo Bills.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749945_608x342_16-9.jpg",
+      "imageCaption": "bills for trolls [608x342]",
+      "imageAlt": "Bills' Grand Theft Auto VI-themed jab at Dolphins tops NFL Week 11 trolls",
+      "publishedAt": "2026-11-23T02:40:14Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50567903/nfl-week-11-trolls",
+      "outletId": "espn_buf",
+      "outletName": "ESPN",
+      "reporterId": "espn_buf",
+      "reporterName": "Anthony Gharib",
+      "author": "Anthony Gharib",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/buf/buffalo-bills",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.4453
     },
     {
       "id": "buf_vid_2d34029898ff",
@@ -338,7 +372,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.723,
+      "breakingPriority": 0.709,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -348,7 +382,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.9612
+      "storyRank": 5.3582
     },
     {
       "id": "buf_vid_a23d0831c539",
@@ -372,7 +406,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.723,
+      "breakingPriority": 0.709,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -382,7 +416,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.9601
+      "storyRank": 5.3572
     },
     {
       "id": "buf_vid_6968cd5c9fe7",
@@ -406,7 +440,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.723,
+      "breakingPriority": 0.709,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -416,7 +450,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.9587
+      "storyRank": 5.3559
     },
     {
       "id": "buf_vid_30f162f1c072",
@@ -440,7 +474,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.723,
+      "breakingPriority": 0.709,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -450,7 +484,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.9575
+      "storyRank": 5.3549
     },
     {
       "id": "buf_vid_966a7900a597",
@@ -474,7 +508,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.722,
+      "breakingPriority": 0.709,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -484,7 +518,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.9556
+      "storyRank": 5.3532
     },
     {
       "id": "buf_vid_bde07c3cf82b",
@@ -508,7 +542,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.722,
+      "breakingPriority": 0.708,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -518,7 +552,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.9521
+      "storyRank": 5.3502
     },
     {
       "id": "buf_espn_bfaeeeaa3d280",
@@ -542,7 +576,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.711,
+      "breakingPriority": 0.697,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -552,7 +586,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8171
+      "storyRank": 5.2313
     },
     {
       "id": "buf_espn_d28600fe9ebea",
@@ -586,41 +620,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.8629
-    },
-    {
-      "id": "buf_vid_199d070dea68",
-      "type": "video",
-      "title": "Joe Brady Talks Cleaning Things Up After Divisional Win Against The Miami Dolphins",
-      "summary": "Joe Brady addressed the media after the 26-9 victory over the Miami Dolphins on Sunday November 22nd. Topics include: James Cook's improved ball security, what went into the onsides kick decision, does he feel satisfied ",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/bills/zipicie1cg12jot6vcmh.png",
-      "imageAlt": "Joe Brady Talks Cleaning Things Up After Divisional Win Against The Miami Dolphins",
-      "publishedAt": "2026-11-22T22:11:02.000Z",
-      "url": "https://www.buffalobills.com/video/joe-brady-talks-cleaning-things-up-after-divisional-win-against-the-miami-dolphins",
-      "externalVideoUrl": "https://www.buffalobills.com/video/joe-brady-talks-cleaning-things-up-after-divisional-win-against-the-miami-dolphins",
-      "outletId": "bills_official",
-      "outletName": "buffalobills.com Video",
-      "reporterId": "bills_official",
-      "reporterName": "buffalobills.com Video",
-      "author": "buffalobills.com Video",
-      "authorHandle": "@BuffaloBills",
-      "authorProfileUrl": "https://www.buffalobills.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.61,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.7294
+      "storyRank": 4.4871
     },
     {
       "id": "buf_espn_d2bf1eb079e37",
@@ -654,7 +654,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.2569
+      "storyRank": 3.9483
+    },
+    {
+      "id": "buf_vid_199d070dea68",
+      "type": "video",
+      "title": "Joe Brady Talks Cleaning Things Up After Divisional Win Against The Miami Dolphins",
+      "summary": "Joe Brady addressed the media after the 26-9 victory over the Miami Dolphins on Sunday November 22nd. Topics include: James Cook's improved ball security, what went into the onsides kick decision, does he feel satisfied ",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/bills/zipicie1cg12jot6vcmh.png",
+      "imageAlt": "Joe Brady Talks Cleaning Things Up After Divisional Win Against The Miami Dolphins",
+      "publishedAt": "2026-11-22T22:11:02.000Z",
+      "url": "https://www.buffalobills.com/video/joe-brady-talks-cleaning-things-up-after-divisional-win-against-the-miami-dolphins",
+      "externalVideoUrl": "https://www.buffalobills.com/video/joe-brady-talks-cleaning-things-up-after-divisional-win-against-the-miami-dolphins",
+      "outletId": "bills_official",
+      "outletName": "buffalobills.com Video",
+      "reporterId": "bills_official",
+      "reporterName": "buffalobills.com Video",
+      "author": "buffalobills.com Video",
+      "authorHandle": "@BuffaloBills",
+      "authorProfileUrl": "https://www.buffalobills.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.598,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.2702
     },
     {
       "id": "buf_vid_228b0f541393",
@@ -678,7 +712,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.596,
+      "breakingPriority": 0.584,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -688,7 +722,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5903
+      "storyRank": 4.1467
     },
     {
       "id": "buf_rss_4683646b1db4",
@@ -711,7 +745,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.56,
+      "breakingPriority": 0.549,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -721,7 +755,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.2627
+      "storyRank": 3.8556
     },
     {
       "id": "buf_vid_9fa8f3ae39d6",
@@ -745,7 +779,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.558,
+      "breakingPriority": 0.547,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -755,7 +789,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.2464
+      "storyRank": 3.8411
     },
     {
       "id": "buf_rss_8ecb1a1c2fe1",
@@ -788,7 +822,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6895
+      "storyRank": 3.4401
     },
     {
       "id": "buf_espn_71e8d5804a03d",
@@ -822,7 +856,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.1439
+      "storyRank": 2.9475
     },
     {
       "id": "buf_vid_fe650c691958",
@@ -856,7 +890,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1557
+      "storyRank": 2.0448
     },
     {
       "id": "buf_vid_5aa8c6e980cd",
@@ -890,7 +924,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9697
+      "storyRank": 1.8732
     },
     {
       "id": "buf_vid_8fe1ca263a35",
@@ -924,7 +958,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8667
+      "storyRank": 1.7779
     },
     {
       "id": "buf_vid_3fb01f764cfc",
@@ -958,7 +992,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7825
+      "storyRank": 1.6998
     },
     {
       "id": "buf_vid_6a1fb07280b3",
@@ -992,7 +1026,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7259
+      "storyRank": 1.6473
     },
     {
       "id": "buf_vid_4c3f3aa1b6f6",
@@ -1026,7 +1060,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7094
+      "storyRank": 1.632
     },
     {
       "id": "buf_vid_c703a7b69da1",
@@ -1060,7 +1094,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6871
+      "storyRank": 1.6112
     },
     {
       "id": "buf_vid_fd7176e1d9a6",
@@ -1094,7 +1128,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6962
+      "storyRank": 0.6553
     },
     {
       "id": "buf_vid_ac9ff355822e",
@@ -1128,7 +1162,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3215
+      "storyRank": 0.3092
     },
     {
       "id": "buf_bsky_9a3a0abbc775",
@@ -1165,7 +1199,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2863
+      "storyRank": 0.2751
     },
     {
       "id": "buf_rss_73900f9becc3",
@@ -1198,7 +1232,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2603
+      "storyRank": 0.2516
     },
     {
       "id": "buf_pfr_e4b84b9ab405",
@@ -1230,7 +1264,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1042
+      "storyRank": 0.1147
     },
     {
       "id": "buf_rss_3523131c1954",
@@ -1263,7 +1297,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1071
+      "storyRank": 0.1055
     },
     {
       "id": "buf_vid_6337e697434c",
@@ -1297,7 +1331,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0889
+      "storyRank": 0.0878
     },
     {
       "id": "buf_tx_45a428167e90",
@@ -1331,7 +1365,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.068
+      "storyRank": 0.0675
     },
     {
       "id": "buf_rss_7f9bc990d679",
@@ -1401,7 +1435,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.0416
     },
     {
       "id": "buf_rss_9cb2e7af2988",
@@ -1434,7 +1468,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0327
+      "storyRank": 0.0329
     },
     {
       "id": "buf_espn_e65125cb896f7",
@@ -1468,7 +1502,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0318
+      "storyRank": 0.032
     },
     {
       "id": "buf_espn_826942b1be13a",
@@ -1502,7 +1536,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0293
+      "storyRank": 0.0295
     },
     {
       "id": "buf_pfr_d6e9815eec79",
@@ -1534,7 +1568,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
+      "storyRank": 0.0226
     },
     {
       "id": "buf_rss_cb1f5599357d",
@@ -1567,7 +1601,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0223
     },
     {
       "id": "buf_bsky_d7270a20b9c0",
@@ -1604,7 +1638,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0192
+      "storyRank": 0.0193
     },
     {
       "id": "buf_tx_99a3a5e05d96",
@@ -1638,7 +1672,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.0186
     },
     {
       "id": "buf_pfr_b8ba66f816a2",
@@ -1670,7 +1704,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0154
+      "storyRank": 0.0175
     },
     {
       "id": "buf_pfr_7952893c8067",
@@ -1702,7 +1736,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0147
+      "storyRank": 0.0167
     },
     {
       "id": "buf_tx_914a56e45dc3",
@@ -1736,7 +1770,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0144
     },
     {
       "id": "buf_bsky_1d62253e724a",
@@ -1773,7 +1807,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.01
+      "storyRank": 0.0102
     },
     {
       "id": "buf_pfr_61a6dbaa1f39",
@@ -1805,7 +1839,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0077
+      "storyRank": 0.0089
     },
     {
       "id": "buf_pfr_7cb59f18ee05",
@@ -1837,7 +1871,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0087
     },
     {
       "id": "buf_tx_e278bc2c941b",
@@ -1871,7 +1905,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0081
     },
     {
       "id": "buf_bsky_5ed4e3a4f99d",
@@ -1908,7 +1942,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0069
+      "storyRank": 0.0071
     },
     {
       "id": "buf_pfr_d05a49816291",
@@ -1940,7 +1974,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0068
     },
     {
       "id": "buf_pfr_ffbd53acab5b",
@@ -1972,7 +2006,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0059
     },
     {
       "id": "buf_tx_3dac4872b752",
@@ -2006,7 +2040,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0054
     },
     {
       "id": "buf_pfr_31112e3c559d",
@@ -2038,7 +2072,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
+      "storyRank": 0.0053
     },
     {
       "id": "buf_pfr_efe8d2d95613",
@@ -2070,7 +2104,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0044
+      "storyRank": 0.0051
     },
     {
       "id": "buf_tx_bb3cae296ade",
@@ -2104,7 +2138,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
+      "storyRank": 0.0049
     },
     {
       "id": "buf_pfr_d4f80b792259",
@@ -2136,7 +2170,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
+      "storyRank": 0.0046
     },
     {
       "id": "buf_pfr_8627ba3c991a",
@@ -2168,7 +2202,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
+      "storyRank": 0.0046
     },
     {
       "id": "buf_tx_7cdd20a9507c",
@@ -2202,7 +2236,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0044
     },
     {
       "id": "buf_tx_39cd7a4f8b9a",
@@ -2236,7 +2270,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0031
     },
     {
       "id": "buf_tx_ced226d4a2aa",
@@ -2270,7 +2304,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0029
     },
     {
       "id": "buf_tx_9bccc5e333e5",
@@ -2304,7 +2338,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0025
+      "storyRank": 0.0027
     },
     {
       "id": "buf_rss_894398f72c91",

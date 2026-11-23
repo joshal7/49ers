@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:25:31.769Z",
+  "updatedAt": "2026-11-23T06:36:12.807Z",
   "dailyTopNewsBrief": {
     "id": "brief_pit_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -7,7 +7,7 @@
     "isPostGame": true,
     "gameWeek": 12,
     "teamRecord": "6-4",
-    "generatedAt": "2026-11-23T06:25:32.580Z",
+    "generatedAt": "2026-11-23T06:36:17.594Z",
     "modelUsed": "gemini-4-hydrogen",
     "thinkingLevel": "XHIGH",
     "source": "deterministic-digest",
@@ -86,19 +86,19 @@
       },
       {
         "sid": "S7",
-        "title": "Aaron Rodgers' 2026 NFL season: Tracking records, milestones",
-        "url": "https://www.espn.com/nfl/story/_/id/49907062/aaron-rodgers-2026-nfl-season-steelers-packers-jets-tracking-records-milestones",
-        "author": "Brooke Pryor",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T00:27:03Z"
-      },
-      {
-        "sid": "S8",
         "title": "WATCH: Watt - 'A lot needs to take place between now and' Friday",
         "url": "https://www.steelers.com/video/watch-watt-a-lot-needs-to-take-place-between-now-and-friday",
         "author": "steelers.com Video",
         "outlet": "steelers.com Video",
         "publishedAt": "2026-11-22T22:16:25.000Z"
+      },
+      {
+        "sid": "S8",
+        "title": "WATCH: McCarthy on the loss to the Eagles",
+        "url": "https://www.steelers.com/video/watch-mccarthy-on-the-loss-to-the-eagles",
+        "author": "steelers.com Video",
+        "outlet": "steelers.com Video",
+        "publishedAt": "2026-11-22T22:06:39.000Z"
       }
     ]
   },
@@ -126,17 +126,17 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.064,
+      "breakingPriority": 1.042,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.7836
+      "storyRank": 11.086
     },
     {
       "id": "pit_espn_e2c5cc0ccd91e",
@@ -160,7 +160,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.833,
+      "breakingPriority": 0.816,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -170,7 +170,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.4976
+      "storyRank": 6.6892
     },
     {
       "id": "pit_rss_c66beeafc036",
@@ -193,7 +193,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.731,
+      "breakingPriority": 0.716,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -203,7 +203,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.0659
+      "storyRank": 5.4402
     },
     {
       "id": "pit_espn_251a69cf49add",
@@ -227,7 +227,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.663,
+      "breakingPriority": 0.649,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -237,7 +237,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.2716
+      "storyRank": 4.7423
     },
     {
       "id": "pit_rss_73fd7a567a70",
@@ -270,7 +270,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.6318
+      "storyRank": 4.2724
     },
     {
       "id": "pit_espn_65d16fc1c609b",
@@ -304,7 +304,75 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3622
+      "storyRank": 4.0334
+    },
+    {
+      "id": "pit_vid_f11448477915",
+      "type": "video",
+      "title": "WATCH: Watt - 'A lot needs to take place between now and' Friday",
+      "summary": "T. J. Watt spoke with the media following the Steelers' 19-16 loss to the Eagles",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/steelers/uh9lw1mcj8ldzctnhvyl.jpg",
+      "imageAlt": "WATCH: Watt - 'A lot needs to take place between now and' Friday",
+      "publishedAt": "2026-11-22T22:16:25.000Z",
+      "url": "https://www.steelers.com/video/watch-watt-a-lot-needs-to-take-place-between-now-and-friday",
+      "externalVideoUrl": "https://www.steelers.com/video/watch-watt-a-lot-needs-to-take-place-between-now-and-friday",
+      "outletId": "steelers_official",
+      "outletName": "steelers.com Video",
+      "reporterId": "steelers_official",
+      "reporterName": "steelers.com Video",
+      "author": "steelers.com Video",
+      "authorHandle": "@steelers",
+      "authorProfileUrl": "https://www.steelers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.603,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.3156
+    },
+    {
+      "id": "pit_vid_ce1a3ed94742",
+      "type": "video",
+      "title": "WATCH: McCarthy on the loss to the Eagles",
+      "summary": "Coach Mike McCarthy spoke with the media following the Steelers' 19-13 loss to the Eagles",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/steelers/kusolnbuub2kmqgm5als.jpg",
+      "imageAlt": "WATCH: McCarthy on the loss to the Eagles",
+      "publishedAt": "2026-11-22T22:06:39.000Z",
+      "url": "https://www.steelers.com/video/watch-mccarthy-on-the-loss-to-the-eagles",
+      "externalVideoUrl": "https://www.steelers.com/video/watch-mccarthy-on-the-loss-to-the-eagles",
+      "outletId": "steelers_official",
+      "outletName": "steelers.com Video",
+      "reporterId": "steelers_official",
+      "reporterName": "steelers.com Video",
+      "author": "steelers.com Video",
+      "authorHandle": "@steelers",
+      "authorProfileUrl": "https://www.steelers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.592,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.217
     },
     {
       "id": "pit_espn_1064dec9de0d4",
@@ -338,75 +406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.1241
-    },
-    {
-      "id": "pit_vid_f11448477915",
-      "type": "video",
-      "title": "WATCH: Watt - 'A lot needs to take place between now and' Friday",
-      "summary": "T. J. Watt spoke with the media following the Steelers' 19-16 loss to the Eagles",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/steelers/uh9lw1mcj8ldzctnhvyl.jpg",
-      "imageAlt": "WATCH: Watt - 'A lot needs to take place between now and' Friday",
-      "publishedAt": "2026-11-22T22:16:25.000Z",
-      "url": "https://www.steelers.com/video/watch-watt-a-lot-needs-to-take-place-between-now-and-friday",
-      "externalVideoUrl": "https://www.steelers.com/video/watch-watt-a-lot-needs-to-take-place-between-now-and-friday",
-      "outletId": "steelers_official",
-      "outletName": "steelers.com Video",
-      "reporterId": "steelers_official",
-      "reporterName": "steelers.com Video",
-      "author": "steelers.com Video",
-      "authorHandle": "@steelers",
-      "authorProfileUrl": "https://www.steelers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.616,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 18,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.4649
-    },
-    {
-      "id": "pit_vid_ce1a3ed94742",
-      "type": "video",
-      "title": "WATCH: McCarthy on the loss to the Eagles",
-      "summary": "Coach Mike McCarthy spoke with the media following the Steelers' 19-13 loss to the Eagles",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/steelers/kusolnbuub2kmqgm5als.jpg",
-      "imageAlt": "WATCH: McCarthy on the loss to the Eagles",
-      "publishedAt": "2026-11-22T22:06:39.000Z",
-      "url": "https://www.steelers.com/video/watch-mccarthy-on-the-loss-to-the-eagles",
-      "externalVideoUrl": "https://www.steelers.com/video/watch-mccarthy-on-the-loss-to-the-eagles",
-      "outletId": "steelers_official",
-      "outletName": "steelers.com Video",
-      "reporterId": "steelers_official",
-      "reporterName": "steelers.com Video",
-      "author": "steelers.com Video",
-      "authorHandle": "@steelers",
-      "authorProfileUrl": "https://www.steelers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.605,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 18,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.3609
+      "storyRank": 3.8216
     },
     {
       "id": "pit_vid_c232a8ed432d",
@@ -430,50 +430,17 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.531,
+      "breakingPriority": 0.52,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.743
-    },
-    {
-      "id": "pit_rss_3fd34057abf3",
-      "type": "article",
-      "title": "Labriola on the loss to the Eagles",
-      "summary": "McCormick's absence hurt the offense in the demeanor department",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/steelers/cimltqvhmesyfx1q65fm.jpg",
-      "imageAlt": "Labriola on the loss to the Eagles",
-      "publishedAt": "2026-11-23T04:05:00.000Z",
-      "url": "https://www.steelers.com/news/labriola-on-the-loss-to-the-eagles-x2917",
-      "outletId": "steelers_official",
-      "outletName": "steelers.com Official",
-      "reporterId": "steelers_official",
-      "reporterName": "steelers.com Official",
-      "author": "steelers.com Official",
-      "authorHandle": "@steelers",
-      "authorProfileUrl": "https://www.steelers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.9175
+      "storyRank": 3.6293
     },
     {
       "id": "pit_nfltr_04251a4d16df",
@@ -506,7 +473,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0239
+      "storyRank": 3.1615
+    },
+    {
+      "id": "pit_rss_3fd34057abf3",
+      "type": "article",
+      "title": "Labriola on the loss to the Eagles",
+      "summary": "McCormick's absence hurt the offense in the demeanor department",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/steelers/cimltqvhmesyfx1q65fm.jpg",
+      "imageAlt": "Labriola on the loss to the Eagles",
+      "publishedAt": "2026-11-23T04:05:00.000Z",
+      "url": "https://www.steelers.com/news/labriola-on-the-loss-to-the-eagles-x2917",
+      "outletId": "steelers_official",
+      "outletName": "steelers.com Official",
+      "reporterId": "steelers_official",
+      "reporterName": "steelers.com Official",
+      "author": "steelers.com Official",
+      "authorHandle": "@steelers",
+      "authorProfileUrl": "https://www.steelers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.5668
     },
     {
       "id": "pit_rss_41f23072b684",
@@ -539,7 +539,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.692
+      "storyRank": 2.5326
     },
     {
       "id": "pit_espn_65acffaa13e73",
@@ -573,7 +573,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5239
+      "storyRank": 2.3793
     },
     {
       "id": "pit_rss_c3cea7e6fab2",
@@ -606,7 +606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4436
+      "storyRank": 2.3059
     },
     {
       "id": "pit_vid_0fdda3e12a53",
@@ -633,14 +633,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9229
+      "storyRank": 2.0168
     },
     {
       "id": "pit_vid_b9539cf3b148",
@@ -667,14 +667,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8034
+      "storyRank": 1.8951
     },
     {
       "id": "pit_vid_66a057f89e0e",
@@ -701,14 +701,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.5635
+      "storyRank": 1.6496
     },
     {
       "id": "pit_vid_a28759751cc4",
@@ -735,14 +735,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4995
+      "storyRank": 1.5839
     },
     {
       "id": "pit_vid_6762f2285dec",
@@ -769,14 +769,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6785
+      "storyRank": 0.7039
     },
     {
       "id": "pit_vid_9e2f37edf7c6",
@@ -803,14 +803,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6369
+      "storyRank": 0.6621
     },
     {
       "id": "pit_vid_05fc72623704",
@@ -837,14 +837,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5456
+      "storyRank": 0.57
     },
     {
       "id": "pit_vid_98b493ea73c3",
@@ -871,14 +871,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4418
+      "storyRank": 0.4645
     },
     {
       "id": "pit_rss_8c772aedf7a1",
@@ -911,7 +911,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2261
+      "storyRank": 0.2191
     },
     {
       "id": "pit_espn_958609b3595ee",
@@ -945,7 +945,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1068
+      "storyRank": 0.1051
     },
     {
       "id": "pit_rss_eabab7e9d607",
@@ -978,7 +978,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1029
+      "storyRank": 0.1014
     },
     {
       "id": "pit_pfr_72b100a5d25d",
@@ -1010,7 +1010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0889
+      "storyRank": 0.0982
     },
     {
       "id": "pit_rss_2e1f71d69701",
@@ -1043,7 +1043,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0523
+      "storyRank": 0.0481
     },
     {
       "id": "pit_rss_b069ce28efbb",
@@ -1076,7 +1076,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0824
+      "storyRank": 0.0815
     },
     {
       "id": "pit_espn_e248c8715eff4",
@@ -1110,7 +1110,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0746
+      "storyRank": 0.0739
     },
     {
       "id": "pit_tx_1cb5cf710fb6",
@@ -1144,7 +1144,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.068
+      "storyRank": 0.0675
     },
     {
       "id": "pit_rss_f2725973774e",
@@ -1177,7 +1177,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0493
+      "storyRank": 0.0492
     },
     {
       "id": "pit_rss_c184b4852205",
@@ -1210,7 +1210,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0482
+      "storyRank": 0.0481
     },
     {
       "id": "pit_tx_6915fa71596f",
@@ -1244,7 +1244,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.038
+      "storyRank": 0.0381
+    },
+    {
+      "id": "pit_pfr_998734380091",
+      "type": "article",
+      "title": "Minor NFL Transactions: 11/19/26",
+      "summary": "Here&#8217;s a look at Thursday&#8217;s minor NFL moves&#8230; Cincinnati Bengals Designated for return from IR: LB Swayze Bozeman Green Bay Packers Waived: RB Pierre Strong Houston Texans Activated from IR: CB Jaylin Smith Indianapolis Col",
+      "imageUrl": "",
+      "publishedAt": "2026-11-20T00:25:27.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-19-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/pittsburgh-steelers",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0326
     },
     {
       "id": "pit_espn_9e4cfc2967553",
@@ -1278,39 +1310,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0329
-    },
-    {
-      "id": "pit_pfr_998734380091",
-      "type": "article",
-      "title": "Minor NFL Transactions: 11/19/26",
-      "summary": "Here&#8217;s a look at Thursday&#8217;s minor NFL moves&#8230; Cincinnati Bengals Designated for return from IR: LB Swayze Bozeman Green Bay Packers Waived: RB Pierre Strong Houston Texans Activated from IR: CB Jaylin Smith Indianapolis Col",
-      "imageUrl": "",
-      "publishedAt": "2026-11-20T00:25:27.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-19-26",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/pittsburgh-steelers",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0289
+      "storyRank": 0.0331
     },
     {
       "id": "pit_tx_1e05a154cd4c",
@@ -1344,7 +1344,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0252
+      "storyRank": 0.0254
     },
     {
       "id": "pit_pfr_5724b6fd4901",
@@ -1376,7 +1376,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0189
+      "storyRank": 0.0214
     },
     {
       "id": "pit_yt_JaLnda9w_-0",
@@ -1412,7 +1412,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0213
+      "storyRank": 0.0215
     },
     {
       "id": "pit_espn_39ef0a7d5e6ba",
@@ -1446,7 +1446,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0212
+      "storyRank": 0.0215
     },
     {
       "id": "pit_pfr_c53c596b985d",
@@ -1478,7 +1478,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
+      "storyRank": 0.0211
     },
     {
       "id": "pit_tx_0f66c0efb2a4",
@@ -1512,7 +1512,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.0186
     },
     {
       "id": "pit_espn_b30a397589247",
@@ -1546,7 +1546,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0169
     },
     {
       "id": "pit_pfr_cf421e858cd5",
@@ -1578,7 +1578,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0136
+      "storyRank": 0.0155
     },
     {
       "id": "pit_tx_9f9bbcc629fd",
@@ -1612,7 +1612,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0144
     },
     {
       "id": "pit_espn_51780beb817ad",
@@ -1646,7 +1646,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
+      "storyRank": 0.0137
     },
     {
       "id": "pit_pfr_960c57cf75d7",
@@ -1678,7 +1678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0097
+      "storyRank": 0.0111
     },
     {
       "id": "pit_pfr_f3d1f30d3305",
@@ -1710,7 +1710,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0109
     },
     {
       "id": "pit_pfr_17e99025f07b",
@@ -1742,7 +1742,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0087
     },
     {
       "id": "pit_tx_f518bbd99016",
@@ -1776,7 +1776,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0081
     },
     {
       "id": "pit_pfr_8755a2214d19",
@@ -1808,7 +1808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0057
     },
     {
       "id": "pit_tx_8f3a4b697c9f",
@@ -1842,7 +1842,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0054
     },
     {
       "id": "pit_pfr_8dff25530754",
@@ -1874,7 +1874,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0052
     },
     {
       "id": "pit_pfr_6020f23adaeb",
@@ -1906,7 +1906,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0046
     },
     {
       "id": "pit_rss_a1daade26434",

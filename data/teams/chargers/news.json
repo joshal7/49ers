@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:25:48.813Z",
+  "updatedAt": "2026-11-23T06:37:07.438Z",
   "dailyTopNewsBrief": {
     "id": "brief_lac_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -128,7 +128,7 @@
       "isBreaking": false,
       "isInGameInjury": true,
       "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.674,
+      "breakingPriority": 1.645,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -145,7 +145,7 @@
       "playerValueScore": 1,
       "playerValueTier": "franchise",
       "injuryImpactScore": 0.892,
-      "storyRank": 16.2045
+      "storyRank": 14.9761
     },
     {
       "id": "lac_rss_75dbbcd77d80",
@@ -178,7 +178,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.0188
+      "storyRank": 8.8637
     },
     {
       "id": "lac_espn_7a956123b6c0f",
@@ -202,7 +202,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.897,
+      "breakingPriority": 0.877,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -212,75 +212,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.6009
-    },
-    {
-      "id": "lac_vid_6eb08188d239",
-      "type": "video",
-      "title": "Ladd McConkey: Justin Herbert 'Made a Hell of a Play' on Diving TD",
-      "summary": "Wide receiver Ladd McConkey speaks to the media on the Chargers' Week 11 matchup vs the New York Jets. He discusses his 2-TD performance, what he thought about Justin Herbert's end-of-half acrobatic touchdown, and how th",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/wetckmnqakbhlg5udwtp.png",
-      "imageAlt": "Ladd McConkey: Justin Herbert 'Made a Hell of a Play' on Diving TD",
-      "publishedAt": "2026-11-23T00:44:53.000Z",
-      "url": "https://www.chargers.com/video/ladd-mcconkey-media-availability-jets-week-11-2026",
-      "externalVideoUrl": "https://www.chargers.com/video/ladd-mcconkey-media-availability-jets-week-11-2026",
-      "outletId": "chargers_official",
-      "outletName": "chargers.com Video",
-      "reporterId": "chargers_official",
-      "reporterName": "chargers.com Video",
-      "author": "chargers.com Video",
-      "authorHandle": "@chargers",
-      "authorProfileUrl": "https://www.chargers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.82,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 7.2901
-    },
-    {
-      "id": "lac_vid_feb773895762",
-      "type": "video",
-      "title": "Head Coach Jim Harbaugh Postgame Press Conference vs. Jets",
-      "summary": "Head Coach Jim Harbaugh meets with the media to discuss the Week 11 matchup against the New York Jets.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/igb8jmgbedst4gaqruup.png",
-      "imageAlt": "Head Coach Jim Harbaugh Postgame Press Conference vs. Jets",
-      "publishedAt": "2026-11-23T00:26:02.000Z",
-      "url": "https://www.chargers.com/video/jim-harbaugh-postgame-press-conference-vs-jets-week-11-2026",
-      "externalVideoUrl": "https://www.chargers.com/video/jim-harbaugh-postgame-press-conference-vs-jets-week-11-2026",
-      "outletId": "chargers_official",
-      "outletName": "chargers.com Video",
-      "reporterId": "chargers_official",
-      "reporterName": "chargers.com Video",
-      "author": "chargers.com Video",
-      "authorHandle": "@chargers",
-      "authorProfileUrl": "https://www.chargers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.79,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 6.8561
+      "storyRank": 7.6264
     },
     {
       "id": "lac_pft_0b84fdf8c9d7",
@@ -313,7 +245,75 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.3617
+      "storyRank": 6.4247
+    },
+    {
+      "id": "lac_vid_6eb08188d239",
+      "type": "video",
+      "title": "Ladd McConkey: Justin Herbert 'Made a Hell of a Play' on Diving TD",
+      "summary": "Wide receiver Ladd McConkey speaks to the media on the Chargers' Week 11 matchup vs the New York Jets. He discusses his 2-TD performance, what he thought about Justin Herbert's end-of-half acrobatic touchdown, and how th",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/wetckmnqakbhlg5udwtp.png",
+      "imageAlt": "Ladd McConkey: Justin Herbert 'Made a Hell of a Play' on Diving TD",
+      "publishedAt": "2026-11-23T00:44:53.000Z",
+      "url": "https://www.chargers.com/video/ladd-mcconkey-media-availability-jets-week-11-2026",
+      "externalVideoUrl": "https://www.chargers.com/video/ladd-mcconkey-media-availability-jets-week-11-2026",
+      "outletId": "chargers_official",
+      "outletName": "chargers.com Video",
+      "reporterId": "chargers_official",
+      "reporterName": "chargers.com Video",
+      "author": "chargers.com Video",
+      "authorHandle": "@chargers",
+      "authorProfileUrl": "https://www.chargers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.802,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.4955
+    },
+    {
+      "id": "lac_vid_feb773895762",
+      "type": "video",
+      "title": "Head Coach Jim Harbaugh Postgame Press Conference vs. Jets",
+      "summary": "Head Coach Jim Harbaugh meets with the media to discuss the Week 11 matchup against the New York Jets.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/igb8jmgbedst4gaqruup.png",
+      "imageAlt": "Head Coach Jim Harbaugh Postgame Press Conference vs. Jets",
+      "publishedAt": "2026-11-23T00:26:02.000Z",
+      "url": "https://www.chargers.com/video/jim-harbaugh-postgame-press-conference-vs-jets-week-11-2026",
+      "externalVideoUrl": "https://www.chargers.com/video/jim-harbaugh-postgame-press-conference-vs-jets-week-11-2026",
+      "outletId": "chargers_official",
+      "outletName": "chargers.com Video",
+      "reporterId": "chargers_official",
+      "reporterName": "chargers.com Video",
+      "author": "chargers.com Video",
+      "authorHandle": "@chargers",
+      "authorProfileUrl": "https://www.chargers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.773,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.1189
     },
     {
       "id": "lac_vid_81bb93d097b7",
@@ -337,7 +337,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.73,
+      "breakingPriority": 0.714,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -347,7 +347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.0454
+      "storyRank": 5.4125
     },
     {
       "id": "lac_vid_b631fd69169f",
@@ -371,7 +371,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.697,
+      "breakingPriority": 0.682,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -381,7 +381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.6572
+      "storyRank": 5.0728
     },
     {
       "id": "lac_nfltr_0d9c4a970421",
@@ -414,7 +414,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5645
+      "storyRank": 4.6843
     },
     {
       "id": "lac_vid_8e7f0640db83",
@@ -448,7 +448,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.2841
+      "storyRank": 3.9556
     },
     {
       "id": "lac_vid_2bc0232d7d19",
@@ -482,7 +482,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.2066
+      "storyRank": 3.8869
     },
     {
       "id": "lac_espn_b338a34b45093",
@@ -516,7 +516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.8686
+      "storyRank": 3.5865
     },
     {
       "id": "lac_rss_7bcb5f93799f",
@@ -549,7 +549,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.598
+      "storyRank": 3.345
     },
     {
       "id": "lac_vid_6038a05948aa",
@@ -583,7 +583,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3305
+      "storyRank": 3.1052
     },
     {
       "id": "lac_vid_f3fbd49d03be",
@@ -617,7 +617,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1315
+      "storyRank": 1.0423
     },
     {
       "id": "lac_vid_b4691779ce53",
@@ -651,7 +651,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.06
+      "storyRank": 0.9791
     },
     {
       "id": "lac_vid_02766a75299a",
@@ -685,7 +685,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9567
+      "storyRank": 0.8873
     },
     {
       "id": "lac_rss_3b239747f8a2",
@@ -718,7 +718,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4074
+      "storyRank": 0.3886
     },
     {
       "id": "lac_nfltr_84eab115160f",
@@ -751,7 +751,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2846
+      "storyRank": 0.3061
     },
     {
       "id": "lac_rss_f9fe0ab84955",
@@ -784,7 +784,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1072
+      "storyRank": 0.1054
     },
     {
       "id": "lac_tx_dc8ca1358c18",
@@ -818,7 +818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.068
+      "storyRank": 0.0675
     },
     {
       "id": "lac_espn_45b75505a0499",
@@ -852,7 +852,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0521
+      "storyRank": 0.0519
     },
     {
       "id": "lac_espn_948e2e73e7ffb",
@@ -886,7 +886,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0518
+      "storyRank": 0.0517
     },
     {
       "id": "lac_rss_3a7eb75c0e3d",
@@ -1018,7 +1018,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.033
+      "storyRank": 0.0332
     },
     {
       "id": "lac_rss_8bbdcea337d8",
@@ -1051,7 +1051,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0281
+      "storyRank": 0.0283
     },
     {
       "id": "lac_tx_6169ad017cb9",
@@ -1085,7 +1085,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0252
+      "storyRank": 0.0254
     },
     {
       "id": "lac_rss_f31df52f3571",
@@ -1118,7 +1118,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.0209
     },
     {
       "id": "lac_espn_2174513a3461e",
@@ -1152,7 +1152,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0196
+      "storyRank": 0.0199
     },
     {
       "id": "lac_espn_dede4a78d0e8e",
@@ -1186,7 +1186,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.052
+      "storyRank": 0.0661
     },
     {
       "id": "lac_rss_29d09beb402c",
@@ -1219,7 +1219,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.017
     },
     {
       "id": "lac_rss_3572d2789918",
@@ -1252,7 +1252,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0162
     },
     {
       "id": "lac_rss_a06ff68c394b",
@@ -1285,7 +1285,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0162
     },
     {
       "id": "lac_rss_d93418e933e5",
@@ -1318,7 +1318,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0632
+      "storyRank": 0.0642
     },
     {
       "id": "lac_rss_08b4e9624480",
@@ -1351,7 +1351,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0155
     },
     {
       "id": "lac_espn_efb0e6e20d069",
@@ -1385,7 +1385,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0131
     },
     {
       "id": "lac_espn_84e1ab5575045",
@@ -1419,7 +1419,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0101
+      "storyRank": 0.0129
     },
     {
       "id": "lac_espn_354afa31bd8d0",
@@ -1453,7 +1453,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.0141
     },
     {
       "id": "lac_espn_13573c069eb2e",
@@ -1487,7 +1487,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0094
+      "storyRank": 0.012
     },
     {
       "id": "lac_rss_6e6bca638566",
@@ -1520,7 +1520,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0137
+      "storyRank": 0.0139
     },
     {
       "id": "lac_rss_716f62a4f916",
@@ -1553,7 +1553,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0034
+      "storyRank": 0.0035
     },
     {
       "id": "lac_rss_d9aecfc18976",
@@ -1586,7 +1586,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0132
     },
     {
       "id": "lac_rss_86a949fcfcaa",
@@ -1619,7 +1619,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.0132
     },
     {
       "id": "lac_rss_7b2ec8378784",
@@ -1652,7 +1652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0344
+      "storyRank": 0.0318
     },
     {
       "id": "lac_tx_2da5aeb9ed8a",
@@ -1686,7 +1686,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0113
+      "storyRank": 0.0116
     },
     {
       "id": "lac_rss_7ac50c280c4a",
@@ -1719,7 +1719,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084
+      "storyRank": 0.0086
     },
     {
       "id": "lac_rss_d53a5ef57069",
@@ -1752,7 +1752,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084
+      "storyRank": 0.0086
     },
     {
       "id": "lac_rss_d92cdef011fc",
@@ -1785,7 +1785,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0077
     },
     {
       "id": "lac_rss_7d7b727f2b92",
@@ -1818,7 +1818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0071
+      "storyRank": 0.0073
     },
     {
       "id": "lac_tx_4b35aa807a16",
@@ -1852,7 +1852,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0068
+      "storyRank": 0.007
     },
     {
       "id": "lac_yt_Y34bLuTqs28",
@@ -1888,7 +1888,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0068
     },
     {
       "id": "lac_rss_7604b2bc93a4",
@@ -1921,7 +1921,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "lac_rss_227626f871ef",
@@ -1954,7 +1954,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0057
     },
     {
       "id": "lac_rss_51bdc33323a1",
@@ -1987,7 +1987,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0057
     },
     {
       "id": "lac_tx_63645284b130",
@@ -2021,7 +2021,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0054
     },
     {
       "id": "lac_rss_ce4c6489e893",
@@ -2054,7 +2054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0052
     },
     {
       "id": "lac_rss_44703069be9b",
@@ -2087,7 +2087,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0052
     },
     {
       "id": "lac_tx_c726340e3933",
@@ -2121,7 +2121,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
+      "storyRank": 0.0049
     },
     {
       "id": "lac_rss_4b695be4d1c0",
@@ -2154,7 +2154,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0047
     },
     {
       "id": "lac_rss_bacf16460630",
@@ -2187,7 +2187,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0044
+      "storyRank": 0.0045
     },
     {
       "id": "lac_rss_d2382d64bfb1",
@@ -2220,7 +2220,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0044
+      "storyRank": 0.0045
     },
     {
       "id": "lac_tx_4ca167430db1",
@@ -2254,7 +2254,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0031
     },
     {
       "id": "lac_tx_9eb6bd7eb5f0",
@@ -2288,7 +2288,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0025
     },
     {
       "id": "lac_rss_009d47e65137",

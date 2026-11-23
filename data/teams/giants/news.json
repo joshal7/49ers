@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:24:58.752Z",
+  "updatedAt": "2026-11-23T06:34:32.908Z",
   "dailyTopNewsBrief": {
     "id": "brief_nyg_3b31690f3158",
     "cycleKey": "2026-11-22@postgame-wk11",
@@ -128,7 +128,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.41,
+      "breakingPriority": 1.384,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -138,7 +138,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 36.7495
+      "storyRank": 30.6498
     },
     {
       "id": "nyg_rss_110f8d140de1",
@@ -161,7 +161,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.195,
+      "breakingPriority": 1.173,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -171,7 +171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 17.8436
+      "storyRank": 15.5229
     },
     {
       "id": "nyg_espn_42057c678030e",
@@ -205,7 +205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.6702
+      "storyRank": 14.434
     },
     {
       "id": "nyg_rss_347ba61e14d4",
@@ -228,7 +228,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.13,
+      "breakingPriority": 1.109,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -238,7 +238,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.9589
+      "storyRank": 13.1102
     },
     {
       "id": "nyg_espn_ba480d36c3298",
@@ -262,7 +262,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.981,
+      "breakingPriority": 0.963,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -272,7 +272,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.3929
+      "storyRank": 9.2243
     },
     {
       "id": "nyg_rss_f681a38d9966",
@@ -295,39 +295,6 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.904,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 8.7413
-    },
-    {
-      "id": "nyg_rss_57579ff8ee58",
-      "type": "article",
-      "title": "📸 Victory in Photos: Giants beat the Jaguars",
-      "summary": "The New York Giants host the Jaguars at MetLife Stadium in Week11.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/giants/r3razacmq6pkjfgtagim.jpg",
-      "imageAlt": "📸 Victory in Photos: Giants beat the Jaguars",
-      "publishedAt": "2026-11-23T01:25:00.000Z",
-      "url": "https://www.giants.com/photos/game-photos-giants-take-on-jaguars",
-      "outletId": "giants_official",
-      "outletName": "giants.com Official",
-      "reporterId": "giants_official",
-      "reporterName": "giants.com Official",
-      "author": "giants.com Official",
-      "authorHandle": "@Giants",
-      "authorProfileUrl": "https://www.giants.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
       "breakingPriority": 0.887,
       "category": "beat",
       "signalScore": 70,
@@ -338,40 +305,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.4185
-    },
-    {
-      "id": "nyg_rss_a01000edbb59",
-      "type": "article",
-      "title": "Notes & Stats: Giants vs. Jaguars Recap",
-      "summary": "Notes and stats from the Giants' 23-18 victory over the Jaguars.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/giants/rnleuaens7uv6mgdo6g6.jpg",
-      "imageAlt": "Notes & Stats: Giants vs. Jaguars Recap",
-      "publishedAt": "2026-11-23T01:18:00.000Z",
-      "url": "https://www.giants.com/news/notes-stats-giants-vs-jaguars-recap",
-      "outletId": "giants_official",
-      "outletName": "giants.com Official",
-      "reporterId": "giants_official",
-      "reporterName": "giants.com Official",
-      "author": "giants.com Official",
-      "authorHandle": "@Giants",
-      "authorProfileUrl": "https://www.giants.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.875,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 8.2048
+      "storyRank": 7.7968
     },
     {
       "id": "nyg_rss_db51125938fa",
@@ -394,17 +328,83 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.895,
+      "breakingPriority": 0.879,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 28,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.6763
+      "storyRank": 7.6544
+    },
+    {
+      "id": "nyg_rss_57579ff8ee58",
+      "type": "article",
+      "title": "📸 Victory in Photos: Giants beat the Jaguars",
+      "summary": "The New York Giants host the Jaguars at MetLife Stadium in Week11.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/giants/r3razacmq6pkjfgtagim.jpg",
+      "imageAlt": "📸 Victory in Photos: Giants beat the Jaguars",
+      "publishedAt": "2026-11-23T01:25:00.000Z",
+      "url": "https://www.giants.com/photos/game-photos-giants-take-on-jaguars",
+      "outletId": "giants_official",
+      "outletName": "giants.com Official",
+      "reporterId": "giants_official",
+      "reporterName": "giants.com Official",
+      "author": "giants.com Official",
+      "authorHandle": "@Giants",
+      "authorProfileUrl": "https://www.giants.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.87,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.5164
+    },
+    {
+      "id": "nyg_rss_a01000edbb59",
+      "type": "article",
+      "title": "Notes & Stats: Giants vs. Jaguars Recap",
+      "summary": "Notes and stats from the Giants' 23-18 victory over the Jaguars.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/giants/rnleuaens7uv6mgdo6g6.jpg",
+      "imageAlt": "Notes & Stats: Giants vs. Jaguars Recap",
+      "publishedAt": "2026-11-23T01:18:00.000Z",
+      "url": "https://www.giants.com/news/notes-stats-giants-vs-jaguars-recap",
+      "outletId": "giants_official",
+      "outletName": "giants.com Official",
+      "reporterId": "giants_official",
+      "reporterName": "giants.com Official",
+      "author": "giants.com Official",
+      "authorHandle": "@Giants",
+      "authorProfileUrl": "https://www.giants.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.859,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.3304
     },
     {
       "id": "nyg_vid_290431346a5e",
@@ -428,7 +428,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.853,
+      "breakingPriority": 0.838,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -438,7 +438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.832
+      "storyRank": 7.0055
     },
     {
       "id": "nyg_pft_2573f1830b0a",
@@ -471,7 +471,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.0966
+      "storyRank": 6.2205
     },
     {
       "id": "nyg_rss_9f5591cb0e7c",
@@ -504,7 +504,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.4207
+      "storyRank": 4.9884
     },
     {
       "id": "nyg_espn_8d9358e9b946e",
@@ -538,7 +538,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.1392
+      "storyRank": 4.7395
     },
     {
       "id": "nyg_rss_a45a30f6fd50",
@@ -571,7 +571,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.0052
+      "storyRank": 4.6207
     },
     {
       "id": "nyg_vid_4636dc05dd5f",
@@ -605,7 +605,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.9097
+      "storyRank": 4.536
     },
     {
       "id": "nyg_vid_a501fe4c66ec",
@@ -639,7 +639,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.8173
+      "storyRank": 4.4539
     },
     {
       "id": "nyg_vid_732b6a8b0ea3",
@@ -673,7 +673,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.6412
+      "storyRank": 4.2972
     },
     {
       "id": "nyg_vid_38227ebde618",
@@ -707,7 +707,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5572
+      "storyRank": 4.2224
     },
     {
       "id": "nyg_vid_b901966dad2d",
@@ -741,7 +741,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.4757
+      "storyRank": 4.1497
     },
     {
       "id": "nyg_vid_35f821a796b3",
@@ -775,7 +775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.2457
+      "storyRank": 3.9441
     },
     {
       "id": "nyg_vid_0fcf9e5eb800",
@@ -809,7 +809,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.1734
+      "storyRank": 3.8795
     },
     {
       "id": "nyg_vid_0ff681cc180f",
@@ -843,7 +843,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.1032
+      "storyRank": 3.8166
     },
     {
       "id": "nyg_vid_46b886066537",
@@ -877,7 +877,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1998
+      "storyRank": 1.1095
     },
     {
       "id": "nyg_vid_c6b950317d94",
@@ -911,7 +911,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0992
+      "storyRank": 1.0198
     },
     {
       "id": "nyg_vid_e863f8e7dc75",
@@ -945,7 +945,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4502
+      "storyRank": 0.4296
     },
     {
       "id": "nyg_vid_59235be692c7",
@@ -979,7 +979,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4411
+      "storyRank": 0.4211
     },
     {
       "id": "nyg_vid_9e6043f98677",
@@ -1013,7 +1013,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4386
+      "storyRank": 0.4188
     },
     {
       "id": "nyg_vid_ad1b3d5e011c",
@@ -1047,7 +1047,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.437
+      "storyRank": 0.4173
     },
     {
       "id": "nyg_vid_b3ddc992ac1a",
@@ -1081,7 +1081,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4354
+      "storyRank": 0.4158
     },
     {
       "id": "nyg_vid_fd722fed412e",
@@ -1115,7 +1115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4338
+      "storyRank": 0.4143
     },
     {
       "id": "nyg_vid_493af1cf3f1b",
@@ -1149,7 +1149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4298
+      "storyRank": 0.4106
     },
     {
       "id": "nyg_vid_6a2522abf7b8",
@@ -1183,7 +1183,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.429
+      "storyRank": 0.4099
     },
     {
       "id": "nyg_vid_46f2f0e2eae0",
@@ -1217,7 +1217,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4228
+      "storyRank": 0.4041
     },
     {
       "id": "nyg_vid_4c5a7519a221",
@@ -1251,7 +1251,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4191
+      "storyRank": 0.4006
     },
     {
       "id": "nyg_vid_3d25fa7c3dbc",
@@ -1285,7 +1285,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4183
+      "storyRank": 0.3999
     },
     {
       "id": "nyg_vid_fdb52af48135",
@@ -1319,7 +1319,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4161
+      "storyRank": 0.3978
     },
     {
       "id": "nyg_vid_1b1e8b5775a9",
@@ -1353,7 +1353,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4109
+      "storyRank": 0.393
     },
     {
       "id": "nyg_rss_7f63b28b4654",
@@ -1379,14 +1379,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3329
+      "storyRank": 0.3534
     },
     {
       "id": "nyg_rss_5a4b20dfd526",
@@ -1419,7 +1419,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3579
+      "storyRank": 0.3435
     },
     {
       "id": "nyg_rss_45c29d585bb7",
@@ -1452,7 +1452,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.326
+      "storyRank": 0.3136
     },
     {
       "id": "nyg_rss_17b6e9032dd0",
@@ -1485,7 +1485,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3221
+      "storyRank": 0.31
     },
     {
       "id": "nyg_rss_71dd83bf01ad",
@@ -1518,7 +1518,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3202
+      "storyRank": 0.3082
     },
     {
       "id": "nyg_rss_7632eb2742af",
@@ -1551,7 +1551,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2818
+      "storyRank": 0.272
     },
     {
       "id": "nyg_rss_68757e5bd7f7",
@@ -1584,7 +1584,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2181
+      "storyRank": 0.2117
     },
     {
       "id": "nyg_rss_65a08f24a7e9",
@@ -1617,7 +1617,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2041
+      "storyRank": 0.1984
     },
     {
       "id": "nyg_rss_1d8824efcbd4",
@@ -1650,7 +1650,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1911
+      "storyRank": 0.1861
     },
     {
       "id": "nyg_espn_f2cc47bada0e0",
@@ -1684,7 +1684,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0747
+      "storyRank": 0.074
     },
     {
       "id": "nyg_tx_ada539eb1529",
@@ -1718,7 +1718,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.068
+      "storyRank": 0.0676
     },
     {
       "id": "nyg_espn_f1a859b200ba2",
@@ -1752,7 +1752,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0563
+      "storyRank": 0.0561
     },
     {
       "id": "nyg_rss_f94af481a5e7",
@@ -1785,7 +1785,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.051
+      "storyRank": 0.0509
     },
     {
       "id": "nyg_rss_4073b9f97cda",
@@ -1818,7 +1818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1203
+      "storyRank": 0.1111
     },
     {
       "id": "nyg_rss_ae539673274b",
@@ -1884,7 +1884,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0469
+      "storyRank": 0.0468
     },
     {
       "id": "nyg_vid_8e47c863d381",
@@ -2088,7 +2088,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.0418
     },
     {
       "id": "nyg_rss_9b784b176846",
@@ -2121,7 +2121,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0404
+      "storyRank": 0.0405
     },
     {
       "id": "nyg_vid_8a3d3a712474",
@@ -2155,7 +2155,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.04
+      "storyRank": 0.0401
     },
     {
       "id": "nyg_espn_a929daa3b225b",
@@ -2189,7 +2189,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0313
+      "storyRank": 0.0314
     },
     {
       "id": "nyg_rss_b89d5c3e5094",
@@ -2222,7 +2222,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0311
+      "storyRank": 0.0313
     },
     {
       "id": "nyg_vid_290b378858f0",
@@ -2256,7 +2256,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0301
+      "storyRank": 0.0303
     },
     {
       "id": "nyg_vid_7a5e489e41d7",
@@ -2290,7 +2290,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.0302
     },
     {
       "id": "nyg_vid_1459fa360afa",
@@ -2324,7 +2324,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.0302
     },
     {
       "id": "nyg_vid_d989d2253f78",
@@ -2358,7 +2358,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.0302
     },
     {
       "id": "nyg_vid_ca744fd30675",
@@ -2392,7 +2392,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0299
+      "storyRank": 0.0301
     },
     {
       "id": "nyg_rss_5ef0d8391f41",
@@ -2425,7 +2425,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0294
+      "storyRank": 0.0296
     },
     {
       "id": "nyg_rss_7da01937f67c",
@@ -2458,7 +2458,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0281
+      "storyRank": 0.0283
     },
     {
       "id": "nyg_vid_a52e61652563",
@@ -2492,7 +2492,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.027
+      "storyRank": 0.0272
     },
     {
       "id": "nyg_vid_68a647a9b325",
@@ -2526,7 +2526,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0066
     },
     {
       "id": "nyg_vid_9d4f82300561",
@@ -2560,7 +2560,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0252
+      "storyRank": 0.0254
     },
     {
       "id": "nyg_pfr_5ff13b5ff505",
@@ -2592,7 +2592,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.021
+      "storyRank": 0.0238
     },
     {
       "id": "nyg_rss_a894b6c352f1",
@@ -2625,7 +2625,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0229
     },
     {
       "id": "nyg_espn_b6328e7829aef",
@@ -2659,7 +2659,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0223
+      "storyRank": 0.0225
     },
     {
       "id": "nyg_rss_404b1c99286e",
@@ -2692,7 +2692,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0217
+      "storyRank": 0.0219
     },
     {
       "id": "nyg_vid_ab14e2849a95",
@@ -2726,7 +2726,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0213
+      "storyRank": 0.0216
     },
     {
       "id": "nyg_vid_a9097ea8c242",
@@ -2760,7 +2760,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0054
     },
     {
       "id": "nyg_vid_0d8496f3af1f",
@@ -2794,7 +2794,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0194
+      "storyRank": 0.0196
     },
     {
       "id": "nyg_vid_a82513d920e6",
@@ -2828,7 +2828,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
+      "storyRank": 0.0048
     },
     {
       "id": "nyg_vid_d807405603af",
@@ -2862,7 +2862,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0188
+      "storyRank": 0.019
     },
     {
       "id": "nyg_vid_5081acd1f65f",
@@ -2896,7 +2896,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
+      "storyRank": 0.0188
     },
     {
       "id": "nyg_tx_ad378ab64094",
@@ -2930,7 +2930,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.0186
     },
     {
       "id": "nyg_vid_c7f4436973de",
@@ -2964,7 +2964,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0036
+      "storyRank": 0.0037
     },
     {
       "id": "nyg_vid_81e675854f87",
@@ -2998,7 +2998,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
+      "storyRank": 0.0148
     },
     {
       "id": "nyg_tx_1908324c84cc",
@@ -3032,7 +3032,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0144
     },
     {
       "id": "nyg_vid_f271d457aa2f",
@@ -3059,14 +3059,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0124
+      "storyRank": 0.014
     },
     {
       "id": "nyg_pfr_e6aa64d4de47",
@@ -3098,7 +3098,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0132
     },
     {
       "id": "nyg_rss_5e67901c49af",
@@ -3131,7 +3131,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.013
     },
     {
       "id": "nyg_espn_ad7063e9d38b9",
@@ -3165,7 +3165,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0119
+      "storyRank": 0.0122
     },
     {
       "id": "nyg_vid_cd3981b55288",
@@ -3199,7 +3199,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0118
     },
     {
       "id": "nyg_tx_5ba553d1efa2",
@@ -3233,7 +3233,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0113
+      "storyRank": 0.0116
     },
     {
       "id": "nyg_rss_d738a0528775",
@@ -3266,7 +3266,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
+      "storyRank": 0.0113
     },
     {
       "id": "nyg_rss_e08c8940aa9a",
@@ -3299,7 +3299,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0101
+      "storyRank": 0.0103
     },
     {
       "id": "nyg_vid_a9939c92585c",
@@ -3333,7 +3333,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0083
+      "storyRank": 0.0085
     },
     {
       "id": "nyg_rss_a7d6d1af6af5",
@@ -3366,7 +3366,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0083
+      "storyRank": 0.0085
     },
     {
       "id": "nyg_rss_ef7521734252",
@@ -3399,7 +3399,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0082
+      "storyRank": 0.0084
     },
     {
       "id": "nyg_rss_d622dea18ff3",
@@ -3432,7 +3432,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0082
+      "storyRank": 0.0084
     },
     {
       "id": "nyg_rss_756d3203bcaa",
@@ -3465,7 +3465,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0082
+      "storyRank": 0.0084
     },
     {
       "id": "nyg_rss_213bb98dff6a",
@@ -3498,7 +3498,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0083
     },
     {
       "id": "nyg_rss_2f6d9564cf56",
@@ -3531,7 +3531,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0076
     },
     {
       "id": "nyg_vid_e2ddd791562e",
@@ -3565,7 +3565,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.0076
     },
     {
       "id": "nyg_vid_3bddbd61cbec",
@@ -3599,7 +3599,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.0075
     },
     {
       "id": "nyg_rss_0191de93cd57",
@@ -3632,7 +3632,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0071
+      "storyRank": 0.0073
     },
     {
       "id": "nyg_rss_48542e232578",
@@ -3665,7 +3665,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0068
+      "storyRank": 0.007
     },
     {
       "id": "nyg_rss_c7411356a68c",
@@ -3698,7 +3698,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0069
     },
     {
       "id": "nyg_vid_841c7418c2fd",
@@ -3732,7 +3732,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0069
     },
     {
       "id": "nyg_rss_5b206ffb000e",
@@ -3765,7 +3765,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0069
     },
     {
       "id": "nyg_vid_c4d55d92d177",
@@ -3799,7 +3799,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0069
     },
     {
       "id": "nyg_vid_a77df5b24401",
@@ -3833,7 +3833,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0069
     },
     {
       "id": "nyg_rss_605915e76458",
@@ -3866,7 +3866,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0069
     },
     {
       "id": "nyg_vid_4d72c2fa0ab6",
@@ -3934,7 +3934,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0069
     },
     {
       "id": "nyg_vid_3fe3856d3579",
@@ -3968,7 +3968,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0069
     },
     {
       "id": "nyg_vid_f85fde787a89",
@@ -4002,7 +4002,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0069
     },
     {
       "id": "nyg_vid_215da3d40fd4",
@@ -4036,7 +4036,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0069
     },
     {
       "id": "nyg_vid_e338e1c8b116",
@@ -4070,7 +4070,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0069
     },
     {
       "id": "nyg_vid_47057f4c8f67",
@@ -4104,7 +4104,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "nyg_vid_729511eb6e24",
@@ -4138,7 +4138,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "nyg_vid_aa8d2effd33e",
@@ -4172,7 +4172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "nyg_vid_7736863d0684",
@@ -4206,7 +4206,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "nyg_vid_2d1fbc1babba",
@@ -4240,7 +4240,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "nyg_vid_ba414e49d401",
@@ -4274,7 +4274,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "nyg_vid_63b9b1207ea7",
@@ -4308,7 +4308,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "nyg_vid_dd4625642625",
@@ -4342,7 +4342,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "nyg_vid_32cf525c95a5",
@@ -4376,7 +4376,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "nyg_vid_3196993fdc89",
@@ -4410,7 +4410,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0067
     },
     {
       "id": "nyg_vid_3b1e52ae1b46",
@@ -4444,7 +4444,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0066
     },
     {
       "id": "nyg_pfr_70fd6b5a0ae1",
@@ -4476,7 +4476,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0065
     },
     {
       "id": "nyg_rss_f3093f9ec1c2",
@@ -4502,14 +4502,14 @@
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
-      "fluffScore": 18,
+      "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0066
     },
     {
       "id": "nyg_rss_159d2f8a17ad",
@@ -4542,7 +4542,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0066
     },
     {
       "id": "nyg_rss_f3cbac9b3d36",
@@ -4575,7 +4575,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0063
+      "storyRank": 0.0065
     },
     {
       "id": "nyg_rss_a549ccd6deb3",
@@ -4608,7 +4608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
+      "storyRank": 0.0163
     },
     {
       "id": "nyg_rss_730977903f3f",
@@ -4641,7 +4641,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0064
     },
     {
       "id": "nyg_rss_78d4eb860c7f",
@@ -4674,7 +4674,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0063
     },
     {
       "id": "nyg_rss_4703f2e44f61",
@@ -4707,7 +4707,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0063
     },
     {
       "id": "nyg_rss_d5a1efc0c927",
@@ -4740,7 +4740,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0061
+      "storyRank": 0.0063
     },
     {
       "id": "nyg_rss_83b646989f38",
@@ -4773,7 +4773,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.006
+      "storyRank": 0.0062
     },
     {
       "id": "nyg_rss_630a52f51c23",
@@ -4806,7 +4806,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.006
+      "storyRank": 0.0062
     },
     {
       "id": "nyg_rss_917731c7f0a9",
@@ -4839,7 +4839,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.006
+      "storyRank": 0.0062
     },
     {
       "id": "nyg_pfr_b3d410e28479",
@@ -4871,7 +4871,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0009
+      "storyRank": 0.0022
     },
     {
       "id": "nyg_rss_b0d3add5a096",
@@ -4904,7 +4904,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0058
     },
     {
       "id": "nyg_vid_d4d2d99b6a18",
@@ -4938,7 +4938,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0058
     },
     {
       "id": "nyg_vid_57c1f2a689d1",
@@ -4972,7 +4972,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0057
     },
     {
       "id": "nyg_vid_e5338e75379a",
@@ -5006,7 +5006,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0057
     },
     {
       "id": "nyg_vid_9919f0c5d062",
@@ -5040,7 +5040,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0057
     },
     {
       "id": "nyg_rss_d7966d8de88b",
@@ -5073,7 +5073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0057
     },
     {
       "id": "nyg_rss_fe38bd3ebe09",
@@ -5106,7 +5106,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0056
     },
     {
       "id": "nyg_rss_20f687fdf8c3",
@@ -5173,7 +5173,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054
+      "storyRank": 0.0056
     },
     {
       "id": "nyg_vid_af6f5cb8b00d",
@@ -5207,7 +5207,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054
+      "storyRank": 0.0056
     },
     {
       "id": "nyg_vid_81e3c5bf0c96",
@@ -5241,7 +5241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054
+      "storyRank": 0.0056
     },
     {
       "id": "nyg_vid_57a3707ed0a2",
@@ -5275,7 +5275,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0055
     },
     {
       "id": "nyg_rss_3d4be538e6e3",
@@ -5308,7 +5308,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0053
     },
     {
       "id": "nyg_rss_fd95d958fe68",
@@ -5341,7 +5341,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0051
     },
     {
       "id": "nyg_rss_7134d1c3c9c9",
@@ -5374,7 +5374,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0051
     },
     {
       "id": "nyg_rss_4b082cd35f23",
@@ -5407,7 +5407,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0051
     },
     {
       "id": "nyg_vid_f57cbe2748d8",
@@ -5441,7 +5441,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0051
     },
     {
       "id": "nyg_vid_eb345affc455",
@@ -5475,7 +5475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0051
     },
     {
       "id": "nyg_vid_dd2f4b564086",
@@ -5509,7 +5509,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0051
     },
     {
       "id": "nyg_vid_ad9eb0186c86",
@@ -5543,7 +5543,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0048
+      "storyRank": 0.005
     },
     {
       "id": "nyg_vid_4ccadbb4808a",
@@ -5577,7 +5577,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0048
+      "storyRank": 0.005
     },
     {
       "id": "nyg_rss_b0e419191edf",
@@ -5610,7 +5610,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0048
+      "storyRank": 0.0049
     },
     {
       "id": "nyg_vid_db12208694c3",
@@ -5677,7 +5677,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
+      "storyRank": 0.0049
     },
     {
       "id": "nyg_pfr_ab4efc96ba46",
@@ -5709,7 +5709,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0189
     },
     {
       "id": "nyg_rss_25e149cbf777",
@@ -5742,7 +5742,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0047
     },
     {
       "id": "nyg_rss_c2b6bb1c60f6",
@@ -5775,7 +5775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0046
     },
     {
       "id": "nyg_rss_84d008f97c55",
@@ -5808,7 +5808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0044
+      "storyRank": 0.0046
     },
     {
       "id": "nyg_pfr_2087104e8453",
@@ -5840,7 +5840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
+      "storyRank": 0.0045
     },
     {
       "id": "nyg_vid_2d2d3f47ce85",
@@ -5874,7 +5874,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0045
     },
     {
       "id": "nyg_vid_b9136291a580",
@@ -5908,7 +5908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0045
     },
     {
       "id": "nyg_rss_0154b302d9de",
@@ -5941,7 +5941,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0044
     },
     {
       "id": "nyg_vid_e50c1318fffb",
@@ -5975,7 +5975,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0044
     },
     {
       "id": "nyg_vid_60b1b9b84a91",
@@ -6043,7 +6043,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "nyg_vid_d2a267642971",
@@ -6077,7 +6077,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "nyg_vid_ebb971ee19c8",
@@ -6111,7 +6111,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0042
     },
     {
       "id": "nyg_vid_1ee1990086eb",
@@ -6179,7 +6179,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0036
     },
     {
       "id": "nyg_tx_422d7336bd45",
@@ -6213,7 +6213,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0031
     },
     {
       "id": "nyg_tx_1f4e2a2a0906",
@@ -6247,7 +6247,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0025
     },
     {
       "id": "nyg_rss_04d40887c06f",
