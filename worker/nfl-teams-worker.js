@@ -499,6 +499,269 @@ function parseWorkerRotoWireTeamInactives(html = '', teamCfg = null) {
   };
 }
 
+export const OFFICIAL_TEAM_X_HANDLES = Object.freeze({
+  SF: '49ers',
+  SEA: 'Seahawks',
+  LAR: 'RamsNFL',
+  ARI: 'AZCardinals',
+  MIN: 'Vikings',
+  DET: 'Lions',
+  GB: 'packers',
+  CHI: 'ChicagoBears',
+  PHI: 'Eagles',
+  DAL: 'dallascowboys',
+  NYG: 'Giants',
+  WAS: 'Commanders',
+  TB: 'Buccaneers',
+  NO: 'Saints',
+  ATL: 'AtlantaFalcons',
+  CAR: 'Panthers',
+  BUF: 'BuffaloBills',
+  NE: 'Patriots',
+  MIA: 'MiamiDolphins',
+  NYJ: 'nyjets',
+  BAL: 'Ravens',
+  CIN: 'Bengals',
+  CLE: 'Browns',
+  PIT: 'steelers',
+  HOU: 'HoustonTexans',
+  IND: 'Colts',
+  JAX: 'Jaguars',
+  TEN: 'Titans',
+  KC: 'Chiefs',
+  LAC: 'chargers',
+  DEN: 'Broncos',
+  LV: 'Raiders'
+});
+
+const AMBIGUOUS_NFL_SURNAMES = new Set([
+  'allen', 'bell', 'brown', 'campbell', 'clark', 'cole', 'cook', 'davis', 'ford', 'gray',
+  'green', 'hall', 'harris', 'hill', 'jackson', 'johnson', 'jones', 'king', 'lee', 'lewis',
+  'long', 'martin', 'miller', 'moore', 'morris', 'reed', 'ross', 'smith', 'taylor', 'thomas',
+  'walker', 'ward', 'west', 'white', 'williams', 'wilson', 'wood', 'wright', 'young'
+]);
+
+/**
+ * Extracts active team player names & unique surnames from an ESPN live `summary?event=` payload
+ * so official `@NFL` highlight clips (e.g., `"George Kittle..."`) match the active team with zero cross-game leaks.
+ */
+export function buildActiveTeamGameDayMatchers(liveSummaryJson = null, team = null) {
+  const fullNames = new Set();
+  const uniqueSurnames = new Set();
+  const teamAbbrUpper = String(team?.abbr || '').toUpperCase();
+  const teamEspnIdStr = String(team?.espnId || '');
+  const oppAbbrs = new Set();
+
+  const addName = rawName => {
+    const clean = String(rawName || '').trim().replace(/\s+/g, ' ');
+    if (clean.length < 5) return;
+    fullNames.add(clean.toLowerCase());
+    const parts = clean.replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').split(' ');
+    const last = (parts[parts.length - 1] || '').toLowerCase().replace(/[^a-z'-]/g, '');
+    if (last.length >= 4 && !AMBIGUOUS_NFL_SURNAMES.has(last)) {
+      uniqueSurnames.add(last);
+    }
+  };
+
+  if (liveSummaryJson && typeof liveSummaryJson === 'object') {
+    const comps = liveSummaryJson?.header?.competitions?.[0]?.competitors || [];
+    for (const c of comps) {
+      const ab = String(c?.team?.abbreviation || '').toUpperCase();
+      if (ab && ab !== teamAbbrUpper) oppAbbrs.add(ab);
+    }
+    for (const tb of Array.isArray(liveSummaryJson?.boxscore?.players) ? liveSummaryJson.boxscore.players : []) {
+      const ab = String(tb?.team?.abbreviation || '').toUpperCase();
+      const id = String(tb?.team?.id || '');
+      if ((teamAbbrUpper && ab === teamAbbrUpper) || (teamEspnIdStr && id === teamEspnIdStr)) {
+        for (const statGrp of Array.isArray(tb.statistics) ? tb.statistics : []) {
+          for (const ath of Array.isArray(statGrp?.athletes) ? statGrp.athletes : []) {
+            addName(ath?.athlete?.displayName || ath?.athlete?.fullName || '');
+          }
+        }
+      }
+    }
+    for (const sp of Array.isArray(liveSummaryJson?.scoringPlays) ? liveSummaryJson.scoringPlays : []) {
+      const ab = String(sp?.team?.abbreviation || '').toUpperCase();
+      const id = String(sp?.team?.id || '');
+      if ((teamAbbrUpper && ab === teamAbbrUpper) || (teamEspnIdStr && id === teamEspnIdStr)) {
+        const txt = String(sp?.text || '');
+        for (const m of txt.matchAll(/\b([A-Z][a-z'’-]{1,16}\s+[A-Z][A-Za-z'’-]{2,20})\b/g)) {
+          addName(m[1]);
+        }
+      }
+    }
+  }
+
+  return { fullNames, uniqueSurnames, oppAbbrs };
+}
+
+/**
+ * Parses official X syndication profile HTML (`syndication.twitter.com/srv/timeline-profile/screen-name/<handle>`)
+ * into normalized live feed items with direct `video.twimg.com` HD MP4 streams, thumbnails, and durations.
+ */
+export function parseOfficialXSyndicationTimelineHtml(
+  html = '',
+  {
+    handle = '49ers',
+    team = null,
+    isLeagueAccount = false,
+    liveMode = false,
+    teamMentionRe = null,
+    gameDayMatchers = null,
+    nowMs = Date.now(),
+    maxAgeHours = 72,
+    maxItems = 14
+  } = {}
+) {
+  if (!html || typeof html !== 'string') return [];
+  const nextDataMatch = html.match(/<script id="__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/);
+  if (!nextDataMatch) return [];
+  let parsed = null;
+  try {
+    parsed = JSON.parse(nextDataMatch[1]);
+  } catch {
+    return [];
+  }
+  const entries = parsed?.props?.pageProps?.timeline?.entries || [];
+  if (!Array.isArray(entries) || entries.length === 0) return [];
+
+  const maxAgeMs = maxAgeHours * 3_600_000;
+  const teamXHandle = OFFICIAL_TEAM_X_HANDLES[String(team?.abbr || '').toUpperCase()] || handle;
+  const teamHandleRe = new RegExp(`[@#]${String(teamXHandle).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+  const abbrEsc = String(team?.abbr || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const oppMatchupHashtagRe =
+    abbrEsc && gameDayMatchers?.oppAbbrs?.size
+      ? new RegExp(
+          `#(?:${[...gameDayMatchers.oppAbbrs]
+            .map(o => {
+              const oe = o.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              return `${oe}vs${abbrEsc}|${abbrEsc}vs${oe}`;
+            })
+            .join('|')})\\b`,
+          'i'
+        )
+      : null;
+
+  const pickBestMp4FromTweet = tw => {
+    const mediaSources = [
+      ...(Array.isArray(tw?.extended_entities?.media) ? tw.extended_entities.media : []),
+      ...(Array.isArray(tw?.entities?.media) ? tw.entities.media : []),
+      ...(Array.isArray(tw?.quoted_status?.extended_entities?.media) ? tw.quoted_status.extended_entities.media : []),
+      ...(Array.isArray(tw?.retweeted_status?.extended_entities?.media) ? tw.retweeted_status.extended_entities.media : [])
+    ];
+    const vidMedia = mediaSources.find(m => m && (m.type === 'video' || m.type === 'animated_gif') && m.video_info?.variants);
+    const photoMedia = mediaSources.find(m => m && m.media_url_https);
+    if (!vidMedia) {
+      return {
+        mp4Url: '',
+        durationMs: 0,
+        thumbUrl: String(photoMedia?.media_url_https || '')
+      };
+    }
+    const mp4Variants = (Array.isArray(vidMedia.video_info.variants) ? vidMedia.video_info.variants : [])
+      .filter(
+        v =>
+          (v?.content_type === 'video/mp4' || v?.type === 'video/mp4') &&
+          /^https:\/\/video\.twimg\.com\//i.test(String(v?.url || v?.src || ''))
+      )
+      .sort((a, b) => (Number(b.bitrate) || 0) - (Number(a.bitrate) || 0));
+    const crispMobile = mp4Variants.find(v => (Number(v.bitrate) || 0) > 0 && Number(v.bitrate) <= 2_400_000) || mp4Variants[0];
+    return {
+      mp4Url: String(crispMobile?.url || crispMobile?.src || ''),
+      durationMs: Number(vidMedia.video_info?.duration_millis || 0),
+      thumbUrl: String(vidMedia.media_url_https || photoMedia?.media_url_https || '')
+    };
+  };
+
+  const tweets = entries
+    .filter(e => e?.type === 'tweet' && e?.content?.tweet)
+    .map(e => e.content.tweet)
+    .sort((a, b) => (Date.parse(b.created_at || '') || 0) - (Date.parse(a.created_at || '') || 0));
+
+  const results = [];
+  const seenIds = new Set();
+  for (const tw of tweets) {
+    if (results.length >= maxItems) break;
+    const idStr = String(tw.id_str || tw.id || '').trim();
+    if (!idStr || seenIds.has(idStr)) continue;
+    const pubMs = Date.parse(tw.created_at || '');
+    if (!Number.isFinite(pubMs) || nowMs - pubMs > maxAgeMs) continue;
+
+    const rawText = String(tw.full_text || tw.text || '')
+      .replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const quotedText = String(tw.quoted_status?.full_text || tw.quoted_status?.text || '')
+      .replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const { mp4Url, durationMs, thumbUrl } = pickBestMp4FromTweet(tw);
+    const caption = rawText || quotedText;
+    if (!caption || (caption.length < 10 && !mp4Url)) continue;
+
+    const relevanceBlob = `${caption} ${quotedText}`;
+    if (isLeagueAccount) {
+      // Strictly gate @NFL clips to active team, matchup hashtag, or active team's game-day players!
+      const relLower = relevanceBlob.toLowerCase();
+      let matchesTeam =
+        (teamMentionRe && teamMentionRe.test(relevanceBlob)) ||
+        teamHandleRe.test(relevanceBlob) ||
+        Boolean(oppMatchupHashtagRe && oppMatchupHashtagRe.test(relevanceBlob));
+      if (!matchesTeam && gameDayMatchers) {
+        for (const fn of gameDayMatchers.fullNames) {
+          if (relLower.includes(fn)) {
+            matchesTeam = true;
+            break;
+          }
+        }
+        if (!matchesTeam) {
+          for (const sn of gameDayMatchers.uniqueSurnames) {
+            if (new RegExp(`\\b${sn.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(relevanceBlob)) {
+              matchesTeam = true;
+              break;
+            }
+          }
+        }
+      }
+      if (!matchesTeam) continue;
+    }
+
+    const screenName = String(tw.user?.screen_name || handle).trim();
+    const postUrl = `https://x.com/${screenName}/status/${idStr}`;
+    const hasVideo = Boolean(mp4Url && (durationMs === 0 || durationMs >= 3500));
+    const durFmt =
+      durationMs >= 4000
+        ? `${Math.floor(durationMs / 60000)}:${String(Math.round((durationMs % 60000) / 1000)).padStart(2, '0')}`
+        : '';
+    const isHighlightVideo = hasVideo && (durationMs >= 4000 || isLeagueAccount || liveMode);
+
+    seenIds.add(idStr);
+    results.push({
+      id: `x_tl_${screenName.toLowerCase()}_${idStr}`,
+      type: hasVideo ? 'video' : 'tweet',
+      title: caption.slice(0, 320),
+      fullText: caption,
+      summary: quotedText && quotedText !== caption ? quotedText.slice(0, 220) : '',
+      url: postUrl,
+      imageUrl: /^https:\/\//i.test(thumbUrl) ? thumbUrl : '',
+      videoStreamUrl: hasVideo ? mp4Url : undefined,
+      isHighlightClip: isHighlightVideo,
+      isLiveGameHighlight: Boolean(hasVideo && liveMode),
+      duration: durFmt || undefined,
+      embeddable: true,
+      outletId: isLeagueAccount ? 'nfl_official' : `${team?.slug || 'team'}_official`,
+      outletName: isLeagueAccount ? 'NFL Official' : `@${screenName} Official`,
+      author: isLeagueAccount ? 'NFL' : tw.user?.name || team?.fullName || `@${screenName}`,
+      authorHandle: `@${screenName}`,
+      authorProfileUrl: `https://x.com/${screenName}`,
+      trustTier: 1,
+      publishedAt: new Date(Math.min(nowMs, pubMs)).toISOString()
+    });
+  }
+
+  return results;
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -588,13 +851,14 @@ export default {
       );
     }
 
-    // 4. Ultra-Fast Edge-Cached Live Wire (15s live-game / 25s standard TTL; 0 KV writes via `caches.default`!)
+    // 4. Ultra-Fast Edge-Cached Live Wire (10s live-game / 25s standard TTL; 0 KV writes via `caches.default`!)
     if (request.method === 'GET' && url.pathname === '/api/live-wire') {
       const liveMode = url.searchParams.get('live') === '1';
       const liveEventId = String(url.searchParams.get('event') || '').replace(/[^0-9]/g, '');
-      const edgeTtlSec = liveMode ? 15 : 25;
+      const edgeTtlSec = liveMode ? 10 : 25;
       return handleCachedEdgeGet(request, team.abbr, edgeTtlSec, async () => {
         const isSfTeam = team.abbr === 'SF';
+        const teamOfficialXHandle = OFFICIAL_TEAM_X_HANDLES[team.abbr] || '';
         const sfExtraRssFeeds = isSfTeam
           ? [
               { outletId: 'nbcsba', outletName: 'NBC Sports Bay Area', url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/?rss=1', trustTier: 1, sfOnly: false },
@@ -606,8 +870,20 @@ export default {
             ]
           : [];
         const clubVideosUrl = team.clubRssUrls?.[1] || `https://www.${team.clubDomain}/rss/videos`;
+        const xSyndicationHeaders = {
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+        };
 
-        const [rssXml, clubVideosXml, pfrXml, espnNews, liveSummaryJson, ...sfFeedXmls] = await Promise.all([
+        const [
+          rssXml,
+          clubVideosXml,
+          pfrXml,
+          espnNews,
+          liveSummaryJson,
+          teamXTimelineHtml,
+          nflXTimelineHtml,
+          ...sfFeedXmls
+        ] = await Promise.all([
           fetch(team.clubRssUrls[0], { signal: AbortSignal.timeout(4500) })
             .then(r => (r.ok ? r.text() : ''))
             .catch(() => ''),
@@ -617,18 +893,34 @@ export default {
           fetch(`https://www.profootballrumors.com/${team.otcSlug}/feed`, { signal: AbortSignal.timeout(4500) })
             .then(r => (r.ok ? r.text() : ''))
             .catch(() => ''),
-          fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${team.espnId}&limit=25`, {
+          fetch(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${team.espnId}&limit=25`, {
             signal: AbortSignal.timeout(4500)
           })
             .then(r => (r.ok ? r.json() : null))
             .catch(() => null),
           liveEventId
-            ? fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${liveEventId}`, {
+            ? fetch(`https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${liveEventId}`, {
                 signal: AbortSignal.timeout(4000)
               })
                 .then(r => (r.ok ? r.json() : null))
                 .catch(() => null)
             : Promise.resolve(null),
+          teamOfficialXHandle
+            ? fetch(`https://syndication.twitter.com/srv/timeline-profile/screen-name/${encodeURIComponent(teamOfficialXHandle)}`, {
+                headers: xSyndicationHeaders,
+                signal: AbortSignal.timeout(3500)
+              })
+                .then(r => (r.ok ? r.text() : ''))
+                .catch(() => '')
+            : Promise.resolve(''),
+          liveMode
+            ? fetch('https://syndication.twitter.com/srv/timeline-profile/screen-name/NFL', {
+                headers: xSyndicationHeaders,
+                signal: AbortSignal.timeout(3500)
+              })
+                .then(r => (r.ok ? r.text() : ''))
+                .catch(() => '')
+            : Promise.resolve(''),
           ...sfExtraRssFeeds.map(src =>
             fetch(src.url, {
               headers: { 'User-Agent': '49ersFaithfulEdge/2.1' },
@@ -673,6 +965,38 @@ export default {
           }
           return bestUrl;
         };
+
+        // 4a-0. Direct Official @<teamXHandle> & @NFL X Syndication Live Timelines (instant native `video.twimg.com` TD clips!)
+        const gameDayMatchers = buildActiveTeamGameDayMatchers(liveSummaryJson, team);
+        const officialTeamXItems = parseOfficialXSyndicationTimelineHtml(teamXTimelineHtml, {
+          handle: teamOfficialXHandle,
+          team,
+          isLeagueAccount: false,
+          liveMode,
+          teamMentionRe,
+          gameDayMatchers,
+          nowMs: nowEdgeMs,
+          maxAgeHours: 72,
+          maxItems: 14
+        });
+        const officialNflXItems = liveMode
+          ? parseOfficialXSyndicationTimelineHtml(nflXTimelineHtml, {
+              handle: 'NFL',
+              team,
+              isLeagueAccount: true,
+              liveMode,
+              teamMentionRe,
+              gameDayMatchers,
+              nowMs: nowEdgeMs,
+              maxAgeHours: 36,
+              maxItems: 10
+            })
+          : [];
+        for (const xIt of [...officialTeamXItems, ...officialNflXItems]) {
+          if (!xIt?.url || seenUrls.has(xIt.url)) continue;
+          seenUrls.add(xIt.url);
+          items.push(xIt);
+        }
 
         // 4a. Instant Live Game ESPN HD MP4 Highlight Clips (`summary.videos`) when `?event=<id>` is active
         if (Array.isArray(liveSummaryJson?.videos)) {

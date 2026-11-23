@@ -3154,6 +3154,7 @@ export async function hydrateLive49ersOfficialRss(appData, { maxAgeDays = 6 } = 
     }
 
     if (discovered.length > 0) {
+      pruneSupersededLiveScoringPlays(appData, discovered);
       appData.news.rawStream = [...discovered, ...appData.news.rawStream];
       propagateLiveItemsToPlayerMentions(discovered, rosterPlayers, appData);
     }
@@ -3287,6 +3288,41 @@ export async function hydrateLive49ersOfficialVideosRss(appData, { maxAgeDays = 
   } catch {
     return 0;
   }
+}
+
+function pruneSupersededLiveScoringPlays(appData, incomingVideos = []) {
+  if (!Array.isArray(appData?.news?.rawStream) || !Array.isArray(incomingVideos) || incomingVideos.length === 0) {
+    return;
+  }
+  const scoringVids = incomingVideos.filter(
+    v =>
+      v &&
+      (v.type === 'video' || Boolean(v.videoStreamUrl)) &&
+      Boolean(v.videoStreamUrl) &&
+      /\b(td|touchdown|score|scores|scoreboard|end zone|pick|interception|fumble|fg|field goal)\b/i.test(
+        `${v.title || ''} ${v.fullText || ''} ${v.summary || ''}`
+      )
+  );
+  if (scoringVids.length === 0) return;
+
+  const vidTextList = scoringVids.map(v => ({
+    blob: `${v.title || ''} ${v.fullText || ''} ${v.summary || ''}`.toLowerCase(),
+    pubMs: Date.parse(v.publishedAt || '') || Date.now()
+  }));
+
+  appData.news.rawStream = appData.news.rawStream.filter(existing => {
+    if (!existing || existing.wireSource !== 'espn_live_scoring_plays') return true;
+    const primaryLast = String(existing.mentionedPlayers?.[0]?.name || '')
+      .split(/\s+/)
+      .pop()
+      ?.toLowerCase();
+    if (!primaryLast || primaryLast.length < 3) return true;
+    const spPubMs = Date.parse(existing.publishedAt || '') || Date.now();
+    const superseded = vidTextList.some(
+      vt => vt.blob.includes(primaryLast) && Math.abs(vt.pubMs - spPubMs) <= 45 * 60_000
+    );
+    return !superseded;
+  });
 }
 
 /**
@@ -3510,9 +3546,13 @@ export async function hydrateLiveEspnGameHighlightsAndPlays(
         [...discovered, ...appData.news.rawStream].some(
           it =>
             (it.type === 'video' || Boolean(it.videoStreamUrl)) &&
-            it.wireSource === 'espn_live_highlights' &&
+            (it.wireSource === 'espn_live_highlights' ||
+              it.wireSource === 'worker_edge_wire' ||
+              Boolean(it.isLiveGameHighlight)) &&
             String(it.title || '').toLowerCase().includes(primaryLast) &&
-            /\b(td|touchdown|score|scores|end zone|pick|interception|fumble|fg|field goal)\b/i.test(String(it.title || ''))
+            /\b(td|touchdown|score|scores|scoreboard|end zone|pick|interception|fumble|fg|field goal)\b/i.test(
+              `${it.title || ''} ${it.fullText || ''}`
+            )
         );
       if (hasMatchingVideoAlready) continue;
 
@@ -3563,6 +3603,7 @@ export async function hydrateLiveEspnGameHighlightsAndPlays(
     }
 
     if (discovered.length > 0) {
+      pruneSupersededLiveScoringPlays(appData, discovered);
       appData.news.rawStream = [...discovered, ...appData.news.rawStream];
       propagateLiveItemsToPlayerMentions(discovered, rosterPlayers, appData);
     }
@@ -3601,8 +3642,19 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
     }
     if (isGameLive) {
       liveParams.set('live', '1');
+      const nowEdgeCallMs = Date.now();
+      const recentSchedGame = (appData.scheduleMatchup?.schedule || [])
+        .filter(g => {
+          if (!g || !g.id || g.isByeWeek || String(g.id).startsWith('post_')) return false;
+          if (String(g.statusState || '').toLowerCase() === 'in' || g.isLive) return true;
+          const koMs = g.dateIso ? Date.parse(g.dateIso) : NaN;
+          if (!Number.isFinite(koMs)) return false;
+          const compMs = g.completedAt ? Date.parse(g.completedAt) : koMs + 3.25 * 3_600_000;
+          return nowEdgeCallMs >= koMs - 15 * 60_000 && nowEdgeCallMs <= compMs + 6 * 3_600_000;
+        })
+        .sort((a, b) => (Date.parse(b.dateIso || '') || 0) - (Date.parse(a.dateIso || '') || 0))[0];
       const liveGameId =
-        appData.scheduleMatchup?.schedule?.find(g => g && (g.statusState === 'in' || g.isLive))?.id ||
+        recentSchedGame?.id ||
         appData.scheduleMatchup?.upcomingMatchup?.gameId ||
         '';
       if (liveGameId && !String(liveGameId).startsWith('post_')) {
@@ -3620,6 +3672,9 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
     const rosterPlayers = appData.roster?.players || [];
     const existingUrls = new Set(appData.news.rawStream.map(it => it.url).filter(Boolean));
     const existingVidIds = new Set(appData.news.rawStream.map(it => it.videoId).filter(Boolean));
+    const existingStreams = new Set(
+      appData.news.rawStream.map(it => String(it.videoStreamUrl || '').split('?')[0].toLowerCase()).filter(Boolean)
+    );
     const nowMs = Date.now();
     const discovered = [];
 
@@ -3628,7 +3683,10 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
       const type = raw.type === 'video' ? 'video' : raw.type === 'tweet' ? 'tweet' : 'article';
       const url = sanitizeExternalUrl(raw.url, null);
       if (type !== 'video' && (!url || existingUrls.has(url))) continue;
+      if (type === 'video' && url && existingUrls.has(url)) continue;
       if (raw.videoId && existingVidIds.has(raw.videoId)) continue;
+      const normRawStream = String(raw.videoStreamUrl || '').split('?')[0].toLowerCase();
+      if (normRawStream && existingStreams.has(normRawStream)) continue;
 
       const title = stripAggregatorBoilerplate(cleanSensationalistText(raw.title || ''));
       const fullText = raw.fullText ? stripAggregatorBoilerplate(cleanSensationalistText(raw.fullText)) : undefined;
@@ -3641,7 +3699,9 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
         continue;
       }
 
-      const isNationalEdgeOutlet = /^(nfl_trade_rumors|sf_standard|nfl_network|espn)$/i.test(String(raw.outletId || ''));
+      const isNationalEdgeOutlet = /^(nfl_trade_rumors|sf_standard|nfl_network|nfl_official|espn)$/i.test(
+        String(raw.outletId || '')
+      );
       const nonBioSummary = stripHistoricalSfBioSentences(summary);
       const leadTextEdge = `${title} ${fullText || ''}`.trim();
       const leadMatchesEdge = matchPlayersClient(leadTextEdge, rosterPlayers, 8, {
@@ -3767,10 +3827,12 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
         continue;
       }
       if (finalizedEdgeItem.url) existingUrls.add(finalizedEdgeItem.url);
+      if (normRawStream) existingStreams.add(normRawStream);
       discovered.push(finalizedEdgeItem);
     }
 
     if (discovered.length > 0) {
+      pruneSupersededLiveScoringPlays(appData, discovered);
       appData.news.rawStream = [...discovered, ...appData.news.rawStream];
       propagateLiveItemsToPlayerMentions(discovered.filter(d => d.type !== 'video'), rosterPlayers, appData);
     }

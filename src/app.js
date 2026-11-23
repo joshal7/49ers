@@ -63,7 +63,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=98';
+} from './services/dataService.js?v=99';
 import {
   SHARED_GEMINI_KEY_STORAGE_KEY,
   publishSharedGeminiApiKey,
@@ -4061,7 +4061,7 @@ function bindEvents() {
   );
 }
 
-const GAME_LIVE_WIRE_POLL_MS = 10_000; // 10s ultra-low latency during live 49ers game windows
+const GAME_LIVE_WIRE_POLL_MS = 8_000; // 8s ultra-low latency during live 49ers game windows
 const STANDARD_WIRE_POLL_MS = 25_000; // 25s sub-minute latency year-round
 
 let lastLiveCheckMs = 0;
@@ -4966,7 +4966,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=116', { updateViaCache: 'none' })
+        .register('./sw.js?v=117', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

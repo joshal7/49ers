@@ -18824,18 +18824,19 @@ await testAsync(
       globalThis.window = origWindow;
     }
 
-    // 6. Verify ultra-low-latency polling intervals & Worker 15s live-game edge cache
+    // 6. Verify ultra-low-latency polling intervals & Worker 10s live-game edge cache
     const appSrc = fs.readFileSync(path.join(rootDir, 'src', 'app.js'), 'utf8');
     const nflTeamsWorkerSrc = fs.readFileSync(path.join(rootDir, 'worker', 'nfl-teams-worker.js'), 'utf8');
     assert.ok(
-      appSrc.includes('GAME_LIVE_WIRE_POLL_MS = 10_000') && appSrc.includes('STANDARD_WIRE_POLL_MS = 25_000'),
-      'src/app.js must poll every 10s during live games and every 25s standard'
+      appSrc.includes('GAME_LIVE_WIRE_POLL_MS = 8_000') && appSrc.includes('STANDARD_WIRE_POLL_MS = 25_000'),
+      'src/app.js must poll every 8s during live games and every 25s standard'
     );
     assert.ok(
-      nflTeamsWorkerSrc.includes('const edgeTtlSec = liveMode ? 15 : 25;') &&
+      nflTeamsWorkerSrc.includes('const edgeTtlSec = liveMode ? 10 : 25;') &&
+        nflTeamsWorkerSrc.includes('syndication.twitter.com/srv/timeline-profile/screen-name/') &&
         nflTeamsWorkerSrc.includes('ninerswire.usatoday.com/feed/') &&
         nflTeamsWorkerSrc.includes('knbr.com/category/49ers/feed/'),
-      'worker/nfl-teams-worker.js /api/live-wire must use 15s/25s edge TTL and ingest Niners Wire + KNBR + Tier 1-3 X embeds'
+      'worker/nfl-teams-worker.js /api/live-wire must use 10s/25s edge TTL, pull official @49ers/@NFL X video timelines, and ingest Niners Wire + KNBR'
     );
     const dataServiceSrc = fs.readFileSync(path.join(rootDir, 'src', 'services', 'dataService.js'), 'utf8');
     const aiWorkerClientSrc = fs.readFileSync(path.join(rootDir, 'src', 'services', 'aiWorkerClient.js'), 'utf8');
@@ -18845,6 +18846,197 @@ await testAsync(
         dataServiceSrc.includes('https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event='),
       'Browser-side ESPN live telemetry must use CORS-safe site.web.api.espn.com (never site.api.espn.com)'
     );
+
+    // 7. Direct Official @49ers & @NFL X Syndication Video Timeline Parsing, Zero-Leak Gating & Text-Play -> HD-Video Upgrade
+    const {
+      OFFICIAL_TEAM_X_HANDLES,
+      buildActiveTeamGameDayMatchers,
+      parseOfficialXSyndicationTimelineHtml
+    } = await import('../worker/nfl-teams-worker.js');
+    assert.equal(OFFICIAL_TEAM_X_HANDLES.SF, '49ers');
+    assert.equal(Object.keys(OFFICIAL_TEAM_X_HANDLES).length, 32, 'Must map official X handles for all 32 NFL teams');
+
+    const mockSummaryForMatchers = {
+      header: {
+        competitions: [
+          {
+            competitors: [
+              { team: { abbreviation: 'SF', id: '25' } },
+              { team: { abbreviation: 'MIN', id: '16' } }
+            ]
+          }
+        ]
+      },
+      boxscore: {
+        players: [
+          {
+            team: { abbreviation: 'SF', id: '25' },
+            statistics: [
+              { athletes: [{ athlete: { displayName: 'George Kittle' } }, { athlete: { displayName: 'Brock Purdy' } }] }
+            ]
+          }
+        ]
+      },
+      scoringPlays: [
+        { team: { abbreviation: 'SF', id: '25' }, text: 'George Kittle 17 Yd pass from Brock Purdy' }
+      ]
+    };
+    const sfTeamCfg = { abbr: 'SF', slug: '49ers', nickname: '49ers', fullName: 'San Francisco 49ers', espnId: 25 };
+    const gdMatchers = buildActiveTeamGameDayMatchers(mockSummaryForMatchers, sfTeamCfg);
+    assert.ok(gdMatchers.uniqueSurnames.has('kittle') && gdMatchers.oppAbbrs.has('MIN'));
+
+    const mockNflTimelineNextData = {
+      props: {
+        pageProps: {
+          timeline: {
+            entries: [
+              {
+                type: 'tweet',
+                content: {
+                  tweet: {
+                    id_str: '2124738170042396672',
+                    created_at: new Date(nowMs - 25_000).toUTCString(),
+                    full_text: 'George Kittle gets on the scoreboard first in Mexico! #MINvsSF https://t.co/abc123',
+                    user: { screen_name: 'NFL', name: 'NFL' },
+                    extended_entities: {
+                      media: [
+                        {
+                          type: 'video',
+                          media_url_https: 'https://pbs.twimg.com/amplify_video_thumb/kittle.jpg',
+                          video_info: {
+                            duration_millis: 24500,
+                            variants: [
+                              { content_type: 'video/mp4', bitrate: 832000, url: 'https://video.twimg.com/amplify_video/kittle_480.mp4' },
+                              { content_type: 'video/mp4', bitrate: 2176000, url: 'https://video.twimg.com/amplify_video/kittle_720.mp4' }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                type: 'tweet',
+                content: {
+                  tweet: {
+                    id_str: '2124738170042399999',
+                    created_at: new Date(nowMs - 20_000).toUTCString(),
+                    full_text: 'Patrick Mahomes hits Travis Kelce for a Chiefs TD! #KCvsBUF https://t.co/xyz789',
+                    user: { screen_name: 'NFL', name: 'NFL' },
+                    extended_entities: {
+                      media: [
+                        {
+                          type: 'video',
+                          media_url_https: 'https://pbs.twimg.com/amplify_video_thumb/mahomes.jpg',
+                          video_info: {
+                            duration_millis: 22000,
+                            variants: [
+                              { content_type: 'video/mp4', bitrate: 2176000, url: 'https://video.twimg.com/amplify_video/mahomes_720.mp4' }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                type: 'tweet',
+                content: {
+                  tweet: {
+                    id_str: '2000000000000000001',
+                    created_at: new Date(nowMs - 10 * 86_400_000).toUTCString(),
+                    full_text: 'Pinned old Super Bowl Halftime promo #49ers',
+                    user: { screen_name: 'NFL', name: 'NFL' }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    };
+    const mockNflHtml = `<!DOCTYPE html><html><body><script id="__NEXT_DATA__" type="application/json">${JSON.stringify(mockNflTimelineNextData)}</script></body></html>`;
+    const parsedNflClips = parseOfficialXSyndicationTimelineHtml(mockNflHtml, {
+      handle: 'NFL',
+      team: sfTeamCfg,
+      isLeagueAccount: true,
+      liveMode: true,
+      teamMentionRe: /\b(?:49ers|Niners|San Francisco)\b/i,
+      gameDayMatchers: gdMatchers,
+      nowMs
+    });
+    assert.equal(parsedNflClips.length, 1, 'Must keep Kittle TD video while filtering Chiefs TD & stale 10d pinned tweet');
+    assert.equal(parsedNflClips[0].type, 'video');
+    assert.equal(parsedNflClips[0].videoStreamUrl, 'https://video.twimg.com/amplify_video/kittle_720.mp4');
+    assert.equal(parsedNflClips[0].isLiveGameHighlight, true);
+    assert.equal(parsedNflClips[0].url, 'https://x.com/NFL/status/2124738170042396672');
+
+    // Verify arriving @NFL HD MP4 clip via hydrateLiveWorkerEdgeWire cleanly supersedes text-only espn_live_scoring_plays card
+    const upgradeTestApp = {
+      meta: { teamAbbr: 'SF', currentWeek: 11 },
+      roster: {
+        players: [{ id: '3040151', name: 'George Kittle', position: 'TE', headshotUrl: 'https://a.espncdn.com/kittle.png' }]
+      },
+      scheduleMatchup: {
+        upcomingMatchup: { week: 11, gameId: '401873099', oppAbbr: 'MIN', oppName: 'Minnesota Vikings' },
+        schedule: [
+          {
+            id: '401873099',
+            week: 11,
+            seasonType: 'REG',
+            statusState: 'in',
+            isLive: true,
+            completed: false,
+            dateIso: new Date(nowMs - 30 * 60_000).toISOString(),
+            opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+          }
+        ]
+      },
+      news: {
+        rawStream: [
+          {
+            id: 'espn_live_score_401873099_sp1',
+            type: 'tweet',
+            wireSource: 'espn_live_scoring_plays',
+            title: 'TOUCHDOWN: George Kittle 17 Yd pass from Brock Purdy (Q1 11:16)',
+            fullText: 'TOUCHDOWN: George Kittle 17 Yd pass from Brock Purdy (Q1 11:16)',
+            publishedAt: new Date(nowMs - 35_000).toISOString(),
+            mentionedPlayers: [{ id: '3040151', name: 'George Kittle' }],
+            url: 'https://www.espn.com/nfl/game/_/gameId/401873099#play-sp1'
+          }
+        ]
+      }
+    };
+    const prevFetchUpgrade = globalThis.fetch;
+    try {
+      globalThis.fetch = async () => ({
+        ok: true,
+        json: async () => ({ ok: true, items: parsedNflClips })
+      });
+      const edgeAdded = await hydrateLiveWorkerEdgeWire(upgradeTestApp, {
+        workerBaseUrl: 'https://49ers.joshal.com',
+        isGameLive: true
+      });
+      assert.equal(edgeAdded, 1, 'Live @NFL Kittle TD video must ingest cleanly via /api/live-wire');
+      assert.ok(
+        upgradeTestApp.news.rawStream.some(x => x.videoStreamUrl === 'https://video.twimg.com/amplify_video/kittle_720.mp4'),
+        'Native video.twimg.com HD MP4 stream must be present in rawStream'
+      );
+      assert.ok(
+        !upgradeTestApp.news.rawStream.some(x => x.id === 'espn_live_score_401873099_sp1'),
+        'Text-only scoring play card must be superseded once matching HD TD highlight video arrives'
+      );
+      // Repeating the same 8s poll must deduplicate cleanly (0 duplicates!)
+      const edgeAddedDup = await hydrateLiveWorkerEdgeWire(upgradeTestApp, {
+        workerBaseUrl: 'https://49ers.joshal.com',
+        isGameLive: true
+      });
+      assert.equal(edgeAddedDup, 0, 'Consecutive 8s polls must not duplicate already-ingested live TD highlight videos');
+    } finally {
+      globalThis.fetch = prevFetchUpgrade;
+    }
   }
 );
 
