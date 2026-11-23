@@ -14,7 +14,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { ALL_NFL_TEAMS, CANARY_TEAM_SLUGS, getTeamBySlug } from '../src/config/teamRegistry.js';
+import { ALL_NFL_TEAMS, getTeamBySlug } from '../src/config/teamRegistry.js';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
@@ -243,11 +243,9 @@ async function main() {
   const args = process.argv.slice(2);
   const allFlag = args.includes('--all');
   const teamsArg = args.find(a => a.startsWith('--teams='));
-  const slugs = allFlag
-    ? ALL_NFL_TEAMS.filter(t => t.abbr !== 'SF').map(t => t.slug)
-    : teamsArg
-      ? teamsArg.replace('--teams=', '').split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
-      : [...CANARY_TEAM_SLUGS];
+  const slugs = teamsArg && !allFlag
+    ? teamsArg.replace('--teams=', '').split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
+    : ALL_NFL_TEAMS.filter(t => t.abbr !== 'SF').map(t => t.slug);
 
   for (const slug of slugs) {
     const team = getTeamBySlug(slug);

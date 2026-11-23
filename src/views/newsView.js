@@ -59,7 +59,6 @@ import {
 } from '../engine/beatAttributionEngine.js';
 import {
   buildDeterministicDailyTopNewsBrief,
-  hasPendingPostGameAiBriefAttempt,
   repairDailyTopNewsBriefLinks
 } from '../services/aiWorkerClient.js';
 import {

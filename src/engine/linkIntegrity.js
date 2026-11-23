@@ -293,21 +293,6 @@ const NON_NFL_OTHER_SPORT_HEADLINE_REGEX =
   /\b(warriors|lakers|celtics|nba\b|sf giants|san francisco giants|dodgers|mlb\b|sharks|nhl\b|stanley cup|world series|premier league|champions league|pga tour|ufc\b|wwe\b)\b/i;
 
 /**
- * Canonical single-source-of-truth registry of current 49ers leadership & front-office names
- * used for national-wire entity relevance checks (never bare ambiguous surnames like `morris` or `lynch`).
- */
-export const CURRENT_49ERS_LEADERSHIP_NAMES = [
-  'Kyle Shanahan',
-  'John Lynch',
-  'Raheem Morris',
-  'Klay Kubiak',
-  'Chris Foerster',
-  'Kris Kocurek',
-  'Paraag Marathe',
-  'Jed York'
-];
-
-/**
  * Departed former 49ers coaches who now lead or have led other NFL staffs.
  * Must NEVER be treated as current 49ers relevance triggers on national wire feeds.
  */

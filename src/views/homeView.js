@@ -56,7 +56,6 @@ import {
   sanitizeExternalUrl
 } from '../engine/linkIntegrity.js';
 import {
-  evaluateGameDayWindow,
   resolveGameDayInjuryRows,
   resolveTeamGameDayModel
 } from '../engine/gameDayRosterEngine.js';
@@ -66,7 +65,7 @@ import {
   resolveItemAuthorProfileUrl,
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
-import { renderDailyTopNewsBriefHtml, renderWireItemCardHtml } from './newsView.js?v=94';
+import { renderDailyTopNewsBriefHtml, renderWireItemCardHtml } from './newsView.js?v=95';
 import { buildDeterministicDailyTopNewsBrief } from '../services/aiWorkerClient.js';
 import {
   extractEspnPlayerIdFromRecord,

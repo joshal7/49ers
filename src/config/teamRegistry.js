@@ -14,8 +14,6 @@
  *     with isolated per-subdomain storage namespaces and WCAG AA (`>= 4.5:1`) contrast-verified dark & light themes.
  */
 
-export const CANARY_TEAM_SLUGS = ['lions', 'bills'];
-
 export const NFL_DIVISIONS = {
   // NFC
   SF: 'NFC West', SEA: 'NFC West', LAR: 'NFC West', ARI: 'NFC West',
@@ -279,7 +277,6 @@ function makeTeamEntry(raw) {
       `https://www.${clubDomain}/rss/videos`
     ],
     priorityTier: isSf ? 'vip' : 'standard',
-    isCanary: CANARY_TEAM_SLUGS.includes(slug),
     storageKeys,
     assets,
     themes: raw.themes,

@@ -9,7 +9,7 @@
     "refresh-data": "node scripts/fetch-live-49ers-data.mjs",
     "update-reporters": "node scripts/update-reporter-registry.mjs",
     "build-podcasts": "node scripts/build-podcasts.mjs",
-    "build-team-icons": "node scripts/build-team-icons.mjs --teams=lions,bills",
+    "build-team-icons": "NODE_EXTRA_CA_CERTS=/etc/ssl/cert.pem node scripts/build-team-icons.mjs --all",
     "build-team-icons:all": "NODE_EXTRA_CA_CERTS=/etc/ssl/cert.pem node scripts/build-team-icons.mjs --all",
     "build:nfl": "node scripts/build-nfl-portal.mjs",
     "deploy:nfl": "NODE_EXTRA_CA_CERTS=/etc/ssl/cert.pem node scripts/deploy-nfl-portal.mjs",

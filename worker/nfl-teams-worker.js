@@ -30,8 +30,7 @@ import {
   hasCrossTeam49ersLeak,
   isNflHubHost,
   normalizeAnyTeamAbbr,
-  resolveExplicitQueryTeam,
-  resolveTeamConfig
+  resolveExplicitQueryTeam
 } from '../src/config/teamRegistry.js';
 import {
   PRIMARY_GEMINI_REASONING_MODEL,

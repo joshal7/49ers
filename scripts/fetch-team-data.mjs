@@ -24,11 +24,9 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import {
   ALL_NFL_TEAMS,
-  CANARY_TEAM_SLUGS,
   NFL_DIVISIONS,
   buildDeterministicCoachingMatchup,
   getTeamByAbbr,
-  getTeamCoaches,
   hasCrossTeam49ersLeak,
   normalizeAnyTeamAbbr,
   resolveTeamConfig,

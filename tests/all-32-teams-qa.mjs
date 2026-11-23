@@ -216,6 +216,11 @@ await test('1. All 32 teams have complete registry entries, concise shortcut tit
   assert.equal(isOfficialTeamHost('49ers2.joshal.com'), false, '49ers2 canary must be retired');
   assert.equal(isOfficialTeamHost('www.joshal.com'), false);
   assert.equal(isOfficialTeamHost('workouts.joshal.com'), false);
+  assert.equal(fs.existsSync(path.join(ROOT, '.assetsignore')), false, 'Retired canary .assetsignore must stay deleted');
+  assert.equal(fs.existsSync(path.join(ROOT, 'scripts', 'upload-r2-data.mjs')), false, 'Retired R2 canary uploader must stay deleted');
+  assert.equal(fs.existsSync(path.join(ROOT, '.github', 'workflows', 'refresh-canary-teams.yml')), false, 'Retired canary workflow must stay deleted');
+  const regSrc = fs.readFileSync(path.join(ROOT, 'src', 'config', 'teamRegistry.js'), 'utf8');
+  assert.equal(/CANARY_TEAM_SLUGS|isCanary/.test(regSrc), false, 'Retired canary flags must not linger in teamRegistry.js');
 
   for (const team of ALL_NFL_TEAMS) {
     assert.equal(isOfficialTeamHost(`${team.slug}.joshal.com`), true, `${team.domain} must be an official host`);

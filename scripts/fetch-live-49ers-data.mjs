@@ -35,12 +35,10 @@ import {
   parseTankathonTeamPicksHtml,
   parseGroundedJsonSafe,
   discoverBestFreeGeminiModel,
-  runVerifiedDeepGeminiSynthesis,
   runSinglePassDailyGeminiSynthesis
 } from './lib/aiSynthesisEngine.mjs';
 import {
   getPacificDateKey,
-  getDailyNewsBriefCycleKey,
   selectTopNewsBriefSourceCandidates,
   buildDailyTopNewsBriefPrompt,
   parseAndSanitizeDailyTopNewsBrief,
@@ -54,7 +52,6 @@ import {
   collapseInitialDots,
   computePlayerPlayProbability,
   computeTeamHealthSummary,
-  calculateIrReturnTimeline,
   detectOpen21DayIrWindowFromHistory,
   doesClauseMentionPlayer,
   extractPracticeDaysFromText,
@@ -87,7 +84,6 @@ import {
 } from '../src/engine/playoffMonteCarlo.js';
 import { cleanSensationalistText, scoreContentSignal } from '../src/engine/antiFluffFilter.js';
 import {
-  DEFAULT_NFL_CALENDAR_2026,
   buildNflCalendarForSeasonYear,
   normalizeScheduleGameItem
 } from '../src/engine/seasonStateMachine.js';
@@ -116,7 +112,6 @@ import {
   parseOfficialClubInactivesArticle,
   parseRotoWireInactivesHtml,
   buildTeamGameDayRosterModel,
-  resolveGameDayInjuryRows,
   classifyRosterUnit,
   resolveEarlyWeekRolloverInput,
   extractCompletedGameRecapSummary
@@ -143,7 +138,6 @@ import {
   is49ersRelevantWireItem,
   isCompatiblePositionToken,
   isOffTopicLeagueFiller,
-  isPaywalledPublisher,
   isStaleSeasonHeadline,
   sanitizeExternalUrl,
   stripAggregatorBoilerplate,

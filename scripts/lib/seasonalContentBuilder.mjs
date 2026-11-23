@@ -10,7 +10,6 @@ import {
   extractBlueskyBestExternalLink,
   formatTweetBodyForDisplay,
   isDirectArticleUrl,
-  isRedundantProfileSelfLink,
   promoteLinkDropTweetToArticle,
   resolveTweetLinkedArticlePreview,
   stripRedundantAuthorBoilerplate

@@ -12,7 +12,6 @@ import {
   normalizePlayerKey,
   slugifyPlayerName,
   sanitizeExternalUrl,
-  buildMockDraftProspectUrl,
   buildMockDraftBigBoardUrl
 } from './linkIntegrity.js';
 

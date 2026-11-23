@@ -859,13 +859,6 @@ export function isOpposingTeamSubjectLead(leadClaim = '', item = {}, teamInput =
 }
 
 /**
- * Backwards-compatible alias for `isOpposingTeamSubjectLead` (now dynamically active-team-aware for all 32 teams).
- */
-export function isNon49ersTeamSubjectLead(leadClaim = '', item = {}, teamInput = null) {
-  return isOpposingTeamSubjectLead(leadClaim, item, teamInput);
-}
-
-/**
  * Returns true when an item is strictly an opposing-team player injury, availability, or roster-move report
  * (e.g., `"49ers' Colton McKivitz exits win vs. Vikings with lower leg injury"` on `vikings.joshal.com`)
  * that active-team fans do not want cluttering their team's News feed or breaking alerts.
