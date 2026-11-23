@@ -104,7 +104,10 @@ import {
   reconcileAndDedupePlayoffGames,
   runPlayoffMonteCarlo,
   computeRootingGuideLeverage,
-  computeCalibratedTeamPowerRating
+  computeCalibratedTeamPowerRating,
+  buildOtherConferenceSimulatorConfig,
+  buildLeagueStandingsSnapshot,
+  computeSimulationRivalImpacts
 } from '../src/engine/playoffMonteCarlo.js';
 import {
   parseTankathonTeamPicksHtml,
@@ -683,6 +686,60 @@ test('Empty simulator config handles gracefully without throwing', () => {
   const empty = runPlayoffMonteCarlo({ nfcTeams: [] });
   assert.equal(empty.sfOdds, null);
   assert.equal(empty.allTeamOdds.length, 0);
+});
+
+test('32-team League Standings Snapshot & AFC Monte Carlo flip compute full ESPN splits, official seeding, and rival sim deltas', () => {
+  const afcCfg = buildOtherConferenceSimulatorConfig(simInputs, 'AFC');
+  assert.ok(afcCfg && afcCfg.conference === 'AFC' && afcCfg.conferenceTeams.length === 16, 'Expected 16 AFC teams');
+  const afcSim = runPlayoffMonteCarlo({ ...afcCfg, iterations: 2500, seed: 492026 });
+  assert.equal(afcSim.allTeamOdds.length, 16);
+  const sumAfcPlayoffs = afcSim.allTeamOdds.reduce((s, t) => s + t.makePlayoffsPct, 0);
+  assert.ok(Math.abs(sumAfcPlayoffs - 700) < 2.5, `AFC playoff sum conservation = ${sumAfcPlayoffs}`);
+
+  const baseNfc = seasonalData.playoffPicture.baselineSimulation;
+  const snap = buildLeagueStandingsSnapshot(simInputs, {
+    primarySimResult: baseNfc,
+    otherConfSimResult: afcSim,
+    baselinePrimarySimResult: baseNfc,
+    baselineOtherConfSimResult: afcSim
+  });
+  assert.equal(snap.leagueRanked.length, 32, 'League standings must contain all 32 NFL clubs');
+  assert.equal(snap.nfcSeeded.length, 16, 'NFC standings must contain 16 seeded clubs');
+  assert.equal(snap.afcSeeded.length, 16, 'AFC standings must contain 16 seeded clubs');
+  assert.equal(Object.keys(snap.divisions).length, 8, 'Must produce all 8 NFL divisions');
+  for (const [divName, clubs] of Object.entries(snap.divisions)) {
+    assert.equal(clubs.length, 4, `${divName} must have 4 clubs`);
+  }
+  assert.equal(snap.wildCardMatchups.NFC.length, 4, 'NFC must have 4 Wild Card matchup pairings');
+  assert.equal(snap.wildCardMatchups.AFC.length, 4, 'AFC must have 4 Wild Card matchup pairings');
+  const sfRow = snap.byAbbr.get('SF');
+  const bufRow = snap.byAbbr.get('BUF');
+  assert.ok(sfRow && /^\d+-\d+/.test(sfRow.homeRec) && /^\d+-\d+/.test(sfRow.awayRec), 'SF home/away splits derived');
+  assert.ok(sfRow.pointsFor > 0 && sfRow.pointsAgainst > 0, 'SF PF/PA derived');
+  assert.ok(/^[WLT]\d+$/.test(sfRow.streak), `SF streak formatted cleanly: ${sfRow.streak}`);
+  assert.ok(bufRow && bufRow.makePlayoffsPct > 0 && /^[WLT]\d+$/.test(bufRow.streak), 'AFC club BUF splits & Monte Carlo odds populated');
+
+  // Verify rival impact calculation when forcing a key rooting game
+  const keyGame = (seasonalData.playoffPicture.rootingLeverage || []).find(g => !g.is49ersGame) || simInputs.remainingGames[0];
+  const forcedSim = runPlayoffMonteCarlo({
+    ...simInputs,
+    forcedWinners: { [keyGame.gameId || keyGame.id]: 'HOME' },
+    iterations: 2500,
+    seed: 492026
+  });
+  const rivals = computeSimulationRivalImpacts({
+    baselineSim: baseNfc,
+    activeSim: forcedSim,
+    targetAbbr: 'SF',
+    maxCount: 3
+  });
+  assert.ok(rivals.length >= 1 && rivals.every(r => r.abbr !== 'SF' && Math.abs(r.deltaPct) >= 0.5), 'Rival impacts must surface non-SF swings');
+
+  // Edge case: 0-0 preseason / empty completedGames produces 32 clean clubs with zero NaNs
+  const emptySnap = buildLeagueStandingsSnapshot({});
+  assert.equal(emptySnap.leagueRanked.length, 32);
+  assert.equal(emptySnap.byAbbr.get('SF').winPctDisplay, '.000');
+  assert.equal(emptySnap.byAbbr.get('SF').streak, '—');
 });
 
 console.log('\n=== [5/6] Anti-Fluff Classifier & Per-User Reporter Filter QA ===');

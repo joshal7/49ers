@@ -38,7 +38,10 @@ import {
   resolveHomeDashboardState
 } from './engine/seasonStateMachine.js?v=64';
 import { simulateCapScenario } from './engine/capSimulator.js?v=66';
-import { runPlayoffMonteCarlo } from './engine/playoffMonteCarlo.js?v=65';
+import {
+  runPlayoffMonteCarlo,
+  buildOtherConferenceSimulatorConfig
+} from './engine/playoffMonteCarlo.js?v=66';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
 import {
   canonicalOpponentHealthSnapshotKey,
@@ -66,7 +69,7 @@ import {
   getCachedGamecastModel,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=102';
+} from './services/dataService.js?v=103';
 import {
   isNumericEspnGameId,
   resolveGamecastGamesList
@@ -159,7 +162,7 @@ import {
 } from './views/newsView.js?v=95';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=50';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=82';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=98';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=99';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=69';
 import {
   renderSettingsSheetHtml,
@@ -274,6 +277,9 @@ const state = {
   matchupStatsUnit: 'offense',
   schedulePrevExpanded: false,
   expandedRootingWeeks: new Set(),
+  playoffStandingsView: 'picture',
+  playoffStandingsConf: ACTIVE_TEAM.conference || 'NFC',
+  playoffSeedBarsExpanded: false,
   // Gamecast (Live & Historical Box Score / Team Stats / Play-by-Play) state
   gamecastGameId: null,
   gamecastTab: null, // 'box' | 'team' | 'pbp' | null (auto: 'pbp' when live, 'box' when final)
@@ -345,6 +351,17 @@ let audioController = null;
 const inMemorySharedVoiceKeys = new Map();
 let cachedMonteCarloKey = '';
 let cachedMonteCarloResult = null;
+let cachedOtherConfMcKey = '';
+let cachedOtherConfMcResult = null;
+let cachedOtherConfBaselineResult = null;
+
+function invalidateMonteCarloCaches() {
+  cachedMonteCarloKey = '';
+  cachedMonteCarloResult = null;
+  cachedOtherConfMcKey = '';
+  cachedOtherConfMcResult = null;
+  cachedOtherConfBaselineResult = null;
+}
 let activeJargonAnchor = null;
 let remoteSheetRequestSeq = 0;
 
@@ -1056,6 +1073,49 @@ function getMonteCarloResult() {
   return cachedMonteCarloResult;
 }
 
+function getOtherConferenceMonteCarloPair() {
+  const inputs = state.appData?.seasonal?.playoffPicture?.simulatorInputs;
+  if (!inputs) return { baseline: null, active: null };
+  const otherConf = (ACTIVE_TEAM.conference || 'NFC') === 'AFC' ? 'NFC' : 'AFC';
+  const otherCfg = buildOtherConferenceSimulatorConfig(inputs, otherConf);
+  if (!otherCfg) return { baseline: null, active: null };
+
+  if (!cachedOtherConfBaselineResult) {
+    cachedOtherConfBaselineResult = runPlayoffMonteCarlo({
+      ...otherCfg,
+      iterations: 2500,
+      seed: 492026
+    });
+  }
+
+  const overrides = state.prefs.playoffForcedWinners || {};
+  const overrideKeys = Object.keys(overrides);
+  if (overrideKeys.length === 0) {
+    return {
+      baseline: cachedOtherConfBaselineResult,
+      active: cachedOtherConfBaselineResult
+    };
+  }
+  const key = JSON.stringify(overrides);
+  if (key === cachedOtherConfMcKey && cachedOtherConfMcResult) {
+    return {
+      baseline: cachedOtherConfBaselineResult,
+      active: cachedOtherConfMcResult
+    };
+  }
+  cachedOtherConfMcKey = key;
+  cachedOtherConfMcResult = runPlayoffMonteCarlo({
+    ...otherCfg,
+    forcedWinners: overrides,
+    iterations: 2500,
+    seed: 492026
+  });
+  return {
+    baseline: cachedOtherConfBaselineResult,
+    active: cachedOtherConfMcResult
+  };
+}
+
 function getAllEpisodes() {
   const base = state.appData?.podcastIndex?.episodes || [];
   const workerEps = state.workerSharedFeed?.episodes || [];
@@ -1313,6 +1373,8 @@ function renderMain() {
         state.seasonSubTab === 'playoffs' || state.seasonSubTab === 'schedule' || state.seasonSubTab === 'gamecast'
           ? getMonteCarloResult()
           : null;
+      const otherConfMcPair =
+        state.seasonSubTab === 'playoffs' ? getOtherConferenceMonteCarloPair() : { baseline: null, active: null };
       const resolvedGcInfo =
         state.seasonSubTab === 'gamecast' ? resolveGamecastGamesList(state.appData, mcSimResult) : null;
       const activeGcId =
@@ -1334,6 +1396,11 @@ function renderMain() {
         draftSub: state.draftSubTab,
         appData: state.appData,
         mcSimResult,
+        otherConfMcSimResult: otherConfMcPair.active,
+        otherConfBaselineSimResult: otherConfMcPair.baseline,
+        playoffStandingsView: state.playoffStandingsView,
+        playoffStandingsConf: state.playoffStandingsConf,
+        playoffSeedBarsExpanded: state.playoffSeedBarsExpanded,
         forcedWinners: state.prefs.playoffForcedWinners,
         combineSearch: state.combineSearch,
         bigBoardSearch: state.bigBoardSearch,
@@ -3627,6 +3694,37 @@ function bindEvents() {
         renderMain();
         break;
 
+      case 'set-playoff-standings-view': {
+        const nextView = btn.getAttribute('data-standings-view') || 'picture';
+        if (['picture', 'division', 'conference', 'league'].includes(nextView)) {
+          state.playoffStandingsView = nextView;
+          renderMain();
+        }
+        break;
+      }
+
+      case 'set-playoff-standings-conf': {
+        const nextConf = String(btn.getAttribute('data-standings-conf') || 'NFC').toUpperCase();
+        if (nextConf === 'NFC' || nextConf === 'AFC') {
+          state.playoffStandingsConf = nextConf;
+          renderMain();
+        }
+        break;
+      }
+
+      case 'toggle-playoff-seed-bars':
+        state.playoffSeedBarsExpanded = !state.playoffSeedBarsExpanded;
+        renderMain();
+        break;
+
+      case 'jump-to-playoff-standings': {
+        const target = document.getElementById('playoffStandingsCard');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        break;
+      }
+
       case 'toggle-draft-spider': {
         const idx = Number(btn.getAttribute('data-draft-idx'));
         state.expandedDraftSpiderIdx = state.expandedDraftSpiderIdx === idx ? -1 : idx;
@@ -4826,8 +4924,7 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
   const briefChanged = hydrateCachedDailyTopNewsBrief(state.appData);
 
   if (addedTweets > 0 || espnChanged || briefChanged || gameDayChanged) {
-    cachedMonteCarloKey = '';
-    cachedMonteCarloResult = null;
+    invalidateMonteCarloCaches();
   }
   renderHeader();
 
@@ -4969,8 +5066,7 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
       state.appData = mergeRuntimeStateIntoUpstreamBundle(state.appData, fresherBundle);
       hydrateCachedDailyMatchupIntel(state.appData);
       hydrateCachedDailyTopNewsBrief(state.appData);
-      cachedMonteCarloKey = '';
-      cachedMonteCarloResult = null;
+      invalidateMonteCarloCaches();
       hasNewUpstreamData = true;
     }
 
@@ -4994,8 +5090,7 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
     const briefHydratedChanged = hydrateCachedDailyTopNewsBrief(state.appData);
 
     if (addedLivePosts > 0 || espnMutated || podsMutated || briefHydratedChanged || gameDayChanged) {
-      cachedMonteCarloKey = '';
-      cachedMonteCarloResult = null;
+      invalidateMonteCarloCaches();
       hasNewUpstreamData = true;
     }
 

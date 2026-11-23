@@ -1271,3 +1271,767 @@ export function computeRootingGuideLeverage(baseConfig, targetOrMaxCount = 12) {
 
   return sorted.slice(0, maxOut);
 }
+
+const NFL_TEAM_META_BY_ABBR = {
+  ARI: { name: 'Arizona Cardinals', espnAbbr: 'ari' },
+  ATL: { name: 'Atlanta Falcons', espnAbbr: 'atl' },
+  BAL: { name: 'Baltimore Ravens', espnAbbr: 'bal' },
+  BUF: { name: 'Buffalo Bills', espnAbbr: 'buf' },
+  CAR: { name: 'Carolina Panthers', espnAbbr: 'car' },
+  CHI: { name: 'Chicago Bears', espnAbbr: 'chi' },
+  CIN: { name: 'Cincinnati Bengals', espnAbbr: 'cin' },
+  CLE: { name: 'Cleveland Browns', espnAbbr: 'cle' },
+  DAL: { name: 'Dallas Cowboys', espnAbbr: 'dal' },
+  DEN: { name: 'Denver Broncos', espnAbbr: 'den' },
+  DET: { name: 'Detroit Lions', espnAbbr: 'det' },
+  GB: { name: 'Green Bay Packers', espnAbbr: 'gb' },
+  HOU: { name: 'Houston Texans', espnAbbr: 'hou' },
+  IND: { name: 'Indianapolis Colts', espnAbbr: 'ind' },
+  JAX: { name: 'Jacksonville Jaguars', espnAbbr: 'jax' },
+  KC: { name: 'Kansas City Chiefs', espnAbbr: 'kc' },
+  LAC: { name: 'Los Angeles Chargers', espnAbbr: 'lac' },
+  LAR: { name: 'Los Angeles Rams', espnAbbr: 'lar' },
+  LV: { name: 'Las Vegas Raiders', espnAbbr: 'lv' },
+  MIA: { name: 'Miami Dolphins', espnAbbr: 'mia' },
+  MIN: { name: 'Minnesota Vikings', espnAbbr: 'min' },
+  NE: { name: 'New England Patriots', espnAbbr: 'ne' },
+  NO: { name: 'New Orleans Saints', espnAbbr: 'no' },
+  NYG: { name: 'New York Giants', espnAbbr: 'nyg' },
+  NYJ: { name: 'New York Jets', espnAbbr: 'nyj' },
+  PHI: { name: 'Philadelphia Eagles', espnAbbr: 'phi' },
+  PIT: { name: 'Pittsburgh Steelers', espnAbbr: 'pit' },
+  SEA: { name: 'Seattle Seahawks', espnAbbr: 'sea' },
+  SF: { name: 'San Francisco 49ers', espnAbbr: 'sf' },
+  TB: { name: 'Tampa Bay Buccaneers', espnAbbr: 'tb' },
+  TEN: { name: 'Tennessee Titans', espnAbbr: 'ten' },
+  WAS: { name: 'Washington Commanders', espnAbbr: 'wsh' }
+};
+
+function fmtWltRecord(w = 0, l = 0, t = 0) {
+  const wn = Number(w) || 0;
+  const ln = Number(l) || 0;
+  const tn = Number(t) || 0;
+  return tn > 0 ? `${wn}-${ln}-${tn}` : `${wn}-${ln}`;
+}
+
+function parseWltCounts(str) {
+  if (!str || typeof str !== 'string') return null;
+  const m = str.trim().match(/^(\d+)\s*-\s*(\d+)(?:\s*-\s*(\d+))?$/);
+  if (!m) return null;
+  return { w: Number(m[1]) || 0, l: Number(m[2]) || 0, t: Number(m[3]) || 0 };
+}
+
+function calcStandingsWinPct(w = 0, l = 0, t = 0) {
+  const gp = (Number(w) || 0) + (Number(l) || 0) + (Number(t) || 0);
+  if (gp <= 0) return 0;
+  return ((Number(w) || 0) + 0.5 * (Number(t) || 0)) / gp;
+}
+
+/**
+ * Derives exact HOME, AWAY, DIV, CONF, PF, PA, STRK, and H2H records from completed regular-season games.
+ */
+function deriveTeamSplitsFromCompletedGames(completedGames = []) {
+  const sortedGames = [...(Array.isArray(completedGames) ? completedGames : [])]
+    .filter(
+      g =>
+        g &&
+        g.home &&
+        g.away &&
+        g.homeScore != null &&
+        g.awayScore != null &&
+        Number.isFinite(Number(g.homeScore)) &&
+        Number.isFinite(Number(g.awayScore))
+    )
+    .sort((a, b) => Number(a.week || 0) - Number(b.week || 0));
+
+  const map = new Map();
+  const h2h = new Map(); // "A|B" -> { w, l, t }
+  const defeatedBy = new Map(); // abbr -> Set/Array of beaten opponents (with multiplicity)
+  const opponentsOf = new Map(); // abbr -> Array of all opponents played
+
+  const ensure = abbr => {
+    if (!map.has(abbr)) {
+      map.set(abbr, {
+        w: 0,
+        l: 0,
+        t: 0,
+        homeW: 0,
+        homeL: 0,
+        homeT: 0,
+        awayW: 0,
+        awayL: 0,
+        awayT: 0,
+        divW: 0,
+        divL: 0,
+        divT: 0,
+        confW: 0,
+        confL: 0,
+        confT: 0,
+        pf: 0,
+        pa: 0,
+        lastOutcome: '',
+        streakCount: 0
+      });
+    }
+    return map.get(abbr);
+  };
+
+  const addH2h = (a, b, res) => {
+    const key = `${a}|${b}`;
+    if (!h2h.has(key)) h2h.set(key, { w: 0, l: 0, t: 0 });
+    const rec = h2h.get(key);
+    if (res === 'W') rec.w++;
+    else if (res === 'L') rec.l++;
+    else rec.t++;
+  };
+
+  const pushStreak = (st, outcome) => {
+    if (st.lastOutcome === outcome) {
+      st.streakCount += 1;
+    } else {
+      st.lastOutcome = outcome;
+      st.streakCount = 1;
+    }
+  };
+
+  for (const g of sortedGames) {
+    const home = normalizeTeamAbbr(g.home);
+    const away = normalizeTeamAbbr(g.away);
+    if (!ALL_NFL_DIVISIONS[home] || !ALL_NFL_DIVISIONS[away]) continue;
+    const hs = Number(g.homeScore);
+    const as = Number(g.awayScore);
+    const hSt = ensure(home);
+    const aSt = ensure(away);
+
+    const sameConf = getConferenceForTeam(home) === getConferenceForTeam(away);
+    const sameDiv = ALL_NFL_DIVISIONS[home] === ALL_NFL_DIVISIONS[away];
+
+    hSt.pf += hs;
+    hSt.pa += as;
+    aSt.pf += as;
+    aSt.pa += hs;
+
+    if (!opponentsOf.has(home)) opponentsOf.set(home, []);
+    if (!opponentsOf.has(away)) opponentsOf.set(away, []);
+    opponentsOf.get(home).push(away);
+    opponentsOf.get(away).push(home);
+
+    if (hs > as) {
+      hSt.w++;
+      hSt.homeW++;
+      aSt.l++;
+      aSt.awayL++;
+      if (sameConf) {
+        hSt.confW++;
+        aSt.confL++;
+      }
+      if (sameDiv) {
+        hSt.divW++;
+        aSt.divL++;
+      }
+      pushStreak(hSt, 'W');
+      pushStreak(aSt, 'L');
+      addH2h(home, away, 'W');
+      addH2h(away, home, 'L');
+      if (!defeatedBy.has(home)) defeatedBy.set(home, []);
+      defeatedBy.get(home).push(away);
+    } else if (as > hs) {
+      aSt.w++;
+      aSt.awayW++;
+      hSt.l++;
+      hSt.homeL++;
+      if (sameConf) {
+        aSt.confW++;
+        hSt.confL++;
+      }
+      if (sameDiv) {
+        aSt.divW++;
+        hSt.divL++;
+      }
+      pushStreak(aSt, 'W');
+      pushStreak(hSt, 'L');
+      addH2h(away, home, 'W');
+      addH2h(home, away, 'L');
+      if (!defeatedBy.has(away)) defeatedBy.set(away, []);
+      defeatedBy.get(away).push(home);
+    } else {
+      hSt.t++;
+      hSt.homeT++;
+      aSt.t++;
+      aSt.awayT++;
+      if (sameConf) {
+        hSt.confT++;
+        aSt.confT++;
+      }
+      if (sameDiv) {
+        hSt.divT++;
+        aSt.divT++;
+      }
+      pushStreak(hSt, 'T');
+      pushStreak(aSt, 'T');
+      addH2h(home, away, 'T');
+      addH2h(away, home, 'T');
+    }
+  }
+
+  return { splitsByAbbr: map, h2h, defeatedBy, opponentsOf };
+}
+
+/**
+ * Deterministically ranks a subset of tied clubs using NFL tiebreaker steps
+ * (H2H -> Division Win% (division mode) -> Conference Win% -> SOV -> SOS -> Point Diff -> PF).
+ */
+function rankTiedStandingsGroup(group, { isDivision = false, byAbbr, h2h, defeatedBy, opponentsOf }) {
+  if (group.length <= 1) return [...group];
+
+  const computeSov = abbr => {
+    const beaten = defeatedBy.get(abbr) || [];
+    if (!beaten.length) return 0;
+    let sum = 0;
+    for (const opp of beaten) {
+      const o = byAbbr.get(opp);
+      if (o) sum += o.winPct;
+    }
+    return sum / beaten.length;
+  };
+  const computeSos = abbr => {
+    const opps = opponentsOf.get(abbr) || [];
+    if (!opps.length) return 0;
+    let sum = 0;
+    for (const opp of opps) {
+      const o = byAbbr.get(opp);
+      if (o) sum += o.winPct;
+    }
+    return sum / opps.length;
+  };
+
+  const pickBestFromTied = tied => {
+    let pool = [...tied];
+    const narrowByMax = scoreFn => {
+      let best = -Infinity;
+      const scored = pool.map(t => {
+        const v = scoreFn(t);
+        if (v > best) best = v;
+        return { t, v };
+      });
+      const next = scored.filter(x => Math.abs(x.v - best) <= 1e-9).map(x => x.t);
+      if (next.length > 0 && next.length < pool.length) {
+        pool = next;
+        return true;
+      }
+      return false;
+    };
+
+    // 1. Head-to-Head
+    if (pool.length === 2) {
+      const r = h2h.get(`${pool[0].abbr}|${pool[1].abbr}`);
+      if (r && r.w + r.l + r.t > 0) {
+        const p0 = calcStandingsWinPct(r.w, r.l, r.t);
+        const p1 = calcStandingsWinPct(r.l, r.w, r.t);
+        if (Math.abs(p0 - p1) > 1e-9) {
+          return p0 > p1 ? pool[0] : pool[1];
+        }
+      }
+    } else if (pool.length >= 3) {
+      if (isDivision) {
+        const h2hScores = new Map();
+        let anyPlayed = false;
+        for (const a of pool) {
+          let w = 0,
+            l = 0,
+            t = 0;
+          for (const b of pool) {
+            if (a.abbr === b.abbr) continue;
+            const r = h2h.get(`${a.abbr}|${b.abbr}`);
+            if (r) {
+              w += r.w;
+              l += r.l;
+              t += r.t;
+              if (r.w + r.l + r.t > 0) anyPlayed = true;
+            }
+          }
+          h2hScores.set(a.abbr, w + l + t > 0 ? calcStandingsWinPct(w, l, t) : -1);
+        }
+        if (anyPlayed && ![...h2hScores.values()].includes(-1)) {
+          if (narrowByMax(t => h2hScores.get(t.abbr))) {
+            if (pool.length === 1) return pool[0];
+          }
+        }
+      } else {
+        // 3+ club conference/wild-card sweep check: only applies if 1 club beat ALL others
+        const sweeper = pool.find(a =>
+          pool.every(b => {
+            if (a.abbr === b.abbr) return true;
+            const r = h2h.get(`${a.abbr}|${b.abbr}`);
+            return r && r.w > r.l;
+          })
+        );
+        if (sweeper) return sweeper;
+      }
+    }
+
+    // 2. Division Win % (for intra-division ties)
+    if (isDivision) {
+      if (narrowByMax(t => t.divWinPct) && pool.length === 1) return pool[0];
+    }
+
+    // 3. Conference Win %
+    if (narrowByMax(t => t.confWinPct) && pool.length === 1) return pool[0];
+
+    // 4. Strength of Victory
+    if (narrowByMax(t => computeSov(t.abbr)) && pool.length === 1) return pool[0];
+
+    // 5. Strength of Schedule
+    if (narrowByMax(t => computeSos(t.abbr)) && pool.length === 1) return pool[0];
+
+    // 6. Point Differential -> Points For -> Alphabetical
+    if (narrowByMax(t => t.pointDiff) && pool.length === 1) return pool[0];
+    if (narrowByMax(t => t.pointsFor) && pool.length === 1) return pool[0];
+    return pool.sort((a, b) => a.abbr.localeCompare(b.abbr))[0];
+  };
+
+  const ordered = [];
+  const rem = [...group];
+  while (rem.length > 0) {
+    // Group by highest Win %
+    let topPct = -Infinity;
+    for (const t of rem) {
+      if (t.winPct > topPct) topPct = t.winPct;
+    }
+    const tiedTop = rem.filter(t => Math.abs(t.winPct - topPct) <= 1e-9);
+    const chosen = tiedTop.length === 1 ? tiedTop[0] : pickBestFromTied(tiedTop);
+    ordered.push(chosen);
+    rem.splice(rem.indexOf(chosen), 1);
+  }
+  return ordered;
+}
+
+/**
+ * Builds a simulator input configuration for the opposite conference (e.g. AFC when viewing SF,
+ * or NFC when viewing BUF) so both conferences can compute live Monte Carlo playoff odds.
+ */
+export function buildOtherConferenceSimulatorConfig(simulatorInputs, targetConference = 'AFC') {
+  if (!simulatorInputs || typeof simulatorInputs !== 'object') return null;
+  const wantConf = String(targetConference || 'AFC').toUpperCase() === 'AFC' ? 'AFC' : 'NFC';
+  const primaryConf =
+    String(simulatorInputs.conference || '').toUpperCase() === 'AFC' ? 'AFC' : 'NFC';
+
+  if (wantConf === primaryConf) {
+    const confTeams =
+      Array.isArray(simulatorInputs.conferenceTeams) && simulatorInputs.conferenceTeams.length > 0
+        ? simulatorInputs.conferenceTeams
+        : simulatorInputs.nfcTeams || [];
+    if (!confTeams.length) return null;
+    return {
+      ...simulatorInputs,
+      conference: primaryConf,
+      targetTeam: simulatorInputs.targetTeam || confTeams[0].abbr,
+      conferenceTeams: confTeams,
+      nfcTeams: confTeams
+    };
+  }
+
+  const primaryTeams =
+    Array.isArray(simulatorInputs.conferenceTeams) && simulatorInputs.conferenceTeams.length > 0
+      ? simulatorInputs.conferenceTeams
+      : simulatorInputs.nfcTeams || [];
+  const otherStandingsMap =
+    simulatorInputs.otherConferenceStandings && Object.keys(simulatorInputs.otherConferenceStandings).length > 0
+      ? simulatorInputs.otherConferenceStandings
+      : simulatorInputs.afcStandings || {};
+  const otherRatingsMap =
+    simulatorInputs.otherConferencePowerRatings ||
+    simulatorInputs.afcPowerRatings ||
+    simulatorInputs.afcRatings ||
+    {};
+
+  const reconciled = reconcileAndDedupePlayoffGames(
+    simulatorInputs.completedGames,
+    simulatorInputs.remainingGames
+  );
+  const derived = deriveTeamSplitsFromCompletedGames(reconciled.completedGames);
+
+  const wantDivMap = wantConf === 'AFC' ? AFC_DIVISIONS : NFC_DIVISIONS;
+  const flippedConfTeams = Object.keys(wantDivMap).map(abbr => {
+    const st = otherStandingsMap[abbr] || {};
+    const d = derived.splitsByAbbr.get(abbr);
+    const wins = Number(st.wins ?? d?.w ?? 0);
+    const losses = Number(st.losses ?? d?.l ?? 0);
+    const ties = Number(st.ties ?? d?.t ?? 0);
+    const pointDiff = Number(st.pointDiff ?? (d ? d.pf - d.pa : 0));
+    const parsedDiv = parseWltCounts(st.divRec);
+    const parsedConf = parseWltCounts(st.confRec);
+    const meta = NFL_TEAM_META_BY_ABBR[abbr] || { name: abbr, espnAbbr: abbr.toLowerCase() };
+    const rating =
+      Number(otherRatingsMap[abbr]) ||
+      computeCalibratedTeamPowerRating({
+        wins,
+        losses,
+        ties,
+        pointDiff,
+        pointsFor: st.pointsFor ?? d?.pf ?? null,
+        pointsAgainst: st.pointsAgainst ?? d?.pa ?? null
+      });
+    return {
+      abbr,
+      name: st.name || meta.name,
+      logoUrl: st.logoUrl || `https://a.espncdn.com/i/teamlogos/nfl/500/${meta.espnAbbr}.png`,
+      division: wantDivMap[abbr],
+      wins,
+      losses,
+      ties,
+      divWins: parsedDiv?.w ?? d?.divW ?? 0,
+      divLosses: parsedDiv?.l ?? d?.divL ?? 0,
+      divTies: parsedDiv?.t ?? d?.divT ?? 0,
+      confWins: parsedConf?.w ?? d?.confW ?? 0,
+      confLosses: parsedConf?.l ?? d?.confL ?? 0,
+      confTies: parsedConf?.t ?? d?.confT ?? 0,
+      pointDiff,
+      pointsFor: st.pointsFor ?? d?.pf ?? 0,
+      pointsAgainst: st.pointsAgainst ?? d?.pa ?? 0,
+      powerRating: Math.round(rating)
+    };
+  });
+
+  const flippedOtherStandings = {};
+  const flippedOtherRatings = {};
+  for (const pt of primaryTeams) {
+    const abbr = normalizeTeamAbbr(pt.abbr);
+    flippedOtherStandings[abbr] = {
+      wins: Number(pt.wins || 0),
+      losses: Number(pt.losses || 0),
+      ties: Number(pt.ties || 0),
+      pointDiff: Number(pt.pointDiff || 0)
+    };
+    flippedOtherRatings[abbr] =
+      Number(pt.powerRating) ||
+      computeCalibratedTeamPowerRating({
+        wins: pt.wins || 0,
+        losses: pt.losses || 0,
+        ties: pt.ties || 0,
+        pointDiff: pt.pointDiff || 0
+      });
+  }
+
+  return {
+    targetTeam: flippedConfTeams[0]?.abbr || (wantConf === 'AFC' ? 'BUF' : 'SF'),
+    conference: wantConf,
+    conferenceTeams: flippedConfTeams,
+    nfcTeams: flippedConfTeams,
+    otherConferencePowerRatings: flippedOtherRatings,
+    afcPowerRatings: flippedOtherRatings,
+    afcRatings: flippedOtherRatings,
+    otherConferenceStandings: flippedOtherStandings,
+    afcStandings: flippedOtherStandings,
+    completedGames: reconciled.completedGames,
+    remainingGames: reconciled.remainingGames
+  };
+}
+
+/**
+ * Builds a complete, deterministic 32-team NFL Standings & Playoff Picture snapshot
+ * (Playoff Picture #1-#16, 8 Divisions, NFC/AFC Conference, and 32-Team League)
+ * combining authoritative ESPN standings splits, completed-game derivations, official NFL
+ * tiebreaker seeding, and live Monte Carlo odds + simulation deltas.
+ */
+export function buildLeagueStandingsSnapshot(
+  simulatorInputs = {},
+  {
+    primarySimResult = null,
+    otherConfSimResult = null,
+    baselinePrimarySimResult = null,
+    baselineOtherConfSimResult = null
+  } = {}
+) {
+  const reconciled = reconcileAndDedupePlayoffGames(
+    simulatorInputs?.completedGames,
+    simulatorInputs?.remainingGames
+  );
+  const derived = deriveTeamSplitsFromCompletedGames(reconciled.completedGames);
+
+  const primaryTeams =
+    Array.isArray(simulatorInputs?.conferenceTeams) && simulatorInputs.conferenceTeams.length > 0
+      ? simulatorInputs.conferenceTeams
+      : simulatorInputs?.nfcTeams || [];
+  const primaryByAbbr = new Map(primaryTeams.map(t => [normalizeTeamAbbr(t.abbr), t]));
+  const otherStandings =
+    simulatorInputs?.otherConferenceStandings && Object.keys(simulatorInputs.otherConferenceStandings).length > 0
+      ? simulatorInputs.otherConferenceStandings
+      : simulatorInputs?.afcStandings || {};
+
+  const oddsByAbbr = new Map();
+  const baseOddsByAbbr = new Map();
+  for (const sim of [primarySimResult, otherConfSimResult]) {
+    for (const o of sim?.allTeamOdds || []) {
+      oddsByAbbr.set(normalizeTeamAbbr(o.abbr), o);
+    }
+  }
+  for (const bsim of [baselinePrimarySimResult, baselineOtherConfSimResult]) {
+    for (const o of bsim?.allTeamOdds || []) {
+      baseOddsByAbbr.set(normalizeTeamAbbr(o.abbr), o);
+    }
+  }
+
+  const byAbbr = new Map();
+  for (const abbr of Object.keys(ALL_NFL_DIVISIONS)) {
+    const p = primaryByAbbr.get(abbr) || null;
+    const o = otherStandings[abbr] || null;
+    const src = p || o || {};
+    const d = derived.splitsByAbbr.get(abbr) || null;
+    const meta = NFL_TEAM_META_BY_ABBR[abbr] || { name: abbr, espnAbbr: abbr.toLowerCase() };
+    const conf = getConferenceForTeam(abbr);
+    const division = ALL_NFL_DIVISIONS[abbr];
+    const divShort = division.replace(/^(?:NFC|AFC)\s+/i, '');
+
+    const wins = Number(src.wins ?? d?.w ?? 0);
+    const losses = Number(src.losses ?? d?.l ?? 0);
+    const ties = Number(src.ties ?? d?.t ?? 0);
+    const gp = wins + losses + ties;
+    const derivedGp = d ? d.w + d.l + d.t : 0;
+    const winPct = calcStandingsWinPct(wins, losses, ties);
+
+    const parsedDiv = parseWltCounts(src.divRec);
+    const divW = parsedDiv?.w ?? src.divWins ?? d?.divW ?? 0;
+    const divL = parsedDiv?.l ?? src.divLosses ?? d?.divL ?? 0;
+    const divT = parsedDiv?.t ?? src.divTies ?? d?.divT ?? 0;
+    const divRec = src.divRec && src.divRec !== '0-0' ? src.divRec : fmtWltRecord(divW, divL, divT);
+
+    const parsedConf = parseWltCounts(src.confRec);
+    const confW = parsedConf?.w ?? src.confWins ?? d?.confW ?? 0;
+    const confL = parsedConf?.l ?? src.confLosses ?? d?.confL ?? 0;
+    const confT = parsedConf?.t ?? src.confTies ?? d?.confT ?? 0;
+    const confRec = src.confRec && src.confRec !== '0-0' ? src.confRec : fmtWltRecord(confW, confL, confT);
+
+    const homeRec = src.homeRec || (d ? fmtWltRecord(d.homeW, d.homeL, d.homeT) : '0-0');
+    const awayRec = src.awayRec || (d ? fmtWltRecord(d.awayW, d.awayL, d.awayT) : '0-0');
+
+    const pf = Number(
+      src.pointsFor != null && (src.pointsFor > 0 || gp === 0)
+        ? src.pointsFor
+        : d
+          ? d.pf
+          : src.pointsFor || 0
+    );
+    const pa = Number(
+      src.pointsAgainst != null && (src.pointsAgainst > 0 || gp === 0)
+        ? src.pointsAgainst
+        : d
+          ? d.pa
+          : src.pointsAgainst || 0
+    );
+    const pointDiff = Number(src.pointDiff ?? (d ? d.pf - d.pa : pf - pa));
+    const streak =
+      src.streak ||
+      (d && d.lastOutcome && d.streakCount > 0 ? `${d.lastOutcome}${d.streakCount}` : gp > 0 && derivedGp === 0 ? '—' : '—');
+
+    const simO = oddsByAbbr.get(abbr) || null;
+    const baseO = baseOddsByAbbr.get(abbr) || null;
+    const makePlayoffsPct = simO ? Number(simO.makePlayoffsPct ?? 0) : null;
+    const winDivisionPct = simO ? Number(simO.winDivisionPct ?? 0) : null;
+    const seed1ByePct = simO ? Number(simO.seed1ByePct ?? 0) : null;
+    const projectedWins = simO ? Number(simO.projectedWins ?? 0) : null;
+
+    const makePlayoffsDelta =
+      simO && baseO ? Math.round((makePlayoffsPct - Number(baseO.makePlayoffsPct ?? 0)) * 10) / 10 : 0;
+    const winDivisionDelta =
+      simO && baseO ? Math.round((winDivisionPct - Number(baseO.winDivisionPct ?? 0)) * 10) / 10 : 0;
+    const seed1ByeDelta =
+      simO && baseO ? Math.round((seed1ByePct - Number(baseO.seed1ByePct ?? 0)) * 10) / 10 : 0;
+
+    byAbbr.set(abbr, {
+      abbr,
+      name: src.name || meta.name,
+      logoUrl: src.logoUrl || simO?.logoUrl || `https://a.espncdn.com/i/teamlogos/nfl/500/${meta.espnAbbr}.png`,
+      conference: conf,
+      division,
+      divShort,
+      wins,
+      losses,
+      ties,
+      gp,
+      record: fmtWltRecord(wins, losses, ties),
+      winPct,
+      winPctDisplay: winPct >= 1 ? '1.000' : winPct.toFixed(3).replace(/^0/, ''),
+      divRec,
+      confRec,
+      divWinPct: calcStandingsWinPct(divW, divL, divT),
+      confWinPct: calcStandingsWinPct(confW, confL, confT),
+      homeRec,
+      awayRec,
+      pointsFor: pf,
+      pointsAgainst: pa,
+      pointDiff,
+      streak,
+      clincher: src.clincher || '',
+      projectedWins,
+      makePlayoffsPct,
+      winDivisionPct,
+      seed1ByePct,
+      makePlayoffsDelta,
+      winDivisionDelta,
+      seed1ByeDelta
+    });
+  }
+
+  const ctx = {
+    byAbbr,
+    h2h: derived.h2h,
+    defeatedBy: derived.defeatedBy,
+    opponentsOf: derived.opponentsOf
+  };
+
+  const divisions = {};
+  for (const divName of [...NFC_DIVISION_NAMES, ...AFC_DIVISION_NAMES]) {
+    const members = [...byAbbr.values()].filter(t => t.division === divName);
+    const ranked = rankTiedStandingsGroup(members, { ...ctx, isDivision: true }).map((t, idx) => ({
+      ...t,
+      divRank: idx + 1
+    }));
+    divisions[divName] = ranked;
+  }
+
+  const seedConference = confName => {
+    const divNames = confName === 'AFC' ? AFC_DIVISION_NAMES : NFC_DIVISION_NAMES;
+    const divOrders = divNames.map(dn => divisions[dn] || []);
+    const divWinners = divOrders.map(arr => arr[0]).filter(Boolean);
+    const seededWinners = rankTiedStandingsGroup(divWinners, { ...ctx, isDivision: false });
+
+    // Seed remaining 12 teams one slot at a time per official NFL procedure (highest remaining club per division competes)
+    const divCursor = [1, 1, 1, 1];
+    const seededNonWinners = [];
+    while (seededNonWinners.length < 12) {
+      const candidates = [];
+      for (let d = 0; d < divOrders.length; d++) {
+        const club = divOrders[d][divCursor[d]];
+        if (club) candidates.push({ club, divIdx: d });
+      }
+      if (!candidates.length) break;
+      const chosenClub =
+        candidates.length === 1
+          ? candidates[0].club
+          : rankTiedStandingsGroup(
+              candidates.map(c => c.club),
+              { ...ctx, isDivision: false }
+            )[0];
+      const chosenEntry = candidates.find(c => c.club.abbr === chosenClub.abbr);
+      seededNonWinners.push(chosenClub);
+      if (chosenEntry) divCursor[chosenEntry.divIdx]++;
+    }
+
+    const combined = [...seededWinners, ...seededNonWinners];
+    const seed1 = combined[0];
+    const seed7 = combined[6];
+    const fmtGb = (team, ref) => {
+      if (!team || !ref || team.abbr === ref.abbr) return '—';
+      const gb = (ref.wins - team.wins + (team.losses - ref.losses)) / 2;
+      if (gb <= 0) return '—';
+      return Number.isInteger(gb) ? String(gb) : gb.toFixed(1);
+    };
+
+    return combined.map((t, idx) => ({
+      ...t,
+      seed: idx + 1,
+      isDivLeader: idx < 4,
+      gamesBackFrom1: idx === 0 ? 'BYE' : fmtGb(t, seed1),
+      gamesBackFrom7: fmtGb(t, seed7)
+    }));
+  };
+
+  const nfcSeeded = seedConference('NFC');
+  const afcSeeded = seedConference('AFC');
+
+  const seedLookup = new Map([...nfcSeeded, ...afcSeeded].map(t => [t.abbr, t.seed]));
+  const leagueRanked = [...byAbbr.values()]
+    .sort(
+      (a, b) =>
+        b.winPct - a.winPct ||
+        b.wins - a.wins ||
+        b.pointDiff - a.pointDiff ||
+        b.pointsFor - a.pointsFor ||
+        a.abbr.localeCompare(b.abbr)
+    )
+    .map((t, idx) => ({
+      ...t,
+      leagueRank: idx + 1,
+      seed: seedLookup.get(t.abbr) || null
+    }));
+
+  const buildMatchups = seeded =>
+    seeded.length >= 7
+      ? [
+          { label: '#1 BYE', high: seeded[0], low: null },
+          { label: '#2 vs #7', high: seeded[1], low: seeded[6] },
+          { label: '#3 vs #6', high: seeded[2], low: seeded[5] },
+          { label: '#4 vs #5', high: seeded[3], low: seeded[4] }
+        ]
+      : [];
+
+  return {
+    byAbbr,
+    nfcSeeded,
+    afcSeeded,
+    divisions,
+    leagueRanked,
+    wildCardMatchups: {
+      NFC: buildMatchups(nfcSeeded),
+      AFC: buildMatchups(afcSeeded)
+    }
+  };
+}
+
+/**
+ * Computes the top rival teams impacted by simulated Rooting Guide winner overrides
+ * by comparing active Monte Carlo odds against baseline Monte Carlo odds.
+ */
+export function computeSimulationRivalImpacts({
+  baselineSim = null,
+  activeSim = null,
+  otherBaselineSim = null,
+  otherActiveSim = null,
+  targetAbbr = 'SF',
+  maxCount = 3
+} = {}) {
+  const normTarget = normalizeTeamAbbr(targetAbbr);
+  const baseMap = new Map();
+  for (const sim of [baselineSim, otherBaselineSim]) {
+    for (const o of sim?.allTeamOdds || []) {
+      baseMap.set(normalizeTeamAbbr(o.abbr), o);
+    }
+  }
+  const impacts = [];
+  const seen = new Set();
+  for (const sim of [activeSim, otherActiveSim]) {
+    for (const o of sim?.allTeamOdds || []) {
+      const abbr = normalizeTeamAbbr(o.abbr);
+      if (abbr === normTarget || seen.has(abbr)) continue;
+      seen.add(abbr);
+      const b = baseMap.get(abbr);
+      if (!b) continue;
+      const dPo = Math.round((Number(o.makePlayoffsPct || 0) - Number(b.makePlayoffsPct || 0)) * 10) / 10;
+      const dDiv = Math.round((Number(o.winDivisionPct || 0) - Number(b.winDivisionPct || 0)) * 10) / 10;
+      const dBye = Math.round((Number(o.seed1ByePct || 0) - Number(b.seed1ByePct || 0)) * 10) / 10;
+
+      // Pick the single most meaningful swing for this rival
+      let metricLabel = 'PO';
+      let deltaPct = dPo;
+      if (Math.abs(dBye) > Math.abs(deltaPct) + 0.5) {
+        metricLabel = 'Bye';
+        deltaPct = dBye;
+      }
+      if (Math.abs(dDiv) > Math.abs(deltaPct) + 1.0) {
+        metricLabel = 'Div';
+        deltaPct = dDiv;
+      }
+      if (Math.abs(deltaPct) >= 0.5) {
+        impacts.push({
+          abbr,
+          metricLabel,
+          deltaPct,
+          magnitude: Math.abs(deltaPct),
+          logoUrl: o.logoUrl || ''
+        });
+      }
+    }
+  }
+  return impacts.sort((a, b) => b.magnitude - a.magnitude || a.abbr.localeCompare(b.abbr)).slice(0, maxCount);
+}

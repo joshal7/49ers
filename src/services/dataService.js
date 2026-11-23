@@ -5652,8 +5652,28 @@ export async function hydrateLiveEspnOverlay(appData) {
         const pa = Number(getStat('pointsAgainst')?.value || 0);
         const seed = Number(getStat('playoffSeed')?.value || 1);
         const divRec = getStat('vs. Div.')?.displayValue || getStat('divisionRecord')?.displayValue || '0-0';
-        const confRec = getStat('vs. Conf.')?.displayValue || '0-0';
-        teamRecords.set(abbr, { record, wins, losses, ties, winPct, pd, pf, pa, seed, divRec, confRec });
+        const confRec = getStat('vs. Conf.')?.displayValue || getStat('conferenceRecord')?.displayValue || '0-0';
+        const homeRec = getStat('Home')?.displayValue || getStat('home')?.displayValue || '';
+        const awayRec = getStat('Road')?.displayValue || getStat('Away')?.displayValue || getStat('away')?.displayValue || '';
+        const streak = getStat('streak')?.displayValue || '';
+        const clincher = getStat('clincher')?.displayValue || '';
+        teamRecords.set(abbr, {
+          record,
+          wins,
+          losses,
+          ties,
+          winPct,
+          pd,
+          pf,
+          pa,
+          seed,
+          divRec,
+          confRec,
+          homeRec,
+          awayRec,
+          streak,
+          clincher
+        });
       }
     }
 
@@ -5704,17 +5724,28 @@ export async function hydrateLiveEspnOverlay(appData) {
             nt.losses = liveT.losses;
             nt.ties = liveT.ties;
             nt.pointDiff = liveT.pd;
+            if (liveT.pf || liveT.pa) {
+              nt.pointsFor = liveT.pf;
+              nt.pointsAgainst = liveT.pa;
+            }
+            if (liveT.homeRec) nt.homeRec = liveT.homeRec;
+            if (liveT.awayRec) nt.awayRec = liveT.awayRec;
+            if (liveT.streak) nt.streak = liveT.streak;
+            if (liveT.clincher) nt.clincher = liveT.clincher;
+            if (liveT.seed) nt.playoffSeed = liveT.seed;
             if (liveT.divRec && liveT.divRec !== '0-0') {
               const dParsed = parseWltRecord(liveT.divRec);
               nt.divWins = dParsed.w;
               nt.divLosses = dParsed.l;
               nt.divTies = dParsed.t;
+              nt.divRec = liveT.divRec;
             }
             if (liveT.confRec && liveT.confRec !== '0-0') {
               const cParsed = parseWltRecord(liveT.confRec);
               nt.confWins = cParsed.w;
               nt.confLosses = cParsed.l;
               nt.confTies = cParsed.t;
+              nt.confRec = liveT.confRec;
             }
             nt.powerRating = computeCalibratedTeamPowerRating({
               wins: liveT.wins,
@@ -5760,7 +5791,15 @@ export async function hydrateLiveEspnOverlay(appData) {
             wins: liveT.wins,
             losses: liveT.losses,
             ties: liveT.ties,
-            pointDiff: liveT.pd
+            pointDiff: liveT.pd,
+            ...(liveT.pf || liveT.pa ? { pointsFor: liveT.pf, pointsAgainst: liveT.pa } : {}),
+            ...(liveT.divRec && liveT.divRec !== '0-0' ? { divRec: liveT.divRec } : {}),
+            ...(liveT.confRec && liveT.confRec !== '0-0' ? { confRec: liveT.confRec } : {}),
+            ...(liveT.homeRec ? { homeRec: liveT.homeRec } : {}),
+            ...(liveT.awayRec ? { awayRec: liveT.awayRec } : {}),
+            ...(liveT.streak ? { streak: liveT.streak } : {}),
+            ...(liveT.clincher ? { clincher: liveT.clincher } : {}),
+            ...(liveT.seed ? { playoffSeed: liveT.seed } : {})
           };
           const ratingVal = computeCalibratedTeamPowerRating({
             wins: liveT.wins,

@@ -5788,8 +5788,15 @@ async function main() {
     const losses = Number(getStat('losses')?.value || 0);
     const ties = Number(getStat('ties')?.value || 0);
     const pointDiff = Number(getStat('pointDifferential')?.value || 0);
+    const pointsFor = Number(getStat('pointsFor')?.value || 0);
+    const pointsAgainst = Number(getStat('pointsAgainst')?.value || 0);
     const divStr = getStat('vs. Div.')?.displayValue || getStat('divisionRecord')?.displayValue || '0-0';
-    const confStr = getStat('vs. Conf.')?.displayValue || '0-0';
+    const confStr = getStat('vs. Conf.')?.displayValue || getStat('conferenceRecord')?.displayValue || '0-0';
+    const homeRec = getStat('Home')?.displayValue || getStat('home')?.displayValue || '';
+    const awayRec = getStat('Road')?.displayValue || getStat('Away')?.displayValue || getStat('away')?.displayValue || '';
+    const streak = getStat('streak')?.displayValue || '';
+    const clincher = getStat('clincher')?.displayValue || '';
+    const playoffSeed = Number(getStat('playoffSeed')?.value || 0) || null;
     const [dw = 0, dl = 0, dt = 0] = divStr.split('-').map(Number);
     const [cw = 0, cl = 0, ct = 0] = confStr.split('-').map(Number);
 
@@ -5818,7 +5825,16 @@ async function main() {
       confWins: cw,
       confLosses: cl,
       confTies: ct,
+      divRec: divStr,
+      confRec: confStr,
+      homeRec,
+      awayRec,
+      pointsFor,
+      pointsAgainst,
       pointDiff,
+      streak,
+      clincher,
+      playoffSeed,
       netEpaPerGame,
       sosSpreadAdj,
       powerRating
@@ -5835,7 +5851,30 @@ async function main() {
     const losses = Number(getStat('losses')?.value || 0);
     const ties = Number(getStat('ties')?.value || 0);
     const pointDiff = Number(getStat('pointDifferential')?.value || 0);
-    afcStandings[abbr] = { wins, losses, ties, pointDiff };
+    const pointsFor = Number(getStat('pointsFor')?.value || 0);
+    const pointsAgainst = Number(getStat('pointsAgainst')?.value || 0);
+    const divRec = getStat('vs. Div.')?.displayValue || getStat('divisionRecord')?.displayValue || '0-0';
+    const confRec = getStat('vs. Conf.')?.displayValue || getStat('conferenceRecord')?.displayValue || '0-0';
+    const homeRec = getStat('Home')?.displayValue || getStat('home')?.displayValue || '';
+    const awayRec = getStat('Road')?.displayValue || getStat('Away')?.displayValue || getStat('away')?.displayValue || '';
+    const streak = getStat('streak')?.displayValue || '';
+    const clincher = getStat('clincher')?.displayValue || '';
+    const playoffSeed = Number(getStat('playoffSeed')?.value || 0) || null;
+    afcStandings[abbr] = {
+      wins,
+      losses,
+      ties,
+      pointDiff,
+      pointsFor,
+      pointsAgainst,
+      divRec,
+      confRec,
+      homeRec,
+      awayRec,
+      streak,
+      clincher,
+      playoffSeed
+    };
     afcRatings[abbr] = computeCalibratedTeamPowerRating({
       wins,
       losses,

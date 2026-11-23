@@ -267,7 +267,11 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
       const winPct = Number(getStat('winPercent')?.value || 0);
       const seed = Number(getStat('playoffSeed')?.value || 16);
       const divRec = getStat('vs. Div.')?.displayValue || getStat('divisionRecord')?.displayValue || '0-0';
-      const confRec = getStat('vs. Conf.')?.displayValue || '0-0';
+      const confRec = getStat('vs. Conf.')?.displayValue || getStat('conferenceRecord')?.displayValue || '0-0';
+      const homeRec = getStat('Home')?.displayValue || getStat('home')?.displayValue || '';
+      const awayRec = getStat('Road')?.displayValue || getStat('Away')?.displayValue || getStat('away')?.displayValue || '';
+      const streak = getStat('streak')?.displayValue || '';
+      const clincher = getStat('clincher')?.displayValue || '';
       const record = getStat('overall')?.displayValue || `${wins}-${losses}${ties ? `-${ties}` : ''}`;
       standingsByAbbr.set(abbr, {
         abbr,
@@ -285,7 +289,11 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
         seed,
         record,
         divRec,
-        confRec
+        confRec,
+        homeRec,
+        awayRec,
+        streak,
+        clincher
       });
     }
   }
@@ -547,11 +555,32 @@ function buildConferencePlayoffPicture(team, leagueCtx) {
         pointDiff: st.pd,
         pointsFor: st.pf,
         pointsAgainst: st.pa,
+        divRec: st.divRec,
+        confRec: st.confRec,
+        homeRec: st.homeRec || '',
+        awayRec: st.awayRec || '',
+        streak: st.streak || '',
+        clincher: st.clincher || '',
+        playoffSeed: st.seed || null,
         powerRating: Math.round(rating)
       });
     } else {
       otherPowerRatings[t.abbr] = Math.round(rating);
-      otherStandings[t.abbr] = { wins: st.wins, losses: st.losses, ties: st.ties, pointDiff: st.pd };
+      otherStandings[t.abbr] = {
+        wins: st.wins,
+        losses: st.losses,
+        ties: st.ties,
+        pointDiff: st.pd,
+        pointsFor: st.pf,
+        pointsAgainst: st.pa,
+        divRec: st.divRec,
+        confRec: st.confRec,
+        homeRec: st.homeRec || '',
+        awayRec: st.awayRec || '',
+        streak: st.streak || '',
+        clincher: st.clincher || '',
+        playoffSeed: st.seed || null
+      };
     }
   }
 

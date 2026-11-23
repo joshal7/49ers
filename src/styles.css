@@ -9460,3 +9460,634 @@ mark.search-hl {
     padding: 4px 4px;
   }
 }
+
+/* ============================================================================
+   Playoffs Tab — Streamlined Standings & Playoff Picture Hub,
+   Compact Seed Distribution + Scenarios, Sticky Simulation Impact Bar,
+   and Full-Column Landscape Fit (iPhone 16 / 16 Pro 852-874px)
+   ============================================================================ */
+
+/* Sticky Live Simulation Impact Bar */
+.playoff-sim-sticky-bar {
+  position: sticky;
+  top: calc(var(--top-header-h, 58px) + 6px);
+  z-index: 35;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 9px 11px;
+  border-radius: var(--radius-md);
+  background: var(--bg-glass);
+  border: 1px solid var(--gold-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+[data-theme="light"] .playoff-sim-sticky-bar {
+  box-shadow: 0 6px 18px rgba(20, 16, 8, 0.12);
+}
+
+.playoff-sim-bar-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.playoff-sim-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.playoff-sim-mini-btn {
+  min-height: 26px;
+  padding: 3px 8px;
+  font-size: 11.2px;
+}
+
+.playoff-sim-bar-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.playoff-sim-kpi-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 4px 7px;
+  border-radius: 8px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-subtle);
+  font-size: 11.5px;
+}
+
+.playoff-sim-kpi-pill .sim-kpi-lbl {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+.playoff-sim-rivals {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  font-size: 11px;
+}
+
+.playoff-sim-rivals .sim-rivals-lbl {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.playoff-rival-chip {
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.playoff-rival-chip.is-up {
+  background: var(--emerald-soft);
+  color: var(--emerald);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+}
+
+.playoff-rival-chip.is-down {
+  background: var(--crimson-soft);
+  color: var(--crimson);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+}
+
+/* Compact Stacked Seed Distribution + Collapsible #1-#7 Breakdown */
+.playoff-seed-stack-box {
+  margin-top: 10px;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-subtle);
+}
+
+.playoff-seed-toggle-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.playoff-seed-toggle-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.playoff-seed-toggle-cue {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold-bright);
+  white-space: nowrap;
+}
+
+.playoff-seed-stacked-bar {
+  display: flex;
+  width: 100%;
+  height: 7px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--border-subtle);
+}
+
+.playoff-seed-legend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.playoff-seed-legend .legend-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.playoff-seed-bars-expanded {
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Always-Visible Scannable Seeding Scenarios in Card 1 */
+.playoff-scenarios-list {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.playoff-scenario-row {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.playoff-scenario-row:last-child {
+  border-bottom: none;
+}
+
+.playoff-scenario-tag {
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.playoff-scenario-tag.is-emerald {
+  color: var(--emerald);
+}
+
+.playoff-scenario-tag.is-gold {
+  color: var(--gold-bright);
+}
+
+.playoff-scenario-tag.is-primary {
+  color: var(--text-primary);
+}
+
+.playoff-scenario-copy {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+/* Standings & Playoff Picture Card Controls */
+.playoff-standings-header {
+  margin-bottom: 8px;
+}
+
+.playoff-standings-header-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.playoff-conf-toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 8px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+}
+
+.playoff-conf-btn {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+}
+
+.playoff-conf-btn.active {
+  background: var(--gold-soft);
+  color: var(--gold-bright);
+  border-color: var(--gold-border);
+}
+
+.segmented-control.playoff-view-seg {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 3px;
+  width: 100%;
+  margin-bottom: 10px;
+  overflow: visible;
+}
+
+.segmented-control.playoff-view-seg .pill-btn.seg-btn {
+  padding: 6px 4px;
+  font-size: 12px;
+  justify-content: center;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+/* Visual Wild Card Matchup Strip */
+.playoff-matchups-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.playoff-matchup-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-subtle);
+  min-width: 0;
+}
+
+.playoff-matchup-pill.is-bye {
+  border-left: 2.5px solid var(--emerald);
+  background: color-mix(in srgb, var(--emerald) 7%, var(--bg-card-alt));
+}
+
+.playoff-matchup-seed {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.playoff-matchup-teams {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  white-space: nowrap;
+}
+
+.playoff-matchup-teams.is-bye-team {
+  color: var(--emerald);
+}
+
+.playoff-at-sep {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.playoff-bye-rec {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+}
+
+/* Unified Sticky-Col Standings Table */
+.playoff-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.playoff-standings-table {
+  width: 100%;
+  min-width: 650px;
+}
+
+.playoff-standings-table th,
+.playoff-standings-table td {
+  padding: 6px 5.5px;
+  font-size: 11.6px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  vertical-align: middle;
+}
+
+.playoff-standings-table th {
+  font-size: 10.2px;
+  letter-spacing: 0.03em;
+}
+
+.playoff-standings-table th:last-child,
+.playoff-standings-table td:last-child {
+  text-align: right;
+}
+
+.playoff-standings-table th.sticky-first-col,
+.playoff-standings-table td.sticky-first-col {
+  min-width: 104px;
+  padding-left: 6px;
+  padding-right: 7px;
+}
+
+.playoff-standings-table tr.playoff-row-active td {
+  background: var(--gold-soft);
+}
+
+.playoff-standings-table tr.playoff-row-active td.sticky-first-col {
+  background: color-mix(in srgb, var(--gold) 18%, var(--bg-elevated));
+}
+
+.playoff-standings-table tr.playoff-row-impacted td {
+  background: var(--scarlet-soft);
+}
+
+.playoff-standings-table tr.playoff-row-impacted td.sticky-first-col {
+  background: color-mix(in srgb, var(--scarlet) 15%, var(--bg-elevated));
+}
+
+.playoff-team-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.playoff-rank-num {
+  width: 16px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.playoff-rank-num.rank-seed-1 {
+  color: var(--emerald);
+}
+
+.playoff-rank-num.rank-seed-in {
+  color: var(--text-primary);
+}
+
+.playoff-rank-num.rank-seed-out {
+  color: var(--text-muted);
+}
+
+.playoff-team-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.playoff-team-div-tag {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.playoff-clincher-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--gold-bright);
+}
+
+.playoff-rec-cell {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.playoff-po-cell {
+  font-weight: 700;
+}
+
+.playoff-cell-delta {
+  display: block;
+  font-size: 9.5px;
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+.playoff-standings-table .val-pos {
+  color: var(--emerald);
+}
+
+.playoff-standings-table .val-gold {
+  color: var(--gold-bright);
+}
+
+.playoff-standings-table .val-neg {
+  color: var(--crimson);
+}
+
+.playoff-standings-table .val-muted {
+  color: var(--text-secondary);
+}
+
+.playoff-group-row td {
+  background: var(--bg-card-alt);
+  font-family: var(--font-sans);
+  font-size: 10.6px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 5px 8px;
+}
+
+.playoff-cutline-row td {
+  padding: 4px 8px;
+  border-top: 1.5px dashed var(--gold);
+  border-bottom: 1px solid var(--gold-border);
+  background: var(--gold-soft);
+  font-family: var(--font-mono);
+  font-size: 10.6px;
+  font-weight: 800;
+  color: var(--gold-bright);
+  letter-spacing: 0.02em;
+}
+
+/* Collapsed Outside Looking In (#13-#16) Drawer */
+.playoff-outside-details {
+  margin-top: 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card-alt);
+  overflow: hidden;
+}
+
+.playoff-outside-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  font-size: 11.8px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.playoff-outside-summary::-webkit-details-marker {
+  display: none;
+}
+
+.playoff-outside-details[open] .playoff-outside-summary {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Division View Stack */
+.playoff-divisions-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.playoff-div-group {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+
+.playoff-div-group.is-active-div {
+  border-color: var(--gold-border);
+}
+
+.playoff-div-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--bg-card-alt);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 12.2px;
+}
+
+.playoff-standings-footnote {
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 10.8px;
+  color: var(--text-muted);
+}
+
+/* Narrow Portrait Mobile (320px-380px) Tuning */
+@media (max-width: 380px) {
+  .segmented-control.playoff-view-seg .pill-btn.seg-btn {
+    font-size: 11px;
+    padding: 5px 2px;
+  }
+  .playoff-matchup-pill {
+    padding: 5px 6px;
+  }
+  .playoff-matchup-teams {
+    font-size: 10.8px;
+    gap: 3px;
+  }
+  .playoff-standings-table th.sticky-first-col,
+  .playoff-standings-table td.sticky-first-col {
+    min-width: 96px;
+  }
+  .playoff-scenario-row {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 6px;
+  }
+}
+
+/* Landscape Mobile (iPhone 16 852x393 & iPhone 16 Pro 874x402) & Tablet/Desktop:
+   Fit ALL 14 ESPN + Monte Carlo Standings Columns with Zero Horizontal Scrolling */
+@media (min-width: 740px) {
+  .playoff-matchups-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .playoff-standings-table {
+    min-width: 0;
+    width: 100%;
+  }
+  .playoff-standings-table th,
+  .playoff-standings-table td {
+    padding: 5px 4px;
+    font-size: 11px;
+  }
+  .playoff-standings-table th {
+    font-size: 9.8px;
+  }
+  .playoff-standings-table th.sticky-first-col,
+  .playoff-standings-table td.sticky-first-col {
+    min-width: 94px;
+    box-shadow: none;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .playoff-swipe-hint {
+    display: none;
+  }
+}
+
+/* Short Landscape Chrome Compaction for Sticky Sim Impact Bar */
+@media (orientation: landscape) and (max-height: 500px) {
+  .playoff-sim-sticky-bar {
+    top: calc(var(--top-header-h, 42px) + 4px);
+    padding: 6px 9px;
+    gap: 4px;
+  }
+  .playoff-sim-bar-kpis {
+    gap: 5px;
+  }
+  .playoff-sim-kpi-pill {
+    padding: 3px 6px;
+    font-size: 11px;
+  }
+}

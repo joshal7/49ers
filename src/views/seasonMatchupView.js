@@ -34,7 +34,11 @@ import { getActiveTeamConfig, getTeamCoaches } from '../config/teamRegistry.js';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';
-import { canonicalPlayoffGameKey } from '../engine/playoffMonteCarlo.js';
+import {
+  canonicalPlayoffGameKey,
+  buildLeagueStandingsSnapshot,
+  computeSimulationRivalImpacts
+} from '../engine/playoffMonteCarlo.js';
 import { resolveConsistentPowerRankings } from '../engine/powerRankingsEngine.js';
 import {
   evaluateCombineLeaderboardWindow,
@@ -421,6 +425,11 @@ export function renderSeasonMatchupViewHtml({
   draftSub = 'prep',
   appData,
   mcSimResult,
+  otherConfMcSimResult = null,
+  otherConfBaselineSimResult = null,
+  playoffStandingsView = 'picture',
+  playoffStandingsConf = null,
+  playoffSeedBarsExpanded = false,
   forcedWinners = {},
   combineSearch = '',
   bigBoardSearch = '',
@@ -529,7 +538,16 @@ export function renderSeasonMatchupViewHtml({
   if (normalizedSeasonSub === 'stats') return switcherCard + renderTeamStatsAndPower(appData, userPrefs);
   if (normalizedSeasonSub === 'trade') return switcherCard + renderTradeWindow(appData);
   if (normalizedSeasonSub === 'playoffs')
-    return switcherCard + renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRootingWeeks, userPrefs);
+    return (
+      switcherCard +
+      renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRootingWeeks, userPrefs, {
+        otherConfMcSimResult,
+        otherConfBaselineSimResult,
+        playoffStandingsView,
+        playoffStandingsConf,
+        playoffSeedBarsExpanded
+      })
+    );
   if (normalizedSeasonSub === 'schedule') return switcherCard + renderFullSchedule(appData, schedulePrevExpanded, mcSimResult);
 
   // Unified Draft view (2027 Prep & Board | 2026 Draft Class)
@@ -2258,17 +2276,394 @@ function renderRootingGameRowHtml(g, forcedWinners) {
   `;
 }
 
-function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRootingWeeks = null, userPrefs = null) {
+function renderPlayoffStandingsTableHeadHtml() {
+  return `
+    <tr>
+      <th class="sticky-first-col">Team</th>
+      <th>W-L</th>
+      <th>PCT</th>
+      <th>DIFF</th>
+      <th>PO %</th>
+      <th>STRK</th>
+      <th>DIV</th>
+      <th>CONF</th>
+      <th>HOME</th>
+      <th>AWAY</th>
+      <th>PF</th>
+      <th>PA</th>
+      <th>Div %</th>
+      <th>#1 Bye</th>
+    </tr>
+  `;
+}
+
+function renderPlayoffStandingsRowHtml(
+  t,
+  {
+    rankNum = '',
+    activeTeamAbbr = 'SF',
+    showDivTag = false,
+    showConfTag = false,
+    showSimDeltas = false
+  } = {}
+) {
+  const isActive = t.abbr === activeTeamAbbr;
+  const poDelta = showSimDeltas ? Number(t.makePlayoffsDelta || 0) : 0;
+  const hasImpact = !isActive && Math.abs(poDelta) >= 0.3;
+  const rowCls = isActive ? 'playoff-row-active' : hasImpact ? 'playoff-row-impacted' : '';
+  const rankCls =
+    t.seed === 1 ? 'rank-seed-1' : t.seed && t.seed <= 7 ? 'rank-seed-in' : 'rank-seed-out';
+  const diffCls = t.pointDiff > 0 ? 'val-pos' : t.pointDiff < 0 ? 'val-neg' : 'val-muted';
+  const diffDisp = t.pointDiff > 0 ? `+${t.pointDiff}` : String(t.pointDiff ?? 0);
+  const strkStr = String(t.streak || '—');
+  const strkCls = strkStr.startsWith('W') ? 'val-pos' : strkStr.startsWith('L') ? 'val-neg' : 'val-muted';
+  const poDisp = t.makePlayoffsPct != null ? `${t.makePlayoffsPct}%` : '—';
+  const poCls =
+    t.makePlayoffsPct == null
+      ? 'val-muted'
+      : t.makePlayoffsPct >= 75
+        ? 'val-pos'
+        : t.makePlayoffsPct >= 35
+          ? 'val-gold'
+          : 'val-muted';
+  const divPctDisp = t.winDivisionPct != null ? `${t.winDivisionPct}%` : '—';
+  const byeDisp = t.seed1ByePct != null ? `${t.seed1ByePct}%` : '—';
+  const divTag = showDivTag
+    ? `<span class="playoff-team-div-tag">${esc(showConfTag ? `${t.conference} ${t.divShort[0]}` : t.divShort[0])}</span>`
+    : '';
+  const clincherTag = t.clincher
+    ? `<span class="playoff-clincher-tag">${esc(t.clincher)}</span>`
+    : '';
+  const poDeltaHtml =
+    Math.abs(poDelta) >= 0.3
+      ? `<span class="playoff-cell-delta ${poDelta > 0 ? 'val-pos' : 'val-neg'}">${poDelta > 0 ? '+' : ''}${poDelta}</span>`
+      : '';
+
+  return `
+    <tr class="${rowCls}" data-standings-team="${esc(t.abbr)}">
+      <td class="sticky-first-col">
+        <div class="playoff-team-cell">
+          ${rankNum !== '' ? `<span class="playoff-rank-num ${rankCls}">${rankNum}</span>` : ''}
+          <a href="${esc(buildEspnNflTeamUrl(t.abbr))}" target="_blank" rel="noopener noreferrer" class="ext-link playoff-team-link">
+            ${renderTeamLogoHtml(t.abbr, t.logoUrl, 18)}
+            <strong>${esc(t.abbr)}</strong>
+          </a>
+          ${clincherTag}
+          ${divTag}
+        </div>
+      </td>
+      <td class="playoff-rec-cell">${esc(t.record)}</td>
+      <td class="val-muted">${esc(t.winPctDisplay)}</td>
+      <td class="${diffCls}">${esc(diffDisp)}</td>
+      <td class="${poCls} playoff-po-cell"><span>${esc(poDisp)}</span>${poDeltaHtml}</td>
+      <td class="${strkCls}">${esc(strkStr)}</td>
+      <td class="val-muted">${esc(t.divRec)}</td>
+      <td class="val-muted">${esc(t.confRec)}</td>
+      <td class="val-muted">${esc(t.homeRec)}</td>
+      <td class="val-muted">${esc(t.awayRec)}</td>
+      <td class="val-muted">${t.pointsFor ?? 0}</td>
+      <td class="val-muted">${t.pointsAgainst ?? 0}</td>
+      <td class="val-muted">${esc(divPctDisp)}</td>
+      <td class="val-muted">${esc(byeDisp)}</td>
+    </tr>
+  `;
+}
+
+function renderPlayoffStandingsBodyHtml(
+  snapshot,
+  { view = 'picture', conf = 'NFC', activeTeam = null, showSimDeltas = false } = {}
+) {
+  const activeAbbr = activeTeam?.abbr || 'SF';
+  const activeConf = activeTeam?.conference || 'NFC';
+  const activeDiv = activeTeam?.division || 'NFC West';
+  const colSpan = 14;
+
+  if (view === 'picture') {
+    const seeded = conf === 'AFC' ? snapshot.afcSeeded : snapshot.nfcSeeded;
+    const matchups = snapshot.wildCardMatchups?.[conf] || [];
+    const divLeaders = seeded.slice(0, 4);
+    const wildCards = seeded.slice(4, 7);
+    const inTheHunt = seeded.slice(7, 12);
+    const outside = seeded.slice(12);
+
+    return `
+      ${
+        matchups.length
+          ? `
+        <div class="playoff-matchups-grid" data-playoff-matchup-strip>
+          ${matchups
+            .map(
+              (m, idx) => `
+            <div class="playoff-matchup-pill ${idx === 0 ? 'is-bye' : ''}">
+              <span class="playoff-matchup-seed mono">${esc(m.label)}</span>
+              ${
+                m.low
+                  ? `<span class="playoff-matchup-teams mono">
+                      ${renderTeamLogoHtml(m.low.abbr, m.low.logoUrl, 15)}<strong>${esc(m.low.abbr)}</strong>
+                      <span class="playoff-at-sep">@</span>
+                      ${renderTeamLogoHtml(m.high.abbr, m.high.logoUrl, 15)}<strong>${esc(m.high.abbr)}</strong>
+                    </span>`
+                  : `<span class="playoff-matchup-teams mono is-bye-team">
+                      ${renderTeamLogoHtml(m.high.abbr, m.high.logoUrl, 15)}<strong>${esc(m.high.abbr)}</strong>
+                      <span class="playoff-bye-rec">(${esc(m.high.record)})</span>
+                    </span>`
+              }
+            </div>
+          `
+            )
+            .join('')}
+        </div>
+      `
+          : ''
+      }
+
+      <div class="table-scroll playoff-table-scroll">
+        <table class="data-table mono sticky-col-table playoff-standings-table">
+          <thead>${renderPlayoffStandingsTableHeadHtml()}</thead>
+          <tbody>
+            <tr class="playoff-group-row"><td colspan="${colSpan}">Division Leaders (#1–#4)</td></tr>
+            ${divLeaders
+              .map(t =>
+                renderPlayoffStandingsRowHtml(t, {
+                  rankNum: t.seed,
+                  activeTeamAbbr: activeAbbr,
+                  showDivTag: true,
+                  showSimDeltas
+                })
+              )
+              .join('')}
+            <tr class="playoff-group-row"><td colspan="${colSpan}">Wild Card (#5–#7)</td></tr>
+            ${wildCards
+              .map(t =>
+                renderPlayoffStandingsRowHtml(t, {
+                  rankNum: t.seed,
+                  activeTeamAbbr: activeAbbr,
+                  showDivTag: true,
+                  showSimDeltas
+                })
+              )
+              .join('')}
+            <tr class="playoff-cutline-row"><td colspan="${colSpan}">Playoff Cutline • Top 7 Qualify</td></tr>
+            <tr class="playoff-group-row"><td colspan="${colSpan}">In The Hunt (#8–#12)</td></tr>
+            ${inTheHunt
+              .map(t =>
+                renderPlayoffStandingsRowHtml(t, {
+                  rankNum: t.seed,
+                  activeTeamAbbr: activeAbbr,
+                  showDivTag: true,
+                  showSimDeltas
+                })
+              )
+              .join('')}
+          </tbody>
+        </table>
+      </div>
+
+      ${
+        outside.length
+          ? `
+        <details class="playoff-outside-details" data-playoff-outside-hunt>
+          <summary class="playoff-outside-summary">
+            <span>Outside Looking In (#13–#16)</span>
+            <span class="mono">${esc(outside.map(t => t.abbr).join(' • '))} ▾</span>
+          </summary>
+          <div class="table-scroll playoff-table-scroll">
+            <table class="data-table mono sticky-col-table playoff-standings-table">
+              <tbody>
+                ${outside
+                  .map(t =>
+                    renderPlayoffStandingsRowHtml(t, {
+                      rankNum: t.seed,
+                      activeTeamAbbr: activeAbbr,
+                      showDivTag: true,
+                      showSimDeltas
+                    })
+                  )
+                  .join('')}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      `
+          : ''
+      }
+    `;
+  }
+
+  if (view === 'division') {
+    const baseDivs =
+      conf === 'AFC'
+        ? ['AFC East', 'AFC North', 'AFC South', 'AFC West']
+        : ['NFC West', 'NFC North', 'NFC East', 'NFC South'];
+    const orderedDivs =
+      conf === activeConf && baseDivs.includes(activeDiv)
+        ? [activeDiv, ...baseDivs.filter(d => d !== activeDiv)]
+        : baseDivs;
+
+    return `
+      <div class="playoff-divisions-stack" data-playoff-divisions-view>
+        ${orderedDivs
+          .map(divName => {
+            const members = snapshot.divisions?.[divName] || [];
+            const isPinned = divName === activeDiv;
+            return `
+              <div class="playoff-div-group ${isPinned ? 'is-active-div' : ''}">
+                <div class="playoff-div-header">
+                  <strong>${esc(divName)}</strong>
+                  ${isPinned ? `<span class="badge badge-gold">${esc(activeTeam?.nickname || '49ers')} Division</span>` : ''}
+                </div>
+                <div class="table-scroll playoff-table-scroll">
+                  <table class="data-table mono sticky-col-table playoff-standings-table">
+                    <thead>${renderPlayoffStandingsTableHeadHtml()}</thead>
+                    <tbody>
+                      ${members
+                        .map(t =>
+                          renderPlayoffStandingsRowHtml(t, {
+                            rankNum: t.divRank,
+                            activeTeamAbbr: activeAbbr,
+                            showDivTag: false,
+                            showSimDeltas
+                          })
+                        )
+                        .join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            `;
+          })
+          .join('')}
+      </div>
+    `;
+  }
+
+  if (view === 'conference') {
+    const seeded = conf === 'AFC' ? snapshot.afcSeeded : snapshot.nfcSeeded;
+    return `
+      <div class="table-scroll playoff-table-scroll" data-playoff-conference-view>
+        <table class="data-table mono sticky-col-table playoff-standings-table">
+          <thead>${renderPlayoffStandingsTableHeadHtml()}</thead>
+          <tbody>
+            ${seeded
+              .slice(0, 7)
+              .map(t =>
+                renderPlayoffStandingsRowHtml(t, {
+                  rankNum: t.seed,
+                  activeTeamAbbr: activeAbbr,
+                  showDivTag: true,
+                  showSimDeltas
+                })
+              )
+              .join('')}
+            <tr class="playoff-cutline-row"><td colspan="${colSpan}">Playoff Cutline • #7 Seed</td></tr>
+            ${seeded
+              .slice(7)
+              .map(t =>
+                renderPlayoffStandingsRowHtml(t, {
+                  rankNum: t.seed,
+                  activeTeamAbbr: activeAbbr,
+                  showDivTag: true,
+                  showSimDeltas
+                })
+              )
+              .join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  // League (All 32 Teams)
+  return `
+    <div class="table-scroll playoff-table-scroll" data-playoff-league-view>
+      <table class="data-table mono sticky-col-table playoff-standings-table">
+        <thead>${renderPlayoffStandingsTableHeadHtml()}</thead>
+        <tbody>
+          ${(snapshot.leagueRanked || [])
+            .map(t =>
+              renderPlayoffStandingsRowHtml(t, {
+                rankNum: t.leagueRank,
+                activeTeamAbbr: activeAbbr,
+                showDivTag: true,
+                showConfTag: true,
+                showSimDeltas
+              })
+            )
+            .join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function getScenarioShortLabel(targetText, divisionName) {
+  const s = String(targetText || '');
+  if (/#1|bye/i.test(s)) return { text: '#1 Bye', tone: 'is-emerald' };
+  if (/division|west|north|east|south/i.test(s)) return { text: divisionName || 'Division', tone: 'is-gold' };
+  return { text: 'Berth', tone: 'is-primary' };
+}
+
+function renderPlayoffSimulator(
+  appData,
+  mcSimResult,
+  forcedWinners,
+  expandedRootingWeeks = null,
+  userPrefs = null,
+  {
+    otherConfMcSimResult = null,
+    otherConfBaselineSimResult = null,
+    playoffStandingsView = 'picture',
+    playoffStandingsConf = null,
+    playoffSeedBarsExpanded = false
+  } = {}
+) {
+  const activeTeam = getActiveTeamConfig();
+  const activeConf = activeTeam.conference || 'NFC';
+  const selectedConf =
+    playoffStandingsConf === 'AFC' || playoffStandingsConf === 'NFC' ? playoffStandingsConf : activeConf;
+  const selectedView = ['picture', 'division', 'conference', 'league'].includes(playoffStandingsView)
+    ? playoffStandingsView
+    : 'picture';
+
   const pp = appData?.seasonal?.playoffPicture || {};
   const sim = mcSimResult || pp.baselineSimulation || {};
-  const sf = sim.sfOdds || {};
+  const sf = sim.teamOdds || sim.sfOdds || {};
   const seeds = sf.seedDistribution || {};
   const overrideCount = Object.keys(forcedWinners || {}).length;
-  const baseSf = pp.baselineSimulation?.sfOdds || {};
+  const baseSf = pp.baselineSimulation?.teamOdds || pp.baselineSimulation?.sfOdds || {};
   const refSf = overrideCount > 0 ? baseSf : userPrefs?.deltaSnapshots?.playoffBaseline || {};
   const makeDelta = formatPlayoffOddsDeltaCue(sf.makePlayoffsPct, refSf.makePlayoffsPct);
   const divDelta = formatPlayoffOddsDeltaCue(sf.winDivisionPct, refSf.winDivisionPct);
   const byeDelta = formatPlayoffOddsDeltaCue(sf.seed1ByePct, refSf.seed1ByePct);
+
+  const seed1Pct = Math.round((Number(seeds[1] ?? sf.seed1ByePct ?? 0)) * 10) / 10;
+  const divSeeds24Pct =
+    Math.round(((Number(seeds[2]) || 0) + (Number(seeds[3]) || 0) + (Number(seeds[4]) || 0)) * 10) / 10;
+  const wcSeeds57Pct =
+    Math.round(((Number(seeds[5]) || 0) + (Number(seeds[6]) || 0) + (Number(seeds[7]) || 0)) * 10) / 10;
+
+  const standingsSnapshot = buildLeagueStandingsSnapshot(pp.simulatorInputs || {}, {
+    primarySimResult: sim,
+    otherConfSimResult: otherConfMcSimResult,
+    baselinePrimarySimResult: pp.baselineSimulation || sim,
+    baselineOtherConfSimResult: otherConfBaselineSimResult || otherConfMcSimResult
+  });
+  const activeStanding = standingsSnapshot.byAbbr.get(activeTeam.abbr);
+  const activeSeedBadge = activeStanding?.seed
+    ? `#${activeStanding.seed} ${activeConf} • ${activeStanding.record}`
+    : sf.currentRecord || '';
+
+  const rivalImpacts =
+    overrideCount > 0
+      ? computeSimulationRivalImpacts({
+          baselineSim: pp.baselineSimulation,
+          activeSim: sim,
+          otherBaselineSim: otherConfBaselineSimResult,
+          otherActiveSim: otherConfMcSimResult,
+          targetAbbr: activeTeam.abbr,
+          maxCount: 3
+        })
+      : [];
 
   const byWeek = new Map();
   const seenRootingKeys = new Set();
@@ -2313,18 +2708,75 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
     })
     .join('');
 
+  const stickySimBarHtml =
+    overrideCount > 0
+      ? `
+    <div class="playoff-sim-sticky-bar" data-playoff-sim-bar="active" role="region" aria-label="Live Playoff Simulation Impact">
+      <div class="playoff-sim-bar-top">
+        <span class="playoff-sim-bar-title">
+          <span class="badge badge-gold mono">Sim • ${overrideCount} ${overrideCount === 1 ? 'Pick' : 'Picks'}</span>
+        </span>
+        <div class="playoff-sim-bar-actions">
+          <button type="button" class="btn-ghost playoff-sim-mini-btn" data-action="jump-to-playoff-standings">↑ Standings</button>
+          <button type="button" class="btn-ghost playoff-sim-mini-btn" data-action="reset-playoff-overrides">${iconSvg('reset', 12)}<span>Clear</span></button>
+        </div>
+      </div>
+      <div class="playoff-sim-bar-kpis mono">
+        <div class="playoff-sim-kpi-pill">
+          <span class="sim-kpi-lbl">${esc(activeTeam.abbr)} PO</span>
+          <strong style="color:var(--emerald)">${sf.makePlayoffsPct ?? 0}%</strong>
+          ${makeDelta ? `<span class="delta-chip ${makeDelta.tone}">${esc(makeDelta.text)}</span>` : ''}
+        </div>
+        <div class="playoff-sim-kpi-pill">
+          <span class="sim-kpi-lbl">Div</span>
+          <strong style="color:var(--gold-bright)">${sf.winDivisionPct ?? 0}%</strong>
+          ${divDelta ? `<span class="delta-chip ${divDelta.tone}">${esc(divDelta.text)}</span>` : ''}
+        </div>
+        <div class="playoff-sim-kpi-pill">
+          <span class="sim-kpi-lbl">#1 Bye</span>
+          <strong>${sf.seed1ByePct ?? 0}%</strong>
+          ${byeDelta ? `<span class="delta-chip ${byeDelta.tone}">${esc(byeDelta.text)}</span>` : ''}
+        </div>
+      </div>
+      ${
+        rivalImpacts.length > 0
+          ? `
+        <div class="playoff-sim-rivals" data-playoff-sim-rivals>
+          <span class="sim-rivals-lbl">Rivals:</span>
+          ${rivalImpacts
+            .map(
+              r => `
+            <span class="playoff-rival-chip mono ${r.deltaPct > 0 ? 'is-up' : 'is-down'}">
+              ${esc(r.abbr)} ${r.deltaPct > 0 ? '+' : ''}${r.deltaPct}% ${esc(r.metricLabel)}
+            </span>
+          `
+            )
+            .join('')}
+        </div>
+      `
+          : ''
+      }
+    </div>
+  `
+      : '';
+
+  const seedPathCards = pp.seedPathCards || [];
+
   return `
+    ${stickySimBarHtml}
+
     <section class="card temporal-highlight">
       <div class="card-header">
         <div class="card-header-left">
           <div class="card-icon-badge temporal" aria-hidden="true">${iconSvg('trophy', 18)}</div>
           <div class="card-title-group">
-            <div class="card-eyebrow">10,000-Run ${jargonTerm('Monte Carlo', 'monte_carlo')}</div>
+            <div class="card-eyebrow">10,000-Run ${jargonTerm('Monte Carlo', 'monte_carlo')} • Proj. ${sf.projectedWins ?? 10.0} W</div>
             <h2 class="card-title">Playoff Odds</h2>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-          <a href="https://www.nfl.com/standings/playoff-picture" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Playoff Picture</span>${iconSvg('externalLink', 11)}</a>
+          ${activeSeedBadge ? `<span class="badge badge-positive mono">${esc(activeSeedBadge)}</span>` : ''}
+          <a href="https://www.nfl.com/standings/playoff-picture" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Picture</span>${iconSvg('externalLink', 11)}</a>
           ${
             overrideCount > 0
               ? `<button type="button" class="btn-ghost" data-action="reset-playoff-overrides">${iconSvg('reset', 13)}<span>Clear (${overrideCount})</span></button>`
@@ -2340,7 +2792,7 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
           ${renderMiniMeterHtml(sf.makePlayoffsPct ?? 0, 'emerald')}
         </div>
         <div class="kpi-box">
-          <div class="kpi-label">Win ${esc(getActiveTeamConfig().division)}</div>
+          <div class="kpi-label">Win ${esc(activeTeam.division)}</div>
           <div class="kpi-val mono" style="color:var(--gold-bright)">${sf.winDivisionPct ?? 0}%${divDelta ? ` <span class="delta-chip ${divDelta.tone}" data-playoff-delta>${esc(divDelta.text)}</span>` : ''}</div>
           ${renderMiniMeterHtml(sf.winDivisionPct ?? 0, 'gold')}
         </div>
@@ -2351,81 +2803,137 @@ function renderPlayoffSimulator(appData, mcSimResult, forcedWinners, expandedRoo
         </div>
       </div>
 
-      <div class="sub-label" style="margin:10px 0 6px">${esc(getActiveTeamConfig().conference)} Seed Distribution (Proj. ${sf.projectedWins ?? 10.0} Wins)</div>
-      <div style="display:flex;flex-direction:column;gap:5px">
-        ${[1, 2, 3, 4, 5, 6, 7]
-          .map(s => {
-            const pct = seeds[s] ?? 0;
-            return `
-              <div class="spider-drill-row" style="grid-template-columns:98px 1fr 44px">
-                <span class="mono" style="font-size:11.5px;font-weight:700;white-space:nowrap">Seed #${s}${s === 1 ? ' (Bye)' : ''}</span>
-                <div class="spider-bar-track"><div class="spider-bar-fill" style="width:${Math.min(100, pct)}%;background:${s === 1 ? 'var(--emerald)' : s <= 4 ? 'var(--gold)' : 'var(--scarlet-bright)'}"></div></div>
-                <span class="mono" style="font-size:12px;text-align:right">${pct}%</span>
-              </div>
-            `;
-          })
-          .join('')}
+      <div class="playoff-seed-stack-box">
+        <button type="button" class="playoff-seed-toggle-btn" data-action="toggle-playoff-seed-bars" aria-expanded="${playoffSeedBarsExpanded ? 'true' : 'false'}">
+          <div class="playoff-seed-toggle-top">
+            <span class="sub-label" style="margin:0">${esc(activeConf)} Seed Distribution</span>
+            <span class="mono playoff-seed-toggle-cue">${playoffSeedBarsExpanded ? 'Hide #1–#7 ▴' : 'See #1–#7 ▾'}</span>
+          </div>
+          <div class="playoff-seed-stacked-bar" aria-hidden="true">
+            <div style="width:${Math.min(100, seed1Pct)}%;background:var(--emerald)"></div>
+            <div style="width:${Math.min(100, divSeeds24Pct)}%;background:var(--gold)"></div>
+            <div style="width:${Math.min(100, wcSeeds57Pct)}%;background:var(--scarlet-bright)"></div>
+          </div>
+          <div class="playoff-seed-legend mono">
+            <span><i class="legend-dot" style="background:var(--emerald)"></i>#1 ${seed1Pct}%</span>
+            <span><i class="legend-dot" style="background:var(--gold)"></i>#2–#4 ${divSeeds24Pct}%</span>
+            <span><i class="legend-dot" style="background:var(--scarlet-bright)"></i>WC ${wcSeeds57Pct}%</span>
+          </div>
+        </button>
+        ${
+          playoffSeedBarsExpanded
+            ? `
+          <div class="playoff-seed-bars-expanded" data-playoff-seed-bars="open">
+            ${[1, 2, 3, 4, 5, 6, 7]
+              .map(s => {
+                const pct = seeds[s] ?? 0;
+                return `
+                  <div class="spider-drill-row" style="grid-template-columns:94px 1fr 44px">
+                    <span class="mono" style="font-size:11.5px;font-weight:700;white-space:nowrap">Seed #${s}${s === 1 ? ' (Bye)' : ''}</span>
+                    <div class="spider-bar-track"><div class="spider-bar-fill" style="width:${Math.min(100, pct)}%;background:${s === 1 ? 'var(--emerald)' : s <= 4 ? 'var(--gold)' : 'var(--scarlet-bright)'}"></div></div>
+                    <span class="mono" style="font-size:12px;text-align:right">${pct}%</span>
+                  </div>
+                `;
+              })
+              .join('')}
+          </div>
+        `
+            : ''
+        }
       </div>
+
+      ${
+        seedPathCards.length > 0
+          ? `
+        <div class="playoff-scenarios-block" data-playoff-scenarios>
+          <div class="sub-label" style="margin:10px 0 6px">Seeding Scenarios</div>
+          <div class="playoff-scenarios-list">
+            ${seedPathCards
+              .map(c => {
+                const tag = getScenarioShortLabel(c.target, activeTeam.division);
+                return `
+                  <div class="playoff-scenario-row">
+                    <span class="playoff-scenario-tag mono ${tag.tone}">${esc(tag.text)}</span>
+                    <div class="playoff-scenario-copy">${escJargon(c.pathSummary)}</div>
+                  </div>
+                `;
+              })
+              .join('')}
+          </div>
+        </div>
+      `
+          : ''
+      }
     </section>
 
-    <section class="card">
-      <div class="card-header">
+    <section class="card" id="playoffStandingsCard" data-playoff-standings-card>
+      <div class="card-header playoff-standings-header">
         <div class="card-title-group">
-          <div class="card-eyebrow">Pick winners to simulate</div>
-          <h3 class="card-title">Rooting Guide</h3>
+          <div class="card-eyebrow">Live Standings &amp; Monte Carlo Odds</div>
+          <h3 class="card-title">Standings &amp; Playoff Picture</h3>
+        </div>
+        <div class="playoff-standings-header-controls">
+          ${
+            selectedView === 'league'
+              ? `<span class="badge badge-neutral mono">32 Teams</span>`
+              : `
+            <div class="playoff-conf-toggle" data-playoff-conf-toggle role="group" aria-label="Conference">
+              <button type="button" class="playoff-conf-btn ${selectedConf === 'NFC' ? 'active' : ''}" data-action="set-playoff-standings-conf" data-standings-conf="NFC">NFC</button>
+              <button type="button" class="playoff-conf-btn ${selectedConf === 'AFC' ? 'active' : ''}" data-action="set-playoff-standings-conf" data-standings-conf="AFC">AFC</button>
+            </div>
+          `
+          }
+          <a href="https://www.espn.com/nfl/standings" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN</span>${iconSvg('externalLink', 11)}</a>
         </div>
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:8px" data-rooting-guide-weeks>
-        ${rootingWeekCardsHtml}
-      </div>
-    </section>
-
-    <section class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-        <h3 class="card-title">Seeding Scenarios</h3>
-        <a href="https://www.espn.com/nfl/standings" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Standings</span>${iconSvg('externalLink', 11)}</a>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
-        ${(pp.seedPathCards || [])
+      <div class="segmented-control playoff-view-seg" data-playoff-standings-tabs role="tablist" aria-label="NFL Standings Views">
+        ${[
+          { key: 'picture', label: 'Picture' },
+          { key: 'division', label: 'Division' },
+          { key: 'conference', label: 'Conference' },
+          { key: 'league', label: 'League' }
+        ]
           .map(
-            c => `
-          <div class="subcard-panel">
-            <strong>${esc(c.target)}</strong>
-            <div style="font-size:12.5px;color:var(--text-secondary);margin-top:3px">${escJargon(c.pathSummary)}</div>
-          </div>
+            tab => `
+          <button type="button" role="tab" aria-selected="${selectedView === tab.key ? 'true' : 'false'}"
+                  class="pill-btn seg-btn ${selectedView === tab.key ? 'active' : ''}"
+                  data-action="set-playoff-standings-view" data-standings-view="${tab.key}">
+            ${tab.label}
+          </button>
         `
           )
           .join('')}
       </div>
 
-      <div class="sub-label" style="margin-bottom:6px">${esc(getActiveTeamConfig().conference)} Projected Standings</div>
-      <div class="table-scroll">
-        <table class="data-table mono">
-          <thead><tr><th>Team</th><th>Div</th><th>Rec</th><th>Proj W</th><th>Playoffs</th><th>Div %</th><th>#1 Bye</th></tr></thead>
-          <tbody>
-            ${(sim.allTeamOdds || [])
-              .map(
-                t => `
-              <tr style="${t.abbr === getActiveTeamConfig().abbr ? 'background:var(--gold-soft)' : ''}">
-                <td>
-                  <a href="${esc(buildEspnNflTeamUrl(t.abbr))}" target="_blank" rel="noopener noreferrer" class="ext-link" style="display:inline-flex;align-items:center;gap:6px;color:inherit">
-                    ${renderTeamLogoHtml(t.abbr, t.logoUrl, 20)}
-                    <strong>${esc(t.abbr)}</strong>
-                  </a>
-                </td>
-                <td style="font-family:var(--font-sans);font-size:11px">${esc(String(t.division || '').replace(/^(?:NFC|AFC)\s+/i, ''))}</td>
-                <td>${esc(t.currentRecord)}</td>
-                <td>${t.projectedWins}</td>
-                <td>${t.makePlayoffsPct}%</td>
-                <td>${t.winDivisionPct}%</td>
-                <td>${t.seed1ByePct}%</td>
-              </tr>
-            `
-              )
-              .join('')}
-          </tbody>
-        </table>
+      ${renderPlayoffStandingsBodyHtml(standingsSnapshot, {
+        view: selectedView,
+        conf: selectedConf,
+        activeTeam,
+        showSimDeltas: overrideCount > 0
+      })}
+
+      <div class="playoff-standings-footnote">
+        <span class="playoff-swipe-hint">Swipe table left for DIV, CONF, HOME/AWAY &amp; PF/PA • Rotate landscape for all columns</span>
+        <span class="mono">z=Bye • y=Div • x=In</span>
+      </div>
+    </section>
+
+    <section class="card" id="playoffRootingCard">
+      <div class="card-header">
+        <div class="card-title-group">
+          <div class="card-eyebrow">Pick winners to simulate ${esc(activeTeam.abbr)} &amp; rival odds</div>
+          <h3 class="card-title">Rooting Guide</h3>
+        </div>
+        ${
+          overrideCount > 0
+            ? `<button type="button" class="btn-ghost" data-action="reset-playoff-overrides">${iconSvg('reset', 13)}<span>Clear (${overrideCount})</span></button>`
+            : ''
+        }
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px" data-rooting-guide-weeks>
+        ${rootingWeekCardsHtml}
       </div>
     </section>
   `;

@@ -7271,6 +7271,170 @@ async function main() {
       await cdp.setViewport(390, 844);
     });
 
+    await runStep('Playoffs Standings Hub (Picture/Division/Conference/League, NFC/AFC, Scenarios, Sticky Sim Bar & iPhone 16 Pro Landscape 14-Col Fit)', async () => {
+      await cdp.setViewport(390, 844);
+      const poCheck = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        document.querySelector('[data-nav-tab="season"]')?.click();
+        await sleep(60);
+        document.querySelector('[data-action="set-season-sub"][data-season-sub="playoffs"]')?.click();
+        await sleep(120);
+
+        const scenariosVisible = document.querySelectorAll('[data-playoff-scenarios] .playoff-scenario-row').length;
+        const standingsCard = document.getElementById('playoffStandingsCard');
+        const rootingCard = document.getElementById('playoffRootingCard');
+        const standingsAboveRooting = Boolean(
+          standingsCard &&
+            rootingCard &&
+            standingsCard.getBoundingClientRect().top < rootingCard.getBoundingClientRect().top
+        );
+
+        // Seed distribution starts compact & expands #1-#7 on click
+        const barsInitiallyHidden = !document.querySelector('[data-playoff-seed-bars="open"]');
+        document.querySelector('[data-action="toggle-playoff-seed-bars"]')?.click();
+        await sleep(50);
+        const barsExpandedCount = document.querySelectorAll('[data-playoff-seed-bars="open"] .spider-drill-row').length;
+        document.querySelector('[data-action="toggle-playoff-seed-bars"]')?.click();
+        await sleep(40);
+
+        // Single 4-tab bar with 0px horizontal overflow
+        const tabBar = document.querySelector('[data-playoff-standings-tabs]');
+        const tabBtns = Array.from(tabBar?.querySelectorAll('[data-action="set-playoff-standings-view"]') || []);
+        const tabLabels = tabBtns.map(b => b.textContent.trim());
+        const tabBarNoScroll = tabBar ? tabBar.scrollWidth <= tabBar.clientWidth + 1 : false;
+
+        // Picture view: 4 matchup pills + collapsed Outside Looking In drawer
+        const matchupPillCount = document.querySelectorAll('[data-playoff-matchup-strip] .playoff-matchup-pill').length;
+        const outsideDetails = document.querySelector('details[data-playoff-outside-hunt]');
+        const outsideStartsCollapsed = Boolean(outsideDetails && !outsideDetails.open);
+        outsideDetails?.querySelector('summary')?.click();
+        await sleep(40);
+        const outsideExpandedRows = outsideDetails ? outsideDetails.querySelectorAll('tbody tr').length : 0;
+
+        // Switch NFC -> AFC
+        document.querySelector('[data-action="set-playoff-standings-conf"][data-standings-conf="AFC"]')?.click();
+        await sleep(80);
+        const afcHasBuf = Boolean(document.querySelector('#playoffStandingsCard [data-standings-team="BUF"]'));
+        document.querySelector('[data-action="set-playoff-standings-conf"][data-standings-conf="NFC"]')?.click();
+        await sleep(80);
+
+        // Division view: 4 NFC divisions with NFC West pinned first
+        document.querySelector('[data-action="set-playoff-standings-view"][data-standings-view="division"]')?.click();
+        await sleep(80);
+        const divHeaders = Array.from(document.querySelectorAll('[data-playoff-divisions-view] .playoff-div-header strong')).map(
+          el => el.textContent.trim()
+        );
+
+        // Conference view: 16 teams
+        document.querySelector('[data-action="set-playoff-standings-view"][data-standings-view="conference"]')?.click();
+        await sleep(80);
+        const confRows = document.querySelectorAll('[data-playoff-conference-view] [data-standings-team]').length;
+
+        // League view: all 32 teams and hides NFC/AFC toggle
+        document.querySelector('[data-action="set-playoff-standings-view"][data-standings-view="league"]')?.click();
+        await sleep(80);
+        const leagueRows = document.querySelectorAll('[data-playoff-league-view] [data-standings-team]').length;
+        const confToggleHiddenInLeague = !document.querySelector('[data-playoff-conf-toggle]');
+
+        // Return to Picture and test Sticky Simulation Impact Bar via Rooting Guide toggle
+        document.querySelector('[data-action="set-playoff-standings-view"][data-standings-view="picture"]')?.click();
+        await sleep(80);
+        const simBarBefore = Boolean(document.querySelector('[data-playoff-sim-bar="active"]'));
+        document.querySelector('[data-action="toggle-playoff-winner"]')?.click();
+        await sleep(100);
+        const simBar = document.querySelector('[data-playoff-sim-bar="active"]');
+        const simBarActive = Boolean(simBar);
+        const simBarPosition = simBar ? getComputedStyle(simBar).position : '';
+        const rivalChips = document.querySelectorAll('[data-playoff-sim-rivals] .playoff-rival-chip').length;
+        const hasJumpBtn = Boolean(document.querySelector('[data-action="jump-to-playoff-standings"]'));
+        document.querySelector('[data-action="reset-playoff-overrides"]')?.click();
+        await sleep(80);
+        const simBarCleared = !document.querySelector('[data-playoff-sim-bar="active"]');
+
+        return {
+          scenariosVisible,
+          standingsAboveRooting,
+          barsInitiallyHidden,
+          barsExpandedCount,
+          tabLabels,
+          tabBarNoScroll,
+          matchupPillCount,
+          outsideStartsCollapsed,
+          outsideExpandedRows,
+          afcHasBuf,
+          divHeaders,
+          confRows,
+          leagueRows,
+          confToggleHiddenInLeague,
+          simBarBefore,
+          simBarActive,
+          simBarPosition,
+          rivalChips,
+          hasJumpBtn,
+          simBarCleared
+        };
+      });
+
+      assert(poCheck.scenariosVisible >= 3, `Seeding Scenarios must remain visible in Card 1: ${JSON.stringify(poCheck)}`);
+      assert(poCheck.standingsAboveRooting, 'Standings & Playoff Picture card must sit above Rooting Guide');
+      assert(poCheck.barsInitiallyHidden && poCheck.barsExpandedCount === 7, `Seed distribution toggle failed: ${JSON.stringify(poCheck)}`);
+      assert(
+        JSON.stringify(poCheck.tabLabels) === JSON.stringify(['Picture', 'Division', 'Conference', 'League']) && poCheck.tabBarNoScroll,
+        `Standings 4-tab bar mismatch or overflow: ${JSON.stringify(poCheck)}`
+      );
+      assert(
+        poCheck.matchupPillCount === 4 && poCheck.outsideStartsCollapsed && poCheck.outsideExpandedRows === 4,
+        `Picture view matchup strip / collapsed outside-hunt check failed: ${JSON.stringify(poCheck)}`
+      );
+      assert(poCheck.afcHasBuf, 'AFC conference toggle must display AFC teams (BUF)');
+      assert(
+        poCheck.divHeaders.length === 4 && poCheck.divHeaders[0] === 'NFC West',
+        `Division view must pin NFC West first: ${JSON.stringify(poCheck.divHeaders)}`
+      );
+      assert(poCheck.confRows === 16, `Conference view must display 16 clubs, got ${poCheck.confRows}`);
+      assert(poCheck.leagueRows === 32 && poCheck.confToggleHiddenInLeague, `League view must display 32 clubs without NFC/AFC toggle: ${JSON.stringify(poCheck)}`);
+      assert(
+        !poCheck.simBarBefore && poCheck.simBarActive && poCheck.simBarPosition === 'sticky' && poCheck.rivalChips >= 1 && poCheck.hasJumpBtn && poCheck.simBarCleared,
+        `Sticky Simulation Impact Bar lifecycle failed: ${JSON.stringify(poCheck)}`
+      );
+
+      await cdp.assertNoOverflow('Playoffs at 390x844');
+
+      // Verify iPhone 16 (852x393) & iPhone 16 Pro (874x402) Landscape full 14-column table fit without horizontal table scroll
+      for (const [lw, lh, label] of [
+        [852, 393, 'iPhone 16 Landscape (852x393)'],
+        [874, 402, 'iPhone 16 Pro Landscape (874x402)']
+      ]) {
+        await cdp.setViewport(lw, lh);
+        const landFit = await cdp.eval(() => {
+          const wrap = document.querySelector('#playoffStandingsCard .playoff-table-scroll');
+          const cols = document.querySelectorAll('#playoffStandingsCard .playoff-standings-table thead th').length;
+          return {
+            cols,
+            clientWidth: wrap ? wrap.clientWidth : 0,
+            scrollWidth: wrap ? wrap.scrollWidth : 9999
+          };
+        });
+        assert(
+          landFit.cols === 14 && landFit.scrollWidth <= landFit.clientWidth + 1,
+          `Expected all 14 Standings columns to fit without scrolling on ${label}: ${JSON.stringify(landFit)}`
+        );
+        await cdp.assertNoOverflow(`Playoffs on ${label}`);
+      }
+
+      // Verify narrow 320px portrait & Light theme ('94 Throwback) clean zero-overflow
+      await cdp.setViewport(320, 640);
+      await cdp.assertNoOverflow('Playoffs at 320x640');
+      await cdp.eval(() => {
+        document.documentElement.setAttribute('data-theme', 'light');
+      });
+      await cdp.assertNoOverflow('Playoffs Light Theme at 320x640');
+      await cdp.eval(() => {
+        document.documentElement.removeAttribute('data-theme');
+      });
+      await cdp.setViewport(390, 844);
+    });
+
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {
       assert(
         cdp.consoleErrors.length === 0,
