@@ -24,7 +24,11 @@
 import { ALL_NFL_TEAMS, getTeamByAbbr, normalizeAnyTeamAbbr } from '../../src/config/teamRegistry.js';
 import { parseOverTheCapHtml, parseDollarCell } from './otcParser.mjs';
 import { normPlayerName, parseCsv } from './nflversePlayerContext.mjs';
-import { buildOtcPlayerUrl, sanitizeExternalUrl } from '../../src/engine/linkIntegrity.js';
+import {
+  buildOtcPlayerUrl,
+  sanitizeExternalUrl,
+  stripHtmlAndDecodeEntities
+} from '../../src/engine/linkIntegrity.js';
 import { evaluateTradeDeadlineStatus } from '../../src/engine/seasonStateMachine.js';
 
 const NFLVERSE_TRADES_URL = 'https://github.com/nflverse/nflverse-data/releases/download/trades/trades.csv';
@@ -124,14 +128,7 @@ function possessive(name = '') {
 }
 
 function stripTags(str = '') {
-  return String(str || '')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&#039;|&#39;|&apos;/g, "'")
-    .replace(/&quot;/g, '"')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return stripHtmlAndDecodeEntities(str);
 }
 
 function resolveTeamAbbrFromText(text = '', excludeAbbr = '') {

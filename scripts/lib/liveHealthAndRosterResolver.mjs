@@ -14,23 +14,13 @@ import {
   canonicalInjuryPlayerKey,
   parseOfficial49ersInjuryReportHtml as parseOfficial49ersInjuryReportHtmlShared
 } from '../../src/engine/injuryProbabilityModel.js';
-
-function decodeHtmlEntities(str = '') {
-  return String(str || '')
-    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
-    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
-    .replace(/&apos;/gi, "'")
-    .replace(/&quot;/gi, '"')
-    .replace(/&amp;/gi, '&')
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/&ndash;/gi, '–')
-    .replace(/&mdash;/gi, '—');
-}
+import {
+  decodeHtmlEntities,
+  stripHtmlAndDecodeEntities
+} from '../../src/engine/linkIntegrity.js';
 
 function stripTags(html = '') {
-  return decodeHtmlEntities(String(html || '').replace(/<[^>]+>/g, ' '))
-    .replace(/\s+/g, ' ')
-    .trim();
+  return stripHtmlAndDecodeEntities(html);
 }
 
 /**

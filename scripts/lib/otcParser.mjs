@@ -5,6 +5,8 @@
  * (Cut, Post-June 1 Cut, Trade, Post-June 1 Trade, Restructure, Extension) across 5 years.
  */
 
+import { stripHtmlAndDecodeEntities } from '../../src/engine/linkIntegrity.js';
+
 export function parseDollarCell(str) {
   if (!str) return 0;
   const cleaned = String(str).replace(/<[^>]+>/g, '').trim();
@@ -18,14 +20,7 @@ export function parseDollarCell(str) {
 }
 
 function stripTags(str) {
-  return String(str || '')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&#039;/g, "'")
-    .replace(/&quot;/g, '"')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return stripHtmlAndDecodeEntities(str);
 }
 
 function estimateCbaMinSalary(yearNum) {

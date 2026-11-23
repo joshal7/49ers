@@ -1544,3 +1544,226 @@ export function resolveIosStandaloneExternalVideoBreakoutUrl(rawUrl, env = null)
   if (!safeUrl || !isExternalClubOrLeagueVideoUrl(safeUrl)) return null;
   return `x-safari-${safeUrl}`;
 }
+
+const HTML_NAMED_ENTITIES = Object.freeze({
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  nbsp: ' ',
+  ensp: ' ',
+  emsp: ' ',
+  thinsp: ' ',
+  rsquo: '’',
+  lsquo: '‘',
+  rdquo: '”',
+  ldquo: '“',
+  sbquo: '‚',
+  bdquo: '„',
+  laquo: '«',
+  raquo: '»',
+  lsaquo: '‹',
+  rsaquo: '›',
+  prime: '′',
+  Prime: '″',
+  ndash: '–',
+  mdash: '—',
+  minus: '−',
+  hellip: '…',
+  bull: '•',
+  middot: '·',
+  sdot: '⋅',
+  times: '×',
+  divide: '÷',
+  plusmn: '±',
+  copy: '©',
+  reg: '®',
+  trade: '™',
+  deg: '°',
+  cent: '¢',
+  pound: '£',
+  euro: '€',
+  yen: '¥',
+  sect: '§',
+  para: '¶',
+  dagger: '†',
+  Dagger: '‡',
+  larr: '←',
+  rarr: '→',
+  uarr: '↑',
+  darr: '↓',
+  harr: '↔',
+  lArr: '⇐',
+  rArr: '⇒',
+  frac12: '½',
+  frac14: '¼',
+  frac34: '¾',
+  sup1: '¹',
+  sup2: '²',
+  sup3: '³',
+  ordf: 'ª',
+  ordm: 'º',
+  shy: '',
+  zwnj: '',
+  zwj: '',
+  aacute: 'á',
+  Aacute: 'Á',
+  agrave: 'à',
+  Agrave: 'À',
+  acirc: 'â',
+  Acirc: 'Â',
+  atilde: 'ã',
+  Atilde: 'Ã',
+  auml: 'ä',
+  Auml: 'Ä',
+  aring: 'å',
+  Aring: 'Å',
+  ccedil: 'ç',
+  Ccedil: 'Ç',
+  eacute: 'é',
+  Eacute: 'É',
+  egrave: 'è',
+  Egrave: 'È',
+  ecirc: 'ê',
+  Ecirc: 'Ê',
+  euml: 'ë',
+  Euml: 'Ë',
+  iacute: 'í',
+  Iacute: 'Í',
+  igrave: 'ì',
+  Igrave: 'Ì',
+  icirc: 'î',
+  Icirc: 'Î',
+  iuml: 'ï',
+  Iuml: 'Ï',
+  ntilde: 'ñ',
+  Ntilde: 'Ñ',
+  oacute: 'ó',
+  Oacute: 'Ó',
+  ograve: 'ò',
+  Ograve: 'Ò',
+  ocirc: 'ô',
+  Ocirc: 'Ô',
+  otilde: 'õ',
+  Otilde: 'Õ',
+  ouml: 'ö',
+  Ouml: 'Ö',
+  uacute: 'ú',
+  Uacute: 'Ú',
+  ugrave: 'ù',
+  Ugrave: 'Ù',
+  ucirc: 'û',
+  Ucirc: 'Û',
+  uuml: 'ü',
+  Uuml: 'Ü',
+  yacute: 'ý',
+  Yacute: 'Ý',
+  yuml: 'ÿ',
+  Yuml: 'Ÿ'
+});
+
+const HTML5_WIN1252_C1_MAP = Object.freeze({
+  128: '€',
+  130: '‚',
+  131: 'ƒ',
+  132: '„',
+  133: '…',
+  134: '†',
+  135: '‡',
+  136: 'ˆ',
+  137: '‰',
+  138: 'Š',
+  139: '‹',
+  140: 'Œ',
+  142: 'Ž',
+  145: '‘',
+  146: '’',
+  147: '“',
+  148: '”',
+  149: '•',
+  150: '–',
+  151: '—',
+  152: '˜',
+  153: '™',
+  154: 'š',
+  155: '›',
+  156: 'œ',
+  158: 'ž',
+  159: 'Ÿ'
+});
+
+const HTML_ENTITY_TOKEN_RE = /&(?:#[xX]([0-9a-fA-F]{1,6})|#(\d{1,7})|([a-zA-Z][a-zA-Z0-9]{1,12}));/g;
+const REAL_HTML_TAG_RE = /<\/?[a-zA-Z][a-zA-Z0-9:-]*(?:\s+[^<>]*)?\/?>/g;
+const KNOWN_ESCAPED_HTML_TAG_RE =
+  /<\/?(?:a|abbr|article|aside|b|blockquote|br|caption|code|dd|del|details|div|dl|dt|em|figcaption|figure|font|footer|h[1-6]|header|hr|i|iframe|img|ins|li|main|mark|nav|ol|p|picture|pre|q|s|section|small|source|span|strong|sub|summary|sup|table|tbody|td|tfoot|th|thead|time|tr|u|ul|video)(?:\s+[^<>]*)?\/?>/gi;
+
+function decodeHtmlCodePoint(cp, fallback) {
+  if (!Number.isInteger(cp) || cp < 0 || cp > 0x10ffff) return fallback;
+  if (cp === 0xa0) return ' ';
+  if (cp === 0xad) return '';
+  if (cp >= 128 && cp <= 159) return HTML5_WIN1252_C1_MAP[cp] ?? fallback;
+  if (cp >= 0xd800 && cp <= 0xdfff) return fallback;
+  if (cp < 0x20 && cp !== 0x09 && cp !== 0x0a && cp !== 0x0d) return fallback;
+  try {
+    return String.fromCodePoint(cp);
+  } catch {
+    return fallback;
+  }
+}
+
+/**
+ * Decodes HTML/XML named and numeric entities (including X/Twitter syndication `&gt;`/`&lt;`/`&amp;`,
+ * RSS numeric entities `&#8217;`/`&#8212;`/`&#160;`/`&#x27;`, Windows-1252 C1 codes, and double-encoded
+ * entities like `&amp;gt;`) in a bounded multi-pass sweep while leaving plain text (`A & B`, `AT&T`) intact.
+ */
+export function decodeHtmlEntities(str = '', { maxPasses = 2 } = {}) {
+  let out = String(str ?? '');
+  if (!out || !out.includes('&')) return out;
+  const passes = Math.max(1, Math.min(3, Number(maxPasses) || 2));
+  for (let i = 0; i < passes; i += 1) {
+    const next = out.replace(HTML_ENTITY_TOKEN_RE, (full, hex, dec, named) => {
+      if (hex !== undefined) return decodeHtmlCodePoint(parseInt(hex, 16), full);
+      if (dec !== undefined) return decodeHtmlCodePoint(parseInt(dec, 10), full);
+      if (named !== undefined) {
+        if (Object.prototype.hasOwnProperty.call(HTML_NAMED_ENTITIES, named)) {
+          return HTML_NAMED_ENTITIES[named];
+        }
+        const lower = named.toLowerCase();
+        if (Object.prototype.hasOwnProperty.call(HTML_NAMED_ENTITIES, lower)) {
+          return HTML_NAMED_ENTITIES[lower];
+        }
+      }
+      return full;
+    });
+    if (next === out) break;
+    out = next;
+    if (!out.includes('&')) break;
+  }
+  return out;
+}
+
+/**
+ * Strips CDATA wrappers, script/style blocks, and HTML tags (both raw and RSS-escaped)
+ * while decoding all HTML/XML entities without corrupting literal comparisons (`3 < 5 && 7 > 4`, `>>>`).
+ */
+export function stripHtmlAndDecodeEntities(str = '') {
+  const raw = String(str ?? '');
+  if (!raw) return '';
+  let out = raw
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+    .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(REAL_HTML_TAG_RE, ' ');
+  if (out.includes('&')) {
+    out = decodeHtmlEntities(out, { maxPasses: 2 });
+    if (out.includes('<')) {
+      out = out
+        .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
+        .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
+        .replace(KNOWN_ESCAPED_HTML_TAG_RE, ' ');
+    }
+  }
+  return out.replace(/\s+/g, ' ').trim();
+}

@@ -25,6 +25,7 @@ import {
   buildOtcPositionUrl,
   buildPfrPlayerUrl,
   buildPfrTeamDraftUrl,
+  decodeHtmlEntities,
   getPlayerLookupKeys,
   hasExplicit49ersEntity,
   hasSafeStandaloneSurnameMatch,
@@ -38,6 +39,7 @@ import {
   slugifyPlayerName,
   stripAggregatorBoilerplate,
   stripHistoricalSfBioSentences,
+  stripHtmlAndDecodeEntities,
   stripNon49ersEntityContexts
 } from '../../src/engine/linkIntegrity.js';
 import {
@@ -328,12 +330,7 @@ export async function fetchCuratedYouTubeChannelVideos({
         for (const m of entries) {
           const block = m[1];
           const videoId = block.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i)?.[1]?.trim() || '';
-          const rawTitle = block
-            .match(/<title>([\s\S]*?)<\/title>/i)?.[1]
-            ?.replace(/&amp;/g, '&')
-            .replace(/&quot;/g, '"')
-            .replace(/&#39;|&apos;/g, "'")
-            .trim();
+          const rawTitle = decodeHtmlEntities(block.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || '').trim();
           const pubIso = block.match(/<published>([^<]+)<\/published>/i)?.[1]?.trim() || '';
           const pubMs = pubIso ? Date.parse(pubIso) : NaN;
           if (!videoId || !rawTitle || rawTitle.length < 16) continue;
@@ -793,15 +790,7 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
   );
 
   // Enrich tweets whose external article link lacks a clean non-duplicate headline or high-res og:image (bounded build-time pass)
-  const ogDecodeHtml = s =>
-    String(s || '')
-      .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
-      .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
-      .replace(/&amp;/gi, '&')
-      .replace(/&quot;/gi, '"')
-      .replace(/&apos;|&#039;/gi, "'")
-      .replace(/\s+/g, ' ')
-      .trim();
+  const ogDecodeHtml = s => decodeHtmlEntities(s).replace(/\s+/g, ' ').trim();
   const extractMetaTag = (html, key) => {
     const rx1 = new RegExp(`<meta[^>]+(?:property|name)=["']${key}["'][^>]+content=["']([^"']{6,320})["']`, 'i');
     const rx2 = new RegExp(`<meta[^>]+content=["']([^"']{6,320})["'][^>]+(?:property|name)=["']${key}["']`, 'i');
@@ -906,25 +895,7 @@ const TRUSTED_MEDIA_DISPLAY_NAMES = {
 };
 
 function decodeBasicEntitiesForOembed(html = '') {
-  return String(html || '')
-    .replace(/<br\s*\/?>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&#(\d+);/g, (_, dec) => {
-      const code = Number(dec);
-      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : _;
-    })
-    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => {
-      const code = parseInt(hex, 16);
-      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : _;
-    })
-    .replace(/&mdash;/gi, '—')
-    .replace(/&ndash;/gi, '–')
-    .replace(/&amp;/gi, '&')
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;|&apos;/gi, "'")
-    .replace(/&lt;/gi, '<')
-    .replace(/&gt;/gi, '>')
-    .replace(/&nbsp;/gi, ' ')
+  return stripHtmlAndDecodeEntities(html)
     .replace(/\bpic\.twitter\.com\/[A-Za-z0-9]+/gi, '')
     .replace(/\bhttps?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
     .replace(/\s+/g, ' ')
@@ -1353,8 +1324,12 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                 };
                 const rawExpUrl = pickSynExternalUrl(syn);
                 const expandedSynUrl = rawExpUrl ? await expandShortenerUrl(rawExpUrl) : '';
-                const synCardTitle = syn.card?.binding_values?.title?.string_value || null;
-                const synCardDesc = syn.card?.binding_values?.description?.string_value || null;
+                const synCardTitle = syn.card?.binding_values?.title?.string_value
+                  ? decodeHtmlEntities(syn.card.binding_values.title.string_value)
+                  : null;
+                const synCardDesc = syn.card?.binding_values?.description?.string_value
+                  ? decodeHtmlEntities(syn.card.binding_values.description.string_value)
+                  : null;
                 const mediaThumb =
                   syn.photos?.[0]?.url ||
                   syn.mediaDetails?.[0]?.media_url_https ||
@@ -1374,7 +1349,7 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                   snowMs: cand.snowMs,
                   dirEntry: resolveReporterFromNameOrHandle(screenName) || cand.dirEntry,
                   rawBodyText: syn.text,
-                  fallbackAuthorName: syn.user?.name || screenName,
+                  fallbackAuthorName: decodeHtmlEntities(syn.user?.name || screenName),
                   fallbackAuthorUrl: `https://x.com/${screenName}`,
                   expandedExtUrl: expandedSynUrl,
                   externalTitle: synCardTitle,
@@ -1536,13 +1511,7 @@ export const FLAGSHIP_49ERS_PODCAST_SHOWS = [
 ];
 
 function cleanPodcastSummary(rawDesc = '', episodeTitle = '') {
-  let txt = String(rawDesc || '')
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/&amp;/gi, '&')
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;|&apos;/gi, "'")
+  let txt = stripHtmlAndDecodeEntities(rawDesc)
     .replace(/https?:\/\/\S+/gi, '')
     .replace(/\b(learn more about your ad choices[\s\S]*)$/i, '')
     .replace(/\b(support us by supporting our sponsors[\s\S]*)$/i, '')
@@ -2840,16 +2809,7 @@ const DISALLOWED_PRIOR_DRAFT_PROSPECTS = new Set([
 ]);
 
 function decodeDraftHtmlEntities(s = '') {
-  return String(s || '')
-    .replace(/&#39;|&#x27;|&apos;/gi, "'")
-    .replace(/&quot;/gi, '"')
-    .replace(/&amp;/gi, '&')
-    .replace(/&#8211;|&ndash;/gi, '–')
-    .replace(/&#8212;|&mdash;/gi, '—')
-    .replace(/&#8226;|&bull;/gi, '•')
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return decodeHtmlEntities(s).replace(/\s+/g, ' ').trim();
 }
 
 const PROSPECT_SCHEME_TRAITS_2027 = {

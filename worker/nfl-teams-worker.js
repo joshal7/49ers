@@ -38,6 +38,10 @@ import {
   buildGeminiThinkingConfig,
   resolveGeminiThinkingLevelLabel
 } from '../src/engine/geminiStudioPrompts.js';
+import {
+  decodeHtmlEntities,
+  stripHtmlAndDecodeEntities
+} from '../src/engine/linkIntegrity.js';
 import { buildKeySyncCspHeader } from '../src/services/sharedApiKeyStore.js';
 
 const SF_RESERVED_DAILY_CALLS = 6;
@@ -432,16 +436,7 @@ async function handleCachedEdgeGet(request, teamAbbr, cacheTtlSec, fetcherFn) {
 }
 
 function decodeWorkerXml(str = '') {
-  return String(str || '')
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;|&apos;|&#x27;/g, "'")
-    .replace(/\s+/g, ' ')
-    .trim();
+  return stripHtmlAndDecodeEntities(str);
 }
 
 function parseWorkerRotoWireTeamInactives(html = '', teamCfg = null) {
@@ -656,11 +651,11 @@ export function parseOfficialXSyndicationTimelineHtml(
     const pubMs = Date.parse(tw.created_at || '');
     if (!Number.isFinite(pubMs) || nowMs - pubMs > maxAgeMs) continue;
 
-    const rawText = String(tw.full_text || tw.text || '')
+    const rawText = decodeHtmlEntities(String(tw.full_text || tw.text || ''))
       .replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
       .replace(/\s+/g, ' ')
       .trim();
-    const quotedText = String(tw.quoted_status?.full_text || tw.quoted_status?.text || '')
+    const quotedText = decodeHtmlEntities(String(tw.quoted_status?.full_text || tw.quoted_status?.text || ''))
       .replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
       .replace(/\s+/g, ' ')
       .trim();
@@ -720,7 +715,7 @@ export function parseOfficialXSyndicationTimelineHtml(
       embeddable: true,
       outletId: isLeagueAccount ? 'nfl_official' : `${team?.slug || 'team'}_official`,
       outletName: isLeagueAccount ? 'NFL Official' : `@${screenName} Official`,
-      author: isLeagueAccount ? 'NFL' : tw.user?.name || team?.fullName || `@${screenName}`,
+      author: isLeagueAccount ? 'NFL' : decodeHtmlEntities(tw.user?.name || team?.fullName || `@${screenName}`),
       authorHandle: `@${screenName}`,
       authorProfileUrl: `https://x.com/${screenName}`,
       trustTier: 1,
@@ -1210,13 +1205,13 @@ export default {
           items.push({
             id: `${team.abbr.toLowerCase()}_ew_${a.dataSourceIdentifier || a.id || ''}`,
             type: a.type === 'Media' ? 'video' : 'article',
-            title: a.headline,
-            summary: a.description || '',
+            title: decodeWorkerXml(a.headline),
+            summary: decodeWorkerXml(a.description || ''),
             url: a.links.web.href,
             imageUrl: pickBestWorkerImg(a.images),
             publishedAt: a.published || new Date().toISOString(),
             outletName: 'ESPN',
-            author: a.byline || 'ESPN'
+            author: decodeWorkerXml(a.byline || 'ESPN') || 'ESPN'
           });
         }
 
@@ -1391,7 +1386,7 @@ export default {
                 });
                 if (!sr.ok) return;
                 const syn = await sr.json();
-                const txt = typeof syn?.text === 'string' ? syn.text.replace(/\s+/g, ' ').trim() : '';
+                const txt = typeof syn?.text === 'string' ? decodeHtmlEntities(syn.text).replace(/\s+/g, ' ').trim() : '';
                 if (!txt || txt.length < 16) return;
                 const handle = syn.user?.screen_name || fallbackHandle;
                 const variants = [
@@ -1423,7 +1418,7 @@ export default {
                   embeddable: true,
                   outletId: 'x_beat',
                   outletName: 'X Beat',
-                  author: syn.user?.name || `@${handle}`,
+                  author: syn.user?.name ? decodeHtmlEntities(syn.user.name) : `@${handle}`,
                   authorHandle: `@${handle}`,
                   authorProfileUrl: `https://x.com/${handle}`,
                   publishedAt: new Date(Math.min(nowEdgeMs, snowMs)).toISOString()

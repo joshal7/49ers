@@ -44,6 +44,10 @@ import {
   parseEspnCoreEventRosterInactives
 } from '../src/engine/gameDayRosterEngine.js';
 import {
+  decodeHtmlEntities,
+  stripHtmlAndDecodeEntities
+} from '../src/engine/linkIntegrity.js';
+import {
   isAllowedInlineVideoStreamUrl,
   selectBestXSyndicationMp4
 } from '../src/engine/linkIntegrity.js';
@@ -639,15 +643,7 @@ async function collectEdgeLiveWire(
       ]
     : [];
 
-  const decodeBasic = str =>
-    String(str || '')
-      .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-      .replace(/<[^>]+>/g, ' ')
-      .replace(/&amp;/g, '&')
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;|&apos;/g, "'")
-      .replace(/\s+/g, ' ')
-      .trim();
+  const decodeBasic = str => stripHtmlAndDecodeEntities(str);
 
   const sfExplicitRe =
     /(?:\b(?:49er|49ers|niners|san francisco|santa clara|levi['’]?s(?:\s+stadium)?|kyle shanahan|shanahan|john lynch|raheem morris|klay kubiak|kris kocurek|chris foerster|paraag marathe|jed york)\b|(?:^|[\s([{"',|/-])#(?:49ers|fttb)\b)/i;
@@ -867,7 +863,7 @@ async function collectEdgeLiveWire(
           });
           if (!sr.ok) return;
           const syn = await sr.json();
-          const txt = typeof syn?.text === 'string' ? syn.text.replace(/\s+/g, ' ').trim() : '';
+          const txt = typeof syn?.text === 'string' ? decodeHtmlEntities(syn.text).replace(/\s+/g, ' ').trim() : '';
           if (!txt || txt.length < 16) return;
           const handle = syn.user?.screen_name || fallbackHandle;
           if (!trustedSfBeatHandleRe.test(handle) && !sfRe.test(stripNonSfContextsEdge(txt))) return;
@@ -911,8 +907,12 @@ async function collectEdgeLiveWire(
               resolvedExtU = '';
             }
           }
-          const synCardTitle = syn.card?.binding_values?.title?.string_value || null;
-          const synCardDesc = syn.card?.binding_values?.description?.string_value || null;
+          const synCardTitle = syn.card?.binding_values?.title?.string_value
+            ? decodeHtmlEntities(syn.card.binding_values.title.string_value)
+            : null;
+          const synCardDesc = syn.card?.binding_values?.description?.string_value
+            ? decodeHtmlEntities(syn.card.binding_values.description.string_value)
+            : null;
           items.push({
             id: `x_edge_${sid}`,
             type: 'tweet',
@@ -929,7 +929,7 @@ async function collectEdgeLiveWire(
             embeddable: true,
             outletId: 'x_beat',
             outletName: 'X Beat',
-            author: syn.user?.name || `@${handle}`,
+            author: syn.user?.name ? decodeHtmlEntities(syn.user.name) : `@${handle}`,
             authorHandle: `@${handle}`,
             authorProfileUrl: `https://x.com/${handle}`,
             publishedAt: new Date(Math.min(nowEdgeMs, snowMs)).toISOString()

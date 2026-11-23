@@ -15,6 +15,8 @@
 
 import {
   AMBIGUOUS_PLAYER_SURNAMES,
+  decodeHtmlEntities,
+  stripHtmlAndDecodeEntities,
   isPaywalledPublisher,
   sanitizeExternalUrl,
   buildEspnPlayerNewsAnchorUrl
@@ -32,6 +34,7 @@ import {
 import {
   classifyBreakingItem,
   computeWireStoryRank,
+  enforceSingleBreakingInjuryPerPlayer,
   isStaleCompletedGameAvailabilityItem,
   isUrgentBreakingBadge,
   resolveGameNewsContext
@@ -2741,21 +2744,11 @@ export function isPureIllnessLabel(label = '') {
 }
 
 function decodeHtmlEntitiesBasic(str = '') {
-  return String(str || '')
-    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
-    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
-    .replace(/&apos;/gi, "'")
-    .replace(/&quot;/gi, '"')
-    .replace(/&amp;/gi, '&')
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/&ndash;/gi, '–')
-    .replace(/&mdash;/gi, '—');
+  return decodeHtmlEntities(str);
 }
 
 function stripHtmlTagsBasic(html = '') {
-  return decodeHtmlEntitiesBasic(String(html || '').replace(/<[^>]+>/g, ' '))
-    .replace(/\s+/g, ' ')
-    .trim();
+  return stripHtmlAndDecodeEntities(html);
 }
 
 export function canonicalInjuryPlayerKey(rawName = '') {
@@ -7687,8 +7680,14 @@ export function rankPlayerInjuryNews(
     };
   });
 
+  // Ensure at most ONE breaking injury update for this player keeps urgent breaking status & top-pinning
+  const enforcedScored = enforceSingleBreakingInjuryPerPlayer(scored, {
+    nowMs,
+    rosterPlayers: Array.isArray(appData?.roster?.players) ? appData.roster.players : player ? [player] : []
+  });
+
   // Sort by live in-game urgent pin -> Joint Recency + Medical Salience score desc -> newest timestamp
-  scored.sort((a, b) => {
+  enforcedScored.sort((a, b) => {
     const aLive = a?.isInGameInjury && isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
     const bLive = b?.isInGameInjury && isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;
     if (aLive !== bLive) return bLive - aLive;
@@ -7701,7 +7700,7 @@ export function rankPlayerInjuryNews(
   // Consolidate only bare multi-player dry practice-report list tweets into `confirmingReports`
   // while keeping every distinct tweet, video, and article visible in the player's Health list!
   const deduped = [];
-  for (const item of scored) {
+  for (const item of enforcedScored) {
     const itemMs = parseFlexibleIsoMs(item.publishedAt) || 0;
     const itemText = `${item.fullText || ''} ${item.title || ''} ${item.summary || ''}`.toLowerCase();
     const bucketTag =
@@ -7991,10 +7990,15 @@ export function rankPlayerOverviewMentions(
     });
   }
 
+  const enforcedDeduped = enforceSingleBreakingInjuryPerPlayer(deduped, {
+    nowMs,
+    rosterPlayers: Array.isArray(appData?.roster?.players) ? appData.roster.players : player ? [player] : []
+  });
+
   if (activeSort === 'latest') {
-    deduped.sort(compareLatestNewsItems);
+    enforcedDeduped.sort(compareLatestNewsItems);
   } else {
-    deduped.sort((a, b) => {
+    enforcedDeduped.sort((a, b) => {
       const aLive = a?.isInGameInjury && isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
       const bLive = b?.isInGameInjury && isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;
       if (aLive !== bLive) return bLive - aLive;
@@ -8004,7 +8008,7 @@ export function rankPlayerOverviewMentions(
     });
   }
 
-  return deduped.slice(0, maxItems);
+  return enforcedDeduped.slice(0, maxItems);
 }
 
 /**

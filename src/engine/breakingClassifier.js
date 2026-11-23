@@ -28,6 +28,7 @@ import {
   resolveReporterFromNameOrHandle
 } from './beatAttributionEngine.js';
 import {
+  decodeHtmlEntities,
   isPaywalledPublisher,
   sanitizeExternalUrl,
   stripAggregatorBoilerplate
@@ -164,6 +165,18 @@ export function matchesInGameInjuryOrReturn(text = '') {
 
 const MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX =
   /\b(cramps?|cramping|dehydrat(?:ed|ion)|wind knocked out(?: of him)?|knocked the wind out|(?:missed|out for|sat out|sidelined for|exited for)\s+(?:a|one|two|1|2|a couple(?: of)?|a few)\s+(?:play|plays|snap|snaps)|for a play or two|for a couple(?: of)? (?:plays|snaps)|briefly (?:exited|left|shaken up|sidelined)|catching his breath|got his breath back|needed a breather|just a breather|shook it off|stayed in the game|back in on the next (?:play|snap|series|drive)|minor nick|looks like (?:it )?(?:could|might) be|from the broadcast angle|by video|my guess is|fearing the worst|looks bad|didn['’]?t look good|hopefully not|pray(?:ing|ers) for)\b/i;
+
+const SPECULATIVE_VISUAL_COMPARISON_REGEX =
+  /\b(looked\s+(?:very\s+|awfully\s+|eerily\s+)?similar\s+to|looks\s+(?:very\s+|awfully\s+|eerily\s+)?similar\s+to|reminds?\s+me\s+of|reminded\s+me\s+of|looked\s+like\s+(?:a|an|the)?\s*(?:torn|fractured|broken|dislocated|serious|bad)|looks\s+like\s+(?:a|an|the)?\s*(?:torn|fractured|broken|dislocated|serious|bad)|fears?\s+(?:it\s+)?(?:could|might|may)\s+be|by\s+video\s+(?:looks|appears|suggests)|from\s+the\s+broadcast\s+angle)\b/i;
+
+const CONFIRMED_DIAGNOSIS_OR_ACTION_REGEX =
+  /\b(confirmed|diagnosed|x-rays?\s+(?:showed|revealed|came\s+back)|mri\s+(?:showed|revealed|confirmed|came\s+back)|tests?\s+(?:showed|revealed|confirmed)|ruled\s+out|downgraded\s+to\s+out|carted\s+(?:off|to|away)|air\s*cast|placed\s+(?:[a-z .'-]{0,28}\s+)?on\s+(?:injured\s+reserve|ir)\b)\b/i;
+
+function isSpeculativeInjuryComparisonOnly(text = '') {
+  const s = String(text || '').trim();
+  if (!s) return false;
+  return SPECULATIVE_VISUAL_COMPARISON_REGEX.test(s) && !CONFIRMED_DIAGNOSIS_OR_ACTION_REGEX.test(s);
+}
 
 const SERIOUS_INJURY_ESCALATION_REGEX =
   /\b(ruled out|downgraded to out|doubtful to return|out for the (?:rest|remainder|game|night|day|season|year)|will not return|won['’]?t return|did not return(?!\s+(?:the\s+|a\s+|that\s+|his\s+)?(?:punt|kick|kickoff|fumble|interception))|done for the (?:day|night|game|season|year)|carted (?:off|to|away|from|back|into|down)|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|loaded\s+onto\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming|comes|came|rolling|rolled|heading|headed)?\s*out|(?:bringing|brought|bring|calling|called|motion(?:ed|ing)?|wav(?:ed|ing)?)\s+(?:out\s+the\s+|for\s+the\s+)cart|medical\s+cart|in an air\s*cast|air\s*cast|splint\b|immobiliz\w*|non-contact (?:injury|knee|ankle|leg)|locker room|(?:into|to|down)\s+the\s+tunnel|concussion (?:evaluation|protocol)|evaluated for (?:a )?concussion|torn (?:acl|achilles|pectoral|meniscus|patellar)|fracture[d]?|broken (?:ankle|leg|arm|foot|collarbone|wrist|hand|rib|ribs|fibula|tibia)|fibula|tibia|gruesome\s+(?:[a-z-]+\s+)?injur\w*|dislocat(?:ed|ion)|on crutches|walking boot|\bmri\b|\bx-rays?\b|ct scan)\b/i;
@@ -954,7 +967,9 @@ export function computeInGameInjurySeverity(item = {}) {
   if (!full) return { severityScore: 0, severityTier: 'minor' };
 
   const hasSeriousEscalation = SERIOUS_INJURY_ESCALATION_REGEX.test(full);
-  const isMinor = MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX.test(full) && !hasSeriousEscalation;
+  const isMinor =
+    isSpeculativeInjuryComparisonOnly(full) ||
+    (MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX.test(full) && !hasSeriousEscalation);
   if (isMinor) {
     return { severityScore: 0.1, severityTier: 'minor' };
   }
@@ -1010,12 +1025,19 @@ export function computePlayerRosterValue(item = {}, rosterPlayers = [], teamInpu
   const isSf = activeTeam.abbr === 'SF';
 
   let matchedRosterObj = null;
-  let resolvedSlug = '';
+  let resolvedSlug = resolvePrimaryInjuredPlayerSlug(item, pool, activeTeam);
 
-  // 1. Match via `item.mentionedPlayers` against `rosterPlayers`
-  if (Array.isArray(item?.mentionedPlayers) && item.mentionedPlayers.length > 0) {
-    const mp = item.mentionedPlayers[0];
-    resolvedSlug = normalizeRosterSlug(mp?.name || mp?.id || '');
+  // 1. Match primary injured player (earliest in lead) or `item.mentionedPlayers` against `rosterPlayers`
+  if (resolvedSlug && pool.length > 0) {
+    matchedRosterObj =
+      pool.find(p => normalizeRosterSlug(p?.name) === resolvedSlug) || null;
+  }
+  if (!matchedRosterObj && Array.isArray(item?.mentionedPlayers) && item.mentionedPlayers.length > 0) {
+    const mp =
+      (resolvedSlug
+        ? item.mentionedPlayers.find(m => normalizeRosterSlug(m?.name || m?.id || '') === resolvedSlug)
+        : null) || item.mentionedPlayers[0];
+    if (!resolvedSlug) resolvedSlug = normalizeRosterSlug(mp?.name || mp?.id || '');
     if (pool.length > 0) {
       matchedRosterObj =
         pool.find(
@@ -1192,9 +1214,11 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
   const inGameClaimText = isTweetItem ? fullTweetOrLead : leadClaim;
   const hasConfirmedInGameStatus = CONFIRMED_IN_GAME_STATUS_REGEX.test(inGameClaimText);
   const hasSeriousInjuryEscalation = SERIOUS_INJURY_ESCALATION_REGEX.test(`${leadClaim} ${fullTweetOrLead}`);
+  const isSpeculativeComparison = isSpeculativeInjuryComparisonOnly(`${leadClaim} ${fullTweetOrLead}`);
   const isMinorOrSpeculativeInjury =
-    MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX.test(`${leadClaim} ${fullTweetOrLead}`) &&
-    !hasSeriousInjuryEscalation;
+    isSpeculativeComparison ||
+    (MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX.test(`${leadClaim} ${fullTweetOrLead}`) &&
+      !hasSeriousInjuryEscalation);
   const isDiagnosticScheduledOnly =
     DIAGNOSTIC_SCHEDULED_ONLY_REGEX.test(leadClaim) && !MATERIAL_INJURY_DIAGNOSIS_REGEX.test(leadClaim);
   const isNegatedCatastrophicTear = NEGATED_CATASTROPHIC_INJURY_REGEX.test(leadClaim);
@@ -1218,6 +1242,7 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     !isSecondaryOrCommentary &&
     !isExpectedRoutineAbsence &&
     !isOpposingTeamOnlySubject &&
+    !isSpeculativeComparison &&
     (POST_GAME_INJURY_FOLLOWUP_REGEX.test(leadClaim) || teamMatchers.activeCoachInjuryUpdateRe.test(leadClaim));
   const matchesPracticeInjuryScoop =
     !isSpeculative &&
@@ -1229,11 +1254,13 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     PRE_GAME_AVAILABILITY_NOISE_REGEX.test(leadClaim) || isPreGamePlayAvailabilityItem(item);
 
   // Guard TIER1_MAJOR against negated catastrophic injuries ("avoided a torn ACL" / "NOT a torn ACL")
+  // and visual-comparison speculation ("looked very similar to the fractured ankle / torn ACL")
   const leadForTier1 = isNegatedCatastrophicTear
     ? leadClaim.replace(/\b(?:torn\s+(?:acl|achilles|pectoral|patellar)|season-ending\s+[a-z]+)\b/gi, '')
     : leadClaim;
   const matchesTier1Major =
     !isSpeculative &&
+    !isSpeculativeComparison &&
     !isSecondaryOrCommentary &&
     !isOpposingTeamOnlySubject &&
     !NON_TRANSACTION_RELEASE_REGEX.test(leadClaim) &&
@@ -2277,14 +2304,44 @@ export function sortNewsWithBreakingPriority(
       return bMs - aMs;
     });
 
+  // Enforce at most ONE breaking / top-pinned injury update per injured player BEFORE the feed-wide scarcity cap
+  // so 3 tweets about the same player's injury never stack at the top or crowd out other injured players!
+  const rosterPlayersForDedup = Array.isArray(ctx?.rosterPlayers)
+    ? ctx.rosterPlayers
+    : Array.isArray(appData?.roster?.players)
+      ? appData.roster.players
+      : [];
+  const afterPerPlayerInj = enforceSingleBreakingInjuryPerPlayer(scored, {
+    nowMs,
+    rosterPlayers: rosterPlayersForDedup,
+    teamConfig: ctx?.teamConfig || null
+  });
+  if (afterPerPlayerInj !== scored) {
+    afterPerPlayerInj.sort((a, b) => {
+      const aNeg = (a.breakingPriority || 0) < 0;
+      const bNeg = (b.breakingPriority || 0) < 0;
+      if (aNeg !== bNeg) return aNeg ? 1 : -1;
+      const rankDiff = (b.storyRank || 0) - (a.storyRank || 0);
+      if (Math.abs(rankDiff) >= 0.35) return rankDiff;
+      const aMs = resolveEffectivePublishTimestampMs(a, nowMs) || 0;
+      const bMs = resolveEffectivePublishTimestampMs(b, nowMs) || 0;
+      return bMs - aMs;
+    });
+  }
+
   // Enforce feed-wide BREAKING scarcity cap BOTH in-game and out-of-game so at most `maxUrgentBreakingBadges`
   // distinct story angles wear urgent red badges simultaneously (gracefully downgrading overflow to ROSTER MOVE / INJURY UPDATE).
   if (maxUrgentBreakingBadges > 0) {
     let urgentSeen = 0;
     const seenUrgentKeys = new Set();
-    for (const item of scored) {
+    for (const item of afterPerPlayerInj) {
       if (!isUrgentBreakingBadge(item.breakingBadge)) continue;
-      const sigKey = buildStorySignatureKey(item) || item.id || item.title;
+      const injInfo = analyzeSinglePlayerInjuryItem(item, rosterPlayersForDedup, ctx?.teamConfig || null);
+      const sigKey =
+        (injInfo.isInjury && injInfo.playerSlug ? `player_injury::${injInfo.playerSlug}` : '') ||
+        buildStorySignatureKey(item) ||
+        item.id ||
+        item.title;
       if (seenUrgentKeys.has(sigKey)) continue;
       urgentSeen += 1;
       seenUrgentKeys.add(sigKey);
@@ -2299,7 +2356,7 @@ export function sortNewsWithBreakingPriority(
     }
   }
 
-  return scored;
+  return afterPerPlayerInj;
 }
 
 function isPureInjuryCard(item) {
@@ -2455,11 +2512,442 @@ export function balanceFeedTopSalience(
 }
 
 const INJURY_BODY_PART_EXTRACT_RE =
-  /\b(acl|mcl|pcl|lcl|meniscus|achilles|concussion|high[- ]ankle|ankle|knee|hamstring|calf|groin|quad|quadriceps|hip|shoulder|collarbone|rib|ribs|chest|pectoral|back|neck|head|elbow|wrist|hand|thumb|finger|foot|toe|turf toe|lisfranc|shin|oblique|abdomen)\b/i;
+  /\b(acl|mcl|pcl|lcl|meniscus|patellar|achilles|concussion|high[- ]ankle|ankle|lower[- ]leg|upper[- ]leg|fibula|tibia|shin|leg|knee|hamstring|calf|groin|quad|quadriceps|hip|shoulder|collarbone|clavicle|rib|ribs|chest|pectoral|pec|back|neck|head|elbow|forearm|wrist|hand|thumb|finger|foot|heel|toe|turf toe|lisfranc|oblique|abdomen|biceps|triceps)\b/i;
 
 function extractNamedInjuryBodyPart(text = '') {
   const m = String(text || '').match(INJURY_BODY_PART_EXTRACT_RE);
   return m ? m[1].toLowerCase().replace(/\s+/g, '-') : '';
+}
+
+const INJURY_ANATOMY_GROUP_BY_PART = {
+  'lower-leg': 'lower_leg',
+  leg: 'lower_leg',
+  fibula: 'lower_leg',
+  tibia: 'lower_leg',
+  shin: 'lower_leg',
+  ankle: 'lower_leg',
+  'high-ankle': 'lower_leg',
+  achilles: 'lower_leg',
+  calf: 'lower_leg',
+  foot: 'lower_leg',
+  heel: 'lower_leg',
+  toe: 'lower_leg',
+  'turf-toe': 'lower_leg',
+  lisfranc: 'lower_leg',
+  knee: 'knee',
+  acl: 'knee',
+  mcl: 'knee',
+  pcl: 'knee',
+  lcl: 'knee',
+  meniscus: 'knee',
+  patellar: 'knee',
+  'upper-leg': 'upper_leg',
+  hamstring: 'upper_leg',
+  quad: 'upper_leg',
+  quadriceps: 'upper_leg',
+  groin: 'upper_leg',
+  hip: 'upper_leg',
+  shoulder: 'upper_arm',
+  collarbone: 'upper_arm',
+  clavicle: 'upper_arm',
+  chest: 'upper_arm',
+  pectoral: 'upper_arm',
+  pec: 'upper_arm',
+  biceps: 'upper_arm',
+  triceps: 'upper_arm',
+  elbow: 'upper_arm',
+  forearm: 'upper_arm',
+  wrist: 'upper_arm',
+  hand: 'upper_arm',
+  thumb: 'upper_arm',
+  finger: 'upper_arm',
+  rib: 'torso',
+  ribs: 'torso',
+  back: 'torso',
+  oblique: 'torso',
+  abdomen: 'torso',
+  head: 'head_neck',
+  concussion: 'head_neck',
+  neck: 'head_neck'
+};
+
+function areInjuryBodyPartsCompatible(partA = '', partB = '') {
+  if (!partA || !partB) return true;
+  if (partA === partB) return true;
+  const gA = INJURY_ANATOMY_GROUP_BY_PART[partA] || partA;
+  const gB = INJURY_ANATOMY_GROUP_BY_PART[partB] || partB;
+  if (gA === gB) return true;
+  if (
+    (partA === 'leg' && (gB === 'knee' || gB === 'upper_leg')) ||
+    (partB === 'leg' && (gA === 'knee' || gA === 'upper_leg'))
+  ) {
+    return true;
+  }
+  return false;
+}
+
+const ROSTER_PRIMARY_MATCHER_CACHE = new WeakMap();
+
+function isAsciiWordCharCode(code) {
+  return (
+    (code >= 48 && code <= 57) || // 0-9
+    (code >= 65 && code <= 90) || // A-Z
+    (code >= 97 && code <= 122) || // a-z
+    code === 95 // _
+  );
+}
+
+function findWordBoundaryIndexLower(haystackLower, needleLower) {
+  if (!haystackLower || !needleLower) return -1;
+  const nLen = needleLower.length;
+  const hLen = haystackLower.length;
+  let pos = 0;
+  while (pos <= hLen - nLen) {
+    const idx = haystackLower.indexOf(needleLower, pos);
+    if (idx < 0) return -1;
+    const beforeOk = idx === 0 || !isAsciiWordCharCode(haystackLower.charCodeAt(idx - 1));
+    const afterPos = idx + nLen;
+    const afterOk = afterPos >= hLen || !isAsciiWordCharCode(haystackLower.charCodeAt(afterPos));
+    if (beforeOk && afterOk) return idx;
+    pos = idx + 1;
+  }
+  return -1;
+}
+
+function getCompiledRosterPrimaryMatchers(pool) {
+  if (!Array.isArray(pool) || pool.length === 0) return [];
+  const cached = ROSTER_PRIMARY_MATCHER_CACHE.get(pool);
+  if (cached) return cached;
+  const activePool = pool.filter(p => p?.name && p.rosterBucket !== 'retired');
+  const surnameCounts = new Map();
+  const rawEntries = [];
+  for (const p of activePool) {
+    const cleanName = String(p.name).replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim();
+    const slug = normalizeRosterSlug(cleanName);
+    if (!slug) continue;
+    const fullLower = cleanName.toLowerCase();
+    const parts = fullLower.split(/\s+/).filter(Boolean);
+    const sn = parts.length >= 2 ? parts[parts.length - 1] : '';
+    if (sn.length >= 4) surnameCounts.set(sn, (surnameCounts.get(sn) || 0) + 1);
+    rawEntries.push({ slug, fullLower, sn });
+  }
+  const compiled = rawEntries.map(e => ({
+    slug: e.slug,
+    fullLower: e.fullLower.length >= 5 ? e.fullLower : '',
+    uniqueSurnameLower: e.sn.length >= 5 && surnameCounts.get(e.sn) === 1 ? e.sn : ''
+  }));
+  ROSTER_PRIMARY_MATCHER_CACHE.set(pool, compiled);
+  return compiled;
+}
+
+/**
+ * Resolves the primary injured/subject player slug for a single-player news item by preferring the
+ * player appearing EARLIEST in the lead sentence (so `"McKivitz (lower leg) was carted off... Vederian Lowe took over"`
+ * and `"Colton McKivitz's left lower leg injury looked similar to Fred Warner's..."` ALWAYS resolve to `coltonmckivitz`).
+ * Returns `''` for multi-player weekly injury reports or multi-topic digests.
+ */
+export function resolvePrimaryInjuredPlayerSlug(item = {}, rosterPlayers = [], teamInput = null) {
+  if (!item || typeof item !== 'object') return '';
+  if (isMultiTopicDigestOrRoundup(item)) return '';
+
+  const lead = extractPrimaryClaimText(item);
+  const full = String(item.fullText || item.title || item.headline || '').trim();
+  const leadLower = lead.toLowerCase();
+
+  if (
+    /\b(injury report|pre practice report|players on its practice participation|inactives list)\b/.test(leadLower) &&
+    ((item.mentionedPlayers?.length || 0) >= 2 || /\b(\d+ players|several others|not participating)\b/.test(leadLower))
+  ) {
+    return '';
+  }
+
+  const findEarliestMatchInLower = (textLower, candidates = []) => {
+    if (!textLower || !Array.isArray(candidates) || candidates.length === 0) return { slug: '', matchCount: 0 };
+    let bestIdx = Infinity;
+    let bestSlug = '';
+    const matchedSlugs = new Set();
+
+    for (const p of candidates) {
+      const cleanName = String(p?.name || '')
+        .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+        .trim();
+      const slug = normalizeRosterSlug(cleanName || p?.id || '');
+      if (!slug || slug.length < 4) continue;
+      const cleanLower = cleanName.toLowerCase();
+      let hitIdx = -1;
+      if (cleanLower.length >= 5) {
+        hitIdx = findWordBoundaryIndexLower(textLower, cleanLower);
+      }
+      if (hitIdx < 0) {
+        const parts = cleanLower.split(/\s+/).filter(Boolean);
+        const surname = parts.length >= 2 ? parts[parts.length - 1] : '';
+        if (surname.length >= 4) {
+          hitIdx = findWordBoundaryIndexLower(textLower, surname);
+        }
+      }
+      if (hitIdx >= 0) {
+        matchedSlugs.add(slug);
+        if (hitIdx < bestIdx) {
+          bestIdx = hitIdx;
+          bestSlug = slug;
+        }
+      }
+    }
+    return { slug: bestSlug, matchCount: matchedSlugs.size };
+  };
+
+  const mentioned = Array.isArray(item.mentionedPlayers) ? item.mentionedPlayers : [];
+  if (mentioned.length > 0) {
+    const inLead = findEarliestMatchInLower(leadLower, mentioned);
+    if (
+      inLead.matchCount >= 3 &&
+      /\b(injury report|practice report|did not practice|not participating|limited|inactives?|ruled out|miss practice)\b/i.test(lead)
+    ) {
+      return '';
+    }
+    if (inLead.slug) return inLead.slug;
+  }
+
+  const pool = Array.isArray(rosterPlayers) ? rosterPlayers : [];
+  if (pool.length > 0 && leadLower) {
+    const compiled = getCompiledRosterPrimaryMatchers(pool);
+    let bestIdx = Infinity;
+    let bestSlug = '';
+    for (let i = 0; i < compiled.length; i++) {
+      const e = compiled[i];
+      let hitIdx = e.fullLower ? findWordBoundaryIndexLower(leadLower, e.fullLower) : -1;
+      if (hitIdx < 0 && e.uniqueSurnameLower) {
+        hitIdx = findWordBoundaryIndexLower(leadLower, e.uniqueSurnameLower);
+      }
+      if (hitIdx >= 0 && hitIdx < bestIdx) {
+        bestIdx = hitIdx;
+        bestSlug = e.slug;
+      }
+    }
+    if (bestSlug) return bestSlug;
+  }
+
+  const activeTeam = resolveTeamConfig(teamInput || item?._teamAbbr || getActiveTeamConfig());
+  const isSf = activeTeam?.abbr === 'SF';
+  const leadSlugs = extractLeadProperNameSlugs(lead);
+  if (leadSlugs.length >= 3 && /\b(injury report|practice report|did not practice|not participating|inactives?)\b/i.test(lead)) {
+    return '';
+  }
+  if (leadSlugs[0]) return leadSlugs[0];
+
+  if (isSf) {
+    const sfLeadSlug = resolveFallback49ersShorthandSlug(lead);
+    if (sfLeadSlug) return sfLeadSlug;
+  }
+
+  if (mentioned.length > 0) {
+    const inFull = findEarliestMatchInLower(full.toLowerCase(), mentioned);
+    if (inFull.slug) return inFull.slug;
+    if (mentioned.length === 1) {
+      return normalizeRosterSlug(mentioned[0]?.name || mentioned[0]?.id || '');
+    }
+  }
+
+  if (isSf) {
+    const sfFullSlug = resolveFallback49ersShorthandSlug(full);
+    if (sfFullSlug) return sfFullSlug;
+  }
+
+  return '';
+}
+
+const SINGLE_PLAYER_INJURY_CUE_RE =
+  /\b(injur\w*|ankle|knee|lower[- ]leg|upper[- ]leg|leg\s+injur\w*|shoulder|hamstring|calf|groin|quad|hip|rib|ribs|back\s+(?:injury|spasm|tightness|issue)|neck|concussion|wrist|hand|thumb|finger|foot|toe|achilles|acl\b|mcl\b|pcl\b|lcl\b|meniscus|pectoral|fibula|tibia|fractur\w*|broken\s+(?:ankle|leg|arm|foot|collarbone|wrist|hand|rib|fibula|tibia)|torn\s+(?:acl|achilles|pectoral|meniscus|patellar)|sprain|strain|dislocat\w*|carted|air\s*cast|medical\s+tent|locker\s+room|questionable\s+to\s+return|doubtful\s+to\s+return|ruled\s+out|injured\s+reserve|\bir\b|practice\s+window|21-day|\bmri\b|x-rays?|surgery)\b/i;
+
+function analyzeSinglePlayerInjuryItem(item = {}, rosterPlayers = [], teamInput = null) {
+  const empty = { isInjury: false, playerSlug: '', bodyPart: '', progLevel: 0, isSpeculative: false, milestone: null };
+  if (!item || typeof item !== 'object') return empty;
+  if (isMultiTopicDigestOrRoundup(item)) return empty;
+
+  const lead = extractPrimaryClaimText(item);
+  const full = `${lead} ${String(item.fullText || item.title || '').slice(0, 260)}`.trim();
+  if (!lead) return empty;
+
+  // Exclude non-injury transactions, human-interest side notes, trade rumors, and pure film breakdowns
+  if (
+    HUMAN_INTEREST_SIDE_NOTE_REGEX.test(lead) ||
+    RETROSPECTIVE_UNEXECUTED_TRADE_REGEX.test(lead) ||
+    CREDIBLE_FORWARD_TRADE_RUMOR_REGEX.test(lead)
+  ) {
+    return empty;
+  }
+  const isNonInjuryTradeOrContract =
+    /\b(trade[!: ]|agree[sd]? to (?:a )?trade|has been traded|contract extension|signed a \d+-year|signs a \d+-year|restructured|arrested|suspended|award|player of the (?:week|month)|pro bowl)\b/i.test(
+      lead
+    ) && !/\b(injur\w*|injured reserve|\bir\b|torn|fractur\w*|carted|air\s*cast|ruled out|mri|x-ray)\b/i.test(lead);
+  if (isNonInjuryTradeOrContract) return empty;
+
+  // Fast pre-check before resolving roster player slug (avoids unnecessary roster scans on 90% of non-injury items)
+  const isSpeculative = isSpeculativeInjuryComparisonOnly(full);
+  const progLevel = computeInjuryProgressionLevel(item);
+  const milestone = resolveInjuryMilestoneBucket(`${lead} ${String(item.fullText || item.summary || '').slice(0, 140)}`);
+  const hasInjurySignal =
+    Boolean(item.isInGameInjury) ||
+    Boolean(item.isPostGameInjuryUpdate) ||
+    item.storyTier === 'in_game_injury' ||
+    item.storyTier === 'post_game_injury' ||
+    item.storyTier === 'practice_injury' ||
+    item.category === 'injury' ||
+    /^(?:LIVE )?INJURY\b/i.test(String(item.breakingBadge || '')) ||
+    (milestone && milestone !== 'pre_game_availability') ||
+    progLevel >= 1 ||
+    (isSpeculative && SINGLE_PLAYER_INJURY_CUE_RE.test(full));
+
+  if (!hasInjurySignal) return empty;
+
+  const playerSlug = resolvePrimaryInjuredPlayerSlug(item, rosterPlayers, teamInput);
+  if (!playerSlug) return empty;
+
+  const bodyPart = extractNamedInjuryBodyPart(full);
+  return {
+    isInjury: true,
+    playerSlug,
+    bodyPart,
+    progLevel,
+    isSpeculative,
+    milestone
+  };
+}
+
+function isBetterSinglePlayerInjuryLead(cand, winner) {
+  const cSpec = Boolean(cand.info?.isSpeculative || cand.info?.progLevel === 0);
+  const wSpec = Boolean(winner.info?.isSpeculative || winner.info?.progLevel === 0);
+  if (cSpec !== wSpec) return !cSpec;
+
+  const cProg = Number(cand.info?.progLevel || 0);
+  const wProg = Number(winner.info?.progLevel || 0);
+  const cMs = Number(cand.ms || 0);
+  const wMs = Number(winner.ms || 0);
+
+  // Higher injury progression stage wins unless it is >30m older than a genuinely newer major update
+  if (cProg !== wProg) {
+    if (cProg > wProg) {
+      return !wMs || !cMs || cMs >= wMs - 30 * 60_000;
+    }
+    // `winner` has higher stage; `cand` only overtakes if `cand` is >6h newer AND urgent breaking (e.g. next-day major update)
+    return Boolean(
+      isUrgentBreakingBadge(cand.item?.breakingBadge) &&
+        cMs > wMs + 6 * 3_600_000
+    );
+  }
+
+  // Same progression stage: adding a specific named body part beats unnamed (within 10m)
+  const cHasBody = Boolean(cand.info?.bodyPart);
+  const wHasBody = Boolean(winner.info?.bodyPart);
+  if (cHasBody !== wHasBody && Math.abs(cMs - wMs) <= 10 * 60_000) {
+    return cHasBody;
+  }
+
+  // Meaningful recency win (>10m newer) unless candidate is a low-tier rewrite aggregator
+  const cIsAgg = AGGREGATOR_REWRITE_OUTLET_REGEX.test(`${cand.item?.outletName || ''} ${cand.item?.url || ''}`);
+  const wIsAgg = AGGREGATOR_REWRITE_OUTLET_REGEX.test(`${winner.item?.outletName || ''} ${winner.item?.url || ''}`);
+  if (cMs > wMs + 10 * 60_000 && (!cIsAgg || wIsAgg)) return true;
+  if (wMs > cMs + 10 * 60_000 && (!wIsAgg || cIsAgg)) return false;
+
+  // Simultaneous burst (<=10m): prefer urgent badge, direct X over Bluesky, higher source quality, then newer timestamp
+  const cUrg = isUrgentBreakingBadge(cand.item?.breakingBadge) ? 1 : 0;
+  const wUrg = isUrgentBreakingBadge(winner.item?.breakingBadge) ? 1 : 0;
+  if (cUrg !== wUrg) return cUrg > wUrg;
+
+  const cQual = scoreClusterLeadQuality(cand.item);
+  const wQual = scoreClusterLeadQuality(winner.item);
+  if (Math.abs(cQual - wQual) > 2) return cQual > wQual;
+  return cMs > wMs;
+}
+
+/**
+ * Enforces strictly AT MOST ONE breaking / top-pinned injury update per injured player across a news stream:
+ *  - Selects the single latest / most-progressed / top new injury update for each injured player
+ *    within a 36-hour active injury window.
+ *  - Strips urgent `"breaking"` status (`BREAKING` / `LIVE INJURY UPDATE`), clears `isInGameInjury` top-pinning,
+ *    and demotes older or out-of-date injury updates for that same player out of the top pinned slots.
+ */
+export function enforceSingleBreakingInjuryPerPlayer(
+  items = [],
+  { nowMs = Date.now(), rosterPlayers = [], teamConfig = null, windowHours = 36 } = {}
+) {
+  if (!Array.isArray(items) || items.length <= 1) return items;
+  const maxWindowMs = windowHours * 3_600_000;
+
+  const byPlayer = new Map();
+  const itemMeta = new Array(items.length);
+
+  for (let i = 0; i < items.length; i++) {
+    const it = items[i];
+    const info = analyzeSinglePlayerInjuryItem(it, rosterPlayers, teamConfig);
+    itemMeta[i] = info;
+    if (!info.isInjury || !info.playerSlug) continue;
+    const ms = resolveClusterLatestTimestampMs(it, nowMs) || 0;
+    const isActiveInjuryCandidate =
+      isUrgentBreakingBadge(it?.breakingBadge) ||
+      Boolean(it?.isUrgentBreaking || it?.isBreaking || it?.isInGameInjury || it?.isPostGameInjuryUpdate) ||
+      info.progLevel >= 1;
+    if (!isActiveInjuryCandidate) continue;
+    if (!byPlayer.has(info.playerSlug)) byPlayer.set(info.playerSlug, []);
+    byPlayer.get(info.playerSlug).push({ idx: i, item: it, info, ms });
+  }
+
+  if (byPlayer.size === 0) return items;
+
+  const supersededIndices = new Set();
+
+  for (const [, group] of byPlayer.entries()) {
+    if (group.length <= 1) continue;
+    const newestMs = group.reduce((max, g) => (g.ms > max ? g.ms : max), 0);
+    const activeGroup = group.filter(g => !newestMs || !g.ms || newestMs - g.ms <= maxWindowMs);
+    if (activeGroup.length <= 1) continue;
+
+    let winner = activeGroup[0];
+    for (let j = 1; j < activeGroup.length; j++) {
+      if (isBetterSinglePlayerInjuryLead(activeGroup[j], winner)) {
+        winner = activeGroup[j];
+      }
+    }
+
+    for (const entry of activeGroup) {
+      if (entry.idx === winner.idx) continue;
+      const sameInjury = areInjuryBodyPartsCompatible(entry.info.bodyPart, winner.info.bodyPart);
+      if (sameInjury || isUrgentBreakingBadge(entry.item?.breakingBadge)) {
+        supersededIndices.add(entry.idx);
+      }
+    }
+  }
+
+  if (supersededIndices.size === 0) return items;
+
+  return items.map((it, idx) => {
+    if (!supersededIndices.has(idx)) return it;
+    const info = itemMeta[idx];
+    const pubMs = resolveEffectivePublishTimestampMs(it, nowMs);
+    const ageHours = Number.isFinite(pubMs) ? Math.max(0, (nowMs - pubMs) / 3_600_000) : 99;
+    const hadUrgent = isUrgentBreakingBadge(it?.breakingBadge) || Boolean(it?.isUrgentBreaking);
+    const nextBadge =
+      info?.isSpeculative || ageHours > 12
+        ? null
+        : hadUrgent
+          ? 'INJURY UPDATE'
+          : it?.breakingBadge && !isUrgentBreakingBadge(it.breakingBadge)
+            ? it.breakingBadge
+            : null;
+    const demotedRank = Number.isFinite(Number(it?.storyRank))
+      ? Math.min(Number(it.storyRank), 42)
+      : it?.storyRank;
+    return {
+      ...it,
+      isUrgentBreaking: false,
+      isBreaking: false,
+      isInGameInjury: false,
+      isSupersededInjuryUpdate: true,
+      breakingPriority: Math.min(Number(it?.breakingPriority) || 0, 0.9),
+      breakingBadge: nextBadge,
+      ...(Number.isFinite(demotedRank) ? { storyRank: demotedRank } : {})
+    };
+  });
 }
 
 /**
@@ -2475,6 +2963,13 @@ export function computeInjuryProgressionLevel(item = {}) {
   const lead = extractPrimaryClaimText(item);
   const full = `${lead} ${String(item?.fullText || item?.title || '').slice(0, 260)}`;
   if (!full.trim()) return 0;
+
+  if (
+    isSpeculativeInjuryComparisonOnly(full) ||
+    (MINOR_OR_SPECULATIVE_INJURY_NOISE_REGEX.test(full) && !SERIOUS_INJURY_ESCALATION_REGEX.test(full))
+  ) {
+    return 0;
+  }
 
   if (MATERIAL_INJURY_DIAGNOSIS_REGEX.test(full) && !DIAGNOSTIC_SCHEDULED_ONLY_REGEX.test(lead)) {
     return 5;
@@ -2513,6 +3008,9 @@ export function computeInjuryProgressionLevel(item = {}) {
 
 function resolveInjuryMilestoneBucket(text = '') {
   const t = String(text || '').toLowerCase();
+  if (isSpeculativeInjuryComparisonOnly(text)) {
+    return null;
+  }
   if (
     /\b(placed on injured reserve|placed on ir|season-ending|activated from ir|activated off ir|21-day|designate[sd]? [\s\S]{0,30}(?:for|to) return|practice window)\b/.test(
       t
@@ -2883,14 +3381,17 @@ function buildStorySignatureKey(item = {}) {
 
   const primaryPlayer = item?.mentionedPlayers?.[0];
   const leadSlugs = extractLeadProperNameSlugs(lead);
-  const pKey = primaryPlayer?.name
-    ? String(primaryPlayer.name)
-        .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
-        .toLowerCase()
-        .replace(/[^a-z0-9]/g, '')
-    : primaryPlayer?.id
-      ? String(primaryPlayer.id).toLowerCase().replace(/[^a-z0-9]/g, '')
-      : leadSlugs[0] || (isSfSig ? resolveFallback49ersShorthandSlug(lead) : null);
+  const earliestMentionedSlug = resolvePrimaryInjuredPlayerSlug(item, [], activeSigTeam);
+  const pKey =
+    earliestMentionedSlug ||
+    (primaryPlayer?.name
+      ? String(primaryPlayer.name)
+          .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, '')
+      : primaryPlayer?.id
+        ? String(primaryPlayer.id).toLowerCase().replace(/[^a-z0-9]/g, '')
+        : leadSlugs[0] || (isSfSig ? resolveFallback49ersShorthandSlug(lead) : null));
 
   const collectPlayerSlugs = () => {
     const combined = new Set();
@@ -3208,8 +3709,15 @@ export function deduplicateAndGroupWireItems(
 ) {
   if (!Array.isArray(items) || items.length <= 1) return items;
 
+  const ctx = gameContext || (appData ? resolveGameNewsContext(appData, nowMs) : null);
+  const rosterPlayersForGroup = Array.isArray(ctx?.rosterPlayers)
+    ? ctx.rosterPlayers
+    : Array.isArray(appData?.roster?.players)
+      ? appData.roster.players
+      : [];
+
   // Flat exact-URL-only dedup mode (used for Latest chronological wire or when Top story grouping is turned off)
-  // Still prevents red-badge flooding when 5 reporters echo the exact same injury/roster breaking stage!
+  // Still prevents red-badge flooding when multiple reporters post older/duplicate updates on the same player injury!
   if (groupSimilarStories === false) {
     const seenUrls = new Set();
     const seenUrgentAngleStage = new Set();
@@ -3244,10 +3752,12 @@ export function deduplicateAndGroupWireItems(
       }
       flat.push(copy);
     }
-    return flat;
+    return enforceSingleBreakingInjuryPerPlayer(flat, {
+      nowMs,
+      rosterPlayers: rosterPlayersForGroup,
+      teamConfig: ctx?.teamConfig || null
+    });
   }
-
-  const ctx = gameContext || (appData ? resolveGameNewsContext(appData, nowMs) : null);
 
   const clusters = [];
 
@@ -3287,6 +3797,7 @@ export function deduplicateAndGroupWireItems(
     const itemSpeaker = extractOfficialSpeakerKey(item);
     const itemTopicDomain = resolveBriefingTopicDomain(item);
     const itemPrimaryPlayer = extractPrimaryPlayerSlug(item);
+    const itemInjInfo = analyzeSinglePlayerInjuryItem(item, rosterPlayersForGroup, ctx?.teamConfig || null);
     const itemReporterKey = String(item.reporterId || item.reporterName || item.author || '').toLowerCase().trim();
     const itemPrimaryUrl = canonicalComparableUrl(item.url || '');
     const itemExternalUrl = canonicalComparableUrl(item.externalUrl || '');
@@ -3349,6 +3860,48 @@ export function deduplicateAndGroupWireItems(
 
       const tokSim = setOverlapSimilarity(tokens, cl.tokens);
       const entSim = setOverlapSimilarity(entities, cl.entities);
+
+      // 1b. Same-Player Active Injury Episode Consolidation:
+      //     Consolidates tightly related updates on the SAME injured player & compatible body part
+      //     (even across milestones like carted-off -> ruled-out -> fracture confirmation -> visual commentary)
+      //     under `Similar stories (N)` while pushing the latest/most-progressed update to the visible card.
+      //     Distinct lower-similarity follow-ups >6h apart stay separate (with older breaking badges stripped below).
+      const itemIsVideoCheck = item.type === 'video' || Boolean(item.videoId) || Boolean(item.videoStreamUrl);
+      const leadIsVideoCheck = cl.lead.type === 'video' || Boolean(cl.lead.videoId) || Boolean(cl.lead.videoStreamUrl);
+      if (
+        itemInjInfo.isInjury &&
+        cl.injInfo?.isInjury &&
+        itemInjInfo.playerSlug === cl.injInfo.playerSlug &&
+        !itemIsDigest &&
+        !cl.isDigest &&
+        !itemIsVideoCheck &&
+        !leadIsVideoCheck &&
+        itemInjInfo.milestone !== 'pre_game_availability' &&
+        cl.injInfo.milestone !== 'pre_game_availability' &&
+        areInjuryBodyPartsCompatible(itemInjInfo.bodyPart, cl.injInfo.bodyPart)
+      ) {
+        const refMs = cl.newestMs || cl.anchorMs || 0;
+        const gapMs =
+          itemMs && refMs
+            ? Math.min(Math.abs((cl.anchorMs || refMs) - itemMs), Math.abs(refMs - itemMs))
+            : 0;
+        const withinTightInjuryWave = gapMs <= 6 * 3_600_000;
+        const withinMediumInjuryWindow =
+          gapMs <= 18 * 3_600_000 &&
+          (Boolean(itemInjInfo.milestone && itemInjInfo.milestone === cl.injInfo.milestone) ||
+            tokSim.jaccard >= 0.2 ||
+            tokSim.containment >= 0.38 ||
+            (Boolean(itemInjInfo.bodyPart && cl.injInfo.bodyPart) &&
+              (itemIsBioBlurb || isPlayerBioWireBlurbItem(cl.lead))));
+        if (withinTightInjuryWave || withinMediumInjuryWindow) {
+          const injSimScore = withinTightInjuryWave ? 0.96 : 0.88;
+          if (injSimScore > bestSim) {
+            matchedCluster = cl;
+            bestSim = injSimScore;
+            if (withinTightInjuryWave) break;
+          }
+        }
+      }
 
       // 2. Same-outlet Article + promotional Tweet echo ("Kyle Shanahan reveals... Read:")
       if (
@@ -3564,6 +4117,7 @@ export function deduplicateAndGroupWireItems(
         speaker: itemSpeaker,
         topicDomain: itemTopicDomain,
         primaryPlayer: itemPrimaryPlayer,
+        injInfo: itemInjInfo,
         anchorMs: itemMs,
         oldestMs: itemMs,
         newestMs: itemMs,
@@ -3596,37 +4150,94 @@ export function deduplicateAndGroupWireItems(
       isBlueskyPostUrl(matchedCluster.lead.url) &&
       (Number(item.trustTier) || 2) <= (Number(matchedCluster.lead.trustTier) || 2);
 
-    // Progression-aware injury lead promotion:
-    // If a newer report identifies the body part, upgrades to Doubtful/Out/Returned, or reveals MRI/X-ray
-    // results, IMMEDIATELY promote it to the lead card (never wait 15m or bury under an older longer tent tweet!).
+    // Progression- & recency-aware injury lead promotion:
+    // 1. Higher medical progression (MRI diagnosis > Ruled Out/Returned > Carted/Air Cast > Body Part/QTR > Tent > Speculative)
+    //    IMMEDIATELY supersedes earlier preliminary tweets on the visible lead card.
+    // 2. Within the same injury progression stage, a meaningfully newer update (>10m fresher, non-aggregator)
+    //    pushes to the visible card, while a simultaneous <=10m burst picks the highest-authority/direct-X tweet!
     const existingProg = computeInjuryProgressionLevel(matchedCluster.lead);
     const candProg = computeInjuryProgressionLevel(item);
     const existingBody = extractNamedInjuryBodyPart(
       `${matchedCluster.lead.title || ''} ${matchedCluster.lead.fullText || ''}`
     );
     const candBody = extractNamedInjuryBodyPart(`${item.title || ''} ${item.fullText || ''}`);
+    const isInjuryCluster = Boolean(
+      itemInjInfo.isInjury || matchedCluster.injInfo?.isInjury || Math.max(existingProg, candProg) >= 1
+    );
+    const existingIsSpeculativeInj = Boolean(
+      matchedCluster.injInfo?.isSpeculative || (isInjuryCluster && existingProg === 0)
+    );
+    const candIsSpeculativeInj = Boolean(itemInjInfo.isSpeculative || (isInjuryCluster && candProg === 0));
     const candAdvancesInjuryStage =
+      (existingIsSpeculativeInj && !candIsSpeculativeInj) ||
       candProg > existingProg ||
-      (candProg >= 1 && candProg === existingProg && !existingBody && Boolean(candBody) && itemMs >= existingMs - 5 * 60_000);
-    const existingHasHigherInjuryStage = existingProg > candProg;
+      (candProg >= 1 &&
+        candProg === existingProg &&
+        !existingBody &&
+        Boolean(candBody) &&
+        itemMs >= existingMs - 10 * 60_000);
+    const existingHasHigherInjuryStage =
+      (!existingIsSpeculativeInj && candIsSpeculativeInj) || existingProg > candProg;
 
-    const candidateIsBetterLead =
-      candAdvancesInjuryStage ||
-      (!existingHasHigherInjuryStage &&
-        (xUpgradesBskyLead ||
+    let candidateIsBetterLead = false;
+    if (candAdvancesInjuryStage) {
+      candidateIsBetterLead = true;
+    } else if (!existingHasHigherInjuryStage) {
+      if (isInjuryCluster) {
+        const candIsAgg = AGGREGATOR_REWRITE_OUTLET_REGEX.test(`${item.outletName || ''} ${item.url || ''}`);
+        const existingIsAgg = AGGREGATOR_REWRITE_OUTLET_REGEX.test(
+          `${matchedCluster.lead.outletName || ''} ${matchedCluster.lead.url || ''}`
+        );
+        const existingRepKey = String(
+          matchedCluster.lead.reporterId || matchedCluster.lead.reporterName || matchedCluster.lead.author || ''
+        )
+          .toLowerCase()
+          .trim();
+        const isSameReporterBskyDowngrade =
+          isBlueskyPostUrl(item.url) &&
+          isDirectXStatusUrl(matchedCluster.lead.url) &&
+          itemReporterKey &&
+          itemReporterKey === existingRepKey;
+        const candMeaningfullyNewer =
+          itemMs > existingMs + 10 * 60_000 && (!candIsAgg || existingIsAgg) && !isSameReporterBskyDowngrade;
+        const existingMeaningfullyNewer =
+          existingMs > itemMs + 10 * 60_000 && (!existingIsAgg || candIsAgg);
+
+        if (candMeaningfullyNewer) {
+          candidateIsBetterLead = true;
+        } else if (!existingMeaningfullyNewer) {
+          // Simultaneous burst (<=10m): promote top authority / direct-X / urgent report
+          const candUrg = isUrgentBreakingBadge(item.breakingBadge) ? 1 : 0;
+          const existingUrg = isUrgentBreakingBadge(matchedCluster.lead.breakingBadge) ? 1 : 0;
+          candidateIsBetterLead =
+            candUrg > existingUrg ||
+            (candUrg === existingUrg &&
+              (xUpgradesBskyLead ||
+                candQual > existingQual + 2 ||
+                (Math.abs(candQual - existingQual) <= 2 && !isBlueskyPostUrl(item.url) && itemMs > existingMs)));
+        }
+      } else {
+        candidateIsBetterLead =
+          xUpgradesBskyLead ||
           candQual > existingQual + 5 ||
           (Math.abs(candQual - existingQual) <= 5 &&
             !isBlueskyPostUrl(item.url) &&
             itemMs > existingMs + 15 * 60_000 &&
             String(item.fullText || item.title || '').length >=
-              String(matchedCluster.lead.fullText || matchedCluster.lead.title || '').length * 0.75)));
+              String(matchedCluster.lead.fullText || matchedCluster.lead.title || '').length * 0.75);
+      }
+    }
 
     if (candAdvancesInjuryStage) {
       matchedCluster.hasInjuryProgressionAdvance = true;
     }
 
     if (candidateIsBetterLead) {
-      const demotedPrev = { ...matchedCluster.lead };
+      const demotedPrev = {
+        ...matchedCluster.lead,
+        isUrgentBreaking: false,
+        isBreaking: false
+      };
       const priorConfirming = Array.isArray(demotedPrev.confirmingReports) ? demotedPrev.confirmingReports : [];
       delete demotedPrev.confirmingReports;
       const bestClusterImg = isEditorialPhotoUrl(item.imageUrl)
@@ -3634,6 +4245,7 @@ export function deduplicateAndGroupWireItems(
         : isEditorialPhotoUrl(demotedPrev.imageUrl)
           ? demotedPrev.imageUrl
           : item.imageUrl || demotedPrev.imageUrl || '';
+      const inheritPrevBadge = !candIsSpeculativeInj && !item.breakingBadge && Boolean(demotedPrev.breakingBadge);
       matchedCluster.lead = {
         ...item,
         imageUrl: bestClusterImg,
@@ -3642,10 +4254,13 @@ export function deduplicateAndGroupWireItems(
         isHighlightClip: Boolean(item.isHighlightClip || demotedPrev.isHighlightClip) || undefined,
         externalUrl: item.externalUrl || demotedPrev.externalUrl || null,
         externalTitle: item.externalTitle || demotedPrev.externalTitle || null,
-        // Inherit urgent breaking badge if an earlier primary report in the same fresh cluster triggered it
-        breakingBadge: item.breakingBadge || demotedPrev.breakingBadge || null,
-        isBreaking: Boolean(item.isBreaking || demotedPrev.isBreaking),
-        isUrgentBreaking: Boolean(item.isUrgentBreaking || demotedPrev.isUrgentBreaking),
+        // Keep the newer/higher-stage update's own badge when present, only inheriting from prior lead when non-speculative
+        breakingBadge: item.breakingBadge || (inheritPrevBadge ? demotedPrev.breakingBadge : null),
+        isBreaking: Boolean(item.isBreaking || (inheritPrevBadge && matchedCluster.lead.isBreaking)),
+        isUrgentBreaking: Boolean(item.isUrgentBreaking || (inheritPrevBadge && matchedCluster.lead.isUrgentBreaking)),
+        isInGameInjury: Boolean(
+          item.isInGameInjury || (!candAdvancesInjuryStage && !candIsSpeculativeInj && matchedCluster.lead.isInGameInjury)
+        ),
         breakingPriority: Math.max(item.breakingPriority || 0, demotedPrev.breakingPriority || 0),
         storyTier:
           (item.breakingPriority || 0) >= (demotedPrev.breakingPriority || 0)
@@ -3654,15 +4269,21 @@ export function deduplicateAndGroupWireItems(
         confirmingReports: [demotedPrev, ...priorConfirming]
       };
       matchedCluster.outletKey = outletKey || matchedCluster.outletKey;
+      if (sigKey) matchedCluster.sigKey = sigKey;
+      if (itemInjInfo.isInjury) matchedCluster.injInfo = itemInjInfo;
     } else {
-      matchedCluster.lead.confirmingReports.push(item);
+      matchedCluster.lead.confirmingReports.push({
+        ...item,
+        isUrgentBreaking: false,
+        isBreaking: false
+      });
       if (
         (!isEditorialPhotoUrl(matchedCluster.lead.imageUrl) && isEditorialPhotoUrl(item.imageUrl)) ||
         (!matchedCluster.lead.imageUrl && item.imageUrl)
       ) {
         matchedCluster.lead.imageUrl = item.imageUrl;
       }
-      if (!matchedCluster.lead.breakingBadge && item.breakingBadge) {
+      if (!matchedCluster.lead.breakingBadge && item.breakingBadge && !existingIsSpeculativeInj) {
         matchedCluster.lead.breakingBadge = item.breakingBadge;
         matchedCluster.lead.isBreaking = Boolean(item.isBreaking);
         matchedCluster.lead.isUrgentBreaking = Boolean(item.isUrgentBreaking);
@@ -3687,7 +4308,19 @@ export function deduplicateAndGroupWireItems(
         if (cu) seenUrls.add(cu);
         uniqueRelated.push(cr);
       }
-      uniqueRelated.sort((a, b) => scoreClusterLeadQuality(b) - scoreClusterLeadQuality(a));
+      if (cl.injInfo?.isInjury) {
+        uniqueRelated.sort((a, b) => {
+          const pDiff = computeInjuryProgressionLevel(b) - computeInjuryProgressionLevel(a);
+          if (pDiff !== 0) return pDiff;
+          const tDiff =
+            (resolveEffectivePublishTimestampMs(b, nowMs) || 0) -
+            (resolveEffectivePublishTimestampMs(a, nowMs) || 0);
+          if (Math.abs(tDiff) > 5 * 60_000) return tDiff;
+          return scoreClusterLeadQuality(b) - scoreClusterLeadQuality(a);
+        });
+      } else {
+        uniqueRelated.sort((a, b) => scoreClusterLeadQuality(b) - scoreClusterLeadQuality(a));
+      }
       lead.confirmingReports = uniqueRelated;
 
       const distinctSources = new Set(
@@ -3738,8 +4371,16 @@ export function deduplicateAndGroupWireItems(
     return lead;
   });
 
+  // Final per-player injury enforcement so any older/distinct unmerged injury card for a player
+  // who already has a newer breaking injury cluster has its breaking status stripped & demoted!
+  const enforcedFinalized = enforceSingleBreakingInjuryPerPlayer(finalized, {
+    nowMs,
+    rosterPlayers: rosterPlayersForGroup,
+    teamConfig: ctx?.teamConfig || null
+  });
+
   // Re-sort finalized clusters if corroboration velocity elevated a multi-source breaking cluster
-  finalized.sort((a, b) => {
+  enforcedFinalized.sort((a, b) => {
     const aNeg = (a.breakingPriority || 0) < 0;
     const bNeg = (b.breakingPriority || 0) < 0;
     if (aNeg !== bNeg) return aNeg ? 1 : -1;
@@ -3750,7 +4391,7 @@ export function deduplicateAndGroupWireItems(
     return bMs - aMs;
   });
 
-  return finalized;
+  return enforcedFinalized;
 }
 
 const AUTHOR_BOILERPLATE_REGEX_CACHE = new Map();
@@ -4721,7 +5362,7 @@ export function resolveTweetLinkedArticlePreview(
  * and trimming very long posts cleanly at a word boundary.
  */
 export function formatTweetBodyForDisplay(rawText = '', limit = SHORT_TWEET_FULL_TEXT_LIMIT) {
-  const cleaned = String(rawText || '')
+  const cleaned = decodeHtmlEntities(String(rawText || ''))
     .replace(/\s+/g, ' ')
     .replace(/\s*(?:Original post|View original post)\s*$/i, '')
     .trim();
@@ -5041,29 +5682,31 @@ export function isBreakingItemCoveredInBrief(item = {}, dailyBrief = null, nowMs
       .filter(Boolean)
   );
 
-  const itemComparable = canonicalComparableUrl(item.url || '');
-  const extComparable = canonicalComparableUrl(item.externalUrl || '');
-  if ((itemComparable && coveredUrls.has(itemComparable)) || (extComparable && coveredUrls.has(extComparable))) {
-    return true;
-  }
-  for (const cr of item.confirmingReports || []) {
-    const crUrl = canonicalComparableUrl(cr?.url || '');
-    if (crUrl && coveredUrls.has(crUrl)) return true;
-  }
-
   const briefGenMs = dailyBrief.generatedAt ? Date.parse(dailyBrief.generatedAt) : NaN;
   const itemPubMs = resolveEffectivePublishTimestampMs(item, nowMs);
   const coveredStoryKeys = new Set(Array.isArray(dailyBrief.coveredStoryKeys) ? dailyBrief.coveredStoryKeys : []);
   const sigKey = buildStorySignatureKey(item);
 
-  // Never let an older brief's `coveredStoryKeys` suppress a brand-new post-brief material injury update
-  // (e.g. confirmed MRI result / "not an ACL" / IR placement / ruled-out escalation published >45m after the brief)!
+  // Never let an older brief's `coveredStoryKeys` or an older pre-brief confirming report suppress
+  // a brand-new post-brief material injury update (e.g. confirmed MRI result / "not an ACL" / IR placement / ruled-out escalation published >45m after the brief)!
   const isFreshPostBriefMaterialUpdate =
     Number.isFinite(briefGenMs) &&
     Number.isFinite(itemPubMs) &&
     itemPubMs > briefGenMs + 45 * 60_000 &&
     (computeInjuryProgressionLevel(item) >= 4 ||
       /::(diagnostic_result|ir_roster_move)$/.test(sigKey || ''));
+
+  const itemComparable = canonicalComparableUrl(item.url || '');
+  const extComparable = canonicalComparableUrl(item.externalUrl || '');
+  if ((itemComparable && coveredUrls.has(itemComparable)) || (extComparable && coveredUrls.has(extComparable))) {
+    return true;
+  }
+  if (!isFreshPostBriefMaterialUpdate) {
+    for (const cr of item.confirmingReports || []) {
+      const crUrl = canonicalComparableUrl(cr?.url || '');
+      if (crUrl && coveredUrls.has(crUrl)) return true;
+    }
+  }
 
   if (sigKey && coveredStoryKeys.has(sigKey) && !isFreshPostBriefMaterialUpdate) {
     return true;
@@ -5774,6 +6417,12 @@ export function partitionBreakingNewsAboveBrief(
     requireAiPostGameBrief = false
   } = options || {};
 
+  const rosterPlayersForDedup = Array.isArray(appData?.roster?.players) ? appData.roster.players : [];
+  const normalizedItems = enforceSingleBreakingInjuryPerPlayer(items, {
+    nowMs,
+    rosterPlayers: rosterPlayersForDedup
+  });
+
   const gdWindow =
     promoteAllGameDayNews && appData
       ? evaluateGameDayAboveBriefWindow(appData, dailyBrief, nowMs, {
@@ -5788,7 +6437,7 @@ export function partitionBreakingNewsAboveBrief(
     // Allow 3 minutes of reporter clock-skew tolerance around the exact T-90m inactives release
     const cutoffMs = gdWindow.windowStartMs - 3 * 60_000;
 
-    for (const item of items) {
+    for (const item of normalizedItems) {
       const latestMs = resolveClusterLatestTimestampMs(item, nowMs);
       const isActiveUrgent =
         isUrgentBreakingBadge(item?.breakingBadge) ||
@@ -5810,7 +6459,7 @@ export function partitionBreakingNewsAboveBrief(
       }
     }
 
-    const rosterPlayersForSort = Array.isArray(appData?.roster?.players) ? appData.roster.players : [];
+    const rosterPlayersForSort = rosterPlayersForDedup;
     const resolveGdInjuryTierAndScore = it => {
       const isUrgInj = Boolean(it?.isInGameInjury && isUrgentBreakingBadge(it?.breakingBadge));
       const isUrgOther = !isUrgInj && isUrgentBreakingBadge(it?.breakingBadge);
@@ -5849,7 +6498,7 @@ export function partitionBreakingNewsAboveBrief(
   const breakingAboveBrief = [];
   const remainingBelowBrief = [];
 
-  for (const item of items) {
+  for (const item of normalizedItems) {
     const isActiveUrgent =
       isUrgentBreakingBadge(item?.breakingBadge) ||
       Boolean(

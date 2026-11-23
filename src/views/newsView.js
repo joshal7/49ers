@@ -44,6 +44,7 @@ import {
   partitionBreakingNewsAboveBrief
 } from '../engine/breakingClassifier.js';
 import {
+  decodeHtmlEntities,
   formatWireSourceDisplayName,
   isOffTopicLeagueFiller,
   isPaywalledPublisher,
@@ -97,18 +98,7 @@ export const NEWS_NAV_CLUSTERS = [
 export const VALID_NEWS_CATEGORIES = new Set(['all', 'tweets', 'articles', 'videos', 'film', 'roster']);
 
 function decodeInlineEntities(str = '') {
-  return String(str || '')
-    .replace(/&#(\d+);/g, (_, dec) => {
-      const code = Number(dec);
-      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : _;
-    })
-    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => {
-      const code = parseInt(hex, 16);
-      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : _;
-    })
-    .replace(/&amp;/gi, '&')
-    .replace(/&quot;/gi, '"')
-    .replace(/&apos;/gi, "'");
+  return decodeHtmlEntities(str);
 }
 
 /**

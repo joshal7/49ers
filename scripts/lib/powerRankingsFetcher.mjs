@@ -21,7 +21,11 @@ import {
   resolveConsistentPowerRankings,
   POST_GAME_FRESHNESS_CUTOFF_HOURS
 } from '../../src/engine/powerRankingsEngine.js';
-import { sanitizeExternalUrl } from '../../src/engine/linkIntegrity.js';
+import {
+  decodeHtmlEntities,
+  sanitizeExternalUrl,
+  stripHtmlAndDecodeEntities
+} from '../../src/engine/linkIntegrity.js';
 
 const BROWSER_UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
@@ -41,29 +45,8 @@ const MONTH_MAP = {
   december: '12', dec: '12'
 };
 
-function decodeHtmlEntities(str = '') {
-  return String(str)
-    .replace(/&nbsp;?/gi, ' ')
-    .replace(/&amp;/gi, '&')
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;|&apos;|&rsquo;|&lsquo;/gi, "'")
-    .replace(/&rdquo;|&ldquo;/gi, '"')
-    .replace(/&mdash;/gi, '—')
-    .replace(/&ndash;/gi, '–')
-    .replace(/&hellip;/gi, '…')
-    .replace(/&#(\d+);/g, (_, num) => {
-      const code = Number(num);
-      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : '';
-    })
-    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => {
-      const code = parseInt(hex, 16);
-      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : '';
-    });
-}
-
 function stripTagsClean(html = '') {
-  return decodeHtmlEntities(String(html).replace(/<[^>]+>/g, ' '))
-    .replace(/\s+/g, ' ')
+  return stripHtmlAndDecodeEntities(String(html || '').replace(/&nbsp(?!;)/gi, ' '))
     .replace(/\s+([,.;:!?])/g, '$1')
     .trim();
 }

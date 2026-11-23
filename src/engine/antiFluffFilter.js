@@ -7,6 +7,7 @@ import {
   isAcuteInjuryOrAvailabilityScoop,
   resolveReporterFromNameOrHandle
 } from './beatAttributionEngine.js';
+import { stripHtmlAndDecodeEntities } from './linkIntegrity.js';
 
 const CLICKBAIT_PATTERNS = [
   /\byou won'?t believe\b/i,
@@ -163,12 +164,7 @@ export function scoreContentSignal(title = '', body = '') {
  * Cleans sensationalist framing or promo boilerplate from raw RSS/article blurbs.
  */
 export function cleanSensationalistText(rawText = '') {
-  return String(rawText || '')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;|&apos;/g, "'")
-    .replace(/&nbsp;/g, ' ')
+  return stripHtmlAndDecodeEntities(rawText)
     .replace(/\b(SHOCKING|BREAKING|UNBELIEVABLE|BOMBSHELL):\s*/gi, '')
     .replace(/\s*(Subscribe|Click here|Follow us on|Download the app|Visit RotoWire\.com).*$/i, '')
     .replace(/!{2,}/g, '.')

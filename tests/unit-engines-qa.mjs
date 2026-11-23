@@ -193,8 +193,10 @@ import {
   buildEspnTeamLogoUrl,
   getPlayerLookupKeys,
   createPlayerIdentityResolver,
+  decodeHtmlEntities,
   isAllowedInlineVideoStreamUrl,
-  selectBestXSyndicationMp4
+  selectBestXSyndicationMp4,
+  stripHtmlAndDecodeEntities
 } from '../src/engine/linkIntegrity.js';
 import {
   validateNoHallucinatedRosterClaims,
@@ -219,6 +221,8 @@ import {
   computeInGameInjuryPriority,
   computeInjuryProgressionLevel,
   computeWireStoryRank,
+  resolvePrimaryInjuredPlayerSlug,
+  enforceSingleBreakingInjuryPerPlayer,
   sortNewsWithBreakingPriority,
   formatTweetBodyForDisplay,
   is49ersGameLiveWindow,
@@ -299,6 +303,7 @@ import {
   shouldTriggerDailyTopNewsBriefRefresh
 } from '../src/services/aiWorkerClient.js';
 import { renderSettingsSheetHtml } from '../src/views/settingsArchiveView.js';
+import { esc } from '../src/views/uiHelpers.js';
 import {
   buildNativePodcastAppHref,
   AI_STUDIO_DIRECT_KEY_URL,
@@ -19469,6 +19474,470 @@ await testAsync(
     }
   }
 );
+
+test('HTML entity decoding fixes X syndication &gt;&gt;&gt;, RSS numeric entities, double-encoding, and preserves comparisons + XSS safety', () => {
+  // 1. Exact reported bug: Panthers X syndication `&gt;&gt;&gt;`
+  assert.equal(
+    decodeHtmlEntities('Victory Monday before a holiday\n&gt;&gt;&gt;'),
+    'Victory Monday before a holiday\n>>>'
+  );
+  // 2. Standard XML/HTML named, numeric decimal, hex, Windows-1252, emoji, accented names, and double-encoded entities
+  assert.equal(
+    decodeHtmlEntities('Today&#8217;s moves &#8212; &#8216;Strong Interest&#8217; in A&#8217;Shawn&#160;Robinson&#8230;'),
+    'Today’s moves — ‘Strong Interest’ in A’Shawn Robinson…'
+  );
+  assert.equal(
+    decodeHtmlEntities('&amp;gt;&amp;gt;&amp;gt; Purdy &amp;amp; Kittle &amp;#39;26 &lt;3 &quot;Bang Bang&quot;'),
+    '>>> Purdy & Kittle \'26 <3 "Bang Bang"'
+  );
+  assert.equal(decodeHtmlEntities('Eddy Pi&ntilde;eiro &#x1F3C8; &#146;94 &#x27;test&#039;'), 'Eddy Piñeiro 🏈 ’94 \'test\'');
+  // 3. Literal ampersands and query strings must never be mangled
+  assert.equal(decodeHtmlEntities('AT&T Stadium vs Texas A&M — https://example.com/?a=1&lt=2&gt=3'), 'AT&T Stadium vs Texas A&M — https://example.com/?a=1&lt=2&gt=3');
+  // 4. Invalid code points must never throw RangeError
+  assert.equal(decodeHtmlEntities('Bad &#99999999; &#xD800; &#0; ok'), 'Bad &#99999999; &#xD800; &#0; ok');
+
+  // 5. stripHtmlAndDecodeEntities strips real & RSS-escaped HTML tags WITHOUT eating angle-bracket comparisons
+  assert.equal(
+    stripHtmlAndDecodeEntities('<![CDATA[<p>Today&#8217;s&nbsp;moves &amp; &lt;b&gt;grades&lt;/b&gt; &gt;&gt;&gt;</p>]]>'),
+    'Today’s moves & grades >>>'
+  );
+  assert.equal(
+    stripHtmlAndDecodeEntities('QB EPA &gt; +0.25 &amp; 3 &lt; 5 &amp;&amp; 7 &gt; 4'),
+    'QB EPA > +0.25 & 3 < 5 && 7 > 4'
+  );
+  assert.equal(
+    stripHtmlAndDecodeEntities('&lt;script&gt;alert(1)&lt;/script&gt;Clean update'),
+    'Clean update'
+  );
+
+  // 6. Client tweet & text cleaners self-heal cached/stale payloads while remaining XSS-safe via esc()
+  assert.equal(
+    formatTweetBodyForDisplay('Victory Monday before a holiday &gt;&gt;&gt;').text,
+    'Victory Monday before a holiday >>>'
+  );
+  assert.equal(
+    cleanSensationalistText('Bengals&#8217; Zac Taylor &amp; defense &gt;&gt;&gt;'),
+    'Bengals’ Zac Taylor & defense >>>'
+  );
+  const decodedXss = decodeHtmlEntities('&lt;img src=x onerror=alert(1)&gt;');
+  assert.equal(decodedXss, '<img src=x onerror=alert(1)>');
+  assert.equal(esc(decodedXss), '&lt;img src=x onerror=alert(1)&gt;');
+});
+
+await testAsync('parseOfficialXSyndicationTimelineHtml decodes &gt;&gt;&gt;, &lt;, &amp;, numeric entities in tweets, quotes & authors', async () => {
+  const { parseOfficialXSyndicationTimelineHtml } = await import('../worker/nfl-teams-worker.js');
+  const nowMs = Date.parse('2026-11-23T19:30:00Z');
+  const nextData = {
+    props: {
+      pageProps: {
+        timeline: {
+          entries: [
+            {
+              type: 'tweet',
+              content: {
+                tweet: {
+                  id_str: '1999111222333444555',
+                  created_at: 'Mon Nov 23 17:30:00 +0000 2026',
+                  full_text: 'Victory Monday before a holiday\n&gt;&gt;&gt; https://t.co/abc123',
+                  quoted_status: {
+                    full_text: 'Bryce Young EPA &gt; +0.20 &amp; 3rd-down rate &gt; 50% &#8212; huge win!'
+                  },
+                  user: {
+                    screen_name: 'Panthers',
+                    name: 'Carolina Panthers &amp; Keep Pounding'
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  };
+  const fakeHtml = `<html><head><script id="__NEXT_DATA__" type="application/json">${JSON.stringify(nextData)}</script></head></html>`;
+  const parsed = parseOfficialXSyndicationTimelineHtml(fakeHtml, {
+    handle: 'Panthers',
+    team: { abbr: 'CAR', slug: 'panthers', fullName: 'Carolina Panthers', nickname: 'Panthers' },
+    nowMs
+  });
+  assert.equal(parsed.length, 1);
+  assert.equal(parsed[0].title, 'Victory Monday before a holiday >>>');
+  assert.equal(parsed[0].fullText, 'Victory Monday before a holiday >>>');
+  assert.equal(parsed[0].summary, 'Bryce Young EPA > +0.20 & 3rd-down rate > 50% — huge win!');
+  assert.equal(parsed[0].author, 'Carolina Panthers & Keep Pounding');
+  assert.ok(!/&(?:gt|lt|amp|quot|apos|nbsp|#\d+);/i.test(`${parsed[0].title} ${parsed[0].summary} ${parsed[0].author}`));
+});
+
+test('Zero undecoded HTML entities exist across all static 32-team data/**/*.json files', () => {
+  const rawEntityRe = /&(?:#x?[0-9a-fA-F]+|gt|lt|amp|quot|apos|nbsp|rsquo|lsquo|rdquo|ldquo|mdash|ndash|hellip|bull);/i;
+  const leaks = [];
+  const walkData = dir => {
+    for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+      const p = path.join(dir, ent.name);
+      if (ent.isDirectory()) walkData(p);
+      else if (ent.name.endsWith('.json')) {
+        const txt = fs.readFileSync(p, 'utf8');
+        const m = txt.match(rawEntityRe);
+        if (m) leaks.push(`${path.relative(rootDir, p)}: ${m[0]}`);
+      }
+    }
+  };
+  walkData(path.join(rootDir, 'data'));
+  assert.deepEqual(leaks, [], `Found undecoded HTML entities in static data JSONs: ${leaks.slice(0, 10).join(', ')}`);
+});
+
+test('Per-player breaking injury dedup: keeps only latest/most-progressed update at top, strips breaking from older updates, consolidates similar injury tweets under Similar stories, and blocks visual-comparison false BREAKING', () => {
+  const realRoster = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'roster.json'), 'utf8'));
+  const koIso = '2026-11-23T01:20:00.000Z';
+  const koMs = Date.parse(koIso);
+  const liveNowMs = koMs + 140 * 60_000; // Late Q4 / post-game window
+
+  const yesterdayAiBrief = {
+    headline: 'Saturday 5 PM Briefing: 49ers Finalize Game Plan vs. Vikings',
+    bullets: ['49ers wrapped Saturday walk-through ahead of Week 12 SNF.', 'Brock Purdy ready for Flores blitzes.'],
+    cycleKey: '2026-11-21@17PT',
+    generatedAt: '2026-11-22T01:00:00.000Z',
+    source: 'pipeline-gemini-daily',
+    sources: []
+  };
+
+  const liveApp = {
+    meta: { seasonYear: 2026, currentWeek: 12, teamAbbr: 'SF', teamSlug: '49ers', teamRecord: '8-3' },
+    roster: realRoster,
+    health: { week: 12, practiceReport: [], irReserve: [] },
+    scheduleMatchup: {
+      schedule: [
+        {
+          id: '401873099',
+          week: 12,
+          seasonType: 'REG',
+          dateIso: koIso,
+          completed: false,
+          statusState: 'in',
+          statusDetail: '4th - 4:10',
+          opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+        }
+      ],
+      upcomingMatchup: {
+        week: 12,
+        gameId: '401873099',
+        oppAbbr: 'MIN',
+        oppName: 'Minnesota Vikings',
+        dateIso: koIso,
+        kickoffIso: koIso,
+        liveState: 'in',
+        isGameInProgress: true,
+        statusDetail: '4th - 4:10'
+      }
+    },
+    news: { dailyTopNewsBrief: yesterdayAiBrief, rawStream: [] }
+  };
+
+  // 1. Exact reported screenshot scenario:
+  //    - Maiocco (2h ago): speculative visual comparison mentioning "fractured" (must NOT wear BREAKING!)
+  //    - Barrows (1h45m ago): earlier sideline cart/lower-leg tweet
+  //    - Eric Branch / Wire (1h ago): latest detailed carted-off + air-cast + Vederian Lowe replacement
+  //    - Jennifer Lee Chan (58m ago): non-injury 18-point lead reminder
+  const maioccoSpeculative = {
+    id: 'mck_maiocco_spec_2h',
+    type: 'tweet',
+    author: 'Matt Maiocco',
+    authorHandle: '@MaioccoNBCS',
+    outletName: 'NBC Sports Bay Area',
+    trustTier: 1,
+    title: "Colton McKivitz's left lower leg injury looked very similar to the fractured ankle Fred Warner suffered earlier this year.",
+    fullText: "Colton McKivitz's left lower leg injury looked very similar to the fractured ankle Fred Warner suffered earlier this year.",
+    mentionedPlayers: [{ name: 'Fred Warner' }, { name: 'Colton McKivitz' }], // Deliberately out of order!
+    url: 'https://x.com/MaioccoNBCS/status/99001',
+    publishedAt: new Date(liveNowMs - 120 * 60_000).toISOString()
+  };
+
+  const barrowsEarlier = {
+    id: 'mck_barrows_earlier_105m',
+    type: 'tweet',
+    author: 'Matt Barrows',
+    authorHandle: '@mattbarrows',
+    outletName: 'The Athletic',
+    trustTier: 1,
+    title: '49ers RT Colton McKivitz is down on the turf with a lower leg injury as trainers call for the cart.',
+    fullText: '49ers RT Colton McKivitz is down on the turf with a lower leg injury as trainers call for the cart.',
+    mentionedPlayers: [{ name: 'Colton McKivitz' }],
+    url: 'https://x.com/mattbarrows/status/99002',
+    publishedAt: new Date(liveNowMs - 105 * 60_000).toISOString()
+  };
+
+  const branchLatest = {
+    id: 'mck_branch_latest_60m',
+    type: 'article',
+    wireSource: 'espn_player_wire',
+    author: 'Eric Branch',
+    outletName: 'San Francisco Chronicle',
+    trustTier: 1,
+    title: 'McKivitz (lower leg) was carted off the field Sunday night against the Vikings.',
+    summary: "McKivitz suffered a gruesome lower left leg injury, and he required an air cast before being carted off the field. In his absence, Vederian Lowe has taken over as the 49ers' right tackle on Sunday night.",
+    mentionedPlayers: [{ name: 'Vederian Lowe' }, { name: 'Colton McKivitz' }], // Replacement listed first!
+    url: 'https://www.espn.com/nfl/player/_/id/4040655/colton-mckivitz#note-99003',
+    publishedAt: new Date(liveNowMs - 60 * 60_000).toISOString()
+  };
+
+  const jlcLeadReminder = {
+    id: 'jlc_score_58m',
+    type: 'tweet',
+    author: 'Jennifer Lee Chan',
+    authorHandle: '@jenniferleechan',
+    outletName: 'NBC Sports Bay Area',
+    trustTier: 1,
+    title: '#49ers have an 18 point lead, but a quick reminder that they led Dallas by 19 before letting them back in the game.',
+    fullText: '#49ers have an 18 point lead, but a quick reminder that they led Dallas by 19 before letting them back in the game.',
+    url: 'https://x.com/jenniferleechan/status/99004',
+    publishedAt: new Date(liveNowMs - 58 * 60_000).toISOString()
+  };
+
+  // Primary injured player extraction MUST pick Colton McKivitz even when Fred Warner or Vederian Lowe is first in mentionedPlayers!
+  assert.equal(resolvePrimaryInjuredPlayerSlug(maioccoSpeculative, realRoster.players), 'coltonmckivitz');
+  assert.equal(resolvePrimaryInjuredPlayerSlug(branchLatest, realRoster.players), 'coltonmckivitz');
+
+  // Speculative visual comparison ("looked very similar to the fractured ankle...") must NOT trigger BREAKING or Stage 5!
+  const specCls = classifyBreakingItem(maioccoSpeculative, liveNowMs, { appData: liveApp });
+  assert.equal(specCls.isUrgentBreaking, false, 'Visual comparison "looked very similar to the fractured..." must NOT be urgent BREAKING');
+  assert.notEqual(specCls.breakingBadge, 'BREAKING', 'Visual comparison must NOT wear BREAKING badge');
+  assert.equal(computeInjuryProgressionLevel(maioccoSpeculative), 0, 'Speculative visual comparison must have progression level 0');
+
+  // 1a. Top Mode (grouped): ALL 3 McKivitz updates consolidate into 1 visible card (latest Eric Branch on top) + Similar stories (2)
+  const sortedStream = sortNewsWithBreakingPriority(
+    [maioccoSpeculative, barrowsEarlier, branchLatest, jlcLeadReminder],
+    liveNowMs,
+    { appData: liveApp }
+  );
+  const groupedTop = deduplicateAndGroupWireItems(sortedStream, { nowMs: liveNowMs, appData: liveApp, groupSimilarStories: true });
+  const mckGroupedCards = groupedTop.filter(it => /mckivitz/i.test(`${it.title || ''} ${it.fullText || ''}`));
+  assert.equal(mckGroupedCards.length, 1, `All 3 McKivitz injury updates must consolidate into 1 card in Top mode, got ${mckGroupedCards.length}`);
+  assert.equal(mckGroupedCards[0].id, 'mck_branch_latest_60m', 'Latest McKivitz update (1h ago) must be pushed to the visible lead card');
+  assert.equal(mckGroupedCards[0].breakingBadge, 'LIVE INJURY UPDATE');
+  assert.equal(mckGroupedCards[0].confirmingReports.length, 2, 'Older 2 McKivitz updates must consolidate into Similar stories (2)');
+
+  // Verify rendered News & Film HTML shows only ONE urgent breaking pill and renders Similar stories (2)
+  const newsTopHtml = renderNewsViewHtml({
+    appData: { ...liveApp, news: { dailyTopNewsBrief: yesterdayAiBrief, rawStream: [maioccoSpeculative, barrowsEarlier, branchLatest, jlcLeadReminder] } },
+    newsCategoryFilter: 'all',
+    newsSortMode: 'top',
+    filteredRawItems: [maioccoSpeculative, barrowsEarlier, branchLatest, jlcLeadReminder],
+    userPrefs: {},
+    nowMs: liveNowMs
+  });
+  const livePillMatches = newsTopHtml.match(/live-breaking-pill/g) || [];
+  assert.equal(livePillMatches.length, 1, `Rendered Top News must show exactly 1 urgent breaking pill for McKivitz, got ${livePillMatches.length}`);
+  assert.ok(newsTopHtml.includes('Similar stories (2)'), 'Consolidated older McKivitz updates must appear inside Similar stories (2)');
+
+  // 1b. Flat Latest Mode (`groupSimilarStories: false`): ONLY the single latest McKivitz update keeps LIVE INJURY UPDATE & stays pinned #1;
+  //     older McKivitz updates lose breaking status and drop below newer regular tweets (JLC 58m ago)!
+  const flatLatest = deduplicateAndGroupWireItems(sortedStream, { nowMs: liveNowMs, appData: liveApp, groupSimilarStories: false });
+  const flatUrgent = flatLatest.filter(it => isUrgentBreakingBadge(it.breakingBadge));
+  assert.equal(flatUrgent.length, 1, `Latest mode must keep strictly 1 urgent breaking card for McKivitz, got ${flatUrgent.length}`);
+  assert.equal(flatUrgent[0].id, 'mck_branch_latest_60m');
+  const flatPart = partitionBreakingNewsAboveBrief(flatLatest, yesterdayAiBrief, liveNowMs, {
+    appData: liveApp,
+    promoteAllGameDayNews: true,
+    requireAiPostGameBrief: true
+  });
+  assert.equal(flatPart.breakingAboveBrief[0].id, 'mck_branch_latest_60m', 'Latest McKivitz update sits #1 at top');
+  assert.equal(flatPart.breakingAboveBrief[1].id, 'jlc_score_58m', 'Newer non-injury tweet (58m ago) must sit above older superseded McKivitz tweets (105m/120m ago)');
+
+  // 2. Cross-milestone consolidation within same game/post-game wave (carted off -> ruled out -> post-game fractured fibula):
+  //    ALL 3 collapse into 1 visible card with the newest/highest-stage diagnosis pushed to the visible card!
+  const mckRuledOut = {
+    id: 'mck_ruled_out_40m',
+    type: 'tweet',
+    author: 'Nick Wagoner',
+    authorHandle: '@nwagoner',
+    outletName: 'ESPN',
+    trustTier: 1,
+    title: 'Colton McKivitz (lower leg) has been ruled out for the rest of tonight’s game.',
+    fullText: 'Colton McKivitz (lower leg) has been ruled out for the rest of tonight’s game.',
+    mentionedPlayers: [{ name: 'Colton McKivitz' }],
+    url: 'https://x.com/nwagoner/status/99005',
+    publishedAt: new Date(liveNowMs - 40 * 60_000).toISOString()
+  };
+  const mckPostDiagnosis = {
+    id: 'mck_fractured_fibula_10m',
+    type: 'tweet',
+    author: 'Adam Schefter',
+    authorHandle: '@AdamSchefter',
+    outletName: 'ESPN',
+    trustTier: 1,
+    title: '49ers RT Colton McKivitz has been diagnosed with a fractured fibula and is out for the rest of the season, per Kyle Shanahan.',
+    fullText: '49ers RT Colton McKivitz has been diagnosed with a fractured fibula and is out for the rest of the season, per Kyle Shanahan.',
+    mentionedPlayers: [{ name: 'Colton McKivitz' }],
+    url: 'https://x.com/AdamSchefter/status/99006',
+    publishedAt: new Date(liveNowMs - 10 * 60_000).toISOString()
+  };
+  const mckNonInjuryStory = {
+    id: 'mck_micd_up_feature',
+    type: 'article',
+    author: '49ers.com Staff',
+    outletName: '49ers.com Official',
+    trustTier: 1,
+    title: "Morning Report: Colton McKivitz Gets Mic'd Up for Primetime Matchup",
+    summary: 'Watch Colton McKivitz wired for sound during pregame warmups.',
+    mentionedPlayers: [{ name: 'Colton McKivitz' }],
+    url: 'https://www.49ers.com/news/mckivitz-micd-up',
+    publishedAt: new Date(liveNowMs - 5 * 60_000).toISOString()
+  };
+
+  const waveSorted = sortNewsWithBreakingPriority(
+    [barrowsEarlier, branchLatest, mckRuledOut, mckPostDiagnosis, mckNonInjuryStory],
+    liveNowMs,
+    { appData: liveApp }
+  );
+  const waveGrouped = deduplicateAndGroupWireItems(waveSorted, { nowMs: liveNowMs, appData: liveApp, groupSimilarStories: true });
+  assert.equal(waveGrouped.length, 2, '4 same-wave McKivitz injury updates must collapse into 1 card while non-injury feature stays separate');
+  const waveInjCard = waveGrouped.find(it => it.id === 'mck_fractured_fibula_10m');
+  assert.ok(waveInjCard, 'Latest Stage-5 confirmed fracture diagnosis must be pushed to the visible lead card');
+  assert.equal(waveInjCard.confirmingReports.length, 3, 'All 3 earlier McKivitz injury tweets/blurbs must fold under Similar stories (3)');
+  assert.ok(waveGrouped.some(it => it.id === 'mck_micd_up_feature'), 'Non-injury story for same player must NEVER be swallowed');
+
+  // 3. Separated distinct updates (>6h apart, low lexical overlap): Sunday in-game carted-off vs Monday confirmed MRI!
+  //    Must NOT over-consolidate into one drawer, MUST strip breaking status from Sunday's older tweet,
+  //    and Monday's confirmed MRI must rise ABOVE Sunday's post-game brief!
+  const sunGameMs = koMs + 100 * 60_000;
+  const monAfternoonMs = koMs + 20 * 3600_000;
+  const postGameApp = {
+    ...liveApp,
+    scheduleMatchup: {
+      schedule: [
+        {
+          id: '401873099',
+          week: 12,
+          seasonType: 'REG',
+          dateIso: koIso,
+          completed: true,
+          statusState: 'post',
+          statusDetail: 'Final',
+          completedAt: new Date(koMs + 3.25 * 3600_000).toISOString(),
+          opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+        }
+      ],
+      upcomingMatchup: { week: 13, oppAbbr: 'LAR', oppName: 'Los Angeles Rams', dateIso: '2026-11-30T01:20:00.000Z' }
+    }
+  };
+  const sunCarted = {
+    id: 'kittle_sun_exit',
+    type: 'tweet',
+    author: 'Matt Barrows',
+    outletName: 'The Athletic',
+    trustTier: 1,
+    title: 'George Kittle limped off the sideline into the blue medical tent late in the 3rd quarter.',
+    fullText: 'George Kittle limped off the sideline into the blue medical tent late in the 3rd quarter.',
+    mentionedPlayers: [{ name: 'George Kittle' }],
+    url: 'https://x.com/mattbarrows/status/99101',
+    publishedAt: new Date(sunGameMs).toISOString(),
+    breakingBadge: 'LIVE INJURY UPDATE',
+    isBreaking: true,
+    isUrgentBreaking: true,
+    isInGameInjury: true
+  };
+  const monMri = {
+    id: 'kittle_mon_mri',
+    type: 'tweet',
+    author: 'Adam Schefter',
+    outletName: 'ESPN',
+    trustTier: 1,
+    title: 'Good news: MRI confirmed George Kittle avoided structural damage — Grade 1 MCL sprain, expected to miss 1-2 weeks.',
+    fullText: 'Good news: MRI confirmed George Kittle avoided structural damage — Grade 1 MCL sprain, expected to miss 1-2 weeks.',
+    mentionedPlayers: [{ name: 'George Kittle' }],
+    url: 'https://x.com/AdamSchefter/status/99102',
+    publishedAt: new Date(monAfternoonMs - 15 * 60_000).toISOString()
+  };
+  const sundayPostBrief = {
+    headline: '49ers Beat Vikings on SNF',
+    bullets: ['George Kittle exited briefly in Q3.', 'Brock Purdy threw 3 touchdowns.'],
+    generatedAt: new Date(koMs + 4 * 3600_000).toISOString(),
+    coveredUrls: ['https://x.com/mattbarrows/status/99101'],
+    coveredStoryKeys: ['georgekittle::in_game_injury_status'],
+    sources: []
+  };
+  const monSorted = sortNewsWithBreakingPriority([sunCarted, monMri], monAfternoonMs, { appData: postGameApp });
+  const monGrouped = deduplicateAndGroupWireItems(monSorted, { nowMs: monAfternoonMs, appData: postGameApp, groupSimilarStories: true });
+  const monKittleMri = monGrouped.find(it => it.id === 'kittle_mon_mri');
+  assert.ok(monKittleMri && monKittleMri.breakingBadge === 'BREAKING', 'Monday confirmed MRI result must wear BREAKING');
+  const sunOldCard = monGrouped.find(it => it.id === 'kittle_sun_exit');
+  if (sunOldCard) {
+    assert.equal(isUrgentBreakingBadge(sunOldCard.breakingBadge), false, 'Older Sunday injury tweet must have breaking status stripped');
+  }
+  const monPart = partitionBreakingNewsAboveBrief(monGrouped, sundayPostBrief, monAfternoonMs, { appData: postGameApp });
+  assert.equal(monPart.breakingAboveBrief.length, 1, 'Fresh Monday confirmed MRI must rise ABOVE Sunday brief even if Sunday tweet URL was covered');
+  assert.equal(monPart.breakingAboveBrief[0].id, 'kittle_mon_mri');
+
+  // 4. Multi-player fairness: 3 McKivitz tweets + 1 Kittle tweet + 1 Warner tweet must NOT starve Kittle or Warner from the 3-slot urgent cap!
+  const kittleLive = {
+    id: 'kittle_live_qtr',
+    type: 'tweet',
+    author: 'Matt Maiocco',
+    trustTier: 1,
+    title: 'George Kittle (ribs) headed to the locker room and is questionable to return.',
+    fullText: 'George Kittle (ribs) headed to the locker room and is questionable to return.',
+    mentionedPlayers: [{ name: 'George Kittle' }],
+    url: 'https://x.com/MaioccoNBCS/status/99201',
+    publishedAt: new Date(liveNowMs - 12 * 60_000).toISOString()
+  };
+  const warnerLive = {
+    id: 'warner_live_qtr',
+    type: 'tweet',
+    author: 'Nick Wagoner',
+    trustTier: 1,
+    title: 'Fred Warner (ankle) walked off with trainers and is questionable to return.',
+    fullText: 'Fred Warner (ankle) walked off with trainers and is questionable to return.',
+    mentionedPlayers: [{ name: 'Fred Warner' }],
+    url: 'https://x.com/nwagoner/status/99202',
+    publishedAt: new Date(liveNowMs - 15 * 60_000).toISOString()
+  };
+  const multiPlayerSorted = sortNewsWithBreakingPriority(
+    [barrowsEarlier, branchLatest, mckRuledOut, kittleLive, warnerLive],
+    liveNowMs,
+    { appData: liveApp, maxUrgentBreakingBadges: 3 }
+  );
+  const urgentIds = multiPlayerSorted.filter(it => isUrgentBreakingBadge(it.breakingBadge)).map(it => it.id);
+  assert.equal(urgentIds.length, 3, `3 distinct injured players should each get 1 urgent slot (not starved by McKivitz dupes), got ${urgentIds.join(', ')}`);
+  assert.ok(urgentIds.includes('mck_ruled_out_40m'), 'Latest/highest-stage McKivitz update keeps urgent slot');
+  assert.ok(urgentIds.includes('kittle_live_qtr'), 'Kittle must not be starved by duplicate McKivitz tweets');
+  assert.ok(urgentIds.includes('warner_live_qtr'), 'Warner must not be starved by duplicate McKivitz tweets');
+
+  // 5. Direct unit test of enforceSingleBreakingInjuryPerPlayer on pre-tagged multi-team (Vikings) items
+  const minEnforced = enforceSingleBreakingInjuryPerPlayer(
+    [
+      {
+        id: 'min_darrisaw_old',
+        type: 'tweet',
+        title: 'Vikings LT Christian Darrisaw (knee) limped into the blue medical tent.',
+        mentionedPlayers: [{ name: 'Christian Darrisaw' }],
+        publishedAt: new Date(liveNowMs - 55 * 60_000).toISOString(),
+        breakingBadge: 'LIVE INJURY UPDATE',
+        isBreaking: true,
+        isUrgentBreaking: true,
+        isInGameInjury: true
+      },
+      {
+        id: 'min_darrisaw_new',
+        type: 'tweet',
+        title: 'Vikings LT Christian Darrisaw (knee) has been ruled out for the rest of tonight’s game.',
+        mentionedPlayers: [{ name: 'Christian Darrisaw' }],
+        publishedAt: new Date(liveNowMs - 8 * 60_000).toISOString(),
+        breakingBadge: 'LIVE INJURY UPDATE',
+        isBreaking: true,
+        isUrgentBreaking: true,
+        isInGameInjury: true
+      }
+    ],
+    { nowMs: liveNowMs }
+  );
+  const minOld = minEnforced.find(x => x.id === 'min_darrisaw_old');
+  const minNew = minEnforced.find(x => x.id === 'min_darrisaw_new');
+  assert.equal(minNew.breakingBadge, 'LIVE INJURY UPDATE');
+  assert.equal(minNew.isUrgentBreaking, true);
+  assert.equal(minOld.isUrgentBreaking, false, 'Older Vikings injury tweet must lose urgent breaking status');
+  assert.equal(minOld.isInGameInjury, false, 'Older Vikings injury tweet must lose in-game top-pinning');
+  assert.equal(minOld.breakingBadge, 'INJURY UPDATE');
+});
 
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);

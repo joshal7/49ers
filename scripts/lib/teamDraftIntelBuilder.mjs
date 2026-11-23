@@ -16,6 +16,7 @@
 import {
   buildMockDraftBigBoardUrl,
   buildMockDraftTeamUrl,
+  decodeHtmlEntities as decodeHtmlEntitiesShared,
   sanitizeExternalUrl
 } from '../../src/engine/linkIntegrity.js';
 import { hasCrossTeam49ersLeak } from '../../src/config/teamRegistry.js';
@@ -77,18 +78,7 @@ const DISALLOWED_PRIOR_DRAFT_PROSPECTS = new Set([
 ]);
 
 function decodeHtmlEntities(str = '') {
-  return String(str || '')
-    .replace(/&amp;/g, '&')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;|&#x27;|&apos;/g, "'")
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&#8226;|&bull;/g, '•')
-    .replace(/&#8211;|&ndash;/g, '–')
-    .replace(/&#8212;|&mdash;/g, '—')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return decodeHtmlEntitiesShared(str).replace(/\s+/g, ' ').trim();
 }
 
 export function normalizeDraftPlayerKey(name = '') {

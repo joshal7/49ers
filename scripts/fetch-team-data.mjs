@@ -106,11 +106,13 @@ import {
 import {
   buildOtcPlayerUrl,
   createPlayerIdentityResolver,
+  decodeHtmlEntities,
   getPlayerLookupKeys,
   isOffTopicLeagueFiller,
   isPaywalledPublisher,
   normalizePlayerKey,
-  sanitizeExternalUrl
+  sanitizeExternalUrl,
+  stripHtmlAndDecodeEntities
 } from '../src/engine/linkIntegrity.js';
 import { selectBestEspnArticleImage } from '../src/engine/salientMediaEngine.js';
 import { cleanSensationalistText, scoreContentSignal } from '../src/engine/antiFluffFilter.js';
@@ -160,16 +162,7 @@ async function fetchJsonSafe(url, timeoutMs = 12000) {
 }
 
 function decodeXmlEntities(str = '') {
-  return String(str || '')
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;|&apos;/g, "'")
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return stripHtmlAndDecodeEntities(str);
 }
 
 function mapPositionToUnit(pos = '') {
@@ -630,7 +623,7 @@ async function fetchTeamBlueskyPosts(team, reportersData) {
         const post = entry?.post;
         const rec = post?.record;
         if (!post || !rec?.text) continue;
-        const text = String(rec.text).replace(/\s+/g, ' ').trim();
+        const text = decodeHtmlEntities(String(rec.text)).replace(/\s+/g, ' ').trim();
         if (text.length < 18) continue;
         const isNational = rep.category === 'national_insider' || rep.category === 'film_analyst' || rep.category === 'cap_analyst';
         if (isNational && !nickRe.test(text)) continue;
@@ -654,7 +647,7 @@ async function fetchTeamBlueskyPosts(team, reportersData) {
           publishedAt: new Date(pubIso).toISOString(),
           url: bskyUrl,
           externalUrl: extUrl && !isPaywalledPublisher(extUrl) ? extUrl : null,
-          externalTitle: extUrl && !isPaywalledPublisher(extUrl) ? (post.embed?.external?.title || null) : null,
+          externalTitle: extUrl && !isPaywalledPublisher(extUrl) ? (post.embed?.external?.title ? decodeHtmlEntities(post.embed.external.title) : null) : null,
           outletId: rep.outletId,
           outletName: rep.name,
           reporterId: rep.id,

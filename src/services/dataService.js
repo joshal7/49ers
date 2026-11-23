@@ -77,6 +77,7 @@ import {
   buildEspnTeamInjuriesUrl,
   buildEspnTeamLogoUrl,
   buildPfrHeadToHeadUrl,
+  decodeHtmlEntities,
   hasExplicit49ersEntity,
   hasSafeStandaloneSurnameMatch,
   is49ersRelevantWireItem,
@@ -85,7 +86,8 @@ import {
   isOpaqueShortenerUrl,
   sanitizeExternalUrl,
   stripAggregatorBoilerplate,
-  stripHistoricalSfBioSentences
+  stripHistoricalSfBioSentences,
+  stripHtmlAndDecodeEntities
 } from '../engine/linkIntegrity.js';
 import {
   configureBeatAttributionForTeam,
@@ -1110,6 +1112,42 @@ function applyCachedGameDayRostersOnBoot(appData) {
   }
 }
 
+const ITEM_ENTITY_TEXT_FIELDS = [
+  'title',
+  'fullText',
+  'summary',
+  'headline',
+  'description',
+  'externalTitle',
+  'externalDescription',
+  'author',
+  'reporterName',
+  'outletName',
+  'imageAlt',
+  'notes',
+  'shortComment',
+  'longComment',
+  'latestBeatNote',
+  'showName',
+  'label'
+];
+
+function decodeItemHtmlEntitiesInPlace(item) {
+  if (!item || typeof item !== 'object') return item;
+  let next = item;
+  for (const key of ITEM_ENTITY_TEXT_FIELDS) {
+    const val = item[key];
+    if (typeof val === 'string' && val.includes('&')) {
+      const dec = decodeHtmlEntities(val);
+      if (dec !== val) {
+        if (next === item) next = { ...item };
+        next[key] = dec;
+      }
+    }
+  }
+  return next;
+}
+
 function hydrateBundlePostLoad(rawFiles) {
   const {
     meta,
@@ -1145,7 +1183,7 @@ function hydrateBundlePostLoad(rawFiles) {
             })
         )
         .map(rawIt => {
-          const it = sanitizeOversizedDirectArticleSummary(rawIt);
+          const it = sanitizeOversizedDirectArticleSummary(decodeItemHtmlEntitiesInPlace(rawIt));
           const isSoc =
             it?.type === 'tweet' || it?.type === 'social' || /^https?:\/\/bsky\.app\//i.test(String(it?.url || ''));
           if (!isSoc) return it;
@@ -1191,7 +1229,7 @@ function hydrateBundlePostLoad(rawFiles) {
             return body && doesClauseMentionPlayer(body, p.name, { allowSurname: true });
           })
           .map(rawRn => {
-            const rn = sanitizeOversizedDirectArticleSummary(rawRn);
+            const rn = sanitizeOversizedDirectArticleSummary(decodeItemHtmlEntitiesInPlace(rawRn));
             const isSoc =
               rn?.type === 'tweet' || rn?.type === 'social' || /^https?:\/\/bsky\.app\//i.test(String(rn?.url || ''));
             if (!isSoc) return rn;
@@ -1271,6 +1309,27 @@ function hydrateBundlePostLoad(rawFiles) {
       }),
       bootCtxStub
     );
+  }
+
+  if (news?.dailyBrief && typeof news.dailyBrief === 'object') {
+    const db = news.dailyBrief;
+    if (typeof db.headline === 'string' && db.headline.includes('&')) db.headline = decodeHtmlEntities(db.headline);
+    if (typeof db.summary === 'string' && db.summary.includes('&')) db.summary = decodeHtmlEntities(db.summary);
+    if (Array.isArray(db.bullets)) {
+      db.bullets = db.bullets.map(b => (typeof b === 'string' && b.includes('&') ? decodeHtmlEntities(b) : b));
+    }
+    if (Array.isArray(db.sources)) {
+      db.sources = db.sources.map(s => decodeItemHtmlEntitiesInPlace(s));
+    }
+  }
+  if (Array.isArray(seasonal?.completedTrades)) {
+    seasonal.completedTrades = seasonal.completedTrades.map(t => decodeItemHtmlEntitiesInPlace(t));
+  }
+  if (Array.isArray(beatPodcasts?.episodes)) {
+    beatPodcasts.episodes = beatPodcasts.episodes.map(ep => decodeItemHtmlEntitiesInPlace(ep));
+  }
+  if (Array.isArray(health?.injuryReport)) {
+    health.injuryReport = health.injuryReport.map(row => decodeItemHtmlEntitiesInPlace(row));
   }
 
   if (meta && typeof meta === 'object' && meta.updatedAt && !meta._upstreamUpdatedAt) {
@@ -1475,17 +1534,7 @@ export async function fetchFresherUpstreamData(currentUpdatedAt = '') {
 }
 
 function decodeXmlEntitiesClient(str = '') {
-  return String(str || '')
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;|&apos;/g, "'")
-    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return stripHtmlAndDecodeEntities(str);
 }
 
 function hashWireKey(str = '') {
@@ -3799,10 +3848,10 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
         externalTitle: safeRawExtUrl ? rawExtTitle : null,
         externalDescription: safeRawExtUrl ? rawExtDesc : null,
         outletId: raw.outletId || 'x_beat',
-        outletName: raw.outletName || `${activeTeam.nickname} Beat`,
+        outletName: decodeHtmlEntities(raw.outletName || `${activeTeam.nickname} Beat`),
         reporterId: raw.reporterId || null,
-        reporterName: raw.author || raw.outletName || `${activeTeam.nickname} Beat`,
-        author: raw.author || raw.outletName || `${activeTeam.nickname} Beat`,
+        reporterName: decodeHtmlEntities(raw.author || raw.outletName || `${activeTeam.nickname} Beat`),
+        author: decodeHtmlEntities(raw.author || raw.outletName || `${activeTeam.nickname} Beat`),
         authorHandle: raw.authorHandle || '',
         authorProfileUrl: raw.authorProfileUrl || null,
         trustTier: Number(raw.trustTier) || 1,

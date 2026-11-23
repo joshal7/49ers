@@ -9,6 +9,7 @@ import {
   getPracticeReportLeadDays,
   scopeBeatTextToPlayer
 } from './injuryProbabilityModel.js';
+import { decodeHtmlEntities, stripHtmlAndDecodeEntities } from './linkIntegrity.js';
 import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 
 export { getPracticeReportLeadDays };
@@ -386,21 +387,7 @@ export function normalizeCanonicalTeamAbbr(abbr = '') {
 }
 
 function decodeHtmlEntitiesBasic(str = '') {
-  return String(str || '')
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => {
-      const code = parseInt(hex, 16);
-      return Number.isFinite(code) ? String.fromCodePoint(code) : ' ';
-    })
-    .replace(/&#(\d+);/g, (_, dec) => {
-      const code = parseInt(dec, 10);
-      return Number.isFinite(code) ? String.fromCodePoint(code) : ' ';
-    })
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/&amp;/gi, '&')
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;|&apos;|&rsquo;|&lsquo;/gi, "'")
-    .replace(/&mdash;|&ndash;/gi, '-');
+  return decodeHtmlEntities(String(str || '').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1'));
 }
 
 const AMBIGUOUS_COMMON_SURNAMES = new Set([
@@ -2665,16 +2652,7 @@ export function rolloverPracticeReportForUpcomingWeek(
 }
 
 function stripBasicHtml(html = '') {
-  return String(html || '')
-    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/&amp;/gi, '&')
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;|&apos;/gi, "'")
-    .replace(/\s+/g, ' ')
-    .trim();
+  return stripHtmlAndDecodeEntities(html);
 }
 
 /**

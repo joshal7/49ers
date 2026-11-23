@@ -132,6 +132,7 @@ import {
   buildPfrPlayerUrl,
   buildPfrTeamSeasonUrl,
   createPlayerIdentityResolver,
+  decodeHtmlEntities,
   getPlayerLookupKeys,
   hasExplicit49ersEntity,
   hasSafeStandaloneSurnameMatch,
@@ -352,24 +353,7 @@ function resolveTeamLogoUrl(abbr = 'SF', espnTeamObj = null) {
 }
 
 function decodeHtmlEntitiesBasic(str = '') {
-  return String(str || '')
-    .replace(/&#(\d+);/g, (_, dec) => {
-      const code = Number(dec);
-      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : _;
-    })
-    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => {
-      const code = parseInt(hex, 16);
-      return Number.isFinite(code) && code > 0 ? String.fromCodePoint(code) : _;
-    })
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/&mdash;/gi, '—')
-    .replace(/&ndash;/gi, '–')
-    .replace(/&lsquo;|&rsquo;|&apos;|&#39;/gi, "'")
-    .replace(/&ldquo;|&rdquo;|&quot;/gi, '"')
-    .replace(/&hellip;/gi, '…')
-    .replace(/&amp;/gi, '&')
-    .replace(/&lt;/gi, '<')
-    .replace(/&gt;/gi, '>');
+  return decodeHtmlEntities(str);
 }
 
 async function main() {
