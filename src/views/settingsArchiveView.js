@@ -10,7 +10,7 @@ import {
   renderPlayerAvatarHtml
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
-import { ALL_NFL_TEAMS, getActiveTeamConfig } from '../config/teamRegistry.js';
+import { ALL_NFL_TEAMS, getActiveTeamConfig, isNflHubMode } from '../config/teamRegistry.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import {
   buildXBeatListSearchUrl,
@@ -83,9 +83,9 @@ export function renderSettingsSheetHtml({
             <strong>All 32 NFL Team Sites</strong>
             <div style="font-size:11.5px;color:var(--text-secondary)">Jump to any franchise hub across the NFL</div>
           </div>
-          <a href="https://nfl.joshal.com" target="_blank" rel="noopener noreferrer" class="source-chip-link">
-            <span>NFL Portal</span>${iconSvg('externalLink', 10)}
-          </a>
+          ${isNflHubMode()
+            ? `<a href="./" class="source-chip-link" data-hub-portal-link="true"><span>NFL Portal</span></a>`
+            : `<a href="https://nfl.joshal.com" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Portal</span>${iconSvg('externalLink', 10)}</a>`}
         </div>
         <details class="stats-expand-details" style="margin-top:0">
           <summary class="stats-expand-summary" style="padding:7px 10px;font-size:12px">
@@ -96,11 +96,11 @@ export function renderSettingsSheetHtml({
             ${(() => {
               const curHost =
                 typeof window !== 'undefined' ? String(window.location?.hostname || '').toLowerCase() : '';
-              const isLocal = /^(localhost|127\.0\.0\.1)$/i.test(curHost);
+              const useSameOriginQuery = /^(localhost|127\.0\.0\.1)$/i.test(curHost) || isNflHubMode();
               return [...ALL_NFL_TEAMS]
                 .sort((a, b) => a.nickname.localeCompare(b.nickname))
                 .map(t => {
-                  const href = isLocal ? `?team=${encodeURIComponent(t.slug)}` : `https://${t.domain}`;
+                  const href = useSameOriginQuery ? `./?team=${encodeURIComponent(t.slug)}` : `https://${t.domain}`;
                   const isCur = activeTeam.slug === t.slug;
                   return `<a href="${esc(href)}" class="source-chip-link ${isCur ? 'active' : ''}" style="${isCur ? 'border-color:var(--gold-border);background:var(--gold-soft);color:var(--text-primary)' : ''}"><span>${esc(t.nickname)}</span></a>`;
                 })

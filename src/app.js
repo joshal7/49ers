@@ -5,6 +5,7 @@
 import {
   applyTeamThemeToDocument,
   getActiveTeamConfig,
+  isNflHubMode,
   resolveTeamFromHostname,
   setActiveTeamConfig
 } from './config/teamRegistry.js';
@@ -18,6 +19,17 @@ const ACTIVE_TEAM =
     : getActiveTeamConfig();
 if (typeof document !== 'undefined') {
   applyTeamThemeToDocument(ACTIVE_TEAM);
+  try {
+    if (
+      isNflHubMode() &&
+      (window.navigator?.standalone === true ||
+        window.matchMedia?.('(display-mode: standalone)')?.matches ||
+        window.matchMedia?.('(display-mode: fullscreen)')?.matches ||
+        window.matchMedia?.('(display-mode: minimal-ui)')?.matches)
+    ) {
+      window.sessionStorage?.setItem('nfl_hub_standalone_session_v1', '1');
+    }
+  } catch {}
 }
 
 import {
@@ -52,7 +64,7 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=96';
+} from './services/dataService.js?v=97';
 import {
   SHARED_GEMINI_KEY_STORAGE_KEY,
   publishSharedGeminiApiKey,
@@ -77,7 +89,7 @@ import {
   shouldTriggerDailyTopNewsBriefRefresh,
   refreshDailyTopNewsBriefIfDue,
   clearDailyNewsBriefAttemptLock
-} from './services/aiWorkerClient.js?v=88';
+} from './services/aiWorkerClient.js?v=89';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -88,7 +100,7 @@ import {
   extractIncomingSharedRoute,
   shareItemNatively,
   shareAudioFileNatively
-} from './services/shareService.js?v=61';
+} from './services/shareService.js?v=62';
 
 import {
   resolveNflTeamMeta,
@@ -138,7 +150,7 @@ import {
   renderUniversalSearchSheetHtml,
   renderUniversalSearchResultsHtml,
   renderUniversalSearchScopeBarHtml
-} from './views/settingsArchiveView.js?v=89';
+} from './views/settingsArchiveView.js?v=90';
 import {
   normalizeNewsSortMode,
   computeCatchUpState,
@@ -3001,7 +3013,13 @@ function bindEvents() {
           search: state.bigBoardSearch,
           includeDraftNav: true
         });
-        const fullShareUrl = `${window.location.origin}${window.location.pathname}${shareSearch}`;
+        let fullShareUrl = `${window.location.origin}${window.location.pathname}${shareSearch}`;
+        if (isNflHubMode() && ACTIVE_TEAM?.domain) {
+          const canonicalParams = new URLSearchParams(String(shareSearch || '').replace(/^\?/, ''));
+          canonicalParams.delete('team');
+          const canonicalQs = canonicalParams.toString();
+          fullShareUrl = `https://${ACTIVE_TEAM.domain}/${canonicalQs ? `?${canonicalQs}` : ''}`;
+        }
         try {
           window.history.replaceState(null, '', `${window.location.pathname}${shareSearch}${window.location.hash || ''}`);
         } catch {}
@@ -4909,7 +4927,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=113', { updateViaCache: 'none' })
+        .register('./sw.js?v=115', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

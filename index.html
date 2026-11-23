@@ -28,12 +28,17 @@
   <link rel="dns-prefetch" href="https://cdn.49erswebzone.com" />
   <link rel="dns-prefetch" href="https://i.ytimg.com" />
   <link rel="dns-prefetch" href="https://is1-ssl.mzstatic.com" />
-  <link rel="stylesheet" href="./src/styles.css?v=71" />
+  <link rel="stylesheet" href="./src/styles.css?v=72" />
 </head>
 <body>
   <!-- Full-Bleed Sticky Solid Header (Subtle, Contextual: Brand + Status on Home, Clean Section Title on Sub-Tabs) -->
   <header class="top-header" role="banner" data-active-tab="home">
     <div class="header-row">
+      <a id="nflHubBackBtn" href="./" class="nfl-hub-back-btn" hidden aria-label="Back to NFL Team Hub" title="All 32 NFL Teams">
+        <svg class="ui-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </a>
       <div class="brand-lockup" id="brandHomeTrigger" role="button" tabindex="0" data-action="go-home" style="cursor:pointer" aria-label="49ers Faithful Home">
         <div class="brand-medallion-wrap brand-home-only">
           <img src="./assets/sf-crest.svg?v=1" alt="49ers" class="brand-medallion" width="32" height="19" />
@@ -241,6 +246,6 @@
   <!-- Subtle Quick-Bubble Popover for Football, Analytics & CBA Jargon -->
   <div id="jargonPopover" class="jargon-popover" hidden role="dialog" aria-label="Football &amp; Salary Cap Term Definition"></div>
 
-  <script type="module" src="./src/app.js?v=137"></script>
+  <script type="module" src="./src/app.js?v=138"></script>
 </body>
 </html>

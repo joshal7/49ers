@@ -114,15 +114,17 @@ export async function decodeSharedPayload(token = '') {
 }
 
 export function resolveShareBaseUrl(locationObj = typeof window !== 'undefined' ? window.location : null) {
+  const activeTeam = getActiveTeamConfig();
+  const canonicalTeamOrigin = activeTeam?.domain ? `https://${activeTeam.domain}` : CANONICAL_SITE_ORIGIN;
   if (!locationObj || !locationObj.origin || locationObj.origin === 'null') {
-    return `${CANONICAL_SITE_ORIGIN}/`;
+    return `${canonicalTeamOrigin}/`;
   }
   const host = String(locationObj.hostname || '').toLowerCase();
   if (host === 'localhost' || host === '127.0.0.1') {
     const cleanPath = String(locationObj.pathname || '/').replace(/index\.html$/i, '');
     return `${locationObj.origin}${cleanPath.endsWith('/') ? cleanPath : `${cleanPath}/`}`;
   }
-  return `${CANONICAL_SITE_ORIGIN}/`;
+  return `${canonicalTeamOrigin}/`;
 }
 
 function maskVoiceRelayToken(rawKey = '', episodeId = '') {

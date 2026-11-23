@@ -1763,6 +1763,11 @@ async function main() {
         st.appData.news.dailyTopNewsBrief = {
           ...st.appData.news.dailyTopNewsBrief,
           headline: '49ers Postgame Recap: Week 99 Takeaways',
+          summary: 'Postgame film, efficiency, and injury takeaway wrap after Week 99 final.',
+          bullets: [
+            'Brock Purdy hit George Kittle down the seam to key the second-half surge.',
+            'San Francisco closed out the fourth quarter cleanly with zero late turnovers.'
+          ],
           teamRecord: st.appData?.meta?.teamRecord || st.appData.news.dailyTopNewsBrief?.teamRecord,
           isPostGame: true,
           gameWeek: 99,

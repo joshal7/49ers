@@ -17542,6 +17542,219 @@ test('Playoff Monte Carlo & Rooting Guide collapse mixed nflverse/ESPN game IDs 
   assert.equal(kcLarRows.length, 1, 'KC @ LAR must appear exactly once in Week 13 rooting guide');
 });
 
+await testAsync('NFL Hub standalone routing, team-isolated cache keys, canonical share URLs & Service Worker HTML isolation', async () => {
+  const {
+    isNflHubHost,
+    isNflHubMode,
+    resolveExplicitQueryTeam,
+    setActiveTeamConfig,
+    getTeamByAbbr
+  } = await import('../src/config/teamRegistry.js');
+  const {
+    getDailyNewsBriefCacheKey,
+    getDailyNewsBriefAttemptKey,
+    resolveReadOnlyPlatformApiBase
+  } = await import('../src/services/aiWorkerClient.js');
+  const { resolveShareBaseUrl } = await import('../src/services/shareService.js');
+
+  // 1. Strict NFL Hub host & explicit query team resolution
+  assert.equal(isNflHubHost('nfl.joshal.com'), true);
+  assert.equal(isNflHubHost('nfl-joshal.pages.dev'), true);
+  assert.equal(isNflHubHost('preview.nfl-joshal.pages.dev'), true);
+  assert.equal(isNflHubHost('49ers.joshal.com'), false);
+  assert.equal(isNflHubHost('lions.joshal.com'), false);
+  assert.equal(isNflHubMode({ hostname: 'nfl.joshal.com' }), true);
+  assert.equal(isNflHubMode({ hostname: 'lions.joshal.com' }), false);
+
+  assert.equal(resolveExplicitQueryTeam(''), null);
+  assert.equal(resolveExplicitQueryTeam('?team=unknown-slug'), null);
+  assert.equal(resolveExplicitQueryTeam('?team=49ers')?.abbr, 'SF');
+  assert.equal(resolveExplicitQueryTeam('?team=lions')?.abbr, 'DET');
+  assert.equal(resolveExplicitQueryTeam('?team=BUF')?.slug, 'bills');
+
+  // 2. Team-scoped Daily Brief localStorage keys (SF preserves legacy key; other 31 teams stay isolated on shared origin)
+  assert.equal(getDailyNewsBriefCacheKey('SF'), 'joshal_49ers_daily_news_brief_v5');
+  assert.equal(getDailyNewsBriefAttemptKey('SF'), 'joshal_49ers_daily_news_brief_attempt_v5');
+  assert.equal(getDailyNewsBriefCacheKey('DET'), 'joshal_lions_daily_news_brief_v5');
+  assert.equal(getDailyNewsBriefCacheKey('BUF'), 'joshal_bills_daily_news_brief_v5');
+  assert.notEqual(getDailyNewsBriefCacheKey('DET'), getDailyNewsBriefCacheKey('BUF'));
+  assert.notEqual(getDailyNewsBriefCacheKey('DET'), getDailyNewsBriefCacheKey('SF'));
+
+  // 3. Platform API base works on both `<team>.joshal.com` and `nfl.joshal.com`
+  const prevWin = globalThis.window;
+  try {
+    globalThis.window = { location: { hostname: 'nfl.joshal.com', protocol: 'https:', origin: 'https://nfl.joshal.com' } };
+    assert.equal(resolveReadOnlyPlatformApiBase({}), 'https://nfl.joshal.com');
+    globalThis.window = { location: { hostname: 'lions.joshal.com', protocol: 'https:', origin: 'https://lions.joshal.com' } };
+    assert.equal(resolveReadOnlyPlatformApiBase({}), 'https://lions.joshal.com');
+  } finally {
+    if (prevWin === undefined) delete globalThis.window;
+    else globalThis.window = prevWin;
+  }
+
+  // 4. Canonical share URLs always point to `<activeTeam>.joshal.com/` even when opened from `nfl.joshal.com/?team=<slug>`
+  try {
+    setActiveTeamConfig(getTeamByAbbr('DET'));
+    assert.equal(
+      resolveShareBaseUrl({ origin: 'https://nfl.joshal.com', hostname: 'nfl.joshal.com', pathname: '/' }),
+      'https://lions.joshal.com/'
+    );
+    setActiveTeamConfig(getTeamByAbbr('BUF'));
+    assert.equal(
+      resolveShareBaseUrl({ origin: 'https://bills.joshal.com', hostname: 'bills.joshal.com', pathname: '/' }),
+      'https://bills.joshal.com/'
+    );
+    setActiveTeamConfig(getTeamByAbbr('SF'));
+    assert.equal(
+      resolveShareBaseUrl({ origin: 'https://nfl.joshal.com', hostname: 'nfl.joshal.com', pathname: '/' }),
+      'https://49ers.joshal.com/'
+    );
+  } finally {
+    setActiveTeamConfig(getTeamByAbbr('SF'));
+  }
+
+  // 5. Service Worker live execution simulation: verify `nfl.joshal.com` isolates `/`, `/?team=lions`,
+  //    and `/?team=49ers` in CacheStorage, bypasses `/key-sync`, never precaches `./data/teams/nfl/*`,
+  //    and preserves exact single-team behavior on `lions.joshal.com` and `49ers.joshal.com`!
+  const swSrc = fs.readFileSync(path.join(rootDir, 'sw.js'), 'utf8');
+  assert.ok(swSrc.includes('IS_NFL_HUB_HOST'), 'sw.js must detect IS_NFL_HUB_HOST');
+  assert.ok(swSrc.includes('resolveRootHtmlCacheKey'), 'sw.js must key root HTML per ?team=<slug> vs / portal');
+  assert.ok(swSrc.includes("url.pathname === '/key-sync'"), 'sw.js must bypass /key-sync vault');
+
+  const runSwHarness = async (originUrl, networkMap = {}) => {
+    const listeners = {};
+    const store = new Map();
+    const makeCacheObj = name => ({
+      put: async (req, res) => {
+        const key = typeof req === 'string' ? new URL(req, originUrl).toString() : req.url;
+        store.set(`${name}::${key}`, res.clone());
+      },
+      match: async (req, opts = {}) => {
+        const rawUrl = typeof req === 'string' ? new URL(req, originUrl).toString() : req.url;
+        const target = opts.ignoreSearch ? rawUrl.split('?')[0] : rawUrl;
+        for (const [k, v] of store.entries()) {
+          if (!k.startsWith(`${name}::`)) continue;
+          const storedUrl = k.slice(name.length + 2);
+          const cmp = opts.ignoreSearch ? storedUrl.split('?')[0] : storedUrl;
+          if (cmp === target) return v.clone();
+        }
+        return undefined;
+      }
+    });
+    const mockCaches = {
+      open: async name => makeCacheObj(name),
+      keys: async () => [...new Set([...store.keys()].map(k => k.split('::')[0]))],
+      delete: async name => {
+        for (const k of [...store.keys()]) if (k.startsWith(`${name}::`)) store.delete(k);
+      },
+      match: async (req, opts = {}) => {
+        for (const name of await mockCaches.keys()) {
+          const hit = await makeCacheObj(name).match(req, opts);
+          if (hit) return hit;
+        }
+        return undefined;
+      }
+    };
+    const fetchedUrls = [];
+    const mockFetch = async url => {
+      const s = typeof url === 'string' ? new URL(url, originUrl).toString() : url.url;
+      fetchedUrls.push(s);
+      if (Object.prototype.hasOwnProperty.call(networkMap, s)) {
+        const val = networkMap[s];
+        if (val instanceof Error) throw val;
+        return new Response(val, { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+      }
+      return new Response('ok', { status: 200 });
+    };
+    const mockSelf = {
+      location: new URL(`${originUrl}/sw.js`),
+      addEventListener: (ev, fn) => {
+        listeners[ev] = fn;
+      },
+      skipWaiting: async () => {},
+      clients: { claim: async () => {} }
+    };
+    const fn = new Function('self', 'caches', 'fetch', 'URL', 'Response', 'Headers', 'AbortController', swSrc);
+    fn(mockSelf, mockCaches, mockFetch, URL, Response, Headers, AbortController);
+    return { listeners, store, fetchedUrls, mockCaches };
+  };
+
+  // 5a. Simulate `https://nfl.joshal.com` install + online/offline navigation between `/`, `/?team=lions`, `/?team=49ers`
+  const hubNet = {
+    'https://nfl.joshal.com/': '<html>NFL_PORTAL_HTML</html>',
+    'https://nfl.joshal.com/?team=lions': '<html>LIONS_HUB_HTML</html>',
+    'https://nfl.joshal.com/?team=49ers': '<html>49ERS_HUB_HTML</html>'
+  };
+  const hubSw = await runSwHarness('https://nfl.joshal.com', hubNet);
+  let installP = null;
+  hubSw.listeners.install({ waitUntil: p => (installP = p) });
+  await installP;
+  assert.ok(
+    !hubSw.fetchedUrls.some(u => u.includes('/data/teams/nfl/')),
+    'nfl.joshal.com SW must NEVER request non-existent /data/teams/nfl/* during install'
+  );
+  assert.ok(
+    hubSw.fetchedUrls.some(u => u.endsWith('/nfl-crest.svg')),
+    'nfl.joshal.com SW should precache portal assets'
+  );
+
+  const navFetch = async (sw, urlStr) => {
+    let respP = null;
+    sw.listeners.fetch({
+      request: { method: 'GET', url: urlStr, mode: 'navigate', redirect: 'manual', headers: new Headers() },
+      respondWith: p => (respP = p)
+    });
+    return respP ? await respP : null;
+  };
+
+  // Bypass `/key-sync` completely
+  assert.equal(await navFetch(hubSw, 'https://nfl.joshal.com/key-sync'), null, 'SW must bypass /key-sync');
+
+  // Populate online caches for `/`, `/?team=lions`, and `/?team=49ers`
+  assert.equal(await (await navFetch(hubSw, 'https://nfl.joshal.com/')).text(), '<html>NFL_PORTAL_HTML</html>');
+  assert.equal(await (await navFetch(hubSw, 'https://nfl.joshal.com/?team=lions')).text(), '<html>LIONS_HUB_HTML</html>');
+  assert.equal(await (await navFetch(hubSw, 'https://nfl.joshal.com/?team=49ers')).text(), '<html>49ERS_HUB_HTML</html>');
+  await new Promise(r => setTimeout(r, 20));
+
+  // Simulate airplane mode (all network requests throw) -> verify ZERO cross-contamination!
+  hubNet['https://nfl.joshal.com/'] = new Error('offline');
+  hubNet['https://nfl.joshal.com/?team=lions'] = new Error('offline');
+  hubNet['https://nfl.joshal.com/?team=49ers'] = new Error('offline');
+  hubNet['https://nfl.joshal.com/?team=lions&lens=pff'] = new Error('offline');
+  assert.equal(
+    await (await navFetch(hubSw, 'https://nfl.joshal.com/')).text(),
+    '<html>NFL_PORTAL_HTML</html>',
+    'Offline `/` on nfl.joshal.com must return portal HTML, NOT Lions or 49ers'
+  );
+  assert.equal(
+    await (await navFetch(hubSw, 'https://nfl.joshal.com/?team=lions')).text(),
+    '<html>LIONS_HUB_HTML</html>',
+    'Offline `/?team=lions` must return Lions HTML, NOT portal or 49ers'
+  );
+  assert.equal(
+    await (await navFetch(hubSw, 'https://nfl.joshal.com/?team=lions&lens=pff')).text(),
+    '<html>LIONS_HUB_HTML</html>',
+    'Offline `/?team=lions&lens=pff` must resolve the normalized Lions cache entry'
+  );
+  assert.equal(
+    await (await navFetch(hubSw, 'https://nfl.joshal.com/?team=49ers')).text(),
+    '<html>49ERS_HUB_HTML</html>',
+    'Offline `/?team=49ers` must return 49ers HTML, NOT portal or Lions'
+  );
+
+  // 5b. Simulate `https://lions.joshal.com` -> precaches `/data/teams/lions/*` cleanly (zero regression)
+  const lionsSw = await runSwHarness('https://lions.joshal.com', {
+    'https://lions.joshal.com/': '<html>LIONS_SUBDOMAIN_HTML</html>'
+  });
+  let lionsInstallP = null;
+  lionsSw.listeners.install({ waitUntil: p => (lionsInstallP = p) });
+  await lionsInstallP;
+  assert.ok(
+    lionsSw.fetchedUrls.some(u => u.endsWith('/data/teams/lions/meta.json')),
+    'lions.joshal.com SW must continue precaching /data/teams/lions/meta.json'
+  );
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

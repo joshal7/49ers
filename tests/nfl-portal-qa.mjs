@@ -544,6 +544,100 @@ async function main() {
       }
     });
 
+    await test('Standalone Safari & Chrome Pseudo-App Mode: rewrites all 32 team links to same-origin ./?team=<slug> while preserving https://<slug>.joshal.com in normal browser tabs', async () => {
+      // 1. Verify manifest has standalone scope & 512x512 PNG icon for Chrome/Safari PWA installability
+      const manifest = JSON.parse(fs.readFileSync(path.join(built.distDir, 'manifest.json'), 'utf8'));
+      assert.equal(manifest.display, 'standalone');
+      assert.equal(manifest.start_url, '/');
+      assert.equal(manifest.scope, '/');
+      assert.ok(
+        manifest.icons.some(ic => ic.sizes === '512x512' && ic.type === 'image/png'),
+        'manifest.json must include a 512x512 PNG icon for full Chrome Android/Desktop standalone installability'
+      );
+      assert.ok(fs.existsSync(path.join(built.distDir, 'nfl-icon-512.png')), 'nfl-icon-512.png missing from dist-nfl');
+
+      // 2. Normal browser tab: links stay canonical https://<slug>.joshal.com
+      await cdp.send('Page.navigate', { url: baseUrl });
+      await new Promise(r => setTimeout(r, 250));
+      const normalCheck = await evalJs(
+        cdp,
+        `(() => {
+          sessionStorage.clear();
+          const tiles = [...document.querySelectorAll('a.team-tile')];
+          return {
+            standaloneAttr: document.documentElement.getAttribute('data-standalone-app'),
+            allExternal: tiles.every(t => t.getAttribute('href') === 'https://' + t.dataset.team + '.joshal.com'),
+            allHaveHubAttr: tiles.every(t => t.getAttribute('data-hub-href') === './?team=' + t.dataset.team)
+          };
+        })()`
+      );
+      assert.equal(normalCheck.standaloneAttr, null);
+      assert.equal(normalCheck.allExternal, true);
+      assert.equal(normalCheck.allHaveHubAttr, true);
+
+      // 3. Simulate iOS Safari Home Screen App (`navigator.standalone === true`) on fresh document load
+      const safariScript = await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
+        source: `Object.defineProperty(navigator, 'standalone', { value: true, configurable: true });`
+      });
+      try {
+        await cdp.send('Page.navigate', { url: `${baseUrl}?safari_standalone_check=1` });
+        await new Promise(r => setTimeout(r, 250));
+        const safariCheck = await evalJs(
+          cdp,
+          `(() => {
+            const tiles = [...document.querySelectorAll('a.team-tile')];
+            return {
+              standaloneAttr: document.documentElement.getAttribute('data-standalone-app'),
+              sessionFlag: sessionStorage.getItem('nfl_hub_standalone_session_v1'),
+              count: tiles.length,
+              allSameOriginHub: tiles.every(t => t.getAttribute('href') === './?team=' + t.dataset.team),
+              lionsHref: document.querySelector('a.team-tile[data-team="lions"]')?.getAttribute('href'),
+              billsHref: document.querySelector('a.team-tile[data-team="bills"]')?.getAttribute('href'),
+              ninersHref: document.querySelector('a.team-tile[data-team="49ers"]')?.getAttribute('href')
+            };
+          })()`
+        );
+        assert.equal(safariCheck.standaloneAttr, 'true');
+        assert.equal(safariCheck.sessionFlag, '1');
+        assert.equal(safariCheck.count, 32);
+        assert.equal(safariCheck.allSameOriginHub, true, 'All 32 tiles must point to ./?team=<slug> in Safari standalone mode');
+        assert.equal(safariCheck.lionsHref, './?team=lions');
+        assert.equal(safariCheck.billsHref, './?team=bills');
+        assert.equal(safariCheck.ninersHref, './?team=49ers');
+      } finally {
+        await cdp.send('Page.removeScriptToEvaluateOnNewDocument', { identifier: safariScript.identifier });
+      }
+
+      // 4. Simulate Chrome Installed Pseudo-App (`matchMedia('(display-mode: standalone)').matches === true`)
+      const chromeScript = await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
+        source: `
+          sessionStorage.clear();
+          const origMM = window.matchMedia.bind(window);
+          window.matchMedia = q => q.includes('display-mode: standalone')
+            ? { matches: true, media: q, addEventListener(){}, removeEventListener(){}, addListener(){}, removeListener(){} }
+            : origMM(q);
+        `
+      });
+      try {
+        await cdp.send('Page.navigate', { url: `${baseUrl}?chrome_standalone_check=1` });
+        await new Promise(r => setTimeout(r, 250));
+        const chromeCheck = await evalJs(
+          cdp,
+          `(() => {
+            const tiles = [...document.querySelectorAll('a.team-tile')];
+            return {
+              standaloneAttr: document.documentElement.getAttribute('data-standalone-app'),
+              allSameOriginHub: tiles.every(t => t.getAttribute('href') === './?team=' + t.dataset.team)
+            };
+          })()`
+        );
+        assert.equal(chromeCheck.standaloneAttr, 'true');
+        assert.equal(chromeCheck.allSameOriginHub, true, 'All 32 tiles must point to ./?team=<slug> in Chrome standalone mode');
+      } finally {
+        await cdp.send('Page.removeScriptToEvaluateOnNewDocument', { identifier: chromeScript.identifier });
+      }
+    });
+
     await test('Zero console errors, zero uncaught page errors, zero 404/network failures', () => {
       assert.deepEqual(consoleErrors, [], `Console errors: ${consoleErrors.join('; ')}`);
       assert.deepEqual(pageErrors, [], `Page errors: ${pageErrors.join('; ')}`);

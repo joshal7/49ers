@@ -1,0 +1,19 @@
+# Cloudflare Pages Production Config for the NFL Team Hub (`nfl.joshal.com` -> `nfl-joshal.pages.dev`)
+#
+# Shares the EXACT SAME unified build (`dist-nfl-teams`) and KV namespace (`SHARED_CACHE`) as `nfl-teams`
+# so tapping any team inside the `nfl.joshal.com` Safari/Chrome Home Screen app opens `nfl.joshal.com/?team=<slug>`
+# with 100% identical app code, live data, theme, and shared KV caching — zero Safari/Chrome browser chrome
+# and zero GoDaddy DNS changes.
+
+name = "nfl-joshal"
+pages_build_output_dir = "../../dist-nfl-teams"
+compatibility_date = "2026-11-01"
+
+[[kv_namespaces]]
+binding = "SHARED_CACHE"
+id = "7562e055d295422fbb209adc711aba32"
+
+[vars]
+ALL_TEAMS = "ALL"
+GEMINI_DEFAULT_FREE_MODEL = "gemini-4-hydrogen"
+GEMINI_THINKING_LEVEL = "XHIGH"

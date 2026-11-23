@@ -1,15 +1,19 @@
 /**
- * All-32-Team NFL Edge Worker & Static Assets Middleware (`*.joshal.com` -> `nfl-teams.pages.dev`)
+ * Unified All-32-Team + NFL Hub Edge Worker & Static Assets Middleware
+ * (`*.joshal.com` -> `nfl-teams.pages.dev`, `nfl.joshal.com` -> `nfl-joshal.pages.dev`)
  *
  * Design Guarantees:
- * 1. Explicit 32-Team Subdomain Routing ONLY (`49ers.joshal.com`, `bills.joshal.com`, `lions.joshal.com`, ...
- *    through `vikings.joshal.com`) — NEVER intercepts `www.joshal.com`, `workouts.joshal.com`, `nfl.joshal.com`,
- *    or arbitrary non-NFL `joshal.com` subdomains.
+ * 1. Explicit 32-Team Subdomain Routing (`49ers.joshal.com` .. `vikings.joshal.com`) AND NFL Team Hub
+ *    routing (`nfl.joshal.com/` -> 32-team portal, `nfl.joshal.com/?team=<slug>` -> full team app in
+ *    same-origin standalone PWA mode, `nfl.joshal.com/key-sync` -> hermetic API key vault).
+ *    NEVER intercepts `www.joshal.com`, `workouts.joshal.com`, or arbitrary non-NFL `joshal.com` subdomains.
  * 2. Zero-FOUC Edge Rendering via `HTMLRewriter`: streams per-team `<title>`, WCAG CSS vars,
  *    `apple-touch-icon.png`, header crest SVG, and dynamic `/manifest.json` (`start_url: "/"`, concise
- *    `short_name` nickname for Safari/Chrome Home Screen shortcuts) per subdomain.
+ *    `short_name` nickname for Safari/Chrome Home Screen shortcuts) per subdomain — and identical team
+ *    rendering (plus unobtrusive `#nflHubBackBtn`) on `nfl.joshal.com/?team=<slug>`.
  * 3. Dedicated `GEMINI_NFL_API_KEY` (`joshalbox@gmail.com`) — zero tokens drawn from `joshal7@gmail.com` —
- *    with Priority #0 SF Daily Quota Reservation (`SF_RESERVED_DAILY_CALLS = 6`).
+ *    with Priority #0 SF Daily Quota Reservation (`SF_RESERVED_DAILY_CALLS = 6`) and transparent KV-miss
+ *    upstream relay from `nfl-joshal` to `nfl-teams.pages.dev` when secrets aren't duplicated.
  * 4. 100% Card-Free Cloudflare Pages Free + KV Free (`<150 writes/day` vs. `1,000/day` cap, ZERO R2):
  *    short-TTL `/api/live-wire` (60s) and `/api/gameday-inactives` (120s) cache in unlimited `caches.default`.
  * 5. Strict BYOK Enforcement for Interactive AI: `/api/analyze` and `/api/podcast` reject unauthenticated
@@ -18,10 +22,13 @@
  */
 
 import {
+  ALL_NFL_TEAMS,
   TEAM_BY_SLUG,
   TEAM_REGISTRY,
   buildTeamCssVarsStyleBlock,
   hasCrossTeam49ersLeak,
+  isNflHubHost,
+  resolveExplicitQueryTeam,
   resolveTeamConfig
 } from '../src/config/teamRegistry.js';
 import {
@@ -29,9 +36,11 @@ import {
   buildGeminiThinkingConfig,
   resolveGeminiThinkingLevelLabel
 } from '../src/engine/geminiStudioPrompts.js';
+import { getAllowedNflTeamOrigins } from '../src/services/sharedApiKeyStore.js';
 
 const SF_RESERVED_DAILY_CALLS = 6;
 const DAILY_LEAGUE_SOFT_BUDGET = 48;
+const UPSTREAM_AI_PAGES_ORIGIN = 'https://nfl-teams.pages.dev';
 const ALLOWED_VIDEO_HOSTS = [
   'video.twimg.com',
   'media.video-cdn.espn.com',
@@ -40,13 +49,14 @@ const ALLOWED_VIDEO_HOSTS = [
   's.espncdn.com'
 ];
 
+function getRequestHost(request, url) {
+  return String(request.headers.get('Host') || url.hostname || '').toLowerCase().split(':')[0];
+}
+
 function resolveTeamForRequest(request, url) {
-  const qTeam = url.searchParams.get('team');
-  if (qTeam) {
-    const resolved = resolveTeamConfig(qTeam);
-    if (resolved) return resolved;
-  }
-  const host = String(request.headers.get('Host') || url.hostname || '').toLowerCase().split(':')[0];
+  const qHit = resolveExplicitQueryTeam(url.search);
+  if (qHit) return qHit;
+  const host = getRequestHost(request, url);
   const m = host.match(/^([a-z0-9-]+)\.joshal\.com$/);
   if (m && TEAM_BY_SLUG[m[1]]) {
     return TEAM_BY_SLUG[m[1]];
@@ -64,7 +74,7 @@ function buildCorsHeaders(request) {
   const origin = String(request.headers.get('Origin') || '');
   const allowed =
     /^https:\/\/[a-z0-9-]+\.joshal\.com$/i.test(origin) ||
-    /^https:\/\/(?:[a-z0-9-]+\.)?nfl-teams\.pages\.dev$/i.test(origin) ||
+    /^https:\/\/(?:[a-z0-9-]+\.)?nfl-(?:teams|joshal)\.pages\.dev$/i.test(origin) ||
     /^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/i.test(origin);
   return {
     'Access-Control-Allow-Origin': allowed ? origin : 'https://49ers.joshal.com',
@@ -73,6 +83,99 @@ function buildCorsHeaders(request) {
     'Access-Control-Max-Age': '86400',
     Vary: 'Origin, Host'
   };
+}
+
+function buildKeySyncCspHeader() {
+  const fromRegistry = ALL_NFL_TEAMS.map(t => `https://${t.slug}.joshal.com`);
+  const allowed = Array.from(new Set([...getAllowedNflTeamOrigins(), ...fromRegistry, 'https://nfl.joshal.com'])).sort();
+  return `default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'self' ${allowed.join(' ')}`;
+}
+
+function buildNflHubManifest() {
+  return {
+    name: 'NFL Team Hub',
+    short_name: 'NFL',
+    description: 'All 32 NFC and AFC franchise hubs',
+    start_url: '/',
+    scope: '/',
+    display: 'standalone',
+    background_color: '#080B10',
+    theme_color: '#080B10',
+    icons: [
+      {
+        src: './nfl-apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png'
+      },
+      {
+        src: './nfl-icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any maskable'
+      },
+      {
+        src: './nfl-icon.svg',
+        sizes: '512x512',
+        type: 'image/svg+xml',
+        purpose: 'any maskable'
+      }
+    ]
+  };
+}
+
+async function fetchStaticAssetNoRedirect(env, pathname, request, fallbackPathname = '') {
+  if (!env?.ASSETS) return null;
+  const baseUrl = new URL(request.url);
+  const tryPath = async targetPath => {
+    const assetUrl = new URL(targetPath, baseUrl.origin);
+    let res = await env.ASSETS.fetch(new Request(assetUrl.toString(), { method: request.method }));
+    if (res && res.status >= 300 && res.status < 400) {
+      const loc = res.headers.get('Location');
+      if (loc) {
+        try {
+          const nextUrl = new URL(loc, baseUrl.origin);
+          if (nextUrl.origin === baseUrl.origin) {
+            res = await env.ASSETS.fetch(new Request(nextUrl.toString(), { method: request.method }));
+          }
+        } catch {}
+      }
+    }
+    return res;
+  };
+  let res = await tryPath(pathname);
+  if ((!res || !res.ok) && fallbackPathname) {
+    res = await tryPath(fallbackPathname);
+  }
+  return res;
+}
+
+async function maybeForwardHubAiPost(request, url, env, rawBodyText, cors) {
+  const hasLocalKey = Boolean(String(env?.GEMINI_NFL_API_KEY || env?.GEMINI_API_KEY || '').trim());
+  if (hasLocalKey) return null;
+  if (request.headers.get('X-NFL-Hub-Forwarded') === '1') return null;
+  if (!isNflHubHost(getRequestHost(request, url))) return null;
+  try {
+    const upstreamUrl = `${UPSTREAM_AI_PAGES_ORIGIN}${url.pathname}${url.search}`;
+    const upRes = await fetch(upstreamUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-NFL-Hub-Forwarded': '1'
+      },
+      body: rawBodyText,
+      signal: AbortSignal.timeout(85000)
+    });
+    const text = await upRes.text();
+    return new Response(text, {
+      status: upRes.status,
+      headers: {
+        'Content-Type': upRes.headers.get('Content-Type') || 'application/json; charset=utf-8',
+        ...cors
+      }
+    });
+  } catch (err) {
+    return jsonResp({ error: `Upstream AI relay failed: ${err?.message || String(err)}` }, 502, cors);
+  }
 }
 
 function jsonResp(data, status = 200, cors = {}, extraHeaders = {}) {
@@ -113,11 +216,19 @@ function buildDynamicManifest(team) {
   };
 }
 
-function rewriteHtmlForTeam(response, team) {
+function rewriteHtmlForTeam(response, team, { isHubMode = false } = {}) {
   const cssVars = buildTeamCssVarsStyleBlock(team);
-  const bootScript = `<script>window.__ACTIVE_TEAM_SLUG__=${JSON.stringify(team.slug)};window.__PLATFORM_API_ENABLED__=true;</script><style id="teamThemeOverrides">${cssVars}</style>`;
+  const hubBootFlag = isHubMode ? 'window.__NFL_HUB_MODE__=true;' : '';
+  const bootScript = `<script>window.__ACTIVE_TEAM_SLUG__=${JSON.stringify(team.slug)};window.__PLATFORM_API_ENABLED__=true;${hubBootFlag}</script><style id="teamThemeOverrides">${cssVars}</style>`;
 
   return new HTMLRewriter()
+    .on('html', {
+      element(el) {
+        if (isHubMode) {
+          el.setAttribute('data-nfl-hub', 'true');
+        }
+      }
+    })
     .on('title', {
       element(el) {
         el.setInnerContent(`${team.brandName} — ${team.domain}`);
@@ -133,7 +244,7 @@ function rewriteHtmlForTeam(response, team) {
     })
     .on('meta[name="apple-mobile-web-app-title"], meta[name="application-name"]', {
       element(el) {
-        el.setAttribute('content', team.shortTitle);
+        el.setAttribute('content', isHubMode ? 'NFL' : team.shortTitle);
       }
     })
     .on('meta[name="theme-color"]', {
@@ -148,6 +259,10 @@ function rewriteHtmlForTeam(response, team) {
     })
     .on('link[rel="apple-touch-icon"], link[rel="apple-touch-icon-precomposed"]', {
       element(el) {
+        if (isHubMode) {
+          el.setAttribute('href', './nfl-apple-touch-icon.png');
+          return;
+        }
         const sz = el.getAttribute('sizes');
         el.setAttribute('href', sz === '180x180' ? team.assets.appleTouchIcon180Png : './apple-touch-icon.png');
       }
@@ -155,6 +270,13 @@ function rewriteHtmlForTeam(response, team) {
     .on('head', {
       element(el) {
         el.append(bootScript, { html: true });
+      }
+    })
+    .on('#nflHubBackBtn', {
+      element(el) {
+        if (isHubMode) {
+          el.removeAttribute('hidden');
+        }
       }
     })
     .on('img.brand-medallion', {
@@ -341,17 +463,45 @@ export default {
       return new Response(null, { status: 204, headers: cors });
     }
 
+    const host = getRequestHost(request, url);
+    const hubHost = isNflHubHost(host);
+    const explicitQueryTeam = resolveExplicitQueryTeam(url.search);
     const team = resolveTeamForRequest(request, url);
 
-    // 1. Dynamic per-team PWA manifest & iOS apple-touch-icon.png
+    // 0. Hermetically sealed Same-Site Gemini API Key Sync Vault (`nfl.joshal.com/key-sync` ONLY)
+    if ((request.method === 'GET' || request.method === 'HEAD') && (url.pathname === '/key-sync' || url.pathname === '/key-sync.html')) {
+      if (!hubHost && host !== 'localhost' && host !== '127.0.0.1') {
+        return jsonResp({ error: 'Not Found' }, 404, cors);
+      }
+      const vaultRes = await fetchStaticAssetNoRedirect(env, '/key-sync', request, '/key-sync.html');
+      if (vaultRes && vaultRes.ok) {
+        const headers = new Headers(vaultRes.headers);
+        headers.set('Content-Type', 'text/html; charset=utf-8');
+        headers.set('Content-Security-Policy', buildKeySyncCspHeader());
+        headers.set('X-Content-Type-Options', 'nosniff');
+        headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+        headers.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=3600');
+        return new Response(request.method === 'HEAD' ? null : vaultRes.body, {
+          status: 200,
+          headers
+        });
+      }
+      return jsonResp({ error: 'Key sync vault not found' }, 404, cors);
+    }
+
+    // 1. Dynamic per-team PWA manifest & iOS apple-touch-icon.png (or NFL Team Hub manifest/icon on nfl.joshal.com)
     if (request.method === 'GET' && url.pathname === '/manifest.json') {
-      return jsonResp(buildDynamicManifest(team), 200, cors, {
+      return jsonResp(hubHost ? buildNflHubManifest() : buildDynamicManifest(team), 200, cors, {
         'Cache-Control': 'public, max-age=300'
       });
     }
 
     if ((request.method === 'GET' || request.method === 'HEAD') && url.pathname === '/apple-touch-icon.png') {
-      const iconPath = team.abbr === 'SF' ? '/apple-touch-icon.png' : `/assets/teams/${team.slug}/apple-touch-icon.png`;
+      const iconPath = hubHost
+        ? '/nfl-apple-touch-icon.png'
+        : team.abbr === 'SF'
+          ? '/apple-touch-icon.png'
+          : `/assets/teams/${team.slug}/apple-touch-icon.png`;
       if (env.ASSETS) {
         const iconReq = new Request(new URL(iconPath, url.origin), request);
         const assetRes = await env.ASSETS.fetch(iconReq);
@@ -374,6 +524,8 @@ export default {
       return jsonResp(
         {
           ok: true,
+          hubHost,
+          entryMode: hubHost ? (explicitQueryTeam ? 'hub-team' : 'hub-portal') : 'team-subdomain',
           teamAbbr: team.abbr,
           teamSlug: team.slug,
           brandName: team.brandName,
@@ -533,7 +685,11 @@ export default {
       }
 
       if (request.method === 'POST') {
-        const body = await request.json().catch(() => null);
+        const rawBodyText = await request.text().catch(() => '');
+        let body = null;
+        try {
+          body = rawBodyText ? JSON.parse(rawBodyText) : null;
+        } catch {}
         if (!body || (!body.prompt && !body.seedData && !body.seedRawText)) {
           return jsonResp({ error: 'Invalid daily news brief payload' }, 400, cors);
         }
@@ -560,6 +716,9 @@ export default {
           await env.SHARED_CACHE?.put(kvKey, JSON.stringify(seeded), { expirationTtl: 60 * 60 * 26 });
           return jsonResp({ cached: false, seeded: true, ...seeded }, 200, cors);
         }
+
+        const forwarded = await maybeForwardHubAiPost(request, url, env, rawBodyText, cors);
+        if (forwarded) return forwarded;
 
         const lockKey = `lock:brief:${team.abbr}:${cycleKey}`;
         const existingLock = await env.SHARED_CACHE?.get(lockKey);
@@ -604,7 +763,11 @@ export default {
 
     // 8. Team-Scoped Matchup Intel (1/day for SF VIP parity; Tue/Fri slots for non-SF clubs; XHIGH + Google Search)
     if (request.method === 'POST' && url.pathname === '/api/matchup-intel') {
-      const body = await request.json().catch(() => null);
+      const rawBodyText = await request.text().catch(() => '');
+      let body = null;
+      try {
+        body = rawBodyText ? JSON.parse(rawBodyText) : null;
+      } catch {}
       if (!body?.prompt) return jsonResp({ error: 'Invalid matchup intel payload' }, 400, cors);
       const seasonYear = Number(body.seasonYear || 2026);
       const week = Number(body.week || 1);
@@ -622,6 +785,9 @@ export default {
       ) {
         return jsonResp({ cached: true, teamAbbr: team.abbr, ...existing }, 200, cors);
       }
+
+      const forwarded = await maybeForwardHubAiPost(request, url, env, rawBodyText, cors);
+      if (forwarded) return forwarded;
 
       const lockKey = `lock:matchup:${team.abbr}:${seasonYear}:wk${week}:${oppAbbr}:${slot}`;
       const existingLock = await env.SHARED_CACHE?.get(lockKey);
@@ -685,12 +851,28 @@ export default {
     // 10. Static PWA Assets + Edge HTMLRewriter on `/` & `/index.html` (Zero FOUC + Zero Safari Redirect!)
     if (env.ASSETS) {
       const isHtmlShellPath = url.pathname === '/' || url.pathname === '/index.html';
-      const assetReq =
-        url.pathname === '/index.html'
-          ? new Request(new URL(`/${url.search}`, url.origin), request)
-          : request;
-      const assetRes = await env.ASSETS.fetch(assetReq);
+
+      // On `nfl.joshal.com` WITHOUT `?team=<valid-slug>`, serve the 32-team NFL Team Hub portal (`nfl-portal.html`)
+      if (hubHost && isHtmlShellPath && !explicitQueryTeam) {
+        const portalRes = await fetchStaticAssetNoRedirect(env, '/nfl-portal', request, '/nfl-portal.html');
+        if (portalRes && portalRes.ok) {
+          const headers = new Headers(portalRes.headers);
+          headers.set('Content-Type', 'text/html; charset=utf-8');
+          headers.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=3600');
+          headers.set('X-Content-Type-Options', 'nosniff');
+          headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+          return new Response(request.method === 'HEAD' ? null : portalRes.body, {
+            status: 200,
+            headers
+          });
+        }
+      }
+
+      const assetRes = isHtmlShellPath
+        ? await fetchStaticAssetNoRedirect(env, `/${url.search}`, request, '/index.html')
+        : await env.ASSETS.fetch(request);
       if (
+        assetRes &&
         assetRes.ok &&
         isHtmlShellPath &&
         (assetRes.headers.get('Content-Type') || '').includes('text/html')
@@ -698,9 +880,9 @@ export default {
         if (ctx && typeof ctx.waitUntil === 'function') {
           ctx.waitUntil(trackActiveTeamVisit(env, team));
         }
-        return rewriteHtmlForTeam(assetRes, team);
+        return rewriteHtmlForTeam(assetRes, team, { isHubMode: hubHost });
       }
-      return assetRes;
+      if (assetRes) return assetRes;
     }
 
     return jsonResp({ error: 'Not Found' }, 404, cors);

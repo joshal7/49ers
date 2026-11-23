@@ -103,6 +103,7 @@ import { selectBestEspnArticleImage } from '../engine/salientMediaEngine.js';
 import {
   buildDeterministicCoachingMatchup,
   getActiveTeamConfig,
+  isNflHubMode,
   resolveTeamConfig,
   resolveTeamDataBasePath
 } from '../config/teamRegistry.js';
@@ -537,6 +538,11 @@ const OFFLINE_BUNDLE_IDB_NAME = '49ers_faithful_data_cache_v1';
 const OFFLINE_BUNDLE_STORE = 'bundles';
 const OFFLINE_BUNDLE_KEY = 'latest_v1';
 
+function getOfflineBundleKey(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  return team.abbr === 'SF' ? OFFLINE_BUNDLE_KEY : `${team.slug}_${OFFLINE_BUNDLE_KEY}`;
+}
+
 function openOfflineBundleDb() {
   if (typeof indexedDB === 'undefined' || !indexedDB) return Promise.resolve(null);
   return new Promise(resolve => {
@@ -559,12 +565,13 @@ function openOfflineBundleDb() {
 async function saveLastKnownGoodRawBundle(rawFiles) {
   const db = await openOfflineBundleDb();
   if (!db) return false;
+  const bundleKey = getOfflineBundleKey(rawFiles?.meta?.teamAbbr || getActiveTeamConfig());
   return new Promise(resolve => {
     try {
       const tx = db.transaction(OFFLINE_BUNDLE_STORE, 'readwrite');
       tx.objectStore(OFFLINE_BUNDLE_STORE).put(
         { savedAt: new Date().toISOString(), files: rawFiles },
-        OFFLINE_BUNDLE_KEY
+        bundleKey
       );
       tx.oncomplete = () => {
         db.close();
@@ -586,10 +593,11 @@ async function saveLastKnownGoodRawBundle(rawFiles) {
 async function loadLastKnownGoodRawBundle() {
   const db = await openOfflineBundleDb();
   if (!db) return null;
+  const bundleKey = getOfflineBundleKey(getActiveTeamConfig());
   return new Promise(resolve => {
     try {
       const tx = db.transaction(OFFLINE_BUNDLE_STORE, 'readonly');
-      const req = tx.objectStore(OFFLINE_BUNDLE_STORE).get(OFFLINE_BUNDLE_KEY);
+      const req = tx.objectStore(OFFLINE_BUNDLE_STORE).get(bundleKey);
       req.onsuccess = () => {
         const val = req.result?.files || null;
         db.close();
@@ -798,10 +806,12 @@ export function persistWeeklyPracticeSnapshot(appData) {
 
     // Non-destructively seed from existing same-week cache so a transient Saturday blank slot
     // or lagging feed can NEVER erase verified earlier-in-the-week Wed/Thu/Fri practice slots!
+    const teamStorageKeys = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig()).storageKeys;
+    const weeklyPracticeKey = teamStorageKeys?.weeklyPractice || WEEKLY_PRACTICE_CACHE_KEY;
     let prevSf = {};
     let prevOpp = {};
     try {
-      const existingRaw = window.localStorage.getItem(WEEKLY_PRACTICE_CACHE_KEY);
+      const existingRaw = window.localStorage.getItem(weeklyPracticeKey);
       if (existingRaw) {
         const prevParsed = JSON.parse(existingRaw);
         const prevFresh = prevParsed && Date.now() - Number(prevParsed.savedAtMs || 0) <= 6.5 * 86_400_000;
@@ -847,7 +857,7 @@ export function persistWeeklyPracticeSnapshot(appData) {
     if (Object.keys(sfEntries).length === 0 && Object.keys(oppEntries).length === 0) return;
 
     window.localStorage.setItem(
-      WEEKLY_PRACTICE_CACHE_KEY,
+      weeklyPracticeKey,
       JSON.stringify({
         seasonYear,
         week,
@@ -863,8 +873,10 @@ export function persistWeeklyPracticeSnapshot(appData) {
 export function persistGameDayInactivesSnapshot(appData, windowState = null) {
   if (typeof window === 'undefined' || !window.localStorage || !appData) return;
   try {
+    const teamStorageKeys = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig()).storageKeys;
+    const gdInactivesKey = teamStorageKeys?.gamedayInactives || GAMEDAY_INACTIVES_CACHE_KEY;
     if (!windowState || !windowState.isActive) {
-      window.localStorage.removeItem(GAMEDAY_INACTIVES_CACHE_KEY);
+      window.localStorage.removeItem(gdInactivesKey);
       return;
     }
     const sfPosted = Boolean(appData.liveGameDay?.sf?.officialPosted && appData.liveGameDay.sf.inactives?.length >= 3);
@@ -874,7 +886,7 @@ export function persistGameDayInactivesSnapshot(appData, windowState = null) {
     const seasonYear = Number(appData.meta?.seasonYear || 2026);
     const oppAbbr = normalizeTeamAbbrClient(windowState.oppAbbr || appData.scheduleMatchup?.upcomingMatchup?.oppAbbr || '');
     window.localStorage.setItem(
-      GAMEDAY_INACTIVES_CACHE_KEY,
+      gdInactivesKey,
       JSON.stringify({
         seasonYear,
         week: Number(windowState.week || 0),
@@ -889,6 +901,10 @@ export function persistGameDayInactivesSnapshot(appData, windowState = null) {
 
 export function hydrateCachedWeeklyPracticeAndInactives(appData) {
   if (typeof window === 'undefined' || !window.localStorage || !appData) return;
+  const teamStorageKeys = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig()).storageKeys;
+  const legacyWeeklyPracticeKey = teamStorageKeys?.weeklyPracticeLegacy || LEGACY_WEEKLY_PRACTICE_CACHE_KEY;
+  const weeklyPracticeKey = teamStorageKeys?.weeklyPractice || WEEKLY_PRACTICE_CACHE_KEY;
+  const gdInactivesKey = teamStorageKeys?.gamedayInactives || GAMEDAY_INACTIVES_CACHE_KEY;
   const um = appData.scheduleMatchup?.upcomingMatchup || {};
   const seasonYear = Number(appData.meta?.seasonYear || 2026);
   const week = Number(appData.health?.week || um.week || appData.meta?.currentWeek || 0);
@@ -897,9 +913,9 @@ export function hydrateCachedWeeklyPracticeAndInactives(appData) {
 
   try {
     try {
-      window.localStorage.removeItem(LEGACY_WEEKLY_PRACTICE_CACHE_KEY);
+      window.localStorage.removeItem(legacyWeeklyPracticeKey);
     } catch {}
-    const rawPrac = window.localStorage.getItem(WEEKLY_PRACTICE_CACHE_KEY);
+    const rawPrac = window.localStorage.getItem(weeklyPracticeKey);
     if (rawPrac && week > 0 && !isBeforeWeeklyPracticeWindow(kickoffIso)) {
       const parsed = JSON.parse(rawPrac);
       const isFresh = parsed && Date.now() - Number(parsed.savedAtMs || 0) <= 6.5 * 86_400_000;
@@ -985,7 +1001,7 @@ export function hydrateCachedWeeklyPracticeAndInactives(appData) {
   } catch {}
 
   try {
-    const rawGd = window.localStorage.getItem(GAMEDAY_INACTIVES_CACHE_KEY);
+    const rawGd = window.localStorage.getItem(gdInactivesKey);
     if (rawGd) {
       const parsedGd = JSON.parse(rawGd);
       const winState = evaluateGameDayWindow(appData.scheduleMatchup?.schedule || [], um, Date.now());
@@ -3262,7 +3278,7 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '' } 
   try {
     const cleanBase = effectiveWorkerBase.replace(/\/+$/, '');
     const wireUrl =
-      activeTeam.abbr === 'SF'
+      activeTeam.abbr === 'SF' && !isNflHubMode()
         ? `${cleanBase}/api/live-wire`
         : `${cleanBase}/api/live-wire?team=${encodeURIComponent(activeTeam.slug)}`;
     const res = await fetchSingleWithTimeout(wireUrl, { cache: 'no-store' }, 4000);
@@ -4223,6 +4239,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
     appData.liveGameDay._lastWorkerInactMs = nowMs;
     try {
       const q = new URLSearchParams({
+        team: activeTeamGd.abbr,
         teams: `${activeTeamGd.abbr},${oppAbbr}`,
         seasonYear: String(appData.meta?.seasonYear || 2026),
         week: String(windowState.week || 1),

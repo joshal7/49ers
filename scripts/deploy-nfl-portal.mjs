@@ -2,9 +2,10 @@
 /**
  * Permanent Go-Live Script for `nfl.joshal.com` on Cloudflare Pages Free (`nfl-joshal`).
  *
- * Completely independent from `nfl-teams` and `49ers-worker`:
- *   - 100% static Cloudflare Pages project (`nfl-joshal.pages.dev`) — 0 Functions, 0 KV, 0 R2, $0 forever.
- *   - Keeps GoDaddy nameservers and all existing subdomains (`www`, `49ers`, `lions`, `bills`, `workouts`, MX) untouched.
+ * Deploys the EXACT SAME unified `dist-nfl-teams/` bundle + Worker + shared KV namespace as `nfl-teams`
+ * so `nfl.joshal.com/` serves the 32-team portal, `nfl.joshal.com/?team=<slug>` serves the full
+ * standalone team app (same origin, zero Safari/Chrome browser chrome), and `nfl.joshal.com/key-sync`
+ * serves the hermetic cross-team API key vault.
  *
  * Usage:
  *   npm run deploy:nfl
@@ -14,9 +15,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
-import { buildNflPortalDist } from './build-nfl-portal.mjs';
+import { buildNflTeamsPagesDist } from './build-nfl-teams-pages.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+const HUB_PAGES_CONFIG_DIR = path.join(ROOT, 'worker', 'pages-nfl-joshal');
 const PROJECT_NAME = 'nfl-joshal';
 const PAGES_TARGET_HOST = `${PROJECT_NAME}.pages.dev`;
 const CUSTOM_DOMAIN = 'nfl.joshal.com';
@@ -26,15 +28,20 @@ function step(n, msg) {
   console.log(`\n[${n}/5] ${msg}`);
 }
 
-function runWrangler(wranglerArgs, { inherit = false, allowFail = false } = {}) {
+function runWrangler(wranglerArgs, { inherit = false, allowFail = false, cwd = ROOT } = {}) {
   const localBin = path.join(ROOT, 'worker', 'node_modules', '.bin', 'wrangler');
   const cmd = fs.existsSync(localBin) ? localBin : 'npx';
-  const finalArgs = cmd === 'npx' ? ['wrangler', ...wranglerArgs] : wranglerArgs;
+  const finalArgs = cmd === 'npx' ? ['--yes', 'wrangler@4', ...wranglerArgs] : wranglerArgs;
   const res = spawnSync(cmd, finalArgs, {
-    cwd: ROOT,
+    cwd,
     stdio: inherit ? 'inherit' : ['pipe', 'pipe', 'pipe'],
     encoding: 'utf8',
-    env: { ...process.env }
+    env: {
+      ...process.env,
+      ...(process.platform === 'darwin' && !process.env.NODE_EXTRA_CA_CERTS && fs.existsSync('/etc/ssl/cert.pem')
+        ? { NODE_EXTRA_CA_CERTS: '/etc/ssl/cert.pem' }
+        : {})
+    }
   });
   if (res.status !== 0 && !allowFail) {
     const out = [res.stdout, res.stderr].filter(Boolean).join('\n').trim();
@@ -72,12 +79,12 @@ async function main() {
   console.log(`  Target Custom Domain     : https://${CUSTOM_DOMAIN}`);
   console.log('========================================================================');
 
-  step(1, 'Building static bundle (dist-nfl/)...');
-  const built = buildNflPortalDist();
-  console.log(`  ✓ Built dist-nfl/ (${built.fileCount} files, ${(built.totalBytes / 1024).toFixed(1)} KB).`);
+  step(1, 'Building unified 32-team + NFL Hub bundle (dist-nfl-teams/)...');
+  const built = buildNflTeamsPagesDist();
+  console.log(`  ✓ Built dist-nfl-teams/ (${built.fileCount} files, ${(built.totalBytes / 1024 / 1024).toFixed(2)} MB).`);
 
   if (DRY_RUN) {
-    console.log('[dry-run] Static bundle verified cleanly.');
+    console.log('[dry-run] Unified NFL Hub bundle verified cleanly.');
     return;
   }
 
@@ -103,26 +110,28 @@ async function main() {
     throw new Error(`Pages project creation failed:\n${projOut}`);
   }
 
-  step(4, `Deploying dist-nfl/ to Cloudflare Pages (${PAGES_TARGET_HOST})...`);
+  step(4, `Deploying unified dist-nfl-teams/ to Cloudflare Pages (${PAGES_TARGET_HOST})...`);
   runWrangler(
     [
       'pages',
       'deploy',
-      'dist-nfl',
-      '--project-name',
-      PROJECT_NAME,
-      '--branch',
-      'main',
+      built.distDir,
+      `--project-name=${PROJECT_NAME}`,
+      '--branch=main',
       '--commit-dirty=true'
     ],
-    { inherit: true }
+    { inherit: true, cwd: HUB_PAGES_CONFIG_DIR }
   );
   console.log(`  ✓ Deployed to https://${PAGES_TARGET_HOST}`);
 
-  step(5, 'Verifying live HTTPS & GoDaddy CNAME status...');
+  step(5, 'Verifying live HTTPS (portal, ?team=lions, manifest & key-sync)...');
   const pagesChk = await fetchStatusSafe(`https://${PAGES_TARGET_HOST}/`);
   console.log(
     `  ${pagesChk.ok && pagesChk.text.includes('NFL Team Hub') && pagesChk.text.includes('49ers Faithful') ? '✓ LIVE' : '… PENDING'}  https://${PAGES_TARGET_HOST}/ (HTTP ${pagesChk.status})`
+  );
+  const teamChk = await fetchStatusSafe(`https://${PAGES_TARGET_HOST}/?team=lions`);
+  console.log(
+    `  ${teamChk.ok && teamChk.text.includes('Lions One Pride') ? '✓ LIVE' : '… PENDING'}  https://${PAGES_TARGET_HOST}/?team=lions (HTTP ${teamChk.status})`
   );
 
   const cnames = digCname(CUSTOM_DOMAIN);

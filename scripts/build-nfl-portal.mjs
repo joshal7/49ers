@@ -28,7 +28,7 @@ const CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
 
 export const PORTAL_CONFERENCES = ['NFC', 'AFC'];
 export const PORTAL_DIVISIONS = ['North', 'South', 'East', 'West'];
-const ASSET_VER = '4';
+const ASSET_VER = '5';
 
 const NFL_MONOGRAM_PATHS = {
   N: 'M -124,-48 L -95,-48 L -68,7 L -68,-34 L -74,-34 L -74,-48 L -42,-48 L -42,-34 L -48,-34 L -48,48 L -71,48 L -98,-7 L -98,34 L -92,34 L -92,48 L -124,48 L -124,34 L -118,34 L -118,-34 L -124,-34 Z',
@@ -421,8 +421,18 @@ export function buildNflPortalIconSvg({ fullBleedSquare = false } = {}) {
 </svg>`;
 }
 
-function rasterizePortalIconPng(svgMarkup, png180Path) {
-  if (!fs.existsSync(CHROME_BIN)) return false;
+function rasterizePortalIconPng(svgMarkup, png180Path, png512Path = '') {
+  const cached180 = path.join(ROOT, 'assets', 'nfl', 'apple-touch-icon-180.png');
+  const cached512 = path.join(ROOT, 'assets', 'nfl', 'icon-512.png');
+  if (!fs.existsSync(CHROME_BIN)) {
+    if (fs.existsSync(cached180)) {
+      fs.copyFileSync(cached180, png180Path);
+    }
+    if (png512Path && fs.existsSync(cached512)) {
+      fs.copyFileSync(cached512, png512Path);
+    }
+    return fs.existsSync(png180Path);
+  }
   const tmpHtml = path.join(path.dirname(png180Path), '_portal_icon_tmp.html');
   const tmp512 = path.join(path.dirname(png180Path), '_portal_icon_512.png');
   fs.writeFileSync(
@@ -444,10 +454,23 @@ function rasterizePortalIconPng(svgMarkup, png180Path) {
       ],
       { stdio: 'pipe', timeout: 15000 }
     );
-    execFileSync('sips', ['-z', '180', '180', tmp512, '--out', png180Path], {
-      stdio: 'pipe',
-      timeout: 10000
-    });
+    if (png512Path) {
+      fs.copyFileSync(tmp512, png512Path);
+    }
+    try {
+      execFileSync('sips', ['-z', '180', '180', tmp512, '--out', png180Path], {
+        stdio: 'pipe',
+        timeout: 10000
+      });
+    } catch {
+      fs.copyFileSync(tmp512, png180Path);
+    }
+    // Keep pre-rasterized assets/nfl/* synced so Linux CI builds are 100% deterministic without macOS Chrome/sips
+    try {
+      fs.mkdirSync(path.dirname(cached180), { recursive: true });
+      fs.copyFileSync(png180Path, cached180);
+      fs.copyFileSync(tmp512, cached512);
+    } catch {}
     return true;
   } finally {
     fs.rmSync(tmpHtml, { force: true });
@@ -497,10 +520,11 @@ function copyTeamIcons(iconsDir) {
 
 function renderTeamTile(team) {
   const href = `https://${team.slug}.joshal.com`;
+  const hubHref = `./?team=${encodeURIComponent(team.slug)}`;
   const accent = team.themes?.dark?.primaryBright || '#60A5FA';
   const aria = escapeHtml(`${team.brandName} — ${team.fullName} (${team.domain})`);
   const tip = escapeHtml(`${team.brandName} — ${team.fullName}`);
-  return `<a class="team-tile" href="${href}" data-team="${escapeHtml(team.slug)}" data-abbr="${escapeHtml(team.abbr)}" style="--team-accent:${escapeHtml(accent)}" aria-label="${aria}" title="${tip}">
+  return `<a class="team-tile" href="${href}" data-external-href="${href}" data-hub-href="${hubHref}" data-team="${escapeHtml(team.slug)}" data-abbr="${escapeHtml(team.abbr)}" style="--team-accent:${escapeHtml(accent)}" aria-label="${aria}" title="${tip}">
                   <span class="logo-wrap">
                     <img class="team-logo" src="./icons/${escapeHtml(team.slug)}.png?v=${ASSET_VER}" alt="${escapeHtml(team.brandName)}" width="180" height="180" decoding="async" fetchpriority="high">
                   </span>
@@ -1062,16 +1086,93 @@ function buildIndexHtml(grouped) {
 
   <script>
     (function () {
+      var SESSION_KEY = 'nfl_hub_standalone_session_v1';
+
+      function isStandalonePseudoApp() {
+        try {
+          if (window.navigator && window.navigator.standalone === true) return true;
+          if (window.matchMedia) {
+            if (
+              window.matchMedia('(display-mode: standalone)').matches ||
+              window.matchMedia('(display-mode: fullscreen)').matches ||
+              window.matchMedia('(display-mode: minimal-ui)').matches ||
+              window.matchMedia('(display-mode: window-controls-overlay)').matches
+            ) {
+              return true;
+            }
+          }
+          if (sessionStorage.getItem(SESSION_KEY) === '1') return true;
+        } catch (e) {}
+        return false;
+      }
+
+      function syncTeamTileHrefs() {
+        var standalone = isStandalonePseudoApp();
+        if (standalone) {
+          document.documentElement.setAttribute('data-standalone-app', 'true');
+          try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (e) {}
+        } else {
+          document.documentElement.removeAttribute('data-standalone-app');
+        }
+        var tiles = document.querySelectorAll('a.team-tile[data-team]');
+        for (var i = 0; i < tiles.length; i += 1) {
+          var tile = tiles[i];
+          var hubHref = tile.getAttribute('data-hub-href');
+          var extHref = tile.getAttribute('data-external-href');
+          if (standalone && hubHref) {
+            tile.setAttribute('href', hubHref);
+          } else if (extHref) {
+            tile.setAttribute('href', extHref);
+          }
+        }
+      }
+
+      syncTeamTileHrefs();
+      window.addEventListener('pageshow', syncTeamTileHrefs);
+
+      try {
+        if (window.matchMedia) {
+          var mq = window.matchMedia('(display-mode: standalone)');
+          if (typeof mq.addEventListener === 'function') mq.addEventListener('change', syncTeamTileHrefs);
+          else if (typeof mq.addListener === 'function') mq.addListener(syncTeamTileHrefs);
+        }
+      } catch (e) {}
+
+      var mainEl = document.querySelector('.conferences');
+      if (mainEl) {
+        mainEl.addEventListener('click', function (ev) {
+          var tile = ev.target && ev.target.closest ? ev.target.closest('a.team-tile[data-team]') : null;
+          if (!tile || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey || ev.button !== 0) return;
+          if (isStandalonePseudoApp()) {
+            var hubHref = tile.getAttribute('data-hub-href');
+            if (hubHref && tile.getAttribute('href') !== hubHref) {
+              tile.setAttribute('href', hubHref);
+            }
+          }
+        });
+      }
+
       var btn = document.getElementById('themeToggle');
-      if (!btn) return;
-      btn.addEventListener('click', function () {
-        var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-        var next = cur === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        var m = document.getElementById('metaThemeColor');
-        if (m) m.setAttribute('content', next === 'light' ? '#F5F6FA' : '#080B10');
-        try { localStorage.setItem('nfl_joshal_theme_v1', next); } catch (e) {}
-      });
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+          var next = cur === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          var m = document.getElementById('metaThemeColor');
+          if (m) m.setAttribute('content', next === 'light' ? '#F5F6FA' : '#080B10');
+          try { localStorage.setItem('nfl_joshal_theme_v1', next); } catch (e) {}
+        });
+      }
+
+      try {
+        var host = String(window.location.hostname || '').toLowerCase();
+        var isHubProd = host === 'nfl.joshal.com' || host === 'nfl-joshal.pages.dev' || host.endsWith('.nfl-joshal.pages.dev');
+        if (isHubProd && 'serviceWorker' in navigator) {
+          window.addEventListener('load', function () {
+            navigator.serviceWorker.register('./sw.js?v=115', { updateViaCache: 'none' }).catch(function () {});
+          }, { once: true });
+        }
+      } catch (e) {}
     })();
   </script>
 </body>
@@ -1162,65 +1263,89 @@ export function buildKeySyncVaultHtml({ extraAllowedOrigins = [] } = {}) {
 `;
 }
 
-export function buildNflPortalDist() {
-  fs.rmSync(DIST, { recursive: true, force: true });
-  fs.mkdirSync(DIST, { recursive: true });
+export function writeNflPortalAssetsToDir(
+  targetDir,
+  {
+    portalHtmlFilename = 'index.html',
+    appleTouchIconFilename = 'apple-touch-icon.png',
+    writeManifestAndHeaders = true
+  } = {}
+) {
+  fs.mkdirSync(targetDir, { recursive: true });
 
   // 1. Copy all 32 180x180 JOSHAL team icons
-  copyTeamIcons(path.join(DIST, 'icons'));
+  copyTeamIcons(path.join(targetDir, 'icons'));
 
-  // 2. Write portal oval crest + favicon + iOS apple-touch-icon + manifest
+  // 2. Write portal oval crest + favicon + iOS apple-touch-icon
   const crestSvg = buildNflCrestSvg();
   const roundedSvg = buildNflPortalIconSvg({ fullBleedSquare: false });
   const squareSvg = buildNflPortalIconSvg({ fullBleedSquare: true });
-  fs.writeFileSync(path.join(DIST, 'nfl-crest.svg'), crestSvg, 'utf8');
-  fs.writeFileSync(path.join(DIST, 'nfl-icon.svg'), roundedSvg, 'utf8');
-  rasterizePortalIconPng(squareSvg, path.join(DIST, 'apple-touch-icon.png'));
+  fs.writeFileSync(path.join(targetDir, 'nfl-crest.svg'), crestSvg, 'utf8');
+  fs.writeFileSync(path.join(targetDir, 'nfl-icon.svg'), roundedSvg, 'utf8');
+  rasterizePortalIconPng(
+    squareSvg,
+    path.join(targetDir, appleTouchIconFilename),
+    path.join(targetDir, 'nfl-icon-512.png')
+  );
 
-  const manifest = {
-    name: 'NFL Team Hub',
-    short_name: 'NFL',
-    description: 'All 32 NFC and AFC franchise hubs',
-    start_url: '/',
-    display: 'standalone',
-    background_color: '#080B10',
-    theme_color: '#080B10',
-    icons: [
-      { src: './apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-      { src: './nfl-icon.svg', sizes: '512x512', type: 'image/svg+xml' }
-    ]
-  };
-  fs.writeFileSync(path.join(DIST, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n', 'utf8');
-
-  // 3. Generate index.html + hermetically sealed same-site key-sync.html vault
+  // 3. Generate portal HTML + hermetically sealed same-site key-sync.html vault
   const grouped = getGroupedPortalTeams();
   const html = buildIndexHtml(grouped);
-  fs.writeFileSync(path.join(DIST, 'index.html'), html, 'utf8');
-  fs.writeFileSync(path.join(DIST, 'key-sync.html'), buildKeySyncVaultHtml(), 'utf8');
+  fs.writeFileSync(path.join(targetDir, portalHtmlFilename), html, 'utf8');
+  fs.writeFileSync(path.join(targetDir, 'key-sync.html'), buildKeySyncVaultHtml(), 'utf8');
 
-  // 4. Cloudflare Pages static caching & security headers
-  const frameAncestorsList = ["'self'", ...getKeySyncAllowedOrigins()].join(' ');
-  const headersTxt = [
-    '/*',
-    '  X-Content-Type-Options: nosniff',
-    '  Referrer-Policy: strict-origin-when-cross-origin',
-    '',
-    '/icons/*',
-    '  Cache-Control: public, max-age=86400, stale-while-revalidate=604800',
-    '',
-    '/index.html',
-    '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
-    '',
-    '/key-sync',
-    `  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors ${frameAncestorsList}`,
-    '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
-    '',
-    '/key-sync.html',
-    `  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors ${frameAncestorsList}`,
-    '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
-    ''
-  ].join('\n');
-  fs.writeFileSync(path.join(DIST, '_headers'), headersTxt, 'utf8');
+  if (writeManifestAndHeaders) {
+    const manifest = {
+      name: 'NFL Team Hub',
+      short_name: 'NFL',
+      description: 'All 32 NFC and AFC franchise hubs',
+      start_url: '/',
+      scope: '/',
+      display: 'standalone',
+      background_color: '#080B10',
+      theme_color: '#080B10',
+      icons: [
+        { src: `./${appleTouchIconFilename}`, sizes: '180x180', type: 'image/png' },
+        { src: './nfl-icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+        { src: './nfl-icon.svg', sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
+      ]
+    };
+    fs.writeFileSync(path.join(targetDir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n', 'utf8');
+
+    const frameAncestorsList = ["'self'", ...getKeySyncAllowedOrigins()].join(' ');
+    const headersTxt = [
+      '/*',
+      '  X-Content-Type-Options: nosniff',
+      '  Referrer-Policy: strict-origin-when-cross-origin',
+      '',
+      '/icons/*',
+      '  Cache-Control: public, max-age=86400, stale-while-revalidate=604800',
+      '',
+      '/index.html',
+      '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
+      '',
+      '/key-sync',
+      `  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors ${frameAncestorsList}`,
+      '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
+      '',
+      '/key-sync.html',
+      `  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors ${frameAncestorsList}`,
+      '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
+      ''
+    ].join('\n');
+    fs.writeFileSync(path.join(targetDir, '_headers'), headersTxt, 'utf8');
+  }
+
+  return { grouped };
+}
+
+export function buildNflPortalDist() {
+  fs.rmSync(DIST, { recursive: true, force: true });
+  const { grouped } = writeNflPortalAssetsToDir(DIST, {
+    portalHtmlFilename: 'index.html',
+    appleTouchIconFilename: 'apple-touch-icon.png',
+    writeManifestAndHeaders: true
+  });
 
   let fileCount = 0;
   let totalBytes = 0;

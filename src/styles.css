@@ -203,6 +203,48 @@ body.sheet-open {
   gap: 8px;
 }
 
+.nfl-hub-back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 36px;
+  margin-left: -6px;
+  margin-right: -2px;
+  border-radius: 9px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+}
+
+.nfl-hub-back-btn[hidden] {
+  display: none !important;
+}
+
+.nfl-hub-back-btn:hover,
+.nfl-hub-back-btn:focus-visible {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  outline: none;
+}
+
+[data-theme="light"] .nfl-hub-back-btn:hover,
+[data-theme="light"] .nfl-hub-back-btn:focus-visible {
+  background: rgba(20, 23, 28, 0.06);
+}
+
+.nfl-hub-back-btn:active {
+  transform: scale(0.92);
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .nfl-hub-back-btn {
+    width: 28px;
+    height: 28px;
+  }
+}
+
 .brand-lockup {
   display: flex;
   align-items: center;

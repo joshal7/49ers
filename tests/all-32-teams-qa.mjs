@@ -31,7 +31,9 @@ import {
   ALL_NFL_TEAMS,
   getTeamByAbbr,
   hasCrossTeam49ersLeak,
+  isNflHubHost,
   isOfficialTeamHost,
+  resolveExplicitQueryTeam,
   resolveTeamFromHostname,
   setActiveTeamConfig
 } from '../src/config/teamRegistry.js';
@@ -469,13 +471,37 @@ await test('3. dist-nfl-teams/ Cloudflare Pages bundle & _worker.js serve all 32
     assert.equal(mJson.start_url, '/', `${team.domain} manifest start_url must be "/" for Safari Home Screen shortcuts`);
   }
 
-  // Verify `/index.html` returns 200 OK (no 308 redirect)
+  // Verify `/index.html` returns 200 OK (no 308 redirect) AND unified `nfl.joshal.com` hub routing
   const prevRewriter = globalThis.HTMLRewriter;
+  const capturedRewrites = [];
   globalThis.HTMLRewriter = class {
-    on() {
+    constructor() {
+      this._handlers = [];
+    }
+    on(sel, handler) {
+      this._handlers.push([sel, handler]);
       return this;
     }
     transform(res) {
+      const attrs = { html: {}, backBtnHiddenRemoved: false, appTitle: null, headAppends: [], title: null };
+      for (const [sel, h] of this._handlers) {
+        if (sel === 'html' && h.element) {
+          h.element({ setAttribute: (k, v) => (attrs.html[k] = v) });
+        }
+        if (sel === '#nflHubBackBtn' && h.element) {
+          h.element({ removeAttribute: k => { if (k === 'hidden') attrs.backBtnHiddenRemoved = true; } });
+        }
+        if (sel.includes('apple-mobile-web-app-title') && h.element) {
+          h.element({ setAttribute: (_k, v) => (attrs.appTitle = v) });
+        }
+        if (sel === 'head' && h.element) {
+          h.element({ append: str => attrs.headAppends.push(str) });
+        }
+        if (sel === 'title' && h.element) {
+          h.element({ setInnerContent: str => (attrs.title = str) });
+        }
+      }
+      capturedRewrites.push(attrs);
       return res;
     }
   };
@@ -483,6 +509,66 @@ await test('3. dist-nfl-teams/ Cloudflare Pages bundle & _worker.js serve all 32
     const idxRes = await worker.fetch(new Request('https://49ers.joshal.com/index.html'), mockEnv, {});
     assert.equal(idxRes.status, 200);
     assert.equal(idxRes.redirected, false);
+    const sfRewrite = capturedRewrites.at(-1);
+    assert.equal(sfRewrite.backBtnHiddenRemoved, false, '49ers.joshal.com must keep #nflHubBackBtn hidden');
+    assert.equal(sfRewrite.appTitle, '49ers');
+    assert.ok(!sfRewrite.headAppends.join('').includes('__NFL_HUB_MODE__=true'));
+
+    // Unified `nfl.joshal.com` portal, `?team=<slug>` team apps, manifest, icon, and hermetic `/key-sync` vault
+    assert.equal(isNflHubHost('nfl.joshal.com'), true);
+    assert.equal(isNflHubHost('nfl-joshal.pages.dev'), true);
+    assert.equal(isNflHubHost('49ers.joshal.com'), false);
+    assert.equal(resolveExplicitQueryTeam('?team=bogus'), null);
+    assert.equal(resolveExplicitQueryTeam('?team=lions')?.abbr, 'DET');
+
+    const portalRes = await worker.fetch(new Request('https://nfl.joshal.com/'), mockEnv, {});
+    assert.equal(portalRes.status, 200);
+    assert.equal(portalRes.redirected, false);
+    const portalHtml = await portalRes.text();
+    assert.ok(portalHtml.includes('NFL Team Hub') && portalHtml.includes('data-hub-href="./?team=lions"'), 'nfl.joshal.com/ must serve NFL Team Hub portal');
+
+    const bogusRes = await worker.fetch(new Request('https://nfl.joshal.com/?team=not-a-team'), mockEnv, {});
+    assert.equal(bogusRes.status, 200);
+    assert.ok((await bogusRes.text()).includes('NFL Team Hub'), 'Invalid ?team= must safely render NFL Team Hub portal');
+
+    const hubManifestRes = await worker.fetch(new Request('https://nfl.joshal.com/manifest.json'), mockEnv, {});
+    assert.equal(hubManifestRes.status, 200);
+    const hubManifest = await hubManifestRes.json();
+    assert.equal(hubManifest.short_name, 'NFL');
+    assert.equal(hubManifest.start_url, '/');
+    assert.equal(hubManifest.scope, '/');
+    assert.equal(hubManifest.display, 'standalone');
+    assert.ok(hubManifest.icons.some(ic => ic.sizes === '512x512' && ic.type === 'image/png'));
+
+    const hubIconRes = await worker.fetch(new Request('https://nfl.joshal.com/apple-touch-icon.png'), mockEnv, {});
+    assert.equal(hubIconRes.status, 200);
+
+    const keySyncRes = await worker.fetch(new Request('https://nfl.joshal.com/key-sync'), mockEnv, {});
+    assert.equal(keySyncRes.status, 200);
+    const keySyncCsp = keySyncRes.headers.get('Content-Security-Policy') || '';
+    assert.ok(keySyncCsp.includes("default-src 'none'") && keySyncCsp.includes('https://lions.joshal.com') && keySyncCsp.includes('https://49ers.joshal.com'));
+
+    const teamKeySyncRes = await worker.fetch(new Request('https://lions.joshal.com/key-sync'), mockEnv, {});
+    assert.equal(teamKeySyncRes.status, 404, '/key-sync vault must stay hermetically restricted to nfl.joshal.com');
+
+    for (const team of ALL_NFL_TEAMS) {
+      const hubTeamRes = await worker.fetch(new Request(`https://nfl.joshal.com/?team=${team.slug}`), mockEnv, {});
+      assert.equal(hubTeamRes.status, 200, `nfl.joshal.com/?team=${team.slug} must return 200`);
+      const rw = capturedRewrites.at(-1);
+      assert.equal(rw.html['data-nfl-hub'], 'true', `nfl.joshal.com/?team=${team.slug} must set data-nfl-hub="true"`);
+      assert.equal(rw.backBtnHiddenRemoved, true, `nfl.joshal.com/?team=${team.slug} must reveal #nflHubBackBtn`);
+      assert.equal(rw.appTitle, 'NFL', `nfl.joshal.com/?team=${team.slug} must keep NFL shortcut title`);
+      assert.equal(rw.title, `${team.brandName} — ${team.domain}`);
+      assert.ok(rw.headAppends.join('').includes(`window.__ACTIVE_TEAM_SLUG__=${JSON.stringify(team.slug)}`));
+      assert.ok(rw.headAppends.join('').includes('window.__NFL_HUB_MODE__=true;'));
+
+      const hubHealthRes = await worker.fetch(new Request(`https://nfl.joshal.com/api/health?team=${team.slug}`), mockEnv, {});
+      assert.equal(hubHealthRes.status, 200);
+      const hubHealth = await hubHealthRes.json();
+      assert.equal(hubHealth.hubHost, true);
+      assert.equal(hubHealth.entryMode, 'hub-team');
+      assert.equal(hubHealth.teamAbbr, team.abbr);
+    }
   } finally {
     if (prevRewriter === undefined) delete globalThis.HTMLRewriter;
     else globalThis.HTMLRewriter = prevRewriter;
@@ -671,6 +757,249 @@ await test('4. Headless Chrome E2E: Cross-team Matchup opposing player dossiers 
     chrome.proc.kill('SIGKILL');
     fs.rmSync(chrome.userDataDir, { recursive: true, force: true });
     server.close();
+  }
+});
+
+await test('5. Headless Chrome E2E: Standalone NFL Hub (nfl.joshal.com -> ?team=<slug>) full round-trip, visual parity with <team>.joshal.com, back navigation & cross-team storage isolation', async () => {
+  const distDir = path.join(ROOT, 'dist-nfl-teams');
+  assert.ok(fs.existsSync(path.join(distDir, 'nfl-portal.html')), 'dist-nfl-teams/nfl-portal.html must exist');
+
+  // Local HTTP harness simulating `nfl.joshal.com` (hub mode at `/` & `/?team=<slug>`) AND `<team>.joshal.com` (subdomain mode at `/subdomain?team=<slug>`)
+  const hubServer = await new Promise(resolve => {
+    const s = http.createServer((req, res) => {
+      const u = new URL(req.url || '/', 'http://127.0.0.1');
+      const teamParam = resolveExplicitQueryTeam(u.search);
+      if (u.pathname === '/' || u.pathname === '/index.html') {
+        if (!teamParam) {
+          res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+          fs.createReadStream(path.join(distDir, 'nfl-portal.html')).pipe(res);
+          return;
+        }
+        let html = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
+        html = html
+          .replace('<html lang="en" data-theme="light">', '<html lang="en" data-theme="light" data-nfl-hub="true">')
+          .replace('id="nflHubBackBtn" href="./" class="nfl-hub-back-btn" hidden', 'id="nflHubBackBtn" href="./" class="nfl-hub-back-btn"')
+          .replace('</head>', `<script>window.__ACTIVE_TEAM_SLUG__=${JSON.stringify(teamParam.slug)};window.__NFL_HUB_MODE__=true;</script></head>`);
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(html);
+        return;
+      }
+      if (u.pathname === '/subdomain' && teamParam) {
+        let html = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
+        html = html.replace('</head>', `<script>window.__ACTIVE_TEAM_SLUG__=${JSON.stringify(teamParam.slug)};</script></head>`);
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(html);
+        return;
+      }
+      const rel = decodeURIComponent(u.pathname).replace(/^\/+/, '');
+      const full = path.join(distDir, rel);
+      if (!full.startsWith(distDir) || !fs.existsSync(full) || fs.statSync(full).isDirectory()) {
+        res.writeHead(404);
+        res.end('Not Found');
+        return;
+      }
+      const ext = path.extname(full).toLowerCase();
+      res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+      fs.createReadStream(full).pipe(res);
+    });
+    s.listen(0, '127.0.0.1', () => resolve({ server: s, port: s.address().port }));
+  });
+
+  const baseOrigin = `http://127.0.0.1:${hubServer.port}`;
+  const cdpPort = 9500 + Math.floor(Math.random() * 400);
+  const chrome = await launchChrome(cdpPort);
+  let cdp = null;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    try {
+      cdp = await createCdpClient(chrome.wsUrl);
+      break;
+    } catch {
+      await new Promise(r => setTimeout(r, 200));
+    }
+  }
+  assert.ok(cdp, 'Failed to connect CDP for NFL Hub E2E');
+
+  try {
+    await cdp.send('Page.enable');
+    await cdp.send('Runtime.enable');
+    await cdp.send('Network.enable');
+    // Emulate iPhone Safari / Chrome standalone Home Screen pseudo-app
+    await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
+      source: `
+        Object.defineProperty(navigator, 'standalone', { value: true, configurable: true });
+        const origMatchMedia = window.matchMedia.bind(window);
+        window.matchMedia = q => q.includes('display-mode: standalone')
+          ? { matches: true, media: q, addEventListener(){}, removeEventListener(){}, addListener(){}, removeListener(){} }
+          : origMatchMedia(q);
+      `
+    });
+    await cdp.send('Emulation.setDeviceMetricsOverride', {
+      width: 393,
+      height: 852,
+      deviceScaleFactor: 2,
+      mobile: true
+    });
+
+    const pageErrors = [];
+    const failedNetwork = [];
+    cdp.on('Runtime.exceptionThrown', p => pageErrors.push(p.exceptionDetails?.text || 'Runtime error'));
+    cdp.on('Network.responseReceived', p => {
+      if (p.response.status >= 400 && p.response.url.startsWith(baseOrigin)) {
+        failedNetwork.push(`${p.response.status} ${p.response.url}`);
+      }
+    });
+
+    // 1. Open NFL Team Hub portal `/` in standalone mode -> click Lions tile
+    await cdp.send('Page.navigate', { url: `${baseOrigin}/` });
+    await waitFor(cdp, `document.querySelectorAll('a.team-tile[data-team]').length === 32`);
+    const lionsPortalHref = await evalJs(cdp, `document.querySelector('a.team-tile[data-team="lions"]').getAttribute('href')`);
+    assert.equal(lionsPortalHref, './?team=lions', 'Standalone portal must link Lions to ./?team=lions');
+
+    await evalJs(cdp, `document.querySelector('a.team-tile[data-team="lions"]').click()`);
+    await waitFor(cdp, `window.location.search.includes('team=lions') && Boolean(window.__49ersDiagnostics?.getState()?.appData)`);
+
+    // 2. Verify Lions renders identically in hub mode, back button is visible, 0px overflow across portrait & landscape
+    for (const vp of [
+      { width: 360, height: 780 },
+      { width: 393, height: 852 },
+      { width: 852, height: 393 }
+    ]) {
+      await cdp.send('Emulation.setDeviceMetricsOverride', { ...vp, deviceScaleFactor: 2, mobile: true });
+      await new Promise(r => setTimeout(r, 120));
+      const check = await evalJs(
+        cdp,
+        `(() => {
+          const back = document.getElementById('nflHubBackBtn');
+          const rect = back ? back.getBoundingClientRect() : { width: 0, height: 0 };
+          return {
+            origin: window.location.origin,
+            search: window.location.search,
+            dataTeam: document.documentElement.getAttribute('data-team'),
+            title: document.getElementById('headerTitleText')?.textContent?.trim(),
+            crestSrc: document.querySelector('.brand-medallion')?.getAttribute('src'),
+            backHidden: back?.hidden,
+            backW: rect.width,
+            backH: rect.height,
+            overflow: document.documentElement.scrollWidth - window.innerWidth
+          };
+        })()`
+      );
+      assert.equal(check.origin, baseOrigin, 'Must stay on exact same origin (no Safari tab break-out)');
+      assert.equal(check.dataTeam, 'lions');
+      assert.equal(check.title, 'Lions One Pride');
+      assert.equal(check.crestSrc, './assets/teams/lions/crest.svg?v=1');
+      assert.equal(check.backHidden, false, '#nflHubBackBtn must be visible in hub mode');
+      assert.ok(check.backW >= 24 && check.backH >= 24, '#nflHubBackBtn must have clickable geometry');
+      assert.ok(check.overflow <= 1, `Hub Lions overflow at ${vp.width}x${vp.height}: ${check.overflow}px`);
+    }
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: 393, height: 852, deviceScaleFactor: 2, mobile: true });
+
+    // 3. Verify Settings NFL Portal + Switch Team links stay same-origin in hub mode
+    await evalJs(cdp, `document.getElementById('openSettingsBtn').click()`);
+    await waitFor(cdp, `!document.getElementById('bottomSheetBackdrop').hidden`);
+    const settingsHubLinks = await evalJs(
+      cdp,
+      `(() => {
+        const portalLink = document.querySelector('[data-hub-portal-link="true"]');
+        const billsChip = [...document.querySelectorAll('[data-settings-team-switcher] a')].find(a => a.textContent.trim() === 'Bills');
+        return {
+          portalHref: portalLink?.getAttribute('href'),
+          portalTarget: portalLink?.getAttribute('target'),
+          billsHref: billsChip?.getAttribute('href')
+        };
+      })()`
+    );
+    assert.equal(settingsHubLinks.portalHref, './', 'Settings NFL Portal link must stay same-origin ./ in hub mode');
+    assert.equal(settingsHubLinks.portalTarget, null, 'Settings NFL Portal link must NOT open target="_blank" in hub mode');
+    assert.equal(settingsHubLinks.billsHref, './?team=bills', 'Settings Switch Team links must stay same-origin ./?team=<slug> in hub mode');
+    await evalJs(cdp, `document.getElementById('closeSheetBtn')?.click()`);
+
+    // 4. Write shared Gemini key + Lions-only daily brief cache & practice cache on Lions
+    await evalJs(
+      cdp,
+      `(() => {
+        localStorage.setItem('joshal_nfl_shared_gemini_key_v1', JSON.stringify({ v: 1, k: 'AIzaHubSharedKeyTest32', m: 'gemini-4-hydrogen', t: Date.now(), c: 0 }));
+        localStorage.setItem('joshal_lions_daily_news_brief_v5', JSON.stringify({ headline: 'LIONS_ONLY_SECRET_BRIEF', bullets: ['Det bullet 1', 'Det bullet 2'], cycleKey: '2026-11-22@17PT', source: 'live-gemini-daily' }));
+      })()`
+    );
+
+    // 5. Click `#nflHubBackBtn` -> returns cleanly same-origin to NFL Team Hub portal -> click Bills tile
+    await evalJs(cdp, `document.getElementById('nflHubBackBtn').click()`);
+    await waitFor(cdp, `window.location.search === '' && document.querySelectorAll('a.team-tile[data-team]').length === 32`);
+    const backPortalCheck = await evalJs(cdp, `document.documentElement.getAttribute('data-standalone-app')`);
+    assert.equal(backPortalCheck, 'true', 'Returning to / via #nflHubBackBtn must keep standalone hub mode active');
+
+    await evalJs(cdp, `document.querySelector('a.team-tile[data-team="bills"]').click()`);
+    await waitFor(cdp, `window.location.search.includes('team=bills') && Boolean(window.__49ersDiagnostics?.getState()?.appData)`);
+
+    const billsCheck = await evalJs(
+      cdp,
+      `(() => {
+        const st = window.__49ersDiagnostics.getState();
+        return {
+          dataTeam: document.documentElement.getAttribute('data-team'),
+          title: document.getElementById('headerTitleText')?.textContent?.trim(),
+          apiKey: st.prefs?.geminiApiKey || '',
+          briefHeadline: st.appData?.news?.dailyTopNewsBrief?.headline || ''
+        };
+      })()`
+    );
+    assert.equal(billsCheck.dataTeam, 'bills');
+    assert.equal(billsCheck.title, 'Bills Mafia');
+    assert.equal(billsCheck.apiKey, 'AIzaHubSharedKeyTest32', 'Shared Gemini API key must sync instantaneously across teams on nfl.joshal.com');
+    assert.ok(!billsCheck.briefHeadline.includes('LIONS_ONLY_SECRET_BRIEF'), 'Lions cached Daily Top-News Brief must NEVER leak into Bills on shared origin');
+
+    // 6. Click `#nflHubBackBtn` -> click 49ers tile -> verify 49ers parity & shared key
+    await evalJs(cdp, `document.getElementById('nflHubBackBtn').click()`);
+    await waitFor(cdp, `window.location.search === '' && document.querySelectorAll('a.team-tile[data-team]').length === 32`);
+    await evalJs(cdp, `document.querySelector('a.team-tile[data-team="49ers"]').click()`);
+    await waitFor(cdp, `window.location.search.includes('team=49ers') && Boolean(window.__49ersDiagnostics?.getState()?.appData)`);
+    const ninersHubCheck = await evalJs(
+      cdp,
+      `(() => {
+        const st = window.__49ersDiagnostics.getState();
+        return {
+          dataTeam: document.documentElement.getAttribute('data-team'),
+          title: document.getElementById('headerTitleText')?.textContent?.trim(),
+          apiKey: st.prefs?.geminiApiKey || '',
+          briefHeadline: st.appData?.news?.dailyTopNewsBrief?.headline || '',
+          backVisible: document.getElementById('nflHubBackBtn')?.hidden === false
+        };
+      })()`
+    );
+    assert.equal(ninersHubCheck.dataTeam, '49ers');
+    assert.equal(ninersHubCheck.title, '49ers Faithful');
+    assert.equal(ninersHubCheck.apiKey, 'AIzaHubSharedKeyTest32');
+    assert.equal(ninersHubCheck.backVisible, true);
+    assert.ok(!ninersHubCheck.briefHeadline.includes('LIONS_ONLY_SECRET_BRIEF'));
+
+    // 7. Verify Non-Hub Subdomain Parity (`/subdomain?team=lions`): `#nflHubBackBtn` MUST remain hidden!
+    await cdp.send('Page.navigate', { url: `${baseOrigin}/subdomain?team=lions` });
+    await waitFor(cdp, `Boolean(window.__49ersDiagnostics?.getState()?.appData)`);
+    const subdomainCheck = await evalJs(
+      cdp,
+      `(() => {
+        const back = document.getElementById('nflHubBackBtn');
+        return {
+          dataTeam: document.documentElement.getAttribute('data-team'),
+          title: document.getElementById('headerTitleText')?.textContent?.trim(),
+          backHidden: back?.hidden,
+          backDisplay: back ? getComputedStyle(back).display : 'none'
+        };
+      })()`
+    );
+    assert.equal(subdomainCheck.dataTeam, 'lions');
+    assert.equal(subdomainCheck.title, 'Lions One Pride');
+    assert.equal(subdomainCheck.backHidden, true, 'Standalone <team>.joshal.com must keep #nflHubBackBtn hidden');
+    assert.equal(subdomainCheck.backDisplay, 'none', 'Standalone <team>.joshal.com must render #nflHubBackBtn with display:none');
+
+    assert.equal(pageErrors.length, 0, `Hub E2E uncaught page errors: ${pageErrors.join(' | ')}`);
+    assert.equal(failedNetwork.length, 0, `Hub E2E failed local requests: ${failedNetwork.join(' | ')}`);
+  } finally {
+    cdp.close();
+    chrome.proc.kill('SIGKILL');
+    fs.rmSync(chrome.userDataDir, { recursive: true, force: true });
+    hubServer.server.close();
   }
 });
 

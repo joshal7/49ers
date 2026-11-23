@@ -1,9 +1,17 @@
 const SW_HOST = String(self.location?.hostname || '').toLowerCase();
+const IS_NFL_HUB_HOST =
+  SW_HOST === 'nfl.joshal.com' ||
+  SW_HOST === 'nfl-joshal.pages.dev' ||
+  SW_HOST.endsWith('.nfl-joshal.pages.dev');
 const SW_SUB_MATCH = SW_HOST.match(/^([a-z0-9-]+)\.joshal\.com$/);
 const SW_RAW_SUB = SW_SUB_MATCH ? SW_SUB_MATCH[1] : '49ers';
-const SW_TEAM_SLUG = SW_RAW_SUB === '49ers' ? '49ers' : SW_RAW_SUB;
+const SW_TEAM_SLUG = IS_NFL_HUB_HOST ? 'nfl' : SW_RAW_SUB === '49ers' ? '49ers' : SW_RAW_SUB;
 const SW_DATA_BASE = SW_TEAM_SLUG === '49ers' ? './data' : `./data/teams/${SW_TEAM_SLUG}`;
-const CACHE_NAME = SW_TEAM_SLUG === '49ers' ? '49ers-faithful-v152' : `${SW_TEAM_SLUG}-hq-v23`;
+const CACHE_NAME = IS_NFL_HUB_HOST
+  ? 'nfl-hub-v1'
+  : SW_TEAM_SLUG === '49ers'
+    ? '49ers-faithful-v153'
+    : `${SW_TEAM_SLUG}-hq-v24`;
 const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-', `${SW_TEAM_SLUG}-podcast-studio-audio-`];
 const NETWORK_TIMEOUT_MS = 7500;
 const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;
@@ -54,22 +62,33 @@ const CORE_ASSETS = [
   './apple-touch-icon.png'
 ];
 
-const TEAM_DYNAMIC_ASSETS = [
-  `${SW_DATA_BASE}/meta.json`,
-  `${SW_DATA_BASE}/roster.json`,
-  `${SW_DATA_BASE}/depth-chart.json`,
-  `${SW_DATA_BASE}/cap.json`,
-  `${SW_DATA_BASE}/reporters.json`,
-  `${SW_DATA_BASE}/news.json`,
-  `${SW_DATA_BASE}/schedule-matchup.json`,
-  `${SW_DATA_BASE}/health.json`,
-  `${SW_DATA_BASE}/seasonal.json`,
-  `${SW_DATA_BASE}/beat-podcasts.json`,
-  `${SW_DATA_BASE}/podcasts/index.json`,
-  SW_TEAM_SLUG === '49ers' ? './assets/app-icon.svg' : `./assets/teams/${SW_TEAM_SLUG}/app-icon.svg`,
-  SW_TEAM_SLUG === '49ers' ? './assets/sf-crest.svg' : `./assets/teams/${SW_TEAM_SLUG}/crest.svg`,
-  SW_TEAM_SLUG === '49ers' ? './apple-touch-icon.png' : `./assets/teams/${SW_TEAM_SLUG}/apple-touch-icon.png`
-];
+const TEAM_DYNAMIC_ASSETS = IS_NFL_HUB_HOST
+  ? ['./nfl-crest.svg', './nfl-icon.svg', './nfl-apple-touch-icon.png']
+  : [
+      `${SW_DATA_BASE}/meta.json`,
+      `${SW_DATA_BASE}/roster.json`,
+      `${SW_DATA_BASE}/depth-chart.json`,
+      `${SW_DATA_BASE}/cap.json`,
+      `${SW_DATA_BASE}/reporters.json`,
+      `${SW_DATA_BASE}/news.json`,
+      `${SW_DATA_BASE}/schedule-matchup.json`,
+      `${SW_DATA_BASE}/health.json`,
+      `${SW_DATA_BASE}/seasonal.json`,
+      `${SW_DATA_BASE}/beat-podcasts.json`,
+      `${SW_DATA_BASE}/podcasts/index.json`,
+      SW_TEAM_SLUG === '49ers' ? './assets/app-icon.svg' : `./assets/teams/${SW_TEAM_SLUG}/app-icon.svg`,
+      SW_TEAM_SLUG === '49ers' ? './assets/sf-crest.svg' : `./assets/teams/${SW_TEAM_SLUG}/crest.svg`,
+      SW_TEAM_SLUG === '49ers' ? './apple-touch-icon.png' : `./assets/teams/${SW_TEAM_SLUG}/apple-touch-icon.png`
+    ];
+
+function resolveRootHtmlCacheKey(url) {
+  if (!url || (url.pathname !== '/' && url.pathname !== '/index.html')) return null;
+  const rawTeam = String(url.searchParams.get('team') || '').trim().toLowerCase();
+  if (rawTeam && /^[a-z0-9-]+$/.test(rawTeam)) {
+    return `${url.origin}/?team=${encodeURIComponent(rawTeam)}`;
+  }
+  return `${url.origin}/`;
+}
 
 function fetchWithTimeoutSw(url, init = {}, timeoutMs = NETWORK_TIMEOUT_MS) {
   if (typeof AbortController !== 'function') {
@@ -126,7 +145,10 @@ self.addEventListener('activate', event => {
     (async () => {
       const keys = await caches.keys();
       const oldKeys = keys.filter(
-        k => k !== CACHE_NAME && !PRESERVED_CACHE_PREFIXES.some(prefix => k.startsWith(prefix))
+        k =>
+          k !== CACHE_NAME &&
+          !PRESERVED_CACHE_PREFIXES.some(prefix => k.startsWith(prefix)) &&
+          !k.includes('-podcast-studio-audio-')
       );
       if (oldKeys.length > 0) {
         try {
@@ -166,7 +188,12 @@ self.addEventListener('fetch', event => {
   }
 
   const url = new URL(event.request.url);
-  if (url.pathname.startsWith('/v1beta/') || url.pathname.startsWith('/api/')) {
+  if (
+    url.pathname.startsWith('/v1beta/') ||
+    url.pathname.startsWith('/api/') ||
+    url.pathname === '/key-sync' ||
+    url.pathname === '/key-sync.html'
+  ) {
     return;
   }
   const isAudioAsset = url.pathname.endsWith('.m4a') || url.pathname.endsWith('.mp3');
@@ -193,13 +220,22 @@ self.addEventListener('fetch', event => {
   // Network-first with fast 2.2s timeout when warm-cached (7.5s cold) & instant offline fallback
   // Pass event.request.url string so { cache: 'no-cache' } never throws TypeError on mode === 'navigate'
   // Never serve a redirected Response (res.redirected === true) to Safari navigation requests
+  // Keep root HTML caches strictly isolated per `?team=<slug>` vs `/` portal so `nfl.joshal.com/` and
+  // `nfl.joshal.com/?team=<slug>` can NEVER overwrite or serve each other from CacheStorage.
   const isNavigation = event.request.mode === 'navigate' || event.request.redirect === 'manual';
   const isRootHtmlPath = url.pathname === '/' || url.pathname === '/index.html';
+  const rootHtmlCacheKey = isNavigation && isRootHtmlPath ? resolveRootHtmlCacheKey(url) : null;
+  const isolateRootByTeam = Boolean(rootHtmlCacheKey && (IS_NFL_HUB_HOST || url.searchParams.has('team')));
   event.respondWith(
     (async () => {
-      let cached = await caches.match(event.request, { ignoreSearch: true });
-      if (!cached && isNavigation && isRootHtmlPath) {
-        cached = await caches.match('./', { ignoreSearch: true });
+      let cached = null;
+      if (isolateRootByTeam) {
+        cached = await caches.match(rootHtmlCacheKey);
+      } else {
+        cached = await caches.match(event.request, { ignoreSearch: true });
+        if (!cached && isNavigation && isRootHtmlPath) {
+          cached = await caches.match('./', { ignoreSearch: true });
+        }
       }
       const timeoutMs = cached ? FAST_CACHED_NETWORK_TIMEOUT_MS : NETWORK_TIMEOUT_MS;
       try {
@@ -228,7 +264,7 @@ self.addEventListener('fetch', event => {
           }
         }
         if (outRes && outRes.status === 200 && !outRes.redirected) {
-          const cacheKey = isNavigation && url.pathname === '/index.html' ? './' : event.request;
+          const cacheKey = rootHtmlCacheKey || (isNavigation && url.pathname === '/index.html' ? './' : event.request);
           const clone = outRes.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(cacheKey, clone));
         }

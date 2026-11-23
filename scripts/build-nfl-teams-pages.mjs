@@ -12,6 +12,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { ALL_NFL_TEAMS } from '../src/config/teamRegistry.js';
+import { getKeySyncAllowedOrigins, writeNflPortalAssetsToDir } from './build-nfl-portal.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const DIST = path.join(ROOT, 'dist-nfl-teams');
@@ -70,6 +71,15 @@ export function buildNflTeamsPagesDist() {
     copyRecursive(path.join(rootDataDir, 'teams', team.slug), path.join(DIST, 'data', 'teams', team.slug), { minifyJson: true });
   }
 
+  // 3b. Unified NFL Team Hub Portal (`nfl.joshal.com`) assets + hermetic `/key-sync.html` vault
+  //     Shipped inside the exact same bundle so `nfl.joshal.com` and all 32 `<team>.joshal.com` hosts
+  //     always run the identical codebase, live data, and Edge Worker with zero drift.
+  writeNflPortalAssetsToDir(DIST, {
+    portalHtmlFilename: 'nfl-portal.html',
+    appleTouchIconFilename: 'nfl-apple-touch-icon.png',
+    writeManifestAndHeaders: false
+  });
+
   // 4. Cloudflare Pages Advanced Mode `_worker.js` (rewriting `../src/` -> `./src/`)
   const workerSrc = fs.readFileSync(path.join(ROOT, 'worker', 'nfl-teams-worker.js'), 'utf8');
   const pagesWorkerSrc = workerSrc.replace(/from\s+['"]\.\.\/src\//g, "from './src/");
@@ -78,16 +88,28 @@ export function buildNflTeamsPagesDist() {
   // 5. `_routes.json` so static JS/CSS/images AND `/data/*` JSON bypass Functions (unlimited free static CDN!)
   const routesJson = {
     version: 1,
-    include: ['/', '/index.html', '/manifest.json', '/apple-touch-icon.png', '/api/*'],
+    include: ['/', '/index.html', '/manifest.json', '/apple-touch-icon.png', '/key-sync', '/key-sync.html', '/api/*'],
     exclude: []
   };
   fs.writeFileSync(path.join(DIST, '_routes.json'), JSON.stringify(routesJson, null, 2) + '\n', 'utf8');
 
-  // 6. `_headers` for fresh 60s JSON caching + CORS on `/data/*` with 0 Functions invocations
+  // 6. `_headers` for fresh 60s JSON caching + CORS on `/data/*`, portal icons caching & defense-in-depth key-sync CSP
+  const frameAncestorsList = ["'self'", ...getKeySyncAllowedOrigins()].join(' ');
   const headersTxt = [
     '/data/*',
     '  Cache-Control: public, max-age=60, stale-while-revalidate=300',
     '  Access-Control-Allow-Origin: *',
+    '',
+    '/icons/*',
+    '  Cache-Control: public, max-age=86400, stale-while-revalidate=604800',
+    '',
+    '/key-sync',
+    `  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors ${frameAncestorsList}`,
+    '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
+    '',
+    '/key-sync.html',
+    `  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors ${frameAncestorsList}`,
+    '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
     ''
   ].join('\n');
   fs.writeFileSync(path.join(DIST, '_headers'), headersTxt, 'utf8');

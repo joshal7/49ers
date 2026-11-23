@@ -49,6 +49,7 @@ import {
   getActiveTeamConfig,
   getTeamCoaches,
   hasCrossTeam49ersLeak,
+  isNflHubHost,
   isOfficialTeamHost,
   resolveTeamConfig
 } from '../config/teamRegistry.js';
@@ -211,7 +212,11 @@ export function resolveReadOnlyPlatformApiBase(prefs = {}) {
     const isHttps = window.location.protocol === 'https:';
     if (
       globalThis.__PLATFORM_API_ENABLED__ === true ||
-      (isHttps && (isOfficialTeamHost(host) || host === 'nfl-teams.pages.dev' || host.endsWith('.nfl-teams.pages.dev')))
+      (isHttps &&
+        (isOfficialTeamHost(host) ||
+          isNflHubHost(host) ||
+          host === 'nfl-teams.pages.dev' ||
+          host.endsWith('.nfl-teams.pages.dev')))
     ) {
       return window.location.origin.replace(/\/+$/, '');
     }
@@ -3100,6 +3105,16 @@ export const DAILY_NEWS_BRIEF_PEAK_HOUR_PT = 17;
 const DAILY_NEWS_BRIEF_CACHE_KEY = 'joshal_49ers_daily_news_brief_v5';
 const DAILY_NEWS_BRIEF_ATTEMPT_KEY = 'joshal_49ers_daily_news_brief_attempt_v5';
 
+export function getDailyNewsBriefCacheKey(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  return team.abbr === 'SF' ? DAILY_NEWS_BRIEF_CACHE_KEY : `joshal_${team.slug}_daily_news_brief_v5`;
+}
+
+export function getDailyNewsBriefAttemptKey(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  return team.abbr === 'SF' ? DAILY_NEWS_BRIEF_ATTEMPT_KEY : `joshal_${team.slug}_daily_news_brief_attempt_v5`;
+}
+
 /**
  * Computes the active schedule-aware daily news-cycle identifier:
  * - Non-game days: `YYYY-MM-DD@17PT` (rolls at 5:00 PM PT).
@@ -4884,22 +4899,26 @@ export function hydrateCachedDailyTopNewsBrief(appData, nowMs = Date.now()) {
     appData.news.dailyTopNewsBrief = repairDailyTopNewsBriefLinks(appData.news.dailyTopNewsBrief).brief;
   }
 
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const briefCacheKey = getDailyNewsBriefCacheKey(activeTeam);
+  const briefAttemptKey = getDailyNewsBriefAttemptKey(activeTeam);
+
   const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
   const activeCycle = cycleState.activeCycleKey;
   const upstream = appData.news.dailyTopNewsBrief || null;
 
-  const rawCached = safeReadLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY);
+  const rawCached = safeReadLocalJson(briefCacheKey);
   let { brief: cached, mutated: cacheMutated } = repairDailyTopNewsBriefLinks(rawCached);
   if (cacheMutated && cached) {
-    safeWriteLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY, cached);
+    safeWriteLocalJson(briefCacheKey, cached);
   }
 
   const cachedStale = cached ? isDailyBriefStaleForLiveState(cached, appData, nowMs) : true;
   if (cached && cachedStale && !cycleState.isGameDayHold) {
-    safeDeleteLocalKey(DAILY_NEWS_BRIEF_CACHE_KEY);
-    const attempt = safeReadLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
+    safeDeleteLocalKey(briefCacheKey);
+    const attempt = safeReadLocalJson(briefAttemptKey);
     if (attempt && (attempt.cycleKey === cached.cycleKey || attempt.cycleKey === activeCycle)) {
-      safeDeleteLocalKey(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
+      safeDeleteLocalKey(briefAttemptKey);
     }
     cached = null;
   }
@@ -4920,7 +4939,7 @@ export function hydrateCachedDailyTopNewsBrief(appData, nowMs = Date.now()) {
       isPostGame: true,
       gameWeek: Number(cycleState.targetGame.week)
     };
-    safeWriteLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY, cached);
+    safeWriteLocalJson(briefCacheKey, cached);
   }
 
   // During Game-Day Hold ([T-90m, Final + buffer)), preserve the active pre-game brief so new game-day news stacks cleanly above it
@@ -5030,7 +5049,7 @@ export function hydrateCachedDailyTopNewsBrief(appData, nowMs = Date.now()) {
  */
 export function hasPendingPostGameAiBriefAttempt(appData, prefs = {}, nowMs = Date.now()) {
   const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();
-  const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+  const baseUrl = resolveReadOnlyPlatformApiBase(prefs);
   if (!effectiveKey && !baseUrl) return false;
 
   const gdWin = evaluateGameDayAboveBriefWindow(
@@ -5042,7 +5061,8 @@ export function hasPendingPostGameAiBriefAttempt(appData, prefs = {}, nowMs = Da
   if (!gdWin.active) return false;
   if (SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise) return true;
 
-  const attempt = safeReadLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const attempt = safeReadLocalJson(getDailyNewsBriefAttemptKey(activeTeam));
   if (
     attempt &&
     attempt.cycleKey === gdWin.expectedPostGameCycleKey &&
@@ -5075,12 +5095,12 @@ function isDailyBriefSynthesisCoolingDown(attempt, activeCycle, nowMs = Date.now
   return nowMs - attemptedMs < cooldownMs;
 }
 
-export function clearDailyNewsBriefAttemptLock() {
-  safeDeleteLocalKey(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
+export function clearDailyNewsBriefAttemptLock(teamInput = null) {
+  safeDeleteLocalKey(getDailyNewsBriefAttemptKey(teamInput || getActiveTeamConfig()));
 }
 
-export function clearDailyMatchupIntelAttemptLock() {
-  safeDeleteLocalKey(DAILY_MATCHUP_ATTEMPT_KEY);
+export function clearDailyMatchupIntelAttemptLock(teamInput = null) {
+  safeDeleteLocalKey(getDailyMatchupAttemptKey(teamInput || getActiveTeamConfig()));
 }
 
 /**
@@ -5090,7 +5110,7 @@ export function clearDailyMatchupIntelAttemptLock() {
 export function shouldTriggerDailyTopNewsBriefRefresh(appData, prefs = {}, nowMs = Date.now()) {
   if (!appData?.news || SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise) return false;
   const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();
-  const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+  const baseUrl = resolveReadOnlyPlatformApiBase(prefs);
   if (!effectiveKey && !baseUrl) return false;
   if (
     appData?._awaitingInitialLiveWireSync === true &&
@@ -5114,7 +5134,8 @@ export function shouldTriggerDailyTopNewsBriefRefresh(appData, prefs = {}, nowMs
     return false;
   }
 
-  const attempt = safeReadLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const attempt = safeReadLocalJson(getDailyNewsBriefAttemptKey(activeTeam));
   if (isDailyBriefSynthesisCoolingDown(attempt, activeCycle, nowMs)) {
     if (!baseUrl) return false;
     const lastKvMs = Date.parse(attempt?.lastKvCheckAt || attempt?.attemptedAt || '');
@@ -5145,6 +5166,8 @@ export async function refreshDailyTopNewsBriefIfDue({
   hydrateCachedDailyTopNewsBrief(appData, nowMs);
 
   const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const briefCacheKey = getDailyNewsBriefCacheKey(activeTeam);
+  const briefAttemptKey = getDailyNewsBriefAttemptKey(activeTeam);
   const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();
   const baseUrl = resolveReadOnlyPlatformApiBase(prefs);
   if (!effectiveKey && !baseUrl) {
@@ -5167,7 +5190,7 @@ export async function refreshDailyTopNewsBriefIfDue({
   const activeCycle = cycleState.activeCycleKey;
   const existing = appData.news.dailyTopNewsBrief;
 
-  const priorAttempt = safeReadLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
+  const priorAttempt = safeReadLocalJson(briefAttemptKey);
   const synthesisCoolingDown = !force && isDailyBriefSynthesisCoolingDown(priorAttempt, activeCycle, nowMs);
 
   if (!force) {
@@ -5191,7 +5214,7 @@ export async function refreshDailyTopNewsBriefIfDue({
     ) {
       return { updated: false, fromCache: true, cycleKey: activeCycle };
     }
-    const { brief: cached } = repairDailyTopNewsBriefLinks(safeReadLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY));
+    const { brief: cached } = repairDailyTopNewsBriefLinks(safeReadLocalJson(briefCacheKey));
     if (
       cached &&
       cached.cycleKey === activeCycle &&
@@ -5251,8 +5274,8 @@ export async function refreshDailyTopNewsBriefIfDue({
               }
             );
             if (fromKv && !isDailyBriefStaleForLiveState(fromKv, appData, nowMs)) {
-              safeDeleteLocalKey(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
-              safeWriteLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY, fromKv);
+              safeDeleteLocalKey(briefAttemptKey);
+              safeWriteLocalJson(briefCacheKey, fromKv);
               appData.news.dailyTopNewsBrief = fromKv;
               return {
                 updated: true,
@@ -5270,7 +5293,7 @@ export async function refreshDailyTopNewsBriefIfDue({
 
     if (synthesisCoolingDown) {
       if (priorAttempt && priorAttempt.cycleKey === activeCycle) {
-        safeWriteLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY, {
+        safeWriteLocalJson(briefAttemptKey, {
           ...priorAttempt,
           lastKvCheckAt: new Date(nowMs).toISOString()
         });
@@ -5283,7 +5306,7 @@ export async function refreshDailyTopNewsBriefIfDue({
         ? Math.max(0, Number(priorAttempt.failCount) || 1)
         : 0;
 
-    safeWriteLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY, {
+    safeWriteLocalJson(briefAttemptKey, {
       cycleKey: activeCycle,
       attemptedAt: new Date(nowMs).toISOString(),
       completedWithoutAi: false,
@@ -5382,13 +5405,14 @@ export async function refreshDailyTopNewsBriefIfDue({
         // Seed Shared Worker KV if `baseUrl` is set so other devices immediately adopt the identical brief
         if (normalized && baseUrl && rawSynthesizedText) {
           await Promise.race([
-            fetch(`${baseUrl}/api/daily-news-brief`, {
+            fetch(`${baseUrl}/api/daily-news-brief?team=${encodeURIComponent(activeTeam.abbr)}`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
                 'X-Group-Passcode': prefs?.groupPasscode || ''
               },
               body: JSON.stringify({
+                teamAbbr: activeTeam.abbr,
                 cycleKey: workerCycleKey,
                 seedRawText: rawSynthesizedText,
                 seedData: normalized,
@@ -5402,7 +5426,7 @@ export async function refreshDailyTopNewsBriefIfDue({
       }
 
       if (!normalized) {
-        safeWriteLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY, {
+        safeWriteLocalJson(briefAttemptKey, {
           cycleKey: activeCycle,
           attemptedAt: new Date(nowMs).toISOString(),
           lastKvCheckAt: new Date(nowMs).toISOString(),
@@ -5412,12 +5436,12 @@ export async function refreshDailyTopNewsBriefIfDue({
         return { updated: false, reason: 'invalid_or_empty_payload' };
       }
 
-      safeDeleteLocalKey(DAILY_NEWS_BRIEF_ATTEMPT_KEY);
-      safeWriteLocalJson(DAILY_NEWS_BRIEF_CACHE_KEY, normalized);
+      safeDeleteLocalKey(briefAttemptKey);
+      safeWriteLocalJson(briefCacheKey, normalized);
       appData.news.dailyTopNewsBrief = normalized;
       return { updated: true, modelUsed, cycleKey: activeCycle };
     } catch {
-      safeWriteLocalJson(DAILY_NEWS_BRIEF_ATTEMPT_KEY, {
+      safeWriteLocalJson(briefAttemptKey, {
         cycleKey: activeCycle,
         attemptedAt: new Date(nowMs).toISOString(),
         lastKvCheckAt: new Date(nowMs).toISOString(),
@@ -5436,6 +5460,20 @@ export async function refreshDailyTopNewsBriefIfDue({
 
 const GAMEDAY_INACTIVES_AI_CACHE_KEY = 'faithful_gameday_inactives_ai_v1';
 const GAMEDAY_INACTIVES_AI_ATTEMPT_KEY = 'faithful_gameday_inactives_ai_attempt_v1';
+
+function getGameDayInactivesAiCacheKey(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  return team.abbr === 'SF'
+    ? GAMEDAY_INACTIVES_AI_CACHE_KEY
+    : `faithful_${team.slug}_gameday_inactives_ai_v1`;
+}
+
+function getGameDayInactivesAiAttemptKey(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  return team.abbr === 'SF'
+    ? GAMEDAY_INACTIVES_AI_ATTEMPT_KEY
+    : `faithful_${team.slug}_gameday_inactives_ai_attempt_v1`;
+}
 
 function normInactivesKey(s = '') {
   return String(s || '')
@@ -5467,12 +5505,15 @@ export async function fetchGeminiFallbackGameDayInactives({
   oppCandidatePlayers = [],
   nowMs = Date.now()
 } = {}) {
+  const activeTeamInact = getActiveTeamConfig();
+  const gdAiCacheKey = getGameDayInactivesAiCacheKey(activeTeamInact);
+  const gdAiAttemptKey = getGameDayInactivesAiAttemptKey(activeTeamInact);
   const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();
-  const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+  const baseUrl = resolveReadOnlyPlatformApiBase(prefs);
   if (!effectiveKey && !baseUrl) return null;
 
-  const gameCacheId = `${seasonYear}:wk${week}:SF-${String(oppAbbr || 'OPP').toUpperCase()}`;
-  const cached = safeReadLocalJson(GAMEDAY_INACTIVES_AI_CACHE_KEY);
+  const gameCacheId = `${seasonYear}:wk${week}:${activeTeamInact.abbr}-${String(oppAbbr || 'OPP').toUpperCase()}`;
+  const cached = safeReadLocalJson(gdAiCacheKey);
   if (
     cached &&
     cached.gameCacheId === gameCacheId &&
@@ -5482,7 +5523,7 @@ export async function fetchGeminiFallbackGameDayInactives({
     return cached;
   }
 
-  const lastAttempt = safeReadLocalJson(GAMEDAY_INACTIVES_AI_ATTEMPT_KEY);
+  const lastAttempt = safeReadLocalJson(gdAiAttemptKey);
   if (
     lastAttempt &&
     lastAttempt.gameCacheId === gameCacheId &&
@@ -5498,14 +5539,15 @@ export async function fetchGeminiFallbackGameDayInactives({
 
   SHARED_AI_SINGLETON.inFlightGameDayInactivesAiPromise = (async () => {
     try {
-      safeWriteLocalJson(GAMEDAY_INACTIVES_AI_ATTEMPT_KEY, {
+      safeWriteLocalJson(gdAiAttemptKey, {
         gameCacheId,
         attemptedAtMs: nowMs
       });
 
       if (baseUrl) {
         const q = new URLSearchParams({
-          teams: `SF,${String(oppAbbr || '').toUpperCase()}`,
+          team: activeTeamInact.abbr,
+          teams: `${activeTeamInact.abbr},${String(oppAbbr || '').toUpperCase()}`,
           seasonYear: String(seasonYear),
           week: String(week),
           oppName: String(oppName || oppAbbr || ''),
@@ -5528,7 +5570,7 @@ export async function fetchGeminiFallbackGameDayInactives({
               modelUsed: json.modelUsed || 'worker-gameday',
               fetchedAt: new Date(nowMs).toISOString()
             };
-            safeWriteLocalJson(GAMEDAY_INACTIVES_AI_CACHE_KEY, out);
+            safeWriteLocalJson(gdAiCacheKey, out);
             return out;
           }
         }
@@ -5551,7 +5593,6 @@ export async function fetchGeminiFallbackGameDayInactives({
       const oppRosterNames = oppCandidatePlayers.map(p => `${p.name} (${p.position})`).slice(0, 62).join(', ');
       const dateStr = kickoffIso ? kickoffIso.slice(0, 10) : new Date(nowMs).toISOString().slice(0, 10);
 
-      const activeTeamInact = getActiveTeamConfig();
       const sysPrompt =
         'You extract verified official 90-minute pre-kickoff NFL game-day inactive lists using live Google Search. Return STRICT JSON only with zero markdown fences or commentary. Never guess: only list players explicitly announced as game-day INACTIVE for this exact game (exclude Injured Reserve players).';
       const userPrompt = `Find the official Week ${week} (${seasonYear} NFL season, game date ${dateStr}) game-day INACTIVES for ${activeTeamInact.fullName} vs. ${oppName} (${oppAbbr}).
@@ -5616,7 +5657,7 @@ Return ONLY valid JSON matching this schema:
         fetchedAt: new Date(nowMs).toISOString()
       };
       if (out.sfInactives.length >= 3 || out.oppInactives.length >= 3) {
-        safeWriteLocalJson(GAMEDAY_INACTIVES_AI_CACHE_KEY, out);
+        safeWriteLocalJson(gdAiCacheKey, out);
       }
       return out;
     } catch {

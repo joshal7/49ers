@@ -1990,13 +1990,33 @@ export function resolveTeamConfig(input = null) {
   return ALIAS_TO_TEAM.get(clean) || TEAM_REGISTRY.SF;
 }
 
-export function resolveTeamFromHostname(hostname = '', search = '') {
+export function resolveExplicitQueryTeam(search = '') {
   const params = new URLSearchParams(String(search || '').replace(/^\?/, ''));
   const queryTeam = params.get('team');
-  if (queryTeam) {
-    const qHit = ALIAS_TO_TEAM.get(queryTeam.trim().toLowerCase());
-    if (qHit) return qHit;
+  if (!queryTeam) return null;
+  return ALIAS_TO_TEAM.get(queryTeam.trim().toLowerCase()) || null;
+}
+
+export function isNflHubHost(hostname = '') {
+  const host = String(hostname || '').trim().toLowerCase().split(':')[0];
+  return (
+    host === 'nfl.joshal.com' ||
+    host === 'nfl-joshal.pages.dev' ||
+    host.endsWith('.nfl-joshal.pages.dev')
+  );
+}
+
+export function isNflHubMode(locationLike = typeof window !== 'undefined' ? window.location : null) {
+  if (typeof globalThis !== 'undefined' && globalThis.__NFL_HUB_MODE__ === true) {
+    return true;
   }
+  const host = String(locationLike?.hostname || '').trim().toLowerCase();
+  return isNflHubHost(host);
+}
+
+export function resolveTeamFromHostname(hostname = '', search = '') {
+  const qHit = resolveExplicitQueryTeam(search);
+  if (qHit) return qHit;
 
   const host = String(hostname || '').trim().toLowerCase();
   const match = host.match(/^([a-z0-9-]+)\.joshal\.com$/);
@@ -2086,6 +2106,17 @@ export function applyTeamThemeToDocument(teamInput = null) {
   const titleText = document.getElementById('headerTitleText');
   if (titleText && (titleText.textContent === '49ers Faithful' || !titleText.dataset.customTabTitle)) {
     titleText.textContent = team.brandName;
+  }
+
+  const hubBackBtn = document.getElementById('nflHubBackBtn');
+  if (hubBackBtn) {
+    const inHubMode = isNflHubMode();
+    hubBackBtn.hidden = !inHubMode;
+    if (inHubMode) {
+      root.setAttribute('data-nfl-hub', 'true');
+    } else {
+      root.removeAttribute('data-nfl-hub');
+    }
   }
 }
 
