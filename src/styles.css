@@ -2408,6 +2408,24 @@ body.sheet-open {
   margin-top: 1px;
 }
 
+.gemini-guide-gif-wrap {
+  margin: 0 0 2px;
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: #0D1117;
+  max-width: 100%;
+}
+
+.gemini-guide-gif {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: 0 auto;
+}
+
 .gemini-connect-box {
   display: flex;
   flex-direction: column;

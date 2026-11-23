@@ -284,52 +284,53 @@ function renderTranscriptTurnsList(episode, activeTurnIdx = -1) {
 
 export const AI_STUDIO_DIRECT_KEY_URL = 'https://aistudio.google.com/app/apikey';
 export const AI_STUDIO_RATE_LIMIT_URL = 'https://aistudio.google.com/rate-limit';
+export const GEMINI_KEY_WALKTHROUGH_GIF_URL = './assets/gemini-key-walkthrough.gif?v=1';
 
 export function renderGeminiApiKeyStepByStepGuideHtml({ includeFocusButton = true } = {}) {
   return `
     <div class="gemini-guide-steps" data-gemini-guide-steps>
+      <figure class="gemini-guide-gif-wrap">
+        <img src="${GEMINI_KEY_WALKTHROUGH_GIF_URL}"
+             alt="Animated walkthrough: tap Get Free Key, sign in with Gmail, accept terms, tap Create API key, tap Create key, copy, and paste into the app"
+             class="gemini-guide-gif"
+             width="420" height="330"
+             loading="lazy" decoding="async" />
+      </figure>
+
       <div class="gemini-guide-step-item">
         <span class="gemini-guide-step-num" aria-hidden="true">1</span>
         <div style="min-width:0">
-          <strong style="color:var(--text-primary)">Open Google AI Studio's API Key Generator ($0, no credit card needed):</strong>
-          Tap <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-weight:700">Open AI Studio API Keys Page ${iconSvg('externalLink', 10)}</a> and sign in with your Google/Gmail account. <em>(This direct link skips the homepage and lands straight on the key generator; first-time visitors just check the Terms box &amp; tap Continue.)</em>
+          Tap <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-weight:700">Get Free Key ${iconSvg('externalLink', 10)}</a> and sign in with Gmail <span style="color:var(--text-muted)">(free, no credit card)</span>.
         </div>
       </div>
 
       <div class="gemini-guide-step-item">
         <span class="gemini-guide-step-num" aria-hidden="true">2</span>
         <div style="min-width:0">
-          <strong style="color:var(--text-primary)">Create your free API key in 2 taps:</strong>
-          On <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="ext-link">aistudio.google.com/app/apikey ${iconSvg('externalLink', 10)}</a>, tap the blue <strong>&ldquo;Create API key&rdquo;</strong> button. If prompted to choose a project, pick <strong>&ldquo;Create API key in new project&rdquo;</strong> (or select the default Gemini project)—Google sets it up automatically in ~2 seconds.
+          Check the Terms box and tap <strong style="color:var(--text-primary)">Continue</strong>.
         </div>
       </div>
 
       <div class="gemini-guide-step-item">
         <span class="gemini-guide-step-num" aria-hidden="true">3</span>
         <div style="min-width:0">
-          <strong style="color:var(--text-primary)">Copy your <code>AIza...</code> key string:</strong>
-          When your newly generated key appears on screen, tap <strong>&ldquo;Copy&rdquo;</strong> next to the <code>AIza...</code> key.
+          Tap <strong style="color:var(--text-primary)">Create API key</strong> &rarr; leave defaults as-is &rarr; tap <strong style="color:var(--text-primary)">Create key</strong>, then <strong style="color:var(--text-primary)">Copy</strong>.
         </div>
       </div>
 
       <div class="gemini-guide-step-item">
         <span class="gemini-guide-step-num" aria-hidden="true">4</span>
         <div style="min-width:0">
-          <strong style="color:var(--text-primary)">Paste right below &amp; tap &ldquo;Connect Gemini&rdquo;:</strong>
-          Switch back here, paste the key into the box directly below, and tap <strong>Connect Gemini</strong>. One 1-time paste saves privately in your device browser and unlocks <strong>both Auto Pod &amp; AI Analysis</strong> (<code>Gemini 4 Hydrogen</code> <code>HIGH</code> Free-Tier queries/day + automatic rollover; check daily usage anytime on <a href="${AI_STUDIO_RATE_LIMIT_URL}" target="_blank" rel="noopener noreferrer" class="ext-link">AI Studio Rate Limits ${iconSvg('externalLink', 10)}</a>).
+          Come back here, paste below, and tap <strong style="color:var(--text-primary)">Connect</strong> <span style="color:var(--text-muted)">(unlocks both Auto Pod &amp; AI Analysis)</span>.
         </div>
       </div>
 
       ${
         includeFocusButton
           ? `<div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:2px">
-               <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="font-size:11.5px;padding:5px 10px;text-decoration:none">
-                 <span>1. Launch AI Studio Key Generator</span>
-                 ${iconSvg('externalLink', 11)}
-               </a>
                <button type="button" class="btn-ghost" data-action="focus-inline-gemini-key" style="font-size:11.5px;padding:5px 10px">
                  ${iconSvg('arrowDown', 11)}
-                 <span>2. Jump to Paste Box Below</span>
+                 <span>Jump to Paste Box</span>
                </button>
              </div>`
           : ''

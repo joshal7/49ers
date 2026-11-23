@@ -3395,14 +3395,22 @@ async function main() {
         );
 
         document.querySelector('[data-action="toggle-gemini-key-guide"]')?.click();
-        await new Promise(r => setTimeout(r, 40));
+        await new Promise(r => setTimeout(r, 120));
         const guideStepsEl = document.querySelector('[data-gemini-guide-steps]');
         const stepCount = guideStepsEl?.querySelectorAll('.gemini-guide-step-item')?.length || 0;
         const hasDirectAppApiKeyLink = Boolean(
           guideStepsEl?.querySelector('a[href="https://aistudio.google.com/app/apikey"]')
         );
-        const hasRateLimitLink = Boolean(
-          guideStepsEl?.querySelector('a[href="https://aistudio.google.com/rate-limit"]')
+        const guideGifEl = guideStepsEl?.querySelector('img.gemini-guide-gif');
+        if (guideGifEl && !guideGifEl.complete) {
+          await new Promise(r => {
+            guideGifEl.addEventListener('load', r, { once: true });
+            guideGifEl.addEventListener('error', r, { once: true });
+            setTimeout(r, 1200);
+          });
+        }
+        const hasWalkthroughGifLoaded = Boolean(
+          guideGifEl && guideGifEl.complete && guideGifEl.naturalWidth >= 300
         );
         const guideExpandedNoOverflow =
           document.documentElement.scrollWidth <= window.innerWidth + 1;
@@ -3458,7 +3466,7 @@ async function main() {
           guidePositionedAboveCard,
           stepCount,
           hasDirectAppApiKeyLink,
-          hasRateLimitLink,
+          hasWalkthroughGifLoaded,
           guideExpandedNoOverflow,
           jumpBtnFocusedInput,
           guideHiddenOnceConnected,
@@ -3488,7 +3496,7 @@ async function main() {
         gateAndConnectAudit.guidePositionedAboveCard &&
           gateAndConnectAudit.stepCount === 4 &&
           gateAndConnectAudit.hasDirectAppApiKeyLink &&
-          gateAndConnectAudit.hasRateLimitLink &&
+          gateAndConnectAudit.hasWalkthroughGifLoaded &&
           gateAndConnectAudit.guideExpandedNoOverflow &&
           gateAndConnectAudit.jumpBtnFocusedInput &&
           gateAndConnectAudit.guideHiddenOnceConnected,

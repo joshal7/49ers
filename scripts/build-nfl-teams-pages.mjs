@@ -51,7 +51,7 @@ export function buildNflTeamsPagesDist() {
 
   // 2. Shared frontend modules & ALL 32 team assets
   copyRecursive(path.join(ROOT, 'src'), path.join(DIST, 'src'));
-  for (const sfAsset of ['sf-crest.svg', 'app-icon.svg']) {
+  for (const sfAsset of ['sf-crest.svg', 'app-icon.svg', 'gemini-key-walkthrough.gif']) {
     copyRecursive(path.join(ROOT, 'assets', sfAsset), path.join(DIST, 'assets', sfAsset));
   }
   const nonSfTeams = ALL_NFL_TEAMS.filter(t => t.abbr !== 'SF');

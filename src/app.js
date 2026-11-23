@@ -153,7 +153,7 @@ import {
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=50';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=82';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=97';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=68';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=69';
 import {
   renderSettingsSheetHtml,
   renderUniversalSearchSheetHtml,
@@ -5200,7 +5200,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=121', { updateViaCache: 'none' })
+        .register('./sw.js?v=122', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

@@ -3567,12 +3567,19 @@ test('New-user 1-time Gemini API key step-by-step guide renders above setup box 
 
   const guideWithFocus = renderGeminiApiKeyStepByStepGuideHtml({ includeFocusButton: true });
   assert.ok(guideWithFocus.includes(AI_STUDIO_DIRECT_KEY_URL), 'Guide must deep-link straight to aistudio.google.com/app/apikey');
-  assert.ok(guideWithFocus.includes(AI_STUDIO_RATE_LIMIT_URL), 'Guide must link to aistudio.google.com/rate-limit');
+  assert.ok(guideWithFocus.includes('gemini-key-walkthrough.gif'), 'Guide must embed the animated walkthrough GIF');
+  assert.ok(guideWithFocus.includes('Get Free Key'), 'Guide must start directly with Get Free Key');
+  assert.ok(!guideWithFocus.includes('or select the default'), 'Guide must avoid A-or-B branching options');
   assert.ok(guideWithFocus.includes('both Auto Pod &amp; AI Analysis'), 'Guide must confirm 1-time key unlocks both Auto Pod & AI Analysis');
   assert.ok(guideWithFocus.includes('data-action="focus-inline-gemini-key"'), 'Inline guide must include jump-to-paste-box button');
 
+  const gifBuf = fs.readFileSync(path.join(rootDir, 'assets', 'gemini-key-walkthrough.gif'));
+  assert.ok(gifBuf.length > 20000 && gifBuf.length < 400000, `Walkthrough GIF size should be compact & non-empty (${gifBuf.length}B)`);
+  assert.equal(gifBuf.subarray(0, 6).toString('ascii'), 'GIF89a', 'Walkthrough asset must be a valid animated GIF89a');
+
   const guideSettings = renderGeminiApiKeyStepByStepGuideHtml({ includeFocusButton: false });
   assert.ok(!guideSettings.includes('data-action="focus-inline-gemini-key"'), 'Settings variant omits inline jump button');
+  assert.ok(guideSettings.includes('gemini-key-walkthrough.gif'), 'Settings guide also includes animated walkthrough GIF');
 
   for (const subSection of ['auto_podcast', 'deep_analysis']) {
     const collapsedHtml = renderAudioAiViewHtml({
