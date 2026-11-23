@@ -1857,8 +1857,18 @@ function renderTeamPlayersStatsSubView(appData, { teamPlayersCat = 'rec', teamPl
                     .map(c => {
                       const disp = r[`${c.key}Disp`] ?? r[c.key] ?? '—';
                       const isSorted = model.sortKey === c.key;
-                      const accentCls = c.accent ? 'team-players-accent' : '';
-                      return `<td class="num-col ${isSorted ? 'is-sorted-cell' : ''} ${accentCls}">${esc(String(disp))}</td>`;
+                      let toneCls = '';
+                      if (c.key === 'epa') {
+                        toneCls =
+                          r.epaTone === 'pos'
+                            ? 'val-pos team-players-tone'
+                            : r.epaTone === 'neg'
+                              ? 'val-neg team-players-tone'
+                              : '';
+                      } else if (c.key === 'sacks') {
+                        toneCls = r.sacksTone === 'pos' ? 'val-pos team-players-tone' : '';
+                      }
+                      return `<td class="num-col ${isSorted ? 'is-sorted-cell' : ''} ${toneCls}">${esc(String(disp))}</td>`;
                     })
                     .join('')}
                 </tr>
@@ -1877,7 +1887,7 @@ function renderTeamPlayersStatsSubView(appData, { teamPlayersCat = 'rec', teamPl
 function renderWeeklySnapMatrixSubView(appData, { snapMatrixUnit = 'offense' } = {}) {
   const players = appData?.roster?.players || [];
   const activeTeam = getActiveTeamConfig();
-  const model = buildWeeklySnapMatrixModel(players, { unit: snapMatrixUnit, maxWeeks: 8 });
+  const model = buildWeeklySnapMatrixModel(players, { unit: snapMatrixUnit, maxWeeks: 22 });
 
   const heatClass = pct => {
     if (pct === null || pct === undefined) return 'snap-heat-empty';
@@ -1908,7 +1918,7 @@ function renderWeeklySnapMatrixSubView(appData, { snapMatrixUnit = 'offense' } =
         model.rows.length === 0 || model.weeks.length === 0
           ? `<div class="subcard-panel" style="font-size:12.5px;color:var(--text-muted)">Weekly snap counts populate automatically once regular-season games are logged.</div>`
           : `
-        <div class="table-scroll">
+        <div class="table-scroll" data-scroll-anchor="right">
           <table class="data-table sticky-col-table snap-matrix-table mono">
             <thead>
               <tr>
@@ -1954,7 +1964,7 @@ function renderWeeklySnapMatrixSubView(appData, { snapMatrixUnit = 'offense' } =
           </table>
         </div>
         <div class="snap-matrix-legend">
-          <span>Scroll weeks → • Col 1 frozen</span>
+          <span>← Swipe for W1 • Col 1 frozen</span>
           <span>Green ≥85% · Gold ≥60%</span>
         </div>
       `
@@ -2583,15 +2593,21 @@ function renderPlayoffStandingsRowHtml(
     activeTeamAbbr = 'SF',
     showDivTag = false,
     showConfTag = false,
-    showSimDeltas = false
+    showSimDeltas = false,
+    useSeedRankTone = true
   } = {}
 ) {
   const isActive = t.abbr === activeTeamAbbr;
   const poDelta = showSimDeltas ? Number(t.makePlayoffsDelta || 0) : 0;
   const hasImpact = !isActive && Math.abs(poDelta) >= 0.3;
   const rowCls = isActive ? 'playoff-row-active' : hasImpact ? 'playoff-row-impacted' : '';
-  const rankCls =
-    t.seed === 1 ? 'rank-seed-1' : t.seed && t.seed <= 7 ? 'rank-seed-in' : 'rank-seed-out';
+  const rankCls = !useSeedRankTone
+    ? 'rank-seed-in'
+    : t.seed === 1
+      ? 'rank-seed-1'
+      : t.seed && t.seed <= 7
+        ? 'rank-seed-in'
+        : 'rank-seed-out';
   const diffCls = t.pointDiff > 0 ? 'val-pos' : t.pointDiff < 0 ? 'val-neg' : 'val-muted';
   const diffDisp = t.pointDiff > 0 ? `+${t.pointDiff}` : String(t.pointDiff ?? 0);
   const strkStr = String(t.streak || '—');
@@ -2722,7 +2738,7 @@ function renderPlayoffStandingsBodyHtml(
                 })
               )
               .join('')}
-            <tr class="playoff-cutline-row"><td colspan="${colSpan}">Playoff Cutline • Top 7 Qualify</td></tr>
+            <tr class="playoff-cutline-row"><td colspan="${colSpan}">Playoff Cutline</td></tr>
             <tr class="playoff-group-row"><td colspan="${colSpan}">In The Hunt (#8–#12)</td></tr>
             ${inTheHunt
               .map(t =>
@@ -2817,32 +2833,23 @@ function renderPlayoffStandingsBodyHtml(
   }
 
   if (view === 'conference') {
-    const seeded = conf === 'AFC' ? snapshot.afcSeeded : snapshot.nfcSeeded;
+    const ranked =
+      conf === 'AFC'
+        ? snapshot.afcConferenceRanked || snapshot.afcSeeded
+        : snapshot.nfcConferenceRanked || snapshot.nfcSeeded;
     return `
       <div class="table-scroll playoff-table-scroll" data-playoff-conference-view>
         <table class="data-table mono sticky-col-table playoff-standings-table">
           <thead>${renderPlayoffStandingsTableHeadHtml()}</thead>
           <tbody>
-            ${seeded
-              .slice(0, 7)
-              .map(t =>
+            ${ranked
+              .map((t, idx) =>
                 renderPlayoffStandingsRowHtml(t, {
-                  rankNum: t.seed,
+                  rankNum: t.confRank ?? idx + 1,
                   activeTeamAbbr: activeAbbr,
                   showDivTag: true,
-                  showSimDeltas
-                })
-              )
-              .join('')}
-            <tr class="playoff-cutline-row"><td colspan="${colSpan}">Playoff Cutline • #7 Seed</td></tr>
-            ${seeded
-              .slice(7)
-              .map(t =>
-                renderPlayoffStandingsRowHtml(t, {
-                  rankNum: t.seed,
-                  activeTeamAbbr: activeAbbr,
-                  showDivTag: true,
-                  showSimDeltas
+                  showSimDeltas,
+                  useSeedRankTone: false
                 })
               )
               .join('')}
@@ -2865,7 +2872,8 @@ function renderPlayoffStandingsBodyHtml(
                 activeTeamAbbr: activeAbbr,
                 showDivTag: true,
                 showConfTag: true,
-                showSimDeltas
+                showSimDeltas,
+                useSeedRankTone: false
               })
             )
             .join('')}

@@ -9821,8 +9821,8 @@ mark.search-hl {
   letter-spacing: 0.03em;
 }
 
-.playoff-standings-table th:last-child,
-.playoff-standings-table td:last-child {
+.playoff-standings-table th:last-child:not([colspan]),
+.playoff-standings-table td:last-child:not([colspan]) {
   text-align: right;
 }
 
@@ -9938,6 +9938,7 @@ mark.search-hl {
   text-transform: uppercase;
   color: var(--text-muted);
   padding: 5px 8px;
+  text-align: left;
 }
 
 .playoff-cutline-row td {
@@ -9950,6 +9951,7 @@ mark.search-hl {
   font-weight: 800;
   color: var(--gold-bright);
   letter-spacing: 0.02em;
+  text-align: left;
 }
 
 /* Collapsed Outside Looking In (#13-#16) Drawer */
@@ -10097,12 +10099,26 @@ mark.search-hl {
    1-Line Moves Ledger, 2027 Free Agents, Ambient Matchup Weather/TV & Rooting Live)
    ========================================================================== */
 
+.val-pos {
+  color: var(--emerald) !important;
+}
+.val-neg {
+  color: var(--crimson) !important;
+}
+
 .badge-info {
   background: rgba(56, 189, 248, 0.16);
   color: #38BDF8;
   border: 1px solid rgba(56, 189, 248, 0.28);
 }
-[data-theme="light"] .badge-info {
+[data-theme="light"] .val-pos {
+  color: var(--emerald) !important;
+}
+.val-neg {
+  color: var(--crimson) !important;
+}
+
+.badge-info {
   background: rgba(2, 132, 199, 0.12);
   color: #0369A1;
   border-color: rgba(2, 132, 199, 0.25);
@@ -10147,43 +10163,153 @@ mark.search-hl {
   font-size: 12px;
 }
 
-/* Game Log Trend Sparkline & Splits (Wave 1A) */
+/* Game Log Trend Sparkline, Single-Row Mobile Header, Metric Switcher & Splits (Wave 1A) */
 .gamelog-summary-card {
-  padding: 11px 12px;
+  padding: 10px 12px 8px;
 }
 .gamelog-header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+}
+.gamelog-metric-head {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.gamelog-metric-title-line {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.gamelog-metric-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px 3px 7px;
+  margin-left: -7px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--gold-bright);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background 0.14s ease, border-color 0.14s ease;
+}
+.gamelog-metric-trigger:hover,
+.gamelog-metric-trigger.is-open {
+  background: var(--gold-soft);
+  border-color: var(--gold-border);
+}
+.gamelog-metric-caret {
+  font-size: 10px;
+  opacity: 0.85;
+  flex-shrink: 0;
 }
 .gamelog-sub-meta {
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: var(--text-muted);
-  margin-top: 1px;
+  line-height: 1.15;
+}
+.gamelog-sub-seg {
+  flex: 0 0 auto;
+  margin: 0 !important;
+  padding: 2px;
+  min-width: 120px;
+}
+.gamelog-sub-seg .seg-btn {
+  padding: 4px 10px;
+  font-size: 11.5px;
+  min-width: 0;
+}
+.gamelog-metric-tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 7px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-subtle);
+}
+.gamelog-metric-chip {
+  padding: 4px 9px !important;
+  font-size: 11px !important;
 }
 .gamelog-spark-wrap {
-  margin-top: 8px;
-  padding: 4px 2px 0;
+  margin-top: 6px;
+  padding: 2px 0 0;
 }
 .gamelog-spark-svg {
   width: 100%;
-  height: 38px;
+  height: 78px;
   display: block;
   overflow: visible;
 }
+.gamelog-spark-grid {
+  stroke: var(--border-subtle);
+  stroke-width: 0.8;
+}
+.gamelog-spark-zero {
+  stroke: var(--border-strong);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
 .gamelog-spark-line {
   stroke: var(--gold);
-  stroke-width: 2;
+  stroke-width: 2.1;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 .gamelog-spark-dot {
   fill: var(--gold-bright);
 }
-.gamelog-spark-dot-last {
+.gamelog-spark-dot-pos {
   fill: var(--emerald);
+}
+.gamelog-spark-dot-neg {
+  fill: var(--crimson);
+}
+.gamelog-spark-dot-mid {
+  fill: var(--gold-bright);
+}
+.gamelog-spark-axis {
+  fill: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 600;
+}
+.gamelog-spark-wk {
+  fill: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+}
+.gamelog-spark-latest {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 800;
+}
+.gamelog-spark-latest.gamelog-spark-dot-pos {
+  fill: var(--emerald);
+}
+.gamelog-spark-latest.gamelog-spark-dot-neg {
+  fill: var(--crimson);
+}
+.gamelog-spark-latest.gamelog-spark-dot-mid {
+  fill: var(--gold-bright);
 }
 .gamelog-tap-hint {
   font-size: 11px;
@@ -10291,8 +10417,7 @@ mark.search-hl {
 .team-players-table td.is-sorted-cell {
   font-weight: 800;
 }
-.team-players-table td.team-players-accent {
-  color: var(--emerald);
+.team-players-table td.team-players-tone {
   font-weight: 700;
 }
 

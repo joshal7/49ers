@@ -1940,6 +1940,16 @@ export function buildLeagueStandingsSnapshot(
   const nfcSeeded = seedConference('NFC');
   const afcSeeded = seedConference('AFC');
 
+  const rankConferencePure = confName => {
+    const members = [...byAbbr.values()].filter(t => t.conference === confName);
+    return rankTiedStandingsGroup(members, { ...ctx, isDivision: false }).map((t, idx) => ({
+      ...t,
+      confRank: idx + 1
+    }));
+  };
+  const nfcConferenceRanked = rankConferencePure('NFC');
+  const afcConferenceRanked = rankConferencePure('AFC');
+
   const seedLookup = new Map([...nfcSeeded, ...afcSeeded].map(t => [t.abbr, t.seed]));
   const leagueRanked = [...byAbbr.values()]
     .sort(
@@ -1970,6 +1980,8 @@ export function buildLeagueStandingsSnapshot(
     byAbbr,
     nfcSeeded,
     afcSeeded,
+    nfcConferenceRanked,
+    afcConferenceRanked,
     divisions,
     leagueRanked,
     wildCardMatchups: {

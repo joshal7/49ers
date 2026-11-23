@@ -41,7 +41,7 @@ import { simulateCapScenario } from './engine/capSimulator.js?v=66';
 import {
   runPlayoffMonteCarlo,
   buildOtherConferenceSimulatorConfig
-} from './engine/playoffMonteCarlo.js?v=66';
+} from './engine/playoffMonteCarlo.js?v=67';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
 import {
   canonicalOpponentHealthSnapshotKey,
@@ -140,7 +140,7 @@ import {
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
 } from './views/uiHelpers.js?v=53';
-import { getJargonEntry } from './engine/jargonGlossary.js?v=50';
+import { getJargonEntry } from './engine/jargonGlossary.js?v=51';
 import {
   isAllowedInlineVideoStreamUrl,
   resolveIosStandaloneExternalVideoBreakoutUrl,
@@ -161,8 +161,8 @@ import {
   VALID_NEWS_CATEGORIES
 } from './views/newsView.js?v=95';
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=51';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=83';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=100';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=84';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=102';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=69';
 import {
   renderSettingsSheetHtml,
@@ -350,6 +350,8 @@ const state = {
   sheetPlayerTab: 'overview',
   sheetPlayerStatsMode: '2026',
   sheetPlayerGameLogSub: 'games',
+  sheetPlayerGameLogMetric: '',
+  sheetPlayerGameLogMetricPickerOpen: false,
   sheetPlayerTxScenario: 'cut',
   sheetPlayerMentionsSort: 'top',
   reporterSearch: '',
@@ -1485,6 +1487,21 @@ function renderMain() {
   });
 
   bindAllMountedInlineVideos();
+  // Anchor right-aligned weekly scroll tables (e.g. Weekly Snap Matrix W1..latest) to most recent week
+  const rightAnchored = document.querySelectorAll('#mainView [data-scroll-anchor="right"]');
+  if (rightAnchored.length > 0) {
+    const scrollToRightEdge = () => {
+      rightAnchored.forEach(el => {
+        if (el.scrollWidth > el.clientWidth) {
+          el.scrollLeft = el.scrollWidth - el.clientWidth;
+        }
+      });
+    };
+    scrollToRightEdge();
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(scrollToRightEdge);
+    }
+  }
   renderHeader();
   renderNavTabs();
   syncNavUnreadBadge();
@@ -1878,6 +1895,9 @@ async function openOpponentPlayerSheet({
       state.sheetPlayerId = localPlayer.id;
       state.sheetPlayerTab = initialTab || 'overview';
       state.sheetPlayerStatsMode = '2026';
+      state.sheetPlayerGameLogSub = 'games';
+      state.sheetPlayerGameLogMetric = '';
+      state.sheetPlayerGameLogMetricPickerOpen = false;
       state.sheetPlayerTxScenario = 'cut';
       state.sheetPlayerMentionsSort = 'top';
       renderSheet();
@@ -2042,6 +2062,8 @@ function renderSheet({ preserveScroll = false } = {}) {
           activeTab: state.sheetPlayerTab,
           statsMode: state.sheetPlayerStatsMode,
           gameLogSub: state.sheetPlayerGameLogSub,
+          gameLogTrendMetric: state.sheetPlayerGameLogMetric,
+          gameLogMetricPickerOpen: state.sheetPlayerGameLogMetricPickerOpen,
           txScenario: state.sheetPlayerTxScenario,
           mentionsSortMode: state.sheetPlayerMentionsSort,
           rawStream: merged.rawStream,
@@ -2082,6 +2104,8 @@ function renderSheet({ preserveScroll = false } = {}) {
         activeTab: state.sheetPlayerTab,
         statsMode: state.sheetPlayerStatsMode,
         gameLogSub: state.sheetPlayerGameLogSub,
+        gameLogTrendMetric: state.sheetPlayerGameLogMetric,
+        gameLogMetricPickerOpen: state.sheetPlayerGameLogMetricPickerOpen,
         txScenario: state.sheetPlayerTxScenario,
         mentionsSortMode: state.sheetPlayerMentionsSort,
         rawStream: state.appData?.news?.rawStream || [],
@@ -3440,6 +3464,8 @@ function bindEvents() {
           state.sheetPlayerTab = btn.getAttribute('data-initial-tab') || 'overview';
           state.sheetPlayerStatsMode = '2026';
           state.sheetPlayerGameLogSub = 'games';
+          state.sheetPlayerGameLogMetric = '';
+          state.sheetPlayerGameLogMetricPickerOpen = false;
           state.sheetPlayerMentionsSort = 'top';
           renderSheet();
         }
@@ -3492,13 +3518,30 @@ function bindEvents() {
 
       case 'set-player-stats-mode':
         state.sheetPlayerStatsMode = btn.getAttribute('data-stats-mode') || '2026';
+        state.sheetPlayerGameLogMetricPickerOpen = false;
         renderSheet();
         break;
 
       case 'set-player-gamelog-sub':
         state.sheetPlayerGameLogSub = btn.getAttribute('data-gamelog-sub') === 'splits' ? 'splits' : 'games';
-        renderSheet();
+        state.sheetPlayerGameLogMetricPickerOpen = false;
+        renderSheet({ preserveScroll: true });
         break;
+
+      case 'toggle-gamelog-metric-picker':
+        state.sheetPlayerGameLogMetricPickerOpen = !state.sheetPlayerGameLogMetricPickerOpen;
+        renderSheet({ preserveScroll: true });
+        break;
+
+      case 'set-player-gamelog-metric': {
+        const nextMetric = btn.getAttribute('data-metric-key') || '';
+        if (nextMetric) {
+          state.sheetPlayerGameLogMetric = nextMetric;
+          state.sheetPlayerGameLogMetricPickerOpen = false;
+          renderSheet({ preserveScroll: true });
+        }
+        break;
+      }
 
       case 'set-player-tx-scenario':
         state.sheetPlayerTxScenario = btn.getAttribute('data-tx') || 'cut';

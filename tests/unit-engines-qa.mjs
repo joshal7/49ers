@@ -706,6 +706,14 @@ test('32-team League Standings Snapshot & AFC Monte Carlo flip compute full ESPN
   assert.equal(snap.leagueRanked.length, 32, 'League standings must contain all 32 NFL clubs');
   assert.equal(snap.nfcSeeded.length, 16, 'NFC standings must contain 16 seeded clubs');
   assert.equal(snap.afcSeeded.length, 16, 'AFC standings must contain 16 seeded clubs');
+  assert.equal(snap.nfcConferenceRanked.length, 16, 'NFC pure conference standings must contain 16 clubs');
+  assert.equal(snap.afcConferenceRanked.length, 16, 'AFC pure conference standings must contain 16 clubs');
+  for (let i = 1; i < snap.nfcConferenceRanked.length; i++) {
+    assert.ok(
+      snap.nfcConferenceRanked[i - 1].winPct >= snap.nfcConferenceRanked[i].winPct - 1e-9,
+      'Conference standings must sort monotonically by pure winPct descending'
+    );
+  }
   assert.equal(Object.keys(snap.divisions).length, 8, 'Must produce all 8 NFL divisions');
   for (const [divName, clubs] of Object.entries(snap.divisions)) {
     assert.equal(clubs.length, 4, `${divName} must have 4 clubs`);
@@ -20410,11 +20418,42 @@ await testAsync('Wave 1 & Wave 2 Deep-Dive Engines (Game Logs, Players, Snap Mat
     `Player Stats tab order must be Game Log -> 2026 -> Career, got ${JSON.stringify(modeMatches)}`
   );
 
-  // 3. Team Players sorting & Weekly Snap Matrix
+  // 3. Team Players sorting, calibrated EPA colors (negative NEVER green; no -0.0) & full W1 Weekly Snap Matrix
   assert.ok(recStats.rows.length >= 4 && recStats.rows[0].yards >= recStats.rows[1].yards, 'Team Players Rec table must sort descending by yards');
+  assert.ok(
+    recStats.rows.every(r => r.epaDisp !== '-0.0' && !(r.epa < 0 && r.epaTone === 'pos')),
+    'Negative EPA must never be classified positive/green and -0.0 must normalize to 0.0'
+  );
+  const negRec = recStats.rows.find(r => r.epa <= -3);
+  if (negRec) assert.equal(negRec.epaTone, 'neg', `Very negative rec EPA (${negRec.epa}) must be red/neg`);
+  const midRec = recStats.rows.find(r => r.epa > -3 && r.epa < 5);
+  if (midRec) assert.equal(midRec.epaTone, 'neutral', `Near-average rec EPA (${midRec.epa}) must be neutral/black`);
   const recAsc = buildTeamPlayerStatsModel(rosterData.players, { category: 'rec', sortKey: 'yards', sortDir: 'asc' });
   assert.ok(recAsc.rows[0].yards <= recAsc.rows[recAsc.rows.length - 1].yards, 'Team Players Rec table must support ascending sort');
-  assert.ok(snapMatrix.weeks.length >= 4 && snapMatrix.rows.length >= 10, 'Offense Weekly Snap Matrix must render multi-week rows');
+  assert.ok(snapMatrix.weeks.length >= 9 && snapMatrix.weeks[0] === 1 && snapMatrix.rows.length >= 10, `Offense Weekly Snap Matrix must span back to Week 1, got weeks=${JSON.stringify(snapMatrix.weeks)}`);
+
+  // 3b. Defensive Impact Score visible in table + dotted jargon tooltip + selectable Game Log sparkline metrics
+  const warner = rosterData.players.find(p => /fred warner/i.test(p.name));
+  assert.ok(warner, 'Fred Warner present on roster');
+  const warnerLog = buildPlayerWeeklyGameLogModel(warner, { schedule: schedData.schedule, teamAbbr: 'SF', seasonYear: 2026 });
+  assert.ok(warnerLog.headers.includes('Impact'), 'Defense Game Log table must include visible Impact column');
+  assert.ok(
+    warnerLog.trendMetrics.some(m => m.key === 'def_impact') && warnerLog.trendMetrics.some(m => m.key === 'tackles') && warnerLog.trendMetrics.some(m => m.key === 'snap_pct'),
+    'Defense Game Log must allow switching sparkline across Impact, Tackles, Snap %, etc.'
+  );
+  const warnerGlHtml = renderPlayerDossierSheetHtml({
+    player: warner,
+    activeTab: 'stats',
+    statsMode: 'gamelog',
+    appData: { meta: { seasonYear: 2026 }, scheduleMatchup: schedData, roster: rosterData }
+  });
+  assert.ok(
+    warnerGlHtml.includes('data-jargon="defensive_impact_score"') && warnerGlHtml.includes('data-action="toggle-gamelog-metric-picker"'),
+    'Defense Game Log must include dotted defensive_impact_score jargon tooltip and tappable metric picker'
+  );
+  const purdyPassYdsLog = buildPlayerWeeklyGameLogModel(purdy, { schedule: schedData.schedule, teamAbbr: 'SF', seasonYear: 2026, trendMetric: 'pass_yds' });
+  assert.equal(purdyPassYdsLog.activeTrendMetric?.key, 'pass_yds', 'Switching QB sparkline metric to pass_yds must update activeTrendMetric');
+  assert.ok(purdyPassYdsLog.trendSeries.some(pt => pt.val >= 150), 'Pass Yds sparkline must plot real passing yard totals');
 
   // 4. Compound ESPN Transaction Sentence Splitting, Multi-Player PS Elevation Counting & Dedup
   const parsedTx = parseEspnTransactionsToLedger(

@@ -7303,8 +7303,11 @@ async function main() {
         const tabLabels = tabBtns.map(b => b.textContent.trim());
         const tabBarNoScroll = tabBar ? tabBar.scrollWidth <= tabBar.clientWidth + 1 : false;
 
-        // Picture view: 4 matchup pills + collapsed Outside Looking In drawer
+        // Picture view: 4 matchup pills, left-aligned "Playoff Cutline" (no "Top 7 Qualify"), & collapsed Outside Looking In drawer
         const matchupPillCount = document.querySelectorAll('[data-playoff-matchup-strip] .playoff-matchup-pill').length;
+        const picCutlineCell = document.querySelector('#playoffStandingsCard .playoff-cutline-row td');
+        const picCutlineText = picCutlineCell ? picCutlineCell.textContent.trim() : '';
+        const picCutlineAlign = picCutlineCell ? getComputedStyle(picCutlineCell).textAlign : '';
         const outsideDetails = document.querySelector('details[data-playoff-outside-hunt]');
         const outsideStartsCollapsed = Boolean(outsideDetails && !outsideDetails.open);
         outsideDetails?.querySelector('summary')?.click();
@@ -7325,10 +7328,11 @@ async function main() {
           el => el.textContent.trim()
         );
 
-        // Conference view: 16 teams
+        // Conference view: 16 teams sorted by pure Win % with NO playoff cutline
         document.querySelector('[data-action="set-playoff-standings-view"][data-standings-view="conference"]')?.click();
         await sleep(80);
         const confRows = document.querySelectorAll('[data-playoff-conference-view] [data-standings-team]').length;
+        const confCutlineCount = document.querySelectorAll('[data-playoff-conference-view] .playoff-cutline-row').length;
 
         // League view: all 32 teams and hides NFC/AFC toggle
         document.querySelector('[data-action="set-playoff-standings-view"][data-standings-view="league"]')?.click();
@@ -7359,11 +7363,14 @@ async function main() {
           tabLabels,
           tabBarNoScroll,
           matchupPillCount,
+          picCutlineText,
+          picCutlineAlign,
           outsideStartsCollapsed,
           outsideExpandedRows,
           afcHasBuf,
           divHeaders,
           confRows,
+          confCutlineCount,
           leagueRows,
           confToggleHiddenInLeague,
           simBarBefore,
@@ -7383,15 +7390,22 @@ async function main() {
         `Standings 4-tab bar mismatch or overflow: ${JSON.stringify(poCheck)}`
       );
       assert(
-        poCheck.matchupPillCount === 4 && poCheck.outsideStartsCollapsed && poCheck.outsideExpandedRows === 4,
-        `Picture view matchup strip / collapsed outside-hunt check failed: ${JSON.stringify(poCheck)}`
+        poCheck.matchupPillCount === 4 &&
+          poCheck.picCutlineText === 'Playoff Cutline' &&
+          (poCheck.picCutlineAlign === 'left' || poCheck.picCutlineAlign === 'start') &&
+          poCheck.outsideStartsCollapsed &&
+          poCheck.outsideExpandedRows === 4,
+        `Picture view matchup strip / cutline / collapsed outside-hunt check failed: ${JSON.stringify(poCheck)}`
       );
       assert(poCheck.afcHasBuf, 'AFC conference toggle must display AFC teams (BUF)');
       assert(
         poCheck.divHeaders.length === 4 && poCheck.divHeaders[0] === 'NFC West',
         `Division view must pin NFC West first: ${JSON.stringify(poCheck.divHeaders)}`
       );
-      assert(poCheck.confRows === 16, `Conference view must display 16 clubs, got ${poCheck.confRows}`);
+      assert(
+        poCheck.confRows === 16 && poCheck.confCutlineCount === 0,
+        `Conference view must display 16 clubs with 0 playoff cutlines: ${JSON.stringify(poCheck)}`
+      );
       assert(poCheck.leagueRows === 32 && poCheck.confToggleHiddenInLeague, `League view must display 32 clubs without NFC/AFC toggle: ${JSON.stringify(poCheck)}`);
       assert(
         !poCheck.simBarBefore && poCheck.simBarActive && poCheck.simBarPosition === 'sticky' && poCheck.rivalChips >= 1 && poCheck.hasJumpBtn && poCheck.simBarCleared,
@@ -7460,11 +7474,16 @@ async function main() {
         const defRowCount = document.querySelectorAll('#teamPlayerStatsCard tbody tr').length;
 
         document.querySelector('[data-action="set-stats-sub"][data-stats-sub="snaps"]')?.click();
-        await sleep(80);
+        await sleep(100);
         const snapCard = Boolean(document.getElementById('weeklySnapMatrixCard'));
         const snapOffRows = document.querySelectorAll('#weeklySnapMatrixCard tbody tr').length;
+        const snapHeaders = Array.from(document.querySelectorAll('#weeklySnapMatrixCard thead th.snap-wk-th')).map(th => th.textContent.trim());
+        const snapScrollEl = document.querySelector('#weeklySnapMatrixCard .table-scroll');
+        const snapAnchoredRight = snapScrollEl
+          ? snapScrollEl.scrollWidth <= snapScrollEl.clientWidth || snapScrollEl.scrollLeft >= snapScrollEl.scrollWidth - snapScrollEl.clientWidth - 4
+          : false;
         document.querySelector('[data-action="set-snap-matrix-unit"][data-snap-unit="defense"]')?.click();
-        await sleep(60);
+        await sleep(80);
         const snapDefRows = document.querySelectorAll('#weeklySnapMatrixCard tbody tr').length;
 
         // Reset back to ranks
@@ -7477,7 +7496,9 @@ async function main() {
           defRowCount,
           snapCard,
           snapOffRows,
-          snapDefRows
+          snapDefRows,
+          startsAtW1: snapHeaders[0] === 'W1',
+          snapAnchoredRight
         };
       });
       assert(
@@ -7485,8 +7506,8 @@ async function main() {
         `Season -> Stats Players sub-view failed: ${JSON.stringify(statsDeep)}`
       );
       assert(
-        statsDeep.snapCard && statsDeep.snapOffRows >= 8 && statsDeep.snapDefRows >= 8,
-        `Season -> Stats Snap Matrix failed: ${JSON.stringify(statsDeep)}`
+        statsDeep.snapCard && statsDeep.snapOffRows >= 8 && statsDeep.snapDefRows >= 8 && statsDeep.startsAtW1 && statsDeep.snapAnchoredRight,
+        `Season -> Stats Snap Matrix (W1..latest right-anchored) failed: ${JSON.stringify(statsDeep)}`
       );
       await cdp.assertNoOverflow('Wave 1B Stats Players & Snap Matrix at 390x844');
 
@@ -7567,7 +7588,21 @@ async function main() {
 
         document.querySelector('#sheetBody [data-action="set-player-stats-mode"][data-stats-mode="gamelog"]')?.click();
         await sleep(80);
-        const hasSpark = Boolean(document.querySelector('#sheetBody svg.gamelog-spark-svg'));
+        const sparkSvgEl = document.querySelector('#sheetBody svg.gamelog-spark-svg');
+        const hasSpark = Boolean(sparkSvgEl);
+        const sparkHeight = sparkSvgEl ? Math.round(sparkSvgEl.getBoundingClientRect().height) : 0;
+        const triggerRect = document.querySelector('#sheetBody .gamelog-metric-trigger')?.getBoundingClientRect();
+        const segRect = document.querySelector('#sheetBody .gamelog-sub-seg')?.getBoundingClientRect();
+        const headerSingleRow = Boolean(triggerRect && segRect && Math.abs(triggerRect.top - segRect.top) < 18);
+
+        // Tap metric trigger to switch EPA/Play -> Pass Yds
+        document.querySelector('#sheetBody [data-action="toggle-gamelog-metric-picker"]')?.click();
+        await sleep(50);
+        const metricTrayOpened = Boolean(document.querySelector('#sheetBody [data-gamelog-metric-tray]'));
+        document.querySelector('#sheetBody [data-action="set-player-gamelog-metric"][data-metric-key="pass_yds"]')?.click();
+        await sleep(60);
+        const switchedMetric = document.querySelector('#sheetBody [data-player-gamelog]')?.getAttribute('data-gamelog-metric');
+
         const logRows = document.querySelectorAll('#sheetBody table.gamelog-table tbody tr').length;
         document.querySelector('#sheetBody [data-action="set-player-gamelog-sub"][data-gamelog-sub="splits"]')?.click();
         await sleep(60);
@@ -7584,6 +7619,10 @@ async function main() {
           modeOrder,
           defaultSelected,
           hasSpark,
+          sparkHeight,
+          headerSingleRow,
+          metricTrayOpened,
+          switchedMetric,
           logRows,
           splitRows,
           hasGamecastJump,
@@ -7597,8 +7636,15 @@ async function main() {
         `Player Stats tab order must be Game Log | 2026 | Career with 2026 default: ${JSON.stringify(dossierDeep)}`
       );
       assert(
-        dossierDeep.hasSpark && dossierDeep.logRows >= 5 && dossierDeep.splitRows >= 3 && dossierDeep.splitRows <= 5,
-        `Player Game Log & Splits failed: ${JSON.stringify(dossierDeep)}`
+        dossierDeep.hasSpark &&
+          dossierDeep.sparkHeight >= 70 &&
+          dossierDeep.headerSingleRow &&
+          dossierDeep.metricTrayOpened &&
+          dossierDeep.switchedMetric === 'pass_yds' &&
+          dossierDeep.logRows >= 5 &&
+          dossierDeep.splitRows >= 3 &&
+          dossierDeep.splitRows <= 5,
+        `Player Game Log sparkline, single-row mobile header & metric switcher failed: ${JSON.stringify(dossierDeep)}`
       );
       assert(
         dossierDeep.hasGamecastJump && dossierDeep.sheetClosedAfterJump && dossierDeep.landedOnGamecast,
