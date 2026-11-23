@@ -2333,6 +2333,42 @@ export function isOfficialTeamHost(hostname = '') {
   return Boolean(TEAM_BY_SLUG[m[1]]);
 }
 
+/**
+ * Single source of truth for the `nfl.joshal.com` PWA manifest, shared by both
+ * `worker/nfl-teams-worker.js` and `scripts/build-nfl-portal.mjs`.
+ */
+export function buildNflHubManifest({ appleTouchIconSrc = './nfl-apple-touch-icon.png' } = {}) {
+  return {
+    name: 'NFL Team Hub',
+    short_name: 'NFL',
+    description: 'All 32 NFC and AFC franchise hubs',
+    start_url: '/',
+    scope: '/',
+    display: 'standalone',
+    background_color: '#080B10',
+    theme_color: '#080B10',
+    icons: [
+      {
+        src: appleTouchIconSrc,
+        sizes: '180x180',
+        type: 'image/png'
+      },
+      {
+        src: './nfl-icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any maskable'
+      },
+      {
+        src: './nfl-icon.svg',
+        sizes: '512x512',
+        type: 'image/svg+xml',
+        purpose: 'any maskable'
+      }
+    ]
+  };
+}
+
 export const NFL_COACHES_SEED = {
   ARI: { hc: "Mike LaFleur", oc: "Nathaniel Hackett", dc: "Nick Rallis", gm: "Monti Ossenfort" },
   ATL: { hc: "Kevin Stefanski", oc: "Tommy Rees", dc: "Jeff Ulbrich", gm: "Ian Cunningham" },

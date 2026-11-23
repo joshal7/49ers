@@ -377,16 +377,32 @@ async function main() {
       await new Promise(r => setTimeout(r, 300));
       const res = await evalJs(cdp, `(() => {
         const before = document.documentElement.getAttribute('data-theme');
+        const statusBefore = document.getElementById('metaStatusBarStyle')?.getAttribute('content');
         document.getElementById('themeToggle').click();
         const after = document.documentElement.getAttribute('data-theme');
         const meta = document.getElementById('metaThemeColor').getAttribute('content');
+        const statusAfter = document.getElementById('metaStatusBarStyle')?.getAttribute('content');
         const stored = localStorage.getItem('nfl_joshal_theme_v1');
-        return { before, after, meta, stored };
+        return { before, statusBefore, after, meta, statusAfter, stored };
       })()`);
       assert.equal(res.before, 'dark');
+      assert.equal(res.statusBefore, 'black', 'Dark portal status bar must use opaque "black" (never black-translucent)');
       assert.equal(res.after, 'light');
       assert.equal(res.meta, '#F5F6FA');
+      assert.equal(res.statusAfter, 'default', 'Light portal status bar must use opaque "default" (matching team apps)');
       assert.equal(res.stored, 'light');
+
+      // Verify portal HTML never regresses to `black-translucent` and keeps SW URL synced with `src/app.js`
+      const portalHtml = fs.readFileSync(path.join(built.distDir, 'index.html'), 'utf8');
+      assert.equal(
+        portalHtml.includes('black-translucent'),
+        false,
+        'nfl.joshal.com must NEVER use apple-mobile-web-app-status-bar-style="black-translucent" (causes iOS 26 half-frosted top edge blur)'
+      );
+      assert.ok(portalHtml.includes('name="mobile-web-app-capable" content="yes"'));
+      const appJs = fs.readFileSync(path.join(ROOT, 'src', 'app.js'), 'utf8');
+      const swMatch = appJs.match(/\.register\(\s*['"](\.\/sw\.js(?:\?v=\d+)?)['"]/);
+      assert.ok(swMatch && portalHtml.includes(swMatch[1]), `Portal SW register URL must stay auto-synced with src/app.js (${swMatch?.[1]})`);
 
       if (SCREENSHOT_DIR) {
         await new Promise(r => setTimeout(r, 220));

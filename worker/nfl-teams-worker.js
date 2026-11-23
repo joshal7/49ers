@@ -22,13 +22,14 @@
  */
 
 import {
-  ALL_NFL_TEAMS,
   TEAM_BY_SLUG,
   TEAM_REGISTRY,
+  buildNflHubManifest,
   buildTeamCssVarsStyleBlock,
   getTeamByAbbr,
   hasCrossTeam49ersLeak,
   isNflHubHost,
+  isOfficialTeamHost,
   normalizeAnyTeamAbbr,
   resolveExplicitQueryTeam
 } from '../src/config/teamRegistry.js';
@@ -37,7 +38,7 @@ import {
   buildGeminiThinkingConfig,
   resolveGeminiThinkingLevelLabel
 } from '../src/engine/geminiStudioPrompts.js';
-import { getAllowedNflTeamOrigins } from '../src/services/sharedApiKeyStore.js';
+import { buildKeySyncCspHeader } from '../src/services/sharedApiKeyStore.js';
 
 const SF_RESERVED_DAILY_CALLS = 6;
 const DAILY_LEAGUE_SOFT_BUDGET = 48;
@@ -83,44 +84,6 @@ function buildCorsHeaders(request) {
     'Access-Control-Allow-Headers': 'Content-Type, X-Group-Passcode, Range',
     'Access-Control-Max-Age': '86400',
     Vary: 'Origin, Host'
-  };
-}
-
-function buildKeySyncCspHeader() {
-  const fromRegistry = ALL_NFL_TEAMS.map(t => `https://${t.slug}.joshal.com`);
-  const allowed = Array.from(new Set([...getAllowedNflTeamOrigins(), ...fromRegistry, 'https://nfl.joshal.com'])).sort();
-  return `default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'self' ${allowed.join(' ')}`;
-}
-
-function buildNflHubManifest() {
-  return {
-    name: 'NFL Team Hub',
-    short_name: 'NFL',
-    description: 'All 32 NFC and AFC franchise hubs',
-    start_url: '/',
-    scope: '/',
-    display: 'standalone',
-    background_color: '#080B10',
-    theme_color: '#080B10',
-    icons: [
-      {
-        src: './nfl-apple-touch-icon.png',
-        sizes: '180x180',
-        type: 'image/png'
-      },
-      {
-        src: './nfl-icon-512.png',
-        sizes: '512x512',
-        type: 'image/png',
-        purpose: 'any maskable'
-      },
-      {
-        src: './nfl-icon.svg',
-        sizes: '512x512',
-        type: 'image/svg+xml',
-        purpose: 'any maskable'
-      }
-    ]
   };
 }
 
@@ -196,6 +159,7 @@ function buildDynamicManifest(team) {
     short_name: team.shortTitle,
     description: `High-signal ${team.fullName} analytics, roster spider charts, cap simulator, injury models, playoff Monte Carlo, beat synthesis, and Autopodcast PWA.`,
     start_url: '/',
+    scope: '/',
     display: 'standalone',
     background_color: team.themes.dark.bgPrimary,
     theme_color: team.themes.dark.bgPrimary,
@@ -220,7 +184,12 @@ function buildDynamicManifest(team) {
 function rewriteHtmlForTeam(response, team, { isHubMode = false } = {}) {
   const cssVars = buildTeamCssVarsStyleBlock(team);
   const hubBootFlag = isHubMode ? 'window.__NFL_HUB_MODE__=true;' : '';
-  const bootScript = `<script>window.__ACTIVE_TEAM_SLUG__=${JSON.stringify(team.slug)};window.__PLATFORM_API_ENABLED__=true;${hubBootFlag}</script><style id="teamThemeOverrides">${cssVars}</style>`;
+  const themeColors = {
+    light: team.themes?.light?.themeColor || '#F7F5F0',
+    dark: team.themes?.dark?.themeColor || '#0B0D10'
+  };
+  const prefsKey = team.storageKeys?.prefs || 'joshal_49ers_hq_prefs_v1';
+  const bootScript = `<script>window.__ACTIVE_TEAM_SLUG__=${JSON.stringify(team.slug)};window.__PLATFORM_API_ENABLED__=true;window.__TEAM_PREFS_KEY__=${JSON.stringify(prefsKey)};window.__TEAM_THEME_COLORS__=${JSON.stringify(themeColors)};${hubBootFlag}</script><style id="teamThemeOverrides">${cssVars}</style>`;
 
   return new HTMLRewriter()
     .on('html', {
@@ -790,18 +759,25 @@ function isAllowedKeyVaultRequest(request, host) {
   const hostOk =
     cleanHost === 'localhost' ||
     cleanHost === '127.0.0.1' ||
-    cleanHost === 'nfl.joshal.com' ||
-    /^(?:[a-z0-9-]+\.)?nfl-(?:teams|joshal)\.pages\.dev$/.test(cleanHost) ||
-    ALL_NFL_TEAMS.some(t => `${t.slug}.joshal.com` === cleanHost);
+    isNflHubHost(cleanHost) ||
+    isOfficialTeamHost(cleanHost) ||
+    /^(?:[a-z0-9-]+\.)?nfl-teams\.pages\.dev$/.test(cleanHost);
   if (!hostOk) return false;
   const origin = String(request.headers.get('Origin') || '').trim();
   if (!origin) return true;
-  return (
-    /^https:\/\/[a-z0-9-]+\.joshal\.com$/i.test(origin) &&
-    (origin === 'https://nfl.joshal.com' || ALL_NFL_TEAMS.some(t => `https://${t.slug}.joshal.com` === origin)) ||
-    /^https:\/\/(?:[a-z0-9-]+\.)?nfl-(?:teams|joshal)\.pages\.dev$/i.test(origin) ||
-    /^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/i.test(origin)
-  );
+  try {
+    const parsed = new URL(origin);
+    const oHost = parsed.hostname.toLowerCase();
+    if (parsed.protocol === 'http:') return oHost === 'localhost' || oHost === '127.0.0.1';
+    if (parsed.protocol !== 'https:') return false;
+    return (
+      isNflHubHost(oHost) ||
+      isOfficialTeamHost(oHost) ||
+      /^(?:[a-z0-9-]+\.)?nfl-teams\.pages\.dev$/.test(oHost)
+    );
+  } catch {
+    return false;
+  }
 }
 
 export default {

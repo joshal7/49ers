@@ -12,7 +12,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { ALL_NFL_TEAMS } from '../src/config/teamRegistry.js';
-import { getKeySyncAllowedOrigins, writeNflPortalAssetsToDir } from './build-nfl-portal.mjs';
+import { buildKeySyncCspHeader } from '../src/services/sharedApiKeyStore.js';
+import { writeNflPortalAssetsToDir } from './build-nfl-portal.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const DIST = path.join(ROOT, 'dist-nfl-teams');
@@ -94,7 +95,7 @@ export function buildNflTeamsPagesDist() {
   fs.writeFileSync(path.join(DIST, '_routes.json'), JSON.stringify(routesJson, null, 2) + '\n', 'utf8');
 
   // 6. `_headers` for fresh 60s JSON caching + CORS on `/data/*`, portal icons caching & defense-in-depth key-sync CSP
-  const frameAncestorsList = ["'self'", ...getKeySyncAllowedOrigins()].join(' ');
+  const keySyncCsp = buildKeySyncCspHeader();
   const headersTxt = [
     '/data/*',
     '  Cache-Control: public, max-age=60, stale-while-revalidate=300',
@@ -104,11 +105,11 @@ export function buildNflTeamsPagesDist() {
     '  Cache-Control: public, max-age=86400, stale-while-revalidate=604800',
     '',
     '/key-sync',
-    `  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors ${frameAncestorsList}`,
+    `  Content-Security-Policy: ${keySyncCsp}`,
     '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
     '',
     '/key-sync.html',
-    `  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors ${frameAncestorsList}`,
+    `  Content-Security-Policy: ${keySyncCsp}`,
     '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
     ''
   ].join('\n');

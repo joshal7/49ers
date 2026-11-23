@@ -3276,6 +3276,34 @@ test(
       html.includes('viewport-fit=cover'),
       'index.html viewport meta must include viewport-fit=cover for exact env(safe-area-inset-top) reporting'
     );
+
+    // 4. Hub-to-Team parity & zero code duplication: `build-nfl-portal.mjs` must match `index.html` status bar (`default`/`black`,
+    //    NEVER `black-translucent`) and both portal + worker must import shared single-source manifest/CSP helpers!
+    const portalBuilder = fs.readFileSync(path.join(rootDir, 'scripts/build-nfl-portal.mjs'), 'utf8');
+    const workerSrc = fs.readFileSync(path.join(rootDir, 'worker/nfl-teams-worker.js'), 'utf8');
+    assert.equal(
+      portalBuilder.includes('black-translucent'),
+      false,
+      'scripts/build-nfl-portal.mjs must NEVER emit black-translucent (causes iOS 26 frosted top edge curtain on nfl.joshal.com)'
+    );
+    assert.ok(
+      portalBuilder.includes('buildNflHubManifest') && workerSrc.includes('buildNflHubManifest'),
+      'Both build-nfl-portal.mjs and nfl-teams-worker.js must share single-source buildNflHubManifest()'
+    );
+    assert.equal(
+      workerSrc.includes('function buildNflHubManifest('),
+      false,
+      'nfl-teams-worker.js must import buildNflHubManifest() from teamRegistry.js instead of duplicating it'
+    );
+    assert.equal(
+      workerSrc.includes('function buildKeySyncCspHeader('),
+      false,
+      'nfl-teams-worker.js must import buildKeySyncCspHeader() from sharedApiKeyStore.js instead of duplicating it'
+    );
+    assert.ok(
+      html.includes('__TEAM_THEME_COLORS__') && html.includes('metaStatusBarStyle'),
+      'index.html must hydrate saved dark/light theme & status bar synchronously before first paint'
+    );
   }
 );
 

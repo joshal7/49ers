@@ -15,13 +15,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { ALL_NFL_TEAMS } from '../src/config/teamRegistry.js';
+import { ALL_NFL_TEAMS, buildNflHubManifest } from '../src/config/teamRegistry.js';
 import {
   SHARED_GEMINI_KEY_CHANNEL,
   SHARED_GEMINI_KEY_STORAGE_KEY,
   SHARED_KEY_HASH_PARAM,
-  getAllowedNflTeamOrigins
+  buildKeySyncCspHeader,
+  getKeySyncAllowedOrigins
 } from '../src/services/sharedApiKeyStore.js';
+
+export { getKeySyncAllowedOrigins };
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const DIST = path.join(ROOT, 'dist-nfl');
@@ -29,7 +32,16 @@ const CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
 
 export const PORTAL_CONFERENCES = ['NFC', 'AFC'];
 export const PORTAL_DIVISIONS = ['North', 'South', 'East', 'West'];
-const ASSET_VER = '5';
+const ASSET_VER = '6';
+
+function resolveCurrentSwRegisterUrl() {
+  try {
+    const appJs = fs.readFileSync(path.join(ROOT, 'src', 'app.js'), 'utf8');
+    const m = appJs.match(/\.register\(\s*['"](\.\/sw\.js(?:\?v=\d+)?)['"]/);
+    if (m && m[1]) return m[1];
+  } catch {}
+  return './sw.js';
+}
 
 const NFL_MONOGRAM_PATHS = {
   N: 'M -124,-48 L -95,-48 L -68,7 L -68,-34 L -74,-34 L -74,-48 L -42,-48 L -42,-34 L -48,-34 L -48,48 L -71,48 L -98,-7 L -98,34 L -92,34 L -92,48 L -124,48 L -124,34 L -118,34 L -118,-34 L -124,-34 Z',
@@ -561,15 +573,17 @@ function renderConferenceColumn({ conference, divisions }) {
 
 function buildIndexHtml(grouped) {
   const conferencesHtml = grouped.map(renderConferenceColumn).join('\n        ');
+  const swRegisterUrl = resolveCurrentSwRegisterUrl();
 
   return `<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <meta name="theme-color" content="#080B10" id="metaThemeColor">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" id="metaStatusBarStyle">
   <meta name="apple-mobile-web-app-title" content="NFL">
   <meta name="description" content="NFL Team Hub — All 32 NFC and AFC franchise hubs.">
   <title>NFL Team Hub</title>
@@ -586,6 +600,8 @@ function buildIndexHtml(grouped) {
         document.documentElement.setAttribute('data-theme', theme);
         var m = document.getElementById('metaThemeColor');
         if (m) m.setAttribute('content', theme === 'light' ? '#F5F6FA' : '#080B10');
+        var s = document.getElementById('metaStatusBarStyle');
+        if (s) s.setAttribute('content', theme === 'light' ? 'default' : 'black');
       } catch (e) {}
     })();
   </script>
@@ -1309,6 +1325,8 @@ function buildIndexHtml(grouped) {
           document.documentElement.setAttribute('data-theme', next);
           var m = document.getElementById('metaThemeColor');
           if (m) m.setAttribute('content', next === 'light' ? '#F5F6FA' : '#080B10');
+          var s = document.getElementById('metaStatusBarStyle');
+          if (s) s.setAttribute('content', next === 'light' ? 'default' : 'black');
           try { localStorage.setItem('nfl_joshal_theme_v1', next); } catch (e) {}
         });
       }
@@ -1318,7 +1336,7 @@ function buildIndexHtml(grouped) {
         var isHubProd = host === 'nfl.joshal.com' || host === 'nfl-joshal.pages.dev' || host.endsWith('.nfl-joshal.pages.dev');
         if (isHubProd && 'serviceWorker' in navigator) {
           window.addEventListener('load', function () {
-            navigator.serviceWorker.register('./sw.js?v=118', { updateViaCache: 'none' }).catch(function () {});
+            navigator.serviceWorker.register(${JSON.stringify(swRegisterUrl)}, { updateViaCache: 'none' }).catch(function () {});
           }, { once: true });
         }
       } catch (e) {}
@@ -1327,11 +1345,6 @@ function buildIndexHtml(grouped) {
 </body>
 </html>
 `;
-}
-
-export function getKeySyncAllowedOrigins() {
-  const fromRegistry = ALL_NFL_TEAMS.map(t => `https://${t.slug}.joshal.com`);
-  return Array.from(new Set([...getAllowedNflTeamOrigins(), ...fromRegistry, 'https://nfl.joshal.com'])).sort();
 }
 
 export function buildKeySyncVaultHtml({ extraAllowedOrigins = [] } = {}) {
@@ -1477,24 +1490,10 @@ export function writeNflPortalAssetsToDir(
   fs.writeFileSync(path.join(targetDir, 'key-sync.html'), buildKeySyncVaultHtml(), 'utf8');
 
   if (writeManifestAndHeaders) {
-    const manifest = {
-      name: 'NFL Team Hub',
-      short_name: 'NFL',
-      description: 'All 32 NFC and AFC franchise hubs',
-      start_url: '/',
-      scope: '/',
-      display: 'standalone',
-      background_color: '#080B10',
-      theme_color: '#080B10',
-      icons: [
-        { src: `./${appleTouchIconFilename}`, sizes: '180x180', type: 'image/png' },
-        { src: './nfl-icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
-        { src: './nfl-icon.svg', sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
-      ]
-    };
+    const manifest = buildNflHubManifest({ appleTouchIconSrc: `./${appleTouchIconFilename}` });
     fs.writeFileSync(path.join(targetDir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n', 'utf8');
 
-    const frameAncestorsList = ["'self'", ...getKeySyncAllowedOrigins()].join(' ');
+    const keySyncCsp = buildKeySyncCspHeader();
     const headersTxt = [
       '/*',
       '  X-Content-Type-Options: nosniff',
@@ -1507,11 +1506,11 @@ export function writeNflPortalAssetsToDir(
       '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
       '',
       '/key-sync',
-      `  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors ${frameAncestorsList}`,
+      `  Content-Security-Policy: ${keySyncCsp}`,
       '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
       '',
       '/key-sync.html',
-      `  Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; frame-ancestors ${frameAncestorsList}`,
+      `  Content-Security-Policy: ${keySyncCsp}`,
       '  Cache-Control: public, max-age=300, stale-while-revalidate=3600',
       ''
     ].join('\n');
