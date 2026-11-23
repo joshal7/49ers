@@ -41,7 +41,7 @@ import {
   buildTeamPlayerStatsModel,
   buildWeeklySnapMatrixModel,
   lookupRootingGameLiveScore
-} from '../engine/teamDeepDiveEngine.js';
+} from '../engine/teamDeepDiveEngine.js?v=2';
 import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatCompactDollars } from '../engine/capSimulator.js';

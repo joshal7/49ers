@@ -7,7 +7,7 @@ import { normalizeScheduleGameItem, resolveCompleteScheduleModel } from '../engi
 import {
   extractLiveScoreboardMap,
   mergeTransactionsLedgers
-} from '../engine/teamDeepDiveEngine.js';
+} from '../engine/teamDeepDiveEngine.js?v=2';
 import {
   canonicalInjuryPlayerKey,
   collapseInitialDots,

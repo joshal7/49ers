@@ -55,10 +55,35 @@ function round2(n) {
 }
 
 function fmtSigned(n, decimals = 2) {
-  const v = Number(n);
-  if (!Number.isFinite(v)) return '—';
+  const raw = Number(n);
+  if (!Number.isFinite(raw)) return '—';
+  const eps = 0.5 * Math.pow(10, -decimals);
+  const v = Math.abs(raw) < eps ? 0 : raw;
   const fixed = v.toFixed(decimals);
   return v > 0 ? `+${fixed}` : fixed;
+}
+
+export function classifySeasonEpaTone(epaVal, category = 'rec') {
+  const v = Number(epaVal);
+  if (!Number.isFinite(v)) return 'neutral';
+  if (category === 'pass') {
+    if (v >= 15) return 'pos';
+    if (v <= -10) return 'neg';
+    return 'neutral';
+  }
+  if (v >= 5) return 'pos';
+  if (v <= -3) return 'neg';
+  return 'neutral';
+}
+
+export function computeDefensiveImpactScore(w = {}) {
+  const tkl = Number(w.tkl || 0);
+  const sck = Number(w.sck || 0);
+  const tfl = Number(w.tfl || 0);
+  const qbh = Number(w.qbh || 0);
+  const ints = Number(w.dInt || 0);
+  const pd = Number(w.pd || 0);
+  return round1(tkl + sck * 2 + tfl * 1.5 + qbh + ints * 3 + pd);
 }
 
 // =============================================================================
@@ -78,6 +103,76 @@ export function resolvePlayerGameLogRole(position = '', weeklyLog = []) {
     return 'def';
   }
   return 'rec';
+}
+
+function getTrendMetricCatalogForRole(role, isPunter = false) {
+  if (role === 'qb') {
+    return [
+      { key: 'epa_play', label: 'EPA/Play', jargonKey: 'epa', signed: true, fmt: v => fmtSigned(v, 2), extract: w => {
+        const plays = Number(w.pAtt || 0) + Number(w.pSck || 0) + Number(w.rAtt || 0);
+        return plays > 0 ? round2((Number(w.pEpa || 0) + Number(w.rEpa || 0)) / plays) : 0;
+      } },
+      { key: 'pass_yds', label: 'Pass Yds', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.pYds || 0) },
+      { key: 'cmp_pct', label: 'Comp %', jargonKey: null, signed: false, fmt: v => `${round1(v)}%`, extract: w => Number(w.pAtt || 0) > 0 ? round1((Number(w.pCmp || 0) / Number(w.pAtt || 0)) * 100) : 0 },
+      { key: 'pass_td', label: 'Pass TDs', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.pTd || 0) },
+      { key: 'snap_pct', label: 'Snap %', jargonKey: null, signed: false, fmt: v => `${Math.round(v)}%`, extract: w => Math.round(Number(w.oPct || 0)) }
+    ];
+  }
+  if (role === 'rb') {
+    return [
+      { key: 'rush_yds', label: 'Rush Yds', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.rYds || 0) },
+      { key: 'rec_yds', label: 'Rec Yds', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.recYds || 0) },
+      { key: 'epa_touch', label: 'EPA/Touch', jargonKey: 'epa', signed: true, fmt: v => fmtSigned(v, 2), extract: w => {
+        const touches = Number(w.rAtt || 0) + Number(w.rec || 0);
+        return touches > 0 ? round2((Number(w.rEpa || 0) + Number(w.recEpa || 0)) / touches) : 0;
+      } },
+      { key: 'td', label: 'TDs', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.rTd || 0) + Number(w.recTd || 0) },
+      { key: 'snap_pct', label: 'Snap %', jargonKey: null, signed: false, fmt: v => `${Math.round(v)}%`, extract: w => Math.round(Number(w.oPct || 0)) }
+    ];
+  }
+  if (role === 'rec') {
+    return [
+      { key: 'rec_yds', label: 'Rec Yds', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.recYds || 0) },
+      { key: 'receptions', label: 'Receptions', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.rec || 0) },
+      { key: 'targets', label: 'Targets', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.tgt || 0) },
+      { key: 'epa_tgt', label: 'EPA/Tgt', jargonKey: 'epa', signed: true, fmt: v => fmtSigned(v, 2), extract: w => Number(w.tgt || 0) > 0 ? round2(Number(w.recEpa || 0) / Number(w.tgt || 0)) : 0 },
+      { key: 'td', label: 'TDs', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.recTd || 0) + Number(w.rTd || 0) },
+      { key: 'snap_pct', label: 'Snap %', jargonKey: null, signed: false, fmt: v => `${Math.round(v)}%`, extract: w => Math.round(Number(w.oPct || 0)) }
+    ];
+  }
+  if (role === 'ol') {
+    return [
+      { key: 'off_pct', label: 'Off Snap %', jargonKey: null, signed: false, fmt: v => `${Math.round(v)}%`, extract: w => Math.round(Number(w.oPct || 0)) },
+      { key: 'off_snaps', label: 'Off Snaps', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.oSn || 0) },
+      { key: 'st_snaps', label: 'ST Snaps', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.sSn || 0) }
+    ];
+  }
+  if (role === 'st') {
+    if (isPunter) {
+      return [
+        { key: 'punt_avg', label: 'Punt Avg', jargonKey: null, signed: false, fmt: v => round1(v).toFixed(1), extract: w => Number(w.ptA || 0) > 0 ? round1(Number(w.ptY || 0) / Number(w.ptA || 0)) : 0 },
+        { key: 'punts', label: 'Punts', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.ptA || 0) },
+        { key: 'in20', label: 'In-20', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.pt20 || 0) },
+        { key: 'snap_pct', label: 'ST Snap %', jargonKey: null, signed: false, fmt: v => `${Math.round(v)}%`, extract: w => Math.round(Number(w.sPct || 0)) }
+      ];
+    }
+    return [
+      { key: 'fg_made', label: 'FG Made', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.fgM || 0) },
+      { key: 'fg_long', label: 'Long FG', jargonKey: null, signed: false, fmt: v => `${Math.round(v)}y`, extract: w => Number(w.fgL || 0) },
+      { key: 'xp_made', label: 'XP Made', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.patM || 0) },
+      { key: 'snap_pct', label: 'ST Snap %', jargonKey: null, signed: false, fmt: v => `${Math.round(v)}%`, extract: w => Math.round(Number(w.sPct || 0)) }
+    ];
+  }
+  // Defense
+  return [
+    { key: 'def_impact', label: 'Impact', jargonKey: 'defensive_impact_score', signed: false, fmt: v => round1(v).toFixed(1).replace(/\.0$/, ''), extract: w => computeDefensiveImpactScore(w) },
+    { key: 'tackles', label: 'Tackles', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.tkl || 0) },
+    { key: 'sacks', label: 'Sacks', jargonKey: null, signed: false, fmt: v => round1(v).toFixed(1).replace(/\.0$/, ''), extract: w => round1(w.sck || 0) },
+    { key: 'tfl', label: 'TFL', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.tfl || 0) },
+    { key: 'qbh', label: 'QB Hits', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.qbh || 0) },
+    { key: 'pd_int', label: 'PD + INT', jargonKey: null, signed: false, fmt: v => String(Math.round(v)), extract: w => Number(w.pd || 0) + Number(w.dInt || 0) },
+    { key: 'snap_pct', label: 'Snap %', jargonKey: null, signed: false, fmt: v => `${Math.round(v)}%`, extract: w => Math.round(Number(w.dPct || 0)) }
+  ];
 }
 
 function formatGameLogRowByRole(w, role) {
@@ -106,8 +201,7 @@ function formatGameLogRowByRole(w, role) {
         `${td}/${ints}`,
         epaPlay !== null ? fmtSigned(epaPlay, 2) : '—'
       ],
-      highlightTone: epaPlay === null ? 'neutral' : epaPlay >= 0.1 ? 'pos' : epaPlay <= -0.1 ? 'neg' : 'neutral',
-      trendValue: epaPlay !== null ? round2(epaPlay) : 0
+      highlightTone: epaPlay === null ? 'neutral' : epaPlay >= 0.15 ? 'pos' : epaPlay <= -0.15 ? 'neg' : 'neutral'
     };
   }
 
@@ -128,8 +222,7 @@ function formatGameLogRowByRole(w, role) {
         String(td),
         epaTouch !== null ? fmtSigned(epaTouch, 2) : '—'
       ],
-      highlightTone: epaTouch === null ? 'neutral' : epaTouch >= 0.08 ? 'pos' : epaTouch <= -0.1 ? 'neg' : 'neutral',
-      trendValue: rYds + recYds
+      highlightTone: epaTouch === null ? 'neutral' : epaTouch >= 0.12 ? 'pos' : epaTouch <= -0.12 ? 'neg' : 'neutral'
     };
   }
 
@@ -147,8 +240,7 @@ function formatGameLogRowByRole(w, role) {
         String(td),
         epa !== null ? fmtSigned(epa, 2) : '—'
       ],
-      highlightTone: epa === null ? 'neutral' : epa >= 0.15 ? 'pos' : epa <= -0.1 ? 'neg' : 'neutral',
-      trendValue: yds
+      highlightTone: epa === null ? 'neutral' : epa >= 0.25 ? 'pos' : epa <= -0.2 ? 'neg' : 'neutral'
     };
   }
 
@@ -163,8 +255,7 @@ function formatGameLogRowByRole(w, role) {
         offPct > 0 ? `${Math.round(offPct)}%` : '—',
         stSnaps > 0 ? `${stSnaps} (${Math.round(stPct)}%)` : '0'
       ],
-      highlightTone: offPct >= 90 ? 'pos' : 'neutral',
-      trendValue: Math.round(offPct)
+      highlightTone: offPct >= 90 ? 'pos' : 'neutral'
     };
   }
 
@@ -181,29 +272,29 @@ function formatGameLogRowByRole(w, role) {
       cells: isPunter
         ? [snapStr, String(punts), punts > 0 ? (pYds / punts).toFixed(1) : '—', String(pIn20)]
         : [snapStr, fgA > 0 ? `${fgM}/${fgA}` : '—', patA > 0 ? `${patM}/${patA}` : '—', Number(w.fgL || 0) > 0 ? `${w.fgL}y` : '—'],
-      highlightTone: isPunter ? (pIn20 >= 2 ? 'pos' : 'neutral') : fgA > 0 && fgM === fgA ? 'pos' : fgA > fgM ? 'neg' : 'neutral',
-      trendValue: isPunter ? (punts > 0 ? round1(pYds / punts) : 0) : fgM * 3 + patM
+      highlightTone: isPunter ? (pIn20 >= 2 ? 'pos' : 'neutral') : fgA > 0 && fgM === fgA ? 'pos' : fgA > fgM ? 'neg' : 'neutral'
     };
   }
 
-  // Defense
+  // Defense (now includes visible Impact column matching the sparkline!)
   const tkl = Number(w.tkl || 0);
   const sck = Number(w.sck || 0);
   const tfl = Number(w.tfl || 0);
   const qbh = Number(w.qbh || 0);
   const pd = Number(w.pd || 0);
   const ints = Number(w.dInt || 0);
-  const splash = sck > 0 || ints > 0 || tfl >= 2;
+  const impact = computeDefensiveImpactScore(w);
+  const impactStr = impact.toFixed(1).replace(/\.0$/, '');
   return {
     cells: [
       snapStr,
       String(tkl),
       sck > 0 ? String(round1(sck)) : '0',
       qbh > 0 || tfl > 0 ? `${tfl}/${qbh}` : '0/0',
-      ints > 0 ? `${ints}I/${pd}` : String(pd)
+      ints > 0 ? `${ints}I/${pd}` : String(pd),
+      impactStr
     ],
-    highlightTone: splash ? 'pos' : 'neutral',
-    trendValue: tkl + sck * 2 + qbh + ints * 3 + pd
+    highlightTone: impact >= 8 ? 'pos' : 'neutral'
   };
 }
 
@@ -317,7 +408,7 @@ function summarizeSplitBucket(rows, role) {
 
 export function buildPlayerWeeklyGameLogModel(
   player = {},
-  { schedule = [], teamAbbr = 'SF', seasonYear = 2026 } = {}
+  { schedule = [], teamAbbr = 'SF', seasonYear = 2026, trendMetric = '' } = {}
 ) {
   const rawLog = Array.isArray(player?.weeklyLog2026)
     ? player.weeklyLog2026
@@ -367,22 +458,33 @@ export function buildPlayerWeeklyGameLogModel(
     .sort((a, b) => b.wk - a.wk); // Newest week first for mobile scanning
 
   const isPunter = role === 'st' && enriched.some(w => Number(w.ptA || 0) > 0) && !enriched.some(w => Number(w.fgA || 0) > 0);
-  const headersByRole = {
-    qb: ['Game', 'Res', 'Snap', 'C/A', 'Yds', 'TD/I', 'EPA/p'],
-    rb: ['Game', 'Res', 'Snap', 'Rush', 'Rec', 'TD', 'EPA/t'],
-    rec: ['Game', 'Res', 'Snap', 'Rec/T', 'Yds', 'TD', 'EPA/t'],
-    ol: ['Game', 'Res', 'Off Sn', 'Off %', 'ST'],
-    st: isPunter ? ['Game', 'Res', 'Snap', 'Punts', 'Avg', 'In20'] : ['Game', 'Res', 'Snap', 'FG', 'XP', 'Lng'],
-    def: ['Game', 'Res', 'Snap', 'Tkl', 'Sck', 'TFL/QBH', 'PD/I']
+  const headerDefsByRole = {
+    qb: [
+      { label: 'Game' }, { label: 'Res' }, { label: 'Snap' }, { label: 'C/A' },
+      { label: 'Yds' }, { label: 'TD/I' }, { label: 'EPA/p', jargonKey: 'epa' }
+    ],
+    rb: [
+      { label: 'Game' }, { label: 'Res' }, { label: 'Snap' }, { label: 'Rush' },
+      { label: 'Rec' }, { label: 'TD' }, { label: 'EPA/t', jargonKey: 'epa' }
+    ],
+    rec: [
+      { label: 'Game' }, { label: 'Res' }, { label: 'Snap' }, { label: 'Rec/T' },
+      { label: 'Yds' }, { label: 'TD' }, { label: 'EPA/t', jargonKey: 'epa' }
+    ],
+    ol: [{ label: 'Game' }, { label: 'Res' }, { label: 'Off Sn' }, { label: 'Off %' }, { label: 'ST' }],
+    st: isPunter
+      ? [{ label: 'Game' }, { label: 'Res' }, { label: 'Snap' }, { label: 'Punts' }, { label: 'Avg' }, { label: 'In20' }]
+      : [{ label: 'Game' }, { label: 'Res' }, { label: 'Snap' }, { label: 'FG' }, { label: 'XP' }, { label: 'Lng' }],
+    def: [
+      { label: 'Game' }, { label: 'Res' }, { label: 'Snap' }, { label: 'Tkl' },
+      { label: 'Sck' }, { label: 'TFL/QBH' }, { label: 'PD/I' },
+      { label: 'Impact', jargonKey: 'defensive_impact_score' }
+    ]
   };
-  const trendLabelByRole = {
-    qb: 'EPA/Play Trend',
-    rb: 'Scrimmage Yds Trend',
-    rec: 'Receiving Yds Trend',
-    ol: 'Offense Snap % Trend',
-    st: isPunter ? 'Punt Avg Trend' : 'Kicking Points Trend',
-    def: 'Defensive Impact Trend'
-  };
+  const headerDefs = headerDefsByRole[role] || headerDefsByRole.rec;
+  const trendCatalog = getTrendMetricCatalogForRole(role, isPunter);
+  const activeMetric =
+    trendCatalog.find(m => m.key === trendMetric) || trendCatalog[0];
 
   const rows = enriched.map(w => {
     const formatted = formatGameLogRowByRole(w, role);
@@ -397,13 +499,17 @@ export function buildPlayerWeeklyGameLogModel(
       espnGameId: w.gid,
       cells: formatted.cells,
       highlightTone: formatted.highlightTone,
-      trendValue: formatted.trendValue
+      trendValue: activeMetric ? activeMetric.extract(w) : 0
     };
   });
 
-  // Chronological trend series (up to latest 8 weeks)
+  // Full chronological trend series (all played regular-season weeks W1 -> latest)
   const chronoRows = [...rows].reverse();
-  const trendSeries = chronoRows.slice(-8).map(r => ({ wk: r.wk, val: r.trendValue }));
+  const trendSeries = chronoRows.map(r => ({
+    wk: r.wk,
+    val: r.trendValue,
+    disp: activeMetric ? activeMetric.fmt(r.trendValue) : String(r.trendValue)
+  }));
 
   // 5 Core Situational Splits (strictly factual, omitting empty buckets)
   const splitDefs = [
@@ -423,8 +529,23 @@ export function buildPlayerWeeklyGameLogModel(
   return {
     seasonYear,
     role,
-    headers: headersByRole[role] || headersByRole.rec,
-    trendLabel: trendLabelByRole[role] || 'Weekly Trend',
+    headers: headerDefs.map(h => h.label),
+    headerDefs,
+    trendLabel: activeMetric ? activeMetric.label : 'Weekly Trend',
+    activeTrendMetric: activeMetric
+      ? {
+          key: activeMetric.key,
+          label: activeMetric.label,
+          jargonKey: activeMetric.jargonKey || null,
+          signed: Boolean(activeMetric.signed),
+          fmt: activeMetric.fmt
+        }
+      : null,
+    trendMetrics: trendCatalog.map(m => ({
+      key: m.key,
+      label: m.label,
+      jargonKey: m.jargonKey || null
+    })),
     trendSeries,
     rows,
     splits,
@@ -513,7 +634,8 @@ export function buildTeamPlayerStatsModel(
         tds: Number(ps.tds || 0),
         tdsDisp: `${ps.tds || 0}/${ps.ints || 0}`,
         epa: round1(ps.epa || 0),
-        epaDisp: fmtSigned(ps.epa || 0, 1)
+        epaDisp: fmtSigned(ps.epa || 0, 1),
+        epaTone: classifySeasonEpaTone(ps.epa || 0, 'pass')
       });
     } else if (catDef.key === 'rush') {
       const ru = st.rushing || {};
@@ -533,7 +655,8 @@ export function buildTeamPlayerStatsModel(
         tds: Number(ru.tds || 0),
         tdsDisp: String(ru.tds || 0),
         epa: round1(ru.epa || 0),
-        epaDisp: fmtSigned(ru.epa || 0, 1)
+        epaDisp: fmtSigned(ru.epa || 0, 1),
+        epaTone: classifySeasonEpaTone(ru.epa || 0, 'rush')
       });
     } else if (catDef.key === 'rec') {
       const rc = st.receiving || {};
@@ -552,7 +675,8 @@ export function buildTeamPlayerStatsModel(
         tds: Number(rc.tds || 0),
         tdsDisp: String(rc.tds || 0),
         epa: round1(rc.epa || 0),
-        epaDisp: fmtSigned(rc.epa || 0, 1)
+        epaDisp: fmtSigned(rc.epa || 0, 1),
+        epaTone: classifySeasonEpaTone(rc.epa || 0, 'rec')
       });
     } else if (catDef.key === 'def') {
       const df = st.defense || {};
@@ -574,6 +698,7 @@ export function buildTeamPlayerStatsModel(
         tflDisp: String(tfl),
         sacks: sck,
         sacksDisp: sck > 0 ? sck.toFixed(1) : '0',
+        sacksTone: sck >= 3 ? 'pos' : 'neutral',
         qbHits: qbh,
         qbHitsDisp: String(qbh),
         intsPd: ints * 10 + pd,
@@ -603,7 +728,7 @@ export function buildTeamPlayerStatsModel(
 
 export function buildWeeklySnapMatrixModel(
   players = [],
-  { unit = 'offense', maxWeeks = 8 } = {}
+  { unit = 'offense', maxWeeks = 22 } = {}
 ) {
   const isDef = String(unit || 'offense').toLowerCase() === 'defense';
   const pctField = isDef ? 'dPct' : 'oPct';

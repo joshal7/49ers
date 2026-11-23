@@ -8,7 +8,7 @@
  * 5. contract  — Multi-Year OverTheCap Breakdown + Pre/Post-June 1 Cut/Trade/Restructure Calculator
  */
 
-import { esc, escJargon, jargonTerm, formatRelativeAge, playProbBadgeClass, resolvePlayerPlayBadgeLabel, rankBadgeClass, renderExpandableSummaryHtml, renderPlayerAvatarHtml, renderSalientThumbHtml, renderTweetLinkedArticleCardHtml, renderMiniMeterHtml } from './uiHelpers.js';
+import { esc, escJargon, jargonTerm, jargonInfoIcon, formatRelativeAge, playProbBadgeClass, resolvePlayerPlayBadgeLabel, rankBadgeClass, renderExpandableSummaryHtml, renderPlayerAvatarHtml, renderSalientThumbHtml, renderTweetLinkedArticleCardHtml, renderMiniMeterHtml } from './uiHelpers.js';
 import { resolveSalientCardVisual } from '../engine/salientMediaEngine.js';
 import { iconSvg } from './icons.js';
 import { getActiveTeamConfig } from '../config/teamRegistry.js';
@@ -16,7 +16,7 @@ import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatDollars, formatOtcDollars, formatCompactDollars, formatCapActionLabel } from '../engine/capSimulator.js';
 import { resolveCareerTableSchema } from '../engine/statsLeaderboardEngine.js';
-import { buildPlayerWeeklyGameLogModel } from '../engine/teamDeepDiveEngine.js';
+import { buildPlayerWeeklyGameLogModel } from '../engine/teamDeepDiveEngine.js?v=2';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   isUrgentBreakingBadge,
@@ -407,6 +407,8 @@ export function renderPlayerDossierSheetHtml({
   activeTab = 'overview',
   statsMode = '2026', // 'gamelog' | '2026' | 'career'
   gameLogSub = 'games', // 'games' | 'splits'
+  gameLogTrendMetric = '',
+  gameLogMetricPickerOpen = false,
   txScenario = 'cut',
   mentionsSortMode = 'top', // 'top' | 'latest'
   rawStream = [],
@@ -471,6 +473,8 @@ export function renderPlayerDossierSheetHtml({
   } else if (activeTab === 'stats') {
     contentHtml = renderStatsTab(effectivePlayer, statsMode, {
       gameLogSub,
+      gameLogTrendMetric,
+      gameLogMetricPickerOpen,
       appData,
       teamContext
     });
@@ -742,37 +746,100 @@ function renderPlayerStatTableRowsHtml(rows = [], playerId = '') {
     .join('');
 }
 
-function renderGameLogSparklineSvg(series = []) {
+function renderGameLogSparklineSvg(series = [], activeMetric = null) {
   if (!Array.isArray(series) || series.length < 2) return '';
   const vals = series.map(x => Number(x.val) || 0);
-  const min = Math.min(...vals);
-  const max = Math.max(...vals);
-  const span = Math.max(0.01, max - min);
-  const w = 280;
-  const h = 38;
-  const pad = 6;
+  const rawMin = Math.min(...vals);
+  const rawMax = Math.max(...vals);
+  const isSigned = Boolean(activeMetric?.signed);
+  // Give a clean vertical margin so flat series or extremes don't hug SVG bounds
+  const span = Math.max(isSigned ? 0.08 : 1, rawMax - rawMin);
+  const domainMin = isSigned ? Math.min(rawMin, 0) : rawMin;
+  const domainMax = isSigned ? Math.max(rawMax, 0) : rawMax;
+  const effSpan = Math.max(span, domainMax - domainMin);
+
+  const w = 300;
+  const h = 84;
+  const padL = 36;
+  const padR = 34;
+  const padT = 11;
+  const padB = 18;
+  const plotW = w - padL - padR;
+  const plotH = h - padT - padB;
+
+  const yFor = v => padT + plotH - ((v - domainMin) / effSpan) * plotH;
   const pts = vals.map((v, i) => [
-    pad + (i / (vals.length - 1)) * (w - pad * 2),
-    h - pad - ((v - min) / span) * (h - pad * 2)
+    padL + (i / (vals.length - 1)) * plotW,
+    yFor(v)
   ]);
+
   const poly = pts.map(pt => `${pt[0].toFixed(1)},${pt[1].toFixed(1)}`).join(' ');
+  const baseY = padT + plotH;
+  const areaPath = `M ${pts[0][0].toFixed(1)},${baseY.toFixed(1)} L ${pts
+    .map(pt => `${pt[0].toFixed(1)},${pt[1].toFixed(1)}`)
+    .join(' L ')} L ${pts[pts.length - 1][0].toFixed(1)},${baseY.toFixed(1)} Z`;
+
+  const hasZeroLine = isSigned && domainMin < 0 && domainMax > 0;
+  const zeroY = hasZeroLine ? yFor(0) : null;
+  const fmtVal = v => (activeMetric?.fmt ? activeMetric.fmt(v) : String(v));
+
+  const lastPt = pts[pts.length - 1];
+  const lastVal = vals[vals.length - 1];
+  const lastDisp = series[series.length - 1]?.disp ?? fmtVal(lastVal);
+  const lastDotCls = isSigned
+    ? lastVal >= 0.12
+      ? 'gamelog-spark-dot-pos'
+      : lastVal <= -0.12
+        ? 'gamelog-spark-dot-neg'
+        : 'gamelog-spark-dot-mid'
+    : 'gamelog-spark-dot-pos';
+
+  const firstWk = series[0]?.wk;
+  const midWk = series[Math.floor(series.length / 2)]?.wk;
+  const lastWk = series[series.length - 1]?.wk;
+
   const dots = pts
     .map(
       (pt, idx) =>
-        `<circle cx="${pt[0].toFixed(1)}" cy="${pt[1].toFixed(1)}" r="${idx === pts.length - 1 ? 3.4 : 2.2}" class="${idx === pts.length - 1 ? 'gamelog-spark-dot-last' : 'gamelog-spark-dot'}" />`
+        `<circle cx="${pt[0].toFixed(1)}" cy="${pt[1].toFixed(1)}" r="${idx === pts.length - 1 ? 3.8 : 2.3}" class="${idx === pts.length - 1 ? lastDotCls : 'gamelog-spark-dot'}" />`
     )
     .join('');
+
   return `
     <div class="gamelog-spark-wrap">
-      <svg viewBox="0 0 ${w} ${h}" class="gamelog-spark-svg" role="img" aria-label="Weekly performance trend">
+      <svg viewBox="0 0 ${w} ${h}" class="gamelog-spark-svg" role="img" aria-label="${esc(activeMetric?.label || 'Weekly')} trend">
+        <defs>
+          <linearGradient id="glSparkFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--gold)" stop-opacity="0.24" />
+            <stop offset="100%" stop-color="var(--gold)" stop-opacity="0.01" />
+          </linearGradient>
+        </defs>
+        <line x1="${padL}" y1="${padT}" x2="${w - padR}" y2="${padT}" class="gamelog-spark-grid" />
+        <line x1="${padL}" y1="${baseY}" x2="${w - padR}" y2="${baseY}" class="gamelog-spark-grid" />
+        ${
+          hasZeroLine
+            ? `<line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${w - padR}" y2="${zeroY.toFixed(1)}" class="gamelog-spark-zero" />`
+            : ''
+        }
+        <path d="${areaPath}" fill="url(#glSparkFill)" />
         <polyline fill="none" class="gamelog-spark-line" points="${poly}" />
         ${dots}
+        <text x="${padL - 5}" y="${padT + 3}" text-anchor="end" class="gamelog-spark-axis">${esc(fmtVal(domainMax))}</text>
+        <text x="${padL - 5}" y="${baseY + 3}" text-anchor="end" class="gamelog-spark-axis">${esc(fmtVal(domainMin))}</text>
+        <text x="${(lastPt[0] + 6).toFixed(1)}" y="${Math.max(padT + 4, Math.min(baseY + 2, lastPt[1] + 3)).toFixed(1)}" text-anchor="start" class="gamelog-spark-latest ${lastDotCls}">${esc(lastDisp)}</text>
+        <text x="${padL}" y="${h - 2}" text-anchor="start" class="gamelog-spark-wk">W${firstWk}</text>
+        ${series.length >= 5 ? `<text x="${(padL + plotW / 2).toFixed(1)}" y="${h - 2}" text-anchor="middle" class="gamelog-spark-wk">W${midWk}</text>` : ''}
+        <text x="${w - padR}" y="${h - 2}" text-anchor="end" class="gamelog-spark-wk">W${lastWk}</text>
       </svg>
     </div>
   `;
 }
 
-function renderStatsTab(p, statsMode, { gameLogSub = 'games', appData = null, teamContext = null } = {}) {
+function renderStatsTab(
+  p,
+  statsMode,
+  { gameLogSub = 'games', gameLogTrendMetric = '', gameLogMetricPickerOpen = false, appData = null, teamContext = null } = {}
+) {
   const seasons = p.careerSeasons || [];
   const profile = p.statProfile2026 || null;
   const seasonYr = Number(appData?.meta?.seasonYear) || 2026;
@@ -798,7 +865,8 @@ function renderStatsTab(p, statsMode, { gameLogSub = 'games', appData = null, te
     const logModel = buildPlayerWeeklyGameLogModel(p, {
       schedule: scheduleForLog,
       teamAbbr,
-      seasonYear: seasonYr
+      seasonYear: seasonYr,
+      trendMetric: gameLogTrendMetric
     });
 
     if (!logModel.hasGames) {
@@ -811,27 +879,53 @@ function renderStatsTab(p, statsMode, { gameLogSub = 'games', appData = null, te
     }
 
     const activeSub = gameLogSub === 'splits' && logModel.splits.length > 0 ? 'splits' : 'games';
-    const sparkSvg = renderGameLogSparklineSvg(logModel.trendSeries);
+    const activeMetric = logModel.activeTrendMetric;
+    const sparkSvg = renderGameLogSparklineSvg(logModel.trendSeries, activeMetric);
+    const hasMultipleMetrics = (logModel.trendMetrics || []).length > 1;
+    const metricJargonHtml = activeMetric?.jargonKey ? jargonInfoIcon(activeMetric.jargonKey) : '';
 
     return `
       ${modeToggle}
-      <section class="card gamelog-summary-card" data-player-gamelog="true">
+      <section class="card gamelog-summary-card" data-player-gamelog="true" data-gamelog-metric="${esc(activeMetric?.key || '')}">
         <div class="gamelog-header-row">
-          <div>
-            <div class="card-eyebrow">${esc(logModel.trendLabel)}</div>
-            <div class="gamelog-sub-meta">${logModel.rows.length} ${logModel.rows.length === 1 ? 'game' : 'games'} logged</div>
+          <div class="gamelog-metric-head">
+            <div class="gamelog-metric-title-line">
+              ${
+                hasMultipleMetrics
+                  ? `<button type="button" class="gamelog-metric-trigger ${gameLogMetricPickerOpen ? 'is-open' : ''}" data-action="toggle-gamelog-metric-picker" aria-expanded="${gameLogMetricPickerOpen ? 'true' : 'false'}" title="Tap to change trend metric"><span>${esc(logModel.trendLabel)}</span><span class="gamelog-metric-caret" aria-hidden="true">${gameLogMetricPickerOpen ? '▴' : '▾'}</span></button>`
+                  : `<span class="card-eyebrow">${esc(logModel.trendLabel)}</span>`
+              }
+              ${metricJargonHtml}
+            </div>
+            <div class="gamelog-sub-meta mono">${logModel.rows.length}G logged</div>
           </div>
           ${
             logModel.splits.length > 0
               ? `
-            <div class="pill-bar compact-chip-row" role="tablist" aria-label="Game Log Mode" style="margin:0">
-              <button type="button" role="tab" aria-selected="${activeSub === 'games'}" class="pill-btn ${activeSub === 'games' ? 'active' : ''}" data-action="set-player-gamelog-sub" data-gamelog-sub="games">Week-by-Week</button>
-              <button type="button" role="tab" aria-selected="${activeSub === 'splits'}" class="pill-btn ${activeSub === 'splits' ? 'active' : ''}" data-action="set-player-gamelog-sub" data-gamelog-sub="splits">Splits (${logModel.splits.length})</button>
+            <div class="segmented-control compact-seg gamelog-sub-seg" role="tablist" aria-label="Game Log Mode">
+              <button type="button" role="tab" aria-selected="${activeSub === 'games'}" class="pill-btn seg-btn ${activeSub === 'games' ? 'active' : ''}" data-action="set-player-gamelog-sub" data-gamelog-sub="games"><span>Weekly</span></button>
+              <button type="button" role="tab" aria-selected="${activeSub === 'splits'}" class="pill-btn seg-btn ${activeSub === 'splits' ? 'active' : ''}" data-action="set-player-gamelog-sub" data-gamelog-sub="splits"><span>Splits</span></button>
             </div>
           `
               : ''
           }
         </div>
+        ${
+          hasMultipleMetrics && gameLogMetricPickerOpen
+            ? `
+          <div class="gamelog-metric-tray" role="group" aria-label="Select Trend Metric" data-gamelog-metric-tray>
+            ${logModel.trendMetrics
+              .map(
+                m => `
+              <button type="button" class="pill-btn gamelog-metric-chip ${activeMetric?.key === m.key ? 'active' : ''}"
+                      data-action="set-player-gamelog-metric" data-metric-key="${esc(m.key)}">${esc(m.label)}</button>
+            `
+              )
+              .join('')}
+          </div>
+        `
+            : ''
+        }
         ${sparkSvg}
       </section>
 
@@ -848,8 +942,11 @@ function renderStatsTab(p, statsMode, { gameLogSub = 'games', appData = null, te
             <table class="data-table sticky-col-table gamelog-table mono" data-gamelog-role="${esc(logModel.role)}">
               <thead>
                 <tr>
-                  ${logModel.headers
-                    .map((h, i) => `<th class="${i === 0 ? 'sticky-col' : i >= 2 ? 'num-col' : ''}">${esc(h)}</th>`)
+                  ${(logModel.headerDefs || logModel.headers.map(label => ({ label })))
+                    .map((h, i) => {
+                      const lblHtml = h.jargonKey ? jargonTerm(h.label, h.jargonKey) : esc(h.label);
+                      return `<th class="${i === 0 ? 'sticky-col' : i >= 2 ? 'num-col' : ''}">${lblHtml}</th>`;
+                    })
                     .join('')}
                 </tr>
               </thead>

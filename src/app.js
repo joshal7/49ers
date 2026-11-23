@@ -69,7 +69,7 @@ import {
   getCachedGamecastModel,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=104';
+} from './services/dataService.js?v=105';
 import {
   isNumericEspnGameId,
   resolveGamecastGamesList
@@ -140,7 +140,7 @@ import {
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
 } from './views/uiHelpers.js?v=53';
-import { getJargonEntry } from './engine/jargonGlossary.js?v=51';
+import { getJargonEntry } from './engine/jargonGlossary.js?v=52';
 import {
   isAllowedInlineVideoStreamUrl,
   resolveIosStandaloneExternalVideoBreakoutUrl,
@@ -160,9 +160,9 @@ import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
 } from './views/newsView.js?v=95';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=51';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=84';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=102';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=52';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=85';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=103';
 import { renderAudioAiViewHtml } from './views/audioAiView.js?v=69';
 import {
   renderSettingsSheetHtml,

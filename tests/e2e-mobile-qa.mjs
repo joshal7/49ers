@@ -7465,6 +7465,15 @@ async function main() {
         await sleep(80);
         const playersCard = Boolean(document.getElementById('teamPlayerStatsCard'));
         const recRowCount = document.querySelectorAll('#teamPlayerStatsCard tbody tr').length;
+        const epaCells = Array.from(document.querySelectorAll('#teamPlayerStatsCard tbody tr td:last-child')).map(td => ({
+          text: td.textContent.trim(),
+          cls: td.className
+        }));
+        const hasNegZeroEpa = epaCells.some(c => c.text === '-0.0' || c.text === '-0.00');
+        const hasGreenNegEpa = epaCells.some(c => c.text.startsWith('-') && c.cls.includes('val-pos'));
+        const hasCalibratedTones =
+          epaCells.some(c => c.cls.includes('val-pos')) &&
+          epaCells.some(c => !c.cls.includes('val-pos') && !c.cls.includes('val-neg'));
         const firstPlayerBefore = document.querySelector('#teamPlayerStatsCard tbody tr td')?.textContent?.trim() || '';
         document.querySelector('#teamPlayerStatsCard th[data-action="set-team-players-sort"][data-sort-key="yards"]')?.click();
         await sleep(60);
@@ -7492,6 +7501,9 @@ async function main() {
           defaultHasRanks,
           playersCard,
           recRowCount,
+          hasNegZeroEpa,
+          hasGreenNegEpa,
+          hasCalibratedTones,
           sortToggled: firstPlayerBefore !== firstPlayerAfterAsc,
           defRowCount,
           snapCard,
@@ -7502,8 +7514,15 @@ async function main() {
         };
       });
       assert(
-        statsDeep.defaultHasRanks && statsDeep.playersCard && statsDeep.recRowCount >= 3 && statsDeep.defRowCount >= 3 && statsDeep.sortToggled,
-        `Season -> Stats Players sub-view failed: ${JSON.stringify(statsDeep)}`
+        statsDeep.defaultHasRanks &&
+          statsDeep.playersCard &&
+          statsDeep.recRowCount >= 3 &&
+          statsDeep.defRowCount >= 3 &&
+          statsDeep.sortToggled &&
+          !statsDeep.hasNegZeroEpa &&
+          !statsDeep.hasGreenNegEpa &&
+          statsDeep.hasCalibratedTones,
+        `Season -> Stats Players sub-view / calibrated EPA tone check failed: ${JSON.stringify(statsDeep)}`
       );
       assert(
         statsDeep.snapCard && statsDeep.snapOffRows >= 8 && statsDeep.snapDefRows >= 8 && statsDeep.startsAtW1 && statsDeep.snapAnchoredRight,
@@ -7649,6 +7668,55 @@ async function main() {
       assert(
         dossierDeep.hasGamecastJump && dossierDeep.sheetClosedAfterJump && dossierDeep.landedOnGamecast,
         `Tapping Game Log row must close sheet and open Gamecast: ${JSON.stringify(dossierDeep)}`
+      );
+
+      // 3b. Defensive Player Game Log: Impact column visible in table below + dotted explanation tooltip popover
+      const defImpactAudit = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        document.querySelector('[data-nav-tab="roster"]')?.click();
+        await sleep(60);
+        document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]')?.click();
+        await sleep(50);
+        const warnerBtn = Array.from(document.querySelectorAll('.player-row')).find(el =>
+          el.textContent.includes('Fred Warner')
+        );
+        warnerBtn?.click();
+        await sleep(80);
+        document.querySelector('[data-action="set-player-tab"][data-player-tab="stats"]')?.click();
+        await sleep(70);
+        document.querySelector('#sheetBody [data-action="set-player-stats-mode"][data-stats-mode="gamelog"]')?.click();
+        await sleep(80);
+        const impactThJargon = document.querySelector(
+          '#sheetBody table.gamelog-table thead th [data-jargon="defensive_impact_score"]'
+        );
+        const impactHeaderInfo = document.querySelector(
+          '#sheetBody .gamelog-header-row [data-jargon="defensive_impact_score"]'
+        );
+        const triggerText = document.querySelector('#sheetBody .gamelog-metric-trigger')?.textContent?.trim() || '';
+        impactThJargon?.click();
+        await sleep(60);
+        const pop = document.getElementById('jargonPopover');
+        const popVisible = Boolean(pop && !pop.hidden);
+        const popText = pop?.textContent?.trim() || '';
+        if (pop && !pop.hidden) pop.hidden = true;
+        document.getElementById('closeSheetBtn')?.click();
+        await sleep(50);
+        return {
+          foundWarner: Boolean(warnerBtn),
+          hasImpactTableHeader: Boolean(impactThJargon),
+          hasImpactSparkInfo: Boolean(impactHeaderInfo),
+          triggerText,
+          popVisible,
+          popHasFormula: /Tackles/i.test(popText) && /Sacks/i.test(popText)
+        };
+      });
+      assert(
+        defImpactAudit.foundWarner &&
+          defImpactAudit.hasImpactTableHeader &&
+          defImpactAudit.hasImpactSparkInfo &&
+          defImpactAudit.popVisible &&
+          defImpactAudit.popHasFormula,
+        `Defensive Impact column + dotted jargon tooltip audit failed: ${JSON.stringify(defImpactAudit)}`
       );
 
       // 4. Compact 320px portrait & Light theme overflow audit on Moves, Free Agents & Snap Matrix

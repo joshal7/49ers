@@ -20394,7 +20394,7 @@ await testAsync('Wave 1 & Wave 2 Deep-Dive Engines (Game Logs, Players, Snap Mat
   const purdyLog = buildPlayerWeeklyGameLogModel(purdy, { schedule: schedData.schedule, teamAbbr: 'SF', seasonYear: 2026 });
   const olLog = buildPlayerWeeklyGameLogModel(trent, { schedule: schedData.schedule, teamAbbr: 'SF', seasonYear: 2026 });
   const recStats = buildTeamPlayerStatsModel(rosterData.players, { category: 'rec', sortKey: 'yards', sortDir: 'desc' });
-  const snapMatrix = buildWeeklySnapMatrixModel(rosterData.players, { unit: 'offense', maxWeeks: 8 });
+  const snapMatrix = buildWeeklySnapMatrixModel(rosterData.players, { unit: 'offense' });
   const faModel = buildUpcomingFreeAgentsModel(capData, rosterData.players, { baseYear: 2026, statusFilter: 'ALL' });
   const capMix = buildPositionalCapSpendModel(capData, { yearKey: '2026' });
   const elapsedMs = performance.now() - t0;

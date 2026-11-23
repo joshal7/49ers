@@ -10,6 +10,12 @@ export const JARGON_GLOSSARY = {
     definition:
       'Measures how much a play changes a team’s expected scoring value based on down, distance, and field position. Positive EPA on offense (and negative EPA allowed on defense) indicates above-average efficiency.'
   },
+  defensive_impact_score: {
+    term: 'Defensive Impact Score',
+    category: 'Analytics',
+    definition:
+      'Per-game defensive disruption score computed directly from logged box-score plays: Tackles (1 pt) + Sacks (2 pts) + TFLs (1.5 pts) + QB Hits (1 pt) + Interceptions (3 pts) + Passes Defended (1 pt). Captures multi-phase playmaking beyond raw tackles.'
+  },
   cpoe: {
     term: 'CPOE (Completion % Over Expected)',
     category: 'Analytics',
