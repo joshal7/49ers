@@ -26,13 +26,18 @@ import {
   AI_STUDIO_DIRECT_KEY_URL,
   renderGeminiApiKeyStepByStepGuideHtml
 } from './audioAiView.js';
+import { isPasskeyPrfPotentiallySupported } from '../services/sharedApiKeyStore.js?v=4';
 
 export function renderSettingsSheetHtml({
   userPrefs,
   reportersData,
   reporterSearch = '',
-  pushStatusNotice = ''
+  pushStatusNotice = '',
+  passkeyNotice = '',
+  passkeyNeedsSecondTap = false,
+  passkeyBusy = false
 }) {
+  const passkeySupported = isPasskeyPrfPotentiallySupported();
   const outlets = reportersData?.outlets || [];
   const reporters = reportersData?.reporters || [];
   const disabledOutlets = new Set(userPrefs?.disabledOutlets || []);
@@ -257,7 +262,7 @@ export function renderSettingsSheetHtml({
         </div>
         <div>
           <label style="font-size:11px;color:var(--text-secondary)" for="prefPasscodeInput">Sync Passcode</label>
-          <input type="password" id="prefPasscodeInput" class="text-input" placeholder="Optional (8+ chars syncs key)" value="${esc(userPrefs.groupPasscode || '')}" />
+          <input type="password" id="prefPasscodeInput" class="text-input" placeholder="Optional PIN" value="${esc(userPrefs.groupPasscode || '')}" />
         </div>
       </div>
       <div>
@@ -276,16 +281,34 @@ export function renderSettingsSheetHtml({
           <label style="font-size:11px;color:var(--text-secondary)" for="prefGeminiKeyInput">Gemini API Key (shared across all 32 NFL apps)</label>
           <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">Get Free Key ${iconSvg('externalLink', 10)}</a>
         </div>
-        <input type="password" id="prefGeminiKeyInput" class="text-input" placeholder="AIza..." autocomplete="off" value="${esc(userPrefs.geminiApiKey || '')}" />
-        <details style="margin-top:5px;font-size:11px;color:var(--text-secondary)">
-          <summary style="cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:4px;color:var(--text-muted)">
-            ${iconSvg('helpCircle', 11)}
-            <span>Cross-app &amp; iPhone Home Screen sync info</span>
-          </summary>
-          <div style="margin-top:4px;line-height:1.42">
-            Auto-syncs across Chrome/Firefox tabs, the unified <strong>NFL Portal</strong> app (<code>nfl.joshal.com</code>), and links opened via <strong>Switch Team</strong> or <strong>NFL Portal</strong>. Because iOS isolates separate Home Screen apps from each other, enter the same <strong>8+ char Sync Passcode</strong> above to end-to-end encrypt &amp; sync your key across separate Home Screen apps and devices.
-          </div>
-        </details>
+        <form data-settings-gemini-form="true" action="#" method="post" novalidate style="margin:0">
+          <input type="text" name="username" value="Gemini API Key (joshal.com)" autocomplete="username" tabindex="-1" aria-hidden="true" class="sr-only-cred-field" readonly />
+          <input type="password" id="prefGeminiKeyInput" name="password" class="text-input" placeholder="AIza..." autocomplete="current-password" value="${esc(userPrefs.geminiApiKey || '')}" />
+        </form>
+        ${
+          passkeySupported
+            ? `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:7px" data-settings-passkey-row="true">
+                ${
+                  userPrefs.geminiApiKey
+                    ? userPrefs.passkeySyncEnabled
+                      ? `<span class="badge badge-positive inline-icon-meta" style="font-size:11px">${iconSvg('faceId', 12)}<span>Face ID Sync Active (All 32 Apps)</span></span>
+                         <button type="button" class="btn-ghost" data-action="unlock-passkey-sync" ${passkeyBusy ? 'disabled' : ''} style="font-size:11px;padding:4px 8px">
+                           ${iconSvg(passkeyBusy ? 'loader' : 'faceId', 12, passkeyBusy ? 'btn-spin-icon' : '')}
+                           <span>${passkeyBusy ? 'Syncing…' : 'Sync Now'}</span>
+                         </button>`
+                      : `<button type="button" class="btn-secondary" style="width:100%;font-size:12px" data-action="${passkeyNeedsSecondTap ? 'unlock-passkey-sync' : 'enable-passkey-sync'}" ${passkeyBusy ? 'disabled' : ''}>
+                           ${iconSvg(passkeyBusy ? 'loader' : 'faceId', 14, passkeyBusy ? 'btn-spin-icon' : '')}
+                           <span>${passkeyBusy ? 'Authorizing…' : passkeyNeedsSecondTap ? 'Finish Face ID Sync' : 'Enable 1-Tap Face ID Sync (All 32 Team Apps)'}</span>
+                         </button>`
+                    : `<button type="button" class="passkey-unlock-btn" data-action="unlock-passkey-sync" ${passkeyBusy ? 'disabled' : ''}>
+                         ${iconSvg(passkeyBusy ? 'loader' : 'faceId', 14, passkeyBusy ? 'btn-spin-icon' : '')}
+                         <span>${passkeyBusy ? 'Authorizing with Face ID…' : 'Already added on another team? Sync with Face ID'}</span>
+                       </button>`
+                }
+              </div>`
+            : ''
+        }
+        ${passkeyNotice ? `<div style="margin-top:5px;font-size:11.5px;color:var(--gold-bright)" data-passkey-notice>${esc(passkeyNotice)}</div>` : ''}
       </div>
       <div>
         <label style="font-size:11px;color:var(--text-secondary)" for="prefWorkerUrlInput">Shared Worker URL (optional)</label>

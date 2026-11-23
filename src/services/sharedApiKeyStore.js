@@ -98,6 +98,15 @@ export function getAllowedNflTeamOrigins() {
   return ALLOWED_NFL_TEAM_SLUGS.map(slug => `https://${slug}.joshal.com`);
 }
 
+export function getKeySyncAllowedOrigins(extraOrigins = []) {
+  return Array.from(new Set([...getAllowedNflTeamOrigins(), 'https://nfl.joshal.com', ...extraOrigins])).sort();
+}
+
+export function buildKeySyncCspHeader(extraOrigins = []) {
+  const allowed = getKeySyncAllowedOrigins(extraOrigins);
+  return `default-src 'none'; script-src 'unsafe-inline'; frame-ancestors 'self' ${allowed.join(' ')}`;
+}
+
 export function normalizeSharedGeminiKeyRecord(raw) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
   const t = Number(raw.t);
@@ -769,18 +778,34 @@ export function resetSharedVaultClientForTests() {
     singletonVaultUrlKey = '';
   }
   e2eeDerivedCache.clear();
+  cachedPasskeyKeysMem = null;
   lastCloudVaultPullMs = 0;
   lastCloudVaultPullPasscodeHash = '';
+  lastPasskeyCloudPullMs = 0;
 }
 
 // ============================================================================
-// Optional Zero-Knowledge Client-Side Encrypted Cloud Sync (`/api/key-vault`)
-// Bridges isolated iOS Home Screen PWAs & cross-device Safari/Chrome via 8+ char Sync Passcode
+// 1-Tap Face ID / Passkey PRF Sync (`rpId: 'joshal.com'`) + Zero-Knowledge E2EE Cloud Vault
+// Bridges Apple's OS-level `WKWebsiteDataStore` isolation between separate iPhone Home Screen PWAs
+// (e.g. `49ers.joshal.com` PWA <-> `bears.joshal.com` PWA <-> `nfl.joshal.com` PWA <-> Mac Safari)
+// with ZERO passcodes to invent or type!
 // ============================================================================
 
+export const PASSKEY_SYNC_RP_NAME = 'NFL Team Hub (joshal.com)';
+export const PASSKEY_SYNC_USER_NAME = 'Gemini API Key Sync';
+const PASSKEY_SYNC_USER_ID = new Uint8Array([
+  106, 111, 115, 104, 97, 108, 45, 110, 102, 108, 45, 115, 121, 110, 99, 49
+]); // 'joshal-nfl-sync1' (deterministic so iCloud Keychain cleanly deduplicates per user)
+const PASSKEY_IDB_NAME = 'joshal_nfl_passkey_vault_v1';
+const PASSKEY_IDB_STORE = 'keys';
+const PASSKEY_IDB_RECORD_KEY = 'active_prf_key_v1';
+
 const e2eeDerivedCache = new Map();
+let cachedPasskeyKeysMem = null;
 let lastCloudVaultPullMs = 0;
 let lastCloudVaultPullPasscodeHash = '';
+let lastPasskeyCloudPullMs = 0;
+let cachedPrfEvalSaltPromise = null;
 
 function getSubtleCrypto() {
   try {
@@ -799,6 +824,554 @@ function bytesToHex(bytes) {
   return out;
 }
 
+export function resolvePasskeyRpId(hostname = '') {
+  const clean = String(hostname || '').trim().toLowerCase().replace(/\.$/, '');
+  if (isAllowedNflTeamHostname(clean)) {
+    return 'joshal.com';
+  }
+  return clean || 'localhost';
+}
+
+export function isPasskeyPrfPotentiallySupported() {
+  try {
+    if (typeof window === 'undefined') return false;
+    if (typeof window.PublicKeyCredential !== 'function') return false;
+    if (!window.navigator?.credentials?.create || !window.navigator?.credentials?.get) return false;
+    if (!getSubtleCrypto()?.subtle) return false;
+    const host = String(window.location?.hostname || '').toLowerCase();
+    const isSecure =
+      window.isSecureContext === true ||
+      host === 'localhost' ||
+      host === '127.0.0.1';
+    return isSecure;
+  } catch {
+    return false;
+  }
+}
+
+export async function getPasskeyPrfEvalSalt() {
+  if (!cachedPrfEvalSaltPromise) {
+    cachedPrfEvalSaltPromise = (async () => {
+      const webCrypto = getSubtleCrypto();
+      if (!webCrypto?.subtle) return new Uint8Array(32);
+      const digest = await webCrypto.subtle.digest(
+        'SHA-256',
+        new TextEncoder().encode('joshal-nfl-passkey-prf-eval-v1')
+      );
+      return new Uint8Array(digest);
+    })();
+  }
+  return cachedPrfEvalSaltPromise;
+}
+
+/**
+ * Derives independent `vaultId` (64-char hex) and non-extractable `aesKey` (AES-256-GCM)
+ * from the 32-byte WebAuthn PRF secret via HKDF-SHA256 (<1ms, zero passwords!).
+ */
+export async function derivePasskeyVaultKeysFromPrf(prfSecretBytes) {
+  const webCrypto = getSubtleCrypto();
+  if (!webCrypto?.subtle || !prfSecretBytes) return null;
+  const rawBytes =
+    prfSecretBytes instanceof Uint8Array
+      ? prfSecretBytes
+      : prfSecretBytes instanceof ArrayBuffer
+        ? new Uint8Array(prfSecretBytes)
+        : ArrayBuffer.isView(prfSecretBytes)
+          ? new Uint8Array(prfSecretBytes.buffer, prfSecretBytes.byteOffset, prfSecretBytes.byteLength)
+          : null;
+  if (!rawBytes || rawBytes.byteLength < 16) return null;
+
+  const enc = new TextEncoder();
+  const hkdfSalt = enc.encode('joshal-nfl-passkey-vault-v1');
+  const ikm = await webCrypto.subtle.importKey('raw', rawBytes, { name: 'HKDF' }, false, [
+    'deriveBits',
+    'deriveKey'
+  ]);
+
+  const [idBits, aesKey] = await Promise.all([
+    webCrypto.subtle.deriveBits(
+      { name: 'HKDF', hash: 'SHA-256', salt: hkdfSalt, info: enc.encode('vault-id') },
+      ikm,
+      256
+    ),
+    webCrypto.subtle.deriveKey(
+      { name: 'HKDF', hash: 'SHA-256', salt: hkdfSalt, info: enc.encode('aes-gcm-key') },
+      ikm,
+      { name: 'AES-GCM', length: 256 },
+      false, // Non-extractable CryptoKey — safe to persist in IndexedDB!
+      ['encrypt', 'decrypt']
+    )
+  ]);
+
+  return {
+    vaultId: bytesToHex(new Uint8Array(idBits)),
+    aesKey
+  };
+}
+
+function openPasskeyKeyIdb() {
+  return new Promise(resolve => {
+    try {
+      if (typeof indexedDB === 'undefined') {
+        resolve(null);
+        return;
+      }
+      const req = indexedDB.open(PASSKEY_IDB_NAME, 1);
+      req.onupgradeneeded = () => {
+        try {
+          const db = req.result;
+          if (!db.objectStoreNames.contains(PASSKEY_IDB_STORE)) {
+            db.createObjectStore(PASSKEY_IDB_STORE);
+          }
+        } catch {}
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => resolve(null);
+    } catch {
+      resolve(null);
+    }
+  });
+}
+
+export async function saveCachedPasskeyVaultKeys(keys) {
+  if (!keys?.vaultId || !keys?.aesKey) return false;
+  cachedPasskeyKeysMem = { vaultId: keys.vaultId, aesKey: keys.aesKey };
+  const db = await openPasskeyKeyIdb();
+  if (!db) return true;
+  return new Promise(resolve => {
+    try {
+      const tx = db.transaction(PASSKEY_IDB_STORE, 'readwrite');
+      tx.objectStore(PASSKEY_IDB_STORE).put(
+        { vaultId: keys.vaultId, aesKey: keys.aesKey, savedAt: Date.now() },
+        PASSKEY_IDB_RECORD_KEY
+      );
+      tx.oncomplete = () => {
+        try { db.close(); } catch {}
+        resolve(true);
+      };
+      tx.onerror = () => {
+        try { db.close(); } catch {}
+        resolve(false);
+      };
+    } catch {
+      try { db.close(); } catch {}
+      resolve(false);
+    }
+  });
+}
+
+export async function loadCachedPasskeyVaultKeys() {
+  if (cachedPasskeyKeysMem?.vaultId && cachedPasskeyKeysMem?.aesKey) {
+    return cachedPasskeyKeysMem;
+  }
+  const db = await openPasskeyKeyIdb();
+  if (!db) return null;
+  return new Promise(resolve => {
+    try {
+      const tx = db.transaction(PASSKEY_IDB_STORE, 'readonly');
+      const req = tx.objectStore(PASSKEY_IDB_STORE).get(PASSKEY_IDB_RECORD_KEY);
+      req.onsuccess = () => {
+        const val = req.result;
+        try { db.close(); } catch {}
+        if (val?.vaultId && val?.aesKey) {
+          cachedPasskeyKeysMem = { vaultId: val.vaultId, aesKey: val.aesKey };
+          resolve(cachedPasskeyKeysMem);
+        } else {
+          resolve(null);
+        }
+      };
+      req.onerror = () => {
+        try { db.close(); } catch {}
+        resolve(null);
+      };
+    } catch {
+      try { db.close(); } catch {}
+      resolve(null);
+    }
+  });
+}
+
+export async function clearCachedPasskeyVaultKeys() {
+  cachedPasskeyKeysMem = null;
+  const db = await openPasskeyKeyIdb();
+  if (!db) return;
+  await new Promise(resolve => {
+    try {
+      const tx = db.transaction(PASSKEY_IDB_STORE, 'readwrite');
+      tx.objectStore(PASSKEY_IDB_STORE).delete(PASSKEY_IDB_RECORD_KEY);
+      tx.oncomplete = () => {
+        try { db.close(); } catch {}
+        resolve();
+      };
+      tx.onerror = () => {
+        try { db.close(); } catch {}
+        resolve();
+      };
+    } catch {
+      try { db.close(); } catch {}
+      resolve();
+    }
+  });
+}
+
+async function encryptRecordWithDerivedKeys(record, derived) {
+  const norm = normalizeSharedGeminiKeyRecord(record);
+  const webCrypto = getSubtleCrypto();
+  if (!norm || !derived?.vaultId || !derived?.aesKey || !webCrypto?.subtle) return null;
+  const iv = new Uint8Array(12);
+  webCrypto.getRandomValues(iv);
+  const plaintext = new TextEncoder().encode(JSON.stringify(norm));
+  const ctBuf = await webCrypto.subtle.encrypt(
+    { name: 'AES-GCM', iv },
+    derived.aesKey,
+    plaintext
+  );
+  return {
+    id: derived.vaultId,
+    v: 1,
+    iv: bytesToBase64Url(iv),
+    ct: bytesToBase64Url(new Uint8Array(ctBuf)),
+    t: norm.t
+  };
+}
+
+async function decryptPayloadWithAesKey(payload, aesKey) {
+  if (!payload || typeof payload !== 'object' || !aesKey) return null;
+  const iv = base64UrlToBytes(payload.iv);
+  const ct = base64UrlToBytes(payload.ct);
+  const webCrypto = getSubtleCrypto();
+  if (!iv || iv.length !== 12 || !ct || ct.length < 16 || !webCrypto?.subtle) return null;
+  try {
+    const ptBuf = await webCrypto.subtle.decrypt({ name: 'AES-GCM', iv }, aesKey, ct);
+    const json = new TextDecoder().decode(new Uint8Array(ptBuf));
+    return normalizeSharedGeminiKeyRecord(JSON.parse(json));
+  } catch {
+    return null;
+  }
+}
+
+function isCloudVaultHostEligible(hostname = '', endpointOverride = '') {
+  if (endpointOverride) return true;
+  const h = String(hostname || '').trim().toLowerCase();
+  if (isAllowedNflTeamHostname(h)) return true;
+  if (/^(?:[a-z0-9-]+\.)?nfl-(?:teams|joshal)\.pages\.dev$/.test(h)) return true;
+  return false;
+}
+
+async function fetchCloudVaultWithDerivedKeys(
+  derived,
+  { endpointOverride = '', fetchImpl = null, timeoutMs = 5000 } = {}
+) {
+  const host = typeof window !== 'undefined' ? window.location?.hostname || '' : '';
+  if (!derived?.vaultId || !derived?.aesKey || !isCloudVaultHostEligible(host, endpointOverride)) {
+    return { checked: false, record: null };
+  }
+  const f = fetchImpl || (typeof fetch === 'function' ? fetch : null);
+  if (!f) return { checked: false, record: null };
+
+  try {
+    const endpoint = resolveCloudVaultEndpoint(endpointOverride);
+    const sep = endpoint.includes('?') ? '&' : '?';
+    const url = `${endpoint}${sep}id=${encodeURIComponent(derived.vaultId)}`;
+    const ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+    const timer = ctrl ? setTimeout(() => ctrl.abort(), Math.max(1500, timeoutMs)) : null;
+    try {
+      const res = await f(url, {
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+        ...(ctrl ? { signal: ctrl.signal } : {})
+      });
+      if (!res || !res.ok) return { checked: true, record: null };
+      const data = await res.json();
+      if (!data?.ok || !data.found || !data.payload) {
+        return { checked: true, record: null };
+      }
+      const record = await decryptPayloadWithAesKey(data.payload, derived.aesKey);
+      return { checked: true, record };
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
+  } catch {
+    return { checked: false, record: null };
+  }
+}
+
+async function pushCloudVaultWithDerivedKeys(
+  record,
+  derived,
+  { endpointOverride = '', fetchImpl = null, timeoutMs = 5000 } = {}
+) {
+  const host = typeof window !== 'undefined' ? window.location?.hostname || '' : '';
+  if (!derived?.vaultId || !derived?.aesKey || !isCloudVaultHostEligible(host, endpointOverride)) {
+    return { synced: false };
+  }
+  const f = fetchImpl || (typeof fetch === 'function' ? fetch : null);
+  if (!f) return { synced: false };
+
+  try {
+    const encrypted = await encryptRecordWithDerivedKeys(record, derived);
+    if (!encrypted) return { synced: false };
+    const endpoint = resolveCloudVaultEndpoint(endpointOverride);
+    const ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+    const timer = ctrl ? setTimeout(() => ctrl.abort(), Math.max(1500, timeoutMs)) : null;
+    try {
+      const res = await f(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(encrypted),
+        ...(ctrl ? { signal: ctrl.signal } : {})
+      });
+      return { synced: Boolean(res && res.ok) };
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
+  } catch {
+    return { synced: false };
+  }
+}
+
+/**
+ * Registers a `joshal.com`-scoped iCloud Keychain / platform Passkey with PRF extension
+ * and immediately encrypts & uploads the user's Gemini API key into `/api/key-vault`.
+ * MUST be invoked directly inside a user tap/click handler so iOS Face ID activation succeeds!
+ */
+export async function enablePasskeyKeySync({
+  record = null,
+  hostname = '',
+  endpointOverride = '',
+  vaultUrlOverride = '',
+  credentialsApi = null,
+  fetchImpl = null
+} = {}) {
+  const creds = credentialsApi || (typeof navigator !== 'undefined' ? navigator.credentials : null);
+  const webCrypto = getSubtleCrypto();
+  if (!creds?.create || !webCrypto?.subtle) {
+    return {
+      ok: false,
+      status: 'unsupported',
+      message: 'Face ID / Passkey sync is not supported in this browser.'
+    };
+  }
+  const activeHost = hostname || (typeof window !== 'undefined' ? window.location?.hostname || '' : '');
+  const rpId = resolvePasskeyRpId(activeHost);
+  const prfSalt = await getPasskeyPrfEvalSalt();
+  const challenge = new Uint8Array(32);
+  webCrypto.getRandomValues(challenge);
+
+  let credential = null;
+  try {
+    credential = await creds.create({
+      publicKey: {
+        challenge,
+        rp: { id: rpId, name: PASSKEY_SYNC_RP_NAME },
+        user: {
+          id: PASSKEY_SYNC_USER_ID,
+          name: PASSKEY_SYNC_USER_NAME,
+          displayName: PASSKEY_SYNC_USER_NAME
+        },
+        pubKeyCredParams: [
+          { type: 'public-key', alg: -7 },
+          { type: 'public-key', alg: -257 }
+        ],
+        authenticatorSelection: {
+          authenticatorAttachment: 'platform',
+          residentKey: 'required',
+          requireResidentKey: true,
+          userVerification: 'required'
+        },
+        timeout: 60_000,
+        attestation: 'none',
+        extensions: {
+          prf: {
+            eval: {
+              first: prfSalt
+            }
+          }
+        }
+      }
+    });
+  } catch (err) {
+    if (err?.name === 'NotAllowedError' || err?.name === 'AbortError') {
+      return { ok: false, status: 'cancelled', message: '' };
+    }
+    return {
+      ok: false,
+      status: 'error',
+      message: err?.message || 'Unable to enable Face ID sync on this device.'
+    };
+  }
+
+  const ext = typeof credential?.getClientExtensionResults === 'function'
+    ? credential.getClientExtensionResults()
+    : {};
+  const prf = ext?.prf || {};
+  const prfFirst = prf?.results?.first || null;
+
+  if (!prfFirst) {
+    if (prf?.enabled === true) {
+      // Safari 18.0-18.3 returns `enabled: true` on create() and yields `results.first` on get()
+      return {
+        ok: false,
+        status: 'needs_verification_tap',
+        message: 'Passkey created! Tap "Finish Face ID Sync" once to upload your encrypted key.'
+      };
+    }
+    return {
+      ok: false,
+      status: 'prf_unsupported',
+      message:
+        'This device does not support Passkey encryption yet (requires iOS 18+ or Chrome). Save your key in Apple Passwords when prompted, or use nfl.joshal.com.'
+    };
+  }
+
+  const derived = await derivePasskeyVaultKeysFromPrf(prfFirst);
+  if (!derived) {
+    return { ok: false, status: 'error', message: 'Failed to derive Passkey encryption keys.' };
+  }
+  await saveCachedPasskeyVaultKeys(derived);
+
+  // Merge LWW against any existing cloud vault record before uploading
+  const existingCloud = await fetchCloudVaultWithDerivedKeys(derived, { endpointOverride, fetchImpl });
+  const normLocal = normalizeSharedGeminiKeyRecord(record) || readSameOriginSharedGeminiKey();
+  const winner = pickNewestSharedRecord(normLocal, existingCloud.record);
+  if (winner) {
+    writeSameOriginSharedGeminiKey(winner);
+    const pushed = await pushCloudVaultWithDerivedKeys(winner, derived, { endpointOverride, fetchImpl });
+    const client = getOrCreateVaultClient({ vaultUrlOverride });
+    if (client) {
+      try {
+        if (winner.c === 1) await client.clearRecord(winner.t);
+        else await client.setRecord(winner);
+      } catch {}
+    }
+    return {
+      ok: true,
+      status: pushed.synced ? 'synced' : 'local_only',
+      record: winner,
+      vaultId: derived.vaultId,
+      cloudSynced: pushed.synced
+    };
+  }
+
+  return { ok: true, status: 'enabled_empty', record: null, vaultId: derived.vaultId, cloudSynced: false };
+}
+
+/**
+ * Unlocks the `joshal.com`-scoped iCloud Keychain / platform Passkey via 1-tap Face ID,
+ * derives `(vaultId, aesKey)` via HKDF-SHA256, caches the non-extractable key in IndexedDB,
+ * and pulls (or pushes) the user's Gemini API key from `/api/key-vault`.
+ * MUST be invoked directly inside a user tap/click handler!
+ */
+export async function unlockAndSyncWithPasskey({
+  localRecord = null,
+  hostname = '',
+  endpointOverride = '',
+  vaultUrlOverride = '',
+  credentialsApi = null,
+  fetchImpl = null
+} = {}) {
+  const creds = credentialsApi || (typeof navigator !== 'undefined' ? navigator.credentials : null);
+  const webCrypto = getSubtleCrypto();
+  if (!creds?.get || !webCrypto?.subtle) {
+    return {
+      ok: false,
+      status: 'unsupported',
+      message: 'Face ID / Passkey sync is not supported in this browser.'
+    };
+  }
+  const activeHost = hostname || (typeof window !== 'undefined' ? window.location?.hostname || '' : '');
+  const rpId = resolvePasskeyRpId(activeHost);
+  const prfSalt = await getPasskeyPrfEvalSalt();
+  const challenge = new Uint8Array(32);
+  webCrypto.getRandomValues(challenge);
+
+  let assertion = null;
+  try {
+    assertion = await creds.get({
+      publicKey: {
+        challenge,
+        rpId,
+        allowCredentials: [],
+        userVerification: 'required',
+        timeout: 60_000,
+        extensions: {
+          prf: {
+            eval: {
+              first: prfSalt
+            }
+          }
+        }
+      }
+    });
+  } catch (err) {
+    if (err?.name === 'NotAllowedError' || err?.name === 'AbortError') {
+      return { ok: false, status: 'cancelled', message: '' };
+    }
+    return {
+      ok: false,
+      status: 'error',
+      message: err?.message || 'Unable to verify Face ID Passkey on this device.'
+    };
+  }
+
+  const ext = typeof assertion?.getClientExtensionResults === 'function'
+    ? assertion.getClientExtensionResults()
+    : {};
+  const prfFirst = ext?.prf?.results?.first || null;
+  if (!prfFirst) {
+    return {
+      ok: false,
+      status: 'prf_unsupported',
+      message:
+        'This Passkey did not return an encryption secret (requires iOS 18+ iCloud Keychain or Chrome).'
+    };
+  }
+
+  const derived = await derivePasskeyVaultKeysFromPrf(prfFirst);
+  if (!derived) {
+    return { ok: false, status: 'error', message: 'Failed to derive Passkey encryption keys.' };
+  }
+  await saveCachedPasskeyVaultKeys(derived);
+
+  const cloudRes = await fetchCloudVaultWithDerivedKeys(derived, { endpointOverride, fetchImpl });
+  const normLocal = normalizeSharedGeminiKeyRecord(localRecord) || readSameOriginSharedGeminiKey();
+  const winner = pickNewestSharedRecord(normLocal, cloudRes.record);
+
+  if (!winner || winner.c === 1) {
+    return {
+      ok: false,
+      status: 'empty_vault',
+      vaultId: derived.vaultId,
+      message:
+        'No synced API key found yet. Paste your Gemini key on one team app and tap "Enable Face ID Sync" first.'
+    };
+  }
+
+  writeSameOriginSharedGeminiKey(winner);
+  const client = getOrCreateVaultClient({ vaultUrlOverride });
+  if (client) {
+    try {
+      await client.setRecord(winner);
+    } catch {}
+  }
+
+  const shouldPushWinner = !cloudRes.record || winner.t > cloudRes.record.t;
+  let pushed = false;
+  if (shouldPushWinner) {
+    const pushRes = await pushCloudVaultWithDerivedKeys(winner, derived, { endpointOverride, fetchImpl });
+    pushed = Boolean(pushRes.synced);
+  }
+
+  return {
+    ok: true,
+    status: shouldPushWinner ? 'pushed' : 'pulled',
+    record: winner,
+    vaultId: derived.vaultId,
+    cloudSynced: pushed || Boolean(cloudRes.record)
+  };
+}
+
 export function isEligibleE2eeSyncPasscode(passcode = '') {
   return String(passcode || '').trim().length >= E2EE_VAULT_MIN_PASSCODE_LENGTH;
 }
@@ -809,11 +1382,7 @@ export function shouldUseEncryptedCloudVault({
   endpointOverride = ''
 } = {}) {
   if (!isEligibleE2eeSyncPasscode(passcode)) return false;
-  if (endpointOverride) return true;
-  const h = String(hostname || '').trim().toLowerCase();
-  if (isAllowedNflTeamHostname(h)) return true;
-  if (/^(?:[a-z0-9-]+\.)?nfl-(?:teams|joshal)\.pages\.dev$/.test(h)) return true;
-  return false;
+  return isCloudVaultHostEligible(hostname, endpointOverride);
 }
 
 /**
@@ -1052,11 +1621,27 @@ export async function publishSharedGeminiApiKey(
         fetchImpl
       })
         .then(res => {
-          cloudSynced = Boolean(res?.synced);
+          if (res?.synced) cloudSynced = true;
         })
         .catch(() => {})
     );
   }
+
+  // If this app already unlocked Face ID / Passkey Sync, silently push updates with 0 extra Face ID prompts
+  tasks.push(
+    loadCachedPasskeyVaultKeys()
+      .then(cachedKeys => {
+        if (!cachedKeys) return null;
+        return pushCloudVaultWithDerivedKeys(record, cachedKeys, {
+          endpointOverride: cloudEndpointOverride,
+          fetchImpl
+        });
+      })
+      .then(res => {
+        if (res?.synced) cloudSynced = true;
+      })
+      .catch(() => {})
+  );
 
   if (tasks.length > 0) {
     await Promise.all(tasks);
@@ -1098,11 +1683,27 @@ export async function publishClearedSharedGeminiApiKey(
         fetchImpl
       })
         .then(res => {
-          cloudSynced = Boolean(res?.synced);
+          if (res?.synced) cloudSynced = true;
         })
         .catch(() => {})
     );
   }
+
+  // Propagate clear tombstone via cached Passkey key so other synced standalone apps clear too
+  tasks.push(
+    loadCachedPasskeyVaultKeys()
+      .then(cachedKeys => {
+        if (!cachedKeys) return null;
+        return pushCloudVaultWithDerivedKeys(tombstone, cachedKeys, {
+          endpointOverride: cloudEndpointOverride,
+          fetchImpl
+        });
+      })
+      .then(res => {
+        if (res?.synced) cloudSynced = true;
+      })
+      .catch(() => {})
+  );
 
   if (tasks.length > 0) {
     await Promise.all(tasks);
@@ -1112,8 +1713,8 @@ export async function publishClearedSharedGeminiApiKey(
 
 /**
  * Reconciles a team's `prefs` object against same-origin shared storage, the remote
- * `https://nfl.joshal.com/key-sync` iframe vault, AND (when an 8+ char Sync Passcode is set)
- * the zero-knowledge E2EE cloud vault.
+ * `https://nfl.joshal.com/key-sync` iframe vault, cached Passkey PRF cloud vault, AND
+ * (if configured) passcode-derived E2EE cloud vault.
  */
 export async function syncPrefsWithSharedGeminiKeyVault(
   prefs,
@@ -1135,11 +1736,14 @@ export async function syncPrefsWithSharedGeminiKeyVault(
   const prevKey = String(prefs.geminiApiKey || '').trim();
   const sameOriginRec = readSameOriginSharedGeminiKey();
   const effectivePasscode = String(syncPasscode || prefs.groupPasscode || '').trim();
+  const cachedPasskeyKeys = await loadCachedPasskeyVaultKeys();
 
   let vaultRec = null;
   let vaultChecked = false;
   let cloudRec = null;
   let cloudChecked = false;
+  let passkeyCloudRec = null;
+  let passkeyCloudChecked = false;
 
   const client = getOrCreateVaultClient({ vaultUrlOverride, timeoutMs });
   const shouldPullCloud =
@@ -1148,6 +1752,9 @@ export async function syncPrefsWithSharedGeminiKeyVault(
       !prevKey ||
       effectivePasscode !== lastCloudVaultPullPasscodeHash ||
       nowMs - lastCloudVaultPullMs >= E2EE_CLOUD_PULL_THROTTLE_MS);
+  const shouldPullPasskeyCloud =
+    Boolean(cachedPasskeyKeys) &&
+    (forceCloudSync || !prevKey || nowMs - lastPasskeyCloudPullMs >= E2EE_CLOUD_PULL_THROTTLE_MS);
 
   await Promise.all([
     client
@@ -1173,10 +1780,26 @@ export async function syncPrefsWithSharedGeminiKeyVault(
             lastCloudVaultPullPasscodeHash = effectivePasscode;
           }
         })()
+      : Promise.resolve(),
+    shouldPullPasskeyCloud
+      ? (async () => {
+          const res = await fetchCloudVaultWithDerivedKeys(cachedPasskeyKeys, {
+            endpointOverride: cloudEndpointOverride,
+            fetchImpl
+          });
+          passkeyCloudChecked = Boolean(res.checked);
+          passkeyCloudRec = res.record;
+          if (passkeyCloudChecked) {
+            lastPasskeyCloudPullMs = nowMs;
+          }
+        })()
       : Promise.resolve()
   ]);
 
-  const newestShared = pickNewestSharedRecord(pickNewestSharedRecord(sameOriginRec, vaultRec), cloudRec);
+  const newestShared = pickNewestSharedRecord(
+    pickNewestSharedRecord(sameOriginRec, vaultRec),
+    pickNewestSharedRecord(cloudRec, passkeyCloudRec)
+  );
   const outcome = reconcileGeminiKeyState(prefs, newestShared, nowMs);
 
   const pushTargets = [];
@@ -1193,8 +1816,16 @@ export async function syncPrefsWithSharedGeminiKeyVault(
         }).catch(() => {})
       );
     }
+    if (cachedPasskeyKeys) {
+      pushTargets.push(
+        pushCloudVaultWithDerivedKeys(outcome.recordToPush, cachedPasskeyKeys, {
+          endpointOverride: cloudEndpointOverride,
+          fetchImpl
+        }).catch(() => {})
+      );
+    }
   } else if (newestShared) {
-    // Keep same-origin mirror, iframe vault, and E2EE cloud vault in lockstep
+    // Keep same-origin mirror, iframe vault, and E2EE cloud vaults in lockstep
     if (!sameOriginRec || newestShared.t > sameOriginRec.t) {
       writeSameOriginSharedGeminiKey(newestShared);
     }
@@ -1209,6 +1840,14 @@ export async function syncPrefsWithSharedGeminiKeyVault(
     if (cloudChecked && (!cloudRec || newestShared.t > cloudRec.t)) {
       pushTargets.push(
         pushEncryptedCloudVaultRecord(newestShared, effectivePasscode, {
+          endpointOverride: cloudEndpointOverride,
+          fetchImpl
+        }).catch(() => {})
+      );
+    }
+    if (passkeyCloudChecked && cachedPasskeyKeys && (!passkeyCloudRec || newestShared.t > passkeyCloudRec.t)) {
+      pushTargets.push(
+        pushCloudVaultWithDerivedKeys(newestShared, cachedPasskeyKeys, {
           endpointOverride: cloudEndpointOverride,
           fetchImpl
         }).catch(() => {})
@@ -1231,6 +1870,6 @@ export async function syncPrefsWithSharedGeminiKeyVault(
     prevKey,
     nextKey: String(prefs.geminiApiKey || '').trim(),
     vaultChecked,
-    cloudChecked
+    cloudChecked: cloudChecked || passkeyCloudChecked
   };
 }

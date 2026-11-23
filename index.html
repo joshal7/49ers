@@ -27,9 +27,30 @@
   <link rel="dns-prefetch" href="https://static.clubs.nfl.com" />
   <link rel="dns-prefetch" href="https://i.ytimg.com" />
   <link rel="dns-prefetch" href="https://is1-ssl.mzstatic.com" />
-  <link rel="stylesheet" href="./src/styles.css?v=73" />
+  <link rel="stylesheet" href="./src/styles.css?v=74" />
 </head>
 <body>
+  <script>
+    (function () {
+      try {
+        var slug = window.__ACTIVE_TEAM_SLUG__ || new URLSearchParams(window.location.search || '').get('team') || '';
+        if (!slug) {
+          var hm = String(window.location.hostname || '').toLowerCase().match(/^([a-z0-9-]+)\.joshal\.com$/);
+          if (hm && hm[1] !== 'nfl') slug = hm[1];
+        }
+        var prefsKey = window.__TEAM_PREFS_KEY__ || (slug && slug !== '49ers' ? 'joshal_' + slug + '_hq_prefs_v1' : 'joshal_49ers_hq_prefs_v1');
+        var raw = localStorage.getItem(prefsKey);
+        var parsed = raw ? JSON.parse(raw) : null;
+        var theme = parsed && parsed.themeDefaultVersion === 2 && parsed.theme === 'dark' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        var colors = window.__TEAM_THEME_COLORS__ || { light: '#F7F5F0', dark: '#0B0D10' };
+        var mt = document.getElementById('metaThemeColor');
+        if (mt) mt.setAttribute('content', theme === 'light' ? colors.light : colors.dark);
+        var ms = document.getElementById('metaStatusBarStyle');
+        if (ms) ms.setAttribute('content', theme === 'light' ? 'default' : 'black');
+      } catch (e) {}
+    })();
+  </script>
   <!-- Full-Bleed Sticky Solid Header (Subtle, Contextual: Brand + Status on Home, Clean Section Title on Sub-Tabs) -->
   <header class="top-header" role="banner" data-active-tab="home">
     <div class="header-row">
@@ -245,6 +266,6 @@
   <!-- Subtle Quick-Bubble Popover for Football, Analytics & CBA Jargon -->
   <div id="jargonPopover" class="jargon-popover" hidden role="dialog" aria-label="Football &amp; Salary Cap Term Definition"></div>
 
-  <script type="module" src="./src/app.js?v=146"></script>
+  <script type="module" src="./src/app.js?v=147"></script>
 </body>
 </html>

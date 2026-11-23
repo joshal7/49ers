@@ -106,7 +106,7 @@ import {
   resolveTeamConfig,
   resolveTeamDataBasePath
 } from '../config/teamRegistry.js';
-import { reconcilePrefsWithSameOriginSharedKey } from './sharedApiKeyStore.js?v=3';
+import { reconcilePrefsWithSameOriginSharedKey } from './sharedApiKeyStore.js?v=4';
 
 function getTeamStorageKeys() {
   return getActiveTeamConfig().storageKeys;
@@ -404,6 +404,7 @@ export const DEFAULT_USER_PREFS = {
   workerBaseUrl: '',
   geminiApiKey: '',
   geminiApiKeyUpdatedAt: 0,
+  passkeySyncEnabled: false,
   geminiNewsApiKey: '',
   verifiedGeminiModel: '',
   geminiApiBaseUrl: '',
@@ -445,6 +446,7 @@ export function loadUserPrefs() {
             Number.isFinite(Number(parsed.geminiApiKeyUpdatedAt)) && Number(parsed.geminiApiKeyUpdatedAt) > 0
               ? Math.floor(Number(parsed.geminiApiKeyUpdatedAt))
               : 0,
+          passkeySyncEnabled: Boolean(parsed.passkeySyncEnabled),
           geminiNewsApiKey: typeof parsed.geminiNewsApiKey === 'string' ? parsed.geminiNewsApiKey.trim() : '',
           podFormat: parsed.podFormat === 'solo' ? 'solo' : 'two_host',
           defaultPodDurationMin:

@@ -2426,6 +2426,94 @@ body.sheet-open {
   flex-wrap: wrap;
 }
 
+.passkey-unlock-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  white-space: normal;
+  background: var(--scarlet);
+  color: var(--on-primary, #FFFFFF);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  cursor: pointer;
+  transition: transform 120ms ease, filter 140ms ease;
+}
+
+.passkey-unlock-btn:hover {
+  filter: brightness(1.07);
+}
+
+.passkey-unlock-btn:active {
+  transform: scale(0.985);
+}
+
+.passkey-unlock-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.gemini-key-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 1px 0;
+}
+
+.gemini-key-divider::before,
+.gemini-key-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.passkey-sync-offer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--gold-border);
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
+.passkey-sync-offer-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.sr-only-cred-field {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .gemini-connected-strip {
   display: flex;
   align-items: center;

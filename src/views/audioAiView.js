@@ -21,6 +21,7 @@ import { getActiveTeamConfig } from '../config/teamRegistry.js';
 import { formatTimeMmSs } from '../components/audioPlayer.js';
 import { hasCachedEpisodeAudioSync } from '../services/podcastAudioStore.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
+import { isPasskeyPrfPotentiallySupported } from '../services/sharedApiKeyStore.js?v=4';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -342,11 +343,43 @@ function renderGeminiConnectionStatusCard(
   _modelInfo = {},
   keyFeedback = '',
   showGeminiKeyGuide = false,
-  { hasSharedItemAbove = false } = {}
+  {
+    hasSharedItemAbove = false,
+    passkeySupported = isPasskeyPrfPotentiallySupported(),
+    showPasskeySyncOffer = false,
+    passkeyNeedsSecondTap = false,
+    passkeyBusy = false
+  } = {}
 ) {
   const connected = hasLiveAiConnection(userPrefs);
   if (connected) {
-    return '';
+    if (!passkeySupported || userPrefs?.passkeySyncEnabled || (!showPasskeySyncOffer && !passkeyNeedsSecondTap)) {
+      return '';
+    }
+    const actionName = passkeyNeedsSecondTap ? 'unlock-passkey-sync' : 'enable-passkey-sync';
+    const btnLabel = passkeyBusy
+      ? 'Authorizing…'
+      : passkeyNeedsSecondTap
+        ? 'Finish Face ID Sync'
+        : 'Enable Face ID Sync';
+    return `
+      <div class="passkey-sync-offer-bar" data-passkey-sync-offer="true">
+        <span class="inline-icon-meta" style="min-width:0;flex:1 1 170px;line-height:1.35">
+          ${iconSvg('faceId', 15)}
+          <span><strong style="color:var(--text-primary)">Share key across all 32 standalone team apps?</strong> One-time Face ID enables instant unlock on any other team app.</span>
+        </span>
+        <div class="passkey-sync-offer-actions">
+          <button type="button" class="btn-secondary" data-action="${actionName}" ${passkeyBusy ? 'disabled' : ''} style="font-size:11.5px;padding:6px 10px">
+            ${iconSvg(passkeyBusy ? 'loader' : 'faceId', 13, passkeyBusy ? 'btn-spin-icon' : '')}
+            <span>${esc(btnLabel)}</span>
+          </button>
+          <button type="button" class="icon-btn" data-action="dismiss-passkey-sync-offer" aria-label="Dismiss Face ID sync prompt" style="padding:4px 6px">
+            ${iconSvg('close', 12)}
+          </button>
+        </div>
+        ${keyFeedback ? `<div style="width:100%;font-size:11px;color:var(--gold-bright)">${esc(keyFeedback)}</div>` : ''}
+      </div>
+    `;
   }
 
   return `
@@ -375,23 +408,36 @@ function renderGeminiConnectionStatusCard(
           ${iconSvg('externalLink', 10)}
         </a>
       </div>
-      <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.4">
-        ${
-          hasSharedItemAbove
-            ? 'No API key needed to listen above. Add one below only to generate new custom episodes.'
-            : 'Saved privately on this device & shared across all 32 NFL team apps. Unlocks Auto Pod and AI Analysis.'
-        }
-      </div>
-      <div class="gemini-key-row">
-        <input type="password" id="inlineGeminiApiKeyInput" class="text-input"
+      ${
+        passkeySupported
+          ? `
+        <button type="button" class="passkey-unlock-btn" data-action="unlock-passkey-sync" data-passkey-unlock-btn="true" ${passkeyBusy ? 'disabled' : ''}>
+          ${iconSvg(passkeyBusy ? 'loader' : 'faceId', 15, passkeyBusy ? 'btn-spin-icon' : '')}
+          <span>${passkeyBusy ? 'Authorizing with Face ID…' : 'Already added on another team? Tap once for Face ID Sync'}</span>
+        </button>
+        <div class="gemini-key-divider"><span>or paste a new Gemini key</span></div>
+      `
+          : `
+        <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.4">
+          ${
+            hasSharedItemAbove
+              ? 'No API key needed to listen above. Add one below only to generate new custom episodes.'
+              : 'Saved privately on this device & shared across all 32 NFL team apps. Unlocks Auto Pod and AI Analysis.'
+          }
+        </div>
+      `
+      }
+      <form class="gemini-key-row" data-inline-gemini-form="true" action="#" method="post" novalidate>
+        <input type="text" name="username" value="Gemini API Key (joshal.com)" autocomplete="username" tabindex="-1" aria-hidden="true" class="sr-only-cred-field" readonly />
+        <input type="password" id="inlineGeminiApiKeyInput" name="password" class="text-input"
                style="flex:1 1 175px;min-width:0;font-size:16px"
-               placeholder="Paste AIza... API Key" autocomplete="off"
+               placeholder="Paste AIza... API Key" autocomplete="current-password"
                aria-label="Google Gemini API Key" />
-        <button type="button" class="btn-secondary" data-action="save-inline-gemini-key" style="flex-shrink:0">
+        <button type="submit" class="btn-secondary" data-action="save-inline-gemini-key" style="flex-shrink:0">
           ${iconSvg('check', 14)}
           <span>Connect</span>
         </button>
-      </div>
+      </form>
       ${keyFeedback ? `<div style="font-size:11.5px;color:var(--gold-bright)">${esc(keyFeedback)}</div>` : ''}
     </div>
   `;
@@ -416,7 +462,10 @@ export function renderAudioAiViewHtml({
   expandedTranscriptIds = new Set(),
   shareToastTargetId = null,
   geminiKeyNotice = '',
-  showGeminiKeyGuide = false
+  showGeminiKeyGuide = false,
+  showPasskeySyncOffer = false,
+  passkeyNeedsSecondTap = false,
+  passkeyBusy = false
 }) {
   registerRosterPlayersForInlineLinks(appData?.roster?.players);
   const beatPodBundle = appData?.beatPodcasts || { shows: [], episodes: [] };
@@ -470,7 +519,10 @@ export function renderAudioAiViewHtml({
         expandedTranscriptIds,
         shareToastTargetId,
         geminiKeyNotice,
-        showGeminiKeyGuide
+        showGeminiKeyGuide,
+        showPasskeySyncOffer,
+        passkeyNeedsSecondTap,
+        passkeyBusy
       })
     );
   }
@@ -486,7 +538,10 @@ export function renderAudioAiViewHtml({
       allAnalyses,
       shareToastTargetId,
       geminiKeyNotice,
-      showGeminiKeyGuide
+      showGeminiKeyGuide,
+      showPasskeySyncOffer,
+      passkeyNeedsSecondTap,
+      passkeyBusy
     })
   );
 }
@@ -688,7 +743,10 @@ function renderPodcastStudio({
   expandedTranscriptIds = new Set(),
   shareToastTargetId = null,
   geminiKeyNotice = '',
-  showGeminiKeyGuide = false
+  showGeminiKeyGuide = false,
+  showPasskeySyncOffer = false,
+  passkeyNeedsSecondTap = false,
+  passkeyBusy = false
 }) {
   const activeEp = audioState?.episode || null;
   const modelInfo = resolveActiveHighQualityModelLabel(appData, userPrefs);
@@ -894,7 +952,10 @@ function renderPodcastStudio({
       </div>
 
       ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice, showGeminiKeyGuide, {
-        hasSharedItemAbove: Boolean(activeEp?.isSharedImport)
+        hasSharedItemAbove: Boolean(activeEp?.isSharedImport),
+        showPasskeySyncOffer,
+        passkeyNeedsSecondTap,
+        passkeyBusy
       })}
 
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
@@ -1049,7 +1110,10 @@ function renderDeepAnalysisRunner({
   allAnalyses = [],
   shareToastTargetId = null,
   geminiKeyNotice = '',
-  showGeminiKeyGuide = false
+  showGeminiKeyGuide = false,
+  showPasskeySyncOffer = false,
+  passkeyNeedsSecondTap = false,
+  passkeyBusy = false
 }) {
   const modelInfo = resolveActiveHighQualityModelLabel(appData, userPrefs);
   const waitEst = estimateGenerationWait({ kind: 'analysis', prefs: userPrefs, appData });
@@ -1112,7 +1176,10 @@ function renderDeepAnalysisRunner({
       </div>
 
       ${renderGeminiConnectionStatusCard(userPrefs, modelInfo, geminiKeyNotice, showGeminiKeyGuide, {
-        hasSharedItemAbove: Boolean(sharedHeroReport)
+        hasSharedItemAbove: Boolean(sharedHeroReport),
+        showPasskeySyncOffer,
+        passkeyNeedsSecondTap,
+        passkeyBusy
       })}
 
       <div class="pill-bar" style="margin-bottom:8px">

@@ -17086,6 +17086,218 @@ await testAsync(
 );
 
 await testAsync(
+  '1-Tap Face ID / Passkey PRF Sync (rpId="joshal.com", HKDF-SHA256, Safari 18 2-tap fallback, background rotation/clear & UI cards)',
+  async () => {
+    const {
+      clearCachedPasskeyVaultKeys,
+      derivePasskeyVaultKeysFromPrf,
+      enablePasskeyKeySync,
+      publishClearedSharedGeminiApiKey,
+      publishSharedGeminiApiKey,
+      resetSharedVaultClientForTests,
+      resolvePasskeyRpId,
+      syncPrefsWithSharedGeminiKeyVault,
+      unlockAndSyncWithPasskey
+    } = await import('../src/services/sharedApiKeyStore.js');
+    const workerMod = await import('../worker/nfl-teams-worker.js');
+    const worker = workerMod.default;
+
+    // 1. `rpId` scopes all 32 team subdomains + nfl.joshal.com to shared `joshal.com` passkey
+    assert.equal(resolvePasskeyRpId('49ers.joshal.com'), 'joshal.com');
+    assert.equal(resolvePasskeyRpId('bears.joshal.com'), 'joshal.com');
+    assert.equal(resolvePasskeyRpId('nfl.joshal.com'), 'joshal.com');
+    assert.equal(resolvePasskeyRpId('www.joshal.com'), 'www.joshal.com', 'www.joshal.com must NOT map to shared NFL rpId');
+    assert.equal(resolvePasskeyRpId('localhost'), 'localhost');
+
+    // 2. HKDF-SHA256 derivation produces deterministic 64-hex vaultId and non-extractable AES-256-GCM key
+    const prfSecret = new Uint8Array(32);
+    for (let i = 0; i < 32; i += 1) prfSecret[i] = (i * 17 + 5) & 0xff;
+    const derivedA = await derivePasskeyVaultKeysFromPrf(prfSecret);
+    const derivedB = await derivePasskeyVaultKeysFromPrf(prfSecret.buffer);
+    assert.ok(derivedA && /^[a-f0-9]{64}$/.test(derivedA.vaultId));
+    assert.equal(derivedA.vaultId, derivedB.vaultId, 'HKDF vaultId must be deterministic');
+    assert.equal(derivedA.aesKey.extractable, false, 'Derived AES key must be non-extractable');
+
+    // 3. Full E2E flow: 49ers standalone PWA (Face ID create) -> Worker KV -> Bears standalone PWA (1-tap Face ID get)
+    const kvMem = new Map();
+    const mockEnv = {
+      SHARED_CACHE: {
+        get: async (k, type) => {
+          const val = kvMem.get(k);
+          if (val == null) return null;
+          return type === 'json' ? JSON.parse(val) : val;
+        },
+        put: async (k, v) => {
+          kvMem.set(k, String(v));
+        }
+      }
+    };
+    const workerFetch = async (url, init = {}) => {
+      const req = new Request(url, {
+        ...init,
+        headers: { ...(init.headers || {}), Origin: new URL(url).origin }
+      });
+      return worker.fetch(req, mockEnv, {});
+    };
+
+    let capturedCreateOpts = null;
+    let capturedGetOpts = null;
+    const mockCredsFullPrf = {
+      create: async opts => {
+        capturedCreateOpts = opts;
+        return {
+          getClientExtensionResults: () => ({ prf: { enabled: true, results: { first: prfSecret.buffer } } })
+        };
+      },
+      get: async opts => {
+        capturedGetOpts = opts;
+        return {
+          getClientExtensionResults: () => ({ prf: { results: { first: prfSecret.buffer } } })
+        };
+      }
+    };
+
+    resetSharedVaultClientForTests();
+    await clearCachedPasskeyVaultKeys();
+    const enableRes = await enablePasskeyKeySync({
+      record: { v: 1, k: 'AIzaFaceIdCrossAppKey99', m: 'gemini-4-hydrogen', t: 1700010000000, c: 0 },
+      hostname: '49ers.joshal.com',
+      endpointOverride: 'https://49ers.joshal.com/api/key-vault',
+      credentialsApi: mockCredsFullPrf,
+      fetchImpl: workerFetch
+    });
+    assert.equal(enableRes.ok, true);
+    assert.equal(enableRes.status, 'synced');
+    assert.equal(capturedCreateOpts.publicKey.rp.id, 'joshal.com');
+    assert.equal(capturedCreateOpts.publicKey.authenticatorSelection.residentKey, 'required');
+    assert.equal(capturedCreateOpts.publicKey.authenticatorSelection.authenticatorAttachment, 'platform');
+    assert.ok(!Array.from(kvMem.values()).join('\n').includes('AIzaFaceIdCrossAppKey99'), 'KV must hold ciphertext only');
+
+    // Simulate completely fresh isolated Bears standalone iPhone PWA (empty memory & storage!)
+    resetSharedVaultClientForTests();
+    await clearCachedPasskeyVaultKeys();
+    const unlockRes = await unlockAndSyncWithPasskey({
+      localRecord: null,
+      hostname: 'bears.joshal.com',
+      endpointOverride: 'https://bears.joshal.com/api/key-vault',
+      credentialsApi: mockCredsFullPrf,
+      fetchImpl: workerFetch
+    });
+    assert.equal(unlockRes.ok, true);
+    assert.equal(unlockRes.status, 'pulled');
+    assert.equal(capturedGetOpts.publicKey.rpId, 'joshal.com');
+    assert.deepEqual(capturedGetOpts.publicKey.allowCredentials, []);
+    assert.equal(unlockRes.record?.k, 'AIzaFaceIdCrossAppKey99');
+    assert.equal(unlockRes.record?.m, 'gemini-4-hydrogen');
+
+    // 4. Cached non-extractable Passkey key propagates subsequent key updates & clears with 0 extra Face ID prompts!
+    const rotated = await publishSharedGeminiApiKey(
+      { apiKey: 'AIzaRotatedZeroTapKey', verifiedModel: 'gemini-4-hydrogen', updatedAt: 1700010000000 },
+      { cloudEndpointOverride: 'https://bears.joshal.com/api/key-vault', fetchImpl: workerFetch }
+    );
+    assert.equal(rotated.cloudSynced, true, 'Key rotation must push via cached Passkey key with zero extra prompts');
+
+    const otherAppPrefs = { geminiApiKey: 'AIzaFaceIdCrossAppKey99', verifiedGeminiModel: '', geminiApiKeyUpdatedAt: 1700010000000 };
+    const pulledRot = await syncPrefsWithSharedGeminiKeyVault(otherAppPrefs, {
+      cloudEndpointOverride: 'https://49ers.joshal.com/api/key-vault',
+      forceCloudSync: true,
+      fetchImpl: workerFetch
+    });
+    assert.equal(pulledRot.action, 'apply_shared');
+    assert.equal(otherAppPrefs.geminiApiKey, 'AIzaRotatedZeroTapKey');
+
+    const cleared = await publishClearedSharedGeminiApiKey(
+      { updatedAt: rotated.updatedAt },
+      { cloudEndpointOverride: 'https://bears.joshal.com/api/key-vault', fetchImpl: workerFetch }
+    );
+    assert.equal(cleared.cloudSynced, true);
+    const pulledClear = await syncPrefsWithSharedGeminiKeyVault(otherAppPrefs, {
+      cloudEndpointOverride: 'https://49ers.joshal.com/api/key-vault',
+      forceCloudSync: true,
+      fetchImpl: workerFetch
+    });
+    assert.equal(pulledClear.action, 'apply_clear');
+    assert.equal(otherAppPrefs.geminiApiKey, '');
+
+    // 5. Safari 18.0-18.3 two-tap fallback (`create()` returns `enabled: true` without `results.first`)
+    const safariStep1 = await enablePasskeyKeySync({
+      record: { v: 1, k: 'AIzaSafariStep2Key', m: 'gemini-4-hydrogen', t: 1700020000000, c: 0 },
+      hostname: '49ers.joshal.com',
+      endpointOverride: 'https://49ers.joshal.com/api/key-vault',
+      credentialsApi: {
+        create: async () => ({ getClientExtensionResults: () => ({ prf: { enabled: true } }) })
+      },
+      fetchImpl: workerFetch
+    });
+    assert.equal(safariStep1.ok, false);
+    assert.equal(safariStep1.status, 'needs_verification_tap');
+
+    // 6. Older iOS / unsupported PRF & user cancel fail gracefully
+    const unsupportedRes = await enablePasskeyKeySync({
+      record: { v: 1, k: 'AIzaTest', m: '', t: 1700020000001, c: 0 },
+      hostname: '49ers.joshal.com',
+      credentialsApi: { create: async () => ({ getClientExtensionResults: () => ({}) }) }
+    });
+    assert.equal(unsupportedRes.status, 'prf_unsupported');
+
+    const cancelRes = await unlockAndSyncWithPasskey({
+      hostname: 'bears.joshal.com',
+      credentialsApi: {
+        get: async () => {
+          const e = new Error('User cancelled');
+          e.name = 'NotAllowedError';
+          throw e;
+        }
+      }
+    });
+    assert.equal(cancelRes.status, 'cancelled');
+    assert.equal(cancelRes.message, '');
+
+    // 7. Audio & AI card UI: unconnected shows Face ID button + iCloud Keychain form; connected preserves zero setup-card clutter
+    const origPkc = globalThis.window;
+    try {
+      globalThis.window = {
+        PublicKeyCredential: function () {},
+        navigator: { credentials: { create() {}, get() {} } },
+        isSecureContext: true,
+        location: { hostname: '49ers.joshal.com', origin: 'https://49ers.joshal.com' }
+      };
+      const unconnectedHtml = renderAudioAiViewHtml({
+        appData: { roster: { players: [] }, beatPodcasts: { shows: [], episodes: [] }, scheduleMatchup: {} },
+        userPrefs: { geminiApiKey: '' },
+        studioSub: 'podcast'
+      });
+      assert.ok(unconnectedHtml.includes('data-passkey-unlock-btn="true"'), 'Unconnected card must render 1-tap Face ID unlock button');
+      assert.ok(unconnectedHtml.includes('data-inline-gemini-form="true"'), 'Unconnected card must render iCloud Keychain credential form');
+      assert.ok(unconnectedHtml.includes('autocomplete="current-password"'), 'Key input must support iCloud Keychain autofill');
+
+      const connectedDefaultHtml = renderAudioAiViewHtml({
+        appData: { roster: { players: [] }, beatPodcasts: { shows: [], episodes: [] }, scheduleMatchup: {} },
+        userPrefs: { geminiApiKey: 'AIzaConnectedKey' },
+        studioSub: 'podcast'
+      });
+      assert.ok(!connectedDefaultHtml.includes('data-gemini-setup-card'), 'Connected view must never show setup card');
+      assert.ok(!connectedDefaultHtml.includes('data-passkey-sync-offer'), 'Connected view must hide sync offer unless triggered');
+
+      const connectedOfferHtml = renderAudioAiViewHtml({
+        appData: { roster: { players: [] }, beatPodcasts: { shows: [], episodes: [] }, scheduleMatchup: {} },
+        userPrefs: { geminiApiKey: 'AIzaConnectedKey', passkeySyncEnabled: false },
+        studioSub: 'podcast',
+        showPasskeySyncOffer: true
+      });
+      assert.ok(!connectedOfferHtml.includes('data-gemini-setup-card'), 'Offer bar must never use setup-card attribute');
+      assert.ok(connectedOfferHtml.includes('data-passkey-sync-offer="true"'), 'Post-connect offer bar must render when triggered');
+      assert.ok(connectedOfferHtml.includes('data-action="enable-passkey-sync"'));
+    } finally {
+      if (origPkc === undefined) delete globalThis.window;
+      else globalThis.window = origPkc;
+      resetSharedVaultClientForTests();
+      await clearCachedPasskeyVaultKeys();
+    }
+  }
+);
+
+await testAsync(
   'Cross-team native player dossier service resolves all 32 teams, fetches & caches remote *.joshal.com JSON, rejects HTML fallbacks, and merges matchup telemetry with zero 49ers leaks',
   async () => {
     clearRemoteTeamCache();

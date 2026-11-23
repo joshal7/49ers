@@ -63,16 +63,20 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=100';
+} from './services/dataService.js?v=101';
 import {
   SHARED_GEMINI_KEY_STORAGE_KEY,
   appendSharedKeyHandoffToUrl,
+  enablePasskeyKeySync,
   isEligibleE2eeSyncPasscode,
+  isPasskeyPrfPotentiallySupported,
+  loadCachedPasskeyVaultKeys,
   publishSharedGeminiApiKey,
   publishClearedSharedGeminiApiKey,
   readSameOriginSharedGeminiKey,
-  syncPrefsWithSharedGeminiKeyVault
-} from './services/sharedApiKeyStore.js?v=3';
+  syncPrefsWithSharedGeminiKeyVault,
+  unlockAndSyncWithPasskey
+} from './services/sharedApiKeyStore.js?v=4';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -140,7 +144,7 @@ import {
   normalizeBigBoardSort
 } from './engine/draftBigBoardEngine.js?v=56';
 import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=49';
-import { iconSvg } from './views/icons.js?v=85';
+import { iconSvg } from './views/icons.js?v=86';
 import { renderHomeDashboardHtml } from './views/homeView.js?v=92';
 import {
   renderNewsViewHtml,
@@ -149,13 +153,13 @@ import {
 import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=50';
 import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=82';
 import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=97';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=67';
+import { renderAudioAiViewHtml } from './views/audioAiView.js?v=68';
 import {
   renderSettingsSheetHtml,
   renderUniversalSearchSheetHtml,
   renderUniversalSearchResultsHtml,
   renderUniversalSearchScopeBarHtml
-} from './views/settingsArchiveView.js?v=91';
+} from './views/settingsArchiveView.js?v=92';
 import {
   normalizeNewsSortMode,
   computeCatchUpState,
@@ -288,6 +292,10 @@ const state = {
   analysisPromptDraft: '',
   geminiKeyNotice: '',
   showGeminiKeyGuide: false,
+  showPasskeySyncOffer: false,
+  passkeyNeedsSecondTap: false,
+  passkeyBusy: false,
+  passkeyNotice: '',
   jobStatus: null,
   sharedAudioPrep: null,
   sharedAnalysisHighlightId: null,
@@ -1328,7 +1336,10 @@ function renderMain() {
         expandedTranscriptIds: state.expandedTranscriptIds,
         shareToastTargetId: state.shareToastTargetId,
         geminiKeyNotice: state.geminiKeyNotice,
-        showGeminiKeyGuide: state.showGeminiKeyGuide
+        showGeminiKeyGuide: state.showGeminiKeyGuide,
+        showPasskeySyncOffer: state.showPasskeySyncOffer,
+        passkeyNeedsSecondTap: state.passkeyNeedsSecondTap,
+        passkeyBusy: state.passkeyBusy
       });
     }
   });
@@ -1956,7 +1967,10 @@ function renderSheet({ preserveScroll = false } = {}) {
         userPrefs: state.prefs,
         reportersData: state.appData?.reporters,
         reporterSearch: state.reporterSearch,
-        pushStatusNotice: state.pushStatusNotice
+        pushStatusNotice: state.pushStatusNotice,
+        passkeyNotice: state.passkeyNotice,
+        passkeyNeedsSecondTap: state.passkeyNeedsSecondTap,
+        passkeyBusy: state.passkeyBusy
       });
       if (!preserveScroll) body.scrollTop = 0;
     } else if (state.sheetMode === 'search') {
@@ -3467,6 +3481,8 @@ function bindEvents() {
       }
 
       case 'save-inline-gemini-key': {
+        e.preventDefault();
+        if (btn.disabled) break;
         const keyInput = document.getElementById('inlineGeminiApiKeyInput');
         const rawKey = String(keyInput?.value || '').trim();
         if (!rawKey) {
@@ -3490,7 +3506,11 @@ function bindEvents() {
           state.prefs.geminiApiKeyUpdatedAt = published.updatedAt;
           saveUserPrefs(state.prefs);
           state.geminiKeyNotice = '';
+          state.passkeyNotice = '';
           state.showGeminiKeyGuide = false;
+          if (isPasskeyPrfPotentiallySupported() && !state.prefs.passkeySyncEnabled) {
+            state.showPasskeySyncOffer = true;
+          }
           if (state.jobStatus?.error) state.jobStatus = null;
           triggerDailyMatchupIntelSync().finally(() => triggerDailyTopNewsBriefSync());
           renderMain();
@@ -3498,6 +3518,122 @@ function bindEvents() {
           state.geminiKeyNotice = err.message || 'Unable to verify Gemini API Key.';
           renderMain();
         }
+        break;
+      }
+
+      case 'enable-passkey-sync': {
+        if (state.passkeyBusy) break;
+        const currentRec = state.prefs.geminiApiKey
+          ? {
+              v: 1,
+              k: String(state.prefs.geminiApiKey).trim(),
+              m: String(state.prefs.verifiedGeminiModel || '').trim(),
+              t: Number(state.prefs.geminiApiKeyUpdatedAt) || Date.now(),
+              c: 0
+            }
+          : readSameOriginSharedGeminiKey();
+        if (!currentRec || currentRec.c === 1) {
+          state.passkeyNotice = 'Add your Gemini API key first before enabling Face ID sync.';
+          state.geminiKeyNotice = state.passkeyNotice;
+          if (state.sheetMode === 'settings') renderSheet(true);
+          renderMain();
+          break;
+        }
+        // IMPORTANT: Invoke `enablePasskeyKeySync` synchronously BEFORE any `await` or DOM rebuild
+        // that could interfere with iOS Safari's transient Face ID user activation!
+        state.passkeyBusy = true;
+        state.passkeyNotice = '';
+        btn.disabled = true;
+        const syncPromise = enablePasskeyKeySync({ record: currentRec });
+        try {
+          const res = await syncPromise;
+          if (res.ok) {
+            state.prefs.passkeySyncEnabled = true;
+            if (res.record?.k) {
+              state.prefs.geminiApiKey = res.record.k;
+              state.prefs.verifiedGeminiModel = res.record.m || state.prefs.verifiedGeminiModel || '';
+              state.prefs.geminiApiKeyUpdatedAt = res.record.t || state.prefs.geminiApiKeyUpdatedAt || Date.now();
+            }
+            saveUserPrefs(state.prefs);
+            state.showPasskeySyncOffer = false;
+            state.passkeyNeedsSecondTap = false;
+            state.geminiKeyNotice = '';
+            state.passkeyNotice =
+              'Face ID Sync enabled! Open any other standalone team app and tap once for Face ID to unlock your key.';
+          } else if (res.status === 'needs_verification_tap') {
+            state.passkeyNeedsSecondTap = true;
+            state.showPasskeySyncOffer = true;
+            state.passkeyNotice = res.message || 'Passkey created! Tap Finish Face ID Sync once to complete.';
+            state.geminiKeyNotice = state.passkeyNotice;
+          } else if (res.status !== 'cancelled') {
+            state.passkeyNotice = res.message || 'Unable to enable Face ID sync.';
+            state.geminiKeyNotice = state.passkeyNotice;
+          }
+        } finally {
+          state.passkeyBusy = false;
+        }
+        if (state.sheetMode === 'settings') renderSheet(true);
+        renderMain();
+        break;
+      }
+
+      case 'unlock-passkey-sync': {
+        if (state.passkeyBusy) break;
+        const localRec = state.prefs.geminiApiKey
+          ? {
+              v: 1,
+              k: String(state.prefs.geminiApiKey).trim(),
+              m: String(state.prefs.verifiedGeminiModel || '').trim(),
+              t: Number(state.prefs.geminiApiKeyUpdatedAt) || Date.now(),
+              c: 0
+            }
+          : readSameOriginSharedGeminiKey();
+        // IMPORTANT: Invoke `unlockAndSyncWithPasskey` synchronously inside click gesture for iOS Safari!
+        state.passkeyBusy = true;
+        state.passkeyNotice = '';
+        btn.disabled = true;
+        const unlockPromise = unlockAndSyncWithPasskey({ localRecord: localRec });
+        try {
+          const res = await unlockPromise;
+          if (res.ok && res.record?.k) {
+            const prevKey = String(state.prefs.geminiApiKey || '').trim();
+            state.prefs.geminiApiKey = res.record.k;
+            state.prefs.verifiedGeminiModel = res.record.m || state.prefs.verifiedGeminiModel || '';
+            state.prefs.geminiApiKeyUpdatedAt = res.record.t || Date.now();
+            state.prefs.passkeySyncEnabled = true;
+            saveUserPrefs(state.prefs);
+            state.showPasskeySyncOffer = false;
+            state.passkeyNeedsSecondTap = false;
+            state.showGeminiKeyGuide = false;
+            state.geminiKeyNotice = '';
+            state.passkeyNotice =
+              res.status === 'pushed'
+                ? 'Face ID Sync complete! Your Gemini API key is ready across all 32 team apps.'
+                : 'Synced with Face ID! Your Gemini API key is now active in this app.';
+            if (state.jobStatus?.error) state.jobStatus = null;
+            if (res.record.k !== prevKey) {
+              checkAndAutoUpdateBestGeminiModel(state.prefs, () => {
+                saveUserPrefs(state.prefs);
+                if (state.activeNavTab === 'audio') renderMain();
+              });
+              triggerDailyMatchupIntelSync().finally(() => triggerDailyTopNewsBriefSync());
+            }
+          } else if (res.status !== 'cancelled') {
+            state.passkeyNotice = res.message || 'Unable to sync key with Face ID.';
+            state.geminiKeyNotice = state.passkeyNotice;
+          }
+        } finally {
+          state.passkeyBusy = false;
+        }
+        if (state.sheetMode === 'settings') renderSheet(true);
+        renderMain();
+        break;
+      }
+
+      case 'dismiss-passkey-sync-offer': {
+        state.showPasskeySyncOffer = false;
+        state.passkeyNeedsSecondTap = false;
+        renderMain();
         break;
       }
 
@@ -3860,6 +3996,10 @@ function bindEvents() {
         clearDailyNewsBriefAttemptLock();
         clearDailyMatchupIntelAttemptLock();
         state.geminiKeyNotice = '';
+        state.passkeyNotice = '';
+        if (state.prefs.geminiApiKey && isPasskeyPrfPotentiallySupported() && !state.prefs.passkeySyncEnabled) {
+          state.showPasskeySyncOffer = true;
+        }
         if (state.jobStatus?.error) state.jobStatus = null;
         const shared = await fetchSharedWorkerFeed(state.prefs);
         if (shared) state.workerSharedFeed = shared;
@@ -3871,6 +4011,19 @@ function bindEvents() {
         }, 900);
         break;
       }
+    }
+  });
+
+  // Prevent native full-page reload on iCloud Keychain / Apple Passwords credential forms
+  document.addEventListener('submit', e => {
+    const form = e.target;
+    if (!form || !form.matches) return;
+    if (form.matches('[data-inline-gemini-form="true"]')) {
+      e.preventDefault();
+      form.querySelector('[data-action="save-inline-gemini-key"]')?.click();
+    } else if (form.matches('[data-settings-gemini-form="true"]')) {
+      e.preventDefault();
+      document.querySelector('[data-action="save-group-config"]')?.click();
     }
   });
 
@@ -4838,6 +4991,14 @@ async function init() {
   applyFeedDensity(state.prefs.feedDensity);
   state.newsSortMode = normalizeNewsSortMode(state.prefs.newsSortMode || 'top');
   // Start cross-subdomain NFL key vault sync immediately in parallel with app data boot
+  loadCachedPasskeyVaultKeys()
+    .then(cached => {
+      if (cached && !state.prefs.passkeySyncEnabled) {
+        state.prefs.passkeySyncEnabled = true;
+        saveUserPrefs(state.prefs);
+      }
+    })
+    .catch(() => {});
   syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
   // Preserve prior visit watermark for the entire active session so "N new since …" stays stable
   state.sessionLastVisitedAt = state.prefs.lastVisitedAt || null;
@@ -5039,7 +5200,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=118', { updateViaCache: 'none' })
+        .register('./sw.js?v=119', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});
