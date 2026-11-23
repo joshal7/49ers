@@ -85,7 +85,7 @@ export function renderSettingsSheetHtml({
           </div>
           ${isNflHubMode()
             ? `<a href="./" class="source-chip-link" data-hub-portal-link="true"><span>NFL Portal</span></a>`
-            : `<a href="https://nfl.joshal.com" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>NFL Portal</span>${iconSvg('externalLink', 10)}</a>`}
+            : `<a href="https://nfl.joshal.com" target="_blank" rel="noopener noreferrer" data-nfl-key-handoff="1" class="source-chip-link"><span>NFL Portal</span>${iconSvg('externalLink', 10)}</a>`}
         </div>
         <details class="stats-expand-details" style="margin-top:0">
           <summary class="stats-expand-summary" style="padding:7px 10px;font-size:12px">
@@ -102,7 +102,8 @@ export function renderSettingsSheetHtml({
                 .map(t => {
                   const href = useSameOriginQuery ? `./?team=${encodeURIComponent(t.slug)}` : `https://${t.domain}`;
                   const isCur = activeTeam.slug === t.slug;
-                  return `<a href="${esc(href)}" class="source-chip-link ${isCur ? 'active' : ''}" style="${isCur ? 'border-color:var(--gold-border);background:var(--gold-soft);color:var(--text-primary)' : ''}"><span>${esc(t.nickname)}</span></a>`;
+                  const handoffAttr = useSameOriginQuery ? '' : ' data-nfl-key-handoff="1"';
+                  return `<a href="${esc(href)}"${handoffAttr} class="source-chip-link ${isCur ? 'active' : ''}" style="${isCur ? 'border-color:var(--gold-border);background:var(--gold-soft);color:var(--text-primary)' : ''}"><span>${esc(t.nickname)}</span></a>`;
                 })
                 .join('');
             })()}
@@ -256,7 +257,7 @@ export function renderSettingsSheetHtml({
         </div>
         <div>
           <label style="font-size:11px;color:var(--text-secondary)" for="prefPasscodeInput">Sync Passcode</label>
-          <input type="password" id="prefPasscodeInput" class="text-input" placeholder="Optional PIN" value="${esc(userPrefs.groupPasscode || '')}" />
+          <input type="password" id="prefPasscodeInput" class="text-input" placeholder="Optional (8+ chars syncs key)" value="${esc(userPrefs.groupPasscode || '')}" />
         </div>
       </div>
       <div>
@@ -276,6 +277,15 @@ export function renderSettingsSheetHtml({
           <a href="${AI_STUDIO_DIRECT_KEY_URL}" target="_blank" rel="noopener noreferrer" class="ext-link" style="font-size:11px">Get Free Key ${iconSvg('externalLink', 10)}</a>
         </div>
         <input type="password" id="prefGeminiKeyInput" class="text-input" placeholder="AIza..." autocomplete="off" value="${esc(userPrefs.geminiApiKey || '')}" />
+        <details style="margin-top:5px;font-size:11px;color:var(--text-secondary)">
+          <summary style="cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:4px;color:var(--text-muted)">
+            ${iconSvg('helpCircle', 11)}
+            <span>Cross-app &amp; iPhone Home Screen sync info</span>
+          </summary>
+          <div style="margin-top:4px;line-height:1.42">
+            Auto-syncs across Chrome/Firefox tabs, the unified <strong>NFL Portal</strong> app (<code>nfl.joshal.com</code>), and links opened via <strong>Switch Team</strong> or <strong>NFL Portal</strong>. Because iOS isolates separate Home Screen apps from each other, enter the same <strong>8+ char Sync Passcode</strong> above to end-to-end encrypt &amp; sync your key across separate Home Screen apps and devices.
+          </div>
+        </details>
       </div>
       <div>
         <label style="font-size:11px;color:var(--text-secondary)" for="prefWorkerUrlInput">Shared Worker URL (optional)</label>

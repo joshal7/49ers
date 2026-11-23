@@ -2530,8 +2530,8 @@ await testAsync('hydrateLiveEspnOverlay preserves Season-Ending IR statuses, off
       scheduleMatchup: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'))
     };
 
-    // Case A: Friday in-week practice window (~48h before kickoff) — preserve official Opponent Wed/Thu/Fri codes!
-    const friKickoffIso = new Date(Date.now() + 48 * 3600_000).toISOString();
+    // Case A: In-week practice window (~24h before kickoff, always inside [Practice Day 1, Kickoff) on every weekday) — preserve official Opponent Wed/Thu/Fri codes!
+    const friKickoffIso = new Date(Date.now() + 24 * 3600_000).toISOString();
     appData.scheduleMatchup.upcomingMatchup.kickoffIso = friKickoffIso;
     appData.scheduleMatchup.upcomingMatchup.oppAbbr = 'LV';
     appData.scheduleMatchup.upcomingMatchup.oppName = 'Las Vegas Raiders';
@@ -16871,6 +16871,217 @@ await testAsync(
     assert.equal(readSameOriginSharedGeminiKey(memStorage)?.c, 1);
     reconcilePrefsWithSameOriginSharedKey(teamAPrefs, { storage: memStorage, nowMs: 7100 });
     assert.equal(teamAPrefs.geminiApiKey, '');
+  }
+);
+
+await testAsync(
+  'Cross-team API key hash handoff (#nfl_ks=), legacy per-team backfill, and zero-knowledge E2EE /api/key-vault sync (iOS Safari + separate PWAs)',
+  async () => {
+    const {
+      SHARED_GEMINI_KEY_STORAGE_KEY,
+      SHARED_KEY_HASH_PARAM,
+      appendSharedKeyHandoffToUrl,
+      consumeSharedKeyHandoffFromLocation,
+      decodeSharedKeyHashToken,
+      decryptSharedKeyPayloadFromVault,
+      encodeSharedKeyHashToken,
+      encryptSharedKeyRecordForVault,
+      extractSharedKeyRecordFromHash,
+      isEligibleE2eeSyncPasscode,
+      readSameOriginSharedGeminiKey,
+      scanSameOriginLegacyTeamPrefsForKey,
+      syncPrefsWithSharedGeminiKeyVault,
+      publishSharedGeminiApiKey,
+      resetSharedVaultClientForTests
+    } = await import('../src/services/sharedApiKeyStore.js');
+    const workerMod = await import('../worker/nfl-teams-worker.js');
+    const worker = workerMod.default;
+
+    // 1. Transient `#nfl_ks=` encode/decode + strict 33-origin allowlist (NEVER leaks to www.joshal.com / third parties)
+    const sampleRec = { v: 1, k: 'AIzaSafariHandoffKey99', m: 'gemini-4-hydrogen', t: 1700001000000, c: 0 };
+    const token = encodeSharedKeyHashToken(sampleRec);
+    assert.ok(token.length > 10 && /^[A-Za-z0-9_-]+$/.test(token), 'Hash token must be URL-safe base64');
+    assert.deepEqual(decodeSharedKeyHashToken(token), sampleRec);
+    assert.equal(decodeSharedKeyHashToken('not_valid_base64!!!'), null);
+
+    // Allowed cross-subdomain targets receive `#nfl_ks=`
+    const bearsUrl = appendSharedKeyHandoffToUrl('https://bears.joshal.com/', sampleRec, {
+      currentOrigin: 'https://49ers.joshal.com'
+    });
+    assert.ok(bearsUrl.startsWith(`https://bears.joshal.com/#${SHARED_KEY_HASH_PARAM}=`), `Got: ${bearsUrl}`);
+    const portalUrl = appendSharedKeyHandoffToUrl('https://nfl.joshal.com', sampleRec, {
+      currentOrigin: 'https://49ers.joshal.com'
+    });
+    assert.ok(portalUrl.includes(`#${SHARED_KEY_HASH_PARAM}=`), `Portal should receive handoff: ${portalUrl}`);
+
+    // Preserves unrelated hash fragments cleanly
+    const withExistingHash = appendSharedKeyHandoffToUrl('https://bears.joshal.com/#cap', sampleRec, {
+      currentOrigin: 'https://nfl.joshal.com'
+    });
+    assert.ok(withExistingHash.includes(`#cap&${SHARED_KEY_HASH_PARAM}=`));
+    const extracted = extractSharedKeyRecordFromHash(new URL(withExistingHash).hash);
+    assert.equal(extracted.record?.k, 'AIzaSafariHandoffKey99');
+    assert.equal(extracted.cleanedHash, '#cap');
+
+    // Same-origin destination skips hash handoff (already shares localStorage natively)
+    assert.equal(
+      appendSharedKeyHandoffToUrl('https://nfl.joshal.com/?team=bears', sampleRec, {
+        currentOrigin: 'https://nfl.joshal.com'
+      }),
+      'https://nfl.joshal.com/?team=bears'
+    );
+
+    // Blocked origins NEVER receive `#nfl_ks=` (SmugMug www.joshal.com, workouts, http://, evil domains)
+    for (const blockedUrl of [
+      'https://www.joshal.com/',
+      'https://workouts.joshal.com/',
+      'http://bears.joshal.com/',
+      'https://evil-bears.joshal.com.attacker.test/',
+      'https://google.com/'
+    ]) {
+      assert.equal(
+        appendSharedKeyHandoffToUrl(blockedUrl, sampleRec, { currentOrigin: 'https://49ers.joshal.com' }),
+        blockedUrl,
+        `Must NEVER attach key handoff to ${blockedUrl}`
+      );
+    }
+
+    // 2. Consuming `#nfl_ks=` immediately persists via LWW and strips hash via `history.replaceState`
+    const mapA = new Map();
+    const makeStore = m => ({
+      get length() {
+        return m.size;
+      },
+      key: idx => Array.from(m.keys())[idx] ?? null,
+      getItem: k => (m.has(k) ? m.get(k) : null),
+      setItem: (k, v) => m.set(k, String(v)),
+      removeItem: k => m.delete(k)
+    });
+    const storeA = makeStore(mapA);
+    let replacedUrl = null;
+    const fakeLoc = {
+      pathname: '/',
+      search: '?team=bears',
+      hash: new URL(withExistingHash).hash
+    };
+    const fakeHist = {
+      state: { from: 'test' },
+      replaceState: (_st, _title, nextUrl) => {
+        replacedUrl = nextUrl;
+      }
+    };
+    const consumed = consumeSharedKeyHandoffFromLocation({
+      locationObj: fakeLoc,
+      historyObj: fakeHist,
+      storage: storeA
+    });
+    assert.equal(consumed.consumed, true);
+    assert.equal(consumed.record?.k, 'AIzaSafariHandoffKey99');
+    assert.equal(replacedUrl, '/?team=bears#cap', 'Must strip nfl_ks while preserving query & unrelated hash');
+    assert.equal(readSameOriginSharedGeminiKey(storeA)?.k, 'AIzaSafariHandoffKey99');
+
+    // 3. Same-origin legacy per-team prefs backfill (`joshal_49ers_hq_prefs_v1` -> `joshal_nfl_shared_gemini_key_v1`)
+    const legacyMap = new Map([
+      [
+        'joshal_49ers_hq_prefs_v1',
+        JSON.stringify({ geminiApiKey: 'AIzaLegacy49ersKey', verifiedGeminiModel: 'gemini-4-hydrogen', geminiApiKeyUpdatedAt: 1700002000000 })
+      ]
+    ]);
+    const legacyStore = makeStore(legacyMap);
+    assert.equal(scanSameOriginLegacyTeamPrefsForKey(legacyStore)?.k, 'AIzaLegacy49ersKey');
+    const backfilled = readSameOriginSharedGeminiKey(legacyStore);
+    assert.equal(backfilled?.k, 'AIzaLegacy49ersKey');
+    assert.ok(legacyMap.has(SHARED_GEMINI_KEY_STORAGE_KEY), 'Must persist backfilled record into shared key');
+
+    // 4. Zero-Knowledge Client-Side E2EE Crypto + Cloudflare Worker `/api/key-vault` end-to-end
+    assert.equal(isEligibleE2eeSyncPasscode('1234'), false, 'Weak 4-digit PIN must NOT trigger cloud E2EE vault');
+    assert.equal(isEligibleE2eeSyncPasscode('Faithful2026!'), true);
+
+    const encPayload = await encryptSharedKeyRecordForVault(sampleRec, 'Faithful2026!');
+    assert.ok(encPayload && /^[a-f0-9]{64}$/.test(encPayload.id), 'vaultId must be 64-char hex');
+    assert.ok(!JSON.stringify(encPayload).includes('AIzaSafariHandoffKey99'), 'Ciphertext must NEVER contain plaintext key');
+    assert.ok(!JSON.stringify(encPayload).includes('Faithful2026!'), 'Payload must NEVER contain plaintext passcode');
+
+    const decOk = await decryptSharedKeyPayloadFromVault(encPayload, 'Faithful2026!');
+    assert.deepEqual(decOk, sampleRec);
+    const decWrong = await decryptSharedKeyPayloadFromVault(encPayload, 'WrongPasscode99');
+    assert.equal(decWrong, null, 'Wrong passcode must fail AES-GCM authentication cleanly');
+
+    // Full Edge Worker `/api/key-vault` KV flow (49ers PWA -> KV -> Bears PWA + monotonic LWW + origin guard)
+    const kvMem = new Map();
+    const mockEnv = {
+      SHARED_CACHE: {
+        get: async (k, type) => {
+          const val = kvMem.get(k);
+          if (val == null) return null;
+          return type === 'json' ? JSON.parse(val) : val;
+        },
+        put: async (k, v) => {
+          kvMem.set(k, String(v));
+        }
+      }
+    };
+
+    // Unallowlisted origin (`www.joshal.com`) is strictly rejected (HTTP 403)
+    const evilReq = new Request(`https://www.joshal.com/api/key-vault?id=${encPayload.id}`, {
+      headers: { Origin: 'https://www.joshal.com' }
+    });
+    const evilRes = await worker.fetch(evilReq, mockEnv, {});
+    assert.equal(evilRes.status, 403, 'www.joshal.com must be forbidden from /api/key-vault');
+
+    // Mock fetchImpl wiring `publishSharedGeminiApiKey` (49ers PWA) & `syncPrefsWithSharedGeminiKeyVault` (Bears PWA) through Worker
+    const workerFetch = async (url, init = {}) => {
+      const req = new Request(url, {
+        ...init,
+        headers: {
+          ...(init.headers || {}),
+          Origin: new URL(url).origin
+        }
+      });
+      return worker.fetch(req, mockEnv, {});
+    };
+
+    resetSharedVaultClientForTests();
+    const pubCloud = await publishSharedGeminiApiKey(
+      { apiKey: 'AIzaIsolatedPwaBridgeKey', verifiedModel: 'gemini-4-hydrogen', syncPasscode: 'Faithful2026!' },
+      { cloudEndpointOverride: 'https://49ers.joshal.com/api/key-vault', fetchImpl: workerFetch }
+    );
+    assert.equal(pubCloud.cloudSynced, true, '49ers PWA must push encrypted key to /api/key-vault');
+
+    // Verify raw KV value contains ZERO plaintext API key
+    const rawKvDump = Array.from(kvMem.values()).join('\n');
+    assert.ok(rawKvDump.length > 20 && !rawKvDump.includes('AIzaIsolatedPwaBridgeKey'), 'KV must hold ciphertext only');
+
+    // Isolated Bears PWA (empty localStorage, same Sync Passcode) pulls & decrypts key seamlessly!
+    resetSharedVaultClientForTests();
+    const bearsPwaPrefs = {
+      geminiApiKey: '',
+      verifiedGeminiModel: '',
+      geminiApiKeyUpdatedAt: 0,
+      groupPasscode: 'Faithful2026!'
+    };
+    const syncBears = await syncPrefsWithSharedGeminiKeyVault(bearsPwaPrefs, {
+      cloudEndpointOverride: 'https://bears.joshal.com/api/key-vault',
+      forceCloudSync: true,
+      fetchImpl: workerFetch
+    });
+    assert.equal(syncBears.cloudChecked, true);
+    assert.equal(syncBears.action, 'apply_shared');
+    assert.equal(bearsPwaPrefs.geminiApiKey, 'AIzaIsolatedPwaBridgeKey');
+    assert.equal(bearsPwaPrefs.verifiedGeminiModel, 'gemini-4-hydrogen');
+
+    // Stale write cannot overwrite newer timestamp on Worker `/api/key-vault`
+    const olderEnc = await encryptSharedKeyRecordForVault(
+      { v: 1, k: 'AIzaStaleOldKey', m: '', t: Math.max(1, pubCloud.updatedAt - 5000), c: 0 },
+      'Faithful2026!'
+    );
+    const stalePostRes = await workerFetch('https://49ers.joshal.com/api/key-vault', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(olderEnc)
+    });
+    const staleJson = await stalePostRes.json();
+    assert.equal(staleJson.preservedNewer, true, 'Worker must preserve newer monotonic record against stale writes');
   }
 );
 

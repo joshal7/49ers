@@ -106,7 +106,7 @@ import {
   resolveTeamConfig,
   resolveTeamDataBasePath
 } from '../config/teamRegistry.js';
-import { reconcilePrefsWithSameOriginSharedKey } from './sharedApiKeyStore.js';
+import { reconcilePrefsWithSameOriginSharedKey } from './sharedApiKeyStore.js?v=3';
 
 function getTeamStorageKeys() {
   return getActiveTeamConfig().storageKeys;

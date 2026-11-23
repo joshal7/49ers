@@ -1,32 +1,49 @@
 /**
- * Cross-Team Shared Gemini API Key Store (All 32 NFL Team Apps + 49ers.joshal.com)
+ * Cross-Team Shared Gemini API Key Store (All 32 NFL Team Apps + nfl.joshal.com Hub)
  *
  * Security & Privacy Architecture:
  *   1. ZERO HTTP Cookie Leakage: Never writes the user's Gemini API key into a `Domain=.joshal.com`
  *      cookie, ensuring third-party-mapped subdomains (e.g. `www.joshal.com` on SmugMug) and CDN/server
  *      HTTP logs receive ZERO bytes of the API key.
- *   2. Hermetically Sealed Same-Site Vault (`https://nfl.joshal.com/key-sync.html`):
- *      - All 32 `<team>.joshal.com` apps share the same eTLD+1 (`joshal.com`),
- *        so Chrome, Safari (iOS & macOS), Firefox, and Edge treat `nfl.joshal.com` as same-site/first-party
- *        with a single unified storage partition across every NFL team app.
+ *   2. Instant Same-Origin Sync (`localStorage['joshal_nfl_shared_gemini_key_v1']`):
+ *      - Provides 0ms synchronous sharing across all 32 teams inside `nfl.joshal.com/?team=<slug>`
+ *        (including the unified iOS/Chrome `nfl.joshal.com` Home Screen PWA) and `localhost` dev.
+ *      - Automatically backfills from any legacy same-origin per-team prefs (`sf49ers_hq_prefs_v2`,
+ *        `joshal_*_hq_prefs_v1`) so existing keys seamlessly flow to all teams.
+ *   3. Transient Client-Side `#nfl_ks=` Hash Handoff (Safari / iOS Safari / Portal <-> Subdomain Bridge):
+ *      - WebKit/Safari partitions cross-origin iframe `localStorage` by `(topOrigin, clientOrigin)`,
+ *        isolating `(49ers.joshal.com, nfl.joshal.com)` from `(bears.joshal.com, nfl.joshal.com)`.
+ *      - Clicking any allowlisted cross-team link (`nfl.joshal.com` portal tiles in normal browser mode,
+ *        or Settings `Switch Team` / `NFL Portal`) attaches a transient `#nfl_ks=...` URL fragment at
+ *        click time (never stored in static DOM `href`s, never sent over HTTP per RFC 3986, never logged).
+ *      - Destination page consumes it synchronously before first paint, merges via Last-Write-Wins, and
+ *        immediately strips `#nfl_ks=...` via `history.replaceState`.
+ *   4. Hardened Same-Site Iframe Vault (`https://nfl.joshal.com/key-sync`):
+ *      - Automatic background sync across all 32 `<team>.joshal.com` tabs in Chrome, Firefox, and Edge
+ *        (which partition by eTLD+1 `joshal.com`).
  *      - Strictly allowlisted by BOTH HTTP `Content-Security-Policy: frame-ancestors` AND JS `event.origin`
  *        checks to the exact 32 NFL team subdomains + `nfl.joshal.com`.
- *      - `default-src 'none'; script-src 'unsafe-inline'` prevents the vault page from ever making network calls.
- *   3. Instant Same-Origin Sync (`localStorage['joshal_nfl_shared_gemini_key_v1']`):
- *      - Provides 0ms synchronous sharing across `?team=` query switches on `localhost` / `*.pages.dev`
- *        and fires cross-tab `storage` events without making external network requests during local dev/QA.
- *   4. Conflict-Safe Last-Write-Wins + Clear Tombstones:
+ *      - Auto-recovers from timed-out/offline frames and listens for explicit vault `ready` handshakes.
+ *   5. Optional Zero-Knowledge E2EE Cloud Sync (`/api/key-vault`, opt-in via 8+ char Sync Passcode):
+ *      - Bridges Apple's OS-level `WKWebsiteDataStore` isolation between separate iPhone Home Screen PWAs
+ *        (e.g. standalone `49ers.joshal.com` PWA <-> standalone `bears.joshal.com` PWA <-> Mac Safari).
+ *      - Uses client-side PBKDF2-SHA256 (210,000 iterations, domain-separated salts) + AES-256-GCM:
+ *        neither the passphrase nor the plaintext API key ever leaves the browser.
+ *   6. Conflict-Safe Last-Write-Wins + Clear Tombstones:
  *      - Monotonic timestamps ensure updating a key in one team app updates all others.
  *      - Explicit clears write a `{ c: 1, t }` tombstone so other team apps cleanly clear instead of
  *        resurrecting old cached keys.
- *      - Existing users who already saved a key on `49ers.joshal.com` (or any team app) automatically
- *        backfill the shared vault on next visit with zero user action.
  */
 
 export const SHARED_GEMINI_KEY_STORAGE_KEY = 'joshal_nfl_shared_gemini_key_v1';
 export const SHARED_GEMINI_KEY_CHANNEL = 'joshal_nfl_key_sync_v1';
+export const SHARED_KEY_HASH_PARAM = 'nfl_ks';
 export const DEFAULT_KEY_VAULT_URL = 'https://nfl.joshal.com/key-sync';
-export const DEFAULT_VAULT_TIMEOUT_MS = 2500;
+export const DEFAULT_E2EE_VAULT_ENDPOINT = '/api/key-vault';
+export const DEFAULT_VAULT_TIMEOUT_MS = 4500;
+export const E2EE_VAULT_MIN_PASSCODE_LENGTH = 8;
+export const E2EE_VAULT_PBKDF2_ITERATIONS = 210_000;
+const E2EE_CLOUD_PULL_THROTTLE_MS = 60_000;
 
 export const ALLOWED_NFL_TEAM_SLUGS = Object.freeze([
   '49ers',
@@ -105,6 +122,185 @@ export function pickNewestSharedRecord(recA, recB) {
   if (!b) return a;
   return b.t > a.t ? b : a;
 }
+
+// ============================================================================
+// Base64URL + Transient `#nfl_ks=` Client-Side Hash Handoff
+// ============================================================================
+
+function bytesToBase64Url(bytes) {
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 1) {
+    bin += String.fromCharCode(bytes[i]);
+  }
+  const b64 =
+    typeof btoa === 'function'
+      ? btoa(bin)
+      : Buffer.from(bytes).toString('base64');
+  return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+}
+
+function base64UrlToBytes(str) {
+  const clean = String(str || '').trim();
+  if (!clean || !/^[A-Za-z0-9_-]+$/.test(clean)) return null;
+  const padLen = (4 - (clean.length % 4)) % 4;
+  const b64 = clean.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat(padLen);
+  try {
+    if (typeof atob === 'function') {
+      const bin = atob(b64);
+      const out = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i += 1) out[i] = bin.charCodeAt(i);
+      return out;
+    }
+    return new Uint8Array(Buffer.from(b64, 'base64'));
+  } catch {
+    return null;
+  }
+}
+
+export function encodeSharedKeyHashToken(record) {
+  const norm = normalizeSharedGeminiKeyRecord(record);
+  if (!norm) return '';
+  try {
+    const json = JSON.stringify(norm);
+    const bytes = new TextEncoder().encode(json);
+    return bytesToBase64Url(bytes);
+  } catch {
+    return '';
+  }
+}
+
+export function decodeSharedKeyHashToken(token) {
+  const clean = String(token || '').trim();
+  if (!clean || clean.length > 1024) return null;
+  const bytes = base64UrlToBytes(clean);
+  if (!bytes || bytes.length === 0 || bytes.length > 768) return null;
+  try {
+    const json = new TextDecoder().decode(bytes);
+    return normalizeSharedGeminiKeyRecord(JSON.parse(json));
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Extracts `nfl_ks=<token>` from a URL hash string (e.g. `#nfl_ks=...` or `#section&nfl_ks=...`)
+ * and returns `{ record, cleanedHash }`. Never mutates anything.
+ */
+export function extractSharedKeyRecordFromHash(hashStr = '') {
+  const raw = String(hashStr || '');
+  if (!raw || raw === '#') {
+    return { record: null, cleanedHash: raw, hadParam: false };
+  }
+  const body = raw.startsWith('#') ? raw.slice(1) : raw;
+  const parts = body.split('&');
+  let record = null;
+  let hadParam = false;
+  const kept = [];
+  for (const part of parts) {
+    if (!part) continue;
+    if (part.startsWith(`${SHARED_KEY_HASH_PARAM}=`)) {
+      hadParam = true;
+      const val = part.slice(SHARED_KEY_HASH_PARAM.length + 1);
+      if (!record) {
+        record = decodeSharedKeyHashToken(val);
+      }
+    } else {
+      kept.push(part);
+    }
+  }
+  const cleanedHash = kept.length > 0 ? `#${kept.join('&')}` : '';
+  return { record, cleanedHash, hadParam };
+}
+
+/**
+ * Safely appends `#nfl_ks=<token>` to a cross-origin NFL destination URL.
+ * STRICT SECURITY GUARD:
+ *   - Only allows the exact 33 official `https://<team>.joshal.com` / `https://nfl.joshal.com` hosts
+ *     (never `www.joshal.com`, `workouts.joshal.com`, or third-party domains).
+ *   - Skips same-origin destinations (which already share `localStorage` natively).
+ *   - Optional `allowLocalOrigins` is strictly for automated cross-origin E2E tests.
+ */
+export function appendSharedKeyHandoffToUrl(
+  rawUrl = '',
+  record = null,
+  { currentOrigin = '', allowLocalOrigins = [] } = {}
+) {
+  const cleanUrl = String(rawUrl || '').trim();
+  if (!cleanUrl) return cleanUrl;
+  const norm = normalizeSharedGeminiKeyRecord(record);
+  if (!norm) return cleanUrl;
+
+  let parsed = null;
+  try {
+    parsed = new URL(cleanUrl, currentOrigin || undefined);
+  } catch {
+    return cleanUrl;
+  }
+
+  if (currentOrigin && parsed.origin === currentOrigin) {
+    return cleanUrl;
+  }
+
+  const localAllowSet = Array.isArray(allowLocalOrigins) && allowLocalOrigins.length > 0
+    ? new Set(allowLocalOrigins)
+    : null;
+  const isAllowedProd = parsed.protocol === 'https:' && isAllowedNflTeamHostname(parsed.hostname);
+  const isAllowedTest = Boolean(localAllowSet && localAllowSet.has(parsed.origin));
+  if (!isAllowedProd && !isAllowedTest) {
+    return cleanUrl;
+  }
+
+  const token = encodeSharedKeyHashToken(norm);
+  if (!token) return cleanUrl;
+
+  const { cleanedHash } = extractSharedKeyRecordFromHash(parsed.hash || '');
+  const prefix = cleanedHash ? `${cleanedHash}&` : '#';
+  parsed.hash = `${prefix}${SHARED_KEY_HASH_PARAM}=${token}`;
+  return parsed.toString();
+}
+
+/**
+ * Synchronously consumes an incoming `#nfl_ks=...` handoff fragment from `window.location.hash`,
+ * merges it via Last-Write-Wins into same-origin shared `localStorage`, and immediately strips
+ * the fragment via `history.replaceState` so it never lingers in the address bar or history.
+ */
+export function consumeSharedKeyHandoffFromLocation({
+  locationObj = null,
+  historyObj = null,
+  storage = null
+} = {}) {
+  try {
+    const loc = locationObj || (typeof window !== 'undefined' ? window.location : null);
+    const hist = historyObj || (typeof window !== 'undefined' ? window.history : null);
+    if (!loc || !loc.hash) {
+      return { consumed: false, record: null };
+    }
+    const { record, cleanedHash, hadParam } = extractSharedKeyRecordFromHash(loc.hash);
+    if (!hadParam) {
+      return { consumed: false, record: null };
+    }
+
+    // Immediately strip `nfl_ks` from URL before any other logic runs
+    if (hist && typeof hist.replaceState === 'function') {
+      const cleanUrl = `${loc.pathname || '/'}${loc.search || ''}${cleanedHash}`;
+      try {
+        hist.replaceState(hist.state, '', cleanUrl);
+      } catch {}
+    }
+
+    if (!record) {
+      return { consumed: false, record: null };
+    }
+    const merged = writeSameOriginSharedGeminiKey(record, storage);
+    return { consumed: true, record: merged || record };
+  } catch {
+    return { consumed: false, record: null };
+  }
+}
+
+// ============================================================================
+// Pure Deterministic Last-Write-Wins Reconciler
+// ============================================================================
 
 /**
  * Pure deterministic Last-Write-Wins reconciler between a team app's local prefs and the shared store.
@@ -218,13 +414,63 @@ export function reconcileGeminiKeyState(localState = {}, sharedRecord = null, no
   };
 }
 
+// ============================================================================
+// Same-Origin Shared LocalStorage + Legacy Team Prefs Backfill
+// ============================================================================
+
+/**
+ * Scans same-origin per-team prefs (`sf49ers_hq_prefs_v2`, `joshal_*_hq_prefs_v1`) for an existing
+ * Gemini API key when `joshal_nfl_shared_gemini_key_v1` has not been written yet (e.g. legacy
+ * `nfl.joshal.com/?team=49ers` users switching straight to `nfl.joshal.com/?team=bears`).
+ */
+export function scanSameOriginLegacyTeamPrefsForKey(storage = null, nowMs = Date.now()) {
+  try {
+    const store = storage || (typeof window !== 'undefined' ? window.localStorage : null);
+    if (!store || typeof store.length !== 'number' || typeof store.key !== 'function') return null;
+    const safeNow = Number.isFinite(Number(nowMs)) && Number(nowMs) > 0 ? Math.floor(Number(nowMs)) : Date.now();
+    let best = null;
+    for (let i = 0; i < store.length; i += 1) {
+      const k = store.key(i);
+      if (!k || (k !== 'sf49ers_hq_prefs_v2' && !/^joshal_[a-z0-9-]+_hq_prefs_v1$/.test(k))) {
+        continue;
+      }
+      let parsed = null;
+      try {
+        parsed = JSON.parse(store.getItem(k) || 'null');
+      } catch {
+        continue;
+      }
+      const apiKey = typeof parsed?.geminiApiKey === 'string' ? parsed.geminiApiKey.trim() : '';
+      if (!apiKey) continue;
+      const verifiedModel = typeof parsed?.verifiedGeminiModel === 'string' ? parsed.verifiedGeminiModel.trim() : '';
+      const rawTs = Number(parsed?.geminiApiKeyUpdatedAt || 0);
+      const t = Number.isFinite(rawTs) && rawTs > 0 ? Math.floor(rawTs) : Math.max(1, safeNow - 1000);
+      const candidate = normalizeSharedGeminiKeyRecord({ v: 1, k: apiKey, m: verifiedModel, t, c: 0 });
+      best = pickNewestSharedRecord(best, candidate);
+    }
+    return best;
+  } catch {
+    return null;
+  }
+}
+
 export function readSameOriginSharedGeminiKey(storage = null) {
   try {
     const store = storage || (typeof window !== 'undefined' ? window.localStorage : null);
     if (!store) return null;
     const raw = store.getItem(SHARED_GEMINI_KEY_STORAGE_KEY);
-    if (!raw) return null;
-    return normalizeSharedGeminiKeyRecord(JSON.parse(raw));
+    if (raw) {
+      const parsed = normalizeSharedGeminiKeyRecord(JSON.parse(raw));
+      if (parsed) return parsed;
+    }
+    const backfilled = scanSameOriginLegacyTeamPrefsForKey(store);
+    if (backfilled) {
+      try {
+        store.setItem(SHARED_GEMINI_KEY_STORAGE_KEY, JSON.stringify(backfilled));
+      } catch {}
+      return backfilled;
+    }
+    return null;
   } catch {
     return null;
   }
@@ -236,7 +482,8 @@ export function writeSameOriginSharedGeminiKey(record, storage = null) {
     if (!normalized) return null;
     const store = storage || (typeof window !== 'undefined' ? window.localStorage : null);
     if (!store) return normalized;
-    const current = readSameOriginSharedGeminiKey(store);
+    const raw = store.getItem(SHARED_GEMINI_KEY_STORAGE_KEY);
+    const current = raw ? normalizeSharedGeminiKeyRecord(JSON.parse(raw)) : null;
     if (current && current.t > normalized.t) {
       return current;
     }
@@ -258,13 +505,16 @@ export function nextMonotonicSharedKeyTimestamp(existingTs = 0, nowMs = Date.now
 }
 
 /**
- * Synchronous reconciliation against same-origin shared `localStorage`.
- * Called during `loadUserPrefs()` for 0ms instant sharing across `?team=` routes & local dev.
+ * Synchronous reconciliation against same-origin shared `localStorage` (plus any incoming `#nfl_ks=` hash handoff).
+ * Called during `loadUserPrefs()` for 0ms instant sharing across `?team=` routes, portal jumps, & local dev.
  */
 export function reconcilePrefsWithSameOriginSharedKey(prefs, { storage = null, nowMs = Date.now() } = {}) {
   if (!prefs || typeof prefs !== 'object') {
     return { action: 'noop', changed: false, prevKey: '', nextKey: '' };
   }
+  // Consume any transient `#nfl_ks=...` client-side handoff synchronously before reconciling
+  consumeSharedKeyHandoffFromLocation({ storage });
+
   const prevKey = String(prefs.geminiApiKey || '').trim();
   const shared = readSameOriginSharedGeminiKey(storage);
   const outcome = reconcileGeminiKeyState(prefs, shared, nowMs);
@@ -284,8 +534,12 @@ export function reconcilePrefsWithSameOriginSharedKey(prefs, { storage = null, n
   };
 }
 
+// ============================================================================
+// Hardened Cross-Subdomain Iframe Vault Client (`https://nfl.joshal.com/key-sync`)
+// ============================================================================
+
 /**
- * Determines whether the remote `https://nfl.joshal.com/key-sync.html` iframe vault should be mounted.
+ * Determines whether the remote `https://nfl.joshal.com/key-sync` iframe vault should be mounted.
  * Active on all 32 official `<team>.joshal.com` hosts (excluding `nfl.joshal.com` itself),
  * or when an explicit `vaultUrlOverride` is injected (e.g. cross-origin Chrome E2E verification).
  */
@@ -307,7 +561,7 @@ export function shouldUseCrossSubdomainVault({ hostname = '', origin = '', vault
 
 /**
  * Creates a resilient postMessage client connected to the hidden same-site key-sync iframe.
- * Never throws; degrades silently to `null` if offline, blocked, or timed out.
+ * Never throws; auto-resets dead/timed-out iframes and degrades silently to `null` if offline or blocked.
  */
 export function createCrossSubdomainVaultClient({
   vaultUrl = DEFAULT_KEY_VAULT_URL,
@@ -322,16 +576,38 @@ export function createCrossSubdomainVaultClient({
 
   let iframe = null;
   let readyPromise = null;
+  let readyResolve = null;
   let destroyed = false;
   let reqSeq = 0;
   const pending = new Map();
+
+  function teardownIframe() {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('message', onMessage);
+    }
+    if (iframe && iframe.parentNode) {
+      iframe.parentNode.removeChild(iframe);
+    }
+    iframe = null;
+    readyPromise = null;
+    readyResolve = null;
+  }
 
   function onMessage(event) {
     if (destroyed || !iframe) return;
     if (event.origin !== vaultOrigin) return;
     if (iframe.contentWindow && event.source !== iframe.contentWindow) return;
     const msg = event.data;
-    if (!msg || typeof msg !== 'object' || msg.channel !== SHARED_GEMINI_KEY_CHANNEL || !msg.id) return;
+    if (!msg || typeof msg !== 'object' || msg.channel !== SHARED_GEMINI_KEY_CHANNEL) return;
+    if (msg.type === 'ready') {
+      if (readyResolve) {
+        const fn = readyResolve;
+        readyResolve = null;
+        fn(true);
+      }
+      return;
+    }
+    if (!msg.id) return;
     const entry = pending.get(msg.id);
     if (!entry) return;
     clearTimeout(entry.timer);
@@ -357,27 +633,22 @@ export function createCrossSubdomainVaultClient({
         iframe.setAttribute('data-nfl-key-sync-vault', '1');
         iframe.setAttribute('aria-hidden', 'true');
         iframe.tabIndex = -1;
+        // Avoid `display:none` so WebKit/mobile browsers never throttle or skip iframe script init
         iframe.style.cssText =
-          'display:none;width:0;height:0;border:0;position:absolute;left:-9999px;pointer-events:none;';
+          'opacity:0;visibility:hidden;width:1px;height:1px;border:0;position:fixed;top:-10px;left:-10px;pointer-events:none;';
 
         let settled = false;
         const finish = ok => {
           if (settled) return;
           settled = true;
+          readyResolve = null;
           clearTimeout(loadTimer);
           if (!ok) {
-            // Reset failed/offline iframe so subsequent attempts after network recovery can succeed cleanly
-            if (typeof window !== 'undefined') {
-              window.removeEventListener('message', onMessage);
-            }
-            if (iframe && iframe.parentNode) {
-              iframe.parentNode.removeChild(iframe);
-            }
-            iframe = null;
-            readyPromise = null;
+            teardownIframe();
           }
           resolve(ok);
         };
+        readyResolve = finish;
 
         const loadTimer = setTimeout(() => finish(false), Math.max(800, timeoutMs));
         iframe.addEventListener('load', () => finish(true), { once: true });
@@ -409,6 +680,10 @@ export function createCrossSubdomainVaultClient({
     return new Promise(resolve => {
       const timer = setTimeout(() => {
         pending.delete(id);
+        // Self-heal: if a loaded iframe failed to answer (e.g. offline/5xx error page), tear it down so next call retries cleanly
+        if (pending.size === 0) {
+          teardownIframe();
+        }
         resolve(null);
       }, Math.max(800, timeoutMs));
 
@@ -426,6 +701,7 @@ export function createCrossSubdomainVaultClient({
       } catch {
         clearTimeout(timer);
         pending.delete(id);
+        teardownIframe();
         resolve(null);
       }
     });
@@ -456,14 +732,7 @@ export function createCrossSubdomainVaultClient({
         entry.resolve(null);
       }
       pending.clear();
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('message', onMessage);
-      }
-      if (iframe && iframe.parentNode) {
-        iframe.parentNode.removeChild(iframe);
-      }
-      iframe = null;
-      readyPromise = null;
+      teardownIframe();
     }
   };
 }
@@ -499,108 +768,456 @@ export function resetSharedVaultClientForTests() {
     singletonVaultClient = null;
     singletonVaultUrlKey = '';
   }
+  e2eeDerivedCache.clear();
+  lastCloudVaultPullMs = 0;
+  lastCloudVaultPullPasscodeHash = '';
+}
+
+// ============================================================================
+// Optional Zero-Knowledge Client-Side Encrypted Cloud Sync (`/api/key-vault`)
+// Bridges isolated iOS Home Screen PWAs & cross-device Safari/Chrome via 8+ char Sync Passcode
+// ============================================================================
+
+const e2eeDerivedCache = new Map();
+let lastCloudVaultPullMs = 0;
+let lastCloudVaultPullPasscodeHash = '';
+
+function getSubtleCrypto() {
+  try {
+    if (typeof globalThis !== 'undefined' && globalThis.crypto?.subtle) {
+      return globalThis.crypto;
+    }
+  } catch {}
+  return null;
+}
+
+function bytesToHex(bytes) {
+  let out = '';
+  for (let i = 0; i < bytes.length; i += 1) {
+    out += bytes[i].toString(16).padStart(2, '0');
+  }
+  return out;
+}
+
+export function isEligibleE2eeSyncPasscode(passcode = '') {
+  return String(passcode || '').trim().length >= E2EE_VAULT_MIN_PASSCODE_LENGTH;
+}
+
+export function shouldUseEncryptedCloudVault({
+  passcode = '',
+  hostname = '',
+  endpointOverride = ''
+} = {}) {
+  if (!isEligibleE2eeSyncPasscode(passcode)) return false;
+  if (endpointOverride) return true;
+  const h = String(hostname || '').trim().toLowerCase();
+  if (isAllowedNflTeamHostname(h)) return true;
+  if (/^(?:[a-z0-9-]+\.)?nfl-(?:teams|joshal)\.pages\.dev$/.test(h)) return true;
+  return false;
 }
 
 /**
- * Publishes an explicitly saved Gemini API key across same-origin storage AND the cross-subdomain vault.
+ * Derives independent `vaultId` (64-char hex lookup ID) and `aesKey` (AES-256-GCM CryptoKey)
+ * strictly inside the browser via domain-separated PBKDF2-SHA256.
+ * Neither the passcode nor `aesKey` ever leaves the client device.
+ */
+export async function deriveEncryptedVaultKeys(passcode = '') {
+  const clean = String(passcode || '').trim();
+  if (!isEligibleE2eeSyncPasscode(clean)) return null;
+  if (e2eeDerivedCache.has(clean)) {
+    return e2eeDerivedCache.get(clean);
+  }
+  const webCrypto = getSubtleCrypto();
+  if (!webCrypto?.subtle) return null;
+
+  const enc = new TextEncoder();
+  const baseKey = await webCrypto.subtle.importKey(
+    'raw',
+    enc.encode(clean),
+    { name: 'PBKDF2' },
+    false,
+    ['deriveBits', 'deriveKey']
+  );
+
+  const [idBits, aesKey] = await Promise.all([
+    webCrypto.subtle.deriveBits(
+      {
+        name: 'PBKDF2',
+        salt: enc.encode('joshal-nfl-e2ee-key-vault-id-v1'),
+        iterations: E2EE_VAULT_PBKDF2_ITERATIONS,
+        hash: 'SHA-256'
+      },
+      baseKey,
+      256
+    ),
+    webCrypto.subtle.deriveKey(
+      {
+        name: 'PBKDF2',
+        salt: enc.encode('joshal-nfl-e2ee-key-vault-aes-v1'),
+        iterations: E2EE_VAULT_PBKDF2_ITERATIONS,
+        hash: 'SHA-256'
+      },
+      baseKey,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['encrypt', 'decrypt']
+    )
+  ]);
+
+  const derived = {
+    vaultId: bytesToHex(new Uint8Array(idBits)),
+    aesKey
+  };
+  // Keep small bounded cache in RAM only (max 4 entries)
+  if (e2eeDerivedCache.size >= 4) {
+    const firstKey = e2eeDerivedCache.keys().next().value;
+    e2eeDerivedCache.delete(firstKey);
+  }
+  e2eeDerivedCache.set(clean, derived);
+  return derived;
+}
+
+export async function encryptSharedKeyRecordForVault(record, passcode = '') {
+  const norm = normalizeSharedGeminiKeyRecord(record);
+  if (!norm) return null;
+  const derived = await deriveEncryptedVaultKeys(passcode);
+  const webCrypto = getSubtleCrypto();
+  if (!derived || !webCrypto?.subtle) return null;
+
+  const iv = new Uint8Array(12);
+  webCrypto.getRandomValues(iv);
+  const plaintext = new TextEncoder().encode(JSON.stringify(norm));
+  const ctBuf = await webCrypto.subtle.encrypt(
+    { name: 'AES-GCM', iv },
+    derived.aesKey,
+    plaintext
+  );
+  return {
+    id: derived.vaultId,
+    v: 1,
+    iv: bytesToBase64Url(iv),
+    ct: bytesToBase64Url(new Uint8Array(ctBuf)),
+    t: norm.t
+  };
+}
+
+export async function decryptSharedKeyPayloadFromVault(payload, passcode = '') {
+  if (!payload || typeof payload !== 'object') return null;
+  const iv = base64UrlToBytes(payload.iv);
+  const ct = base64UrlToBytes(payload.ct);
+  if (!iv || iv.length !== 12 || !ct || ct.length < 16) return null;
+  const derived = await deriveEncryptedVaultKeys(passcode);
+  const webCrypto = getSubtleCrypto();
+  if (!derived || !webCrypto?.subtle) return null;
+  try {
+    const ptBuf = await webCrypto.subtle.decrypt(
+      { name: 'AES-GCM', iv },
+      derived.aesKey,
+      ct
+    );
+    const json = new TextDecoder().decode(new Uint8Array(ptBuf));
+    return normalizeSharedGeminiKeyRecord(JSON.parse(json));
+  } catch {
+    return null;
+  }
+}
+
+function resolveCloudVaultEndpoint(endpointOverride = '') {
+  if (endpointOverride) return endpointOverride;
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return `${window.location.origin}${DEFAULT_E2EE_VAULT_ENDPOINT}`;
+  }
+  return DEFAULT_E2EE_VAULT_ENDPOINT;
+}
+
+export async function fetchEncryptedCloudVaultRecord(
+  passcode = '',
+  { endpointOverride = '', fetchImpl = null, timeoutMs = 5000 } = {}
+) {
+  const host = typeof window !== 'undefined' ? window.location?.hostname || '' : '';
+  if (!shouldUseEncryptedCloudVault({ passcode, hostname: host, endpointOverride })) {
+    return { checked: false, record: null };
+  }
+  const f = fetchImpl || (typeof fetch === 'function' ? fetch : null);
+  if (!f) return { checked: false, record: null };
+
+  try {
+    const derived = await deriveEncryptedVaultKeys(passcode);
+    if (!derived) return { checked: false, record: null };
+    const endpoint = resolveCloudVaultEndpoint(endpointOverride);
+    const sep = endpoint.includes('?') ? '&' : '?';
+    const url = `${endpoint}${sep}id=${encodeURIComponent(derived.vaultId)}`;
+    const ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+    const timer = ctrl ? setTimeout(() => ctrl.abort(), Math.max(1500, timeoutMs)) : null;
+    try {
+      const res = await f(url, {
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+        ...(ctrl ? { signal: ctrl.signal } : {})
+      });
+      if (!res || !res.ok) return { checked: true, record: null };
+      const data = await res.json();
+      if (!data?.ok || !data.found || !data.payload) {
+        return { checked: true, record: null };
+      }
+      const record = await decryptSharedKeyPayloadFromVault(data.payload, passcode);
+      return { checked: true, record };
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
+  } catch {
+    return { checked: false, record: null };
+  }
+}
+
+export async function pushEncryptedCloudVaultRecord(
+  record,
+  passcode = '',
+  { endpointOverride = '', fetchImpl = null, timeoutMs = 5000 } = {}
+) {
+  const host = typeof window !== 'undefined' ? window.location?.hostname || '' : '';
+  if (!shouldUseEncryptedCloudVault({ passcode, hostname: host, endpointOverride })) {
+    return { synced: false };
+  }
+  const f = fetchImpl || (typeof fetch === 'function' ? fetch : null);
+  if (!f) return { synced: false };
+
+  try {
+    const encrypted = await encryptSharedKeyRecordForVault(record, passcode);
+    if (!encrypted) return { synced: false };
+    const endpoint = resolveCloudVaultEndpoint(endpointOverride);
+    const ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+    const timer = ctrl ? setTimeout(() => ctrl.abort(), Math.max(1500, timeoutMs)) : null;
+    try {
+      const res = await f(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(encrypted),
+        ...(ctrl ? { signal: ctrl.signal } : {})
+      });
+      return { synced: Boolean(res && res.ok) };
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
+  } catch {
+    return { synced: false };
+  }
+}
+
+// ============================================================================
+// High-Level Public Publish & Reconcile APIs
+// ============================================================================
+
+/**
+ * Publishes an explicitly saved Gemini API key across same-origin storage, the cross-subdomain
+ * iframe vault, AND (when an 8+ char Sync Passcode is configured) the zero-knowledge E2EE cloud vault.
  */
 export async function publishSharedGeminiApiKey(
-  { apiKey = '', verifiedModel = '', updatedAt = 0 } = {},
-  { vaultUrlOverride = '', timeoutMs = DEFAULT_VAULT_TIMEOUT_MS } = {}
+  { apiKey = '', verifiedModel = '', updatedAt = 0, syncPasscode = '' } = {},
+  { vaultUrlOverride = '', cloudEndpointOverride = '', timeoutMs = DEFAULT_VAULT_TIMEOUT_MS, fetchImpl = null } = {}
 ) {
   const cleanKey = String(apiKey || '').trim();
   const cleanModel = String(verifiedModel || '').trim();
   if (!cleanKey) {
-    return publishClearedSharedGeminiApiKey({ updatedAt }, { vaultUrlOverride, timeoutMs });
+    return publishClearedSharedGeminiApiKey(
+      { updatedAt, syncPasscode },
+      { vaultUrlOverride, cloudEndpointOverride, timeoutMs, fetchImpl }
+    );
   }
   const t = nextMonotonicSharedKeyTimestamp(updatedAt);
   const record = { v: 1, k: cleanKey, m: cleanModel, t, c: 0 };
   writeSameOriginSharedGeminiKey(record);
 
+  let vaultSynced = false;
+  let cloudSynced = false;
+  const tasks = [];
+
   const client = getOrCreateVaultClient({ vaultUrlOverride, timeoutMs });
   if (client) {
-    try {
-      await client.setRecord(record);
-    } catch {
-      // Offline / blocked vault must never break local save
-    }
+    tasks.push(
+      client
+        .setRecord(record)
+        .then(res => {
+          vaultSynced = Boolean(res);
+        })
+        .catch(() => {})
+    );
   }
-  return { apiKey: cleanKey, verifiedModel: cleanModel, updatedAt: t };
+
+  if (isEligibleE2eeSyncPasscode(syncPasscode)) {
+    tasks.push(
+      pushEncryptedCloudVaultRecord(record, syncPasscode, {
+        endpointOverride: cloudEndpointOverride,
+        fetchImpl
+      })
+        .then(res => {
+          cloudSynced = Boolean(res?.synced);
+        })
+        .catch(() => {})
+    );
+  }
+
+  if (tasks.length > 0) {
+    await Promise.all(tasks);
+  }
+  return { apiKey: cleanKey, verifiedModel: cleanModel, updatedAt: t, vaultSynced, cloudSynced };
 }
 
 /**
  * Publishes an explicit Clear Tombstone so all 32 team apps clear the key instead of resurrecting stale copies.
  */
 export async function publishClearedSharedGeminiApiKey(
-  { updatedAt = 0 } = {},
-  { vaultUrlOverride = '', timeoutMs = DEFAULT_VAULT_TIMEOUT_MS } = {}
+  { updatedAt = 0, syncPasscode = '' } = {},
+  { vaultUrlOverride = '', cloudEndpointOverride = '', timeoutMs = DEFAULT_VAULT_TIMEOUT_MS, fetchImpl = null } = {}
 ) {
   const t = nextMonotonicSharedKeyTimestamp(updatedAt);
   const tombstone = { v: 1, k: '', m: '', t, c: 1 };
   writeSameOriginSharedGeminiKey(tombstone);
 
+  let vaultSynced = false;
+  let cloudSynced = false;
+  const tasks = [];
+
   const client = getOrCreateVaultClient({ vaultUrlOverride, timeoutMs });
   if (client) {
-    try {
-      await client.clearRecord(t);
-    } catch {
-      // Offline / blocked vault must never break local clear
-    }
+    tasks.push(
+      client
+        .clearRecord(t)
+        .then(res => {
+          vaultSynced = Boolean(res);
+        })
+        .catch(() => {})
+    );
   }
-  return { apiKey: '', verifiedModel: '', updatedAt: t };
+
+  if (isEligibleE2eeSyncPasscode(syncPasscode)) {
+    tasks.push(
+      pushEncryptedCloudVaultRecord(tombstone, syncPasscode, {
+        endpointOverride: cloudEndpointOverride,
+        fetchImpl
+      })
+        .then(res => {
+          cloudSynced = Boolean(res?.synced);
+        })
+        .catch(() => {})
+    );
+  }
+
+  if (tasks.length > 0) {
+    await Promise.all(tasks);
+  }
+  return { apiKey: '', verifiedModel: '', updatedAt: t, vaultSynced, cloudSynced };
 }
 
 /**
- * Reconciles a team's `prefs` object against BOTH same-origin shared storage AND the remote
- * `https://nfl.joshal.com/key-sync.html` vault (when running on any of the 32 `<team>.joshal.com` hosts).
+ * Reconciles a team's `prefs` object against same-origin shared storage, the remote
+ * `https://nfl.joshal.com/key-sync` iframe vault, AND (when an 8+ char Sync Passcode is set)
+ * the zero-knowledge E2EE cloud vault.
  */
 export async function syncPrefsWithSharedGeminiKeyVault(
   prefs,
-  { vaultUrlOverride = '', timeoutMs = DEFAULT_VAULT_TIMEOUT_MS, nowMs = Date.now() } = {}
+  {
+    vaultUrlOverride = '',
+    cloudEndpointOverride = '',
+    syncPasscode = '',
+    forceCloudSync = false,
+    timeoutMs = DEFAULT_VAULT_TIMEOUT_MS,
+    nowMs = Date.now(),
+    fetchImpl = null
+  } = {}
 ) {
   if (!prefs || typeof prefs !== 'object') {
-    return { action: 'noop', changed: false, prevKey: '', nextKey: '', vaultChecked: false };
+    return { action: 'noop', changed: false, prevKey: '', nextKey: '', vaultChecked: false, cloudChecked: false };
   }
+  consumeSharedKeyHandoffFromLocation();
+
   const prevKey = String(prefs.geminiApiKey || '').trim();
   const sameOriginRec = readSameOriginSharedGeminiKey();
+  const effectivePasscode = String(syncPasscode || prefs.groupPasscode || '').trim();
 
   let vaultRec = null;
   let vaultChecked = false;
-  const client = getOrCreateVaultClient({ vaultUrlOverride, timeoutMs });
-  if (client) {
-    vaultChecked = true;
-    try {
-      vaultRec = await client.getRecord();
-    } catch {
-      vaultRec = null;
-    }
-  }
+  let cloudRec = null;
+  let cloudChecked = false;
 
-  const newestShared = pickNewestSharedRecord(sameOriginRec, vaultRec);
+  const client = getOrCreateVaultClient({ vaultUrlOverride, timeoutMs });
+  const shouldPullCloud =
+    isEligibleE2eeSyncPasscode(effectivePasscode) &&
+    (forceCloudSync ||
+      !prevKey ||
+      effectivePasscode !== lastCloudVaultPullPasscodeHash ||
+      nowMs - lastCloudVaultPullMs >= E2EE_CLOUD_PULL_THROTTLE_MS);
+
+  await Promise.all([
+    client
+      ? (async () => {
+          vaultChecked = true;
+          try {
+            vaultRec = await client.getRecord();
+          } catch {
+            vaultRec = null;
+          }
+        })()
+      : Promise.resolve(),
+    shouldPullCloud
+      ? (async () => {
+          const res = await fetchEncryptedCloudVaultRecord(effectivePasscode, {
+            endpointOverride: cloudEndpointOverride,
+            fetchImpl
+          });
+          cloudChecked = Boolean(res.checked);
+          cloudRec = res.record;
+          if (cloudChecked) {
+            lastCloudVaultPullMs = nowMs;
+            lastCloudVaultPullPasscodeHash = effectivePasscode;
+          }
+        })()
+      : Promise.resolve()
+  ]);
+
+  const newestShared = pickNewestSharedRecord(pickNewestSharedRecord(sameOriginRec, vaultRec), cloudRec);
   const outcome = reconcileGeminiKeyState(prefs, newestShared, nowMs);
 
-  // If local prefs (or same-origin shared) is newer than the remote vault, push it up to the vault!
+  const pushTargets = [];
   if (outcome.shouldPushToShared && outcome.recordToPush) {
     writeSameOriginSharedGeminiKey(outcome.recordToPush);
     if (client) {
-      try {
-        await client.setRecord(outcome.recordToPush);
-      } catch {}
+      pushTargets.push(client.setRecord(outcome.recordToPush).catch(() => {}));
+    }
+    if (isEligibleE2eeSyncPasscode(effectivePasscode)) {
+      pushTargets.push(
+        pushEncryptedCloudVaultRecord(outcome.recordToPush, effectivePasscode, {
+          endpointOverride: cloudEndpointOverride,
+          fetchImpl
+        }).catch(() => {})
+      );
     }
   } else if (newestShared) {
-    // Keep same-origin mirror and remote vault in lockstep
+    // Keep same-origin mirror, iframe vault, and E2EE cloud vault in lockstep
     if (!sameOriginRec || newestShared.t > sameOriginRec.t) {
       writeSameOriginSharedGeminiKey(newestShared);
     }
     if (client && (!vaultRec || newestShared.t > vaultRec.t)) {
-      try {
-        if (newestShared.c === 1) {
-          await client.clearRecord(newestShared.t);
-        } else {
-          await client.setRecord(newestShared);
-        }
-      } catch {}
+      pushTargets.push(
+        (newestShared.c === 1
+          ? client.clearRecord(newestShared.t)
+          : client.setRecord(newestShared)
+        ).catch(() => {})
+      );
     }
+    if (cloudChecked && (!cloudRec || newestShared.t > cloudRec.t)) {
+      pushTargets.push(
+        pushEncryptedCloudVaultRecord(newestShared, effectivePasscode, {
+          endpointOverride: cloudEndpointOverride,
+          fetchImpl
+        }).catch(() => {})
+      );
+    }
+  }
+
+  if (pushTargets.length > 0) {
+    await Promise.all(pushTargets);
   }
 
   if (outcome.changed) {
@@ -613,6 +1230,7 @@ export async function syncPrefsWithSharedGeminiKeyVault(
     ...outcome,
     prevKey,
     nextKey: String(prefs.geminiApiKey || '').trim(),
-    vaultChecked
+    vaultChecked,
+    cloudChecked
   };
 }

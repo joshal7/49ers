@@ -638,6 +638,66 @@ async function main() {
       }
     });
 
+    await test('Portal `#nfl_ks=` Hash Handoff E2E: consumes incoming key, strips URL hash immediately, and attaches transient handoff on normal-browser team tile click', async () => {
+      const { encodeSharedKeyHashToken, SHARED_GEMINI_KEY_STORAGE_KEY, SHARED_KEY_HASH_PARAM } = await import(
+        '../src/services/sharedApiKeyStore.js'
+      );
+      const token = encodeSharedKeyHashToken({
+        v: 1,
+        k: 'AIzaPortalHandoffE2EKey77',
+        m: 'gemini-4-hydrogen',
+        t: 1700009000000,
+        c: 0
+      });
+      await evalJs(cdp, `sessionStorage.clear(); localStorage.clear();`);
+      await cdp.send('Page.navigate', { url: `${baseUrl}#${SHARED_KEY_HASH_PARAM}=${token}` });
+      await new Promise(r => setTimeout(r, 350));
+
+      const afterArrival = await evalJs(
+        cdp,
+        `(() => {
+          const storedRaw = localStorage.getItem(${JSON.stringify(SHARED_GEMINI_KEY_STORAGE_KEY)});
+          const stored = storedRaw ? JSON.parse(storedRaw) : null;
+          const bearsTile = document.querySelector('a.team-tile[data-team="bears"]');
+          const staticHrefBefore = bearsTile ? bearsTile.getAttribute('href') : '';
+          let clickedHref = '';
+          if (bearsTile) {
+            document.addEventListener('click', ev => {
+              if (ev.target && ev.target.closest && ev.target.closest('a.team-tile[data-team="bears"]')) {
+                clickedHref = bearsTile.getAttribute('href') || '';
+                ev.preventDefault();
+              }
+            }, { once: true });
+            bearsTile.click();
+          }
+          return {
+            currentHash: window.location.hash,
+            storedKey: stored?.k || '',
+            storedModel: stored?.m || '',
+            staticHrefBefore,
+            clickedHref
+          };
+        })()`
+      );
+
+      assert.equal(afterArrival.currentHash, '', 'Portal must immediately strip #nfl_ks= from window.location.hash');
+      assert.equal(afterArrival.storedKey, 'AIzaPortalHandoffE2EKey77');
+      assert.equal(afterArrival.storedModel, 'gemini-4-hydrogen');
+      assert.equal(afterArrival.staticHrefBefore, 'https://bears.joshal.com', 'Static DOM href must stay clean before click');
+      assert.ok(
+        afterArrival.clickedHref.startsWith(`https://bears.joshal.com/#${SHARED_KEY_HASH_PARAM}=`),
+        `Expected transient #nfl_ks= handoff on click, got: ${afterArrival.clickedHref}`
+      );
+
+      // Verify href reverts cleanly after the 250ms tick
+      await new Promise(r => setTimeout(r, 320));
+      const revertedHref = await evalJs(
+        cdp,
+        `document.querySelector('a.team-tile[data-team="bears"]')?.getAttribute('href') || ''`
+      );
+      assert.equal(revertedHref, 'https://bears.joshal.com', 'Tile href must revert to clean canonical URL after click');
+    });
+
     await test('Zero console errors, zero uncaught page errors, zero 404/network failures', () => {
       assert.deepEqual(consoleErrors, [], `Console errors: ${consoleErrors.join('; ')}`);
       assert.deepEqual(pageErrors, [], `Page errors: ${pageErrors.join('; ')}`);

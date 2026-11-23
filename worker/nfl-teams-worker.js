@@ -762,6 +762,48 @@ export function parseOfficialXSyndicationTimelineHtml(
   return results;
 }
 
+const KEY_VAULT_RATE_LIMIT = new Map();
+
+function checkKeyVaultRateLimit(request) {
+  const ip =
+    String(request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || 'local')
+      .split(',')[0]
+      .trim() || 'local';
+  const now = Date.now();
+  const windowMs = 60_000;
+  const maxReq = 30;
+  const prev = KEY_VAULT_RATE_LIMIT.get(ip);
+  if (!prev || now - prev.startMs >= windowMs) {
+    if (KEY_VAULT_RATE_LIMIT.size > 500) {
+      KEY_VAULT_RATE_LIMIT.clear();
+    }
+    KEY_VAULT_RATE_LIMIT.set(ip, { startMs: now, count: 1 });
+    return true;
+  }
+  if (prev.count >= maxReq) return false;
+  prev.count += 1;
+  return true;
+}
+
+function isAllowedKeyVaultRequest(request, host) {
+  const cleanHost = String(host || '').toLowerCase();
+  const hostOk =
+    cleanHost === 'localhost' ||
+    cleanHost === '127.0.0.1' ||
+    cleanHost === 'nfl.joshal.com' ||
+    /^(?:[a-z0-9-]+\.)?nfl-(?:teams|joshal)\.pages\.dev$/.test(cleanHost) ||
+    ALL_NFL_TEAMS.some(t => `${t.slug}.joshal.com` === cleanHost);
+  if (!hostOk) return false;
+  const origin = String(request.headers.get('Origin') || '').trim();
+  if (!origin) return true;
+  return (
+    /^https:\/\/[a-z0-9-]+\.joshal\.com$/i.test(origin) &&
+    (origin === 'https://nfl.joshal.com' || ALL_NFL_TEAMS.some(t => `https://${t.slug}.joshal.com` === origin)) ||
+    /^https:\/\/(?:[a-z0-9-]+\.)?nfl-(?:teams|joshal)\.pages\.dev$/i.test(origin) ||
+    /^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/i.test(origin)
+  );
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -795,6 +837,86 @@ export default {
         });
       }
       return jsonResp({ error: 'Key sync vault not found' }, 404, cors);
+    }
+
+    // 0b. Zero-Knowledge Client-Side Encrypted Key Sync Vault (`/api/key-vault`)
+    //     Stores ONLY opaque client-encrypted AES-256-GCM ciphertext (`iv` + `ct`) keyed by a
+    //     PBKDF2-derived 64-hex `vaultId` so separate iOS Home Screen PWAs & devices can sync safely.
+    if (url.pathname === '/api/key-vault') {
+      if (!isAllowedKeyVaultRequest(request, host)) {
+        return jsonResp({ error: 'Forbidden origin' }, 403, cors, { 'Cache-Control': 'no-store' });
+      }
+      if (!checkKeyVaultRateLimit(request)) {
+        return jsonResp({ error: 'Rate limit exceeded' }, 429, cors, { 'Cache-Control': 'no-store' });
+      }
+      if (!env.SHARED_CACHE) {
+        return jsonResp({ error: 'Vault storage unavailable' }, 503, cors, { 'Cache-Control': 'no-store' });
+      }
+
+      if (request.method === 'GET') {
+        const vaultId = String(url.searchParams.get('id') || '').trim().toLowerCase();
+        if (!/^[a-f0-9]{64}$/.test(vaultId)) {
+          return jsonResp({ error: 'Invalid vault id' }, 400, cors, { 'Cache-Control': 'no-store' });
+        }
+        const stored = await env.SHARED_CACHE.get(`key_vault_v1:${vaultId}`, 'json').catch(() => null);
+        if (!stored || typeof stored !== 'object' || !stored.iv || !stored.ct) {
+          return jsonResp({ ok: true, found: false, payload: null }, 200, cors, { 'Cache-Control': 'no-store' });
+        }
+        return jsonResp(
+          {
+            ok: true,
+            found: true,
+            payload: { v: 1, iv: stored.iv, ct: stored.ct, t: Number(stored.t) || 0 }
+          },
+          200,
+          cors,
+          { 'Cache-Control': 'no-store' }
+        );
+      }
+
+      if (request.method === 'POST') {
+        let body = null;
+        try {
+          body = await request.json();
+        } catch {
+          return jsonResp({ error: 'Invalid JSON body' }, 400, cors, { 'Cache-Control': 'no-store' });
+        }
+        const vaultId = String(body?.id || '').trim().toLowerCase();
+        const iv = String(body?.iv || '').trim();
+        const ct = String(body?.ct || '').trim();
+        const t = Number(body?.t || 0);
+        if (
+          !/^[a-f0-9]{64}$/.test(vaultId) ||
+          !/^[A-Za-z0-9_-]{16}$/.test(iv) ||
+          !/^[A-Za-z0-9_-]{24,1024}$/.test(ct) ||
+          !Number.isFinite(t) ||
+          t <= 0
+        ) {
+          return jsonResp({ error: 'Invalid encrypted vault payload' }, 400, cors, { 'Cache-Control': 'no-store' });
+        }
+
+        const kvKey = `key_vault_v1:${vaultId}`;
+        const existing = await env.SHARED_CACHE.get(kvKey, 'json').catch(() => null);
+        const existingTs = Number(existing?.t || 0);
+        if (existing && Number.isFinite(existingTs) && existingTs > Math.floor(t)) {
+          return jsonResp(
+            { ok: true, preservedNewer: true, t: existingTs },
+            200,
+            cors,
+            { 'Cache-Control': 'no-store' }
+          );
+        }
+
+        const nextRecord = { v: 1, iv, ct, t: Math.floor(t) };
+        await env.SHARED_CACHE.put(kvKey, JSON.stringify(nextRecord), {
+          expirationTtl: 365 * 86400
+        });
+        return jsonResp({ ok: true, preservedNewer: false, t: nextRecord.t }, 200, cors, {
+          'Cache-Control': 'no-store'
+        });
+      }
+
+      return jsonResp({ error: 'Method not allowed' }, 405, cors, { 'Cache-Control': 'no-store' });
     }
 
     // 1. Dynamic per-team PWA manifest & iOS apple-touch-icon.png (or NFL Team Hub manifest/icon on nfl.joshal.com)

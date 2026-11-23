@@ -63,13 +63,16 @@ import {
   hydrateLive49ersPodcasts,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=99';
+} from './services/dataService.js?v=100';
 import {
   SHARED_GEMINI_KEY_STORAGE_KEY,
+  appendSharedKeyHandoffToUrl,
+  isEligibleE2eeSyncPasscode,
   publishSharedGeminiApiKey,
   publishClearedSharedGeminiApiKey,
+  readSameOriginSharedGeminiKey,
   syncPrefsWithSharedGeminiKeyVault
-} from './services/sharedApiKeyStore.js?v=2';
+} from './services/sharedApiKeyStore.js?v=3';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -152,7 +155,7 @@ import {
   renderUniversalSearchSheetHtml,
   renderUniversalSearchResultsHtml,
   renderUniversalSearchScopeBarHtml
-} from './views/settingsArchiveView.js?v=90';
+} from './views/settingsArchiveView.js?v=91';
 import {
   normalizeNewsSortMode,
   computeCatchUpState,
@@ -2422,6 +2425,42 @@ function bindEvents() {
     }
     const btn = e.target.closest('[data-action]');
     if (anchorHit && (!btn || btn.contains(anchorHit))) {
+      // Attach transient client-side `#nfl_ks=` fragment on allowlisted cross-subdomain NFL links
+      // (Settings "NFL Portal" / "Switch Team") so Safari / iOS propagate the API key instantaneously
+      // without ever transmitting it to a server or exposing it in static DOM href attributes.
+      if (
+        anchorHit.hasAttribute('data-nfl-key-handoff') &&
+        !e.metaKey &&
+        !e.ctrlKey &&
+        !e.shiftKey &&
+        !e.altKey &&
+        (e.button === 0 || e.button == null)
+      ) {
+        const cleanHref = anchorHit.getAttribute('href') || '';
+        const sharedRec =
+          readSameOriginSharedGeminiKey() ||
+          (state.prefs?.geminiApiKey
+            ? {
+                v: 1,
+                k: String(state.prefs.geminiApiKey).trim(),
+                m: String(state.prefs.verifiedGeminiModel || '').trim(),
+                t: Number(state.prefs.geminiApiKeyUpdatedAt) || Date.now(),
+                c: 0
+              }
+            : null);
+        if (cleanHref && sharedRec) {
+          const handoffHref = appendSharedKeyHandoffToUrl(anchorHit.href, sharedRec, {
+            currentOrigin: window.location.origin
+          });
+          if (handoffHref && handoffHref !== anchorHit.href) {
+            anchorHit.setAttribute('href', handoffHref);
+            setTimeout(() => {
+              anchorHit.setAttribute('href', cleanHref);
+            }, 250);
+          }
+        }
+      }
+
       // On iOS 17+ installed Home Screen PWAs (standalone mode), opening NFL club/league
       // video pages (`49ers.com/video/...`, `nfl.com/videos/...`) via `target="_blank"`
       // opens them inside `SFSafariViewController`, where NFL's TheoPlayer/Anvato + IMA
@@ -3443,7 +3482,8 @@ function bindEvents() {
           const published = await publishSharedGeminiApiKey({
             apiKey: rawKey,
             verifiedModel: verified.bestModel || '',
-            updatedAt: state.prefs.geminiApiKeyUpdatedAt || 0
+            updatedAt: state.prefs.geminiApiKeyUpdatedAt || 0,
+            syncPasscode: state.prefs.groupPasscode || ''
           });
           state.prefs.geminiApiKey = published.apiKey;
           state.prefs.verifiedGeminiModel = published.verifiedModel;
@@ -3463,7 +3503,8 @@ function bindEvents() {
 
       case 'clear-gemini-key': {
         const cleared = await publishClearedSharedGeminiApiKey({
-          updatedAt: state.prefs.geminiApiKeyUpdatedAt || 0
+          updatedAt: state.prefs.geminiApiKeyUpdatedAt || 0,
+          syncPasscode: state.prefs.groupPasscode || ''
         });
         state.prefs.geminiApiKey = '';
         state.prefs.verifiedGeminiModel = '';
@@ -3767,9 +3808,12 @@ function bindEvents() {
         const passEl = document.getElementById('prefPasscodeInput');
         const urlEl = document.getElementById('prefWorkerUrlInput');
         const geminiKeyEl = document.getElementById('prefGeminiKeyInput');
+        const prevPasscode = String(state.prefs.groupPasscode || '').trim();
         if (authEl) state.prefs.authorName = authEl.value.trim() || 'Josh';
         if (passEl) state.prefs.groupPasscode = passEl.value.trim();
         if (urlEl) state.prefs.workerBaseUrl = urlEl.value.trim();
+        const nextPasscode = String(state.prefs.groupPasscode || '').trim();
+        let didPublishExplicitKeyChange = false;
         if (geminiKeyEl) {
           const prevKey = String(state.prefs.geminiApiKey || '').trim();
           const nextKey = geminiKeyEl.value.trim();
@@ -3778,9 +3822,11 @@ function bindEvents() {
             state.prefs.verifiedGeminiModel = '';
             if (prevKey) {
               const cleared = await publishClearedSharedGeminiApiKey({
-                updatedAt: state.prefs.geminiApiKeyUpdatedAt || 0
+                updatedAt: state.prefs.geminiApiKeyUpdatedAt || 0,
+                syncPasscode: nextPasscode
               });
               state.prefs.geminiApiKeyUpdatedAt = cleared.updatedAt;
+              didPublishExplicitKeyChange = true;
             }
           } else {
             let nextModel = nextKey === prevKey ? state.prefs.verifiedGeminiModel || '' : '';
@@ -3793,14 +3839,24 @@ function bindEvents() {
             const published = await publishSharedGeminiApiKey({
               apiKey: nextKey,
               verifiedModel: nextModel,
-              updatedAt: state.prefs.geminiApiKeyUpdatedAt || 0
+              updatedAt: state.prefs.geminiApiKeyUpdatedAt || 0,
+              syncPasscode: nextPasscode
             });
             state.prefs.geminiApiKey = published.apiKey;
             state.prefs.verifiedGeminiModel = published.verifiedModel;
             state.prefs.geminiApiKeyUpdatedAt = published.updatedAt;
+            didPublishExplicitKeyChange = true;
           }
         }
         saveUserPrefs(state.prefs);
+        // When an 8+ char E2EE Sync Passcode is newly entered or changed (especially on a fresh isolated
+        // iOS Home Screen PWA without a key yet), immediately reconcile against the zero-knowledge cloud vault!
+        if (
+          isEligibleE2eeSyncPasscode(nextPasscode) &&
+          (!didPublishExplicitKeyChange || nextPasscode !== prevPasscode || !state.prefs.geminiApiKey)
+        ) {
+          await syncSharedGeminiKeyAcrossTeams({ triggerBriefs: false, forceCloudSync: true });
+        }
         clearDailyNewsBriefAttemptLock();
         clearDailyMatchupIntelAttemptLock();
         state.geminiKeyNotice = '';
@@ -4734,17 +4790,31 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
 
 let sharedGeminiKeySyncPromise = null;
 
-async function syncSharedGeminiKeyAcrossTeams({ triggerBriefs = true, vaultUrlOverride = '' } = {}) {
+async function syncSharedGeminiKeyAcrossTeams({
+  triggerBriefs = true,
+  vaultUrlOverride = '',
+  cloudEndpointOverride = '',
+  forceCloudSync = false
+} = {}) {
   if (sharedGeminiKeySyncPromise) return sharedGeminiKeySyncPromise;
   sharedGeminiKeySyncPromise = (async () => {
     try {
-      const res = await syncPrefsWithSharedGeminiKeyVault(state.prefs, { vaultUrlOverride });
+      const res = await syncPrefsWithSharedGeminiKeyVault(state.prefs, {
+        vaultUrlOverride,
+        cloudEndpointOverride,
+        syncPasscode: state.prefs.groupPasscode || '',
+        forceCloudSync
+      });
       if (res.changed) {
         saveUserPrefs(state.prefs);
         if (res.nextKey && res.nextKey !== res.prevKey) {
           state.geminiKeyNotice = '';
           state.showGeminiKeyGuide = false;
           if (state.jobStatus?.error) state.jobStatus = null;
+          checkAndAutoUpdateBestGeminiModel(state.prefs, () => {
+            saveUserPrefs(state.prefs);
+            if (state.activeNavTab === 'audio') renderMain();
+          });
           if (triggerBriefs && state.appData) {
             triggerDailyMatchupIntelSync().finally(() => triggerDailyTopNewsBriefSync());
           }
@@ -4754,7 +4824,7 @@ async function syncSharedGeminiKeyAcrossTeams({ triggerBriefs = true, vaultUrlOv
       }
       return res;
     } catch {
-      return { action: 'noop', changed: false, prevKey: '', nextKey: '', vaultChecked: false };
+      return { action: 'noop', changed: false, prevKey: '', nextKey: '', vaultChecked: false, cloudChecked: false };
     } finally {
       sharedGeminiKeySyncPromise = null;
     }
@@ -4890,6 +4960,9 @@ async function init() {
       triggerDailyTopNewsBriefSync();
     }
   });
+  window.addEventListener('pageshow', () => {
+    syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
+  });
   window.addEventListener('storage', e => {
     if (e.key === SHARED_GEMINI_KEY_STORAGE_KEY) {
       syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
@@ -4966,7 +5039,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=117', { updateViaCache: 'none' })
+        .register('./sw.js?v=118', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

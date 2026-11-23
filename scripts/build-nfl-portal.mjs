@@ -19,6 +19,7 @@ import { ALL_NFL_TEAMS } from '../src/config/teamRegistry.js';
 import {
   SHARED_GEMINI_KEY_CHANNEL,
   SHARED_GEMINI_KEY_STORAGE_KEY,
+  SHARED_KEY_HASH_PARAM,
   getAllowedNflTeamOrigins
 } from '../src/services/sharedApiKeyStore.js';
 
@@ -1087,6 +1088,134 @@ function buildIndexHtml(grouped) {
   <script>
     (function () {
       var SESSION_KEY = 'nfl_hub_standalone_session_v1';
+      var SHARED_KEY_STORAGE = ${JSON.stringify(SHARED_GEMINI_KEY_STORAGE_KEY)};
+      var HASH_PARAM = ${JSON.stringify(SHARED_KEY_HASH_PARAM)};
+      var ALLOWED_HANDOFF_ORIGINS = new Set(${JSON.stringify(getKeySyncAllowedOrigins())});
+
+      function normalizeSharedRecord(raw) {
+        if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+        var t = Number(raw.t);
+        if (!isFinite(t) || t <= 0) return null;
+        var cleared = raw.c === 1 || raw.c === true;
+        var k = cleared ? '' : String(raw.k || '').trim();
+        var m = cleared ? '' : String(raw.m || '').trim();
+        if (!cleared && !k) return null;
+        return { v: 1, k: k, m: m, t: Math.floor(t), c: cleared ? 1 : 0 };
+      }
+
+      function decodeB64UrlJson(token) {
+        try {
+          var clean = String(token || '').trim();
+          if (!clean || clean.length > 1024 || !/^[A-Za-z0-9_-]+$/.test(clean)) return null;
+          var pad = (4 - (clean.length % 4)) % 4;
+          var b64 = clean.replace(/-/g, '+').replace(/_/g, '/') + new Array(pad + 1).join('=');
+          var bin = atob(b64);
+          var bytes = new Uint8Array(bin.length);
+          for (var i = 0; i < bin.length; i += 1) bytes[i] = bin.charCodeAt(i);
+          var text = typeof TextDecoder === 'function' ? new TextDecoder().decode(bytes) : decodeURIComponent(escape(bin));
+          return normalizeSharedRecord(JSON.parse(text));
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function encodeB64UrlJson(rec) {
+        try {
+          var norm = normalizeSharedRecord(rec);
+          if (!norm) return '';
+          var json = JSON.stringify(norm);
+          var bin = typeof TextEncoder === 'function'
+            ? (function () {
+                var arr = new TextEncoder().encode(json);
+                var s = '';
+                for (var i = 0; i < arr.length; i += 1) s += String.fromCharCode(arr[i]);
+                return s;
+              })()
+            : unescape(encodeURIComponent(json));
+          return btoa(bin).replace(/[+]/g, '-').replace(/[/]/g, '_').replace(/=+$/g, '');
+        } catch (e) {
+          return '';
+        }
+      }
+
+      function readStoredSharedKey() {
+        try {
+          var raw = localStorage.getItem(SHARED_KEY_STORAGE);
+          if (raw) {
+            var parsed = normalizeSharedRecord(JSON.parse(raw));
+            if (parsed) return parsed;
+          }
+          var best = null;
+          for (var i = 0; i < localStorage.length; i += 1) {
+            var k = localStorage.key(i);
+            if (!k || (k !== 'sf49ers_hq_prefs_v2' && !/^joshal_[a-z0-9-]+_hq_prefs_v1$/.test(k))) continue;
+            try {
+              var p = JSON.parse(localStorage.getItem(k) || 'null');
+              var keyStr = p && typeof p.geminiApiKey === 'string' ? p.geminiApiKey.trim() : '';
+              if (!keyStr) continue;
+              var ts = Number((p && p.geminiApiKeyUpdatedAt) || 0);
+              var cand = normalizeSharedRecord({
+                v: 1,
+                k: keyStr,
+                m: p && typeof p.verifiedGeminiModel === 'string' ? p.verifiedGeminiModel.trim() : '',
+                t: isFinite(ts) && ts > 0 ? Math.floor(ts) : Math.max(1, Date.now() - 1000),
+                c: 0
+              });
+              if (cand && (!best || cand.t > best.t)) best = cand;
+            } catch (e2) {}
+          }
+          if (best) {
+            try { localStorage.setItem(SHARED_KEY_STORAGE, JSON.stringify(best)); } catch (e3) {}
+          }
+          return best;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function writeStoredSharedKey(rec) {
+        try {
+          var norm = normalizeSharedRecord(rec);
+          if (!norm) return null;
+          var cur = readStoredSharedKey();
+          if (cur && cur.t > norm.t) return cur;
+          localStorage.setItem(SHARED_KEY_STORAGE, JSON.stringify(norm));
+          return norm;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function consumeIncomingKeyHandoff() {
+        try {
+          var hash = window.location.hash || '';
+          if (!hash || hash.indexOf(HASH_PARAM + '=') === -1) return;
+          var parts = hash.slice(1).split('&');
+          var kept = [];
+          var rec = null;
+          for (var i = 0; i < parts.length; i += 1) {
+            var part = parts[i];
+            if (!part) continue;
+            if (part.indexOf(HASH_PARAM + '=') === 0) {
+              if (!rec) rec = decodeB64UrlJson(part.slice(HASH_PARAM.length + 1));
+            } else {
+              kept.push(part);
+            }
+          }
+          var cleanHash = kept.length > 0 ? '#' + kept.join('&') : '';
+          if (window.history && typeof window.history.replaceState === 'function') {
+            window.history.replaceState(
+              window.history.state,
+              '',
+              (window.location.pathname || '/') + (window.location.search || '') + cleanHash
+            );
+          }
+          if (rec) writeStoredSharedKey(rec);
+        } catch (e) {}
+      }
+
+      consumeIncomingKeyHandoff();
+      readStoredSharedKey();
 
       function isStandalonePseudoApp() {
         try {
@@ -1128,7 +1257,10 @@ function buildIndexHtml(grouped) {
       }
 
       syncTeamTileHrefs();
-      window.addEventListener('pageshow', syncTeamTileHrefs);
+      window.addEventListener('pageshow', function () {
+        consumeIncomingKeyHandoff();
+        syncTeamTileHrefs();
+      });
 
       try {
         if (window.matchMedia) {
@@ -1148,7 +1280,24 @@ function buildIndexHtml(grouped) {
             if (hubHref && tile.getAttribute('href') !== hubHref) {
               tile.setAttribute('href', hubHref);
             }
+            return;
           }
+          var extHref = tile.getAttribute('data-external-href');
+          if (!extHref) return;
+          try {
+            var dest = new URL(extHref, window.location.href);
+            if (dest.origin === window.location.origin) return;
+            if (!ALLOWED_HANDOFF_ORIGINS.has(dest.origin)) return;
+            var rec = readStoredSharedKey();
+            if (!rec) return;
+            var token = encodeB64UrlJson(rec);
+            if (!token) return;
+            dest.hash = '#' + HASH_PARAM + '=' + token;
+            tile.setAttribute('href', dest.toString());
+            setTimeout(function () {
+              tile.setAttribute('href', extHref);
+            }, 250);
+          } catch (e) {}
         });
       }
 
@@ -1169,7 +1318,7 @@ function buildIndexHtml(grouped) {
         var isHubProd = host === 'nfl.joshal.com' || host === 'nfl-joshal.pages.dev' || host.endsWith('.nfl-joshal.pages.dev');
         if (isHubProd && 'serviceWorker' in navigator) {
           window.addEventListener('load', function () {
-            navigator.serviceWorker.register('./sw.js?v=115', { updateViaCache: 'none' }).catch(function () {});
+            navigator.serviceWorker.register('./sw.js?v=118', { updateViaCache: 'none' }).catch(function () {});
           }, { once: true });
         }
       } catch (e) {}
@@ -1215,8 +1364,33 @@ export function buildKeySyncVaultHtml({ extraAllowedOrigins = [] } = {}) {
       function readStored() {
         try {
           var raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return null;
-          return normalizeRecord(JSON.parse(raw));
+          if (raw) {
+            var parsed = normalizeRecord(JSON.parse(raw));
+            if (parsed) return parsed;
+          }
+          var best = null;
+          for (var i = 0; i < localStorage.length; i += 1) {
+            var k = localStorage.key(i);
+            if (!k || (k !== 'sf49ers_hq_prefs_v2' && !/^joshal_[a-z0-9-]+_hq_prefs_v1$/.test(k))) continue;
+            try {
+              var p = JSON.parse(localStorage.getItem(k) || 'null');
+              var keyStr = p && typeof p.geminiApiKey === 'string' ? p.geminiApiKey.trim() : '';
+              if (!keyStr) continue;
+              var ts = Number((p && p.geminiApiKeyUpdatedAt) || 0);
+              var cand = normalizeRecord({
+                v: 1,
+                k: keyStr,
+                m: p && typeof p.verifiedGeminiModel === 'string' ? p.verifiedGeminiModel.trim() : '',
+                t: isFinite(ts) && ts > 0 ? Math.floor(ts) : Math.max(1, Date.now() - 1000),
+                c: 0
+              });
+              if (cand && (!best || cand.t > best.t)) best = cand;
+            } catch (e2) {}
+          }
+          if (best) {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(best)); } catch (e3) {}
+          }
+          return best;
         } catch (e) {
           return null;
         }
@@ -1240,7 +1414,9 @@ export function buildKeySyncVaultHtml({ extraAllowedOrigins = [] } = {}) {
         var msg = event.data;
         if (!msg || typeof msg !== 'object' || msg.channel !== CHANNEL || !msg.id) return;
         var reply = { channel: CHANNEL, id: msg.id, ok: true, record: null };
-        if (msg.type === 'get') {
+        if (msg.type === 'ping') {
+          reply.ready = true;
+        } else if (msg.type === 'get') {
           reply.record = readStored();
         } else if (msg.type === 'set') {
           reply.record = writeStored(msg.record);
@@ -1256,6 +1432,12 @@ export function buildKeySyncVaultHtml({ extraAllowedOrigins = [] } = {}) {
           }
         } catch (e) {}
       });
+
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ channel: CHANNEL, type: 'ready' }, '*');
+        }
+      } catch (e) {}
     })();
   </script>
 </body>
