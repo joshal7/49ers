@@ -1737,14 +1737,14 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
       gravity = 1.30;
       break;
     case 'side_note':
-      eventMagnitude = 34;
-      gravity = 1.52;
+      eventMagnitude = 28;
+      gravity = 1.60;
       break;
     default: {
       const lead = extractPrimaryClaimText(item);
       if (HUMAN_INTEREST_SIDE_NOTE_REGEX.test(lead) || RETROSPECTIVE_UNEXECUTED_TRADE_REGEX.test(lead)) {
-        eventMagnitude = 34;
-        gravity = 1.52;
+        eventMagnitude = 28;
+        gravity = 1.60;
       } else if (/\b(injury report|practice report|returns? to practice|miss practice)\b/i.test(lead)) {
         eventMagnitude = 78;
         gravity = 1.30;
@@ -3163,7 +3163,7 @@ function scoreClusterLeadQuality(item = {}) {
   const isConversationalAside = /^(?:if it helps|pretty interesting|fwiw|fun fact)\b/i.test(titleText);
   const isRewriteAgg = AGGREGATOR_REWRITE_OUTLET_REGEX.test(`${item.outletName || ''} ${item.url || ''}`);
 
-  const tierScore = isRewriteAgg ? 8 : trustTier === 1 ? 26 : trustTier === 2 ? 24 : 18;
+  const tierScore = isRewriteAgg ? 8 : trustTier === 1 ? 29 : trustTier === 2 ? 23 : 19;
   const formatScore = isPlayerBioBlurb
     ? 6
     : isArticle

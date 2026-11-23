@@ -18111,6 +18111,735 @@ await testAsync('iOS Standalone PWA Safari Breakout for 49ers.com/NFL Club Video
   );
 });
 
+await testAsync(
+  'Stale 4-Day Top News Brief Prevention: Game-Day Hold KV adoption (0 Gemini POSTs), pre-game rebuild, upstream merge & 72h Worker KV TTL',
+  async () => {
+    const {
+      hydrateCachedDailyTopNewsBrief,
+      hydrateDailyTopNewsBriefFromSharedKv,
+      mergeDailyTopNewsBriefOnUpstreamRefresh,
+      shouldTriggerDailyTopNewsBriefRefresh,
+      refreshDailyTopNewsBriefIfDue,
+      buildDeterministicDailyTopNewsBrief
+    } = await import('../src/services/aiWorkerClient.js');
+
+    const origFetch = globalThis.fetch;
+    const origLocalStorage = globalThis.localStorage;
+    const origWindow = globalThis.window;
+
+    // Sunday Nov 22, 2026 at 5:01 PM PT (`T-19m` before 5:20 PM PT SNF kickoff vs Vikings)
+    const sun501PmPtMs = Date.parse('2026-11-23T01:01:00Z');
+    const snfKickoffIso = '2026-11-23T01:20:00Z';
+
+    const makeHoldAppData = ({ rawStream = [], briefOverride = null } = {}) => ({
+      meta: {
+        teamAbbr: 'SF',
+        seasonYear: 2026,
+        currentWeek: 11,
+        teamRecord: '8-1',
+        standingSummary: '1st in NFC West • #1 Seed in NFC',
+        updatedAt: '2026-11-17T07:08:18.577Z' // 5 days stale static meta.json
+      },
+      scheduleMatchup: {
+        upcomingMatchup: {
+          week: 11,
+          oppAbbr: 'MIN',
+          oppName: 'Minnesota Vikings',
+          oppRecord: '7-3',
+          dateIso: snfKickoffIso,
+          kickoffIso: snfKickoffIso
+        },
+        schedule: [
+          {
+            id: 'wk10_dal',
+            week: 10,
+            seasonType: 2,
+            completed: true,
+            result: 'W',
+            sfScore: 46,
+            oppScore: 40,
+            dateIso: '2026-11-15T21:25:00Z',
+            opponent: { abbr: 'DAL', name: 'Dallas Cowboys' }
+          },
+          {
+            id: 'wk11_min',
+            week: 11,
+            seasonType: 2,
+            completed: false,
+            dateIso: snfKickoffIso,
+            statusState: 'pre',
+            statusDetail: '11/22 - 8:20 PM EST',
+            opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+          }
+        ]
+      },
+      health: {
+        practiceReport: [
+          {
+            name: 'Brock Purdy',
+            position: 'QB',
+            injuryType: 'Shoulder',
+            wed: 'LP',
+            thu: 'FP',
+            fri: 'FP',
+            gameStatus: 'Active'
+          }
+        ],
+        irAndReserveTracker: []
+      },
+      roster: { players: [{ id: 'p_purdy', name: 'Brock Purdy', position: 'QB' }] },
+      cap: { years: { '2026': { teamCapSpace: 35_000_000 }, '2027': { teamCapSpace: -12_000_000 } } },
+      news: {
+        rawStream,
+        dailyTopNewsBrief:
+          briefOverride || {
+            id: 'daily_brief_2026-11-17_17PT',
+            cycleKey: '2026-11-17@17PT',
+            generatedAt: '2026-11-18T01:03:41.927Z', // 4d ago!
+            source: 'pipeline-grounded',
+            headline: '49ers (8-1) Week 11 Briefing: Pass-Rush Review & Injury Updates Ahead of Vikings',
+            bullets: [
+              'Cowboys Offensive Surge: San Francisco piled up 584 total yards against Dallas.',
+              'Pass-Rush & Front Review: San Francisco generated 1 sack against Dallas.'
+            ],
+            sources: []
+          }
+      }
+    });
+
+    try {
+      const store = new Map();
+      const mockStorage = {
+        getItem: k => (store.has(k) ? store.get(k) : null),
+        setItem: (k, v) => store.set(k, String(v)),
+        removeItem: k => store.delete(k)
+      };
+      globalThis.localStorage = mockStorage;
+      globalThis.window = { ...(origWindow || {}), localStorage: mockStorage };
+      if (globalThis.__FAITHFUL_AI_STATE__?.lastDailyNewsBriefKvCheckMsByKey) {
+        globalThis.__FAITHFUL_AI_STATE__.lastDailyNewsBriefKvCheckMsByKey.clear();
+      }
+
+      // 1. Cold device at 5:01 PM PT game-day hold with 4-day-old upstream brief MUST fetch activeCycle from Shared KV (0 POSTs!)
+      const fetchCalls = [];
+      globalThis.fetch = async (url, init = {}) => {
+        fetchCalls.push({ url: String(url), method: String(init?.method || 'GET'), cache: init?.cache });
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({
+            cached: true,
+            teamAbbr: 'SF',
+            cycleKey: '2026-11-21@17PT-v5',
+            modelUsed: 'gemini-4-hydrogen',
+            generatedAt: '2026-11-22T01:05:00.000Z',
+            data: {
+              headline: '49ers Finalize Vikings Game Plan as Practice Squad Elevations Lock In',
+              summary: '',
+              bullets: [
+                'San Francisco elevated two defensive linemen for Sunday Night Football against Minnesota.',
+                'Brock Purdy finished Friday practice in full as Kyle Shanahan prepares for Brian Flores blitz packages.'
+              ],
+              sources: [
+                {
+                  type: 'article',
+                  author: 'Matt Maiocco',
+                  outlet: 'NBC Sports Bay Area',
+                  title: '49ers finalize Saturday roster elevations ahead of Vikings SNF',
+                  url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/vikings-elevations-2026/',
+                  publishedAt: '2026-11-22T00:30:00Z'
+                }
+              ]
+            }
+          })
+        };
+      };
+
+      const holdAppKv = makeHoldAppData();
+      const prefsWithWorker = { workerBaseUrl: 'https://49ers.joshal.com', geminiApiKey: 'AIzaTestFakeKey' };
+      assert.equal(
+        shouldTriggerDailyTopNewsBriefRefresh(holdAppKv, prefsWithWorker, sun501PmPtMs),
+        true,
+        'Game-day hold with 4-day-old static brief must trigger 0-credit Shared KV lookup'
+      );
+
+      const kvHoldRes = await refreshDailyTopNewsBriefIfDue({
+        appData: holdAppKv,
+        prefs: prefsWithWorker,
+        nowMs: sun501PmPtMs
+      });
+      assert.equal(kvHoldRes.updated, true, 'Game-day hold must adopt Saturday activeCycle brief from Shared KV');
+      assert.equal(kvHoldRes.fromSharedWorkerCache, true, 'Must report Shared Worker KV cache adoption');
+      assert.equal(
+        holdAppKv.news.dailyTopNewsBrief.cycleKey,
+        '2026-11-21@17PT',
+        'Brief cycleKey must advance from 4-day-old Tuesday brief to Saturday activeCycle'
+      );
+      assert.equal(
+        fetchCalls.filter(c => c.method === 'POST').length,
+        0,
+        'Game-day hold MUST NEVER spend a Gemini POST credit'
+      );
+      assert.equal(
+        fetchCalls[0]?.cache,
+        'no-store',
+        'Shared KV GET must bypass Safari/HTTP cache via cache: no-store'
+      );
+      assert.ok(
+        fetchCalls[0]?.url.includes('allowLatest=1'),
+        'Shared KV GET must include allowLatest=1 fallback flag'
+      );
+
+      // 2. When exact cycle misses in KV, allowLatest=1 fallback adopts recent pre-game AI brief without mislabeling cycleKey
+      store.clear();
+      if (globalThis.__FAITHFUL_AI_STATE__?.lastDailyNewsBriefKvCheckMsByKey) {
+        globalThis.__FAITHFUL_AI_STATE__.lastDailyNewsBriefKvCheckMsByKey.clear();
+      }
+      globalThis.fetch = async () => ({
+        ok: true,
+        status: 200,
+        json: async () => ({
+          cached: true,
+          latestFallback: true,
+          teamAbbr: 'SF',
+          cycleKey: '2026-11-20@17PT-v5',
+          modelUsed: 'gemini-4-hydrogen',
+          generatedAt: '2026-11-21T01:05:00.000Z',
+          data: {
+            headline: '49ers Friday Injury Report Clears Key Starters Ahead of Vikings',
+            summary: '',
+            bullets: [
+              'Brock Purdy logged a full Friday practice and carries no injury designation into Sunday night.',
+              'San Francisco expects full defensive front rotation against Minnesota in Week 11.'
+            ],
+            sources: [
+              {
+                type: 'article',
+                author: 'Matt Barrows',
+                outlet: '49ers Beat',
+                title: '49ers Friday injury report ahead of Vikings',
+                url: 'https://www.49ers.com/news/friday-injury-report-week-11-vikings',
+                publishedAt: '2026-11-20T23:45:00Z'
+              }
+            ]
+          }
+        })
+      });
+      const holdAppLatest = makeHoldAppData();
+      const latestRes = await hydrateDailyTopNewsBriefFromSharedKv({
+        appData: holdAppLatest,
+        prefs: prefsWithWorker,
+        nowMs: sun501PmPtMs,
+        force: true
+      });
+      assert.equal(latestRes.updated, true, 'latestFallback from Friday must upgrade 4-day-old Tuesday static brief');
+      assert.equal(latestRes.latestFallback, true, 'Must preserve latestFallback flag');
+      assert.equal(
+        holdAppLatest.news.dailyTopNewsBrief.cycleKey,
+        '2026-11-20@17PT',
+        'latestFallback must keep its true cycleKey rather than falsely stamping 2026-11-21@17PT'
+      );
+
+      // 3. When KV misses & localStorage is empty, hydrateCachedDailyTopNewsBrief rebuilds strictly pre-game brief (< T-90m)
+      //    once live pre-game wire items exist, keeping live game-day items ABOVE the brief & never stamping 4-day-old meta.updatedAt
+      store.clear();
+      const preGameAndLiveStream = [
+        {
+          id: 'live_gd_inactives',
+          type: 'tweet',
+          title: '49ers official Week 11 inactives vs Vikings announced 90 minutes before kickoff',
+          fullText: '49ers official Week 11 inactives vs Vikings announced 90 minutes before kickoff.',
+          url: 'https://x.com/MaioccoNBCS/status/999000111',
+          author: 'Matt Maiocco',
+          outletName: 'NBC Sports Bay Area',
+          publishedAt: '2026-11-23T00:05:00Z' // T-75m (live game-day item — MUST stay above brief!)
+        },
+        {
+          id: 'sat_pregame_1',
+          type: 'article',
+          title: '49ers elevate defensive linemen ahead of Week 11 Vikings matchup',
+          summary: 'San Francisco made two Saturday practice squad elevations before Sunday Night Football.',
+          url: 'https://www.49ers.com/news/roster-moves-week-11-vikings-elevations',
+          author: '49ers.com Official',
+          outletName: '49ers.com Official',
+          publishedAt: '2026-11-22T21:10:00Z' // Saturday/Sunday pre-T-90m
+        },
+        {
+          id: 'sat_pregame_2',
+          type: 'article',
+          title: 'Brock Purdy cleared on final injury report for Vikings game',
+          summary: 'Brock Purdy practiced in full Friday and carries no game status ahead of Minnesota.',
+          url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/purdy-cleared-vikings/',
+          author: 'Matt Maiocco',
+          outletName: 'NBC Sports Bay Area',
+          publishedAt: '2026-11-22T18:00:00Z'
+        }
+      ];
+      const holdAppRebuild = makeHoldAppData({ rawStream: preGameAndLiveStream });
+      const rebuiltChanged = hydrateCachedDailyTopNewsBrief(holdAppRebuild, sun501PmPtMs);
+      assert.equal(rebuiltChanged, true, 'Stale 4-day-old upstream brief must rebuild during game-day hold once fresher pre-game wire exists');
+      assert.equal(
+        holdAppRebuild.news.dailyTopNewsBrief.cycleKey,
+        '2026-11-21@17PT',
+        'Rebuilt pre-game hold brief must target activeCycle (Saturday 5 PM PT)'
+      );
+      const rebuiltGenMs = Date.parse(holdAppRebuild.news.dailyTopNewsBrief.generatedAt);
+      const preGameCutoffMs = Date.parse(snfKickoffIso) - 90 * 60_000;
+      assert.ok(
+        rebuiltGenMs <= preGameCutoffMs && rebuiltGenMs >= Date.parse('2026-11-22T18:00:00Z'),
+        `Rebuilt pre-game brief generatedAt (${holdAppRebuild.news.dailyTopNewsBrief.generatedAt}) must reflect pre-game source recency and stay <= T-90m`
+      );
+      assert.ok(
+        !(holdAppRebuild.news.dailyTopNewsBrief.coveredUrls || []).includes('https://x.com/MaioccoNBCS/status/999000111'),
+        'Live game-day items arriving after T-90m must NEVER leak into the pre-game hold brief'
+      );
+
+      // 4. mergeDailyTopNewsBriefOnUpstreamRefresh NEVER overwrites a newer-cycle live AI brief with an older-cycle static brief
+      const freshSatBrief = {
+        id: 'daily_brief_2026-11-21_17PT',
+        cycleKey: '2026-11-21@17PT',
+        generatedAt: '2026-11-22T01:05:00.000Z',
+        source: 'live-gemini-daily',
+        headline: 'Saturday Fresh AI Brief',
+        bullets: ['Bullet one with verified Saturday updates.', 'Bullet two with verified Saturday updates.'],
+        sources: []
+      };
+      const staleTueBrief = makeHoldAppData().news.dailyTopNewsBrief;
+      const mergedKeepFresh = mergeDailyTopNewsBriefOnUpstreamRefresh(
+        freshSatBrief,
+        staleTueBrief,
+        holdAppKv,
+        sun501PmPtMs
+      );
+      assert.equal(
+        mergedKeepFresh.cycleKey,
+        '2026-11-21@17PT',
+        'Older-cycle upstream news.json brief must NEVER clobber a newer-cycle live AI brief'
+      );
+
+      // 5. buildDeterministicDailyTopNewsBrief never stamps a 5-day-old meta.updatedAt onto a newly built brief
+      const detNow = buildDeterministicDailyTopNewsBrief(holdAppRebuild, sun501PmPtMs);
+      assert.ok(
+        Math.abs(Date.parse(detNow.generatedAt) - sun501PmPtMs) < 60_000,
+        `Fresh deterministic brief must NOT inherit 5-day-old meta.updatedAt (got ${detNow.generatedAt})`
+      );
+
+      // 6. Worker KV TTL (72h), Cache-Control: no-store, latest fallback, SW self-heal & non-blocking boot KV wiring
+      const nflTeamsWorkerSrc = fs.readFileSync(path.join(rootDir, 'worker', 'nfl-teams-worker.js'), 'utf8');
+      const legacyWorkerSrc = fs.readFileSync(path.join(rootDir, 'worker', 'index.js'), 'utf8');
+      const swSrc = fs.readFileSync(path.join(rootDir, 'sw.js'), 'utf8');
+      const appSrc = fs.readFileSync(path.join(rootDir, 'src', 'app.js'), 'utf8');
+      assert.ok(
+        nflTeamsWorkerSrc.includes('60 * 60 * 72') &&
+          nflTeamsWorkerSrc.includes("'Cache-Control': 'no-store'") &&
+          nflTeamsWorkerSrc.includes('daily_news_brief_latest_v7:'),
+        'worker/nfl-teams-worker.js must use 72h TTL, Cache-Control: no-store & latest fallback pointer'
+      );
+      assert.ok(
+        legacyWorkerSrc.includes('60 * 60 * 72') &&
+          legacyWorkerSrc.includes("'Cache-Control': 'no-store'") &&
+          legacyWorkerSrc.includes('daily_news_brief_latest_v5'),
+        'worker/index.js must use 72h TTL, Cache-Control: no-store & latest fallback pointer'
+      );
+      assert.ok(
+        swSrc.includes('Stale-while-revalidate self-heal') && swSrc.includes("url.pathname.startsWith('/data/')"),
+        'sw.js must background-refresh /data/*.json caches whenever the 2.2s cellular timeout falls back to cache'
+      );
+      assert.ok(
+        appSrc.includes('triggerFastSharedKvBriefHydration()') &&
+          appSrc.includes('mergeDailyTopNewsBriefOnUpstreamRefresh('),
+        'src/app.js must run instant 0-credit Shared KV hydration on boot and use cycle-safe upstream brief merging'
+      );
+    } finally {
+      globalThis.fetch = origFetch;
+      globalThis.localStorage = origLocalStorage;
+      globalThis.window = origWindow;
+      if (globalThis.__FAITHFUL_AI_STATE__?.lastDailyNewsBriefKvCheckMsByKey) {
+        globalThis.__FAITHFUL_AI_STATE__.lastDailyNewsBriefKvCheckMsByKey.clear();
+      }
+    }
+  }
+);
+
+await testAsync(
+  'Balanced Tier 1-3 Reporter Distribution, Relaxed Interest-Story Filters & Ultra-Low-Latency Live Game Highlights',
+  async () => {
+    const {
+      hydrateLiveEspnGameHighlightsAndPlays,
+      hydrateLiveWorkerEdgeWire,
+      LIVE_BLUESKY_BEAT_ACCOUNTS
+    } = await import('../src/services/dataService.js');
+    const { isOffTopicLeagueFiller } = await import('../src/engine/linkIntegrity.js');
+
+    const nowMs = Date.parse('2026-11-23T02:15:00Z');
+    const koIso = '2026-11-23T01:20:00Z';
+
+    // 1. Fair Reporter Tiering: Fresh Tier-3 (Dieter Kurtenbach) & Tier-2 (Kyle Posey) tweets must NOT be buried behind older Tier-1 (Matt Maiocco)
+    const tierDistributionStream = sortNewsWithBreakingPriority(
+      [
+        {
+          id: 'maiocco_older',
+          type: 'tweet',
+          reporterId: 'matt_maiocco',
+          author: 'Matt Maiocco',
+          authorHandle: '@MaioccoNBCS',
+          trustTier: 1,
+          title: '49ers offense is moving efficiently in early drives tonight.',
+          fullText: '49ers offense is moving efficiently in early drives tonight.',
+          url: 'https://x.com/MaioccoNBCS/status/2000000000000000001',
+          publishedAt: new Date(nowMs - 95 * 60_000).toISOString()
+        },
+        {
+          id: 'dieter_fresh',
+          type: 'tweet',
+          reporterId: 'dieter_kurtenbach',
+          author: 'Dieter Kurtenbach',
+          authorHandle: '@dieter',
+          trustTier: 3,
+          title: 'This 49ers defense looks completely transformed with Fred Warner diagnosing motion pre-snap.',
+          fullText: 'This 49ers defense looks completely transformed with Fred Warner diagnosing motion pre-snap.',
+          url: 'https://x.com/dieter/status/2000000000000000002',
+          publishedAt: new Date(nowMs - 8 * 60_000).toISOString()
+        },
+        {
+          id: 'posey_fresh',
+          type: 'tweet',
+          reporterId: 'kyle_posey',
+          author: 'Kyle Posey',
+          authorHandle: '@KP_Show',
+          trustTier: 2,
+          title: 'Love the 21-personnel weakside pin-and-pull concept Shanahan dialed up on 2nd-and-6.',
+          fullText: 'Love the 21-personnel weakside pin-and-pull concept Shanahan dialed up on 2nd-and-6.',
+          url: 'https://x.com/KP_Show/status/2000000000000000003',
+          publishedAt: new Date(nowMs - 10 * 60_000).toISOString()
+        }
+      ],
+      nowMs
+    );
+    const dieterIdx = tierDistributionStream.findIndex(x => x.id === 'dieter_fresh');
+    const maioccoIdx = tierDistributionStream.findIndex(x => x.id === 'maiocco_older');
+    assert.ok(
+      dieterIdx < maioccoIdx,
+      `Fresh Dieter Kurtenbach (Tier 3) tweet must outrank 95m-old Matt Maiocco tweet (dieter=${dieterIdx}, maiocco=${maioccoIdx})`
+    );
+
+    // 2. Per-author diversity in balanceFeedTopSalience: prolific Tier-1 reporter cannot hog 4 consecutive top slots
+    const prolificItems = [
+      ...Array.from({ length: 5 }, (_, i) => ({
+        id: `mm_${i}`,
+        type: 'tweet',
+        reporterId: 'matt_maiocco',
+        author: 'Matt Maiocco',
+        trustTier: 1,
+        storyRank: 60 - i,
+        signalScore: 76,
+        title: `49ers offensive rhythm observation #${i + 1} from practice field.`,
+        fullText: `49ers offensive rhythm observation #${i + 1} from practice field.`,
+        publishedAt: new Date(nowMs - (10 + i * 5) * 60_000).toISOString()
+      })),
+      {
+        id: 'dk_1',
+        type: 'tweet',
+        reporterId: 'dieter_kurtenbach',
+        author: 'Dieter Kurtenbach',
+        trustTier: 3,
+        storyRank: 52,
+        signalScore: 72,
+        title: 'Why the 49ers locker room swagger feels different heading into December.',
+        fullText: 'Why the 49ers locker room swagger feels different heading into December.',
+        publishedAt: new Date(nowMs - 22 * 60_000).toISOString()
+      },
+      {
+        id: 'eb_1',
+        type: 'tweet',
+        reporterId: 'eric_branch',
+        author: 'Eric Branch',
+        trustTier: 1,
+        storyRank: 51,
+        signalScore: 70,
+        title: 'Not many empty seats about 30 minutes before kickoff. This crowd is raucous in warmups. #49ers',
+        fullText: 'Not many empty seats about 30 minutes before kickoff. This crowd is raucous in warmups. #49ers',
+        publishedAt: new Date(nowMs - 24 * 60_000).toISOString()
+      },
+      {
+        id: 'kp_1',
+        type: 'tweet',
+        reporterId: 'kyle_posey',
+        author: 'Kyle Posey',
+        trustTier: 2,
+        storyRank: 50,
+        signalScore: 74,
+        title: 'Garret Wallow getting base-defense LB snaps alongside Fred Warner and Jaden Dugger.',
+        fullText: 'Garret Wallow getting base-defense LB snaps alongside Fred Warner and Jaden Dugger.',
+        publishedAt: new Date(nowMs - 26 * 60_000).toISOString()
+      }
+    ];
+    const diverseFeed = balanceFeedTopSalience(prolificItems, { nowMs });
+    let maxRun = 0;
+    let curRun = 0;
+    let prevAuth = '';
+    for (const it of diverseFeed.slice(0, 7)) {
+      if (it.reporterId === prevAuth) curRun += 1;
+      else {
+        prevAuth = it.reporterId;
+        curRun = 1;
+      }
+      if (curRun > maxRun) maxRun = curRun;
+    }
+    assert.ok(maxRun <= 2, `No single reporter should run >2 consecutive slots in Top feed (got ${maxRun})`);
+    assert.ok(
+      diverseFeed.slice(0, 5).some(it => it.reporterId === 'dieter_kurtenbach'),
+      'Dieter Kurtenbach (Tier 3) should surface inside Top 5 when diverse voices are balanced'
+    );
+
+    // 3. Relaxed Anti-Clickbait & Interest Story Inclusion: live TD excitement, crowd atmosphere & boos pass cleanly
+    const kittleTdTweet = scoreContentSignal(
+      'TOUCHDOWN GEORGE KITTLE!! 49ers take the lead in a wild red-zone grab!!',
+      'What a throw by Brock Purdy!'
+    );
+    assert.equal(kittleTdTweet.isClickbait, false, 'Live TD excitement tweet with ALL-CAPS & !! must NOT be flagged as clickbait');
+
+    const crowdWarmup = scoreContentSignal(
+      'Not many empty seats about 30 minutes before kickoff. This crowd is raucous in warmups. #49ers',
+      ''
+    );
+    assert.equal(crowdWarmup.isClickbait, false, 'Pregame crowd warmup atmosphere tweet must pass');
+
+    const bosaBoos = scoreContentSignal(
+      '#49ers DE Nick Bosa shown on the big screen and getting loud boos after his comments this week.',
+      ''
+    );
+    assert.equal(bosaBoos.isClickbait, false, 'Rivalry crowd/big-screen interest tweet must pass');
+
+    const hotSeatColumn = scoreContentSignal(
+      'Is the 49ers pass-rush coordinator on the hot seat? Breaking down 3rd-down pressure rates',
+      'Dieter Kurtenbach column examining defensive line adjustments.'
+    );
+    assert.equal(hotSeatColumn.isClickbait, false, 'Legitimate columnist hot-seat commentary must pass');
+
+    assert.equal(
+      isOffTopicLeagueFiller({
+        title: 'Not many empty seats about 30 minutes before kickoff. This crowd is raucous in warmups.',
+        summary: '',
+        hasRosterMatch: false,
+        isDedicatedTeamBeat: true
+      }),
+      false,
+      'Dedicated 49ers beat writer warmup/crowd tweet without literal "#49ers" must NOT be dropped as off-topic'
+    );
+    assert.equal(
+      isOffTopicLeagueFiller({
+        title: 'Warriors rally past Lakers behind Steph Curry in 4th quarter',
+        summary: '',
+        hasRosterMatch: false,
+        isDedicatedTeamBeat: true
+      }),
+      true,
+      'Non-NFL NBA/MLB tweet from a Bay Area writer must still be filtered out'
+    );
+
+    // 4. Expanded Bluesky beat accounts include Eric Branch, Rob Guerrera & Mina Kimes
+    const bskyActors = new Set(LIVE_BLUESKY_BEAT_ACCOUNTS.map(a => a.actor));
+    assert.ok(bskyActors.has('eric-branch.bsky.social'), 'Eric Branch must be in LIVE_BLUESKY_BEAT_ACCOUNTS');
+    assert.ok(bskyActors.has('statsonfire.bsky.social'), 'Rob Guerrera must be in LIVE_BLUESKY_BEAT_ACCOUNTS');
+    assert.ok(bskyActors.has('minakimes.bsky.social'), 'Mina Kimes must be in LIVE_BLUESKY_BEAT_ACCOUNTS');
+
+    // 5. Instant Live Game Scoring Plays & ESPN HD Highlight Clips + In-Game Highlight Elevation
+    const liveGameAppData = {
+      meta: { teamAbbr: 'SF', teamSlug: '49ers', seasonYear: 2026, currentWeek: 11 },
+      roster: {
+        players: [
+          { id: '3040151', name: 'George Kittle', position: 'TE', headshotUrl: 'https://a.espncdn.com/kittle.png' },
+          { id: '4361741', name: 'Brock Purdy', position: 'QB', headshotUrl: 'https://a.espncdn.com/purdy.png' }
+        ]
+      },
+      scheduleMatchup: {
+        schedule: [
+          {
+            id: '401873099',
+            week: 11,
+            seasonType: 'REG',
+            dateIso: koIso,
+            completed: false,
+            statusState: 'in',
+            isLive: true,
+            statusDetail: '2nd - 4:12',
+            homeAway: 'away',
+            opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+          }
+        ],
+        upcomingMatchup: {
+          week: 11,
+          gameId: '401873099',
+          oppAbbr: 'MIN',
+          oppName: 'Minnesota Vikings',
+          homeAway: 'away',
+          dateIso: koIso,
+          kickoffIso: koIso,
+          liveState: 'in',
+          isGameInProgress: true
+        }
+      },
+      news: { rawStream: [] }
+    };
+
+    const origFetch = globalThis.fetch;
+    const origWindow = globalThis.window;
+    const fetchedUrls = [];
+    try {
+      // 5a. First poll: ESPN scoringPlays has George Kittle TD immediately, BEFORE video finishes encoding
+      globalThis.fetch = async url => {
+        fetchedUrls.push(String(url));
+        if (String(url).includes('/summary?event=401873099')) {
+          return {
+            ok: true,
+            json: async () => ({
+              header: {
+                competitions: [
+                  {
+                    status: { type: { state: 'in', shortDetail: '2nd - 4:12' } },
+                    competitors: [
+                      { id: '25', homeAway: 'away', score: '14', team: { abbreviation: 'SF' } },
+                      { id: '16', homeAway: 'home', score: '7', team: { abbreviation: 'MIN' } }
+                    ]
+                  }
+                ]
+              },
+              scoringPlays: [
+                {
+                  id: 'sp_kittle_td_1',
+                  team: { id: '25', abbreviation: 'SF' },
+                  scoringType: { abbreviation: 'TD' },
+                  period: { number: 2 },
+                  clock: { displayValue: '4:12' },
+                  awayScore: 14,
+                  homeScore: 7,
+                  text: 'George Kittle 18 Yd pass from Brock Purdy (Eddy Pineiro Kick)',
+                  modified: new Date(nowMs - 20_000).toISOString()
+                }
+              ],
+              videos: []
+            })
+          };
+        }
+        return { ok: true, json: async () => ({ ok: true, items: [] }) };
+      };
+
+      const addedScoreOnly = await hydrateLiveEspnGameHighlightsAndPlays(liveGameAppData, {
+        isGameLive: true,
+        nowMs
+      });
+      assert.equal(addedScoreOnly, 1, 'Live George Kittle TD scoring play must ingest immediately before MP4 encodes');
+      assert.equal(liveGameAppData.scheduleMatchup.upcomingMatchup.sfScore, 14, 'Live scoreboard score must update');
+      assert.ok(
+        liveGameAppData.news.rawStream[0].title.includes('TOUCHDOWN') &&
+          liveGameAppData.news.rawStream[0].title.includes('George Kittle'),
+        'Live scoring play card must headline George Kittle TOUCHDOWN'
+      );
+
+      // 5b. Next poll (60s later): ESPN attaches HD MP4 video clip for Kittle's TD!
+      globalThis.fetch = async url => {
+        if (String(url).includes('/summary?event=401873099')) {
+          return {
+            ok: true,
+            json: async () => ({
+              scoringPlays: [
+                {
+                  id: 'sp_kittle_td_1',
+                  team: { id: '25', abbreviation: 'SF' },
+                  scoringType: { abbreviation: 'TD' },
+                  period: { number: 2 },
+                  clock: { displayValue: '4:12' },
+                  awayScore: 14,
+                  homeScore: 7,
+                  text: 'George Kittle 18 Yd pass from Brock Purdy (Eddy Pineiro Kick)'
+                }
+              ],
+              videos: [
+                {
+                  id: 'vid_kittle_999',
+                  headline: 'George Kittle hauls in 18-yard TD from Brock Purdy',
+                  description: '49ers TE George Kittle scores against the Vikings.',
+                  duration: 28,
+                  thumbnail: 'https://a.espncdn.com/kittle_td.jpg',
+                  lastModified: new Date(nowMs - 10_000).toISOString(),
+                  links: {
+                    web: { href: 'https://www.espn.com/video/clip?id=vid_kittle_999' },
+                    source: { HD: { href: 'https://media.video-cdn.espn.com/kittle_td_hd.mp4' } }
+                  }
+                }
+              ]
+            })
+          };
+        }
+        return { ok: true, json: async () => ({ ok: true, items: [] }) };
+      };
+      const addedVideo = await hydrateLiveEspnGameHighlightsAndPlays(liveGameAppData, {
+        isGameLive: true,
+        nowMs: nowMs + 60_000
+      });
+      assert.equal(addedVideo, 1, 'ESPN HD MP4 highlight clip for George Kittle TD must ingest immediately');
+
+      // 5c. In-game StoryRank must elevate Kittle TD highlight ABOVE routine in-game tweets (while staying below LIVE INJURY UPDATE)
+      const inGameRanked = sortNewsWithBreakingPriority(
+        [
+          {
+            id: 'routine_live_tw',
+            type: 'tweet',
+            author: 'Matt Maiocco',
+            trustTier: 1,
+            title: '49ers lining up in 21 personnel at midfield.',
+            fullText: '49ers lining up in 21 personnel at midfield.',
+            publishedAt: new Date(nowMs - 5_000).toISOString()
+          },
+          liveGameAppData.news.rawStream.find(x => x.id === 'espn_hl_vid_vid_kittle_999')
+        ],
+        nowMs + 60_000,
+        { appData: liveGameAppData }
+      );
+      assert.equal(
+        inGameRanked[0].id,
+        'espn_hl_vid_vid_kittle_999',
+        'Live in-game George Kittle TD highlight clip must outrank routine in-game tweets'
+      );
+      assert.equal(inGameRanked[0].storyTier, 'live_in_game_highlight');
+
+      // 5d. Edge Worker `/api/live-wire` auto-resolves on 49ers.joshal.com without manual workerBaseUrl & passes `?live=1&event=`
+      globalThis.window = {
+        location: { hostname: '49ers.joshal.com', protocol: 'https:', origin: 'https://49ers.joshal.com', search: '' },
+        localStorage: { getItem: () => null, setItem: () => {} }
+      };
+      const edgeHits = [];
+      globalThis.fetch = async url => {
+        edgeHits.push(String(url));
+        return { ok: true, json: async () => ({ ok: true, items: [] }) };
+      };
+      await hydrateLiveWorkerEdgeWire(liveGameAppData, { workerBaseUrl: '', isGameLive: true });
+      assert.ok(
+        edgeHits.some(u => u === 'https://49ers.joshal.com/api/live-wire?live=1&event=401873099'),
+        `Expected auto-resolved same-origin Edge /api/live-wire?live=1&event=401873099, got: ${edgeHits.join(', ')}`
+      );
+    } finally {
+      globalThis.fetch = origFetch;
+      globalThis.window = origWindow;
+    }
+
+    // 6. Verify ultra-low-latency polling intervals & Worker 15s live-game edge cache
+    const appSrc = fs.readFileSync(path.join(rootDir, 'src', 'app.js'), 'utf8');
+    const nflTeamsWorkerSrc = fs.readFileSync(path.join(rootDir, 'worker', 'nfl-teams-worker.js'), 'utf8');
+    assert.ok(
+      appSrc.includes('GAME_LIVE_WIRE_POLL_MS = 10_000') && appSrc.includes('STANDARD_WIRE_POLL_MS = 25_000'),
+      'src/app.js must poll every 10s during live games and every 25s standard'
+    );
+    assert.ok(
+      nflTeamsWorkerSrc.includes('const edgeTtlSec = liveMode ? 15 : 25;') &&
+        nflTeamsWorkerSrc.includes('ninerswire.usatoday.com/feed/') &&
+        nflTeamsWorkerSrc.includes('knbr.com/category/49ers/feed/'),
+      'worker/nfl-teams-worker.js /api/live-wire must use 15s/25s edge TTL and ingest Niners Wire + KNBR + Tier 1-3 X embeds'
+    );
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

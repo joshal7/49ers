@@ -8,10 +8,10 @@ const SW_RAW_SUB = SW_SUB_MATCH ? SW_SUB_MATCH[1] : '49ers';
 const SW_TEAM_SLUG = IS_NFL_HUB_HOST ? 'nfl' : SW_RAW_SUB === '49ers' ? '49ers' : SW_RAW_SUB;
 const SW_DATA_BASE = SW_TEAM_SLUG === '49ers' ? './data' : `./data/teams/${SW_TEAM_SLUG}`;
 const CACHE_NAME = IS_NFL_HUB_HOST
-  ? 'nfl-hub-v4'
+  ? 'nfl-hub-v5'
   : SW_TEAM_SLUG === '49ers'
-    ? '49ers-faithful-v156'
-    : `${SW_TEAM_SLUG}-hq-v27`;
+    ? '49ers-faithful-v157'
+    : `${SW_TEAM_SLUG}-hq-v28`;
 const PRESERVED_CACHE_PREFIXES =
   SW_TEAM_SLUG === '49ers'
     ? ['49ers-podcast-studio-audio-']
@@ -274,6 +274,21 @@ self.addEventListener('fetch', event => {
         return outRes;
       } catch {
         if (cached) {
+          // Stale-while-revalidate self-heal: when the 2.2s cellular fast-timeout falls back to a cached
+          // `/data/*.json` feed, continue refreshing the SW cache in the background so the next load is fresh.
+          if (url.pathname.startsWith('/data/') && url.pathname.endsWith('.json')) {
+            const cacheKey = event.request;
+            event.waitUntil(
+              fetchWithTimeoutSw(event.request.url, { cache: 'no-cache' }, 12000)
+                .then(async bgRes => {
+                  if (!bgRes || bgRes.status !== 200) return;
+                  const cleanBg = bgRes.redirected ? await cleanRedirectedResponse(bgRes) : bgRes;
+                  const c = await caches.open(CACHE_NAME);
+                  await c.put(cacheKey, cleanBg.clone());
+                })
+                .catch(() => {})
+            );
+          }
           return cached.redirected ? cleanRedirectedResponse(cached) : cached;
         }
         return Response.error();

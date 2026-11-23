@@ -589,24 +589,60 @@ export default {
       );
     }
 
-    // 4. Short-TTL Edge-Cached Live Wire (0 KV writes — uses unlimited `caches.default`!)
+    // 4. Ultra-Fast Edge-Cached Live Wire (15s live-game / 25s standard TTL; 0 KV writes via `caches.default`!)
     if (request.method === 'GET' && url.pathname === '/api/live-wire') {
-      return handleCachedEdgeGet(request, team.abbr, 60, async () => {
-        const [rssXml, pfrXml, espnNews] = await Promise.all([
-          fetch(team.clubRssUrls[0], { signal: AbortSignal.timeout(6500) })
+      const liveMode = url.searchParams.get('live') === '1';
+      const liveEventId = String(url.searchParams.get('event') || '').replace(/[^0-9]/g, '');
+      const edgeTtlSec = liveMode ? 15 : 25;
+      return handleCachedEdgeGet(request, team.abbr, edgeTtlSec, async () => {
+        const isSfTeam = team.abbr === 'SF';
+        const sfExtraRssFeeds = isSfTeam
+          ? [
+              { outletId: 'nbcsba', outletName: 'NBC Sports Bay Area', url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/?rss=1', trustTier: 1, sfOnly: false },
+              { outletId: 'niners_nation', outletName: 'Niners Nation', url: 'https://www.ninersnation.com/rss/current.xml', trustTier: 2, sfOnly: false },
+              { outletId: '49ers_webzone', outletName: '49ers Webzone', url: 'https://feeds.feedburner.com/49erswebzone', trustTier: 2, sfOnly: false },
+              { outletId: 'sf_standard', outletName: 'The SF Standard', url: 'https://www.sfstandard.com/sports/feed/', trustTier: 2, sfOnly: true },
+              { outletId: 'niners_wire', outletName: 'Niners Wire', url: 'https://ninerswire.usatoday.com/feed/', trustTier: 2, sfOnly: false },
+              { outletId: 'knbr_radio', outletName: 'KNBR', url: 'https://www.knbr.com/category/49ers/feed/', trustTier: 2, sfOnly: false }
+            ]
+          : [];
+        const clubVideosUrl = team.clubRssUrls?.[1] || `https://www.${team.clubDomain}/rss/videos`;
+
+        const [rssXml, clubVideosXml, pfrXml, espnNews, liveSummaryJson, ...sfFeedXmls] = await Promise.all([
+          fetch(team.clubRssUrls[0], { signal: AbortSignal.timeout(4500) })
             .then(r => (r.ok ? r.text() : ''))
             .catch(() => ''),
-          fetch(`https://www.profootballrumors.com/${team.otcSlug}/feed`, { signal: AbortSignal.timeout(5500) })
+          fetch(clubVideosUrl, { signal: AbortSignal.timeout(4000) })
             .then(r => (r.ok ? r.text() : ''))
             .catch(() => ''),
-          fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${team.espnId}&limit=15`, {
-            signal: AbortSignal.timeout(6500)
+          fetch(`https://www.profootballrumors.com/${team.otcSlug}/feed`, { signal: AbortSignal.timeout(4500) })
+            .then(r => (r.ok ? r.text() : ''))
+            .catch(() => ''),
+          fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${team.espnId}&limit=25`, {
+            signal: AbortSignal.timeout(4500)
           })
             .then(r => (r.ok ? r.json() : null))
-            .catch(() => null)
+            .catch(() => null),
+          liveEventId
+            ? fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${liveEventId}`, {
+                signal: AbortSignal.timeout(4000)
+              })
+                .then(r => (r.ok ? r.json() : null))
+                .catch(() => null)
+            : Promise.resolve(null),
+          ...sfExtraRssFeeds.map(src =>
+            fetch(src.url, {
+              headers: { 'User-Agent': '49ersFaithfulEdge/2.1' },
+              signal: AbortSignal.timeout(3800)
+            })
+              .then(r => (r.ok ? r.text() : ''))
+              .catch(() => '')
+          )
         ]);
+
         const items = [];
         const seenUrls = new Set();
+        const nowEdgeMs = Date.now();
         const teamTerms = [team.nickname, ...(team.keywordRules?.excludeGenericCity ? [] : [team.city]), ...(team.keywordRules?.requiredNicknames || []), ...(team.aliases || [])]
           .filter(Boolean)
           .map(s => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
@@ -638,12 +674,50 @@ export default {
           }
           return bestUrl;
         };
+
+        // 4a. Instant Live Game ESPN HD MP4 Highlight Clips (`summary.videos`) when `?event=<id>` is active
+        if (Array.isArray(liveSummaryJson?.videos)) {
+          for (const vid of liveSummaryJson.videos.slice(0, 12)) {
+            const headline = decodeWorkerXml(vid?.headline || '');
+            const mp4Raw = vid?.links?.source?.HD?.href || vid?.links?.source?.full?.href || vid?.links?.source?.href || '';
+            const mp4Https = mp4Raw.startsWith('http://') ? `https://${mp4Raw.slice(7)}` : mp4Raw;
+            const webRaw = vid?.links?.web?.href || mp4Https;
+            const webHttps = webRaw.startsWith('http://') ? `https://${webRaw.slice(7)}` : webRaw;
+            if (!headline || !mp4Https.startsWith('https://') || seenUrls.has(webHttps)) continue;
+            seenUrls.add(webHttps);
+            const durNum = Number(vid?.duration || 0);
+            const durFmt = durNum > 0 ? `${Math.floor(durNum / 60)}:${String(Math.round(durNum % 60)).padStart(2, '0')}` : '';
+            const thumbRaw = String(vid?.thumbnail || '');
+            const thumbHttps = thumbRaw.startsWith('http://') ? `https://${thumbRaw.slice(7)}` : thumbRaw;
+            items.push({
+              id: `espn_hl_vid_${vid.id || items.length}`,
+              type: 'video',
+              title: headline,
+              summary: decodeWorkerXml(vid?.description || '').slice(0, 220),
+              url: webHttps,
+              videoStreamUrl: mp4Https,
+              isHighlightClip: true,
+              isLiveGameHighlight: true,
+              duration: durFmt || undefined,
+              embeddable: true,
+              imageUrl: thumbHttps.startsWith('https://') ? thumbHttps : '',
+              publishedAt: vid?.lastModified || vid?.originalPublishDate || new Date(nowEdgeMs).toISOString(),
+              outletId: 'espn',
+              outletName: 'ESPN',
+              author: 'ESPN',
+              authorHandle: '@ESPNNFL',
+              trustTier: 1
+            });
+          }
+        }
+
         for (const a of espnNews?.articles || []) {
           if (!a?.headline || !a?.links?.web?.href || a.premium) continue;
           const teamCats = Array.isArray(a.categories) ? a.categories.filter(c => c?.type === 'team') : [];
           if (teamCats.length >= 6 && teamMentionRe && !teamMentionRe.test(`${a.headline} ${a.description || ''}`)) {
             continue;
           }
+          if (seenUrls.has(a.links.web.href)) continue;
           seenUrls.add(a.links.web.href);
           items.push({
             id: `${team.abbr.toLowerCase()}_ew_${a.dataSourceIdentifier || a.id || ''}`,
@@ -657,34 +731,9 @@ export default {
             author: a.byline || 'ESPN'
           });
         }
+
         // Parse Official Club News RSS into live wire
         for (const m of (rssXml || '').matchAll(/<item\b[\s\S]*?<\/item>/gi)) {
-          if (items.length >= 35) break;
-          const b = m[0];
-          const title = decodeWorkerXml((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
-          const link = decodeWorkerXml((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
-          if (!title || !link || !/^https:\/\//i.test(link) || seenUrls.has(link)) continue;
-          seenUrls.add(link);
-          const summary = decodeWorkerXml((b.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '').slice(0, 220);
-          const pubRaw = decodeWorkerXml((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
-          const img = ((b.match(/<media:content[^>]*url="([^"]+)"/i) || b.match(/<enclosure[^>]*url="([^"]+)"/i) || [])[1] || '').replace(/&amp;/g, '&');
-          const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
-          items.push({
-            id: `${team.abbr.toLowerCase()}_clubrss_${items.length}`,
-            type: 'article',
-            title,
-            summary,
-            url: link,
-            imageUrl: /^https:\/\//i.test(img) ? img : '',
-            publishedAt: Number.isFinite(pubMs) ? new Date(pubMs).toISOString() : new Date().toISOString(),
-            outletId: `${team.slug}_official`,
-            outletName: `${team.clubDomain} Official`,
-            author: `${team.clubDomain} Official`,
-            trustTier: 1
-          });
-        }
-        // Parse Pro Football Rumors team feed into live wire
-        for (const m of (pfrXml || '').matchAll(/<item\b[\s\S]*?<\/item>/gi)) {
           if (items.length >= 45) break;
           const b = m[0];
           const title = decodeWorkerXml((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
@@ -693,7 +742,65 @@ export default {
           seenUrls.add(link);
           const summary = decodeWorkerXml((b.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '').slice(0, 220);
           const pubRaw = decodeWorkerXml((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
-          const pubMs = pubRaw ? Date.parse(pubRaw) : Date.now();
+          const img = ((b.match(/<media:content[^>]*url="([^"]+)"/i) || b.match(/<enclosure[^>]*url="([^"]+)"/i) || [])[1] || '').replace(/&amp;/g, '&');
+          const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
+          items.push({
+            id: `${team.abbr.toLowerCase()}_clubrss_${items.length}`,
+            type: 'article',
+            title,
+            summary,
+            url: link,
+            imageUrl: /^https:\/\//i.test(img) ? img : '',
+            publishedAt: Number.isFinite(pubMs) ? new Date(Math.min(nowEdgeMs, pubMs)).toISOString() : new Date().toISOString(),
+            outletId: `${team.slug}_official`,
+            outletName: `${team.clubDomain} Official`,
+            author: `${team.clubDomain} Official`,
+            trustTier: 1
+          });
+        }
+
+        // Parse Official Club Videos RSS into live wire (instant official TD & locker-room clips)
+        for (const m of (clubVideosXml || '').matchAll(/<item\b[\s\S]*?<\/item>/gi)) {
+          if (items.length >= 58) break;
+          const b = m[0];
+          const title = decodeWorkerXml((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+          const link = decodeWorkerXml((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
+          if (!title || !link || !/^https:\/\//i.test(link) || seenUrls.has(link)) continue;
+          seenUrls.add(link);
+          const summary = decodeWorkerXml((b.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '').slice(0, 220);
+          const pubRaw = decodeWorkerXml((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
+          const img = ((b.match(/<media:content[^>]*url="([^"]+)"/i) || b.match(/<media:thumbnail[^>]*url="([^"]+)"/i) || b.match(/<enclosure[^>]*url="([^"]+\.(?:jpg|jpeg|png|webp)[^"]*)"/i) || [])[1] || '').replace(/&amp;/g, '&');
+          const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
+          items.push({
+            id: `${team.abbr.toLowerCase()}_clubvid_${items.length}`,
+            type: 'video',
+            title,
+            summary,
+            url: link,
+            externalVideoUrl: link,
+            embeddable: false,
+            isHighlightClip: true,
+            isLiveGameHighlight: liveMode,
+            imageUrl: /^https:\/\//i.test(img) ? img : '',
+            publishedAt: Number.isFinite(pubMs) ? new Date(Math.min(nowEdgeMs, pubMs)).toISOString() : new Date().toISOString(),
+            outletId: `${team.slug}_official`,
+            outletName: `${team.clubDomain} Official`,
+            author: `${team.clubDomain} Video`,
+            trustTier: 1
+          });
+        }
+
+        // Parse Pro Football Rumors team feed into live wire
+        for (const m of (pfrXml || '').matchAll(/<item\b[\s\S]*?<\/item>/gi)) {
+          if (items.length >= 68) break;
+          const b = m[0];
+          const title = decodeWorkerXml((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
+          const link = decodeWorkerXml((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
+          if (!title || !link || !/^https:\/\//i.test(link) || seenUrls.has(link)) continue;
+          seenUrls.add(link);
+          const summary = decodeWorkerXml((b.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '').slice(0, 220);
+          const pubRaw = decodeWorkerXml((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
+          const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
           items.push({
             id: `${team.abbr.toLowerCase()}_pfrlive_${items.length}`,
             type: 'article',
@@ -701,17 +808,149 @@ export default {
             summary,
             url: link,
             imageUrl: '',
-            publishedAt: Number.isFinite(pubMs) ? new Date(pubMs).toISOString() : new Date().toISOString(),
-            outletId: 'pro_football_rumors',
+            publishedAt: Number.isFinite(pubMs) ? new Date(Math.min(nowEdgeMs, pubMs)).toISOString() : new Date().toISOString(),
+            outletId: 'pfrumors',
             outletName: 'Pro Football Rumors',
             author: 'Pro Football Rumors',
             trustTier: 2
           });
         }
+
+        // Parse SF Tier 1-3 Beat RSS feeds (NBCSBA, Niners Nation, 49ers Webzone, SF Standard, Niners Wire, KNBR)
+        // AND harvest embedded X status URLs (incl. Tier 2 & 3 reporters + native MP4 highlight clips)
+        const discoveredXStatusMap = new Map();
+        const xStatusRe = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
+        const sfTrustedXRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|victafur|harrisonrich_|mattblively|chrisbiderman|dieter|dkurtenbach|grantcohn|sportslarryk|brianajeannel|kp_show|rohanchakrav|akashanav|steph49k|jasonaponte2103|vishkumaran|bdpeacock|crocky209|jl_chapman|guyhaberman|pff_jeff|alsacco49|jonnydels|theqbschool|graham_sfn|thesfNiners|49erswebzone|nbcs49ers|ninersnation|ninerswire|knbr|957thegame|oursf49ers|coach_yac|49ershive|rob_lowder|statsonfire|samwarren83|bynoahfurtado|adamschefter|rapsheet|tompelissero|mikegarafolo|dmrussini|fieldyates|nfl|espnnfl|nflnetwork)$/i;
+        const scanXmlForX = rawXml => {
+          if (!rawXml) return;
+          for (const xm of String(rawXml).replace(/\\\//g, '/').matchAll(xStatusRe)) {
+            const h = xm[1];
+            const sid = xm[2];
+            if (!/^(i|intent|share|hashtag|search)$/i.test(h) && sfTrustedXRe.test(h) && !discoveredXStatusMap.has(sid)) {
+              discoveredXStatusMap.set(sid, h);
+            }
+          }
+        };
+        scanXmlForX(pfrXml);
+        scanXmlForX(rssXml);
+
+        sfExtraRssFeeds.forEach((src, sIdx) => {
+          const xml = sfFeedXmls[sIdx] || '';
+          if (!xml) return;
+          scanXmlForX(xml);
+          const blocks = xml.match(/<(?:item|entry)\b[\s\S]*?<\/(?:item|entry)>/gi) || [];
+          for (const block of blocks.slice(0, 12)) {
+            const title = decodeWorkerXml((block.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1] || '');
+            const summary = decodeWorkerXml(
+              (block.match(/<(?:description|summary|content)[^>]*>([\s\S]*?)<\/(?:description|summary|content)>/i) || [])[1] || ''
+            ).slice(0, 240);
+            const link = decodeWorkerXml(
+              (block.match(/<link[^>]*href="([^"]+)"/i) || [])[1] ||
+                (block.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] ||
+                ''
+            );
+            const pubRaw = decodeWorkerXml(
+              (block.match(/<(?:pubDate|published|updated)>([\s\S]*?)<\/(?:pubDate|published|updated)>/i) || [])[1] || ''
+            );
+            const creator = decodeWorkerXml(
+              (block.match(/<dc:creator[^>]*>([\s\S]*?)<\/dc:creator>/i) || [])[1] ||
+                (block.match(/<author>[\s\S]*?<name>([^<]+)<\/name>/i) || [])[1] ||
+                ''
+            );
+            const img = (
+              (block.match(/<media:content[^>]*url="([^"]+)"/i) ||
+                block.match(/<media:thumbnail[^>]*url="([^"]+)"/i) ||
+                block.match(/<enclosure[^>]*url="([^"]+\.(?:jpg|jpeg|png|webp)[^"]*)"/i) ||
+                [])[1] || ''
+            ).replace(/&amp;/g, '&');
+            if (!title || !/^https:\/\//i.test(link) || seenUrls.has(link)) continue;
+            if (src.sfOnly && teamMentionRe && !teamMentionRe.test(`${title} ${summary}`)) continue;
+            seenUrls.add(link);
+            const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
+            items.push({
+              id: `sf_edge_${src.outletId}_${items.length}`,
+              type: 'article',
+              title,
+              summary,
+              url: link,
+              imageUrl: /^https:\/\//i.test(img) && !/pixel|tracker|1x1|fb-og-image/i.test(img) ? img : '',
+              publishedAt: Number.isFinite(pubMs) ? new Date(Math.min(nowEdgeMs, pubMs)).toISOString() : new Date().toISOString(),
+              outletId: src.outletId,
+              outletName: src.outletName,
+              author: creator || src.outletName,
+              trustTier: src.trustTier
+            });
+          }
+        });
+
+        // Hydrate up to 16 diverse newest X status tweets (max 3 per handle so Tier 2/3 & all beat voices get fair coverage!)
+        if (isSfTeam && discoveredXStatusMap.size > 0) {
+          const sortedAllX = [...discoveredXStatusMap.entries()].sort((a, b) => (BigInt(b[0]) > BigInt(a[0]) ? 1 : -1));
+          const handleCounts = new Map();
+          const diverseXBatch = [];
+          for (const entry of sortedAllX) {
+            if (diverseXBatch.length >= 16) break;
+            const hk = entry[1].toLowerCase();
+            if ((handleCounts.get(hk) || 0) >= 3) continue;
+            handleCounts.set(hk, (handleCounts.get(hk) || 0) + 1);
+            diverseXBatch.push(entry);
+          }
+          await Promise.all(
+            diverseXBatch.map(async ([sid, fallbackHandle]) => {
+              try {
+                const sr = await fetch(`https://cdn.syndication.twimg.com/tweet-result?id=${sid}&token=x`, {
+                  signal: AbortSignal.timeout(3000)
+                });
+                if (!sr.ok) return;
+                const syn = await sr.json();
+                const txt = typeof syn?.text === 'string' ? syn.text.replace(/\s+/g, ' ').trim() : '';
+                if (!txt || txt.length < 16) return;
+                const handle = syn.user?.screen_name || fallbackHandle;
+                const variants = [
+                  ...(Array.isArray(syn.video?.variants) ? syn.video.variants : []),
+                  ...(Array.isArray(syn.mediaDetails?.[0]?.video_info?.variants)
+                    ? syn.mediaDetails[0].video_info.variants
+                    : [])
+                ].filter(v => (v?.type === 'video/mp4' || v?.content_type === 'video/mp4') && /^https:\/\/video\.twimg\.com\//i.test(v?.src || v?.url || ''));
+                variants.sort((a, b) => (Number(b.bitrate) || 0) - (Number(a.bitrate) || 0));
+                const bestMp4 = variants[0]?.src || variants[0]?.url || '';
+                const durMs = Number(syn.video?.durationMs || syn.mediaDetails?.[0]?.video_info?.duration_millis || 0);
+                const durFmt = durMs >= 5000 ? `${Math.floor(durMs / 60000)}:${String(Math.round((durMs % 60000) / 1000)).padStart(2, '0')}` : '';
+                const thumb = syn.photos?.[0]?.url || syn.mediaDetails?.[0]?.media_url_https || syn.video?.poster || '';
+                const snowMs = Number((BigInt(sid) >> 22n) + 1288834974657n);
+                const postUrl = `https://x.com/${handle}/status/${sid}`;
+                if (seenUrls.has(postUrl)) return;
+                seenUrls.add(postUrl);
+                items.push({
+                  id: `x_edge_${sid}`,
+                  type: 'tweet',
+                  title: txt.slice(0, 320),
+                  fullText: txt,
+                  url: postUrl,
+                  imageUrl: thumb.startsWith('https://') ? thumb : '',
+                  videoStreamUrl: bestMp4 || undefined,
+                  isHighlightClip: Boolean(bestMp4 && durMs >= 6000),
+                  isLiveGameHighlight: Boolean(liveMode && bestMp4 && durMs >= 6000),
+                  duration: durFmt || undefined,
+                  embeddable: true,
+                  outletId: 'x_beat',
+                  outletName: 'X Beat',
+                  author: syn.user?.name || `@${handle}`,
+                  authorHandle: `@${handle}`,
+                  authorProfileUrl: `https://x.com/${handle}`,
+                  publishedAt: new Date(Math.min(nowEdgeMs, snowMs)).toISOString()
+                });
+              } catch {}
+            })
+          );
+        }
+
         return jsonResp(
           {
             ok: true,
             teamAbbr: team.abbr,
+            liveMode,
+            cacheTtlSec: edgeTtlSec,
             fetchedAt: new Date().toISOString(),
             clubRssAvailable: Boolean(rssXml && rssXml.includes('<item')),
             items
@@ -811,22 +1050,37 @@ export default {
       }
     }
 
-    // 7. Team-Scoped Daily Top-News Brief (GET + POST with atomic KV lock + SF Priority #0 Quota Gate)
+    // 7. Team-Scoped Daily Top-News Brief (GET + POST with atomic KV lock, 72h TTL, latest fallback & SF Priority #0 Quota Gate)
     if (url.pathname === '/api/daily-news-brief') {
       if (ctx && typeof ctx.waitUntil === 'function') {
         ctx.waitUntil(trackActiveTeamVisit(env, team));
       }
+      const noStoreHeaders = { 'Cache-Control': 'no-store' };
+      const latestKvKey = `daily_news_brief_latest_v7:${team.abbr}`;
+      const briefTtlSec = 60 * 60 * 72; // 72h survives full SNF/MNF game-day hold without expiring mid-game
       if (request.method === 'GET') {
         const cycleKey = String(url.searchParams.get('cycleKey') || new Date().toISOString().slice(0, 10)).replace(
           /[^A-Za-z0-9@_-]/g,
           ''
         );
+        const allowLatest = url.searchParams.get('allowLatest') === '1';
         const kvKey = `daily_news_brief_v7:${team.abbr}:${cycleKey}`;
         const existing = await env.SHARED_CACHE?.get(kvKey, 'json');
         if (existing && !hasCrossTeam49ersLeak(existing.rawText || JSON.stringify(existing.data || ''), team)) {
-          return jsonResp({ cached: true, teamAbbr: team.abbr, ...existing }, 200, cors);
+          return jsonResp({ cached: true, teamAbbr: team.abbr, ...existing }, 200, cors, noStoreHeaders);
         }
-        return jsonResp({ cached: false, teamAbbr: team.abbr, cycleKey, rawText: '' }, 200, cors);
+        if (allowLatest) {
+          const latest = await env.SHARED_CACHE?.get(latestKvKey, 'json');
+          if (latest && !hasCrossTeam49ersLeak(latest.rawText || JSON.stringify(latest.data || ''), team)) {
+            return jsonResp(
+              { cached: true, latestFallback: true, teamAbbr: team.abbr, ...latest },
+              200,
+              cors,
+              noStoreHeaders
+            );
+          }
+        }
+        return jsonResp({ cached: false, teamAbbr: team.abbr, cycleKey, rawText: '' }, 200, cors, noStoreHeaders);
       }
 
       if (request.method === 'POST') {
@@ -836,7 +1090,7 @@ export default {
           body = rawBodyText ? JSON.parse(rawBodyText) : null;
         } catch {}
         if (!body || (!body.prompt && !body.seedData && !body.seedRawText)) {
-          return jsonResp({ error: 'Invalid daily news brief payload' }, 400, cors);
+          return jsonResp({ error: 'Invalid daily news brief payload' }, 400, cors, noStoreHeaders);
         }
         const cycleKey = String(body.cycleKey || new Date().toISOString().slice(0, 10)).replace(/[^A-Za-z0-9@_-]/g, '');
         const kvKey = `daily_news_brief_v7:${team.abbr}:${cycleKey}`;
@@ -846,13 +1100,13 @@ export default {
           !body.forceRefresh &&
           !hasCrossTeam49ersLeak(existing.rawText || JSON.stringify(existing.data || ''), team)
         ) {
-          return jsonResp({ cached: true, teamAbbr: team.abbr, ...existing }, 200, cors);
+          return jsonResp({ cached: true, teamAbbr: team.abbr, ...existing }, 200, cors, noStoreHeaders);
         }
 
         if (body.seedData || body.seedRawText) {
           const seedCheckText = `${body.seedRawText || ''} ${JSON.stringify(body.seedData || '')}`;
           if (hasCrossTeam49ersLeak(seedCheckText, team)) {
-            return jsonResp({ error: 'Rejected cross-team contamination in daily brief seed' }, 422, cors);
+            return jsonResp({ error: 'Rejected cross-team contamination in daily brief seed' }, 422, cors, noStoreHeaders);
           }
           const seeded = {
             teamAbbr: team.abbr,
@@ -862,8 +1116,12 @@ export default {
             rawText: body.seedRawText || '',
             data: body.seedData || null
           };
-          await env.SHARED_CACHE?.put(kvKey, JSON.stringify(seeded), { expirationTtl: 60 * 60 * 26 });
-          return jsonResp({ cached: false, seeded: true, ...seeded }, 200, cors);
+          const serializedSeed = JSON.stringify(seeded);
+          await Promise.all([
+            env.SHARED_CACHE?.put(kvKey, serializedSeed, { expirationTtl: briefTtlSec }),
+            env.SHARED_CACHE?.put(latestKvKey, serializedSeed, { expirationTtl: briefTtlSec })
+          ]);
+          return jsonResp({ cached: false, seeded: true, ...seeded }, 200, cors, noStoreHeaders);
         }
 
         const forwarded = await maybeForwardHubAiPost(request, url, env, rawBodyText, cors);
@@ -872,14 +1130,14 @@ export default {
         const lockKey = `lock:brief:${team.abbr}:${cycleKey}`;
         const existingLock = await env.SHARED_CACHE?.get(lockKey);
         if (existingLock) {
-          return jsonResp({ cached: false, inFlight: true, teamAbbr: team.abbr, cycleKey }, 202, cors);
+          return jsonResp({ cached: false, inFlight: true, teamAbbr: team.abbr, cycleKey }, 202, cors, noStoreHeaders);
         }
         await env.SHARED_CACHE?.put(lockKey, '1', { expirationTtl: 120 });
 
         try {
           const quota = await checkAndReserveDailyQuota(env, team);
           if (!quota.allowed) {
-            return jsonResp({ error: 'Daily league quota reserved for priority teams', ...quota }, 429, cors);
+            return jsonResp({ error: 'Daily league quota reserved for priority teams', ...quota }, 429, cors, noStoreHeaders);
           }
           const editorialSystem = buildTeamEditorialSystemPrompt(team);
           const clientSystem = String(body.systemPrompt || '').slice(0, 8000);
@@ -890,7 +1148,7 @@ export default {
             thinkingLevel: 'XHIGH',
             useGoogleSearch: true
           });
-          if (!gen.ok) return jsonResp({ error: gen.error }, gen.status || 502, cors);
+          if (!gen.ok) return jsonResp({ error: gen.error }, gen.status || 502, cors, noStoreHeaders);
           const payloadOut = {
             teamAbbr: team.abbr,
             cycleKey,
@@ -901,9 +1159,13 @@ export default {
             rawText: gen.rawText
           };
           if (isCacheableStructuredIntel(gen.rawText, team)) {
-            await env.SHARED_CACHE?.put(kvKey, JSON.stringify(payloadOut), { expirationTtl: 60 * 60 * 26 });
+            const serializedOut = JSON.stringify(payloadOut);
+            await Promise.all([
+              env.SHARED_CACHE?.put(kvKey, serializedOut, { expirationTtl: briefTtlSec }),
+              env.SHARED_CACHE?.put(latestKvKey, serializedOut, { expirationTtl: briefTtlSec })
+            ]);
           }
-          return jsonResp({ cached: false, ...payloadOut }, 200, cors);
+          return jsonResp({ cached: false, ...payloadOut }, 200, cors, noStoreHeaders);
         } finally {
           await env.SHARED_CACHE?.delete(lockKey).catch(() => {});
         }

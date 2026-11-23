@@ -5543,6 +5543,19 @@ export async function refreshDailyTopNewsBriefIfDue({
   const activeCycle = cycleState.activeCycleKey;
   const existing = appData.news.dailyTopNewsBrief;
 
+  if (
+    !force &&
+    appData?._awaitingInitialLiveWireSync === true &&
+    !cycleState.isGameDayHold &&
+    (typeof navigator === 'undefined' || navigator.onLine !== false)
+  ) {
+    return { updated: false, reason: 'awaiting_initial_live_wire_sync' };
+  }
+
+  if (!force && isAppDataAwaitingLivePostGameHydration(appData, nowMs)) {
+    return { updated: false, reason: 'awaiting_live_postgame_hydration' };
+  }
+
   // During Game-Day Hold (`[T-90m, Final + buffer)`), NEVER spend a Gemini POST credit (save it for post-game),
   // but ALWAYS check Shared Worker KV (0 credits!) first if we don't already have the active pre-game AI brief!
   if (!force && cycleState.isGameDayHold) {
@@ -5564,18 +5577,6 @@ export async function refreshDailyTopNewsBriefIfDue({
     if (postKvExisting && Array.isArray(postKvExisting.bullets) && postKvExisting.bullets.length >= 2) {
       return { updated: false, reason: 'holding_for_postgame_completion', cycleKey: activeCycle };
     }
-  }
-
-  if (
-    !force &&
-    appData?._awaitingInitialLiveWireSync === true &&
-    (typeof navigator === 'undefined' || navigator.onLine !== false)
-  ) {
-    return { updated: false, reason: 'awaiting_initial_live_wire_sync' };
-  }
-
-  if (!force && isAppDataAwaitingLivePostGameHydration(appData, nowMs)) {
-    return { updated: false, reason: 'awaiting_live_postgame_hydration' };
   }
 
   const priorAttempt = safeReadLocalJson(briefAttemptKey);

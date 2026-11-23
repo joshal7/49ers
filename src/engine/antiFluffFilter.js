@@ -15,9 +15,10 @@ const CLICKBAIT_PATTERNS = [
   /\bsocial media (erupts|goes wild|is losing it)\b/i,
   /\bunfollowed.*instagram\b/i,
   /\bcryptic\s+(post|tweet|message|emoji)\b/i,
-  /\bblockbuster\s+mock\s+trade\s+sends\b/i,
-  /\b(?:wild|insane|massive|crazy)\s+(?:mock\s+)?trade\s+(?:proposal|idea|pitch|scenario)\b/i,
+  /\bblockbuster\s+mock\s+trade\b/i,
+  /\b(?:wild|insane|massive|crazy|blockbuster)(?:\s+(?:blockbuster|mock))?\s+trade\s+(?:proposal|idea|pitch|scenario)\b/i,
   /\bmock\s+trade\s+(?:proposal|idea|pitch)\b/i,
+  /\bhypothetical\s+trade\s+(?:proposal|idea|pitch|scenario)\b/i,
   /\burges?\s+(?:the\s+)?(?:[a-z0-9]{3,16}|head coach|front office)\s+to\s+(?:bench|trade|cut|move on from)\b/i,
   /\b(?:super\s+bowl\s+lock|unstoppable\s+juggernaut|guaranteed\s+(?:win|blowout|victory))\b/i,
   /\bnobody\s+can\s+(?:beat|stop)\s+the\s+[a-z0-9]{3,16}\b/i
@@ -153,7 +154,7 @@ export function scoreContentSignal(title = '', body = '') {
   return {
     fluffScore,
     signalScore,
-    isClickbait: fluffScore >= 60 && signalScore < 50,
+    isClickbait: (fluffScore >= 60 && signalScore < 55) || (fluffScore >= 85 && signalScore < 65),
     matchedFlags
   };
 }

@@ -4062,8 +4062,8 @@ function bindEvents() {
   );
 }
 
-const GAME_LIVE_WIRE_POLL_MS = 20_000; // 20s latency during 49ers game windows (<1 min)
-const STANDARD_WIRE_POLL_MS = 45_000; // 45s latency year-round (<1 min)
+const GAME_LIVE_WIRE_POLL_MS = 10_000; // 10s ultra-low latency during live 49ers game windows
+const STANDARD_WIRE_POLL_MS = 25_000; // 25s sub-minute latency year-round
 
 let lastLiveCheckMs = 0;
 let lastWirePollMs = 0;
@@ -4161,15 +4161,14 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
   const hasPendingPracticeSlots = (state.appData?.health?.practiceReport || []).some(
     r => r.wed === '-' || r.thu === '-' || r.fri === '-'
   );
+  // During 10s live-game polling, run heavy 8-endpoint standings/roster/injuries overlay every ~30s (every 3rd tick)
+  // while keeping ultra-fast beat wire + live game highlights/scoring plays running on EVERY 10s tick!
   const shouldCheckEspn =
     manual ||
-    gameLive ||
-    Boolean(gameCtx.postGameImmediate) ||
-    viewingHealthSurface ||
-    hasPendingPracticeSlots ||
-    wirePollCount % 2 === 0;
+    wirePollCount === 1 ||
+    (gameLive ? wirePollCount % 3 === 0 : Boolean(gameCtx.postGameImmediate) || viewingHealthSurface || hasPendingPracticeSlots || wirePollCount % 2 === 0);
 
-  // Serialize `hydrateLiveEspnOverlay` BEFORE `hydrateLiveMultiSourceBeatWire` so `_livePlayedPlayerIds`,
+  // Serialize `hydrateLiveEspnOverlay` BEFORE `hydrateLiveMultiSourceBeatWire` when due so `_livePlayedPlayerIds`,
   // `completed = true`, and `upcomingMatchup.week` advance atomically with zero concurrent mutation!
   const espnChanged = shouldCheckEspn ? await hydrateLiveEspnOverlay(state.appData) : false;
   const wireResult = await hydrateLiveMultiSourceBeatWire(state.appData, {
@@ -4870,12 +4869,15 @@ async function init() {
       syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
       if (!state.appData) {
         bootOrRecoverAppData({ manual: false });
-      } else if (Date.now() - lastLiveCheckMs >= 5 * 60_000) {
-        refreshLiveFeedsInBackground(false);
-      } else if (Date.now() - lastWirePollMs >= 15_000) {
-        pollLowLatencyTweetAndInjuryWire(false);
-      } else if (shouldTriggerDailyTopNewsBriefRefresh(state.appData, state.prefs)) {
-        triggerDailyTopNewsBriefSync();
+      } else {
+        triggerFastSharedKvBriefHydration();
+        if (Date.now() - lastLiveCheckMs >= 5 * 60_000) {
+          refreshLiveFeedsInBackground(false);
+        } else if (Date.now() - lastWirePollMs >= 15_000) {
+          pollLowLatencyTweetAndInjuryWire(false);
+        } else if (shouldTriggerDailyTopNewsBriefRefresh(state.appData, state.prefs)) {
+          triggerDailyTopNewsBriefSync();
+        }
       }
     }
   });

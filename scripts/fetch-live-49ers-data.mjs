@@ -2016,6 +2016,8 @@ async function main() {
     pftFeedXml,
     webzoneXml,
     webzoneArticlesHtml,
+    ninersWireXml,
+    knbr49ersXml,
     curatedYtChannelClips,
     official49ersGameClips,
     officialNflGameClips,
@@ -2042,6 +2044,8 @@ async function main() {
     fetchText('https://profootballtalk.nbcsports.com/feed/').catch(() => ''),
     fetchText('https://feeds.feedburner.com/49erswebzone').catch(() => ''),
     fetchText('https://www.49erswebzone.com/articles/').catch(() => ''),
+    fetchText('https://ninerswire.usatoday.com/feed/').catch(() => ''),
+    fetchText('https://www.knbr.com/category/49ers/feed/').catch(() => ''),
     fetchCuratedYouTubeChannelVideos({ qbNames: active49ersQbNames, rosterPlayers, maxAgeDays: 11 }).catch(() => []),
     searchYouTubeChannelVideos(
       'UCeIOarQkwmGhimim9cDUTng',
@@ -2265,6 +2269,8 @@ async function main() {
       nbcsbaXml,
       official49ersXml,
       sfStandardXml,
+      ninersWireXml,
+      knbr49ersXml,
       JSON.stringify(espnNews || {})
     ],
     Date.now(),
@@ -3243,9 +3249,11 @@ async function main() {
     rawNewsStream.push(nnItem);
   }
 
-  // Parse Direct 49ers Webzone Original Articles RSS (`49erswebzone.com/articles/...`)
+  // Parse Direct 49ers Webzone, USA Today Niners Wire & KNBR 49ers Original Articles RSS
   for (const [feedKey, rawFeedXml, outletId, outletName, defaultUrl] of [
-    ['wz', webzoneXml, '49ers_webzone', '49ers Webzone', 'https://www.49erswebzone.com/']
+    ['wz', webzoneXml, '49ers_webzone', '49ers Webzone', 'https://www.49erswebzone.com/'],
+    ['nwire', ninersWireXml, 'niners_wire', 'Niners Wire', 'https://ninerswire.usatoday.com/'],
+    ['knbr', knbr49ersXml, 'knbr_radio', 'KNBR', 'https://www.knbr.com/49ers/']
   ]) {
     for (const itemMatch of rawFeedXml.matchAll(/<item>([\s\S]*?)<\/item>/gi)) {
       const xml = itemMatch[1];
@@ -6189,13 +6197,19 @@ async function main() {
     console.log(
       `[1/Day News Brief AI] Reusing cached ${activeNewsBriefCycle} Top News Brief (${dailyTopNewsBrief.source}, 0 credits spent).`
     );
-  } else if (!pipelineBriefCycleState.isGameDayHold) {
-    const sourceCandidates = selectTopNewsBriefSourceCandidates(liveNewsBriefAppData, 18, Date.now());
-    // 1. Check Shared Worker KV first when configured so pipeline & live devices converge on one ubiquitous AI brief
+  } else {
+    const preGameHoldCutoffMs =
+      pipelineBriefCycleState.isGameDayHold && Number.isFinite(pipelineBriefCycleState.targetKickoffMs)
+        ? pipelineBriefCycleState.targetKickoffMs - 90 * 60_000
+        : null;
+    const sourceCandidates = selectTopNewsBriefSourceCandidates(liveNewsBriefAppData, 18, Date.now(), {
+      maxPublishedMs: preGameHoldCutoffMs
+    });
+    // 1. ALWAYS check Shared Worker KV first (even during Game-Day Hold — 0 credits spent!)
     if (!process.env.FORCE_NEWS_BRIEF_AI && workerBaseUrlEnv && sourceCandidates.length > 0) {
       try {
         const kvRes = await fetch(
-          `${workerBaseUrlEnv}/api/daily-news-brief?cycleKey=${encodeURIComponent(workerBriefCycleKey)}`,
+          `${workerBaseUrlEnv}/api/daily-news-brief?team=SF&cycleKey=${encodeURIComponent(workerBriefCycleKey)}&allowLatest=1`,
           {
             method: 'GET',
             headers: groupPasscodeEnv ? { 'X-Group-Passcode': groupPasscodeEnv } : {},
@@ -6204,7 +6218,7 @@ async function main() {
         );
         if (kvRes.ok) {
           const kvJson = await kvRes.json();
-          if (kvJson?.cached && (kvJson.data || kvJson.rawText)) {
+          if (kvJson?.cached && (kvJson.data || kvJson.rawText) && !kvJson.latestFallback) {
             const adopted = parseAndSanitizeDailyTopNewsBrief(
               kvJson.data || kvJson.rawText,
               sourceCandidates,
@@ -6233,8 +6247,8 @@ async function main() {
       }
     }
 
-    // 2. Synthesize canonical Gemini 4 Hydrogen (XHIGH) brief when API key is available
-    if (!dailyTopNewsBrief && newsBriefApiKey && sourceCandidates.length > 0) {
+    // 2. Synthesize canonical Gemini 4 Hydrogen (XHIGH) brief when API key is available (skip synthesis during Game-Day Hold)
+    if (!pipelineBriefCycleState.isGameDayHold && !dailyTopNewsBrief && newsBriefApiKey && sourceCandidates.length > 0) {
       try {
         const aiNewsBriefRes = await runSinglePassDailyGeminiSynthesis({
           apiKey: newsBriefApiKey,
@@ -6297,8 +6311,13 @@ async function main() {
   }
 
   if (!dailyTopNewsBrief) {
+    const preGameHoldCutoffMs =
+      pipelineBriefCycleState.isGameDayHold && Number.isFinite(pipelineBriefCycleState.targetKickoffMs)
+        ? pipelineBriefCycleState.targetKickoffMs - 90 * 60_000
+        : null;
     dailyTopNewsBrief = buildDeterministicDailyTopNewsBrief(liveNewsBriefAppData, Date.now(), {
       cycleKey: activeNewsBriefCycle,
+      ...(Number.isFinite(preGameHoldCutoffMs) ? { maxPublishedMs: preGameHoldCutoffMs } : {}),
       source: 'pipeline-grounded'
     });
   }

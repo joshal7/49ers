@@ -1835,7 +1835,7 @@ export async function hydrateLiveBlueskyBeatWire(
   await Promise.all(
     teamAccounts.map(async acct => {
       try {
-        const limit = acct.isNationalInsider ? 28 : isGameLive || manual ? 35 : 28;
+        const limit = acct.isNationalInsider ? 28 : isGameLive || manual ? 30 : 28;
         const apiUrl = `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(acct.actor)}&limit=${limit}&filter=posts_and_author_threads`;
         const res = await fetchSingleWithTimeout(apiUrl, { cache: 'no-store' }, 5000);
         if (!res.ok) return;
@@ -3826,7 +3826,8 @@ export async function hydrateLiveMultiSourceBeatWire(
     hydrateLiveEspnRapidBreakingDesk(appData),
     hydrateLive49ersOfficialRss(appData),
     hydrateLive49ersOfficialVideosRss(appData),
-    hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl })
+    hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl, isGameLive }),
+    hydrateLiveEspnGameHighlightsAndPlays(appData, { isGameLive })
   ]);
 
   const val = idx => (results[idx]?.status === 'fulfilled' ? Number(results[idx].value || 0) : 0);
@@ -3838,7 +3839,8 @@ export async function hydrateLiveMultiSourceBeatWire(
     espnRapidDesk: val(4),
     officialRss: val(5),
     officialVideosRss: val(6),
-    workerEdge: val(7)
+    workerEdge: val(7),
+    liveGameHighlights: val(8)
   };
   const totalAdded =
     bySource.espnPlayerWire +
@@ -3848,7 +3850,8 @@ export async function hydrateLiveMultiSourceBeatWire(
     bySource.espnRapidDesk +
     bySource.officialRss +
     bySource.officialVideosRss +
-    bySource.workerEdge;
+    bySource.workerEdge +
+    bySource.liveGameHighlights;
 
   // Atomic link-drop promotion/reconciliation + deduplication + cross-source corroboration + StoryRank sort
   const atomicallyDeduped = dedupeRawStreamAtomically(

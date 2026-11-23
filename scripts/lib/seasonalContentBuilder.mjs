@@ -457,6 +457,36 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
       requireKeyword: false
     },
     {
+      actor: 'eric-branch.bsky.social',
+      reporterId: 'eric_branch',
+      reporterName: 'Eric Branch',
+      authorHandle: '@Eric_Branch',
+      outletId: 'sf_chronicle',
+      outletName: 'SF Chronicle',
+      tier: 1,
+      requireKeyword: false
+    },
+    {
+      actor: 'statsonfire.bsky.social',
+      reporterId: 'rob_guerrera',
+      reporterName: 'Rob "Stats" Guerrera',
+      authorHandle: '@StatsOnFire',
+      outletId: 'youtube_film',
+      outletName: 'The Gold Standard',
+      tier: 2,
+      requireKeyword: false
+    },
+    {
+      actor: 'minakimes.bsky.social',
+      reporterId: 'mina_kimes',
+      reporterName: 'Mina Kimes',
+      authorHandle: '@minakimes',
+      outletId: 'espn',
+      outletName: 'ESPN NFL',
+      tier: 2,
+      requireKeyword: true
+    },
+    {
       actor: 'timkawakami.bsky.social',
       reporterId: 'tim_kawakami',
       reporterName: 'Tim Kawakami',
@@ -681,7 +711,8 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
               url: extUri,
               title: rawText,
               summary: `${extTitle} ${nonBioExtDesc}`,
-              hasRosterMatch: leadRosterHits > 0 || bodyRosterHits > 0
+              hasRosterMatch: leadRosterHits > 0 || bodyRosterHits > 0,
+              isDedicatedTeamBeat: !acc.requireKeyword
             })
           ) {
             continue;
@@ -845,8 +876,12 @@ const TRUSTED_MEDIA_X_HANDLES = new Set([
   '49ers',
   '49erswebzone',
   'ninersnation',
+  'ninerswire',
+  '49ersonsi',
+  'lockedon49ers',
   'mattblively',
   'rob_lowder',
+  'statsonfire',
   'oursf49ers',
   '49ershive',
   'coach_yac'
@@ -918,7 +953,7 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
   );
   const statusRegex = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
   const articleUrlRegex =
-    /https?:\/\/(?:www\.)?(?:49erswebzone\.com\/(?:articles|news)\/\d+-[^"'\s<>]+|nbcsportsbayarea\.com\/nfl\/san-francisco-49ers\/[^"'\s<>]+|profootballrumors\.com\/\d{4}\/\d{2}\/[^"'\s<>]+|nfltraderumors\.co\/[a-z0-9][a-z0-9-]{8,}\/?|ninersnation\.com\/\d{4}\/\d+\/\d+\/[^"'\s<>]+|sfstandard\.com\/202\d\/[^"'\s<>]+|espn\.com\/nfl\/story\/_\/id\/\d+[^"'\s<>]*)/gi;
+    /https?:\/\/(?:www\.)?(?:49erswebzone\.com\/(?:articles|news)\/\d+-[^"'\s<>]+|nbcsportsbayarea\.com\/nfl\/san-francisco-49ers\/[^"'\s<>]+|profootballrumors\.com\/\d{4}\/\d{2}\/[^"'\s<>]+|nfltraderumors\.co\/[a-z0-9][a-z0-9-]{8,}\/?|ninersnation\.com\/\d{4}\/\d+\/\d+\/[^"'\s<>]+|ninerswire\.usatoday\.com\/(?:story\/)?[^"'\s<>]+|knbr\.com\/\d{4}\/\d{2}\/\d{2}\/[^"'\s<>]+|sfstandard\.com\/202\d\/[^"'\s<>]+|espn\.com\/nfl\/story\/_\/id\/\d+[^"'\s<>]*)/gi;
 
   const scanPayloadForXStatuses = (raw, collectArticles = false) => {
     if (!raw || typeof raw !== 'string') return;
@@ -982,7 +1017,7 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
       })
     );
 
-    const crawlBatch = [...articleUrlsToCrawl].slice(0, 72);
+    const crawlBatch = [...articleUrlsToCrawl].slice(0, 100);
     const CRAWL_CONCURRENCY = 18;
     for (let i = 0; i < crawlBatch.length; i += CRAWL_CONCURRENCY) {
       await Promise.all(
@@ -1003,9 +1038,17 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
     }
   }
 
-  const ordered = [...candidates.values()]
-    .sort((a, b) => b.snowMs - a.snowMs)
-    .slice(0, 105);
+  // Diverse newest selection (cap 10 per handle during batch selection so Tier 2 & 3 reporters are never crowded out)
+  const sortedCandidates = [...candidates.values()].sort((a, b) => b.snowMs - a.snowMs);
+  const perHandleCounts = new Map();
+  const ordered = [];
+  for (const cand of sortedCandidates) {
+    if (ordered.length >= 180) break;
+    const hk = String(cand.handle || '').toLowerCase();
+    if ((perHandleCounts.get(hk) || 0) >= 10) continue;
+    perHandleCounts.set(hk, (perHandleCounts.get(hk) || 0) + 1);
+    ordered.push(cand);
+  }
   if (ordered.length === 0) return [];
 
   const rosterTokens = (Array.isArray(rosterPlayers) ? rosterPlayers : [])
@@ -1136,6 +1179,7 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
     'jasonaponte2103',
     'vishkumaran',
     'dieter',
+    'dkurtenbach',
     'sportslarryk',
     'grantcohn',
     '957thegame',
@@ -1144,11 +1188,18 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
     'nbcsauthentic',
     '49erswebzone',
     'ninersnation',
+    'ninerswire',
+    '49ersonsi',
+    'lockedon49ers',
     'rob_lowder',
+    'statsonfire',
     'oursf49ers',
     '49ershive',
     'coach_yac'
   ]);
+  const nflGameContextRe =
+    /\b(warmups?|kickoff|stadium|crowd|boos|touchdown|\btd\b|interception|fumble|sack|drive|quarter|halftime|overtime|defense|offense|special teams|practice|locker room|injury|draft|cap|trade|coach|qb|wr|rb|te|lb|cb|ol|dl|game|playoff|win|loss|nfl|nfc|afc)\b/i;
+  const nonNflOtherSportRe = /\b(warriors|lakers|nba\b|sf giants|mlb\b|sharks|nhl\b|world series|stanley cup)\b/i;
 
   const hydratedMap = new Map();
 
@@ -1175,7 +1226,10 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
       const cleanedRelevanceText = stripNon49ersEntityContexts(bodyText);
       const isLocal49ersHandle = local49ersXHandles.has(handleLower);
       if (isLocal49ersHandle) {
-        if (!sfRelevantRegex.test(cleanedRelevanceText)) return null;
+        const isOtherBaySport = nonNflOtherSportRe.test(bodyText) && !sfRelevantRegex.test(cleanedRelevanceText);
+        if (isOtherBaySport || (!sfRelevantRegex.test(cleanedRelevanceText) && !nflGameContextRe.test(bodyText))) {
+          return null;
+        }
       } else if (!sfExplicitOrFullNameRegex.test(cleanedRelevanceText)) {
         return null;
       }

@@ -607,10 +607,11 @@ async function expandAllowedShortenerUrlEdge(env, rawInput) {
 
 async function collectEdgeLiveWire(
   env,
-  { maxXHydrate = 14, includeYouTube = true, useCache = true, writeCache = true } = {}
+  { maxXHydrate = 22, includeYouTube = true, useCache = true, writeCache = true, liveMode = false } = {}
 ) {
+  const kvCacheKey = liveMode ? 'wire:rss_live_v7_live' : 'wire:rss_live_v7';
   if (useCache) {
-    const cachedWire = await env.SHARED_CACHE?.get('wire:rss_live_v6', 'json');
+    const cachedWire = await env.SHARED_CACHE?.get(kvCacheKey, 'json');
     if (cachedWire && Array.isArray(cachedWire.items)) {
       return { cached: true, ...cachedWire };
     }
@@ -621,6 +622,8 @@ async function collectEdgeLiveWire(
     { outletId: '49ers_official', outletName: '49ers.com Official', url: 'https://www.49ers.com/rss/news', sfOnly: false },
     { outletId: 'niners_nation', outletName: 'Niners Nation', url: 'https://www.ninersnation.com/rss/current.xml', sfOnly: false },
     { outletId: '49ers_webzone', outletName: '49ers Webzone', url: 'https://feeds.feedburner.com/49erswebzone', sfOnly: false },
+    { outletId: 'niners_wire', outletName: 'Niners Wire', url: 'https://ninerswire.usatoday.com/feed/', sfOnly: false },
+    { outletId: 'knbr_radio', outletName: 'KNBR', url: 'https://www.knbr.com/category/49ers/feed/', sfOnly: false },
     { outletId: 'pfrumors', outletName: 'Pro Football Rumors', url: 'https://www.profootballrumors.com/san-francisco-49ers/feed', sfOnly: false },
     { outletId: 'nfl_trade_rumors', outletName: 'NFL Trade Rumors', url: 'https://nfltraderumors.co/feed/', sfOnly: true },
     { outletId: 'nfl_network', outletName: 'ProFootballTalk', url: 'https://profootballtalk.nbcsports.com/feed/', sfOnly: true },
@@ -703,7 +706,7 @@ async function collectEdgeLiveWire(
     if (otherTeamLeadRe.test(cleanBody)) return false;
     return sfPlayerRe.test(bodyClean);
   };
-  const trustedSfBeatHandleRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|victafur|harrisonrich_|mattblively|chrisbiderman|dieter|brianajeannel|graham_sfn|thesfNiners|49erswebzone|nbcs49ers|ninersnation)$/i;
+  const trustedSfBeatHandleRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|victafur|harrisonrich_|mattblively|chrisbiderman|dieter|dkurtenbach|grantcohn|sportslarryk|brianajeannel|kp_show|rohanchakrav|akashanav|steph49k|jasonaponte2103|vishkumaran|bdpeacock|crocky209|jl_chapman|guyhaberman|pff_jeff|alsacco49|jonnydels|theqbschool|graham_sfn|thesfNiners|49erswebzone|nbcs49ers|ninersnation|ninerswire|knbr|957thegame|oursf49ers|coach_yac|49ershive|rob_lowder|statsonfire|samwarren83|bynoahfurtado|nfl|espnnfl|nflnetwork)$/i;
   const xStatusRe = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
   const discoveredStatusMap = new Map();
   const seenEdgeUrls = new Set();
@@ -846,9 +849,16 @@ async function collectEdgeLiveWire(
   ]);
 
   if (maxXHydrate > 0) {
-    const newestXIds = [...discoveredStatusMap.entries()]
-      .sort((a, b) => (BigInt(b[0]) > BigInt(a[0]) ? 1 : -1))
-      .slice(0, maxXHydrate);
+    const sortedXEntries = [...discoveredStatusMap.entries()].sort((a, b) => (BigInt(b[0]) > BigInt(a[0]) ? 1 : -1));
+    const handleCounts = new Map();
+    const newestXIds = [];
+    for (const entry of sortedXEntries) {
+      if (newestXIds.length >= maxXHydrate) break;
+      const hk = entry[1].toLowerCase();
+      if ((handleCounts.get(hk) || 0) >= 3) continue;
+      handleCounts.set(hk, (handleCounts.get(hk) || 0) + 1);
+      newestXIds.push(entry);
+    }
     await Promise.all(
       newestXIds.map(async ([sid, fallbackHandle]) => {
         try {
@@ -931,7 +941,7 @@ async function collectEdgeLiveWire(
 
   const payload = { updatedAt: new Date().toISOString(), items };
   if (writeCache && env.SHARED_CACHE && items.length > 0 && includeYouTube && maxXHydrate >= 10) {
-    await env.SHARED_CACHE.put('wire:rss_live_v6', JSON.stringify(payload), { expirationTtl: 60 });
+    await env.SHARED_CACHE.put(kvCacheKey, JSON.stringify(payload), { expirationTtl: liveMode ? 15 : 25 });
   }
   return { cached: false, ...payload };
 }
@@ -1344,9 +1354,15 @@ export async function runScheduledDailyNewsBrief(
       scheduled: true
     };
 
-    await env.SHARED_CACHE.put(cacheKey, JSON.stringify(payloadOut), {
-      expirationTtl: 60 * 60 * 26
-    });
+    const serializedCronOut = JSON.stringify(payloadOut);
+    await Promise.all([
+      env.SHARED_CACHE.put(cacheKey, serializedCronOut, {
+        expirationTtl: 60 * 60 * 72
+      }),
+      env.SHARED_CACHE.put('daily_news_brief_latest_v5', serializedCronOut, {
+        expirationTtl: 60 * 60 * 72
+      })
+    ]);
 
     return {
       ok: true,
@@ -1579,11 +1595,13 @@ export default {
     }
 
     if (request.method === 'GET' && url.pathname === '/api/live-wire') {
+      const liveMode = url.searchParams.get('live') === '1';
       const wirePayload = await collectEdgeLiveWire(env, {
-        maxXHydrate: 14,
+        maxXHydrate: 22,
         includeYouTube: true,
         useCache: true,
-        writeCache: true
+        writeCache: true,
+        liveMode
       });
       return jsonResponse(wirePayload, 200, cors);
     }
@@ -2000,28 +2018,37 @@ export default {
     }
 
     if (request.method === 'GET' && url.pathname === '/api/daily-news-brief') {
+      const noStoreCors = { ...cors, 'Cache-Control': 'no-store' };
       const cycleKey = String(
         url.searchParams.get('cycleKey') || new Date().toISOString().slice(0, 10)
       ).replace(/[^A-Za-z0-9@_-]/g, '');
+      const allowLatest = url.searchParams.get('allowLatest') === '1';
       const cacheKey = `daily_news_brief_v5:${cycleKey}`;
       const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
       if (existing) {
-        return jsonResponse({ cached: true, ...existing }, 200, cors);
+        return jsonResponse({ cached: true, ...existing }, 200, noStoreCors);
       }
-      return jsonResponse({ cached: false, cycleKey, rawText: '' }, 200, cors);
+      if (allowLatest) {
+        const latest = await env.SHARED_CACHE?.get('daily_news_brief_latest_v5', 'json');
+        if (latest) {
+          return jsonResponse({ cached: true, latestFallback: true, ...latest }, 200, noStoreCors);
+        }
+      }
+      return jsonResponse({ cached: false, cycleKey, rawText: '' }, 200, noStoreCors);
     }
 
     if (request.method === 'POST' && url.pathname === '/api/daily-news-brief') {
+      const noStoreCors = { ...cors, 'Cache-Control': 'no-store' };
       const body = await parseJsonBodySafe(request);
       if (!body || (!body.prompt && !body.seedRawText && !body.seedData)) {
-        return jsonResponse({ error: 'Invalid daily news brief request' }, 400, cors);
+        return jsonResponse({ error: 'Invalid daily news brief request' }, 400, noStoreCors);
       }
       const cycleKey = String(body.cycleKey || new Date().toISOString().slice(0, 10)).replace(/[^A-Za-z0-9@_-]/g, '');
       const cacheKey = `daily_news_brief_v5:${cycleKey}`;
 
       const existing = await env.SHARED_CACHE?.get(cacheKey, 'json');
       if (existing && !body.forceRefresh) {
-        return jsonResponse({ cached: true, ...existing }, 200, cors);
+        return jsonResponse({ cached: true, ...existing }, 200, noStoreCors);
       }
 
       if ((body.seedRawText || body.seedData) && !body.prompt) {
@@ -2044,16 +2071,18 @@ export default {
           ...(validSeedData ? { data: validSeedData } : {})
         };
         if (env.SHARED_CACHE) {
-          await env.SHARED_CACHE.put(cacheKey, JSON.stringify(seededPayload), {
-            expirationTtl: 60 * 60 * 26
-          });
+          const serializedSeed = JSON.stringify(seededPayload);
+          await Promise.all([
+            env.SHARED_CACHE.put(cacheKey, serializedSeed, { expirationTtl: 60 * 60 * 72 }),
+            env.SHARED_CACHE.put('daily_news_brief_latest_v5', serializedSeed, { expirationTtl: 60 * 60 * 72 })
+          ]);
         }
-        return jsonResponse({ cached: false, seeded: true, ...seededPayload }, 200, cors);
+        return jsonResponse({ cached: false, seeded: true, ...seededPayload }, 200, noStoreCors);
       }
 
       const newsKey = env.GEMINI_NEWS_API_KEY || env.GEMINI_API_KEY;
       if (!newsKey) {
-        return jsonResponse({ error: 'GEMINI_API_KEY secret is not configured on this Worker.' }, 503, cors);
+        return jsonResponse({ error: 'GEMINI_API_KEY secret is not configured on this Worker.' }, 503, noStoreCors);
       }
 
       const thinkingBudget = Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET);
@@ -2087,7 +2116,7 @@ export default {
 
       if (!geminiRes || !geminiRes.ok) {
         const errText = geminiRes ? await geminiRes.text() : 'No response';
-        return jsonResponse({ error: `Gemini API error: ${errText.slice(0, 240)}` }, 502, cors);
+        return jsonResponse({ error: `Gemini API error: ${errText.slice(0, 240)}` }, 502, noStoreCors);
       }
 
       const rawJson = await geminiRes.json();
@@ -2103,11 +2132,13 @@ export default {
       };
 
       if (env.SHARED_CACHE && rawText) {
-        await env.SHARED_CACHE.put(cacheKey, JSON.stringify(payloadOut), {
-          expirationTtl: 60 * 60 * 26
-        });
+        const serializedOut = JSON.stringify(payloadOut);
+        await Promise.all([
+          env.SHARED_CACHE.put(cacheKey, serializedOut, { expirationTtl: 60 * 60 * 72 }),
+          env.SHARED_CACHE.put('daily_news_brief_latest_v5', serializedOut, { expirationTtl: 60 * 60 * 72 })
+        ]);
       }
-      return jsonResponse({ cached: false, ...payloadOut }, 200, cors);
+      return jsonResponse({ cached: false, ...payloadOut }, 200, noStoreCors);
     }
 
     if (request.method === 'POST' && url.pathname === '/api/analyze') {
