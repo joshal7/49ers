@@ -20250,17 +20250,18 @@ await testAsync('Worker GET /api/gamecast validates numeric event IDs/modes and 
   const badModeRes = await edgeWorker.fetch(new Request('https://49ers.joshal.com/api/gamecast?event=401873077&mode=hack'), {});
   assert.equal(badModeRes.status, 400, 'Invalid mode must return 400');
 
-  // Mock global fetch to verify TTLs for situation (2s), live summary (3s), and final summary (3600s)
+  // Mock global fetch to verify Worker uses WAF-safe site.api.espn.com & sets TTLs for situation (2s), live summary (3s), and final summary (3600s)
   const origFetch = globalThis.fetch;
   try {
     globalThis.fetch = async url => {
       const s = String(url);
-      if (s.includes('/situation')) {
-        return new Response(JSON.stringify({ down: 2, distance: 7, lastPlay: { id: '99' } }), { status: 200 });
-      }
+      assert.ok(s.startsWith('https://site.api.espn.com/'), `Worker /api/gamecast must use Worker-safe site.api.espn.com, got: ${s}`);
       if (s.includes('event=401873077')) {
         return new Response(
-          JSON.stringify({ header: { competitions: [{ status: { type: { state: 'in' } } }] } }),
+          JSON.stringify({
+            header: { competitions: [{ status: { displayClock: '6:42', period: 3, type: { state: 'in' } } }] },
+            situation: { down: 2, distance: 7, yardLine: 38, lastPlay: { id: '99' } }
+          }),
           { status: 200 }
         );
       }
@@ -20273,6 +20274,9 @@ await testAsync('Worker GET /api/gamecast validates numeric event IDs/modes and 
     const sitRes = await edgeWorker.fetch(new Request('https://49ers.joshal.com/api/gamecast?event=401873077&mode=situation'), {});
     assert.equal(sitRes.status, 200);
     assert.equal(sitRes.headers.get('X-Gamecast-TTL'), '2', 'Live situation must use 2s edge cache TTL');
+    const sitJson = await sitRes.json();
+    assert.equal(sitJson.lastPlay.id, '99');
+    assert.equal(sitJson.down, 2);
 
     const liveSumRes = await edgeWorker.fetch(new Request('https://49ers.joshal.com/api/gamecast?event=401873077&mode=summary'), {});
     assert.equal(liveSumRes.status, 200);

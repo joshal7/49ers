@@ -1605,11 +1605,7 @@ export default {
         return jsonResponse({ error: 'Invalid gamecast mode (use summary or situation)' }, 400, cors);
       }
 
-      const upstreamUrl =
-        mode === 'situation'
-          ? `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/${encodeURIComponent(eventId)}/competitions/${encodeURIComponent(eventId)}/situation`
-          : `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${encodeURIComponent(eventId)}`;
-
+      const upstreamUrl = `https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${encodeURIComponent(eventId)}`;
       const edgeCache = typeof caches !== 'undefined' && caches?.default ? caches.default : null;
       const cacheKeyUrl = new URL(request.url);
       cacheKeyUrl.search = `?event=${encodeURIComponent(eventId)}&mode=${encodeURIComponent(mode)}`;
@@ -1629,27 +1625,47 @@ export default {
 
       try {
         const upRes = await fetch(upstreamUrl, {
-          headers: {
-            Accept: 'application/json',
-            'User-Agent': '49ersFaithfulEdge/1.0'
-          },
-          signal: AbortSignal.timeout(mode === 'situation' ? 3000 : 5000)
+          headers: { Accept: 'application/json' },
+          signal: AbortSignal.timeout(5000)
         });
         if (!upRes.ok) {
-          return jsonResponse({ error: `Upstream ESPN returned ${upRes.status}` }, upRes.status >= 400 && upRes.status < 500 ? upRes.status : 502, cors);
+          return jsonResponse(
+            { error: `Upstream ESPN returned ${upRes.status}` },
+            upRes.status >= 400 && upRes.status < 500 ? upRes.status : 502,
+            cors
+          );
         }
         const rawText = await upRes.text();
-        let ttlSec = mode === 'situation' ? 2 : 3;
-        if (mode === 'summary') {
-          try {
-            const parsed = JSON.parse(rawText);
-            const st = String(parsed?.header?.competitions?.[0]?.status?.type?.state || '').toLowerCase();
-            if (st === 'post') ttlSec = 3600;
-            else if (st === 'pre') ttlSec = 30;
-            else ttlSec = 3;
-          } catch {
-            ttlSec = 3;
-          }
+        let parsed = null;
+        try {
+          parsed = JSON.parse(rawText);
+        } catch {}
+        const comp = parsed?.header?.competitions?.[0] || {};
+        const st = String(comp?.status?.type?.state || '').toLowerCase();
+
+        let bodyOut = rawText;
+        let ttlSec = st === 'post' ? 3600 : st === 'pre' ? 30 : 3;
+        if (mode === 'situation') {
+          ttlSec = st === 'post' ? 60 : 2;
+          const sit = parsed?.situation || comp?.situation || {};
+          const curDrv = parsed?.drives?.current;
+          const prevDrvs = Array.isArray(parsed?.drives?.previous) ? parsed.drives.previous : [];
+          const lastDrv = curDrv?.plays?.length ? curDrv : prevDrvs[prevDrvs.length - 1];
+          const lastPl = lastDrv?.plays?.[lastDrv.plays.length - 1] || null;
+          bodyOut = JSON.stringify({
+            state: st || 'pre',
+            clock: comp?.status?.displayClock || '',
+            period: comp?.status?.period || 0,
+            lastPlay: { id: String(sit?.lastPlay?.id || lastPl?.id || '') },
+            down: sit?.down ?? lastPl?.start?.down ?? -1,
+            distance: sit?.distance ?? lastPl?.start?.distance ?? -1,
+            yardLine: sit?.yardLine ?? lastPl?.end?.yardLine ?? -1,
+            possession: sit?.possession || '',
+            homeTimeouts: sit?.homeTimeouts ?? -1,
+            awayTimeouts: sit?.awayTimeouts ?? -1,
+            isRedZone: Boolean(sit?.isRedZone),
+            downDistanceText: String(sit?.downDistanceText || sit?.shortDownDistanceText || '').trim()
+          });
         }
         const outHeaders = new Headers({
           ...cors,
@@ -1658,7 +1674,7 @@ export default {
           'X-Gamecast-Cache': 'MISS',
           'X-Gamecast-TTL': String(ttlSec)
         });
-        const responseToReturn = new Response(rawText, { status: 200, headers: outHeaders });
+        const responseToReturn = new Response(bodyOut, { status: 200, headers: outHeaders });
         if (edgeCache) {
           const toCache = responseToReturn.clone();
           const putPromise = edgeCache.put(cacheKeyReq, toCache).catch(() => {});
