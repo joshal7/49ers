@@ -41,6 +41,7 @@ import {
   isEditorialPhotoUrl,
   isHeadshotImageUrl,
   optimizeImageUrlForSlot,
+  classifyEditorialImageRisk,
   resolveSalientCardVisual,
   resolveDailyBriefHeroMedia,
   resolveAudioEpisodeVisual,
@@ -6430,7 +6431,11 @@ test('Unified 6-Tab News Architecture, 5PM PT Daily Gemini 4 Hydrogen (XHIGH) To
     const visibleAnchorText = innerAnchorHtml.replace(/<[^>]+>/g, '').trim();
     assert.equal(visibleAnchorText, '', `Inline link item must be icon-only without full source name text, got "${visibleAnchorText}"`);
   }
-  const visibleProseOnly = briefBodyBeforeDrawer.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const visibleProseOnly = briefBodyBeforeDrawer
+    .replace(/<span[^>]*class="[^"]*salient-hero-credit[^"]*"[^>]*>[\s\S]*?<\/span>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
   assert.ok(!/\.{3}|…/.test(visibleProseOnly), `Daily Brief prose must NEVER contain truncated ellipses: "${visibleProseOnly}"`);
   assert.ok(!/\b(latest on|click here|read more|pro football rumors|adam schefter|49ers webzone)\b/i.test(visibleProseOnly), `Daily Brief prose must not contain teaser copy or inline outlet/reporter names: "${visibleProseOnly}"`);
 
@@ -11370,6 +11375,168 @@ await testAsync(
       assert.ok(
         !safeWasSources.some(s => s.url.includes('all-sack-list-tracker') || s.url.includes('fashionable-arrivals')),
         'Uncited off-topic league roundups (Myles Garrett / George Kittle) must be stripped from Sources drawer'
+      );
+    } finally {
+      setActiveTeamConfig(sfCfg);
+    }
+  }
+);
+
+await testAsync(
+  'Boilerplate Text-Banner & Lower-Third Guard: rejects club INJURY REPORT / HOW TO WATCH / POWER RANKINGS graphics (jpg & png) across Daily Brief hero and card visuals',
+  async () => {
+    const { resolveTeamConfig, setActiveTeamConfig } = await import('../src/config/teamRegistry.js');
+    const cinCfg = resolveTeamConfig('bengals');
+    const sfCfg = resolveTeamConfig('49ers');
+    try {
+      setActiveTeamConfig(cinCfg);
+
+      // 1. Risk classifier accurately separates text banners (.jpg & .png), lower-third templates, and clean photos
+      assert.equal(
+        classifyEditorialImageRisk({
+          title: 'Week 11 Injury Report | Bengals at Commanders',
+          url: 'https://www.bengals.com/news/bengals-commanders-week-11-2026-injury-report-monday-night-football',
+          imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/bengals/yrwojc9rgvrgxzx5xfun.jpg'
+        }),
+        'text_banner',
+        'Bengals .jpg Injury Report graphic must classify as text_banner'
+      );
+      assert.equal(
+        classifyEditorialImageRisk({
+          title: 'Power Rankings: Where the 49ers Stand Entering Week 11',
+          url: 'https://www.49ers.com/news/power-rankings-where-the-49ers-stand-entering-week-11',
+          imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/w1hhx3epkwewtvq9dnzx.png'
+        }),
+        'text_banner',
+        'Club Power Rankings sponsor graphic must classify as text_banner'
+      );
+      assert.equal(
+        classifyEditorialImageRisk({
+          title: 'Houston Texans vs Baltimore Ravens: How to Watch, Listen, & Live Stream',
+          url: 'https://www.houstontexans.com/news/how-to-watch-week-12',
+          imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/texans/qko8nivcowj5ayac1kln.png'
+        }),
+        'text_banner',
+        'Club How to Watch graphic must classify as text_banner'
+      );
+      assert.equal(
+        classifyEditorialImageRisk({
+          title: 'Power of the 70 | The Sound of the Seahawks: S5 Ep. 5',
+          url: 'https://www.seahawks.com/video/sound-of-seahawks-s5-ep-5',
+          imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/seahawks/gnlugcyxeydhcqz2du7k.png'
+        }),
+        'text_banner',
+        'Branded docuseries episode poster must classify as text_banner'
+      );
+      assert.equal(
+        classifyEditorialImageRisk({
+          title: "Game Within The Game | Zac Taylor's Coaching Collaboration Defines Bengals' Hottest Offense",
+          url: 'https://www.bengals.com/news/game-within-the-game-zac-taylor',
+          imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/bengals/aradkof28pedzvhaaijy.jpg'
+        }),
+        'lower_third',
+        'Branded lower-third club column must classify as lower_third'
+      );
+      assert.equal(
+        classifyEditorialImageRisk({
+          title: "Why Amarius Mims is an underrated key to Bengals' success",
+          url: 'https://www.espn.com/nfl/story/_/id/50543897/bengals-amarius-mims-pass-protection-joe-burrow',
+          imageUrl: 'https://a.espncdn.com/photo/2026/1120/r1748729_2_1296x729_16-9.jpg'
+        }),
+        'clean',
+        'Full-bleed ESPN wire action photo must classify as clean'
+      );
+      assert.equal(
+        classifyEditorialImageRisk({
+          title: "Drake Maye ankle injury: Is the Patriots' season over?",
+          url: 'https://www.espn.com/nfl/story/_/id/50520000/drake-maye-ankle-injury',
+          imageUrl: 'https://a.espncdn.com/photo/2026/1116/r1746769_608x342_16-9.jpg'
+        }),
+        'clean',
+        'Player injury feature article must NOT false-positive as generic Injury Report text_banner'
+      );
+
+      // 2. Bengals MNF exact regression: even when Injury Report (.jpg) is inline-cited and has highest storyRank,
+      //    resolveDailyBriefHeroMedia MUST reject it and prefer clean 16:9 action photo over lower-third template
+      const cinBrief = {
+        generatedAt: '2026-11-23T03:51:16.411Z',
+        headline: 'Bengals Face Commanders on MNF With Joe Burrow Cleared',
+        summary: 'Cincinnati enters Monday Night Football against Washington.',
+        bullets: [
+          'Joe Burrow carries no designation per the [Week 11 Injury Report](https://www.bengals.com/news/bengals-commanders-week-11-2026-injury-report-monday-night-football) and [bengals.com Official](https://www.bengals.com/news/game-within-the-game-zac-taylor).',
+          'Right tackle Amarius Mims anchors pass protection per [Ben Baby](https://www.espn.com/nfl/story/_/id/50543897/bengals-amarius-mims-pass-protection-joe-burrow).'
+        ],
+        sources: [
+          { sid: 'S1', title: 'Week 11 Injury Report | Bengals at Commanders', url: 'https://www.bengals.com/news/bengals-commanders-week-11-2026-injury-report-monday-night-football', outlet: 'bengals.com Official' },
+          { sid: 'S2', title: "Game Within The Game | Zac Taylor's Coaching Collaboration Defines Bengals' Offense", url: 'https://www.bengals.com/news/game-within-the-game-zac-taylor', outlet: 'bengals.com Official' },
+          { sid: 'S3', title: "Why Amarius Mims is an underrated key to Bengals' success", url: 'https://www.espn.com/nfl/story/_/id/50543897/bengals-amarius-mims-pass-protection-joe-burrow', outlet: 'ESPN' }
+        ]
+      };
+      const cinStream = [
+        {
+          id: 'cin_inj',
+          type: 'article',
+          title: cinBrief.sources[0].title,
+          url: cinBrief.sources[0].url,
+          outletName: 'bengals.com Official',
+          publishedAt: '2026-11-22T21:15:00.000Z',
+          storyRank: 18,
+          imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/bengals/yrwojc9rgvrgxzx5xfun.jpg'
+        },
+        {
+          id: 'cin_gwtg',
+          type: 'article',
+          title: cinBrief.sources[1].title,
+          url: cinBrief.sources[1].url,
+          outletName: 'bengals.com Official',
+          publishedAt: '2026-11-22T20:00:00.000Z',
+          storyRank: 10,
+          imageUrl: 'https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/bengals/aradkof28pedzvhaaijy.jpg'
+        },
+        {
+          id: 'cin_mims',
+          type: 'article',
+          title: cinBrief.sources[2].title,
+          url: cinBrief.sources[2].url,
+          outletName: 'ESPN',
+          publishedAt: '2026-11-21T11:00:10.000Z',
+          storyRank: 2,
+          imageUrl: 'https://a.espncdn.com/photo/2026/1120/r1748729_2_1296x729_16-9.jpg'
+        }
+      ];
+      const cinHero = resolveDailyBriefHeroMedia(cinBrief, cinStream, { teamConfig: cinCfg });
+      assert.ok(cinHero, 'Bengals brief must resolve a hero photo');
+      assert.ok(
+        cinHero.rawUrl.includes('r1748729_2_1296x729_16-9.jpg'),
+        `Bengals brief must reject Injury Report text banner & prefer full-bleed Mims wire photo, got: ${cinHero.rawUrl}`
+      );
+
+      // 3. When ONLY text-banner graphics exist in stream, omit hero banner cleanly (return null)
+      const onlyBannerHero = resolveDailyBriefHeroMedia(cinBrief, [cinStream[0]], { teamConfig: cinCfg });
+      assert.equal(onlyBannerHero, null, 'Must return null when only a boilerplate Injury Report text banner exists');
+
+      // 4. resolveSalientCardVisual: never promote Injury Report text banner to hero slot; prefer Matchup/Player on thumb;
+      //    and promote clean confirming report photo from a cluster when lead item carries a text banner
+      const injHeroVisual = resolveSalientCardVisual(cinStream[0], { slot: 'hero' });
+      assert.notEqual(
+        injHeroVisual?.kind,
+        'editorial',
+        'Injury Report text banner must never promote to full-width hero editorial banner'
+      );
+      assert.equal(
+        injHeroVisual?.kind,
+        'matchup',
+        'Bengals at Commanders Injury Report should fall back to crisp CIN × WSH matchup dual-crest tile'
+      );
+
+      const clusteredCleanVisual = resolveSalientCardVisual(
+        { ...cinStream[0], confirmingReports: [cinStream[2]] },
+        { slot: 'hero' }
+      );
+      assert.equal(clusteredCleanVisual?.kind, 'editorial', 'Cluster must promote clean confirming report photo over lead text banner');
+      assert.ok(
+        clusteredCleanVisual.rawUrl.includes('r1748729_2_1296x729_16-9.jpg'),
+        'Promoted cluster photo must be the clean ESPN wire photo'
       );
     } finally {
       setActiveTeamConfig(sfCfg);

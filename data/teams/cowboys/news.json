@@ -23,61 +23,21 @@
     ],
     "coveredStoryKeys": [
       "dal_espn_c66b1cfb0eee8",
-      "dal_espn_1c585d6bd3e60",
-      "dal_espn_7435c17a22db1",
-      "dal_espn_165c27d62fbe1",
-      "dal_espn_60efae509e729",
-      "dal_rss_8014469efd9e"
+      "dal_espn_b3925c660b5f2",
+      "dal_espn_8a9bd77d8178f",
+      "dal_rss_56bae5368d67",
+      "dal_rss_55f17e678532",
+      "dal_rss_d620a72d02a4"
     ],
     "coveredUrls": [
+      "https://www.dallascowboys.com/news/george-pickens-joins-ceedee-lamb-in-topping-100-yards",
+      "https://www.dallascowboys.com/news/game-recap-offense-dominates-in-51-30-win",
+      "https://www.espn.com/nfl/story/_/id/50566873/dak-prescott-continues-hot-streak-leads-cowboys-titans",
       "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "https://www.espn.com/nfl/story/_/id/50563318/week-11-overreactions-2026-graziano-bills-eagles-nfc-east",
-      "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-      "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-      "https://www.dallascowboys.com/news/george-pickens-joins-ceedee-lamb-in-topping-100-yards"
+      "https://www.dallascowboys.com/news/eatman-this-offense-stole-the-show-and-the-storylines",
+      "https://www.espn.com/video/clip/_/id/50567155/why-cowboys-needed-their-win-sunday"
     ],
     "sources": [
-      {
-        "sid": "S1",
-        "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-        "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-        "author": "NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:42:13Z"
-      },
-      {
-        "sid": "S2",
-        "title": "Judging overreactions to NFL Week 11: Joe Brady's Bills impact, Eagles' chances",
-        "url": "https://www.espn.com/nfl/story/_/id/50563318/week-11-overreactions-2026-graziano-bills-eagles-nfc-east",
-        "author": "Dan Graziano",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T02:41:09Z"
-      },
-      {
-        "sid": "S3",
-        "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-        "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-        "author": "NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T02:01:39Z"
-      },
-      {
-        "sid": "S4",
-        "title": "How active NFL players continue to redefine all-time sack list",
-        "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-        "author": "Sarah Barshop",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:49:27Z"
-      },
-      {
-        "sid": "S5",
-        "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-        "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-        "author": "ESPN Staff",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:00:32Z"
-      },
       {
         "sid": "S6",
         "title": "George Pickens joins CeeDee Lamb in topping 100 yards",
@@ -85,14 +45,6 @@
         "author": "dallascowboys.com Official",
         "outlet": "dallascowboys.com Official",
         "publishedAt": "2026-11-22T23:44:45.000Z"
-      },
-      {
-        "sid": "S7",
-        "title": "Eatman: This offense stole the show and the storylines",
-        "url": "https://www.dallascowboys.com/news/eatman-this-offense-stole-the-show-and-the-storylines",
-        "author": "dallascowboys.com Official",
-        "outlet": "dallascowboys.com Official",
-        "publishedAt": "2026-11-22T23:41:37.000Z"
       },
       {
         "sid": "S8",
@@ -103,20 +55,52 @@
         "publishedAt": "2026-11-22T21:19:30.000Z"
       },
       {
-        "sid": "S9",
-        "title": "Bills' Grand Theft Auto VI-themed jab at Dolphins tops NFL Week 11 trolls",
-        "url": "https://www.espn.com/nfl/story/_/id/50567903/nfl-week-11-trolls",
-        "author": "Anthony Gharib",
+        "sid": "S5",
+        "title": "Dak Prescott continues hot streak, salutes Cowboys offense after rout of Titans",
+        "url": "https://www.espn.com/nfl/story/_/id/50566873/dak-prescott-continues-hot-streak-leads-cowboys-titans",
+        "author": "Todd Archer",
         "outlet": "ESPN",
-        "publishedAt": "2026-11-23T02:40:14Z"
+        "publishedAt": "2026-11-23T01:14:14Z"
       },
       {
-        "sid": "S10",
-        "title": "Who are the winningest NFL coaches of all time?",
-        "url": "https://www.espn.com/nfl/story/_/id/39286200/best-nfl-coaches-all-ranked-wins",
-        "author": "Alex Kennedy and Keith Jenkins",
+        "sid": "S1",
+        "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+        "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
+        "author": "NFL Nation",
         "outlet": "ESPN",
-        "publishedAt": "2026-11-22T23:05:23Z"
+        "publishedAt": "2026-11-23T01:42:13Z"
+      },
+      {
+        "sid": "S7",
+        "title": "Eatman: This offense stole the show and the storylines",
+        "url": "https://www.dallascowboys.com/news/eatman-this-offense-stole-the-show-and-the-storylines",
+        "author": "dallascowboys.com Official",
+        "outlet": "dallascowboys.com Official",
+        "publishedAt": "2026-11-22T23:41:37.000Z"
+      },
+      {
+        "sid": "S6",
+        "title": "Why the Cowboys needed their win on Sunday",
+        "url": "https://www.espn.com/video/clip/_/id/50567155/why-cowboys-needed-their-win-sunday",
+        "author": "ESPN NFL Nation",
+        "outlet": "ESPN",
+        "publishedAt": "2026-11-23T00:05:33Z"
+      },
+      {
+        "sid": "S7",
+        "title": "Brian Schottenheimer 'very proud' of Cowboys defense in Mike Pettine's first game as play-caller",
+        "url": "https://www.dallascowboys.com/news/brian-schottenheimer-very-proud-of-cowboys-defense-in-mike-pettine-s-first-game-as-play-caller",
+        "author": "dallascowboys.com Official",
+        "outlet": "dallascowboys.com Official",
+        "publishedAt": "2026-11-23T00:00:29.000Z"
+      },
+      {
+        "sid": "S8",
+        "title": "Dak Prescott, Cowboys offense find rhythm, answers for everything vs. Titans",
+        "url": "https://www.dallascowboys.com/news/dak-prescott-cowboys-offense-find-rhythm-answers-for-everything-vs-titans",
+        "author": "dallascowboys.com Official",
+        "outlet": "dallascowboys.com Official",
+        "publishedAt": "2026-11-22T23:21:36.000Z"
       }
     ]
   },
@@ -143,7 +127,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.241,
+      "breakingPriority": 1.079,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -153,55 +137,55 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 20.4192
+      "storyRank": 13.1356
     },
     {
-      "id": "dal_espn_1c585d6bd3e60",
+      "id": "dal_espn_b3925c660b5f2",
       "type": "article",
-      "title": "Judging overreactions to NFL Week 11: Joe Brady's Bills impact, Eagles' chances",
-      "summary": "Is Brady the coach that can vault the Bills over the top? Is an NFC East three-peat still in play in Philly? We overreact to Week 11 NFL action.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749873_608x342_16-9.jpg",
-      "imageAlt": "Judging overreactions to NFL Week 11: Joe Brady's Bills impact, Eagles' chances",
-      "publishedAt": "2026-11-23T02:41:09Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50563318/week-11-overreactions-2026-graziano-bills-eagles-nfc-east",
-      "outletId": "espn_national",
+      "title": "Dak Prescott continues hot streak, salutes Cowboys offense after rout of Titans",
+      "summary": "Dak Prescott completed 28 of 33 passes for 325 yards with four TDs, no interceptions and a rushing score in the Cowboys' 51-30 win against the Titans.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749861_1296x729_16-9.jpg",
+      "imageAlt": "Dak Prescott continues hot streak, salutes Cowboys offense after rout of Titans",
+      "publishedAt": "2026-11-23T01:14:14Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50566873/dak-prescott-continues-hot-streak-leads-cowboys-titans",
+      "outletId": "espn_dal",
       "outletName": "ESPN",
-      "reporterId": "dan_graziano",
-      "reporterName": "Dan Graziano",
-      "author": "Dan Graziano",
-      "authorHandle": "@DanGrazianoESPN",
-      "authorProfileUrl": "https://x.com/DanGrazianoESPN",
+      "reporterId": "todd_archer",
+      "reporterName": "Todd Archer",
+      "author": "Todd Archer",
+      "authorHandle": "@toddarcher",
+      "authorProfileUrl": "https://x.com/toddarcher",
       "trustTier": 1,
       "wireSource": "espn_team_news",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 1.023,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 88,
-      "storyTier": "standard",
+      "credibilityScore": 93,
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.1175
+      "storyRank": 11.4492
     },
     {
-      "id": "dal_espn_7435c17a22db1",
-      "type": "article",
-      "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749880_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-23T02:01:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
+      "id": "dal_espn_8a9bd77d8178f",
+      "type": "video",
+      "title": "Why the Cowboys needed their win on Sunday",
+      "summary": "Todd Archer breaks down everything that went right for the Cowboys in their 51-30 win over the Titans.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_NFL_InstantAnalysis_Cowboys_IA/dm_261122_NFL_InstantAnalysis_Cowboys_IA.jpg",
+      "imageAlt": "Why the Cowboys needed their win on Sunday",
+      "publishedAt": "2026-11-23T00:05:33Z",
+      "url": "https://www.espn.com/video/clip/_/id/50567155/why-cowboys-needed-their-win-sunday",
       "outletId": "espn_dal",
       "outletName": "ESPN",
       "reporterId": "espn_dal",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
       "authorHandle": "@ESPNNFL",
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys",
       "trustTier": 1,
@@ -209,65 +193,131 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 0.896,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 15.26
+      "storyRank": 8.5894
     },
     {
-      "id": "dal_espn_165c27d62fbe1",
+      "id": "dal_rss_56bae5368d67",
       "type": "article",
-      "title": "How active NFL players continue to redefine all-time sack list",
-      "summary": "Myles Garrett's torrid pace up the all-time sack list paces active players making their moves among the greats.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0828/nfl_data_viz_garrett_cr_16x9_608x342.jpg",
-      "imageAlt": "How active NFL players continue to redefine all-time sack list",
-      "publishedAt": "2026-11-23T01:49:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "sarah_barshop",
-      "reporterName": "Sarah Barshop",
-      "author": "Sarah Barshop",
-      "authorHandle": "@sarahbarshop",
-      "authorProfileUrl": "https://x.com/sarahbarshop",
+      "title": "Brian Schottenheimer 'very proud' of Cowboys defense in Mike Pettine's first game as play-caller",
+      "summary": "Cowboys coach Brian Schottenheimer was \"very proud\" of Dallas' defensive performance in a 51-30 win over the Titans Sunday, which aimed to \"do simple, better\" in Mike Pettine's first game as the defensive play-caller.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/sudicdwolra8vi88e2ss.jpg",
+      "imageAlt": "Brian Schottenheimer 'very proud' of Cowboys defense in Mike Pettine's first game as play-caller",
+      "publishedAt": "2026-11-23T00:00:29.000Z",
+      "url": "https://www.dallascowboys.com/news/brian-schottenheimer-very-proud-of-cowboys-defense-in-mike-pettine-s-first-game-as-play-caller",
+      "outletId": "cowboys_official",
+      "outletName": "dallascowboys.com Official",
+      "reporterId": "cowboys_official",
+      "reporterName": "dallascowboys.com Official",
+      "author": "dallascowboys.com Official",
+      "authorHandle": "@Cowboys",
+      "authorProfileUrl": "https://www.dallascowboys.com/news/",
       "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "wireSource": "club_official_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 0.887,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.8063
+      "storyRank": 8.4282
     },
     {
-      "id": "dal_espn_60efae509e729",
+      "id": "dal_rss_55f17e678532",
       "type": "article",
-      "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "publishedAt": "2026-11-23T01:00:32Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
+      "title": "Dak Prescott, Cowboys offense find rhythm, answers for everything vs. Titans",
+      "summary": "Regardless of what the Titans did on defense, Cowboys QB Dak Prescott and the offense had an answer with six different players recording a touchdown on Sunday.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/rawqloxyqddpz0netc0c.jpg",
+      "imageAlt": "Dak Prescott, Cowboys offense find rhythm, answers for everything vs. Titans",
+      "publishedAt": "2026-11-22T23:21:36.000Z",
+      "url": "https://www.dallascowboys.com/news/dak-prescott-cowboys-offense-find-rhythm-answers-for-everything-vs-titans",
+      "outletId": "cowboys_official",
+      "outletName": "dallascowboys.com Official",
+      "reporterId": "cowboys_official",
+      "reporterName": "dallascowboys.com Official",
+      "author": "dallascowboys.com Official",
+      "authorHandle": "@Cowboys",
+      "authorProfileUrl": "https://www.dallascowboys.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.823,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.3483
+    },
+    {
+      "id": "dal_rss_d620a72d02a4",
+      "type": "article",
+      "title": "CeeDee Lamb sigue haciendo historia con los Cowboys",
+      "summary": "Con 132 yardas, un touchdown y su sexta temporada consecutiva superando las 1,000 yardas por recepción, Lamb fue clave en la contundente victoria de los Dallas Cowboys sobre los Tennessee Titans.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/us0moahcmdxrq3pqddmr.png",
+      "imageAlt": "CeeDee Lamb sigue haciendo historia con los Cowboys",
+      "publishedAt": "2026-11-22T23:21:35.000Z",
+      "url": "https://www.dallascowboys.com/news/ceedee-lamb-sigue-haciendo-historia-con-los-cowboys",
+      "outletId": "cowboys_official",
+      "outletName": "dallascowboys.com Official",
+      "reporterId": "cowboys_official",
+      "reporterName": "dallascowboys.com Official",
+      "author": "dallascowboys.com Official",
+      "authorHandle": "@Cowboys",
+      "authorProfileUrl": "https://www.dallascowboys.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.823,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.3479
+    },
+    {
+      "id": "dal_espn_f0672a0e47f1d",
+      "type": "article",
+      "title": "Dak Prescott accounts for 5 TDs as the Cowboys roll to a 51-30 victory over the Titans",
+      "summary": "— When one touchdown became two and three and so on, all the way to six, Dak Prescott said the conversation was the same for the offense of the Dallas Cowboys: Just keeping doing it.",
+      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873073.png?templateId=espn.applewatch.awayhome.1",
+      "imageAlt": "Dak Prescott accounts for 5 TDs as the Cowboys roll to a 51-30 victory over the Titans",
+      "publishedAt": "2026-11-22T23:05:32Z",
+      "url": "https://www.espn.com/nfl/recap?gameId=401873073",
       "outletId": "espn_dal",
       "outletName": "ESPN",
       "reporterId": "espn_dal",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
       "authorHandle": "@ESPNNFL",
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys",
       "trustTier": 1,
@@ -275,17 +325,50 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 0.798,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.8005
+      "storyRank": 6.9704
+    },
+    {
+      "id": "dal_rss_516403d77dd4",
+      "type": "article",
+      "title": "Cowboys desatan su ofensiva y aplastan a los Titans 51-30",
+      "summary": "Dak Prescott lanzó cuatro touchdowns y lideró una ofensiva explosiva que permitió a Dallas dominar de principio a fin y conseguir una contundente victoria en casa.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/fsh4dfoxy1qweyanete6.png",
+      "imageAlt": "Cowboys desatan su ofensiva y aplastan a los Titans 51-30",
+      "publishedAt": "2026-11-22T22:51:46.000Z",
+      "url": "https://www.dallascowboys.com/news/cowboys-desatan-su-ofensiva-y-aplastan-a-los-titans-51-30",
+      "outletId": "cowboys_official",
+      "outletName": "dallascowboys.com Official",
+      "reporterId": "cowboys_official",
+      "reporterName": "dallascowboys.com Official",
+      "author": "dallascowboys.com Official",
+      "authorHandle": "@Cowboys",
+      "authorProfileUrl": "https://www.dallascowboys.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.777,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 6.6727
     },
     {
       "id": "dal_rss_8014469efd9e",
@@ -318,7 +401,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.5218
+      "storyRank": 4.8096
+    },
+    {
+      "id": "dal_rss_2fb5e3917737",
+      "type": "article",
+      "title": "Game Recap: Offense dominates in 51-30 win",
+      "summary": "After a week of uncertainty surrounding the Dallas defense, Dak Prescott and the offense came out and took care of business in a dominating 51-30 win over the Titans.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/slysukmc2zai7lmb66gw.jpg",
+      "imageAlt": "Game Recap: Offense dominates in 51-30 win",
+      "publishedAt": "2026-11-22T21:19:30.000Z",
+      "url": "https://www.dallascowboys.com/news/game-recap-offense-dominates-in-51-30-win",
+      "outletId": "cowboys_official",
+      "outletName": "dallascowboys.com Official",
+      "reporterId": "cowboys_official",
+      "reporterName": "dallascowboys.com Official",
+      "author": "dallascowboys.com Official",
+      "authorHandle": "@Cowboys",
+      "authorProfileUrl": "https://www.dallascowboys.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.651,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.1413
     },
     {
       "id": "dal_rss_c8e7fbb0e21d",
@@ -351,106 +467,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.4275
-    },
-    {
-      "id": "dal_rss_2fb5e3917737",
-      "type": "article",
-      "title": "Game Recap: Offense dominates in 51-30 win",
-      "summary": "After a week of uncertainty surrounding the Dallas defense, Dak Prescott and the offense came out and took care of business in a dominating 51-30 win over the Titans.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/slysukmc2zai7lmb66gw.jpg",
-      "imageAlt": "Game Recap: Offense dominates in 51-30 win",
-      "publishedAt": "2026-11-22T21:19:30.000Z",
-      "url": "https://www.dallascowboys.com/news/game-recap-offense-dominates-in-51-30-win",
-      "outletId": "cowboys_official",
-      "outletName": "dallascowboys.com Official",
-      "reporterId": "cowboys_official",
-      "reporterName": "dallascowboys.com Official",
-      "author": "dallascowboys.com Official",
-      "authorHandle": "@Cowboys",
-      "authorProfileUrl": "https://www.dallascowboys.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.749,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 6.286
-    },
-    {
-      "id": "dal_espn_70ee274fda6b3",
-      "type": "article",
-      "title": "Bills' Grand Theft Auto VI-themed jab at Dolphins tops NFL Week 11 trolls",
-      "summary": "NFL teams remained petty in Week 11, led by a post from the Buffalo Bills.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749945_608x342_16-9.jpg",
-      "imageAlt": "Bills' Grand Theft Auto VI-themed jab at Dolphins tops NFL Week 11 trolls",
-      "publishedAt": "2026-11-23T02:40:14Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50567903/nfl-week-11-trolls",
-      "outletId": "espn_dal",
-      "outletName": "ESPN",
-      "reporterId": "espn_dal",
-      "reporterName": "Anthony Gharib",
-      "author": "Anthony Gharib",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 5.5397
-    },
-    {
-      "id": "dal_espn_1d3957278e257",
-      "type": "article",
-      "title": "Who are the winningest NFL coaches of all time?",
-      "summary": "From Belichick to Reid, there are many iconic coaches in NFL history. Who has the best career record? Check out the stat breakdown now.",
-      "imageUrl": "https://a.espncdn.com/photo/2012/0128/bos_g_belichick_kraft_b1_800.jpg",
-      "imageAlt": "Who are the winningest NFL coaches of all time?",
-      "publishedAt": "2026-11-22T23:05:23Z",
-      "url": "https://www.espn.com/nfl/story/_/id/39286200/best-nfl-coaches-all-ranked-wins",
-      "outletId": "espn_dal",
-      "outletName": "ESPN",
-      "reporterId": "espn_dal",
-      "reporterName": "Alex Kennedy and Keith Jenkins",
-      "author": "Alex Kennedy and Keith Jenkins",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 5.486
+      "storyRank": 4.7534
     },
     {
       "id": "dal_bsky_f987726328a7",
@@ -477,7 +494,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.586,
+      "breakingPriority": 0.543,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -487,238 +504,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.8039
-    },
-    {
-      "id": "dal_rss_13a332a4ab33",
-      "type": "article",
-      "title": "Don't Forget These 5: Barron's tackle before halftime",
-      "summary": "Plays that might get forgotten include Dak Prescott’s fourth-down conversion on the opening drive. It’s hard to score on the first eight drives if you don’t get the first one.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/uo5qlgozfbnivi84x2oy.jpg",
-      "imageAlt": "Don't Forget These 5: Barron's tackle before halftime",
-      "publishedAt": "2026-11-22T21:28:23.000Z",
-      "url": "https://www.dallascowboys.com/news/don-t-forget-these-5-barron-s-tackle-before-halftime",
-      "outletId": "cowboys_official",
-      "outletName": "dallascowboys.com Official",
-      "reporterId": "cowboys_official",
-      "reporterName": "dallascowboys.com Official",
-      "author": "dallascowboys.com Official",
-      "authorHandle": "@Cowboys",
-      "authorProfileUrl": "https://www.dallascowboys.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.8529
-    },
-    {
-      "id": "dal_espn_b3925c660b5f2",
-      "type": "article",
-      "title": "Dak Prescott continues hot streak, salutes Cowboys offense after rout of Titans",
-      "summary": "Dak Prescott completed 28 of 33 passes for 325 yards with four TDs, no interceptions and a rushing score in the Cowboys' 51-30 win against the Titans.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749861_1296x729_16-9.jpg",
-      "imageAlt": "Dak Prescott continues hot streak, salutes Cowboys offense after rout of Titans",
-      "publishedAt": "2026-11-23T01:14:14Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50566873/dak-prescott-continues-hot-streak-leads-cowboys-titans",
-      "outletId": "espn_dal",
-      "outletName": "ESPN",
-      "reporterId": "todd_archer",
-      "reporterName": "Todd Archer",
-      "author": "Todd Archer",
-      "authorHandle": "@toddarcher",
-      "authorProfileUrl": "https://x.com/toddarcher",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 93,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.6754
-    },
-    {
-      "id": "dal_espn_8a9bd77d8178f",
-      "type": "video",
-      "title": "Why the Cowboys needed their win on Sunday",
-      "summary": "Todd Archer breaks down everything that went right for the Cowboys in their 51-30 win over the Titans.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_NFL_InstantAnalysis_Cowboys_IA/dm_261122_NFL_InstantAnalysis_Cowboys_IA.jpg",
-      "imageAlt": "Why the Cowboys needed their win on Sunday",
-      "publishedAt": "2026-11-23T00:05:33Z",
-      "url": "https://www.espn.com/video/clip/_/id/50567155/why-cowboys-needed-their-win-sunday",
-      "outletId": "espn_dal",
-      "outletName": "ESPN",
-      "reporterId": "espn_dal",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.8031
-    },
-    {
-      "id": "dal_rss_56bae5368d67",
-      "type": "article",
-      "title": "Brian Schottenheimer 'very proud' of Cowboys defense in Mike Pettine's first game as play-caller",
-      "summary": "Cowboys coach Brian Schottenheimer was \"very proud\" of Dallas' defensive performance in a 51-30 win over the Titans Sunday, which aimed to \"do simple, better\" in Mike Pettine's first game as the defensive play-caller.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/sudicdwolra8vi88e2ss.jpg",
-      "imageAlt": "Brian Schottenheimer 'very proud' of Cowboys defense in Mike Pettine's first game as play-caller",
-      "publishedAt": "2026-11-23T00:00:29.000Z",
-      "url": "https://www.dallascowboys.com/news/brian-schottenheimer-very-proud-of-cowboys-defense-in-mike-pettine-s-first-game-as-play-caller",
-      "outletId": "cowboys_official",
-      "outletName": "dallascowboys.com Official",
-      "reporterId": "cowboys_official",
-      "reporterName": "dallascowboys.com Official",
-      "author": "dallascowboys.com Official",
-      "authorHandle": "@Cowboys",
-      "authorProfileUrl": "https://www.dallascowboys.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.7583
-    },
-    {
-      "id": "dal_espn_f954b8a037db9",
-      "type": "video",
-      "title": "I Scored a Touchdown: Emmitt Smith Super Bowl XXVIII",
-      "summary": "I Scored a Touchdown: Emmitt Smith Super Bowl XXVIII",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/16fbe000ef724046bf3d24685bfe649a786/16fbe000ef724046bf3d24685bfe649a786.jpg",
-      "imageAlt": "I Scored a Touchdown: Emmitt Smith Super Bowl XXVIII",
-      "publishedAt": "2026-11-22T18:06:26Z",
-      "url": "https://www.espn.com/video/clip/_/id/50547526/emmitt-smith-super-bowl-xxviii",
-      "outletId": "espn_dal",
-      "outletName": "ESPN",
-      "reporterId": "espn_dal",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 18,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.0366
-    },
-    {
-      "id": "dal_rss_55f17e678532",
-      "type": "article",
-      "title": "Dak Prescott, Cowboys offense find rhythm, answers for everything vs. Titans",
-      "summary": "Regardless of what the Titans did on defense, Cowboys QB Dak Prescott and the offense had an answer with six different players recording a touchdown on Sunday.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/rawqloxyqddpz0netc0c.jpg",
-      "imageAlt": "Dak Prescott, Cowboys offense find rhythm, answers for everything vs. Titans",
-      "publishedAt": "2026-11-22T23:21:36.000Z",
-      "url": "https://www.dallascowboys.com/news/dak-prescott-cowboys-offense-find-rhythm-answers-for-everything-vs-titans",
-      "outletId": "cowboys_official",
-      "outletName": "dallascowboys.com Official",
-      "reporterId": "cowboys_official",
-      "reporterName": "dallascowboys.com Official",
-      "author": "dallascowboys.com Official",
-      "authorHandle": "@Cowboys",
-      "authorProfileUrl": "https://www.dallascowboys.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.4691
-    },
-    {
-      "id": "dal_rss_d620a72d02a4",
-      "type": "article",
-      "title": "CeeDee Lamb sigue haciendo historia con los Cowboys",
-      "summary": "Con 132 yardas, un touchdown y su sexta temporada consecutiva superando las 1,000 yardas por recepción, Lamb fue clave en la contundente victoria de los Dallas Cowboys sobre los Tennessee Titans.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/us0moahcmdxrq3pqddmr.png",
-      "imageAlt": "CeeDee Lamb sigue haciendo historia con los Cowboys",
-      "publishedAt": "2026-11-22T23:21:35.000Z",
-      "url": "https://www.dallascowboys.com/news/ceedee-lamb-sigue-haciendo-historia-con-los-cowboys",
-      "outletId": "cowboys_official",
-      "outletName": "dallascowboys.com Official",
-      "reporterId": "cowboys_official",
-      "reporterName": "dallascowboys.com Official",
-      "author": "dallascowboys.com Official",
-      "authorHandle": "@Cowboys",
-      "authorProfileUrl": "https://www.dallascowboys.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.4689
+      "storyRank": 4.7741
     },
     {
       "id": "dal_rss_9c248a831ebf",
@@ -751,73 +537,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4115
-    },
-    {
-      "id": "dal_espn_f0672a0e47f1d",
-      "type": "article",
-      "title": "Dak Prescott accounts for 5 TDs as the Cowboys roll to a 51-30 victory over the Titans",
-      "summary": "— When one touchdown became two and three and so on, all the way to six, Dak Prescott said the conversation was the same for the offense of the Dallas Cowboys: Just keeping doing it.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873073.png?templateId=espn.applewatch.awayhome.1",
-      "imageAlt": "Dak Prescott accounts for 5 TDs as the Cowboys roll to a 51-30 victory over the Titans",
-      "publishedAt": "2026-11-22T23:05:32Z",
-      "url": "https://www.espn.com/nfl/recap?gameId=401873073",
-      "outletId": "espn_dal",
-      "outletName": "ESPN",
-      "reporterId": "espn_dal",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.3723
-    },
-    {
-      "id": "dal_rss_516403d77dd4",
-      "type": "article",
-      "title": "Cowboys desatan su ofensiva y aplastan a los Titans 51-30",
-      "summary": "Dak Prescott lanzó cuatro touchdowns y lideró una ofensiva explosiva que permitió a Dallas dominar de principio a fin y conseguir una contundente victoria en casa.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/fsh4dfoxy1qweyanete6.png",
-      "imageAlt": "Cowboys desatan su ofensiva y aplastan a los Titans 51-30",
-      "publishedAt": "2026-11-22T22:51:46.000Z",
-      "url": "https://www.dallascowboys.com/news/cowboys-desatan-su-ofensiva-y-aplastan-a-los-titans-51-30",
-      "outletId": "cowboys_official",
-      "outletName": "dallascowboys.com Official",
-      "reporterId": "cowboys_official",
-      "reporterName": "dallascowboys.com Official",
-      "author": "dallascowboys.com Official",
-      "authorHandle": "@Cowboys",
-      "authorProfileUrl": "https://www.dallascowboys.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.2978
+      "storyRank": 4.2765
     },
     {
       "id": "dal_rss_fd1723f39294",
@@ -850,7 +570,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2932
+      "storyRank": 3.9778
+    },
+    {
+      "id": "dal_rss_13a332a4ab33",
+      "type": "article",
+      "title": "Don't Forget These 5: Barron's tackle before halftime",
+      "summary": "Plays that might get forgotten include Dak Prescott’s fourth-down conversion on the opening drive. It’s hard to score on the first eight drives if you don’t get the first one.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/uo5qlgozfbnivi84x2oy.jpg",
+      "imageAlt": "Don't Forget These 5: Barron's tackle before halftime",
+      "publishedAt": "2026-11-22T21:28:23.000Z",
+      "url": "https://www.dallascowboys.com/news/don-t-forget-these-5-barron-s-tackle-before-halftime",
+      "outletId": "cowboys_official",
+      "outletName": "dallascowboys.com Official",
+      "reporterId": "cowboys_official",
+      "reporterName": "dallascowboys.com Official",
+      "author": "dallascowboys.com Official",
+      "authorHandle": "@Cowboys",
+      "authorProfileUrl": "https://www.dallascowboys.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.1013
     },
     {
       "id": "dal_espn_a430f618eed75",
@@ -883,7 +636,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9609
+      "storyRank": 3.095
     },
     {
       "id": "dal_rss_ae730dd6c565",
@@ -916,40 +669,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5645
-    },
-    {
-      "id": "dal_espn_481f6b6eb5e6b",
-      "type": "article",
-      "title": "NFL Week 11 predictions: Upsets, fantasy sleepers, stat lines, TD scorers, more",
-      "summary": "Eagles upsetting the Steelers? Big receiving day for Christian McCaffrey? Touchdown for Josh Downs? Let's predict 15 things for Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746461_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 predictions: Upsets, fantasy sleepers, stat lines, TD scorers, more",
-      "publishedAt": "2026-11-21T11:49:08Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50521728/week-11-predictions-upsets-fantasy-sleepers-stats-2026",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "ben_solak",
-      "reporterName": "Ben Solak",
-      "author": "Ben Solak",
-      "authorHandle": "@BenjaminSolak",
-      "authorProfileUrl": "https://x.com/BenjaminSolak",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0837
+      "storyRank": 1.9388
     },
     {
       "id": "dal_tx_19e154089c32",
@@ -983,40 +703,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0184
-    },
-    {
-      "id": "dal_espn_4b15838125df3",
-      "type": "article",
-      "title": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "summary": "Here's a look at what each NFL team is wearing in Week 11, led by Houston debuting its Rivalries combination.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/commanders-texans-week-11-unis16x9.jpg",
-      "imageAlt": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "publishedAt": "2026-11-20T22:49:33Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
-      "outletId": "espn_dal",
-      "outletName": "ESPN",
-      "reporterId": "espn_dal",
-      "reporterName": "Anthony Gharib",
-      "author": "Anthony Gharib",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0142
+      "storyRank": 0.071
     },
     {
       "id": "dal_espn_f278fb977c281",
@@ -1049,7 +736,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0563
+      "storyRank": 0.0546
     },
     {
       "id": "dal_rss_3cccf409f6f9",
@@ -1082,7 +769,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0136
+      "storyRank": 0.0527
     },
     {
       "id": "dal_rss_b3bcccc92909",
@@ -1115,7 +802,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0542
+      "storyRank": 0.0526
     },
     {
       "id": "dal_espn_728c14ed7c47f",
@@ -1148,7 +835,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0135
+      "storyRank": 0.0525
     },
     {
       "id": "dal_rss_ca621bc62399",
@@ -1181,7 +868,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0538
+      "storyRank": 0.0522
     },
     {
       "id": "dal_rss_7cf218d470ac",
@@ -1214,7 +901,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
+      "storyRank": 0.0521
     },
     {
       "id": "dal_rss_0b2e61b81bf9",
@@ -1247,7 +934,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133
+      "storyRank": 0.0518
     },
     {
       "id": "dal_espn_a5858d91ce037",
@@ -1280,40 +967,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133
-    },
-    {
-      "id": "dal_espn_e18552bc1fb8c",
-      "type": "article",
-      "title": "NFL Week 11 betting odds: Lines and totals for every game",
-      "summary": "Updated odds, spreads, totals and FPI predictions for every NFL game in Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746635_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 betting odds: Lines and totals for every game",
-      "publishedAt": "2026-11-20T20:13:57Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals",
-      "outletId": "espn_dal",
-      "outletName": "ESPN",
-      "reporterId": "espn_dal",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.053
+      "storyRank": 0.0516
     },
     {
       "id": "dal_rss_6bd865328082",
@@ -1346,7 +1000,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132
+      "storyRank": 0.0511
     },
     {
       "id": "dal_rss_80ce4566e2bc",
@@ -1379,40 +1033,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
-    },
-    {
-      "id": "dal_espn_f9ca15e024182",
-      "type": "article",
-      "title": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "summary": "Joe Burrow vs. Jayden Daniels? Fernando Mendoza vs. Bo Nix? There are 12 more games in Week 11, and we have picks, predictions and more for all of them.",
-      "imageUrl": "https://a.espncdn.com/photo/2025/0819/r1533632_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "publishedAt": "2026-11-20T18:48:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50522208/week-11-picks-predictions-schedule-fantasy-odds-2026",
-      "outletId": "espn_dal",
-      "outletName": "ESPN",
-      "reporterId": "espn_dal",
-      "reporterName": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "author": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0511
+      "storyRank": 0.0125
     },
     {
       "id": "dal_rss_9051e0dfcef4",
@@ -1445,7 +1066,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0501
+      "storyRank": 0.0487
     },
     {
       "id": "dal_rss_cd6b9231975a",
@@ -1478,7 +1099,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0486
     },
     {
       "id": "dal_rss_2269d2d7d2b8",
@@ -1511,7 +1132,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.012
+      "storyRank": 0.0468
     },
     {
       "id": "dal_rss_caa508603cfb",
@@ -1544,7 +1165,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0467
+      "storyRank": 0.0454
     },
     {
       "id": "dal_espn_c3ea798dc55be",
@@ -1577,7 +1198,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1264
+      "storyRank": 0.1709
     },
     {
       "id": "dal_rss_4236995d0f31",
@@ -1610,7 +1231,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084
+      "storyRank": 0.0329
     },
     {
       "id": "dal_rss_02cf4aa68f63",
@@ -1643,7 +1264,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0083
+      "storyRank": 0.0324
     },
     {
       "id": "dal_espn_4a41f7e047c7e",
@@ -1676,7 +1297,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0082
+      "storyRank": 0.032
     },
     {
       "id": "dal_espn_f9f85a7022ccd",
@@ -1709,7 +1330,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0082
+      "storyRank": 0.032
     },
     {
       "id": "dal_rss_50f9901acdba",
@@ -1742,40 +1363,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
-    },
-    {
-      "id": "dal_espn_b95a427d7fb7b",
-      "type": "article",
-      "title": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "summary": "Here's the good and the bad for each offensive coordinator or playcaller through Week 10, plus keys to their success the rest of the way.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1118/32_for_32_midseason_look_608x342.png",
-      "imageAlt": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "publishedAt": "2026-11-19T17:37:25Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50520404/nfl-offensive-coordinators-playcallers-midseason-report",
-      "outletId": "espn_dal",
-      "outletName": "ESPN",
-      "reporterId": "espn_dal",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0306
+      "storyRank": 0.0309
     },
     {
       "id": "dal_espn_e8a1cc0b6c1dd",
@@ -1808,7 +1396,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0294
     },
     {
       "id": "dal_rss_43206eb58b59",
@@ -1841,7 +1429,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0291
     },
     {
       "id": "dal_rss_b58ea66e8360",
@@ -1874,7 +1462,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0297
+      "storyRank": 0.0291
     },
     {
       "id": "dal_tx_35b6ab63ebc6",
@@ -1908,7 +1496,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0258
     },
     {
       "id": "dal_rss_bfe71d2a2e1e",
@@ -1941,7 +1529,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0226
     },
     {
       "id": "dal_rss_afc91eed9a31",
@@ -1974,40 +1562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
-    },
-    {
-      "id": "dal_rss_1dd068b0fff6",
-      "type": "article",
-      "title": "Zero to 100: Boosted sack numbers in last 5 games",
-      "summary": "Here are some key numbers to watch heading into Sunday's game against the Titans.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/lyd12ia8br9ybe1bi6p1.jpg",
-      "imageAlt": "Zero to 100: Boosted sack numbers in last 5 games",
-      "publishedAt": "2026-11-18T20:20:40.000Z",
-      "url": "https://www.dallascowboys.com/news/zero-to-100-boosted-sack-numbers-in-last-5-games",
-      "outletId": "cowboys_official",
-      "outletName": "dallascowboys.com Official",
-      "reporterId": "cowboys_official",
-      "reporterName": "dallascowboys.com Official",
-      "author": "dallascowboys.com Official",
-      "authorHandle": "@Cowboys",
-      "authorProfileUrl": "https://www.dallascowboys.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0225
     },
     {
       "id": "dal_rss_7b20598dcade",
@@ -2040,7 +1595,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0216
     },
     {
       "id": "dal_rss_a945cdb1493d",
@@ -2073,7 +1628,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0216
     },
     {
       "id": "dal_rss_bd5029c79289",
@@ -2106,40 +1661,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0219
-    },
-    {
-      "id": "dal_espn_58b0bd5777d30",
-      "type": "article",
-      "title": "NFL survivor power rankings: Why this is the week to use the Bills or the Texans",
-      "summary": "ESPN NFL survivor pool strategy, predictions and ranking the top six options for Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1118/r1747739_1296x729_16-9.jpg",
-      "imageAlt": "NFL survivor power rankings: Why this is the week to use the Bills or the Texans",
-      "publishedAt": "2026-11-18T19:26:57Z",
-      "url": "https://www.espn.com/fantasy/football/story/_/id/50520032/nfl-survivor-week-11-survivor-pool-strategy-advice-picks",
-      "outletId": "espn_dal",
-      "outletName": "ESPN",
-      "reporterId": "espn_dal",
-      "reporterName": "Mackenzie Kraemer",
-      "author": "Mackenzie Kraemer",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/dal/dallas-cowboys",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0216
     },
     {
       "id": "dal_rss_5eeb8d543737",
@@ -2172,7 +1694,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054
+      "storyRank": 0.0212
     },
     {
       "id": "dal_rss_01947e60166c",
@@ -2205,7 +1727,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.0205
     },
     {
       "id": "dal_tx_24e00a1d90c5",
@@ -2239,7 +1761,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
+      "storyRank": 0.0186
     },
     {
       "id": "dal_rss_f4bc5206572b",
@@ -2272,7 +1794,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0167
     },
     {
       "id": "dal_rss_a34ae18af744",
@@ -2305,7 +1827,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0165
     },
     {
       "id": "dal_rss_dbd101aa96db",
@@ -2338,7 +1860,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0162
     },
     {
       "id": "dal_rss_54b22b841a63",
@@ -2371,7 +1893,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0157
     },
     {
       "id": "dal_rss_dfd9940f1257",
@@ -2404,7 +1926,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0156
+      "storyRank": 0.0154
     },
     {
       "id": "dal_tx_e9befcfc47bc",
@@ -2438,7 +1960,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0036
+      "storyRank": 0.0143
     },
     {
       "id": "dal_rss_6721c5d3b347",
@@ -2471,7 +1993,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.0132
     },
     {
       "id": "dal_rss_656ff2fe0493",
@@ -2504,7 +2026,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133
+      "storyRank": 0.0033
     },
     {
       "id": "dal_rss_4134b52202f2",
@@ -2537,7 +2059,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133
+      "storyRank": 0.0131
     },
     {
       "id": "dal_rss_3caa0b713698",
@@ -2570,7 +2092,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.0124
     },
     {
       "id": "dal_rss_0315dcebfad1",
@@ -2603,7 +2125,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0123
     },
     {
       "id": "dal_rss_1514afa81c71",
@@ -2636,7 +2158,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0124
+      "storyRank": 0.0122
     },
     {
       "id": "dal_rss_98405591d5ab",
@@ -2669,40 +2191,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0112
-    },
-    {
-      "id": "dal_rss_90975db646ad",
-      "type": "article",
-      "title": "Dak reconoce la frustración: \"Algo tiene que cambiar\"",
-      "summary": "Tras caer ante los 49ers y quedar con récord de 4-6, Prescott habló sobre la falta de consistencia del equipo y la necesidad de mejorar dentro y fuera del campo.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/nn9ceov6n2lkfuetvatx.png",
-      "imageAlt": "Dak reconoce la frustración: \"Algo tiene que cambiar\"",
-      "publishedAt": "2026-11-16T03:10:47.000Z",
-      "url": "https://www.dallascowboys.com/news/dak-reconoce-la-frustracion-algo-tiene-que-cambiar",
-      "outletId": "cowboys_official",
-      "outletName": "dallascowboys.com Official",
-      "reporterId": "cowboys_official",
-      "reporterName": "dallascowboys.com Official",
-      "author": "dallascowboys.com Official",
-      "authorHandle": "@Cowboys",
-      "authorProfileUrl": "https://www.dallascowboys.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
+      "storyRank": 0.011
     },
     {
       "id": "dal_rss_d139fb153e09",
@@ -2735,7 +2224,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.011
     },
     {
       "id": "dal_rss_bae4c396e41c",
@@ -2768,7 +2257,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.011
     },
     {
       "id": "dal_rss_6cf56d8f26b2",
@@ -2801,7 +2290,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
+      "storyRank": 0.011
     },
     {
       "id": "dal_rss_3574a935cf90",
@@ -2834,7 +2323,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
+      "storyRank": 0.0027
     },
     {
       "id": "dal_rss_187e103dc14e",
@@ -2867,7 +2356,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.011
+      "storyRank": 0.0109
     },
     {
       "id": "dal_rss_7cefefa3396c",
@@ -2900,7 +2389,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0108
     },
     {
       "id": "dal_rss_c3c8cd92f818",
@@ -2933,7 +2422,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0105
     },
     {
       "id": "dal_rss_b49232a80f97",
@@ -2966,7 +2455,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0088
     },
     {
       "id": "dal_tx_862b8c1e023f",
@@ -3000,7 +2489,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.002
+      "storyRank": 0.008
     },
     {
       "id": "dal_rss_d7bd87be9b4d",
@@ -3033,7 +2522,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0075
     },
     {
       "id": "dal_rss_d4d4a6adb08d",
@@ -3066,7 +2555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0075
     },
     {
       "id": "dal_rss_52bafe351093",
@@ -3099,7 +2588,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0019
     },
     {
       "id": "dal_rss_727279f3e264",
@@ -3132,7 +2621,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0018
+      "storyRank": 0.0073
     },
     {
       "id": "dal_rss_a45b2113c330",
@@ -3165,7 +2654,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0063
+      "storyRank": 0.0062
     },
     {
       "id": "dal_rss_bd8b59b00506",
@@ -3198,7 +2687,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0018
     },
     {
       "id": "dal_rss_8bd9463dab63",
@@ -3231,7 +2720,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0018
+      "storyRank": 0.0072
     },
     {
       "id": "dal_rss_d669941073bb",
@@ -3297,7 +2786,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0016
+      "storyRank": 0.0065
     },
     {
       "id": "dal_rss_cbc05f971767",
@@ -3330,7 +2819,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0016
     },
     {
       "id": "dal_rss_7220c2863a8c",
@@ -3363,7 +2852,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0063
     },
     {
       "id": "dal_rss_a897003f1973",
@@ -3396,7 +2885,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0016
+      "storyRank": 0.0063
     },
     {
       "id": "dal_rss_19b638cf8fd2",
@@ -3407,39 +2896,6 @@
       "imageAlt": "Trivia Thursday: The best of Cowboys-49ers history",
       "publishedAt": "2026-11-12T15:31:37.000Z",
       "url": "https://www.dallascowboys.com/news/trivia-thursday-the-best-of-cowboys-49ers-history",
-      "outletId": "cowboys_official",
-      "outletName": "dallascowboys.com Official",
-      "reporterId": "cowboys_official",
-      "reporterName": "dallascowboys.com Official",
-      "author": "dallascowboys.com Official",
-      "authorHandle": "@Cowboys",
-      "authorProfileUrl": "https://www.dallascowboys.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0063
-    },
-    {
-      "id": "dal_rss_d1f290f8247b",
-      "type": "article",
-      "title": "Mailbag: Cause for fourth quarter meltdowns?",
-      "summary": "What do you feel is the cause for these fourth quarter meltdowns?",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/cowboys/aksfarmgehwrvg2rv0ta.jpg",
-      "imageAlt": "Mailbag: Cause for fourth quarter meltdowns?",
-      "publishedAt": "2026-11-12T15:00:12.000Z",
-      "url": "https://www.dallascowboys.com/news/mailbag-cause-for-fourth-quarter-meltdowns",
       "outletId": "cowboys_official",
       "outletName": "dallascowboys.com Official",
       "reporterId": "cowboys_official",
@@ -3495,7 +2951,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0057
     },
     {
       "id": "dal_rss_1ff851fa4ae2",
@@ -3528,7 +2984,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0014
     },
     {
       "id": "dal_rss_057bb8ca676d",
@@ -3561,7 +3017,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0056
     },
     {
       "id": "dal_rss_ea824b4438d4",
@@ -3627,7 +3083,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0055
     },
     {
       "id": "dal_rss_db93ab264a9c",
@@ -3660,7 +3116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0055
     },
     {
       "id": "dal_tx_986000bd8e82",
@@ -3694,7 +3150,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0053
     },
     {
       "id": "dal_rss_0f2798208c6b",
@@ -3760,7 +3216,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.005
     },
     {
       "id": "dal_rss_5a3e73fb9556",
@@ -3793,7 +3249,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.0049
     },
     {
       "id": "dal_rss_672779982550",
@@ -3860,7 +3316,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.0047
     },
     {
       "id": "dal_rss_619f3b61087d",
@@ -3893,7 +3349,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0046
     },
     {
       "id": "dal_rss_83cb58f984f0",
@@ -3926,7 +3382,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0045
     },
     {
       "id": "dal_rss_d0f53a3b0b4e",
@@ -4092,7 +3548,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0009
+      "storyRank": 0.0035
     },
     {
       "id": "dal_tx_f51fa96cafb1",
@@ -4126,7 +3582,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0028
     }
   ]
 }

@@ -556,8 +556,8 @@ function renderBeatPodcastsDirectory({
   const defaultShows =
     shows.length > 0
       ? shows
-      : activeTeam.abbr !== 'SF' && activeTeam.beatPodcastShows?.length > 0
-        ? activeTeam.beatPodcastShows
+      : activeTeam.abbr !== 'SF'
+        ? activeTeam.beatPodcastShows || []
         : [
             { id: 'the_gold_standard', name: 'The Gold Standard', hosts: 'Rob "Stats" Guerrera & Levin Black' },
             { id: '49ers_talk', name: '49ers Talk', hosts: 'Matt Maiocco & Jennifer Lee Chan' },

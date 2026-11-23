@@ -23,21 +23,45 @@
     ],
     "coveredStoryKeys": [
       "min_bsky_323517ecab0c",
-      "min_bsky_ac2368d7d4a1",
       "min_bsky_4814e9a5edcf",
-      "min_bsky_f6680492fa69",
-      "min_bsky_6ecb0ba6f9f8",
-      "min_bsky_27c669baa0a8"
+      "min_bsky_27c669baa0a8",
+      "min_bsky_69c99595379f",
+      "min_bsky_e1b9d2e38719",
+      "min_bsky_a52b5ac1afdc"
     ],
     "coveredUrls": [
+      "https://bsky.app/profile/bengoessling.bsky.social/post/3n2x3vs624b2k",
+      "https://bsky.app/profile/bengoessling.bsky.social/post/3n2wysfnsep2p",
+      "https://www.vikings.com/video/kirk-cousins-justin-jefferson-29-yard-completion-catch-49ers",
       "https://bsky.app/profile/lukebraunnfl.bsky.social/post/3n2x7opvwns25",
-      "https://bsky.app/profile/bengoessling.bsky.social/post/3n2x4yikvuv2r",
       "https://bsky.app/profile/bengoessling.bsky.social/post/3n2x46f2kcl2j",
-      "https://bsky.app/profile/andrewkrammer.bsky.social/post/3n2x3zs4e4k2w",
-      "https://bsky.app/profile/andrewkrammer.bsky.social/post/3n2x3zrvv3k2x",
-      "https://bsky.app/profile/bengoessling.bsky.social/post/3n2x3vs624b2k"
+      "https://bsky.app/profile/bengoessling.bsky.social/post/3n2x2zeq7j32n"
     ],
     "sources": [
+      {
+        "sid": "S6",
+        "title": "They had the help of a pick-6, but the 49ers have scored more points in the first half than the Vikings have allowed in a game all year.",
+        "url": "https://bsky.app/profile/bengoessling.bsky.social/post/3n2x3vs624b2k",
+        "author": "Ben Goessling",
+        "outlet": "Ben Goessling",
+        "publishedAt": "2026-11-23T02:36:53.756Z"
+      },
+      {
+        "sid": "S6",
+        "title": "This couldn't have started much worse for the Vikings. 49ers will take over their own 45 after Will Reichard misses wide left. Already a critical series for this defense.",
+        "url": "https://bsky.app/profile/bengoessling.bsky.social/post/3n2wysfnsep2p",
+        "author": "Ben Goessling",
+        "outlet": "Ben Goessling",
+        "publishedAt": "2026-11-23T01:41:18.752Z"
+      },
+      {
+        "sid": "S8",
+        "title": "Kirk Cousins Goes Deep to a Wide-Open Justin Jefferson for 29-Yard Completion",
+        "url": "https://www.vikings.com/video/kirk-cousins-justin-jefferson-29-yard-completion-catch-49ers",
+        "author": "vikings.com Video",
+        "outlet": "vikings.com Video",
+        "publishedAt": "2026-11-23T01:50:00.000Z"
+      },
       {
         "sid": "S1",
         "title": "Very much like how the Lions dunked on the Vikings at the end of 2024, you run a lot of spacing esque concepts and have a QB that can ID underneath coverage structures fast. you cannot pure progress you have to make the 1st read the right read and hit it 100 times and the 49ers are doing that",
@@ -45,14 +69,6 @@
         "author": "Luke Braun",
         "outlet": "Luke Braun",
         "publishedAt": "2026-11-23T03:44:31.676Z"
-      },
-      {
-        "sid": "S2",
-        "title": "I don't think I've seen a fair catch free kick live before, at any level of football",
-        "url": "https://bsky.app/profile/bengoessling.bsky.social/post/3n2x4yikvuv2r",
-        "author": "Ben Goessling",
-        "outlet": "Ben Goessling",
-        "publishedAt": "2026-11-23T02:56:18.097Z"
       },
       {
         "sid": "S3",
@@ -63,38 +79,6 @@
         "publishedAt": "2026-11-23T02:41:41.990Z"
       },
       {
-        "sid": "S4",
-        "title": "The Kirk Cousins of it all aside, the 49ers are a wood chipper",
-        "url": "https://bsky.app/profile/andrewkrammer.bsky.social/post/3n2x3zs4e4k2w",
-        "author": "Andrew Krammer",
-        "outlet": "Andrew Krammer",
-        "publishedAt": "2026-11-23T02:39:08.112Z"
-      },
-      {
-        "sid": "S5",
-        "title": "So even without considering the defensive TD, the 49ers will finish this half with 8.7 yards per play and no turnovers against the league's top pass defense.",
-        "url": "https://bsky.app/profile/andrewkrammer.bsky.social/post/3n2x3zrvv3k2x",
-        "author": "Andrew Krammer",
-        "outlet": "Andrew Krammer",
-        "publishedAt": "2026-11-23T02:39:07.903Z"
-      },
-      {
-        "sid": "S6",
-        "title": "They had the help of a pick-6, but the 49ers have scored more points in the first half than the Vikings have allowed in a game all year.",
-        "url": "https://bsky.app/profile/bengoessling.bsky.social/post/3n2x3vs624b2k",
-        "author": "Ben Goessling",
-        "outlet": "Ben Goessling",
-        "publishedAt": "2026-11-23T02:36:53.756Z"
-      },
-      {
-        "sid": "S7",
-        "title": "Only a few times I've seen a medical staff jump into action that fast and players react that strongly. Similar speed to the response when Teddy Bridgewater went down.",
-        "url": "https://bsky.app/profile/bengoessling.bsky.social/post/3n2x3cmegrc27",
-        "author": "Ben Goessling",
-        "outlet": "Ben Goessling",
-        "publishedAt": "2026-11-23T02:26:10.138Z"
-      },
-      {
         "sid": "S8",
         "title": "Vikings have run 28 plays on offense, holding the ball for 15:56 (to 7:16 for the 49ers). They've been able to sustain drives; they'll just need to finish them, with Brock Purdy still carrying a 158.3 passer rating.",
         "url": "https://bsky.app/profile/bengoessling.bsky.social/post/3n2x2zeq7j32n",
@@ -103,20 +87,20 @@
         "publishedAt": "2026-11-23T02:21:00.138Z"
       },
       {
-        "sid": "S9",
-        "title": "Brock Purdy 34yd to Evans on 2nd-10 vs. a 5-man rush will further push him to the right on this chart ... hits Kittle with perfect timing in front of Harrison Smith to give 49ers a 14-7 lead",
-        "url": "https://bsky.app/profile/andrewkrammer.bsky.social/post/3n2x2evfszc2n",
-        "author": "Andrew Krammer",
-        "outlet": "Andrew Krammer",
-        "publishedAt": "2026-11-23T02:09:33.183Z"
-      },
-      {
         "sid": "S10",
         "title": "Huge stop for the Vikings, who brought the house after mostly rushing four against Brock Purdy on the first drive. Eric Wilson comes up with the sack.",
         "url": "https://bsky.app/profile/bengoessling.bsky.social/post/3n2wyz6fksu2c",
         "author": "Ben Goessling",
         "outlet": "Ben Goessling",
         "publishedAt": "2026-11-23T01:45:05.994Z"
+      },
+      {
+        "sid": "S7",
+        "title": "Aaron Jones Sr. Rushes for 11-Yard Touchdown in Vikings vs. 49ers Game",
+        "url": "https://www.vikings.com/video/aaron-jones-touchdown-49ers-mexico-city-2026",
+        "author": "vikings.com Video",
+        "outlet": "vikings.com Video",
+        "publishedAt": "2026-11-23T02:00:00.000Z"
       }
     ]
   },
@@ -157,44 +141,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 359.843865
-    },
-    {
-      "id": "min_bsky_ac2368d7d4a1",
-      "type": "tweet",
-      "title": "I don't think I've seen a fair catch free kick live before, at any level of football",
-      "fullText": "I don't think I've seen a fair catch free kick live before, at any level of football",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Ben Goessling post",
-      "publishedAt": "2026-11-23T02:56:18.097Z",
-      "url": "https://bsky.app/profile/bengoessling.bsky.social/post/3n2x4yikvuv2r",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "star_tribune_public_beat_wire_min",
-      "outletName": "Ben Goessling",
-      "reporterId": "ben_goessling",
-      "reporterName": "Ben Goessling",
-      "author": "Ben Goessling",
-      "authorHandle": "@BenGoessling",
-      "authorProfileUrl": "https://x.com/BenGoessling",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 2.1,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "live_in_game",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 348.5910577777778
+      "storyRank": 342.3513394444444
     },
     {
       "id": "min_bsky_4814e9a5edcf",
@@ -231,81 +178,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 345.183975
-    },
-    {
-      "id": "min_bsky_f6680492fa69",
-      "type": "tweet",
-      "title": "The Kirk Cousins of it all aside, the 49ers are a wood chipper",
-      "fullText": "The Kirk Cousins of it all aside, the 49ers are a wood chipper",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:okvjatxlpd4sl3ewhkld4bu3/bafkreifqiwujfmk3fj4i6upr5qxgvezkz4cewc2hdt26lbstacgp3x6jlm",
-      "imageAlt": "Andrew Krammer post",
-      "publishedAt": "2026-11-23T02:39:08.112Z",
-      "url": "https://bsky.app/profile/andrewkrammer.bsky.social/post/3n2x3zs4e4k2w",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "star_tribune_public_beat_wire_min",
-      "outletName": "Andrew Krammer",
-      "reporterId": "andrew_krammer",
-      "reporterName": "Andrew Krammer",
-      "author": "Andrew Krammer",
-      "authorHandle": "@Andrew_Krammer",
-      "authorProfileUrl": "https://x.com/Andrew_Krammer",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 2.1,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "live_in_game",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 344.58556055555556
-    },
-    {
-      "id": "min_bsky_6ecb0ba6f9f8",
-      "type": "tweet",
-      "title": "So even without considering the defensive TD, the 49ers will finish this half with 8.7 yards per play and no turnovers against the league's top pass defense.",
-      "fullText": "So even without considering the defensive TD, the 49ers will finish this half with 8.7 yards per play and no turnovers against the league's top pass defense.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Andrew Krammer post",
-      "publishedAt": "2026-11-23T02:39:07.903Z",
-      "url": "https://bsky.app/profile/andrewkrammer.bsky.social/post/3n2x3zrvv3k2x",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "star_tribune_public_beat_wire_min",
-      "outletName": "Andrew Krammer",
-      "reporterId": "andrew_krammer",
-      "reporterName": "Andrew Krammer",
-      "author": "Andrew Krammer",
-      "authorHandle": "@Andrew_Krammer",
-      "authorProfileUrl": "https://x.com/Andrew_Krammer",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 2.1,
-      "category": "film",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "live_in_game",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 344.5847477777778
+      "storyRank": 327.69144944444446
     },
     {
       "id": "min_bsky_27c669baa0a8",
@@ -342,44 +215,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 344.063065
-    },
-    {
-      "id": "min_bsky_fecab1979829",
-      "type": "tweet",
-      "title": "Only a few times I've seen a medical staff jump into action that fast and players react that strongly. Similar speed to the response when Teddy Bridgewater went down.",
-      "fullText": "Only a few times I've seen a medical staff jump into action that fast and players react that strongly. Similar speed to the response when Teddy Bridgewater went down.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Ben Goessling post",
-      "publishedAt": "2026-11-23T02:26:10.138Z",
-      "url": "https://bsky.app/profile/bengoessling.bsky.social/post/3n2x3cmegrc27",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "star_tribune_public_beat_wire_min",
-      "outletName": "Ben Goessling",
-      "reporterId": "ben_goessling",
-      "reporterName": "Ben Goessling",
-      "author": "Ben Goessling",
-      "authorHandle": "@BenGoessling",
-      "authorProfileUrl": "https://x.com/BenGoessling",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 2.1,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "live_in_game",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 341.5601061111111
+      "storyRank": 326.5705394444444
     },
     {
       "id": "min_bsky_69c99595379f",
@@ -416,44 +252,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 340.35455055555553
-    },
-    {
-      "id": "min_bsky_a89607ac19e1",
-      "type": "tweet",
-      "title": "Brock Purdy 34yd to Evans on 2nd-10 vs. a 5-man rush will further push him to the right on this chart ... hits Kittle with perfect timing in front of Harrison Smith to give 49ers a 14-7 lead",
-      "fullText": "Brock Purdy 34yd to Evans on 2nd-10 vs. a 5-man rush will further push him to the right on this chart ... hits Kittle with perfect timing in front of Harrison Smith to give 49ers a 14-7 lead",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:okvjatxlpd4sl3ewhkld4bu3/bafkreiannrrb4kf3kajlyw4ffrztezpscwzrcct6vc5tpxwlnhzxap2faa",
-      "imageAlt": "Andrew Krammer post",
-      "publishedAt": "2026-11-23T02:09:33.183Z",
-      "url": "https://bsky.app/profile/andrewkrammer.bsky.social/post/3n2x2evfszc2n",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "star_tribune_public_beat_wire_min",
-      "outletName": "Andrew Krammer",
-      "reporterId": "andrew_krammer",
-      "reporterName": "Andrew Krammer",
-      "author": "Andrew Krammer",
-      "authorHandle": "@Andrew_Krammer",
-      "authorProfileUrl": "https://x.com/Andrew_Krammer",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 2.1,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "live_in_game",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 337.68305888888887
+      "storyRank": 322.862025
     },
     {
       "id": "min_bsky_e1b9d2e38719",
@@ -490,7 +289,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 331.9773238888889
+      "storyRank": 314.48479833333334
     },
     {
       "id": "min_bsky_a52b5ac1afdc",
@@ -527,175 +326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 331.093605
-    },
-    {
-      "id": "min_vid_024e3ba9ad86",
-      "type": "video",
-      "title": "Kirk Cousins Goes Deep to a Wide-Open Justin Jefferson for 29-Yard Completion",
-      "summary": "Minnesota Vikings quarterback Kirk Cousins passes to wide receiver Justin Jefferson for a 29-yard gain in first half.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/ghceiywlayb7uog1exgp.jpg",
-      "imageAlt": "Kirk Cousins Goes Deep to a Wide-Open Justin Jefferson for 29-Yard Completion",
-      "publishedAt": "2026-11-23T01:50:00.000Z",
-      "url": "https://www.vikings.com/video/kirk-cousins-justin-jefferson-29-yard-completion-catch-49ers",
-      "externalVideoUrl": "https://www.vikings.com/video/kirk-cousins-justin-jefferson-29-yard-completion-catch-49ers",
-      "outletId": "vikings_official",
-      "outletName": "vikings.com Video",
-      "reporterId": "vikings_official",
-      "reporterName": "vikings.com Video",
-      "author": "vikings.com Video",
-      "authorHandle": "@Vikings",
-      "authorProfileUrl": "https://www.vikings.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 19.1771
-    },
-    {
-      "id": "min_espn_165c27d62fbe1",
-      "type": "article",
-      "title": "How active NFL players continue to redefine all-time sack list",
-      "summary": "Myles Garrett's torrid pace up the all-time sack list paces active players making their moves among the greats.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0828/nfl_data_viz_garrett_cr_16x9_608x342.jpg",
-      "imageAlt": "How active NFL players continue to redefine all-time sack list",
-      "publishedAt": "2026-11-23T01:49:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "sarah_barshop",
-      "reporterName": "Sarah Barshop",
-      "author": "Sarah Barshop",
-      "authorHandle": "@sarahbarshop",
-      "authorProfileUrl": "https://x.com/sarahbarshop",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 19.0723
-    },
-    {
-      "id": "min_espn_c66b1cfb0eee8",
-      "type": "article",
-      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
-      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-23T01:42:13Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 17.7795
-    },
-    {
-      "id": "min_vid_ea503e24fbb4",
-      "type": "video",
-      "title": "Eric Wilson Sacks Brock Purdy for His Fifth Sack of 2026 Season",
-      "summary": "Minnesota Vikings linebacker Eric Wilson sacks San Francisco 49ers quarterback Brock Purdy for a 7-yard loss.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/nyunpbmzardzg0zqoqjq.jpg",
-      "imageAlt": "Eric Wilson Sacks Brock Purdy for His Fifth Sack of 2026 Season",
-      "publishedAt": "2026-11-23T01:40:00.000Z",
-      "url": "https://www.vikings.com/video/eric-wilson-sacks-brock-purdy-49ers-2026",
-      "externalVideoUrl": "https://www.vikings.com/video/eric-wilson-sacks-brock-purdy-49ers-2026",
-      "outletId": "vikings_official",
-      "outletName": "vikings.com Video",
-      "reporterId": "vikings_official",
-      "reporterName": "vikings.com Video",
-      "author": "vikings.com Video",
-      "authorHandle": "@Vikings",
-      "authorProfileUrl": "https://www.vikings.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 17.4129
-    },
-    {
-      "id": "min_vid_b455d7f0bbef",
-      "type": "video",
-      "title": "Got Mossed: T.J. Hockenson Catches Kirk Cousins' 20-Yard Pass",
-      "summary": "Minnesota Vikings quarterback Kirk Cousins passes to tight end T.J. Hockenson for a 20-yard gain vs. San Francisco 49ers in Mexico City.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/eavbniaakmtqfdtvpbgq.jpg",
-      "imageAlt": "Got Mossed: T.J. Hockenson Catches Kirk Cousins' 20-Yard Pass",
-      "publishedAt": "2026-11-23T01:30:00.000Z",
-      "url": "https://www.vikings.com/video/got-mossed-t-j-hockenson-catches-kirk-cousins-20-yard-pass",
-      "externalVideoUrl": "https://www.vikings.com/video/got-mossed-t-j-hockenson-catches-kirk-cousins-20-yard-pass",
-      "outletId": "vikings_official",
-      "outletName": "vikings.com Video",
-      "reporterId": "vikings_official",
-      "reporterName": "vikings.com Video",
-      "author": "vikings.com Video",
-      "authorHandle": "@Vikings",
-      "authorProfileUrl": "https://www.vikings.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 15.9084
+      "storyRank": 313.60107944444445
     },
     {
       "id": "min_vid_4b92a5c76771",
@@ -729,26 +360,27 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 15.3139
+      "storyRank": 11.2388
     },
     {
-      "id": "min_espn_60efae509e729",
-      "type": "article",
-      "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "publishedAt": "2026-11-23T01:00:32Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
+      "id": "min_vid_024e3ba9ad86",
+      "type": "video",
+      "title": "Kirk Cousins Goes Deep to a Wide-Open Justin Jefferson for 29-Yard Completion",
+      "summary": "Minnesota Vikings quarterback Kirk Cousins passes to wide receiver Justin Jefferson for a 29-yard gain in first half.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/ghceiywlayb7uog1exgp.jpg",
+      "imageAlt": "Kirk Cousins Goes Deep to a Wide-Open Justin Jefferson for 29-Yard Completion",
+      "publishedAt": "2026-11-23T01:50:00.000Z",
+      "url": "https://www.vikings.com/video/kirk-cousins-justin-jefferson-29-yard-completion-catch-49ers",
+      "externalVideoUrl": "https://www.vikings.com/video/kirk-cousins-justin-jefferson-29-yard-completion-catch-49ers",
+      "outletId": "vikings_official",
+      "outletName": "vikings.com Video",
+      "reporterId": "vikings_official",
+      "reporterName": "vikings.com Video",
+      "author": "vikings.com Video",
+      "authorHandle": "@Vikings",
+      "authorProfileUrl": "https://www.vikings.com/news/",
       "trustTier": 1,
-      "wireSource": "espn_team_news",
+      "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -762,7 +394,75 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.5511
+      "storyRank": 10.5111
+    },
+    {
+      "id": "min_vid_ea503e24fbb4",
+      "type": "video",
+      "title": "Eric Wilson Sacks Brock Purdy for His Fifth Sack of 2026 Season",
+      "summary": "Minnesota Vikings linebacker Eric Wilson sacks San Francisco 49ers quarterback Brock Purdy for a 7-yard loss.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/nyunpbmzardzg0zqoqjq.jpg",
+      "imageAlt": "Eric Wilson Sacks Brock Purdy for His Fifth Sack of 2026 Season",
+      "publishedAt": "2026-11-23T01:40:00.000Z",
+      "url": "https://www.vikings.com/video/eric-wilson-sacks-brock-purdy-49ers-2026",
+      "externalVideoUrl": "https://www.vikings.com/video/eric-wilson-sacks-brock-purdy-49ers-2026",
+      "outletId": "vikings_official",
+      "outletName": "vikings.com Video",
+      "reporterId": "vikings_official",
+      "reporterName": "vikings.com Video",
+      "author": "vikings.com Video",
+      "authorHandle": "@Vikings",
+      "authorProfileUrl": "https://www.vikings.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 9.8601
+    },
+    {
+      "id": "min_vid_b455d7f0bbef",
+      "type": "video",
+      "title": "Got Mossed: T.J. Hockenson Catches Kirk Cousins' 20-Yard Pass",
+      "summary": "Minnesota Vikings quarterback Kirk Cousins passes to tight end T.J. Hockenson for a 20-yard gain vs. San Francisco 49ers in Mexico City.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/eavbniaakmtqfdtvpbgq.jpg",
+      "imageAlt": "Got Mossed: T.J. Hockenson Catches Kirk Cousins' 20-Yard Pass",
+      "publishedAt": "2026-11-23T01:30:00.000Z",
+      "url": "https://www.vikings.com/video/got-mossed-t-j-hockenson-catches-kirk-cousins-20-yard-pass",
+      "externalVideoUrl": "https://www.vikings.com/video/got-mossed-t-j-hockenson-catches-kirk-cousins-20-yard-pass",
+      "outletId": "vikings_official",
+      "outletName": "vikings.com Video",
+      "reporterId": "vikings_official",
+      "reporterName": "vikings.com Video",
+      "author": "vikings.com Video",
+      "authorHandle": "@Vikings",
+      "authorProfileUrl": "https://www.vikings.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 9.275
     },
     {
       "id": "min_bsky_0f207bb1e62f",
@@ -799,7 +499,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.0444
+      "storyRank": 5.0384
     },
     {
       "id": "min_bsky_d9326fa33dd3",
@@ -836,184 +536,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.0444
-    },
-    {
-      "id": "min_espn_804b13b182152",
-      "type": "article",
-      "title": "Week 11 betting preview: Analysis, best bets, TD predictions for Sunday",
-      "summary": "Our experts dive into the odds and player props for Week 11 and offer their betting tips and favorite plays.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748568_608x342_16-9.jpg",
-      "imageAlt": "Week 11 betting preview: Analysis, best bets, TD predictions for Sunday",
-      "publishedAt": "2026-11-22T20:08:45Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50534274/week-11-nfl-odds-touchdown-props-best-bets-sunday-games",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "ben_solak",
-      "reporterName": "Ben Solak",
-      "author": "Ben Solak",
-      "authorHandle": "@BenjaminSolak",
-      "authorProfileUrl": "https://x.com/BenjaminSolak",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.3737
-    },
-    {
-      "id": "min_bsky_7ba76236bee7",
-      "type": "tweet",
-      "title": "It was a hike, but we made it. Now what to do for 3 hours before kickoff.",
-      "fullText": "It was a hike, but we made it. Now what to do for 3 hours before kickoff.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:dc3dxlm7iqw3rwg4elxsc5s2/bafkreifc2d2cmc4a4pqmlpsgscmp3yxglu2w7qzostk33il32x3vtmekru",
-      "imageAlt": "Andrew Krammer post",
-      "publishedAt": "2026-11-22T22:08:42.312Z",
-      "url": "https://bsky.app/profile/andrewkrammer.bsky.social/post/3n2wmw7ygj42y",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "star_tribune_public_beat_wire_min",
-      "outletName": "Andrew Krammer",
-      "reporterId": "andrew_krammer",
-      "reporterName": "Andrew Krammer",
-      "author": "Andrew Krammer",
-      "authorHandle": "@Andrew_Krammer",
-      "authorProfileUrl": "https://x.com/Andrew_Krammer",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.2258
-    },
-    {
-      "id": "min_espn_7e5b5d51b9f61",
-      "type": "article",
-      "title": "Best bets for Vikings-49ers: Tips, analysis and our top prop plays",
-      "summary": "Odds, analysis and recommended plays to help you bet Sunday night's Vikings-49ers game.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748654_608x342_16-9.jpg",
-      "imageAlt": "Best bets for Vikings-49ers: Tips, analysis and our top prop plays",
-      "publishedAt": "2026-11-22T11:32:20Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50511549/nfl-week-11-odds-vikings-49ers-betting-preview-props",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "Pamela Maldonado",
-      "author": "Pamela Maldonado",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.2022
-    },
-    {
-      "id": "min_bsky_ac310658b710",
-      "type": "tweet",
-      "title": "Gophers (6-0) up 43-35 over Utah in their second of two games in South Carolina at the Shrines Children's Charleston Classic ... Jaylen Crocker-Johnson hit career-high seventh 3pt and has 23 points already w/ 14:46 left. He's one shot from his career high 26 points.",
-      "fullText": "Gophers (6-0) up 43-35 over Utah in their second of two games in South Carolina at the Shrines Children's Charleston Classic ... Jaylen Crocker-Johnson hit career-high seventh 3pt and has 23 points already w/ 14:46 left. He's one shot from his career high 26 points.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Andrew Krammer post",
-      "publishedAt": "2026-11-23T00:11:17.114Z",
-      "url": "https://bsky.app/profile/andrewkrammer.bsky.social/post/3n2wtrg3nmk2x",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "star_tribune_public_beat_wire_min",
-      "outletName": "Andrew Krammer",
-      "reporterId": "andrew_krammer",
-      "reporterName": "Andrew Krammer",
-      "author": "Andrew Krammer",
-      "authorHandle": "@Andrew_Krammer",
-      "authorProfileUrl": "https://x.com/Andrew_Krammer",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.5496
-    },
-    {
-      "id": "min_bsky_1fe8513d71b6",
-      "type": "tweet",
-      "title": "The Titans should be relegated",
-      "fullText": "The Titans should be relegated",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Andrew Krammer post",
-      "publishedAt": "2026-11-22T20:46:56.905Z",
-      "url": "https://bsky.app/profile/andrewkrammer.bsky.social/post/3n2widzsyu22s",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "star_tribune_public_beat_wire_min",
-      "outletName": "Andrew Krammer",
-      "reporterId": "andrew_krammer",
-      "reporterName": "Andrew Krammer",
-      "author": "Andrew Krammer",
-      "authorHandle": "@Andrew_Krammer",
-      "authorProfileUrl": "https://x.com/Andrew_Krammer",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2297
+      "storyRank": 5.0384
     },
     {
       "id": "min_espn_888a12f7e7d0e",
@@ -1046,77 +569,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4792
-    },
-    {
-      "id": "min_bsky_a07ce431cde1",
-      "type": "tweet",
-      "title": "Dallas Turner fined $11,941 by the NFL for taunting in last week's win in Green Bay",
-      "fullText": "Dallas Turner fined $11,941 by the NFL for taunting in last week's win in Green Bay",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Andrew Krammer post",
-      "publishedAt": "2026-11-21T21:22:12.358Z",
-      "url": "https://bsky.app/profile/andrewkrammer.bsky.social/post/3n2tzu5tbjk22",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "star_tribune_public_beat_wire_min",
-      "outletName": "Andrew Krammer",
-      "reporterId": "andrew_krammer",
-      "reporterName": "Andrew Krammer",
-      "author": "Andrew Krammer",
-      "authorHandle": "@Andrew_Krammer",
-      "authorProfileUrl": "https://x.com/Andrew_Krammer",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0304
-    },
-    {
-      "id": "min_espn_481f6b6eb5e6b",
-      "type": "article",
-      "title": "NFL Week 11 predictions: Upsets, fantasy sleepers, stat lines, TD scorers, more",
-      "summary": "Eagles upsetting the Steelers? Big receiving day for Christian McCaffrey? Touchdown for Josh Downs? Let's predict 15 things for Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746461_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 predictions: Upsets, fantasy sleepers, stat lines, TD scorers, more",
-      "publishedAt": "2026-11-21T11:49:08Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50521728/week-11-predictions-upsets-fantasy-sleepers-stats-2026",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "ben_solak",
-      "reporterName": "Ben Solak",
-      "author": "Ben Solak",
-      "authorHandle": "@BenjaminSolak",
-      "authorProfileUrl": "https://x.com/BenjaminSolak",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.3421
+      "storyRank": 0.4163
     },
     {
       "id": "min_rss_a7d157459538",
@@ -1149,7 +602,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5437
+      "storyRank": 0.5276
     },
     {
       "id": "min_espn_3da6192fc0397",
@@ -1182,40 +635,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
-    },
-    {
-      "id": "min_espn_4b15838125df3",
-      "type": "article",
-      "title": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "summary": "Here's a look at what each NFL team is wearing in Week 11, led by Houston debuting its Rivalries combination.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/commanders-texans-week-11-unis16x9.jpg",
-      "imageAlt": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "publishedAt": "2026-11-20T22:49:33Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "Anthony Gharib",
-      "author": "Anthony Gharib",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0575
+      "storyRank": 0.0591
     },
     {
       "id": "min_espn_2ade24c77278f",
@@ -1248,7 +668,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0546
     },
     {
       "id": "min_rss_a99895bcf009",
@@ -1281,40 +701,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.158
-    },
-    {
-      "id": "min_espn_e18552bc1fb8c",
-      "type": "article",
-      "title": "NFL Week 11 betting odds: Lines and totals for every game",
-      "summary": "Updated odds, spreads, totals and FPI predictions for every NFL game in Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746635_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 betting odds: Lines and totals for every game",
-      "publishedAt": "2026-11-20T20:13:57Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2152
+      "storyRank": 0.2126
     },
     {
       "id": "min_vid_2a814d12a7e8",
@@ -1348,40 +735,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1531
-    },
-    {
-      "id": "min_espn_f9ca15e024182",
-      "type": "article",
-      "title": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "summary": "Joe Burrow vs. Jayden Daniels? Fernando Mendoza vs. Bo Nix? There are 12 more games in Week 11, and we have picks, predictions and more for all of them.",
-      "imageUrl": "https://a.espncdn.com/photo/2025/0819/r1533632_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "publishedAt": "2026-11-20T18:48:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50522208/week-11-picks-predictions-schedule-fantasy-odds-2026",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "author": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2076
+      "storyRank": 0.2061
     },
     {
       "id": "min_vid_7591f039fd45",
@@ -1415,7 +769,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2066
+      "storyRank": 0.2004
     },
     {
       "id": "min_vid_636378ed63a0",
@@ -1449,7 +803,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1433
+      "storyRank": 0.1932
     },
     {
       "id": "min_vid_11f400d0e3fc",
@@ -1483,7 +837,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
+      "storyRank": 0.0476
     },
     {
       "id": "min_vid_78c196b2b87d",
@@ -1517,40 +871,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1369
-    },
-    {
-      "id": "min_espn_6e8b34928325d",
-      "type": "article",
-      "title": "NFL offseason free agent and trade acquisitions that have and have not worked",
-      "summary": "Kenneth Walker III and Devin Lloyd look great with their new teams in 2026. But Jaylen Waddle and Alontae Taylor haven't quite found their groove.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1747957_608x342_16-9.jpg",
-      "imageAlt": "NFL offseason free agent and trade acquisitions that have and have not worked",
-      "publishedAt": "2026-11-20T11:42:26Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50525533/2026-offseason-change-scenery-fits-players-new-teams",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "Aaron Schatz",
-      "author": "Aaron Schatz",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.044
+      "storyRank": 0.1848
     },
     {
       "id": "min_vid_d706f0132948",
@@ -1584,7 +905,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0972
+      "storyRank": 0.132
     },
     {
       "id": "min_vid_39da6f2ee672",
@@ -1618,7 +939,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1348
+      "storyRank": 0.0949
     },
     {
       "id": "min_vid_aa4d29bb6daa",
@@ -1652,7 +973,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0968
+      "storyRank": 0.1315
     },
     {
       "id": "min_vid_e799deb2a7ad",
@@ -1686,7 +1007,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1332
+      "storyRank": 0.0938
     },
     {
       "id": "min_espn_fa620a694d7c8",
@@ -1719,40 +1040,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1324
-    },
-    {
-      "id": "min_rss_370fd625a594",
-      "type": "article",
-      "title": "Quarterback Kirk Cousins Heading for Unique Rematch Against 49ers",
-      "summary": "",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/hiaeau8ftykden114f4x.jpg",
-      "imageAlt": "Quarterback Kirk Cousins Heading for Unique Rematch Against 49ers",
-      "publishedAt": "2026-11-19T19:56:44.000Z",
-      "url": "https://www.vikings.com/news/quarterback-kirk-cousins-unique-rematch-against-49ers-week-11",
-      "outletId": "vikings_official",
-      "outletName": "vikings.com Official",
-      "reporterId": "vikings_official",
-      "reporterName": "vikings.com Official",
-      "author": "vikings.com Official",
-      "authorHandle": "@Vikings",
-      "authorProfileUrl": "https://www.vikings.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.129
+      "storyRank": 0.1295
     },
     {
       "id": "min_espn_6b9a07c93cfde",
@@ -1785,7 +1073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0312
     },
     {
       "id": "min_vid_6455bcf2d475",
@@ -1819,40 +1107,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1269
-    },
-    {
-      "id": "min_espn_b95a427d7fb7b",
-      "type": "article",
-      "title": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "summary": "Here's the good and the bad for each offensive coordinator or playcaller through Week 10, plus keys to their success the rest of the way.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1118/32_for_32_midseason_look_608x342.png",
-      "imageAlt": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "publishedAt": "2026-11-19T17:37:25Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50520404/nfl-offensive-coordinators-playcallers-midseason-report",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.031
+      "storyRank": 0.0894
     },
     {
       "id": "min_vid_65e06ced62f8",
@@ -1886,7 +1141,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.086
+      "storyRank": 0.117
     },
     {
       "id": "min_vid_efe868953c83",
@@ -1920,7 +1175,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1146
+      "storyRank": 0.0809
     },
     {
       "id": "min_vid_66867c838169",
@@ -1954,7 +1209,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0812
+      "storyRank": 0.1106
     },
     {
       "id": "min_vid_4b1bf565ff0b",
@@ -1988,7 +1243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0933
+      "storyRank": 0.066
     },
     {
       "id": "min_vid_a60a5fbbe774",
@@ -2022,7 +1277,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0928
+      "storyRank": 0.0657
     },
     {
       "id": "min_vid_af3089cccc97",
@@ -2056,7 +1311,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0663
+      "storyRank": 0.0906
     },
     {
       "id": "min_vid_b81c2c3acf93",
@@ -2090,7 +1345,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0894
+      "storyRank": 0.0879
     },
     {
       "id": "min_rss_4cb08c829ab0",
@@ -2123,40 +1378,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0887
-    },
-    {
-      "id": "min_espn_533c73d43a5d8",
-      "type": "article",
-      "title": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "summary": "Which NFL team could land Drew Mestemaker? Who needs Chris Cole, Ashton Hampton or Jamari Johnson? Jordan Reid projected first-round picks for 2027 -- and a trade.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/261118_cfb_jordan-reid-mock-draft_16x9_608x342.jpg",
-      "imageAlt": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "publishedAt": "2026-11-18T17:51:58Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/50502243/2027-nfl-mock-draft-reid-midseason-32-first-round-predictions",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "Jordan Reid",
-      "author": "Jordan Reid",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0216
+      "storyRank": 0.0872
     },
     {
       "id": "min_vid_8b2ee00f05c8",
@@ -2190,7 +1412,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054
+      "storyRank": 0.0212
     },
     {
       "id": "min_vid_9601f0892eb7",
@@ -2224,7 +1446,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0838
+      "storyRank": 0.0825
     },
     {
       "id": "min_vid_02fbf75ed8f2",
@@ -2258,7 +1480,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0208
+      "storyRank": 0.0205
     },
     {
       "id": "min_espn_a9bd573e68363",
@@ -2291,41 +1513,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
-    },
-    {
-      "id": "min_vid_974585435644",
-      "type": "video",
-      "title": "GMFB: Which NFL Team Do You Least Want to Face Right Now?",
-      "summary": "NFL Network's \"Good Morning Football\" crew discuss which NFL team do you least want to face right now in Week 11 of the 2026 season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/qopjemjufy0zb1ulbck8.png",
-      "imageAlt": "GMFB: Which NFL Team Do You Least Want to Face Right Now?",
-      "publishedAt": "2026-11-18T12:30:00.000Z",
-      "url": "https://www.vikings.com/video/nfc-vikings-49ers-bengals-gmfb-2026",
-      "externalVideoUrl": "https://www.vikings.com/video/nfc-vikings-49ers-bengals-gmfb-2026",
-      "outletId": "vikings_official",
-      "outletName": "vikings.com Video",
-      "reporterId": "vikings_official",
-      "reporterName": "vikings.com Video",
-      "author": "vikings.com Video",
-      "authorHandle": "@Vikings",
-      "authorProfileUrl": "https://www.vikings.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0203
     },
     {
       "id": "min_vid_867ad769c810",
@@ -2359,7 +1547,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.02
+      "storyRank": 0.0197
     },
     {
       "id": "min_tx_ccfc32eb0396",
@@ -2393,7 +1581,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0048
+      "storyRank": 0.0188
     },
     {
       "id": "min_vid_bbfca4a901a1",
@@ -2427,7 +1615,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0177
+      "storyRank": 0.07
     },
     {
       "id": "min_vid_17d04d8884a7",
@@ -2461,40 +1649,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0694
-    },
-    {
-      "id": "min_espn_d51f7983010a2",
-      "type": "article",
-      "title": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "summary": "How does every NFL team stack up heading into Week 11? We made our 1-32 list and picked the non-quarterback MVPs for each roster.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/nfl_power_rankings_608x342.png",
-      "imageAlt": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "publishedAt": "2026-11-17T20:45:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0669
+      "storyRank": 0.0684
     },
     {
       "id": "min_vid_f6de26945bbb",
@@ -2528,7 +1683,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.0163
     },
     {
       "id": "min_vid_aad0015d2b94",
@@ -2562,7 +1717,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0661
+      "storyRank": 0.0652
     },
     {
       "id": "min_vid_ef98ee6dcba8",
@@ -2596,7 +1751,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.066
+      "storyRank": 0.0651
     },
     {
       "id": "min_vid_4f5e31d396d2",
@@ -2630,40 +1785,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0651
-    },
-    {
-      "id": "min_espn_c6078de4614f7",
-      "type": "article",
-      "title": "Super Bowl LXI odds: All 32 teams' odds to win the championship",
-      "summary": "Every NFL team's win total, as well as odds to win the division, the conference and Super Bowl LXI.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0202/r1609489_608x342_16-9.jpg",
-      "imageAlt": "Super Bowl LXI odds: All 32 teams' odds to win the championship",
-      "publishedAt": "2026-11-17T17:59:35Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/47809892/2026-super-bowl-lxi-odds-nfl-sports-betting-season-win-totals-playoffs",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "Doug Greenberg",
-      "author": "Doug Greenberg",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.0642
     },
     {
       "id": "min_espn_f82a7dcf26a21",
@@ -2696,7 +1818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0159
     },
     {
       "id": "min_espn_16beeafd3881f",
@@ -2729,41 +1851,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
-    },
-    {
-      "id": "min_vid_ffc25e0eca30",
-      "type": "video",
-      "title": "GMFB: Which Current NFL Wide Receiver Reminds You of Jerry Rice?",
-      "summary": "The \"GMFB\" crew discuss which current NFL wide receiver reminds you of Hall of Fame wide receiver Jerry Rice.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/vikings/rqrilvqwbkuuljngmw2d.png",
-      "imageAlt": "GMFB: Which Current NFL Wide Receiver Reminds You of Jerry Rice?",
-      "publishedAt": "2026-11-17T14:00:00.000Z",
-      "url": "https://www.vikings.com/video/justin-jefferson-jerry-rice-wide-receiver-2026-gmfb",
-      "externalVideoUrl": "https://www.vikings.com/video/justin-jefferson-jerry-rice-wide-receiver-2026-gmfb",
-      "outletId": "vikings_official",
-      "outletName": "vikings.com Video",
-      "reporterId": "vikings_official",
-      "reporterName": "vikings.com Video",
-      "author": "vikings.com Video",
-      "authorHandle": "@Vikings",
-      "authorProfileUrl": "https://www.vikings.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.0156
     },
     {
       "id": "min_espn_c7594e179b64a",
@@ -2796,40 +1884,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
-    },
-    {
-      "id": "min_espn_51b53fdbdad19",
-      "type": "article",
-      "title": "2027 NFL draft order projections for Round 1, chances for top pick, more",
-      "summary": "ESPN's Football Power Index projects the 2027 NFL draft order for Round 1, complete with each team's chances to pick in the top five, in the top 10 and at No. 1.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0601/r1666608_608x342_16-9.jpg",
-      "imageAlt": "2027 NFL draft order projections for Round 1, chances for top pick, more",
-      "publishedAt": "2026-11-17T11:41:00Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/49794361/2027-nfl-draft-order-projections-first-round-picks",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "ESPN staff",
-      "author": "ESPN staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0152
+      "storyRank": 0.0038
     },
     {
       "id": "min_tx_e76147842e66",
@@ -2863,7 +1918,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0144
     },
     {
       "id": "min_vid_882f108cc9ee",
@@ -2897,7 +1952,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0034
+      "storyRank": 0.0134
     },
     {
       "id": "min_vid_297e27c47bc4",
@@ -2931,40 +1986,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0542
-    },
-    {
-      "id": "min_espn_ee9a3465db613",
-      "type": "article",
-      "title": "Kyle Hamilton rocks Christmas sweater ahead of 'MNF,' leads NFL Week 10 arrivals",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746900_545x307_16-9.png",
-      "imageAlt": "Kyle Hamilton rocks Christmas sweater ahead of 'MNF,' leads NFL Week 10 arrivals",
-      "publishedAt": "2026-11-16T23:53:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50465223/nfl-week-10-fashionable-arrivals",
-      "outletId": "espn_min",
-      "outletName": "ESPN",
-      "reporterId": "espn_min",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/min/minnesota-vikings",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0135
+      "storyRank": 0.0535
     },
     {
       "id": "min_vid_430baf5fbca4",
@@ -2998,7 +2020,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0128
     },
     {
       "id": "min_vid_aefc7edddefc",
@@ -3032,7 +2054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.0122
     },
     {
       "id": "min_tx_c60d1d6fe6d6",
@@ -3066,7 +2088,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0029
+      "storyRank": 0.0115
     },
     {
       "id": "min_vid_59889dbdaa4d",
@@ -3100,7 +2122,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0108
     },
     {
       "id": "min_vid_514cdf44b775",
@@ -3134,7 +2156,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0107
     },
     {
       "id": "min_vid_0d719b5beef2",
@@ -3168,7 +2190,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0107
     },
     {
       "id": "min_vid_21a7ad4b2634",
@@ -3202,7 +2224,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0107
     },
     {
       "id": "min_vid_3460df4ea3b3",
@@ -3236,7 +2258,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0107
     },
     {
       "id": "min_vid_317b73782fa9",
@@ -3270,7 +2292,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0107
     },
     {
       "id": "min_vid_f2cfebdeb79a",
@@ -3304,7 +2326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0107
     },
     {
       "id": "min_vid_d22c0ec05d8c",
@@ -3338,7 +2360,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0106
     },
     {
       "id": "min_vid_9eb4e964c66a",
@@ -3372,7 +2394,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0106
     },
     {
       "id": "min_vid_2eae8b0a7c58",
@@ -3406,7 +2428,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0026
     },
     {
       "id": "min_vid_0515a929c91f",
@@ -3440,7 +2462,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0106
     },
     {
       "id": "min_vid_56ae09664539",
@@ -3474,7 +2496,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0105
     },
     {
       "id": "min_vid_9fcc3c88934d",
@@ -3508,7 +2530,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0026
     },
     {
       "id": "min_vid_ae6fbeecc0cd",
@@ -3542,7 +2564,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0105
     },
     {
       "id": "min_vid_bc34b23bce0e",
@@ -3576,7 +2598,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0105
     },
     {
       "id": "min_vid_935aeb8bb46a",
@@ -3610,7 +2632,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0104
     },
     {
       "id": "min_vid_201412492e02",
@@ -3644,7 +2666,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0104
     },
     {
       "id": "min_vid_34c44df270dd",
@@ -3712,7 +2734,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0104
     },
     {
       "id": "min_vid_fd2008ac7d29",
@@ -3746,7 +2768,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0104
     },
     {
       "id": "min_vid_8a42aeabbc0d",
@@ -3780,7 +2802,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0104
     },
     {
       "id": "min_vid_c29d3ac14f4b",
@@ -3882,7 +2904,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0104
     },
     {
       "id": "min_vid_86346744290e",
@@ -3916,7 +2938,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0104
     },
     {
       "id": "min_vid_c92131e8bf8b",
@@ -3950,7 +2972,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0104
     },
     {
       "id": "min_vid_55cf7b0ea919",
@@ -3984,7 +3006,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0103
     },
     {
       "id": "min_vid_21805ccb006b",
@@ -4052,7 +3074,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0103
     },
     {
       "id": "min_vid_9e0b40ffdfca",
@@ -4120,7 +3142,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0103
     },
     {
       "id": "min_vid_ef0f1ba63088",
@@ -4154,7 +3176,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0023
+      "storyRank": 0.0091
     },
     {
       "id": "min_tx_3c0981c807ec",
@@ -4188,7 +3210,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.002
+      "storyRank": 0.008
     },
     {
       "id": "min_vid_8c2dbcd0e218",
@@ -4256,7 +3278,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0019
+      "storyRank": 0.0074
     },
     {
       "id": "min_vid_e9c40cba0af2",
@@ -4290,7 +3312,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0017
+      "storyRank": 0.0066
     },
     {
       "id": "min_vid_a1b4a536760f",
@@ -4324,7 +3346,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0066
     },
     {
       "id": "min_vid_db6870962019",
@@ -4358,7 +3380,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0066
     },
     {
       "id": "min_vid_3073062061d4",
@@ -4392,7 +3414,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0017
+      "storyRank": 0.0016
     },
     {
       "id": "min_vid_20a2e953aaeb",
@@ -4460,7 +3482,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0017
+      "storyRank": 0.0016
     },
     {
       "id": "min_vid_855f3ea78976",
@@ -4494,7 +3516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0016
+      "storyRank": 0.0062
     },
     {
       "id": "min_tx_0a51cfbd09d1",
@@ -4528,7 +3550,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0015
+      "storyRank": 0.006
     },
     {
       "id": "min_vid_e2fa7d71681d",
@@ -4562,7 +3584,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0015
+      "storyRank": 0.0058
     },
     {
       "id": "min_vid_ad3f641a4e4c",
@@ -4596,7 +3618,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0057
     },
     {
       "id": "min_vid_2b1c0b96c71c",
@@ -4664,7 +3686,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0057
     },
     {
       "id": "min_vid_ebff4aba28cc",
@@ -4698,7 +3720,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0057
     },
     {
       "id": "min_vid_bbe440f16601",
@@ -4732,7 +3754,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0056
     },
     {
       "id": "min_tx_1b63e5d81014",
@@ -4766,7 +3788,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0053
     },
     {
       "id": "min_vid_27f8c0adc772",
@@ -4800,7 +3822,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0051
     },
     {
       "id": "min_vid_d05609b78022",
@@ -4834,7 +3856,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0051
     },
     {
       "id": "min_vid_01696ef1bec4",
@@ -4868,7 +3890,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0051
     },
     {
       "id": "min_vid_34f4de77c7f8",
@@ -4902,7 +3924,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0051
     },
     {
       "id": "min_vid_ce73efc013fd",
@@ -4936,7 +3958,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.005
     },
     {
       "id": "min_vid_7b6ee47e0c02",
@@ -4970,7 +3992,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.005
     },
     {
       "id": "min_vid_d57eb6940977",
@@ -5004,7 +4026,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.005
     },
     {
       "id": "min_vid_a63b6031bf9a",
@@ -5038,7 +4060,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.0049
     },
     {
       "id": "min_tx_e4fa88a8e4a0",
@@ -5072,7 +4094,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.0047
     },
     {
       "id": "min_vid_f594c01b60a9",
@@ -5106,7 +4128,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.0047
     },
     {
       "id": "min_vid_cf4d8392eb35",
@@ -5140,7 +4162,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.0047
     },
     {
       "id": "min_vid_df109c40f2fa",
@@ -5174,7 +4196,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.0047
     },
     {
       "id": "min_vid_07382a93e98c",
@@ -5208,7 +4230,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.0047
     },
     {
       "id": "min_vid_78f5961e38b3",
@@ -5242,7 +4264,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.0047
     },
     {
       "id": "min_tx_80e55e774c57",
@@ -5276,7 +4298,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0043
     },
     {
       "id": "min_tx_af669a4d2caa",
@@ -5310,7 +4332,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0039
     },
     {
       "id": "min_tx_2ce463a3484a",
@@ -5344,7 +4366,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.003
     },
     {
       "id": "min_tx_4e2e9a5a5df1",
@@ -5378,7 +4400,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0028
     },
     {
       "id": "min_tx_b577b5d64da6",
@@ -5412,7 +4434,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0006
+      "storyRank": 0.0026
     },
     {
       "id": "min_rss_92f42357df89",

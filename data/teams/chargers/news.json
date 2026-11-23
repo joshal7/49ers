@@ -22,54 +22,22 @@
       "Outside linebacker Tuli Tuipulotu emphasized regrouping after defense allowed scores on New York's opening five possessions, according to [chargers.com Video](https://www.chargers.com/video/tuli-tuipulotu-media-availability-jets-week-11-2026)."
     ],
     "coveredStoryKeys": [
-      "lac_espn_c66b1cfb0eee8",
-      "lac_espn_7435c17a22db1",
-      "lac_vid_6eb08188d239",
-      "lac_espn_165c27d62fbe1",
+      "lac_espn_829588ca8e863",
       "lac_rss_75dbbcd77d80",
-      "lac_espn_3b5ddc54255df"
+      "lac_espn_7a956123b6c0f",
+      "lac_vid_6eb08188d239",
+      "lac_vid_feb773895762",
+      "lac_vid_81bb93d097b7"
     ],
     "coveredUrls": [
-      "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-      "https://www.chargers.com/video/ladd-mcconkey-media-availability-jets-week-11-2026",
-      "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
       "https://www.chargers.com/news/jets-takeaways-justin-herbert-jim-harbaugh-week-11",
-      "https://www.espn.com/fantasy/football/story/_/id/40699880/fantasy-football-injuries-position-battles-nfl-news-analysis"
+      "https://www.chargers.com/video/ladd-mcconkey-highlight-6-yard-touchdown-vs-jets-week-11-2026",
+      "https://www.chargers.com/video/tuli-tuipulotu-media-availability-jets-week-11-2026",
+      "https://www.espn.com/nfl/story/_/id/50567478/chargers-justin-herbert-lands-concussion-protocol",
+      "https://www.chargers.com/video/ladd-mcconkey-media-availability-jets-week-11-2026",
+      "https://www.chargers.com/video/ladd-mcconkey-highlight-11-yard-touchdown-vs-jets-week-11-2026"
     ],
     "sources": [
-      {
-        "sid": "S1",
-        "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-        "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-        "author": "NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:42:13Z"
-      },
-      {
-        "sid": "S2",
-        "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-        "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-        "author": "NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T02:01:39Z"
-      },
-      {
-        "sid": "S3",
-        "title": "Ladd McConkey: Justin Herbert 'Made a Hell of a Play' on Diving TD",
-        "url": "https://www.chargers.com/video/ladd-mcconkey-media-availability-jets-week-11-2026",
-        "author": "chargers.com Video",
-        "outlet": "chargers.com Video",
-        "publishedAt": "2026-11-23T00:44:53.000Z"
-      },
-      {
-        "sid": "S4",
-        "title": "How active NFL players continue to redefine all-time sack list",
-        "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-        "author": "Sarah Barshop",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:49:27Z"
-      },
       {
         "sid": "S5",
         "title": "5 Takeaways: Chargers Comeback Attempt Falls Short Against New York",
@@ -77,14 +45,6 @@
         "author": "chargers.com Official",
         "outlet": "chargers.com Official",
         "publishedAt": "2026-11-23T03:42:24.000Z"
-      },
-      {
-        "sid": "S6",
-        "title": "Fantasy buzz: Week 11's leading fantasy scorers through Sunday's 4 p.m. ET games",
-        "url": "https://www.espn.com/fantasy/football/story/_/id/40699880/fantasy-football-injuries-position-battles-nfl-news-analysis",
-        "author": "ESPN Fantasy",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:26:17Z"
       },
       {
         "sid": "S7",
@@ -95,12 +55,28 @@
         "publishedAt": "2026-11-22T23:44:35.000Z"
       },
       {
-        "sid": "S8",
-        "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-        "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-        "author": "ESPN Staff",
+        "sid": "S10",
+        "title": "Tuli Tuipulotu: \"Gotta Go Back To The Drawing Board\"",
+        "url": "https://www.chargers.com/video/tuli-tuipulotu-media-availability-jets-week-11-2026",
+        "author": "chargers.com Video",
+        "outlet": "chargers.com Video",
+        "publishedAt": "2026-11-23T00:38:26.000Z"
+      },
+      {
+        "sid": "S6",
+        "title": "Chargers' Justin Herbert lands in concussion protocol",
+        "url": "https://www.espn.com/nfl/story/_/id/50567478/chargers-justin-herbert-lands-concussion-protocol",
+        "author": "ESPN NFL Nation",
         "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:00:32Z"
+        "publishedAt": "2026-11-23T01:00:45Z"
+      },
+      {
+        "sid": "S3",
+        "title": "Ladd McConkey: Justin Herbert 'Made a Hell of a Play' on Diving TD",
+        "url": "https://www.chargers.com/video/ladd-mcconkey-media-availability-jets-week-11-2026",
+        "author": "chargers.com Video",
+        "outlet": "chargers.com Video",
+        "publishedAt": "2026-11-23T00:44:53.000Z"
       },
       {
         "sid": "S9",
@@ -111,149 +87,64 @@
         "publishedAt": "2026-11-22T23:21:06.000Z"
       },
       {
-        "sid": "S10",
-        "title": "Tuli Tuipulotu: \"Gotta Go Back To The Drawing Board\"",
-        "url": "https://www.chargers.com/video/tuli-tuipulotu-media-availability-jets-week-11-2026",
+        "sid": "S7",
+        "title": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
+        "url": "https://www.espn.com/nfl/recap?gameId=401873074",
+        "author": "ESPN NFL Nation",
+        "outlet": "ESPN",
+        "publishedAt": "2026-11-23T01:31:34Z"
+      },
+      {
+        "sid": "S8",
+        "title": "Head Coach Jim Harbaugh Postgame Press Conference vs. Jets",
+        "url": "https://www.chargers.com/video/jim-harbaugh-postgame-press-conference-vs-jets-week-11-2026",
         "author": "chargers.com Video",
         "outlet": "chargers.com Video",
-        "publishedAt": "2026-11-23T00:38:26.000Z"
+        "publishedAt": "2026-11-23T00:26:02.000Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
     {
-      "id": "lac_espn_c66b1cfb0eee8",
+      "id": "lac_espn_829588ca8e863",
       "type": "article",
-      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
-      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-23T01:42:13Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
+      "title": "Chargers' Justin Herbert lands in concussion protocol",
+      "summary": "Quarterback Justin Herbert is in the concussion protocol, the Chargers said after Sunday's 27-24 loss to the Jets in Inglewood, California.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749912_600x600_1-1.jpg",
+      "imageAlt": "Chargers' Justin Herbert lands in concussion protocol",
+      "publishedAt": "2026-11-23T01:00:45Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50567478/chargers-justin-herbert-lands-concussion-protocol",
       "outletId": "espn_lac",
       "outletName": "ESPN",
       "reporterId": "espn_lac",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
       "authorHandle": "@ESPNNFL",
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
       "trustTier": 1,
       "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.223,
-      "category": "beat",
+      "isBreaking": true,
+      "isInGameInjury": true,
+      "breakingBadge": "LIVE INJURY UPDATE",
+      "breakingPriority": 3.421,
+      "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
+      "storyTier": "in_game_injury",
+      "isUrgentBreaking": true,
+      "isPostGameInjuryUpdate": true,
       "isStalePreGameAvailability": false,
-      "storyRank": 19.3587
-    },
-    {
-      "id": "lac_espn_7435c17a22db1",
-      "type": "article",
-      "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749880_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-23T02:01:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 14.329
-    },
-    {
-      "id": "lac_vid_6eb08188d239",
-      "type": "video",
-      "title": "Ladd McConkey: Justin Herbert 'Made a Hell of a Play' on Diving TD",
-      "summary": "Wide receiver Ladd McConkey speaks to the media on the Chargers' Week 11 matchup vs the New York Jets. He discusses his 2-TD performance, what he thought about Justin Herbert's end-of-half acrobatic touchdown, and how th",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/wetckmnqakbhlg5udwtp.png",
-      "imageAlt": "Ladd McConkey: Justin Herbert 'Made a Hell of a Play' on Diving TD",
-      "publishedAt": "2026-11-23T00:44:53.000Z",
-      "url": "https://www.chargers.com/video/ladd-mcconkey-media-availability-jets-week-11-2026",
-      "externalVideoUrl": "https://www.chargers.com/video/ladd-mcconkey-media-availability-jets-week-11-2026",
-      "outletId": "chargers_official",
-      "outletName": "chargers.com Video",
-      "reporterId": "chargers_official",
-      "reporterName": "chargers.com Video",
-      "author": "chargers.com Video",
-      "authorHandle": "@Chargers",
-      "authorProfileUrl": "https://www.chargers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.096,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.684
-    },
-    {
-      "id": "lac_espn_165c27d62fbe1",
-      "type": "article",
-      "title": "How active NFL players continue to redefine all-time sack list",
-      "summary": "Myles Garrett's torrid pace up the all-time sack list paces active players making their moves among the greats.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0828/nfl_data_viz_garrett_cr_16x9_608x342.jpg",
-      "imageAlt": "How active NFL players continue to redefine all-time sack list",
-      "publishedAt": "2026-11-23T01:49:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "sarah_barshop",
-      "reporterName": "Sarah Barshop",
-      "author": "Sarah Barshop",
-      "authorHandle": "@sarahbarshop",
-      "authorProfileUrl": "https://x.com/sarahbarshop",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.0185
+      "storyRank": 27.9549,
+      "injurySeverityScore": 0.82,
+      "injurySeverityTier": "serious",
+      "playerValueScore": 1,
+      "playerValueTier": "franchise",
+      "injuryImpactScore": 0.892
     },
     {
       "id": "lac_rss_75dbbcd77d80",
@@ -286,22 +177,22 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.1575
+      "storyRank": 19.8135
     },
     {
-      "id": "lac_espn_3b5ddc54255df",
+      "id": "lac_espn_7a956123b6c0f",
       "type": "article",
-      "title": "Fantasy buzz: Week 11's leading fantasy scorers through Sunday's 4 p.m. ET games",
-      "summary": "A closer look at the top 10 fantasy scorers in Week 11, including Cowboys QB Dak Prescott and Broncos RB Jonah Coleman.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749796_2_1296x729_16-9.jpg",
-      "imageAlt": "Fantasy buzz: Week 11's leading fantasy scorers through Sunday's 4 p.m. ET games",
-      "publishedAt": "2026-11-23T01:26:17Z",
-      "url": "https://www.espn.com/fantasy/football/story/_/id/40699880/fantasy-football-injuries-position-battles-nfl-news-analysis",
+      "title": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
+      "summary": "— Mired in a losing season, New York Jets quarterback Geno Smith's efficiency has been largely overlooked with the offense lagging. Sterling Shepard helped change that Sunday, catching two touchdown passes from Smith and potentially earning himself a...",
+      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873074.png?templateId=espn.applewatch.awayhome.1",
+      "imageAlt": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
+      "publishedAt": "2026-11-23T01:31:34Z",
+      "url": "https://www.espn.com/nfl/recap?gameId=401873074",
       "outletId": "espn_lac",
       "outletName": "ESPN",
       "reporterId": "espn_lac",
-      "reporterName": "ESPN Fantasy",
-      "author": "ESPN Fantasy",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
       "authorHandle": "@ESPNNFL",
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
       "trustTier": 1,
@@ -309,17 +200,85 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 1.057,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.0271
+      "storyRank": 12.4455
+    },
+    {
+      "id": "lac_vid_6eb08188d239",
+      "type": "video",
+      "title": "Ladd McConkey: Justin Herbert 'Made a Hell of a Play' on Diving TD",
+      "summary": "Wide receiver Ladd McConkey speaks to the media on the Chargers' Week 11 matchup vs the New York Jets. He discusses his 2-TD performance, what he thought about Justin Herbert's end-of-half acrobatic touchdown, and how th",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/wetckmnqakbhlg5udwtp.png",
+      "imageAlt": "Ladd McConkey: Justin Herbert 'Made a Hell of a Play' on Diving TD",
+      "publishedAt": "2026-11-23T00:44:53.000Z",
+      "url": "https://www.chargers.com/video/ladd-mcconkey-media-availability-jets-week-11-2026",
+      "externalVideoUrl": "https://www.chargers.com/video/ladd-mcconkey-media-availability-jets-week-11-2026",
+      "outletId": "chargers_official",
+      "outletName": "chargers.com Video",
+      "reporterId": "chargers_official",
+      "reporterName": "chargers.com Video",
+      "author": "chargers.com Video",
+      "authorHandle": "@Chargers",
+      "authorProfileUrl": "https://www.chargers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.966,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 10.0493
+    },
+    {
+      "id": "lac_vid_feb773895762",
+      "type": "video",
+      "title": "Head Coach Jim Harbaugh Postgame Press Conference vs. Jets",
+      "summary": "Head Coach Jim Harbaugh meets with the media to discuss the Week 11 matchup against the New York Jets.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/igb8jmgbedst4gaqruup.png",
+      "imageAlt": "Head Coach Jim Harbaugh Postgame Press Conference vs. Jets",
+      "publishedAt": "2026-11-23T00:26:02.000Z",
+      "url": "https://www.chargers.com/video/jim-harbaugh-postgame-press-conference-vs-jets-week-11-2026",
+      "externalVideoUrl": "https://www.chargers.com/video/jim-harbaugh-postgame-press-conference-vs-jets-week-11-2026",
+      "outletId": "chargers_official",
+      "outletName": "chargers.com Video",
+      "reporterId": "chargers_official",
+      "reporterName": "chargers.com Video",
+      "author": "chargers.com Video",
+      "authorHandle": "@Chargers",
+      "authorProfileUrl": "https://www.chargers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.932,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 9.2997
     },
     {
       "id": "lac_vid_81bb93d097b7",
@@ -343,7 +302,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.975,
+      "breakingPriority": 0.861,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -353,40 +312,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.2583
-    },
-    {
-      "id": "lac_espn_60efae509e729",
-      "type": "article",
-      "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "publishedAt": "2026-11-23T01:00:32Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 9.3566
+      "storyRank": 7.9551
     },
     {
       "id": "lac_vid_b631fd69169f",
@@ -410,7 +336,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.932,
+      "breakingPriority": 0.822,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -420,7 +346,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.3068
+      "storyRank": 7.336
     },
     {
       "id": "lac_vid_8e7f0640db83",
@@ -454,7 +380,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.2385
+      "storyRank": 5.9834
     },
     {
       "id": "lac_vid_2bc0232d7d19",
@@ -488,7 +414,73 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.0045
+      "storyRank": 5.8471
+    },
+    {
+      "id": "lac_espn_b338a34b45093",
+      "type": "video",
+      "title": "New York Jets vs. Los Angeles Chargers: Game Highlights",
+      "summary": "New York Jets vs. Los Angeles Chargers: Game Highlights",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/1d994fc4-f225-4162-8d60-60fca59a2886/1d994fc4-f225-4162-8d60-60fca59a2886.jpg",
+      "imageAlt": "New York Jets vs. Los Angeles Chargers: Game Highlights",
+      "publishedAt": "2026-11-23T00:08:00Z",
+      "url": "https://www.espn.com/video/clip/_/id/50567126/game-highlights",
+      "outletId": "espn_lac",
+      "outletName": "ESPN",
+      "reporterId": "espn_lac",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.2651
+    },
+    {
+      "id": "lac_rss_7bcb5f93799f",
+      "type": "article",
+      "title": "Game Recap: Chargers Drop Home Game to Jets in Week 11",
+      "summary": "The Chargers are now 1-9 and return home to host the Patriots in Week 12",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/l4n0sot7fxyhu81cdzy8.png",
+      "imageAlt": "Game Recap: Chargers Drop Home Game to Jets in Week 11",
+      "publishedAt": "2026-11-22T23:45:00.000Z",
+      "url": "https://www.chargers.com/news/game-recap-jets-week-11",
+      "outletId": "chargers_official",
+      "outletName": "chargers.com Official",
+      "reporterId": "chargers_official",
+      "reporterName": "chargers.com Official",
+      "author": "chargers.com Official",
+      "authorHandle": "@Chargers",
+      "authorProfileUrl": "https://www.chargers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.8142
     },
     {
       "id": "lac_vid_6038a05948aa",
@@ -522,210 +514,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.6301
-    },
-    {
-      "id": "lac_espn_7a956123b6c0f",
-      "type": "article",
-      "title": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
-      "summary": "— Mired in a losing season, New York Jets quarterback Geno Smith's efficiency has been largely overlooked with the offense lagging. Sterling Shepard helped change that Sunday, catching two touchdown passes from Smith and potentially earning himself a...",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873074.png?templateId=espn.applewatch.awayhome.1",
-      "imageAlt": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
-      "publishedAt": "2026-11-23T01:31:34Z",
-      "url": "https://www.espn.com/nfl/recap?gameId=401873074",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.8584
-    },
-    {
-      "id": "lac_espn_829588ca8e863",
-      "type": "article",
-      "title": "Chargers' Justin Herbert lands in concussion protocol",
-      "summary": "Quarterback Justin Herbert is in the concussion protocol, the Chargers said after Sunday's 27-24 loss to the Jets in Inglewood, California.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749912_600x600_1-1.jpg",
-      "imageAlt": "Chargers' Justin Herbert lands in concussion protocol",
-      "publishedAt": "2026-11-23T01:00:45Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50567478/chargers-justin-herbert-lands-concussion-protocol",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 1,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.6291
-    },
-    {
-      "id": "lac_vid_f3fbd49d03be",
-      "type": "video",
-      "title": "Donte Jackson on Defensive Performance vs Jets: \"We Didn't Execute\"",
-      "summary": "Cornerback Donte Jackson speaks with the media after the Week 11 matchup vs. the New York Jets. He explains the setbacks the defense faced during the game and how they will plan to bounce back in practice this week.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/tzcxvqtr6c03fhdbbopi.png",
-      "imageAlt": "Donte Jackson on Defensive Performance vs Jets: \"We Didn't Execute\"",
-      "publishedAt": "2026-11-23T00:53:56.000Z",
-      "url": "https://www.chargers.com/video/donte-jackson-media-availability-jets-week-11-2026",
-      "externalVideoUrl": "https://www.chargers.com/video/donte-jackson-media-availability-jets-week-11-2026",
-      "outletId": "chargers_official",
-      "outletName": "chargers.com Video",
-      "reporterId": "chargers_official",
-      "reporterName": "chargers.com Video",
-      "author": "chargers.com Video",
-      "authorHandle": "@Chargers",
-      "authorProfileUrl": "https://www.chargers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.2492
-    },
-    {
-      "id": "lac_vid_b4691779ce53",
-      "type": "video",
-      "title": "Omarion Hampton on Week 11 vs Jets: \"We All Have Faith in Each Other\"",
-      "summary": "Running back Omarion Hampton meets with he media following the Week 11 matchup against the New York Jets. Hampton discusses the confidence the team has headed into Week 12.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/fjvq92ijaxhxavsqyfde.png",
-      "imageAlt": "Omarion Hampton on Week 11 vs Jets: \"We All Have Faith in Each Other\"",
-      "publishedAt": "2026-11-23T00:35:27.000Z",
-      "url": "https://www.chargers.com/video/omarion-hampton-media-availability-jets-week-11-2026",
-      "externalVideoUrl": "https://www.chargers.com/video/omarion-hampton-media-availability-jets-week-11-2026",
-      "outletId": "chargers_official",
-      "outletName": "chargers.com Video",
-      "reporterId": "chargers_official",
-      "reporterName": "chargers.com Video",
-      "author": "chargers.com Video",
-      "authorHandle": "@Chargers",
-      "authorProfileUrl": "https://www.chargers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.0262
-    },
-    {
-      "id": "lac_vid_feb773895762",
-      "type": "video",
-      "title": "Head Coach Jim Harbaugh Postgame Press Conference vs. Jets",
-      "summary": "Head Coach Jim Harbaugh meets with the media to discuss the Week 11 matchup against the New York Jets.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/igb8jmgbedst4gaqruup.png",
-      "imageAlt": "Head Coach Jim Harbaugh Postgame Press Conference vs. Jets",
-      "publishedAt": "2026-11-23T00:26:02.000Z",
-      "url": "https://www.chargers.com/video/jim-harbaugh-postgame-press-conference-vs-jets-week-11-2026",
-      "externalVideoUrl": "https://www.chargers.com/video/jim-harbaugh-postgame-press-conference-vs-jets-week-11-2026",
-      "outletId": "chargers_official",
-      "outletName": "chargers.com Video",
-      "reporterId": "chargers_official",
-      "reporterName": "chargers.com Video",
-      "author": "chargers.com Video",
-      "authorHandle": "@Chargers",
-      "authorProfileUrl": "https://www.chargers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.9267
-    },
-    {
-      "id": "lac_espn_b338a34b45093",
-      "type": "video",
-      "title": "New York Jets vs. Los Angeles Chargers: Game Highlights",
-      "summary": "New York Jets vs. Los Angeles Chargers: Game Highlights",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/1d994fc4-f225-4162-8d60-60fca59a2886/1d994fc4-f225-4162-8d60-60fca59a2886.jpg",
-      "imageAlt": "New York Jets vs. Los Angeles Chargers: Game Highlights",
-      "publishedAt": "2026-11-23T00:08:00Z",
-      "url": "https://www.espn.com/video/clip/_/id/50567126/game-highlights",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.7578
+      "storyRank": 4.3811
     },
     {
       "id": "lac_vid_02766a75299a",
@@ -759,40 +548,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7289
-    },
-    {
-      "id": "lac_rss_7bcb5f93799f",
-      "type": "article",
-      "title": "Game Recap: Chargers Drop Home Game to Jets in Week 11",
-      "summary": "The Chargers are now 1-9 and return home to host the Patriots in Week 12",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/chargers/l4n0sot7fxyhu81cdzy8.png",
-      "imageAlt": "Game Recap: Chargers Drop Home Game to Jets in Week 11",
-      "publishedAt": "2026-11-22T23:45:00.000Z",
-      "url": "https://www.chargers.com/news/game-recap-jets-week-11",
-      "outletId": "chargers_official",
-      "outletName": "chargers.com Official",
-      "reporterId": "chargers_official",
-      "reporterName": "chargers.com Official",
-      "author": "chargers.com Official",
-      "authorHandle": "@Chargers",
-      "authorProfileUrl": "https://www.chargers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.5763
+      "storyRank": 1.2986
     },
     {
       "id": "lac_rss_3b239747f8a2",
@@ -825,7 +581,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1366
+      "storyRank": 0.4778
     },
     {
       "id": "lac_rss_f9fe0ab84955",
@@ -858,7 +614,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0298
+      "storyRank": 0.1138
     },
     {
       "id": "lac_tx_dc8ca1358c18",
@@ -892,40 +648,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0184
-    },
-    {
-      "id": "lac_espn_4b15838125df3",
-      "type": "article",
-      "title": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "summary": "Here's a look at what each NFL team is wearing in Week 11, led by Houston debuting its Rivalries combination.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/commanders-texans-week-11-unis16x9.jpg",
-      "imageAlt": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "publishedAt": "2026-11-20T22:49:33Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "Anthony Gharib",
-      "author": "Anthony Gharib",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.071
     },
     {
       "id": "lac_espn_45b75505a0499",
@@ -958,7 +681,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.054
     },
     {
       "id": "lac_espn_948e2e73e7ffb",
@@ -991,40 +714,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0552
-    },
-    {
-      "id": "lac_espn_e18552bc1fb8c",
-      "type": "article",
-      "title": "NFL Week 11 betting odds: Lines and totals for every game",
-      "summary": "Updated odds, spreads, totals and FPI predictions for every NFL game in Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746635_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 betting odds: Lines and totals for every game",
-      "publishedAt": "2026-11-20T20:13:57Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0528
+      "storyRank": 0.0537
     },
     {
       "id": "lac_rss_3a7eb75c0e3d",
@@ -1057,7 +747,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0119
+      "storyRank": 0.0465
     },
     {
       "id": "lac_rss_8b388e93598c",
@@ -1090,7 +780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0117
+      "storyRank": 0.0456
     },
     {
       "id": "lac_rss_46516db4cf00",
@@ -1123,40 +813,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
-    },
-    {
-      "id": "lac_espn_6e8b34928325d",
-      "type": "article",
-      "title": "NFL offseason free agent and trade acquisitions that have and have not worked",
-      "summary": "Kenneth Walker III and Devin Lloyd look great with their new teams in 2026. But Jaylen Waddle and Alontae Taylor haven't quite found their groove.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1119/r1747957_608x342_16-9.jpg",
-      "imageAlt": "NFL offseason free agent and trade acquisitions that have and have not worked",
-      "publishedAt": "2026-11-20T11:42:26Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50525533/2026-offseason-change-scenery-fits-players-new-teams",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "Aaron Schatz",
-      "author": "Aaron Schatz",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0433
+      "storyRank": 0.0455
     },
     {
       "id": "lac_rss_c1cc7c1b60ef",
@@ -1189,40 +846,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0086
-    },
-    {
-      "id": "lac_espn_b95a427d7fb7b",
-      "type": "article",
-      "title": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "summary": "Here's the good and the bad for each offensive coordinator or playcaller through Week 10, plus keys to their success the rest of the way.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1118/32_for_32_midseason_look_608x342.png",
-      "imageAlt": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "publishedAt": "2026-11-19T17:37:25Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50520404/nfl-offensive-coordinators-playcallers-midseason-report",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0306
+      "storyRank": 0.0339
     },
     {
       "id": "lac_rss_8bbdcea337d8",
@@ -1255,7 +879,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.0287
     },
     {
       "id": "lac_tx_6169ad017cb9",
@@ -1289,40 +913,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
-    },
-    {
-      "id": "lac_espn_533c73d43a5d8",
-      "type": "article",
-      "title": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "summary": "Which NFL team could land Drew Mestemaker? Who needs Chris Cole, Ashton Hampton or Jamari Johnson? Jordan Reid projected first-round picks for 2027 -- and a trade.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/261118_cfb_jordan-reid-mock-draft_16x9_608x342.jpg",
-      "imageAlt": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "publishedAt": "2026-11-18T17:51:58Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/50502243/2027-nfl-mock-draft-reid-midseason-32-first-round-predictions",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "Jordan Reid",
-      "author": "Jordan Reid",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0214
+      "storyRank": 0.0258
     },
     {
       "id": "lac_rss_f31df52f3571",
@@ -1355,7 +946,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.021
     },
     {
       "id": "lac_espn_2174513a3461e",
@@ -1388,7 +979,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.02
     },
     {
       "id": "lac_espn_dede4a78d0e8e",
@@ -1421,7 +1012,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0198
+      "storyRank": 0.078
     },
     {
       "id": "lac_rss_29d09beb402c",
@@ -1454,40 +1045,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
-    },
-    {
-      "id": "lac_espn_d51f7983010a2",
-      "type": "article",
-      "title": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "summary": "How does every NFL team stack up heading into Week 11? We made our 1-32 list and picked the non-quarterback MVPs for each roster.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/nfl_power_rankings_608x342.png",
-      "imageAlt": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "publishedAt": "2026-11-17T20:45:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.017
     },
     {
       "id": "lac_rss_3572d2789918",
@@ -1520,7 +1078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0162
     },
     {
       "id": "lac_rss_a06ff68c394b",
@@ -1553,7 +1111,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0162
     },
     {
       "id": "lac_rss_d93418e933e5",
@@ -1586,40 +1144,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0467
-    },
-    {
-      "id": "lac_espn_c6078de4614f7",
-      "type": "article",
-      "title": "Super Bowl LXI odds: All 32 teams' odds to win the championship",
-      "summary": "Every NFL team's win total, as well as odds to win the division, the conference and Super Bowl LXI.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0202/r1609489_608x342_16-9.jpg",
-      "imageAlt": "Super Bowl LXI odds: All 32 teams' odds to win the championship",
-      "publishedAt": "2026-11-17T17:59:35Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/47809892/2026-super-bowl-lxi-odds-nfl-sports-betting-season-win-totals-playoffs",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "Doug Greenberg",
-      "author": "Doug Greenberg",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0161
+      "storyRank": 0.0641
     },
     {
       "id": "lac_rss_08b4e9624480",
@@ -1652,7 +1177,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
+      "storyRank": 0.0155
     },
     {
       "id": "lac_espn_efb0e6e20d069",
@@ -1685,40 +1210,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
-    },
-    {
-      "id": "lac_espn_fc0e22b5ec64e",
-      "type": "video",
-      "title": "Fan makes a fantastic catch to send himself to Super Bowl LXI",
-      "summary": "Fan makes a fantastic catch to send himself to Super Bowl LXI",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1116/ss_20261116_200452806_3745664/ss_20261116_200452806_3745664.jpg",
-      "imageAlt": "Fan makes a fantastic catch to send himself to Super Bowl LXI",
-      "publishedAt": "2026-11-17T13:27:03Z",
-      "url": "https://www.espn.com/video/clip/_/id/50506334/fan-makes-fantastic-catch-send-super-bowl-lxi",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0154
     },
     {
       "id": "lac_espn_84e1ab5575045",
@@ -1751,40 +1243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0038
-    },
-    {
-      "id": "lac_espn_51b53fdbdad19",
-      "type": "article",
-      "title": "2027 NFL draft order projections for Round 1, chances for top pick, more",
-      "summary": "ESPN's Football Power Index projects the 2027 NFL draft order for Round 1, complete with each team's chances to pick in the top five, in the top 10 and at No. 1.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0601/r1666608_608x342_16-9.jpg",
-      "imageAlt": "2027 NFL draft order projections for Round 1, chances for top pick, more",
-      "publishedAt": "2026-11-17T11:41:00Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/49794361/2027-nfl-draft-order-projections-first-round-picks",
-      "outletId": "espn_lac",
-      "outletName": "ESPN",
-      "reporterId": "espn_lac",
-      "reporterName": "ESPN staff",
-      "author": "ESPN staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0151
+      "storyRank": 0.0103
     },
     {
       "id": "lac_espn_354afa31bd8d0",
@@ -1817,7 +1276,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0036
+      "storyRank": 0.0141
     },
     {
       "id": "lac_espn_13573c069eb2e",
@@ -1850,7 +1309,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0036
+      "storyRank": 0.0095
     },
     {
       "id": "lac_rss_6e6bca638566",
@@ -1883,7 +1342,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0139
     },
     {
       "id": "lac_rss_716f62a4f916",
@@ -1949,7 +1408,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.0131
     },
     {
       "id": "lac_rss_86a949fcfcaa",
@@ -1982,7 +1441,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.0131
     },
     {
       "id": "lac_rss_7b2ec8378784",
@@ -2015,7 +1474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0348
     },
     {
       "id": "lac_tx_2da5aeb9ed8a",
@@ -2049,7 +1508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0029
+      "storyRank": 0.0115
     },
     {
       "id": "lac_rss_7ac50c280c4a",
@@ -2082,7 +1541,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0021
+      "storyRank": 0.0085
     },
     {
       "id": "lac_rss_d53a5ef57069",
@@ -2115,7 +1574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0021
+      "storyRank": 0.0084
     },
     {
       "id": "lac_rss_d92cdef011fc",
@@ -2148,7 +1607,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0019
+      "storyRank": 0.0076
     },
     {
       "id": "lac_rss_7d7b727f2b92",
@@ -2181,7 +1640,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0018
+      "storyRank": 0.0072
     },
     {
       "id": "lac_tx_4b35aa807a16",
@@ -2215,7 +1674,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0017
+      "storyRank": 0.0069
     },
     {
       "id": "lac_rss_7604b2bc93a4",
@@ -2248,7 +1707,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0017
+      "storyRank": 0.0066
     },
     {
       "id": "lac_rss_227626f871ef",
@@ -2281,7 +1740,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0056
     },
     {
       "id": "lac_rss_51bdc33323a1",
@@ -2314,7 +1773,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0055
     },
     {
       "id": "lac_tx_63645284b130",
@@ -2348,7 +1807,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0053
     },
     {
       "id": "lac_rss_ce4c6489e893",
@@ -2381,7 +1840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0051
     },
     {
       "id": "lac_rss_44703069be9b",
@@ -2414,7 +1873,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.005
     },
     {
       "id": "lac_tx_c726340e3933",
@@ -2448,7 +1907,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.0047
     },
     {
       "id": "lac_rss_4b695be4d1c0",
@@ -2481,7 +1940,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0046
     },
     {
       "id": "lac_rss_bacf16460630",
@@ -2514,7 +1973,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0044
     },
     {
       "id": "lac_rss_d2382d64bfb1",
@@ -2547,7 +2006,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0044
     },
     {
       "id": "lac_tx_4ca167430db1",
@@ -2581,7 +2040,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.003
     },
     {
       "id": "lac_tx_9eb6bd7eb5f0",
@@ -2615,7 +2074,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0006
+      "storyRank": 0.0024
     },
     {
       "id": "lac_rss_009d47e65137",

@@ -44,11 +44,11 @@ const DEPARTED_PLAYER_PHOTO_TITLE_RE =
 const RIVAL_TROLL_TITLE_RE =
   /\b(?:jab\s+at|poke(?:s|d)?\s+fun\s+at|troll(?:s|ed|ing)?|mocks?|mocked|roast(?:s|ed)?)\b/i;
 const GENERIC_CLUB_GRAPHIC_TITLE_RE =
-  /\b(?:power\s+rankings?|how\s+to\s+watch|where\s+to\s+watch|watch,?\s*listen|tv,?\s*stream|ways\s+to\s+watch|where\s+the\s+[a-z0-9\s]+\s+stand|viewing\s+guide|broadcast\s+info|injury\s+report|practice\s+report|game\s+status(?:\s+report)?|game\s+designations?|inactives?(?:\s+list|\s+report)?|depth\s+chart|roster\s+moves?|transactions?|waiver\s+claims?|uniform\s+combination|release\s+uniform|schedule\s+release|mailbag|wallpaper|sweepstakes|giveaway|foodie\s+passport|small\s+business|community\s+support|mock\s+draft|betting\s+odds|point\s+spreads?|s\d+\s*ep\.?\s*\d+|season\s+\d+\s*,?\s*ep(?:isode)?\.?\s*\d+|the\s+sound\s+of\s+the\s+)\b/i;
+  /\b(?:power\s+rankings?|how\s+to\s+watch|where\s+to\s+watch|watch,?\s*listen|tv,?\s*stream|ways\s+to\s+watch|where\s+the\s+[a-z0-9\s]+\s+stand|viewing\s+guide|broadcast\s+info|injury\s+report|practice\s+report|game\s+status(?:\s+report)?|game\s+designations?|inactives?(?:\s+list|\s+report)?|depth\s+chart|roster\s+moves?|transactions?|waiver\s+claims?|uniform\s+combination|release\s+uniform|schedule\s+release|mailbag|wallpaper|sweepstakes|giveaway|foodie\s+passport|small\s+business|community\s+(?:support|event|clinic|outreach)|cheerleaders?|junior\s+cheer|cheer\s+clinic|off\s+the\s+field|mock\s+draft|betting\s+odds|point\s+spreads?|s\d+\s*ep\.?\s*\d+|season\s+\d+\s*,?\s*ep(?:isode)?\.?\s*\d+|the\s+sound\s+of\s+the\s+)\b/i;
 const GENERIC_CLUB_GRAPHIC_URL_RE =
   /(?:[/_-])(?:injury-report|practice-report|game-status|inactives|how-to-watch|where-to-watch|broadcast-info|viewing-guide|power-rankings|depth-chart|roster-moves|transactions|uniform-combination|schedule-release|mailbag|betting-odds)(?:[/_.-]|$)/i;
 const BRANDED_LOWER_THIRD_TITLE_RE =
-  /\b(?:game\s+within\s+the\s+game|what\s+to\s+watch\s+for|quick\s+hits|by\s+the\s+numbers|quote\s+sheet|scouting\s+report|after\s+further\s+review|top\s+\d+\s+things|\d+\s+takeaways?|press\s+conference|speaks\s+to\s+the\s+media|meets\s+with\s+the\s+media|talks\s+after|postgame\s+press|on\s+outcome\s+in)\b/i;
+  /\b(?:game\s+within\s+the\s+game|what\s+to\s+watch\s+for|quick\s+hits|by\s+the\s+numbers|quote\s+sheet|scouting\s+report|after\s+further\s+review|from\s+the\s+press\s+room|top\s+\d+\s+things|\d+\s+takeaways?|press\s+conference|speaks\s+to\s+the\s+media|meets\s+with\s+the\s+media|talks\s+after|postgame\s+press|on\s+outcome\s+in)\b/i;
 const BRIEF_STOP_WORDS = new Set([
   'the', 'and', 'for', 'with', 'from', 'that', 'this', 'into', 'over', 'amid', 'after', 'before',
   'against', 'ahead', 'about', 'while', 'where', 'their', 'they', 'will', 'have', 'been', 'more',
@@ -695,8 +695,15 @@ export function resolveSalientCardVisual(
   const activeTeamMedia = getActiveTeamConfig();
   const teamNickMedia = activeTeamMedia?.nickname || 'NFL';
 
-  // Tier 1: True editorial / game / practice photo (lead or cluster confirming report)
-  const editorialHit = findClusterEditorialPhoto(item);
+  // Tier 1: True editorial / game / practice photo (lead or cluster confirming report).
+  // Never promote boilerplate text-banner graphics ("INJURY REPORT", "HOW TO WATCH",
+  // "POWER RANKINGS", data-viz collages) or 1:1 square crops into hero banners; on compact
+  // thumbs, prefer salient Player Spotlight or Matchup Dual-Crest tiles over text banners.
+  const isHeroSlot = slot === 'hero';
+  const editorialHit = findClusterEditorialPhoto(item, {
+    allowTextBanner: false,
+    allowSquareOrGraphic: !isHeroSlot
+  });
   if (editorialHit) {
     const opt = optimizeImageUrlForSlot(editorialHit.rawUrl, slot);
     if (opt.src) {
@@ -873,7 +880,7 @@ export function resolveDailyBriefHeroMedia(
 
   for (const { item, bulletCited, listedSource } of candidateItems) {
     if (item.type === 'video' && !isEditorialPhotoUrl(item.imageUrl)) continue;
-    const hit = findClusterEditorialPhoto(item);
+    const hit = findClusterEditorialPhoto(item, { allowTextBanner: false, allowSquareOrGraphic: true });
     if (!hit) continue;
 
     const rawUrl = hit.rawUrl;
@@ -881,6 +888,14 @@ export function resolveDailyBriefHeroMedia(
     const itemSummary = String(item.summary || item.fullText || '').trim();
     const itemUrlLower = String(item.url || '').toLowerCase();
     const rawUrlLower = rawUrl.toLowerCase();
+
+    // Strictly reject pure boilerplate text-banner / ad-graphic cards (e.g., "INJURY REPORT",
+    // "HOW TO WATCH", "POWER RANKINGS PRESENTED BY SAP", "SEASON 5 EP 5", data-viz graphics)
+    // regardless of `.jpg` vs `.png` extension or citation status.
+    const imageRisk = hit.imageRisk || classifyEditorialImageRisk(item, rawUrl);
+    if (imageRisk === 'text_banner') {
+      continue;
+    }
 
     const isOfficialClubPhoto =
       /static\.clubs\.nfl\.com\/image\/upload\//i.test(rawUrl) &&
@@ -921,10 +936,6 @@ export function resolveDailyBriefHeroMedia(
     // archival game photo of the traded player (frequently showing an unrelated earlier opponent)
     const isDepartedPlayerArticle =
       !isOfficialClubPhoto && DEPARTED_PLAYER_PHOTO_TITLE_RE.test(`${itemTitle} ${item.imageCaption || ''}`);
-    const isGenericClubGraphic =
-      isOfficialClubPhoto &&
-      /\.png(?:\?|$)/i.test(rawUrl) &&
-      GENERIC_CLUB_GRAPHIC_TITLE_RE.test(itemTitle);
     const hasAccidental49ersPhotoLeak =
       activeTeamCfg.abbr !== 'SF' &&
       !/\b(?:49ers|niners|san francisco)\b/i.test(String(dailyBrief?.headline || '')) &&
@@ -951,7 +962,7 @@ export function resolveDailyBriefHeroMedia(
     else if (listedSource) score += 12;
 
     // Team specificity & off-team protection
-    if (isOfficialClubPhoto) score += 40;
+    if (isOfficialClubPhoto) score += 34;
     else if (isTeamSpecificItem) score += 26;
     else if (mentionsActiveTeamInBody) score += 8;
     else score -= 35;
@@ -960,16 +971,16 @@ export function resolveDailyBriefHeroMedia(
     if (isRivalLedTrollOrSubject) score -= 52;
     if (isLeagueRoundup) score -= 45;
     if (isDepartedPlayerArticle) score -= 38;
-    if (isGenericClubGraphic) score -= 24;
+    if (imageRisk === 'lower_third') score -= 26;
     if (hasAccidental49ersPhotoLeak) score -= 55;
 
-    // Editorial photo authenticity (real club/wire photography >> custom studio collages/graphics)
+    // Editorial photo authenticity (clean full-bleed wire/action photography >> branded templates/collages)
     if (isOfficialClubPhoto) {
-      score += 18;
+      score += item.type === 'video' ? 8 : 20;
     } else if (isEspnWirePhoto) {
-      score += 28;
+      score += 30;
     } else if (isTrustedBeatPhoto) {
-      score += 22;
+      score += 24;
     } else if (isEspnMediaStill) {
       score += 14;
     } else if (isCustomEspnGraphic) {
@@ -1011,13 +1022,13 @@ export function resolveDailyBriefHeroMedia(
       const pubMs = Date.parse(item.publishedAt);
       if (Number.isFinite(pubMs) && pubMs <= refNowMs + 2 * 86_400_000) {
         const pubAgeDays = Math.max(0, (refNowMs - pubMs) / 86_400_000);
-        if (pubAgeDays <= 7) score += 18;
+        if (pubAgeDays <= 7) score += 16;
         else if (pubAgeDays <= 14) score += 8;
       }
     }
 
-    // Format preference & modest storyRank tiebreaker (cannot override photo authenticity or relevance)
-    score += item.type === 'article' ? 10 : item.type === 'video' ? 4 : 6;
+    // Format preference & modest storyRank tiebreaker (clean articles over talking-head video stills)
+    score += item.type === 'article' ? 10 : item.type === 'video' ? -6 : 6;
     score += Math.min(10, Number(item.storyRank || 0) * 0.12);
 
     if (score > bestScore) {

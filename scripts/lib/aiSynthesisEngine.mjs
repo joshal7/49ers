@@ -448,12 +448,12 @@ export async function runVerifiedDeepGeminiSynthesis({
       'ACT AS AN ADVERSARIAL NFL CAP, ROSTER & ANALYTICS AUDITOR.',
       'Audit the DRAFT SYNTHESIS below line-by-line against the AUTHORITATIVE LIVE GROUND-TRUTH SNAPSHOT and live Google Search.',
       'Fix ANY discrepancy in:',
-      '1) 2026 Cap Space vs. 2027 Projected Cap Deficit and CBA Article 13 rollover math (purchasing power lets SF absorb 9/18ths base salary on expiring rentals to lower pick costs; never claim sellers must eat cash unless an expensive 2027 guarantee exists).',
-      '2) Remaining 2027 Draft Picks (verify exact count and rounds after the DeForest Buckner 4th-round trade).',
-      '3) Active vs. Injured Reserve vs. Out 49ers players, coaching staff (DC Raheem Morris), and opponent coaches/records.',
-      '4) Trade target current teams, 2026 production (reject 0-sack aging traps), and 2027 contract guarantees/extensions.',
+      '1) Current-season Cap Space vs. Next-Year Projected Cap Position and CBA Article 13 rollover math (purchasing power lets teams absorb remaining weekly base salary on expiring rentals to lower pick costs; never claim sellers must eat cash unless an expensive future guarantee exists).',
+      '2) Remaining Draft Picks (verify exact count and rounds from the live snapshot).',
+      '3) Active vs. Injured Reserve vs. Out team players, current coaching staff (HC/OC/DC/GM from snapshot), and opponent coaches/records.',
+      '4) Trade target current teams, current-season production (reject declining aging traps), and future contract guarantees/extensions.',
       '5) Calibrated Playoff Monte Carlo odds (must match the exact snapshot numbers).',
-      '6) Impartiality & Balance Audit: Strip any homerism, first-person "we/our" fan pronouns, or effusive cheerleading. Ensure assessments are calibrated to the Vegas spread / implied win probability and give honest weight to opponent top-10 units, star players, and 49ers league-relative weaknesses.',,
+      '6) Impartiality & Balance Audit: Strip any homerism, first-person "we/our" fan pronouns, or effusive cheerleading. Ensure assessments are calibrated to the Vegas spread / implied win probability and give honest weight to opponent top-10 units, star players, and league-relative weaknesses.',
       expectJson
         ? 'Output ONLY the corrected, valid JSON structure with zero markdown fences or commentary.'
         : 'Output ONLY the corrected final markdown analysis with zero meta-commentary.',

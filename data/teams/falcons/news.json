@@ -22,38 +22,22 @@
       "With a 3-7 record, Atlanta currently holds the #10 overall pick in the 2027 NFL Draft, with midseason projections focusing on defensive reinforcements to bolster a unit allowing 358.2 yards per game [S10](https://www.espn.com/nfl/draft2027/story/_/id/50502243/2027-nfl-mock-draft-reid-midseason-32-first-round-predictions)."
     ],
     "coveredStoryKeys": [
-      "atl_espn_165c27d62fbe1",
-      "atl_espn_60efae509e729",
       "atl_espn_faaa82c8f2010",
-      "atl_espn_4b15838125df3",
-      "atl_espn_e18552bc1fb8c",
-      "atl_espn_f9ca15e024182"
+      "atl_espn_60665e84e7b6e",
+      "atl_espn_7cc8fe35ab6f7",
+      "atl_vid_db08ba1e6bae",
+      "atl_vid_e30bc25c2aa0",
+      "atl_vid_a26fb306bec3"
     ],
     "coveredUrls": [
-      "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
       "https://www.espn.com/nfl/story/_/id/50473666/atlanta-falcons-trade-deadline-jessie-bates-morale",
-      "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
-      "https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals",
-      "https://www.espn.com/nfl/story/_/id/50522208/week-11-picks-predictions-schedule-fantasy-odds-2026"
+      "https://www.espn.com/video/clip/_/id/50541233/falcons-familiar-spot",
+      "https://www.espn.com/nfl/story/_/id/50524413/falcons-matt-ryan-michael-penix-kevin-stefanski",
+      "https://www.atlantafalcons.com/video/every-atlanta-falcons-offensive-touchdown-through-the-first-half-of-the-2026-season-highlights",
+      "https://www.atlantafalcons.com/video/every-drake-london-reception-from-the-first-half-of-the-2026-season-highlights",
+      "https://www.atlantafalcons.com/video/top-bijan-robinson-highlights-from-the-first-half-of-the-2026-season-atlanta-falcons"
     ],
     "sources": [
-      {
-        "sid": "S1",
-        "title": "How active NFL players continue to redefine all-time sack list",
-        "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-        "author": "Sarah Barshop",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:49:27Z"
-      },
-      {
-        "sid": "S2",
-        "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-        "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-        "author": "ESPN Staff",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:00:32Z"
-      },
       {
         "sid": "S3",
         "title": "Falcons insist winning still the goal despite trading Jessie Bates III",
@@ -61,30 +45,6 @@
         "author": "Marc Raimondi",
         "outlet": "ESPN",
         "publishedAt": "2026-11-21T11:59:54Z"
-      },
-      {
-        "sid": "S4",
-        "title": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-        "url": "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
-        "author": "Anthony Gharib",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-20T22:49:33Z"
-      },
-      {
-        "sid": "S5",
-        "title": "NFL Week 11 betting odds: Lines and totals for every game",
-        "url": "https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals",
-        "author": "ESPN",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-20T20:13:57Z"
-      },
-      {
-        "sid": "S6",
-        "title": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-        "url": "https://www.espn.com/nfl/story/_/id/50522208/week-11-picks-predictions-schedule-fantasy-odds-2026",
-        "author": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-20T18:48:27Z"
       },
       {
         "sid": "S7",
@@ -95,14 +55,6 @@
         "publishedAt": "2026-11-20T15:51:10Z"
       },
       {
-        "sid": "S8",
-        "title": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-        "url": "https://www.espn.com/nfl/story/_/id/50520404/nfl-offensive-coordinators-playcallers-midseason-report",
-        "author": "NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-19T17:37:25Z"
-      },
-      {
         "sid": "S9",
         "title": "Falcons seek change, but keep ending up in the same spot",
         "url": "https://www.espn.com/nfl/story/_/id/50524413/falcons-matt-ryan-michael-penix-kevin-stefanski",
@@ -111,83 +63,49 @@
         "publishedAt": "2026-11-19T11:39:28Z"
       },
       {
-        "sid": "S10",
-        "title": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-        "url": "https://www.espn.com/nfl/draft2027/story/_/id/50502243/2027-nfl-mock-draft-reid-midseason-32-first-round-predictions",
-        "author": "Jordan Reid",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-18T17:51:58Z"
+        "sid": "S4",
+        "title": "EVERY Atlanta Falcons offensive touchdown through the first half of the 2026 season | Highlights",
+        "url": "https://www.atlantafalcons.com/video/every-atlanta-falcons-offensive-touchdown-through-the-first-half-of-the-2026-season-highlights",
+        "author": "atlantafalcons.com Video",
+        "outlet": "atlantafalcons.com Video",
+        "publishedAt": "2026-11-17T20:37:29.000Z"
+      },
+      {
+        "sid": "S5",
+        "title": "EVERY Drake London reception from the first half of the 2026 season | Highlights",
+        "url": "https://www.atlantafalcons.com/video/every-drake-london-reception-from-the-first-half-of-the-2026-season-highlights",
+        "author": "atlantafalcons.com Video",
+        "outlet": "atlantafalcons.com Video",
+        "publishedAt": "2026-11-17T20:15:00.000Z"
+      },
+      {
+        "sid": "S6",
+        "title": "TOP Bijan Robinson highlights from the first half of the 2026 season | Atlanta Falcons",
+        "url": "https://www.atlantafalcons.com/video/top-bijan-robinson-highlights-from-the-first-half-of-the-2026-season-atlanta-falcons",
+        "author": "atlantafalcons.com Video",
+        "outlet": "atlantafalcons.com Video",
+        "publishedAt": "2026-11-17T20:11:00.000Z"
+      },
+      {
+        "sid": "S7",
+        "title": "EVERY Atlanta Falcons sack through the first half of the 2026 season | Highlights",
+        "url": "https://www.atlantafalcons.com/video/every-atlanta-falcons-sack-through-the-first-half-of-the-2026-season-highlights",
+        "author": "atlantafalcons.com Video",
+        "outlet": "atlantafalcons.com Video",
+        "publishedAt": "2026-11-17T20:11:00.000Z"
+      },
+      {
+        "sid": "S8",
+        "title": "Tracking the NFC South: Panthers expand division lead with win vs. Saints",
+        "url": "https://www.atlantafalcons.com/news/tracking-the-nfc-south-panthers-division-lead-saints-buccaneers-falcons",
+        "author": "atlantafalcons.com Official",
+        "outlet": "atlantafalcons.com Official",
+        "publishedAt": "2026-11-17T17:00:16.000Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
-    {
-      "id": "atl_espn_165c27d62fbe1",
-      "type": "article",
-      "title": "How active NFL players continue to redefine all-time sack list",
-      "summary": "Myles Garrett's torrid pace up the all-time sack list paces active players making their moves among the greats.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0828/nfl_data_viz_garrett_cr_16x9_608x342.jpg",
-      "imageAlt": "How active NFL players continue to redefine all-time sack list",
-      "publishedAt": "2026-11-23T01:49:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "sarah_barshop",
-      "reporterName": "Sarah Barshop",
-      "author": "Sarah Barshop",
-      "authorHandle": "@sarahbarshop",
-      "authorProfileUrl": "https://x.com/sarahbarshop",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.2813
-    },
-    {
-      "id": "atl_espn_60efae509e729",
-      "type": "article",
-      "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "publishedAt": "2026-11-23T01:00:32Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 9.5057
-    },
     {
       "id": "atl_espn_faaa82c8f2010",
       "type": "article",
@@ -219,106 +137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.084
-    },
-    {
-      "id": "atl_espn_4b15838125df3",
-      "type": "article",
-      "title": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "summary": "Here's a look at what each NFL team is wearing in Week 11, led by Houston debuting its Rivalries combination.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/commanders-texans-week-11-unis16x9.jpg",
-      "imageAlt": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "publishedAt": "2026-11-20T22:49:33Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "Anthony Gharib",
-      "author": "Anthony Gharib",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0565
-    },
-    {
-      "id": "atl_espn_e18552bc1fb8c",
-      "type": "article",
-      "title": "NFL Week 11 betting odds: Lines and totals for every game",
-      "summary": "Updated odds, spreads, totals and FPI predictions for every NFL game in Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746635_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 betting odds: Lines and totals for every game",
-      "publishedAt": "2026-11-20T20:13:57Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2115
-    },
-    {
-      "id": "atl_espn_f9ca15e024182",
-      "type": "article",
-      "title": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "summary": "Joe Burrow vs. Jayden Daniels? Fernando Mendoza vs. Bo Nix? There are 12 more games in Week 11, and we have picks, predictions and more for all of them.",
-      "imageUrl": "https://a.espncdn.com/photo/2025/0819/r1533632_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "publishedAt": "2026-11-20T18:48:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50522208/week-11-picks-predictions-schedule-fantasy-odds-2026",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "author": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2041
+      "storyRank": 0.3226
     },
     {
       "id": "atl_espn_60665e84e7b6e",
@@ -351,40 +170,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0476
-    },
-    {
-      "id": "atl_espn_b95a427d7fb7b",
-      "type": "article",
-      "title": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "summary": "Here's the good and the bad for each offensive coordinator or playcaller through Week 10, plus keys to their success the rest of the way.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1118/32_for_32_midseason_look_608x342.png",
-      "imageAlt": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "publishedAt": "2026-11-19T17:37:25Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50520404/nfl-offensive-coordinators-playcallers-midseason-report",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1224
+      "storyRank": 0.1851
     },
     {
       "id": "atl_espn_7cc8fe35ab6f7",
@@ -417,106 +203,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0277
-    },
-    {
-      "id": "atl_espn_533c73d43a5d8",
-      "type": "article",
-      "title": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "summary": "Which NFL team could land Drew Mestemaker? Who needs Chris Cole, Ashton Hampton or Jamari Johnson? Jordan Reid projected first-round picks for 2027 -- and a trade.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/261118_cfb_jordan-reid-mock-draft_16x9_608x342.jpg",
-      "imageAlt": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "publishedAt": "2026-11-18T17:51:58Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/50502243/2027-nfl-mock-draft-reid-midseason-32-first-round-predictions",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "Jordan Reid",
-      "author": "Jordan Reid",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0857
-    },
-    {
-      "id": "atl_espn_3b2fdfe28dfc8",
-      "type": "article",
-      "title": "NFL Week 11 latest intel, buzz questions, news, fantasy tips: What we're hearing",
-      "summary": "What are people around the league saying about Fernando Mendoza? Could changes be coming in Dallas? And what now for New England? Here's the latest intel.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747264_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 latest intel, buzz questions, news, fantasy tips: What we're hearing",
-      "publishedAt": "2026-11-18T17:48:56Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50513379/week-11-buzz-fantasy-predictions-graziano-fowler-2026",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "jeremy_fowler",
-      "reporterName": "Jeremy Fowler",
-      "author": "Jeremy Fowler",
-      "authorHandle": "@JFowlerESPN",
-      "authorProfileUrl": "https://x.com/JFowlerESPN",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0857
-    },
-    {
-      "id": "atl_espn_d51f7983010a2",
-      "type": "article",
-      "title": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "summary": "How does every NFL team stack up heading into Week 11? We made our 1-32 list and picked the non-quarterback MVPs for each roster.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/nfl_power_rankings_608x342.png",
-      "imageAlt": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "publishedAt": "2026-11-17T20:45:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0664
+      "storyRank": 0.1089
     },
     {
       "id": "atl_vid_db08ba1e6bae",
@@ -550,7 +237,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.015
+      "storyRank": 0.0591
     },
     {
       "id": "atl_vid_e30bc25c2aa0",
@@ -584,7 +271,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0596
+      "storyRank": 0.0589
     },
     {
       "id": "atl_vid_a26fb306bec3",
@@ -618,7 +305,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.0651
     },
     {
       "id": "atl_vid_afcbfd238320",
@@ -652,7 +339,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0149
+      "storyRank": 0.0588
     },
     {
       "id": "atl_rss_e8b1b614b76a",
@@ -681,39 +368,6 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
-    },
-    {
-      "id": "atl_espn_16beeafd3881f",
-      "type": "article",
-      "title": "Seven things Solak thinks for NFL Week 11: Takes on four QBs, Lions, Rams, more",
-      "summary": "Get ready for Week 11 with what makes Vikings-49ers must-watch football, Joe Burrow's MVP case and how Aidan Hutchinson's injury could impact the Lions.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1746919_608x342_16-9.jpg",
-      "imageAlt": "Seven things Solak thinks for NFL Week 11: Takes on four QBs, Lions, Rams, more",
-      "publishedAt": "2026-11-17T15:39:31Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50505355/week-11-seven-things-solak-thinks-burrow-mvp-rams-lions",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "ben_solak",
-      "reporterName": "Ben Solak",
-      "author": "Ben Solak",
-      "authorHandle": "@BenjaminSolak",
-      "authorProfileUrl": "https://x.com/BenjaminSolak",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
@@ -751,40 +405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
-    },
-    {
-      "id": "atl_espn_51b53fdbdad19",
-      "type": "article",
-      "title": "2027 NFL draft order projections for Round 1, chances for top pick, more",
-      "summary": "ESPN's Football Power Index projects the 2027 NFL draft order for Round 1, complete with each team's chances to pick in the top five, in the top 10 and at No. 1.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0601/r1666608_608x342_16-9.jpg",
-      "imageAlt": "2027 NFL draft order projections for Round 1, chances for top pick, more",
-      "publishedAt": "2026-11-17T11:41:00Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/49794361/2027-nfl-draft-order-projections-first-round-picks",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "ESPN staff",
-      "author": "ESPN staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0602
+      "storyRank": 0.0613
     },
     {
       "id": "atl_vid_d2e49f1f9ee6",
@@ -818,40 +439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0536
-    },
-    {
-      "id": "atl_espn_ee9a3465db613",
-      "type": "article",
-      "title": "Kyle Hamilton rocks Christmas sweater ahead of 'MNF,' leads NFL Week 10 arrivals",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746900_545x307_16-9.png",
-      "imageAlt": "Kyle Hamilton rocks Christmas sweater ahead of 'MNF,' leads NFL Week 10 arrivals",
-      "publishedAt": "2026-11-16T23:53:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50465223/nfl-week-10-fashionable-arrivals",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0536
+      "storyRank": 0.053
     },
     {
       "id": "atl_vid_9038f9cf61b8",
@@ -885,7 +473,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132
+      "storyRank": 0.052
     },
     {
       "id": "atl_espn_3ed26fa45e367",
@@ -918,7 +506,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.0506
     },
     {
       "id": "atl_vid_b1a09eb2ea39",
@@ -952,7 +540,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.0505
     },
     {
       "id": "atl_rss_f66fa5406769",
@@ -985,106 +573,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
-    },
-    {
-      "id": "atl_espn_8d4c0df7a7dbe",
-      "type": "article",
-      "title": "NFL playoff chance tiers: Where all 32 teams fit in 2026 postseason picture",
-      "summary": "We placed all 32 NFL teams into tiers based on their likelihood of making the playoffs, from Super Bowl favorites to the top-draft-pick candidates.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1113/2026_midseason_playoff_tiers_608x342.png",
-      "imageAlt": "NFL playoff chance tiers: Where all 32 teams fit in 2026 postseason picture",
-      "publishedAt": "2026-11-16T16:21:08Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50463347/2026-nfl-playoffs-chances-odds-tiers-32-teams-nfc-afc",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "Seth Walder",
-      "author": "Seth Walder",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.05
-    },
-    {
-      "id": "atl_espn_ef57ad8125e5f",
-      "type": "article",
-      "title": "NFL Week 10: Big takeaways, questions and fantasy spin from Sunday's games",
-      "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 10.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746498_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 10: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-16T06:53:37Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50443510/week-10-sunday-games-takeaways-questions-2026",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.046
-    },
-    {
-      "id": "atl_espn_6c60aedbc3d0b",
-      "type": "article",
-      "title": "Week 10 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of Sunday's top moments, TDs and analysis from ESPN's NFL reporters.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746290_576x324_16-9.jpg",
-      "imageAlt": "Week 10 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-16T05:24:51Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50489998/week-10-highlights-sunday-best-plays-touchdowns-2026",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0454
+      "storyRank": 0.0496
     },
     {
       "id": "atl_espn_9f020e3e0ae5a",
@@ -1117,7 +606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0428
     },
     {
       "id": "atl_espn_848ebddeec81d",
@@ -1150,7 +639,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0427
     },
     {
       "id": "atl_vid_d5056d939b60",
@@ -1184,7 +673,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0425
     },
     {
       "id": "atl_vid_1f2b2f4bb4b4",
@@ -1218,7 +707,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0425
     },
     {
       "id": "atl_vid_9710be269fe8",
@@ -1252,7 +741,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0421
     },
     {
       "id": "atl_rss_630fa9ab4ad4",
@@ -1285,7 +774,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.042
     },
     {
       "id": "atl_vid_1de5cb6af681",
@@ -1319,7 +808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0423
+      "storyRank": 0.0419
     },
     {
       "id": "atl_vid_0b127ce6a8c5",
@@ -1353,7 +842,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0105
     },
     {
       "id": "atl_vid_e4c4e1c496c5",
@@ -1387,7 +876,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0422
+      "storyRank": 0.0418
     },
     {
       "id": "atl_vid_71a21c3f0953",
@@ -1421,40 +910,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
-    },
-    {
-      "id": "atl_espn_8c0697d3339bb",
-      "type": "article",
-      "title": "NFL Week 10 uniforms: Titans debut Rivalries look, Ravens go all-black",
-      "summary": "Here's a look at what each NFL team is wearing in Week 10, led by the Tennessee Titans' Rivalries look.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1111/16x9.jpg",
-      "imageAlt": "NFL Week 10 uniforms: Titans debut Rivalries look, Ravens go all-black",
-      "publishedAt": "2026-11-15T20:40:00Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50448015/nfl-week-10-uniforms",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "Anthony Gharib",
-      "author": "Anthony Gharib",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0105
     },
     {
       "id": "atl_vid_71e11d547e1a",
@@ -1488,7 +944,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0422
+      "storyRank": 0.0418
     },
     {
       "id": "atl_vid_6849242723fa",
@@ -1522,7 +978,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0104
     },
     {
       "id": "atl_vid_6cc4c7aa99fd",
@@ -1556,7 +1012,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0104
     },
     {
       "id": "atl_vid_0c9f955ba5a3",
@@ -1590,7 +1046,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0416
     },
     {
       "id": "atl_vid_5946fb31e919",
@@ -1624,7 +1080,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0103
     },
     {
       "id": "atl_vid_498940465f1e",
@@ -1658,40 +1114,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
-    },
-    {
-      "id": "atl_espn_a7801e5ef2889",
-      "type": "article",
-      "title": "Countdown to Super Bowl LXI: Top-10 lists, projections, rankings, more coverage",
-      "summary": "The Super Bowl will air on ESPN on Feb. 14, 2027. We have all-time lists, predictions and unforgettable moments.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1106/r1741948_608x342_16-9.jpg",
-      "imageAlt": "Countdown to Super Bowl LXI: Top-10 lists, projections, rankings, more coverage",
-      "publishedAt": "2026-11-15T18:52:06Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50119009/super-bowl-2027-lxi-countdown-top-10-lists-rankings",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "ESPN staff",
-      "author": "ESPN staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "film",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0416
+      "storyRank": 0.0413
     },
     {
       "id": "atl_rss_e4947d5197cf",
@@ -1724,73 +1147,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
-    },
-    {
-      "id": "atl_espn_a7729f2a0d2ad",
-      "type": "article",
-      "title": "NFL Week 10 betting odds: Lines and totals for every game",
-      "summary": "Updated odds, spreads, totals and FPI predictions for every NFL game in Week 10.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1109/r1743451_2_1296x729_16-9.jpg",
-      "imageAlt": "NFL Week 10 betting odds: Lines and totals for every game",
-      "publishedAt": "2026-11-14T16:55:36Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50414742/2026-nfl-week-10-schedule-odds-point-spreads-totals",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0343
-    },
-    {
-      "id": "atl_espn_089a3b6e8b400",
-      "type": "article",
-      "title": "NFL Week 10 predictions: Upsets, fantasy sleepers, stat lines, TD scorers, more",
-      "summary": "Touchdown for Chuba Hubbard? Fantasy upside for Aaron Rodgers? Trick play from the Raiders? Let's predict 15 things for Week 10.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1112/r1744993_2_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 10 predictions: Upsets, fantasy sleepers, stat lines, TD scorers, more",
-      "publishedAt": "2026-11-14T11:53:16Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50453290/week-10-predictions-upsets-fantasy-sleepers-stats-2026",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "ben_solak",
-      "reporterName": "Ben Solak",
-      "author": "Ben Solak",
-      "authorHandle": "@BenjaminSolak",
-      "authorProfileUrl": "https://x.com/BenjaminSolak",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0331
+      "storyRank": 0.035
     },
     {
       "id": "atl_tx_5b421c082348",
@@ -1824,7 +1181,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.032
     },
     {
       "id": "atl_rss_7d49c666a330",
@@ -1857,7 +1214,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0296
     },
     {
       "id": "atl_vid_b5e7e908e1df",
@@ -1891,7 +1248,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0295
     },
     {
       "id": "atl_rss_c83616257292",
@@ -1924,7 +1281,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.082
     },
     {
       "id": "atl_rss_1413d95dc2ce",
@@ -1957,7 +1314,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0286
     },
     {
       "id": "atl_rss_4ea0b1f46176",
@@ -1990,7 +1347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0286
     },
     {
       "id": "atl_tx_01180c486c8b",
@@ -2024,7 +1381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0069
+      "storyRank": 0.0275
     },
     {
       "id": "atl_rss_ef1def40a3e1",
@@ -2057,7 +1414,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0265
     },
     {
       "id": "atl_rss_7ff7091046f3",
@@ -2090,7 +1447,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.0729
     },
     {
       "id": "atl_vid_7b464d4d545d",
@@ -2124,7 +1481,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0255
     },
     {
       "id": "atl_rss_43c5cdd7d26f",
@@ -2157,7 +1514,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0247
     },
     {
       "id": "atl_vid_ed78d5a4dce9",
@@ -2191,7 +1548,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0233
     },
     {
       "id": "atl_vid_158cc9299cd7",
@@ -2225,7 +1582,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0057
     },
     {
       "id": "atl_rss_6cef9df7b9fc",
@@ -2258,7 +1615,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0228
     },
     {
       "id": "atl_rss_726dcffeda07",
@@ -2291,7 +1648,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0652
     },
     {
       "id": "atl_rss_12604ad7fac4",
@@ -2324,7 +1681,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0228
     },
     {
       "id": "atl_rss_ac3bd81a97c1",
@@ -2357,7 +1714,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0225
     },
     {
       "id": "atl_rss_56485a7a2ee5",
@@ -2390,7 +1747,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0224
     },
     {
       "id": "atl_vid_14e310a16f42",
@@ -2424,7 +1781,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0224
     },
     {
       "id": "atl_rss_377400c9cc49",
@@ -2457,7 +1814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.022
     },
     {
       "id": "atl_tx_74e210c1510b",
@@ -2491,7 +1848,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0212
     },
     {
       "id": "atl_rss_e977be8203e5",
@@ -2524,7 +1881,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0202
     },
     {
       "id": "atl_vid_dd655223124f",
@@ -2558,73 +1915,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0201
-    },
-    {
-      "id": "atl_rss_d77b9114a23a",
-      "type": "article",
-      "title": "Tracking the NFC South: A 4-way tie between 3-win teams",
-      "summary": "The division is as tight as possible heading into Week 10.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/hm09v7xjtidzanqxiuyp.png",
-      "imageAlt": "Tracking the NFC South: A 4-way tie between 3-win teams",
-      "publishedAt": "2026-11-10T18:55:45.000Z",
-      "url": "https://www.atlantafalcons.com/news/tracking-the-nfc-south-panthers-saints-bucs-falcons-wins",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@Falcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.02
-    },
-    {
-      "id": "atl_rss_fb7977b08381",
-      "type": "article",
-      "title": "Week 10 NFL Power Rankings Roundup: Packers on the move, top offenses stand firm",
-      "summary": "Bengals, Broncos and Bears continue to hold strong as frequent flyers as top teams in the league.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/y4j9scqgyzcnumg1aylm.jpg",
-      "imageAlt": "Week 10 NFL Power Rankings Roundup: Packers on the move, top offenses stand firm",
-      "publishedAt": "2026-11-10T18:04:00.000Z",
-      "url": "https://www.atlantafalcons.com/news/week-10-nfl-power-rankings-roundup-packers-on-the-move-top-offenses-stand-firm",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@Falcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0199
     },
     {
       "id": "atl_rss_f2f796faf1fe",
@@ -2657,7 +1948,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0196
+      "storyRank": 0.0195
     },
     {
       "id": "atl_tx_f528c4fe1b37",
@@ -2691,7 +1982,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0048
+      "storyRank": 0.0189
     },
     {
       "id": "atl_rss_2826f0a942e9",
@@ -2724,7 +2015,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0182
+      "storyRank": 0.0181
     },
     {
       "id": "atl_rss_1ddac499f485",
@@ -2757,7 +2048,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.018
     },
     {
       "id": "atl_vid_d60ab025a824",
@@ -2791,7 +2082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0179
     },
     {
       "id": "atl_vid_2dd4f631a635",
@@ -2825,7 +2116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.018
+      "storyRank": 0.0179
     },
     {
       "id": "atl_rss_952a334268a1",
@@ -2858,7 +2149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0178
     },
     {
       "id": "atl_rss_6bba2484a82d",
@@ -2891,7 +2182,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0177
     },
     {
       "id": "atl_tx_fc5a0725e987",
@@ -2925,7 +2216,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.017
     },
     {
       "id": "atl_vid_64a8458d4d33",
@@ -2959,7 +2250,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0164
     },
     {
       "id": "atl_vid_b85f1a807407",
@@ -3027,7 +2318,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0162
     },
     {
       "id": "atl_vid_12fcf6f1a764",
@@ -3061,7 +2352,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0161
     },
     {
       "id": "atl_vid_581f35a285b7",
@@ -3129,7 +2420,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.016
     },
     {
       "id": "atl_vid_facbf2e4b5d6",
@@ -3163,7 +2454,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0161
+      "storyRank": 0.016
     },
     {
       "id": "atl_vid_b5a12ab9561d",
@@ -3197,7 +2488,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0161
+      "storyRank": 0.016
     },
     {
       "id": "atl_vid_cd650e6ba285",
@@ -3231,7 +2522,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0161
+      "storyRank": 0.016
     },
     {
       "id": "atl_vid_25734f1e86df",
@@ -3265,7 +2556,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0161
+      "storyRank": 0.016
     },
     {
       "id": "atl_vid_532f3a87fc73",
@@ -3299,7 +2590,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0159
     },
     {
       "id": "atl_vid_305223f824da",
@@ -3333,7 +2624,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0159
     },
     {
       "id": "atl_vid_8e3114def61f",
@@ -3367,7 +2658,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0159
     },
     {
       "id": "atl_vid_993aede9b36b",
@@ -3401,7 +2692,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0159
     },
     {
       "id": "atl_vid_72d70aaf36b0",
@@ -3469,7 +2760,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.016
+      "storyRank": 0.0159
     },
     {
       "id": "atl_vid_6f5cdf3017db",
@@ -3537,7 +2828,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0146
     },
     {
       "id": "atl_tx_a874b8a93a5c",
@@ -3571,7 +2862,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0145
     },
     {
       "id": "atl_vid_9393787fe4f4",
@@ -3639,7 +2930,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.0133
     },
     {
       "id": "atl_vid_16e3c14ecc40",
@@ -3673,7 +2964,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.0122
     },
     {
       "id": "atl_vid_b7e44187b261",
@@ -3741,7 +3032,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.0112
     },
     {
       "id": "atl_tx_c91c06ccefd8",
@@ -3775,7 +3066,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.011
     },
     {
       "id": "atl_vid_a438972cd715",
@@ -3843,7 +3134,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0102
     },
     {
       "id": "atl_vid_6bcda9879ba0",
@@ -3911,7 +3202,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0095
     },
     {
       "id": "atl_vid_cd29c305142f",
@@ -3945,7 +3236,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0095
     },
     {
       "id": "atl_rss_f8489ea8b6c2",

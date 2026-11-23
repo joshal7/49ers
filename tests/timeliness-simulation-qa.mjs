@@ -12,6 +12,10 @@ import { fileURLToPath } from 'node:url';
 import {
   resolveGameNewsContext,
   classifyBreakingItem,
+  computePlayerRosterValue,
+  isOpposingTeamSubjectLead,
+  isOpposingTeamOnlyInjuryOrRosterStory,
+  filterOutOpposingTeamInjuryItems,
   sortNewsWithBreakingPriority,
   deduplicateAndGroupWireItems,
   balanceFeedTopSalience,
@@ -19,7 +23,11 @@ import {
   partitionBreakingNewsAboveBrief
 } from '../src/engine/breakingClassifier.js';
 import {
-  resolveEarlyWeekRolloverInput
+  resolveReporterFromNameOrHandle
+} from '../src/engine/beatAttributionEngine.js';
+import {
+  resolveEarlyWeekRolloverInput,
+  formatCompletedGameRecapForPrompt
 } from '../src/engine/gameDayRosterEngine.js';
 import {
   rankPlayerInjuryNews,
@@ -35,6 +43,8 @@ import {
 } from '../src/services/aiWorkerClient.js';
 import {
   hydrateLiveEspnOverlay,
+  hydrateLiveEspnRapidBreakingDesk,
+  hydrateLiveRotoWireBeatRss,
   hydrateLiveWorkerEdgeWire,
   hydrateLiveMultiSourceBeatWire
 } from '../src/services/dataService.js';
@@ -1534,6 +1544,270 @@ await runSim('Scenario 12 [SNF Game-Day Lifecycle & Post-Final Rollover]: hydrat
   } finally {
     globalThis.fetch = origFetch;
   }
+});
+
+// ---------------------------------------------------------------------------
+// Scenario 13: Multi-Team Opposing-Injury Isolation & Zero Accidental 49ers Bias (Vikings vs. 49ers SNF)
+// ---------------------------------------------------------------------------
+await runSim('Scenario 13 [Zero 49ers Bias for Other Teams]: Vikings feed blocks 49ers Colton McKivitz injury from LIVE INJURY UPDATE / rawStream, demotes SF beat writers (Nick Wagoner), keeps Darrisaw LIVE INJURY UPDATE #1, and preserves SF symmetry', async () => {
+  const nowMs = Date.parse('2026-11-23T04:40:00Z');
+  const koIso = '2026-11-23T01:20:00Z';
+  const minRoster = [
+    { id: '4362072', name: 'Christian Darrisaw', shortName: 'C. Darrisaw', position: 'OT', jersey: 71, rosterBucket: 'active', isStarter: true, primarySnapPct: 96, capHit2026: 18_500_000 },
+    { id: '4262921', name: 'Justin Jefferson', shortName: 'J. Jefferson', position: 'WR', jersey: 18, rosterBucket: 'active', isStarter: true, primarySnapPct: 94, capHit2026: 35_000_000 },
+    { id: '4036378', name: 'T.J. Hockenson', shortName: 'T. Hockenson', position: 'TE', jersey: 87, rosterBucket: 'active', isStarter: true, primarySnapPct: 82, capHit2026: 16_000_000 }
+  ];
+  const minAppData = {
+    meta: { teamAbbr: 'MIN', teamSlug: 'vikings', brandName: 'Vikings Skol', currentWeek: 11 },
+    roster: { players: minRoster },
+    scheduleMatchup: {
+      schedule: [
+        {
+          id: '401873111',
+          week: 11,
+          dateIso: koIso,
+          completed: true,
+          statusDetail: 'Final',
+          opponent: { abbr: 'SF', name: 'San Francisco 49ers' }
+        },
+        {
+          id: '401873125',
+          week: 12,
+          dateIso: '2026-11-29T18:00:00Z',
+          completed: false,
+          statusDetail: 'Sun 1:00 PM',
+          opponent: { abbr: 'GB', name: 'Green Bay Packers' }
+        }
+      ],
+      upcomingMatchup: {
+        week: 12,
+        oppAbbr: 'GB',
+        oppName: 'Green Bay Packers',
+        dateIso: '2026-11-29T18:00:00Z',
+        opponentHealth: {
+          activeRoster: [{ id: '3916075', name: 'Colton McKivitz', position: 'OT' }],
+          keyStartersHealthy: [],
+          injuryReport: []
+        }
+      }
+    },
+    news: { rawStream: [] }
+  };
+
+  const sfMcKivitzArticle = {
+    id: 'espn_mckivitz_sf',
+    type: 'article',
+    title: "49ers' Colton McKivitz exits win vs. Vikings with lower leg injury",
+    summary: "49ers right tackle Colton McKivitz departed Sunday night's game against the Vikings midway through the second quarter because of what appeared to be a serious injury to his lower left leg.",
+    author: 'Nick Wagoner',
+    reporterId: 'nick_wagoner',
+    mentionedPlayers: [],
+    url: 'https://www.espn.com/nfl/story/_/id/9990001/49ers-colton-mckivitz-exits-win-vs-vikings',
+    wireSource: 'espn_rapid_desk',
+    publishedAt: '2026-11-23T04:23:00Z'
+  };
+
+  const minDarrisawInjury = {
+    id: 'tw_darrisaw_min',
+    type: 'tweet',
+    title: "Darrisaw (shoulder) is questionable to return to Sunday night's contest against the 49ers.",
+    fullText: "Darrisaw (shoulder) is questionable to return to Sunday night's contest against the 49ers.",
+    author: 'Alec Lewis',
+    trustTier: 1,
+    mentionedPlayers: [{ id: '4362072', name: 'Christian Darrisaw' }],
+    url: 'https://x.com/alec_lewis/status/2000112233',
+    publishedAt: '2026-11-23T03:40:00Z'
+  };
+
+  const minOfficialRecap = {
+    id: 'min_recap_official',
+    type: 'article',
+    title: 'Vikings at 49ers Game Observations: Slow Start, Rough 2nd Quarter & Giveaways Add Up in Loss',
+    summary: 'Minnesota struggled early against San Francisco in Week 11.',
+    author: 'vikings.com Official',
+    outletId: 'vikings_official',
+    trustTier: 1,
+    mentionedPlayers: [],
+    url: 'https://www.vikings.com/news/game-observations-week-11',
+    wireSource: 'club_official_rss',
+    publishedAt: '2026-11-23T04:39:00Z'
+  };
+
+  const sfWagonerRecap = {
+    id: 'espn_wagoner_recap',
+    type: 'article',
+    title: "49ers make bold statement with blowout win over Vikings, keep NFC's No. 1 seed",
+    summary: "The 49ers used a late second-quarter burst to take control of Sunday's game in Mexico City.",
+    author: 'Nick Wagoner',
+    reporterId: 'nick_wagoner',
+    mentionedPlayers: [],
+    url: 'https://www.espn.com/nfl/story/_/id/9990002/49ers-blowout-win-over-vikings',
+    wireSource: 'espn_rapid_desk',
+    publishedAt: '2026-11-23T04:33:00Z'
+  };
+
+  const minOfficialVideo = {
+    id: 'min_vid_hockenson',
+    type: 'video',
+    title: 'T.J. Hockenson on Playing with Kirk Cousins Again, Injury Update, Preparing for 49ers in Mexico',
+    author: 'vikings.com Video',
+    outletId: 'vikings_official',
+    url: 'https://www.vikings.com/video/hockenson-injury-update-49ers',
+    wireSource: 'club_video_rss',
+    publishedAt: '2026-11-21T20:00:00Z'
+  };
+
+  // 1. Opposing-team subject detection & beat writer scoping for MIN vs SF
+  assert.equal(isOpposingTeamSubjectLead(sfMcKivitzArticle.title, sfMcKivitzArticle, 'MIN'), true, '49ers McKivitz lead must be detected as opposing team on MIN');
+  assert.equal(isOpposingTeamOnlyInjuryOrRosterStory(sfMcKivitzArticle, 'MIN'), true, '49ers McKivitz article must be flagged as opposing-team-only injury on MIN');
+  assert.equal(isOpposingTeamSubjectLead(minDarrisawInjury.title, minDarrisawInjury, 'MIN'), false, 'Vikings Darrisaw injury must NOT be flagged as opposing team on MIN');
+  assert.equal(isOpposingTeamOnlyInjuryOrRosterStory(minOfficialVideo, 'MIN'), false, 'Official vikings.com Video mentioning 49ers must NEVER be false-positive filtered');
+
+  // 2. Beat reporter trust-tier isolation: Nick Wagoner is Tier-3 other-team beat on MIN, Tier-1 on SF
+  const wagonerOnMin = resolveReporterFromNameOrHandle('Nick Wagoner', 'MIN');
+  const wagonerOnSf = resolveReporterFromNameOrHandle('Nick Wagoner', 'SF');
+  assert.equal(wagonerOnMin?.isOtherTeamBeat, true, 'Nick Wagoner must be flagged isOtherTeamBeat on MIN');
+  assert.equal(wagonerOnMin?.trustTier, 3, 'Nick Wagoner must be demoted to trustTier 3 on MIN');
+  assert.equal(wagonerOnSf?.trustTier, 1, 'Nick Wagoner must remain Tier 1 on SF');
+  assert.ok(!wagonerOnSf?.isOtherTeamBeat, 'Nick Wagoner must NOT be flagged isOtherTeamBeat on SF');
+
+  // 3. Roster value must NOT apply SF fallback starter slugs (`coltonmckivitz`) on MIN
+  const mckValOnMin = computePlayerRosterValue(sfMcKivitzArticle, minRoster, 'MIN');
+  assert.ok(mckValOnMin.valueScore < 0.5, `Colton McKivitz must NOT get SF starter value (>=0.5) on MIN, got ${mckValOnMin.valueScore}`);
+
+  // 4. Breaking classifier: McKivitz gets ZERO breaking/injury badge on MIN, while Darrisaw gets LIVE INJURY UPDATE
+  const mckOnMinClass = classifyBreakingItem(sfMcKivitzArticle, nowMs, { appData: minAppData });
+  assert.equal(mckOnMinClass.isBreaking, false, '49ers McKivitz injury must NOT be breaking on Vikings site');
+  assert.equal(mckOnMinClass.isInGameInjury, false, '49ers McKivitz injury must NOT be isInGameInjury on Vikings site');
+  assert.equal(mckOnMinClass.breakingBadge, null, '49ers McKivitz injury must NOT wear LIVE INJURY UPDATE badge on Vikings site');
+
+  const darrisawOnMinClass = classifyBreakingItem(minDarrisawInjury, nowMs, { appData: minAppData });
+  assert.equal(darrisawOnMinClass.breakingBadge, 'LIVE INJURY UPDATE', 'Vikings Darrisaw injury must still wear LIVE INJURY UPDATE on Vikings site');
+
+  // 5. Converse SF symmetry: exact same McKivitz article STILL gets LIVE INJURY UPDATE on 49ers.joshal.com!
+  const sfAppData = {
+    meta: { teamAbbr: 'SF', teamSlug: '49ers', brandName: '49ers Faithful', currentWeek: 11 },
+    roster: { players: [{ id: '3916075', name: 'Colton McKivitz', position: 'OT', rosterBucket: 'active', isStarter: true, primarySnapPct: 98, capHit2026: 12_000_000 }] },
+    scheduleMatchup: {
+      schedule: [{ id: '401873111', week: 11, dateIso: koIso, completed: true, statusDetail: 'Final', opponent: { abbr: 'MIN', name: 'Minnesota Vikings' } }],
+      upcomingMatchup: { week: 12, oppAbbr: 'SEA', oppName: 'Seattle Seahawks', dateIso: '2026-11-29T21:05:00Z' }
+    }
+  };
+  const mckOnSfClass = classifyBreakingItem(sfMcKivitzArticle, nowMs, { appData: sfAppData });
+  assert.equal(mckOnSfClass.breakingBadge, 'LIVE INJURY UPDATE', '49ers McKivitz injury MUST still wear LIVE INJURY UPDATE on 49ers site');
+
+  // 6. Bilateral trade & coach presser detection work symmetrically on MIN (no SF bias)
+  const minTrade = {
+    id: 'tw_min_trade',
+    type: 'tweet',
+    title: 'Trade! The Colts are sending WR Michael Pittman to the #Vikings for a 3rd-round pick, per sources.',
+    fullText: 'Trade! The Colts are sending WR Michael Pittman to the #Vikings for a 3rd-round pick, per sources.',
+    author: 'Adam Schefter',
+    trustTier: 1,
+    publishedAt: '2026-11-23T04:10:00Z'
+  };
+  const minTradeClass = classifyBreakingItem(minTrade, nowMs, { appData: minAppData });
+  assert.equal(minTradeClass.storyTier, 'tier1_major', 'Bilateral trade to Vikings must classify as tier1_major on MIN');
+  assert.equal(minTradeClass.breakingBadge, 'BREAKING', 'Fresh Vikings trade must wear BREAKING badge on MIN');
+
+  // 7. Stream filtering & ranking: McKivitz filtered out; Darrisaw #1; vikings.com recap outranks Nick Wagoner SF recap
+  const filteredMin = filterOutOpposingTeamInjuryItems(
+    [sfMcKivitzArticle, minDarrisawInjury, minOfficialRecap, sfWagonerRecap, minOfficialVideo],
+    minAppData
+  );
+  assert.equal(filteredMin.some(it => it.id === 'espn_mckivitz_sf'), false, 'filterOutOpposingTeamInjuryItems must remove 49ers McKivitz injury from Vikings feed');
+  assert.equal(filteredMin.some(it => it.id === 'tw_darrisaw_min'), true, 'filterOutOpposingTeamInjuryItems must keep Vikings Darrisaw injury');
+  assert.equal(filteredMin.some(it => it.id === 'min_vid_hockenson'), true, 'filterOutOpposingTeamInjuryItems must keep official Vikings video');
+
+  const rankedMin = sortNewsWithBreakingPriority(filteredMin, nowMs, { appData: minAppData });
+  assert.equal(rankedMin[0].id, 'tw_darrisaw_min', 'Vikings Darrisaw LIVE INJURY UPDATE must rank #1 on Vikings site');
+  const idxMinRecap = rankedMin.findIndex(it => it.id === 'min_recap_official');
+  const idxSfRecap = rankedMin.findIndex(it => it.id === 'espn_wagoner_recap');
+  assert.ok(idxMinRecap >= 0 && idxSfRecap > idxMinRecap, 'vikings.com Official recap must outrank Nick Wagoner 49ers-framed recap on Vikings site');
+
+  // 8. Live ESPN Rapid Desk + RotoWire RSS ingestion isolate opposing 49ers injuries on MIN
+  const origFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async url => {
+      const u = String(url);
+      if (u.includes('espn.com/apis/site/v2/sports/football/nfl/news?team=16')) {
+        return new Response(
+          JSON.stringify({
+            articles: [
+              {
+                id: '9990001',
+                headline: sfMcKivitzArticle.title,
+                description: sfMcKivitzArticle.summary,
+                byline: 'Nick Wagoner',
+                published: new Date(Date.now() - 10 * 60_000).toISOString(),
+                links: { web: { href: sfMcKivitzArticle.url } }
+              },
+              {
+                id: '9990003',
+                headline: "Vikings' Christian Darrisaw questionable to return vs. 49ers with shoulder injury",
+                description: 'Vikings left tackle Christian Darrisaw exited in the third quarter with a shoulder injury.',
+                byline: 'Kevin Seifert',
+                published: new Date(Date.now() - 12 * 60_000).toISOString(),
+                links: { web: { href: 'https://www.espn.com/nfl/story/_/id/9990003/vikings-darrisaw-shoulder' } }
+              }
+            ]
+          }),
+          { status: 200 }
+        );
+      }
+      if (u.includes('rotowire.com/rss/news.php')) {
+        return new Response(
+          `<rss><channel><item><title>Colton McKivitz (49ers)</title><description>49ers RT Colton McKivitz exits Sunday night's game against the Vikings with a lower leg injury.</description><link>https://www.rotowire.com/football/player/colton-mckivitz-14500</link><pubDate>${new Date().toUTCString()}</pubDate><guid>rw_mck_1</guid></item></channel></rss>`,
+          { status: 200 }
+        );
+      }
+      return new Response(JSON.stringify({ articles: [], transactions: [] }), { status: 200 });
+    };
+
+    minAppData.news.rawStream = [];
+    await hydrateLiveEspnRapidBreakingDesk(minAppData);
+    assert.equal(
+      minAppData.news.rawStream.some(it => /McKivitz/i.test(it.title)),
+      false,
+      'Live ESPN Rapid Desk must NOT inject 49ers Colton McKivitz injury into Vikings rawStream'
+    );
+    assert.equal(
+      minAppData.news.rawStream.some(it => /Darrisaw/i.test(it.title)),
+      true,
+      'Live ESPN Rapid Desk MUST inject Vikings Christian Darrisaw injury into Vikings rawStream'
+    );
+
+    minAppData.news.rawStream = [];
+    await hydrateLiveRotoWireBeatRss(minAppData, { isGameLive: true });
+    assert.equal(
+      minAppData.news.rawStream.some(it => /McKivitz/i.test(it.title || it.fullText || '')),
+      false,
+      'Live RotoWire RSS must NOT inject 49ers Colton McKivitz injury into Vikings rawStream just because "against the Vikings" appears'
+    );
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+
+  // 9. Completed game recap prompt formatter uses Vikings (zero 49ers leak)
+  const minPromptBlock = formatCompletedGameRecapForPrompt(
+    {
+      teamAbbr: 'MIN',
+      teamFullName: 'Minnesota Vikings',
+      teamNickname: 'Vikings',
+      week: 11,
+      homeAway: 'away',
+      sfScore: 17,
+      oppScore: 34,
+      result: 'L',
+      oppAbbr: 'SF',
+      oppName: 'San Francisco 49ers',
+      sfLinescores: [3, 7, 7, 0],
+      oppLinescores: [7, 17, 7, 3]
+    },
+    'MIN'
+  );
+  assert.ok(minPromptBlock.includes('Minnesota Vikings 17, San Francisco 49ers 34'), 'Recap prompt must label active team as Minnesota Vikings');
+  assert.ok(minPromptBlock.includes('MIN [3-7-7-0]'), 'Recap prompt must label quarter scoring with MIN, not SF');
 });
 
 console.log(`\nTimeliness Simulation Summary: ${passed} passed, ${failed} failed.\n`);

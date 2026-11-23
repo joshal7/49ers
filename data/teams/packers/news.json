@@ -22,38 +22,22 @@
       "Wide receiver Christian Watson noted 'we know what's at stake' on [packers.com Video](https://www.packers.com/video/christian-watson-we-know-what-s-at-stake-in-matchup-vs-the-rams-nov-22-2026), as Green Bay's #1-ranked explosive pass offense attempts to overcome their #32-ranked rushing attack (67.0 yards per game)."
     ],
     "coveredStoryKeys": [
-      "gb_espn_165c27d62fbe1",
-      "gb_espn_60efae509e729",
       "gb_rss_3335aa2dfab7",
       "gb_vid_860d724d92c9",
       "gb_vid_b22d17cced29",
-      "gb_vid_5d57ffbf7ef2"
+      "gb_vid_5d57ffbf7ef2",
+      "gb_rss_436e39b97f3e",
+      "gb_vid_039a50ac8547"
     ],
     "coveredUrls": [
-      "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
       "https://www.packers.com/news/packers-rams-injury-report-nov-22-2026",
       "https://www.packers.com/video/christian-watson-we-know-what-s-at-stake-in-matchup-vs-the-rams-nov-22-2026",
+      "https://www.packers.com/video/matt-lafleur-on-micah-parsons-he-is-an-elite-player-he-is-an-elite-athlete-nov-22-2026",
       "https://www.packers.com/video/evan-williams-on-matchup-vs-rams-what-an-opportunity-nov-22-2026",
-      "https://www.packers.com/video/matt-lafleur-on-micah-parsons-he-is-an-elite-player-he-is-an-elite-athlete-nov-22-2026"
+      "https://www.packers.com/video/jordan-love-sean-rhyan-is-a-guy-that-does-all-the-little-things-right-nov-21-2026",
+      "https://www.packers.com/video/zaire-franklin-we-got-to-go-out-there-and-earn-it-nov-21-2026"
     ],
     "sources": [
-      {
-        "sid": "S1",
-        "title": "How active NFL players continue to redefine all-time sack list",
-        "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-        "author": "Sarah Barshop",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:49:27Z"
-      },
-      {
-        "sid": "S2",
-        "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-        "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-        "author": "ESPN Staff",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:00:32Z"
-      },
       {
         "sid": "S3",
         "title": "Packers-Rams Injury Report | Nov. 22, 2026",
@@ -71,20 +55,20 @@
         "publishedAt": "2026-11-22T21:09:55.000Z"
       },
       {
-        "sid": "S5",
-        "title": "Evan Williams on matchup vs. Rams: 'What an opportunity'",
-        "url": "https://www.packers.com/video/evan-williams-on-matchup-vs-rams-what-an-opportunity-nov-22-2026",
-        "author": "packers.com Video",
-        "outlet": "packers.com Video",
-        "publishedAt": "2026-11-22T21:09:44.000Z"
-      },
-      {
         "sid": "S6",
         "title": "Matt LaFleur on Micah Parsons: 'He is an elite player, he is an elite athlete'",
         "url": "https://www.packers.com/video/matt-lafleur-on-micah-parsons-he-is-an-elite-player-he-is-an-elite-athlete-nov-22-2026",
         "author": "packers.com Video",
         "outlet": "packers.com Video",
         "publishedAt": "2026-11-22T17:17:24.000Z"
+      },
+      {
+        "sid": "S5",
+        "title": "Evan Williams on matchup vs. Rams: 'What an opportunity'",
+        "url": "https://www.packers.com/video/evan-williams-on-matchup-vs-rams-what-an-opportunity-nov-22-2026",
+        "author": "packers.com Video",
+        "outlet": "packers.com Video",
+        "publishedAt": "2026-11-22T21:09:44.000Z"
       },
       {
         "sid": "S7",
@@ -123,72 +107,6 @@
   "clusteredBriefs": [],
   "rawStream": [
     {
-      "id": "gb_espn_165c27d62fbe1",
-      "type": "article",
-      "title": "How active NFL players continue to redefine all-time sack list",
-      "summary": "Myles Garrett's torrid pace up the all-time sack list paces active players making their moves among the greats.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0828/nfl_data_viz_garrett_cr_16x9_608x342.jpg",
-      "imageAlt": "How active NFL players continue to redefine all-time sack list",
-      "publishedAt": "2026-11-23T01:49:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "sarah_barshop",
-      "reporterName": "Sarah Barshop",
-      "author": "Sarah Barshop",
-      "authorHandle": "@sarahbarshop",
-      "authorProfileUrl": "https://x.com/sarahbarshop",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.5721
-    },
-    {
-      "id": "gb_espn_60efae509e729",
-      "type": "article",
-      "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "publishedAt": "2026-11-23T01:00:32Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 9.6695
-    },
-    {
       "id": "gb_rss_3335aa2dfab7",
       "type": "article",
       "title": "Packers-Rams Injury Report | Nov. 22, 2026",
@@ -219,7 +137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.3567
+      "storyRank": 6.0413
     },
     {
       "id": "gb_vid_860d724d92c9",
@@ -253,7 +171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5993
+      "storyRank": 2.1033
     },
     {
       "id": "gb_vid_b22d17cced29",
@@ -287,7 +205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5979
+      "storyRank": 2.1023
     },
     {
       "id": "gb_vid_5d57ffbf7ef2",
@@ -321,7 +239,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.0214
+      "storyRank": 1.7499
+    },
+    {
+      "id": "gb_rss_436e39b97f3e",
+      "type": "article",
+      "title": "Packers getting healthier on both sides of the ball",
+      "summary": "Several injured players trending toward returning to action on Thanksgiving eve",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/ukmoae8uexmmswcgb32y.png",
+      "imageAlt": "Packers getting healthier on both sides of the ball",
+      "publishedAt": "2026-11-21T22:26:00.000Z",
+      "url": "https://www.packers.com/news/packers-getting-healthier-on-both-sides-of-the-ball-nov-21-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Official",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Official",
+      "author": "packers.com Official",
+      "authorHandle": "@Packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4835
     },
     {
       "id": "gb_vid_039a50ac8547",
@@ -355,7 +306,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4847
+      "storyRank": 0.459
     },
     {
       "id": "gb_vid_79be54eb3fcb",
@@ -389,40 +340,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4821
-    },
-    {
-      "id": "gb_rss_436e39b97f3e",
-      "type": "article",
-      "title": "Packers getting healthier on both sides of the ball",
-      "summary": "Several injured players trending toward returning to action on Thanksgiving eve",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/ukmoae8uexmmswcgb32y.png",
-      "imageAlt": "Packers getting healthier on both sides of the ball",
-      "publishedAt": "2026-11-21T22:26:00.000Z",
-      "url": "https://www.packers.com/news/packers-getting-healthier-on-both-sides-of-the-ball-nov-21-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@Packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1279
+      "storyRank": 0.4566
     },
     {
       "id": "gb_vid_4395c572dedb",
@@ -456,7 +374,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3467
+      "storyRank": 0.3284
     },
     {
       "id": "gb_rss_54069f85fbca",
@@ -489,7 +407,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1198
+      "storyRank": 0.454
     },
     {
       "id": "gb_vid_9943638b9cb9",
@@ -523,7 +441,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4166
+      "storyRank": 0.3966
     },
     {
       "id": "gb_rss_7fbd7ac0c342",
@@ -556,7 +474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3614
+      "storyRank": 0.3457
     },
     {
       "id": "gb_tx_a24dc24b80ae",
@@ -590,106 +508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0737
-    },
-    {
-      "id": "gb_espn_4b15838125df3",
-      "type": "article",
-      "title": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "summary": "Here's a look at what each NFL team is wearing in Week 11, led by Houston debuting its Rivalries combination.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/commanders-texans-week-11-unis16x9.jpg",
-      "imageAlt": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "publishedAt": "2026-11-20T22:49:33Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "Anthony Gharib",
-      "author": "Anthony Gharib",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0566
-    },
-    {
-      "id": "gb_espn_e18552bc1fb8c",
-      "type": "article",
-      "title": "NFL Week 11 betting odds: Lines and totals for every game",
-      "summary": "Updated odds, spreads, totals and FPI predictions for every NFL game in Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746635_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 betting odds: Lines and totals for every game",
-      "publishedAt": "2026-11-20T20:13:57Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2117
-    },
-    {
-      "id": "gb_rss_369852b4278d",
-      "type": "article",
-      "title": "Inbox: Hopefully he never changes",
-      "summary": "This next game will tell us a lot",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/iwy6i0s1oaci5ffpfzim.jpg",
-      "imageAlt": "Inbox: Hopefully he never changes",
-      "publishedAt": "2026-11-20T14:30:00.000Z",
-      "url": "https://www.packers.com/news/inbox-hopefully-he-never-changes-nov-20-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@Packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1846
+      "storyRank": 0.2836
     },
     {
       "id": "gb_tx_482839d994b4",
@@ -723,7 +542,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0401
+      "storyRank": 0.1564
     },
     {
       "id": "gb_rss_74f0b81bc686",
@@ -756,7 +575,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0335
+      "storyRank": 0.131
     },
     {
       "id": "gb_vid_9d6e79e766c8",
@@ -790,106 +609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0319
-    },
-    {
-      "id": "gb_espn_b95a427d7fb7b",
-      "type": "article",
-      "title": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "summary": "Here's the good and the bad for each offensive coordinator or playcaller through Week 10, plus keys to their success the rest of the way.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1118/32_for_32_midseason_look_608x342.png",
-      "imageAlt": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "publishedAt": "2026-11-19T17:37:25Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50520404/nfl-offensive-coordinators-playcallers-midseason-report",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1225
-    },
-    {
-      "id": "gb_rss_29fe52b30f53",
-      "type": "article",
-      "title": "'Do you believe this guy was on the street?'",
-      "summary": "Late bloomer Tramon Williams rose from the bottom",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/sfynxxvegai0xuhzbzjd.png",
-      "imageAlt": "'Do you believe this guy was on the street?'",
-      "publishedAt": "2026-11-19T15:00:00.000Z",
-      "url": "https://www.packers.com/news/do-you-believe-this-guy-was-on-the-street-nov-19-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@Packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1172
-    },
-    {
-      "id": "gb_rss_a2f34a77cb1f",
-      "type": "article",
-      "title": "Inbox: They've changed the complexion of this defense",
-      "summary": "You live and learn, and try to be better the next time around",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/bsrpinw12mcjbgpsrpn1.jpg",
-      "imageAlt": "Inbox: They've changed the complexion of this defense",
-      "publishedAt": "2026-11-19T14:30:00.000Z",
-      "url": "https://www.packers.com/news/inbox-they-ve-changed-the-complexion-of-this-defense-nov-19-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@Packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1163
+      "storyRank": 0.1249
     },
     {
       "id": "gb_vid_a63db56a8cbb",
@@ -923,7 +643,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0284
+      "storyRank": 0.1114
     },
     {
       "id": "gb_vid_f31b4b2694ed",
@@ -957,7 +677,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0284
+      "storyRank": 0.1112
     },
     {
       "id": "gb_tx_73a10848aa7a",
@@ -991,7 +711,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0262
+      "storyRank": 0.1029
     },
     {
       "id": "gb_rss_bbaffc23c4ca",
@@ -1024,7 +744,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0221
+      "storyRank": 0.0868
     },
     {
       "id": "gb_rss_e64388554f8c",
@@ -1057,7 +777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0216
+      "storyRank": 0.0851
     },
     {
       "id": "gb_rss_9189215983ce",
@@ -1090,40 +810,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0208
-    },
-    {
-      "id": "gb_rss_4c9a995f5788",
-      "type": "article",
-      "title": "Inbox: The strategy has served the team well",
-      "summary": "It does function like a division game",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/h1dkgsh5nec42iaiklmy.jpg",
-      "imageAlt": "Inbox: The strategy has served the team well",
-      "publishedAt": "2026-11-18T14:30:00.000Z",
-      "url": "https://www.packers.com/news/inbox-the-strategy-has-served-the-team-well-nov-18-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@Packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0821
+      "storyRank": 0.0818
     },
     {
       "id": "gb_espn_727c591ea031c",
@@ -1156,7 +843,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0806
     },
     {
       "id": "gb_rss_93ad6c6de61a",
@@ -1189,7 +876,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0665
     },
     {
       "id": "gb_vid_2ad5375980ff",
@@ -1223,7 +910,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0664
     },
     {
       "id": "gb_rss_5d6a892920e0",
@@ -1256,7 +943,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0661
     },
     {
       "id": "gb_rss_81a783df6d0f",
@@ -1289,74 +976,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
-    },
-    {
-      "id": "gb_vid_06462aa2e43f",
-      "type": "video",
-      "title": "Three Things: Wild-card race, Parsons' return, Brooks' knockout performance",
-      "summary": "Larry, Mike and Wes share three things heading into the bye week with a Week 12 matchup against the Los Angeles Rams on the horizon.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/qmzntpxnfqm5ebckbkr4.jpg",
-      "imageAlt": "Three Things: Wild-card race, Parsons' return, Brooks' knockout performance",
-      "publishedAt": "2026-11-17T20:57:48.000Z",
-      "url": "https://www.packers.com/video/three-things-wild-card-race-parsons-return-brooks-knockout-performance-nov-17-2026",
-      "externalVideoUrl": "https://www.packers.com/video/three-things-wild-card-race-parsons-return-brooks-knockout-performance-nov-17-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Video",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Video",
-      "author": "packers.com Video",
-      "authorHandle": "@Packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0666
-    },
-    {
-      "id": "gb_espn_d51f7983010a2",
-      "type": "article",
-      "title": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "summary": "How does every NFL team stack up heading into Week 11? We made our 1-32 list and picked the non-quarterback MVPs for each roster.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/nfl_power_rankings_608x342.png",
-      "imageAlt": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "publishedAt": "2026-11-17T20:45:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0664
+      "storyRank": 0.0657
     },
     {
       "id": "gb_vid_75c80b4e6dec",
@@ -1390,7 +1010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.065
     },
     {
       "id": "gb_vid_fc1b26ae8d2d",
@@ -1424,7 +1044,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0649
     },
     {
       "id": "gb_vid_f2806d71b15d",
@@ -1458,7 +1078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0653
+      "storyRank": 0.0644
     },
     {
       "id": "gb_vid_466a9a4eefb6",
@@ -1492,7 +1112,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0652
+      "storyRank": 0.0644
     },
     {
       "id": "gb_vid_4bac606b8f8d",
@@ -1526,7 +1146,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0649
+      "storyRank": 0.064
     },
     {
       "id": "gb_vid_dcab3d064e0e",
@@ -1560,7 +1180,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0628
+      "storyRank": 0.062
     },
     {
       "id": "gb_rss_f5bd4bc4d022",
@@ -1593,7 +1213,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0156
+      "storyRank": 0.0617
     },
     {
       "id": "gb_vid_774c6d996a95",
@@ -1627,7 +1247,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0622
+      "storyRank": 0.0614
     },
     {
       "id": "gb_rss_af409d7c7a94",
@@ -1660,7 +1280,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0621
+      "storyRank": 0.0613
     },
     {
       "id": "gb_vid_b97f86a1bc29",
@@ -1694,7 +1314,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.0611
     },
     {
       "id": "gb_espn_c7594e179b64a",
@@ -1727,7 +1347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0154
+      "storyRank": 0.0609
     },
     {
       "id": "gb_tx_fa69b6a8bb61",
@@ -1761,40 +1381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
-    },
-    {
-      "id": "gb_espn_ee9a3465db613",
-      "type": "article",
-      "title": "Kyle Hamilton rocks Christmas sweater ahead of 'MNF,' leads NFL Week 10 arrivals",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746900_545x307_16-9.png",
-      "imageAlt": "Kyle Hamilton rocks Christmas sweater ahead of 'MNF,' leads NFL Week 10 arrivals",
-      "publishedAt": "2026-11-16T23:53:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50465223/nfl-week-10-fashionable-arrivals",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0536
+      "storyRank": 0.0573
     },
     {
       "id": "gb_espn_7ab4b7e427750",
@@ -1827,7 +1414,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0519
     },
     {
       "id": "gb_espn_d6dbdebf5e948",
@@ -1860,7 +1447,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0516
     },
     {
       "id": "gb_rss_ac06da64a814",
@@ -1893,7 +1480,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0516
     },
     {
       "id": "gb_rss_830970779c2a",
@@ -1926,40 +1513,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013
-    },
-    {
-      "id": "gb_rss_f702e7317caf",
-      "type": "article",
-      "title": "Ice skating on Titletown's Hy-Vee Plaza now open",
-      "summary": "Winter fun returns to Titletown with ice skating on Hy-Vee Plaza",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/cguyhhauzazpsal9alts.png",
-      "imageAlt": "Ice skating on Titletown's Hy-Vee Plaza now open",
-      "publishedAt": "2026-11-16T20:17:17.000Z",
-      "url": "https://www.packers.com/news/ice-skating-on-titletown-s-hy-vee-plaza-now-open-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@Packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0518
+      "storyRank": 0.0516
     },
     {
       "id": "gb_vid_c8dd399e888d",
@@ -1993,73 +1547,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0372
-    },
-    {
-      "id": "gb_espn_8d4c0df7a7dbe",
-      "type": "article",
-      "title": "NFL playoff chance tiers: Where all 32 teams fit in 2026 postseason picture",
-      "summary": "We placed all 32 NFL teams into tiers based on their likelihood of making the playoffs, from Super Bowl favorites to the top-draft-pick candidates.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1113/2026_midseason_playoff_tiers_608x342.png",
-      "imageAlt": "NFL playoff chance tiers: Where all 32 teams fit in 2026 postseason picture",
-      "publishedAt": "2026-11-16T16:21:08Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50463347/2026-nfl-playoffs-chances-odds-tiers-32-teams-nfc-afc",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "Seth Walder",
-      "author": "Seth Walder",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.05
-    },
-    {
-      "id": "gb_rss_78eefb0d0888",
-      "type": "article",
-      "title": "Inbox: It all comes back to one thing",
-      "summary": "If you can’t do that, it’s game over",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/ehneun4ijh4bz8sml5ma.jpg",
-      "imageAlt": "Inbox: It all comes back to one thing",
-      "publishedAt": "2026-11-16T14:30:00.000Z",
-      "url": "https://www.packers.com/news/inbox-it-all-comes-back-to-one-thing-nov-16-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@Packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0491
+      "storyRank": 0.0511
     },
     {
       "id": "gb_vid_afc98cb48567",
@@ -2093,7 +1581,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
+      "storyRank": 0.0485
     },
     {
       "id": "gb_tx_1f103a59771c",
@@ -2127,73 +1615,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
-    },
-    {
-      "id": "gb_espn_ef57ad8125e5f",
-      "type": "article",
-      "title": "NFL Week 10: Big takeaways, questions and fantasy spin from Sunday's games",
-      "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 10.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746498_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 10: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-16T06:53:37Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50443510/week-10-sunday-games-takeaways-questions-2026",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.046
-    },
-    {
-      "id": "gb_espn_6c60aedbc3d0b",
-      "type": "article",
-      "title": "Week 10 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of Sunday's top moments, TDs and analysis from ESPN's NFL reporters.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746290_576x324_16-9.jpg",
-      "imageAlt": "Week 10 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-16T05:24:51Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50489998/week-10-highlights-sunday-best-plays-touchdowns-2026",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0454
+      "storyRank": 0.0459
     },
     {
       "id": "gb_rss_0a72417f8672",
@@ -2226,7 +1648,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0109
+      "storyRank": 0.0431
     },
     {
       "id": "gb_rss_cd1cb9eebcf4",
@@ -2259,7 +1681,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0109
+      "storyRank": 0.0431
     },
     {
       "id": "gb_espn_51de93b545d64",
@@ -2292,7 +1714,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0109
+      "storyRank": 0.043
     },
     {
       "id": "gb_rss_3a99f34cf1e1",
@@ -2325,7 +1747,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0429
     },
     {
       "id": "gb_vid_7d1ec2223155",
@@ -2359,7 +1781,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0426
     },
     {
       "id": "gb_espn_31790621109d2",
@@ -2392,7 +1814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0106
     },
     {
       "id": "gb_vid_b61b77343de3",
@@ -2426,7 +1848,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0425
     },
     {
       "id": "gb_vid_d39fc942cff4",
@@ -2460,7 +1882,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0106
     },
     {
       "id": "gb_vid_bdfe0790414e",
@@ -2494,7 +1916,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0429
+      "storyRank": 0.0425
     },
     {
       "id": "gb_vid_fae47362a177",
@@ -2528,7 +1950,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0429
+      "storyRank": 0.0425
     },
     {
       "id": "gb_vid_3e742ef03990",
@@ -2562,7 +1984,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0422
     },
     {
       "id": "gb_rss_45605a1244a1",
@@ -2595,73 +2017,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
-    },
-    {
-      "id": "gb_espn_4ea732b40e02a",
-      "type": "article",
-      "title": "2026 NFL midseason report: Questions, stats for all 32 teams entering second half",
-      "summary": "The 2026 NFL season has hit the midway point. Here's what to watch in the second half, key QB stats and fantasy nuggets for all 32 teams.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1110/nfl_2026_mid_season_report_1296x729.jpg",
-      "imageAlt": "2026 NFL midseason report: Questions, stats for all 32 teams entering second half",
-      "publishedAt": "2026-11-15T20:46:47Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50448976/2026-nfl-midseason-report-questions-stats-fantasy",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "NFL Nation reporters and Michael F. Florio",
-      "author": "NFL Nation reporters and Michael F. Florio",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0423
-    },
-    {
-      "id": "gb_espn_8c0697d3339bb",
-      "type": "article",
-      "title": "NFL Week 10 uniforms: Titans debut Rivalries look, Ravens go all-black",
-      "summary": "Here's a look at what each NFL team is wearing in Week 10, led by the Tennessee Titans' Rivalries look.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1111/16x9.jpg",
-      "imageAlt": "NFL Week 10 uniforms: Titans debut Rivalries look, Ravens go all-black",
-      "publishedAt": "2026-11-15T20:40:00Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50448015/nfl-week-10-uniforms",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "Anthony Gharib",
-      "author": "Anthony Gharib",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0419
     },
     {
       "id": "gb_vid_0ca930d1f7b4",
@@ -2695,7 +2051,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0377
     },
     {
       "id": "gb_vid_137926698ff8",
@@ -2729,7 +2085,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
+      "storyRank": 0.0377
     },
     {
       "id": "gb_vid_5f1a2798b55c",
@@ -2763,40 +2119,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0095
-    },
-    {
-      "id": "gb_espn_70eea66d727bd",
-      "type": "article",
-      "title": "Ranking the top 10 Super Bowl performances by a defender",
-      "summary": "Not all Super Bowl MVPs were quarterbacks or offensive stars. We listed 10 standout individual defensive performances.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1110/nfl_super-bowl-defensive_16x9.jpg",
-      "imageAlt": "Ranking the top 10 Super Bowl performances by a defender",
-      "publishedAt": "2026-11-15T19:49:59Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50454197/top-10-super-bowl-individual-defensive-performances",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "courtney_cronin",
-      "reporterName": "Courtney Cronin",
-      "author": "Courtney Cronin",
-      "authorHandle": "@CourtneyRCronin",
-      "authorProfileUrl": "https://x.com/CourtneyRCronin",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0376
     },
     {
       "id": "gb_rss_adbeb7befadb",
@@ -2829,7 +2152,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0414
     },
     {
       "id": "gb_vid_4a09ab0a3ad3",
@@ -2863,40 +2186,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
-    },
-    {
-      "id": "gb_espn_a7801e5ef2889",
-      "type": "article",
-      "title": "Countdown to Super Bowl LXI: Top-10 lists, projections, rankings, more coverage",
-      "summary": "The Super Bowl will air on ESPN on Feb. 14, 2027. We have all-time lists, predictions and unforgettable moments.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1106/r1741948_608x342_16-9.jpg",
-      "imageAlt": "Countdown to Super Bowl LXI: Top-10 lists, projections, rankings, more coverage",
-      "publishedAt": "2026-11-15T18:52:06Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50119009/super-bowl-2027-lxi-countdown-top-10-lists-rankings",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "ESPN staff",
-      "author": "ESPN staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "film",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0416
+      "storyRank": 0.0414
     },
     {
       "id": "gb_rss_b0a363b57cc7",
@@ -2929,7 +2219,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.01
+      "storyRank": 0.0395
     },
     {
       "id": "gb_rss_66efdab3797f",
@@ -2962,7 +2252,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.01
+      "storyRank": 0.0395
     },
     {
       "id": "gb_rss_676ef65dc46c",
@@ -2995,7 +2285,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
+      "storyRank": 0.0394
     },
     {
       "id": "gb_vid_cc80ebcd25d2",
@@ -3029,7 +2319,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
+      "storyRank": 0.0394
     },
     {
       "id": "gb_vid_693a77ad042c",
@@ -3063,7 +2353,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
+      "storyRank": 0.0392
     },
     {
       "id": "gb_rss_b0189d255f51",
@@ -3096,40 +2386,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
-    },
-    {
-      "id": "gb_espn_a7729f2a0d2ad",
-      "type": "article",
-      "title": "NFL Week 10 betting odds: Lines and totals for every game",
-      "summary": "Updated odds, spreads, totals and FPI predictions for every NFL game in Week 10.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1109/r1743451_2_1296x729_16-9.jpg",
-      "imageAlt": "NFL Week 10 betting odds: Lines and totals for every game",
-      "publishedAt": "2026-11-14T16:55:36Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50414742/2026-nfl-week-10-schedule-odds-point-spreads-totals",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0343
+      "storyRank": 0.035
     },
     {
       "id": "gb_rss_2bb092dee522",
@@ -3162,7 +2419,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0336
+      "storyRank": 0.0333
     },
     {
       "id": "gb_tx_2712c8245f2b",
@@ -3196,7 +2453,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.032
     },
     {
       "id": "gb_vid_dd7594f1ade9",
@@ -3230,41 +2487,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0301
-    },
-    {
-      "id": "gb_vid_2c8d59f80511",
-      "type": "video",
-      "title": "First-ever Wisconsin Girls High School Flag Football State Championship",
-      "summary": "Six elite programs competed for the inaugural state title with the Xavier Hawks coming out on top, beating the Bay Port Pirates in the championship.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/etetelscascmhdlrjeky.jpg",
-      "imageAlt": "First-ever Wisconsin Girls High School Flag Football State Championship",
-      "publishedAt": "2026-11-13T20:00:00.000Z",
-      "url": "https://www.packers.com/video/first-ever-wisconsin-girls-high-school-flag-football-state-championship-2026",
-      "externalVideoUrl": "https://www.packers.com/video/first-ever-wisconsin-girls-high-school-flag-football-state-championship-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Video",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Video",
-      "author": "packers.com Video",
-      "authorHandle": "@Packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0299
+      "storyRank": 0.0298
     },
     {
       "id": "gb_vid_79be9bbf04f8",
@@ -3298,40 +2521,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
-    },
-    {
-      "id": "gb_espn_e5a884e930468",
-      "type": "article",
-      "title": "NFC North: Bears win division? Cousins has Vikes in command?",
-      "summary": "What will Kirk Cousins and Micah Parsons mean for the best division in football, or will the Bears hang on?",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1112/nfc_roundtable3_608x342.png",
-      "imageAlt": "NFC North: Bears win division? Cousins has Vikes in command?",
-      "publishedAt": "2026-11-13T15:19:15Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50462993/lions-packers-bears-vikings-nfc-north",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "rob_demovsky",
-      "reporterName": "Rob Demovsky",
-      "author": "Rob Demovsky",
-      "authorHandle": "@RobDemovsky",
-      "authorProfileUrl": "https://x.com/RobDemovsky",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.0291
     },
     {
       "id": "gb_rss_8c0e30da337a",
@@ -3364,40 +2554,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
-    },
-    {
-      "id": "gb_rss_cc510e646725",
-      "type": "article",
-      "title": "Inbox: There are others on the rise as well",
-      "summary": "The condensed part of the field will decide things",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/clgsjmkunw1g3e8bso4u.jpg",
-      "imageAlt": "Inbox: There are others on the rise as well",
-      "publishedAt": "2026-11-13T14:30:21.000Z",
-      "url": "https://www.packers.com/news/inbox-there-are-others-on-the-rise-as-well-nov-13-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@Packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0289
+      "storyRank": 0.0287
     },
     {
       "id": "gb_vid_a3d34af61353",
@@ -3431,40 +2588,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
-    },
-    {
-      "id": "gb_espn_43c157d766acc",
-      "type": "article",
-      "title": "NFL execs on tight playoff races, MVP, Super Bowl picks, breakouts, more",
-      "summary": "Who will win the most competitive divisions, and who's in line for awards? We asked sources around the NFL at midseason.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1014/r1730810_1296x729_16-9.jpg",
-      "imageAlt": "NFL execs on tight playoff races, MVP, Super Bowl picks, breakouts, more",
-      "publishedAt": "2026-11-13T12:08:03Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50462723/2026-nfl-playoffs-mvp-super-bowl-breakout-players-divisions",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "jeremy_fowler",
-      "reporterName": "Jeremy Fowler",
-      "author": "Jeremy Fowler",
-      "authorHandle": "@JFowlerESPN",
-      "authorProfileUrl": "https://x.com/JFowlerESPN",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0284
+      "storyRank": 0.0286
     },
     {
       "id": "gb_rss_fe7b9e098ade",
@@ -3497,7 +2621,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0261
     },
     {
       "id": "gb_rss_006ecce0b993",
@@ -3530,7 +2654,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0185
+      "storyRank": 0.0735
     },
     {
       "id": "gb_espn_dd3830ced25e2",
@@ -3563,7 +2687,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.026
     },
     {
       "id": "gb_vid_3d5fc7531427",
@@ -3597,7 +2721,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
+      "storyRank": 0.0258
     },
     {
       "id": "gb_vid_e62be9385d21",
@@ -3631,7 +2755,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
+      "storyRank": 0.0258
     },
     {
       "id": "gb_vid_de9333eaf922",
@@ -3665,7 +2789,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
+      "storyRank": 0.0258
     },
     {
       "id": "gb_vid_18d2ec6ab4ab",
@@ -3699,7 +2823,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0256
+      "storyRank": 0.0254
     },
     {
       "id": "gb_rss_826f8a78ed11",
@@ -3732,7 +2856,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0063
+      "storyRank": 0.0252
     },
     {
       "id": "gb_vid_fbd8180b5ba8",
@@ -3766,7 +2890,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0063
+      "storyRank": 0.0252
     },
     {
       "id": "gb_vid_d72890cfff9e",
@@ -3800,7 +2924,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0063
+      "storyRank": 0.0252
     },
     {
       "id": "gb_rss_9cfeb8cdc33f",
@@ -3833,7 +2957,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0063
+      "storyRank": 0.0251
     },
     {
       "id": "gb_vid_0451d10e3138",
@@ -3867,7 +2991,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0252
+      "storyRank": 0.0251
     },
     {
       "id": "gb_espn_8d6fbc3ce92b7",
@@ -3900,7 +3024,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0063
+      "storyRank": 0.0249
     },
     {
       "id": "gb_rss_1fb8992a6187",
@@ -3933,7 +3057,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0251
+      "storyRank": 0.0249
     },
     {
       "id": "gb_vid_2fdd290f5431",
@@ -3967,7 +3091,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0063
+      "storyRank": 0.0249
     },
     {
       "id": "gb_vid_ff01077c80e7",
@@ -4001,7 +3125,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0248
     },
     {
       "id": "gb_vid_ded4151c9a39",
@@ -4035,7 +3159,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0247
     },
     {
       "id": "gb_vid_5151d6cd462e",
@@ -4069,7 +3193,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0062
+      "storyRank": 0.0247
     },
     {
       "id": "gb_rss_a58a81391937",
@@ -4102,7 +3226,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0231
     },
     {
       "id": "gb_vid_9cd961cd7ba9",
@@ -4136,7 +3260,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.023
     },
     {
       "id": "gb_vid_6dd3a3096565",
@@ -4170,7 +3294,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0057
     },
     {
       "id": "gb_vid_cb92e4a14364",
@@ -4204,7 +3328,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0057
     },
     {
       "id": "gb_rss_eee23351bc45",
@@ -4237,7 +3361,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0227
     },
     {
       "id": "gb_rss_67bae36c3be0",
@@ -4270,7 +3394,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.065
     },
     {
       "id": "gb_rss_3c85ab63b16c",
@@ -4303,7 +3427,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0227
     },
     {
       "id": "gb_vid_94d1b57190cd",
@@ -4337,7 +3461,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0225
     },
     {
       "id": "gb_vid_47567b305726",
@@ -4371,7 +3495,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0224
     },
     {
       "id": "gb_rss_acd4f5cb310e",
@@ -4404,7 +3528,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0222
     },
     {
       "id": "gb_rss_84f8c7d1dc03",
@@ -4437,40 +3561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
-    },
-    {
-      "id": "gb_rss_bfdacebaddba",
-      "type": "article",
-      "title": "Inbox: He would've been a much bigger story",
-      "summary": "There’s reason to believe in this team",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/jtiilbk0npwwzesawwgu.jpg",
-      "imageAlt": "Inbox: He would've been a much bigger story",
-      "publishedAt": "2026-11-11T14:30:00.000Z",
-      "url": "https://www.packers.com/news/inbox-he-would-ve-been-a-much-bigger-story-nov-11-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@Packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0221
+      "storyRank": 0.0222
     },
     {
       "id": "gb_vid_358c5c41e6e2",
@@ -4504,7 +3595,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0219
     },
     {
       "id": "gb_tx_7c9cff10a74b",
@@ -4538,7 +3629,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0212
     },
     {
       "id": "gb_vid_2fda614e7eb7",
@@ -4572,7 +3663,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0204
     },
     {
       "id": "gb_vid_11ddd38d5315",
@@ -4606,7 +3697,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
+      "storyRank": 0.0203
     },
     {
       "id": "gb_rss_abd359703269",
@@ -4639,7 +3730,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0201
     },
     {
       "id": "gb_rss_873c9b65be13",
@@ -4672,7 +3763,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0201
     },
     {
       "id": "gb_rss_f54a41ba5a69",
@@ -4705,7 +3796,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0201
     },
     {
       "id": "gb_vid_d9f453c02817",
@@ -4739,7 +3830,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0201
+      "storyRank": 0.02
     },
     {
       "id": "gb_vid_7224f9721df5",
@@ -4773,7 +3864,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0201
+      "storyRank": 0.02
     },
     {
       "id": "gb_vid_f035a46aefb4",
@@ -4807,7 +3898,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0201
+      "storyRank": 0.02
     },
     {
       "id": "gb_vid_3f0e00322f17",
@@ -4841,7 +3932,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0198
     },
     {
       "id": "gb_vid_67ac6e310bee",
@@ -4875,7 +3966,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0198
     },
     {
       "id": "gb_rss_2b2adcc648f6",
@@ -4908,7 +3999,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0196
+      "storyRank": 0.0195
     },
     {
       "id": "gb_vid_ed5c58d0a1e0",
@@ -4942,7 +4033,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0196
+      "storyRank": 0.0195
     },
     {
       "id": "gb_vid_500236b67039",
@@ -5010,7 +4101,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0195
     },
     {
       "id": "gb_tx_4b4909daf2a5",
@@ -5044,7 +4135,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0048
+      "storyRank": 0.0189
     },
     {
       "id": "gb_rss_8fdb64dc5530",
@@ -5077,7 +4168,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
+      "storyRank": 0.0181
     },
     {
       "id": "gb_vid_0fc97e65c50a",
@@ -5111,7 +4202,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.018
     },
     {
       "id": "gb_rss_332baaea69d8",
@@ -5144,7 +4235,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.018
     },
     {
       "id": "gb_rss_2a37b9d1be6b",
@@ -5177,7 +4268,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.018
     },
     {
       "id": "gb_rss_87029248e790",
@@ -5210,7 +4301,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0179
     },
     {
       "id": "gb_rss_932dbca8b619",
@@ -5243,7 +4334,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0178
+      "storyRank": 0.0177
     },
     {
       "id": "gb_vid_ab09d010bbab",
@@ -5277,40 +4368,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0178
-    },
-    {
-      "id": "gb_rss_2bdaeb787271",
-      "type": "article",
-      "title": "Inbox: This unit is crazy fun to watch",
-      "summary": "You just never know in this league",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/v1794236118/packers/iiwkp2t67hecbkv8f9ko.jpg",
-      "imageAlt": "Inbox: This unit is crazy fun to watch",
-      "publishedAt": "2026-11-09T14:30:00.000Z",
-      "url": "https://www.packers.com/news/inbox-this-unit-is-crazy-fun-to-watch-nov-9-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@Packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
+      "storyRank": 0.0177
     },
     {
       "id": "gb_vid_3f462c955fb0",
@@ -5344,7 +4402,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0044
+      "storyRank": 0.0175
     },
     {
       "id": "gb_vid_05dbd24e14b3",
@@ -5378,7 +4436,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0167
     },
     {
       "id": "gb_vid_0cb49515bcd8",
@@ -5446,7 +4504,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0166
     },
     {
       "id": "gb_vid_8573813b1c02",
@@ -5480,7 +4538,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0166
     },
     {
       "id": "gb_vid_3ea1cfa9b73d",
@@ -5514,7 +4572,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0166
     },
     {
       "id": "gb_vid_2d1d0b55b94c",
@@ -5548,7 +4606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0166
     },
     {
       "id": "gb_vid_b8768ff3fddf",
@@ -5582,7 +4640,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0166
     },
     {
       "id": "gb_vid_ef5e6ae5c95b",
@@ -5616,7 +4674,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0166
     },
     {
       "id": "gb_vid_afc952acad42",
@@ -5650,7 +4708,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0041
     },
     {
       "id": "gb_vid_156bfd2a3a48",
@@ -5684,7 +4742,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0166
     },
     {
       "id": "gb_vid_bb8dde0812a4",
@@ -5718,7 +4776,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0165
     },
     {
       "id": "gb_vid_4931597868e2",
@@ -5752,7 +4810,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0165
     },
     {
       "id": "gb_vid_b00c7ad0da6d",
@@ -5786,7 +4844,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0149
     },
     {
       "id": "gb_vid_4317e2cca4be",
@@ -5820,7 +4878,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0149
     },
     {
       "id": "gb_vid_cfc56877ea1d",
@@ -5854,7 +4912,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0149
     },
     {
       "id": "gb_vid_584b6e6ada55",
@@ -5888,7 +4946,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0165
     },
     {
       "id": "gb_vid_75fa3de6ddbf",
@@ -5922,7 +4980,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0149
     },
     {
       "id": "gb_vid_2e4e95aab14c",
@@ -5956,7 +5014,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0149
     },
     {
       "id": "gb_vid_2f956160bb09",
@@ -5990,7 +5048,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.0133
     },
     {
       "id": "gb_vid_c9973b27827b",
@@ -6024,7 +5082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0148
     },
     {
       "id": "gb_vid_003f5fae9cf7",
@@ -6058,7 +5116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0164
     },
     {
       "id": "gb_vid_95e03aeb160d",
@@ -6092,7 +5150,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.0132
     },
     {
       "id": "gb_vid_440c5b4367d0",
@@ -6126,7 +5184,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0148
     },
     {
       "id": "gb_vid_a11ba4cc42e3",
@@ -6160,7 +5218,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0164
     },
     {
       "id": "gb_vid_9f62a4458103",
@@ -6194,7 +5252,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0148
     },
     {
       "id": "gb_vid_c9792d3bae9a",
@@ -6228,7 +5286,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0163
     },
     {
       "id": "gb_vid_43975101c0cd",
@@ -6262,7 +5320,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0147
     },
     {
       "id": "gb_vid_f86a1884cb8d",
@@ -6296,7 +5354,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0037
+      "storyRank": 0.0147
     },
     {
       "id": "gb_vid_2ed1cf7641bc",
@@ -6330,7 +5388,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0159
     },
     {
       "id": "gb_vid_ad08f0bc9b85",
@@ -6364,7 +5422,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0159
     },
     {
       "id": "gb_tx_5af6cfe34bcd",
@@ -6398,7 +5456,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0141
     },
     {
       "id": "gb_vid_68cdc0f85174",
@@ -6432,7 +5490,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0136
+      "storyRank": 0.0135
     },
     {
       "id": "gb_tx_5a01a36ef772",
@@ -6466,7 +5524,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.011
     },
     {
       "id": "gb_tx_cd23266daeac",
@@ -6500,7 +5558,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0102
     },
     {
       "id": "gb_rss_49cb6f28b5e6",

@@ -3229,9 +3229,14 @@ export function extractLivePracticeParticipationFromWire({
 
     if (!slot) continue;
 
-    // 2. Check structured beat practice-report list format (e.g., "49ers participation report No practice WR Mike Evans ... Limited LB Dre Greenlaw LT Trent Williams ...")
+    // 2. Check structured beat practice-report list format (e.g., "49ers/Vikings participation report No practice WR ...")
+    const activeTeamPr = getActiveTeamConfig();
+    const prTeamPat = [activeTeamPr?.nickname, activeTeamPr?.city, ...(activeTeamPr?.abbr === 'SF' ? ['niners'] : [])]
+      .filter(Boolean)
+      .map(s => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('|');
     const isOfficialParticipationSummary =
-      /\b(?:49ers|niners|san francisco|#49ers)\b[\s\S]{0,42}\b(?:participation|injury|practice)\s+report\b/i.test(
+      new RegExp(`\\b#?(?:${prTeamPat || '49ers'})\\b[\\s\\S]{0,42}\\b(?:participation|injury|practice)\\s+report\\b`, 'i').test(
         fullBody
       ) && !/\bpre[- ]practice\b/i.test(fullBody);
     const headerMatches = [...fullBody.matchAll(STRUCTURED_HEADER_TOKEN_RE)];
@@ -7715,20 +7720,23 @@ export function rankPlayerInjuryNews(
   // Clean fallback: if an injured player has no matched stream card in the feed yet,
   // synthesize a grounded beat/medical update card from their verified ESPN/RotoWire/49ers.com injury note
   if (deduped.length === 0 && includeFallbackCard) {
+    const activeTeamInj = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+    const teamNickInj = activeTeamInj?.nickname || 'NFL';
+    const clubInjUrl = activeTeamInj?.clubInjuryUrl || `https://www.${activeTeamInj?.clubDomain || 'nfl.com'}/team/injury-report/`;
     const fallbackProse = pickMeaningfulInjuryComment(h.irBeatNote, h.longComment, h.shortComment, player.beatComment);
     if (fallbackProse && !isBareStatusPlaceholderComment(fallbackProse)) {
       const parsedAttr = extractBeatAttributionFromText(fallbackProse, {
         reporterId: null,
-        reporterName: '49ers Beat & Medical Desk',
+        reporterName: `${teamNickInj} Beat & Medical Desk`,
         outletId: 'espn',
-        outletName: 'ESPN / 49ers Beat'
+        outletName: `ESPN / ${teamNickInj} Beat`
       });
       const hasEspnId = /^\d+$/.test(String(player.id || ''));
       const fallbackUrl = sanitizeExternalUrl(
         hasEspnId
           ? buildEspnPlayerNewsAnchorUrl(player.id, player.name, fallbackProse)
-          : player.espnUrl || 'https://www.49ers.com/team/injury-report/',
-        'https://www.49ers.com/team/injury-report/'
+          : player.espnUrl || clubInjUrl,
+        clubInjUrl
       );
       const authorProfile = sanitizeExternalUrl(
         parsedAttr.xUrl || parsedAttr.authorProfileUrl || fallbackUrl,
@@ -7743,7 +7751,7 @@ export function rankPlayerInjuryNews(
         fullText: null,
         isFullTweet: false,
         summary: '',
-        author: parsedAttr.author || '49ers Beat & Medical Desk',
+        author: parsedAttr.author || `${teamNickInj} Beat & Medical Desk`,
         authorHandle: parsedAttr.authorHandle || '',
         authorProfileUrl: authorProfile,
         outletName: parsedAttr.outletName || 'ESPN Injury Wire',

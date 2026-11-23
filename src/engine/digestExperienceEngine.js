@@ -22,6 +22,7 @@ import {
   sanitizeExternalUrl
 } from './linkIntegrity.js';
 import { resolveOriginalTweetUrl } from './beatAttributionEngine.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 
 export const NEWS_SORT_MODES = [
   { key: 'top', label: 'Top', shortLabel: 'Top', title: 'Highest-impact stories, breaking updates & corroborated scoops (Default)' },
@@ -333,9 +334,28 @@ const NATIONAL_LENS_RE =
 const FILM_LENS_RE =
   /\b(qb school|o['’]?sullivan|jonnydel|baldinger|baldy|orlovsky|solak|tice|mina kimes|film|all-22|trench|pff|next gen)\b/i;
 
+function escapeDigestRegex(s = '') {
+  return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getActiveOfficialLensRegex() {
+  const team = getActiveTeamConfig();
+  if (!team || team.abbr === 'SF') return OFFICIAL_LENS_RE;
+  const parts = [
+    team.clubDomain,
+    team.fullName,
+    team.nickname ? `${team.nickname} official` : '',
+    team.nickname ? `@${team.nickname}` : '',
+    'official transactions'
+  ]
+    .filter(Boolean)
+    .map(p => escapeDigestRegex(String(p).trim()));
+  return new RegExp(`(?:^|\\b|\\s)(?:${parts.join('|')})(?:\\b|$)`, 'i');
+}
+
 export function classifySourceLensTag(item = {}) {
   const hay = `${item.author || ''} ${item.reporterName || ''} ${item.outletName || ''} ${item.url || ''}`;
-  if (OFFICIAL_LENS_RE.test(hay)) return 'Official';
+  if (getActiveOfficialLensRegex().test(hay) || /_official$/i.test(String(item.outletId || ''))) return 'Official';
   if (item.category === 'film' || FILM_LENS_RE.test(hay)) return 'Film';
   if (item.isNationalInsider || NATIONAL_LENS_RE.test(hay)) return 'National';
   return 'Beat';
@@ -364,7 +384,8 @@ export function buildStoryTimelineEntries(leadItem, confirmingReports = [], prio
     if (normHref && seenUrls.has(normHref)) continue;
     if (normHref) seenUrls.add(normHref);
 
-    const rawAuthor = item.author || item.reporterName || item.outletName || '49ers Beat';
+    const activeTeamNick = getActiveTeamConfig()?.nickname || '49ers';
+    const rawAuthor = item.author || item.reporterName || item.outletName || `${activeTeamNick} Beat`;
     const author = formatWireSourceDisplayName(rawAuthor, item);
     const body = stripRedundantAuthorBoilerplate(item.fullText || item.title || '', rawAuthor);
     const pubMs = getItemTimestampMs(item);
@@ -634,12 +655,63 @@ function normalizePresserTopicFingerprint(text = '') {
     .slice(0, 6);
 }
 
+const COMMON_SPEAKER_SURNAMES = new Set([
+  'allen', 'brown', 'campbell', 'clark', 'davis', 'green', 'hall', 'harris', 'hill', 'johnson',
+  'jones', 'king', 'lewis', 'martin', 'miller', 'moore', 'morris', 'smith', 'taylor', 'thomas',
+  'walker', 'white', 'williams', 'wilson', 'wright', 'young'
+]);
+
+function getActivePresserSpeakers(team = null) {
+  const active = team || getActiveTeamConfig();
+  if (!active || active.abbr === 'SF') {
+    return {
+      speakers: PRESSER_SPEAKERS,
+      leadShortNames: new Set(['Shanahan', 'Lynch']),
+      colonRe: /\b(?:shanahan|lynch|morris|kubiak)\s*:/i
+    };
+  }
+  const coaches = active.coachesSeed || {};
+  const speakers = [];
+  const leadShortNames = new Set();
+  const colonParts = [];
+  for (const [role, full] of [
+    ['hc', coaches.hc],
+    ['gm', coaches.gm],
+    ['oc', coaches.oc],
+    ['dc', coaches.dc]
+  ]) {
+    const clean = String(full || '').trim();
+    if (!clean || /head coach|coordinator|general manager/i.test(clean)) continue;
+    const parts = clean.split(/\s+/);
+    const last = parts[parts.length - 1] || clean;
+    const shortName = last;
+    const escFull = escapeDigestRegex(clean).replace(/\\ /g, '\\s+');
+    const escLast = escapeDigestRegex(last);
+    const useSurname = last.length >= 5 && !COMMON_SPEAKER_SURNAMES.has(last.toLowerCase());
+    speakers.push({
+      name: clean,
+      shortName,
+      re: new RegExp(`\\b(?:${escFull}${useSurname ? `|${escLast}` : ''})\\b`, 'i')
+    });
+    if (role === 'hc' || role === 'gm') leadShortNames.add(shortName);
+    colonParts.push(escFull);
+    if (useSurname) colonParts.push(escLast);
+  }
+  return {
+    speakers,
+    leadShortNames,
+    colonRe: colonParts.length > 0 ? new RegExp(`\\b(?:${colonParts.join('|')})\\s*:`, 'i') : null
+  };
+}
+
 export function extractPresserTakeaways(
   rawItems = [],
-  { nowMs = Date.now(), maxWindowHours = 42, maxTakeaways = 5 } = {}
+  { nowMs = Date.now(), maxWindowHours = 42, maxTakeaways = 5, team = null } = {}
 ) {
   const list = Array.isArray(rawItems) ? rawItems : [];
   const cutoffMs = nowMs - maxWindowHours * 3_600_000;
+  const activeTeam = team || getActiveTeamConfig();
+  const { speakers, leadShortNames, colonRe } = getActivePresserSpeakers(activeTeam);
   const candidates = [];
 
   for (const item of list) {
@@ -647,7 +719,8 @@ export function extractPresserTakeaways(
     const pubMs = getItemTimestampMs(item);
     if (!pubMs || pubMs < cutoffMs) continue;
 
-    const rawAuthor = item.author || item.reporterName || item.outletName || '49ers Beat';
+    const activeTeamNick = activeTeam?.nickname || '49ers';
+    const rawAuthor = item.author || item.reporterName || item.outletName || `${activeTeamNick} Beat`;
     const rawBody = stripRedundantAuthorBoilerplate(
       item.type === 'tweet' || item.type === 'social'
         ? item.fullText || item.title || ''
@@ -656,13 +729,13 @@ export function extractPresserTakeaways(
     ).trim();
     if (rawBody.length < 35) continue;
 
-    const speaker = PRESSER_SPEAKERS.find(s => s.re.test(rawBody) && (!s.rejectRe || !s.rejectRe.test(rawBody)));
+    const speaker = speakers.find(s => s.re.test(rawBody) && (!s.rejectRe || !s.rejectRe.test(rawBody)));
     if (!speaker) continue;
 
     const hasDirectQuote = /[“"][^”"]{14,}[”"]/.test(rawBody);
     const hasPresserSignal =
       PRESSER_VERB_RE.test(rawBody) ||
-      /\b(?:shanahan|lynch|morris|kubiak)\s*:/i.test(rawBody);
+      Boolean(colonRe && colonRe.test(rawBody));
     if (!hasDirectQuote && !hasPresserSignal) continue;
 
     // Exclude clickbait / podcast promo blurbs
@@ -682,7 +755,7 @@ export function extractPresserTakeaways(
       .trim();
     const displayText = cleanSnippet.length > 185 ? `${cleanSnippet.slice(0, 182).replace(/\s+\S*$/, '')}…` : cleanSnippet;
 
-    const topicTag = /\b(injur|ir\b|practice|achilles|hamstring|knee|ankle|back|groin|day-to-day|window|return|out|questionable)\b/i.test(
+    const topicTag = /\b(injur|ir\b|practice|achilles|hamstring|knee|ankle|back|groin|calf|foot|concussion|day-to-day|window|return|out|questionable)\b/i.test(
       cleanSnippet
     )
       ? 'Health'
@@ -693,7 +766,7 @@ export function extractPresserTakeaways(
           : 'Podium';
 
     const priorityScore =
-      (speaker.shortName === 'Shanahan' || speaker.shortName === 'Lynch' ? 24 : 12) +
+      (leadShortNames.has(speaker.shortName) ? 24 : 12) +
       (hasDirectQuote ? 14 : 0) +
       (topicTag === 'Health' || topicTag === 'Roster' ? 10 : 4) +
       Math.max(0, 14 - (nowMs - pubMs) / 3_600_000);

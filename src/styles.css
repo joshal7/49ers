@@ -6535,13 +6535,13 @@ tr.unit-overall-banner.overall-stat-row td {
 }
 
 .salient-hero-banner.compact {
-  aspect-ratio: 2.25 / 1;
-  max-height: 148px;
+  aspect-ratio: 16 / 9;
+  max-height: 184px;
   border-radius: 10px;
 }
 
 .salient-hero-banner.wire-hero-media {
-  max-height: 196px;
+  max-height: 204px;
   border-radius: 11px;
   margin-bottom: 2px;
 }
@@ -6554,7 +6554,7 @@ tr.unit-overall-banner.overall-stat-row td {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 18%;
+  object-position: center 22%;
   display: block;
   transition: transform 0.25s ease;
 }
@@ -6850,23 +6850,25 @@ a.raw-item-thumb.salient-thumb:hover {
     height: 78px;
   }
 
-  .salient-hero-banner {
+  .salient-hero-banner,
+  .salient-hero-banner.wire-hero-media {
     max-height: 268px;
   }
 
   .salient-hero-banner.compact {
-    max-height: 204px;
+    max-height: 224px;
   }
 }
 
 @media (min-width: 640px) and (min-height: 520px) {
-  .salient-hero-banner {
-    max-height: 340px;
+  .salient-hero-banner,
+  .salient-hero-banner.wire-hero-media {
+    max-height: 360px;
   }
 
   .salient-hero-banner.compact {
     aspect-ratio: 16 / 9;
-    max-height: 292px;
+    max-height: 310px;
   }
 }
 

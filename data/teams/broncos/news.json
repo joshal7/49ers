@@ -22,62 +22,22 @@
       "Despite the win, Denver must address a #31 ranked 3rd-down conversion rate (32.4%) before facing the Pittsburgh Steelers' top-ranked rushing efficiency in Week 12 [S2](https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026)."
     ],
     "coveredStoryKeys": [
-      "den_espn_c66b1cfb0eee8",
-      "den_espn_7435c17a22db1",
       "den_rss_ae8721232b1f",
-      "den_rss_689c948c89ab",
-      "den_espn_165c27d62fbe1",
-      "den_espn_8f2b08b115806"
+      "den_espn_8f2b08b115806",
+      "den_espn_c66b1cfb0eee8",
+      "den_espn_dff65d955a316",
+      "den_vid_cf589ff44de4",
+      "den_rss_285a16cb2118"
     ],
     "coveredUrls": [
+      "https://www.espn.com/nfl/story/_/id/50569388/broncos-coach-sean-payton-game-ball-tom-jackson-family",
+      "https://www.denverbroncos.com/video/cb-ja-quan-mcmillian-records-35-yard-pick-six-broncos-vs-raiders",
+      "https://www.denverbroncos.com/video/rb-jonah-coleman-finds-the-end-zone-for-7-yard-touchdown-broncos-vs-raiders",
       "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
       "https://www.denverbroncos.com/news/hc-sean-payton-broncos-reflect-on-ring-of-fame-lb-tom-jackson-s-legacy-following-win-over-raiders",
-      "https://www.denverbroncos.com/news/the-way-he-played-today-was-special-rb-jonah-coleman-posts-historic-111-yard-3-touchdown-rushing-performance-vs-raiders",
-      "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "https://www.espn.com/nfl/story/_/id/50569388/broncos-coach-sean-payton-game-ball-tom-jackson-family"
+      "https://www.espn.com/nfl/recap?gameId=401873075"
     ],
     "sources": [
-      {
-        "sid": "S1",
-        "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-        "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-        "author": "NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:42:13Z"
-      },
-      {
-        "sid": "S2",
-        "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-        "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-        "author": "NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T02:01:39Z"
-      },
-      {
-        "sid": "S3",
-        "title": "HC Sean Payton, Broncos reflect on Ring of Fame LB Tom Jackson's legacy following win over Raiders",
-        "url": "https://www.denverbroncos.com/news/hc-sean-payton-broncos-reflect-on-ring-of-fame-lb-tom-jackson-s-legacy-following-win-over-raiders",
-        "author": "denverbroncos.com Official",
-        "outlet": "denverbroncos.com Official",
-        "publishedAt": "2026-11-23T03:47:23.000Z"
-      },
-      {
-        "sid": "S4",
-        "title": "'The way he played today was special': RB Jonah Coleman posts historic 111-yard, 3 touchdown rushing performance vs. Raiders",
-        "url": "https://www.denverbroncos.com/news/the-way-he-played-today-was-special-rb-jonah-coleman-posts-historic-111-yard-3-touchdown-rushing-performance-vs-raiders",
-        "author": "denverbroncos.com Official",
-        "outlet": "denverbroncos.com Official",
-        "publishedAt": "2026-11-23T03:45:35.000Z"
-      },
-      {
-        "sid": "S5",
-        "title": "How active NFL players continue to redefine all-time sack list",
-        "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-        "author": "Sarah Barshop",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:49:27Z"
-      },
       {
         "sid": "S6",
         "title": "Broncos coach Sean Payton awards game ball to Tom Jackson's family",
@@ -88,11 +48,35 @@
       },
       {
         "sid": "S7",
-        "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-        "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-        "author": "ESPN Staff",
+        "title": "CB Ja'Quan McMillian records 35-yard pick six | Broncos vs. Raiders",
+        "url": "https://www.denverbroncos.com/video/cb-ja-quan-mcmillian-records-35-yard-pick-six-broncos-vs-raiders",
+        "author": "denverbroncos.com Video",
+        "outlet": "denverbroncos.com Video",
+        "publishedAt": "2026-11-23T00:43:06.000Z"
+      },
+      {
+        "sid": "S8",
+        "title": "RB Jonah Coleman finds the end zone for 7-yard touchdown | Broncos vs. Raiders",
+        "url": "https://www.denverbroncos.com/video/rb-jonah-coleman-finds-the-end-zone-for-7-yard-touchdown-broncos-vs-raiders",
+        "author": "denverbroncos.com Video",
+        "outlet": "denverbroncos.com Video",
+        "publishedAt": "2026-11-23T00:13:24.000Z"
+      },
+      {
+        "sid": "S1",
+        "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+        "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
+        "author": "NFL Nation",
         "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:00:32Z"
+        "publishedAt": "2026-11-23T01:42:13Z"
+      },
+      {
+        "sid": "S3",
+        "title": "HC Sean Payton, Broncos reflect on Ring of Fame LB Tom Jackson's legacy following win over Raiders",
+        "url": "https://www.denverbroncos.com/news/hc-sean-payton-broncos-reflect-on-ring-of-fame-lb-tom-jackson-s-legacy-following-win-over-raiders",
+        "author": "denverbroncos.com Official",
+        "outlet": "denverbroncos.com Official",
+        "publishedAt": "2026-11-23T03:47:23.000Z"
       },
       {
         "sid": "S8",
@@ -122,72 +106,6 @@
   },
   "clusteredBriefs": [],
   "rawStream": [
-    {
-      "id": "den_espn_c66b1cfb0eee8",
-      "type": "article",
-      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
-      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-23T01:42:13Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.224,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 19.3997
-    },
-    {
-      "id": "den_espn_7435c17a22db1",
-      "type": "article",
-      "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749880_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-23T02:01:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 14.3647
-    },
     {
       "id": "den_rss_ae8721232b1f",
       "type": "article",
@@ -219,73 +137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.5107
-    },
-    {
-      "id": "den_rss_689c948c89ab",
-      "type": "article",
-      "title": "'The way he played today was special': RB Jonah Coleman posts historic 111-yard, 3 touchdown rushing performance vs. Raiders",
-      "summary": "“As long as we’ve got him running the ball like he did today, I think we’ll be in a pretty good place,” wide receiver Marvin Mims Jr. said of Jonah Coleman following Sunday’s win.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/cg9hs6lacmbxaeufjryn.jpg",
-      "imageAlt": "'The way he played today was special': RB Jonah Coleman posts historic 111-yard, 3 touchdown rushing performance vs. Raiders",
-      "publishedAt": "2026-11-23T03:45:35.000Z",
-      "url": "https://www.denverbroncos.com/news/the-way-he-played-today-was-special-rb-jonah-coleman-posts-historic-111-yard-3-touchdown-rushing-performance-vs-raiders",
-      "outletId": "broncos_official",
-      "outletName": "denverbroncos.com Official",
-      "reporterId": "broncos_official",
-      "reporterName": "denverbroncos.com Official",
-      "author": "denverbroncos.com Official",
-      "authorHandle": "@Broncos",
-      "authorProfileUrl": "https://www.denverbroncos.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.0225
-    },
-    {
-      "id": "den_espn_165c27d62fbe1",
-      "type": "article",
-      "title": "How active NFL players continue to redefine all-time sack list",
-      "summary": "Myles Garrett's torrid pace up the all-time sack list paces active players making their moves among the greats.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0828/nfl_data_viz_garrett_cr_16x9_608x342.jpg",
-      "imageAlt": "How active NFL players continue to redefine all-time sack list",
-      "publishedAt": "2026-11-23T01:49:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "sarah_barshop",
-      "reporterName": "Sarah Barshop",
-      "author": "Sarah Barshop",
-      "authorHandle": "@sarahbarshop",
-      "authorProfileUrl": "https://x.com/sarahbarshop",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.0488
+      "storyRank": 20.8681
     },
     {
       "id": "den_espn_8f2b08b115806",
@@ -318,22 +170,22 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.9339
+      "storyRank": 18.6532
     },
     {
-      "id": "den_espn_60efae509e729",
+      "id": "den_espn_c66b1cfb0eee8",
       "type": "article",
-      "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "publishedAt": "2026-11-23T01:00:32Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
+      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
+      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+      "publishedAt": "2026-11-23T01:42:13Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
       "outletId": "espn_den",
       "outletName": "ESPN",
       "reporterId": "espn_den",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
+      "reporterName": "NFL Nation",
+      "author": "NFL Nation",
       "authorHandle": "@ESPNNFL",
       "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
       "trustTier": 1,
@@ -341,17 +193,17 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 1.079,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.3738
+      "storyRank": 13.1356
     },
     {
       "id": "den_espn_dff65d955a316",
@@ -384,7 +236,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.6048
+      "storyRank": 12.4448
     },
     {
       "id": "den_vid_cf589ff44de4",
@@ -408,17 +260,17 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 1.038,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.6828
+      "storyRank": 11.873
     },
     {
       "id": "den_rss_285a16cb2118",
@@ -441,17 +293,119 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 1.003,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.3987
+      "storyRank": 10.9424
+    },
+    {
+      "id": "den_vid_2d9951a9d2c7",
+      "type": "video",
+      "title": "CB Ja'Quan McMillian records 35-yard pick six | Broncos vs. Raiders",
+      "summary": "Cornerback Ja'Quan McMillian intercepts quarterback Fernando Mendoza and returns the ball 35 yards for a touchdown.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/tju2kraztlky4ku4qc5q.jpg",
+      "imageAlt": "CB Ja'Quan McMillian records 35-yard pick six | Broncos vs. Raiders",
+      "publishedAt": "2026-11-23T00:43:06.000Z",
+      "url": "https://www.denverbroncos.com/video/cb-ja-quan-mcmillian-records-35-yard-pick-six-broncos-vs-raiders",
+      "externalVideoUrl": "https://www.denverbroncos.com/video/cb-ja-quan-mcmillian-records-35-yard-pick-six-broncos-vs-raiders",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Video",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Video",
+      "author": "denverbroncos.com Video",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.963,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 9.9739
+    },
+    {
+      "id": "den_vid_5a758a31a2c8",
+      "type": "video",
+      "title": "RB Jonah Coleman finds the end zone for 7-yard touchdown | Broncos vs. Raiders",
+      "summary": "Running back Jonah Coleman scores his third touchdown of the day against the Raiders.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/kbikdsqhmlvujofunq7w.jpg",
+      "imageAlt": "RB Jonah Coleman finds the end zone for 7-yard touchdown | Broncos vs. Raiders",
+      "publishedAt": "2026-11-23T00:13:24.000Z",
+      "url": "https://www.denverbroncos.com/video/rb-jonah-coleman-finds-the-end-zone-for-7-yard-touchdown-broncos-vs-raiders",
+      "externalVideoUrl": "https://www.denverbroncos.com/video/rb-jonah-coleman-finds-the-end-zone-for-7-yard-touchdown-broncos-vs-raiders",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Video",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Video",
+      "author": "denverbroncos.com Video",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.91,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 8.8501
+    },
+    {
+      "id": "den_vid_865f071cd414",
+      "type": "video",
+      "title": "RB Jonah Coleman rushes for 4-yard touchdown | Broncos vs. Raiders",
+      "summary": "Running back Jonah Coleman finds the end zone for the second time to give the Broncos a third-quarter lead over the Raiders.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/ozzflncw6llpllpvwjdm.jpg",
+      "imageAlt": "RB Jonah Coleman rushes for 4-yard touchdown | Broncos vs. Raiders",
+      "publishedAt": "2026-11-23T00:00:54.000Z",
+      "url": "https://www.denverbroncos.com/video/rb-jonah-coleman-rushes-for-4-yard-touchdown-broncos-vs-raiders",
+      "externalVideoUrl": "https://www.denverbroncos.com/video/rb-jonah-coleman-rushes-for-4-yard-touchdown-broncos-vs-raiders",
+      "outletId": "broncos_official",
+      "outletName": "denverbroncos.com Video",
+      "reporterId": "broncos_official",
+      "reporterName": "denverbroncos.com Video",
+      "author": "denverbroncos.com Video",
+      "authorHandle": "@Broncos",
+      "authorProfileUrl": "https://www.denverbroncos.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.888,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 8.4413
     },
     {
       "id": "den_espn_e9ee16d94b886",
@@ -484,109 +438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.2137
-    },
-    {
-      "id": "den_vid_2d9951a9d2c7",
-      "type": "video",
-      "title": "CB Ja'Quan McMillian records 35-yard pick six | Broncos vs. Raiders",
-      "summary": "Cornerback Ja'Quan McMillian intercepts quarterback Fernando Mendoza and returns the ball 35 yards for a touchdown.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/tju2kraztlky4ku4qc5q.jpg",
-      "imageAlt": "CB Ja'Quan McMillian records 35-yard pick six | Broncos vs. Raiders",
-      "publishedAt": "2026-11-23T00:43:06.000Z",
-      "url": "https://www.denverbroncos.com/video/cb-ja-quan-mcmillian-records-35-yard-pick-six-broncos-vs-raiders",
-      "externalVideoUrl": "https://www.denverbroncos.com/video/cb-ja-quan-mcmillian-records-35-yard-pick-six-broncos-vs-raiders",
-      "outletId": "broncos_official",
-      "outletName": "denverbroncos.com Video",
-      "reporterId": "broncos_official",
-      "reporterName": "denverbroncos.com Video",
-      "author": "denverbroncos.com Video",
-      "authorHandle": "@Broncos",
-      "authorProfileUrl": "https://www.denverbroncos.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.1174
-    },
-    {
-      "id": "den_vid_5a758a31a2c8",
-      "type": "video",
-      "title": "RB Jonah Coleman finds the end zone for 7-yard touchdown | Broncos vs. Raiders",
-      "summary": "Running back Jonah Coleman scores his third touchdown of the day against the Raiders.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/kbikdsqhmlvujofunq7w.jpg",
-      "imageAlt": "RB Jonah Coleman finds the end zone for 7-yard touchdown | Broncos vs. Raiders",
-      "publishedAt": "2026-11-23T00:13:24.000Z",
-      "url": "https://www.denverbroncos.com/video/rb-jonah-coleman-finds-the-end-zone-for-7-yard-touchdown-broncos-vs-raiders",
-      "externalVideoUrl": "https://www.denverbroncos.com/video/rb-jonah-coleman-finds-the-end-zone-for-7-yard-touchdown-broncos-vs-raiders",
-      "outletId": "broncos_official",
-      "outletName": "denverbroncos.com Video",
-      "reporterId": "broncos_official",
-      "reporterName": "denverbroncos.com Video",
-      "author": "denverbroncos.com Video",
-      "authorHandle": "@Broncos",
-      "authorProfileUrl": "https://www.denverbroncos.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.8084
-    },
-    {
-      "id": "den_vid_865f071cd414",
-      "type": "video",
-      "title": "RB Jonah Coleman rushes for 4-yard touchdown | Broncos vs. Raiders",
-      "summary": "Running back Jonah Coleman finds the end zone for the second time to give the Broncos a third-quarter lead over the Raiders.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/ozzflncw6llpllpvwjdm.jpg",
-      "imageAlt": "RB Jonah Coleman rushes for 4-yard touchdown | Broncos vs. Raiders",
-      "publishedAt": "2026-11-23T00:00:54.000Z",
-      "url": "https://www.denverbroncos.com/video/rb-jonah-coleman-rushes-for-4-yard-touchdown-broncos-vs-raiders",
-      "externalVideoUrl": "https://www.denverbroncos.com/video/rb-jonah-coleman-rushes-for-4-yard-touchdown-broncos-vs-raiders",
-      "outletId": "broncos_official",
-      "outletName": "denverbroncos.com Video",
-      "reporterId": "broncos_official",
-      "reporterName": "denverbroncos.com Video",
-      "author": "denverbroncos.com Video",
-      "authorHandle": "@Broncos",
-      "authorProfileUrl": "https://www.denverbroncos.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.7006
+      "storyRank": 6.3275
     },
     {
       "id": "den_vid_fc6fc9b48fc3",
@@ -620,7 +472,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6868
+      "storyRank": 5.0844
     },
     {
       "id": "den_vid_268f07dbdabb",
@@ -654,7 +506,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1724
+      "storyRank": 3.7495
     },
     {
       "id": "den_vid_c8e0327825e6",
@@ -688,7 +540,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1719
+      "storyRank": 3.7481
     },
     {
       "id": "den_vid_c397d9649db3",
@@ -722,7 +574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1671
+      "storyRank": 3.7349
     },
     {
       "id": "den_vid_df5721d11a87",
@@ -756,7 +608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0903
+      "storyRank": 3.523
     },
     {
       "id": "den_vid_18893caa1dfc",
@@ -790,7 +642,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0587
+      "storyRank": 3.4349
     },
     {
       "id": "den_vid_83c9438b6083",
@@ -824,7 +676,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0551
+      "storyRank": 3.4248
     },
     {
       "id": "den_vid_2a8e35798df4",
@@ -858,7 +710,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0532
+      "storyRank": 3.4195
     },
     {
       "id": "den_espn_798d3aaf63da5",
@@ -891,7 +743,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9529
+      "storyRank": 3.1352
     },
     {
       "id": "den_rss_323f10412688",
@@ -924,73 +776,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9349
-    },
-    {
-      "id": "den_espn_feb7e98485161",
-      "type": "video",
-      "title": "Why Tom Jackson was such a special person",
-      "summary": "Why Tom Jackson was such a special person",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/dm_261122_nfl_tomjackson_tribute/dm_261122_nfl_tomjackson_tribute.jpg",
-      "imageAlt": "Why Tom Jackson was such a special person",
-      "publishedAt": "2026-11-22T19:32:31Z",
-      "url": "https://www.espn.com/video/clip/_/id/50563922/why-tom-jackson-was-such-special-person",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.6787
-    },
-    {
-      "id": "den_rss_64081a77551f",
-      "type": "article",
-      "title": "Statements from Commissioner Roger Goodell, football world on passing of Ring of Famer Tom Jackson",
-      "summary": "“NFL lost a wonderful man with the passing of Tom Jackson,\" Commissioner Roger Goodell said, in part.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/gvchunlt8c3tzlhmfqgh.jpg",
-      "imageAlt": "Statements from Commissioner Roger Goodell, football world on passing of Ring of Famer Tom Jackson",
-      "publishedAt": "2026-11-22T18:16:14.000Z",
-      "url": "https://www.denverbroncos.com/news/statements-from-commissioner-roger-goodell-football-world-on-passing-of-ring-of-famer-tom-jackson",
-      "outletId": "broncos_official",
-      "outletName": "denverbroncos.com Official",
-      "reporterId": "broncos_official",
-      "reporterName": "denverbroncos.com Official",
-      "author": "denverbroncos.com Official",
-      "authorHandle": "@Broncos",
-      "authorProfileUrl": "https://www.denverbroncos.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.5667
+      "storyRank": 3.0835
     },
     {
       "id": "den_rss_3268ee7ca9ce",
@@ -1023,7 +809,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0977
+      "storyRank": 0.3509
     },
     {
       "id": "den_vid_95d62b99d9ea",
@@ -1057,7 +843,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0967
+      "storyRank": 0.3477
     },
     {
       "id": "den_rss_5027396ce39f",
@@ -1090,7 +876,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0305
+      "storyRank": 0.1161
     },
     {
       "id": "den_rss_b2ad84e303fa",
@@ -1123,40 +909,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0254
-    },
-    {
-      "id": "den_espn_481f6b6eb5e6b",
-      "type": "article",
-      "title": "NFL Week 11 predictions: Upsets, fantasy sleepers, stat lines, TD scorers, more",
-      "summary": "Eagles upsetting the Steelers? Big receiving day for Christian McCaffrey? Touchdown for Josh Downs? Let's predict 15 things for Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746461_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 predictions: Upsets, fantasy sleepers, stat lines, TD scorers, more",
-      "publishedAt": "2026-11-21T11:49:08Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50521728/week-11-predictions-upsets-fantasy-sleepers-stats-2026",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "ben_solak",
-      "reporterName": "Ben Solak",
-      "author": "Ben Solak",
-      "authorHandle": "@BenjaminSolak",
-      "authorProfileUrl": "https://x.com/BenjaminSolak",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0834
+      "storyRank": 0.0975
     },
     {
       "id": "den_tx_e177a0eb4bc5",
@@ -1190,7 +943,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0184
+      "storyRank": 0.071
     },
     {
       "id": "den_rss_7421dff55d5e",
@@ -1223,7 +976,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0161
+      "storyRank": 0.0626
     },
     {
       "id": "den_vid_86e6b1bf873c",
@@ -1257,7 +1010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0568
     },
     {
       "id": "den_espn_d1e3b828f28c5",
@@ -1290,40 +1043,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
-    },
-    {
-      "id": "den_espn_4b15838125df3",
-      "type": "article",
-      "title": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "summary": "Here's a look at what each NFL team is wearing in Week 11, led by Houston debuting its Rivalries combination.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/commanders-texans-week-11-unis16x9.jpg",
-      "imageAlt": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "publishedAt": "2026-11-20T22:49:33Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "Anthony Gharib",
-      "author": "Anthony Gharib",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0562
     },
     {
       "id": "den_vid_c783f99d5678",
@@ -1357,7 +1077,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.0547
     },
     {
       "id": "den_rss_ca3f58b411ad",
@@ -1390,7 +1110,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.0541
     },
     {
       "id": "den_vid_b064abc3bbcd",
@@ -1424,106 +1144,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0549
-    },
-    {
-      "id": "den_espn_14510466789c5",
-      "type": "article",
-      "title": "Tom Brady tops list of athletes who became owners",
-      "summary": "The legendary quarterback is a member of an exclusive list of athletes that includes LeBron James, Serena Williams and Wayne Gretzky.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748645_608x342_16-9.jpg",
-      "imageAlt": "Tom Brady tops list of athletes who became owners",
-      "publishedAt": "2026-11-20T20:47:35Z",
-      "url": "https://www.espn.com/nfl/story/_/id/29553205/dwyane-wade-tom-brady-lebron-james-athletes-team-owners",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0536
-    },
-    {
-      "id": "den_espn_e18552bc1fb8c",
-      "type": "article",
-      "title": "NFL Week 11 betting odds: Lines and totals for every game",
-      "summary": "Updated odds, spreads, totals and FPI predictions for every NFL game in Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746635_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 betting odds: Lines and totals for every game",
-      "publishedAt": "2026-11-20T20:13:57Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0528
-    },
-    {
-      "id": "den_espn_f9ca15e024182",
-      "type": "article",
-      "title": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "summary": "Joe Burrow vs. Jayden Daniels? Fernando Mendoza vs. Bo Nix? There are 12 more games in Week 11, and we have picks, predictions and more for all of them.",
-      "imageUrl": "https://a.espncdn.com/photo/2025/0819/r1533632_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "publishedAt": "2026-11-20T18:48:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50522208/week-11-picks-predictions-schedule-fantasy-odds-2026",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "author": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.051
+      "storyRank": 0.0534
     },
     {
       "id": "den_rss_f36e3518ccb4",
@@ -1556,40 +1177,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0489
-    },
-    {
-      "id": "den_espn_4c8d8d26a6b12",
-      "type": "article",
-      "title": "Peyton Manning enshrined in ESPN Fantasy Football Hall of Fame",
-      "summary": "Peyton Manning, who retired as the top scorer of the ESPN fantasy football era, is the latest inductee in the ESPN Fantasy Football Hall of Fame.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1120/r1748541_1280x720_16-9.png",
-      "imageAlt": "Peyton Manning enshrined in ESPN Fantasy Football Hall of Fame",
-      "publishedAt": "2026-11-20T15:56:11Z",
-      "url": "https://www.espn.com/fantasy/football/story/_/id/50541172/fantasy-football-hall-fame-peyton-manning",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0476
+      "storyRank": 0.0477
     },
     {
       "id": "den_espn_6e8b34928325d",
@@ -1622,7 +1210,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0433
+      "storyRank": 0.0423
     },
     {
       "id": "den_espn_090c64b75fe77",
@@ -1655,7 +1243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0342
     },
     {
       "id": "den_rss_47b74d1f7b70",
@@ -1688,7 +1276,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.034
     },
     {
       "id": "den_vid_f74fa6c3dd58",
@@ -1722,7 +1310,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0338
+      "storyRank": 0.0332
     },
     {
       "id": "den_vid_7f39a796444c",
@@ -1756,7 +1344,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084
+      "storyRank": 0.0331
     },
     {
       "id": "den_vid_b9cb0f3eb3ef",
@@ -1790,7 +1378,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084
+      "storyRank": 0.0331
     },
     {
       "id": "den_vid_dfdea5c17a7a",
@@ -1824,7 +1412,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0335
+      "storyRank": 0.0329
     },
     {
       "id": "den_rss_36234cfdaf44",
@@ -1857,7 +1445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
+      "storyRank": 0.0803
     },
     {
       "id": "den_espn_b8399061cb798",
@@ -1890,7 +1478,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0315
     },
     {
       "id": "den_rss_ee6526fe2bba",
@@ -1923,40 +1511,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
-    },
-    {
-      "id": "den_espn_b95a427d7fb7b",
-      "type": "article",
-      "title": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "summary": "Here's the good and the bad for each offensive coordinator or playcaller through Week 10, plus keys to their success the rest of the way.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1118/32_for_32_midseason_look_608x342.png",
-      "imageAlt": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "publishedAt": "2026-11-19T17:37:25Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50520404/nfl-offensive-coordinators-playcallers-midseason-report",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0306
+      "storyRank": 0.0312
     },
     {
       "id": "den_tx_503c5762ee5b",
@@ -1990,7 +1545,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0258
     },
     {
       "id": "den_rss_818b69c8a450",
@@ -2023,7 +1578,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.006
+      "storyRank": 0.0234
     },
     {
       "id": "den_rss_260b32eacd44",
@@ -2056,7 +1611,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0234
     },
     {
       "id": "den_vid_3bfcfe0ff88c",
@@ -2090,7 +1645,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0233
     },
     {
       "id": "den_rss_c6ac70d5dc65",
@@ -2123,7 +1678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0231
     },
     {
       "id": "den_vid_9c1bcf738a9d",
@@ -2157,7 +1712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0057
     },
     {
       "id": "den_vid_0222afdb388c",
@@ -2191,7 +1746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0228
     },
     {
       "id": "den_vid_726a6a32a7bc",
@@ -2225,7 +1780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0057
     },
     {
       "id": "den_vid_f08e830dadb9",
@@ -2259,7 +1814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.0226
     },
     {
       "id": "den_rss_a3f5251e1224",
@@ -2292,7 +1847,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0146
+      "storyRank": 0.0575
     },
     {
       "id": "den_rss_49608da2f9ff",
@@ -2325,106 +1880,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
-    },
-    {
-      "id": "den_espn_58b0bd5777d30",
-      "type": "article",
-      "title": "NFL survivor power rankings: Why this is the week to use the Bills or the Texans",
-      "summary": "ESPN NFL survivor pool strategy, predictions and ranking the top six options for Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1118/r1747739_1296x729_16-9.jpg",
-      "imageAlt": "NFL survivor power rankings: Why this is the week to use the Bills or the Texans",
-      "publishedAt": "2026-11-18T19:26:57Z",
-      "url": "https://www.espn.com/fantasy/football/story/_/id/50520032/nfl-survivor-week-11-survivor-pool-strategy-advice-picks",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "Mackenzie Kraemer",
-      "author": "Mackenzie Kraemer",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
-    },
-    {
-      "id": "den_espn_533c73d43a5d8",
-      "type": "article",
-      "title": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "summary": "Which NFL team could land Drew Mestemaker? Who needs Chris Cole, Ashton Hampton or Jamari Johnson? Jordan Reid projected first-round picks for 2027 -- and a trade.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/261118_cfb_jordan-reid-mock-draft_16x9_608x342.jpg",
-      "imageAlt": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "publishedAt": "2026-11-18T17:51:58Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/50502243/2027-nfl-mock-draft-reid-midseason-32-first-round-predictions",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "Jordan Reid",
-      "author": "Jordan Reid",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0214
-    },
-    {
-      "id": "den_espn_d51f7983010a2",
-      "type": "article",
-      "title": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "summary": "How does every NFL team stack up heading into Week 11? We made our 1-32 list and picked the non-quarterback MVPs for each roster.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/nfl_power_rankings_608x342.png",
-      "imageAlt": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "publishedAt": "2026-11-17T20:45:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0574
     },
     {
       "id": "den_espn_0a4af8b5025b7",
@@ -2457,40 +1913,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0038
-    },
-    {
-      "id": "den_espn_51b53fdbdad19",
-      "type": "article",
-      "title": "2027 NFL draft order projections for Round 1, chances for top pick, more",
-      "summary": "ESPN's Football Power Index projects the 2027 NFL draft order for Round 1, complete with each team's chances to pick in the top five, in the top 10 and at No. 1.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0601/r1666608_608x342_16-9.jpg",
-      "imageAlt": "2027 NFL draft order projections for Round 1, chances for top pick, more",
-      "publishedAt": "2026-11-17T11:41:00Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/49794361/2027-nfl-draft-order-projections-first-round-picks",
-      "outletId": "espn_den",
-      "outletName": "ESPN",
-      "reporterId": "espn_den",
-      "reporterName": "ESPN staff",
-      "author": "ESPN staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/den/denver-broncos",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0151
+      "storyRank": 0.015
     },
     {
       "id": "den_rss_9230667b812f",
@@ -2523,7 +1946,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.0131
     },
     {
       "id": "den_vid_8b923f729c57",
@@ -2557,7 +1980,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.0131
     },
     {
       "id": "den_vid_a972dd387102",
@@ -2591,7 +2014,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.0131
     },
     {
       "id": "den_vid_e6c78291ab39",
@@ -2625,7 +2048,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0127
     },
     {
       "id": "den_vid_93abcc242538",
@@ -2659,7 +2082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0104
     },
     {
       "id": "den_vid_a7129e969085",
@@ -2693,7 +2116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0023
+      "storyRank": 0.0092
     },
     {
       "id": "den_vid_84e0f6f42a12",
@@ -2727,7 +2150,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0023
+      "storyRank": 0.0092
     },
     {
       "id": "den_vid_5d48fd87e2c4",
@@ -2794,7 +2217,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0022
+      "storyRank": 0.0087
     },
     {
       "id": "den_vid_0fe20e440741",
@@ -2828,7 +2251,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0019
+      "storyRank": 0.0077
     },
     {
       "id": "den_vid_454ab24700b0",
@@ -2862,7 +2285,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0017
+      "storyRank": 0.0067
     },
     {
       "id": "den_vid_8c1057ec4eea",
@@ -2929,7 +2352,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0015
+      "storyRank": 0.0059
     },
     {
       "id": "den_vid_f9b1cf413157",
@@ -2963,7 +2386,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0051
     },
     {
       "id": "den_rss_13973988e249",
@@ -2996,7 +2419,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0056
     },
     {
       "id": "den_rss_a4b756fdecd4",
@@ -3029,7 +2452,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0056
     },
     {
       "id": "den_vid_d8d8100e9da0",
@@ -3063,7 +2486,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0055
     },
     {
       "id": "den_vid_c077a0674295",
@@ -3097,7 +2520,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.0047
     },
     {
       "id": "den_vid_f75db7bc16de",
@@ -3165,7 +2588,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0051
     },
     {
       "id": "den_rss_9c7a782d2fa1",
@@ -3198,7 +2621,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0051
     },
     {
       "id": "den_vid_346590eb5cd2",
@@ -3232,7 +2655,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.005
     },
     {
       "id": "den_rss_04da857032e8",
@@ -3265,7 +2688,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.005
     },
     {
       "id": "den_vid_bb7eaa850239",
@@ -3299,7 +2722,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0045
     },
     {
       "id": "den_tx_892733be0d0a",
@@ -3333,40 +2756,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
-    },
-    {
-      "id": "den_rss_d91b75bb7aeb",
-      "type": "article",
-      "title": "Next-Day Notebook: How OLB Nik Bonitto set up his game-winning strip-sack throughout Sunday's win vs. Panthers",
-      "summary": "“I know this could be one of my last rushes, so I’m just trying to make a play for the team,” Bonitto said.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/usz3rdaqpbg5t68xc7ba.jpg",
-      "imageAlt": "Next-Day Notebook: How OLB Nik Bonitto set up his game-winning strip-sack throughout Sunday's win vs. Panthers",
-      "publishedAt": "2026-11-09T20:14:21.000Z",
-      "url": "https://www.denverbroncos.com/news/next-day-notebook-how-olb-nik-bonitto-set-up-his-game-winning-strip-sack-throughout-sunday-s-win-vs-panthers",
-      "outletId": "broncos_official",
-      "outletName": "denverbroncos.com Official",
-      "reporterId": "broncos_official",
-      "reporterName": "denverbroncos.com Official",
-      "author": "denverbroncos.com Official",
-      "authorHandle": "@Broncos",
-      "authorProfileUrl": "https://www.denverbroncos.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0047
     },
     {
       "id": "den_vid_b0462746be6d",
@@ -3400,7 +2790,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0044
     },
     {
       "id": "den_vid_bece5b77adfc",
@@ -3468,7 +2858,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0042
     },
     {
       "id": "den_vid_83f7a6be1e3e",
@@ -3604,7 +2994,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0041
     },
     {
       "id": "den_vid_4a712ef1cb33",
@@ -3638,7 +3028,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0041
     },
     {
       "id": "den_vid_bd484e2e423f",
@@ -3672,7 +3062,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0041
     },
     {
       "id": "den_vid_5c953559dcd2",
@@ -3706,7 +3096,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0041
     },
     {
       "id": "den_vid_fd4c25130df2",
@@ -3740,7 +3130,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0041
     },
     {
       "id": "den_vid_e991041bbb2f",
@@ -3774,7 +3164,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0041
     },
     {
       "id": "den_vid_ae25acd97e9e",
@@ -3808,7 +3198,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0041
     },
     {
       "id": "den_vid_36d33aa124ad",
@@ -3842,7 +3232,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0041
     },
     {
       "id": "den_vid_c761751f45c8",
@@ -3876,7 +3266,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.004
     },
     {
       "id": "den_vid_eb7bbbf58346",
@@ -3910,7 +3300,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.004
     },
     {
       "id": "den_vid_07e563ca9ba9",
@@ -3944,7 +3334,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.004
     },
     {
       "id": "den_vid_f76656ebfb1c",
@@ -3978,7 +3368,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.004
     },
     {
       "id": "den_vid_052ab401995b",
@@ -4012,7 +3402,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.004
     },
     {
       "id": "den_vid_36e3fb1212c2",
@@ -4046,7 +3436,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.004
     },
     {
       "id": "den_tx_7615fde204a5",
@@ -4080,7 +3470,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0009
+      "storyRank": 0.0035
     },
     {
       "id": "den_vid_9142f1fe408c",
@@ -4114,7 +3504,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0009
+      "storyRank": 0.0034
     },
     {
       "id": "den_vid_0f162145fe9b",
@@ -4148,7 +3538,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0009
+      "storyRank": 0.0034
     },
     {
       "id": "den_vid_dac55e55e40d",
@@ -4182,7 +3572,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0009
+      "storyRank": 0.0034
     },
     {
       "id": "den_vid_c07213d7478e",
@@ -4216,7 +3606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0031
     },
     {
       "id": "den_vid_b9ee1bd557cf",
@@ -4250,7 +3640,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0031
     },
     {
       "id": "den_vid_b235eed19265",
@@ -4284,41 +3674,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
-    },
-    {
-      "id": "den_vid_a8154a3fd790",
-      "type": "video",
-      "title": "OC Davis Webb on Carolina's defense: 'There'll definitely be some wrinkles'",
-      "summary": "Offensive Coordinator Davis Webb speaks to the media about facing the Panthers, the wrinkles he expects from their defense and more.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/broncos/xbfwqymmbth3dsnmutx2.jpg",
-      "imageAlt": "OC Davis Webb on Carolina's defense: 'There'll definitely be some wrinkles'",
-      "publishedAt": "2026-11-06T00:06:23.000Z",
-      "url": "https://www.denverbroncos.com/video/oc-davis-webb-on-carolina-s-defense-there-ll-definitely-be-some-wrinkles",
-      "externalVideoUrl": "https://www.denverbroncos.com/video/oc-davis-webb-on-carolina-s-defense-there-ll-definitely-be-some-wrinkles",
-      "outletId": "broncos_official",
-      "outletName": "denverbroncos.com Video",
-      "reporterId": "broncos_official",
-      "reporterName": "denverbroncos.com Video",
-      "author": "denverbroncos.com Video",
-      "authorHandle": "@Broncos",
-      "authorProfileUrl": "https://www.denverbroncos.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0008
+      "storyRank": 0.0031
     },
     {
       "id": "den_vid_11033bd43cc3",
@@ -4352,7 +3708,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0028
     },
     {
       "id": "den_vid_3212edee5558",
@@ -4386,7 +3742,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0029
     },
     {
       "id": "den_vid_539778831461",
@@ -4420,7 +3776,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0029
     },
     {
       "id": "den_vid_305fe6149a95",
@@ -4522,7 +3878,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0029
     },
     {
       "id": "den_tx_d2fc79330ae1",
@@ -4556,7 +3912,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0028
     },
     {
       "id": "den_vid_23e50d491cc7",
@@ -4590,7 +3946,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0027
     },
     {
       "id": "den_tx_ed325de4fe8e",
@@ -4624,7 +3980,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0006
+      "storyRank": 0.0026
     },
     {
       "id": "den_vid_da6106abadeb",
@@ -4658,7 +4014,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0006
+      "storyRank": 0.0023
     },
     {
       "id": "den_vid_dbdfc143fbbb",
@@ -4726,7 +4082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0006
+      "storyRank": 0.0025
     },
     {
       "id": "den_vid_ff18be0802b2",
@@ -4760,7 +4116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0006
+      "storyRank": 0.0024
     },
     {
       "id": "den_vid_9b726e30a6ab",
@@ -4794,7 +4150,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0006
+      "storyRank": 0.0024
     },
     {
       "id": "den_rss_5e331ca0b96d",

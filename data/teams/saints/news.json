@@ -22,54 +22,22 @@
       "New Orleans faces a formidable Week 12 road test without offensive linemen Erik McCoy (biceps) and Taliese Fuaga (knee), confronting a Bengals offense ranking top-three in scoring and passing EPA ([neworleanssaints.com](https://www.neworleanssaints.com/news/chicago-bears-new-orleans-saints-2026-nfl-week-11-game-recap))."
     ],
     "coveredStoryKeys": [
-      "no_espn_c66b1cfb0eee8",
-      "no_espn_7435c17a22db1",
-      "no_espn_165c27d62fbe1",
-      "no_espn_60efae509e729",
       "no_espn_396db277a8768",
-      "no_espn_8e379aad64212"
+      "no_espn_1125cb99eeb13",
+      "no_vid_e0c4969f1035",
+      "no_espn_8e379aad64212",
+      "no_vid_09daa0a06770",
+      "no_bsky_72c42ae3c473"
     ],
     "coveredUrls": [
-      "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-      "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
       "https://www.espn.com/nfl/story/_/id/50566404/tyler-shough-confident-new-orleans-saints-kellen-moore",
-      "https://www.espn.com/video/clip/_/id/50567218/saints-fall-3-7-another-loss"
+      "https://www.espn.com/nfl/recap?gameId=401873071",
+      "https://www.neworleanssaints.com/news/chicago-bears-new-orleans-saints-2026-nfl-week-11-game-recap",
+      "https://www.espn.com/video/clip/_/id/50567218/saints-fall-3-7-another-loss",
+      "https://bsky.app/profile/nickunderhill.bsky.social/post/3n2wssv5a3dig",
+      "https://www.neworleanssaints.com/news/new-orleans-saints-succumb-to-familiar-theme-in-loss-to-chicago"
     ],
     "sources": [
-      {
-        "sid": "S1",
-        "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-        "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-        "author": "NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:42:13Z"
-      },
-      {
-        "sid": "S2",
-        "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-        "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-        "author": "NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T02:01:39Z"
-      },
-      {
-        "sid": "S3",
-        "title": "How active NFL players continue to redefine all-time sack list",
-        "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-        "author": "Sarah Barshop",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:49:27Z"
-      },
-      {
-        "sid": "S4",
-        "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-        "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-        "author": "ESPN Staff",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:00:32Z"
-      },
       {
         "sid": "S5",
         "title": "Tyler Shough voices confidence in Saints, Kellen Moore after 3-7 start",
@@ -77,6 +45,22 @@
         "author": "Katherine Terrell",
         "outlet": "ESPN",
         "publishedAt": "2026-11-23T01:25:56Z"
+      },
+      {
+        "sid": "S8",
+        "title": "Jeffery Simmons gets 3 sacks as the Chicago Bears beat the New Orleans Saints 21-13",
+        "url": "https://www.espn.com/nfl/recap?gameId=401873071",
+        "author": "ESPN NFL Nation",
+        "outlet": "ESPN",
+        "publishedAt": "2026-11-22T23:25:33Z"
+      },
+      {
+        "sid": "S8",
+        "title": "Game Recap: Chicago Bears 21, New Orleans Saints 13 | 2026 NFL Week 11",
+        "url": "https://www.neworleanssaints.com/news/chicago-bears-new-orleans-saints-2026-nfl-week-11-game-recap",
+        "author": "neworleanssaints.com Official",
+        "outlet": "neworleanssaints.com Official",
+        "publishedAt": "2026-11-22T21:15:00.000Z"
       },
       {
         "sid": "S6",
@@ -95,14 +79,6 @@
         "publishedAt": "2026-11-23T00:04:41.814Z"
       },
       {
-        "sid": "S8",
-        "title": "Jeffery Simmons gets 3 sacks as the Chicago Bears beat the New Orleans Saints 21-13",
-        "url": "https://www.espn.com/nfl/recap?gameId=401873071",
-        "author": "ESPN NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-22T23:25:33Z"
-      },
-      {
         "sid": "S9",
         "title": "New Orleans Saints succumb to familiar theme in loss to Chicago",
         "url": "https://www.neworleanssaints.com/news/new-orleans-saints-succumb-to-familiar-theme-in-loss-to-chicago",
@@ -117,143 +93,19 @@
         "author": "neworleanssaints.com Video",
         "outlet": "neworleanssaints.com Video",
         "publishedAt": "2026-11-22T22:11:38.000Z"
+      },
+      {
+        "sid": "S7",
+        "title": "Kellen Moore recaps loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
+        "url": "https://www.neworleanssaints.com/video/kellen-moore-interview-saints-bears-postgame-2026-nfl-week-11",
+        "author": "neworleanssaints.com Video",
+        "outlet": "neworleanssaints.com Video",
+        "publishedAt": "2026-11-22T21:57:58.000Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
-    {
-      "id": "no_espn_c66b1cfb0eee8",
-      "type": "article",
-      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
-      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-23T01:42:13Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.239,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 20.2617
-    },
-    {
-      "id": "no_espn_7435c17a22db1",
-      "type": "article",
-      "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749880_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-23T02:01:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 15.1209
-    },
-    {
-      "id": "no_espn_165c27d62fbe1",
-      "type": "article",
-      "title": "How active NFL players continue to redefine all-time sack list",
-      "summary": "Myles Garrett's torrid pace up the all-time sack list paces active players making their moves among the greats.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0828/nfl_data_viz_garrett_cr_16x9_608x342.jpg",
-      "imageAlt": "How active NFL players continue to redefine all-time sack list",
-      "publishedAt": "2026-11-23T01:49:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "sarah_barshop",
-      "reporterName": "Sarah Barshop",
-      "author": "Sarah Barshop",
-      "authorHandle": "@sarahbarshop",
-      "authorProfileUrl": "https://x.com/sarahbarshop",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.689
-    },
-    {
-      "id": "no_espn_60efae509e729",
-      "type": "article",
-      "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "publishedAt": "2026-11-23T01:00:32Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 9.735
-    },
     {
       "id": "no_espn_396db277a8768",
       "type": "article",
@@ -285,7 +137,74 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.8754
+      "storyRank": 7.5001
+    },
+    {
+      "id": "no_espn_1125cb99eeb13",
+      "type": "article",
+      "title": "Jeffery Simmons gets 3 sacks as the Chicago Bears beat the New Orleans Saints 21-13",
+      "summary": "— Jeffery Simmons delivered once again. That blockbuster trade for the All-Pro defensive tackle is looking like the appropriate price at the moment.",
+      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873071.png?templateId=espn.applewatch.awayhome.1",
+      "imageAlt": "Jeffery Simmons gets 3 sacks as the Chicago Bears beat the New Orleans Saints 21-13",
+      "publishedAt": "2026-11-22T23:25:33Z",
+      "url": "https://www.espn.com/nfl/recap?gameId=401873071",
+      "outletId": "espn_no",
+      "outletName": "ESPN",
+      "reporterId": "espn_no",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.83,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.4467
+    },
+    {
+      "id": "no_vid_e0c4969f1035",
+      "type": "video",
+      "title": "Tyler Shough talks loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
+      "summary": "New Orleans Saints quarterback Tyler Shough's postgame media availability after the Saints' game against the Chicago Bears in Week 11 of the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/saints/qgiqlcjzbxcfm9qzjzqw.png",
+      "imageAlt": "Tyler Shough talks loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
+      "publishedAt": "2026-11-22T22:11:38.000Z",
+      "url": "https://www.neworleanssaints.com/video/tyler-shough-interview-saints-bears-postgame-2026-nfl-week-11",
+      "externalVideoUrl": "https://www.neworleanssaints.com/video/tyler-shough-interview-saints-bears-postgame-2026-nfl-week-11",
+      "outletId": "saints_official",
+      "outletName": "neworleanssaints.com Video",
+      "reporterId": "saints_official",
+      "reporterName": "neworleanssaints.com Video",
+      "author": "neworleanssaints.com Video",
+      "authorHandle": "@Saints",
+      "authorProfileUrl": "https://www.neworleanssaints.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.72,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.9201
     },
     {
       "id": "no_espn_8e379aad64212",
@@ -318,7 +237,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.8562
+      "storyRank": 5.3586
+    },
+    {
+      "id": "no_vid_09daa0a06770",
+      "type": "video",
+      "title": "Kellen Moore recaps loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
+      "summary": "New Orleans Saints head coach Kellen Moore's postgame media availability after the Saints' game against the Chicago Bears in Week 11 of the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/saints/jnd5zke0s34v7xcmrpg8.png",
+      "imageAlt": "Kellen Moore recaps loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
+      "publishedAt": "2026-11-22T21:57:58.000Z",
+      "url": "https://www.neworleanssaints.com/video/kellen-moore-interview-saints-bears-postgame-2026-nfl-week-11",
+      "externalVideoUrl": "https://www.neworleanssaints.com/video/kellen-moore-interview-saints-bears-postgame-2026-nfl-week-11",
+      "outletId": "saints_official",
+      "outletName": "neworleanssaints.com Video",
+      "reporterId": "saints_official",
+      "reporterName": "neworleanssaints.com Video",
+      "author": "neworleanssaints.com Video",
+      "authorHandle": "@Saints",
+      "authorProfileUrl": "https://www.neworleanssaints.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.701,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 5.6969
     },
     {
       "id": "no_bsky_72c42ae3c473",
@@ -355,40 +308,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7311
-    },
-    {
-      "id": "no_espn_1125cb99eeb13",
-      "type": "article",
-      "title": "Jeffery Simmons gets 3 sacks as the Chicago Bears beat the New Orleans Saints 21-13",
-      "summary": "— Jeffery Simmons delivered once again. That blockbuster trade for the All-Pro defensive tackle is looking like the appropriate price at the moment.",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873071.png?templateId=espn.applewatch.awayhome.1",
-      "imageAlt": "Jeffery Simmons gets 3 sacks as the Chicago Bears beat the New Orleans Saints 21-13",
-      "publishedAt": "2026-11-22T23:25:33Z",
-      "url": "https://www.espn.com/nfl/recap?gameId=401873071",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.4876
+      "storyRank": 5.0369
     },
     {
       "id": "no_rss_950a7da3f86c",
@@ -421,109 +341,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2972
-    },
-    {
-      "id": "no_vid_e0c4969f1035",
-      "type": "video",
-      "title": "Tyler Shough talks loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
-      "summary": "New Orleans Saints quarterback Tyler Shough's postgame media availability after the Saints' game against the Chicago Bears in Week 11 of the 2026 NFL season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/saints/qgiqlcjzbxcfm9qzjzqw.png",
-      "imageAlt": "Tyler Shough talks loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
-      "publishedAt": "2026-11-22T22:11:38.000Z",
-      "url": "https://www.neworleanssaints.com/video/tyler-shough-interview-saints-bears-postgame-2026-nfl-week-11",
-      "externalVideoUrl": "https://www.neworleanssaints.com/video/tyler-shough-interview-saints-bears-postgame-2026-nfl-week-11",
-      "outletId": "saints_official",
-      "outletName": "neworleanssaints.com Video",
-      "reporterId": "saints_official",
-      "reporterName": "neworleanssaints.com Video",
-      "author": "neworleanssaints.com Video",
-      "authorHandle": "@Saints",
-      "authorProfileUrl": "https://www.neworleanssaints.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.1113
-    },
-    {
-      "id": "no_vid_09daa0a06770",
-      "type": "video",
-      "title": "Kellen Moore recaps loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
-      "summary": "New Orleans Saints head coach Kellen Moore's postgame media availability after the Saints' game against the Chicago Bears in Week 11 of the 2026 NFL season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/saints/jnd5zke0s34v7xcmrpg8.png",
-      "imageAlt": "Kellen Moore recaps loss to Chicago | Saints-Bears Postgame | 2026 NFL Week 11",
-      "publishedAt": "2026-11-22T21:57:58.000Z",
-      "url": "https://www.neworleanssaints.com/video/kellen-moore-interview-saints-bears-postgame-2026-nfl-week-11",
-      "externalVideoUrl": "https://www.neworleanssaints.com/video/kellen-moore-interview-saints-bears-postgame-2026-nfl-week-11",
-      "outletId": "saints_official",
-      "outletName": "neworleanssaints.com Video",
-      "reporterId": "saints_official",
-      "reporterName": "neworleanssaints.com Video",
-      "author": "neworleanssaints.com Video",
-      "authorHandle": "@Saints",
-      "authorProfileUrl": "https://www.neworleanssaints.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.0592
-    },
-    {
-      "id": "no_vid_5d1bbce9c2b3",
-      "type": "video",
-      "title": "Bears vs. Saints Highlights | 2026 NFL Week 11",
-      "summary": "Highlights from the Week 11 game between the New Orleans Saints and the Chicago Bears during the 2026 NFL season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/saints/ydthqths6r5ewcmgitqi.jpg",
-      "imageAlt": "Bears vs. Saints Highlights | 2026 NFL Week 11",
-      "publishedAt": "2026-11-22T21:39:20.000Z",
-      "url": "https://www.neworleanssaints.com/video/bears-vs-saints-highlights-2026-nfl-week-11",
-      "externalVideoUrl": "https://www.neworleanssaints.com/video/bears-vs-saints-highlights-2026-nfl-week-11",
-      "outletId": "saints_official",
-      "outletName": "neworleanssaints.com Video",
-      "reporterId": "saints_official",
-      "reporterName": "neworleanssaints.com Video",
-      "author": "neworleanssaints.com Video",
-      "authorHandle": "@Saints",
-      "authorProfileUrl": "https://www.neworleanssaints.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.9947
+      "storyRank": 4.0025
     },
     {
       "id": "no_rss_07aed2ae212b",
@@ -556,7 +374,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.92
+      "storyRank": 2.9899
     },
     {
       "id": "no_vid_bd813d571fed",
@@ -590,7 +408,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9159
+      "storyRank": 2.9784
     },
     {
       "id": "no_vid_33a661dea616",
@@ -624,7 +442,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9105
+      "storyRank": 2.9631
     },
     {
       "id": "no_espn_0935ab3a4d4c7",
@@ -657,7 +475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9072
+      "storyRank": 2.954
     },
     {
       "id": "no_vid_db68365ed0d9",
@@ -691,7 +509,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8479
+      "storyRank": 2.7856
     },
     {
       "id": "no_vid_cc53160489d2",
@@ -725,7 +543,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8413
+      "storyRank": 2.7668
     },
     {
       "id": "no_vid_4a336b092557",
@@ -759,7 +577,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7523
+      "storyRank": 2.5088
     },
     {
       "id": "no_vid_ae6bbb46993e",
@@ -793,7 +611,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7031
+      "storyRank": 2.3634
     },
     {
       "id": "no_vid_2d11597ec563",
@@ -827,7 +645,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7009
+      "storyRank": 2.3569
     },
     {
       "id": "no_rss_96c66cd3fddf",
@@ -860,7 +678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6955
+      "storyRank": 2.3408
     },
     {
       "id": "no_rss_c23cb2a580f4",
@@ -893,7 +711,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5543
+      "storyRank": 1.9112
+    },
+    {
+      "id": "no_vid_5d1bbce9c2b3",
+      "type": "video",
+      "title": "Bears vs. Saints Highlights | 2026 NFL Week 11",
+      "summary": "Highlights from the Week 11 game between the New Orleans Saints and the Chicago Bears during the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/saints/ydthqths6r5ewcmgitqi.jpg",
+      "imageAlt": "Bears vs. Saints Highlights | 2026 NFL Week 11",
+      "publishedAt": "2026-11-22T21:39:20.000Z",
+      "url": "https://www.neworleanssaints.com/video/bears-vs-saints-highlights-2026-nfl-week-11",
+      "externalVideoUrl": "https://www.neworleanssaints.com/video/bears-vs-saints-highlights-2026-nfl-week-11",
+      "outletId": "saints_official",
+      "outletName": "neworleanssaints.com Video",
+      "reporterId": "saints_official",
+      "reporterName": "neworleanssaints.com Video",
+      "author": "neworleanssaints.com Video",
+      "authorHandle": "@Saints",
+      "authorProfileUrl": "https://www.neworleanssaints.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7994
     },
     {
       "id": "no_rss_a7d540437de6",
@@ -926,7 +778,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0966
+      "storyRank": 0.3441
     },
     {
       "id": "no_rss_db34683c7a1e",
@@ -959,7 +811,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0934
+      "storyRank": 0.3333
     },
     {
       "id": "no_rss_745271f094d1",
@@ -992,7 +844,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0279
+      "storyRank": 0.1061
     },
     {
       "id": "no_rss_ccd9d4d4881f",
@@ -1025,7 +877,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0235
+      "storyRank": 0.0898
     },
     {
       "id": "no_rss_6616b3f11065",
@@ -1058,7 +910,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
+      "storyRank": 0.0874
     },
     {
       "id": "no_rss_51faef4cb6e3",
@@ -1091,7 +943,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0866
     },
     {
       "id": "no_tx_9e15c8a8f6fc",
@@ -1125,40 +977,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0184
-    },
-    {
-      "id": "no_espn_4b15838125df3",
-      "type": "article",
-      "title": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "summary": "Here's a look at what each NFL team is wearing in Week 11, led by Houston debuting its Rivalries combination.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/commanders-texans-week-11-unis16x9.jpg",
-      "imageAlt": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "publishedAt": "2026-11-20T22:49:33Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "Anthony Gharib",
-      "author": "Anthony Gharib",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.071
     },
     {
       "id": "no_espn_19fe7eac860bf",
@@ -1191,7 +1010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.0539
     },
     {
       "id": "no_rss_d4e3e8769efa",
@@ -1224,73 +1043,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133
-    },
-    {
-      "id": "no_espn_e18552bc1fb8c",
-      "type": "article",
-      "title": "NFL Week 11 betting odds: Lines and totals for every game",
-      "summary": "Updated odds, spreads, totals and FPI predictions for every NFL game in Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746635_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 betting odds: Lines and totals for every game",
-      "publishedAt": "2026-11-20T20:13:57Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.053
-    },
-    {
-      "id": "no_espn_f9ca15e024182",
-      "type": "article",
-      "title": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "summary": "Joe Burrow vs. Jayden Daniels? Fernando Mendoza vs. Bo Nix? There are 12 more games in Week 11, and we have picks, predictions and more for all of them.",
-      "imageUrl": "https://a.espncdn.com/photo/2025/0819/r1533632_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "publishedAt": "2026-11-20T18:48:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50522208/week-11-picks-predictions-schedule-fantasy-odds-2026",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "author": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0511
+      "storyRank": 0.0515
     },
     {
       "id": "no_rss_ddae5a380caa",
@@ -1323,7 +1076,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0114
+      "storyRank": 0.0445
     },
     {
       "id": "no_tx_0846df3dd9ed",
@@ -1357,7 +1110,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.01
+      "storyRank": 0.0391
     },
     {
       "id": "no_espn_d0772fb94d2eb",
@@ -1390,7 +1143,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0339
     },
     {
       "id": "no_rss_4239d4cd898a",
@@ -1423,7 +1176,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084
+      "storyRank": 0.0329
     },
     {
       "id": "no_espn_892218accf6db",
@@ -1456,7 +1209,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0082
+      "storyRank": 0.032
     },
     {
       "id": "no_rss_1805e2b119f5",
@@ -1489,7 +1242,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0201
+      "storyRank": 0.079
     },
     {
       "id": "no_bsky_c4092348f5f5",
@@ -1526,40 +1279,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
-    },
-    {
-      "id": "no_espn_b95a427d7fb7b",
-      "type": "article",
-      "title": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "summary": "Here's the good and the bad for each offensive coordinator or playcaller through Week 10, plus keys to their success the rest of the way.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1118/32_for_32_midseason_look_608x342.png",
-      "imageAlt": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "publishedAt": "2026-11-19T17:37:25Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50520404/nfl-offensive-coordinators-playcallers-midseason-report",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0306
+      "storyRank": 0.0309
     },
     {
       "id": "no_rss_4e5f8ee84867",
@@ -1592,7 +1312,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0284
     },
     {
       "id": "no_rss_9b6a4764e309",
@@ -1625,7 +1345,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0072
+      "storyRank": 0.0071
     },
     {
       "id": "no_tx_883206c01c9d",
@@ -1659,7 +1379,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0258
     },
     {
       "id": "no_bsky_c6f9cfe9e2c8",
@@ -1696,7 +1416,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0225
+      "storyRank": 0.0222
     },
     {
       "id": "no_rss_629fbb0969bb",
@@ -1729,73 +1449,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
-    },
-    {
-      "id": "no_espn_533c73d43a5d8",
-      "type": "article",
-      "title": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "summary": "Which NFL team could land Drew Mestemaker? Who needs Chris Cole, Ashton Hampton or Jamari Johnson? Jordan Reid projected first-round picks for 2027 -- and a trade.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/261118_cfb_jordan-reid-mock-draft_16x9_608x342.jpg",
-      "imageAlt": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "publishedAt": "2026-11-18T17:51:58Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/50502243/2027-nfl-mock-draft-reid-midseason-32-first-round-predictions",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "Jordan Reid",
-      "author": "Jordan Reid",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0214
-    },
-    {
-      "id": "no_espn_3b2fdfe28dfc8",
-      "type": "article",
-      "title": "NFL Week 11 latest intel, buzz questions, news, fantasy tips: What we're hearing",
-      "summary": "What are people around the league saying about Fernando Mendoza? Could changes be coming in Dallas? And what now for New England? Here's the latest intel.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747264_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 latest intel, buzz questions, news, fantasy tips: What we're hearing",
-      "publishedAt": "2026-11-18T17:48:56Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50513379/week-11-buzz-fantasy-predictions-graziano-fowler-2026",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "jeremy_fowler",
-      "reporterName": "Jeremy Fowler",
-      "author": "Jeremy Fowler",
-      "authorHandle": "@JFowlerESPN",
-      "authorProfileUrl": "https://x.com/JFowlerESPN",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0214
+      "storyRank": 0.0229
     },
     {
       "id": "no_espn_238c25f897c51",
@@ -1828,7 +1482,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.02
     },
     {
       "id": "no_tx_7e596c49d737",
@@ -1862,73 +1516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
-    },
-    {
-      "id": "no_espn_d51f7983010a2",
-      "type": "article",
-      "title": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "summary": "How does every NFL team stack up heading into Week 11? We made our 1-32 list and picked the non-quarterback MVPs for each roster.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/nfl_power_rankings_608x342.png",
-      "imageAlt": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "publishedAt": "2026-11-17T20:45:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
-    },
-    {
-      "id": "no_espn_16beeafd3881f",
-      "type": "article",
-      "title": "Seven things Solak thinks for NFL Week 11: Takes on four QBs, Lions, Rams, more",
-      "summary": "Get ready for Week 11 with what makes Vikings-49ers must-watch football, Joe Burrow's MVP case and how Aidan Hutchinson's injury could impact the Lions.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1746919_608x342_16-9.jpg",
-      "imageAlt": "Seven things Solak thinks for NFL Week 11: Takes on four QBs, Lions, Rams, more",
-      "publishedAt": "2026-11-17T15:39:31Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50505355/week-11-seven-things-solak-thinks-burrow-mvp-rams-lions",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "ben_solak",
-      "reporterName": "Ben Solak",
-      "author": "Ben Solak",
-      "authorHandle": "@BenjaminSolak",
-      "authorProfileUrl": "https://x.com/BenjaminSolak",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0039
+      "storyRank": 0.0186
     },
     {
       "id": "no_espn_51b53fdbdad19",
@@ -1961,40 +1549,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0151
-    },
-    {
-      "id": "no_espn_ee9a3465db613",
-      "type": "article",
-      "title": "Kyle Hamilton rocks Christmas sweater ahead of 'MNF,' leads NFL Week 10 arrivals",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746900_545x307_16-9.png",
-      "imageAlt": "Kyle Hamilton rocks Christmas sweater ahead of 'MNF,' leads NFL Week 10 arrivals",
-      "publishedAt": "2026-11-16T23:53:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50465223/nfl-week-10-fashionable-arrivals",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
+      "storyRank": 0.0149
     },
     {
       "id": "no_bsky_51dde1ef0958",
@@ -2031,106 +1586,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
-    },
-    {
-      "id": "no_espn_8d4c0df7a7dbe",
-      "type": "article",
-      "title": "NFL playoff chance tiers: Where all 32 teams fit in 2026 postseason picture",
-      "summary": "We placed all 32 NFL teams into tiers based on their likelihood of making the playoffs, from Super Bowl favorites to the top-draft-pick candidates.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1113/2026_midseason_playoff_tiers_608x342.png",
-      "imageAlt": "NFL playoff chance tiers: Where all 32 teams fit in 2026 postseason picture",
-      "publishedAt": "2026-11-16T16:21:08Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50463347/2026-nfl-playoffs-chances-odds-tiers-32-teams-nfc-afc",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "Seth Walder",
-      "author": "Seth Walder",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
       "storyRank": 0.0125
-    },
-    {
-      "id": "no_espn_ef57ad8125e5f",
-      "type": "article",
-      "title": "NFL Week 10: Big takeaways, questions and fantasy spin from Sunday's games",
-      "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 10.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746498_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 10: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-16T06:53:37Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50443510/week-10-sunday-games-takeaways-questions-2026",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0115
-    },
-    {
-      "id": "no_espn_6c60aedbc3d0b",
-      "type": "article",
-      "title": "Week 10 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of Sunday's top moments, TDs and analysis from ESPN's NFL reporters.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746290_576x324_16-9.jpg",
-      "imageAlt": "Week 10 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-16T05:24:51Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50489998/week-10-highlights-sunday-best-plays-touchdowns-2026",
-      "outletId": "espn_no",
-      "outletName": "ESPN",
-      "reporterId": "espn_no",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/no/new-orleans-saints",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0114
     },
     {
       "id": "no_bsky_561d493564d5",
@@ -2167,7 +1623,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0104
     },
     {
       "id": "no_bsky_1242c8c33c94",
@@ -2204,7 +1660,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0086
+      "storyRank": 0.0085
     },
     {
       "id": "no_tx_da2cd9b8ca0e",
@@ -2238,7 +1694,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.002
+      "storyRank": 0.008
     },
     {
       "id": "no_tx_b54718f71448",
@@ -2272,7 +1728,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0053
     },
     {
       "id": "no_tx_e73ca8862538",
@@ -2306,7 +1762,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
+      "storyRank": 0.0047
     },
     {
       "id": "no_tx_633be3bdcd1d",
@@ -2340,7 +1796,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0043
     },
     {
       "id": "no_tx_ac8bd8819c5b",
@@ -2374,7 +1830,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0009
+      "storyRank": 0.0035
     },
     {
       "id": "no_tx_47c1f15df811",
@@ -2408,7 +1864,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0028
     },
     {
       "id": "no_tx_d7259fcfb9ec",
@@ -2442,7 +1898,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0006
+      "storyRank": 0.0026
     },
     {
       "id": "no_rss_fd615257e35f",

@@ -24,96 +24,96 @@ export const TRUST_TIER_LABELS = {
 
 export const BEAT_REPORTER_DIRECTORY = [
   // Tier 1: Official Podium + Primary Credentialed 49ers Beat + Top National Transaction Insiders
-  { id: 'kyle_shanahan', name: 'Kyle Shanahan', handle: '@49ers', outletId: '49ers_official', outletName: '49ers Official', trustTier: 1, credibilityScore: 99 },
-  { id: 'john_lynch', name: 'John Lynch', handle: '@JohnLynch49ers', outletId: '49ers_official', outletName: '49ers Official', trustTier: 1, credibilityScore: 97 },
-  { id: '49ers_news', name: 'San Francisco 49ers Official', handle: '@49ers', outletId: '49ers_official', outletName: '49ers.com Official', trustTier: 1, credibilityScore: 98 },
-  { id: 'brianna_jeannel', name: 'Briana Jeannel', handle: '@BrianaJeannel', outletId: '49ers_official', outletName: '49ers.com', trustTier: 1, credibilityScore: 95, aliases: ['brianna jeannel', 'brooke evans'] },
-  { id: 'matt_maiocco', name: 'Matt Maiocco', handle: '@MaioccoNBCS', outletId: 'nbcsba', outletName: 'NBC Sports Bay Area', trustTier: 1, credibilityScore: 98 },
-  { id: 'nick_wagoner', name: 'Nick Wagoner', handle: '@nwagoner', outletId: 'espn', outletName: 'ESPN 49ers Beat', trustTier: 1, credibilityScore: 98 },
-  { id: 'matt_barrows', name: 'Matt Barrows', handle: '@mattbarrows', outletId: 'athletic', outletName: 'The Athletic', trustTier: 1, credibilityScore: 98 },
-  { id: 'david_lombardi', name: 'David Lombardi', handle: '@LombardiHimself', outletId: 'sf_standard', outletName: 'The SF Standard', trustTier: 1, credibilityScore: 95 },
-  { id: 'jennifer_lee_chan', name: 'Jennifer Lee Chan', handle: '@jenniferleechan', outletId: 'nbcsba', outletName: 'NBC Sports Bay Area', trustTier: 1, credibilityScore: 95 },
-  { id: 'eric_branch', name: 'Eric Branch', handle: '@Eric_Branch', outletId: 'sf_chronicle', outletName: 'SF Chronicle', trustTier: 1, credibilityScore: 95 },
-  { id: 'cam_inman', name: 'Cam Inman', handle: '@CamInman', outletId: 'bay_area_news', outletName: 'Bay Area News Group', trustTier: 1, credibilityScore: 95 },
+  { id: 'kyle_shanahan', name: 'Kyle Shanahan', handle: '@49ers', outletId: '49ers_official', outletName: '49ers Official', trustTier: 1, credibilityScore: 99, teamAbbr: 'SF' },
+  { id: 'john_lynch', name: 'John Lynch', handle: '@JohnLynch49ers', outletId: '49ers_official', outletName: '49ers Official', trustTier: 1, credibilityScore: 97, teamAbbr: 'SF' },
+  { id: '49ers_news', name: 'San Francisco 49ers Official', handle: '@49ers', outletId: '49ers_official', outletName: '49ers.com Official', trustTier: 1, credibilityScore: 98, teamAbbr: 'SF' },
+  { id: 'brianna_jeannel', name: 'Briana Jeannel', handle: '@BrianaJeannel', outletId: '49ers_official', outletName: '49ers.com', trustTier: 1, credibilityScore: 95, aliases: ['brianna jeannel', 'brooke evans'], teamAbbr: 'SF' },
+  { id: 'matt_maiocco', name: 'Matt Maiocco', handle: '@MaioccoNBCS', outletId: 'nbcsba', outletName: 'NBC Sports Bay Area', trustTier: 1, credibilityScore: 98, teamAbbr: 'SF' },
+  { id: 'nick_wagoner', name: 'Nick Wagoner', handle: '@nwagoner', outletId: 'espn', outletName: 'ESPN 49ers Beat', trustTier: 1, credibilityScore: 98, teamAbbr: 'SF' },
+  { id: 'matt_barrows', name: 'Matt Barrows', handle: '@mattbarrows', outletId: 'athletic', outletName: 'The Athletic', trustTier: 1, credibilityScore: 98, teamAbbr: 'SF' },
+  { id: 'david_lombardi', name: 'David Lombardi', handle: '@LombardiHimself', outletId: 'sf_standard', outletName: 'The SF Standard', trustTier: 1, credibilityScore: 95, teamAbbr: 'SF' },
+  { id: 'jennifer_lee_chan', name: 'Jennifer Lee Chan', handle: '@jenniferleechan', outletId: 'nbcsba', outletName: 'NBC Sports Bay Area', trustTier: 1, credibilityScore: 95, teamAbbr: 'SF' },
+  { id: 'eric_branch', name: 'Eric Branch', handle: '@Eric_Branch', outletId: 'sf_chronicle', outletName: 'SF Chronicle', trustTier: 1, credibilityScore: 95, teamAbbr: 'SF' },
+  { id: 'cam_inman', name: 'Cam Inman', handle: '@CamInman', outletId: 'bay_area_news', outletName: 'Bay Area News Group', trustTier: 1, credibilityScore: 95, teamAbbr: 'SF' },
   { id: 'adam_schefter', name: 'Adam Schefter', handle: '@AdamSchefter', outletId: 'espn', outletName: 'ESPN NFL Insider', trustTier: 1, credibilityScore: 99 },
   { id: 'ian_rapoport', name: 'Ian Rapoport', handle: '@RapSheet', outletId: 'nfl_network', outletName: 'NFL Network', trustTier: 1, credibilityScore: 98 },
   { id: 'tom_pelissero', name: 'Tom Pelissero', handle: '@TomPelissero', outletId: 'nfl_network', outletName: 'NFL Network', trustTier: 1, credibilityScore: 97 },
   { id: 'mike_garafolo', name: 'Mike Garafolo', handle: '@MikeGarafolo', outletId: 'nfl_network', outletName: 'NFL Network', trustTier: 1, credibilityScore: 96 },
 
   // Tier 2: Verified Beat Reporters, National Reporters, Cap & All-22 Film Analysts
-  { id: 'harrison_rich', name: 'Harrison Rich', handle: '@harrisonrich_', outletId: 'sf_chronicle', outletName: 'San Francisco Chronicle', trustTier: 2, credibilityScore: 88 },
-  { id: 'matt_lively', name: 'Matt Lively', handle: '@mattblively', outletId: 'knbr_radio', outletName: 'CBS News Bay Area (KPIX)', trustTier: 2, credibilityScore: 90 },
-  { id: 'chris_biderman', name: 'Chris Biderman', handle: '@ChrisBiderman', outletId: 'youtube_film', outletName: 'Candlestick Chronicles', trustTier: 2, credibilityScore: 90 },
+  { id: 'harrison_rich', name: 'Harrison Rich', handle: '@harrisonrich_', outletId: 'sf_chronicle', outletName: 'San Francisco Chronicle', trustTier: 2, credibilityScore: 88, teamAbbr: 'SF' },
+  { id: 'matt_lively', name: 'Matt Lively', handle: '@mattblively', outletId: 'knbr_radio', outletName: 'CBS News Bay Area (KPIX)', trustTier: 2, credibilityScore: 90, teamAbbr: 'SF' },
+  { id: 'chris_biderman', name: 'Chris Biderman', handle: '@ChrisBiderman', outletId: 'youtube_film', outletName: 'Candlestick Chronicles', trustTier: 2, credibilityScore: 90, teamAbbr: 'SF' },
   { id: 'dianna_russini', name: 'Dianna Russini', handle: '@DMRussini', outletId: 'nfl_network', outletName: 'The Russini Report', trustTier: 2, credibilityScore: 94 },
   { id: 'albert_breer', name: 'Albert Breer', handle: '@AlbertBreer', outletId: 'nfl_network', outletName: 'MMQB / SI', trustTier: 2, credibilityScore: 92 },
   { id: 'field_yates', name: 'Field Yates', handle: '@FieldYates', outletId: 'espn', outletName: 'ESPN NFL', trustTier: 2, credibilityScore: 92 },
   { id: 'jeremy_fowler', name: 'Jeremy Fowler', handle: '@JFowlerESPN', outletId: 'espn', outletName: 'ESPN NFL', trustTier: 2, credibilityScore: 91 },
   { id: 'jordan_schultz', name: 'Jordan Schultz', handle: '@Schultz_Report', outletId: 'nfl_network', outletName: 'NFL Insider', trustTier: 2, credibilityScore: 88 },
   { id: 'aaron_wilson', name: 'Aaron Wilson', handle: '@AaronWilson_NFL', outletId: 'nfl_network', outletName: 'KPRC 2 NFL', trustTier: 2, credibilityScore: 90 },
-  { id: 'vic_tafur', name: 'Vic Tafur', handle: '@VicTafur', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 89 },
-  { id: 'tim_kawakami', name: 'Tim Kawakami', handle: '@timkawakami', outletId: 'sf_standard', outletName: 'The SF Standard', trustTier: 2, credibilityScore: 89 },
-  { id: 'tim_ryan', name: 'Tim Ryan', handle: '@TimRyan99', outletId: 'knbr_radio', outletName: 'KNBR / 49ers Radio', trustTier: 2, credibilityScore: 93, handleAliases: ['@TimRyan49ers'] },
-  { id: 'greg_papa', name: 'Greg Papa', handle: '', outletId: 'knbr_radio', outletName: 'KNBR / 49ers Radio', trustTier: 2, credibilityScore: 88, profileUrl: 'https://www.knbr.com/49ers/' },
-  { id: 'guy_haberman', name: 'Guy Haberman', handle: '@GuyHaberman', outletId: 'youtube_film', outletName: 'Haberman & Middlekauff', trustTier: 2, credibilityScore: 91 },
-  { id: 'john_chapman', name: 'John Chapman', handle: '@JL_Chapman', outletId: 'youtube_film', outletName: '49ers Rush', trustTier: 2, credibilityScore: 90 },
-  { id: 'brian_peacock', name: 'Brian Peacock', handle: '@BDPeacock', outletId: 'youtube_film', outletName: 'Locked On 49ers', trustTier: 2, credibilityScore: 90 },
-  { id: 'eric_crocker', name: 'Eric Crocker', handle: '@Crocky209', outletId: 'youtube_film', outletName: 'Locked On 49ers', trustTier: 2, credibilityScore: 91, handleAliases: ['@eric_crocker'] },
-  { id: 'jonnydel', name: "Jonnydel's Football Academy", handle: '@jonnydels', outletId: 'youtube_film', outletName: "Jonnydel's FA", trustTier: 2, credibilityScore: 93, aliases: ['jonnydel'], handleAliases: ['@jonnydelsfa'] },
+  { id: 'vic_tafur', name: 'Vic Tafur', handle: '@VicTafur', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 89, teamAbbr: 'SF' },
+  { id: 'tim_kawakami', name: 'Tim Kawakami', handle: '@timkawakami', outletId: 'sf_standard', outletName: 'The SF Standard', trustTier: 2, credibilityScore: 89, teamAbbr: 'SF' },
+  { id: 'tim_ryan', name: 'Tim Ryan', handle: '@TimRyan99', outletId: 'knbr_radio', outletName: 'KNBR / 49ers Radio', trustTier: 2, credibilityScore: 93, handleAliases: ['@TimRyan49ers'], teamAbbr: 'SF' },
+  { id: 'greg_papa', name: 'Greg Papa', handle: '', outletId: 'knbr_radio', outletName: 'KNBR / 49ers Radio', trustTier: 2, credibilityScore: 88, profileUrl: 'https://www.knbr.com/49ers/', teamAbbr: 'SF' },
+  { id: 'guy_haberman', name: 'Guy Haberman', handle: '@GuyHaberman', outletId: 'youtube_film', outletName: 'Haberman & Middlekauff', trustTier: 2, credibilityScore: 91, teamAbbr: 'SF' },
+  { id: 'john_chapman', name: 'John Chapman', handle: '@JL_Chapman', outletId: 'youtube_film', outletName: '49ers Rush', trustTier: 2, credibilityScore: 90, teamAbbr: 'SF' },
+  { id: 'brian_peacock', name: 'Brian Peacock', handle: '@BDPeacock', outletId: 'youtube_film', outletName: 'Locked On 49ers', trustTier: 2, credibilityScore: 90, teamAbbr: 'SF' },
+  { id: 'eric_crocker', name: 'Eric Crocker', handle: '@Crocky209', outletId: 'youtube_film', outletName: 'Locked On 49ers', trustTier: 2, credibilityScore: 91, handleAliases: ['@eric_crocker'], teamAbbr: 'SF' },
+  { id: 'jonnydel', name: "Jonnydel's Football Academy", handle: '@jonnydels', outletId: 'youtube_film', outletName: "Jonnydel's FA", trustTier: 2, credibilityScore: 93, aliases: ['jonnydel'], handleAliases: ['@jonnydelsfa'], teamAbbr: 'SF' },
   { id: 'jt_osullivan', name: "JT O'Sullivan", handle: '@theqbschool', outletId: 'youtube_film', outletName: 'The QB School', trustTier: 2, credibilityScore: 92, aliases: ['the qb school', 'qb school'], handleAliases: ['@jt_osullivan'] },
   { id: 'chase_daniel', name: 'Chase Daniel', handle: '@ChaseDaniel', outletId: 'youtube_film', outletName: 'Chase Daniel Film', trustTier: 2, credibilityScore: 90, aliases: ["chase daniel and bussin' with the boys"] },
   { id: 'alex_rollins', name: 'Alex Rollins', handle: '@AlexRollinsNFL', outletId: 'youtube_film', outletName: 'Alex Rollins NFL', trustTier: 2, credibilityScore: 91, aliases: ['alex rollins nfl'] },
   { id: 'mike_florio', name: 'ProFootballTalk', handle: '@ProFootballTalk', outletId: 'nfl_network', outletName: 'NBC ProFootballTalk', trustTier: 2, credibilityScore: 88, aliases: ['mike florio', 'pft'] },
-  { id: 'jeff_deeney', name: 'Jeff Deeney', handle: '@PFF_Jeff', outletId: 'youtube_film', outletName: '49ers Analytics', trustTier: 2, credibilityScore: 89 },
-  { id: 'brad_graham', name: 'Brad Graham', handle: '@Graham_SFN', outletId: 'youtube_film', outletName: 'TheSFNiners', trustTier: 2, credibilityScore: 88, handleAliases: ['@TheSFNiners'] },
-  { id: 'al_sacco', name: 'Al Sacco', handle: '@AlSacco49', outletId: '49ers_webzone', outletName: '49ers Webzone', trustTier: 2, credibilityScore: 85 },
-  { id: 'kyle_posey', name: 'Kyle Posey', handle: '@KP_Show', outletId: 'niners_nation', outletName: 'Niners Nation', trustTier: 2, credibilityScore: 89 },
-  { id: 'rohan_chakravarthi', name: 'Rohan Chakravarthi', handle: '@RohanChakrav', outletId: 'niners_nation', outletName: 'Niners Nation', trustTier: 2, credibilityScore: 84 },
-  { id: 'akash_anavarathan', name: 'Akash Anavarathan', handle: '@akashanav', outletId: 'youtube_film', outletName: '49ers Analytics', trustTier: 2, credibilityScore: 87 },
-  { id: 'steph_sanchez', name: 'Steph Sanchez', handle: '@Steph49K', outletId: 'youtube_film', outletName: '49ers Know It All', trustTier: 2, credibilityScore: 84 },
-  { id: 'jason_aponte', name: 'Jason Aponte', handle: '@JasonAponte2103', outletId: 'youtube_film', outletName: 'Sprint Right Option', trustTier: 2, credibilityScore: 84 },
-  { id: 'vish_kumaran', name: 'Vish Kumaran', handle: '@VishKumaran', outletId: 'niners_nation', outletName: 'Niners Nation', trustTier: 2, credibilityScore: 84 },
+  { id: 'jeff_deeney', name: 'Jeff Deeney', handle: '@PFF_Jeff', outletId: 'youtube_film', outletName: '49ers Analytics', trustTier: 2, credibilityScore: 89, teamAbbr: 'SF' },
+  { id: 'brad_graham', name: 'Brad Graham', handle: '@Graham_SFN', outletId: 'youtube_film', outletName: 'TheSFNiners', trustTier: 2, credibilityScore: 88, handleAliases: ['@TheSFNiners'], teamAbbr: 'SF' },
+  { id: 'al_sacco', name: 'Al Sacco', handle: '@AlSacco49', outletId: '49ers_webzone', outletName: '49ers Webzone', trustTier: 2, credibilityScore: 85, teamAbbr: 'SF' },
+  { id: 'kyle_posey', name: 'Kyle Posey', handle: '@KP_Show', outletId: 'niners_nation', outletName: 'Niners Nation', trustTier: 2, credibilityScore: 89, teamAbbr: 'SF' },
+  { id: 'rohan_chakravarthi', name: 'Rohan Chakravarthi', handle: '@RohanChakrav', outletId: 'niners_nation', outletName: 'Niners Nation', trustTier: 2, credibilityScore: 84, teamAbbr: 'SF' },
+  { id: 'akash_anavarathan', name: 'Akash Anavarathan', handle: '@akashanav', outletId: 'youtube_film', outletName: '49ers Analytics', trustTier: 2, credibilityScore: 87, teamAbbr: 'SF' },
+  { id: 'steph_sanchez', name: 'Steph Sanchez', handle: '@Steph49K', outletId: 'youtube_film', outletName: '49ers Know It All', trustTier: 2, credibilityScore: 84, teamAbbr: 'SF' },
+  { id: 'jason_aponte', name: 'Jason Aponte', handle: '@JasonAponte2103', outletId: 'youtube_film', outletName: 'Sprint Right Option', trustTier: 2, credibilityScore: 84, teamAbbr: 'SF' },
+  { id: 'vish_kumaran', name: 'Vish Kumaran', handle: '@VishKumaran', outletId: 'niners_nation', outletName: 'Niners Nation', trustTier: 2, credibilityScore: 84, teamAbbr: 'SF' },
   { id: 'mina_kimes', name: 'Mina Kimes', handle: '@minakimes', outletId: 'espn', outletName: 'ESPN NFL', trustTier: 2, credibilityScore: 93 },
   { id: 'ben_solak', name: 'Ben Solak', handle: '@BenjaminSolak', outletId: 'espn', outletName: 'ESPN NFL', trustTier: 2, credibilityScore: 91 },
   { id: 'brett_kollmann', name: 'Brett Kollmann', handle: '@BrettKollmann', outletId: 'youtube_film', outletName: 'The Film Room', trustTier: 2, credibilityScore: 89 },
 
   // Tier 3: Viable Columnists, Camp & Sideline Observers (lower weight on opinion, full First-Mover elevation on acute injury observations)
-  { id: 'dieter_kurtenbach', name: 'Dieter Kurtenbach', handle: '@dieter', outletId: 'bay_area_news', outletName: 'Bay Area News Group', trustTier: 3, credibilityScore: 80, handleAliases: ['@dkurtenbach'] },
-  { id: 'larry_krueger', name: 'Larry Krueger', handle: '@sportslarryk', outletId: 'youtube_film', outletName: 'The Krueg Show', trustTier: 3, credibilityScore: 78, handleAliases: ['@sportslarryknbr'] },
-  { id: 'grant_cohn', name: 'Grant Cohn', handle: '@grantcohn', outletId: 'youtube_film', outletName: '49ers On SI', trustTier: 3, credibilityScore: 76 },
-  { id: 'sam_warren', name: 'Sam Warren', handle: '@samwarren83', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 91 },
-  { id: 'noah_furtado', name: 'Noah Furtado', handle: '@bynoahfurtado', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 91, handleAliases: ['@_noahfurtado'] },
+  { id: 'dieter_kurtenbach', name: 'Dieter Kurtenbach', handle: '@dieter', outletId: 'bay_area_news', outletName: 'Bay Area News Group', trustTier: 3, credibilityScore: 80, handleAliases: ['@dkurtenbach'], teamAbbr: 'SF' },
+  { id: 'larry_krueger', name: 'Larry Krueger', handle: '@sportslarryk', outletId: 'youtube_film', outletName: 'The Krueg Show', trustTier: 3, credibilityScore: 78, handleAliases: ['@sportslarryknbr'], teamAbbr: 'SF' },
+  { id: 'grant_cohn', name: 'Grant Cohn', handle: '@grantcohn', outletId: 'youtube_film', outletName: '49ers On SI', trustTier: 3, credibilityScore: 76, teamAbbr: 'SF' },
+  { id: 'sam_warren', name: 'Sam Warren', handle: '@samwarren83', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 91, teamAbbr: 'SF' },
+  { id: 'noah_furtado', name: 'Noah Furtado', handle: '@bynoahfurtado', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 91, handleAliases: ['@_noahfurtado'], teamAbbr: 'SF' },
   { id: 'dane_brugler', name: 'Dane Brugler', handle: '@dpbrugler', outletId: 'athletic', outletName: 'The Athletic Draft', trustTier: 1, credibilityScore: 95 },
   { id: 'mel_kiper', name: 'Mel Kiper Jr.', aliases: ['Mel Kiper'], handle: '@MelKiperESPN', outletId: 'espn', outletName: 'ESPN NFL Draft', trustTier: 2, credibilityScore: 88 },
   { id: 'daniel_jeremiah', name: 'Daniel Jeremiah', handle: '@MoveTheSticks', outletId: 'nfl_network', outletName: 'NFL Network', trustTier: 1, credibilityScore: 95 },
   { id: 'lance_zierlein', name: 'Lance Zierlein', handle: '@LanceZierlein', outletId: 'nfl_network', outletName: 'NFL.com Draft', trustTier: 1, credibilityScore: 93 },
-  { id: 'todd_archer', name: 'Todd Archer', handle: '@toddarcher', outletId: 'espn', outletName: 'ESPN', trustTier: 1, credibilityScore: 93 },
-  { id: 'jon_machota', name: 'Jon Machota', handle: '@jonmachota', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 91 },
-  { id: 'calvin_watkins', name: 'Calvin Watkins', handle: '@calvinwatkins', outletId: 'national_nfl', outletName: 'Dallas Morning News', trustTier: 2, credibilityScore: 89 },
-  { id: 'tommy_yarrish', name: 'Tommy Yarrish', handle: '@tommy_yarrish', outletId: 'national_nfl', outletName: 'DallasCowboys.com', trustTier: 2, credibilityScore: 89 },
-  { id: 'patrik_walker', name: 'Patrik Walker', handle: '@VoiceOfTheStar', outletId: 'national_nfl', outletName: 'DallasCowboys.com', trustTier: 2, credibilityScore: 89 },
-  { id: 'brady_henderson', name: 'Brady Henderson', handle: '@BradyHenderson', outletId: 'espn', outletName: 'ESPN', trustTier: 1, credibilityScore: 92 },
-  { id: 'gregg_bell', name: 'Gregg Bell', handle: '@gbellseattle', outletId: 'national_nfl', outletName: 'Tacoma News Tribune', trustTier: 2, credibilityScore: 90 },
-  { id: 'bob_condotta', name: 'Bob Condotta', handle: '@bcondotta', outletId: 'national_nfl', outletName: 'Seattle Times', trustTier: 2, credibilityScore: 90 },
-  { id: 'michael_shawn_dugar', name: 'Michael-Shawn Dugar', handle: '@MikeDugar', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 90 },
-  { id: 'jourdan_rodrigue', name: 'Jourdan Rodrigue', handle: '@JourdanRodrigue', outletId: 'athletic', outletName: 'The Athletic', trustTier: 1, credibilityScore: 94 },
-  { id: 'sarah_barshop', name: 'Sarah Barshop', handle: '@sarahbarshop', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 90 },
-  { id: 'gary_klein', name: 'Gary Klein', handle: '@LATimesklein', outletId: 'national_nfl', outletName: 'Los Angeles Times', trustTier: 2, credibilityScore: 90 },
-  { id: 'stu_jackson', name: 'Stu Jackson', handle: '@StuJRams', outletId: 'national_nfl', outletName: 'TheRams.com', trustTier: 2, credibilityScore: 89 },
-  { id: 'josh_weinfuss', name: 'Josh Weinfuss', handle: '@joshweinfuss', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 89 },
-  { id: 'darren_urban', name: 'Darren Urban', handle: '@Cardschatter', outletId: 'national_nfl', outletName: 'AZCardinals.com', trustTier: 2, credibilityScore: 89 },
-  { id: 'tyler_drake', name: 'Tyler Drake', handle: '@Tdrake4sports', outletId: 'national_nfl', outletName: 'Arizona Sports', trustTier: 2, credibilityScore: 88 },
-  { id: 'tashan_reed', name: 'Tashan Reed', handle: '@tashanreed', outletId: 'national_nfl', outletName: 'Washington Post', trustTier: 2, credibilityScore: 90 },
-  { id: 'vinny_bonsignore', name: 'Vinny Bonsignore', handle: '@VinnyBonsignore', outletId: 'national_nfl', outletName: 'Las Vegas Review-Journal', trustTier: 2, credibilityScore: 89 },
-  { id: 'paul_gutierrez', name: 'Paul Gutierrez', handle: '@PGutierrezESPN', outletId: 'national_nfl', outletName: 'Raiders.com', trustTier: 2, credibilityScore: 89 },
-  { id: 'rob_demovsky', name: 'Rob Demovsky', handle: '@RobDemovsky', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 90 },
-  { id: 'matt_schneidman', name: 'Matt Schneidman', handle: '@mattschneidman', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 90 },
-  { id: 'courtney_cronin', name: 'Courtney Cronin', handle: '@CourtneyRCronin', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 91 },
-  { id: 'colton_pouncy', name: 'Colton Pouncy', handle: '@colton_pouncy', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 90 },
-  { id: 'john_keim', name: 'John Keim', handle: '@john_keim', outletId: 'espn', outletName: 'ESPN', trustTier: 1, credibilityScore: 92 },
-  { id: 'nicki_jhabvala', name: 'Nicki Jhabvala', handle: '@NickiJhabvala', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 90 },
-  { id: 'jeff_legwold', name: 'Jeff Legwold', handle: '@Jeff_Legwold', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 90 },
-  { id: 'marc_raimondi', name: 'Marc Raimondi', handle: '@marcraimondi', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 89 },
-  { id: 'marcel_louis_jacques', name: 'Marcel Louis-Jacques', handle: '@Marcel_LJ', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 90 }
+  { id: 'todd_archer', name: 'Todd Archer', handle: '@toddarcher', outletId: 'espn', outletName: 'ESPN', trustTier: 1, credibilityScore: 93, teamAbbr: 'DAL' },
+  { id: 'jon_machota', name: 'Jon Machota', handle: '@jonmachota', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 91, teamAbbr: 'DAL' },
+  { id: 'calvin_watkins', name: 'Calvin Watkins', handle: '@calvinwatkins', outletId: 'national_nfl', outletName: 'Dallas Morning News', trustTier: 2, credibilityScore: 89, teamAbbr: 'DAL' },
+  { id: 'tommy_yarrish', name: 'Tommy Yarrish', handle: '@tommy_yarrish', outletId: 'national_nfl', outletName: 'DallasCowboys.com', trustTier: 2, credibilityScore: 89, teamAbbr: 'DAL' },
+  { id: 'patrik_walker', name: 'Patrik Walker', handle: '@VoiceOfTheStar', outletId: 'national_nfl', outletName: 'DallasCowboys.com', trustTier: 2, credibilityScore: 89, teamAbbr: 'DAL' },
+  { id: 'brady_henderson', name: 'Brady Henderson', handle: '@BradyHenderson', outletId: 'espn', outletName: 'ESPN', trustTier: 1, credibilityScore: 92, teamAbbr: 'SEA' },
+  { id: 'gregg_bell', name: 'Gregg Bell', handle: '@gbellseattle', outletId: 'national_nfl', outletName: 'Tacoma News Tribune', trustTier: 2, credibilityScore: 90, teamAbbr: 'SEA' },
+  { id: 'bob_condotta', name: 'Bob Condotta', handle: '@bcondotta', outletId: 'national_nfl', outletName: 'Seattle Times', trustTier: 2, credibilityScore: 90, teamAbbr: 'SEA' },
+  { id: 'michael_shawn_dugar', name: 'Michael-Shawn Dugar', handle: '@MikeDugar', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 90, teamAbbr: 'SEA' },
+  { id: 'jourdan_rodrigue', name: 'Jourdan Rodrigue', handle: '@JourdanRodrigue', outletId: 'athletic', outletName: 'The Athletic', trustTier: 1, credibilityScore: 94, teamAbbr: 'LAR' },
+  { id: 'sarah_barshop', name: 'Sarah Barshop', handle: '@sarahbarshop', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 90, teamAbbr: 'LAR' },
+  { id: 'gary_klein', name: 'Gary Klein', handle: '@LATimesklein', outletId: 'national_nfl', outletName: 'Los Angeles Times', trustTier: 2, credibilityScore: 90, teamAbbr: 'LAR' },
+  { id: 'stu_jackson', name: 'Stu Jackson', handle: '@StuJRams', outletId: 'national_nfl', outletName: 'TheRams.com', trustTier: 2, credibilityScore: 89, teamAbbr: 'LAR' },
+  { id: 'josh_weinfuss', name: 'Josh Weinfuss', handle: '@joshweinfuss', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 89, teamAbbr: 'ARI' },
+  { id: 'darren_urban', name: 'Darren Urban', handle: '@Cardschatter', outletId: 'national_nfl', outletName: 'AZCardinals.com', trustTier: 2, credibilityScore: 89, teamAbbr: 'ARI' },
+  { id: 'tyler_drake', name: 'Tyler Drake', handle: '@Tdrake4sports', outletId: 'national_nfl', outletName: 'Arizona Sports', trustTier: 2, credibilityScore: 88, teamAbbr: 'ARI' },
+  { id: 'tashan_reed', name: 'Tashan Reed', handle: '@tashanreed', outletId: 'national_nfl', outletName: 'Washington Post', trustTier: 2, credibilityScore: 90, teamAbbr: 'WAS' },
+  { id: 'vinny_bonsignore', name: 'Vinny Bonsignore', handle: '@VinnyBonsignore', outletId: 'national_nfl', outletName: 'Las Vegas Review-Journal', trustTier: 2, credibilityScore: 89, teamAbbr: 'LV' },
+  { id: 'paul_gutierrez', name: 'Paul Gutierrez', handle: '@PGutierrezESPN', outletId: 'national_nfl', outletName: 'Raiders.com', trustTier: 2, credibilityScore: 89, teamAbbr: 'LV' },
+  { id: 'rob_demovsky', name: 'Rob Demovsky', handle: '@RobDemovsky', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 90, teamAbbr: 'GB' },
+  { id: 'matt_schneidman', name: 'Matt Schneidman', handle: '@mattschneidman', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 90, teamAbbr: 'GB' },
+  { id: 'courtney_cronin', name: 'Courtney Cronin', handle: '@CourtneyRCronin', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 91, teamAbbr: 'CHI' },
+  { id: 'colton_pouncy', name: 'Colton Pouncy', handle: '@colton_pouncy', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 90, teamAbbr: 'DET' },
+  { id: 'john_keim', name: 'John Keim', handle: '@john_keim', outletId: 'espn', outletName: 'ESPN', trustTier: 1, credibilityScore: 92, teamAbbr: 'WAS' },
+  { id: 'nicki_jhabvala', name: 'Nicki Jhabvala', handle: '@NickiJhabvala', outletId: 'athletic', outletName: 'The Athletic', trustTier: 2, credibilityScore: 90, teamAbbr: 'WAS' },
+  { id: 'jeff_legwold', name: 'Jeff Legwold', handle: '@Jeff_Legwold', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 90, teamAbbr: 'DEN' },
+  { id: 'marc_raimondi', name: 'Marc Raimondi', handle: '@marcraimondi', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 89, teamAbbr: 'ATL' },
+  { id: 'marcel_louis_jacques', name: 'Marcel Louis-Jacques', handle: '@Marcel_LJ', outletId: 'espn', outletName: 'ESPN', trustTier: 2, credibilityScore: 90, teamAbbr: 'MIA' }
 ];
 
 const BY_ID = new Map();
@@ -294,7 +294,13 @@ export function configureBeatAttributionForTeam(teamInput = null, reportersData 
 
   const reps = Array.isArray(reportersData?.reporters) ? reportersData.reporters : [];
   for (const r of reps) {
-    registerReporterEntry(r, outletNameById);
+    const isLocalTeamVoice = !['national_insider', 'film_analyst', 'cap_analyst', 'draft'].includes(
+      String(r?.category || '').toLowerCase()
+    );
+    registerReporterEntry(
+      isLocalTeamVoice && !r?.teamAbbr ? { ...r, teamAbbr: team.abbr } : r,
+      outletNameById
+    );
   }
   if (Array.isArray(reportersData?.podiumSubjectIds)) {
     for (const pid of reportersData.podiumSubjectIds) {
@@ -304,39 +310,54 @@ export function configureBeatAttributionForTeam(teamInput = null, reportersData 
   return ACTIVE_TEAM_CONTEXT;
 }
 
-export function getReporterDirectoryEntry(reporterId = '') {
-  return BY_ID.get(String(reporterId || '').trim()) || null;
+function applyTeamBeatScope(entry, teamInput = null) {
+  if (!entry) return null;
+  if (!entry.teamAbbr) return entry;
+  const activeTeam = resolveTeamConfig(teamInput || ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
+  if (!activeTeam || entry.teamAbbr === activeTeam.abbr) return entry;
+  return {
+    ...entry,
+    trustTier: 3,
+    trustTierLabel: TRUST_TIER_LABELS[3],
+    credibilityScore: Math.min(Number(entry.credibilityScore) || 78, 78),
+    isOtherTeamBeat: true
+  };
 }
 
-export function getReporterTrustTier(reporterId = '') {
-  const entry = getReporterDirectoryEntry(reporterId);
+export function getReporterDirectoryEntry(reporterId = '', teamInput = null) {
+  const entry = BY_ID.get(String(reporterId || '').trim()) || null;
+  return applyTeamBeatScope(entry, teamInput);
+}
+
+export function getReporterTrustTier(reporterId = '', teamInput = null) {
+  const entry = getReporterDirectoryEntry(reporterId, teamInput);
   return entry ? entry.trustTier : 2;
 }
 
-export function resolveReporterFromNameOrHandle(candidate = '') {
+export function resolveReporterFromNameOrHandle(candidate = '', teamInput = null) {
   const raw = String(candidate || '').trim();
   if (!raw) return null;
-  if (BY_ID.has(raw)) return BY_ID.get(raw);
+  if (BY_ID.has(raw)) return applyTeamBeatScope(BY_ID.get(raw), teamInput);
 
   const handleClean = raw.replace(/^@/, '').toLowerCase();
   if (BY_LOWER_HANDLE.has(handleClean)) {
-    return BY_LOWER_HANDLE.get(handleClean);
+    return applyTeamBeatScope(BY_LOWER_HANDLE.get(handleClean), teamInput);
   }
 
   const lower = raw.toLowerCase().replace(/\s+/g, ' ');
   if (BY_LOWER_NAME.has(lower)) {
-    return BY_LOWER_NAME.get(lower);
+    return applyTeamBeatScope(BY_LOWER_NAME.get(lower), teamInput);
   }
 
   for (const [fullLower, entry] of BY_LOWER_NAME.entries()) {
     if (fullLower.length >= 7 && lower.includes(fullLower)) {
-      return entry;
+      return applyTeamBeatScope(entry, teamInput);
     }
   }
 
   const tokenClean = lower.replace(/[^a-z]/g, '');
   if (UNIQUE_SURNAME_MAP.has(tokenClean)) {
-    return UNIQUE_SURNAME_MAP.get(tokenClean);
+    return applyTeamBeatScope(UNIQUE_SURNAME_MAP.get(tokenClean), teamInput);
   }
 
   return null;
@@ -478,9 +499,13 @@ export function resolveItemAuthorProfileUrl(item = {}, fallbackUrl = null) {
     return `https://x.com/${cleanHandle}`;
   }
 
+  const activeTeamAttr = resolveTeamConfig(ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
+  const teamOfficialX = `https://x.com/${String(activeTeamAttr?.nickname || 'NFL').replace(/[^A-Za-z0-9_]/g, '')}`;
   const safeFallback =
     fallbackUrl && /^https?:\/\/bsky\.app\//i.test(String(fallbackUrl))
-      ? 'https://x.com/49ers'
+      ? activeTeamAttr?.abbr === 'SF'
+        ? 'https://x.com/49ers'
+        : teamOfficialX
       : fallbackUrl;
   return OUTLET_DEFAULT_HUB_URLS[item?.outletId] || safeFallback;
 }
@@ -491,6 +516,9 @@ export function resolveItemAuthorProfileUrl(item = {}, fallbackUrl = null) {
  */
 export function extractBeatAttributionFromText(rawText = '', fallback = {}) {
   const original = String(rawText || '').replace(/\s+/g, ' ').trim();
+  const activeTeamBeat = resolveTeamConfig(ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
+  const defaultTeamBeatLabel = `${activeTeamBeat?.nickname || 'NFL'} Beat`;
+  const defaultTeamWireLabel = `${activeTeamBeat?.nickname || 'NFL'} Beat Wire`;
   const fallbackEntry =
     resolveReporterFromNameOrHandle(fallback.reporterId || fallback.reporterName || fallback.authorHandle) || null;
 
@@ -505,13 +533,14 @@ export function extractBeatAttributionFromText(rawText = '', fallback = {}) {
         xUrl: entry.xUrl,
         authorProfileUrl: entry.xUrl || fallback.authorProfileUrl || null,
         outletId: entry.outletId || fallback.outletId || 'espn',
-        outletName: customOutlet || entry.outletName || fallback.outletName || '49ers Beat',
+        outletName: customOutlet || entry.outletName || fallback.outletName || defaultTeamBeatLabel,
         trustTier: entry.trustTier,
         credibilityScore: entry.credibilityScore,
+        isOtherTeamBeat: Boolean(entry.isOtherTeamBeat),
         viaWire
       };
     }
-    const finalName = customName || fallback.reporterName || fallback.author || '49ers Beat Wire';
+    const finalName = customName || fallback.reporterName || fallback.author || defaultTeamWireLabel;
     const isCustomExternalWriter = Boolean(customName);
     const cleanFallbackHandle = isCustomExternalWriter ? '' : String(fallback.authorHandle || '').replace(/^@/, '');
     const fallbackXUrl = cleanFallbackHandle ? `https://x.com/${cleanFallbackHandle}` : null;
@@ -527,7 +556,7 @@ export function extractBeatAttributionFromText(rawText = '', fallback = {}) {
       xUrl: fallbackXUrl,
       authorProfileUrl: fallbackXUrl || (isCustomExternalWriter ? null : fallback.authorProfileUrl || null),
       outletId: fallback.outletId || 'espn',
-      outletName: customOutlet || fallback.outletName || '49ers Beat Wire',
+      outletName: customOutlet || fallback.outletName || defaultTeamWireLabel,
       trustTier: fallbackEntry?.trustTier || 2,
       credibilityScore: fallbackEntry?.credibilityScore || 86,
       viaWire
@@ -621,7 +650,7 @@ function classifyWireEventTopic(text = '') {
   if (/\b(activated (?:from|off)|placed on (?:ir|injured reserve)|21-day|practice window|designate[sd]? [\s\S]{0,35}(?:for|to) return)\b/i.test(s)) {
     return 'roster_ir_tx';
   }
-  if (/\b(\btrade[!: ]|agree[sd]? to (?:a )?trade|completing a trade|finalizing a trade|sending [\s\S]{0,55}to (?:the )?(?:49ers|san francisco|niners)|traded (?:to|for)|(?:49ers|san francisco|niners) (?:officially )?(?:acquire[sd]?|acquiring|re-acquir(?:e[sd]?|ing)|sign(?:ed|s)?|re-sign(?:ed|s)?|waive[sd]?|release[sd]?|claim(?:ed|s)?)|practice squad)\b/i.test(s)) {
+  if (/\b(\btrade[!: ]|agree[sd]? to (?:a )?trade|completing a trade|finalizing a trade|sending [\s\S]{0,55}to (?:the )?[a-z0-9 ]{2,24}|traded (?:to|for)|(?:officially )?(?:acquire[sd]?|acquiring|re-acquir(?:e[sd]?|ing)|sign(?:ed|s)?|re-sign(?:ed|s)?|waive[sd]?|release[sd]?|claim(?:ed|s)?)|practice squad)\b/i.test(s)) {
     return 'roster_tx_move';
   }
   if (isAcuteInjuryOrAvailabilityScoop(s)) {
@@ -1130,7 +1159,7 @@ export function isDirectSocialPostUrl(url = '') {
   const clean = String(url || '').trim();
   if (isDirectXStatusUrl(clean)) return true;
   if (isBlueskyPostUrl(clean)) return true;
-  if (/^https?:\/\/(?:www\.)?49ers\.com\/team\/transactions\//i.test(clean)) return true;
+  if (/^https?:\/\/(?:www\.)?[a-z0-9-]+\.com\/team\/transactions\//i.test(clean)) return true;
   if (/^https?:\/\/(?:www\.)?rotowire\.com\/+football\/player\/[a-z0-9-]+/i.test(clean)) return true;
   return false;
 }
@@ -1251,14 +1280,17 @@ if (resolvedEntry && BLUESKY_PRIMARY_REPORTER_IDS.has(resolvedEntry.id)) {
   return buildXBeatListSearchUrl('trusted');
 }
 
+const activeTeamSearch = resolveTeamConfig(ACTIVE_TEAM_CONTEXT?.team || getActiveTeamConfig());
+const teamQueryToken = activeTeamSearch?.nickname || 'NFL';
+
 if (cleanHandle) {
-  const q = focusTerm ? `from:${cleanHandle} "${focusTerm}"${sinceClause}` : `from:${cleanHandle} 49ers${sinceClause}`;
+  const q = focusTerm ? `from:${cleanHandle} "${focusTerm}"${sinceClause}` : `from:${cleanHandle} ${teamQueryToken}${sinceClause}`;
   return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
 }
 
   const cleanAuthor = String(authorName || '').trim();
   if (cleanAuthor && cleanAuthor.length >= 4 && !/beat wire|espn|rotowire/i.test(cleanAuthor)) {
-    const q = focusTerm ? `"${cleanAuthor}" "${focusTerm}"${sinceClause}` : `"${cleanAuthor}" 49ers${sinceClause}`;
+    const q = focusTerm ? `"${cleanAuthor}" "${focusTerm}"${sinceClause}` : `"${cleanAuthor}" ${teamQueryToken}${sinceClause}`;
     return `https://x.com/search?q=${encodeURIComponent(q)}&src=typed_query&f=live`;
   }
 
@@ -1310,7 +1342,7 @@ export function resolveOriginalTweetUrl(item = {}, directSocialPosts = []) {
     const m = rawUrl.match(/\/([A-Za-z0-9_]+)\/status\/(\d+)/i);
     return `https://x.com/${m[1]}/status/${m[2]}`;
   }
-  if (/^https?:\/\/(?:www\.)?49ers\.com\/team\/transactions\//i.test(rawUrl)) {
+  if (/^https?:\/\/(?:www\.)?[a-z0-9-]+\.com\/team\/transactions\//i.test(rawUrl)) {
     return rawUrl.startsWith('http://') ? `https://${rawUrl.slice(7)}` : rawUrl;
   }
   if (/^https?:\/\/(?:www\.)?rotowire\.com\/+football\/player\/[a-z0-9-]+/i.test(rawUrl)) {
@@ -1380,7 +1412,7 @@ export function resolveOriginalTweetUrl(item = {}, directSocialPosts = []) {
 
     for (const dp of directSocialPosts) {
       const dpUrl = String(dp?.url || '').trim();
-      if (!dpUrl || !isDirectSocialPostUrl(dpUrl) || dpUrl.includes('49ers.com/team/transactions') || dpUrl.includes('rotowire.com')) {
+      if (!dpUrl || !isDirectSocialPostUrl(dpUrl) || /\/team\/transactions\//i.test(dpUrl) || dpUrl.includes('rotowire.com')) {
         continue;
       }
 

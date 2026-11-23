@@ -19,12 +19,12 @@ const CLICKBAIT_PATTERNS = [
   /\bblockbuster\s+mock\s+trade\s+sends\b/i,
   /\b(?:wild|insane|massive|crazy)\s+(?:mock\s+)?trade\s+(?:proposal|idea|pitch|scenario)\b/i,
   /\bmock\s+trade\s+(?:proposal|idea|pitch)\b/i,
-  /\burges?\s+(?:the\s+)?(?:49ers|niners|shanahan|lynch)\s+to\s+(?:bench|trade|cut|move on from)\b/i,
+  /\burges?\s+(?:the\s+)?(?:[a-z0-9]{3,16}|head coach|front office)\s+to\s+(?:bench|trade|cut|move on from)\b/i,
   /\b(?:twitter|x|nfl\s+world)\s+reacts\s+to\b/i,
   /\bpanic\s+button\b/i,
   /\bis\s+it\s+time\s+to\s+(fire|bench)\b/i,
   /\bhot\s+seat\b/i,
-  /\b(?:super\s+bowl\s+lock|unstoppable\s+juggernaut|nobody\s+can\s+(?:beat|stop)\s+the\s+(?:49ers|niners)|guaranteed\s+(?:win|blowout|victory))\b/i,
+  /\b(?:super\s+bowl\s+lock|unstoppable\s+juggernaut|nobody\s+can\s+(?:beat|stop)\s+the\s+[a-z0-9]{3,16}|guaranteed\s+(?:win|blowout|victory))\b/i,
   /!{2,}|\?{2,}/
 ];
 
@@ -38,17 +38,20 @@ const ANALYTICAL_SIGNAL_PATTERNS = [
   /\b(1-on-1|one-on-one|sit-down|exclusive interview|locker room|opened up about|spoke candidly|mic'?d up|players'? tribune|candid interview)\b/i
 ];
 
-const PRIMARY_BEAT_REPORTER_IDS = new Set([
+const NATIONAL_PRIMARY_INSIDER_IDS = new Set([
+  'adam_schefter',
+  'ian_rapoport',
+  'tom_pelissero',
+  'field_yates'
+]);
+
+const SF_PRIMARY_BEAT_REPORTER_IDS = new Set([
   'matt_maiocco',
   'matt_barrows',
   'nick_wagoner',
   'david_lombardi',
   'eric_branch',
   'vic_tafur',
-  'adam_schefter',
-  'ian_rapoport',
-  'tom_pelissero',
-  'field_yates',
   'kyle_shanahan'
 ]);
 
@@ -281,20 +284,28 @@ export function computeNewsSalienceScore(
   const repId = item.reporterId || item.citedReporterIds?.[0] || '';
   const repObj = reportersById instanceof Map && repId ? reportersById.get(repId) : null;
   const dirEntry = resolveReporterFromNameOrHandle(repId || item.author || item.reporterName || item.authorHandle);
-  const trustTier = Number(item.trustTier) || repObj?.trustTier || dirEntry?.trustTier || (PRIMARY_BEAT_REPORTER_IDS.has(repId) ? 1 : 2);
+  const isOtherTeamBeat = Boolean(dirEntry?.isOtherTeamBeat);
+  const isPrimaryBeat =
+    !isOtherTeamBeat &&
+    (NATIONAL_PRIMARY_INSIDER_IDS.has(repId) ||
+      (!dirEntry?.teamAbbr && SF_PRIMARY_BEAT_REPORTER_IDS.has(repId)) ||
+      (dirEntry && !dirEntry.isOtherTeamBeat && SF_PRIMARY_BEAT_REPORTER_IDS.has(repId)));
+  const trustTier = isOtherTeamBeat
+    ? 3
+    : Number(item.trustTier) || repObj?.trustTier || dirEntry?.trustTier || (isPrimaryBeat ? 1 : 2);
   const isAcuteInjuryScoop =
     Boolean(item.isInGameInjury || item.isFirstMoverInjuryScoop) ||
     isAcuteInjuryOrAvailabilityScoop(`${title} ${body}`);
 
   if ((repObj?.styleTag === 'opinion-hot-take' || trustTier === 3) && !isAcuteInjuryScoop) {
     salience -= 12;
-  } else if (trustTier === 1 || repObj?.styleTag === 'analytics-film' || repObj?.tier === 1 || PRIMARY_BEAT_REPORTER_IDS.has(repId)) {
+  } else if (trustTier === 1 || repObj?.styleTag === 'analytics-film' || repObj?.tier === 1 || isPrimaryBeat) {
     salience += 11;
   } else if (trustTier === 2) {
     salience += 4;
   }
 
-  if (/\b(heavy on 49ers|heavy\.com|clutchpoints|athlon|yardbarker)\b/i.test(`${item.outletName || ''} ${item.url || ''}`)) {
+  if (/\b(heavy on [a-z0-9]+|heavy\.com|clutchpoints|athlon|yardbarker)\b/i.test(`${item.outletName || ''} ${item.url || ''}`)) {
     salience -= 14;
   }
   if (item.storyTier === 'side_note') {

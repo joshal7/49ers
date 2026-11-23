@@ -15,6 +15,7 @@ import { formatWireSourceDisplayName, sanitizeExternalUrl } from './linkIntegrit
 import { resolveOriginalTweetUrl } from './beatAttributionEngine.js';
 import { JARGON_GLOSSARY } from './jargonGlossary.js';
 import { isUrgentBreakingBadge } from './breakingClassifier.js';
+import { getActiveTeamConfig } from '../config/teamRegistry.js';
 
 export const QUICK_SECTION_TARGETS = [
   {
@@ -107,9 +108,9 @@ export const QUICK_SECTION_TARGETS = [
   },
   {
     id: 'sec_podcasts',
-    title: '49ers Beat Podcasts (6 Shows)',
+    title: 'Beat Podcasts',
     subtitle: 'Audio & AI',
-    keywords: 'podcasts podcast gold standard 49ers talk locked on lombardi plus minus dieter hutch',
+    keywords: 'podcasts podcast beat radio locked on show episodes audio',
     navTab: 'audio',
     subTab: 'beat_podcasts'
   },
@@ -618,7 +619,8 @@ export function buildUniversalSearchLexicon({
     const outletName = String(it.outletName || '').trim();
     const authorHandle = String(it.authorHandle || '').trim();
 
-    if (displayAuthor && displayAuthor !== '49ers Beat') {
+    const defaultBeatLabel = `${getActiveTeamConfig()?.nickname || 'NFL'} Beat`;
+    if (displayAuthor && displayAuthor !== '49ers Beat' && displayAuthor !== defaultBeatLabel) {
       const authorSrc = registerSource({
         id: it.reporterId || '',
         name: displayAuthor,
@@ -748,13 +750,48 @@ export function buildUniversalSearchLexicon({
  * Spelling Autocorrect / "Did You Mean...?" Engine
  * ============================================================================ */
 
+const UNIVERSAL_TYPO_AND_ALIAS_MAP = {
+  scheffter: 'Schefter',
+  shefter: 'Schefter',
+  scheft: 'Schefter',
+  rapaport: 'Rapoport',
+  rappoport: 'Rapoport',
+  rappaport: 'Rapoport',
+  pelisero: 'Pelissero',
+  pellissero: 'Pelissero',
+  rusini: 'Russini',
+  russinni: 'Russini',
+  baldy: 'Baldinger',
+  pft: 'ProFootballTalk',
+  qbschool: 'The QB School',
+  jto: "JT O'Sullivan"
+};
+
+function getQuickSectionTargetsForActiveTeam() {
+  const active = getActiveTeamConfig();
+  if (!active || active.abbr === 'SF') return QUICK_SECTION_TARGETS;
+  const shows = Array.isArray(active.beatPodcastShows) ? active.beatPodcastShows : [];
+  const podCount = shows.length > 0 ? ` (${shows.length} Show${shows.length === 1 ? '' : 's'})` : '';
+  const podKeywords = [
+    'podcasts podcast beat audio show',
+    active.nickname.toLowerCase(),
+    ...shows.map(s => `${s.name || ''} ${s.hosts || ''}`.toLowerCase())
+  ].join(' ');
+  return QUICK_SECTION_TARGETS.map(sec =>
+    sec.id === 'sec_podcasts'
+      ? { ...sec, title: `${active.nickname} Beat Podcasts${podCount}`, keywords: podKeywords }
+      : sec
+  );
+}
+
 function findBestTokenCorrection(rawTok, lexicon) {
   const tok = normalizeSearchText(rawTok.replace(/^[#@]+/, ''));
   if (!tok || tok.length < 3 || /^\d+$/.test(tok) || /^49ers?$/.test(tok)) return null;
 
-  // 1. Direct known typo/shorthand map
-  if (TYPO_AND_ALIAS_MAP[tok]) {
-    const mapped = TYPO_AND_ALIAS_MAP[tok];
+  // 1. Direct known typo/shorthand map (SF-specific aliases only active on SF)
+  const activeMap = getActiveTeamConfig()?.abbr === 'SF' ? TYPO_AND_ALIAS_MAP : UNIVERSAL_TYPO_AND_ALIAS_MAP;
+  if (activeMap[tok]) {
+    const mapped = activeMap[tok];
     if (normalizeSearchText(mapped) !== tok) {
       return { from: rawTok, to: mapped, distance: 1, confidence: 0.96 };
     }
@@ -945,7 +982,10 @@ export function getSearchAutocompleteSuggestions(
 
   // 2. Player & Nickname Autocomplete
   if (!isHandleTyped) {
-    const nickTarget = PLAYER_NICKNAME_ALIASES[fullNorm] || PLAYER_NICKNAME_ALIASES[activeTokenNorm];
+    const isSfTeam = getActiveTeamConfig()?.abbr === 'SF';
+    const nickTarget = isSfTeam
+      ? PLAYER_NICKNAME_ALIASES[fullNorm] || PLAYER_NICKNAME_ALIASES[activeTokenNorm]
+      : null;
     for (const p of appData?.roster?.players || []) {
       if (!p?.name) continue;
       const pNorm = normalizeSearchText(p.name);
@@ -1308,8 +1348,10 @@ function executeSearchPass(
     if (parsed.phrases.some(ph => !h.includes(ph))) return false;
     return tokens.every(tok => {
       if (h.includes(tok)) return true;
-      const nick = PLAYER_NICKNAME_ALIASES[tok];
-      if (nick && h.includes(normalizeSearchText(nick))) return true;
+      if (getActiveTeamConfig()?.abbr === 'SF') {
+        const nick = PLAYER_NICKNAME_ALIASES[tok];
+        if (nick && h.includes(normalizeSearchText(nick))) return true;
+      }
       return false;
     });
   };
@@ -1412,7 +1454,10 @@ function executeSearchPass(
       snippet: matchInfo.snippet,
       matchedIn: matchInfo.matchedIn,
       matchedTokens: matchInfo.matchedTokens,
-      author: formatWireSourceDisplayName(it.author || it.reporterName || it.outletName || '49ers Beat', it),
+      author: formatWireSourceDisplayName(
+        it.author || it.reporterName || it.outletName || `${getActiveTeamConfig()?.nickname || 'NFL'} Beat`,
+        it
+      ),
       outletName: it.outletName || '',
       href,
       publishedAt: it.publishedAt,
@@ -1486,8 +1531,9 @@ function executeSearchPass(
   }
 
   // 6. Quick Section Jumps
+  const activeSectionTargets = getQuickSectionTargetsForActiveTeam();
   const sections = !sourceFilter
-    ? QUICK_SECTION_TARGETS.filter(sec => matchesAllTokens(`${sec.title} ${sec.subtitle} ${sec.keywords}`))
+    ? activeSectionTargets.filter(sec => matchesAllTokens(`${sec.title} ${sec.subtitle} ${sec.keywords}`))
     : [];
 
   // Scope counts before applying active scope filter
@@ -1605,7 +1651,7 @@ export function runUniversalSearch(
       news: [],
       audioAndAi: [],
       glossary: [],
-      sections: QUICK_SECTION_TARGETS.slice(0, 6),
+      sections: getQuickSectionTargetsForActiveTeam().slice(0, 6),
       topSources: lexicon.sources.filter(s => s.itemCount > 0).slice(0, 6)
     };
   }

@@ -43,6 +43,9 @@ import {
   formatTweetBodyForDisplay,
   isStaleCompletedGameAvailabilityItem,
   filterOutCompletedGameAvailabilityItems,
+  isOpposingTeamSubjectLead,
+  isOpposingTeamOnlyInjuryOrRosterStory,
+  filterOutOpposingTeamInjuryItems,
   filterAndCleanSynthesisClusters,
   stripRedundantAuthorBoilerplate
 } from '../engine/breakingClassifier.js';
@@ -94,6 +97,7 @@ import {
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
 import { refreshLiveStandingsMetricsInTeamStats } from '../engine/statsLeaderboardEngine.js';
+import { selectBestEspnArticleImage } from '../engine/salientMediaEngine.js';
 import {
   buildDeterministicCoachingMatchup,
   getActiveTeamConfig,
@@ -114,7 +118,7 @@ const GITHUB_RAW_DATA_BASE = 'https://raw.githubusercontent.com/joshal7/49ers/ma
 export const LIVE_WIRE_SOURCE_LABELS = [
   'ESPN X-Beat Player Wire',
   'RotoWire Live NFL Beat',
-  '49ers Official Transactions',
+  'Official Team Transactions',
   'ESPN Rapid Beat & Injury Desk',
   'Beat Social Mirrors'
 ];
@@ -1115,7 +1119,10 @@ function hydrateBundlePostLoad(rawFiles) {
     }
     const dedupedByUrl = dedupeRawStreamAtomically(mappedStream);
     news.rawStream = sortNewsWithBreakingPriority(
-      filterOutCompletedGameAvailabilityItems(dedupedByUrl, bootCtxStub),
+      filterOutOpposingTeamInjuryItems(
+        filterOutCompletedGameAvailabilityItems(dedupedByUrl, bootCtxStub),
+        bootCtxStub
+      ),
       Date.now(),
       { appData: bootCtxStub }
     );
@@ -1853,6 +1860,7 @@ export async function hydrateLiveBlueskyBeatWire(
             trustTier: parsedAttr.trustTier
           };
           if (isStaleCompletedGameAvailabilityItem(bskyCand, appData)) continue;
+          if (acct.isNationalInsider && isOpposingTeamOnlyInjuryOrRosterStory(bskyCand, activeTeam)) continue;
           const brk = classifyBreakingItem(bskyCand, Date.now(), { appData });
 
           const vidEmbed =
@@ -2389,11 +2397,15 @@ export async function hydrateLiveRotoWireBeatRss(appData, { isGameLive = false }
       const combined = `${rawTitle} ${rawDesc}`.trim();
       if (!combined || combined.length < 20) continue;
 
+      const activeTeamRw = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
       const hasExplicitSf = sfTeamRe.test(combined);
       const exactRosterMatches = matchPlayersClient(combined, rosterPlayers, 6, {
         allowUniqueSurnames: hasExplicitSf
       });
-      if (!hasExplicitSf && exactRosterMatches.length === 0) {
+      const isOpposingRwSubject =
+        exactRosterMatches.length === 0 &&
+        isOpposingTeamSubjectLead(combined, { mentionedPlayers: exactRosterMatches }, activeTeamRw);
+      if ((!hasExplicitSf && exactRosterMatches.length === 0) || isOpposingRwSubject) {
         // All week long (plus [T-90m, Final)), buffer Opponent RotoWire practice/trend/inactives items for Opponent Health
         if (oppPool.length > 0) {
           const hasExplicitOpp = oppTeamRe ? oppTeamRe.test(combined) : false;
@@ -2726,6 +2738,12 @@ export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5
       const mentioned = matchPlayersClient(combined, rosterPlayers, 12, {
         allowUniqueSurnames: art._isSfFeed || sfTeamRe.test(combined)
       });
+      const teamCats = Array.isArray(art.categories)
+        ? art.categories.filter(c => c?.type === 'team')
+        : [];
+      if (teamCats.length >= 6 && !sfTeamRe.test(combined) && leadMatches.length === 0) {
+        continue;
+      }
       if (isOffTopicLeagueFiller({ url, title, summary, hasRosterMatch: mentioned.length > 0 || sfTeamRe.test(title) })) {
         continue;
       }
@@ -2736,14 +2754,31 @@ export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5
       if (isStaleCompletedGameAvailabilityItem({ type: 'article', title, summary, publishedAt: pubIso }, appData)) {
         continue;
       }
+      if (isOpposingTeamOnlyInjuryOrRosterStory({ type: 'article', title, summary, mentionedPlayers: mentioned }, activeTeam)) {
+        continue;
+      }
 
       const bylineClean = art.byline
         ? cleanSensationalistText(String(art.byline).replace(/^By\s+/i, '').split(/\s+and\s+|,/i)[0].trim())
         : 'ESPN';
-      const rawDirEntry = resolveReporterFromNameOrHandle(bylineClean);
+      const rawDirEntry = resolveReporterFromNameOrHandle(bylineClean, activeTeam);
       const dirEntry = rawDirEntry && !isPodiumSubjectId(rawDirEntry.id) ? rawDirEntry : null;
-      const brk = classifyBreakingItem({ type: 'article', title, summary, publishedAt: pubIso }, nowMs, { appData });
-      let imgUrl = art.images?.[0]?.url || '';
+      const resolvedTrustTier = dirEntry?.isOtherTeamBeat ? 3 : dirEntry?.trustTier || 1;
+      const brk = classifyBreakingItem(
+        {
+          type: 'article',
+          title,
+          summary,
+          publishedAt: pubIso,
+          mentionedPlayers: mentioned,
+          author: bylineClean,
+          reporterId: dirEntry?.id || null,
+          trustTier: resolvedTrustTier
+        },
+        nowMs,
+        { appData }
+      );
+      let imgUrl = selectBestEspnArticleImage(art.images) || '';
       if (imgUrl.startsWith('http://')) imgUrl = `https://${imgUrl.slice(7)}`;
 
       existingUrls.add(url);
@@ -2765,7 +2800,7 @@ export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5
         author: bylineClean,
         authorHandle: dirEntry?.handle || '',
         authorProfileUrl: dirEntry?.xUrl || null,
-        trustTier: 1,
+        trustTier: resolvedTrustTier,
         wireSource: 'espn_rapid_desk',
         isBreaking: brk.isBreaking,
         isInGameInjury: brk.isInGameInjury,
@@ -3234,6 +3269,14 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '' } 
       const mentioned = matchPlayersClient(`${title} ${fullText || ''} ${nonBioSummary}`, rosterPlayers, 12, {
         allowUniqueSurnames: !isNationalEdgeOutlet || hasExplicit49ersEntity(`${leadTextEdge} ${nonBioSummary}`)
       });
+      if (
+        isOpposingTeamOnlyInjuryOrRosterStory(
+          { type, title, fullText, summary: nonBioSummary, mentionedPlayers: mentioned },
+          activeTeam
+        )
+      ) {
+        continue;
+      }
       const sig = scoreContentSignal(fullText || title, nonBioSummary);
       if (sig.isClickbait) continue;
       const brk = classifyBreakingItem(
@@ -3400,7 +3443,10 @@ export async function hydrateLiveMultiSourceBeatWire(
     reconcileLinkDropTweetsWithArticles(appData.news.rawStream)
   );
   appData.news.rawStream = sortNewsWithBreakingPriority(
-    filterOutCompletedGameAvailabilityItems(atomicallyDeduped, appData),
+    filterOutOpposingTeamInjuryItems(
+      filterOutCompletedGameAvailabilityItems(atomicallyDeduped, appData),
+      appData
+    ),
     Date.now(),
     { appData }
   );
@@ -4371,7 +4417,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
               authorHandle: item.authorHandle || '',
               outletName: item.outletName || teamBeatFallback,
               publishedAt: item.publishedAt || new Date(nowMs).toISOString(),
-              url: item.url || activeTeamGd.clubInjuryUrl || 'https://www.49ers.com/team/injury-report/',
+              url: item.url || activeTeamGd.clubInjuryUrl || `https://www.${activeTeamGd.clubDomain || 'nfl.com'}/team/injury-report/`,
               isBreaking: true,
               isInGameInjury: true,
               breakingBadge: 'LIVE INJURY UPDATE'
@@ -6875,15 +6921,32 @@ export async function hydrateLiveEspnOverlay(appData) {
       const matchedRep = (appData.reporters?.reporters || []).find(
         r => r.name && !isPodiumSubjectId(r.id) && r.name.toLowerCase() === bylineLower
       );
-      const rawDirEntry = resolveReporterFromNameOrHandle(matchedRep?.id || bylineClean);
+      const rawDirEntry = resolveReporterFromNameOrHandle(matchedRep?.id || bylineClean, activeTeam);
       const dirEntry = rawDirEntry && !isPodiumSubjectId(rawDirEntry.id) ? rawDirEntry : null;
       const resolvedReporterId =
         matchedRep?.id || dirEntry?.id || (/schefter/i.test(bylineClean) ? 'adam_schefter' : null);
+      const resolvedTrustTier = dirEntry?.isOtherTeamBeat ? 3 : dirEntry?.trustTier || 1;
       const pubIso = art.published || new Date().toISOString();
       if (isStaleCompletedGameAvailabilityItem({ type: 'article', title, summary, publishedAt: pubIso }, appData)) {
         continue;
       }
-      const brk = classifyBreakingItem({ title, summary, publishedAt: pubIso }, Date.now(), { appData });
+      if (isOpposingTeamOnlyInjuryOrRosterStory({ type: 'article', title, summary, mentionedPlayers: mentioned }, activeTeam)) {
+        continue;
+      }
+      const brk = classifyBreakingItem(
+        {
+          type: 'article',
+          title,
+          summary,
+          publishedAt: pubIso,
+          mentionedPlayers: mentioned,
+          author: bylineClean,
+          reporterId: resolvedReporterId,
+          trustTier: resolvedTrustTier
+        },
+        Date.now(),
+        { appData }
+      );
 
       existingUrls.add(url);
       const itemDraft = {
@@ -6903,12 +6966,12 @@ export async function hydrateLiveEspnOverlay(appData) {
         author: bylineClean,
         authorHandle: matchedRep?.handle || dirEntry?.handle || '',
         authorProfileUrl: matchedRep?.xUrl || dirEntry?.xUrl || null,
-        trustTier: dirEntry?.trustTier || 1,
+        trustTier: resolvedTrustTier,
         isBreaking: brk.isBreaking,
         isInGameInjury: brk.isInGameInjury,
         breakingBadge: brk.breakingBadge,
         breakingPriority: brk.breakingPriority,
-        category: brk.isInGameInjury || /injur|bosa|questionable|return/i.test(title) ? 'injury' : 'beat',
+        category: brk.isInGameInjury || /injur|questionable|doubtful|ruled out|return/i.test(title) ? 'injury' : 'beat',
         signalScore: Math.max(70, sig.signalScore),
         fluffScore: sig.fluffScore,
         isClickbait: false
@@ -6918,7 +6981,10 @@ export async function hydrateLiveEspnOverlay(appData) {
     }
     if (newArts.length > 0) {
       appData.news.rawStream = sortNewsWithBreakingPriority(
-        filterOutCompletedGameAvailabilityItems([...newArts, ...appData.news.rawStream], appData),
+        filterOutOpposingTeamInjuryItems(
+          filterOutCompletedGameAvailabilityItems([...newArts, ...appData.news.rawStream], appData),
+          appData
+        ),
         Date.now(),
         { appData }
       );
@@ -6929,7 +6995,10 @@ export async function hydrateLiveEspnOverlay(appData) {
 
   if (Array.isArray(appData.news?.rawStream)) {
     const beforeLen = appData.news.rawStream.length;
-    appData.news.rawStream = filterOutCompletedGameAvailabilityItems(appData.news.rawStream, appData);
+    appData.news.rawStream = filterOutOpposingTeamInjuryItems(
+      filterOutCompletedGameAvailabilityItems(appData.news.rawStream, appData),
+      appData
+    );
     if (appData.news.rawStream.length !== beforeLen) mutated = true;
   }
   if (Array.isArray(appData.news?.clusteredBriefs)) {

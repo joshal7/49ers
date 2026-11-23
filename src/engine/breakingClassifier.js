@@ -33,7 +33,7 @@ import {
   stripAggregatorBoilerplate
 } from './linkIntegrity.js';
 import { isEditorialPhotoUrl } from './salientMediaEngine.js';
-import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
+import { ALL_NFL_TEAMS, getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 
 export const SHORT_TWEET_FULL_TEXT_LIMIT = 320;
 export const WIRE_ARTICLE_EXCERPT_MAX_CHARS = 280;
@@ -114,7 +114,7 @@ const RETROSPECTIVE_UNEXECUTED_TRADE_REGEX =
 const HUMAN_INTEREST_SIDE_NOTE_REGEX =
   /\b(freely gave|kept his promise|took care of me|jersey (?:no\.|number)|no\.\s*99\b|temporary jersey|wife celebrates|addresses? (?:past )?beef|beef [\s\S]{0,28}(?:squashed|past)|feud resurfaces|social media beef|all good now|makes? strong statement|drops? strong [\s\S]{0,24}statement|gives? true thoughts|face concerning reality|suddenly welcome back|celebrates his|4-word message|drew \d+(?:\.\d+)? million viewers)\b/i;
 
-const AGGREGATOR_REWRITE_OUTLET_REGEX = /\b(heavy on 49ers|heavy\.com|clutchpoints|athlon|yardbarker|total pro sports)\b/i;
+const AGGREGATOR_REWRITE_OUTLET_REGEX = /\b(heavy on [a-z0-9]+|heavy\.com|clutchpoints|athlon|yardbarker|total pro sports)\b/i;
 
 const NON_TRANSACTION_RELEASE_REGEX =
   /\breleased\s+(?:a\s+|an\s+|their\s+|the\s+|its\s+|his\s+|her\s+|new\s+|official\s+|week\s+\d+\s+)?(?:statement|video|hype video|trailer|podcast|episode|schedule|depth chart|uniform|uniforms|jersey|renderings|report|rankings|grades|mock|list|photos|highlights|mic['’]?d up)\b/i;
@@ -424,7 +424,9 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
   const latestCompletedOppAbbr = String(latestCompleted?.opponent?.abbr || '').toUpperCase();
   const latestCompletedOppNickname = extractTeamNickname(latestCompleted?.opponent?.name || '');
 
+  const resolvedTeam = resolveTeamConfig(appData?.meta?.teamAbbr || appData?.meta?.teamSlug || getActiveTeamConfig());
   const sharedCompletedMeta = {
+    teamConfig: resolvedTeam,
     latestCompletedWeek,
     latestCompletedKickoffMs,
     latestCompletedEndMs,
@@ -553,55 +555,251 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
  * - Tier-2 official roster moves ("49ers Designate DT CJ West For Return", IR placements) wear `BREAKING`
  *   strictly when <= 4.5h old, then transition to `ROSTER MOVE`.
  */
-const NON_49ERS_NFL_TEAM_NAMES_PATTERN =
-  'Cardinals|Falcons|Ravens|Bills|Panthers|Bears|Bengals|Browns|Cowboys|Broncos|Lions|Packers|Texans|Colts|Jaguars|Chiefs|Raiders|Chargers|Rams|Dolphins|Vikings|Patriots|Saints|Giants|Jets|Eagles|Steelers|Seahawks|Buccaneers|Bucs|Titans|Commanders';
+const TEAM_CLASSIFIER_MATCHERS_CACHE = new Map();
 
-const NON_49ERS_NFL_CITIES_OR_TEAMS_REGEX = new RegExp(
-  `\\b#?(?:${NON_49ERS_NFL_TEAM_NAMES_PATTERN}|Arizona|Atlanta|Baltimore|Buffalo|Carolina|Chicago|Cincinnati|Cleveland|Dallas|Denver|Detroit|Green Bay|Houston|Indianapolis|Jacksonville|Kansas City|Las Vegas|Miami|Minnesota|New England|New Orleans|Philadelphia|Pittsburgh|Seattle|Tampa Bay|Tennessee)\\b`,
-  'i'
-);
+const COMMON_SURNAME_SKIP = new Set([
+  'allen', 'brown', 'campbell', 'clark', 'davis', 'green', 'hall', 'harris', 'hill', 'johnson',
+  'jones', 'king', 'lewis', 'martin', 'miller', 'moore', 'morris', 'smith', 'taylor', 'thomas',
+  'walker', 'white', 'williams', 'wilson', 'wright', 'young'
+]);
 
-const NON_49ERS_SUBJECT_LEAD_REGEX = new RegExp(
-  `^(?:(?:breaking|just in|update|injury update|roster move|source|sources|per source|per sources|nfl)[:\\s-]+)*(?:the\\s+)?#?(?:${NON_49ERS_NFL_TEAM_NAMES_PATTERN})\\b`,
-  'i'
-);
+const EXTRA_TEAM_NICKNAME_ALIASES = {
+  SF: ['Niners'],
+  TB: ['Bucs'],
+  NE: ['Pats'],
+  JAX: ['Jags']
+};
 
-const NON_49ERS_POS_SUBJECT_REGEX = new RegExp(
-  `\\b#?(?:${NON_49ERS_NFL_TEAM_NAMES_PATTERN})\\s+(?:QB|RB|FB|WR|TE|OL|OT|OG|LT|LG|RT|RG|DL|DE|DT|NT|EDGE|LB|ILB|OLB|MLB|CB|DB|FS|SS|K|P|LS|G|C|T|S|HC|OC|DC|head coach|coach|rookie|star|starter|veteran)\\b`,
-  'i'
-);
+const EXTRA_TEAM_CITY_ALIASES = {
+  SF: ['Santa Clara'],
+  IND: ['Indy']
+};
 
-const SF_TRANSACTION_PARTNER_REGEX =
-  /\b(?:(?:to|with|from)\s+(?:the\s+)?#?(?:49ers|Niners|San Francisco)\b[\s\S]{0,40}\b(?:trad(?:e|es|ed|ing)|acquir(?:e|es|ed|ing)|send(?:s|ing)|deal)|(?:trad(?:e|es|ed|ing)|acquir(?:e|es|ed|ing)|send(?:s|ing)|deal[\s\S]{0,20})[\s\S]{0,55}\b(?:to|with|from)\s+(?:the\s+)?#?(?:49ers|Niners|San Francisco)|#?(?:49ers|Niners|San Francisco)\s+(?:are\s+|have\s+)?(?:trad(?:e|es|ed|ing)|acquir(?:e|es|ed|ing)|sign(?:s|ed|ing)?|claim(?:s|ed|ing)?|waiv(?:e|ed|ing)|releas(?:e|ed|ing)|designat(?:e|ed|ing)|activat(?:e|ed|ing)|plac(?:e|ed|ing)))\b/i;
+function getTeamClassifierMatchers(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  const abbr = String(team?.abbr || 'SF').toUpperCase();
+  if (TEAM_CLASSIFIER_MATCHERS_CACHE.has(abbr)) {
+    return TEAM_CLASSIFIER_MATCHERS_CACHE.get(abbr);
+  }
+  const isSf = abbr === 'SF';
 
-const SF_INCIDENTAL_GAME_CLAUSE_REGEX =
-  /\b(?:loss to|lost to|win over|victory over|beat|defeat(?:ed)?|against|vs\.?|versus|facing|play(?:ed|ing)?)\s+(?:the\s+)?#?(?:49ers|Niners|San Francisco)\b/gi;
+  const activeTokensSet = new Set();
+  const addTok = v => {
+    const clean = String(v || '').trim();
+    if (clean && clean.length >= 3) activeTokensSet.add(escapeRegexToken(clean));
+  };
+  addTok(team?.nickname);
+  addTok(team?.city);
+  addTok(team?.fullName);
+  for (const rn of team?.requiredNicknames || []) addTok(rn);
+  for (const al of EXTRA_TEAM_NICKNAME_ALIASES[abbr] || []) addTok(al);
+  for (const cal of EXTRA_TEAM_CITY_ALIASES[abbr] || []) addTok(cal);
+
+  const activeTeamPattern = `(?:${[...activeTokensSet].join('|')})`;
+
+  const coachEntityTokens = new Set();
+  const coachFullNames = [];
+  const coachSurnames = [];
+  const coaches = team?.coachesSeed || {};
+  for (const full of [coaches.hc, coaches.gm, coaches.oc, coaches.dc]) {
+    const clean = String(full || '').trim();
+    if (!clean || /head coach|coordinator|general manager/i.test(clean)) continue;
+    const escFull = escapeRegexToken(clean).replace(/\\ /g, '\\s+').replace(/['’]/g, "['’]");
+    coachEntityTokens.add(escFull);
+    coachFullNames.push(escFull);
+    const parts = clean.split(/\s+/);
+    const sn = (parts[parts.length - 1] || '').replace(/[^A-Za-z'-]/g, '');
+    if (sn.length >= 5 && !COMMON_SURNAME_SKIP.has(sn.toLowerCase())) {
+      const escSn = escapeRegexToken(sn).replace(/['’]/g, "['’]");
+      coachEntityTokens.add(escSn);
+      coachSurnames.push(escSn);
+    }
+  }
+  if (isSf) {
+    for (const sfStar of ['Purdy', 'McCaffrey', 'Bosa', 'Kittle', 'Warner']) {
+      coachEntityTokens.add(sfStar);
+    }
+  }
+
+  const otherTeamNamesSet = new Set();
+  const otherCitiesOrTeamsSet = new Set();
+  for (const t of ALL_NFL_TEAMS) {
+    if (t.abbr === abbr) continue;
+    const nickEsc = escapeRegexToken(t.nickname);
+    otherTeamNamesSet.add(nickEsc);
+    otherCitiesOrTeamsSet.add(nickEsc);
+    if (t.city) {
+      otherCitiesOrTeamsSet.add(escapeRegexToken(t.city).replace(/\\ /g, '\\s+'));
+    }
+    for (const al of EXTRA_TEAM_NICKNAME_ALIASES[t.abbr] || []) {
+      const alEsc = escapeRegexToken(al);
+      otherTeamNamesSet.add(alEsc);
+      otherCitiesOrTeamsSet.add(alEsc);
+    }
+    for (const cal of EXTRA_TEAM_CITY_ALIASES[t.abbr] || []) {
+      otherCitiesOrTeamsSet.add(escapeRegexToken(cal).replace(/\\ /g, '\\s+'));
+    }
+  }
+
+  const otherTeamNamesPattern = [...otherTeamNamesSet].join('|');
+  const otherCitiesOrTeamsPattern = [...otherCitiesOrTeamsSet].join('|');
+
+  const otherCitiesOrTeamsRe = new RegExp(`\\b#?(?:${otherCitiesOrTeamsPattern})\\b`, 'i');
+  const otherSubjectLeadRe = new RegExp(
+    `^(?:(?:breaking|just in|update|injury update|roster move|source|sources|per source|per sources|nfl)[:\\s-]+)*(?:the\\s+)?#?(?:${otherTeamNamesPattern})(?:['’]s?)?\\b`,
+    'i'
+  );
+  const otherPosSubjectRe = new RegExp(
+    `\\b#?(?:${otherTeamNamesPattern})(?:['’]s?)?\\s+(?:QB|RB|FB|WR|TE|OL|OT|OG|LT|LG|RT|RG|DL|DE|DT|NT|EDGE|LB|ILB|OLB|MLB|CB|DB|FS|SS|K|P|LS|G|C|T|S|HC|OC|DC|head coach|coach|right tackle|left tackle|right guard|left guard|center|quarterback|running back|wide receiver|tight end|linebacker|cornerback|safety|defensive end|defensive tackle|pass rusher|edge rusher|rookie|star|starter|veteran)\\b`,
+    'i'
+  );
+  const activeTransactionPartnerRe = new RegExp(
+    `\\b(?:(?:to|with|from)\\s+(?:the\\s+)?#?${activeTeamPattern}\\b[\\s\\S]{0,40}\\b(?:trad(?:e|es|ed|ing)|acquir(?:e|es|ed|ing)|send(?:s|ing)|deal)|(?:trad(?:e|es|ed|ing)|acquir(?:e|es|ed|ing)|send(?:s|ing)|deal[\\s\\S]{0,20})[\\s\\S]{0,55}\\b(?:to|with|from)\\s+(?:the\\s+)?#?${activeTeamPattern}|#?${activeTeamPattern}\\s+(?:are\\s+|have\\s+)?(?:trad(?:e|es|ed|ing)|acquir(?:e|es|ed|ing)|sign(?:s|ed|ing)?|claim(?:s|ed|ing)?|waiv(?:e|ed|ing)|releas(?:e|ed|ing)|designat(?:e|ed|ing)|activat(?:e|ed|ing)|plac(?:e|ed|ing)))\\b`,
+    'i'
+  );
+  const activeIncidentalGameClauseRe = new RegExp(
+    `\\b(?:loss to|lost to|win over|win vs\\.?|win against|victory over|victory vs\\.?|victory against|blowout(?:\\s+win)?\\s+over|beat(?:s|ing)?|defeat(?:s|ed|ing)?|against|vs\\.?|versus|facing|play(?:ed|ing)?|contest against|game against|matchup (?:against|vs\\.?))\\s+(?:the\\s+)?#?${activeTeamPattern}\\b`,
+    'gi'
+  );
+  const activeEntityRe = new RegExp(
+    `\\b#?(?:${[...activeTokensSet, ...coachEntityTokens].join('|')})\\b`,
+    'i'
+  );
+  const activeTradeLeadRe = new RegExp(
+    `\\b(?:sending [\\s\\S]{1,65}\\bto (?:the )?#?${activeTeamPattern}|heading to (?:the )?#?${activeTeamPattern} [\\s\\S]{1,45}\\bfor a (?:\\d{4} )?[a-z0-9-]+(?:-round)? pick|#?${activeTeamPattern} (?:officially )?(?:trade[sd]? for|acquire[sd]?|acquiring|re-acquir(?:e[sd]?|ing)|have (?:officially )?acquired|officially announce [\\s\\S]{0,30}trade)|traded (?:to|for) (?:the )?#?${activeTeamPattern}|${activeTeamPattern} roster move:\\s*acquired)\\b`,
+    'i'
+  );
+  const activeRosterMovePrefixRe = new RegExp(`\\b${activeTeamPattern}\\s+roster\\s+move:`, 'i');
+  const coachPattern = coachSurnames.length > 0 ? `(?:${[...coachFullNames, ...coachSurnames].join('|')})` : 'head\\s+coach';
+  const activeCoachInjuryUpdateRe = new RegExp(
+    `\\b(?:(?:${activeTeamPattern}\\s+)?injury\\s+update:\\s*${coachPattern}|${coachPattern}\\s+(?:said|noted|confirmed|announced|provided|reveals?)[\\s\\S]{0,65}\\b(?:injury|ankle|knee|foot|back|shoulder|hamstring|calf|quad|groin|rib|wrist|hand|concussion|mri|day-to-day|week-to-week))\\b`,
+    'i'
+  );
+
+  const built = {
+    abbr,
+    isSf,
+    team,
+    activeTeamPattern,
+    otherCitiesOrTeamsRe,
+    otherSubjectLeadRe,
+    otherPosSubjectRe,
+    activeTransactionPartnerRe,
+    activeIncidentalGameClauseRe,
+    activeEntityRe,
+    activeTradeLeadRe,
+    activeRosterMovePrefixRe,
+    activeCoachInjuryUpdateRe
+  };
+  TEAM_CLASSIFIER_MATCHERS_CACHE.set(abbr, built);
+  return built;
+}
+
+const OPPOSING_INJURY_OR_ROSTER_EVENT_REGEX =
+  /\b(injur(?:y|ies|ed)|exits?(?:\s+[a-z0-9.'-]+){0,6}\s+with\b|left\s+(?:the|sunday|monday|thursday|saturday|tonight)['’]?s?\s+game|ruled out|questionable(?:\s+to\s+return)?|doubtful(?:\s+to\s+return)?|inactive|injured reserve|\bir\b|torn\s+(?:acl|achilles|pectoral|meniscus|patellar)|sprain|strain|fracture|broken\s+(?:ankle|leg|arm|foot|collarbone|wrist|hand|rib|fibula|tibia)|concussion|carted|air\s*cast|medical tent|(?:headed|going|went|walked|taken|limped|helped|escorted)\s+(?:off\s+)?(?:to\s+the\s+)?locker room|lower[- ]leg|upper[- ]leg|high[- ]ankle|ankle|knee|shoulder|hamstring|calf|groin|quad|foot|back|rib|wrist|hand|mri|x-ray|surgery|waived|released|signed to|practice squad|placed on|activated from|designated to return|back at practice)\b/i;
 
 /**
- * Returns true when the lead sentence's primary subject is a non-49ers NFL team or opposing player/coach
- * (e.g., "#Cowboys G Tyler Booker suffered a high-ankle sprain in his team's loss to the #49ers" or
- * "Coach Mike Macdonald noted ahead of Seattle's Week 11 bye..."), rather than an active 49ers player,
- * coach, or bilateral 49ers trade/transaction.
+ * Returns true when the lead sentence's primary subject is an OPPOSING NFL team or opposing player/coach
+ * (e.g., on `vikings.joshal.com`: `"49ers' Colton McKivitz exits win vs. Vikings with lower leg injury"`;
+ * on `49ers.joshal.com`: `"#Cowboys G Tyler Booker suffered a high-ankle sprain in his team's loss to the #49ers"`),
+ * rather than an active-team player, coach, or bilateral trade/transaction involving the active team.
  */
-export function isNon49ersTeamSubjectLead(leadClaim = '', item = {}) {
+export function isOpposingTeamSubjectLead(leadClaim = '', item = {}, teamInput = null) {
   const lead = String(leadClaim || '').trim();
   if (!lead) return false;
-  if (SF_TRANSACTION_PARTNER_REGEX.test(lead)) return false;
+  const m = getTeamClassifierMatchers(teamInput || item?._teamAbbr || getActiveTeamConfig());
+  if (m.activeTransactionPartnerRe.test(lead)) return false;
 
-  const hasSfRosterMention = Array.isArray(item?.mentionedPlayers) && item.mentionedPlayers.length > 0;
-  if (hasSfRosterMention) return false;
+  // Strip incidental game-context mentions ("in his team's loss to the #49ers", "win vs. Vikings", "against the Vikings")
+  const strippedIncidental = lead.replace(m.activeIncidentalGameClauseRe, '');
 
-  // Strip incidental game-context mentions ("in his team's loss to the #49ers", "against the 49ers")
-  const strippedSfIncidental = lead.replace(SF_INCIDENTAL_GAME_CLAUSE_REGEX, '');
-  if (/\b#?(?:49ers|Niners|San Francisco|Santa Clara|Shanahan|Lynch|Raheem Morris|Purdy|McCaffrey|Bosa|Kittle|Warner)\b/i.test(strippedSfIncidental)) {
+  const mentionedList = Array.isArray(item?.mentionedPlayers) ? item.mentionedPlayers : [];
+  const hasExplicitOtherTeamLead =
+    m.otherSubjectLeadRe.test(lead) || m.otherPosSubjectRe.test(lead.slice(0, 100));
+
+  // If the lead explicitly opens with an opposing team's possessive/player ("49ers' Colton McKivitz exits win vs. Vikings"),
+  // only override if an active-team player is explicitly named in the non-incidental lead itself.
+  if (hasExplicitOtherTeamLead) {
+    const activePlayerInLead = mentionedList.some(mp => {
+      const cleanName = String(mp?.name || '').replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim();
+      if (!cleanName || cleanName.length < 4) return false;
+      const surname = cleanName.split(/\s+/).pop() || '';
+      return (
+        new RegExp(`\\b${escapeRegexToken(cleanName)}\\b`, 'i').test(strippedIncidental) ||
+        (surname.length >= 5 && new RegExp(`\\b${escapeRegexToken(surname)}\\b`, 'i').test(strippedIncidental))
+      );
+    });
+    if (!activePlayerInLead && !m.activeEntityRe.test(strippedIncidental)) {
+      return true;
+    }
+  }
+
+  if (mentionedList.length > 0) return false;
+
+  if (m.activeEntityRe.test(strippedIncidental)) {
     return false;
   }
 
-  const hasOppLeadSubject =
-    NON_49ERS_SUBJECT_LEAD_REGEX.test(lead) ||
-    NON_49ERS_POS_SUBJECT_REGEX.test(lead.slice(0, 95)) ||
-    NON_49ERS_NFL_CITIES_OR_TEAMS_REGEX.test(strippedSfIncidental);
-  return hasOppLeadSubject;
+  return (
+    hasExplicitOtherTeamLead ||
+    m.otherCitiesOrTeamsRe.test(strippedIncidental)
+  );
+}
+
+/**
+ * Backwards-compatible alias for `isOpposingTeamSubjectLead` (now dynamically active-team-aware for all 32 teams).
+ */
+export function isNon49ersTeamSubjectLead(leadClaim = '', item = {}, teamInput = null) {
+  return isOpposingTeamSubjectLead(leadClaim, item, teamInput);
+}
+
+/**
+ * Returns true when an item is strictly an opposing-team player injury, availability, or roster-move report
+ * (e.g., `"49ers' Colton McKivitz exits win vs. Vikings with lower leg injury"` on `vikings.joshal.com`)
+ * that active-team fans do not want cluttering their team's News feed or breaking alerts.
+ */
+export function isOpposingTeamOnlyInjuryOrRosterStory(item = {}, teamInput = null) {
+  if (!item || typeof item !== 'object') return false;
+  const team = resolveTeamConfig(teamInput || item?._teamAbbr || getActiveTeamConfig());
+  // Never filter official club RSS, official club videos, official team transactions, or links on the team's own domain
+  const ws = String(item.wireSource || '').toLowerCase();
+  if (
+    ws === '49ers_official_rss' ||
+    ws === '49ers_official_videos_rss' ||
+    ws === 'club_official_rss' ||
+    ws === 'club_video_rss' ||
+    ws === 'official_transactions'
+  ) {
+    return false;
+  }
+  const clubDomain = String(team?.clubDomain || '').toLowerCase();
+  const itemUrlLower = String(item.url || '').toLowerCase();
+  const itemOutletLower = String(item.outletId || '').toLowerCase();
+  if (
+    (clubDomain && itemUrlLower.includes(clubDomain)) ||
+    /_official$/i.test(itemOutletLower)
+  ) {
+    return false;
+  }
+  const lead = extractPrimaryClaimText(item);
+  if (!lead) return false;
+  if (!isOpposingTeamSubjectLead(lead, item, team)) return false;
+  return (
+    OPPOSING_INJURY_OR_ROSTER_EVENT_REGEX.test(lead) ||
+    IN_GAME_INJURY_RETURN_REGEX.test(lead) ||
+    MATERIAL_INJURY_DIAGNOSIS_REGEX.test(lead) ||
+    TIER2_ROSTER_OR_STATUS_MOVE_REGEX.test(lead)
+  );
+}
+
+/**
+ * Filters opposing-team-only injury/roster articles out of a team's active news stream while leaving
+ * active-team stories, bilateral trades, and game recaps intact.
+ */
+export function filterOutOpposingTeamInjuryItems(items = [], appData = null) {
+  if (!Array.isArray(items) || items.length === 0) return [];
+  const team = resolveTeamConfig(appData?.meta?.teamAbbr || appData?.meta?.teamSlug || getActiveTeamConfig());
+  return items.filter(it => !isOpposingTeamOnlyInjuryOrRosterStory(it, team));
 }
 
 const FRANCHISE_CORE_PLAYER_SLUGS = new Set([
@@ -693,10 +891,12 @@ function CATASTROPHIC_INJURY_CHECK(text = '') {
  * like CMC / Purdy / Bosa / Warner / Kittle / Trent (`0.92–1.00`) outrank core starters (`0.55–0.85`)
  * and rotational/depth players like Sebastian Valdez (`0.16–0.40`).
  */
-export function computePlayerRosterValue(item = {}, rosterPlayers = []) {
+export function computePlayerRosterValue(item = {}, rosterPlayers = [], teamInput = null) {
   const lead = extractPrimaryClaimText(item);
   const full = `${lead} ${String(item?.fullText || item?.title || '').slice(0, 260)}`.trim();
   const pool = Array.isArray(rosterPlayers) ? rosterPlayers : [];
+  const activeTeam = resolveTeamConfig(teamInput || item?._teamAbbr || getActiveTeamConfig());
+  const isSf = activeTeam.abbr === 'SF';
 
   let matchedRosterObj = null;
   let resolvedSlug = '';
@@ -717,7 +917,7 @@ export function computePlayerRosterValue(item = {}, rosterPlayers = []) {
 
   // 2. Fallback: match directly from tweet/headline text against `rosterPlayers` (full name or unique surname/CMC)
   if (!matchedRosterObj && pool.length > 0 && full) {
-    const shorthandSlug = resolveFallback49ersShorthandSlug(full);
+    const shorthandSlug = isSf ? resolveFallback49ersShorthandSlug(full) : '';
     if (shorthandSlug) {
       matchedRosterObj = pool.find(p => normalizeRosterSlug(p?.name) === shorthandSlug) || null;
       if (!resolvedSlug) resolvedSlug = shorthandSlug;
@@ -757,10 +957,12 @@ export function computePlayerRosterValue(item = {}, rosterPlayers = []) {
   // 3. Fallback when `rosterPlayers` is empty (e.g. unit test without full roster loaded)
   if (!resolvedSlug) {
     const leadSlugs = extractLeadProperNameSlugs(lead);
-    resolvedSlug = leadSlugs[0] || resolveFallback49ersShorthandSlug(full);
+    resolvedSlug = leadSlugs[0] || (isSf ? resolveFallback49ersShorthandSlug(full) : '');
   }
 
-  let valueScore = 0.58; // Neutral starter default when roster is unavailable and player is unrecognized
+  // When rosterPlayers IS loaded on a non-SF team and NO active player matched, stay conservative (0.35)
+  // so unrecognized/opposing players never accidentally cross the >= 0.50 urgent threshold.
+  let valueScore = !isSf && pool.length > 0 && !matchedRosterObj ? 0.35 : 0.58;
   let playerName = matchedRosterObj?.name || item?.mentionedPlayers?.[0]?.name || '';
 
   if (matchedRosterObj) {
@@ -792,16 +994,16 @@ export function computePlayerRosterValue(item = {}, rosterPlayers = []) {
 
     valueScore = Math.min(1, Number(s.toFixed(3)));
     const slug = normalizeRosterSlug(matchedRosterObj.name);
-    if (FRANCHISE_CORE_PLAYER_SLUGS.has(slug)) {
+    if (isSf && FRANCHISE_CORE_PLAYER_SLUGS.has(slug)) {
       valueScore = Math.max(valueScore, slug === 'brockpurdy' ? 1.0 : 0.95);
-    } else if (CORE_STARTER_FALLBACK_SLUGS.has(slug)) {
+    } else if (isSf && CORE_STARTER_FALLBACK_SLUGS.has(slug)) {
       valueScore = Math.max(valueScore, 0.65);
     }
-  } else if (FRANCHISE_CORE_PLAYER_SLUGS.has(resolvedSlug)) {
+  } else if (isSf && FRANCHISE_CORE_PLAYER_SLUGS.has(resolvedSlug)) {
     valueScore = resolvedSlug === 'brockpurdy' ? 1.0 : 0.95;
-  } else if (CORE_STARTER_FALLBACK_SLUGS.has(resolvedSlug)) {
+  } else if (isSf && CORE_STARTER_FALLBACK_SLUGS.has(resolvedSlug)) {
     valueScore = 0.7;
-  } else if (/\b(?:valdez|sebastian valdez|practice squad|backup|reserve|special teamer)\b/i.test(full)) {
+  } else if (/\b(?:practice squad|backup|reserve|special teamer)\b/i.test(full) || (isSf && /\b(?:valdez|sebastian valdez)\b/i.test(full))) {
     valueScore = 0.2;
   }
 
@@ -821,9 +1023,9 @@ export function computePlayerRosterValue(item = {}, rosterPlayers = []) {
  * Combines in-game injury severity (`60%`) and player roster value (`40%`) into a calibrated priority score (`0..1`).
  * Minor 1-2 play knocks (e.g. "wind knocked out for a play or two") are clamped to `0.05` regardless of player star power.
  */
-export function computeInGameInjuryPriority(item = {}, rosterPlayers = []) {
+export function computeInGameInjuryPriority(item = {}, rosterPlayers = [], teamInput = null) {
   const sev = computeInGameInjurySeverity(item);
-  const val = computePlayerRosterValue(item, rosterPlayers);
+  const val = computePlayerRosterValue(item, rosterPlayers, teamInput);
   const impactScore =
     sev.severityTier === 'minor'
       ? 0.05
@@ -840,6 +1042,10 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     gameContext && typeof gameContext === 'object' && gameContext.appData
       ? resolveGameNewsContext(gameContext.appData, nowMs)
       : gameContext;
+  const activeTeam = resolveTeamConfig(
+    ctx?.teamConfig || gameContext?.team || item?._teamAbbr || getActiveTeamConfig()
+  );
+  const teamMatchers = getTeamClassifierMatchers(activeTeam);
 
   const isVideo = item?.type === 'video' || Boolean(item?.videoId);
   const leadClaim = extractPrimaryClaimText(item);
@@ -862,7 +1068,7 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
   const isSideNote =
     RETROSPECTIVE_UNEXECUTED_TRADE_REGEX.test(leadClaim) ||
     HUMAN_INTEREST_SIDE_NOTE_REGEX.test(leadClaim);
-  const isOpposingTeamOnlySubject = isNon49ersTeamSubjectLead(leadClaim, item);
+  const isOpposingTeamOnlySubject = isOpposingTeamSubjectLead(leadClaim, item, activeTeam);
 
   // Evaluate primary event patterns strictly against `leadClaim` for articles (never trailing recap paragraphs!),
   // while checking the full short tweet body (`fullTweetOrLead`) for multi-sentence live in-game injury tweets
@@ -897,7 +1103,7 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     !isSecondaryOrCommentary &&
     !isExpectedRoutineAbsence &&
     !isOpposingTeamOnlySubject &&
-    POST_GAME_INJURY_FOLLOWUP_REGEX.test(leadClaim);
+    (POST_GAME_INJURY_FOLLOWUP_REGEX.test(leadClaim) || teamMatchers.activeCoachInjuryUpdateRe.test(leadClaim));
   const matchesPracticeInjuryScoop =
     !isSpeculative &&
     !isSecondaryOrCommentary &&
@@ -916,29 +1122,33 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     !isSecondaryOrCommentary &&
     !isOpposingTeamOnlySubject &&
     !NON_TRANSACTION_RELEASE_REGEX.test(leadClaim) &&
-    TIER1_MAJOR_BREAKING_EVENT_REGEX.test(leadForTier1);
+    (TIER1_MAJOR_BREAKING_EVENT_REGEX.test(leadForTier1) || teamMatchers.activeTradeLeadRe.test(leadForTier1));
 
   const matchesTier2RosterMove =
     !isSpeculative &&
     !isSecondaryOrCommentary &&
     !isOpposingTeamOnlySubject &&
     !NON_TRANSACTION_RELEASE_REGEX.test(leadClaim) &&
-    TIER2_ROSTER_OR_STATUS_MOVE_REGEX.test(leadClaim);
+    (TIER2_ROSTER_OR_STATUS_MOVE_REGEX.test(leadClaim) || teamMatchers.activeRosterMovePrefixRe.test(leadClaim));
 
   const tradeDeadlinePassed =
     Number.isFinite(ctx?.tradeDeadlineMs) && nowMs > ctx.tradeDeadlineMs + 2 * 3_600_000;
   const matchesCredibleTradeRumor =
     !isSpeculative &&
     !isSecondaryOrCommentary &&
+    !isOpposingTeamOnlySubject &&
     !tradeDeadlinePassed &&
     CREDIBLE_FORWARD_TRADE_RUMOR_REGEX.test(leadClaim);
 
-  const matchesSalientInterview = !isSpeculative && SALIENT_INTERVIEW_OR_FEATURE_REGEX.test(combined);
+  const matchesSalientInterview = !isSpeculative && !isOpposingTeamOnlySubject && SALIENT_INTERVIEW_OR_FEATURE_REGEX.test(combined);
 
   const repEntry = resolveReporterFromNameOrHandle(
-    item.reporterId || item.author || item.reporterName || item.authorHandle
+    item.reporterId || item.author || item.reporterName || item.authorHandle,
+    activeTeam
   );
-  const effectiveTrustTier = Number(item.trustTier) || repEntry?.trustTier || 2;
+  const effectiveTrustTier = repEntry?.isOtherTeamBeat
+    ? Math.max(3, Number(item.trustTier) || 3)
+    : Number(item.trustTier) || repEntry?.trustTier || 2;
 
   // 1. LIVE IN-GAME MODE: Prioritize in-game injuries (#1) & live game tweets; sink pre-game availability noise to bottom
   if (ctx?.inGame && Number.isFinite(ctx.activeKickoffMs)) {
@@ -989,7 +1199,7 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     // Confirmed/salient in-game injury updates & material diagnostic updates are calibrated by
     // Injury Severity (minor 1-2 play knocks vs moderate vs serious/catastrophic) × Player Value (CMC/franchise/starters vs rotational/depth like Valdez).
     if ((matchesInGame || matchesMaterialInjuryDiagnosis) && (effectiveTrustTier <= 2 || hasConfirmedInGameStatus)) {
-      const injPri = computeInGameInjuryPriority(item, ctx?.rosterPlayers);
+      const injPri = computeInGameInjuryPriority(item, ctx?.rosterPlayers, activeTeam);
       if (injPri.severityTier !== 'minor') {
         const isHighValuePlayer = injPri.valueScore >= 0.5;
         const isUrgentLive = isHighValuePlayer || matchesMaterialInjuryDiagnosis;
@@ -1092,7 +1302,7 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
 
   // 3. LIVE / RECENT SIDELINE IN-GAME INJURY UPDATES (<16h), calibrated by Injury Severity × Player Value
   if (matchesInGame && ageHours <= 16 && (effectiveTrustTier <= 2 || hasConfirmedInGameStatus || Boolean(item.isFirstMoverInjuryScoop))) {
-    const injPri = computeInGameInjuryPriority(item, ctx?.rosterPlayers);
+    const injPri = computeInGameInjuryPriority(item, ctx?.rosterPlayers, activeTeam);
     if (injPri.severityTier !== 'minor') {
       const isHighValueOrFirstMover = injPri.valueScore >= 0.5 || Boolean(item.isFirstMoverInjuryScoop);
       const isUrgent = ageHours <= 4.5 && isHighValueOrFirstMover;
@@ -1121,7 +1331,7 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
   if (matchesTier2RosterMove && ageHours <= 24) {
     const isExplicitAlertOnly =
       /^(?:breaking|just in):/i.test(leadClaim) &&
-      !/\b(designate|practice window|reinstated|activated|placed [\s\S]{0,28}on (?:ir|injured reserve)|signed|claimed|waived|released|49ers roster move)\b/i.test(
+      !/\b(designate|practice window|reinstated|activated|placed [\s\S]{0,28}on (?:ir|injured reserve)|signed|claimed|waived|released|roster move:)\b/i.test(
         leadClaim
       );
     if (!isExplicitAlertOnly || effectiveTrustTier === 1) {
@@ -1397,7 +1607,11 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
     }
   }
 
-  const trustTier = Number(item.trustTier) || 2;
+  const repAuthEntry = resolveReporterFromNameOrHandle(
+    item.reporterId || item.author || item.reporterName || item.authorHandle,
+    ctx?.teamConfig
+  );
+  const trustTier = repAuthEntry?.isOtherTeamBeat ? 3 : Number(item.trustTier) || repAuthEntry?.trustTier || 2;
   const isRewriteAggregator = AGGREGATOR_REWRITE_OUTLET_REGEX.test(
     `${item.outletName || ''} ${item.url || ''}`
   );
@@ -1503,9 +1717,9 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
     }
   }
 
-  // Demote non-49ers opposing-player items unless they pertain to the upcoming opponent's matchup context
+  // Demote opposing-team-only items unless they pertain to the upcoming opponent's matchup context
   const primaryLeadText = extractPrimaryClaimText(item);
-  if (isNon49ersTeamSubjectLead(primaryLeadText, item)) {
+  if (isOpposingTeamSubjectLead(primaryLeadText, item, ctx?.teamConfig)) {
     const mentionsUpcomingOpp =
       ctx?.upcomingOppNickname &&
       ctx.upcomingOppAbbr !== ctx?.latestCompletedOppAbbr &&
@@ -3825,7 +4039,8 @@ export function promoteLinkDropTweetToArticle(item = {}) {
   const verdict = isArticleLinkDropTweet(item);
   if (!verdict.isLinkDrop || !verdict.targetUrl) return item;
 
-  const promotedTitle = verdict.cleanTitle || item.title || item.headline || '49ers Story';
+  const activeTeamPromo = getActiveTeamConfig();
+  const promotedTitle = verdict.cleanTitle || item.title || item.headline || `${activeTeamPromo?.nickname || 'NFL'} Story`;
   const promotedSummary = verdict.cleanSummary || '';
   const writer = verdict.creditedWriter;
 
@@ -4491,9 +4706,16 @@ export function scoreHighlightAndTeamVideoSalience(item = {}, appData = null, no
     score += 14;
   }
 
-  if (/^(?:nfl|san francisco 49ers)$/i.test(channel)) {
+  const activeTeamVid = resolveTeamConfig(ctx?.teamConfig || getActiveTeamConfig());
+  const teamFullLower = String(activeTeamVid?.fullName || 'San Francisco 49ers').toLowerCase();
+  const clubDomainLower = String(activeTeamVid?.clubDomain || '49ers.com').toLowerCase();
+  if (/^nfl$/i.test(channel) || channel.toLowerCase() === teamFullLower || channel.toLowerCase().includes(clubDomainLower)) {
     score += 14;
-  } else if (/nbc sports bay area|espn|fox sports|cbs sports|knbr|forever faithful|san francisco 49ers fans/i.test(channel)) {
+  } else if (
+    activeTeamVid?.abbr === 'SF'
+      ? /nbc sports bay area|espn|fox sports|cbs sports|knbr|forever faithful|san francisco 49ers fans/i.test(channel)
+      : /espn|fox sports|cbs sports|nfl network|official/i.test(channel)
+  ) {
     score += 10;
   }
 

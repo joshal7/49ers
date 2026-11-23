@@ -279,7 +279,7 @@ export function renderSettingsSheetHtml({
       </div>
       <div>
         <label style="font-size:11px;color:var(--text-secondary)" for="prefWorkerUrlInput">Shared Worker URL (optional)</label>
-        <input type="url" id="prefWorkerUrlInput" class="text-input" placeholder="https://49ers-worker.<subdomain>.workers.dev" value="${esc(userPrefs.workerBaseUrl || '')}" />
+        <input type="url" id="prefWorkerUrlInput" class="text-input" placeholder="https://${esc(activeTeam.slug || '49ers')}-worker.<subdomain>.workers.dev" value="${esc(userPrefs.workerBaseUrl || '')}" />
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button type="button" class="btn-secondary" style="flex:1 1 160px" data-action="save-group-config">
@@ -348,7 +348,18 @@ export function renderSettingsSheetHtml({
       <div class="search-input-wrap">
         ${iconSvg('search', 15, 'search-input-icon')}
         <input type="search" id="reporterFilterSearchInput" class="text-input has-lead-icon"
-               placeholder="Search Maiocco, Barrows, Lombardi, Wagoner, Schefter…"
+               placeholder="${esc(
+                 activeTeam.abbr === 'SF'
+                   ? 'Search Maiocco, Barrows, Lombardi, Wagoner, Schefter…'
+                   : `Search ${reporters
+                       .filter(r => !/official/i.test(r.name || '') && r.name)
+                       .slice(0, 3)
+                       .map(r => String(r.name).trim().split(/\s+/).pop())
+                       .concat(['Schefter'])
+                       .filter((v, i, a) => v && a.indexOf(v) === i)
+                       .slice(0, 4)
+                       .join(', ')}…`
+               )}"
                value="${esc(reporterSearch)}" aria-label="Search Reporters" />
       </div>
 
@@ -463,12 +474,22 @@ export function renderUniversalSearchResultsHtml({
   const hasFilter = hasQuery || hasSource;
   const hlTokens = buildSearchHighlightTokens(res);
 
-  // Suggested quick pills when query & source are empty (top injured starters + key shortcuts)
+  // Suggested quick pills when query & source are empty (top injured starters + active QB + key shortcuts)
   const injuredSuggestions = (appData?.health?.practiceReport || [])
     .slice(0, 3)
     .map(p => p?.name)
     .filter(Boolean);
-  const quickChips = [...new Set([...injuredSuggestions, 'Purdy', 'Cap', 'Film', 'Playoffs'])].slice(0, 6);
+  const activeSearchTeam = getActiveTeamConfig();
+  const starterQb = (appData?.roster?.players || []).find(
+    p => p?.position === 'QB' && (p.rosterBucket === 'active' || p.isStarter)
+  );
+  const qbQuickChip =
+    activeSearchTeam.abbr === 'SF'
+      ? 'Purdy'
+      : starterQb?.name
+        ? String(starterQb.name).replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim().split(/\s+/).pop()
+        : activeSearchTeam.nickname;
+  const quickChips = [...new Set([...injuredSuggestions, qbQuickChip, 'Cap', 'Film', 'Playoffs'].filter(Boolean))].slice(0, 6);
 
   const recentChipsHtml =
     !hasFilter && Array.isArray(recentSearches) && recentSearches.length > 0

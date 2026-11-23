@@ -757,7 +757,16 @@ function getTeamWireMatchers(team = null) {
     if (t.abbr === 'SF') otherTokens.push('niners');
   }
   const otherTeamsRe = new RegExp(`\\b(${otherTokens.join('|')})\\b`, 'i');
-  const built = { isSf: false, explicitEntityRe, otherTeamsRe, teamShortRe };
+  const activeNickCityPat = [active.fullName, active.nickname, active.city].filter(Boolean).map(t => escapeLinkRegex(t)).join('|');
+  const formerTeamPrefixRe = new RegExp(
+    `\\b(?:former|ex[-\\s])\\s*(?:${activeNickCityPat})(?:\\s+(?:hc|oc|dc|gm|head\\s+coach|assistant|coach|coordinator|qb|rb|fb|wr|te|ol|dl|lb|cb|db|de|dt|s|k|p|ls|exec|executive|scout))?\\b`,
+    'gi'
+  );
+  const historicalBioRe = new RegExp(
+    `\\b(originally signed (?:on )?with (?:the )?(?:${activeNickCityPat})|(?:was )?(?:selected|drafted|taken) [\\s\\S]{0,55}by (?:the )?(?:${activeNickCityPat})|began (?:his|their) (?:nfl )?career with (?:the )?(?:${activeNickCityPat})|spent (?:time|his rookie|the \\d{4} season|\\d+ seasons?) with (?:the )?(?:${activeNickCityPat})|stint with (?:the )?(?:${activeNickCityPat}))\\b`,
+    'i'
+  );
+  const built = { isSf: false, explicitEntityRe, otherTeamsRe, teamShortRe, formerTeamPrefixRe, historicalBioRe };
   TEAM_WIRE_REGEX_CACHE.set(cacheKey, built);
   return built;
 }
@@ -773,7 +782,7 @@ export function hasExplicit49ersEntity(text = '') {
     if (!cleaned) return false;
     return EXPLICIT_SF_ENTITY_REGEX.test(cleaned);
   }
-  const cleaned = stripAggregatorBoilerplate(text);
+  const cleaned = stripAggregatorBoilerplate(text).replace(matchers.formerTeamPrefixRe, ' ').replace(/\s+/g, ' ').trim();
   if (!cleaned) return false;
   return matchers.explicitEntityRe.test(cleaned);
 }
@@ -796,7 +805,9 @@ export function is49ersRelevantWireItem({
   if (!isNationalFeed) return true;
   const matchers = getTeamWireMatchers();
   const leadText = stripAggregatorBoilerplate(`${title || ''} ${fullText || ''}`).trim();
-  const leadClean = matchers.isSf ? stripNon49ersEntityContexts(leadText) : leadText;
+  const leadClean = matchers.isSf
+    ? stripNon49ersEntityContexts(leadText)
+    : leadText.replace(matchers.formerTeamPrefixRe, ' ').replace(/\s+/g, ' ').trim();
   if (matchers.explicitEntityRe.test(leadClean)) {
     return true;
   }
@@ -807,8 +818,16 @@ export function is49ersRelevantWireItem({
     return false;
   }
   const rawBody = `${externalTitle || ''} ${summary || ''} ${externalDescription || ''}`;
-  const cleanBody = matchers.isSf ? stripHistoricalSfBioSentences(rawBody) : rawBody;
-  const bodyClean = matchers.isSf ? stripNon49ersEntityContexts(cleanBody) : cleanBody;
+  const cleanBody = matchers.isSf
+    ? stripHistoricalSfBioSentences(rawBody)
+    : rawBody
+        .split(/(?<=[.!?])\s+/)
+        .filter(s => s && !matchers.historicalBioRe.test(s))
+        .join(' ')
+        .trim();
+  const bodyClean = matchers.isSf
+    ? stripNon49ersEntityContexts(cleanBody)
+    : cleanBody.replace(matchers.formerTeamPrefixRe, ' ').replace(/\s+/g, ' ').trim();
   if (matchers.explicitEntityRe.test(bodyClean)) {
     return true;
   }

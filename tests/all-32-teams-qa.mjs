@@ -32,8 +32,17 @@ import {
   getTeamByAbbr,
   hasCrossTeam49ersLeak,
   isOfficialTeamHost,
-  resolveTeamFromHostname
+  resolveTeamFromHostname,
+  setActiveTeamConfig
 } from '../src/config/teamRegistry.js';
+import {
+  detectMentionedOpponentTeam,
+  resolveDailyBriefHeroMedia,
+  resolveSalientCardVisual
+} from '../src/engine/salientMediaEngine.js';
+import { classifySourceLensTag, extractPresserTakeaways } from '../src/engine/digestExperienceEngine.js';
+import { formatCompletedGameRecapForPrompt } from '../src/engine/gameDayRosterEngine.js';
+import { runUniversalSearch } from '../src/engine/universalSearchEngine.js';
 import { buildNflTeamsPagesDist } from '../scripts/build-nfl-teams-pages.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -245,13 +254,130 @@ await test('2. All 32 teams have valid live 11-file 2026 JSON bundles with zero 
         false,
         `${team.abbr} coachingMatchup leaked 49ers copy (opp=${oppAbbr})`
       );
-      const briefTxt = `${news.dailyTopNewsBrief.headline} ${news.dailyTopNewsBrief.summary || ''}`;
+      const briefTxt = `${news.dailyTopNewsBrief.headline} ${news.dailyTopNewsBrief.summary || ''} ${(news.dailyTopNewsBrief.bullets || []).join(' ')}`;
       assert.equal(
         hasCrossTeam49ersLeak(briefTxt, team, oppAbbr),
         false,
         `${team.abbr} dailyTopNewsBrief leaked 49ers copy`
       );
+      if (oppAbbr !== 'SF') {
+        assert.equal(
+          /\bgeorge kittle\b/i.test(briefTxt),
+          false,
+          `${team.abbr} dailyTopNewsBrief leaked off-topic George Kittle story`
+        );
+        const badSrc = (news.dailyTopNewsBrief.sources || []).find(s =>
+          /\bgeorge kittle\b|luchador mask|all-time sack list|week \d+ uniforms/i.test(String(s?.title || ''))
+        );
+        assert.equal(badSrc, undefined, `${team.abbr} dailyTopNewsBrief.sources leaked off-topic article: ${badSrc?.title}`);
+      }
+      setActiveTeamConfig(team);
+      const briefHero = resolveDailyBriefHeroMedia(news.dailyTopNewsBrief, news.rawStream || [], {
+        rosterPlayers: roster.players || []
+      });
+      if (briefHero) {
+        assert.equal(
+          /r1745395/i.test(briefHero.rawUrl),
+          false,
+          `${team.abbr} hero must never select archival traded-player 49ers-vs-Falcons photo r1745395`
+        );
+        if (oppAbbr !== 'SF') {
+          assert.equal(
+            /\b(?:49ers|niners|george kittle|brock purdy|kyle shanahan)\b/i.test(briefHero.alt || ''),
+            false,
+            `${team.abbr} hero photo alt leaked 49ers content: ${briefHero.alt}`
+          );
+        }
+      }
     }
+  }
+  setActiveTeamConfig(getTeamByAbbr('SF'));
+});
+
+await test('2b. Zero accidental 49ers bias across salientMedia, digestExperience, gameDayRecap & universalSearch engines', () => {
+  const atl = getTeamByAbbr('ATL');
+  const sf = getTeamByAbbr('SF');
+  try {
+    setActiveTeamConfig(atl);
+
+    // 1. Falcons brief hero must choose active Falcons QB photo over traded-player archival 49ers-vs-Falcons photo
+    const atlNews = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'teams', 'falcons', 'news.json'), 'utf8'));
+    const atlRoster = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'teams', 'falcons', 'roster.json'), 'utf8'));
+    const atlHero = resolveDailyBriefHeroMedia(atlNews.dailyTopNewsBrief, atlNews.rawStream || [], {
+      rosterPlayers: atlRoster.players || []
+    });
+    assert.ok(atlHero, 'Falcons brief must resolve a valid editorial hero photo');
+    assert.ok(!/r1745395/i.test(atlHero.rawUrl), `Falcons hero must not pick traded-player photo r1745395 (got ${atlHero.rawUrl})`);
+
+    // 2. detectMentionedOpponentTeam recognizes SF/49ers on non-SF teams
+    const sfOpp = detectMentionedOpponentTeam('Falcons prepare for San Francisco 49ers defense');
+    assert.equal(sfOpp?.abbr, 'SF', 'Non-SF teams must detect 49ers as an opponent');
+
+    // 3. Team emblem fallback tag uses active team nickname, never hardcoded 49ERS
+    const fallbackVisual = resolveSalientCardVisual(
+      { title: 'Atlanta offense prepares for Sunday', fullText: 'Routine game prep' },
+      { rosterPlayers: [], allowTeamFallback: true }
+    );
+    assert.equal(fallbackVisual?.kind, 'team');
+    assert.equal(fallbackVisual?.tagLabel, 'FALCONS', 'Non-SF fallback emblem tag must be FALCONS, not 49ERS');
+
+    // 4. Official source lens and presser takeaways use active team (never Kyle Shanahan on Falcons)
+    assert.equal(
+      classifySourceLensTag({ outletName: 'atlantafalcons.com Official', url: 'https://www.atlantafalcons.com/news/test' }),
+      'Official'
+    );
+    const nowMs = Date.now();
+    const pressers = extractPresserTakeaways(
+      [
+        {
+          id: 'p1',
+          type: 'article',
+          title: 'Kevin Stefanski said the Falcons must protect the football in Week 12',
+          url: 'https://www.espn.com/nfl/story/_/id/999/falcons-stefanski',
+          publishedAt: new Date(nowMs - 3600_000).toISOString()
+        },
+        {
+          id: 'p1b',
+          type: 'article',
+          title: 'Jeff Ulbrich explained how Atlanta plans to disguise blitzes against Minnesota',
+          url: 'https://www.espn.com/nfl/story/_/id/997/falcons-ulbrich',
+          publishedAt: new Date(nowMs - 4200_000).toISOString()
+        },
+        {
+          id: 'p2',
+          type: 'article',
+          title: 'Kyle Shanahan said the 49ers offense is clicking ahead of Sunday',
+          url: 'https://www.espn.com/nfl/story/_/id/998/sf-shanahan',
+          publishedAt: new Date(nowMs - 3600_000).toISOString()
+        }
+      ],
+      { nowMs }
+    );
+    assert.equal(pressers.length, 2, 'Falcons presser extractor must capture Stefanski & Ulbrich and ignore Kyle Shanahan');
+    assert.ok(pressers.every(p => !/shanahan/i.test(p.speakerFull)), 'Falcons presser extractor must never emit Kyle Shanahan');
+
+    // 5. Completed game recap prompt formatter uses active team, never San Francisco 49ers
+    const recapPrompt = formatCompletedGameRecapForPrompt({
+      week: 10,
+      homeAway: 'home',
+      sfScore: 17,
+      oppScore: 24,
+      result: 'L',
+      oppAbbr: 'KC',
+      oppName: 'Kansas City Chiefs',
+      sfTeamStats: { totalYards: 320, yardsPerPlay: 5.1, netPassingYards: 210, completionAttempts: '20-32', rushingYards: 110, rushingAttempts: 24, yardsPerRush: 4.6, thirdDownEff: '5-12', sacksTakenCount: 2, sacksYardsLost: 14, turnovers: 1, penaltyCount: 5, penaltyYards: 40, possessionTime: '28:15' }
+    });
+    assert.ok(recapPrompt.includes('Atlanta Falcons'), 'Recap prompt must name Atlanta Falcons');
+    assert.ok(!/49ers|San Francisco/i.test(recapPrompt), 'Recap prompt must not leak 49ers/San Francisco on Falcons');
+
+    // 6. Universal Search quick section jumps use active team podcasts, never 49ers Beat Podcasts
+    const searchRes = runUniversalSearch('podcasts', { appData: { meta: { teamAbbr: 'ATL' }, roster: atlRoster } });
+    const podSec = (searchRes.sections || []).find(s => s.id === 'sec_podcasts');
+    assert.ok(podSec, 'Universal search must match podcasts section');
+    assert.ok(!/49ers/i.test(podSec.title), `Podcast quick jump must not say 49ers on Falcons (got ${podSec.title})`);
+    assert.ok(/Falcons/i.test(podSec.title), `Podcast quick jump must say Falcons on Falcons (got ${podSec.title})`);
+  } finally {
+    setActiveTeamConfig(sf);
   }
 });
 

@@ -22,46 +22,22 @@
       "Tight end Hunter Henry remains focused on the team's mindset heading into the final seven games, as New England looks to improve a #31 ranked -10 turnover differential [S13](https://www.patriots.com/video/one-on-one-with-hunter-henry-patriots-all-access)"
     ],
     "coveredStoryKeys": [
-      "ne_espn_165c27d62fbe1",
-      "ne_espn_60efae509e729",
-      "ne_espn_1d3957278e257",
       "ne_espn_99b1e4513f880",
       "ne_vid_9ba2db3fb3b7",
-      "ne_vid_16e155798697"
+      "ne_vid_16e155798697",
+      "ne_espn_281429b2d7a67",
+      "ne_espn_5766af6285303",
+      "ne_espn_d05c955fa4747"
     ],
     "coveredUrls": [
-      "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-      "https://www.espn.com/nfl/story/_/id/39286200/best-nfl-coaches-all-ranked-wins",
       "https://www.espn.com/nfl/story/_/id/50544188/new-england-patriots-highest-paid-players-2026",
+      "https://www.espn.com/nfl/story/_/id/50503981/drake-maye-ankle-injury-patriots-tommy-devito-stats",
+      "https://www.espn.com/nfl/story/_/id/50542578/patriots-qb-drake-maye-fractured-fibula-sources-say",
+      "https://www.patriots.com/video/one-on-one-with-hunter-henry-patriots-all-access",
       "https://www.patriots.com/video/lions-recap-previewing-the-final-seven-game-slate-patriots-this-week",
       "https://www.patriots.com/video/previewing-final-seven-matchups-exclusive-with-hunter-henry-tales-from-the-tailgate-patriots-all-access"
     ],
     "sources": [
-      {
-        "sid": "S1",
-        "title": "How active NFL players continue to redefine all-time sack list",
-        "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-        "author": "Sarah Barshop",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:49:27Z"
-      },
-      {
-        "sid": "S2",
-        "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-        "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-        "author": "ESPN Staff",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:00:32Z"
-      },
-      {
-        "sid": "S3",
-        "title": "Who are the winningest NFL coaches of all time?",
-        "url": "https://www.espn.com/nfl/story/_/id/39286200/best-nfl-coaches-all-ranked-wins",
-        "author": "Alex Kennedy and Keith Jenkins",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-22T23:05:23Z"
-      },
       {
         "sid": "S4",
         "title": "How Patriots' top 10 earners have fared: A.J. Brown, Christian Gonzalez, more",
@@ -69,6 +45,30 @@
         "author": "Mike Reiss",
         "outlet": "ESPN",
         "publishedAt": "2026-11-22T11:59:26Z"
+      },
+      {
+        "sid": "S8",
+        "title": "Drake Maye ankle injury: Is the Patriots' season over? Can Tommy DeVito step up?",
+        "url": "https://www.espn.com/nfl/story/_/id/50503981/drake-maye-ankle-injury-patriots-tommy-devito-stats",
+        "author": "Mike Reiss",
+        "outlet": "ESPN",
+        "publishedAt": "2026-11-20T22:06:28Z"
+      },
+      {
+        "sid": "S10",
+        "title": "Patriots QB Drake Maye has fractured fibula, sources say",
+        "url": "https://www.espn.com/nfl/story/_/id/50542578/patriots-qb-drake-maye-fractured-fibula-sources-say",
+        "author": "Adam Schefter",
+        "outlet": "ESPN",
+        "publishedAt": "2026-11-20T19:36:45Z"
+      },
+      {
+        "sid": "S7",
+        "title": "One-on-One with Hunter Henry | Patriots All Access",
+        "url": "https://www.patriots.com/video/one-on-one-with-hunter-henry-patriots-all-access",
+        "author": "patriots.com Video",
+        "outlet": "patriots.com Video",
+        "publishedAt": "2026-11-20T17:33:24.000Z"
       },
       {
         "sid": "S5",
@@ -87,140 +87,25 @@
         "publishedAt": "2026-11-21T01:00:00.000Z"
       },
       {
-        "sid": "S7",
-        "title": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-        "url": "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
-        "author": "Anthony Gharib",
+        "sid": "S6",
+        "title": "McAfee & Co. speculate who will replace injured Drake Maye",
+        "url": "https://www.espn.com/video/clip/_/id/50542714/mcafee-co-speculate-replace-injured-drake-maye",
+        "author": "ESPN NFL Nation",
         "outlet": "ESPN",
-        "publishedAt": "2026-11-20T22:49:33Z"
+        "publishedAt": "2026-11-20T19:36:23Z"
       },
       {
         "sid": "S8",
-        "title": "Drake Maye ankle injury: Is the Patriots' season over? Can Tommy DeVito step up?",
-        "url": "https://www.espn.com/nfl/story/_/id/50503981/drake-maye-ankle-injury-patriots-tommy-devito-stats",
-        "author": "Mike Reiss",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-20T22:06:28Z"
-      },
-      {
-        "sid": "S9",
-        "title": "NFL Week 11 betting odds: Lines and totals for every game",
-        "url": "https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals",
-        "author": "ESPN",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-20T20:13:57Z"
-      },
-      {
-        "sid": "S10",
-        "title": "Patriots QB Drake Maye has fractured fibula, sources say",
-        "url": "https://www.espn.com/nfl/story/_/id/50542578/patriots-qb-drake-maye-fractured-fibula-sources-say",
-        "author": "Adam Schefter",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-20T19:36:45Z"
+        "title": "Tales from the Tailgate: Victoria and Simon Visit from Austria",
+        "url": "https://www.patriots.com/video/tales-from-the-tailgate-victoria-and-simon-visit-from-austria",
+        "author": "patriots.com Video",
+        "outlet": "patriots.com Video",
+        "publishedAt": "2026-11-20T17:16:16.000Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
-    {
-      "id": "ne_espn_165c27d62fbe1",
-      "type": "article",
-      "title": "How active NFL players continue to redefine all-time sack list",
-      "summary": "Myles Garrett's torrid pace up the all-time sack list paces active players making their moves among the greats.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0828/nfl_data_viz_garrett_cr_16x9_608x342.jpg",
-      "imageAlt": "How active NFL players continue to redefine all-time sack list",
-      "publishedAt": "2026-11-23T01:49:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "sarah_barshop",
-      "reporterName": "Sarah Barshop",
-      "author": "Sarah Barshop",
-      "authorHandle": "@sarahbarshop",
-      "authorProfileUrl": "https://x.com/sarahbarshop",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.1591
-    },
-    {
-      "id": "ne_espn_60efae509e729",
-      "type": "article",
-      "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "publishedAt": "2026-11-23T01:00:32Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-      "outletId": "espn_ne",
-      "outletName": "ESPN",
-      "reporterId": "espn_ne",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 9.4365
-    },
-    {
-      "id": "ne_espn_1d3957278e257",
-      "type": "article",
-      "title": "Who are the winningest NFL coaches of all time?",
-      "summary": "From Belichick to Reid, there are many iconic coaches in NFL history. Who has the best career record? Check out the stat breakdown now.",
-      "imageUrl": "https://a.espncdn.com/photo/2012/0128/bos_g_belichick_kraft_b1_800.jpg",
-      "imageAlt": "Who are the winningest NFL coaches of all time?",
-      "publishedAt": "2026-11-22T23:05:23Z",
-      "url": "https://www.espn.com/nfl/story/_/id/39286200/best-nfl-coaches-all-ranked-wins",
-      "outletId": "espn_ne",
-      "outletName": "ESPN",
-      "reporterId": "espn_ne",
-      "reporterName": "Alex Kennedy and Keith Jenkins",
-      "author": "Alex Kennedy and Keith Jenkins",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 5.3491
-    },
     {
       "id": "ne_espn_99b1e4513f880",
       "type": "article",
@@ -252,7 +137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.294
+      "storyRank": 1.0697
     },
     {
       "id": "ne_vid_9ba2db3fb3b7",
@@ -286,7 +171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0624
+      "storyRank": 0.2416
     },
     {
       "id": "ne_vid_16e155798697",
@@ -320,40 +205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0599
-    },
-    {
-      "id": "ne_espn_4b15838125df3",
-      "type": "article",
-      "title": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "summary": "Here's a look at what each NFL team is wearing in Week 11, led by Houston debuting its Rivalries combination.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/commanders-texans-week-11-unis16x9.jpg",
-      "imageAlt": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "publishedAt": "2026-11-20T22:49:33Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
-      "outletId": "espn_ne",
-      "outletName": "ESPN",
-      "reporterId": "espn_ne",
-      "reporterName": "Anthony Gharib",
-      "author": "Anthony Gharib",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0565
+      "storyRank": 0.232
     },
     {
       "id": "ne_espn_281429b2d7a67",
@@ -386,40 +238,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0554
-    },
-    {
-      "id": "ne_espn_e18552bc1fb8c",
-      "type": "article",
-      "title": "NFL Week 11 betting odds: Lines and totals for every game",
-      "summary": "Updated odds, spreads, totals and FPI predictions for every NFL game in Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746635_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 betting odds: Lines and totals for every game",
-      "publishedAt": "2026-11-20T20:13:57Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals",
-      "outletId": "espn_ne",
-      "outletName": "ESPN",
-      "reporterId": "espn_ne",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2114
+      "storyRank": 0.2152
     },
     {
       "id": "ne_espn_5766af6285303",
@@ -452,7 +271,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.052
+      "storyRank": 0.2022
     },
     {
       "id": "ne_espn_d05c955fa4747",
@@ -485,40 +304,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2081
-    },
-    {
-      "id": "ne_espn_f9ca15e024182",
-      "type": "article",
-      "title": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "summary": "Joe Burrow vs. Jayden Daniels? Fernando Mendoza vs. Bo Nix? There are 12 more games in Week 11, and we have picks, predictions and more for all of them.",
-      "imageUrl": "https://a.espncdn.com/photo/2025/0819/r1533632_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "publishedAt": "2026-11-20T18:48:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50522208/week-11-picks-predictions-schedule-fantasy-odds-2026",
-      "outletId": "espn_ne",
-      "outletName": "ESPN",
-      "reporterId": "espn_ne",
-      "reporterName": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "author": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.204
+      "storyRank": 0.2022
     },
     {
       "id": "ne_vid_f51a611fe62a",
@@ -552,7 +338,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0495
+      "storyRank": 0.1926
     },
     {
       "id": "ne_vid_6d03ffaccfc6",
@@ -586,7 +372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1966
+      "storyRank": 0.1913
     },
     {
       "id": "ne_vid_ee07477295fd",
@@ -620,7 +406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0359
+      "storyRank": 0.1405
     },
     {
       "id": "ne_vid_54e8ac100aeb",
@@ -654,7 +440,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0329
+      "storyRank": 0.0322
     },
     {
       "id": "ne_vid_0ec7a6491d4d",
@@ -688,7 +474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0314
+      "storyRank": 0.1232
     },
     {
       "id": "ne_vid_4dec6b92819b",
@@ -722,73 +508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0312
-    },
-    {
-      "id": "ne_espn_4c7f7ffda521e",
-      "type": "article",
-      "title": "Bill Belichick, Robert Kraft named Hall of Fame finalists for 2nd straight year",
-      "summary": "Bill Belichick and Robert Kraft have both advanced to the final round of voting for the Pro Football Hall of Fame for the second straight year.",
-      "imageUrl": "https://a.espncdn.com/photo/2024/0411/r1317317_1296x729_16-9.jpg",
-      "imageAlt": "Bill Belichick, Robert Kraft named Hall of Fame finalists for 2nd straight year",
-      "publishedAt": "2026-11-19T17:45:38Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50532254/belichick-kraft-finalists-again-pro-football-hall-fame",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "jeff_legwold",
-      "reporterName": "Jeff Legwold",
-      "author": "Jeff Legwold",
-      "authorHandle": "@Jeff_Legwold",
-      "authorProfileUrl": "https://x.com/Jeff_Legwold",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1227
-    },
-    {
-      "id": "ne_espn_b95a427d7fb7b",
-      "type": "article",
-      "title": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "summary": "Here's the good and the bad for each offensive coordinator or playcaller through Week 10, plus keys to their success the rest of the way.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1118/32_for_32_midseason_look_608x342.png",
-      "imageAlt": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "publishedAt": "2026-11-19T17:37:25Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50520404/nfl-offensive-coordinators-playcallers-midseason-report",
-      "outletId": "espn_ne",
-      "outletName": "ESPN",
-      "reporterId": "espn_ne",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1224
+      "storyRank": 0.1223
     },
     {
       "id": "ne_vid_0b9ea92bbba6",
@@ -822,40 +542,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0303
-    },
-    {
-      "id": "ne_rss_69628bef4d2a",
-      "type": "article",
-      "title": "Robert Kraft, Bill Belichick Advance in Pro Football Hall of Fame Selection Process",
-      "summary": "Robert Kraft and Bill Belichick have advanced in the selection process for the Pro Football Hall of Fame Class of 2027.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/patriots/bilv5jhlvfyjki431jhe.jpg",
-      "imageAlt": "Robert Kraft, Bill Belichick Advance in Pro Football Hall of Fame Selection Process",
-      "publishedAt": "2026-11-19T17:00:00.000Z",
-      "url": "https://www.patriots.com/news/robert-kraft-bill-belichick-advance-in-pro-football-hall-of-fame-selection-process",
-      "outletId": "patriots_official",
-      "outletName": "patriots.com Official",
-      "reporterId": "patriots_official",
-      "reporterName": "patriots.com Official",
-      "author": "patriots.com Official",
-      "authorHandle": "@Patriots",
-      "authorProfileUrl": "https://www.patriots.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1211
+      "storyRank": 0.1188
     },
     {
       "id": "ne_vid_23123a36b00a",
@@ -889,7 +576,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.1176
     },
     {
       "id": "ne_rss_5e63bd85dc30",
@@ -922,7 +609,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0274
+      "storyRank": 0.1078
     },
     {
       "id": "ne_vid_be20fae64efc",
@@ -956,7 +643,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0217
+      "storyRank": 0.0853
     },
     {
       "id": "ne_vid_8b314dfe91e5",
@@ -990,73 +677,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0216
-    },
-    {
-      "id": "ne_espn_533c73d43a5d8",
-      "type": "article",
-      "title": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "summary": "Which NFL team could land Drew Mestemaker? Who needs Chris Cole, Ashton Hampton or Jamari Johnson? Jordan Reid projected first-round picks for 2027 -- and a trade.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/261118_cfb_jordan-reid-mock-draft_16x9_608x342.jpg",
-      "imageAlt": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "publishedAt": "2026-11-18T17:51:58Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/50502243/2027-nfl-mock-draft-reid-midseason-32-first-round-predictions",
-      "outletId": "espn_ne",
-      "outletName": "ESPN",
-      "reporterId": "espn_ne",
-      "reporterName": "Jordan Reid",
-      "author": "Jordan Reid",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0857
-    },
-    {
-      "id": "ne_espn_3b2fdfe28dfc8",
-      "type": "article",
-      "title": "NFL Week 11 latest intel, buzz questions, news, fantasy tips: What we're hearing",
-      "summary": "What are people around the league saying about Fernando Mendoza? Could changes be coming in Dallas? And what now for New England? Here's the latest intel.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747264_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 latest intel, buzz questions, news, fantasy tips: What we're hearing",
-      "publishedAt": "2026-11-18T17:48:56Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50513379/week-11-buzz-fantasy-predictions-graziano-fowler-2026",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "jeremy_fowler",
-      "reporterName": "Jeremy Fowler",
-      "author": "Jeremy Fowler",
-      "authorHandle": "@JFowlerESPN",
-      "authorProfileUrl": "https://x.com/JFowlerESPN",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0856
+      "storyRank": 0.0853
     },
     {
       "id": "ne_espn_dede4a78d0e8e",
@@ -1089,40 +710,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.057
-    },
-    {
-      "id": "ne_espn_d51f7983010a2",
-      "type": "article",
-      "title": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "summary": "How does every NFL team stack up heading into Week 11? We made our 1-32 list and picked the non-quarterback MVPs for each roster.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/nfl_power_rankings_608x342.png",
-      "imageAlt": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "publishedAt": "2026-11-17T20:45:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
-      "outletId": "espn_ne",
-      "outletName": "ESPN",
-      "reporterId": "espn_ne",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0664
+      "storyRank": 0.078
     },
     {
       "id": "ne_rss_945fcd3e5ab0",
@@ -1155,7 +743,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.0651
     },
     {
       "id": "ne_vid_8eb36f22f7d0",
@@ -1189,7 +777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0646
     },
     {
       "id": "ne_vid_59cc8967a48d",
@@ -1223,7 +811,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0643
     },
     {
       "id": "ne_rss_d529e83f8748",
@@ -1256,40 +844,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0468
-    },
-    {
-      "id": "ne_espn_c6078de4614f7",
-      "type": "article",
-      "title": "Super Bowl LXI odds: All 32 teams' odds to win the championship",
-      "summary": "Every NFL team's win total, as well as odds to win the division, the conference and Super Bowl LXI.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0202/r1609489_608x342_16-9.jpg",
-      "imageAlt": "Super Bowl LXI odds: All 32 teams' odds to win the championship",
-      "publishedAt": "2026-11-17T17:59:35Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/47809892/2026-super-bowl-lxi-odds-nfl-sports-betting-season-win-totals-playoffs",
-      "outletId": "espn_ne",
-      "outletName": "ESPN",
-      "reporterId": "espn_ne",
-      "reporterName": "Doug Greenberg",
-      "author": "Doug Greenberg",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0644
+      "storyRank": 0.0642
     },
     {
       "id": "ne_vid_e22bb780778a",
@@ -1323,7 +878,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0626
     },
     {
       "id": "ne_espn_d75fd66268b58",
@@ -1356,40 +911,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0631
-    },
-    {
-      "id": "ne_espn_51b53fdbdad19",
-      "type": "article",
-      "title": "2027 NFL draft order projections for Round 1, chances for top pick, more",
-      "summary": "ESPN's Football Power Index projects the 2027 NFL draft order for Round 1, complete with each team's chances to pick in the top five, in the top 10 and at No. 1.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0601/r1666608_608x342_16-9.jpg",
-      "imageAlt": "2027 NFL draft order projections for Round 1, chances for top pick, more",
-      "publishedAt": "2026-11-17T11:41:00Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/49794361/2027-nfl-draft-order-projections-first-round-picks",
-      "outletId": "espn_ne",
-      "outletName": "ESPN",
-      "reporterId": "espn_ne",
-      "reporterName": "ESPN staff",
-      "author": "ESPN staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0602
+      "storyRank": 0.0623
     },
     {
       "id": "ne_espn_5fc985167a6ca",
@@ -1422,40 +944,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
-    },
-    {
-      "id": "ne_espn_ee9a3465db613",
-      "type": "article",
-      "title": "Kyle Hamilton rocks Christmas sweater ahead of 'MNF,' leads NFL Week 10 arrivals",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746900_545x307_16-9.png",
-      "imageAlt": "Kyle Hamilton rocks Christmas sweater ahead of 'MNF,' leads NFL Week 10 arrivals",
-      "publishedAt": "2026-11-16T23:53:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50465223/nfl-week-10-fashionable-arrivals",
-      "outletId": "espn_ne",
-      "outletName": "ESPN",
-      "reporterId": "espn_ne",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0536
+      "storyRank": 0.0558
     },
     {
       "id": "ne_rss_56b591a8b159",
@@ -1488,7 +977,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013
+      "storyRank": 0.0513
     },
     {
       "id": "ne_vid_4720d77be885",
@@ -1522,7 +1011,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0508
+      "storyRank": 0.0503
     },
     {
       "id": "ne_vid_94ca9a2dc64b",
@@ -1556,7 +1045,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0493
+      "storyRank": 0.0488
     },
     {
       "id": "ne_espn_0c9d65e63adaa",
@@ -1589,7 +1078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
+      "storyRank": 0.0487
     },
     {
       "id": "ne_espn_6ec99cf6ff044",
@@ -1622,7 +1111,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0122
+      "storyRank": 0.0483
     },
     {
       "id": "ne_espn_e217e534e6b7b",
@@ -1655,40 +1144,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0121
-    },
-    {
-      "id": "ne_espn_ef57ad8125e5f",
-      "type": "article",
-      "title": "NFL Week 10: Big takeaways, questions and fantasy spin from Sunday's games",
-      "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 10.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746498_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 10: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-16T06:53:37Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50443510/week-10-sunday-games-takeaways-questions-2026",
-      "outletId": "espn_ne",
-      "outletName": "ESPN",
-      "reporterId": "espn_ne",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ne/new-england-patriots",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0459
+      "storyRank": 0.0478
     },
     {
       "id": "ne_vid_219df85406f0",
@@ -1722,7 +1178,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0423
     },
     {
       "id": "ne_vid_d5f08a29c745",
@@ -1756,7 +1212,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.0413
     },
     {
       "id": "ne_vid_506c975e5036",
@@ -1790,7 +1246,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0415
+      "storyRank": 0.0411
     },
     {
       "id": "ne_vid_96028bcb07ef",
@@ -1824,7 +1280,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0415
+      "storyRank": 0.0411
     },
     {
       "id": "ne_vid_214edb76c5d2",
@@ -1858,7 +1314,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0409
     },
     {
       "id": "ne_vid_a0f5735e061f",
@@ -1892,7 +1348,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0408
     },
     {
       "id": "ne_vid_ca049beb894a",
@@ -1926,7 +1382,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0102
     },
     {
       "id": "ne_vid_55a93d100d0d",
@@ -1960,7 +1416,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0102
     },
     {
       "id": "ne_vid_08becf5a6883",
@@ -1994,7 +1450,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0408
+      "storyRank": 0.0404
     },
     {
       "id": "ne_vid_6e00f5e8c463",
@@ -2028,7 +1484,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0406
+      "storyRank": 0.0402
     },
     {
       "id": "ne_vid_2d5ca4ee6e3b",
@@ -2096,7 +1552,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0404
+      "storyRank": 0.04
     },
     {
       "id": "ne_vid_2f2a08865732",
@@ -2130,7 +1586,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0404
+      "storyRank": 0.04
     },
     {
       "id": "ne_vid_56ab07df9f5f",
@@ -2164,7 +1620,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0101
+      "storyRank": 0.01
     },
     {
       "id": "ne_vid_40dc8e78c697",
@@ -2198,7 +1654,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0101
+      "storyRank": 0.04
     },
     {
       "id": "ne_vid_208491e3a8d6",
@@ -2232,7 +1688,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0101
+      "storyRank": 0.0399
     },
     {
       "id": "ne_vid_5e2f6749a210",
@@ -2266,7 +1722,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.01
+      "storyRank": 0.0099
     },
     {
       "id": "ne_vid_bade9e625463",
@@ -2300,7 +1756,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0085
+      "storyRank": 0.0338
     },
     {
       "id": "ne_vid_0cb1105b8508",
@@ -2334,7 +1790,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0085
+      "storyRank": 0.0337
     },
     {
       "id": "ne_vid_21d3cb2fb73a",
@@ -2368,7 +1824,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0085
+      "storyRank": 0.0337
     },
     {
       "id": "ne_tx_8058cefb28f6",
@@ -2402,7 +1858,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.032
     },
     {
       "id": "ne_vid_02335b5bc759",
@@ -2436,7 +1892,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0078
+      "storyRank": 0.0309
     },
     {
       "id": "ne_vid_87387fa9f3c2",
@@ -2470,7 +1926,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0294
     },
     {
       "id": "ne_vid_bf27b738b0a4",
@@ -2504,7 +1960,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.0292
     },
     {
       "id": "ne_vid_06fed3487d8a",
@@ -2538,7 +1994,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0291
+      "storyRank": 0.0289
     },
     {
       "id": "ne_vid_5127992a264d",
@@ -2572,7 +2028,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0285
+      "storyRank": 0.0283
     },
     {
       "id": "ne_vid_f1f67547e0ed",
@@ -2606,7 +2062,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0267
     },
     {
       "id": "ne_vid_02243ab9834a",
@@ -2640,7 +2096,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0263
+      "storyRank": 0.0261
     },
     {
       "id": "ne_vid_c51a20d72053",
@@ -2674,7 +2130,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0262
+      "storyRank": 0.0261
     },
     {
       "id": "ne_vid_ae0c72e40dd3",
@@ -2708,7 +2164,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0262
+      "storyRank": 0.026
     },
     {
       "id": "ne_vid_6455ba67700c",
@@ -2742,7 +2198,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.026
     },
     {
       "id": "ne_vid_18899d2dc4d3",
@@ -2776,7 +2232,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0258
     },
     {
       "id": "ne_vid_ccac409f880f",
@@ -2810,7 +2266,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0257
+      "storyRank": 0.0256
     },
     {
       "id": "ne_vid_3bab09651966",
@@ -2844,7 +2300,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0255
     },
     {
       "id": "ne_tx_3b3255156ab4",
@@ -2878,7 +2334,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0212
     },
     {
       "id": "ne_tx_336e12a9315c",
@@ -2912,7 +2368,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.017
     },
     {
       "id": "ne_tx_50d98b4a659c",
@@ -2946,7 +2402,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0141
     },
     {
       "id": "ne_tx_3fb66dae5c4e",
@@ -2980,7 +2436,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0119
     },
     {
       "id": "ne_tx_bd90b82a4f80",
@@ -3014,7 +2470,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
+      "storyRank": 0.011
     },
     {
       "id": "ne_tx_c9950e9e8e55",
@@ -3048,7 +2504,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0102
     },
     {
       "id": "ne_tx_0b9966ae257d",
@@ -3082,7 +2538,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0024
+      "storyRank": 0.0095
     }
   ]
 }

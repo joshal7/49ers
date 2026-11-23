@@ -2931,8 +2931,10 @@ export function extractCompletedGameRecapSummary(summaryJson, gameMeta = {}) {
     summaryJson.article?.links?.web?.href ||
     (gameId ? `https://www.espn.com/nfl/recap/_/gameId/${encodeURIComponent(gameId)}` : gameMeta?.gameUrl || '');
 
+  const activeRecapTeam = resolveTeamConfig(gameMeta?.teamAbbr || getActiveTeamConfig());
+  const activeRecapNickEsc = String(activeRecapTeam?.nickname || '49ers').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   let inGameInjuryNotes = '';
-  const injIdx = rawStoryClean.search(/\bInjuries\s+49ers\s*:/i);
+  const injIdx = rawStoryClean.search(new RegExp(`\\bInjuries\\s+${activeRecapNickEsc}\\s*:`, 'i'));
   if (injIdx >= 0) {
     const tail = rawStoryClean.slice(injIdx, injIdx + 520);
     const upNextIdx = tail.search(/\bUp next\b/i);
@@ -2940,7 +2942,7 @@ export function extractCompletedGameRecapSummary(summaryJson, gameMeta = {}) {
   }
 
   let upNextNotes = '';
-  const upIdx = rawStoryClean.search(/\bUp next\s+49ers\s*:/i);
+  const upIdx = rawStoryClean.search(new RegExp(`\\bUp next\\s+${activeRecapNickEsc}\\s*:`, 'i'));
   if (upIdx >= 0) {
     upNextNotes = rawStoryClean.slice(upIdx, upIdx + 240).replace(/\s*-{3,}[\s\S]*$/, '').trim();
   }
@@ -2963,6 +2965,9 @@ export function extractCompletedGameRecapSummary(summaryJson, gameMeta = {}) {
     week,
     dateIso,
     homeAway,
+    teamAbbr: activeRecapTeam?.abbr || targetAbbr || 'SF',
+    teamFullName: activeRecapTeam?.fullName || 'San Francisco 49ers',
+    teamNickname: activeRecapTeam?.nickname || '49ers',
     sfScore,
     oppScore,
     result,
@@ -3015,16 +3020,21 @@ export function extractCompletedGameRecapSummary(summaryJson, gameMeta = {}) {
  * Formats `lastCompletedGameRecap` into a concise, LLM-ready ground-truth block so Gemini
  * sees the complete macro team & player picture alongside beat tweets/articles.
  */
-export function formatCompletedGameRecapForPrompt(recap) {
+export function formatCompletedGameRecapForPrompt(recap, teamInput = null) {
   if (!recap || typeof recap !== 'object') return '';
+  const team = resolveTeamConfig(teamInput || recap.teamAbbr || getActiveTeamConfig());
+  const teamFull = team?.fullName || 'San Francisco 49ers';
+  const teamAbbr = team?.abbr || 'SF';
+  const teamNick = team?.nickname || '49ers';
+  const teamNickUp = teamNick.toUpperCase();
   const lines = [];
   const loc = recap.homeAway === 'away' ? 'at' : 'vs.';
   lines.push(
-    `FINAL SCORE: Week ${recap.week || ''} — San Francisco 49ers ${recap.sfScore}, ${recap.oppName} ${recap.oppScore} (${recap.result || 'Final'}, ${loc} ${recap.oppName})`
+    `FINAL SCORE: Week ${recap.week || ''} — ${teamFull} ${recap.sfScore}, ${recap.oppName} ${recap.oppScore} (${recap.result || 'Final'}, ${loc} ${recap.oppName})`
   );
   if (recap.sfLinescores?.length && recap.oppLinescores?.length) {
     lines.push(
-      `QUARTER SCORING: SF [${recap.sfLinescores.join('-')}] vs. ${recap.oppAbbr || 'OPP'} [${recap.oppLinescores.join('-')}]${
+      `QUARTER SCORING: ${teamAbbr} [${recap.sfLinescores.join('-')}] vs. ${recap.oppAbbr || 'OPP'} [${recap.oppLinescores.join('-')}]${
         recap.oppFourthQuarterPts != null ? ` (${recap.oppAbbr || 'OPP'} scored ${recap.oppFourthQuarterPts} pts in 4Q)` : ''
       }`
     );
@@ -3032,19 +3042,19 @@ export function formatCompletedGameRecapForPrompt(recap) {
   if (recap.sfTeamStats) {
     const s = recap.sfTeamStats;
     lines.push(
-      `49ERS TEAM OFFENSE & DISCIPLINE: ${s.totalYards} total yards (${s.yardsPerPlay} yds/play) | ${s.netPassingYards} net pass yds (${s.completionAttempts}) | ${s.rushingYards} rush yds on ${s.rushingAttempts} carries (${s.yardsPerRush} YPC) | 3rd Down ${s.thirdDownEff} | Sacks Allowed: ${s.sacksTakenCount} (${s.sacksYardsLost}) | Turnovers Committed: ${s.turnovers} | Penalties: ${s.penaltyCount} for ${s.penaltyYards} yds | TOP: ${s.possessionTime}`
+      `${teamNickUp} TEAM OFFENSE & DISCIPLINE: ${s.totalYards} total yards (${s.yardsPerPlay} yds/play) | ${s.netPassingYards} net pass yds (${s.completionAttempts}) | ${s.rushingYards} rush yds on ${s.rushingAttempts} carries (${s.yardsPerRush} YPC) | 3rd Down ${s.thirdDownEff} | Sacks Allowed: ${s.sacksTakenCount} (${s.sacksYardsLost}) | Turnovers Committed: ${s.turnovers} | Penalties: ${s.penaltyCount} for ${s.penaltyYards} yds | TOP: ${s.possessionTime}`
     );
   }
   if (recap.oppTeamStats) {
     const o = recap.oppTeamStats;
     lines.push(
-      `49ERS DEFENSE (ALLOWED TO ${recap.oppAbbr || 'OPP'}): ${o.totalYards} total yds (${o.yardsPerPlay} yds/play) | Pass Defense Yielded: ${o.netPassingYards} net pass yds (${o.completionAttempts}) & ${o.passingTds ?? '?'} pass TDs | Run Defense Allowed: ${o.rushingYards} rush yds on ${o.rushingAttempts} carries (${o.yardsPerRush} YPC) & ${o.rushingTds ?? 0} rush TDs | 3rd Down ${o.thirdDownEff} | 4th Down Conversions Allowed: ${o.fourthDownEff} | 49ers Sacks Recorded: ${recap.sfDefense?.sacksRecorded ?? o.sacksTakenCount} | Takeaways Forced: ${o.turnovers} (${o.interceptions} INT, ${o.fumblesLost} FR)`
+      `${teamNickUp} DEFENSE (ALLOWED TO ${recap.oppAbbr || 'OPP'}): ${o.totalYards} total yds (${o.yardsPerPlay} yds/play) | Pass Defense Yielded: ${o.netPassingYards} net pass yds (${o.completionAttempts}) & ${o.passingTds ?? '?'} pass TDs | Run Defense Allowed: ${o.rushingYards} rush yds on ${o.rushingAttempts} carries (${o.yardsPerRush} YPC) & ${o.rushingTds ?? 0} rush TDs | 3rd Down ${o.thirdDownEff} | 4th Down Conversions Allowed: ${o.fourthDownEff} | ${teamNick} Sacks Recorded: ${recap.sfDefense?.sacksRecorded ?? o.sacksTakenCount} | Takeaways Forced: ${o.turnovers} (${o.interceptions} INT, ${o.fumblesLost} FR)`
     );
   }
   if (recap.sfPassing?.length) {
     const p = recap.sfPassing[0];
     lines.push(
-      `49ERS PASSING: ${p.name} — ${p.compAtt}, ${p.yards} pass yds, ${p.tds} TD, ${p.ints} INT, ${p.rating} passer rating (${p.qbr} QBR), sacked ${p.sacksTaken} times`
+      `${teamNickUp} PASSING: ${p.name} — ${p.compAtt}, ${p.yards} pass yds, ${p.tds} TD, ${p.ints} INT, ${p.rating} passer rating (${p.qbr} QBR), sacked ${p.sacksTaken} times`
     );
   }
   if (recap.sfScrimmageLeaders?.length) {
@@ -3064,7 +3074,7 @@ export function formatCompletedGameRecapForPrompt(recap) {
         return `${p.name}: ${p.scrimmageYards} scrimmage yds, ${p.totalTds} total TD (${parts.join('; ')})`;
       })
       .join(' | ');
-    lines.push(`49ERS SCRIMMAGE & RECEIVING LEADERS: ${scrimTxt}`);
+    lines.push(`${teamNickUp} SCRIMMAGE & RECEIVING LEADERS: ${scrimTxt}`);
   }
   if (recap.sfDefense) {
     const d = recap.sfDefense;
@@ -3083,11 +3093,11 @@ export function formatCompletedGameRecapForPrompt(recap) {
         `Top Tacklers: ${d.tackleLeaders.map(t => `${t.name} (${t.tackles} tkl${t.sacks ? `, ${t.sacks} sk` : ''}${t.qbHits ? `, ${t.qbHits} QBH` : ''})`).join(', ')}`
       );
     }
-    if (defBits.length) lines.push(`49ERS DEFENSIVE STANDOUTS: ${defBits.join(' | ')}`);
+    if (defBits.length) lines.push(`${teamNickUp} DEFENSIVE STANDOUTS: ${defBits.join(' | ')}`);
   }
   if (recap.sfScoringPlays?.length) {
     lines.push(
-      `49ERS SCORING PLAYS: ${recap.sfScoringPlays.map(sp => `Q${sp.quarter} ${sp.text}`).join(' | ')}`
+      `${teamNickUp} SCORING PLAYS: ${recap.sfScoringPlays.map(sp => `Q${sp.quarter} ${sp.text}`).join(' | ')}`
     );
   }
   if (recap.inGameInjuryNotes) {

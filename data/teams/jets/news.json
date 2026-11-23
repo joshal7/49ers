@@ -22,20 +22,20 @@
       "Head Coach Aaron Glenn emphasized the team's resilience in the winning locker room, though New York must now address a rush defense ranked #30 league-wide before facing Miami [S14](https://www.newyorkjets.com/video/jets-locker-room-win-speech-game-balls-vs-chargers-11-23-2026)"
     ],
     "coveredStoryKeys": [
+      "nyj_rss_a5d03cedd99a",
+      "nyj_vid_1c8dc106f686",
+      "nyj_rss_3bb5d93bfc1c",
       "nyj_rss_d637a94a7f03",
       "nyj_vid_b4f9333aabd7",
-      "nyj_espn_c66b1cfb0eee8",
-      "nyj_vid_a51846fa1380",
-      "nyj_espn_7435c17a22db1",
-      "nyj_espn_165c27d62fbe1"
+      "nyj_espn_c66b1cfb0eee8"
     ],
     "coveredUrls": [
       "https://www.newyorkjets.com/news/california-native-david-bailey-sacks-justin-herbert-twice-in-return-to-the-west-coast-11-22-2026",
       "https://www.newyorkjets.com/video/hc-aaron-glenn-postgame-press-conference-11-22-week-11",
       "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
       "https://www.newyorkjets.com/video/geno-smith-jets-postgame-press-conference-11-22-2026-week-11",
-      "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-      "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald"
+      "https://www.newyorkjets.com/video/garrett-wilson-jets-postgame-media-availability-11-22-2026-week-11",
+      "https://www.newyorkjets.com/video/david-bailey-jets-postgame-media-availability-11-22-2026-week-11"
     ],
     "sources": [
       {
@@ -69,22 +69,6 @@
         "author": "newyorkjets.com Video",
         "outlet": "newyorkjets.com Video",
         "publishedAt": "2026-11-23T01:40:00.000Z"
-      },
-      {
-        "sid": "S5",
-        "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-        "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-        "author": "NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T02:01:39Z"
-      },
-      {
-        "sid": "S6",
-        "title": "How active NFL players continue to redefine all-time sack list",
-        "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-        "author": "Sarah Barshop",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T01:49:27Z"
       },
       {
         "sid": "S7",
@@ -123,375 +107,6 @@
   "clusteredBriefs": [],
   "rawStream": [
     {
-      "id": "nyj_rss_d637a94a7f03",
-      "type": "article",
-      "title": "California Native David Bailey Sacks Justin Herbert Twice in Return to the West Coast",
-      "summary": "HC Aaron Glenn: ‘Anytime He’s on the Field, He Gives Us A Chance For Something Big to Happen’",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/qojokpvpwlt7qcjjmthp.png",
-      "imageAlt": "California Native David Bailey Sacks Justin Herbert Twice in Return to the West Coast",
-      "publishedAt": "2026-11-23T02:58:00.000Z",
-      "url": "https://www.newyorkjets.com/news/california-native-david-bailey-sacks-justin-herbert-twice-in-return-to-the-west-coast-11-22-2026",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Official",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Official",
-      "author": "newyorkjets.com Official",
-      "authorHandle": "@Jets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 26.3046
-    },
-    {
-      "id": "nyj_vid_b4f9333aabd7",
-      "type": "video",
-      "title": "HC Aaron Glenn Postgame Press Conference (11/22) | Week 11",
-      "summary": "The Jets' head coach takes questions from the media following the Week 11 win.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/f6usg6aqu3k6kzmmtgcl.png",
-      "imageAlt": "HC Aaron Glenn Postgame Press Conference (11/22) | Week 11",
-      "publishedAt": "2026-11-23T01:45:00.000Z",
-      "url": "https://www.newyorkjets.com/video/hc-aaron-glenn-postgame-press-conference-11-22-week-11",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/hc-aaron-glenn-postgame-press-conference-11-22-week-11",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Video",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Video",
-      "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.241,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 20.3649
-    },
-    {
-      "id": "nyj_espn_c66b1cfb0eee8",
-      "type": "article",
-      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
-      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
-      "publishedAt": "2026-11-23T01:42:13Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.234,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 19.9653
-    },
-    {
-      "id": "nyj_vid_a51846fa1380",
-      "type": "video",
-      "title": "QB Geno Smith Postgame Press Conference (11/22) | Week 11",
-      "summary": "The Jets QB takes questions from the media after the team's Week 11 win.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/nrsac3beipars1aofw9r.png",
-      "imageAlt": "QB Geno Smith Postgame Press Conference (11/22) | Week 11",
-      "publishedAt": "2026-11-23T01:40:00.000Z",
-      "url": "https://www.newyorkjets.com/video/geno-smith-jets-postgame-press-conference-11-22-2026-week-11",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/geno-smith-jets-postgame-press-conference-11-22-2026-week-11",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Video",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Video",
-      "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.229,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 19.6568
-    },
-    {
-      "id": "nyj_espn_7435c17a22db1",
-      "type": "article",
-      "title": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1122/r1749880_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-23T02:01:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50563342/week-11-sunday-games-takeaways-questions-2026",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 14.8599
-    },
-    {
-      "id": "nyj_espn_165c27d62fbe1",
-      "type": "article",
-      "title": "How active NFL players continue to redefine all-time sack list",
-      "summary": "Myles Garrett's torrid pace up the all-time sack list paces active players making their moves among the greats.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0828/nfl_data_viz_garrett_cr_16x9_608x342.jpg",
-      "imageAlt": "How active NFL players continue to redefine all-time sack list",
-      "publishedAt": "2026-11-23T01:49:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "sarah_barshop",
-      "reporterName": "Sarah Barshop",
-      "author": "Sarah Barshop",
-      "authorHandle": "@sarahbarshop",
-      "authorProfileUrl": "https://x.com/sarahbarshop",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.4685
-    },
-    {
-      "id": "nyj_vid_781eded9fcfa",
-      "type": "video",
-      "title": "WR Garrett Wilson Postgame Media Availability (11/22) | Week 11",
-      "summary": "The Jets' wide reciever takes questions from the media postgame after the team's Week 11 victory.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/lsscrq7wlcinpptf7g9b.png",
-      "imageAlt": "WR Garrett Wilson Postgame Media Availability (11/22) | Week 11",
-      "publishedAt": "2026-11-23T00:33:29.000Z",
-      "url": "https://www.newyorkjets.com/video/garrett-wilson-jets-postgame-media-availability-11-22-2026-week-11",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/garrett-wilson-jets-postgame-media-availability-11-22-2026-week-11",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Video",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Video",
-      "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.081,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.1906
-    },
-    {
-      "id": "nyj_vid_55b01d73747f",
-      "type": "video",
-      "title": "Edge David Bailey Postgame Media Availability (11/22) | Week 11",
-      "summary": "The Jets' rookie edge rusher takes questions from the media postgame after the team's Week 11 victory.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/iy0h3lbzpxdds5dvoaaj.png",
-      "imageAlt": "Edge David Bailey Postgame Media Availability (11/22) | Week 11",
-      "publishedAt": "2026-11-23T00:27:23.000Z",
-      "url": "https://www.newyorkjets.com/video/david-bailey-jets-postgame-media-availability-11-22-2026-week-11",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/david-bailey-jets-postgame-media-availability-11-22-2026-week-11",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Video",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Video",
-      "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.068,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 12.7845
-    },
-    {
-      "id": "nyj_vid_e943a6ea6583",
-      "type": "video",
-      "title": "RB Breece Hall Postgame Media Availability (11/22) | Week 11",
-      "summary": "The Jets' running back takes questions from the media after the team's Week 11 win.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/mi7hjxa04doa1h9gayin.png",
-      "imageAlt": "RB Breece Hall Postgame Media Availability (11/22) | Week 11",
-      "publishedAt": "2026-11-23T00:23:13.000Z",
-      "url": "https://www.newyorkjets.com/video/breece-hall-jets-postgame-media-availability-11-22-2026-week-11",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/breece-hall-jets-postgame-media-availability-11-22-2026-week-11",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Video",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Video",
-      "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.06,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 12.5194
-    },
-    {
-      "id": "nyj_vid_0547d711edca",
-      "type": "video",
-      "title": "WR Sterling Shepard Postgame Media Availability (11/22) | Week 11",
-      "summary": "The Jets' wideout takes questions from the media postgame after the team's Week 11 victory.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/ogibc4q0ulexfgwgp2vl.png",
-      "imageAlt": "WR Sterling Shepard Postgame Media Availability (11/22) | Week 11",
-      "publishedAt": "2026-11-23T00:18:24.000Z",
-      "url": "https://www.newyorkjets.com/video/sterling-shepard-jets-postgame-media-availability-11-22-2026-week-11",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/sterling-shepard-jets-postgame-media-availability-11-22-2026-week-11",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Video",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Video",
-      "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.05,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 12.2248
-    },
-    {
-      "id": "nyj_espn_60efae509e729",
-      "type": "article",
-      "title": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749927_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 arrivals: George Kittle rocks luchador mask ahead of SNF in Mexico",
-      "publishedAt": "2026-11-23T01:00:32Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50535179/nfl-week-11-fashionable-arrivals",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 9.6113
-    },
-    {
       "id": "nyj_rss_a5d03cedd99a",
       "type": "article",
       "title": "Jets-Chargers Game Recap | Offense Powers Green & White to 27-24 Victory in Los Angeles",
@@ -512,17 +127,51 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 1.254,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.7438
+      "storyRank": 21.1906
+    },
+    {
+      "id": "nyj_vid_1c8dc106f686",
+      "type": "video",
+      "title": "Jets Victory Speech | Who Earned Game Balls vs. Chargers?",
+      "summary": "Go inside the winning locker room for sights and sounds with head coach Aaron Glenn and the Jets following the 27-24 road win at the Chargers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/etsihh6nyxzk7x9pwt5n.png",
+      "imageAlt": "Jets Victory Speech | Who Earned Game Balls vs. Chargers?",
+      "publishedAt": "2026-11-23T02:58:00.000Z",
+      "url": "https://www.newyorkjets.com/video/jets-locker-room-win-speech-game-balls-vs-chargers-11-23-2026",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/jets-locker-room-win-speech-game-balls-vs-chargers-11-23-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Video",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Video",
+      "author": "newyorkjets.com Video",
+      "authorHandle": "@Jets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.249,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 20.8814
     },
     {
       "id": "nyj_rss_3bb5d93bfc1c",
@@ -555,27 +204,26 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.6591
+      "storyRank": 13.4695
     },
     {
-      "id": "nyj_vid_1c8dc106f686",
-      "type": "video",
-      "title": "Jets Victory Speech | Who Earned Game Balls vs. Chargers?",
-      "summary": "Go inside the winning locker room for sights and sounds with head coach Aaron Glenn and the Jets following the 27-24 road win at the Chargers.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/etsihh6nyxzk7x9pwt5n.png",
-      "imageAlt": "Jets Victory Speech | Who Earned Game Balls vs. Chargers?",
+      "id": "nyj_rss_d637a94a7f03",
+      "type": "article",
+      "title": "California Native David Bailey Sacks Justin Herbert Twice in Return to the West Coast",
+      "summary": "HC Aaron Glenn: ‘Anytime He’s on the Field, He Gives Us A Chance For Something Big to Happen’",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/qojokpvpwlt7qcjjmthp.png",
+      "imageAlt": "California Native David Bailey Sacks Justin Herbert Twice in Return to the West Coast",
       "publishedAt": "2026-11-23T02:58:00.000Z",
-      "url": "https://www.newyorkjets.com/video/jets-locker-room-win-speech-game-balls-vs-chargers-11-23-2026",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/jets-locker-room-win-speech-game-balls-vs-chargers-11-23-2026",
+      "url": "https://www.newyorkjets.com/news/california-native-david-bailey-sacks-justin-herbert-twice-in-return-to-the-west-coast-11-22-2026",
       "outletId": "jets_official",
-      "outletName": "newyorkjets.com Video",
+      "outletName": "newyorkjets.com Official",
       "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Video",
-      "author": "newyorkjets.com Video",
+      "reporterName": "newyorkjets.com Official",
+      "author": "newyorkjets.com Official",
       "authorHandle": "@Jets",
       "authorProfileUrl": "https://www.newyorkjets.com/news/",
       "trustTier": 1,
-      "wireSource": "club_video_rss",
+      "wireSource": "club_official_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -589,7 +237,175 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.5761
+      "storyRank": 13.3653
+    },
+    {
+      "id": "nyj_vid_b4f9333aabd7",
+      "type": "video",
+      "title": "HC Aaron Glenn Postgame Press Conference (11/22) | Week 11",
+      "summary": "The Jets' head coach takes questions from the media following the Week 11 win.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/f6usg6aqu3k6kzmmtgcl.png",
+      "imageAlt": "HC Aaron Glenn Postgame Press Conference (11/22) | Week 11",
+      "publishedAt": "2026-11-23T01:45:00.000Z",
+      "url": "https://www.newyorkjets.com/video/hc-aaron-glenn-postgame-press-conference-11-22-week-11",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/hc-aaron-glenn-postgame-press-conference-11-22-week-11",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Video",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Video",
+      "author": "newyorkjets.com Video",
+      "authorHandle": "@Jets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.085,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 13.327
+    },
+    {
+      "id": "nyj_espn_c66b1cfb0eee8",
+      "type": "article",
+      "title": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+      "summary": "Check here for all of the top moments, TDs and analysis from games at the Broncos, Jets, Cowboys, Eagles and more.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749962_608x342_16-9.jpg",
+      "imageAlt": "Week 11 NFL highlights: Best plays, moments, touchdowns, more",
+      "publishedAt": "2026-11-23T01:42:13Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50562956/week-11-highlights-sunday-best-plays-touchdowns-2026",
+      "outletId": "espn_nyj",
+      "outletName": "ESPN",
+      "reporterId": "espn_nyj",
+      "reporterName": "NFL Nation",
+      "author": "NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.079,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 13.1356
+    },
+    {
+      "id": "nyj_vid_a51846fa1380",
+      "type": "video",
+      "title": "QB Geno Smith Postgame Press Conference (11/22) | Week 11",
+      "summary": "The Jets QB takes questions from the media after the team's Week 11 win.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/nrsac3beipars1aofw9r.png",
+      "imageAlt": "QB Geno Smith Postgame Press Conference (11/22) | Week 11",
+      "publishedAt": "2026-11-23T01:40:00.000Z",
+      "url": "https://www.newyorkjets.com/video/geno-smith-jets-postgame-press-conference-11-22-2026-week-11",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/geno-smith-jets-postgame-press-conference-11-22-2026-week-11",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Video",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Video",
+      "author": "newyorkjets.com Video",
+      "authorHandle": "@Jets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.075,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 12.9865
+    },
+    {
+      "id": "nyj_vid_50479ba87f64",
+      "type": "video",
+      "title": "Jets-Chargers Postgame Show | Jets Overtime",
+      "summary": "Recapping the Jets' Week 11 win against the Chargers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/gvaf0hdkhispc2vqh80t.png",
+      "imageAlt": "Jets-Chargers Postgame Show | Jets Overtime",
+      "publishedAt": "2026-11-23T01:35:00.000Z",
+      "url": "https://www.newyorkjets.com/video/jets-chargers-postgame-overtime-show-11-22-2026",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/jets-chargers-postgame-overtime-show-11-22-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Video",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Video",
+      "author": "newyorkjets.com Video",
+      "authorHandle": "@Jets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.064,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 12.6609
+    },
+    {
+      "id": "nyj_espn_7a956123b6c0f",
+      "type": "article",
+      "title": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
+      "summary": "— Mired in a losing season, New York Jets quarterback Geno Smith's efficiency has been largely overlooked with the offense lagging. Sterling Shepard helped change that Sunday, catching two touchdown passes from Smith and potentially earning himself a...",
+      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873074.png?templateId=espn.applewatch.awayhome.1",
+      "imageAlt": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
+      "publishedAt": "2026-11-23T01:31:34Z",
+      "url": "https://www.espn.com/nfl/recap?gameId=401873074",
+      "outletId": "espn_nyj",
+      "outletName": "ESPN",
+      "reporterId": "espn_nyj",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 1.057,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 12.4455
     },
     {
       "id": "nyj_vid_1dcc7ccfb742",
@@ -623,18 +439,18 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.8122
+      "storyRank": 10.923
     },
     {
-      "id": "nyj_vid_f54fc9c7b273",
+      "id": "nyj_vid_781eded9fcfa",
       "type": "video",
-      "title": "QB Geno Smith's Best Plays from 3-TD Game & Win vs. Chargers",
-      "summary": "Check out the best plays by Jets QB Geno Smith from his 3-touchdown game and Week 11 victory against the Los Angeles Chargers at SoFi Stadium Sunday.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/u9ojam9wcej11ys0jzbv.png",
-      "imageAlt": "QB Geno Smith's Best Plays from 3-TD Game & Win vs. Chargers",
-      "publishedAt": "2026-11-23T02:25:00.000Z",
-      "url": "https://www.newyorkjets.com/video/geno-smith-highlights-jets-best-plays-from-3-td-game-win-vs-chargers-11-22-2026",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/geno-smith-highlights-jets-best-plays-from-3-td-game-win-vs-chargers-11-22-2026",
+      "title": "WR Garrett Wilson Postgame Media Availability (11/22) | Week 11",
+      "summary": "The Jets' wide reciever takes questions from the media postgame after the team's Week 11 victory.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/lsscrq7wlcinpptf7g9b.png",
+      "imageAlt": "WR Garrett Wilson Postgame Media Availability (11/22) | Week 11",
+      "publishedAt": "2026-11-23T00:33:29.000Z",
+      "url": "https://www.newyorkjets.com/video/garrett-wilson-jets-postgame-media-availability-11-22-2026-week-11",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/garrett-wilson-jets-postgame-media-availability-11-22-2026-week-11",
       "outletId": "jets_official",
       "outletName": "newyorkjets.com Video",
       "reporterId": "jets_official",
@@ -647,28 +463,28 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 0.945,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5811
+      "storyRank": 9.5839
     },
     {
-      "id": "nyj_vid_50479ba87f64",
+      "id": "nyj_vid_55b01d73747f",
       "type": "video",
-      "title": "Jets-Chargers Postgame Show | Jets Overtime",
-      "summary": "Recapping the Jets' Week 11 win against the Chargers.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/gvaf0hdkhispc2vqh80t.png",
-      "imageAlt": "Jets-Chargers Postgame Show | Jets Overtime",
-      "publishedAt": "2026-11-23T01:35:00.000Z",
-      "url": "https://www.newyorkjets.com/video/jets-chargers-postgame-overtime-show-11-22-2026",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/jets-chargers-postgame-overtime-show-11-22-2026",
+      "title": "Edge David Bailey Postgame Media Availability (11/22) | Week 11",
+      "summary": "The Jets' rookie edge rusher takes questions from the media postgame after the team's Week 11 victory.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/iy0h3lbzpxdds5dvoaaj.png",
+      "imageAlt": "Edge David Bailey Postgame Media Availability (11/22) | Week 11",
+      "publishedAt": "2026-11-23T00:27:23.000Z",
+      "url": "https://www.newyorkjets.com/video/david-bailey-jets-postgame-media-availability-11-22-2026-week-11",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/david-bailey-jets-postgame-media-availability-11-22-2026-week-11",
       "outletId": "jets_official",
       "outletName": "newyorkjets.com Video",
       "reporterId": "jets_official",
@@ -681,61 +497,28 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 0.934,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0216
+      "storyRank": 9.3501
     },
     {
-      "id": "nyj_espn_7a956123b6c0f",
-      "type": "article",
-      "title": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
-      "summary": "— Mired in a losing season, New York Jets quarterback Geno Smith's efficiency has been largely overlooked with the offense lagging. Sterling Shepard helped change that Sunday, catching two touchdown passes from Smith and potentially earning himself a...",
-      "imageUrl": "https://s.espncdn.com/stitcher/sports/football/nfl/events/401873074.png?templateId=espn.applewatch.awayhome.1",
-      "imageAlt": "Jets score on first 5 drives and edge Chargers 27-24 to snap 5-game skid",
-      "publishedAt": "2026-11-23T01:31:34Z",
-      "url": "https://www.espn.com/nfl/recap?gameId=401873074",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.9483
-    },
-    {
-      "id": "nyj_vid_be97321b561c",
+      "id": "nyj_vid_e943a6ea6583",
       "type": "video",
-      "title": "David Bailey, Breece Hall, Sterling Shepard & More React to the Win Over the Chargers | Press Pass",
-      "summary": "Hear postgame interviews with David Bailey, Breece Hall, Sterling Shepard, Garrett Wilson and Demario Davis following the road win over the Chargers.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/it687sfmsbbagwmx8box.png",
-      "imageAlt": "David Bailey, Breece Hall, Sterling Shepard & More React to the Win Over the Chargers | Press Pass",
-      "publishedAt": "2026-11-23T01:04:28.000Z",
-      "url": "https://www.newyorkjets.com/video/jets-postgame-player-interviews-david-bailey-breece-hall-sterling-chepard-garrett-wilson-demario-davis-11-22-2026",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/jets-postgame-player-interviews-david-bailey-breece-hall-sterling-chepard-garrett-wilson-demario-davis-11-22-2026",
+      "title": "RB Breece Hall Postgame Media Availability (11/22) | Week 11",
+      "summary": "The Jets' running back takes questions from the media after the team's Week 11 win.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/mi7hjxa04doa1h9gayin.png",
+      "imageAlt": "RB Breece Hall Postgame Media Availability (11/22) | Week 11",
+      "publishedAt": "2026-11-23T00:23:13.000Z",
+      "url": "https://www.newyorkjets.com/video/breece-hall-jets-postgame-media-availability-11-22-2026-week-11",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/breece-hall-jets-postgame-media-availability-11-22-2026-week-11",
       "outletId": "jets_official",
       "outletName": "newyorkjets.com Video",
       "reporterId": "jets_official",
@@ -748,17 +531,85 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingPriority": 0.927,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "post_game_recap",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4621
+      "storyRank": 9.196
+    },
+    {
+      "id": "nyj_vid_0547d711edca",
+      "type": "video",
+      "title": "WR Sterling Shepard Postgame Media Availability (11/22) | Week 11",
+      "summary": "The Jets' wideout takes questions from the media postgame after the team's Week 11 victory.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/ogibc4q0ulexfgwgp2vl.png",
+      "imageAlt": "WR Sterling Shepard Postgame Media Availability (11/22) | Week 11",
+      "publishedAt": "2026-11-23T00:18:24.000Z",
+      "url": "https://www.newyorkjets.com/video/sterling-shepard-jets-postgame-media-availability-11-22-2026-week-11",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/sterling-shepard-jets-postgame-media-availability-11-22-2026-week-11",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Video",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Video",
+      "author": "newyorkjets.com Video",
+      "authorHandle": "@Jets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.918,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 9.0234
+    },
+    {
+      "id": "nyj_vid_8b67cdc18a11",
+      "type": "video",
+      "title": "Jets-Chargers Highlight | Geno Smith Finds Sterling Shepard for 16-Yard Touchdown to Extend Lead",
+      "summary": "Jets' QB Geno Smith hits WR Sterling Shepard with a short pass and the veteran races into the end zone for his second score of the game.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/idok4dtkqxifpqo49ywg.jpg",
+      "imageAlt": "Jets-Chargers Highlight | Geno Smith Finds Sterling Shepard for 16-Yard Touchdown to Extend Lead",
+      "publishedAt": "2026-11-22T23:23:09.000Z",
+      "url": "https://www.newyorkjets.com/video/jets-chargers-highlight-geno-smith-finds-sterling-shepard-for-16-yard-touchdown-to-extend-lead-11-22-2026",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/jets-chargers-highlight-geno-smith-finds-sterling-shepard-for-16-yard-touchdown-to-extend-lead-11-22-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Video",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Video",
+      "author": "newyorkjets.com Video",
+      "authorHandle": "@Jets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0.826,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "post_game_recap",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.3866
     },
     {
       "id": "nyj_espn_b338a34b45093",
@@ -791,7 +642,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7968
+      "storyRank": 5.2651
     },
     {
       "id": "nyj_vid_339de467d943",
@@ -825,7 +676,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7135
+      "storyRank": 5.0675
     },
     {
       "id": "nyj_vid_0e7a2abab344",
@@ -859,41 +710,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4731
-    },
-    {
-      "id": "nyj_vid_8b67cdc18a11",
-      "type": "video",
-      "title": "Jets-Chargers Highlight | Geno Smith Finds Sterling Shepard for 16-Yard Touchdown to Extend Lead",
-      "summary": "Jets' QB Geno Smith hits WR Sterling Shepard with a short pass and the veteran races into the end zone for his second score of the game.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/idok4dtkqxifpqo49ywg.jpg",
-      "imageAlt": "Jets-Chargers Highlight | Geno Smith Finds Sterling Shepard for 16-Yard Touchdown to Extend Lead",
-      "publishedAt": "2026-11-22T23:23:09.000Z",
-      "url": "https://www.newyorkjets.com/video/jets-chargers-highlight-geno-smith-finds-sterling-shepard-for-16-yard-touchdown-to-extend-lead-11-22-2026",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/jets-chargers-highlight-geno-smith-finds-sterling-shepard-for-16-yard-touchdown-to-extend-lead-11-22-2026",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Video",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Video",
-      "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.4589
+      "storyRank": 4.4791
     },
     {
       "id": "nyj_vid_9ee1840115e0",
@@ -927,7 +744,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.418
+      "storyRank": 4.3402
     },
     {
       "id": "nyj_vid_f2c1e3043b39",
@@ -961,7 +778,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2518
+      "storyRank": 3.9115
     },
     {
       "id": "nyj_vid_21897e5647d3",
@@ -995,7 +812,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0967
+      "storyRank": 3.4972
     },
     {
       "id": "nyj_vid_d6a3c86d1f93",
@@ -1029,7 +846,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0723
+      "storyRank": 3.4305
     },
     {
       "id": "nyj_vid_e2432142377d",
@@ -1063,7 +880,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0549
+      "storyRank": 3.383
     },
     {
       "id": "nyj_vid_2bcefb871101",
@@ -1097,7 +914,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0145
+      "storyRank": 3.2716
     },
     {
       "id": "nyj_vid_6640b35ea189",
@@ -1131,7 +948,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9296
+      "storyRank": 3.0339
+    },
+    {
+      "id": "nyj_vid_f54fc9c7b273",
+      "type": "video",
+      "title": "QB Geno Smith's Best Plays from 3-TD Game & Win vs. Chargers",
+      "summary": "Check out the best plays by Jets QB Geno Smith from his 3-touchdown game and Week 11 victory against the Los Angeles Chargers at SoFi Stadium Sunday.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/u9ojam9wcej11ys0jzbv.png",
+      "imageAlt": "QB Geno Smith's Best Plays from 3-TD Game & Win vs. Chargers",
+      "publishedAt": "2026-11-23T02:25:00.000Z",
+      "url": "https://www.newyorkjets.com/video/geno-smith-highlights-jets-best-plays-from-3-td-game-win-vs-chargers-11-22-2026",
+      "externalVideoUrl": "https://www.newyorkjets.com/video/geno-smith-highlights-jets-best-plays-from-3-td-game-win-vs-chargers-11-22-2026",
+      "outletId": "jets_official",
+      "outletName": "newyorkjets.com Video",
+      "reporterId": "jets_official",
+      "reporterName": "newyorkjets.com Video",
+      "author": "newyorkjets.com Video",
+      "authorHandle": "@Jets",
+      "authorProfileUrl": "https://www.newyorkjets.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.6416
     },
     {
       "id": "nyj_vid_039b34071c50",
@@ -1165,7 +1016,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1703
+      "storyRank": 0.5773
     },
     {
       "id": "nyj_espn_f6aa6be9753b2",
@@ -1198,7 +1049,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0681
+      "storyRank": 0.2491
     },
     {
       "id": "nyj_rss_0306813751a4",
@@ -1231,7 +1082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0313
+      "storyRank": 0.1189
     },
     {
       "id": "nyj_vid_1e8c978e0b02",
@@ -1265,7 +1116,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0313
+      "storyRank": 0.1188
     },
     {
       "id": "nyj_rss_0b6036be5203",
@@ -1298,7 +1149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0313
+      "storyRank": 0.1187
     },
     {
       "id": "nyj_rss_e5977f344fc3",
@@ -1331,7 +1182,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0312
+      "storyRank": 0.1186
     },
     {
       "id": "nyj_rss_4e3b603ab89b",
@@ -1364,7 +1215,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0312
+      "storyRank": 0.1184
     },
     {
       "id": "nyj_rss_d8928294853f",
@@ -1397,7 +1248,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0312
+      "storyRank": 0.1184
     },
     {
       "id": "nyj_vid_175440c61e1a",
@@ -1431,7 +1282,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0311
+      "storyRank": 0.1183
     },
     {
       "id": "nyj_vid_68a83fd60589",
@@ -1454,18 +1305,18 @@
       "wireSource": "club_video_rss",
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.124,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "standard",
+      "storyTier": "film_trench",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0311
+      "storyRank": 0.2067
     },
     {
       "id": "nyj_rss_01cc2c98060e",
@@ -1498,7 +1349,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0311
+      "storyRank": 0.1181
     },
     {
       "id": "nyj_rss_a538ed41729f",
@@ -1531,7 +1382,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.1139
     },
     {
       "id": "nyj_vid_ae518ccb67cc",
@@ -1565,7 +1416,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0234
+      "storyRank": 0.0898
     },
     {
       "id": "nyj_vid_f136c422cd3c",
@@ -1599,7 +1450,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0218
+      "storyRank": 0.0836
     },
     {
       "id": "nyj_tx_252526788649",
@@ -1633,40 +1484,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0184
-    },
-    {
-      "id": "nyj_espn_4b15838125df3",
-      "type": "article",
-      "title": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "summary": "Here's a look at what each NFL team is wearing in Week 11, led by Houston debuting its Rivalries combination.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/commanders-texans-week-11-unis16x9.jpg",
-      "imageAlt": "NFL Week 11 uniforms: Texans debut Rivalries look, Commanders rock 'Hail Raiser'",
-      "publishedAt": "2026-11-20T22:49:33Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50514892/nfl-week-11-uniforms",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "Anthony Gharib",
-      "author": "Anthony Gharib",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0141
+      "storyRank": 0.071
     },
     {
       "id": "nyj_espn_3e3b9e9f984f4",
@@ -1699,7 +1517,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.054
     },
     {
       "id": "nyj_espn_45b75505a0499",
@@ -1732,106 +1550,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
-    },
-    {
-      "id": "nyj_espn_948e2e73e7ffb",
-      "type": "article",
-      "title": "Draft buzz: Interest in Oklahoma State's Drew Mestemaker could spur draft trade",
-      "summary": "If the Titans or Chargers wind up with the No. 1 selection and stick with their franchise quarterbacks, interest in Oklahoma State's Drew Mestemaker could lead to a team seeking to trade up for the top overall pick.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1111/r1744598_1296x729_16-9.jpg",
-      "imageAlt": "Draft buzz: Interest in Oklahoma State's Drew Mestemaker could spur draft trade",
-      "publishedAt": "2026-11-20T21:59:31Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50541939/draft-buzz-mestemaker-spur-auction-no-1-pick",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0553
-    },
-    {
-      "id": "nyj_espn_e18552bc1fb8c",
-      "type": "article",
-      "title": "NFL Week 11 betting odds: Lines and totals for every game",
-      "summary": "Updated odds, spreads, totals and FPI predictions for every NFL game in Week 11.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746635_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 betting odds: Lines and totals for every game",
-      "publishedAt": "2026-11-20T20:13:57Z",
-      "url": "https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "ESPN",
-      "author": "ESPN",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0529
-    },
-    {
-      "id": "nyj_espn_f9ca15e024182",
-      "type": "article",
-      "title": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "summary": "Joe Burrow vs. Jayden Daniels? Fernando Mendoza vs. Bo Nix? There are 12 more games in Week 11, and we have picks, predictions and more for all of them.",
-      "imageUrl": "https://a.espncdn.com/photo/2025/0819/r1533632_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 preview: Picks, predictions, schedule, betting odds, fantasy tips",
-      "publishedAt": "2026-11-20T18:48:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50522208/week-11-picks-predictions-schedule-fantasy-odds-2026",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "author": "NFL Nation, Pamela Maldonado, Eric Moody and Seth Walder",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0511
+      "storyRank": 0.054
     },
     {
       "id": "nyj_vid_53fa4cfc90e9",
@@ -1865,7 +1584,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0504
+      "storyRank": 0.049
     },
     {
       "id": "nyj_vid_b626bd9776a0",
@@ -1899,7 +1618,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.047
+      "storyRank": 0.0458
     },
     {
       "id": "nyj_rss_276a2ff60e7e",
@@ -1932,7 +1651,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0115
+      "storyRank": 0.0449
     },
     {
       "id": "nyj_rss_f406ce5af207",
@@ -1965,7 +1684,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.02
+      "storyRank": 0.0787
     },
     {
       "id": "nyj_vid_4b52985a1f2a",
@@ -1999,7 +1718,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0322
+      "storyRank": 0.0316
     },
     {
       "id": "nyj_vid_db06aa68662e",
@@ -2033,40 +1752,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
-    },
-    {
-      "id": "nyj_espn_b95a427d7fb7b",
-      "type": "article",
-      "title": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "summary": "Here's the good and the bad for each offensive coordinator or playcaller through Week 10, plus keys to their success the rest of the way.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1118/32_for_32_midseason_look_608x342.png",
-      "imageAlt": "Midseason reports on every NFL team's offensive coordinator, playcaller",
-      "publishedAt": "2026-11-19T17:37:25Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50520404/nfl-offensive-coordinators-playcallers-midseason-report",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0306
+      "storyRank": 0.0315
     },
     {
       "id": "nyj_vid_dcf0525fbb45",
@@ -2100,7 +1786,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0306
+      "storyRank": 0.03
     },
     {
       "id": "nyj_vid_6c51c16c1d55",
@@ -2134,7 +1820,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0304
+      "storyRank": 0.0298
     },
     {
       "id": "nyj_vid_71897d8bc7cb",
@@ -2168,7 +1854,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0303
+      "storyRank": 0.0297
     },
     {
       "id": "nyj_vid_f237629dd526",
@@ -2202,7 +1888,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0071
+      "storyRank": 0.0278
     },
     {
       "id": "nyj_rss_8983edebfd21",
@@ -2235,40 +1921,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
-    },
-    {
-      "id": "nyj_espn_cd66439a0fce6",
-      "type": "article",
-      "title": "Jets QB Geno Smith (ankle) intends to play vs. Chargers: 'That's the plan'",
-      "summary": "Jets quarterback Geno Smith says he intends to play Sunday against the Chargers despite still walking with a noticeable limp due to an ankle injury.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1118/r1747812_1296x729_16-9.jpg",
-      "imageAlt": "Jets QB Geno Smith (ankle) intends to play vs. Chargers: 'That's the plan'",
-      "publishedAt": "2026-11-18T21:09:21Z",
-      "url": "https://www.espn.com/mlb/story/_/id/50523800/jets-qb-geno-smith-ankle-intends-play-vs-chargers",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "rich_cimini",
-      "reporterName": "Rich Cimini",
-      "author": "Rich Cimini",
-      "authorHandle": "@RichCimini",
-      "authorProfileUrl": "https://x.com/RichCimini",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0224
     },
     {
       "id": "nyj_rss_89d67790886c",
@@ -2301,7 +1954,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0142
+      "storyRank": 0.0562
     },
     {
       "id": "nyj_rss_295e945511b9",
@@ -2334,7 +1987,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0218
     },
     {
       "id": "nyj_vid_d958e24d2849",
@@ -2368,7 +2021,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0218
+      "storyRank": 0.0215
     },
     {
       "id": "nyj_vid_e4615a76e97c",
@@ -2402,73 +2055,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0216
-    },
-    {
-      "id": "nyj_espn_533c73d43a5d8",
-      "type": "article",
-      "title": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "summary": "Which NFL team could land Drew Mestemaker? Who needs Chris Cole, Ashton Hampton or Jamari Johnson? Jordan Reid projected first-round picks for 2027 -- and a trade.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/261118_cfb_jordan-reid-mock-draft_16x9_608x342.jpg",
-      "imageAlt": "2027 NFL mock draft: Reid's midseason first-round predictions for all 32 picks",
-      "publishedAt": "2026-11-18T17:51:58Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/50502243/2027-nfl-mock-draft-reid-midseason-32-first-round-predictions",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "Jordan Reid",
-      "author": "Jordan Reid",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0214
-    },
-    {
-      "id": "nyj_espn_3b2fdfe28dfc8",
-      "type": "article",
-      "title": "NFL Week 11 latest intel, buzz questions, news, fantasy tips: What we're hearing",
-      "summary": "What are people around the league saying about Fernando Mendoza? Could changes be coming in Dallas? And what now for New England? Here's the latest intel.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1117/r1747264_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 11 latest intel, buzz questions, news, fantasy tips: What we're hearing",
-      "publishedAt": "2026-11-18T17:48:56Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50513379/week-11-buzz-fantasy-predictions-graziano-fowler-2026",
-      "outletId": "espn_national",
-      "outletName": "ESPN",
-      "reporterId": "jeremy_fowler",
-      "reporterName": "Jeremy Fowler",
-      "author": "Jeremy Fowler",
-      "authorHandle": "@JFowlerESPN",
-      "authorProfileUrl": "https://x.com/JFowlerESPN",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0214
+      "storyRank": 0.0213
     },
     {
       "id": "nyj_vid_cce89a1f68a0",
@@ -2502,7 +2089,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0212
+      "storyRank": 0.0209
     },
     {
       "id": "nyj_espn_2174513a3461e",
@@ -2535,7 +2122,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0584
+      "storyRank": 0.0799
     },
     {
       "id": "nyj_tx_97d7ff984bf1",
@@ -2569,40 +2156,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
-    },
-    {
-      "id": "nyj_espn_d51f7983010a2",
-      "type": "article",
-      "title": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "summary": "How does every NFL team stack up heading into Week 11? We made our 1-32 list and picked the non-quarterback MVPs for each roster.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/nfl_power_rankings_608x342.png",
-      "imageAlt": "NFL Power Rankings: Stacking all 32 teams for Week 11, plus non-QB MVPs",
-      "publishedAt": "2026-11-17T20:45:39Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0186
     },
     {
       "id": "nyj_vid_e2a43cee5058",
@@ -2636,40 +2190,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
-    },
-    {
-      "id": "nyj_espn_51b53fdbdad19",
-      "type": "article",
-      "title": "2027 NFL draft order projections for Round 1, chances for top pick, more",
-      "summary": "ESPN's Football Power Index projects the 2027 NFL draft order for Round 1, complete with each team's chances to pick in the top five, in the top 10 and at No. 1.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0601/r1666608_608x342_16-9.jpg",
-      "imageAlt": "2027 NFL draft order projections for Round 1, chances for top pick, more",
-      "publishedAt": "2026-11-17T11:41:00Z",
-      "url": "https://www.espn.com/nfl/draft2027/story/_/id/49794361/2027-nfl-draft-order-projections-first-round-picks",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "ESPN staff",
-      "author": "ESPN staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0151
+      "storyRank": 0.0163
     },
     {
       "id": "nyj_tx_52271b30ec9a",
@@ -2703,7 +2224,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0036
+      "storyRank": 0.0143
     },
     {
       "id": "nyj_espn_38ff0ea9dae38",
@@ -2732,39 +2253,6 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0034
-    },
-    {
-      "id": "nyj_espn_ee9a3465db613",
-      "type": "article",
-      "title": "Kyle Hamilton rocks Christmas sweater ahead of 'MNF,' leads NFL Week 10 arrivals",
-      "summary": "NFL stars continue to turn game-day arrivals into their own weekly fashion showcase.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746900_545x307_16-9.png",
-      "imageAlt": "Kyle Hamilton rocks Christmas sweater ahead of 'MNF,' leads NFL Week 10 arrivals",
-      "publishedAt": "2026-11-16T23:53:27Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50465223/nfl-week-10-fashionable-arrivals",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "ESPN Staff",
-      "author": "ESPN Staff",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
@@ -2802,7 +2290,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.0125
     },
     {
       "id": "nyj_espn_0d7fbd850dab3",
@@ -2835,7 +2323,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.0125
     },
     {
       "id": "nyj_vid_e43120d93511",
@@ -2869,7 +2357,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0124
+      "storyRank": 0.0123
     },
     {
       "id": "nyj_vid_0f6f38aa6f91",
@@ -2903,7 +2391,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0124
+      "storyRank": 0.0122
     },
     {
       "id": "nyj_vid_da9ec76bfabb",
@@ -2937,7 +2425,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
+      "storyRank": 0.0122
     },
     {
       "id": "nyj_vid_164c711df927",
@@ -2971,74 +2459,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0121
-    },
-    {
-      "id": "nyj_espn_ef57ad8125e5f",
-      "type": "article",
-      "title": "NFL Week 10: Big takeaways, questions and fantasy spin from Sunday's games",
-      "summary": "Our NFL Nation reporters react to all the action, answering the biggest questions coming out of each Sunday game. Here's what we learned from Week 10.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746498_608x342_16-9.jpg",
-      "imageAlt": "NFL Week 10: Big takeaways, questions and fantasy spin from Sunday's games",
-      "publishedAt": "2026-11-16T06:53:37Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50443510/week-10-sunday-games-takeaways-questions-2026",
-      "outletId": "espn_nyj",
-      "outletName": "ESPN",
-      "reporterId": "espn_nyj",
-      "reporterName": "NFL Nation",
-      "author": "NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0115
-    },
-    {
-      "id": "nyj_vid_f566afdf5dd9",
-      "type": "video",
-      "title": "WR Garrett Wilson's Best Plays from 106-Yard Performance vs. Bills",
-      "summary": "Watch WR Garrett Wilson's best plays from his 106-yard game against the Bills in Week 10.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jets/hypyel2tiqrdr628bscm.png",
-      "imageAlt": "WR Garrett Wilson's Best Plays from 106-Yard Performance vs. Bills",
-      "publishedAt": "2026-11-15T23:05:00.000Z",
-      "url": "https://www.newyorkjets.com/video/garrett-wilson-best-plays-106-yard-performance-vs-bills-11-15-2026",
-      "externalVideoUrl": "https://www.newyorkjets.com/video/garrett-wilson-best-plays-106-yard-performance-vs-bills-11-15-2026",
-      "outletId": "jets_official",
-      "outletName": "newyorkjets.com Video",
-      "reporterId": "jets_official",
-      "reporterName": "newyorkjets.com Video",
-      "author": "newyorkjets.com Video",
-      "authorHandle": "@Jets",
-      "authorProfileUrl": "https://www.newyorkjets.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.012
     },
     {
       "id": "nyj_vid_d207f7ee05e3",
@@ -3072,7 +2493,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0107
     },
     {
       "id": "nyj_vid_42cffb6530c4",
@@ -3106,7 +2527,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0106
     },
     {
       "id": "nyj_vid_4b825c392e5a",
@@ -3140,7 +2561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0106
     },
     {
       "id": "nyj_vid_2a30bdb19235",
@@ -3174,7 +2595,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0106
     },
     {
       "id": "nyj_vid_d5deccc670ab",
@@ -3208,7 +2629,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0106
     },
     {
       "id": "nyj_vid_e3502d9391a7",
@@ -3242,7 +2663,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0106
     },
     {
       "id": "nyj_vid_65c99fb019d3",
@@ -3276,7 +2697,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0106
     },
     {
       "id": "nyj_vid_fa9e47b9591d",
@@ -3310,7 +2731,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0106
     },
     {
       "id": "nyj_vid_8a143a25d729",
@@ -3344,7 +2765,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0105
     },
     {
       "id": "nyj_vid_54547f1268f0",
@@ -3378,7 +2799,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0105
     },
     {
       "id": "nyj_vid_b84a8d7a80db",
@@ -3412,7 +2833,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0104
     },
     {
       "id": "nyj_vid_ace7c803d812",
@@ -3446,7 +2867,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0104
     },
     {
       "id": "nyj_vid_abb1710d3899",
@@ -3480,7 +2901,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0104
     },
     {
       "id": "nyj_vid_126a47e0ca4c",
@@ -3514,7 +2935,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0104
     },
     {
       "id": "nyj_vid_5766b481b9ae",
@@ -3548,7 +2969,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0103
     },
     {
       "id": "nyj_vid_2a9d1d29ecd0",
@@ -3582,7 +3003,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0103
     },
     {
       "id": "nyj_vid_505a9cb069b3",
@@ -3616,7 +3037,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0103
     },
     {
       "id": "nyj_vid_4e8ee83448b3",
@@ -3650,7 +3071,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0101
     },
     {
       "id": "nyj_vid_23b3f37fddb0",
@@ -3684,7 +3105,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0023
+      "storyRank": 0.0089
     },
     {
       "id": "nyj_vid_319db4999000",
@@ -3718,7 +3139,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0022
+      "storyRank": 0.0088
     },
     {
       "id": "nyj_vid_2d9bf881db6f",
@@ -3752,7 +3173,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0022
+      "storyRank": 0.0088
     },
     {
       "id": "nyj_vid_0012ab78d437",
@@ -3786,7 +3207,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0022
+      "storyRank": 0.0088
     },
     {
       "id": "nyj_vid_d7c8ef672a4d",
@@ -3820,7 +3241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0021
+      "storyRank": 0.0084
     },
     {
       "id": "nyj_vid_38558ebc4e9d",
@@ -3854,7 +3275,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0021
+      "storyRank": 0.0083
     },
     {
       "id": "nyj_vid_3c515210bc03",
@@ -3922,7 +3343,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.0072
     },
     {
       "id": "nyj_vid_25bcd819407f",
@@ -3956,7 +3377,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0016
+      "storyRank": 0.0064
     },
     {
       "id": "nyj_vid_583ef99520d3",
@@ -3990,7 +3411,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0064
     },
     {
       "id": "nyj_vid_52cf9b22e378",
@@ -4024,7 +3445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0064
     },
     {
       "id": "nyj_vid_5fd4dd2983dd",
@@ -4058,7 +3479,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0064
     },
     {
       "id": "nyj_vid_b53524df0565",
@@ -4092,7 +3513,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0063
     },
     {
       "id": "nyj_vid_243127ebe4d4",
@@ -4126,7 +3547,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0063
     },
     {
       "id": "nyj_vid_27ce4fb2d3ec",
@@ -4160,7 +3581,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0063
     },
     {
       "id": "nyj_vid_c5a2ea661130",
@@ -4194,7 +3615,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0016
+      "storyRank": 0.0062
     },
     {
       "id": "nyj_vid_aa208ce75ac9",
@@ -4262,7 +3683,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0057
     },
     {
       "id": "nyj_vid_25862059e334",
@@ -4364,7 +3785,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.0056
     },
     {
       "id": "nyj_vid_d2fcd608ecf5",
@@ -4398,7 +3819,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0054
     },
     {
       "id": "nyj_vid_f8389ebdb23b",
@@ -4432,7 +3853,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
+      "storyRank": 0.0048
     },
     {
       "id": "nyj_vid_5f7aebbdf349",
@@ -4466,7 +3887,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0044
     },
     {
       "id": "nyj_vid_2a5a21dfcfa9",
@@ -4636,7 +4057,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0043
     },
     {
       "id": "nyj_vid_d421c9164df7",
@@ -4670,7 +4091,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0041
     },
     {
       "id": "nyj_vid_94b8238dac1a",
@@ -4908,7 +4329,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0041
     },
     {
       "id": "nyj_vid_94fc18784a44",
@@ -4942,7 +4363,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0041
     },
     {
       "id": "nyj_vid_1efa4a417a71",
@@ -4976,7 +4397,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.004
     },
     {
       "id": "nyj_tx_fabfecb56aa5",
@@ -5010,7 +4431,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0009
+      "storyRank": 0.0035
     },
     {
       "id": "nyj_tx_50ed4c52ce24",
@@ -5044,7 +4465,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0028
     },
     {
       "id": "nyj_tx_49e5c37ce5db",
@@ -5078,7 +4499,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0006
+      "storyRank": 0.0026
     },
     {
       "id": "nyj_rss_84628e44865c",
