@@ -770,7 +770,14 @@ export function scopeBeatTextToPlayer(rawText = '', targetPlayerName = '', roste
         activeSubjectIsTarget = true;
         anyTargetMentioned = true;
       } else if (activeSubjectIsTarget) {
-        if (mentionsOtherNamedPlayer(clause)) {
+        const isTeammateConsolationBackRef =
+          /\b(?:hug(?:s|ged|ging)?|consol(?:e|es|ed|ing)|embrac(?:e|es|ed|ing)|check(?:s|ed|ing)?\s+on|encourag(?:e|es|ed|ing)|pray(?:s|ed|ing)?\s+for|gathered\s+around|walked\s+over\s+to|came\s+over\s+to)\b[\s\S]{0,36}\b(?:him|his)\b/i.test(
+            clause
+          );
+        if (isTeammateConsolationBackRef) {
+          // Teammate consolation referring back to our injured target ("Trent Williams walked over to hug him"):
+          // keep `activeSubjectIsTarget = true` so subsequent injury-detail sentences stay scoped to target!
+        } else if (mentionsOtherNamedPlayer(clause)) {
           activeSubjectIsTarget = false;
         } else {
           kept.push(clause);
@@ -1527,7 +1534,7 @@ export function extractInjuryBodyPartFromProse(rawText = '', fallbackInjury = ''
   for (const pm of parenMatches) {
     const cand = pm[1].trim();
     if (
-      /\b(?:back|lower back|upper back|hamstring|achilles|high[- ]ankle|ankle|meniscus|mcl|acl|pcl|knee|shoulder|pectoral|pec|groin|adductor|calf|quad|quadriceps|hip|oblique|rib|ribs|wrist|thumb|hand|finger|elbow|neck|concussion|foot|turf toe|toe|collarbone|clavicle|shin|illness)\b/i.test(
+      /\b(?:back|lower back|upper back|lower[- ]leg|upper[- ]leg|right\s+leg|left\s+leg|leg|fibula|tibia|hamstring|achilles|high[- ]ankle|ankle|meniscus|mcl|acl|pcl|knee|shoulder|pectoral|pec|groin|adductor|calf|quad|quadriceps|hip|oblique|rib|ribs|wrist|thumb|hand|finger|elbow|neck|concussion|foot|turf toe|toe|collarbone|clavicle|shin|illness)\b/i.test(
         cand
       ) &&
       !/\b(?:solo|tackle|yard|target|catch|carry|touchdown|sack|int|fumble|paywall)\b/i.test(cand)
@@ -1536,6 +1543,7 @@ export function extractInjuryBodyPartFromProse(rawText = '', fallbackInjury = ''
       if (/^mcl$/i.test(cand)) return 'Knee - MCL';
       if (/^pcl$/i.test(cand)) return 'Knee - PCL';
       if (/^acl$/i.test(cand)) return 'Knee - ACL';
+      if (/^lower[- ]leg$/i.test(cand)) return 'Lower Leg';
       return cand.charAt(0).toUpperCase() + cand.slice(1);
     }
   }
@@ -1556,6 +1564,15 @@ export function extractInjuryBodyPartFromProse(rawText = '', fallbackInjury = ''
   if (/\bcalf\b/i.test(text)) return 'Calf';
   if (/\boblique\b/i.test(text)) return 'Oblique';
   if (/\bcollarbone\b|\bclavicle\b/i.test(text)) return 'Collarbone';
+  if (/\bfibula\b|\btibia\b|\blower[- ]leg\b/i.test(text)) return 'Lower Leg';
+  if (
+    /\b(?:right\s+|left\s+|upper\s+)?leg\s+(?:injur\w*|fracture|break|cast|splint|brace|wrap|issue|pain|soreness|strain|rolled|trapped|deformed)\b|\b(?:air\s*cast|cast|splint)\s+(?:(?:placed|put|going|fitted|applied)\s+)?(?:on|around|over)\s+(?:his\s+)?(?:right\s+|left\s+|lower\s+|upper\s+)?leg\b|\b(?:injured|hurt|broke|fractured|grabbing|clutching|rolled\s+up\s+on)\s+(?:at\s+)?(?:his\s+)?(?:right\s+|left\s+|lower\s+|upper\s+)?leg\b|\b(?:left|exited|carted\s+off|out)\s+(?:[\w' -]{0,24}\s+)?(?:with|w\/)\s*(?:a|an|his)\s+(?:right\s+|left\s+|lower\s+|upper\s+)?leg\b/i.test(
+      text
+    )
+  ) {
+    return 'Leg';
+  }
+  if (/\bshin\b/i.test(text)) return 'Shin';
   if (/\bankle\b/i.test(text)) return 'Ankle';
   if (/\bknee\b|\bpatellar\b/i.test(text)) return 'Knee';
   if (/\bshoulder\b/i.test(text)) return 'Shoulder';
@@ -1838,7 +1855,7 @@ export function evaluateCorroboratedNewsInjurySignal({
     );
 
     const hasNonReturnPhrase =
-      /\b(?:did(?:n['’]?t|\s+not)\s+return|will\s+not\s+return|won['’]?t\s+return|unable\s+to\s+finish\s+(?:(?:sunday|monday|thursday|saturday|today|tonight|the|week\s*\d+)(?:['’]s)?\s+)?(?:game|contest|win|loss|matchup)|did(?:n['’]?t|\s+not)\s+finish\s+(?:(?:sunday|monday|thursday|saturday|today|tonight|the|week\s*\d+)(?:['’]s)?\s+)?(?:game|contest)|ruled\s+out\s+for\s+the\s+(?:rest|remainder)\s+of|out\s+for\s+the\s+(?:rest|remainder)\s+of\s+(?:the|sunday|monday|thursday|saturday))\b/i.test(
+      /\b(?:did(?:n['’]?t|\s+not)\s+return|will\s+not\s+return|won['’]?t\s+return|unable\s+to\s+finish\s+(?:(?:sunday|monday|thursday|saturday|today|tonight|the|week\s*\d+)(?:['’]s)?\s+)?(?:game|contest|win|loss|matchup)|did(?:n['’]?t|\s+not)\s+finish\s+(?:(?:sunday|monday|thursday|saturday|today|tonight|the|week\s*\d+)(?:['’]s)?\s+)?(?:game|contest)|ruled\s+out\s+for\s+the\s+(?:rest|remainder)\s+of|out\s+for\s+the\s+(?:rest|remainder|game|night|day|season|year)(?:\s+of\s+(?:the|sunday|monday|thursday|saturday))?|done\s+for\s+the\s+(?:game|night|day|season|year)|season-ending)\b/i.test(
         sanitizedScopedForAcute
       ) && !/\breturn\s+(?:any\s+)?(?:punts?|kicks?|kickoffs?)\b/i.test(sanitizedScopedForAcute);
 
@@ -1846,12 +1863,12 @@ export function evaluateCorroboratedNewsInjurySignal({
       /\b(?:left|exited|departed|forced\s+out(?:\s+of)?|unable\s+to\s+finish)\s+(?:(?:sunday|monday|thursday|saturday|today|tonight|the|week\s*\d+)(?:['’]s)?\s+(?:game|win|loss|victory|defeat|contest|matchup|tilt)(?:\s+(?:over|against|vs\.?)\s+[a-z .'-]{2,28})?\s+)?(?:(?:early|in\s+the\s+(?:first|second|third|fourth|1st|2nd|3rd|4th)\s+(?:half|quarter))\s+)?(?:with|w\/)\s*(?:a|an|his|the(?:\s+same)?)\s+[a-z -]{3,28}/i.test(
         sanitizedScopedForAcute
       ) ||
-      /\b(?:exited|left\s+(?:sunday|monday|thursday|saturday|the)(?:['’]s)?\s+(?:game|win|loss|victory|defeat|contest|matchup|tilt)|forced\s+out\s+of\s+(?:sunday|monday|thursday|saturday|the)(?:['’]s)?\s+(?:game|contest)|limped\s+(?:off|to\s+the\s+locker\s+room)|carted\s+(?:off|to\s+the\s+locker\s+room)|headed\s+to\s+the\s+locker\s+room)\b/i.test(
+      /\b(?:exited|left\s+(?:sunday|monday|thursday|saturday|the)(?:['’]s)?\s+(?:game|win|loss|victory|defeat|contest|matchup|tilt)|forced\s+out\s+of\s+(?:sunday|monday|thursday|saturday|the)(?:['’]s)?\s+(?:game|contest)|limped\s+(?:off|to\s+the\s+locker\s+room)|carted\s+(?:off|to|away|from|back|into|down)|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|loaded\s+onto\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming\s+)?out|air\s*cast|splint\b|(?:headed|went|walked|taken|limped|helped|escorted)\s+(?:off\s+)?(?:to\s+the\s+locker\s+room|(?:into|to|down)\s+the\s+tunnel))\b/i.test(
         sanitizedScopedForAcute
       );
 
     const hasAcuteDiagnosisOrPodiumUpdate =
-      /\b(?:(?:suffered|sustained|aggravated|re-aggravated)\s+(?:a|an|his|the\s+same)\s+(?:apparent\s+|possible\s+|suspected\s+|high[- ]ankle\s+|low[- ]ankle\s+|[a-z-]+\s+){0,2}(?:injur\w*|sprain\w*|strain\w*|tear|fracture|concussion|spasms?|back|hamstring|ankle|knee|shoulder|foot|groin|calf|quad\w*|achilles|hip|rib\w*|wrist|thumb|hand|elbow|neck|pectoral|oblique)|apparent\s+aggravation|(?:underwent|undergoing|scheduled\s+for|will\s+(?:have|undergo))\s+(?:an?\s+)?(?:mri|x-rays?|ct\s+scan|surgery)|evaluated\s+for\s+a\s+concussion|entered\s+(?:the\s+)?concussion\s+protocol)\b/i.test(
+      /\b(?:(?:suffered|sustained|aggravated|re-aggravated)\s+(?:a|an|his|the\s+same)\s+(?:apparent\s+|possible\s+|suspected\s+|severe\s+|gruesome\s+|high[- ]ankle\s+|low[- ]ankle\s+|lower[- ]leg\s+|upper[- ]leg\s+|[a-z-]+\s+){0,2}(?:injur\w*|sprain\w*|strain\w*|tear|fracture|concussion|spasms?|back|hamstring|ankle|knee|leg|fibula|tibia|shin|shoulder|foot|groin|calf|quad\w*|achilles|hip|rib\w*|wrist|thumb|hand|elbow|neck|pectoral|oblique)|apparent\s+aggravation|(?:underwent|undergoing|scheduled\s+for|will\s+(?:have|undergo))\s+(?:an?\s+)?(?:mri|x-rays?|ct\s+scan|surgery)|evaluated\s+for\s+a\s+concussion|entered\s+(?:the\s+)?concussion\s+protocol)\b/i.test(
         sanitizedScopedForAcute
       ) ||
       (pubMs >= postGameMinMs &&
@@ -1861,7 +1878,9 @@ export function evaluateCorroboratedNewsInjurySignal({
 
     const hasMidGameTentOrReturnCheck =
       pubMs < postGameMinMs &&
-      /\b(?:questionable\s+to\s+return|doubtful\s+to\s+return)\b/i.test(sanitizedScopedForAcute);
+      /\b(?:questionable\s+to\s+return|doubtful\s+to\s+return|air\s*cast|cart\s+(?:is\s+)?(?:coming\s+)?out|loaded\s+onto\s+(?:a|the)\s+(?:medical\s+)?cart|rolled\s+up\s+on|(?:down|staying\s+down|remained\s+down)\s+on\s+(?:the\s+)?(?:field|turf|grass))\b/i.test(
+        sanitizedScopedForAcute
+      );
 
     const isSustainedInGameInjury =
       rosterBucket === 'active' &&
@@ -6999,7 +7018,7 @@ const NON_MEDICAL_FOOTBALL_IDIOM_STRIP_RE =
   /\b(?:injury[- ](?:plagued|riddled|depleted|decimated|ravaged|hit|marred)|massive\s+injury\s+wave|injury\s+(?:wave|bug|front|luck|crisis|woes)|despite\s+(?:a\s+(?:carousel|rash|string|wave)\s+of\s+[^.!?]{0,45})?\binjur(?:y|ies)\b|(?:carousel|group|corps|room)\s+of\s+(?:receivers|wideouts|linemen|corners|backs)[^.!?]{0,45}\binjur\w*|without\s+(?:any\s+|another\s+)?(?:massive\s+)?injur\w*|keep\s+(?:them|him|her|players|veterans|starters|everyone)\s+healthy|(?:get|stay|remain|getting|staying|keeping)\s+healthy|emerged\s+relatively\s+healthy|seemed\s+like\s+he\s+was\s+hurt[\s\S]{0,75}assuming\s+not|discuss\s+[^.!?]{0,45}\binjuries\b|had\s+the\s+same\s+injury\s+last\s+(?:season|year)|leaned\s+his\s+(?:left\s+|right\s+)?shoulder\s+into|over\s+his\s+(?:left\s+|right\s+)?shoulder|chip\s+on\s+his\s+shoulder|took\s+a\s+knee|taking\s+a\s+knee|on\s+one\s+knee|fumble\s+recover\w*|recover\s+an\s+onside\s+kick|clear(?:ed|s|ing)?\s+the\s+(?:path|pocket|lane|way)|elevat(?:e|ed|ing)\s+his\s+(?:game|play))\b/gi;
 
 const INJURY_NEWS_TOPIC_RELEVANCE_RE =
-  /(?:\(\s*(?:back|foot|hip|neck|hand|knee|ankle|shoulder|rib|ribs|calf|quad|quadriceps|groin|adductor|wrist|thumb|elbow|toe|pectoral|pec|oblique|concussion|illness)\s*\)|\b(?:injur(?:y|ed|ies)|(?:limited|full|non-?|did\s+not|didn['’]?t|no|missed|missing|return(?:ed|ing)?\s+to|back\s+(?:at|in|to|on\s+the)|at\s+today['’]?s|in\s+(?:wednesday|thursday|friday|today)['’]?s)\s*(?:practice[d]?|practicing|participant|participation|session|walk-?through)|participat(?:e|ed|ing|ion)\s+in\s+(?:[\w' -]{0,18}\s+)?practice|walk-?through\s+but\s+not\s+practice|practice\s+(?:report|window|status|participation)|not\s+participating|full\s+go|(?:good|ready)\s+to\s+(?:go|play)|expected\s+to\s+(?:play|suit\s+up|miss|be\s+activated)|on\s+track\s+to\s+(?:play|suit\s+up|be\s+activated)|plan(?:s|ning)?\s+to\s+play|set\s+to\s+play|game-time\s+decision|no\s+(?:official\s+)?injury\s+designation|without\s+an?\s+(?:official\s+)?(?:injury\s+)?designation|side\s*lines?\s+with\s+trainers|spotted\s+(?:running|sprinting|working|jogging|cutting|throwing)|side\s+field|rehab\s+field|rehab(?:bing)?|working\s+with\s+trainers|non-contact|walking\s+boot|brace|observer|(?:headed|walked|limped|helped|carted|taken|escorted)\s+(?:off\s+)?to\s+the\s+locker\s+room|medical\s+tent|blue\s+tent|\bmri\b|x-rays?|ct\s+scan|surgery|surgical|(?:passed|failed)\s+(?:his|a|the)\s+physical|concussion|protocol|hamstring|achilles|tendinitis|ankle|high-ankle|meniscus|\bmcl\b|\bpcl\b|\bacl\b|turf\s+toe|(?:lower\s+|upper\s+)?back\s+(?:injur\w*|spasms?|tightness|issue|pain|strain)|left\s+with\s+(?:his|a|an|the(?:\s+same)?)\s+(?:lower\s+|upper\s+)?back|foot\s+(?:injur\w*|sprain|fracture|issue|pain)|battled\s+a\s+bad\s+(?:foot|ankle|knee|back|shoulder|hamstring|hip|hand|wrist)|fresh\s+off\s+a\s+(?:hamstring|ankle|knee|groin|calf|shoulder|back|foot|concussion)|(?:were|was|is|been|still|playing|already|got)\s+hurt\b|hurt\s+(?:his|your)\s+(?:shoulder|back|ankle|knee|foot|hamstring|groin|calf|hand|wrist|neck|hip|elbow|rib|ribs)|shoulder\s+(?:injur\w*|sprain|strain|harness|brace|surgery|issue|soreness)|knee\s+(?:injur\w*|sprain|brace|surgery|swelling|soreness|issue)|groin|adductor|calf|quadriceps|quad\s+(?:injur\w*|strain|contusion|issue)|hip\s+(?:injur\w*|pointer|flexor|issue|strain)|oblique|pectoral|ribs?\s+(?:injur\w*|fracture|cartilage|issue)|wrist\s+(?:injur\w*|sprain|fracture|cast|brace|issue)|hand\s+(?:injur\w*|fracture|surgery|cast)|thumb\s+(?:injur\w*|sprain|fracture|surgery)|neck\s+(?:injur\w*|stinger|spasms?|issue)|elbow\s+(?:injur\w*|sprain|brace|issue)|illness|sprain\w*|strain\w*|tear|torn|fracture[d]?|dislocated|day[-\s]+to[-\s]+day|week[-\s]+to[-\s]+week|questionable|doubtful|ruled\s+out|inactives?|injured\s+reserve|\bir\b|\bpup\b|21-day|designated\s+(?:for|to)\s+return|activated\s+from|setback|aggravat\w*|fully\s+heals?\b|heal(?:ing|ed)\b|act(?:ing)?\s+up\s+again|recovery\s+(?:is\s+progressing|from|timeline|process)|['’]s\s+recovery\b|recuperat\w*|return(?:ed|ing)?\s+(?:from\s+(?:an?\s+|his\s+)?(?:injur\w*|ir\b|achilles|hamstring|ankle|knee)|to\s+(?:action|the\s+field|(?:the\s+|sunday['’]?s\s+|monday['’]?s\s+|thursday['’]?s\s+|saturday['’]?s\s+)?game))|unable\s+to\s+finish\s+(?:[\w' -]{0,16}\s+)?game|did(?:n['’]?t|\s+not)\s+return|will\s+not\s+return|won['’]?t\s+return|shaken\s+up|limped\s+off|helped\s+off|carted\s+off|sidelined|capped\s+session)\b)/i;
+  /(?:\(\s*(?:back|lower\s+back|upper\s+back|lower[- ]leg|upper[- ]leg|right\s+leg|left\s+leg|leg|fibula|tibia|shin|foot|hip|neck|hand|knee|ankle|shoulder|rib|ribs|calf|quad|quadriceps|groin|adductor|wrist|thumb|elbow|toe|pectoral|pec|oblique|collarbone|clavicle|concussion|illness)\s*\)|\b(?:injur(?:y|ed|ies)|(?:limited|full|non-?|did\s+not|didn['’]?t|no|missed|missing|return(?:ed|ing)?\s+to|back\s+(?:at|in|to|on\s+the)|at\s+today['’]?s|in\s+(?:wednesday|thursday|friday|today)['’]?s)\s*(?:practice[d]?|practicing|participant|participation|session|walk-?through)|participat(?:e|ed|ing|ion)\s+in\s+(?:[\w' -]{0,18}\s+)?practice|walk-?through\s+but\s+not\s+practice|practice\s+(?:report|window|status|participation)|not\s+participating|full\s+go|(?:good|ready)\s+to\s+(?:go|play)|expected\s+to\s+(?:play|suit\s+up|miss|be\s+activated)|on\s+track\s+to\s+(?:play|suit\s+up|be\s+activated)|plan(?:s|ning)?\s+to\s+play|set\s+to\s+play|game-time\s+decision|no\s+(?:official\s+)?injury\s+designation|without\s+an?\s+(?:official\s+)?(?:injury\s+)?designation|side\s*lines?\s+with\s+trainers|spotted\s+(?:running|sprinting|working|jogging|cutting|throwing)|side\s+field|rehab\s+field|rehab(?:bing)?|working\s+with\s+trainers|walked\s+off\s+with\s+trainers|examined\s+by\s+trainers|(?:trainers|medical\s+staff)\s+(?:are\s+)?(?:out|rushing|attending|tending|checking|looking\s+at|examining|surrounding|working\s+on)|being\s+tended\s+to|tended\s+to\s+by\s+trainers|medical\s+attention|non-contact|walking\s+boot|air\s*cast|in\s+a\s+cast|cast\s+on\s+his|crutches|splint\b|immobiliz\w*|towel\s+over\s+his\s+head|brace|observer|(?:headed|going|went|walked|limped|helped|carted|taken|escorted)\s+(?:off\s+)?(?:to\s+the\s+locker\s+room|(?:into|to|down)\s+the\s+tunnel)|carted(?:\s+(?:off|away|to|from|into|down|back))?|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|loaded\s+onto\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming|comes|came|rolling|rolled|heading|headed)?\s*out|(?:bringing|brought|bring|calling|called|motion(?:ed|ing)?|wav(?:ed|ing)?)\s+(?:out\s+the\s+|for\s+the\s+)cart|medical\s+cart|medical\s+tent|blue\s+tent|being\s+evaluated|evaluated\s+for|being\s+checked|(?:down|staying\s+down|remained\s+down|still\s+down)\s+on\s+(?:the\s+)?(?:field|turf|grass)|went\s+down\s+(?:hard|clutching|grabbing|holding|with|on\s+the\s+play|after\s+getting\s+rolled)|rolled\s+up\s+on|(?:grabbing|clutching)\s+(?:at\s+)?his\s+(?:right\s+|left\s+|lower\s+|upper\s+)?(?:leg|ankle|knee|foot|shoulder|arm|wrist|hand|hip|back|rib|ribs)|in\s+(?:a\s+lot\s+of\s+|visible\s+|significant\s+)?pain|gruesome\s+(?:[a-z-]+\s+)?injur\w*|season-ending|\bmri\b|x-rays?|ct\s+scan|surgery|surgical|(?:passed|failed)\s+(?:his|a|the)\s+physical|concussion|protocol|hamstring|achilles|tendinitis|ankle|high-ankle|meniscus|\bmcl\b|\bpcl\b|\bacl\b|turf\s+toe|lower[- ]leg\b|upper[- ]leg\b|(?:right\s+|left\s+)?leg\s+(?:injur\w*|fracture|break|cast|splint|brace|wrap|issue|pain|soreness|strain|rolled|trapped|deformed)|fibula|tibia|shin\b|collarbone|clavicle|broken\s+(?:leg|ankle|foot|arm|collarbone|rib|ribs|wrist|hand|thumb|finger|bone|fibula|tibia)|(?:lower\s+|upper\s+)?back\s+(?:injur\w*|spasms?|tightness|issue|pain|strain)|left\s+with\s+(?:his|a|an|the(?:\s+same)?)\s+(?:lower\s+|upper\s+)?back|foot\s+(?:injur\w*|sprain|fracture|issue|pain)|battled\s+a\s+bad\s+(?:foot|ankle|knee|leg|back|shoulder|hamstring|hip|hand|wrist)|fresh\s+off\s+a\s+(?:hamstring|ankle|knee|leg|groin|calf|shoulder|back|foot|concussion)|(?:were|was|is|been|still|playing|already|got)\s+hurt\b|hurt\s+(?:his|your)\s+(?:shoulder|back|ankle|knee|leg|foot|hamstring|groin|calf|hand|wrist|neck|hip|elbow|rib|ribs)|shoulder\s+(?:injur\w*|sprain|strain|harness|brace|surgery|issue|soreness)|knee\s+(?:injur\w*|sprain|brace|surgery|swelling|soreness|issue)|groin|adductor|calf|quadriceps|quad\s+(?:injur\w*|strain|contusion|issue)|hip\s+(?:injur\w*|pointer|flexor|issue|strain)|oblique|pectoral|ribs?\s+(?:injur\w*|fracture|cartilage|issue)|wrist\s+(?:injur\w*|sprain|fracture|cast|brace|issue)|hand\s+(?:injur\w*|fracture|surgery|cast)|thumb\s+(?:injur\w*|sprain|fracture|surgery)|neck\s+(?:injur\w*|stinger|spasms?|issue)|elbow\s+(?:injur\w*|sprain|brace|issue)|illness|sprain\w*|strain\w*|tear|torn|fracture[d]?|dislocated|day[-\s]+to[-\s]+day|week[-\s]+to[-\s]+week|questionable|doubtful|ruled\s+out|downgraded\s+to\s+out|out\s+for\s+(?:the\s+(?:rest|remainder|game|night|day|season|year)|tonight|today)|done\s+for\s+(?:the\s+)?(?:game|night|day|season|year)|(?:left|exited)\s+(?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s|saturday['’]?s|today['’]?s)\s+(?:game|contest|matchup)|inactives?|injured\s+reserve|\bir\b|\bpup\b|21-day|designated\s+(?:for|to)\s+return|activated\s+from|setback|aggravat\w*|fully\s+heals?\b|heal(?:ing|ed)\b|act(?:ing)?\s+up\s+again|recovery\s+(?:is\s+progressing|from|timeline|process)|['’]s\s+recovery\b|recuperat\w*|return(?:ed|ing)?\s+(?:from\s+(?:an?\s+|his\s+)?(?:injur\w*|ir\b|achilles|hamstring|ankle|knee|leg)|to\s+(?:action|the\s+field|(?:the\s+|sunday['’]?s\s+|monday['’]?s\s+|thursday['’]?s\s+|saturday['’]?s\s+)?game))|unable\s+to\s+finish\s+(?:[\w' -]{0,16}\s+)?game|did(?:n['’]?t|\s+not)\s+return|will\s+not\s+return|won['’]?t\s+return|shaken\s+up|limped\s+off|limping\s+off|helped\s+off|sidelined|capped\s+session)\b)/i;
 
 function sanitizeTextForPlayerHealthCheck(text = '') {
   return String(text || '').replace(NON_MEDICAL_FOOTBALL_IDIOM_STRIP_RE, ' ');
@@ -7015,10 +7034,10 @@ const INJURY_MEDICAL_DIAGNOSTIC_OR_QUOTE_RE =
   /\b(\bmri\b|x-rays?|ct\s+scan|surgery|meniscus|high-ankle|concussion\s+protocol|shanahan\s+(?:said|noted|revealed|relayed|confirmed|indicated|announced|provided)|shanahan[\s\S]{0,35}(?:injury\s+update|reveals\s+latest)|(?:left|unable\s+to\s+finish[\s\S]{0,18})\s+(?:with|w\/)\s*(?:a|an|his|the\s+same)\s+[a-z-]+\s+injury|lynch\s+(?:said|noted|confirmed)|said\s+(?:monday|wednesday|thursday|friday|after)|day[-\s]+to[-\s]+day|week[-\s]+to[-\s]+week|21-day\s+practice\s+window|opened\s+(?:the\s+|his\s+|[a-z']+s?\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+)?practice\s+window|designated\b[^.;]{0,55}\bto\s+return|not\s+expecting\b[^.;]{0,45}\bthis\s+week)\b/i;
 
 const INJURY_STATUS_MILESTONE_RE =
-  /\b(opened\s+(?:the\s+|his\s+|[a-z']+s?\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+)?practice\s+window|designated\b[^.;]{0,55}\bto\s+return|activated\s+from|placed\s+on\s+(?:injured\s+reserve|ir\b)|back\s+on\s+the\s+practice\s+field|returned\s+to\s+(?:on-field\s+)?practice|cleared\s+(?:the\s+)?concussion\s+protocol|suffered\s+a\s+setback|aggravated|ruled\s+out)\b/i;
+  /\b(opened\s+(?:the\s+|his\s+|[a-z']+s?\s+)?(?:21-day\s+|injured\s+reserve\s+|ir\s+)?practice\s+window|designated\b[^.;]{0,55}\bto\s+return|activated\s+from|placed\s+on\s+(?:injured\s+reserve|ir\b)|back\s+on\s+the\s+practice\s+field|returned\s+to\s+(?:on-field\s+)?practice|cleared\s+(?:the\s+)?concussion\s+protocol|suffered\s+a\s+setback|aggravated|ruled\s+out|downgraded\s+to\s+out|out\s+for\s+(?:the\s+(?:rest|remainder|game|night|day|season|year)|tonight|today)|done\s+for\s+(?:the\s+)?(?:game|night|day|season|year)|questionable\s+to\s+return|doubtful\s+to\s+return|will\s+not\s+return|won['’]?t\s+return|air\s*cast|carted(?:\s+(?:off|away|to|from|into|down|back))?|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming\s+)?out|locker\s+room|tunnel|blue\s+(?:medical\s+)?tent|medical\s+tent|returned\s+to\s+(?:the\s+|tonight['’]?s\s+)?(?:game|action)|cleared\s+to\s+return)\b/i;
 
 const PLAYER_LONG_TERM_OR_IR_TIMELINE_RE =
-  /\b(injured\s+reserve|\bir\b|21-day|practice\s+window|designate[sd]?\s+[\s\S]{0,28}return|season-ending|surgery|surgical|torn\s+(?:acl|achilles|pectoral|meniscus|patellar)|fracture|broken|out\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|miss\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|high-ankle\s+sprain)\b/i;
+  /\b(injured\s+reserve|\bir\b|21-day|practice\s+window|designate[sd]?\s+[\s\S]{0,28}return|season-ending|out\s+for\s+(?:the\s+)?(?:rest\s+of\s+(?:the\s+)?)?(?:\d{4}\s+)?season|done\s+for\s+the\s+(?:season|year)|air\s*cast|fibula|tibia|surgery|surgical|torn\s+(?:acl|achilles|pectoral|meniscus|patellar)|fracture|broken|out\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|miss\s+(?:multiple|several|[2-9]|two|three|four)\s+weeks|high-ankle\s+sprain)\b/i;
 
 const COMPLETED_GAME_AVAILABILITY_BLURB_RE =
   /\b(won['’]?t\s+play|will\s+not\s+play|ruled\s+out|expected\s+to\s+play|game-time\s+decision|inactives?\b|officially\s+(?:active|inactive)|declared\s+inactive|among\s+.*inactives|before\s+[a-z]+\s+game|game\s+status\s+vs\.?\s+[a-z]{2,12}|still\s+missing\s+starters|did\s+not\s+practice|didn['’]?t\s+practice|doesn['’]?t\s+practice|not\s+practicing|not\s+seen\s+at\s+(?:#?49ers\s+)?practice|seen\s+but\s+not\s+part(?:i)?cipating|pre\s+practice\s+report|participation\s+report|no\s+practice|did\s+not\s+participate\s+in\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|limited\s+(?:in|at)\s+(?:wednesday|thursday|friday|today)['’]?s?\s+practice|observer\s+for\s+(?:wednesday|thursday|friday)['’]?s?\s+session|ahead\s+of\s+(?:sunday|monday|thursday|saturday|week\s+\d+)['’]?s?\s*(?:game|tilt|matchup|contest|clash)?|ahead\s+of\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+game\s+(?:at|against|vs\.?)|ahead\s+of\s+(?:sunday['’]?s\s+)?[a-z]+\s+game|available\s+for\s+(?:sunday|monday|thursday|saturday)['’]?s?\s+(?:game|tilt|matchup|contest)|questionable\s+for\s+(?:sunday|monday|thursday|saturday)|doubtful\s+for\s+(?:sunday|monday|thursday|saturday)|ruled\s+out\s+for\s+(?:sunday|monday|thursday|saturday)|suit\s+up\s+(?:sunday|monday|thursday|saturday|versus|vs\.?|against)|(?:good|ready|confident[\s\S]{0,45}good)\s+to\s+(?:go|play)|in\s+order\s+to\s+play|hinting\s+at\s+some\s+good\s+news|continue\s+to\s+miss\s+practice|miss\s+second\s+consecutive\s+practice)\b/i;
@@ -7429,7 +7448,7 @@ export function computeInjuryNewsRankScore(
     /\b(?:transcripts?:|press\s+conference|presser|shares\s+(?:49ers\s+)?injury\s+updates|discusses\s+(?:key\s+)?injuries\s*,)/i.test(
       fullBody
     ) &&
-    !/\b(?:ankle|knee|hamstring|groin|calf|achilles|foot|toe|back|shoulder|elbow|wrist|hand|thumb|rib|chest|neck|hip|quad|concussion|adductor|oblique|pectoral|illness|dnp|limited|did not practice|practiced|sidelined|ruled out|questionable|doubtful|injured reserve|\bir\b|21-day|mri|surgery|sprain|strain|tear|fracture|setback|rehab|trending\s+(?:up|down))\b/i.test(
+    !/\b(?:ankle|knee|leg|lower[- ]leg|fibula|tibia|shin|hamstring|groin|calf|achilles|foot|toe|back|shoulder|elbow|wrist|hand|thumb|rib|chest|neck|hip|quad|concussion|adductor|oblique|pectoral|collarbone|illness|air\s*cast|carted|cart|dnp|limited|did not practice|practiced|sidelined|ruled out|questionable|doubtful|injured reserve|\bir\b|21-day|mri|surgery|sprain|strain|tear|fracture|setback|rehab|trending\s+(?:up|down))\b/i.test(
       sanitizedHealthScope
     );
   if (isGenericPresserTopicList) {
@@ -7480,7 +7499,9 @@ export function computeInjuryNewsRankScore(
       `${checkScope} ${fullBody}`
     );
   let milestoneScore = 0;
-  if (isLateWeekAvailabilityScoop) {
+  if (enriched.isInGameInjury && ageHours <= 8) {
+    milestoneScore = 24 * Math.pow(0.5, ageHours / 12);
+  } else if (isLateWeekAvailabilityScoop) {
     milestoneScore = 22 * Math.pow(0.5, ageHours / 36);
   } else if (INJURY_STATUS_MILESTONE_RE.test(checkScope)) {
     milestoneScore = 16 * salienceAgeDecay;

@@ -3490,6 +3490,240 @@ await testAsync(
   }
 );
 
+await testAsync(
+  'Live in-game injury parity: Health tab tweets & live status match Overview & News during live lower-leg/air-cast/cart injury (McKivitz regression)',
+  async () => {
+    const {
+      extractInjuryBodyPartFromProse,
+      rankPlayerInjuryNews,
+      rankPlayerOverviewMentions,
+      buildTeamInjuryNewsFeed
+    } = await import('../src/engine/injuryProbabilityModel.js');
+    const {
+      evaluateGameDayWindow,
+      extractLiveInGameInjurySignals,
+      resolveGameDayInjuryRows,
+      resolveTeamGameDayModel
+    } = await import('../src/engine/gameDayRosterEngine.js');
+    const { renderPlayerDossierSheetHtml } = await import('../src/views/playerSheetView.js');
+    const { classifyBreakingItem } = await import('../src/engine/breakingClassifier.js');
+
+    const nowMs = Date.now();
+    const kickoffMs = nowMs - 65 * 60_000;
+    const kickoffIso = new Date(kickoffMs).toISOString();
+
+    const mckivitz = {
+      id: '3916075',
+      name: 'Colton McKivitz',
+      shortName: 'C. McKivitz',
+      position: 'OT',
+      unit: 'Offense',
+      jersey: 68,
+      rosterBucket: 'active',
+      isStarter: true,
+      primarySnapPct: 100,
+      capHit2026: 7_500_000,
+      health: {
+        status: 'Active',
+        injuryType: '',
+        isOnPracticeReport: false,
+        wed: '-',
+        thu: '-',
+        fri: '-',
+        playProbabilityPct: 99,
+        playTier: 'ACTIVE',
+        playBadgeLabel: '99% • Full Go',
+        factors: ['Off injury report; full active status'],
+        archetypeNote: 'Veteran starter profile.'
+      },
+      recentNews: []
+    };
+    const trentWilliams = {
+      id: '13241',
+      name: 'Trent Williams',
+      shortName: 'T. Williams',
+      position: 'OT',
+      unit: 'Offense',
+      jersey: 71,
+      rosterBucket: 'active',
+      isStarter: true,
+      primarySnapPct: 98,
+      capHit2026: 32_000_000,
+      health: { status: 'Active', injuryType: '', playProbabilityPct: 99, playTier: 'ACTIVE', playBadgeLabel: '99% • Full Go', factors: ['Off injury report; full active status'] },
+      recentNews: []
+    };
+    const vederianLowe = {
+      id: '4242350',
+      name: 'Vederian Lowe',
+      shortName: 'V. Lowe',
+      position: 'OT',
+      unit: 'Offense',
+      jersey: 74,
+      rosterBucket: 'active',
+      isStarter: false,
+      primarySnapPct: 8,
+      capHit2026: 1_500_000,
+      health: { status: 'Active', injuryType: '', playProbabilityPct: 99, playTier: 'ACTIVE', playBadgeLabel: '99% • Full Go', factors: ['Off injury report; full active status'] },
+      recentNews: []
+    };
+
+    const liveTweets = [
+      {
+        id: 'tw_mck_1',
+        type: 'tweet',
+        author: 'Matt Maiocco',
+        reporterId: 'matt_maiocco',
+        trustTier: 1,
+        publishedAt: new Date(nowMs - 8 * 60_000).toISOString(),
+        title: 'Colton McKivitz is down on the field after his lower leg got rolled up on. Trainers are putting an air cast on his leg and the cart is coming out.',
+        fullText: 'Colton McKivitz is down on the field after his lower leg got rolled up on. Trainers are putting an air cast on his leg and the cart is coming out.',
+        url: 'https://x.com/MaioccoNBCS/status/2001001001',
+        mentionedPlayers: [{ id: '3916075', name: 'Colton McKivitz' }]
+      },
+      {
+        id: 'tw_mck_2',
+        type: 'tweet',
+        author: 'Matt Barrows',
+        reporterId: 'matt_barrows',
+        trustTier: 1,
+        publishedAt: new Date(nowMs - 6 * 60_000).toISOString(),
+        title: 'Colton McKivitz is down on the turf. Trent Williams walked over to hug him. They are putting an aircast on his lower leg and bringing out the cart.',
+        fullText: 'Colton McKivitz is down on the turf. Trent Williams walked over to hug him. They are putting an aircast on his lower leg and bringing out the cart.',
+        url: 'https://x.com/mattbarrows/status/2001001002',
+        mentionedPlayers: [{ id: '3916075', name: 'Colton McKivitz' }, { id: '13241', name: 'Trent Williams' }]
+      },
+      {
+        id: 'tw_mck_3',
+        type: 'tweet',
+        author: 'Nick Wagoner',
+        reporterId: 'nick_wagoner',
+        trustTier: 1,
+        publishedAt: new Date(nowMs - 4 * 60_000).toISOString(),
+        title: 'Vederian Lowe is in at RT for Colton McKivitz, who was loaded onto a cart with an air cast on his right leg and headed into the tunnel.',
+        fullText: 'Vederian Lowe is in at RT for Colton McKivitz, who was loaded onto a cart with an air cast on his right leg and headed into the tunnel.',
+        url: 'https://x.com/nwagoner/status/2001001003',
+        mentionedPlayers: [{ id: '4242350', name: 'Vederian Lowe' }, { id: '3916075', name: 'Colton McKivitz' }]
+      },
+      {
+        id: 'tw_mck_4',
+        type: 'tweet',
+        author: 'Jennifer Lee Chan',
+        reporterId: 'jennifer_lee_chan',
+        trustTier: 1,
+        publishedAt: new Date(nowMs - 2 * 60_000).toISOString(),
+        title: 'Update on Colton McKivitz. He has been ruled out for the rest of the game.',
+        fullText: 'Update on Colton McKivitz. He has been ruled out for the rest of the game.',
+        url: 'https://x.com/jenniferleechan/status/2001001004',
+        mentionedPlayers: [{ id: '3916075', name: 'Colton McKivitz' }]
+      }
+    ];
+
+    const liveAppData = {
+      meta: { seasonYear: 2026, currentWeek: 11 },
+      roster: { players: [mckivitz, trentWilliams, vederianLowe] },
+      health: { week: 11, byeWeek: 8, practiceReport: [], irAndReserveTracker: [] },
+      scheduleMatchup: {
+        upcomingMatchup: {
+          week: 11,
+          gameId: '401671999',
+          dateIso: kickoffIso,
+          kickoffIso,
+          oppAbbr: 'MIN',
+          oppName: 'Minnesota Vikings',
+          isGameInProgress: true,
+          liveState: 'in',
+          statusDetail: '8:12 - 2nd'
+        },
+        schedule: [
+          {
+            id: '401671999',
+            week: 11,
+            seasonType: 'REG',
+            dateIso: kickoffIso,
+            completed: false,
+            isLive: true,
+            statusState: 'in',
+            statusDetail: '8:12 - 2nd',
+            opponent: { abbr: 'MIN', name: 'Minnesota Vikings' }
+          }
+        ]
+      },
+      news: { rawStream: liveTweets }
+    };
+
+    // 1. Body-part prose extraction must recognize Lower Leg / Leg
+    assert.equal(extractInjuryBodyPartFromProse('Colton McKivitz suffered a severe lower leg injury.'), 'Lower Leg');
+    assert.equal(extractInjuryBodyPartFromProse('Air cast placed on his right leg.'), 'Leg');
+
+    // 2. Live classifier must mark ALL 4 tweets as live in-game injuries (NEVER stale pre-game!)
+    for (const tw of liveTweets) {
+      const cls = classifyBreakingItem(tw, nowMs, { appData: liveAppData });
+      assert.equal(cls.isStalePreGameAvailability, undefined, `Live tweet ${tw.id} must NOT be marked stale pre-game`);
+      assert.equal(cls.isInGameInjury, true, `Live tweet ${tw.id} must be classified as isInGameInjury=true`);
+      assert.ok(cls.breakingPriority > 2.5, `Live tweet ${tw.id} must carry urgent in-game priority (got ${cls.breakingPriority})`);
+    }
+
+    // 3. extractLiveInGameInjurySignals detects McKivitz across multi-sentence pronoun follow-ups while isolating teammates
+    const liveWin = evaluateGameDayWindow(liveAppData.scheduleMatchup.schedule, liveAppData.scheduleMatchup.upcomingMatchup, nowMs);
+    assert.equal(liveWin.isActive, true);
+    assert.equal(liveWin.hasKickoffStarted, true);
+
+    const lowerLegSig = extractLiveInGameInjurySignals(liveTweets.slice(0, 2), liveAppData.roster.players, liveWin);
+    assert.equal(lowerLegSig.byKey.get('coltonmckivitz')?.injuryType, 'Lower Leg');
+
+    const midSig = extractLiveInGameInjurySignals(liveTweets.slice(0, 3), liveAppData.roster.players, liveWin);
+    assert.equal(midSig.byKey.get('coltonmckivitz')?.state, 'doubtful');
+    assert.equal(midSig.byKey.get('coltonmckivitz')?.probabilityPct, 20);
+    assert.equal(midSig.byKey.get('coltonmckivitz')?.injuryType, 'Right Leg');
+    assert.equal(midSig.byKey.has('trentwilliams'), false, 'Consoling teammate Trent Williams must NOT be flagged as injured');
+    assert.equal(midSig.byKey.has('vederianlowe'), false, 'Replacement RT Vederian Lowe must NOT be flagged as injured');
+
+    const fullSig = extractLiveInGameInjurySignals(liveTweets, liveAppData.roster.players, liveWin);
+    assert.equal(fullSig.byKey.get('coltonmckivitz')?.state, 'out');
+    assert.equal(fullSig.byKey.get('coltonmckivitz')?.probabilityPct, 0);
+    assert.equal(fullSig.byKey.get('coltonmckivitz')?.injuryType, 'Right Leg');
+
+    // 4. Health tab (`rankPlayerInjuryNews`) MUST match all 4 live injury tweets visible in Overview (`rankPlayerOverviewMentions`)
+    const overviewItems = rankPlayerOverviewMentions(mckivitz, { rawStream: liveTweets, appData: liveAppData, nowMs });
+    const healthItems = rankPlayerInjuryNews(mckivitz, { rawStream: liveTweets, appData: liveAppData, nowMs, maxAgeDays: 14 });
+    assert.equal(overviewItems.length, 4, 'Overview tab must show all 4 live McKivitz tweets');
+    assert.equal(healthItems.length, 4, 'Health tab must match Overview and show all 4 live McKivitz injury tweets');
+    for (const id of ['tw_mck_1', 'tw_mck_2', 'tw_mck_3', 'tw_mck_4']) {
+      assert.ok(healthItems.some(it => it.id === id), `Health tab missing live injury tweet ${id}`);
+    }
+
+    // 5. Player Sheet (`renderPlayerDossierSheetHtml`) synchronously overlays live in-game status onto BOTH Health & Overview
+    const healthSheetHtml = renderPlayerDossierSheetHtml({
+      player: mckivitz,
+      activeTab: 'health',
+      rawStream: liveTweets,
+      appData: liveAppData
+    });
+    assert.ok(healthSheetHtml.includes('data-player-injury-news'), 'Health tab must render Injury News card during live injury');
+    assert.ok(healthSheetHtml.includes('Out (In-Game)'), 'Health tab must show live Out (In-Game) status instead of stale Active');
+    assert.ok(healthSheetHtml.includes('Right Leg'), 'Health tab must show extracted Right Leg injury');
+    assert.ok(healthSheetHtml.includes('0% • Out (In-Game)'), 'Health tab badge must update to 0% • Out (In-Game)');
+    assert.ok(!healthSheetHtml.includes('Off injury report; full active status'), 'Health tab Model Factors must NOT show stale active copy');
+    assert.ok(healthSheetHtml.includes('air cast on his leg'), 'Health tab must render live air-cast tweet');
+
+    const overviewSheetHtml = renderPlayerDossierSheetHtml({
+      player: mckivitz,
+      activeTab: 'overview',
+      rawStream: liveTweets,
+      appData: liveAppData
+    });
+    assert.ok(overviewSheetHtml.includes('0% • Out (In-Game)'), 'Overview tab hero badge must also reflect live 0% • Out (In-Game)');
+
+    // 6. Game & Season -> Health (`buildTeamInjuryNewsFeed`) includes McKivitz at #1 with his live tweet
+    const sfModel = resolveTeamGameDayModel(liveAppData, { is49ers: true, nowMs });
+    const sfRows = resolveGameDayInjuryRows([], sfModel, { activeRosterPlayers: liveAppData.roster.players });
+    const teamFeed = buildTeamInjuryNewsFeed(liveAppData, { nowMs, injuryRowsOverride: sfRows });
+    assert.equal(teamFeed.length, 1, 'Team Injury News feed must include live-injured McKivitz (and neither Trent nor Lowe)');
+    assert.equal(teamFeed[0].name, 'Colton McKivitz');
+    assert.equal(teamFeed[0].playProbabilityPct, 0);
+  }
+);
+
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);
 if (failed > 0) {
   process.exit(1);

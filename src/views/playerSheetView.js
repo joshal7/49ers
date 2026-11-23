@@ -44,6 +44,10 @@ import {
   rankPlayerInjuryNews,
   rankPlayerOverviewMentions
 } from '../engine/injuryProbabilityModel.js';
+import {
+  normalizeLookupName,
+  resolveTeamGameDayModel
+} from '../engine/gameDayRosterEngine.js';
 
 export function renderInjuryNewsItemCardHtml(
   n = {},
@@ -340,6 +344,62 @@ export function renderInjuryNewsItemCardHtml(
   `;
 }
 
+function applyLiveGameDayPlayerOverlay(player, appData = null, teamContext = null) {
+  if (!player || !appData || player.rosterBucket === 'ir' || player.rosterBucket === 'suspended') {
+    return { effectivePlayer: player, liveInGameItem: null };
+  }
+  const gameDayModel = resolveTeamGameDayModel(appData, {
+    is49ers: !teamContext?.isRemoteTeam
+  });
+  if (!gameDayModel?.isActive || !gameDayModel?.hasKickoffStarted) {
+    return { effectivePlayer: player, liveInGameItem: null };
+  }
+  const pKey = normalizeLookupName(player.name || '');
+  const sig = pKey && gameDayModel.inGameSignals?.byKey ? gameDayModel.inGameSignals.byKey.get(pKey) : null;
+  if (!sig) {
+    return { effectivePlayer: player, liveInGameItem: null };
+  }
+
+  const baseHealth = player.health || {};
+  const tier =
+    sig.state === 'out'
+      ? 'OUT'
+      : sig.state === 'doubtful'
+        ? 'DOUBTFUL'
+        : sig.state === 'returned'
+          ? 'ACTIVE'
+          : 'QUESTIONABLE';
+  const liveInjLabel = sig.injuryType || baseHealth.injuryType || 'In-Game Injury';
+  const liveFactor =
+    sig.state === 'returned'
+      ? `Live in-game update (${liveInjLabel}): Returned to game action`
+      : `Live in-game injury update (${liveInjLabel}): ${sig.status}`;
+  const cleanedFactors = (Array.isArray(baseHealth.factors) ? baseHealth.factors : []).filter(
+    f =>
+      !/^off injury report;\s*full active status$/i.test(String(f || '').trim()) &&
+      !/^live in-game (?:injury )?update\b/i.test(String(f || '').trim())
+  );
+
+  const effectivePlayer = {
+    ...player,
+    health: {
+      ...baseHealth,
+      status: sig.status,
+      injuryType: liveInjLabel,
+      playProbabilityPct: sig.probabilityPct,
+      playTier: tier,
+      playBadgeLabel: sig.badgeLabel,
+      sustainedInLastGame: true,
+      isInGameInjury: sig.state !== 'returned',
+      isInGameReturned: sig.state === 'returned',
+      shortComment: sig.latestSummary || baseHealth.shortComment || '',
+      longComment: sig.latestSummary || baseHealth.longComment || '',
+      factors: [liveFactor, ...cleanedFactors]
+    }
+  };
+  return { effectivePlayer, liveInGameItem: sig.latestItem || null };
+}
+
 export function renderPlayerDossierSheetHtml({
   player,
   activeTab = 'overview',
@@ -355,6 +415,15 @@ export function renderPlayerDossierSheetHtml({
   remoteStatus = null
 }) {
   if (!player) return `<div class="empty-state">Player not found.</div>`;
+
+  const { effectivePlayer, liveInGameItem } = applyLiveGameDayPlayerOverlay(player, appData, teamContext);
+  const effectiveRawStream =
+    liveInGameItem &&
+    !(Array.isArray(rawStream) ? rawStream : []).some(
+      it => (liveInGameItem.id && it?.id === liveInGameItem.id) || (liveInGameItem.url && it?.url === liveInGameItem.url)
+    )
+      ? [liveInGameItem, ...(Array.isArray(rawStream) ? rawStream : [])]
+      : rawStream;
 
   const tabDefs = [
     ['overview', 'football', 'Overview'],
@@ -387,8 +456,8 @@ export function renderPlayerDossierSheetHtml({
 
   if (activeTab === 'overview') {
     contentHtml = renderOverviewTab(
-      player,
-      rawStream,
+      effectivePlayer,
+      effectiveRawStream,
       appData,
       userPrefs,
       reportersById,
@@ -397,13 +466,21 @@ export function renderPlayerDossierSheetHtml({
       teamContext
     );
   } else if (activeTab === 'stats') {
-    contentHtml = renderStatsTab(player, statsMode);
+    contentHtml = renderStatsTab(effectivePlayer, statsMode);
   } else if (activeTab === 'spider') {
-    contentHtml = renderSpiderChartHtml(player.spiderProfile, player.name);
+    contentHtml = renderSpiderChartHtml(effectivePlayer.spiderProfile, effectivePlayer.name);
   } else if (activeTab === 'contract') {
-    contentHtml = renderContractTab(player, txScenario, teamContext);
+    contentHtml = renderContractTab(effectivePlayer, txScenario, teamContext);
   } else if (activeTab === 'health') {
-    contentHtml = renderHealthTab(player, rawStream, appData, userPrefs, reportersById, activeVideosSet, teamContext);
+    contentHtml = renderHealthTab(
+      effectivePlayer,
+      effectiveRawStream,
+      appData,
+      userPrefs,
+      reportersById,
+      activeVideosSet,
+      teamContext
+    );
   }
 
   return `${tabsBar}${remoteStatusBannerHtml}${contentHtml}`;

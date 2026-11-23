@@ -1783,7 +1783,12 @@ export async function hydrateLiveBlueskyBeatWire(
             title: tweetDisplay.text,
             fullText: cleanFull,
             summary: `${cleanExtTitle} ${cleanExtDesc}`.trim(),
-            publishedAt: pubIso
+            publishedAt: pubIso,
+            mentionedPlayers: mentioned,
+            author: parsedAttr.reporterName,
+            reporterId: parsedAttr.reporterId,
+            reporterName: parsedAttr.reporterName,
+            trustTier: parsedAttr.trustTier
           };
           if (isStaleCompletedGameAvailabilityItem(bskyCand, appData)) continue;
           const brk = classifyBreakingItem(bskyCand, Date.now(), { appData });
@@ -2196,7 +2201,12 @@ export async function hydrateLiveEspnPlayerBeatWire(
             title: resolvedTitle,
             fullText: effectiveType === 'tweet' ? cleanFull : undefined,
             summary: resolvedSummary || rawDesc,
-            publishedAt: pubIsoStr
+            publishedAt: pubIsoStr,
+            mentionedPlayers: mentioned,
+            author: parsedAttr.reporterName,
+            reporterId: parsedAttr.reporterId,
+            reporterName: parsedAttr.reporterName,
+            trustTier: parsedAttr.trustTier || 1
           };
           if (isStaleCompletedGameAvailabilityItem(pwireCand, appData)) continue;
           const brk = classifyBreakingItem(pwireCand, Date.now(), { appData });
@@ -2400,7 +2410,12 @@ export async function hydrateLiveRotoWireBeatRss(appData, { isGameLive = false }
         title: tweetDisplay.text,
         fullText: bodyText,
         summary: rawTitle,
-        publishedAt: pubIso
+        publishedAt: pubIso,
+        mentionedPlayers: exactRosterMatches,
+        author: parsedAttr.reporterName,
+        reporterId: parsedAttr.reporterId,
+        reporterName: parsedAttr.reporterName,
+        trustTier: parsedAttr.trustTier || 1
       };
       if (isStaleCompletedGameAvailabilityItem(rwCand, appData)) continue;
       const brk = classifyBreakingItem(rwCand, Date.now(), { appData });
@@ -3135,7 +3150,22 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '' } 
       });
       const sig = scoreContentSignal(fullText || title, nonBioSummary);
       if (sig.isClickbait) continue;
-      const brk = classifyBreakingItem({ type, title, fullText, summary: nonBioSummary, publishedAt: pubIso }, nowMs, { appData });
+      const brk = classifyBreakingItem(
+        {
+          type,
+          title,
+          fullText,
+          summary: nonBioSummary,
+          publishedAt: pubIso,
+          mentionedPlayers: mentioned,
+          author: raw.author || raw.reporterName || '',
+          reporterId: raw.reporterId || '',
+          reporterName: raw.reporterName || raw.author || '',
+          trustTier: Number(raw.trustTier) || undefined
+        },
+        nowMs,
+        { appData }
+      );
 
       if (url) existingUrls.add(url);
       if (raw.videoId) existingVidIds.add(raw.videoId);
@@ -4219,6 +4249,22 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
         p.health.isInGameReturned = Boolean(reportMatch.isInGameReturned);
         if (reportMatch.sustainedInLastGame || reportMatch.isInGameInjury || reportMatch.isInGameReturned) {
           p.health.sustainedInLastGame = true;
+          if (reportMatch.beatComment) {
+            p.health.shortComment = reportMatch.beatComment;
+            p.health.longComment = reportMatch.beatComment;
+          }
+          const liveInjLabel = reportMatch.injuryType || p.health.injuryType || 'In-Game Injury';
+          const liveFactor = reportMatch.isInGameReturned
+            ? `Live in-game update (${liveInjLabel}): Returned to game action`
+            : `Live in-game injury update (${liveInjLabel}): ${reportMatch.gameStatus || p.health.status || 'Questionable to Return'}`;
+          const prevFactors = Array.isArray(p.health.factors)
+            ? p.health.factors.filter(
+                f =>
+                  !/^off injury report;\s*full active status$/i.test(String(f || '').trim()) &&
+                  !/^live in-game (?:injury )?update\b/i.test(String(f || '').trim())
+              )
+            : [];
+          p.health.factors = [liveFactor, ...prevFactors];
         }
 
         // Ensure latest mid-game injury/return tweet is immediately visible inside the Player Sheet modal!

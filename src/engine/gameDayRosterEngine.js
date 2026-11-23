@@ -1127,10 +1127,13 @@ export function extractSleeperGameDaySignals(
 }
 
 const BODY_PART_IN_GAME_RE =
-  /\b(right\s+shoulder|left\s+shoulder|shoulder|right\s+ankle|left\s+ankle|high[\s-]ankle|ankle|right\s+knee|left\s+knee|knee|acl|mcl|pcl|meniscus|hamstring|concussion|head|neck|stinger|elbow|wrist|hand|thumb|finger|rib|ribs|chest|pectoral|back|lower\s+back|hip|groin|quad|quadriceps|calf|shin|foot|toe|turf\s+toe|achilles|illness|cramps|eye|jaw|abdomen|oblique)\b/i;
+  /\b(right\s+lower[\s-]leg|left\s+lower[\s-]leg|lower[\s-]leg|upper[\s-]leg|right\s+leg|left\s+leg|\bleg\b|fibula|tibia|right\s+shoulder|left\s+shoulder|shoulder|right\s+ankle|left\s+ankle|high[\s-]ankle|ankle|right\s+knee|left\s+knee|knee|acl|mcl|pcl|meniscus|hamstring|concussion|head|neck|stinger|elbow|wrist|hand|thumb|finger|rib|ribs|chest|pectoral|collarbone|clavicle|back|lower\s+back|hip|groin|quad|quadriceps|calf|shin|foot|toe|turf\s+toe|achilles|illness|cramps|eye|jaw|abdomen|oblique)\b/i;
 
 function formatBodyPartTitle(raw = '') {
-  const clean = String(raw || '').trim();
+  const clean = String(raw || '')
+    .replace(/-/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
   if (!clean) return '';
   if (/^(acl|mcl|pcl)$/i.test(clean)) return clean.toUpperCase();
   return clean
@@ -1139,10 +1142,30 @@ function formatBodyPartTitle(raw = '') {
     .join(' ');
 }
 
+const IN_GAME_REPLACEMENT_OR_CONSOLATION_VERB_RE =
+  /\b(?:(?:is|was|now)\s+in\s+(?:at\s+[a-z0-9/-]+\s+)?for|step(?:s|ped|ping)?\s+in\s+(?:at\s+[a-z0-9/-]+\s+)?for|fill(?:s|ed|ing)?\s+in\s+(?:at\s+[a-z0-9/-]+\s+)?for|cam(?:e|es)\s+in\s+(?:at\s+[a-z0-9/-]+\s+)?for|enter(?:s|ed|ing)?\s+(?:at\s+[a-z0-9/-]+\s+)?for|replac(?:e|es|ed|ing)\b|warming\s+up\s+for|took\s+over\s+(?:at\s+[a-z0-9/-]+\s+)?for|walked\s+over\s+to\s+(?:hug|console|check\s+on|encourage|embrace)|came\s+over\s+to\s+(?:hug|console|check\s+on|encourage|embrace)|gave\s+[\w\s'-]{0,20}\bhugs?\s+to|hugged|hugging|hugs\b|consoled|consoling|embraced|embracing|praying\s+for|prayers?\s+for)\b/i;
+
+function findPlayerMentionOffsetInClause(pm, clause = '') {
+  if (!pm || !clause) return -1;
+  const fullM = pm.regex.exec(clause);
+  if (fullM) return fullM.index;
+  if (pm.nicknameRegex) {
+    const nickM = pm.nicknameRegex.exec(clause);
+    if (nickM) return nickM.index;
+  }
+  if (pm.surnameRegex) {
+    const surM = pm.surnameRegex.exec(clause);
+    if (surM) return surM.index;
+  }
+  return -1;
+}
+
 /**
  * Evaluates live post-kickoff beat tweets & wire blurbs (`[Kickoff, Final)`) to track real-time
  * in-game injuries and return probabilities for ANY active 49ers or Opponent player:
  *  - Evaluates chronologically so sequential transitions (QTR -> Returned OR QTR -> Ruled Out) resolve cleanly
+ *  - Carries active injured-player subject across multi-sentence pronoun follow-ups ("Colton McKivitz is down on the field. Air cast going on his lower leg and the cart is out.")
+ *  - Excludes healthy replacement/consolation teammates ("Vederian Lowe in at RT for McKivitz", "Trent Williams came over to hug McKivitz")
  *  - Protects against lagging blurb regressions (e.g. a delayed QTR blurb cannot revert `0% • Out (In-Game)`!)
  */
 export function extractLiveInGameInjurySignals(
@@ -1172,7 +1195,14 @@ export function extractLiveInGameInjurySignals(
   for (const item of newsItems || []) {
     const pubMs = Date.parse(item?.publishedAt || '');
     if (!Number.isFinite(pubMs) || pubMs < minInGameMs || pubMs > maxInGameMs) continue;
-    const text = `${item?.title || ''} ${item?.fullText || ''} ${item?.headline || ''} ${item?.summary || ''}`.trim();
+    const leadPart = String(item?.fullText || item?.title || item?.headline || '').trim();
+    const sumPart = String(item?.summary || '').trim();
+    const text =
+      sumPart && (!leadPart || !leadPart.toLowerCase().includes(sumPart.toLowerCase().slice(0, 32)))
+        ? leadPart
+          ? `${leadPart}. ${sumPart}`
+          : sumPart
+        : leadPart;
     if (!text) continue;
     relevantItems.push({ item, pubMs, text });
   }
@@ -1188,13 +1218,49 @@ export function extractLiveInGameInjurySignals(
     if (/\b(?:today'?s|official|week\s*\d+|game[\s-]?day)\s+inactives\b/i.test(text)) continue;
 
     const clauses = splitTextIntoGameDayClauses(text);
+    let activeSubjectMatchers = [];
 
     for (const clause of clauses) {
+      const mentionedInClause = matchers.filter(
+        pm => !pregameInactiveKeys.has(pm.key) && doesClauseMentionPlayer(pm, clause, { allowUniqueSurname: true })
+      );
+
+      // Guard healthy replacement/consolation subjects ("Vederian Lowe in at RT for Colton McKivitz", "Trent Williams came over to hug McKivitz/him")
+      const repConsolMatch = IN_GAME_REPLACEMENT_OR_CONSOLATION_VERB_RE.exec(clause);
+      let targetMatchersForClause = mentionedInClause;
+      let isConsolationOnlyReferencingPrior = false;
+      if (repConsolMatch && mentionedInClause.length > 0) {
+        const verbIdx = repConsolMatch.index;
+        const afterVerb = mentionedInClause.filter(pm => {
+          const idx = findPlayerMentionOffsetInClause(pm, clause);
+          return idx >= verbIdx;
+        });
+        if (afterVerb.length > 0) {
+          targetMatchersForClause = afterVerb;
+        } else if (
+          activeSubjectMatchers.length > 0 &&
+          /\b(?:him|his)\b/i.test(clause.slice(verbIdx))
+        ) {
+          targetMatchersForClause = activeSubjectMatchers;
+          isConsolationOnlyReferencingPrior = true;
+        } else {
+          targetMatchersForClause = [];
+        }
+      }
+
+      if (targetMatchersForClause.length > 0) {
+        if (!isConsolationOnlyReferencingPrior) {
+          activeSubjectMatchers = targetMatchersForClause;
+        }
+      } else if (mentionedInClause.length > 0 && !repConsolMatch) {
+        activeSubjectMatchers = [];
+      }
+
       const hasMinorKnockOnly =
         /\b(?:shook it off and stayed in|stayed in the game|no injury|wind knocked out(?: of him)?|knocked the wind out|(?:missed|out for|sat out|exited for)\s+(?:a|one|two|1|2|a couple(?: of)?|a few)\s+(?:play|plays|snap|snaps)|for a play or two|for a couple(?: of)? (?:plays|snaps)|catching his breath|just a breather|back in on the next (?:play|snap|series|drive)|cramps?|cramping)\b/i.test(
           clause
         ) &&
-        !/\b(?:ruled out|downgraded to out|doubtful to return|carted|air cast|locker room|concussion|torn|fracture|won'?t return|will not return)\b/i.test(
+        !/\b(?:ruled out|downgraded to out|doubtful to return|carted|cart\s+(?:is\s+)?(?:coming\s+)?out|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|air\s*cast|splint\b|immobiliz|locker room|tunnel|concussion|torn|fracture|broken|won'?t return|will not return|rolled\s+up\s+on)\b/i.test(
           clause
         );
       if (hasMinorKnockOnly) continue;
@@ -1205,13 +1271,13 @@ export function extractLiveInGameInjurySignals(
         ) && !/\b(?:not|never|won'?t|will not|unlikely to|questionable to|doubtful to)\s+return\b/i.test(clause);
 
       const isRuledOutInGame =
-        /\b(ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded\s+to\s+out|out for the (?:rest|remainder|game|night|day)|will not return|won'?t return|did not return|done for the (?:day|night|game))\b/i.test(
+        /\b(ruled out(?:\s+for\s+(?:the\s+(?:rest|remainder)|tonight|today|the\s+game))?|downgraded\s+to\s+out|out for the (?:rest|remainder|game|night|day|season|year)|out for (?:tonight|today)|season-ending|will not return|won'?t return|did not return|done for the (?:day|night|game|season|year)|(?:officially\s+)?out\s+with\s+(?:a|an)\s+[a-z -]{2,24}\s+injur\w*)\b/i.test(
           clause
         ) && !/\b(?:not|hasn'?t been|haven'?t been|isn'?t)\s+ruled\s+out\b/i.test(clause);
 
       const isDoubtfulInGame =
         !isRuledOutInGame &&
-        /\b(doubtful to return|carted (?:off|to the locker room|away)|in an air cast|air cast|on crutches|walking boot|unlikely to return)\b/i.test(
+        /\b(doubtful to return|carted (?:off|to|away|from|back|into|down)|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|loaded\s+onto\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming|comes|came|rolling|rolled|heading|headed)?\s*out|(?:bringing|brought|bring|calling|called|motion(?:ed|ing)?|wav(?:ed|ing)?)\s+(?:out\s+the\s+|for\s+the\s+)cart|medical\s+cart|in an air\s*cast|air\s*cast|splint\b|immobiliz\w*|on crutches|walking boot|gruesome\s+(?:[a-z-]+\s+)?injur\w*|deformed|unlikely to return)\b/i.test(
           clause
         );
 
@@ -1219,18 +1285,25 @@ export function extractLiveInGameInjurySignals(
         !isRuledOutInGame &&
         !isDoubtfulInGame &&
         !isReturned &&
-        /\b(questionable to return|evaluated for (?:a|an)\b|being evaluated|being checked (?:in|out in) the (?:blue )?(?:medical )?tent|blue medical tent|medical tent|headed to the locker room|went to the locker room|walked to the locker room|taken to the locker room|limped off|helped off|shaken up on the play|non-contact|concussion (?:protocol|evaluation)|(?:exited|left) (?:tonight'?s|sunday'?s|monday'?s|thursday'?s|saturday'?s|today'?s|the)\s+(?:game|contest|matchup))\b/i.test(
+        /\b(questionable to return|evaluated for (?:a|an)\b|being evaluated|being checked (?:in|out in) the (?:blue )?(?:medical )?tent|blue medical tent|medical tent|(?:headed|going|went|walked|taken|limped|helped|escorted)\s+(?:off\s+)?(?:to\s+the\s+locker\s+room|(?:into|to|down)\s+the\s+tunnel)|limped off|limping off|helped off|walked off with trainers|examined by trainers|(?:trainers|medical\s+staff)\s+(?:are\s+)?(?:out|rushing|attending|tending|checking|looking\s+at|examining|surrounding|working\s+on)|being\s+tended\s+to|tended\s+to\s+by\s+trainers|receiving\s+medical\s+attention|shaken up on the play|non-contact|(?:down|staying\s+down|remained\s+down|still\s+down)\s+on\s+(?:the\s+)?(?:field|turf|grass)|(?:went|is|was)\s+down\s+(?:hard|clutching|grabbing|holding|after\s+getting\s+rolled|in\s+(?:a\s+lot\s+of\s+|visible\s+)?pain)|rolled\s+up\s+on|concussion (?:protocol|evaluation)|(?:exited|left) (?:tonight'?s|sunday'?s|monday'?s|thursday'?s|saturday'?s|today'?s|the)\s+(?:game|contest|matchup)|(?:exited|left)\s+(?:with|w\/)\s*(?:a|an|his)\s+[a-z -]{2,24}\s+(?:injur\w*|issue|pain|spasm|sprain|strain))\b/i.test(
           clause
         );
 
       if (!isReturned && !isRuledOutInGame && !isDoubtfulInGame && !isQuestionableInGame) continue;
 
+      const effectivePlayers =
+        targetMatchersForClause.length > 0
+          ? targetMatchersForClause
+          : mentionedInClause.length === 0 && activeSubjectMatchers.length > 0
+            ? activeSubjectMatchers
+            : [];
+      if (effectivePlayers.length === 0) continue;
+
       const bodyMatch = clause.match(BODY_PART_IN_GAME_RE) || text.match(BODY_PART_IN_GAME_RE);
       const extractedBodyPart = bodyMatch ? formatBodyPartTitle(bodyMatch[1]) : '';
 
-      for (const pm of matchers) {
+      for (const pm of effectivePlayers) {
         if (pregameInactiveKeys.has(pm.key)) continue;
-        if (!doesClauseMentionPlayer(pm, clause, { allowUniqueSurname: true })) continue;
 
         const prev = byKey.get(pm.key) || null;
         // Only recognize a "returned to the game" signal if the player had an in-game injury or explicit return report
