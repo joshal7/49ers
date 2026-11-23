@@ -1,10 +1,9 @@
-const CACHE_NAME = '49ers-faithful-v137';
+const CACHE_NAME = '49ers-faithful-v138';
 const PRESERVED_CACHE_PREFIXES = ['49ers-podcast-studio-audio-'];
 const NETWORK_TIMEOUT_MS = 7500;
 const FAST_CACHED_NETWORK_TIMEOUT_MS = 2200;
 const CORE_ASSETS = [
   './',
-  './index.html',
   './manifest.json',
   './src/styles.css',
   './src/app.js',
@@ -72,6 +71,26 @@ function fetchWithTimeoutSw(url, init = {}, timeoutMs = NETWORK_TIMEOUT_MS) {
   return fetch(url, { ...init, signal: ctrl.signal }).finally(() => clearTimeout(timer));
 }
 
+async function cleanRedirectedResponse(res) {
+  if (!res || !res.redirected) return res;
+  const body = await res.clone().arrayBuffer();
+  const headers = new Headers(res.headers);
+  headers.delete('content-encoding');
+  headers.delete('content-length');
+  headers.delete('transfer-encoding');
+  return new Response(body, {
+    status: res.status,
+    statusText: res.statusText,
+    headers
+  });
+}
+
+function getPathnameDir(pathname = '/') {
+  const clean = String(pathname || '/');
+  const idx = clean.lastIndexOf('/');
+  return idx >= 0 ? clean.slice(0, idx + 1) : '/';
+}
+
 self.addEventListener('install', event => {
   event.waitUntil(
     caches
@@ -80,7 +99,11 @@ self.addEventListener('install', event => {
         Promise.all(
           CORE_ASSETS.map(url =>
             fetchWithTimeoutSw(url, { cache: 'no-cache' }, 9000)
-              .then(res => (res && res.ok ? cache.put(url, res) : null))
+              .then(async res => {
+                if (!res || !res.ok) return null;
+                const cleanRes = await cleanRedirectedResponse(res);
+                return cache.put(url, cleanRes);
+              })
               .catch(() => null)
           )
         )
@@ -160,19 +183,52 @@ self.addEventListener('fetch', event => {
 
   // Network-first with fast 2.2s timeout when warm-cached (7.5s cold) & instant offline fallback
   // Pass event.request.url string so { cache: 'no-cache' } never throws TypeError on mode === 'navigate'
+  // Never serve a redirected Response (res.redirected === true) to Safari navigation requests
+  const isNavigation = event.request.mode === 'navigate' || event.request.redirect === 'manual';
+  const isRootHtmlPath = url.pathname === '/' || url.pathname === '/index.html';
   event.respondWith(
     (async () => {
-      const cached = await caches.match(event.request, { ignoreSearch: true });
+      let cached = await caches.match(event.request, { ignoreSearch: true });
+      if (!cached && isNavigation && isRootHtmlPath) {
+        cached = await caches.match('./', { ignoreSearch: true });
+      }
       const timeoutMs = cached ? FAST_CACHED_NETWORK_TIMEOUT_MS : NETWORK_TIMEOUT_MS;
       try {
-        const res = await fetchWithTimeoutSw(event.request.url, { cache: 'no-cache' }, timeoutMs);
-        if (res && res.status === 200) {
-          const clone = res.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        const fetchUrl =
+          isNavigation && url.pathname === '/index.html'
+            ? `${url.origin}/${url.search}`
+            : event.request.url;
+        const rawRes = await fetchWithTimeoutSw(fetchUrl, { cache: 'no-cache' }, timeoutMs);
+        let outRes = rawRes;
+        if (rawRes && rawRes.redirected) {
+          if (isNavigation && rawRes.url) {
+            let sameDir = false;
+            try {
+              const finalUrl = new URL(rawRes.url);
+              sameDir =
+                finalUrl.origin === url.origin &&
+                getPathnameDir(finalUrl.pathname) === getPathnameDir(url.pathname);
+            } catch {}
+            if (sameDir && rawRes.ok) {
+              outRes = await cleanRedirectedResponse(rawRes);
+            } else {
+              return Response.redirect(rawRes.url, 302);
+            }
+          } else if (rawRes.ok) {
+            outRes = await cleanRedirectedResponse(rawRes);
+          }
         }
-        return res;
+        if (outRes && outRes.status === 200 && !outRes.redirected) {
+          const cacheKey = isNavigation && url.pathname === '/index.html' ? './' : event.request;
+          const clone = outRes.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(cacheKey, clone));
+        }
+        return outRes;
       } catch {
-        return cached || Response.error();
+        if (cached) {
+          return cached.redirected ? cleanRedirectedResponse(cached) : cached;
+        }
+        return Response.error();
       }
     })()
   );

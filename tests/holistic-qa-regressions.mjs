@@ -3379,6 +3379,117 @@ await testAsync(
   }
 );
 
+await testAsync(
+  'iOS Safari Home Screen shortcut: manifest start_url is "/" and sw.js never serves redirected responses',
+  async () => {
+    const vm = await import('node:vm');
+    const manifest = JSON.parse(fs.readFileSync(path.join(rootDir, 'manifest.json'), 'utf8'));
+    assert.equal(manifest.start_url, '/', 'manifest.json start_url must be "/"');
+    const swSrc = fs.readFileSync(path.join(rootDir, 'sw.js'), 'utf8');
+    assert.ok(!swSrc.includes("'./index.html'"), 'sw.js CORE_ASSETS must not precache ./index.html');
+
+    const cacheBuckets = new Map();
+    const makeCacheBucket = name => {
+      if (!cacheBuckets.has(name)) cacheBuckets.set(name, new Map());
+      const map = cacheBuckets.get(name);
+      const keyOf = req => {
+        const raw = typeof req === 'string' ? req : req.url;
+        const u = new URL(raw, 'https://49ers.joshal.com/');
+        return u.origin + u.pathname;
+      };
+      return {
+        async put(req, res) {
+          map.set(keyOf(req), res);
+        },
+        async match(req) {
+          return map.get(keyOf(req)) || undefined;
+        }
+      };
+    };
+    const mockCaches = {
+      async open(name) {
+        return makeCacheBucket(name);
+      },
+      async keys() {
+        return [...cacheBuckets.keys()];
+      },
+      async delete(name) {
+        return cacheBuckets.delete(name);
+      },
+      async match(req) {
+        for (const name of cacheBuckets.keys()) {
+          const hit = await makeCacheBucket(name).match(req);
+          if (hit) return hit;
+        }
+        return undefined;
+      }
+    };
+    const makeRedirectedRes = (bodyText, finalUrl) => {
+      const r = new Response(bodyText, {
+        status: 200,
+        headers: { 'Content-Type': 'text/html; charset=utf-8', 'Content-Encoding': 'gzip' }
+      });
+      Object.defineProperty(r, 'redirected', { value: true, configurable: true });
+      Object.defineProperty(r, 'url', { value: finalUrl, configurable: true });
+      return r;
+    };
+
+    const seenFetches = [];
+    let fetchImpl = async () => makeRedirectedRes('<html>cached</html>', 'https://49ers.joshal.com/');
+    const listeners = {};
+    const swSelf = {
+      location: new URL('https://49ers.joshal.com/sw.js'),
+      addEventListener(type, fn) {
+        listeners[type] = fn;
+      },
+      skipWaiting: async () => {},
+      clients: { claim: async () => {}, matchAll: async () => [] },
+      registration: { showNotification: async () => {} }
+    };
+    vm.runInNewContext(swSrc, {
+      self: swSelf,
+      caches: mockCaches,
+      fetch: (url, init) => {
+        seenFetches.push(String(url));
+        return fetchImpl(url, init);
+      },
+      Response,
+      Headers,
+      Request,
+      URL,
+      AbortController,
+      setTimeout,
+      clearTimeout
+    });
+
+    let installP = null;
+    listeners.install({ waitUntil: p => { installP = p; } });
+    await installP;
+    const cachedRoot = await mockCaches.match('https://49ers.joshal.com/');
+    assert.ok(cachedRoot, 'sw.js install must cache root shell');
+    assert.equal(cachedRoot.redirected, false, 'Cached root shell must not be redirected');
+    assert.equal(cachedRoot.headers.get('content-encoding'), null, 'Sanitized cached response must strip content-encoding');
+
+    seenFetches.length = 0;
+    fetchImpl = async () => makeRedirectedRes('<html>live</html>', 'https://49ers.joshal.com/');
+    let respP = null;
+    listeners.fetch({
+      request: {
+        method: 'GET',
+        url: 'https://49ers.joshal.com/index.html?tab=news',
+        mode: 'navigate',
+        redirect: 'manual',
+        headers: new Headers()
+      },
+      respondWith: p => { respP = p; }
+    });
+    const navRes = await respP;
+    assert.equal(navRes.status, 200);
+    assert.equal(navRes.redirected, false, 'Navigation response must never have redirected === true');
+    assert.equal(seenFetches[0], 'https://49ers.joshal.com/?tab=news', 'SW must canonicalize /index.html navigation to /?tab=news');
+  }
+);
+
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);
 if (failed > 0) {
   process.exit(1);
