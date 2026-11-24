@@ -21561,6 +21561,363 @@ await testAsync('NFL CMS <!--[if IE 9]> HTML Comment Stripping, Self-Healing Cac
   );
 });
 
+await testAsync('Playoff clinch guard (never 100% unclinched), stale brief/live boot snapshot persistence, 32-team matchup betting, and Gamecast 3D field/UX polish (v179)', async () => {
+  const { parseEspnSummaryToGamecast } = await import('../src/engine/gamecastEngine.js');
+  const { renderGamecastViewHtml } = await import('../src/views/gamecastView.js');
+  const { renderSeasonMatchupViewHtml } = await import('../src/views/seasonMatchupView.js');
+  const {
+    computeMatchupBettingFields,
+    persistLiveBootSnapshot,
+    hydrateLiveBootSnapshotOnBoot
+  } = await import('../src/services/dataService.js');
+  const { hydrateCachedDailyTopNewsBrief, getDailyNewsBriefCacheKey } = await import('../src/services/aiWorkerClient.js');
+
+  // 1. Playoff Monte Carlo: unclinched 10-1 team with 6 games left must NEVER display 100%, and rooting CHI pick keeps SF PO non-decreasing while lifting #1 Bye
+  const rem = simInputs.remainingGames || [];
+  const minSf = rem.find(g => (g.home === 'SF' && g.away === 'MIN') || (g.home === 'MIN' && g.away === 'SF'));
+  const seaSf = rem.find(g => (g.home === 'SF' && g.away === 'SEA') || (g.home === 'SEA' && g.away === 'SF'));
+  const chiDet = rem.find(g => (g.home === 'DET' && g.away === 'CHI') || (g.home === 'CHI' && g.away === 'DET'));
+  if (minSf && seaSf && chiDet) {
+    const baseFw = { [minSf.id]: minSf.home === 'SF' ? 'HOME' : 'AWAY' };
+    const sfWinFw = { ...baseFw, [seaSf.id]: seaSf.home === 'SF' ? 'HOME' : 'AWAY' };
+    const sfChiFw = { ...sfWinFw, [chiDet.id]: chiDet.home === 'CHI' ? 'HOME' : 'AWAY' };
+    const simSf = runPlayoffMonteCarlo({ ...simInputs, targetTeam: 'SF', forcedWinners: sfWinFw, iterations: 5000, seed: 492026 });
+    const simSfChi = runPlayoffMonteCarlo({ ...simInputs, targetTeam: 'SF', forcedWinners: sfChiFw, iterations: 5000, seed: 492026 });
+    assert.ok(simSf.teamOdds.isClinchedPlayoffs === false, '10-1 SF with 6 games left must NOT be flagged mathematically clinched');
+    assert.ok(simSf.teamOdds.makePlayoffsPct <= 99.9, `Unclinched 10-1 SF must cap at <=99.9%, got ${simSf.teamOdds.makePlayoffsPct}%`);
+    assert.ok(
+      simSfChi.teamOdds.makePlayoffsPct >= simSf.teamOdds.makePlayoffsPct,
+      `Adding recommended CHI pick must not drop SF PO (${simSf.teamOdds.makePlayoffsPct}% -> ${simSfChi.teamOdds.makePlayoffsPct}%)`
+    );
+    assert.ok(
+      simSfChi.teamOdds.seed1ByePct > simSf.teamOdds.seed1ByePct,
+      `Adding recommended CHI pick must raise SF #1 Bye (${simSf.teamOdds.seed1ByePct}% -> ${simSfChi.teamOdds.seed1ByePct}%)`
+    );
+  }
+
+  // 2. Stale 6-day-old static AI brief & live boot snapshot persistence
+  const memStore = new Map();
+  const mockLocalStorage = {
+    getItem: k => (memStore.has(k) ? memStore.get(k) : null),
+    setItem: (k, v) => memStore.set(k, String(v)),
+    removeItem: k => memStore.delete(k),
+    get length() {
+      return memStore.size;
+    },
+    key: i => Array.from(memStore.keys())[i] ?? null
+  };
+  const prevWin = globalThis.window;
+  const prevLsDesc = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
+  globalThis.window = { localStorage: mockLocalStorage };
+  Object.defineProperty(globalThis, 'localStorage', { value: mockLocalStorage, configurable: true, writable: true });
+  try {
+    const nowBootMs = Date.parse('2026-11-24T19:00:00Z');
+    const staleStaticApp = {
+      meta: { teamAbbr: 'SF', teamRecord: '8-1', currentWeek: 11, updatedAt: '2026-11-18T01:00:00Z', _upstreamUpdatedAt: '2026-11-18T01:00:00Z' },
+      scheduleMatchup: {
+        schedule: [
+          { id: '401873001', seasonType: 'REG', week: 11, dateIso: '2026-11-23T01:20:00Z', completed: false, opponent: { abbr: 'MIN', name: 'Minnesota Vikings' } }
+        ],
+        upcomingMatchup: { week: 11, gameId: '401873001', oppAbbr: 'MIN', oppName: 'Minnesota Vikings' }
+      },
+      news: {
+        dailyTopNewsBrief: {
+          id: 'daily_brief_2026-11-17_17PT',
+          cycleKey: '2026-11-17@17PT',
+          generatedAt: '2026-11-18T01:03:00Z',
+          source: 'pipeline-grounded',
+          headline: '6-day-old Vikings preview brief',
+          bullets: ['Old bullet one from six days ago.', 'Old bullet two from six days ago.']
+        },
+        rawStream: [
+          { id: 'old_1', type: 'article', title: 'Old Nov 17 article', url: 'https://example.com/old', publishedAt: '2026-11-17T22:00:00Z' }
+        ]
+      }
+    };
+    const yesterdayAiBrief = {
+      id: 'daily_brief_2026-11-23_17PT',
+      cycleKey: '2026-11-23@17PT',
+      generatedAt: '2026-11-24T01:05:00Z',
+      source: 'live-gemini-daily',
+      headline: '49ers Move to 9-1 After Dominant Win Over Vikings',
+      bullets: [
+        'Brock Purdy threw 3 touchdowns as San Francisco improved to 9-1 [ESPN](https://www.espn.com/nfl/recap).',
+        'Attention now shifts to Week 12 vs Seattle for NFC West control [49ers.com](https://www.49ers.com/news).'
+      ],
+      sources: [{ title: 'Recap', url: 'https://www.espn.com/nfl/recap', publishedAt: '2026-11-23T06:00:00Z' }]
+    };
+    memStore.set(getDailyNewsBriefCacheKey('SF'), JSON.stringify(yesterdayAiBrief));
+    // Even after a new cycle rolls over (2026-11-24@17PT at 6 PM PT), must NEVER fall back to 6-day-old upstream brief!
+    hydrateCachedDailyTopNewsBrief(staleStaticApp, Date.parse('2026-11-25T02:00:00Z'));
+    assert.equal(
+      staleStaticApp.news.dailyTopNewsBrief.cycleKey,
+      '2026-11-23@17PT',
+      'Must preserve fresher localStorage AI brief instead of regressing to 6-day-old static news.json'
+    );
+
+    // Live boot snapshot persist + instant T=0ms rehydrate
+    const hydratedLiveApp = structuredClone(staleStaticApp);
+    hydratedLiveApp.meta.teamRecord = '9-1';
+    hydratedLiveApp.meta.currentWeek = 12;
+    hydratedLiveApp.scheduleMatchup.schedule[0].completed = true;
+    hydratedLiveApp.scheduleMatchup.schedule[0].sfScore = 31;
+    hydratedLiveApp.scheduleMatchup.schedule[0].oppScore = 17;
+    hydratedLiveApp.scheduleMatchup.schedule[0].result = 'W';
+    hydratedLiveApp.news.rawStream.unshift({
+      id: 'fresh_today_1',
+      type: 'tweet',
+      title: 'Kyle Shanahan confirms Nick Bosa full participant ahead of Seahawks',
+      url: 'https://x.com/mattbarrows/status/9999999999',
+      publishedAt: '2026-11-24T18:30:00Z',
+      author: 'Matt Barrows',
+      outletName: 'The Athletic'
+    });
+    assert.equal(persistLiveBootSnapshot(hydratedLiveApp, nowBootMs), true, 'Live boot snapshot must persist');
+
+    const coldReloadApp = structuredClone(staleStaticApp);
+    const applied = hydrateLiveBootSnapshotOnBoot(coldReloadApp, nowBootMs + 60_000);
+    assert.equal(applied, true, 'Cold boot must synchronously rehydrate live boot snapshot');
+    assert.equal(coldReloadApp.meta.teamRecord, '9-1', 'Cold boot must immediately show live 9-1 record');
+    assert.equal(coldReloadApp.scheduleMatchup.schedule[0].completed, true, 'Cold boot must immediately mark Week 11 completed');
+    assert.ok(
+      coldReloadApp.news.rawStream.some(it => it.id === 'fresh_today_1'),
+      'Cold boot must immediately include freshest cached live wire items'
+    );
+  } finally {
+    globalThis.window = prevWin;
+    if (prevLsDesc) Object.defineProperty(globalThis, 'localStorage', prevLsDesc);
+    else delete globalThis.localStorage;
+  }
+
+  // 3. Gamecast 3D field: Timeout zero-yardLine arrow fix, trapezoid endzone angles, FG dotted arc & scoring banners
+  const makeMockSummary = ({ lastPlay, rawSit, prevPlay = null }) => ({
+    header: {
+      id: '401873078',
+      competitions: [
+        {
+          id: '401873078',
+          status: { period: 4, displayClock: '1:35', type: { state: 'in', completed: false, shortDetail: '1:35 - 4th' } },
+          competitors: [
+            {
+              id: '4',
+              homeAway: 'away',
+              score: '17',
+              record: [{ type: 'total', summary: '7-2' }],
+              team: { id: '4', abbreviation: 'CIN', displayName: 'Cincinnati Bengals', name: 'Bengals', color: 'FB4F14' }
+            },
+            {
+              id: '28',
+              homeAway: 'home',
+              score: '19',
+              record: [{ type: 'total', summary: '3-5-1' }],
+              team: { id: '28', abbreviation: 'WSH', displayName: 'Washington Commanders', name: 'Commanders', color: '5A1414' }
+            }
+          ]
+        }
+      ]
+    },
+    situation: rawSit,
+    drives: {
+      previous: [],
+      current: {
+        id: 'drv_1',
+        team: { abbreviation: rawSit.possession === '4' ? 'CIN' : 'WSH', shortDisplayName: rawSit.possession === '4' ? 'Bengals' : 'Commanders' },
+        start: { text: rawSit.possession === '4' ? 'CIN 25' : 'WAS 20', yardLine: 25, period: { number: 4 } },
+        description: '11 plays, 56 yards, 6:04',
+        plays: [
+          ...(prevPlay ? [prevPlay] : []),
+          lastPlay
+        ]
+      }
+    },
+    boxscore: {
+      players: [
+        {
+          team: { abbreviation: 'WSH' },
+          statistics: [{ name: 'passing', labels: ['C/ATT', 'YDS'], athletes: [{ athlete: { id: '4426348', displayName: 'Jayden Daniels', shortName: 'J. Daniels', position: { abbreviation: 'QB' } }, stats: ['23/35', '289'] }] }]
+        }
+      ],
+      teams: [
+        { team: { abbreviation: 'CIN' }, statistics: [{ name: 'totalYards', displayValue: '312' }] },
+        { team: { abbreviation: 'WSH' }, statistics: [{ name: 'totalYards', displayValue: '428' }] }
+      ]
+    }
+  });
+
+  // 3a. Timeout play with ESPN corrupted `yardsToEndzone: 0` must NOT point white arrow backwards from endzone
+  const toSummary = makeMockSummary({
+    rawSit: { possession: '4', downDistanceText: '3rd & 7 at WSH 30', shortDownDistanceText: '3rd & 7', possessionText: 'WSH 30', distance: 7, yardLine: 70, yardsToEndzone: 30 },
+    lastPlay: {
+      id: 'p_to',
+      period: { number: 4 },
+      clock: { displayValue: '1:35' },
+      type: { text: 'Timeout' },
+      text: 'Timeout #1 by CIN at 01:35.',
+      start: { yardsToEndzone: 0 },
+      end: { yardsToEndzone: 0 }
+    }
+  });
+  const toModel = parseEspnSummaryToGamecast(toSummary, { gameMeta: { id: '401873078' }, activeTeam: 'WAS' });
+  assert.equal(toModel.situation.ballPos0to100, 70, 'CIN ball on WSH 30 must map to u=70');
+  assert.equal(toModel.situation.prevPos0to100, 70, 'Timeout play with yardsToEndzone:0 must set prevPos === ballPos (no bogus backwards arrow)');
+
+  const toHtml = renderGamecastViewHtml({
+    appData: {
+      roster: { players: [] },
+      scheduleMatchup: { schedule: [{ id: '401873078', seasonType: 'REG', week: 11, isLive: true, statusState: 'in', homeAway: 'home', opponent: { abbr: 'CIN', name: 'Cincinnati Bengals' } }] }
+    },
+    selectedGameId: '401873078',
+    gamecastTab: 'pbp',
+    gamecastModel: toModel
+  });
+  assert.ok(!toHtml.includes('gc-run-arrow'), 'Timeout play must not render a backwards run arrow');
+  assert.ok(toHtml.includes('rotate(-71.68'), 'Left endzone text must align with trapezoid goal-line angle (-71.68 deg)');
+  assert.ok(toHtml.includes('rotate(71.68'), 'Right endzone text must align with trapezoid goal-line angle (+71.68 deg)');
+  assert.ok(!toHtml.includes('gc-switcher-strip'), 'Top switcher strip (WK 11 vs CIN / Final / ESPN) must be removed');
+  assert.ok(toHtml.includes('data-gamecast-week-picker'), 'Compact WK N picker must sit inline beside 3-tab bar');
+  assert.ok(toHtml.includes('gc-sb-name-text'), 'Scorebug team names must use inner ellipsis span so first letter never clips');
+
+  // Verify Play-by-Play toolbar order: All Plays -> Key Plays -> Scoring (zero "All Drives")
+  const pbpToolbarSlice = toHtml.slice(toHtml.indexOf('data-gamecast-pbp-toolbar'));
+  const idxAllPlays = pbpToolbarSlice.indexOf('All Plays');
+  const idxKeyPlays = pbpToolbarSlice.indexOf('Key Plays');
+  const idxScoring = pbpToolbarSlice.indexOf('>Scoring<');
+  assert.ok(!pbpToolbarSlice.includes('All Drives'), 'Play-by-Play filter must rename All Drives to All Plays');
+  assert.ok(idxAllPlays > 0 && idxKeyPlays > idxAllPlays && idxScoring > idxKeyPlays, 'Play-by-Play pills must be ordered All Plays -> Key Plays -> Scoring');
+
+  // 3b. Field Goal Good: dotted arc from kick spot + [Logo] FIELD GOAL banner replacing 4th & 1
+  const fgSummary = makeMockSummary({
+    rawSit: { possession: '28', downDistanceText: '4th & 1 at CIN 24', shortDownDistanceText: '4th & 1', possessionText: 'CIN 24', distance: 1, yardLine: 24, yardsToEndzone: 24 },
+    prevPlay: { id: 'p_prev', period: { number: 4 }, clock: { displayValue: '2:30' }, type: { text: 'Rush' }, text: 'J. Daniels rush for 2 yards.', statYardage: 2, awayScore: 17, homeScore: 16, start: { possessionText: 'CIN 26' }, end: { possessionText: 'CIN 24' } },
+    lastPlay: {
+      id: 'p_fg',
+      period: { number: 4 },
+      clock: { displayValue: '2:26' },
+      scoringPlay: true,
+      awayScore: 17,
+      homeScore: 19,
+      type: { text: 'Field Goal Good' },
+      text: 'D.Stevens 41 yard field goal is GOOD, Center-T.Ott, Holder-T.Way.',
+      start: { possessionText: 'CIN 24', yardsToEndzone: 24 },
+      end: { yardsToEndzone: 0 }
+    }
+  });
+  const fgModel = parseEspnSummaryToGamecast(fgSummary, { gameMeta: { id: '401873078' }, activeTeam: 'WAS' });
+  assert.equal(fgModel.situation.scoringPlayType, 'field_goal', 'Made FG must set scoringPlayType=field_goal');
+  assert.equal(fgModel.situation.fgKickSpotPos0to100, 24, 'Made FG from CIN 24 must keep kick spot at u=24');
+  const fgHtml = renderGamecastViewHtml({
+    appData: { roster: { players: [] }, scheduleMatchup: { schedule: [{ id: '401873078', seasonType: 'REG', week: 11, isLive: true, statusState: 'in', homeAway: 'home', opponent: { abbr: 'CIN', name: 'Cincinnati Bengals' } }] } },
+    selectedGameId: '401873078',
+    gamecastTab: 'pbp',
+    gamecastModel: fgModel
+  });
+  const fgFieldSlice = fgHtml.slice(0, fgHtml.indexOf('data-gamecast-quarter-scoreboard'));
+  assert.ok(fgFieldSlice.includes('data-gamecast-scoring-banner="field_goal"') && fgFieldSlice.includes('FIELD GOAL'), 'FG must render [Logo] FIELD GOAL banner');
+  assert.ok(!fgFieldSlice.includes('4th &amp; 1') && !fgFieldSlice.includes('Ball on'), 'Scoring FG play must replace Down & Distance (4th & 1) in hero field card');
+  assert.ok(fgFieldSlice.includes('data-gamecast-fg-arc="good"'), 'Made FG must render dotted trajectory arc through uprights');
+
+  // 3c. Safety credits defense & free-safety tackle does NOT falsely trigger safety banner
+  const safSummary = makeMockSummary({
+    rawSit: { possession: '4', downDistanceText: '2nd & 10 at CIN 2', shortDownDistanceText: '2nd & 10', possessionText: 'CIN 2' },
+    prevPlay: { id: 'p_s0', period: { number: 4 }, clock: { displayValue: '3:00' }, type: { text: 'Rush' }, text: 'Rush for 0 yds.', awayScore: 17, homeScore: 17 },
+    lastPlay: {
+      id: 'p_saf',
+      period: { number: 4 },
+      clock: { displayValue: '2:55' },
+      scoringPlay: true,
+      awayScore: 17,
+      homeScore: 19,
+      type: { text: 'Safety' },
+      text: 'J.Burrow sacked in end zone for a SAFETY.',
+      start: { possessionText: 'CIN 2' }
+    }
+  });
+  const safModel = parseEspnSummaryToGamecast(safSummary, { gameMeta: { id: '401873078' }, activeTeam: 'WAS' });
+  assert.equal(safModel.situation.scoringPlayType, 'safety', 'Safety play must set scoringPlayType=safety');
+  assert.equal(safModel.situation.scoringTeamSide, 'home', 'Safety must credit the defensive scoring team');
+
+  const fsTackleSummary = makeMockSummary({
+    rawSit: { possession: '4', downDistanceText: '2nd & 6 at CIN 34', shortDownDistanceText: '2nd & 6', possessionText: 'CIN 34' },
+    lastPlay: {
+      id: 'p_fs',
+      period: { number: 4 },
+      clock: { displayValue: '4:00' },
+      scoringPlay: false,
+      type: { text: 'Rush' },
+      text: 'C.Brown rush up the middle for 4 yards, tackled by free safety J.Chinn.',
+      statYardage: 4,
+      start: { possessionText: 'CIN 30' },
+      end: { possessionText: 'CIN 34' }
+    }
+  });
+  const fsModel = parseEspnSummaryToGamecast(fsTackleSummary, { gameMeta: { id: '401873078' }, activeTeam: 'WAS' });
+  assert.equal(fsModel.situation.scoringPlayType, null, 'Mentioning "free safety" on a tackle must NOT trigger a Safety banner');
+
+  // 3d. Box Score removes All/Off/Def/ST pills & Team Stats removes redundant Single-Game Stats legend
+  const boxHtml = renderGamecastViewHtml({
+    appData: { roster: { players: [] }, scheduleMatchup: { schedule: [{ id: '401873078', seasonType: 'REG', week: 11, completed: true, homeAway: 'home', opponent: { abbr: 'CIN', name: 'Cincinnati Bengals' } }] } },
+    selectedGameId: '401873078',
+    gamecastTab: 'box',
+    gamecastModel: toModel
+  });
+  assert.ok(!boxHtml.includes('gc-unit-pills') && !boxHtml.includes('set-gamecast-box-unit'), 'Box Score must omit All/Off/Def/ST unit filter pills');
+  const teamStatsHtml = renderGamecastViewHtml({
+    appData: { roster: { players: [] }, scheduleMatchup: { schedule: [{ id: '401873078', seasonType: 'REG', week: 11, completed: true, homeAway: 'home', opponent: { abbr: 'CIN', name: 'Cincinnati Bengals' } }] } },
+    selectedGameId: '401873078',
+    gamecastTab: 'team',
+    gamecastModel: toModel
+  });
+  assert.ok(!teamStatsHtml.includes('gc-ts-legend') && !teamStatsHtml.includes('Single-Game Stats'), 'Team Stats must omit redundant Single-Game Stats header row');
+
+  // 4. Matchup: remove ESPN Gamecast & nflverse EPA bubbles + populate Implied Score & Line & Rest across all 32 teams
+  const computedCmdBet = computeMatchupBettingFields({
+    teamAbbr: 'WSH',
+    oppAbbr: 'ARI',
+    isHome: false,
+    spreadRaw: 'WSH -7.5',
+    overUnderRaw: 42.5
+  });
+  assert.equal(computedCmdBet.impliedScore, 'WSH 25.0 – ARI 17.5', `Expected WSH 25.0 – ARI 17.5, got ${computedCmdBet.impliedScore}`);
+  assert.ok(computedCmdBet.openingSpread && computedCmdBet.moneyline && computedCmdBet.restAdvantage, 'Line & Rest fields must never be blank');
+
+  const matchupHtml = renderSeasonMatchupViewHtml({
+    seasonSub: 'matchup',
+    appData: {
+      meta: { teamRecord: '9-1', currentWeek: 12 },
+      roster: { players: [] },
+      health: { injuryReport: [], irReserve: [] },
+      scheduleMatchup: {
+        schedule: [],
+        upcomingMatchup: {
+          week: 12,
+          gameId: '401873100',
+          oppAbbr: 'ARI',
+          oppName: 'Arizona Cardinals',
+          homeAway: 'away',
+          gameUrl: 'https://www.espn.com/nfl/game/_/gameId/401873100',
+          betting: { spread: 'SF -7.5', overUnder: 42.5 },
+          opponentHealth: { injuryReport: [], irReserve: [] },
+          coachingMatchup: {}
+        }
+      }
+    }
+  });
+  assert.ok(!matchupHtml.includes('<span>ESPN Gamecast</span>'), 'Matchup card must omit ESPN Gamecast bubble');
+  assert.ok(!matchupHtml.includes('<span>nflverse EPA</span>'), 'Matchup card must omit nflverse EPA bubble');
+  assert.ok(matchupHtml.includes('SF 25.0 · ARI 17.5'), 'Matchup card must render derived Implied Score even when raw betting omitted it');
+  assert.ok(!matchupHtml.includes('• ML <span class="mono"></span> •'), 'Matchup Line & Rest must never render blank ML bullets');
+
+  // Verify every single one of the 31 non-SF team bundles on disk has populated impliedScore, openingSpread, moneyline & restAdvantage
+  const teamsDir = path.join(rootDir, 'data', 'teams');
+  for (const slug of fs.readdirSync(teamsDir)) {
+    const f = path.join(teamsDir, slug, 'schedule-matchup.json');
+    if (!fs.existsSync(f)) continue;
+    const sm = JSON.parse(fs.readFileSync(f, 'utf8'));
+    const b = sm?.upcomingMatchup?.betting || {};
+    assert.ok(b.impliedScore && b.openingSpread && b.moneyline && b.restAdvantage, `${slug} schedule-matchup.json missing betting/rest fields: ${JSON.stringify(b)}`);
+  }
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

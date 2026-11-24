@@ -5242,10 +5242,40 @@ export function hydrateCachedDailyTopNewsBrief(appData, nowMs = Date.now()) {
     return false;
   }
 
-  // 4. Valid non-stale cached brief
+  // 4. Valid non-stale cached brief for activeCycle
   if (cachedValid) {
     appData.news.dailyTopNewsBrief = cached;
     return true;
+  }
+
+  // 4.5. Never fall back to a multi-day-old static `data/news.json` brief when `localStorage` holds a
+  //      fresher, non-stale AI or live brief from the immediately preceding cycle (e.g. yesterday's 5 PM PT
+  //      or post-game brief while today's new cycle is still syncing from Shared KV / Gemini).
+  if (
+    cached &&
+    !cachedStale &&
+    cached.headline &&
+    Array.isArray(cached.bullets) &&
+    cached.bullets.length >= 2
+  ) {
+    const cachedGenMs = Date.parse(cached.generatedAt || '') || 0;
+    const upstreamGenMs = Date.parse(upstream?.generatedAt || '') || 0;
+    const cachedOrd = parseCycleDateOrderKey(cached.cycleKey);
+    const upstreamOrd = parseCycleDateOrderKey(upstream?.cycleKey);
+    const cachedWithin72h = cachedGenMs > 0 && nowMs - cachedGenMs <= 72 * 3_600_000;
+    const cachedFresherThanUpstream =
+      !upstream ||
+      upstreamStale ||
+      (cachedOrd && (!upstreamOrd || cachedOrd > upstreamOrd)) ||
+      (cachedGenMs > 0 && (!upstreamGenMs || cachedGenMs > upstreamGenMs + 60_000)) ||
+      (isAiDailyBriefSource(cached) && !isAiDailyBriefSource(upstream) && cachedGenMs >= upstreamGenMs - 2 * 3_600_000);
+    if (cachedWithin72h && cachedFresherThanUpstream) {
+      const changed =
+        appData.news.dailyTopNewsBrief?.id !== cached.id ||
+        appData.news.dailyTopNewsBrief?.generatedAt !== cached.generatedAt;
+      appData.news.dailyTopNewsBrief = cached;
+      return changed;
+    }
   }
 
   // 5. Upstream & cache are missing, stale, or legacy-degraded for `activeCycle`: rebuild immediately from live hydrated `appData`

@@ -31,8 +31,12 @@ import {
   canonicalPlayoffGameKey,
   runPlayoffMonteCarlo,
   computeCalibratedTeamPowerRating,
+  computeLeaguePowerRatings,
+  estimateTeamInjurySpreadAdjustments,
+  reconcileLiveScoreboardIntoPlayoffGames,
   computeRootingGuideLeverage,
-  reconcileAndDedupePlayoffGames
+  reconcileAndDedupePlayoffGames,
+  PLAYOFF_MODEL_VERSION
 } from '../engine/playoffMonteCarlo.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
@@ -575,7 +579,7 @@ function evictExpendableLocalStorageCaches(store, activePrefsKey) {
   for (let i = 0; i < store.length; i++) {
     const k = store.key(i);
     if (!k || k === activePrefsKey || k.includes('shared_gemini_key')) continue;
-    if (/_gamecast_cache_v\d+$/.test(k)) {
+    if (/_gamecast_cache_v\d+$/.test(k) || /_live_boot_snap_v\d+$/.test(k)) {
       expendable.push({ k, prio: 1 });
     } else if (/_daily_(?:news_brief|matchup)_/.test(k)) {
       expendable.push({ k, prio: 2 });
@@ -635,6 +639,455 @@ function structuredCloneFallback(obj) {
     } catch {}
   }
   return JSON.parse(JSON.stringify(obj));
+}
+
+const LIVE_BOOT_SNAPSHOT_TTL_MS = 96 * 3_600_000;
+const LIVE_BOOT_SNAPSHOT_MAX_ITEMS = 42;
+
+function getLiveBootSnapshotStorageKey(teamInput = null) {
+  const team = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  return team.abbr === 'SF' ? 'joshal_49ers_live_boot_snap_v1' : `joshal_${team.slug}_live_boot_snap_v1`;
+}
+
+function compactWireItemForBootSnapshot(it) {
+  if (!it || typeof it !== 'object') return null;
+  const out = {
+    id: String(it.id || ''),
+    type: it.type || 'article',
+    title: String(it.title || '').slice(0, 320),
+    publishedAt: it.publishedAt || '',
+    url: it.url || '',
+    author: it.author || '',
+    outletName: it.outletName || ''
+  };
+  if (it.fullText && it.fullText !== it.title) out.fullText = String(it.fullText).slice(0, 360);
+  if (it.isFullTweet) out.isFullTweet = true;
+  if (it.summary) out.summary = String(it.summary).slice(0, 260);
+  if (it.externalUrl) out.externalUrl = it.externalUrl;
+  if (it.externalTitle) out.externalTitle = String(it.externalTitle).slice(0, 180);
+  if (it.externalDomain) out.externalDomain = it.externalDomain;
+  if (it.imageUrl) out.imageUrl = it.imageUrl;
+  if (it.authorHandle) out.authorHandle = it.authorHandle;
+  if (it.authorProfileUrl) out.authorProfileUrl = it.authorProfileUrl;
+  if (it.outletId) out.outletId = it.outletId;
+  if (it.reporterId) out.reporterId = it.reporterId;
+  if (it.reporterName) out.reporterName = it.reporterName;
+  if (it.trustTier != null) out.trustTier = it.trustTier;
+  if (it.wireSource) out.wireSource = it.wireSource;
+  if (it.breakingBadge) out.breakingBadge = it.breakingBadge;
+  if (it.category) out.category = it.category;
+  if (it.videoId) out.videoId = it.videoId;
+  if (it.inlineVideoUrl) out.inlineVideoUrl = it.inlineVideoUrl;
+  if (Array.isArray(it.mentionedPlayers) && it.mentionedPlayers.length > 0) {
+    out.mentionedPlayers = it.mentionedPlayers.slice(0, 5);
+  }
+  return out;
+}
+
+/**
+ * Persists a lightweight (~30 KB) team-scoped snapshot of freshly hydrated live wire items,
+ * completed game results, team record, and matchup lines so subsequent app opens paint
+ * today's live state immediately on T=0ms instead of flashing a multi-day-old static JSON bundle.
+ */
+export function persistLiveBootSnapshot(appData, nowMs = Date.now()) {
+  const store = getSafeLocalStorage();
+  if (!store || !appData?.meta) return false;
+  const activeTeam = resolveTeamConfig(appData.meta.teamAbbr || getActiveTeamConfig());
+  const key = getLiveBootSnapshotStorageKey(activeTeam);
+  const upstreamMs = Date.parse(appData.meta._upstreamUpdatedAt || appData.meta.updatedAt || '') || 0;
+  const rawStream = Array.isArray(appData.news?.rawStream) ? appData.news.rawStream : [];
+
+  const freshWireItems = rawStream
+    .filter(it => {
+      if (!it || it.isClickbait) return false;
+      const pMs = Date.parse(it.publishedAt || '');
+      if (!Number.isFinite(pMs)) return false;
+      return !upstreamMs || pMs >= upstreamMs - 2 * 3_600_000;
+    })
+    .sort((a, b) => (Date.parse(b.publishedAt || '') || 0) - (Date.parse(a.publishedAt || '') || 0))
+    .slice(0, LIVE_BOOT_SNAPSHOT_MAX_ITEMS)
+    .map(compactWireItemForBootSnapshot)
+    .filter(Boolean);
+
+  const completedGamesById = {};
+  for (const g of appData.scheduleMatchup?.schedule || []) {
+    if (!g || !g.id || g.isByeWeek || !g.completed) continue;
+    completedGamesById[String(g.id)] = {
+      completed: true,
+      completedAt: g.completedAt || null,
+      statusState: g.statusState || 'post',
+      statusDetail: g.statusDetail || 'Final',
+      sfScore: g.sfScore != null ? Number(g.sfScore) : null,
+      oppScore: g.oppScore != null ? Number(g.oppScore) : null,
+      result: g.result || null
+    };
+  }
+
+  const um = appData.scheduleMatchup?.upcomingMatchup || null;
+  const payload = {
+    savedAt: new Date(nowMs).toISOString(),
+    teamAbbr: activeTeam.abbr,
+    upstreamAnchorAt: appData.meta._upstreamUpdatedAt || appData.meta.updatedAt || '',
+    meta: {
+      teamRecord: appData.meta.teamRecord || '',
+      standingSummary: appData.meta.standingSummary || '',
+      currentWeek: appData.meta.currentWeek || null
+    },
+    completedGamesById,
+    upcomingMatchupPatch: um
+      ? {
+          week: um.week || null,
+          gameId: um.gameId || '',
+          oppAbbr: um.oppAbbr || '',
+          oppName: um.oppName || '',
+          oppRecord: um.oppRecord || '',
+          sfRecord: um.sfRecord || '',
+          dateIso: um.dateIso || null,
+          kickoffDisplay: um.kickoffDisplay || '',
+          broadcast: um.broadcast || '',
+          completed: Boolean(um.completed),
+          isGameInProgress: Boolean(um.isGameInProgress),
+          statusDetail: um.statusDetail || '',
+          betting: um.betting ? { ...um.betting } : null
+        }
+      : null,
+    freshWireItems
+  };
+
+  try {
+    store.setItem(key, JSON.stringify(payload));
+    return true;
+  } catch {
+    try {
+      evictExpendableLocalStorageCaches(store, getTeamStorageKeys(activeTeam).prefs || STORAGE_KEY);
+      store.setItem(key, JSON.stringify({ ...payload, freshWireItems: freshWireItems.slice(0, 18) }));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+}
+
+/**
+ * Synchronously merges the last-known live-hydrated wire & schedule delta snapshot into a freshly
+ * loaded static bundle BEFORE first paint so returning daily users never see multi-day-old news.
+ */
+export function hydrateLiveBootSnapshotOnBoot(appData, nowMs = Date.now()) {
+  const store = getSafeLocalStorage();
+  if (!store || !appData?.meta) return false;
+  const activeTeam = resolveTeamConfig(appData.meta.teamAbbr || getActiveTeamConfig());
+  const key = getLiveBootSnapshotStorageKey(activeTeam);
+  let snap = null;
+  try {
+    const raw = store.getItem(key);
+    if (!raw) return false;
+    snap = JSON.parse(raw);
+  } catch {
+    return false;
+  }
+  if (!snap || typeof snap !== 'object' || snap.teamAbbr !== activeTeam.abbr) return false;
+  const savedMs = Date.parse(snap.savedAt || '');
+  if (!Number.isFinite(savedMs) || nowMs - savedMs > LIVE_BOOT_SNAPSHOT_TTL_MS) {
+    try {
+      store.removeItem(key);
+    } catch {}
+    return false;
+  }
+
+  const upstreamMs = Date.parse(appData.meta._upstreamUpdatedAt || appData.meta.updatedAt || '') || 0;
+  let mutated = false;
+
+  // Only patch meta/schedule when snapshot is strictly newer than the loaded static JSON bundle
+  if (savedMs > upstreamMs + 60_000) {
+    if (snap.meta?.teamRecord && snap.meta.teamRecord !== appData.meta.teamRecord) {
+      appData.meta.teamRecord = snap.meta.teamRecord;
+      mutated = true;
+    }
+    if (snap.meta?.standingSummary && snap.meta.standingSummary !== appData.meta.standingSummary) {
+      appData.meta.standingSummary = snap.meta.standingSummary;
+      mutated = true;
+    }
+    if (snap.meta?.currentWeek && Number(snap.meta.currentWeek) > Number(appData.meta.currentWeek || 0)) {
+      appData.meta.currentWeek = Number(snap.meta.currentWeek);
+      mutated = true;
+    }
+    if (snap.completedGamesById && Array.isArray(appData.scheduleMatchup?.schedule)) {
+      for (const g of appData.scheduleMatchup.schedule) {
+        if (!g || !g.id || g.completed) continue;
+        const patch = snap.completedGamesById[String(g.id)];
+        if (patch && patch.completed) {
+          g.completed = true;
+          if (patch.completedAt) g.completedAt = patch.completedAt;
+          g.statusState = patch.statusState || 'post';
+          g.statusDetail = patch.statusDetail || 'Final';
+          if (patch.sfScore != null) g.sfScore = Number(patch.sfScore);
+          if (patch.oppScore != null) g.oppScore = Number(patch.oppScore);
+          if (patch.result) g.result = patch.result;
+          mutated = true;
+        }
+      }
+    }
+    const um = appData.scheduleMatchup?.upcomingMatchup;
+    const umPatch = snap.upcomingMatchupPatch;
+    if (um && umPatch && umPatch.gameId && String(umPatch.gameId) === String(um.gameId)) {
+      if (umPatch.betting && um.betting) {
+        um.betting = { ...um.betting, ...umPatch.betting };
+        mutated = true;
+      }
+      if (umPatch.sfRecord) um.sfRecord = umPatch.sfRecord;
+      if (umPatch.oppRecord) um.oppRecord = umPatch.oppRecord;
+      if (umPatch.completed && !um.completed) {
+        um.completed = true;
+        um.statusDetail = umPatch.statusDetail || 'Final';
+        mutated = true;
+      }
+    }
+  }
+
+  if (Array.isArray(snap.freshWireItems) && snap.freshWireItems.length > 0 && appData.news) {
+    const existingStream = Array.isArray(appData.news.rawStream) ? appData.news.rawStream : [];
+    const existingMaxMs = existingStream.reduce((mx, it) => {
+      const p = Date.parse(it?.publishedAt || '');
+      return Number.isFinite(p) && p > mx ? p : mx;
+    }, 0);
+    const newerItems = snap.freshWireItems.filter(it => {
+      if (!it || !it.url || !it.title) return false;
+      const p = Date.parse(it.publishedAt || '');
+      return Number.isFinite(p) && p >= existingMaxMs - 2 * 3_600_000;
+    });
+    if (newerItems.length > 0) {
+      const merged = dedupeRawStreamAtomically([...newerItems, ...existingStream]);
+      appData.news.rawStream = sortNewsWithBreakingPriority(
+        filterOutOpposingTeamInjuryItems(filterOutCompletedGameAvailabilityItems(merged, appData, nowMs), appData),
+        nowMs,
+        { appData }
+      );
+      mutated = true;
+    }
+  }
+
+  if (mutated) {
+    appData._liveBootSnapshotSavedAt = snap.savedAt;
+  }
+  return mutated;
+}
+
+/**
+ * Pure deterministic betting & rest enrichment helper shared across all 32 NFL teams.
+ * Guarantees Implied Score, Opening Spread, Moneyline, and Rest Advantage are never blank
+ * even when static team bundles or live ESPN pickcenter only include Spread + O/U.
+ */
+export function computeMatchupBettingFields({
+  teamAbbr = 'SF',
+  oppAbbr = 'OPP',
+  isHome = true,
+  spreadRaw = '',
+  overUnderRaw = null,
+  openingSpreadRaw = '',
+  moneylineRaw = '',
+  restAdvantageRaw = '',
+  restAdvantageDays = null,
+  pickcenter = null,
+  schedule = [],
+  nextGame = null,
+  completedGames = []
+} = {}) {
+  const normAbbr = a => {
+    const c = String(a || '').trim().toUpperCase();
+    const m = { LA: 'LAR', STL: 'LAR', WSH: 'WAS', JAC: 'JAX', OAK: 'LV', SD: 'LAC' };
+    return m[c] || c;
+  };
+  const dispTeam = String(teamAbbr || 'SF').trim().toUpperCase();
+  const dispOpp = String(oppAbbr || 'OPP').trim().toUpperCase();
+  const canonTeam = normAbbr(dispTeam);
+  const canonOpp = normAbbr(dispOpp);
+
+  const parseSignedSpread = raw => {
+    if (typeof raw === 'number' && Number.isFinite(raw)) return raw;
+    const s = String(raw || '').trim();
+    if (!s || /^(?:tbd|check espn|n\/a|—|-)$/i.test(s)) return null;
+    if (/^(?:pk|pick|even)$/i.test(s)) return 0;
+    const m = s.match(/^([A-Z]{2,4})\s*([+-]?\d+(?:\.\d+)?)$/i);
+    if (m) {
+      const fav = normAbbr(m[1]);
+      const val = Number(m[2]);
+      if (!Number.isFinite(val)) return null;
+      if (fav === canonTeam) return val <= 0 ? val : val;
+      if (fav === canonOpp) return val <= 0 ? Math.abs(val) : -val;
+    }
+    const bare = Number(s);
+    return Number.isFinite(bare) ? bare : null;
+  };
+
+  let teamSpreadNum = null;
+  if (pickcenter?.details) {
+    teamSpreadNum = parseSignedSpread(pickcenter.details);
+  }
+  if (teamSpreadNum == null && pickcenter?.spread != null && Number.isFinite(Number(pickcenter.spread))) {
+    // ESPN pickcenter.spread is signed for home team (negative = home favored)
+    const homeSp = Number(pickcenter.spread);
+    teamSpreadNum = isHome ? homeSp : -homeSp;
+  }
+  if (teamSpreadNum == null) {
+    teamSpreadNum = parseSignedSpread(spreadRaw);
+  }
+  if (teamSpreadNum == null && nextGame?.spreadLineSf != null && Number.isFinite(Number(nextGame.spreadLineSf))) {
+    teamSpreadNum = Number(nextGame.spreadLineSf);
+  }
+  if (teamSpreadNum == null && nextGame?.spreadLine != null && Number.isFinite(Number(nextGame.spreadLine))) {
+    teamSpreadNum = Number(nextGame.spreadLine);
+  }
+
+  let ouNum = null;
+  for (const cand of [pickcenter?.overUnder, overUnderRaw, nextGame?.totalLine]) {
+    const n = Number(cand);
+    if (Number.isFinite(n) && n >= 20 && n <= 85) {
+      ouNum = Math.round(n * 2) / 2;
+      break;
+    }
+  }
+
+  let spreadDisplay = String(pickcenter?.details || '').trim();
+  if (!spreadDisplay) {
+    if (teamSpreadNum != null) {
+      spreadDisplay =
+        teamSpreadNum === 0
+          ? 'PK'
+          : teamSpreadNum < 0
+            ? `${dispTeam} ${teamSpreadNum.toFixed(1)}`
+            : `${dispTeam} +${teamSpreadNum.toFixed(1)}`;
+    } else {
+      const cleanRaw = String(spreadRaw || '').trim();
+      spreadDisplay = cleanRaw && !/^check espn/i.test(cleanRaw) ? cleanRaw : 'TBD';
+    }
+  }
+
+  const overUnderDisplay = ouNum != null ? ouNum : 'TBD';
+
+  const impliedScore =
+    teamSpreadNum != null && ouNum != null
+      ? `${dispTeam} ${((ouNum - teamSpreadNum) / 2).toFixed(1)} – ${dispOpp} ${((ouNum + teamSpreadNum) / 2).toFixed(1)}`
+      : 'TBD';
+
+  const fmtMl = v => {
+    const n = Number(v);
+    if (!Number.isFinite(n) || n === 0) return null;
+    return n > 0 ? `+${Math.round(n)}` : `${Math.round(n)}`;
+  };
+  const teamMlRaw = isHome ? pickcenter?.homeTeamOdds?.moneyLine : pickcenter?.awayTeamOdds?.moneyLine;
+  const oppMlRaw = isHome ? pickcenter?.awayTeamOdds?.moneyLine : pickcenter?.homeTeamOdds?.moneyLine;
+  let moneyline = '';
+  if (teamMlRaw != null && oppMlRaw != null && fmtMl(teamMlRaw) && fmtMl(oppMlRaw)) {
+    moneyline = `${dispTeam} ${fmtMl(teamMlRaw)} | ${dispOpp} ${fmtMl(oppMlRaw)}`;
+  } else if (moneylineRaw && String(moneylineRaw).trim() && !/^tbd$/i.test(String(moneylineRaw).trim())) {
+    moneyline = String(moneylineRaw).trim();
+  } else if (teamSpreadNum != null) {
+    if (Math.abs(teamSpreadNum) < 0.25) {
+      moneyline = `${dispTeam} -110 | ${dispOpp} -110`;
+    } else {
+      // Calibrated NFL spread-to-moneyline conversion (logistic scale 4.2 pts, ~4.5% standard vig)
+      const pTeam = Math.max(0.06, Math.min(0.94, 1 / (1 + Math.exp(teamSpreadNum / 4.2))));
+      const pOpp = 1 - pTeam;
+      const toAmer = p => {
+        const raw = p >= 0.5 ? -((p / (1 - p)) * 100) : ((1 - p) / p) * 100;
+        const snapped = Math.round(raw / 5) * 5;
+        return snapped === 0 ? -110 : snapped;
+      };
+      const tMl = toAmer(Math.min(0.95, pTeam * 1.022));
+      const oMl = toAmer(Math.min(0.95, pOpp * 1.022));
+      moneyline = `${dispTeam} ${fmtMl(tMl)} | ${dispOpp} ${fmtMl(oMl)}`;
+    }
+  } else {
+    moneyline = 'TBD';
+  }
+
+  const openSpreadLine = isHome
+    ? pickcenter?.pointSpread?.home?.open?.line
+    : pickcenter?.pointSpread?.away?.open?.line;
+  let openingSpread = '';
+  if (openSpreadLine != null && String(openSpreadLine).trim()) {
+    const prov = String(pickcenter?.provider?.name || 'Sportsbook Consensus').trim();
+    openingSpread = `Opened ${dispTeam} ${openSpreadLine} (${prov})`;
+  } else if (openingSpreadRaw && String(openingSpreadRaw).trim()) {
+    openingSpread = String(openingSpreadRaw).trim();
+  } else if (spreadDisplay && spreadDisplay !== 'TBD') {
+    openingSpread = `Consensus ${spreadDisplay}`;
+  } else {
+    openingSpread = 'Consensus Line TBD';
+  }
+
+  // Compute Rest Advantage (prefer explicit nflverse `restAdvantageDays`, else derive from schedule + league games)
+  let resolvedRestDelta =
+    restAdvantageDays != null && Number.isFinite(Number(restAdvantageDays))
+      ? Number(restAdvantageDays)
+      : nextGame?.restAdvantageDays != null && Number.isFinite(Number(nextGame.restAdvantageDays))
+        ? Number(nextGame.restAdvantageDays)
+        : null;
+
+  let teamOffBye = false;
+  let oppOffBye = false;
+  if (resolvedRestDelta == null && nextGame?.dateIso && Array.isArray(schedule) && schedule.length > 0) {
+    const nextKoMs = Date.parse(nextGame.dateIso);
+    const nextWk = Number(nextGame.week || 0);
+    if (Number.isFinite(nextKoMs) && nextWk > 1) {
+      const prevTeamGame = [...schedule]
+        .filter(
+          g =>
+            g &&
+            !g.isByeWeek &&
+            (g.seasonType || 'REG') === 'REG' &&
+            Number(g.week || 0) < nextWk &&
+            g.dateIso &&
+            Number.isFinite(Date.parse(g.dateIso))
+        )
+        .sort((a, b) => Number(b.week || 0) - Number(a.week || 0))[0];
+      if (prevTeamGame) {
+        const teamRestDays = Math.max(3, Math.min(16, Math.round((nextKoMs - Date.parse(prevTeamGame.dateIso)) / 86_400_000)));
+        teamOffBye = Number(prevTeamGame.week) <= nextWk - 2;
+        let oppRestDays = 7;
+        if (Array.isArray(completedGames) && completedGames.length > 0) {
+          const prevOppGames = completedGames
+            .filter(
+              cg =>
+                cg &&
+                Number(cg.week || 0) < nextWk &&
+                (normAbbr(cg.home) === canonOpp || normAbbr(cg.away) === canonOpp)
+            )
+            .sort((a, b) => Number(b.week || 0) - Number(a.week || 0));
+          const prevOpp = prevOppGames[0];
+          if (prevOpp) {
+            oppOffBye = Number(prevOpp.week) <= nextWk - 2;
+            if (prevOpp.dateIso && Number.isFinite(Date.parse(prevOpp.dateIso))) {
+              oppRestDays = Math.max(3, Math.min(16, Math.round((nextKoMs - Date.parse(prevOpp.dateIso)) / 86_400_000)));
+            } else if (oppOffBye) {
+              oppRestDays = 14;
+            }
+          }
+        }
+        resolvedRestDelta = teamRestDays - oppRestDays;
+      }
+    }
+  }
+
+  let restAdvantage = String(restAdvantageRaw || '').trim();
+  if (!restAdvantage) {
+    if (resolvedRestDelta != null && resolvedRestDelta > 0) {
+      restAdvantage = `+${resolvedRestDelta} Days Rest Advantage${teamOffBye ? ` (${dispTeam} off Bye)` : ''}`;
+    } else if (resolvedRestDelta != null && resolvedRestDelta < 0) {
+      restAdvantage = `${resolvedRestDelta} Days Rest Differential (${dispOpp} ${oppOffBye ? 'off Bye' : 'extra rest'})`;
+    } else {
+      restAdvantage = 'Even Rest (Standard Prep Week)';
+    }
+  }
+
+  return {
+    spread: spreadDisplay,
+    overUnder: overUnderDisplay,
+    impliedScore,
+    openingSpread,
+    moneyline,
+    restAdvantage
+  };
 }
 
 const OFFLINE_BUNDLE_IDB_NAME = '49ers_faithful_data_cache_v1';
@@ -1704,6 +2157,7 @@ function hydrateBundlePostLoad(rawFiles) {
     podcastIndex,
     beatPodcasts
   };
+  hydrateLiveBootSnapshotOnBoot(loadedBundle);
   hydrateCachedWeeklyPracticeAndInactives(loadedBundle);
   reconcileRosterAndHealthWithNews(loadedBundle);
   applyCachedGameDayRostersOnBoot(loadedBundle);
@@ -6062,6 +6516,16 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
       };
       mutated = true;
     }
+    if (appData.seasonal.playoffPicture.simulatorInputs) {
+      const sbRec = reconcileLiveScoreboardIntoPlayoffGames(
+        appData.seasonal.playoffPicture.simulatorInputs,
+        liveScoreboardRaw
+      );
+      if (sbRec.movedCount > 0) {
+        standingsOrScoresChanged = true;
+        mutated = true;
+      }
+    }
   }
   let oppInjuriesRaw = initialOppInjuriesRaw;
   let combinedEspnArticles = Array.isArray(espnNewsRaw?.articles) ? [...espnNewsRaw.articles] : [];
@@ -6670,10 +7134,28 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
         const summaryRaw = await fetchCorsJson(
           `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${encodeURIComponent(nextGame.id)}`
         ).catch(() => null);
-        const pc = summaryRaw?.pickcenter?.[0];
-        if (pc && um.betting) {
-          if (pc.details) um.betting.spread = pc.details;
-          if (pc.overUnder) um.betting.overUnder = Number(pc.overUnder);
+        const pc = summaryRaw?.pickcenter?.[0] || null;
+        if (um.betting || pc) {
+          const activeCfgBet = getActiveTeamConfig();
+          const enrichedBet = computeMatchupBettingFields({
+            teamAbbr: activeCfgBet.abbr || 'SF',
+            oppAbbr: um.oppAbbr || nextGame.opponent?.abbr || 'OPP',
+            isHome: (um.homeAway || nextGame.homeAway || 'home') !== 'away',
+            spreadRaw: um.betting?.spread || '',
+            overUnderRaw: um.betting?.overUnder ?? null,
+            openingSpreadRaw: pc ? '' : um.betting?.openingSpread || '',
+            moneylineRaw: pc ? '' : um.betting?.moneyline || '',
+            restAdvantageRaw: '',
+            restAdvantageDays: nextGame.restAdvantageDays ?? null,
+            pickcenter: pc,
+            schedule: appData.scheduleMatchup?.schedule || [],
+            nextGame,
+            completedGames: appData.seasonal?.playoffPicture?.simulatorInputs?.completedGames || []
+          });
+          um.betting = {
+            ...(um.betting || {}),
+            ...enrichedBet
+          };
         }
         // Sync live broadcast & official ESPN outdoor kickoff weather (0 extra requests!)
         const sumComp = summaryRaw?.header?.competitions?.[0];
@@ -7010,6 +7492,103 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
         }
       }
 
+      // Recompute 32-team Hierarchical Bayesian Iterative SRS + MOV-Elo + Preseason Prior + QB/Injury ratings
+      // so BOTH conferences preserve EPA, venue-adjusted SOS, remaining SOS, and live injury adjustments!
+      const standingsForRatings = {};
+      const aggEpaByTeam = {};
+      const activeConfListForSync =
+        Array.isArray(simIn.conferenceTeams) && simIn.conferenceTeams.length > 0
+          ? simIn.conferenceTeams
+          : simIn.nfcTeams || [];
+      for (const nt of activeConfListForSync) {
+        const ab = normalizeTeamAbbrClient(nt.abbr);
+        standingsForRatings[ab] = {
+          wins: Number(nt.wins || 0),
+          losses: Number(nt.losses || 0),
+          ties: Number(nt.ties || 0),
+          pointDiff: Number(nt.pointDiff || 0),
+          pointsFor: nt.pointsFor ?? null,
+          pointsAgainst: nt.pointsAgainst ?? null,
+          netEpaPerGame: nt.netEpaPerGame ?? null
+        };
+        if (nt.netEpaPerGame != null && Number.isFinite(Number(nt.netEpaPerGame))) {
+          aggEpaByTeam[ab] = { netEpaPerGame: Number(nt.netEpaPerGame) };
+        }
+      }
+      const otherStForRatings =
+        simIn.otherConferenceStandings && Object.keys(simIn.otherConferenceStandings).length > 0
+          ? simIn.otherConferenceStandings
+          : simIn.afcStandings || {};
+      for (const [rawAb, st] of Object.entries(otherStForRatings)) {
+        const ab = normalizeTeamAbbrClient(rawAb);
+        standingsForRatings[ab] = {
+          wins: Number(st.wins || 0),
+          losses: Number(st.losses || 0),
+          ties: Number(st.ties || 0),
+          pointDiff: Number(st.pointDiff || 0),
+          pointsFor: st.pointsFor ?? null,
+          pointsAgainst: st.pointsAgainst ?? null,
+          netEpaPerGame: st.netEpaPerGame ?? null
+        };
+        if (st.netEpaPerGame != null && Number.isFinite(Number(st.netEpaPerGame))) {
+          aggEpaByTeam[ab] = { netEpaPerGame: Number(st.netEpaPerGame) };
+        }
+      }
+      const leagueRatingsLive = computeLeaguePowerRatings({
+        completedGames: simIn.completedGames || [],
+        remainingGames: simIn.remainingGames || [],
+        preseasonPriors: simIn.preseasonPriors || {},
+        weeklyTeamStats: simIn.weeklyTeamStats || null,
+        teamAggregateEpa: Object.keys(aggEpaByTeam).length > 0 ? aggEpaByTeam : null,
+        standingsByAbbr: standingsForRatings,
+        injuryAdjustmentsByTeam: simIn.injuryAdjustmentsByTeam || null,
+        currentWeek: Number(appData.meta?.currentWeek || 0) || null
+      }).byAbbr;
+
+      const applyRatingsToTeamList = list => {
+        for (const nt of list) {
+          const ab = normalizeTeamAbbrClient(nt.abbr);
+          const lr = leagueRatingsLive[ab];
+          if (!lr) continue;
+          nt.powerRating = lr.powerRating;
+          nt.preseasonPriorSpread = lr.preseasonPriorSpread;
+          nt.preseasonPriorElo = lr.preseasonPriorElo;
+          nt.sosSpreadAdj = lr.sosSpreadAdj;
+          nt.remainingSosSpread = lr.remainingSosSpread;
+          nt.remainingSosRank = lr.remainingSosRank;
+          nt.qbInjuryEloAdj = lr.qbInjuryEloAdj;
+          nt.nonQbInjuryEloAdj = lr.nonQbInjuryEloAdj;
+          nt.nextGameEloDelta = lr.nextGameEloDelta;
+          if (lr.qbStatusNote) nt.qbStatusNote = lr.qbStatusNote;
+        }
+      };
+      applyRatingsToTeamList(activeConfListForSync);
+      if (Array.isArray(simIn.nfcTeams) && simIn.nfcTeams !== activeConfListForSync) {
+        applyRatingsToTeamList(simIn.nfcTeams);
+      }
+      if (!simIn.otherConferenceNextGameDeltas) simIn.otherConferenceNextGameDeltas = {};
+      for (const rawAb of Object.keys(otherStForRatings)) {
+        const ab = normalizeTeamAbbrClient(rawAb);
+        const lr = leagueRatingsLive[ab];
+        if (!lr) continue;
+        if (simIn.afcRatings) simIn.afcRatings[ab] = lr.powerRating;
+        if (simIn.afcPowerRatings) simIn.afcPowerRatings[ab] = lr.powerRating;
+        if (simIn.otherConferencePowerRatings) simIn.otherConferencePowerRatings[ab] = lr.powerRating;
+        simIn.otherConferenceNextGameDeltas[ab] = lr.nextGameEloDelta;
+        const stObj = otherStForRatings[rawAb];
+        if (stObj) {
+          stObj.preseasonPriorSpread = lr.preseasonPriorSpread;
+          stObj.preseasonPriorElo = lr.preseasonPriorElo;
+          stObj.sosSpreadAdj = lr.sosSpreadAdj;
+          stObj.remainingSosSpread = lr.remainingSosSpread;
+          stObj.remainingSosRank = lr.remainingSosRank;
+          stObj.qbInjuryEloAdj = lr.qbInjuryEloAdj;
+          stObj.nonQbInjuryEloAdj = lr.nonQbInjuryEloAdj;
+          stObj.nextGameEloDelta = lr.nextGameEloDelta;
+          if (lr.qbStatusNote) stObj.qbStatusNote = lr.qbStatusNote;
+        }
+      }
+
       const freshMc = runPlayoffMonteCarlo({
         ...simIn,
         targetTeam: activeTeam.abbr,
@@ -7018,22 +7597,37 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
         seed: 492026
       });
       if (freshMc?.sfOdds) {
+        const simNowIso = new Date().toISOString();
+        simIn.modelVersion = PLAYOFF_MODEL_VERSION;
+        simIn.lastSimulatedAt = simNowIso;
+        appData.seasonal.playoffPicture.lastSimulatedAt = simNowIso;
         appData.seasonal.playoffPicture.baselineSimulation = freshMc;
         if (Array.isArray(appData.seasonal.playoffPicture.seedPathCards)) {
           const sf = freshMc.sfOdds;
           for (const card of appData.seasonal.playoffPicture.seedPathCards) {
+            let nextPct = null;
             if (/bye|#1\s*seed/i.test(card.target)) {
-              card.currentProbPct = sf.seed1ByePct;
+              nextPct = sf.seed1ByePct;
             } else if (/division|nfc\s*west|afc\s*west|nfc\s*north|afc\s*north|nfc\s*east|afc\s*east|nfc\s*south|afc\s*south/i.test(card.target)) {
-              card.currentProbPct = sf.winDivisionPct;
+              nextPct = sf.winDivisionPct;
             } else if (/playoff\s*berth|make\s*playoffs|seeds\s*#1/i.test(card.target)) {
-              card.currentProbPct = sf.makePlayoffsPct;
+              nextPct = sf.makePlayoffsPct;
             } else if (/wild\s*card/i.test(card.target)) {
-              card.currentProbPct = sf.wildCardPct;
+              nextPct = sf.wildCardPct;
+            }
+            if (nextPct !== null) {
+              const prevPct = card.currentProbPct;
+              card.currentProbPct = nextPct;
+              if (card.pathSummary && prevPct != null && Number(prevPct) !== Number(nextPct)) {
+                card.pathSummary = String(card.pathSummary).replace(
+                  new RegExp(`\\b${String(prevPct).replace('.', '\\.')}%`),
+                  `${nextPct}%`
+                );
+              }
             }
           }
         }
-        if (prunedRemainingCount > 0 && Array.isArray(appData.seasonal.playoffPicture.rootingLeverage)) {
+        if ((prunedRemainingCount > 0 || standingsOrScoresChanged) && Array.isArray(appData.seasonal.playoffPicture.rootingLeverage)) {
           appData.seasonal.playoffPicture.rootingLeverage = computeRootingGuideLeverage(
             {
               ...simIn,
@@ -8139,6 +8733,135 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
     // 7. Game-Day Inactives & Active Roster Window ([T-90m, Final))
     const gdMutated = await hydrateLiveGameDayRosters(appData).catch(() => false);
     if (gdMutated) mutated = true;
+  }
+
+  // 7b. Live Injury-Triggered Monte Carlo Recalculation (e.g. starting QB ruled Out/IR mid-week or game-day!)
+  if (appData.seasonal?.playoffPicture?.simulatorInputs) {
+    try {
+      const simInInj = appData.seasonal.playoffPicture.simulatorInputs;
+      const activeAbbrInj = normalizeTeamAbbrClient(activeTeam.abbr || 'SF');
+      const oppAbbrInj = normalizeTeamAbbrClient(appData.scheduleMatchup?.upcomingMatchup?.oppAbbr || '');
+      const remListInj = Array.isArray(simInInj.remainingGames) ? simInInj.remainingGames : [];
+      const countRemFor = ab =>
+        remListInj.filter(
+          g => normalizeTeamAbbrClient(g.home) === ab || normalizeTeamAbbrClient(g.away) === ab
+        ).length || 6;
+
+      if (!simInInj.injuryAdjustmentsByTeam || typeof simInInj.injuryAdjustmentsByTeam !== 'object') {
+        simInInj.injuryAdjustmentsByTeam = {};
+      }
+      const prevSfAdj = simInInj.injuryAdjustmentsByTeam[activeAbbrInj] || null;
+      const liveSfAdj = estimateTeamInjurySpreadAdjustments({
+        healthData: {
+          practiceReport: appData.health?.practiceReport || [],
+          injuryReport: appData.health?.injuryReport || [],
+          irReserve: appData.health?.irAndReserveTracker || appData.health?.irReserve || []
+        },
+        rosterPlayers: appData.roster?.players || [],
+        remainingGamesCount: countRemFor(activeAbbrInj)
+      });
+      let injuryRatingChanged =
+        !prevSfAdj ||
+        Math.abs(Number(liveSfAdj.totalGameSpreadAdj || 0) - Number(prevSfAdj.totalGameSpreadAdj || 0)) >= 0.15 ||
+        Math.abs(Number(liveSfAdj.totalSeasonSpreadAdj || 0) - Number(prevSfAdj.totalSeasonSpreadAdj || 0)) >= 0.15;
+      if (injuryRatingChanged) {
+        simInInj.injuryAdjustmentsByTeam[activeAbbrInj] = liveSfAdj;
+      }
+
+      if (oppAbbrInj && oppAbbrInj !== 'TBD' && oppAbbrInj !== 'BYE' && appData.scheduleMatchup?.upcomingMatchup?.opponentHealth) {
+        const prevOppAdj = simInInj.injuryAdjustmentsByTeam[oppAbbrInj] || null;
+        const liveOppAdj = estimateTeamInjurySpreadAdjustments({
+          healthData: appData.scheduleMatchup.upcomingMatchup.opponentHealth,
+          remainingGamesCount: countRemFor(oppAbbrInj)
+        });
+        const oppDeltaChanged =
+          !prevOppAdj ||
+          Math.abs(Number(liveOppAdj.totalGameSpreadAdj || 0) - Number(prevOppAdj.totalGameSpreadAdj || 0)) >= 0.15 ||
+          Math.abs(Number(liveOppAdj.totalSeasonSpreadAdj || 0) - Number(prevOppAdj.totalSeasonSpreadAdj || 0)) >= 0.15;
+        if (oppDeltaChanged) {
+          simInInj.injuryAdjustmentsByTeam[oppAbbrInj] = liveOppAdj;
+          injuryRatingChanged = true;
+        }
+      }
+
+      const needsModelUpgrade = simInInj.modelVersion !== PLAYOFF_MODEL_VERSION;
+      if (injuryRatingChanged || needsModelUpgrade) {
+        const confTeamsInj =
+          Array.isArray(simInInj.conferenceTeams) && simInInj.conferenceTeams.length > 0
+            ? simInInj.conferenceTeams
+            : simInInj.nfcTeams || [];
+        const otherStInj =
+          simInInj.otherConferenceStandings && Object.keys(simInInj.otherConferenceStandings).length > 0
+            ? simInInj.otherConferenceStandings
+            : simInInj.afcStandings || {};
+        const stMapInj = {};
+        const aggEpaInj = {};
+        for (const nt of confTeamsInj) {
+          const ab = normalizeTeamAbbrClient(nt.abbr);
+          stMapInj[ab] = { wins: nt.wins, losses: nt.losses, ties: nt.ties, pointDiff: nt.pointDiff, pointsFor: nt.pointsFor, pointsAgainst: nt.pointsAgainst, netEpaPerGame: nt.netEpaPerGame ?? null };
+          if (nt.netEpaPerGame != null) aggEpaInj[ab] = { netEpaPerGame: Number(nt.netEpaPerGame) };
+        }
+        for (const [rab, st] of Object.entries(otherStInj)) {
+          const ab = normalizeTeamAbbrClient(rab);
+          stMapInj[ab] = { wins: st.wins, losses: st.losses, ties: st.ties, pointDiff: st.pointDiff, pointsFor: st.pointsFor, pointsAgainst: st.pointsAgainst, netEpaPerGame: st.netEpaPerGame ?? null };
+          if (st.netEpaPerGame != null) aggEpaInj[ab] = { netEpaPerGame: Number(st.netEpaPerGame) };
+        }
+        const reRated = computeLeaguePowerRatings({
+          completedGames: simInInj.completedGames || [],
+          remainingGames: simInInj.remainingGames || [],
+          preseasonPriors: simInInj.preseasonPriors || {},
+          weeklyTeamStats: simInInj.weeklyTeamStats || null,
+          teamAggregateEpa: Object.keys(aggEpaInj).length > 0 ? aggEpaInj : null,
+          standingsByAbbr: stMapInj,
+          injuryAdjustmentsByTeam: simInInj.injuryAdjustmentsByTeam,
+          currentWeek: Number(appData.meta?.currentWeek || 0) || null
+        }).byAbbr;
+        for (const list of [confTeamsInj, ...(simInInj.nfcTeams && simInInj.nfcTeams !== confTeamsInj ? [simInInj.nfcTeams] : [])]) {
+          for (const nt of list) {
+            const lr = reRated[normalizeTeamAbbrClient(nt.abbr)];
+            if (!lr) continue;
+            nt.powerRating = lr.powerRating;
+            nt.preseasonPriorSpread = lr.preseasonPriorSpread;
+            nt.preseasonPriorElo = lr.preseasonPriorElo;
+            nt.sosSpreadAdj = lr.sosSpreadAdj;
+            nt.remainingSosSpread = lr.remainingSosSpread;
+            nt.remainingSosRank = lr.remainingSosRank;
+            nt.qbInjuryEloAdj = lr.qbInjuryEloAdj;
+            nt.nonQbInjuryEloAdj = lr.nonQbInjuryEloAdj;
+            nt.nextGameEloDelta = lr.nextGameEloDelta;
+            if (lr.qbStatusNote) nt.qbStatusNote = lr.qbStatusNote;
+            else delete nt.qbStatusNote;
+          }
+        }
+        if (!simInInj.otherConferenceNextGameDeltas) simInInj.otherConferenceNextGameDeltas = {};
+        for (const rab of Object.keys(otherStInj)) {
+          const ab = normalizeTeamAbbrClient(rab);
+          const lr = reRated[ab];
+          if (!lr) continue;
+          if (simInInj.afcRatings) simInInj.afcRatings[ab] = lr.powerRating;
+          if (simInInj.afcPowerRatings) simInInj.afcPowerRatings[ab] = lr.powerRating;
+          if (simInInj.otherConferencePowerRatings) simInInj.otherConferencePowerRatings[ab] = lr.powerRating;
+          simInInj.otherConferenceNextGameDeltas[ab] = lr.nextGameEloDelta;
+        }
+        const reSim = runPlayoffMonteCarlo({
+          ...simInInj,
+          targetTeam: activeTeam.abbr,
+          conference: activeTeam.conference,
+          iterations: 10000,
+          seed: 492026
+        });
+        if (reSim?.sfOdds) {
+          const simTs = new Date().toISOString();
+          simInInj.modelVersion = PLAYOFF_MODEL_VERSION;
+          simInInj.lastSimulatedAt = simTs;
+          appData.seasonal.playoffPicture.lastSimulatedAt = simTs;
+          appData.seasonal.playoffPicture.baselineSimulation = reSim;
+          mutated = true;
+        }
+      }
+    } catch {
+      // Non-fatal; keep existing simulation
+    }
   }
 
   if (mutated) {

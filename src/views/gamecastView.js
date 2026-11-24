@@ -438,27 +438,54 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
   const driveStartU = Math.max(0, Math.min(100, Number(sit.driveStartPos0to100 ?? prevU)));
   const firstDownU = Math.max(0, Math.min(100, Number(sit.firstDownPos0to100 ?? 60)));
 
-  const isTd = Boolean(sit.isTouchdownLastPlay);
+  const scoringType = sit.scoringPlayType || (sit.isTouchdownLastPlay ? 'touchdown' : sit.isFieldGoalGoodLastPlay ? 'field_goal' : sit.isSafetyLastPlay ? 'safety' : null);
+  const isTd = scoringType === 'touchdown' || Boolean(sit.isTouchdownLastPlay);
+  const isFgGood = scoringType === 'field_goal' || Boolean(sit.isFieldGoalGoodLastPlay);
+  const isFgMissed = Boolean(sit.isFieldGoalMissedLastPlay) && !isFgGood;
+  const isFgPlay = isFgGood || isFgMissed || Boolean(sit.isFieldGoalLastPlay);
+  const isSafety = scoringType === 'safety' || Boolean(sit.isSafetyLastPlay);
+  const isScoringBanner = Boolean(scoringType);
+  const scoringBannerLabel =
+    scoringType === 'field_goal'
+      ? 'FIELD GOAL'
+      : scoringType === 'touchdown'
+        ? 'TOUCHDOWN'
+        : scoringType === 'safety'
+          ? 'SAFETY'
+          : scoringType === 'extra_point'
+            ? 'EXTRA POINT'
+            : scoringType === 'two_point'
+              ? '2-PT CONVERSION'
+              : '';
+  const scoringTeamAbbr = sit.scoringTeamAbbr || sit.possessionAbbr || away.abbr;
+  const scoringTeamLogo = sit.scoringTeamLogo || (sit.scoringTeamSide === 'away' ? away.logoUrl : home.logoUrl);
+
+  const kickSpotU =
+    isFgPlay && sit.fgKickSpotPos0to100 != null
+      ? Math.max(1, Math.min(99, Number(sit.fgKickSpotPos0to100)))
+      : ballU;
   const possessingColor = sit.possessionSide === 'away' ? away.color : home.color;
-  const driveMinU = Math.min(driveStartU, ballU);
-  const driveMaxU = Math.max(driveStartU, ballU);
+  const driveEndU = isFgPlay ? kickSpotU : ballU;
+  const driveMinU = Math.min(driveStartU, driveEndU);
+  const driveMaxU = Math.max(driveStartU, driveEndU);
   const hasDriveSpan = driveMaxU - driveMinU >= 0.8;
 
   // Play trajectory coordinates at field depth v = 0.54 (visually centered in perspective)
   const playV = 0.54;
   const pDriveStart = proj(driveStartU, playV);
-  const pPrev = proj(prevU, playV);
-  const pBall = proj(ballU, playV);
+  const pPrev = proj(isFgPlay ? kickSpotU : prevU, playV);
+  const pBall = proj(isFgPlay ? kickSpotU : ballU, playV);
   const dxPlay = pBall.x - pPrev.x;
-  const hasMovement = Math.abs(dxPlay) >= 3.2;
+  const hasMovement = !isFgPlay && !sit.lastPlayIsStoppage && Math.abs(dxPlay) >= 3.2;
   const hasPriorDriveShaft = Math.abs(pPrev.x - pDriveStart.x) >= 4;
 
   // Line of Scrimmage (Blue) & 1st Down Marker (Yellow) perspective segments
-  const losTop = proj(ballU, 0);
-  const losBot = proj(ballU, 1);
+  const losTop = proj(isFgPlay ? kickSpotU : ballU, 0);
+  const losBot = proj(isFgPlay ? kickSpotU : ballU, 1);
   const fdTop = proj(firstDownU, 0);
   const fdBot = proj(firstDownU, 1);
-  const showFirstDownLine = !isTd && Math.abs(firstDownU - ballU) >= 0.5 && firstDownU > 0.5 && firstDownU < 99.5;
+  const showFirstDownLine =
+    !isTd && !isFgPlay && !isSafety && Math.abs(firstDownU - ballU) >= 0.5 && firstDownU > 0.5 && firstDownU < 99.5;
 
   // Compute clean directional play arc / arrow (stopped just short of football so arrowhead is visible)
   const dirSign = dxPlay >= 0 ? 1 : -1;
@@ -469,21 +496,38 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
   const passPeakY = Math.max(8, pBall.y - passArcLift);
 
   // Incomplete pass short up-and-down visual cue
-  const isIncomplete = Boolean(sit.lastPlayIsIncomplete);
+  const isIncomplete = Boolean(sit.lastPlayIsIncomplete) && !isFgPlay;
   const incDir = sit.possessionSide === 'away' ? 1 : -1;
   const incEndU = Math.max(2, Math.min(98, ballU + incDir * 9));
   const pIncEnd = proj(incEndU, playV);
   const pIncMidX = (pBall.x + pIncEnd.x) / 2;
 
-  // Endzone label centers
+  // Exact perspective-aligned endzone label centers & angles computed directly from trapezoid geometry
+  const awayEzTop = proj(-5, 0);
+  const awayEzBot = proj(-5, 1);
   const awayEzMid = proj(-5, 0.52);
+  const awayEzAngle = (Math.atan2(awayEzTop.y - awayEzBot.y, awayEzTop.x - awayEzBot.x) * 180) / Math.PI;
+  const homeEzTop = proj(105, 0);
+  const homeEzBot = proj(105, 1);
   const homeEzMid = proj(105, 0.52);
+  const homeEzAngle = (Math.atan2(homeEzBot.y - homeEzTop.y, homeEzBot.x - homeEzTop.x) * 180) / Math.PI;
   const awayEzLabel = away.abbr === 'SF' ? '49ERS' : (away.shortName || away.abbr || '').toUpperCase().slice(0, 10);
   const homeEzLabel = home.abbr === 'SF' ? '49ERS' : (home.shortName || home.abbr || '').toUpperCase().slice(0, 10);
 
-  // Goalposts anchored at back of each endzone (u = -10 and u = 110, v = 0.45)
+  // Goalposts anchored at back of each endzone (u = -10 and u = 110, v = 0.46)
   const gpLeftBase = proj(-10, 0.46);
   const gpRightBase = proj(110, 0.46);
+
+  // Field Goal dotted parabolic trajectory from kick spot through the target goalpost uprights (ESPN-style)
+  const fgTargetIsRight = sit.possessionSide === 'away';
+  const fgTargetPt = fgTargetIsRight
+    ? { x: gpRightBase.x + 4.5, y: gpRightBase.y - 13 }
+    : { x: gpLeftBase.x - 4.5, y: gpLeftBase.y - 13 };
+  const fgEndPt = isFgMissed
+    ? { x: fgTargetPt.x + (fgTargetIsRight ? 5 : -5), y: fgTargetPt.y + 8 }
+    : fgTargetPt;
+  const fgCtrlX = (pBall.x + fgEndPt.x) / 2;
+  const fgCtrlY = Math.max(3.5, Math.min(pBall.y, fgEndPt.y) - 34);
 
   // Live Win Prob badge for top Last Play header (Requirement #3 + Photo 8)
   const hasWp = wp.teamPctExact != null || wp.teamPct != null;
@@ -518,15 +562,26 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
           </div>
         </div>
         <div class="gc-drive-hero-badges">
-          ${sit.isRedZone && !isTd ? '<span class="gc-rz-pill">RED ZONE</span>' : ''}
-          ${isTd ? '<span class="gc-td-pill">TOUCHDOWN</span>' : '<span class="gc-live-chip"><span class="gc-live-dot" aria-hidden="true"></span>LIVE</span>'}
+          ${sit.isRedZone && !isScoringBanner ? '<span class="gc-rz-pill">RED ZONE</span>' : ''}
+          ${
+            isScoringBanner
+              ? `<span class="gc-td-pill">${esc(scoringBannerLabel)}</span>`
+              : '<span class="gc-live-chip"><span class="gc-live-dot" aria-hidden="true"></span>LIVE</span>'
+          }
         </div>
       </div>
 
-      <!-- Centered Down & Ball On KPI Strip (Photo 8) -->
+      <!-- Centered Scoring Play Banner ([Team Logo] FIELD GOAL / TOUCHDOWN / SAFETY) OR Down & Ball On KPI Strip -->
       ${
-        isTd
-          ? `<div class="gc-sit-kpi-bar is-td mono"><strong>TOUCHDOWN ${esc(sit.possessionAbbr || '')}!</strong></div>`
+        isScoringBanner
+          ? `
+            <div class="gc-sit-kpi-bar is-scoring" data-gamecast-scoring-banner="${esc(scoringType)}">
+              <div class="gc-scoring-banner-inner">
+                ${renderTeamLogoHtml(scoringTeamAbbr, scoringTeamLogo, 28, 'gc-logo-bare')}
+                <strong class="gc-scoring-banner-title">${esc(scoringBannerLabel)}</strong>
+              </div>
+            </div>
+          `
           : `
             <div class="gc-sit-kpi-bar">
               <div class="gc-sit-kpi">
@@ -545,7 +600,7 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
       <!-- 3D Perspective Football Field -->
       <div class="gc-field-stage">
         <svg viewBox="0 0 380 116" class="gc-field-svg" role="img"
-             aria-label="Live 3D field position: ${esc(sit.downDistanceText || downOnly || 'Midfield')}">
+             aria-label="Live 3D field position: ${esc(isScoringBanner ? `${scoringTeamAbbr} ${scoringBannerLabel}` : sit.downDistanceText || downOnly || 'Midfield')}">
           <defs>
             <linearGradient id="gc-field-depth" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#0b2815" stop-opacity="0.34" />
@@ -588,7 +643,7 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
                 fill="${away.abbr === 'SF' ? '#E2C67E' : '#FFFFFF'}" fill-opacity="0.92"
                 font-size="${awayEzLabel.length > 7 ? '7.6' : '8.8'}" font-weight="900"
                 text-anchor="middle" dominant-baseline="middle"
-                transform="rotate(-77 ${awayEzMid.x.toFixed(1)} ${awayEzMid.y.toFixed(1)})"
+                transform="rotate(${awayEzAngle.toFixed(2)} ${awayEzMid.x.toFixed(1)} ${awayEzMid.y.toFixed(1)})"
                 letter-spacing="1.2">${esc(awayEzLabel)}</text>
 
           <!-- Right 3D Endzone (Home) -->
@@ -598,7 +653,7 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
                 fill="${home.abbr === 'SF' ? '#E2C67E' : '#FFFFFF'}" fill-opacity="0.92"
                 font-size="${homeEzLabel.length > 7 ? '7.6' : '8.8'}" font-weight="900"
                 text-anchor="middle" dominant-baseline="middle"
-                transform="rotate(77 ${homeEzMid.x.toFixed(1)} ${homeEzMid.y.toFixed(1)})"
+                transform="rotate(${homeEzAngle.toFixed(2)} ${homeEzMid.x.toFixed(1)} ${homeEzMid.y.toFixed(1)})"
                 letter-spacing="1.2">${esc(homeEzLabel)}</text>
 
           <!-- Perspective Yard Lines (10..90) + Subtle Hash Ticks -->
@@ -636,14 +691,19 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
               : ''
           }
 
-          <!-- Blue Line of Scrimmage & Yellow First-Down Line (Kept per Req #1!) -->
+          <!-- Line of Scrimmage (Yellow on Field Goal kick spot like ESPN, Blue otherwise) & Yellow 1st-Down Line -->
           ${
-            !isTd
+            isFgPlay
               ? `
-                <line x1="${losTop.x.toFixed(1)}" y1="${losTop.y.toFixed(1)}" x2="${losBot.x.toFixed(1)}" y2="${losBot.y.toFixed(1)}" stroke="rgba(0,0,0,0.45)" stroke-width="3.4" />
-                <line x1="${losTop.x.toFixed(1)}" y1="${losTop.y.toFixed(1)}" x2="${losBot.x.toFixed(1)}" y2="${losBot.y.toFixed(1)}" stroke="#38bdf8" stroke-width="2.1" class="gc-los-line" />
+                <line x1="${losTop.x.toFixed(1)}" y1="${losTop.y.toFixed(1)}" x2="${losBot.x.toFixed(1)}" y2="${losBot.y.toFixed(1)}" stroke="rgba(0,0,0,0.45)" stroke-width="3.2" />
+                <line x1="${losTop.x.toFixed(1)}" y1="${losTop.y.toFixed(1)}" x2="${losBot.x.toFixed(1)}" y2="${losBot.y.toFixed(1)}" stroke="#facc15" stroke-width="2.0" class="gc-fg-los-line" />
               `
-              : ''
+              : !isTd && !isSafety
+                ? `
+                  <line x1="${losTop.x.toFixed(1)}" y1="${losTop.y.toFixed(1)}" x2="${losBot.x.toFixed(1)}" y2="${losBot.y.toFixed(1)}" stroke="rgba(0,0,0,0.45)" stroke-width="3.4" />
+                  <line x1="${losTop.x.toFixed(1)}" y1="${losTop.y.toFixed(1)}" x2="${losBot.x.toFixed(1)}" y2="${losBot.y.toFixed(1)}" stroke="#38bdf8" stroke-width="2.1" class="gc-los-line" />
+                `
+                : ''
           }
           ${
             showFirstDownLine
@@ -654,71 +714,98 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
               : ''
           }
 
-          <!-- Prior Drive Progression Shaft (ESPN-style solid line up to previous spot) -->
+          <!-- Prior Drive Progression Shaft (ESPN-style solid white line up to kick/previous spot) -->
           ${
             hasPriorDriveShaft
               ? `
                 <line x1="${pDriveStart.x.toFixed(1)}" y1="${pDriveStart.y.toFixed(1)}"
                       x2="${pPrev.x.toFixed(1)}" y2="${pPrev.y.toFixed(1)}"
-                      stroke="rgba(255,255,255,0.52)" stroke-width="1.6" stroke-linecap="round" />
-                <circle cx="${pDriveStart.x.toFixed(1)}" cy="${pDriveStart.y.toFixed(1)}" r="2.1" fill="rgba(255,255,255,0.68)" />
+                      stroke="${isFgPlay ? 'rgba(255,255,255,0.88)' : 'rgba(255,255,255,0.58)'}" stroke-width="${isFgPlay ? '2.0' : '1.6'}" stroke-linecap="round" />
+                <circle cx="${pDriveStart.x.toFixed(1)}" cy="${pDriveStart.y.toFixed(1)}" r="2.1" fill="rgba(255,255,255,0.75)" />
               `
               : ''
           }
 
-          <!-- Last Play Trajectory: Small Up-and-Down Pass Arc or Solid Run/Sack Arrow -->
+          <!-- Last Play Trajectory: ESPN Dotted Field Goal Arc, Pass Arc, or Run/Sack Arrow -->
           ${
-            isIncomplete
+            isFgPlay
               ? `
-                <path d="M ${pBall.x.toFixed(1)} ${pBall.y.toFixed(1)} Q ${pIncMidX.toFixed(1)} ${(pBall.y - 16).toFixed(1)} ${pIncEnd.x.toFixed(1)} ${pIncEnd.y.toFixed(1)}"
-                      fill="none" stroke="rgba(250,204,21,0.78)" stroke-width="1.8" stroke-dasharray="3.2 2.6" stroke-linecap="round" class="gc-play-arc-anim" />
-                <g stroke="#fb7185" stroke-width="1.6" stroke-linecap="round">
-                  <line x1="${(pIncEnd.x - 2.6).toFixed(1)}" y1="${(pIncEnd.y - 2.6).toFixed(1)}" x2="${(pIncEnd.x + 2.6).toFixed(1)}" y2="${(pIncEnd.y + 2.6).toFixed(1)}" />
-                  <line x1="${(pIncEnd.x + 2.6).toFixed(1)}" y1="${(pIncEnd.y - 2.6).toFixed(1)}" x2="${(pIncEnd.x - 2.6).toFixed(1)}" y2="${(pIncEnd.y + 2.6).toFixed(1)}" />
-                </g>
+                <path d="M ${pBall.x.toFixed(1)} ${pBall.y.toFixed(1)} Q ${fgCtrlX.toFixed(1)} ${fgCtrlY.toFixed(1)} ${fgEndPt.x.toFixed(1)} ${fgEndPt.y.toFixed(1)}"
+                      fill="none"
+                      stroke="${isFgMissed ? '#fb7185' : '#ffffff'}"
+                      stroke-width="2.2"
+                      stroke-dasharray="2.6 3.6"
+                      stroke-linecap="round"
+                      class="gc-play-arc-anim gc-fg-arc"
+                      data-gamecast-fg-arc="${isFgMissed ? 'missed' : 'good'}" />
+                ${
+                  isFgMissed
+                    ? `
+                      <g stroke="#fb7185" stroke-width="1.6" stroke-linecap="round">
+                        <line x1="${(fgEndPt.x - 2.6).toFixed(1)}" y1="${(fgEndPt.y - 2.6).toFixed(1)}" x2="${(fgEndPt.x + 2.6).toFixed(1)}" y2="${(fgEndPt.y + 2.6).toFixed(1)}" />
+                        <line x1="${(fgEndPt.x + 2.6).toFixed(1)}" y1="${(fgEndPt.y - 2.6).toFixed(1)}" x2="${(fgEndPt.x - 2.6).toFixed(1)}" y2="${(fgEndPt.y + 2.6).toFixed(1)}" />
+                      </g>
+                    `
+                    : ''
+                }
               `
-              : hasMovement
-                ? sit.lastPlayIsPass && !sit.lastPlayIsSack
-                  ? `
-                    <circle cx="${pPrev.x.toFixed(1)}" cy="${pPrev.y.toFixed(1)}" r="2.4" fill="#facc15" fill-opacity="0.88" />
-                    <path d="M ${pPrev.x.toFixed(1)} ${pPrev.y.toFixed(1)} Q ${midPlayX.toFixed(1)} ${passPeakY.toFixed(1)} ${endArrowX.toFixed(1)} ${pBall.y.toFixed(1)}"
-                          fill="none"
-                          stroke="#facc15"
-                          stroke-width="2.1"
-                          stroke-dasharray="4 2.6"
-                          stroke-linecap="round"
-                          marker-end="url(#gc-arrow-pass)"
-                          class="gc-play-arc-anim gc-pass-arc" />
-                  `
-                  : `
-                    <circle cx="${pPrev.x.toFixed(1)}" cy="${pPrev.y.toFixed(1)}" r="2.4" fill="${sit.lastPlayIsSack || sit.lastPlayYards < 0 ? '#fb7185' : '#ffffff'}" fill-opacity="0.88" />
-                    <line x1="${pPrev.x.toFixed(1)}" y1="${pPrev.y.toFixed(1)}"
-                          x2="${endArrowX.toFixed(1)}" y2="${pBall.y.toFixed(1)}"
-                          stroke="${sit.lastPlayIsSack || sit.lastPlayYards < 0 ? '#fb7185' : '#ffffff'}"
-                          stroke-width="2.2"
-                          stroke-linecap="round"
-                          marker-end="url(#${sit.lastPlayIsSack || sit.lastPlayYards < 0 ? 'gc-arrow-neg' : 'gc-arrow-run'})"
-                          class="gc-play-arc-anim gc-run-arrow" />
-                  `
-                : ''
+              : isIncomplete
+                ? `
+                  <path d="M ${pBall.x.toFixed(1)} ${pBall.y.toFixed(1)} Q ${pIncMidX.toFixed(1)} ${(pBall.y - 16).toFixed(1)} ${pIncEnd.x.toFixed(1)} ${pIncEnd.y.toFixed(1)}"
+                        fill="none" stroke="rgba(250,204,21,0.78)" stroke-width="1.8" stroke-dasharray="3.2 2.6" stroke-linecap="round" class="gc-play-arc-anim" />
+                  <g stroke="#fb7185" stroke-width="1.6" stroke-linecap="round">
+                    <line x1="${(pIncEnd.x - 2.6).toFixed(1)}" y1="${(pIncEnd.y - 2.6).toFixed(1)}" x2="${(pIncEnd.x + 2.6).toFixed(1)}" y2="${(pIncEnd.y + 2.6).toFixed(1)}" />
+                    <line x1="${(pIncEnd.x + 2.6).toFixed(1)}" y1="${(pIncEnd.y - 2.6).toFixed(1)}" x2="${(pIncEnd.x - 2.6).toFixed(1)}" y2="${(pIncEnd.y + 2.6).toFixed(1)}" />
+                  </g>
+                `
+                : hasMovement
+                  ? sit.lastPlayIsPass && !sit.lastPlayIsSack
+                    ? `
+                      <circle cx="${pPrev.x.toFixed(1)}" cy="${pPrev.y.toFixed(1)}" r="2.4" fill="#facc15" fill-opacity="0.88" />
+                      <path d="M ${pPrev.x.toFixed(1)} ${pPrev.y.toFixed(1)} Q ${midPlayX.toFixed(1)} ${passPeakY.toFixed(1)} ${endArrowX.toFixed(1)} ${pBall.y.toFixed(1)}"
+                            fill="none"
+                            stroke="#facc15"
+                            stroke-width="2.1"
+                            stroke-dasharray="4 2.6"
+                            stroke-linecap="round"
+                            marker-end="url(#gc-arrow-pass)"
+                            class="gc-play-arc-anim gc-pass-arc" />
+                    `
+                    : `
+                      <circle cx="${pPrev.x.toFixed(1)}" cy="${pPrev.y.toFixed(1)}" r="2.4" fill="${sit.lastPlayIsSack || sit.lastPlayYards < 0 ? '#fb7185' : '#ffffff'}" fill-opacity="0.88" />
+                      <line x1="${pPrev.x.toFixed(1)}" y1="${pPrev.y.toFixed(1)}"
+                            x2="${endArrowX.toFixed(1)}" y2="${pBall.y.toFixed(1)}"
+                            stroke="${sit.lastPlayIsSack || sit.lastPlayYards < 0 ? '#fb7185' : '#ffffff'}"
+                            stroke-width="2.2"
+                            stroke-linecap="round"
+                            marker-end="url(#${sit.lastPlayIsSack || sit.lastPlayYards < 0 ? 'gc-arrow-neg' : 'gc-arrow-run'})"
+                            class="gc-play-arc-anim gc-run-arrow" />
+                    `
+                  : ''
           }
 
-          <!-- Sleek Realistic Broadcast Football Marker (Outer translate prevents CSS transform override!) -->
-          <g transform="translate(${pBall.x.toFixed(1)}, ${pBall.y.toFixed(1)})">
-            <g class="gc-ball-pop">
-              <ellipse cx="0" cy="4.4" rx="5.8" ry="1.8" fill="rgba(0,0,0,0.44)" />
-              <path d="M -6.4 0 C -3.8 -3.7, 3.8 -3.7, 6.4 0 C 3.8 3.7, -3.8 3.7, -6.4 0 Z"
-                    fill="url(#gc-ball-leather)" stroke="rgba(255,255,255,0.65)" stroke-width="0.65" />
-              <!-- Subtle end stripes -->
-              <path d="M -3.9 -1.8 Q -3.4 0 -3.9 1.8" fill="none" stroke="rgba(255,255,255,0.58)" stroke-width="0.7" />
-              <path d="M 3.9 -1.8 Q 3.4 0 3.9 1.8" fill="none" stroke="rgba(255,255,255,0.58)" stroke-width="0.7" />
-              <!-- Fine broadcast laces -->
-              <line x1="-1.9" y1="-0.3" x2="1.9" y2="-0.3" stroke="rgba(255,255,255,0.88)" stroke-width="0.65" stroke-linecap="round" />
-              <line x1="-1.1" y1="-1.1" x2="-1.1" y2="0.5" stroke="rgba(255,255,255,0.82)" stroke-width="0.55" />
-              <line x1="0" y1="-1.2" x2="0" y2="0.6" stroke="rgba(255,255,255,0.82)" stroke-width="0.55" />
-              <line x1="1.1" y1="-1.1" x2="1.1" y2="0.5" stroke="rgba(255,255,255,0.82)" stroke-width="0.55" />
-            </g>
-          </g>
+          <!-- Sleek Realistic Broadcast Football Marker (hidden on Field Goal kicks where dotted arc flies through uprights) -->
+          ${
+            !isFgPlay
+              ? `
+                <g transform="translate(${pBall.x.toFixed(1)}, ${pBall.y.toFixed(1)})">
+                  <g class="gc-ball-pop">
+                    <ellipse cx="0" cy="4.4" rx="5.8" ry="1.8" fill="rgba(0,0,0,0.44)" />
+                    <path d="M -6.4 0 C -3.8 -3.7, 3.8 -3.7, 6.4 0 C 3.8 3.7, -3.8 3.7, -6.4 0 Z"
+                          fill="url(#gc-ball-leather)" stroke="rgba(255,255,255,0.65)" stroke-width="0.65" />
+                    <!-- Subtle end stripes -->
+                    <path d="M -3.9 -1.8 Q -3.4 0 -3.9 1.8" fill="none" stroke="rgba(255,255,255,0.58)" stroke-width="0.7" />
+                    <path d="M 3.9 -1.8 Q 3.4 0 3.9 1.8" fill="none" stroke="rgba(255,255,255,0.58)" stroke-width="0.7" />
+                    <!-- Fine broadcast laces -->
+                    <line x1="-1.9" y1="-0.3" x2="1.9" y2="-0.3" stroke="rgba(255,255,255,0.88)" stroke-width="0.65" stroke-linecap="round" />
+                    <line x1="-1.1" y1="-1.1" x2="-1.1" y2="0.5" stroke="rgba(255,255,255,0.82)" stroke-width="0.55" />
+                    <line x1="0" y1="-1.2" x2="0" y2="0.6" stroke="rgba(255,255,255,0.82)" stroke-width="0.55" />
+                    <line x1="1.1" y1="-1.1" x2="1.1" y2="0.5" stroke="rgba(255,255,255,0.82)" stroke-width="0.55" />
+                  </g>
+                </g>
+              `
+              : ''
+          }
 
           <!-- Bottom Apron Yard Numbers (ESPN-Style Below Near Sideline) -->
           <text x="${proj(-5, 1).x.toFixed(1)}" y="108" class="gc-field-num side" text-anchor="middle">${esc(away.abbr)}</text>
@@ -730,15 +817,6 @@ function renderAnimatedFootballFieldCard(model, fieldAnimKey = 0) {
             })
             .join('')}
           <text x="${proj(105, 1).x.toFixed(1)}" y="108" class="gc-field-num side" text-anchor="middle">${esc(home.abbr)}</text>
-
-          ${
-            isTd
-              ? `
-                <rect x="98" y="34" width="184" height="36" rx="8" fill="rgba(170,0,0,0.94)" stroke="#E2C67E" stroke-width="1.5" />
-                <text x="190" y="56.5" fill="#FFFFFF" font-size="13" font-weight="900" text-anchor="middle" letter-spacing="1.4">TOUCHDOWN ${esc(sit.possessionAbbr || '')}!</text>
-              `
-              : ''
-          }
         </svg>
       </div>
 
@@ -827,20 +905,15 @@ function renderQuarterScoreboardCard(model) {
 
 function renderBoxScoreTabHtml(
   model,
-  { boxTeam = 'team', boxUnit = 'all', rosterPlayers = [], isLoading = false } = {}
+  { boxTeam = 'team', rosterPlayers = [], isLoading = false } = {}
 ) {
   const activeSide = model.activeSide || {};
   const oppSide = model.oppSide || {};
   const showingActiveTeam = boxTeam !== 'opponent';
   const groups = showingActiveTeam ? model.boxScore?.team || [] : model.boxScore?.opponent || [];
 
-  const filteredGroups = groups.filter(g => {
-    if (boxUnit === 'all') return true;
-    return g.unit === boxUnit;
-  });
-
   const controlsHtml = `
-    <div class="gc-box-controls">
+    <div class="gc-box-controls" data-gamecast-box-controls>
       <div class="segmented-control compact-seg gc-team-seg" role="tablist" aria-label="Box Score Team">
         <button type="button" role="tab" aria-selected="${showingActiveTeam ? 'true' : 'false'}"
                 class="pill-btn seg-btn ${showingActiveTeam ? 'active' : ''}"
@@ -852,25 +925,6 @@ function renderBoxScoreTabHtml(
                 data-action="set-gamecast-box-team" data-box-team="opponent">
           <span>${esc(oppSide.shortName || oppSide.abbr || 'Opponent')}</span>
         </button>
-      </div>
-
-      <div class="gc-unit-pills" role="group" aria-label="Box Score Unit Filter">
-        ${[
-          ['all', 'All'],
-          ['offense', 'Off'],
-          ['defense', 'Def'],
-          ['special_teams', 'ST']
-        ]
-          .map(
-            ([k, lbl]) => `
-          <button type="button"
-                  class="pill-btn gc-mini-pill ${boxUnit === k ? 'active' : ''}"
-                  data-action="set-gamecast-box-unit" data-box-unit="${k}">
-            ${lbl}
-          </button>
-        `
-          )
-          .join('')}
       </div>
     </div>
   `;
@@ -899,17 +953,13 @@ function renderBoxScoreTabHtml(
     `;
   }
 
-  if (filteredGroups.length === 0) {
+  if (groups.length === 0) {
     return `
       ${controlsHtml}
       <section class="card gc-empty-card">
-        <div class="gc-empty-title">${groups.length === 0 ? 'Player box score unavailable offline' : 'No stats recorded in this unit'}</div>
+        <div class="gc-empty-title">Player box score unavailable offline</div>
         <div class="gc-empty-actions">
-          ${
-            groups.length === 0
-              ? `<button type="button" class="btn-ghost" data-action="refresh-gamecast-now">${iconSvg('reset', 12)}<span>Retry Load</span></button>`
-              : `<button type="button" class="btn-ghost" data-action="set-gamecast-box-unit" data-box-unit="all"><span>Show All Units</span></button>`
-          }
+          <button type="button" class="btn-ghost" data-action="refresh-gamecast-now">${iconSvg('reset', 12)}<span>Retry Load</span></button>
           ${
             model.gameUrl
               ? `<a href="${esc(model.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Box Score</span>${iconSvg('externalLink', 10)}</a>`
@@ -920,7 +970,7 @@ function renderBoxScoreTabHtml(
     `;
   }
 
-  const tablesHtml = filteredGroups
+  const tablesHtml = groups
     .map(grp => {
       const colCount = grp.labels.length;
       return `
@@ -1025,20 +1075,6 @@ function renderTeamStatsTabHtml(model, { isLoading = false } = {}) {
     `;
   }
 
-  const legendHtml = `
-    <div class="gc-ts-legend">
-      <div class="gc-ts-team-tag ${away.isActive ? 'is-active' : ''}">
-        ${renderTeamLogoHtml(away.abbr, away.logoUrl, 22, 'gc-logo-bare')}
-        <strong>${esc(away.shortName || away.abbr)}</strong>
-      </div>
-      <span class="gc-ts-mid-label">Single-Game Stats</span>
-      <div class="gc-ts-team-tag right ${home.isActive ? 'is-active' : ''}">
-        <strong>${esc(home.shortName || home.abbr)}</strong>
-        ${renderTeamLogoHtml(home.abbr, home.logoUrl, 22, 'gc-logo-bare')}
-      </div>
-    </div>
-  `;
-
   const cardsHtml = groups
     .map(
       grp => `
@@ -1086,7 +1122,7 @@ function renderTeamStatsTabHtml(model, { isLoading = false } = {}) {
     )
     .join('');
 
-  return `${legendHtml}<div class="gc-stack">${cardsHtml}</div>`;
+  return `<div class="gc-stack">${cardsHtml}</div>`;
 }
 
 function renderPlayClipBlockHtml(play, clipKey, activeGamecastClipKey, prefs = null) {
@@ -1174,14 +1210,14 @@ function renderPlayByPlayTabHtml(
   const quarters = model.quartersAvailable?.length ? model.quartersAvailable : ['Q1', 'Q2', 'Q3', 'Q4'];
   const effectiveOrder = model.isLive ? 'newest' : pbpOrder;
 
-  // Single-line delineated toolbar: [All Drives | Scoring | Key Plays]  |  [All | Q1 | Q2 | Q3 | Q4]
+  // Single-line delineated toolbar: [All Plays | Key Plays | Scoring]  |  [All | Q1 | Q2 | Q3 | Q4]
   const controlsHtml = `
     <div class="gc-pbp-toolbar" data-gamecast-pbp-toolbar>
       <div class="gc-pbp-group gc-pbp-modes" role="tablist" aria-label="Play-by-Play Filter">
         ${[
-          ['all', 'All Drives', 'Drives'],
-          ['scoring', 'Scoring', 'Scoring'],
-          ['key', 'Key Plays', 'Key']
+          ['all', 'All Plays', 'All Plays'],
+          ['key', 'Key Plays', 'Key'],
+          ['scoring', 'Scoring', 'Scoring']
         ]
           .map(
             ([k, fullLbl, shortLbl]) => `
@@ -1342,7 +1378,7 @@ function renderPlayByPlayTabHtml(
         <section class="card gc-empty-card">
           <div class="gc-empty-title">No plays match this filter</div>
           <button type="button" class="btn-ghost" data-action="set-gamecast-pbp-filter" data-pbp-filter="all">
-            <span>Show All Drives</span>
+            <span>Show All Plays</span>
           </button>
         </section>
       `;
@@ -1413,65 +1449,24 @@ export function renderGamecastViewHtml({
     }
   }
 
-  const curIdx = games.findIndex(g => g.id === activeMeta.id);
-  const hasPrev = curIdx > 0;
-  const hasNext = curIdx >= 0 && curIdx < games.length - 1;
   const away = model.away || {};
   const home = model.home || {};
   const hasScore = away.score != null && home.score != null;
-  const syncAgeText = model.fetchedAtIso ? relTime(model.fetchedAtIso) : '';
-  const liveLabel = isSyncing ? 'Syncing…' : `Live${syncAgeText ? ` · ${syncAgeText}` : ''}`;
-
   const activeTab = ['box', 'team', 'pbp'].includes(gamecastTab) ? gamecastTab : model.isLive ? 'pbp' : 'box';
 
   const awayLeading = hasScore && Number(away.score) > Number(home.score);
   const homeLeading = hasScore && Number(home.score) > Number(away.score);
+  const compactWeekLabel = String(activeMeta.weekTag || `WK ${activeMeta.week || ''}`).trim();
 
-  // 1. MODERN SLIM SCOREBUG (Unboxed Larger Team Logos + Crisp Timeout Pips Beneath Each Team)
+  // 1. MODERN SLIM SCOREBUG (Clean, Zero Top Toolbar Clutter, Unboxed Logos + Crisp Timeout Pips)
   const scorebugHtml = `
     <section class="card gc-scorebug-card" data-gamecast-scorebug data-game-id="${esc(model.gameId)}" data-game-state="${esc(model.state)}">
-      <div class="gc-switcher-strip">
-        <div class="gc-switcher-left">
-          ${
-            fromSchedule
-              ? `<button type="button" class="gc-back-btn" data-action="back-to-schedule-from-gamecast" aria-label="Back to Schedule">← Sched</button>`
-              : ''
-          }
-          <button type="button" class="gc-step-btn" data-action="step-gamecast-game" data-step="-1"
-                  ${!hasPrev ? 'disabled' : ''} aria-label="Previous game">‹</button>
-          <select class="gc-game-select mono" data-action="select-gamecast-game" aria-label="Select game">
-            ${games
-              .map(
-                g => `<option value="${esc(g.id)}"${g.id === activeMeta.id ? ' selected' : ''}>${esc(g.pickerLabel)}</option>`
-              )
-              .join('')}
-          </select>
-          <button type="button" class="gc-step-btn" data-action="step-gamecast-game" data-step="1"
-                  ${!hasNext ? 'disabled' : ''} aria-label="Next game">›</button>
-        </div>
-
-        <div class="gc-switcher-right">
-          <button type="button" class="gc-fresh-pill mono ${model.isLive ? 'is-live' : ''}"
-                  data-action="refresh-gamecast-now"
-                  title="Refresh game data now">
-            ${model.isLive ? '<span class="gc-live-dot" aria-hidden="true"></span>' : ''}
-            <span>${esc(model.isLive ? liveLabel : model.isFinal ? 'Final' : 'Pre')}</span>
-            <span class="gc-refresh-glyph ${isSyncing ? 'spinning' : ''}" aria-hidden="true">↻</span>
-          </button>
-          ${
-            model.gameUrl
-              ? `<a href="${esc(model.gameUrl)}" target="_blank" rel="noopener noreferrer" class="gc-espn-link" title="Open on ESPN">ESPN${iconSvg('externalLink', 10)}</a>`
-              : ''
-          }
-        </div>
-      </div>
-
       <div class="gc-score-row">
         <div class="gc-sb-team">
           ${renderTeamLogoHtml(away.abbr, away.logoUrl, 44, 'gc-logo-bare gc-sb-logo', { eager: true })}
           <div class="gc-sb-team-meta">
             <div class="gc-sb-name">
-              <span>${esc(away.shortName || away.abbr)}</span>
+              <span class="gc-sb-name-text">${esc(away.shortName || away.abbr)}</span>
               ${model.isLive && away.hasPossession ? '<span class="gc-poss-dot" title="Possession" aria-label="Has possession">●</span>' : ''}
             </div>
             ${away.record ? `<div class="gc-sb-sub mono">${esc(away.record)}</div>` : ''}
@@ -1487,16 +1482,29 @@ export function renderGamecastViewHtml({
                 : 'vs'
             }
           </div>
-          <div class="gc-sb-clock mono ${model.isLive ? 'is-live' : ''}">
-            ${esc(model.isLive ? model.statusDetail || model.clock || 'LIVE' : model.isFinal ? model.statusDetail || 'FINAL' : model.statusDetail || 'Scheduled')}
-          </div>
+          ${
+            model.isLive
+              ? `
+                <button type="button" class="gc-sb-clock mono is-live gc-sb-clock-btn"
+                        data-action="refresh-gamecast-now"
+                        title="Refresh live game data">
+                  <span class="gc-live-dot" aria-hidden="true"></span>
+                  <span>${esc(isSyncing ? 'Syncing…' : model.statusDetail || model.clock || 'LIVE')}</span>
+                </button>
+              `
+              : `
+                <div class="gc-sb-clock mono">
+                  ${esc(model.isFinal ? model.statusDetail || 'Final' : model.statusDetail || 'Scheduled')}
+                </div>
+              `
+          }
         </div>
 
         <div class="gc-sb-team home">
           <div class="gc-sb-team-meta">
             <div class="gc-sb-name">
               ${model.isLive && home.hasPossession ? '<span class="gc-poss-dot" title="Possession" aria-label="Has possession">●</span>' : ''}
-              <span>${esc(home.shortName || home.abbr)}</span>
+              <span class="gc-sb-name-text">${esc(home.shortName || home.abbr)}</span>
             </div>
             ${home.record ? `<div class="gc-sb-sub mono">${esc(home.record)}</div>` : ''}
             ${model.isLive ? `<div class="gc-sb-to-row">${renderTimeoutDotsHtml(home.timeoutsRemaining ?? 3)}</div>` : ''}
@@ -1520,25 +1528,44 @@ export function renderGamecastViewHtml({
     </section>
   `;
 
-  // 2. STICKY 3-TAB BAR (Sticks under top-header while 2x4 Season nav scrolls away)
+  // 2. STICKY BAR: Compact `WK N ▾` Game Switcher (native full-label picker on tap) + 3-Tab Switcher
   const stickyTabsHtml = `
     <div class="gc-sticky-tabs" data-gamecast-tabs>
-      <div class="segmented-control gc-inner-seg" role="tablist" aria-label="Gamecast Sections">
-        ${[
-          { key: 'box', label: 'Box Score' },
-          { key: 'team', label: 'Team Stats' },
-          { key: 'pbp', label: 'Play-by-Play' }
-        ]
-          .map(
-            t => `
-          <button type="button" role="tab" aria-selected="${activeTab === t.key ? 'true' : 'false'}"
-                  class="pill-btn seg-btn ${activeTab === t.key ? 'active' : ''}"
-                  data-action="set-gamecast-tab" data-gamecast-tab="${t.key}">
-            <span>${t.label}</span>
-          </button>
-        `
-          )
-          .join('')}
+      <div class="gc-sticky-tabs-row">
+        ${
+          fromSchedule
+            ? `<button type="button" class="gc-back-pill" data-action="back-to-schedule-from-gamecast" aria-label="Back to Schedule" title="Back to Schedule">←</button>`
+            : ''
+        }
+        <div class="gc-week-picker-pill" data-gamecast-week-picker title="${esc(activeMeta.pickerLabel)}">
+          <span class="gc-week-picker-label mono" aria-hidden="true">${esc(compactWeekLabel)}</span>
+          <span class="gc-week-picker-caret" aria-hidden="true">▾</span>
+          <select class="gc-week-select-overlay" data-action="select-gamecast-game" aria-label="Select week and game">
+            ${games
+              .map(
+                g => `<option value="${esc(g.id)}"${g.id === activeMeta.id ? ' selected' : ''}>${esc(g.pickerLabel)}</option>`
+              )
+              .join('')}
+          </select>
+        </div>
+
+        <div class="segmented-control gc-inner-seg" role="tablist" aria-label="Gamecast Sections">
+          ${[
+            { key: 'box', label: 'Box Score' },
+            { key: 'team', label: 'Team Stats' },
+            { key: 'pbp', label: 'Play-by-Play' }
+          ]
+            .map(
+              t => `
+            <button type="button" role="tab" aria-selected="${activeTab === t.key ? 'true' : 'false'}"
+                    class="pill-btn seg-btn ${activeTab === t.key ? 'active' : ''}"
+                    data-action="set-gamecast-tab" data-gamecast-tab="${t.key}">
+              <span>${t.label}</span>
+            </button>
+          `
+            )
+            .join('')}
+        </div>
       </div>
     </div>
   `;

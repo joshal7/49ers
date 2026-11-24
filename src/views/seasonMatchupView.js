@@ -36,6 +36,7 @@ import {
   formatStadiumAltitudeLabel,
   resolveNflStadiumMeta
 } from '../config/nflStadiums.js';
+import { computeMatchupBettingFields } from '../services/dataService.js';
 import {
   TEAM_PLAYER_STATS_CATEGORIES,
   buildTeamPlayerStatsModel,
@@ -1068,25 +1069,38 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
             `;
           })()}
         </div>
-        <div class="source-link-strip">
-          ${
-            um.gameUrl
-              ? `<a href="${esc(um.gameUrl)}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>ESPN Gamecast</span>${iconSvg('externalLink', 11)}</a>`
-              : ''
-          }
-          <a href="${esc(um.statsSourceUrl || 'https://github.com/nflverse/nflverse-data')}" target="_blank" rel="noopener noreferrer" class="source-chip-link"><span>nflverse EPA</span>${iconSvg('externalLink', 11)}</a>
-        </div>
       </div>
 
-      <div class="kpi-grid" style="grid-template-columns:0.82fr 0.8fr 1.38fr">
-        <div class="kpi-box"><div class="kpi-label">Spread</div><div class="kpi-val mono" style="color:var(--emerald)">${esc(bet.spread)}</div></div>
-        <div class="kpi-box"><div class="kpi-label">Total (O/U)</div><div class="kpi-val mono">${esc(bet.overUnder)}</div></div>
-        <div class="kpi-box"><div class="kpi-label">Implied Score</div><div class="kpi-val mono" style="font-size:12px;letter-spacing:-0.03em">${esc(String(bet.impliedScore || '').replace(/\s+[–—-]\s+/g, ' · '))}</div></div>
-      </div>
+      ${(() => {
+        const matchedSchedGame = (appData?.scheduleMatchup?.schedule || []).find(
+          g => g && !g.isByeWeek && ((um.gameId && String(g.id) === String(um.gameId)) || Number(g.week) === Number(um.week))
+        );
+        const resolvedBet = computeMatchupBettingFields({
+          teamAbbr: activeTeamMatchup.abbr || 'SF',
+          oppAbbr: um.oppAbbr || matchedSchedGame?.opponent?.abbr || 'OPP',
+          isHome: (um.homeAway || matchedSchedGame?.homeAway || 'home') !== 'away',
+          spreadRaw: bet.spread || '',
+          overUnderRaw: bet.overUnder ?? null,
+          openingSpreadRaw: bet.openingSpread || '',
+          moneylineRaw: bet.moneyline || '',
+          restAdvantageRaw: bet.restAdvantage || '',
+          restAdvantageDays: matchedSchedGame?.restAdvantageDays ?? null,
+          schedule: appData?.scheduleMatchup?.schedule || [],
+          nextGame: matchedSchedGame || um,
+          completedGames: appData?.seasonal?.playoffPicture?.simulatorInputs?.completedGames || []
+        });
+        return `
+          <div class="kpi-grid" style="grid-template-columns:0.82fr 0.8fr 1.38fr">
+            <div class="kpi-box"><div class="kpi-label">Spread</div><div class="kpi-val mono" style="color:var(--emerald)">${esc(resolvedBet.spread)}</div></div>
+            <div class="kpi-box"><div class="kpi-label">Total (O/U)</div><div class="kpi-val mono">${esc(resolvedBet.overUnder)}</div></div>
+            <div class="kpi-box"><div class="kpi-label">Implied Score</div><div class="kpi-val mono" style="font-size:12px;letter-spacing:-0.03em">${esc(String(resolvedBet.impliedScore || '').replace(/\s+[–—-]\s+/g, ' · '))}</div></div>
+          </div>
 
-      <div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)">
-        <strong>Line &amp; Rest:</strong> ${esc(bet.openingSpread)} • ML <span class="mono">${esc(bet.moneyline)}</span> • <strong style="color:var(--gold-bright)">${esc(bet.restAdvantage)}</strong>
-      </div>
+          <div class="subcard-panel" style="font-size:12px;color:var(--text-secondary)" data-matchup-line-rest>
+            <strong>Line &amp; Rest:</strong> ${esc(resolvedBet.openingSpread)} • ML <span class="mono">${esc(resolvedBet.moneyline)}</span> • <strong style="color:var(--gold-bright)">${esc(resolvedBet.restAdvantage)}</strong>
+          </div>
+        `;
+      })()}
     </section>
 
     <section class="card" id="opponentHealthSection">
@@ -3148,6 +3162,70 @@ function renderPlayoffSimulator(
             : ''
         }
       </div>
+
+      ${(() => {
+        const simIn = pp.simulatorInputs || {};
+        const activeConfList =
+          Array.isArray(simIn.conferenceTeams) && simIn.conferenceTeams.length > 0
+            ? simIn.conferenceTeams
+            : simIn.nfcTeams || [];
+        const teamMeta =
+          activeConfList.find(t => String(t?.abbr || '').toUpperCase() === activeTeam.abbr) || null;
+        const pwrElo = Math.round(Number(sf.powerRating ?? teamMeta?.powerRating ?? 1500));
+        const priorElo =
+          sf.preseasonPriorElo ?? teamMeta?.preseasonPriorElo ?? null;
+        const sosPlayed =
+          sf.sosSpreadAdj ?? teamMeta?.sosSpreadAdj ?? null;
+        const remSos =
+          sf.remainingSosSpread ?? teamMeta?.remainingSosSpread ?? null;
+        const remSosRank =
+          sf.remainingSosRank ?? teamMeta?.remainingSosRank ?? null;
+        const qbAdjElo = Math.round(Number(sf.qbInjuryEloAdj ?? teamMeta?.qbInjuryEloAdj ?? 0));
+        const nonQbAdjElo = Math.round(Number(sf.nonQbInjuryEloAdj ?? teamMeta?.nonQbInjuryEloAdj ?? 0));
+        const totalInjElo = qbAdjElo + nonQbAdjElo;
+        const qbNote = sf.qbStatusNote || teamMeta?.qbStatusNote || '';
+        const fmtSigned = (v, unit = '') => {
+          const n = Number(v || 0);
+          return `${n > 0 ? '+' : ''}${unit === 'pts' ? n.toFixed(1) : Math.round(n)}${unit ? ` ${unit}` : ''}`;
+        };
+        const injTone = totalInjElo <= -35 ? 'is-danger' : totalInjElo < 0 ? 'is-warn' : 'is-positive';
+        const injLabel = qbNote
+          ? `${qbNote} (${fmtSigned(totalInjElo, 'Elo')})`
+          : totalInjElo !== 0
+            ? `${fmtSigned(totalInjElo, 'Elo')} (Key Injuries)`
+            : 'Healthy Starter (±0 Elo)';
+        const simTs = pp.lastSimulatedAt || simIn.lastSimulatedAt || appData?.meta?.updatedAt || '';
+        const simRel = simTs ? formatRelativeTime(simTs) : 'Live';
+        return `
+        <details class="playoff-model-factors-disclosure" data-playoff-model-factors>
+          <summary class="playoff-model-factors-summary">
+            <span class="playoff-model-factors-title">Model Factors • ${pwrElo} Elo${totalInjElo !== 0 ? ` (${fmtSigned(totalInjElo)} Inj)` : ''}</span>
+            <span class="mono playoff-model-factors-cue">${esc(simRel)} ▾</span>
+          </summary>
+          <div class="playoff-model-factors-grid mono">
+            <div class="pmf-cell">
+              <span class="pmf-lbl">Preseason Prior</span>
+              <strong>${priorElo != null ? `${Math.round(priorElo)} Elo` : '1500 Elo'}</strong>
+            </div>
+            <div class="pmf-cell">
+              <span class="pmf-lbl">SOS Played</span>
+              <strong>${sosPlayed != null ? fmtSigned(sosPlayed, 'pts') : '0.0 pts'}</strong>
+            </div>
+            <div class="pmf-cell">
+              <span class="pmf-lbl">Remaining SOS</span>
+              <strong>${remSos != null ? `${fmtSigned(remSos, 'pts')}${remSosRank ? ` (#${remSosRank})` : ''}` : '—'}</strong>
+            </div>
+            <div class="pmf-cell">
+              <span class="pmf-lbl">QB &amp; Key Injuries</span>
+              <strong class="${injTone}">${esc(injLabel)}</strong>
+            </div>
+          </div>
+          <p class="playoff-model-factors-note">
+            Hierarchical Bayesian ratings blend fading preseason priors, opponent- &amp; venue-adjusted Margin + Pass/Rush EPA, starting QB &amp; IR status, rest/bye edges, and divisional HFA. Refreshes every 30s on NFL game days and on breaking injury updates.
+          </p>
+        </details>
+        `;
+      })()}
 
       ${
         seedPathCards.length > 0

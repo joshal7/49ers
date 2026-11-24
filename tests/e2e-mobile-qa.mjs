@@ -7287,6 +7287,8 @@ async function main() {
         await sleep(60);
 
         const hasScorebug = Boolean(document.querySelector('[data-gamecast-scorebug]'));
+        const hasOldSwitcherStrip = Boolean(document.querySelector('.gc-switcher-strip'));
+        const hasWeekPickerPill = Boolean(document.querySelector('[data-gamecast-week-picker]'));
         const hasBackBtn = Boolean(document.querySelector('[data-action="back-to-schedule-from-gamecast"]'));
         const hasStickyTabs = Boolean(document.querySelector('[data-gamecast-tabs]'));
         const gameSelectOptions = document.querySelectorAll('select[data-action="select-gamecast-game"] option').length;
@@ -7301,27 +7303,39 @@ async function main() {
             sbLogoRect.width >= 40
         );
 
-        // 2. Box Score tab: Quarter Scoreboard MUST NOT appear
+        // 2. Box Score tab: Quarter Scoreboard MUST NOT appear; no All/Off/Def/ST unit pills; Team A/B stretched full-width
         document.querySelector('[data-action="set-gamecast-tab"][data-gamecast-tab="box"]')?.click();
         await sleep(30);
         const boxHasQuarter = Boolean(document.querySelector('[data-gamecast-quarter-scoreboard]'));
+        const boxHasUnitPills = Boolean(document.querySelector('.gc-unit-pills'));
+        const teamSegEl = document.querySelector('.gc-team-seg');
+        const boxControlsEl = document.querySelector('.gc-box-controls');
+        const boxTeamSegFullWidth = Boolean(
+          !teamSegEl ||
+            !boxControlsEl ||
+            teamSegEl.getBoundingClientRect().width >= boxControlsEl.getBoundingClientRect().width - 4
+        );
         const boxOverflow = document.documentElement.scrollWidth > window.innerWidth + 1;
 
-        // 3. Team Stats tab: Quarter Scoreboard MUST NOT appear
+        // 3. Team Stats tab: Quarter Scoreboard & redundant Single-Game Stats legend MUST NOT appear
         document.querySelector('[data-action="set-gamecast-tab"][data-gamecast-tab="team"]')?.click();
         await sleep(30);
         const teamHasQuarter = Boolean(document.querySelector('[data-gamecast-quarter-scoreboard]'));
+        const teamHasRedundantLegend = Boolean(document.querySelector('.gc-ts-legend'));
         const teamOverflow = document.documentElement.scrollWidth > window.innerWidth + 1;
 
-        // 4. Play-by-Play tab: Quarter Scoreboard MUST appear, and PBP toolbar (if present) stays single-line
+        // 4. Play-by-Play tab: Quarter Scoreboard MUST appear, and PBP toolbar (if present) stays single-line in All Plays -> Key Plays -> Scoring order
         document.querySelector('[data-action="set-gamecast-tab"][data-gamecast-tab="pbp"]')?.click();
         await sleep(30);
         const pbpHasQuarter = Boolean(document.querySelector('[data-gamecast-quarter-scoreboard]'));
         const pbpToolbarEl = document.querySelector('[data-gamecast-pbp-toolbar]');
         const pbpToolbarSingleLine = !pbpToolbarEl || pbpToolbarEl.getBoundingClientRect().height <= 42;
+        const pbpModeKeys = Array.from(document.querySelectorAll('[data-action="set-gamecast-pbp-filter"]')).map(el =>
+          el.getAttribute('data-pbp-filter')
+        );
         const pbpOverflow = document.documentElement.scrollWidth > window.innerWidth + 1;
 
-        // 5. Return cleanly via <- Sched breadcrumb
+        // 5. Return cleanly via <- breadcrumb
         document.querySelector('[data-action="back-to-schedule-from-gamecast"]')?.click();
         await sleep(35);
         const returnedToSchedule = Boolean(document.querySelector('[data-schedule-upcoming-list]'));
@@ -7330,27 +7344,38 @@ async function main() {
         return {
           hasSchedGamecastBtn,
           hasScorebug,
+          hasOldSwitcherStrip,
+          hasWeekPickerPill,
           hasBackBtn,
           hasStickyTabs,
           gameSelectOptions,
           sbLogoUnboxedAndLarge,
           boxHasQuarter,
+          boxHasUnitPills,
+          boxTeamSegFullWidth,
           boxOverflow,
           teamHasQuarter,
+          teamHasRedundantLegend,
           teamOverflow,
           pbpHasQuarter,
           pbpToolbarSingleLine,
+          pbpModeKeys,
           pbpOverflow,
           returnedToSchedule
         };
       });
 
       assert(gcRes.hasSchedGamecastBtn, 'Schedule completed row must render in-app Box Score / Gamecast button');
-      assert(gcRes.hasScorebug && gcRes.hasStickyTabs && gcRes.gameSelectOptions >= 10, `Gamecast chrome incomplete: ${JSON.stringify(gcRes)}`);
+      assert(gcRes.hasScorebug && !gcRes.hasOldSwitcherStrip && gcRes.hasWeekPickerPill && gcRes.hasStickyTabs && gcRes.gameSelectOptions >= 10, `Gamecast streamlined chrome incomplete: ${JSON.stringify(gcRes)}`);
       assert(gcRes.sbLogoUnboxedAndLarge, `Scorebug team logo must be unboxed (0px border) and >=40px at 375px: ${JSON.stringify(gcRes)}`);
       assert(gcRes.hasBackBtn && gcRes.returnedToSchedule, `Schedule <-> Gamecast back navigation failed: ${JSON.stringify(gcRes)}`);
-      assert(!gcRes.boxHasQuarter && !gcRes.teamHasQuarter, `Quarter scoreboard must be hidden on Box Score & Team Stats: ${JSON.stringify(gcRes)}`);
+      assert(!gcRes.boxHasQuarter && !gcRes.boxHasUnitPills && gcRes.boxTeamSegFullWidth, `Box Score must omit unit pills and stretch Team A/B full-width: ${JSON.stringify(gcRes)}`);
+      assert(!gcRes.teamHasQuarter && !gcRes.teamHasRedundantLegend, `Team Stats must omit Quarter scoreboard and redundant Single-Game Stats legend: ${JSON.stringify(gcRes)}`);
       assert(gcRes.pbpHasQuarter && gcRes.pbpToolbarSingleLine, `Quarter scoreboard and single-line PBP toolbar must render cleanly: ${JSON.stringify(gcRes)}`);
+      assert(
+        gcRes.pbpModeKeys.length === 0 || JSON.stringify(gcRes.pbpModeKeys) === JSON.stringify(['all', 'key', 'scoring']),
+        `Play-by-Play filter pills must be ordered All Plays -> Key Plays -> Scoring: ${JSON.stringify(gcRes.pbpModeKeys)}`
+      );
       assert(!gcRes.boxOverflow && !gcRes.teamOverflow && !gcRes.pbpOverflow, `Gamecast overflow detected at 375px: ${JSON.stringify(gcRes)}`);
 
       // Also verify 320x640 narrow mobile overflow on Gamecast

@@ -59,6 +59,7 @@ import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer
 import {
   loadAll49ersData,
   fetchFresherUpstreamData,
+  persistLiveBootSnapshot,
   dedupeRawStreamAtomically,
   hydrateLiveMultiSourceBeatWire,
   LIVE_WIRE_SOURCE_LABELS,
@@ -1467,6 +1468,9 @@ function renderNavTabs() {
   });
 }
 
+let lastRenderedMainTab = '';
+let lastRenderedMainHtml = '';
+
 function renderMain({ isBackground = false } = {}) {
   if (!state.appData) return;
   const mainEl = document.getElementById('mainView');
@@ -1521,171 +1525,183 @@ function renderMain({ isBackground = false } = {}) {
       ? getReportersMap()
       : null;
 
+  let nextMainHtml = null;
+  if (tab === 'home') {
+    const filteredRawItems = filterNewsByUserPrefs(
+      state.appData.news?.rawStream || [],
+      reportersMap,
+      state.prefs
+    );
+    const homeSimCapResult = simulateCapScenario(
+      state.appData.cap,
+      getCapMovesForYear(primaryCapYear),
+      { baseYear: primaryCapYear }
+    );
+    const { orderedBlocks } = resolveHomeDashboardState();
+    const mcSimResult = orderedBlocks.includes('playoff_picture') ? getMonteCarloResult() : null;
+    nextMainHtml = renderHomeDashboardHtml({
+      orderedBlocks,
+      appData: state.appData,
+      simCapResult: homeSimCapResult,
+      mcSimResult,
+      filteredRawItems,
+      userPrefs: state.prefs,
+      activeVideosSet: state.activeVideosSet,
+      sessionLastVisitedAt: state.sessionLastVisitedAt
+    });
+  } else if (tab === 'news') {
+    const filteredRawItems = filterNewsByUserPrefs(
+      state.appData.news?.rawStream || [],
+      reportersMap,
+      state.prefs
+    );
+    nextMainHtml = renderNewsViewHtml({
+      appData: state.appData,
+      newsCategoryFilter: state.newsCategoryFilter,
+      newsSortMode: state.newsSortMode,
+      newsTopicFilter: state.newsTopicFilter,
+      newsSearchQuery: state.newsSearchQuery,
+      newsSourceFilter: state.newsSourceFilter,
+      filteredRawItems,
+      reportersById: reportersMap,
+      activeVideosSet: state.activeVideosSet,
+      userPrefs: state.prefs,
+      lastWireSyncAt: state.lastWireSyncAt || state.appData.meta?.updatedAt,
+      isSyncingWire: state.isSyncingWire,
+      sessionLastVisitedAt: state.sessionLastVisitedAt
+    });
+  } else if (tab === 'roster') {
+    const activeYearMoves = getCapMovesForYear(activeCapYear);
+    const rosterSimCapResult = simulateCapScenario(state.appData.cap, activeYearMoves, { baseYear: activeCapYear });
+    nextMainHtml = renderRosterCapViewHtml({
+      subTab: state.rosterSubTab,
+      rosterSearch: state.rosterSearch,
+      rosterUnitFilter: state.rosterUnitFilter,
+      rosterPosFilter: state.rosterPosFilter,
+      rosterSort: state.rosterSort,
+      rosterSortDir: state.rosterSortDir,
+      depthMode: state.depthMode,
+      rosterMovesFilter: state.rosterMovesFilter,
+      capSelectedYear: activeCapYear,
+      capViewMode: state.capViewMode,
+      capFaFilter: state.capFaFilter,
+      appData: state.appData,
+      simCapResult: rosterSimCapResult,
+      userCapMoves: activeYearMoves
+    });
+  } else if (tab === 'season') {
+    const mcSimResult =
+      state.seasonSubTab === 'playoffs' || state.seasonSubTab === 'schedule' || state.seasonSubTab === 'gamecast'
+        ? getMonteCarloResult()
+        : null;
+    const otherConfMcPair =
+      state.seasonSubTab === 'playoffs' ? getOtherConferenceMonteCarloPair() : { baseline: null, active: null };
+    const resolvedGcInfo =
+      state.seasonSubTab === 'gamecast' ? resolveGamecastGamesList(state.appData, mcSimResult) : null;
+    const activeGcId =
+      resolvedGcInfo
+        ? (state.gamecastGameId && resolvedGcInfo.games.some(g => g.id === String(state.gamecastGameId))
+            ? String(state.gamecastGameId)
+            : resolvedGcInfo.defaultGameId)
+        : null;
+    const activeGcMeta = resolvedGcInfo?.games?.find(g => g.id === activeGcId) || null;
+    const activeGcModel =
+      (activeGcId && state.gamecastModelsById.get(activeGcId)) ||
+      (activeGcId && getCachedGamecastModel(activeGcId)) ||
+      null;
+    const resolvedGcTab =
+      state.gamecastTab ||
+      (activeGcModel?.isLive || activeGcMeta?.isLive ? 'pbp' : 'box');
+    nextMainHtml = renderSeasonMatchupViewHtml({
+      seasonSub: state.seasonSubTab,
+      draftSub: state.draftSubTab,
+      appData: state.appData,
+      mcSimResult,
+      otherConfMcSimResult: otherConfMcPair.active,
+      otherConfBaselineSimResult: otherConfMcPair.baseline,
+      playoffStandingsView: state.playoffStandingsView,
+      playoffStandingsConf: state.playoffStandingsConf,
+      playoffSeedBarsExpanded: state.playoffSeedBarsExpanded,
+      forcedWinners: state.prefs.playoffForcedWinners,
+      combineSearch: state.combineSearch,
+      bigBoardSearch: state.bigBoardSearch,
+      bigBoardPosFilter: state.bigBoardPosFilter,
+      bigBoardPositions: state.bigBoardPositions,
+      bigBoardLens: state.bigBoardLens,
+      bigBoardSortField: state.bigBoardSortField,
+      bigBoardSortDir: state.bigBoardSortDir,
+      bigBoardRange: state.bigBoardRange,
+      bigBoardAgreement: state.bigBoardAgreement,
+      bigBoardRankedOnly: state.bigBoardRankedOnly,
+      bigBoardFilterDrawerOpen: state.bigBoardFilterDrawerOpen,
+      bigBoardExpanded: state.bigBoardExpanded,
+      bigBoardShowAll: state.bigBoardShowAll,
+      bigBoardExpandedIds: state.bigBoardExpandedIds,
+      bigBoardShareCopied: state.bigBoardShareCopied,
+      expandedDraftSpiderIdx: state.expandedDraftSpiderIdx,
+      activeVideosSet: state.activeVideosSet,
+      schedulePrevExpanded: state.schedulePrevExpanded,
+      expandedRootingWeeks: state.expandedRootingWeeks,
+      matchupStatsUnit: state.matchupStatsUnit,
+      statsSubMode: state.statsSubMode,
+      teamPlayersCat: state.teamPlayersCat,
+      teamPlayersSortKey: state.teamPlayersSortKey,
+      teamPlayersSortDir: state.teamPlayersSortDir,
+      snapMatrixUnit: state.snapMatrixUnit,
+      userPrefs: state.prefs,
+      reportersById: reportersMap,
+      gamecastGameId: activeGcId,
+      gamecastTab: resolvedGcTab,
+      gamecastBoxTeam: state.gamecastBoxTeam,
+      gamecastBoxUnit: state.gamecastBoxUnit,
+      gamecastPbpFilter: state.gamecastPbpFilter,
+      gamecastPbpQuarter: state.gamecastPbpQuarter,
+      gamecastPbpOrder: state.gamecastPbpOrder,
+      gamecastExpandedDrives: state.gamecastExpandedDrives,
+      gamecastFromSchedule: state.gamecastFromSchedule,
+      gamecastModel: activeGcModel,
+      gamecastIsLoading: Boolean(activeGcId && state.gamecastLoadingId === activeGcId && !activeGcModel),
+      gamecastIsSyncing: state.gamecastSyncing,
+      gamecastFieldAnimKey: state.gamecastFieldAnimKey,
+      activeGamecastClipKey: state.activeGamecastClipKey
+    });
+  } else if (tab === 'audio') {
+    nextMainHtml = renderAudioAiViewHtml({
+      appData: state.appData,
+      userPrefs: state.prefs,
+      studioSub: state.studioSubTab,
+      beatPodViewMode: state.beatPodViewMode,
+      beatPodShowFilter: state.beatPodShowFilter,
+      podDurationMin: state.podDurationMin,
+      podFormat: state.podFormat,
+      podTopicDraft: state.podTopicDraft,
+      analysisPromptDraft: state.analysisPromptDraft,
+      jobStatus: state.jobStatus,
+      sharedAudioPrep: state.sharedAudioPrep,
+      sharedAnalysisHighlightId: state.sharedAnalysisHighlightId,
+      allEpisodes: getAllEpisodes(),
+      allAnalyses: getSavedAnalyses(),
+      audioState: state.audioState,
+      expandedTranscriptIds: state.expandedTranscriptIds,
+      shareToastTargetId: state.shareToastTargetId,
+      geminiKeyNotice: state.geminiKeyNotice,
+      showGeminiKeyGuide: state.showGeminiKeyGuide,
+      showPasskeySyncOffer: state.showPasskeySyncOffer,
+      passkeyNeedsSecondTap: state.passkeyNeedsSecondTap,
+      passkeyBusy: state.passkeyBusy
+    });
+  }
+
+  // Skip identical background DOM re-renders to eliminate unnecessary visual flicker
+  if (isBackground && nextMainHtml !== null && tab === lastRenderedMainTab && nextMainHtml === lastRenderedMainHtml) {
+    return;
+  }
+
   preserveFocusAroundRender(() => {
-    if (tab === 'home') {
-      const filteredRawItems = filterNewsByUserPrefs(
-        state.appData.news?.rawStream || [],
-        reportersMap,
-        state.prefs
-      );
-      const homeSimCapResult = simulateCapScenario(
-        state.appData.cap,
-        getCapMovesForYear(primaryCapYear),
-        { baseYear: primaryCapYear }
-      );
-      const { orderedBlocks } = resolveHomeDashboardState();
-      const mcSimResult = orderedBlocks.includes('playoff_picture') ? getMonteCarloResult() : null;
-      mainEl.innerHTML = renderHomeDashboardHtml({
-        orderedBlocks,
-        appData: state.appData,
-        simCapResult: homeSimCapResult,
-        mcSimResult,
-        filteredRawItems,
-        userPrefs: state.prefs,
-        activeVideosSet: state.activeVideosSet,
-        sessionLastVisitedAt: state.sessionLastVisitedAt
-      });
-    } else if (tab === 'news') {
-      const filteredRawItems = filterNewsByUserPrefs(
-        state.appData.news?.rawStream || [],
-        reportersMap,
-        state.prefs
-      );
-      mainEl.innerHTML = renderNewsViewHtml({
-        appData: state.appData,
-        newsCategoryFilter: state.newsCategoryFilter,
-        newsSortMode: state.newsSortMode,
-        newsTopicFilter: state.newsTopicFilter,
-        newsSearchQuery: state.newsSearchQuery,
-        newsSourceFilter: state.newsSourceFilter,
-        filteredRawItems,
-        reportersById: reportersMap,
-        activeVideosSet: state.activeVideosSet,
-        userPrefs: state.prefs,
-        lastWireSyncAt: state.lastWireSyncAt || state.appData.meta?.updatedAt,
-        isSyncingWire: state.isSyncingWire,
-        sessionLastVisitedAt: state.sessionLastVisitedAt
-      });
-    } else if (tab === 'roster') {
-      const activeYearMoves = getCapMovesForYear(activeCapYear);
-      const rosterSimCapResult = simulateCapScenario(state.appData.cap, activeYearMoves, { baseYear: activeCapYear });
-      mainEl.innerHTML = renderRosterCapViewHtml({
-        subTab: state.rosterSubTab,
-        rosterSearch: state.rosterSearch,
-        rosterUnitFilter: state.rosterUnitFilter,
-        rosterPosFilter: state.rosterPosFilter,
-        rosterSort: state.rosterSort,
-        rosterSortDir: state.rosterSortDir,
-        depthMode: state.depthMode,
-        rosterMovesFilter: state.rosterMovesFilter,
-        capSelectedYear: activeCapYear,
-        capViewMode: state.capViewMode,
-        capFaFilter: state.capFaFilter,
-        appData: state.appData,
-        simCapResult: rosterSimCapResult,
-        userCapMoves: activeYearMoves
-      });
-    } else if (tab === 'season') {
-      const mcSimResult =
-        state.seasonSubTab === 'playoffs' || state.seasonSubTab === 'schedule' || state.seasonSubTab === 'gamecast'
-          ? getMonteCarloResult()
-          : null;
-      const otherConfMcPair =
-        state.seasonSubTab === 'playoffs' ? getOtherConferenceMonteCarloPair() : { baseline: null, active: null };
-      const resolvedGcInfo =
-        state.seasonSubTab === 'gamecast' ? resolveGamecastGamesList(state.appData, mcSimResult) : null;
-      const activeGcId =
-        resolvedGcInfo
-          ? (state.gamecastGameId && resolvedGcInfo.games.some(g => g.id === String(state.gamecastGameId))
-              ? String(state.gamecastGameId)
-              : resolvedGcInfo.defaultGameId)
-          : null;
-      const activeGcMeta = resolvedGcInfo?.games?.find(g => g.id === activeGcId) || null;
-      const activeGcModel =
-        (activeGcId && state.gamecastModelsById.get(activeGcId)) ||
-        (activeGcId && getCachedGamecastModel(activeGcId)) ||
-        null;
-      const resolvedGcTab =
-        state.gamecastTab ||
-        (activeGcModel?.isLive || activeGcMeta?.isLive ? 'pbp' : 'box');
-      mainEl.innerHTML = renderSeasonMatchupViewHtml({
-        seasonSub: state.seasonSubTab,
-        draftSub: state.draftSubTab,
-        appData: state.appData,
-        mcSimResult,
-        otherConfMcSimResult: otherConfMcPair.active,
-        otherConfBaselineSimResult: otherConfMcPair.baseline,
-        playoffStandingsView: state.playoffStandingsView,
-        playoffStandingsConf: state.playoffStandingsConf,
-        playoffSeedBarsExpanded: state.playoffSeedBarsExpanded,
-        forcedWinners: state.prefs.playoffForcedWinners,
-        combineSearch: state.combineSearch,
-        bigBoardSearch: state.bigBoardSearch,
-        bigBoardPosFilter: state.bigBoardPosFilter,
-        bigBoardPositions: state.bigBoardPositions,
-        bigBoardLens: state.bigBoardLens,
-        bigBoardSortField: state.bigBoardSortField,
-        bigBoardSortDir: state.bigBoardSortDir,
-        bigBoardRange: state.bigBoardRange,
-        bigBoardAgreement: state.bigBoardAgreement,
-        bigBoardRankedOnly: state.bigBoardRankedOnly,
-        bigBoardFilterDrawerOpen: state.bigBoardFilterDrawerOpen,
-        bigBoardExpanded: state.bigBoardExpanded,
-        bigBoardShowAll: state.bigBoardShowAll,
-        bigBoardExpandedIds: state.bigBoardExpandedIds,
-        bigBoardShareCopied: state.bigBoardShareCopied,
-        expandedDraftSpiderIdx: state.expandedDraftSpiderIdx,
-        activeVideosSet: state.activeVideosSet,
-        schedulePrevExpanded: state.schedulePrevExpanded,
-        expandedRootingWeeks: state.expandedRootingWeeks,
-        matchupStatsUnit: state.matchupStatsUnit,
-        statsSubMode: state.statsSubMode,
-        teamPlayersCat: state.teamPlayersCat,
-        teamPlayersSortKey: state.teamPlayersSortKey,
-        teamPlayersSortDir: state.teamPlayersSortDir,
-        snapMatrixUnit: state.snapMatrixUnit,
-        userPrefs: state.prefs,
-        reportersById: reportersMap,
-        gamecastGameId: activeGcId,
-        gamecastTab: resolvedGcTab,
-        gamecastBoxTeam: state.gamecastBoxTeam,
-        gamecastBoxUnit: state.gamecastBoxUnit,
-        gamecastPbpFilter: state.gamecastPbpFilter,
-        gamecastPbpQuarter: state.gamecastPbpQuarter,
-        gamecastPbpOrder: state.gamecastPbpOrder,
-        gamecastExpandedDrives: state.gamecastExpandedDrives,
-        gamecastFromSchedule: state.gamecastFromSchedule,
-        gamecastModel: activeGcModel,
-        gamecastIsLoading: Boolean(activeGcId && state.gamecastLoadingId === activeGcId && !activeGcModel),
-        gamecastIsSyncing: state.gamecastSyncing,
-        gamecastFieldAnimKey: state.gamecastFieldAnimKey,
-        activeGamecastClipKey: state.activeGamecastClipKey
-      });
-    } else if (tab === 'audio') {
-      mainEl.innerHTML = renderAudioAiViewHtml({
-        appData: state.appData,
-        userPrefs: state.prefs,
-        studioSub: state.studioSubTab,
-        beatPodViewMode: state.beatPodViewMode,
-        beatPodShowFilter: state.beatPodShowFilter,
-        podDurationMin: state.podDurationMin,
-        podFormat: state.podFormat,
-        podTopicDraft: state.podTopicDraft,
-        analysisPromptDraft: state.analysisPromptDraft,
-        jobStatus: state.jobStatus,
-        sharedAudioPrep: state.sharedAudioPrep,
-        sharedAnalysisHighlightId: state.sharedAnalysisHighlightId,
-        allEpisodes: getAllEpisodes(),
-        allAnalyses: getSavedAnalyses(),
-        audioState: state.audioState,
-        expandedTranscriptIds: state.expandedTranscriptIds,
-        shareToastTargetId: state.shareToastTargetId,
-        geminiKeyNotice: state.geminiKeyNotice,
-        showGeminiKeyGuide: state.showGeminiKeyGuide,
-        showPasskeySyncOffer: state.showPasskeySyncOffer,
-        passkeyNeedsSecondTap: state.passkeyNeedsSecondTap,
-        passkeyBusy: state.passkeyBusy
-      });
+    if (nextMainHtml !== null) {
+      mainEl.innerHTML = nextMainHtml;
+      lastRenderedMainTab = tab;
+      lastRenderedMainHtml = nextMainHtml;
     }
   });
 
@@ -5405,6 +5421,34 @@ function mergeRuntimeStateIntoUpstreamBundle(prevData, nextData) {
   return nextData;
 }
 
+function hasActiveLeagueNflGame(appData, nowMs = Date.now()) {
+  const liveMap = appData?.seasonal?.playoffPicture?.liveScoresByMatchup || null;
+  if (liveMap && typeof liveMap === 'object') {
+    for (const entry of Object.values(liveMap)) {
+      if (entry && (entry.isLive || String(entry.state || '').toLowerCase() === 'in')) {
+        return true;
+      }
+    }
+  }
+  // Also recognize active NFL game-day windows (Thu/Mon 5:00-9:00 PM PT, Sun 9:30 AM-9:00 PM PT, Sat Dec/Jan)
+  try {
+    const dt = new Date(nowMs);
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Los_Angeles',
+      weekday: 'short',
+      hour: 'numeric',
+      hour12: false
+    }).formatToParts(dt);
+    const wd = parts.find(p => p.type === 'weekday')?.value || '';
+    const hr = Number(parts.find(p => p.type === 'hour')?.value || 0);
+    if (wd === 'Sun' && hr >= 9 && hr <= 21) return true;
+    if ((wd === 'Thu' || wd === 'Mon') && hr >= 17 && hr <= 21) return true;
+  } catch {
+    // ignore Intl edge cases
+  }
+  return false;
+}
+
 async function executeSingleWirePollPass({ manual = false, focusPlayerId = null } = {}) {
   if (!state.appData) return;
   const gameLive = is49ersGameLiveWindow(state.appData);
@@ -5414,13 +5458,16 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
   const viewingHealthSurface =
     (state.activeNavTab === 'season' && (state.seasonSubTab === 'health' || state.seasonSubTab === 'matchup')) ||
     state.sheetMode === 'player';
-  // Enforce balanced ESPN overlay cadence (24s during live game, 30s immediate post-game, 55s standard/health)
-  // so 9-16 endpoint overlays never hammer cellular/battery on every 25s standard tick while `manual` always runs immediately!
+  const viewingPlayoffsSurface =
+    state.activeNavTab === 'season' && state.seasonSubTab === 'playoffs';
+  const leagueGameLive = viewingPlayoffsSurface && hasActiveLeagueNflGame(state.appData, nowMs);
+  // Enforce balanced ESPN overlay cadence (24s during live 49ers game, 30s immediate post-game or
+  // active NFL league-wide game window on Playoffs tab, 45s health/matchup/playoffs, 60s standard)
   const minEspnIntervalMs = gameLive
     ? 24_000
-    : gameCtx.postGameImmediate
+    : gameCtx.postGameImmediate || leagueGameLive
       ? 30_000
-      : viewingHealthSurface
+      : viewingHealthSurface || viewingPlayoffsSurface
         ? 45_000
         : 60_000;
   const shouldCheckEspn =
@@ -5450,6 +5497,9 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
   if (state.appData) {
     state.appData._awaitingInitialLiveWireSync = false;
     syncHealthDeltaSnapshots(state.appData);
+    if (addedTweets > 0 || espnChanged) {
+      persistLiveBootSnapshot(state.appData);
+    }
   }
 
   const briefChanged = hydrateCachedDailyTopNewsBrief(state.appData);
@@ -5641,6 +5691,7 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
     lastWirePollMs = Date.now();
     state.appData._awaitingInitialLiveWireSync = false;
     syncHealthDeltaSnapshots(state.appData);
+    persistLiveBootSnapshot(state.appData);
 
     const briefHydratedChanged = hydrateCachedDailyTopNewsBrief(state.appData);
 
@@ -5948,8 +5999,10 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
 
   try {
     state.appData = await loadAll49ersData();
-    const upstreamAgeMs = state.appData?.meta?.updatedAt
-      ? Date.now() - Date.parse(state.appData.meta.updatedAt)
+    const effectiveFreshAnchorIso =
+      state.appData?._liveBootSnapshotSavedAt || state.appData?.meta?.updatedAt || '';
+    const upstreamAgeMs = effectiveFreshAnchorIso
+      ? Date.now() - Date.parse(effectiveFreshAnchorIso)
       : Infinity;
     if (
       !Number.isFinite(upstreamAgeMs) ||
@@ -6403,7 +6456,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=126', { updateViaCache: 'none' })
+        .register('./sw.js?v=127', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

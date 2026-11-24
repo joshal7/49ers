@@ -68,9 +68,11 @@ import {
 import {
   canonicalPlayoffGameKey,
   computeCalibratedTeamPowerRating,
+  computeLeaguePowerRatings,
   computeRootingGuideLeverage,
   reconcileAndDedupePlayoffGames,
-  runPlayoffMonteCarlo
+  runPlayoffMonteCarlo,
+  PLAYOFF_MODEL_VERSION
 } from '../src/engine/playoffMonteCarlo.js';
 import {
   NFL_TEAM_NAMES,
@@ -446,6 +448,9 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     powerRankingsPayloads,
     completedGames: reconciledLeagueGames.completedGames,
     remainingGames: reconciledLeagueGames.remainingGames,
+    sharedPreseasonPriors: sfSeasonal?.playoffPicture?.simulatorInputs?.preseasonPriors || {},
+    sharedWeeklyTeamStats: sfSeasonal?.playoffPicture?.simulatorInputs?.weeklyTeamStats || null,
+    sharedInjuryAdjustments: sfSeasonal?.playoffPicture?.simulatorInputs?.injuryAdjustmentsByTeam || null,
     liveScoresByMatchup,
     espnWeatherByGameId,
     baseTeamStatsTemplate: sfMatchup?.teamStats || null,
@@ -541,20 +546,48 @@ function buildConferencePlayoffPicture(team, leagueCtx) {
   const confTeams = [];
   const otherPowerRatings = {};
   const otherStandings = {};
+  const otherNextGameDeltas = {};
+
+  const standingsObj = {};
+  for (const t of ALL_NFL_TEAMS) {
+    const st = leagueCtx.standingsByAbbr.get(t.abbr);
+    if (st) {
+      standingsObj[t.abbr] = {
+        wins: st.wins,
+        losses: st.losses,
+        ties: st.ties,
+        pointDiff: st.pd,
+        pointsFor: st.pf,
+        pointsAgainst: st.pa
+      };
+    }
+  }
+  const leagueRatings = computeLeaguePowerRatings({
+    completedGames: leagueCtx.completedGames,
+    remainingGames: leagueCtx.remainingGames,
+    preseasonPriors: leagueCtx.sharedPreseasonPriors || {},
+    weeklyTeamStats: leagueCtx.sharedWeeklyTeamStats || null,
+    standingsByAbbr: standingsObj,
+    injuryAdjustmentsByTeam: leagueCtx.sharedInjuryAdjustments || null
+  }).byAbbr;
 
   for (const t of ALL_NFL_TEAMS) {
     const st = leagueCtx.standingsByAbbr.get(t.abbr) || {
       wins: 0, losses: 0, ties: 0, pf: 0, pa: 0, pd: 0, record: '0-0', divRec: '0-0', confRec: '0-0',
       logoUrl: `https://a.espncdn.com/i/teamlogos/nfl/500/${t.espnAbbr}.png`
     };
-    const rating = computeCalibratedTeamPowerRating({
-      wins: st.wins,
-      losses: st.losses,
-      ties: st.ties,
-      pointDiff: st.pd,
-      pointsFor: st.pf,
-      pointsAgainst: st.pa
-    });
+    const lr = leagueRatings[t.abbr] || null;
+    const rating =
+      lr?.powerRating ??
+      computeCalibratedTeamPowerRating({
+        wins: st.wins,
+        losses: st.losses,
+        ties: st.ties,
+        pointDiff: st.pd,
+        pointsFor: st.pf,
+        pointsAgainst: st.pa,
+        preseasonPriorSpread: leagueCtx.sharedPreseasonPriors?.[t.abbr] ?? 0
+      });
     if (t.conference === targetConf) {
       const dr = parseWlt(st.divRec);
       const cr = parseWlt(st.confRec);
@@ -582,10 +615,20 @@ function buildConferencePlayoffPicture(team, leagueCtx) {
         streak: st.streak || '',
         clincher: st.clincher || '',
         playoffSeed: st.seed || null,
+        preseasonPriorSpread: lr?.preseasonPriorSpread ?? 0,
+        preseasonPriorElo: lr?.preseasonPriorElo ?? 1500,
+        sosSpreadAdj: lr?.sosSpreadAdj ?? 0,
+        remainingSosSpread: lr?.remainingSosSpread ?? 0,
+        remainingSosRank: lr?.remainingSosRank ?? 16,
+        qbInjuryEloAdj: lr?.qbInjuryEloAdj ?? 0,
+        nonQbInjuryEloAdj: lr?.nonQbInjuryEloAdj ?? 0,
+        nextGameEloDelta: lr?.nextGameEloDelta ?? 0,
+        ...(lr?.qbStatusNote ? { qbStatusNote: lr.qbStatusNote } : {}),
         powerRating: Math.round(rating)
       });
     } else {
       otherPowerRatings[t.abbr] = Math.round(rating);
+      otherNextGameDeltas[t.abbr] = lr?.nextGameEloDelta ?? 0;
       otherStandings[t.abbr] = {
         wins: st.wins,
         losses: st.losses,
@@ -599,12 +642,24 @@ function buildConferencePlayoffPicture(team, leagueCtx) {
         awayRec: st.awayRec || '',
         streak: st.streak || '',
         clincher: st.clincher || '',
-        playoffSeed: st.seed || null
+        playoffSeed: st.seed || null,
+        preseasonPriorSpread: lr?.preseasonPriorSpread ?? 0,
+        preseasonPriorElo: lr?.preseasonPriorElo ?? 1500,
+        sosSpreadAdj: lr?.sosSpreadAdj ?? 0,
+        remainingSosSpread: lr?.remainingSosSpread ?? 0,
+        remainingSosRank: lr?.remainingSosRank ?? 16,
+        qbInjuryEloAdj: lr?.qbInjuryEloAdj ?? 0,
+        nonQbInjuryEloAdj: lr?.nonQbInjuryEloAdj ?? 0,
+        nextGameEloDelta: lr?.nextGameEloDelta ?? 0,
+        ...(lr?.qbStatusNote ? { qbStatusNote: lr.qbStatusNote } : {})
       };
     }
   }
 
+  const nowSimIso = new Date().toISOString();
   const simulatorInputs = {
+    modelVersion: PLAYOFF_MODEL_VERSION,
+    lastSimulatedAt: nowSimIso,
     targetTeam: team.abbr,
     conference: targetConf,
     conferenceTeams: confTeams,
@@ -614,6 +669,10 @@ function buildConferencePlayoffPicture(team, leagueCtx) {
     afcRatings: otherPowerRatings,
     otherConferenceStandings: otherStandings,
     afcStandings: otherStandings,
+    otherConferenceNextGameDeltas: otherNextGameDeltas,
+    preseasonPriors: leagueCtx.sharedPreseasonPriors || {},
+    ...(leagueCtx.sharedWeeklyTeamStats ? { weeklyTeamStats: leagueCtx.sharedWeeklyTeamStats } : {}),
+    ...(leagueCtx.sharedInjuryAdjustments ? { injuryAdjustmentsByTeam: leagueCtx.sharedInjuryAdjustments } : {}),
     completedGames: leagueCtx.completedGames,
     remainingGames: leagueCtx.remainingGames
   };
@@ -1119,6 +1178,38 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
             : 'T'
         : null;
 
+    const matchedNflRow =
+      seasonType === 'REG' && Array.isArray(nflCtx?.gamesRows)
+        ? nflCtx.gamesRows.find(
+            r =>
+              Number(r.season) === seasonYear &&
+              Number(r.week) === wk &&
+              (normalizeAnyTeamAbbr(r.home_team) === team.abbr || normalizeAnyTeamAbbr(r.away_team) === team.abbr)
+          ) || null
+        : null;
+    const isTeamHome = (myComp?.homeAway || 'home') === 'home';
+    const teamRestDays = matchedNflRow
+      ? isTeamHome
+        ? Number(matchedNflRow.home_rest || 7)
+        : Number(matchedNflRow.away_rest || 7)
+      : 7;
+    const oppRestDays = matchedNflRow
+      ? isTeamHome
+        ? Number(matchedNflRow.away_rest || 7)
+        : Number(matchedNflRow.home_rest || 7)
+      : 7;
+    const netRestDays = matchedNflRow ? teamRestDays - oppRestDays : null;
+    const nflSpreadTeam =
+      matchedNflRow && matchedNflRow.spread_line !== '' && matchedNflRow.spread_line != null
+        ? isTeamHome
+          ? -Number(matchedNflRow.spread_line)
+          : Number(matchedNflRow.spread_line)
+        : null;
+    const nflTotalLine =
+      matchedNflRow && matchedNflRow.total_line !== '' && matchedNflRow.total_line != null
+        ? Number(matchedNflRow.total_line)
+        : null;
+
     schedule.push(
       normalizeScheduleGameItem(
         {
@@ -1154,6 +1245,9 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
             isInternational: Boolean(comp.venue?.address?.country && comp.venue.address.country !== 'USA'),
             surface: comp.venue?.grass ? 'Natural Grass' : 'Turf'
           },
+          ...(netRestDays != null && Number.isFinite(netRestDays) ? { restAdvantageDays: netRestDays } : {}),
+          ...(nflSpreadTeam != null && Number.isFinite(nflSpreadTeam) ? { spreadLineSf: nflSpreadTeam } : {}),
+          ...(nflTotalLine != null && Number.isFinite(nflTotalLine) ? { totalLine: nflTotalLine } : {}),
           broadcast: (comp.broadcasts || []).flatMap(b => b.names || []).filter(Boolean).join(' / ') || 'NFL TV'
         },
         seasonYear
@@ -2656,6 +2750,96 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     }
   }
 
+  // Populate full betting lines (Spread, O/U, Implied Score, Opening Line, Moneyline & Rest Advantage)
+  let nextPickPrimary = null;
+  if (nextUnplayed?.id && /^\d{6,12}$/.test(String(nextUnplayed.id)) && !nextUnplayed.completed) {
+    const sumRaw = await fetchJsonSafe(
+      `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${encodeURIComponent(nextUnplayed.id)}`,
+      8000
+    ).catch(() => null);
+    nextPickPrimary = sumRaw?.pickcenter?.[0] || null;
+  }
+  const teamIsHomeNext = (nextUnplayed?.homeAway || 'home') !== 'away';
+  const oppAbbrNext = nextUnplayed?.opponent?.abbr || 'OPP';
+  const signedSpreadNext = (() => {
+    if (nextPickPrimary?.details) {
+      const m = String(nextPickPrimary.details).trim().match(/^([A-Z]{2,4})\s*([+-]?\d+(?:\.\d+)?)$/i);
+      if (m) {
+        const fav = normalizeAnyTeamAbbr(m[1]);
+        const v = Number(m[2]);
+        if (Number.isFinite(v)) return fav === team.abbr ? -Math.abs(v) : Math.abs(v);
+      }
+      if (/^(?:pk|even)$/i.test(String(nextPickPrimary.details).trim())) return 0;
+    }
+    if (nextPickPrimary?.spread != null && Number.isFinite(Number(nextPickPrimary.spread))) {
+      return teamIsHomeNext ? Number(nextPickPrimary.spread) : -Number(nextPickPrimary.spread);
+    }
+    if (nextUnplayed?.spreadLineSf != null && Number.isFinite(Number(nextUnplayed.spreadLineSf))) {
+      return Number(nextUnplayed.spreadLineSf);
+    }
+    return null;
+  })();
+  const ouNext = (() => {
+    for (const c of [nextPickPrimary?.overUnder, nextUnplayed?.totalLine]) {
+      const n = Number(c);
+      if (Number.isFinite(n) && n >= 20 && n <= 85) return Math.round(n * 2) / 2;
+    }
+    return null;
+  })();
+  const spreadDispNext =
+    String(nextPickPrimary?.details || '').trim() ||
+    (signedSpreadNext == null
+      ? 'TBD'
+      : signedSpreadNext === 0
+        ? 'PK'
+        : signedSpreadNext < 0
+          ? `${team.abbr} ${signedSpreadNext.toFixed(1)}`
+          : `${team.abbr} +${signedSpreadNext.toFixed(1)}`);
+  const impliedScoreDispNext =
+    signedSpreadNext != null && ouNext != null
+      ? `${team.abbr} ${((ouNext - signedSpreadNext) / 2).toFixed(1)} – ${oppAbbrNext} ${((ouNext + signedSpreadNext) / 2).toFixed(1)}`
+      : 'TBD';
+  const fmtMlNext = v => {
+    const n = Number(v);
+    if (!Number.isFinite(n) || n === 0) return null;
+    return n > 0 ? `+${Math.round(n)}` : `${Math.round(n)}`;
+  };
+  const teamMlRawNext = teamIsHomeNext ? nextPickPrimary?.homeTeamOdds?.moneyLine : nextPickPrimary?.awayTeamOdds?.moneyLine;
+  const oppMlRawNext = teamIsHomeNext ? nextPickPrimary?.awayTeamOdds?.moneyLine : nextPickPrimary?.homeTeamOdds?.moneyLine;
+  const moneylineDispNext = (() => {
+    if (fmtMlNext(teamMlRawNext) && fmtMlNext(oppMlRawNext)) {
+      return `${team.abbr} ${fmtMlNext(teamMlRawNext)} | ${oppAbbrNext} ${fmtMlNext(oppMlRawNext)}`;
+    }
+    if (signedSpreadNext != null) {
+      if (Math.abs(signedSpreadNext) < 0.25) return `${team.abbr} -110 | ${oppAbbrNext} -110`;
+      const pT = Math.max(0.06, Math.min(0.94, 1 / (1 + Math.exp(signedSpreadNext / 4.2))));
+      const pO = 1 - pT;
+      const toAmer = p => {
+        const raw = p >= 0.5 ? -((p / (1 - p)) * 100) : ((1 - p) / p) * 100;
+        const s = Math.round(raw / 5) * 5;
+        return s === 0 ? -110 : s;
+      };
+      return `${team.abbr} ${fmtMlNext(toAmer(Math.min(0.95, pT * 1.022)))} | ${oppAbbrNext} ${fmtMlNext(toAmer(Math.min(0.95, pO * 1.022)))}`;
+    }
+    return 'TBD';
+  })();
+  const openLineNext = teamIsHomeNext
+    ? nextPickPrimary?.pointSpread?.home?.open?.line
+    : nextPickPrimary?.pointSpread?.away?.open?.line;
+  const openingSpreadDispNext =
+    openLineNext != null && String(openLineNext).trim()
+      ? `Opened ${team.abbr} ${openLineNext} (${nextPickPrimary?.provider?.name || 'Sportsbook Consensus'})`
+      : spreadDispNext !== 'TBD'
+        ? `Consensus ${spreadDispNext}`
+        : 'Consensus Line TBD';
+  const restDeltaNext = Number(nextUnplayed?.restAdvantageDays || 0);
+  const restAdvDispNext =
+    restDeltaNext > 0
+      ? `+${restDeltaNext} Days Rest Advantage${byeWeek && currentWeek === byeWeek + 1 ? ` (${team.abbr} off Week ${byeWeek} Bye)` : ''}`
+      : restDeltaNext < 0
+        ? `${restDeltaNext} Days Rest Differential (${oppAbbrNext} extra rest)`
+        : 'Even Rest (Standard Prep Week)';
+
   const upcomingMatchup = {
     week: nextUnplayed?.week || currentWeek,
     gameId: nextUnplayed?.id || '',
@@ -2687,9 +2871,16 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
       irReserve: oppIrReserve
     },
     betting: {
-      spread: 'Check ESPN Gamecast',
-      overUnder: 'TBD',
-      impliedWinProb: '50%'
+      spread: spreadDispNext,
+      openingSpread: openingSpreadDispNext,
+      overUnder: ouNext ?? 'TBD',
+      moneyline: moneylineDispNext,
+      impliedScore: impliedScoreDispNext,
+      restAdvantage: restAdvDispNext,
+      impliedWinProb:
+        signedSpreadNext != null
+          ? `${Math.round((1 / (1 + Math.exp(signedSpreadNext / 4.2))) * 100)}%`
+          : '50%'
     },
     franchiseHistory: {
       ...h2hNext,
