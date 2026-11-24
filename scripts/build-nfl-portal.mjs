@@ -779,9 +779,11 @@ function buildIndexHtml(grouped) {
       transition: background 140ms ease, color 140ms ease, border-color 140ms ease, transform 120ms ease;
     }
 
-    .theme-btn:hover {
-      color: var(--text);
-      border-color: var(--border-strong);
+    @media (hover: hover) and (pointer: fine) {
+      .theme-btn:hover {
+        color: var(--text);
+        border-color: var(--border-strong);
+      }
     }
 
     .theme-btn:active {
@@ -935,8 +937,10 @@ function buildIndexHtml(grouped) {
       outline: none;
     }
 
-    .team-tile:hover {
-      transform: translateY(-2px) scale(1.035);
+    @media (hover: hover) and (pointer: fine) {
+      .team-tile:hover {
+        transform: translateY(-2px) scale(1.035);
+      }
     }
 
     .team-tile:active {
@@ -958,8 +962,10 @@ function buildIndexHtml(grouped) {
       background: #0B1018;
     }
 
-    .team-tile:hover .logo-wrap {
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.44), 0 0 0 2px var(--team-accent, rgba(255, 255, 255, 0.36));
+    @media (hover: hover) and (pointer: fine) {
+      .team-tile:hover .logo-wrap {
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.44), 0 0 0 2px var(--team-accent, rgba(255, 255, 255, 0.36));
+      }
     }
 
     .team-logo {

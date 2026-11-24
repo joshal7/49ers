@@ -27,7 +27,7 @@
   <link rel="dns-prefetch" href="https://static.clubs.nfl.com" />
   <link rel="dns-prefetch" href="https://i.ytimg.com" />
   <link rel="dns-prefetch" href="https://is1-ssl.mzstatic.com" />
-  <link rel="stylesheet" href="./src/styles.css?v=83" />
+  <link rel="stylesheet" href="./src/styles.css?v=84" />
 </head>
 <body>
   <script>
@@ -48,6 +48,26 @@
         if (mt) mt.setAttribute('content', theme === 'light' ? colors.light : colors.dark);
         var ms = document.getElementById('metaStatusBarStyle');
         if (ms) ms.setAttribute('content', theme === 'light' ? 'default' : 'black');
+      } catch (e) {}
+      // Capture very early cold-boot taps on shell buttons before ES modules finish parsing & replay them in init()
+      try {
+        function onEarlyTap(ev) {
+          if (window.__appEventsBound || window.__49ersDiagnostics) {
+            document.removeEventListener('click', onEarlyTap, true);
+            return;
+          }
+          var t = ev.target && ev.target.closest ? ev.target.closest('.nav-tab-btn, #openSearchBtn, #openSettingsBtn') : null;
+          if (!t) return;
+          if (t.id === 'openSearchBtn') window.__earlyBootTapAction = { type: 'search' };
+          else if (t.id === 'openSettingsBtn') window.__earlyBootTapAction = { type: 'settings' };
+          else if (t.hasAttribute('data-nav-tab')) window.__earlyBootTapAction = { type: 'nav-tab', tab: t.getAttribute('data-nav-tab') };
+        }
+        window.__detachEarlyTap = function () {
+          try {
+            document.removeEventListener('click', onEarlyTap, true);
+          } catch (e) {}
+        };
+        document.addEventListener('click', onEarlyTap, true);
       } catch (e) {}
     })();
   </script>
@@ -114,7 +134,7 @@
   <!-- Sticky Podcast Mini-Player (Docked above Bottom Nav when active) -->
   <aside id="miniPlayer" class="mini-player" hidden aria-label="Autopodcast Mini Player">
     <div class="mini-player-inner">
-      <div class="mini-player-info" id="miniPlayerExpandTrigger">
+      <div class="mini-player-info" id="miniPlayerExpandTrigger" role="button" tabindex="0">
         <div class="mini-player-title-row">
           <span class="mini-player-wave" aria-hidden="true">
             <span></span><span></span><span></span>
@@ -266,6 +286,6 @@
   <!-- Subtle Quick-Bubble Popover for Football, Analytics & CBA Jargon -->
   <div id="jargonPopover" class="jargon-popover" hidden role="dialog" aria-label="Football &amp; Salary Cap Term Definition"></div>
 
-  <script type="module" src="./src/app.js?v=159"></script>
+  <script type="module" src="./src/app.js?v=160"></script>
 </body>
 </html>

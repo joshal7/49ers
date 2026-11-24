@@ -128,14 +128,27 @@ const SHARED_AI_SINGLETON =
     discoveredCascadeByKey: new Map(),
     unavailableModelsByKey: new Map(),
     unavailableTtsModelsByKey: new Map(),
-    inFlightDailyMatchupPromise: null,
-    inFlightDailyNewsBriefPromise: null,
-    inFlightDailyNewsBriefKvPromise: null,
+    inFlightDailyMatchupByKey: new Map(),
+    inFlightDailyNewsBriefByKey: new Map(),
+    inFlightDailyNewsBriefKvByKey: new Map(),
     lastDailyNewsBriefKvCheckMsByKey: new Map(),
-    inFlightGameDayInactivesAiPromise: null
+    inFlightGameDayInactivesAiPromise: null,
+    bskySearchBlockedUntilMs: 0
   });
 if (!SHARED_AI_SINGLETON.lastDailyNewsBriefKvCheckMsByKey) {
   SHARED_AI_SINGLETON.lastDailyNewsBriefKvCheckMsByKey = new Map();
+}
+if (!SHARED_AI_SINGLETON.inFlightDailyMatchupByKey) {
+  SHARED_AI_SINGLETON.inFlightDailyMatchupByKey = new Map();
+}
+if (!SHARED_AI_SINGLETON.inFlightDailyNewsBriefByKey) {
+  SHARED_AI_SINGLETON.inFlightDailyNewsBriefByKey = new Map();
+}
+if (!SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvByKey) {
+  SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvByKey = new Map();
+}
+if (typeof SHARED_AI_SINGLETON.bskySearchBlockedUntilMs !== 'number') {
+  SHARED_AI_SINGLETON.bskySearchBlockedUntilMs = 0;
 }
 const discoveredCascadeByKey = SHARED_AI_SINGLETON.discoveredCascadeByKey;
 const unavailableModelsByKey = SHARED_AI_SINGLETON.unavailableModelsByKey;
@@ -1357,7 +1370,7 @@ async function synthesizeWithGeminiNotebookLmTts({
   };
 }
 
-async function fetchJsonWithTimeout(url, timeoutMs = 3500) {
+async function fetchJsonWithTimeout(url, timeoutMs = 3500, { onAuthDenied = null } = {}) {
   if (typeof fetch !== 'function') return null;
   const ctrl = typeof AbortController === 'function' ? new AbortController() : null;
   const timer = ctrl ? setTimeout(() => ctrl.abort(), timeoutMs) : null;
@@ -1366,7 +1379,12 @@ async function fetchJsonWithTimeout(url, timeoutMs = 3500) {
       mode: 'cors',
       ...(ctrl ? { signal: ctrl.signal } : {})
     });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      if ((res.status === 401 || res.status === 403) && typeof onAuthDenied === 'function') {
+        onAuthDenied(res.status);
+      }
+      return null;
+    }
     return await res.json();
   } catch {
     return null;
@@ -1375,8 +1393,10 @@ async function fetchJsonWithTimeout(url, timeoutMs = 3500) {
   }
 }
 
+const BSKY_SEARCH_AUTH_BACKOFF_MS = 6 * 3_600_000;
+
 /**
- * Queries real-time ESPN 49ers team coverage and Bluesky 49ers beat wire for the exact user topic.
+ * Queries real-time ESPN team coverage and Bluesky beat wire for the exact user topic.
  */
 export async function fetchLiveTopicSignals(rawTopic = '', teamInput = null) {
   const topic = normalizeDisplayTopic(rawTopic);
@@ -1386,9 +1406,16 @@ export async function fetchLiveTopicSignals(rawTopic = '', teamInput = null) {
   const bskyQuery = encodeURIComponent(`${activeTeam.nickname} ${topic.slice(0, 64)}`);
   const bskyUrl = `https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=${bskyQuery}&limit=8`;
   const espnUrl = `https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/news?team=${activeTeam.espnId || 25}&limit=10`;
+  const bskyBlocked = Date.now() < (SHARED_AI_SINGLETON.bskySearchBlockedUntilMs || 0);
 
   const [bskyJson, espnJson] = await Promise.all([
-    fetchJsonWithTimeout(bskyUrl, 3200),
+    bskyBlocked
+      ? Promise.resolve(null)
+      : fetchJsonWithTimeout(bskyUrl, 3200, {
+          onAuthDenied: () => {
+            SHARED_AI_SINGLETON.bskySearchBlockedUntilMs = Date.now() + BSKY_SEARCH_AUTH_BACKOFF_MS;
+          }
+        }),
     fetchJsonWithTimeout(espnUrl, 3200)
   ]);
 
@@ -2993,11 +3020,12 @@ export async function refreshDailyMatchupIntelIfDue({
     }
   }
 
-  if (SHARED_AI_SINGLETON.inFlightDailyMatchupPromise) {
-    return SHARED_AI_SINGLETON.inFlightDailyMatchupPromise;
+  const matchupInFlightKey = `${activeTeam.abbr}:${todayPt}:${scopeId}`;
+  if (SHARED_AI_SINGLETON.inFlightDailyMatchupByKey.has(matchupInFlightKey)) {
+    return SHARED_AI_SINGLETON.inFlightDailyMatchupByKey.get(matchupInFlightKey);
   }
 
-  SHARED_AI_SINGLETON.inFlightDailyMatchupPromise = (async () => {
+  const matchupPromise = (async () => {
     safeWriteLocalJson(matchupAttemptKey, {
       attemptId: `${todayPt}:${scopeId}`,
       attemptedAt: new Date(nowMs).toISOString()
@@ -3103,11 +3131,14 @@ export async function refreshDailyMatchupIntelIfDue({
     } catch {
       return { updated: false, reason: 'request_failed_graceful_fallback' };
     } finally {
-      SHARED_AI_SINGLETON.inFlightDailyMatchupPromise = null;
+      if (SHARED_AI_SINGLETON.inFlightDailyMatchupByKey.get(matchupInFlightKey) === matchupPromise) {
+        SHARED_AI_SINGLETON.inFlightDailyMatchupByKey.delete(matchupInFlightKey);
+      }
     }
   })();
 
-  return SHARED_AI_SINGLETON.inFlightDailyMatchupPromise;
+  SHARED_AI_SINGLETON.inFlightDailyMatchupByKey.set(matchupInFlightKey, matchupPromise);
+  return matchupPromise;
 }
 
 /* ==========================================================================
@@ -5342,12 +5373,12 @@ export async function hydrateDailyTopNewsBriefFromSharedKv({
     return { updated: false, throttled: true, cycleKey: activeCycle };
   }
 
-  if (SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvPromise) {
-    return SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvPromise;
+  if (SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvByKey.has(throttleKey)) {
+    return SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvByKey.get(throttleKey);
   }
 
   SHARED_AI_SINGLETON.lastDailyNewsBriefKvCheckMsByKey.set(throttleKey, nowMs);
-  SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvPromise = (async () => {
+  const kvPromise = (async () => {
     try {
       const workerCycleKey = `${activeCycle}-v5`;
       const kvGetRes = await fetchWithTimeout(
@@ -5455,11 +5486,14 @@ export async function hydrateDailyTopNewsBriefFromSharedKv({
     } catch {
       return { updated: false, reason: 'kv_fetch_error', cycleKey: activeCycle };
     } finally {
-      SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvPromise = null;
+      if (SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvByKey.get(throttleKey) === kvPromise) {
+        SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvByKey.delete(throttleKey);
+      }
     }
   })();
 
-  return SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvPromise;
+  SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvByKey.set(throttleKey, kvPromise);
+  return kvPromise;
 }
 
 /**
@@ -5468,13 +5502,17 @@ export async function hydrateDailyTopNewsBriefFromSharedKv({
  * Shared Worker KV should be polled for 0 credits during a Game-Day Hold).
  */
 export function shouldTriggerDailyTopNewsBriefRefresh(appData, prefs = {}, nowMs = Date.now()) {
-  if (!appData?.news || SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise) return false;
+  if (!appData?.news) return false;
   const effectiveKey = String(prefs?.geminiNewsApiKey || prefs?.geminiApiKey || '').trim();
   const baseUrl = resolveReadOnlyPlatformApiBase(prefs);
   if (!effectiveKey && !baseUrl) return false;
 
   const cycleState = resolveNewsBriefCycleState(nowMs, appData, DAILY_NEWS_BRIEF_PEAK_HOUR_PT);
   const activeCycle = cycleState.activeCycleKey;
+  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
+  const teamCycleKey = `${activeTeam.abbr}:${activeCycle}`;
+  if (SHARED_AI_SINGLETON.inFlightDailyNewsBriefByKey.has(teamCycleKey)) return false;
+
   const existing = appData.news.dailyTopNewsBrief;
   const existingIsValidActiveAi = Boolean(
     existing &&
@@ -5486,14 +5524,11 @@ export function shouldTriggerDailyTopNewsBriefRefresh(appData, prefs = {}, nowMs
     return false;
   }
 
-  const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
-
   // During Game-Day Hold, NEVER spend a Gemini POST credit, but DO allow a 0-credit Shared KV GET
   // whenever we don't yet hold the active pre-game cycle's AI brief!
   if (cycleState.isGameDayHold) {
-    if (!baseUrl || SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvPromise) return false;
-    const throttleKey = `${activeTeam.abbr}:${activeCycle}`;
-    const lastKvMs = SHARED_AI_SINGLETON.lastDailyNewsBriefKvCheckMsByKey.get(throttleKey) || 0;
+    if (!baseUrl || SHARED_AI_SINGLETON.inFlightDailyNewsBriefKvByKey.has(teamCycleKey)) return false;
+    const lastKvMs = SHARED_AI_SINGLETON.lastDailyNewsBriefKvCheckMsByKey.get(teamCycleKey) || 0;
     return !lastKvMs || nowMs - lastKvMs >= DAILY_NEWS_BRIEF_KV_RECHECK_MS;
   }
 
@@ -5614,11 +5649,12 @@ export async function refreshDailyTopNewsBriefIfDue({
     }
   }
 
-  if (SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise) {
-    return SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise;
+  const briefInFlightKey = `${activeTeam.abbr}:${activeCycle}`;
+  if (SHARED_AI_SINGLETON.inFlightDailyNewsBriefByKey.has(briefInFlightKey)) {
+    return SHARED_AI_SINGLETON.inFlightDailyNewsBriefByKey.get(briefInFlightKey);
   }
 
-  SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise = (async () => {
+  const briefPromise = (async () => {
     try {
       const sourceCandidates = selectTopNewsBriefSourceCandidates(appData, 18, nowMs);
       if (sourceCandidates.length === 0) {
@@ -5837,11 +5873,14 @@ export async function refreshDailyTopNewsBriefIfDue({
       return { updated: false, reason: 'request_failed_graceful_fallback' };
     }
     } finally {
-      SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise = null;
+      if (SHARED_AI_SINGLETON.inFlightDailyNewsBriefByKey.get(briefInFlightKey) === briefPromise) {
+        SHARED_AI_SINGLETON.inFlightDailyNewsBriefByKey.delete(briefInFlightKey);
+      }
     }
   })();
 
-  return SHARED_AI_SINGLETON.inFlightDailyNewsBriefPromise;
+  SHARED_AI_SINGLETON.inFlightDailyNewsBriefByKey.set(briefInFlightKey, briefPromise);
+  return briefPromise;
 }
 
 const GAMEDAY_INACTIVES_AI_CACHE_KEY = 'faithful_gameday_inactives_ai_v1';

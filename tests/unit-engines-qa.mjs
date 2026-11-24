@@ -6339,9 +6339,10 @@ test('Film & Trench vs Videos are significantly differentiated in both engine cl
   const liveMeta = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8'));
   const liveSched = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'schedule-matchup.json'), 'utf8'));
   const appStub = { meta: liveMeta, scheduleMatchup: liveSched };
+  const liveAnchorMs = Date.parse(liveMeta?.updatedAt || '') || Date.now();
   const sortedLive = sortNewsWithBreakingPriority(
     filterOutCompletedGameAvailabilityItems(liveNews.rawStream || [], appStub),
-    Date.now(),
+    liveAnchorMs,
     { appData: appStub }
   );
   const videoIds = deduplicateAndGroupWireItems(
@@ -6633,7 +6634,7 @@ test('Unified 6-Tab News Architecture, 5PM PT Daily Gemini 4 Hydrogen (XHIGH) To
   assert.ok(newsBrkPos > -1 && newsBriefPos > -1 && newsBrkPos < newsBriefPos, 'Uncovered breaking news must render ABOVE Daily Brief in News -> All');
 
   const seasonStateNow = evaluateSeasonState({
-    now: new Date(),
+    now: new Date(nowOrderMs),
     calendar: fullAppData.meta.calendar,
     teamStatus: fullAppData.meta.teamStatus
   });
@@ -9509,19 +9510,14 @@ await testAsync(
     } = await import('../src/engine/injuryProbabilityModel.js');
     const { resolveEarlyWeekRolloverInput } = await import('../src/engine/gameDayRosterEngine.js');
 
-    // 0. Live data/health.json invariant: Renardo Green (CB #0, Back) is listed cleanly on Week 11 Injury Report
+    // 0. Live data/health.json universal hygiene invariant (non-fragile across future weeks when players heal)
     const liveHealth = JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'health.json'), 'utf8'));
-    const liveGreenRow = (liveHealth.practiceReport || []).find(r => r.name === 'Renardo Green');
-    assert.ok(liveGreenRow, 'Renardo Green must be present on data/health.json practiceReport');
-    assert.equal(liveGreenRow.injuryType, 'Back');
-    assert.ok(
-      liveGreenRow.playProbabilityPct >= 60 && liveGreenRow.playProbabilityPct <= 75,
-      `Expected Renardo Green playProbabilityPct in [60, 75], got ${liveGreenRow.playProbabilityPct}`
-    );
-    assert.ok(
-      !/is active for sunday|defeated the 49ers 29 renardo|\.\./i.test(liveGreenRow.beatComment || ''),
-      `Renardo Green beatComment must be clean & grammatical: ${liveGreenRow.beatComment}`
-    );
+    for (const row of liveHealth.practiceReport || []) {
+      assert.ok(
+        !/defeated the 49ers \d+\s+[A-Z]|(?<!\.)\.\.(?!\.)/i.test(row.beatComment || ''),
+        `practiceReport beatComment for ${row.name} must be clean & grammatical: ${row.beatComment}`
+      );
+    }
 
     // 1. Sentence-boundary assembly & body-part extraction (including "w/his back injury" and homonym guards)
     const assembled = assemblePlayerNewsItemText(
@@ -20789,7 +20785,7 @@ await testAsync('NFL 47/48 Game-Day Active Cap, Healthy Scratch vs Medical Injur
   assert.ok(renderedSfHealth.includes("Healthy Scratch (Coach&#39;s Decision)") || renderedSfHealth.includes("Healthy Scratch (Coach's Decision)"), 'Demarcus Robinson chip must say Healthy Scratch (Coach\'s Decision)');
 });
 
-test('Holistic architecture integrity: single-instance ES module graph, KV TTL >= 60, multi-team Worker 404 JSON & canonical inactives, SW Cache-First & HTML-safe JSON fetch', async () => {
+await testAsync('Holistic architecture integrity: single-instance ES module graph, KV TTL >= 60, multi-team Worker 404 JSON & canonical inactives, SW Cache-First & HTML-safe JSON fetch', async () => {
   // 1. Single-instance ES module graph: zero `?v=` query strings on internal relative imports across `src/`
   const walkJs = dir => {
     const out = [];
@@ -20893,11 +20889,397 @@ test('Holistic architecture integrity: single-instance ES module graph, KV TTL >
     globalThis.fetch = origFetch;
   }
 
-  // 4. Service Worker (`sw.js`) invariants: Cache-First versioned static assets, `?t=` normalization, batched precache
+  // 4. Service Worker (`sw.js`) invariants: Cache-First versioned static assets, `?t=` normalization, batched precache, offline Range 206 & navigation click
   const swSrc = fs.readFileSync(path.resolve(rootDir, 'sw.js'), 'utf8');
   assert.ok(swSrc.includes('isCacheFirstStaticAsset'), 'sw.js must serve version-scoped static assets Cache-First');
   assert.ok(swSrc.includes('normalizeDataCacheKey'), 'sw.js must normalize ?t= query strings on /data/*.json');
   assert.ok(swSrc.includes('precacheInBatches'), 'sw.js must batch install precache fetches');
+  assert.ok(swSrc.includes('serveOfflineAudioRange'), 'sw.js must slice cached audio 206 Partial Content offline for iOS Safari');
+
+  // 5. Canonical team alias resolution (`LA`/`STL` -> `LAR`, `WSH` -> `WAS`, `OAK` -> `LV`, `SD` -> `LAC`, PFR codes)
+  const { normalizeAnyTeamAbbr, getTeamByAbbr } = await import('../src/config/teamRegistry.js');
+  assert.equal(normalizeAnyTeamAbbr('LA'), 'LAR', 'ESPN Rams code LA must normalize to LAR (never fall back to SF)');
+  assert.equal(getTeamByAbbr('LA').abbr, 'LAR', 'getTeamByAbbr("LA") must return LAR, not SF');
+  assert.equal(normalizeAnyTeamAbbr('STL'), 'LAR');
+  assert.equal(normalizeAnyTeamAbbr('OAK'), 'LV');
+  assert.equal(normalizeAnyTeamAbbr('SD'), 'LAC');
+  assert.equal(normalizeAnyTeamAbbr('ARZ'), 'ARI');
+  assert.equal(normalizeAnyTeamAbbr('BLT'), 'BAL');
+  assert.equal(normalizeAnyTeamAbbr('HST'), 'HOU');
+
+  // 6. Safari Private Browsing `SecurityError` + `QuotaExceededError` eviction resilience in dataService.js
+  const {
+    persistWeeklyPracticeSnapshot,
+    persistGameDayInactivesSnapshot,
+    hydrateCachedWeeklyPracticeAndInactives,
+    saveUserPrefs
+  } = await import('../src/services/dataService.js');
+  const prevWinDesc = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  try {
+    // 6a. `window.localStorage` getter throws SecurityError (Safari Private Browsing)
+    const throwingWindow = {};
+    Object.defineProperty(throwingWindow, 'localStorage', {
+      configurable: true,
+      get() {
+        throw new Error('SecurityError: The operation is insecure.');
+      }
+    });
+    Object.defineProperty(globalThis, 'window', { value: throwingWindow, configurable: true, writable: true });
+    assert.doesNotThrow(() => persistWeeklyPracticeSnapshot({ meta: { teamAbbr: 'SF' }, health: {}, scheduleMatchup: {} }));
+    assert.doesNotThrow(() => persistGameDayInactivesSnapshot({ meta: { teamAbbr: 'SF' } }, { isActive: false }));
+    assert.doesNotThrow(() => hydrateCachedWeeklyPracticeAndInactives({ meta: { teamAbbr: 'SF' }, health: {}, scheduleMatchup: {} }));
+    assert.equal(saveUserPrefs({ theme: 'dark' }), false, 'saveUserPrefs must safely return false on SecurityError');
+
+    // 6b. `QuotaExceededError` progressive eviction clears expendable Gamecast cache and succeeds on retry
+    const storeMap = new Map([['joshal_min_gamecast_cache_v2', '{"big":"payload"}']]);
+    let failUntilEvicted = true;
+    const quotaWindow = {
+      localStorage: {
+        get length() {
+          return storeMap.size;
+        },
+        key(idx) {
+          return [...storeMap.keys()][idx] || null;
+        },
+        getItem(k) {
+          return storeMap.has(k) ? storeMap.get(k) : null;
+        },
+        removeItem(k) {
+          storeMap.delete(k);
+          if (k === 'joshal_min_gamecast_cache_v2') failUntilEvicted = false;
+        },
+        setItem(k, v) {
+          if (failUntilEvicted) throw new Error('QuotaExceededError');
+          storeMap.set(k, String(v));
+        }
+      }
+    };
+    Object.defineProperty(globalThis, 'window', { value: quotaWindow, configurable: true, writable: true });
+    assert.equal(saveUserPrefs({ theme: 'dark', geminiApiKey: 'AIzaTestKey1234567890' }), true, 'saveUserPrefs must evict stale gamecast cache and succeed on QuotaExceededError');
+    assert.equal(storeMap.has('joshal_min_gamecast_cache_v2'), false, 'Expendable Gamecast cache must be evicted under quota pressure');
+  } finally {
+    if (prevWinDesc) Object.defineProperty(globalThis, 'window', prevWinDesc);
+    else delete globalThis.window;
+  }
+
+  // 7. Shared Gemini Key Vault: never resurrects a locally cleared key when an older shared record arrives late
+  const { reconcileGeminiKeyState } = await import('../src/services/sharedApiKeyStore.js');
+  const clearedOutcome = reconcileGeminiKeyState(
+    { geminiApiKey: '', verifiedGeminiModel: '', geminiApiKeyUpdatedAt: 2000 },
+    { v: 1, k: 'AIzaStaleOldKey1234567890', m: 'gemini-4-hydrogen', t: 1000, c: 0 },
+    3000
+  );
+  assert.equal(clearedOutcome.action, 'noop', 'Stale shared record (t=1000) must NOT resurrect locally cleared key (t=2000)');
+  assert.equal(clearedOutcome.apiKey, '');
+
+  // 8. Edge Worker security parity: anchored localhost CORS & 404 JSON on unknown `/api/*` in worker/index.js
+  //    + post-redirect SSRF guard & Akamai allowlist on `/api/video-stream` in worker/nfl-teams-worker.js
+  const sfWorker = (await import('../worker/index.js')).default;
+  const evilCorsRes = await sfWorker.fetch(
+    new Request('https://worker.test/api/health', {
+      headers: { Origin: 'https://evil-localhost.com' }
+    }),
+    { ALLOWED_ORIGIN: 'https://49ers.joshal.com' }
+  );
+  assert.equal(
+    evilCorsRes.headers.get('access-control-allow-origin'),
+    'https://49ers.joshal.com',
+    'worker/index.js must reject spoofed evil-localhost.com origin'
+  );
+  const missingSfApiRes = await sfWorker.fetch(new Request('https://worker.test/api/unknown-route'), {});
+  assert.equal(missingSfApiRes.status, 404, 'worker/index.js must return 404 JSON on unmatched /api/*');
+  const blockedVidRes = await nflTeamsWorker.fetch(
+    new Request('https://49ers.joshal.com/api/video-stream?url=https://evil.example.com/clip.mp4'),
+    {}
+  );
+  assert.equal(blockedVidRes.status, 403, 'nfl-teams-worker /api/video-stream must reject non-allowlisted hosts');
+
+  // 9. Remote team dossier service derives all 32 teams directly from teamRegistry with full parity
+  const { ALL_NFL_TEAMS } = await import('../src/config/teamRegistry.js');
+  const { ALL_NFL_TEAM_ENTRIES, resolveNflTeamMeta } = await import('../src/services/remoteTeamDossierService.js');
+  assert.equal(ALL_NFL_TEAM_ENTRIES.length, 32);
+  for (let i = 0; i < 32; i++) {
+    assert.equal(ALL_NFL_TEAM_ENTRIES[i].abbr, ALL_NFL_TEAMS[i].abbr);
+    assert.equal(ALL_NFL_TEAM_ENTRIES[i].domain, ALL_NFL_TEAMS[i].domain);
+    assert.equal(ALL_NFL_TEAM_ENTRIES[i].espnId, ALL_NFL_TEAMS[i].espnId);
+    assert.equal(ALL_NFL_TEAM_ENTRIES[i].themes.dark.primary, ALL_NFL_TEAMS[i].themes.dark.primary);
+    assert.ok(ALL_NFL_TEAM_ENTRIES[i].themes.dark.heroGlowPrimary.startsWith('rgba('));
+  }
+  assert.equal(resolveNflTeamMeta('vikes')?.abbr, 'MIN');
+  assert.equal(resolveNflTeamMeta('LA')?.abbr, 'LAR');
+
+  // 10. PodcastAudioController track-switch race: switching away from a synthesizing episode must NOT trap isBufferingAudio
+  const { PodcastAudioController } = await import('../src/components/audioPlayer.js');
+  let resolveSynthA = null;
+  const fakeAudioEl = {
+    paused: true,
+    muted: false,
+    volume: 1,
+    playbackRate: 1,
+    currentTime: 0,
+    duration: 120,
+    src: '',
+    loop: false,
+    preload: '',
+    addEventListener() {},
+    setAttribute() {},
+    load() {},
+    pause() {
+      this.paused = true;
+    },
+    async play() {
+      this.paused = false;
+    }
+  };
+  const prevAudioCtor = globalThis.Audio;
+  try {
+    globalThis.Audio = function FakeAudio() {
+      return fakeAudioEl;
+    };
+    const ctrl = new PodcastAudioController(() => {}, {
+      onSynthesizeMissingAudio: () =>
+        new Promise(resolve => {
+          resolveSynthA = resolve;
+        })
+    });
+    const epA = { id: 'race_ep_a', title: 'Ep A', durationSec: 120 };
+    const epB = { id: 'race_ep_b', title: 'Ep B', durationSec: 120, audioUrl: 'https://49ers.joshal.com/audio/ep-b.m4a' };
+    const loadAPromise = ctrl.loadAndPlay(epA, 0);
+    await new Promise(r => setTimeout(r, 15));
+    assert.equal(ctrl.isBufferingAudio, true, 'Ep A should be buffering while synthesizing');
+    await ctrl.loadAndPlay(epB, 0);
+    assert.equal(ctrl.currentEpisode?.id, 'race_ep_b');
+    assert.equal(ctrl.isBufferingAudio, false, 'Switching to ready Ep B must immediately clear isBufferingAudio');
+    assert.equal(ctrl.isPlaying, true, 'Ep B must be playing cleanly');
+    resolveSynthA?.('blob:stale-ep-a');
+    await loadAPromise;
+    assert.equal(ctrl.currentEpisode?.id, 'race_ep_b', 'Stale Ep A resolution must NOT hijack Ep B playback');
+    assert.equal(ctrl.isBufferingAudio, false);
+    ctrl.closePlayer();
+  } finally {
+    globalThis.Audio = prevAudioCtor;
+  }
+
+  // 11. podcastAudioStore: chunk-scanning WAV duration (with leading JUNK chunk) + pinned LRU eviction protection
+  const {
+    inspectWavBufferDurationSec,
+    saveEpisodeAudioBlob,
+    peekCachedEpisodeAudioUrl,
+    setPinnedEpisodeAudioId,
+    deleteEpisodeAudioBlob
+  } = await import('../src/services/podcastAudioStore.js');
+  const buildJunkPrefixedWav = (durationSec = 2, sampleRate = 8000) => {
+    const dataBytes = durationSec * sampleRate * 2; // mono 16-bit
+    const junkSize = 16;
+    const total = 12 + (8 + junkSize) + (8 + 16) + (8 + dataBytes);
+    const buf = new ArrayBuffer(total);
+    const dv = new DataView(buf);
+    const putStr = (off, s) => {
+      for (let i = 0; i < s.length; i++) dv.setUint8(off + i, s.charCodeAt(i));
+    };
+    putStr(0, 'RIFF');
+    dv.setUint32(4, total - 8, true);
+    putStr(8, 'WAVE');
+    let off = 12;
+    putStr(off, 'JUNK');
+    dv.setUint32(off + 4, junkSize, true);
+    off += 8 + junkSize;
+    putStr(off, 'fmt ');
+    dv.setUint32(off + 4, 16, true);
+    dv.setUint16(off + 8, 1, true); // PCM
+    dv.setUint16(off + 10, 1, true); // mono
+    dv.setUint32(off + 12, sampleRate, true);
+    dv.setUint32(off + 16, sampleRate * 2, true);
+    dv.setUint16(off + 20, 2, true);
+    dv.setUint16(off + 22, 16, true);
+    off += 24;
+    putStr(off, 'data');
+    dv.setUint32(off + 4, dataBytes, true);
+    return buf;
+  };
+  assert.ok(
+    Math.abs(inspectWavBufferDurationSec(buildJunkPrefixedWav(3, 8000)) - 3) < 0.01,
+    'WAV chunk scanner must compute exact duration even with leading JUNK metadata chunk'
+  );
+  const fakeUrls = [];
+  const prevCreateObj = URL.createObjectURL;
+  const prevRevokeObj = URL.revokeObjectURL;
+  try {
+    URL.createObjectURL = () => {
+      const u = `blob:test-lru-${fakeUrls.length + 1}`;
+      fakeUrls.push(u);
+      return u;
+    };
+    URL.revokeObjectURL = () => {};
+    const tinyWav = buildJunkPrefixedWav(1, 8000);
+    await saveEpisodeAudioBlob('lru_ep_1', tinyWav);
+    setPinnedEpisodeAudioId('lru_ep_1');
+    await saveEpisodeAudioBlob('lru_ep_2', tinyWav);
+    await saveEpisodeAudioBlob('lru_ep_3', tinyWav);
+    await saveEpisodeAudioBlob('lru_ep_4', tinyWav);
+    await saveEpisodeAudioBlob('lru_ep_5', tinyWav);
+    assert.ok(peekCachedEpisodeAudioUrl('lru_ep_1'), 'Pinned active episode must NEVER be evicted by LRU cap');
+    assert.equal(peekCachedEpisodeAudioUrl('lru_ep_2'), null, 'Oldest unpinned episode must be evicted at cap=4');
+    setPinnedEpisodeAudioId(null);
+    for (const id of ['lru_ep_1', 'lru_ep_2', 'lru_ep_3', 'lru_ep_4', 'lru_ep_5']) {
+      await deleteEpisodeAudioBlob(id);
+    }
+  } finally {
+    URL.createObjectURL = prevCreateObj;
+    URL.revokeObjectURL = prevRevokeObj;
+  }
+
+  // 12. fetchLiveTopicSignals Bluesky 401/403 session circuit-breaker + team-keyed KV brief locks
+  const { fetchLiveTopicSignals } = await import('../src/services/aiWorkerClient.js');
+  const prevFetch = globalThis.fetch;
+  try {
+    if (globalThis.__FAITHFUL_AI_STATE__) {
+      globalThis.__FAITHFUL_AI_STATE__.bskySearchBlockedUntilMs = 0;
+    }
+    let bskyHits = 0;
+    let espnHits = 0;
+    globalThis.fetch = async url => {
+      const s = String(url);
+      if (s.includes('app.bsky.feed.searchPosts')) {
+        bskyHits += 1;
+        return new Response('Forbidden', { status: 403 });
+      }
+      if (s.includes('site.web.api.espn.com')) {
+        espnHits += 1;
+        return new Response(
+          JSON.stringify({ articles: [{ headline: 'Brock Purdy red-zone efficiency surge', description: 'Film study' }] }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      return new Response('', { status: 404 });
+    };
+    const sig1 = await fetchLiveTopicSignals('Brock Purdy red zone', 'SF');
+    const sig2 = await fetchLiveTopicSignals('Nick Bosa pass rush', 'SF');
+    assert.equal(bskyHits, 1, 'Bluesky searchPosts 403 must trip session circuit-breaker after 1st denial');
+    assert.equal(espnHits, 2, 'ESPN team news must still run on every topic lookup');
+    assert.equal(sig1.length, 1);
+    assert.equal(sig2.length, 1);
+  } finally {
+    globalThis.fetch = prevFetch;
+    if (globalThis.__FAITHFUL_AI_STATE__) {
+      globalThis.__FAITHFUL_AI_STATE__.bskySearchBlockedUntilMs = 0;
+    }
+  }
+
+  // 13. POST /api/daily-news-brief hardening on BOTH workers (413 oversized, 400 malformed seed with 0 KV writes, 200 valid seed)
+  const makeMockKv = () => {
+    const map = new Map();
+    return {
+      map,
+      async get(k, type) {
+        if (!map.has(k)) return null;
+        const v = map.get(k);
+        return type === 'json' ? JSON.parse(v) : v;
+      },
+      async put(k, v) {
+        map.set(k, String(v));
+      }
+    };
+  };
+  for (const [label, workerImpl, reqUrl] of [
+    ['worker/index.js', sfWorker, 'https://worker.test/api/daily-news-brief'],
+    ['worker/nfl-teams-worker.js', nflTeamsWorker, 'https://lions.joshal.com/api/daily-news-brief?team=DET']
+  ]) {
+    const kv = makeMockKv();
+    const oversizedRes = await workerImpl.fetch(
+      new Request(reqUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cycleKey: '2026-11-23@17PT', seedRawText: 'x'.repeat(70_000) })
+      }),
+      { SHARED_CACHE: kv }
+    );
+    assert.equal(oversizedRes.status, 413, `${label} must return 413 on >64KB daily brief payload`);
+    assert.equal(kv.map.size, 0, `${label} must not write KV on 413`);
+
+    const badSeedRes = await workerImpl.fetch(
+      new Request(reqUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cycleKey: '2026-11-23@17PT', seedData: { headline: '', bullets: ['only one'] } })
+      }),
+      { SHARED_CACHE: kv }
+    );
+    assert.equal(badSeedRes.status, 400, `${label} must reject malformed seedData with 400`);
+    assert.equal(kv.map.size, 0, `${label} must not poison KV with empty brief on malformed seedData`);
+
+    const okSeedRes = await workerImpl.fetch(
+      new Request(reqUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cycleKey: '2026-11-23@17PT',
+          seedData: {
+            headline: 'Practice report and injury outlook ahead of Sunday',
+            bullets: ['Starting tackle returned to limited work on Thursday.', 'Defense tightened third-down coverage shells.']
+          }
+        })
+      }),
+      { SHARED_CACHE: kv }
+    );
+    assert.equal(okSeedRes.status, 200, `${label} must accept valid structured seedData`);
+    assert.ok(kv.map.size >= 2, `${label} must persist valid seedData to cycle and latest KV keys`);
+  }
+
+  // 14. hydrateLiveMultiSourceBeatWire skips duplicate direct club RSS when Edge Worker 200 already covered them
+  const { hydrateLiveMultiSourceBeatWire } = await import('../src/services/dataService.js');
+  const prevFetchWire = globalThis.fetch;
+  try {
+    const fetchedUrls = [];
+    globalThis.fetch = async url => {
+      const s = String(url);
+      fetchedUrls.push(s);
+      if (s.includes('/api/live-wire')) {
+        return new Response(
+          JSON.stringify({
+            items: [
+              {
+                id: 'edge_rss_1',
+                type: 'article',
+                title: '49ers practice report update from Santa Clara',
+                summary: 'Full participation across offensive line ahead of Week 12.',
+                url: 'https://www.49ers.com/news/practice-report-week-12',
+                publishedAt: new Date().toISOString(),
+                outletId: 'club_official',
+                outletName: '49ers.com',
+                trustTier: 1
+              }
+            ]
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      return new Response('', { status: 500 });
+    };
+    const stubAppData = {
+      meta: { teamAbbr: 'SF', currentWeek: 12 },
+      roster: { players: [] },
+      health: { practiceReport: [], injuredReserve: [], week: 12 },
+      scheduleMatchup: { schedule: [], upcomingMatchup: { week: 12, oppAbbr: 'SEA' } },
+      news: { rawStream: [], clusteredBriefs: [] }
+    };
+    await hydrateLiveMultiSourceBeatWire(stubAppData, {
+      isGameLive: false,
+      workerBaseUrl: 'https://49ers.joshal.com',
+      manual: true
+    });
+    assert.ok(
+      fetchedUrls.some(u => u.includes('/api/live-wire')),
+      'hydrateLiveMultiSourceBeatWire must query Worker /api/live-wire'
+    );
+    assert.equal(
+      fetchedUrls.some(u => u.includes('49ers.com/rss/news') || u.includes('49ers.com/rss/videos')),
+      false,
+      'Must skip redundant direct 49ers.com RSS fetches when Worker /api/live-wire HTTP 200 already covered them'
+    );
+  } finally {
+    globalThis.fetch = prevFetchWire;
+  }
 });
 
 console.log(`\n======================================================`);

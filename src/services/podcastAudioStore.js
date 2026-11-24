@@ -27,7 +27,69 @@ function getTeamPodcastCacheName() {
 
 const memoryBlobFallback = new Map();
 const objectUrlCache = new Map();
+const inFlightUrlLoads = new Map();
+const episodeDeleteEpoch = new Map();
+const MAX_IN_MEMORY_AUDIO_ENTRIES = 4;
+let pinnedEpisodeAudioId = null;
 let dbPromise = null;
+
+/**
+ * Pins the actively playing episode ID so in-memory LRU eviction never revokes
+ * a `blob:` URL currently attached to `<audio>`.
+ */
+export function setPinnedEpisodeAudioId(episodeId) {
+  pinnedEpisodeAudioId = episodeId ? String(episodeId) : null;
+  if (pinnedEpisodeAudioId) {
+    touchLruEntry(memoryBlobFallback, pinnedEpisodeAudioId);
+    touchLruEntry(objectUrlCache, pinnedEpisodeAudioId);
+  }
+}
+
+function touchLruEntry(map, id) {
+  if (!id || !map.has(id)) return;
+  const val = map.get(id);
+  map.delete(id);
+  map.set(id, val);
+}
+
+function findOldestEvictableKey(map, protectedId) {
+  for (const key of map.keys()) {
+    if (key !== protectedId && key !== pinnedEpisodeAudioId) {
+      return key;
+    }
+  }
+  return null;
+}
+
+function setBoundedInMemoryAudio(id, blob, objectUrl = null) {
+  if (blob) {
+    memoryBlobFallback.delete(id);
+    memoryBlobFallback.set(id, blob);
+    while (memoryBlobFallback.size > MAX_IN_MEMORY_AUDIO_ENTRIES) {
+      const oldestKey = findOldestEvictableKey(memoryBlobFallback, id);
+      if (!oldestKey) break;
+      memoryBlobFallback.delete(oldestKey);
+    }
+  }
+  if (objectUrl) {
+    objectUrlCache.delete(id);
+    objectUrlCache.set(id, objectUrl);
+    while (objectUrlCache.size > MAX_IN_MEMORY_AUDIO_ENTRIES) {
+      const oldestKey = findOldestEvictableKey(objectUrlCache, id);
+      if (!oldestKey) break;
+      const staleUrl = objectUrlCache.get(oldestKey);
+      objectUrlCache.delete(oldestKey);
+      memoryBlobFallback.delete(oldestKey);
+      if (staleUrl && typeof URL !== 'undefined' && typeof URL.revokeObjectURL === 'function') {
+        setTimeout(() => {
+          try {
+            URL.revokeObjectURL(staleUrl);
+          } catch {}
+        }, 2500);
+      }
+    }
+  }
+}
 
 function buildCacheStorageAudioRequestUrl(episodeId) {
   const team = getActiveTeamConfig();
@@ -58,6 +120,15 @@ function openAudioDb() {
   if (dbPromise) return dbPromise;
 
   dbPromise = new Promise(resolve => {
+    let settled = false;
+    const finish = val => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      if (!val) dbPromise = null;
+      resolve(val);
+    };
+    const timer = setTimeout(() => finish(null), 3000);
     try {
       const req = indexedDB.open(DB_NAME, DB_VERSION);
       req.onupgradeneeded = () => {
@@ -66,10 +137,20 @@ function openAudioDb() {
           db.createObjectStore(STORE_NAME, { keyPath: 'episodeId' });
         }
       };
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => resolve(null);
+      req.onsuccess = () => {
+        const db = req.result;
+        db.onversionchange = () => {
+          try {
+            db.close();
+          } catch {}
+          dbPromise = null;
+        };
+        finish(db);
+      };
+      req.onerror = () => finish(null);
+      req.onblocked = () => finish(null);
     } catch {
-      resolve(null);
+      finish(null);
     }
   });
 
@@ -77,11 +158,11 @@ function openAudioDb() {
 }
 
 /**
- * Parses a RIFF WAVE `ArrayBuffer` header (scanning `fmt ` and `data` subchunks safely)
- * and returns its exact playable duration in seconds, or `0` if non-WAV / unreadable.
+ * Walks RIFF WAVE subchunks safely (`fmt ` and `data`) regardless of leading
+ * `JUNK`, `LIST`/`INFO`, or `bext` chunks.
  */
-export function inspectWavBufferDurationSec(arrBuf) {
-  if (!arrBuf || arrBuf.byteLength < 44) return 0;
+function parseWavHeaderMeta(arrBuf, totalByteLength = arrBuf?.byteLength || 0) {
+  if (!arrBuf || arrBuf.byteLength < 12) return null;
   try {
     const view = new DataView(arrBuf);
     const riff =
@@ -90,10 +171,14 @@ export function inspectWavBufferDurationSec(arrBuf) {
     const wave =
       String.fromCharCode(view.getUint8(8), view.getUint8(9), view.getUint8(10), view.getUint8(11)) ===
       'WAVE';
-    if (!riff || !wave) return 0;
+    if (!riff || !wave) return null;
 
+    let numChannels = 0;
+    let sampleRate = 0;
+    let bitsPerSample = 0;
     let byteRate = 0;
-    let dataBytes = 0;
+    let dataOffset = -1;
+    let dataChunkSize = 0;
     let offset = 12;
 
     while (offset + 8 <= arrBuf.byteLength) {
@@ -105,27 +190,53 @@ export function inspectWavBufferDurationSec(arrBuf) {
       );
       const chunkSize = view.getUint32(offset + 4, true);
       if (chunkId === 'fmt ' && offset + 24 <= arrBuf.byteLength) {
-        const numCh = Math.max(1, view.getUint16(offset + 10, true));
-        const sampleRate = view.getUint32(offset + 12, true);
+        numChannels = Math.max(1, view.getUint16(offset + 10, true));
+        sampleRate = view.getUint32(offset + 12, true);
         const headerByteRate = view.getUint32(offset + 16, true);
-        const bitsPerSample = Math.max(8, view.getUint16(offset + 22, true));
+        bitsPerSample = Math.max(8, view.getUint16(offset + 22, true));
         byteRate =
-          headerByteRate > 0 ? headerByteRate : sampleRate * numCh * Math.max(1, bitsPerSample / 8);
+          headerByteRate > 0 ? headerByteRate : sampleRate * numChannels * Math.max(1, bitsPerSample / 8);
       } else if (chunkId === 'data') {
-        dataBytes = Math.min(chunkSize, arrBuf.byteLength - (offset + 8));
+        dataOffset = offset + 8;
+        dataChunkSize = chunkSize;
         break;
       }
-      offset += 8 + chunkSize + (chunkSize % 2);
+      const nextOffset = offset + 8 + chunkSize + (chunkSize % 2);
+      if (nextOffset <= offset) break;
+      offset = nextOffset;
     }
 
-    if (byteRate <= 0) return 0;
-    if (dataBytes <= 0) {
-      dataBytes = Math.max(0, arrBuf.byteLength - 44);
-    }
-    return dataBytes / byteRate;
+    const effectiveTotal = Math.max(arrBuf.byteLength, Number(totalByteLength || 0));
+    const effectiveDataOffset = dataOffset >= 0 ? dataOffset : 44;
+    const availableDataBytes = Math.max(0, effectiveTotal - effectiveDataOffset);
+    const dataBytes =
+      dataOffset >= 0 && dataChunkSize > 0
+        ? Math.min(dataChunkSize, availableDataBytes)
+        : availableDataBytes;
+
+    return {
+      isWave: true,
+      numChannels,
+      sampleRate,
+      bitsPerSample,
+      byteRate,
+      dataOffset: effectiveDataOffset,
+      dataBytes
+    };
   } catch {
-    return 0;
+    return null;
   }
+}
+
+/**
+ * Parses a RIFF WAVE `ArrayBuffer` header (scanning `fmt ` and `data` subchunks safely)
+ * and returns its exact playable duration in seconds, or `0` if non-WAV / unreadable.
+ */
+export function inspectWavBufferDurationSec(arrBuf) {
+  if (!arrBuf || arrBuf.byteLength < 44) return 0;
+  const meta = parseWavHeaderMeta(arrBuf, arrBuf.byteLength);
+  if (!meta || meta.byteRate <= 0 || meta.dataBytes <= 0) return 0;
+  return meta.dataBytes / meta.byteRate;
 }
 
 function isTruncatedStudioWav(actualDurationSec, expectedDurationSec = 0) {
@@ -150,20 +261,23 @@ export async function saveEpisodeAudioBlob(episodeId, wavBlobOrBuffer) {
 
   const prevUrl = objectUrlCache.get(id);
   if (prevUrl && typeof URL !== 'undefined' && typeof URL.revokeObjectURL === 'function') {
-    try {
-      URL.revokeObjectURL(prevUrl);
-    } catch {}
+    // Defer revoking old blob URL so an active `<audio>` hot-swap finishes reading before teardown
+    setTimeout(() => {
+      try {
+        URL.revokeObjectURL(prevUrl);
+      } catch {}
+    }, 2000);
   }
 
   let objectUrl = null;
   if (typeof URL !== 'undefined' && typeof URL.createObjectURL === 'function') {
     objectUrl = URL.createObjectURL(blob);
-    objectUrlCache.set(id, objectUrl);
   }
-  memoryBlobFallback.set(id, blob);
+  setBoundedInMemoryAudio(id, blob, objectUrl);
   const savedAt = Date.now();
 
   // 1. Primary durable mobile storage: CacheStorage (handles 15–30 MB WAV streams natively on iOS WebKit)
+  let storedInCacheStorage = false;
   const audioCache = await openAudioCacheStorage();
   if (audioCache && typeof Response === 'function') {
     try {
@@ -178,49 +292,54 @@ export async function saveEpisodeAudioBlob(episodeId, wavBlobOrBuffer) {
           }
         })
       );
+      storedInCacheStorage = true;
       pruneOldCacheStorageEpisodes(audioCache).catch(() => {});
     } catch {}
   }
 
-  // 2. Secondary durable storage: IndexedDB (store Blob first to avoid 18 MB ArrayBuffer clone spikes on iOS, fallback to ArrayBuffer)
-  const db = await openAudioDb();
-  if (db) {
-    let storedBlobOk = false;
-    try {
-      storedBlobOk = await new Promise(resolve => {
-        const tx = db.transaction(STORE_NAME, 'readwrite');
-        const store = tx.objectStore(STORE_NAME);
-        store.put({
-          episodeId: id,
-          mimeType: blob.type || 'audio/wav',
-          savedAt,
-          blob
-        });
-        tx.oncomplete = () => resolve(true);
-        tx.onerror = () => resolve(false);
-      });
-    } catch {
-      storedBlobOk = false;
-    }
-
-    if (!storedBlobOk) {
+  // 2. Fallback durable storage: IndexedDB only when CacheStorage is unavailable or failed (avoids 2x 320MB disk bloat)
+  if (!storedInCacheStorage) {
+    const db = await openAudioDb();
+    if (db) {
+      let storedBlobOk = false;
       try {
-        const arrBuf = await blob.arrayBuffer();
-        await new Promise(resolve => {
+        storedBlobOk = await new Promise(resolve => {
           const tx = db.transaction(STORE_NAME, 'readwrite');
           const store = tx.objectStore(STORE_NAME);
           store.put({
             episodeId: id,
             mimeType: blob.type || 'audio/wav',
             savedAt,
-            buffer: arrBuf
+            blob
           });
           tx.oncomplete = () => resolve(true);
           tx.onerror = () => resolve(false);
+          tx.onabort = () => resolve(false);
         });
-      } catch {}
+      } catch {
+        storedBlobOk = false;
+      }
+
+      if (!storedBlobOk) {
+        try {
+          const arrBuf = await blob.arrayBuffer();
+          await new Promise(resolve => {
+            const tx = db.transaction(STORE_NAME, 'readwrite');
+            const store = tx.objectStore(STORE_NAME);
+            store.put({
+              episodeId: id,
+              mimeType: blob.type || 'audio/wav',
+              savedAt,
+              buffer: arrBuf
+            });
+            tx.oncomplete = () => resolve(true);
+            tx.onerror = () => resolve(false);
+            tx.onabort = () => resolve(false);
+          });
+        } catch {}
+      }
+      pruneOldStoredEpisodes(db).catch(() => {});
     }
-    pruneOldStoredEpisodes(db).catch(() => {});
   }
 
   return objectUrl;
@@ -251,12 +370,21 @@ async function pruneOldStoredEpisodes(db) {
     try {
       const tx = db.transaction(STORE_NAME, 'readwrite');
       const store = tx.objectStore(STORE_NAME);
-      const getAllReq = store.getAll();
-      getAllReq.onsuccess = () => {
-        const rows = Array.isArray(getAllReq.result) ? getAllReq.result : [];
-        if (rows.length > MAX_STORED_EPISODES) {
-          rows
-            .sort((a, b) => Number(b.savedAt || 0) - Number(a.savedAt || 0))
+      const metas = [];
+      const cursorReq = store.openCursor();
+      cursorReq.onsuccess = () => {
+        const cursor = cursorReq.result;
+        if (cursor) {
+          metas.push({
+            episodeId: cursor.value?.episodeId || cursor.key,
+            savedAt: Number(cursor.value?.savedAt || 0)
+          });
+          cursor.continue();
+          return;
+        }
+        if (metas.length > MAX_STORED_EPISODES) {
+          metas
+            .sort((a, b) => b.savedAt - a.savedAt)
             .slice(MAX_STORED_EPISODES)
             .forEach(oldRow => {
               if (oldRow?.episodeId) store.delete(oldRow.episodeId);
@@ -265,6 +393,7 @@ async function pruneOldStoredEpisodes(db) {
       };
       tx.oncomplete = () => resolve();
       tx.onerror = () => resolve();
+      tx.onabort = () => resolve();
     } catch {
       resolve();
     }
@@ -277,29 +406,26 @@ async function pruneOldStoredEpisodes(db) {
  */
 export function peekCachedEpisodeAudioUrl(episodeId) {
   if (!episodeId) return null;
-  return objectUrlCache.get(String(episodeId)) || null;
+  const id = String(episodeId);
+  const cached = objectUrlCache.get(id) || null;
+  if (cached) {
+    touchLruEntry(objectUrlCache, id);
+    touchLruEntry(memoryBlobFallback, id);
+  }
+  return cached;
 }
 
 async function validateBlobNotTruncated(blob, expectedDurationSec = 0) {
   if (!blob) return false;
   if (!expectedDurationSec || expectedDurationSec < 45) return true;
   try {
-    // Only inspect header slice (first 512 bytes) + total blob.size when standard 44-byte header applies
+    // Inspect chunked RIFF WAVE header slice + full blob.size without copying 25MB WAV into RAM
     const headSlice = await blob.slice(0, Math.min(blob.size, 4096)).arrayBuffer();
     if (headSlice.byteLength < 44) return false;
-    const view = new DataView(headSlice);
-    const riff =
-      String.fromCharCode(view.getUint8(0), view.getUint8(1), view.getUint8(2), view.getUint8(3)) ===
-      'RIFF';
-    if (!riff) return true;
-    const headerByteRate = view.getUint32(28, true);
-    const numCh = Math.max(1, view.getUint16(22, true));
-    const sampleRate = view.getUint32(24, true);
-    const bitsPerSample = Math.max(8, view.getUint16(34, true));
-    const byteRate =
-      headerByteRate > 0 ? headerByteRate : sampleRate * numCh * Math.max(1, bitsPerSample / 8);
-    if (byteRate <= 0) return true;
-    const approxDurationSec = Math.max(0, blob.size - 44) / byteRate;
+    const meta = parseWavHeaderMeta(headSlice, blob.size);
+    // Non-WAV blobs (e.g. MP3/M4A) or WAVs whose fmt chunk starts beyond 4096 bytes fail open
+    if (!meta || meta.byteRate <= 0) return true;
+    const approxDurationSec = meta.dataBytes / meta.byteRate;
     return !isTruncatedStudioWav(approxDurationSec, expectedDurationSec);
   } catch {
     return true;
@@ -314,99 +440,127 @@ async function validateBlobNotTruncated(blob, expectedDurationSec = 0) {
 export async function getEpisodeAudioUrl(episodeId, expectedDurationSec = 0) {
   if (!episodeId) return null;
   const id = String(episodeId);
-
-  if (memoryBlobFallback.has(id)) {
-    const memBlob = memoryBlobFallback.get(id);
-    if (!(await validateBlobNotTruncated(memBlob, expectedDurationSec))) {
-      await deleteEpisodeAudioBlob(id);
-      return null;
-    }
-    if (objectUrlCache.has(id)) {
-      return objectUrlCache.get(id);
-    }
-    if (typeof URL !== 'undefined' && typeof URL.createObjectURL === 'function') {
-      const url = URL.createObjectURL(memBlob);
-      objectUrlCache.set(id, url);
-      return url;
-    }
-  } else if (objectUrlCache.has(id)) {
-    return objectUrlCache.get(id);
+  if (inFlightUrlLoads.has(id)) {
+    return inFlightUrlLoads.get(id);
   }
 
-  // 1. Hydrate from CacheStorage first (fast, reliable across iOS Chrome/Safari reloads)
-  const audioCache = await openAudioCacheStorage();
-  if (audioCache) {
-    try {
-      const reqUrl = buildCacheStorageAudioRequestUrl(id);
-      const cachedRes = await audioCache.match(reqUrl);
-      if (cachedRes && cachedRes.ok) {
-        const blob = await cachedRes.blob();
-        if (blob && blob.size > 44) {
-          if (!(await validateBlobNotTruncated(blob, expectedDurationSec))) {
-            await deleteEpisodeAudioBlob(id);
-            return null;
-          }
-          memoryBlobFallback.set(id, blob);
-          if (typeof URL !== 'undefined' && typeof URL.createObjectURL === 'function') {
-            const url = URL.createObjectURL(blob);
-            objectUrlCache.set(id, url);
-            return url;
-          }
-        }
-      }
-    } catch {}
-  }
+  const deleteEpochAtStart = episodeDeleteEpoch.get(id) || 0;
+  const isDeletedMidFlight = () => (episodeDeleteEpoch.get(id) || 0) !== deleteEpochAtStart;
 
-  // 2. Hydrate from IndexedDB fallback
-  const db = await openAudioDb();
-  if (!db) return null;
-
-  try {
-    const record = await new Promise(resolve => {
-      const tx = db.transaction(STORE_NAME, 'readonly');
-      const store = tx.objectStore(STORE_NAME);
-      const req = store.get(id);
-      req.onsuccess = () => resolve(req.result || null);
-      req.onerror = () => resolve(null);
-    });
-
-    const blob =
-      record?.blob instanceof Blob
-        ? record.blob
-        : record?.buffer
-          ? new Blob([record.buffer], { type: record.mimeType || 'audio/wav' })
-          : null;
-
-    if (blob && blob.size > 44) {
-      if (!(await validateBlobNotTruncated(blob, expectedDurationSec))) {
+  const loadPromise = (async () => {
+    if (memoryBlobFallback.has(id)) {
+      const memBlob = memoryBlobFallback.get(id);
+      if (!(await validateBlobNotTruncated(memBlob, expectedDurationSec))) {
         await deleteEpisodeAudioBlob(id);
         return null;
       }
-      memoryBlobFallback.set(id, blob);
-      // Backfill CacheStorage if IndexedDB had the record so future reloads hit CacheStorage immediately
-      if (audioCache && typeof Response === 'function') {
-        audioCache
-          .put(
-            buildCacheStorageAudioRequestUrl(id),
-            new Response(blob, {
-              status: 200,
-              headers: {
-                'Content-Type': blob.type || 'audio/wav',
-                'X-Saved-At': String(record?.savedAt || Date.now())
-              }
-            })
-          )
-          .catch(() => {});
+      if (isDeletedMidFlight()) return null;
+      if (objectUrlCache.has(id)) {
+        touchLruEntry(objectUrlCache, id);
+        touchLruEntry(memoryBlobFallback, id);
+        return objectUrlCache.get(id);
       }
       if (typeof URL !== 'undefined' && typeof URL.createObjectURL === 'function') {
-        const url = URL.createObjectURL(blob);
-        objectUrlCache.set(id, url);
+        const url = URL.createObjectURL(memBlob);
+        setBoundedInMemoryAudio(id, memBlob, url);
         return url;
       }
+    } else if (objectUrlCache.has(id)) {
+      touchLruEntry(objectUrlCache, id);
+      return objectUrlCache.get(id);
     }
-  } catch {}
 
-  return null;
+    // 1. Hydrate from CacheStorage first (fast, reliable across iOS Chrome/Safari reloads)
+    const audioCache = await openAudioCacheStorage();
+    if (audioCache) {
+      try {
+        const reqUrl = buildCacheStorageAudioRequestUrl(id);
+        const cachedRes = await audioCache.match(reqUrl);
+        if (cachedRes && cachedRes.ok) {
+          const blob = await cachedRes.blob();
+          if (isDeletedMidFlight()) return null;
+          if (blob && blob.size > 44) {
+            if (!(await validateBlobNotTruncated(blob, expectedDurationSec))) {
+              await deleteEpisodeAudioBlob(id);
+              return null;
+            }
+            if (isDeletedMidFlight()) return null;
+            if (typeof URL !== 'undefined' && typeof URL.createObjectURL === 'function') {
+              const url = URL.createObjectURL(blob);
+              setBoundedInMemoryAudio(id, blob, url);
+              return url;
+            }
+            setBoundedInMemoryAudio(id, blob, null);
+          }
+        }
+      } catch {}
+    }
+
+    if (isDeletedMidFlight()) return null;
+
+    // 2. Hydrate from IndexedDB fallback
+    const db = await openAudioDb();
+    if (!db || isDeletedMidFlight()) return null;
+
+    try {
+      const record = await new Promise(resolve => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.get(id);
+        req.onsuccess = () => resolve(req.result || null);
+        req.onerror = () => resolve(null);
+        tx.onabort = () => resolve(null);
+      });
+      if (isDeletedMidFlight()) return null;
+
+      const blob =
+        record?.blob instanceof Blob
+          ? record.blob
+          : record?.buffer
+            ? new Blob([record.buffer], { type: record.mimeType || 'audio/wav' })
+            : null;
+
+      if (blob && blob.size > 44) {
+        if (!(await validateBlobNotTruncated(blob, expectedDurationSec))) {
+          await deleteEpisodeAudioBlob(id);
+          return null;
+        }
+        if (isDeletedMidFlight()) return null;
+        // Backfill CacheStorage if IndexedDB had the record so future reloads hit CacheStorage immediately
+        if (audioCache && typeof Response === 'function') {
+          audioCache
+            .put(
+              buildCacheStorageAudioRequestUrl(id),
+              new Response(blob, {
+                status: 200,
+                headers: {
+                  'Content-Type': blob.type || 'audio/wav',
+                  'X-Saved-At': String(record?.savedAt || Date.now())
+                }
+              })
+            )
+            .catch(() => {});
+        }
+        if (typeof URL !== 'undefined' && typeof URL.createObjectURL === 'function') {
+          const url = URL.createObjectURL(blob);
+          setBoundedInMemoryAudio(id, blob, url);
+          return url;
+        }
+        setBoundedInMemoryAudio(id, blob, null);
+      }
+    } catch {}
+
+    return null;
+  })();
+
+  inFlightUrlLoads.set(id, loadPromise);
+  try {
+    return await loadPromise;
+  } finally {
+    if (inFlightUrlLoads.get(id) === loadPromise) {
+      inFlightUrlLoads.delete(id);
+    }
+  }
 }
 
 /**
@@ -443,7 +597,13 @@ function ensureLameMp3Encoder() {
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js';
     script.async = true;
-    const timer = setTimeout(() => resolve(null), 3500);
+    const timer = setTimeout(() => {
+      lameLoaderPromise = null;
+      try {
+        script.remove();
+      } catch {}
+      resolve(null);
+    }, 3500);
     script.onload = () => {
       clearTimeout(timer);
       resolve(window.lamejs?.Mp3Encoder ? window.lamejs : null);
@@ -478,19 +638,18 @@ export async function exportEpisodeShareableAudioFile(episode, kbps = 64) {
 
   try {
     const arrBuf = await rawBlob.arrayBuffer();
-    if (arrBuf.byteLength > 44) {
-      const view = new DataView(arrBuf);
-      const riff =
-        String.fromCharCode(view.getUint8(0), view.getUint8(1), view.getUint8(2), view.getUint8(3)) ===
-        'RIFF';
-      const lame = riff ? await ensureLameMp3Encoder() : null;
+    const wavMeta = parseWavHeaderMeta(arrBuf, arrBuf.byteLength);
+    if (wavMeta && wavMeta.numChannels > 0 && wavMeta.sampleRate > 0 && wavMeta.bitsPerSample === 16) {
+      const lame = await ensureLameMp3Encoder();
       if (lame?.Mp3Encoder) {
-        const numChannels = Math.max(1, view.getUint16(22, true));
-        const sampleRate = Math.max(8000, view.getUint32(24, true));
+        const view = new DataView(arrBuf);
+        const numChannels = Math.max(1, wavMeta.numChannels);
+        const sampleRate = Math.max(8000, wavMeta.sampleRate);
         const bytesPerFrame = numChannels * 2;
-        const numFrames = Math.floor((arrBuf.byteLength - 44) / bytesPerFrame);
+        const maxReadableBytes = Math.max(0, Math.min(wavMeta.dataBytes, arrBuf.byteLength - wavMeta.dataOffset));
+        const numFrames = Math.floor(maxReadableBytes / bytesPerFrame);
         const monoSamples = new Int16Array(numFrames);
-        let byteOff = 44;
+        let byteOff = wavMeta.dataOffset;
         for (let i = 0; i < numFrames; i++) {
           monoSamples[i] = view.getInt16(byteOff, true);
           byteOff += bytesPerFrame;
@@ -531,6 +690,11 @@ export async function exportEpisodeShareableAudioFile(episode, kbps = 64) {
 export async function deleteEpisodeAudioBlob(episodeId) {
   if (!episodeId) return false;
   const id = String(episodeId);
+  episodeDeleteEpoch.set(id, (episodeDeleteEpoch.get(id) || 0) + 1);
+  inFlightUrlLoads.delete(id);
+  if (pinnedEpisodeAudioId === id) {
+    pinnedEpisodeAudioId = null;
+  }
 
   const prevUrl = objectUrlCache.get(id);
   if (prevUrl && typeof URL !== 'undefined' && typeof URL.revokeObjectURL === 'function') {

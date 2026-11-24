@@ -17,7 +17,6 @@
 import { getActiveTeamConfig } from '../config/teamRegistry.js';
 
 const ESPN_HEADSHOT_PATH_RE = /\/i\/headshots\/nfl\/players\/full\/(\d+)\.png/i;
-const ESPN_TEAMLOGO_PATH_RE = /\/i\/teamlogos\/nfl\/500\/([a-z0-9_-]+)\.png/i;
 const ESPN_PHOTO_PATH_RE = /^https:\/\/a\.espncdn\.com(\/photo\/.+)$/i;
 const TWIMG_MEDIA_RE = /^https:\/\/pbs\.twimg\.com\/media\/([A-Za-z0-9_-]+)(?:\.(jpg|jpeg|png|webp))?(?:\?(.*))?$/i;
 const SBNATION_WP_IMG_RE = /^https:\/\/platform\.[a-z0-9-]+\.com\/wp-content\/uploads\/.+$/i;

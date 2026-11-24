@@ -217,10 +217,9 @@ export async function pollAndCacheBestFreeModel(env) {
 }
 
 function corsHeaders(origin, allowedOrigin) {
-  const allow =
-    !origin || origin.includes('localhost') || origin.includes('127.0.0.1') || origin === allowedOrigin
-      ? origin || '*'
-      : allowedOrigin || '*';
+  const isLocalhostOrigin =
+    typeof origin === 'string' && /^https?:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/i.test(origin);
+  const allow = !origin || isLocalhostOrigin || origin === allowedOrigin ? origin || '*' : allowedOrigin || '*';
   return {
     'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'GET, HEAD, POST, OPTIONS',
@@ -596,10 +595,21 @@ async function expandAllowedShortenerUrlEdge(env, rawInput) {
     return '';
   }
   const normalizedShort = parsed.toString();
-  const kvKey = `expand_v1:${normalizedShort}`;
-  const cached = await env.SHARED_CACHE?.get(kvKey);
-  if (cached !== null && cached !== undefined) {
-    return cached;
+  const edgeCache = typeof caches !== 'undefined' && caches?.default ? caches.default : null;
+  const edgeKey = edgeCache
+    ? new Request(`https://cache.internal/expand_v1?u=${encodeURIComponent(normalizedShort)}`, { method: 'GET' })
+    : null;
+  if (edgeCache && edgeKey) {
+    try {
+      const hit = await edgeCache.match(edgeKey);
+      if (hit) return await hit.text();
+    } catch {}
+  } else {
+    const kvKey = `expand_v1:${normalizedShort}`;
+    const cached = await env.SHARED_CACHE?.get(kvKey).catch(() => null);
+    if (cached !== null && cached !== undefined) {
+      return cached;
+    }
   }
   let resolved = '';
   for (const method of ['HEAD', 'GET']) {
@@ -621,24 +631,55 @@ async function expandAllowedShortenerUrlEdge(env, rawInput) {
       }
     } catch {}
   }
-  if (env.SHARED_CACHE) {
-    await env.SHARED_CACHE.put(kvKey, resolved, { expirationTtl: resolved ? 86400 : 1800 });
+  if (edgeCache && edgeKey) {
+    await edgeCache
+      .put(
+        edgeKey,
+        new Response(resolved, {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Cache-Control': `public, max-age=${resolved ? 86400 : 1800}`
+          }
+        })
+      )
+      .catch(() => {});
+  } else if (env.SHARED_CACHE) {
+    try {
+      await env.SHARED_CACHE.put(`expand_v1:${normalizedShort}`, resolved, { expirationTtl: resolved ? 86400 : 1800 });
+    } catch {}
   }
   return resolved;
 }
 
 async function collectEdgeLiveWire(
   env,
-  { maxXHydrate = 22, includeYouTube = true, useCache = true, writeCache = true, liveMode = false } = {}
+  { maxXHydrate = 14, includeYouTube = true, useCache = true, writeCache = true, liveMode = false } = {}
 ) {
+  const safeMaxXHydrate = Math.min(14, Math.max(0, Number(maxXHydrate || 0)));
   const kvCacheKey = liveMode ? 'wire:rss_live_v7_live' : 'wire:rss_live_v7';
-  const softMaxAgeMs = (liveMode ? 15 : 25) * 1000;
+  const ttlSec = liveMode ? 15 : 25;
+  const softMaxAgeMs = ttlSec * 1000;
+  const edgeCache = typeof caches !== 'undefined' && caches?.default ? caches.default : null;
+  const edgeKey = edgeCache ? new Request(`https://cache.internal/${kvCacheKey}`, { method: 'GET' }) : null;
   if (useCache) {
-    const cachedWire = await env.SHARED_CACHE?.get(kvCacheKey, 'json').catch(() => null);
-    if (cachedWire && Array.isArray(cachedWire.items)) {
-      const cachedAtMs = Date.parse(cachedWire.updatedAt || '');
-      if (Number.isFinite(cachedAtMs) && Date.now() - cachedAtMs <= softMaxAgeMs) {
-        return { cached: true, ...cachedWire };
+    if (edgeCache && edgeKey) {
+      try {
+        const hit = await edgeCache.match(edgeKey);
+        if (hit) {
+          const cachedWire = await hit.json();
+          if (cachedWire && Array.isArray(cachedWire.items)) {
+            return { cached: true, ...cachedWire };
+          }
+        }
+      } catch {}
+    } else {
+      const cachedWire = await env.SHARED_CACHE?.get(kvCacheKey, 'json').catch(() => null);
+      if (cachedWire && Array.isArray(cachedWire.items)) {
+        const cachedAtMs = Date.parse(cachedWire.updatedAt || '');
+        if (Number.isFinite(cachedAtMs) && Date.now() - cachedAtMs <= softMaxAgeMs) {
+          return { cached: true, ...cachedWire };
+        }
       }
     }
   }
@@ -866,12 +907,13 @@ async function collectEdgeLiveWire(
     })
   ]);
 
-  if (maxXHydrate > 0) {
+  if (safeMaxXHydrate > 0) {
+    let shortenerBudget = 8;
     const sortedXEntries = [...discoveredStatusMap.entries()].sort((a, b) => (BigInt(b[0]) > BigInt(a[0]) ? 1 : -1));
     const handleCounts = new Map();
     const newestXIds = [];
     for (const entry of sortedXEntries) {
-      if (newestXIds.length >= maxXHydrate) break;
+      if (newestXIds.length >= safeMaxXHydrate) break;
       const hk = entry[1].toLowerCase();
       if ((handleCounts.get(hk) || 0) >= 3) continue;
       handleCounts.set(hk, (handleCounts.get(hk) || 0) + 1);
@@ -921,7 +963,12 @@ async function collectEdgeLiveWire(
             try {
               const parsedExt = new URL(resolvedExtU.startsWith('http://') ? `https://${resolvedExtU.slice(7)}` : resolvedExtU);
               if (ALLOWED_SHORTENER_HOST_RE.test(parsedExt.hostname.toLowerCase())) {
-                resolvedExtU = await expandAllowedShortenerUrlEdge(env, parsedExt.toString());
+                if (shortenerBudget > 0) {
+                  shortenerBudget -= 1;
+                  resolvedExtU = await expandAllowedShortenerUrlEdge(env, parsedExt.toString());
+                } else {
+                  resolvedExtU = '';
+                }
               } else {
                 resolvedExtU = stripEdgeTrackingParams(parsedExt.toString());
               }
@@ -962,11 +1009,27 @@ async function collectEdgeLiveWire(
   }
 
   const payload = { updatedAt: new Date().toISOString(), items };
-  if (writeCache && env.SHARED_CACHE && items.length > 0 && includeYouTube && maxXHydrate >= 10) {
-    // Cloudflare KV enforces a hard minimum expirationTtl of 60 seconds; soft freshness (15s/25s) is checked on read.
-    try {
-      await env.SHARED_CACHE.put(kvCacheKey, JSON.stringify(payload), { expirationTtl: 60 });
-    } catch {}
+  if (writeCache && items.length > 0 && includeYouTube && safeMaxXHydrate >= 10) {
+    if (edgeCache && edgeKey) {
+      // Zero Cloudflare KV writes on high-frequency `/api/live-wire` by storing in unlimited `caches.default`
+      await edgeCache
+        .put(
+          edgeKey,
+          new Response(JSON.stringify(payload), {
+            status: 200,
+            headers: {
+              'Content-Type': 'application/json; charset=utf-8',
+              'Cache-Control': `public, max-age=${ttlSec}`
+            }
+          })
+        )
+        .catch(() => {});
+    } else if (env.SHARED_CACHE) {
+      // Cloudflare KV enforces a hard minimum expirationTtl of 60 seconds; soft freshness (15s/25s) is checked on read.
+      try {
+        await env.SHARED_CACHE.put(kvCacheKey, JSON.stringify(payload), { expirationTtl: 60 });
+      } catch {}
+    }
   }
   return { cached: false, ...payload };
 }
@@ -1714,7 +1777,7 @@ export default {
     if (request.method === 'GET' && url.pathname === '/api/live-wire') {
       const liveMode = url.searchParams.get('live') === '1';
       const wirePayload = await collectEdgeLiveWire(env, {
-        maxXHydrate: 22,
+        maxXHydrate: 14,
         includeYouTube: true,
         useCache: true,
         writeCache: true,
@@ -1855,7 +1918,7 @@ export default {
               const eUrl = `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/${encodeURIComponent(gameId)}/competitions/${encodeURIComponent(gameId)}/competitors/${tid}/roster`;
               const eRes = await fetch(eUrl, {
                 headers: { 'User-Agent': '49ersFaithfulEdge/1.0' },
-                signal: AbortSignal.timeout(5000)
+                signal: AbortSignal.timeout(2200)
               });
               if (!eRes.ok) return;
               const eJson = await eRes.json();
@@ -2166,7 +2229,14 @@ export default {
 
     if (request.method === 'POST' && url.pathname === '/api/daily-news-brief') {
       const noStoreCors = { ...cors, 'Cache-Control': 'no-store' };
-      const body = await parseJsonBodySafe(request);
+      const rawBodyText = await request.text().catch(() => '');
+      if (rawBodyText.length > 64_000) {
+        return jsonResponse({ error: 'Daily news brief payload too large' }, 413, noStoreCors);
+      }
+      let body = null;
+      try {
+        body = rawBodyText ? JSON.parse(rawBodyText) : null;
+      } catch {}
       if (!body || (!body.prompt && !body.seedRawText && !body.seedData)) {
         return jsonResponse({ error: 'Invalid daily news brief request' }, 400, noStoreCors);
       }
@@ -2185,20 +2255,28 @@ export default {
           typeof body.seedData === 'object' &&
           !Array.isArray(body.seedData) &&
           typeof body.seedData.headline === 'string' &&
+          body.seedData.headline.trim().length > 0 &&
           Array.isArray(body.seedData.bullets) &&
           body.seedData.bullets.length >= 2
             ? body.seedData
             : undefined;
+        const cleanSeedRawText = typeof body.seedRawText === 'string' ? body.seedRawText.trim().slice(0, 16000) : '';
+        if (!validSeedData && !cleanSeedRawText) {
+          return jsonResponse({ error: 'Invalid daily news brief seed payload' }, 400, noStoreCors);
+        }
         const seededPayload = {
           cycleKey,
           modelUsed: seedModel,
           thinkingLevel: resolveGeminiThinkingLevelLabel(seedModel, 'XHIGH'),
           generatedAt: String(body.generatedAt || new Date().toISOString()).slice(0, 40),
-          rawText: typeof body.seedRawText === 'string' ? body.seedRawText.slice(0, 16000) : '',
+          rawText: cleanSeedRawText,
           ...(validSeedData ? { data: validSeedData } : {})
         };
+        const serializedSeed = JSON.stringify(seededPayload);
+        if (serializedSeed.length > 32_000) {
+          return jsonResponse({ error: 'Daily news brief seed exceeds size cap' }, 413, noStoreCors);
+        }
         if (env.SHARED_CACHE) {
-          const serializedSeed = JSON.stringify(seededPayload);
           await Promise.all([
             env.SHARED_CACHE.put(cacheKey, serializedSeed, { expirationTtl: 60 * 60 * 72 }),
             env.SHARED_CACHE.put('daily_news_brief_latest_v5', serializedSeed, { expirationTtl: 60 * 60 * 72 })
@@ -2960,6 +3038,9 @@ export default {
       return jsonResponse({ cached: false, episode }, 200, cors);
     }
 
+    if (url.pathname.startsWith('/api/')) {
+      return jsonResponse({ error: 'Not Found' }, 404, cors);
+    }
     return jsonResponse({ status: 'ok', service: '49ers-worker' }, 200, cors);
   }
 };

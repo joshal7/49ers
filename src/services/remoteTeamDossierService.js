@@ -19,7 +19,7 @@
  *   fallback if a remote subdomain is temporarily unreachable or offline.
  */
 
-import { getActiveTeamConfig } from '../config/teamRegistry.js';
+import { ALL_NFL_TEAMS, getActiveTeamConfig } from '../config/teamRegistry.js';
 const REMOTE_TEAM_CACHE_TTL_MS = 5 * 60 * 1000;
 const REMOTE_TEAM_FAIL_COOLDOWN_MS = 20 * 1000;
 const DEFAULT_REMOTE_FETCH_TIMEOUT_MS = 7500;
@@ -36,43 +36,6 @@ function hexToRgba(hex, alpha) {
   const { r, g, b } = hexToRgb(hex);
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
-
-// [abbr, slug, espnId, espnAbbr, otcSlug, city, nickname, brandName, clubDomain, darkColors, lightColors]
-// darkColors / lightColors = [primary, primaryBright, secondary, secondaryBright]
-const RAW_NFL_TEAMS = [
-  ['SF', '49ers', 25, 'sf', 'san-francisco-49ers', 'San Francisco', '49ers', '49ers Faithful', '49ers.com', ['#AA0000', '#D41919', '#B3995D', '#E7D29B'], ['#AA0000', '#B80000', '#8C7034', '#6B5320']],
-  ['SEA', 'seahawks', 26, 'sea', 'seattle-seahawks', 'Seattle', 'Seahawks', 'Seahawks 12s', 'seahawks.com', ['#2D6CDF', '#5C9BFF', '#7AD934', '#A6F065'], ['#002244', '#0A3B6E', '#2F6B12', '#21500B']],
-  ['LAR', 'rams', 14, 'lar', 'los-angeles-rams', 'Los Angeles', 'Rams', 'Rams House', 'therams.com', ['#2563EB', '#60A5FA', '#F5C400', '#FFE159'], ['#003594', '#0047C2', '#8A6900', '#6B5000']],
-  ['ARI', 'cardinals', 22, 'ari', 'arizona-cardinals', 'Arizona', 'Cardinals', 'Cardinals Red Sea', 'azcardinals.com', ['#B8254B', '#F05279', '#F2B830', '#FFD66B'], ['#97233F', '#B02345', '#8A6008', '#6C4A04']],
-  ['DET', 'lions', 8, 'det', 'detroit-lions', 'Detroit', 'Lions', 'Lions One Pride', 'detroitlions.com', ['#0076B6', '#4BB3F4', '#B0B7BC', '#DCE2E7'], ['#005A9C', '#006CB8', '#4B5A68', '#36434F']],
-  ['MIN', 'vikings', 16, 'min', 'minnesota-vikings', 'Minnesota', 'Vikings', 'Vikings Skol', 'vikings.com', ['#7C4DFF', '#A98BFF', '#F5C400', '#FFE066'], ['#4F2683', '#61329E', '#8A6700', '#6B4F00']],
-  ['GB', 'packers', 9, 'gb', 'green-bay-packers', 'Green Bay', 'Packers', 'Go Pack Go', 'packers.com', ['#247A53', '#4ADE96', '#F2B830', '#FFD76E'], ['#203731', '#2B4E45', '#8A6300', '#6B4B00']],
-  ['CHI', 'bears', 3, 'chi', 'chicago-bears', 'Chicago', 'Bears', 'Da Bears', 'chicagobears.com', ['#E35B2B', '#FF7B4D', '#8BA6CC', '#B8CCE8'], ['#0B162A', '#1B2E52', '#B8360A', '#962B06']],
-  ['PHI', 'eagles', 21, 'phi', 'philadelphia-eagles', 'Philadelphia', 'Eagles', 'Fly Eagles Fly', 'philadelphiaeagles.com', ['#13828E', '#36C2CF', '#A5ACAF', '#D2D8DB'], ['#004C54', '#00646E', '#4B575C', '#354045']],
-  ['DAL', 'cowboys', 6, 'dal', 'dallas-cowboys', 'Dallas', 'Cowboys', 'Cowboys Nation', 'dallascowboys.com', ['#2965B5', '#64A2F0', '#A4B0BE', '#CFD8E3'], ['#041E42', '#0B356E', '#4E5B6B', '#374250']],
-  ['NYG', 'giants', 19, 'nyg', 'new-york-giants', 'New York', 'Giants', 'Giants Big Blue', 'giants.com', ['#2D66D4', '#689CFF', '#E54B5D', '#FF7D8C'], ['#0B2265', '#15348F', '#A71930', '#851023']],
-  ['WAS', 'commanders', 28, 'wsh', 'washington-commanders', 'Washington', 'Commanders', 'Hail Washington', 'commanders.com', ['#A83244', '#E56074', '#F2B830', '#FFD66E'], ['#5A1414', '#7A1C1C', '#8A6008', '#6B4804']],
-  ['TB', 'buccaneers', 27, 'tb', 'tampa-bay-buccaneers', 'Tampa Bay', 'Buccaneers', 'Bucs Krewe', 'buccaneers.com', ['#D51E34', '#FF5A6E', '#B6A89D', '#DCD2C9'], ['#A50E22', '#C4162C', '#5C514A', '#453C36']],
-  ['NO', 'saints', 18, 'no', 'new-orleans-saints', 'New Orleans', 'Saints', 'Saints Who Dat', 'neworleanssaints.com', ['#C4A661', '#E6CA85', '#B8BFC7', '#DCE2E8'], ['#1A1A1A', '#333333', '#806526', '#634D1A']],
-  ['ATL', 'falcons', 1, 'atl', 'atlanta-falcons', 'Atlanta', 'Falcons', 'Falcons Rise Up', 'atlantafalcons.com', ['#C8233E', '#F55670', '#A5ACAF', '#D2D8DB'], ['#A71930', '#C21F39', '#4E5559', '#383E42']],
-  ['CAR', 'panthers', 29, 'car', 'carolina-panthers', 'Carolina', 'Panthers', 'Keep Pounding', 'panthers.com', ['#0085CA', '#47B8F5', '#BFC0BF', '#E0E2E2'], ['#005F91', '#0072AD', '#4B555E', '#363E45']],
-  ['BUF', 'bills', 2, 'buf', 'buffalo-bills', 'Buffalo', 'Bills', 'Bills Mafia', 'buffalobills.com', ['#1D5FD6', '#5E9AFF', '#E5485B', '#FF7A8A'], ['#00338D', '#0047C2', '#B80B2C', '#960722']],
-  ['NE', 'patriots', 17, 'ne', 'new-england-patriots', 'New England', 'Patriots', 'Pats Nation', 'patriots.com', ['#2A63C9', '#689CFF', '#E5485B', '#FF7D8C'], ['#002244', '#0D3866', '#B30B2C', '#8F0722']],
-  ['MIA', 'dolphins', 15, 'mia', 'miami-dolphins', 'Miami', 'Dolphins', 'Fins Up', 'miamidolphins.com', ['#0099A8', '#3CD3E2', '#FF7D45', '#FFA075'], ['#006875', '#007E8E', '#B83C12', '#962E0B']],
-  ['NYJ', 'jets', 20, 'nyj', 'new-york-jets', 'New York', 'Jets', 'Jets Gang Green', 'newyorkjets.com', ['#198754', '#47D18E', '#A8B3BE', '#D4DCE3'], ['#125740', '#187053', '#4A5752', '#34403B']],
-  ['BAL', 'ravens', 33, 'bal', 'baltimore-ravens', 'Baltimore', 'Ravens', 'Ravens Flock', 'baltimoreravens.com', ['#7657E5', '#A38BFF', '#E6B84C', '#F7D57E'], ['#241773', '#3825A3', '#856216', '#664A0E']],
-  ['CIN', 'bengals', 4, 'cin', 'cincinnati-bengals', 'Cincinnati', 'Bengals', 'Bengals Who Dey', 'bengals.com', ['#E8531E', '#FF7D4D', '#B3B8BF', '#DCE0E6'], ['#B8390E', '#D44211', '#4B5056', '#34383D']],
-  ['CLE', 'browns', 5, 'cle', 'cleveland-browns', 'Cleveland', 'Browns', 'Browns Dawg Pound', 'clevelandbrowns.com', ['#E8561A', '#FF804D', '#C49A7A', '#E3BEA2'], ['#4A2B11', '#633B1A', '#B53809', '#942C05']],
-  ['PIT', 'steelers', 23, 'pit', 'pittsburgh-steelers', 'Pittsburgh', 'Steelers', 'Steeler Nation', 'steelers.com', ['#F2B816', '#FFD34D', '#B3BAC2', '#DCE2E8'], ['#1A1A1A', '#333333', '#8A6300', '#6B4B00']],
-  ['HOU', 'texans', 34, 'hou', 'houston-texans', 'Houston', 'Texans', 'H-Town Texans', 'houstontexans.com', ['#D93B4E', '#FF6B7D', '#7BA4DB', '#A8C7F0'], ['#03202F', '#0B3952', '#A71930', '#871024']],
-  ['IND', 'colts', 11, 'ind', 'indianapolis-colts', 'Indianapolis', 'Colts', 'Colts Nation', 'colts.com', ['#246BCE', '#63A0FA', '#A5ACAF', '#D4DADD'], ['#002C5F', '#00428C', '#4E5861', '#384047']],
-  ['JAX', 'jaguars', 30, 'jax', 'jacksonville-jaguars', 'Jacksonville', 'Jaguars', 'Jags DUUUVAL', 'jaguars.com', ['#00879A', '#38C8DB', '#D7A22A', '#F2C65C'], ['#006778', '#007E91', '#7D5C10', '#614608']],
-  ['TEN', 'titans', 10, 'ten', 'tennessee-titans', 'Tennessee', 'Titans', 'Titan Up', 'tennesseetitans.com', ['#4B92DB', '#78B7F5', '#E34B5D', '#FF7D8C'], ['#0C2340', '#183C6B', '#A81728', '#8A101E']],
-  ['KC', 'chiefs', 12, 'kc', 'kansas-city-chiefs', 'Kansas City', 'Chiefs', 'Chiefs Kingdom', 'chiefs.com', ['#E31837', '#FF546E', '#FFB81C', '#FFD466'], ['#B8102A', '#D41533', '#8A6200', '#6B4A00']],
-  ['DEN', 'broncos', 7, 'den', 'denver-broncos', 'Denver', 'Broncos', 'Broncos Country', 'denverbroncos.com', ['#EB5621', '#FF7D4D', '#7EA5D9', '#ADC9F0'], ['#002244', '#0D3866', '#B8390C', '#962C07']],
-  ['LAC', 'chargers', 24, 'lac', 'los-angeles-chargers', 'Los Angeles', 'Chargers', 'Chargers Bolt Up', 'chargers.com', ['#0088D1', '#47B8F5', '#FFC20E', '#FFDA5C'], ['#005F94', '#0074B5', '#8A6300', '#6B4B00']],
-  ['LV', 'raiders', 13, 'lv', 'las-vegas-raiders', 'Las Vegas', 'Raiders', 'Raider Nation', 'raiders.com', ['#A5ACAF', '#D4DADD', '#8C969E', '#BCC6CE'], ['#14171A', '#2E343B', '#4E575E', '#383F45']]
-];
 
 const EXTRA_ABBR_ALIASES = {
   sfo: 'SF',
@@ -99,51 +62,52 @@ const EXTRA_ABBR_ALIASES = {
 };
 
 export const ALL_NFL_TEAM_ENTRIES = Object.freeze(
-  RAW_NFL_TEAMS.map(
-    ([abbr, slug, espnId, espnAbbr, otcSlug, city, nickname, brandName, clubDomain, darkC, lightC]) =>
-      Object.freeze({
-        abbr,
-        slug,
-        domain: `${slug}.joshal.com`,
-        origin: `https://${slug}.joshal.com`,
-        espnId,
-        espnAbbr,
-        otcSlug,
-        city,
-        nickname,
-        fullName: `${city} ${nickname}`,
-        brandName,
-        clubDomain,
-        clubInjuryUrl: `https://www.${clubDomain}/team/injury-report/`,
-        otcCapUrl: `https://overthecap.com/salary-cap/${otcSlug}`,
-        themes: Object.freeze({
-          dark: Object.freeze({
-            primary: darkC[0],
-            primaryBright: darkC[1],
-            primarySoft: hexToRgba(darkC[1], 0.16),
-            secondary: darkC[2],
-            secondaryBright: darkC[3],
-            secondarySoft: hexToRgba(darkC[2], 0.15),
-            secondaryBorder: hexToRgba(darkC[2], 0.34),
-            heroGlowPrimary: hexToRgba(darkC[1], 0.3),
-            heroGlowSecondary: hexToRgba(darkC[2], 0.2),
-            pillShadow: hexToRgba(darkC[0], 0.34)
-          }),
-          light: Object.freeze({
-            primary: lightC[0],
-            primaryBright: lightC[1],
-            primarySoft: hexToRgba(lightC[0], 0.1),
-            secondary: lightC[2],
-            secondaryBright: lightC[3],
-            secondarySoft: hexToRgba(lightC[2], 0.16),
-            secondaryBorder: hexToRgba(lightC[2], 0.36),
-            heroGlowPrimary: hexToRgba(lightC[0], 0.18),
-            heroGlowSecondary: hexToRgba(lightC[2], 0.16),
-            pillShadow: hexToRgba(lightC[0], 0.26)
-          })
+  ALL_NFL_TEAMS.map(team => {
+    const dark = team.themes.dark;
+    const light = team.themes.light;
+    return Object.freeze({
+      abbr: team.abbr,
+      slug: team.slug,
+      domain: team.domain,
+      origin: `https://${team.domain}`,
+      espnId: team.espnId,
+      espnAbbr: team.espnAbbr,
+      otcSlug: team.otcSlug,
+      city: team.city,
+      nickname: team.nickname,
+      fullName: team.fullName,
+      brandName: team.brandName,
+      clubDomain: team.clubDomain,
+      clubInjuryUrl: team.clubInjuryUrl,
+      otcCapUrl: `https://overthecap.com/salary-cap/${team.otcSlug}`,
+      themes: Object.freeze({
+        dark: Object.freeze({
+          primary: dark.primary,
+          primaryBright: dark.primaryBright,
+          primarySoft: dark.primarySoft,
+          secondary: dark.secondary,
+          secondaryBright: dark.secondaryBright,
+          secondarySoft: dark.secondarySoft,
+          secondaryBorder: dark.secondaryBorder,
+          heroGlowPrimary: hexToRgba(dark.primaryBright, 0.3),
+          heroGlowSecondary: hexToRgba(dark.secondary, 0.2),
+          pillShadow: hexToRgba(dark.primary, 0.34)
+        }),
+        light: Object.freeze({
+          primary: light.primary,
+          primaryBright: light.primaryBright,
+          primarySoft: light.primarySoft,
+          secondary: light.secondary,
+          secondaryBright: light.secondaryBright,
+          secondarySoft: light.secondarySoft,
+          secondaryBorder: light.secondaryBorder,
+          heroGlowPrimary: hexToRgba(light.primary, 0.18),
+          heroGlowSecondary: hexToRgba(light.secondary, 0.16),
+          pillShadow: hexToRgba(light.primary, 0.26)
         })
       })
-  )
+    });
+  })
 );
 
 export const NFL_TEAMS_BY_ABBR = Object.freeze(
@@ -952,6 +916,8 @@ async function tryLoadBundleFromBaseUrl(baseUrl, { fetchImpl, timeoutMs }) {
  * Fetches & caches a remote franchise's JSON data bundle from `<team>.joshal.com`.
  * Never throws; always returns a structured result with `{ ok, status, team, appData, ... }`.
  */
+const teamBundleSeqByAbbr = new Map();
+
 export async function fetchRemoteTeamBundle(
   teamInput,
   {
@@ -976,6 +942,9 @@ export async function fetchRemoteTeamBundle(
     return teamBundleInFlight.get(team.abbr);
   }
 
+  const reqSeq = (teamBundleSeqByAbbr.get(team.abbr) || 0) + 1;
+  teamBundleSeqByAbbr.set(team.abbr, reqSeq);
+
   const promise = (async () => {
     const baseUrls = buildTeamDataBaseUrls(team, { baseUrlOverride });
     let lastError = 'Unavailable';
@@ -996,7 +965,9 @@ export async function fetchRemoteTeamBundle(
           reportersById: attempt.reportersById,
           error: null
         };
-        teamBundleCache.set(team.abbr, result);
+        if (teamBundleSeqByAbbr.get(team.abbr) === reqSeq) {
+          teamBundleCache.set(team.abbr, result);
+        }
         return result;
       }
       lastError = attempt.error || lastError;
@@ -1015,7 +986,10 @@ export async function fetchRemoteTeamBundle(
       reportersById: new Map(),
       error: lastError
     };
-    teamBundleCache.set(team.abbr, failResult);
+    const existing = teamBundleCache.get(team.abbr);
+    if (teamBundleSeqByAbbr.get(team.abbr) === reqSeq && !existing?.ok) {
+      teamBundleCache.set(team.abbr, failResult);
+    }
     return failResult;
   })();
 

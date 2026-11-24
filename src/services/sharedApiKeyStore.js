@@ -386,6 +386,18 @@ export function reconcileGeminiKeyState(localState = {}, sharedRecord = null, no
   }
 
   // Case 4: Shared record has an active key (`c === 0`, `shared.k` non-empty)
+  if (!localKey && localTs > shared.t) {
+    // Respect a newer local clear timestamp so an older in-flight shared record never resurrects a deleted key
+    return {
+      action: 'noop',
+      changed: false,
+      shouldPushToShared: false,
+      apiKey: '',
+      verifiedModel: '',
+      updatedAt: localTs,
+      recordToPush: null
+    };
+  }
   if (localKey && localTs > shared.t) {
     return {
       action: 'push_local',
@@ -463,6 +475,8 @@ export function scanSameOriginLegacyTeamPrefsForKey(storage = null, nowMs = Date
   }
 }
 
+let legacyPrefsScanCheckedStore = null;
+
 export function readSameOriginSharedGeminiKey(storage = null) {
   try {
     const store = storage || (typeof window !== 'undefined' ? window.localStorage : null);
@@ -471,6 +485,13 @@ export function readSameOriginSharedGeminiKey(storage = null) {
     if (raw) {
       const parsed = normalizeSharedGeminiKeyRecord(JSON.parse(raw));
       if (parsed) return parsed;
+    }
+    // Avoid re-scanning & JSON.parsing every team prefs blob on every focus/visibility check when no key exists
+    if (!storage && legacyPrefsScanCheckedStore === store) {
+      return null;
+    }
+    if (!storage) {
+      legacyPrefsScanCheckedStore = store;
     }
     const backfilled = scanSameOriginLegacyTeamPrefsForKey(store);
     if (backfilled) {
@@ -497,6 +518,7 @@ export function writeSameOriginSharedGeminiKey(record, storage = null) {
       return current;
     }
     store.setItem(SHARED_GEMINI_KEY_STORAGE_KEY, JSON.stringify(normalized));
+    if (!storage) legacyPrefsScanCheckedStore = null;
     return normalized;
   } catch {
     return null;
@@ -647,11 +669,13 @@ export function createCrossSubdomainVaultClient({
           'opacity:0;visibility:hidden;width:1px;height:1px;border:0;position:fixed;top:-10px;left:-10px;pointer-events:none;';
 
         let settled = false;
+        let postLoadGraceTimer = null;
         const finish = ok => {
           if (settled) return;
           settled = true;
           readyResolve = null;
           clearTimeout(loadTimer);
+          clearTimeout(postLoadGraceTimer);
           if (!ok) {
             teardownIframe();
           }
@@ -660,7 +684,15 @@ export function createCrossSubdomainVaultClient({
         readyResolve = finish;
 
         const loadTimer = setTimeout(() => finish(false), Math.max(800, timeoutMs));
-        iframe.addEventListener('load', () => finish(true), { once: true });
+        iframe.addEventListener(
+          'load',
+          () => {
+            // Wait briefly for the vault's `{ type: 'ready' }` handshake so 404/502 error pages fail fast (~350ms)
+            // instead of hanging every subsequent request for 4.5s.
+            postLoadGraceTimer = setTimeout(() => finish(true), 350);
+          },
+          { once: true }
+        );
         iframe.addEventListener('error', () => finish(false), { once: true });
         iframe.src = vaultUrl;
 
@@ -849,19 +881,15 @@ export function isPasskeyPrfPotentiallySupported() {
   }
 }
 
+// Precomputed SHA-256('joshal-nfl-passkey-prf-eval-v1') so WebAuthn creds.create/get execute
+// 100% synchronously inside the iOS Safari tap gesture (zero dropped user activation on first tap).
+const PASSKEY_PRF_EVAL_SALT_BYTES = new Uint8Array([
+  232, 30, 231, 182, 234, 46, 58, 174, 21, 254, 147, 210, 101, 141, 71, 155,
+  87, 80, 230, 183, 159, 235, 25, 207, 112, 198, 37, 231, 125, 1, 200, 192
+]);
+
 export async function getPasskeyPrfEvalSalt() {
-  if (!cachedPrfEvalSaltPromise) {
-    cachedPrfEvalSaltPromise = (async () => {
-      const webCrypto = getSubtleCrypto();
-      if (!webCrypto?.subtle) return new Uint8Array(32);
-      const digest = await webCrypto.subtle.digest(
-        'SHA-256',
-        new TextEncoder().encode('joshal-nfl-passkey-prf-eval-v1')
-      );
-      return new Uint8Array(digest);
-    })();
-  }
-  return cachedPrfEvalSaltPromise;
+  return PASSKEY_PRF_EVAL_SALT_BYTES;
 }
 
 /**
@@ -911,9 +939,17 @@ export async function derivePasskeyVaultKeysFromPrf(prfSecretBytes) {
 
 function openPasskeyKeyIdb() {
   return new Promise(resolve => {
+    let settled = false;
+    const finish = val => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve(val);
+    };
+    const timer = setTimeout(() => finish(null), 2500);
     try {
       if (typeof indexedDB === 'undefined') {
-        resolve(null);
+        finish(null);
         return;
       }
       const req = indexedDB.open(PASSKEY_IDB_NAME, 1);
@@ -925,10 +961,11 @@ function openPasskeyKeyIdb() {
           }
         } catch {}
       };
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => resolve(null);
+      req.onsuccess = () => finish(req.result);
+      req.onerror = () => finish(null);
+      req.onblocked = () => finish(null);
     } catch {
-      resolve(null);
+      finish(null);
     }
   });
 }
@@ -1155,7 +1192,7 @@ export async function enablePasskeyKeySync({
   }
   const activeHost = hostname || (typeof window !== 'undefined' ? window.location?.hostname || '' : '');
   const rpId = resolvePasskeyRpId(activeHost);
-  const prfSalt = await getPasskeyPrfEvalSalt();
+  const prfSalt = PASSKEY_PRF_EVAL_SALT_BYTES;
   const challenge = new Uint8Array(32);
   webCrypto.getRandomValues(challenge);
 
@@ -1282,7 +1319,7 @@ export async function unlockAndSyncWithPasskey({
   }
   const activeHost = hostname || (typeof window !== 'undefined' ? window.location?.hostname || '' : '');
   const rpId = resolvePasskeyRpId(activeHost);
-  const prfSalt = await getPasskeyPrfEvalSalt();
+  const prfSalt = PASSKEY_PRF_EVAL_SALT_BYTES;
   const challenge = new Uint8Array(32);
   webCrypto.getRandomValues(challenge);
 
@@ -1399,51 +1436,57 @@ export async function deriveEncryptedVaultKeys(passcode = '') {
   const webCrypto = getSubtleCrypto();
   if (!webCrypto?.subtle) return null;
 
-  const enc = new TextEncoder();
-  const baseKey = await webCrypto.subtle.importKey(
-    'raw',
-    enc.encode(clean),
-    { name: 'PBKDF2' },
-    false,
-    ['deriveBits', 'deriveKey']
-  );
-
-  const [idBits, aesKey] = await Promise.all([
-    webCrypto.subtle.deriveBits(
-      {
-        name: 'PBKDF2',
-        salt: enc.encode('joshal-nfl-e2ee-key-vault-id-v1'),
-        iterations: E2EE_VAULT_PBKDF2_ITERATIONS,
-        hash: 'SHA-256'
-      },
-      baseKey,
-      256
-    ),
-    webCrypto.subtle.deriveKey(
-      {
-        name: 'PBKDF2',
-        salt: enc.encode('joshal-nfl-e2ee-key-vault-aes-v1'),
-        iterations: E2EE_VAULT_PBKDF2_ITERATIONS,
-        hash: 'SHA-256'
-      },
-      baseKey,
-      { name: 'AES-GCM', length: 256 },
+  const derivePromise = (async () => {
+    const enc = new TextEncoder();
+    const baseKey = await webCrypto.subtle.importKey(
+      'raw',
+      enc.encode(clean),
+      { name: 'PBKDF2' },
       false,
-      ['encrypt', 'decrypt']
-    )
-  ]);
+      ['deriveBits', 'deriveKey']
+    );
 
-  const derived = {
-    vaultId: bytesToHex(new Uint8Array(idBits)),
-    aesKey
-  };
-  // Keep small bounded cache in RAM only (max 4 entries)
+    const [idBits, aesKey] = await Promise.all([
+      webCrypto.subtle.deriveBits(
+        {
+          name: 'PBKDF2',
+          salt: enc.encode('joshal-nfl-e2ee-key-vault-id-v1'),
+          iterations: E2EE_VAULT_PBKDF2_ITERATIONS,
+          hash: 'SHA-256'
+        },
+        baseKey,
+        256
+      ),
+      webCrypto.subtle.deriveKey(
+        {
+          name: 'PBKDF2',
+          salt: enc.encode('joshal-nfl-e2ee-key-vault-aes-v1'),
+          iterations: E2EE_VAULT_PBKDF2_ITERATIONS,
+          hash: 'SHA-256'
+        },
+        baseKey,
+        { name: 'AES-GCM', length: 256 },
+        false,
+        ['encrypt', 'decrypt']
+      )
+    ]);
+
+    return {
+      vaultId: bytesToHex(new Uint8Array(idBits)),
+      aesKey
+    };
+  })().catch(err => {
+    e2eeDerivedCache.delete(clean);
+    throw err;
+  });
+
+  // Deduplicate concurrent PBKDF2 runs and keep a small bounded RAM cache (max 4 entries)
   if (e2eeDerivedCache.size >= 4) {
     const firstKey = e2eeDerivedCache.keys().next().value;
     e2eeDerivedCache.delete(firstKey);
   }
-  e2eeDerivedCache.set(clean, derived);
-  return derived;
+  e2eeDerivedCache.set(clean, derivePromise);
+  return derivePromise;
 }
 
 export async function encryptSharedKeyRecordForVault(record, passcode = '') {
@@ -1796,11 +1839,14 @@ export async function syncPrefsWithSharedGeminiKeyVault(
       : Promise.resolve()
   ]);
 
+  // Re-read same-origin storage AFTER async iframe/cloud awaits so a user clear/save during the
+  // network round-trip is never overwritten by a stale pre-await snapshot!
+  const latestSameOriginRec = readSameOriginSharedGeminiKey() || sameOriginRec;
   const newestShared = pickNewestSharedRecord(
-    pickNewestSharedRecord(sameOriginRec, vaultRec),
+    pickNewestSharedRecord(latestSameOriginRec, vaultRec),
     pickNewestSharedRecord(cloudRec, passkeyCloudRec)
   );
-  const outcome = reconcileGeminiKeyState(prefs, newestShared, nowMs);
+  const outcome = reconcileGeminiKeyState(prefs, newestShared, Math.max(nowMs, Date.now()));
 
   const pushTargets = [];
   if (outcome.shouldPushToShared && outcome.recordToPush) {

@@ -19,13 +19,11 @@ import {
   registerOpponentPlayersForInlineLinks
 } from './uiHelpers.js';
 import { iconSvg } from './icons.js';
-import { getActiveTeamConfig } from '../config/teamRegistry.js';
 import {
   buildFallbackGamecastFromSchedule,
   resolveGamecastGamesList
 } from '../engine/gamecastEngine.js';
 import { resolveNflTeamMeta } from '../services/remoteTeamDossierService.js';
-import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import { resolveReadOnlyPlatformApiBase } from '../services/aiWorkerClient.js';
 
 function renderTimeoutDotsHtml(count) {

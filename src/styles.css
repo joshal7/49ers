@@ -247,16 +247,24 @@ body.sheet-open {
   display: none !important;
 }
 
-.nfl-hub-back-btn:hover,
 .nfl-hub-back-btn:focus-visible {
   color: var(--text-primary);
   background: rgba(255, 255, 255, 0.08);
   outline: none;
 }
 
-[data-theme="light"] .nfl-hub-back-btn:hover,
 [data-theme="light"] .nfl-hub-back-btn:focus-visible {
   background: rgba(20, 23, 28, 0.06);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nfl-hub-back-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  [data-theme="light"] .nfl-hub-back-btn:hover {
+    background: rgba(20, 23, 28, 0.06);
+  }
 }
 
 .nfl-hub-back-btn:active {
@@ -410,8 +418,10 @@ body.sheet-open {
   cursor: pointer;
   transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease, transform 0.12s ease;
 }
-.icon-btn:hover {
-  border-color: var(--gold-border);
+@media (hover: hover) and (pointer: fine) {
+  .icon-btn:hover {
+    border-color: var(--gold-border);
+  }
 }
 .icon-btn:active {
   transform: scale(0.97);
@@ -427,11 +437,17 @@ body.sheet-open {
   background: transparent;
   color: var(--text-secondary);
 }
-.icon-btn.header-icon-btn:hover,
 .icon-btn.header-icon-btn:focus-visible {
   background: var(--bg-card-alt);
   border-color: var(--border-subtle);
   color: var(--text-primary);
+}
+@media (hover: hover) and (pointer: fine) {
+  .icon-btn.header-icon-btn:hover {
+    background: var(--bg-card-alt);
+    border-color: var(--border-subtle);
+    color: var(--text-primary);
+  }
 }
 
 .icon-btn.active {
@@ -597,18 +613,6 @@ body.sheet-open {
   flex-shrink: 0;
 }
 
-.news-toolbar-meta {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--gold-bright);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .card-footer-row {
   margin-top: 11px;
   padding-top: 9px;
@@ -623,8 +627,10 @@ body.sheet-open {
 .card-cta-btn .ui-icon {
   transition: transform 0.16s ease;
 }
-.card-cta-btn:hover .ui-icon {
-  transform: translateX(2px);
+@media (hover: hover) and (pointer: fine) {
+  .card-cta-btn:hover .ui-icon {
+    transform: translateX(2px);
+  }
 }
 
 .subcard-panel {
@@ -640,45 +646,6 @@ body.sheet-open {
   gap: 6px;
   font-size: 12px;
   color: var(--text-secondary);
-}
-
-.signal-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--emerald);
-}
-
-.text-muted-inline {
-  color: var(--text-muted);
-}
-
-.reorder-controls {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  flex-shrink: 0;
-}
-
-.reorder-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  border: 1px solid var(--border-strong);
-  background: var(--bg-input);
-  color: var(--text-primary);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.reorder-btn:disabled {
-  opacity: 0.3;
-  cursor: default;
 }
 
 /* Badges & Pills */
@@ -891,8 +858,10 @@ body.sheet-open {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 3px 10px rgba(var(--primary-rgb, 170, 0, 0), 0.3);
   transition: transform 0.12s ease, filter 0.15s ease;
 }
-.btn-primary:hover {
-  filter: brightness(1.06);
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    filter: brightness(1.06);
+  }
 }
 .btn-primary:active {
   transform: scale(0.985);
@@ -934,9 +903,11 @@ body.sheet-open {
   cursor: pointer;
   transition: border-color 0.15s ease, color 0.15s ease;
 }
-.btn-ghost:hover {
-  border-color: var(--gold-border);
-  color: var(--text-primary);
+@media (hover: hover) and (pointer: fine) {
+  .btn-ghost:hover {
+    border-color: var(--gold-border);
+    color: var(--text-primary);
+  }
 }
 
 .btn-ghost.btn-compact {
@@ -1364,13 +1335,15 @@ body.sheet-open {
   color: var(--text-muted);
 }
 
-.wire-headline-link:hover .wire-inline-ext,
-.home-wire-text-link:hover .wire-inline-ext,
-.home-article-row:hover .wire-inline-ext,
-.player-mention-tweet-body:hover .wire-inline-ext,
-.similar-story-row:hover .wire-inline-ext,
-[data-brief-source-row]:hover .wire-inline-ext {
-  color: var(--gold-bright);
+@media (hover: hover) and (pointer: fine) {
+  .wire-headline-link:hover .wire-inline-ext,
+  .home-wire-text-link:hover .wire-inline-ext,
+  .home-article-row:hover .wire-inline-ext,
+  .player-mention-tweet-body:hover .wire-inline-ext,
+  .similar-story-row:hover .wire-inline-ext,
+  [data-brief-source-row]:hover .wire-inline-ext {
+    color: var(--gold-bright);
+  }
 }
 
 .wire-card-summary {
@@ -1455,22 +1428,6 @@ body.sheet-open {
   margin-top: 2px;
 }
 
-.brief-headline {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 800;
-  line-height: 1.35;
-}
-
-.brief-section-label {
-  font-size: 10.5px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--gold-bright);
-  margin-bottom: 3px;
-}
-
 .brief-bullets {
   margin: 0;
   padding-left: 17px;
@@ -1514,19 +1471,6 @@ body.sheet-open {
   background: linear-gradient(90deg, rgba(22, 27, 36, 0.98), rgba(16, 20, 27, 0.98));
   color: #F3F5F8;
   font-size: 12px;
-}
-
-.video-play-disc {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(var(--primary-bright-rgb, 212, 25, 25), 0.22);
-  border: 1px solid var(--gold-border);
-  color: var(--gold-bright);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
 }
 
 /* Spider Chart Styles */
@@ -1870,8 +1814,10 @@ body.sheet-open {
   transition: color 0.16s ease;
 }
 
-.nav-tab-btn:hover {
-  color: var(--text-secondary);
+@media (hover: hover) and (pointer: fine) {
+  .nav-tab-btn:hover {
+    color: var(--text-secondary);
+  }
 }
 
 .nav-tab-btn .nav-icon {
@@ -2770,9 +2716,11 @@ button.featured-player-chip:active {
   margin-left: 0;
 }
 
-.avatar-stack-btn:hover {
-  transform: translateY(-2px) scale(1.06);
-  z-index: 4;
+@media (hover: hover) and (pointer: fine) {
+  .avatar-stack-btn:hover {
+    transform: translateY(-2px) scale(1.06);
+    z-index: 4;
+  }
 }
 
 /* Mini Horizontal Data / Percentile / Play-Likelihood Bars */
@@ -3161,13 +3109,6 @@ button.featured-player-chip:active {
   text-decoration: none;
 }
 
-.inline-ext-icon {
-  display: inline-flex;
-  vertical-align: middle;
-  margin-left: 3px;
-  color: var(--gold-bright);
-}
-
 .home-article-row {
   display: flex;
   align-items: center;
@@ -3217,19 +3158,6 @@ button.featured-player-chip:active {
   flex-shrink: 0;
 }
 
-.source-open-pill {
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
-  background: var(--bg-primary);
-  border: 1px solid var(--border-strong);
-  color: var(--gold-bright);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
 .source-link-strip {
   display: flex;
   flex-wrap: wrap;
@@ -3263,35 +3191,6 @@ button.featured-player-chip:active {
   border-color: var(--gold);
 }
 
-.source-card-link {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 7px 10px;
-  border-radius: 9px;
-  background: var(--bg-card-alt);
-  border: 1px solid var(--border-subtle);
-  text-decoration: none;
-  transition: border-color 0.14s ease;
-}
-
-.source-card-link:hover {
-  border-color: var(--gold-border);
-}
-
-.source-card-outlet {
-  font-size: 10.5px;
-  font-weight: 700;
-  color: var(--gold-bright);
-}
-
-.source-card-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-primary);
-  line-height: 1.32;
-}
-
 .video-external-card {
   display: block;
   text-decoration: none;
@@ -3315,9 +3214,11 @@ button.featured-player-chip:active {
   transition: transform 0.25s ease, filter 0.25s ease;
 }
 
-.video-thumb-stage:hover .video-thumb-img {
-  transform: scale(1.03);
-  filter: brightness(0.98);
+@media (hover: hover) and (pointer: fine) {
+  .video-thumb-stage:hover .video-thumb-img {
+    transform: scale(1.03);
+    filter: brightness(0.98);
+  }
 }
 
 .video-thumb-overlay {
@@ -3357,11 +3258,6 @@ button.featured-player-chip:active {
 }
 
 /* Breaking & Live In-Game Injury Elevation */
-.breaking-wire-card {
-  border-color: rgba(239, 68, 68, 0.45);
-  background: linear-gradient(160deg, rgba(var(--primary-rgb, 170, 0, 0), 0.14), var(--bg-elevated) 55%);
-}
-
 .breaking-elevated {
   border-color: rgba(var(--primary-bright-rgb, 212, 25, 25), 0.42) !important;
   box-shadow: inset 3px 0 0 var(--scarlet-bright);
@@ -3675,12 +3571,18 @@ button.featured-player-chip:active {
   transition: opacity 0.14s ease, transform 0.14s ease;
 }
 
-.jargon-info-dot:hover,
-.jargon-info-dot:focus-visible,
-.big-board-sources-trigger:hover .jargon-info-dot-inline {
+.jargon-info-dot:focus-visible {
   opacity: 1;
   transform: scale(1.08);
   outline: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .jargon-info-dot:hover,
+  .big-board-sources-trigger:hover .jargon-info-dot-inline {
+    opacity: 1;
+    transform: scale(1.08);
+  }
 }
 
 /* OverTheCap 5-Year Tabs & Multi-Year Salary Cap Simulator Table */
@@ -4746,10 +4648,6 @@ button.gameday-active-pill:hover {
   text-decoration: none;
 }
 
-.wire-author-link:hover {
-  text-decoration: underline;
-}
-
 .confirming-reports-toggle {
   margin-top: 4px;
   padding: 4px 8px;
@@ -4769,42 +4667,6 @@ button.gameday-active-pill:hover {
 .similar-story-row {
   padding: 8px 10px;
   overflow-wrap: anywhere;
-}
-
-.related-coverage-row {
-  font-size: 11.5px;
-  line-height: 1.4;
-  color: var(--text-secondary);
-  padding: 4px 0;
-  border-top: 1px solid var(--border-subtle);
-}
-
-.related-coverage-row:first-child {
-  border-top: 0;
-  padding-top: 1px;
-}
-
-/* Clickable "XX reports" AI Synthesis Source Trigger & Slide-Up Report List */
-.synthesis-reports-link {
-  appearance: none;
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font: inherit;
-  color: var(--gold-bright);
-  font-weight: 700;
-  text-decoration: underline;
-  text-decoration-color: var(--gold-border);
-  text-underline-offset: 2.5px;
-  cursor: pointer;
-  transition: color 0.14s ease, text-decoration-color 0.14s ease;
-}
-
-.synthesis-reports-link:hover,
-.synthesis-reports-link:focus-visible {
-  color: var(--text-primary);
-  text-decoration-color: var(--gold-bright);
 }
 
 .synthesis-source-sheet-row {
@@ -4974,11 +4836,17 @@ tr.unit-overall-banner.overall-stat-row td {
   transition: transform 0.12s ease, filter 0.14s ease;
 }
 
-.rank-badge-trigger:hover,
 .rank-badge-trigger:focus-visible {
   transform: translateY(-1px);
   filter: brightness(1.1);
   outline: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rank-badge-trigger:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+  }
 }
 
 .rank-badge-trigger .badge {
@@ -5499,9 +5367,11 @@ tr.unit-overall-banner.overall-stat-row td {
   transition: opacity 0.14s ease;
 }
 
-.health-injury-player-head:hover .health-injury-player-label strong {
-  text-decoration: underline;
-  text-underline-offset: 2px;
+@media (hover: hover) and (pointer: fine) {
+  .health-injury-player-head:hover .health-injury-player-label strong {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
 }
 
 .health-injury-player-ident {
@@ -5660,7 +5530,6 @@ tr.unit-overall-banner.overall-stat-row td {
   color: var(--scarlet);
 }
 
-.brief-inline-source-link:hover,
 .brief-inline-source-link:focus-visible {
   background: var(--gold-border);
   border-color: var(--gold-bright);
@@ -5668,77 +5537,31 @@ tr.unit-overall-banner.overall-stat-row td {
   transform: translateY(-0.5px);
 }
 
-[data-theme="light"] .brief-inline-source-link:hover,
 [data-theme="light"] .brief-inline-source-link:focus-visible {
   background: rgba(var(--primary-rgb, 170, 0, 0), 0.16);
   border-color: var(--scarlet);
   color: var(--scarlet);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .brief-inline-source-link:hover {
+    background: var(--gold-border);
+    border-color: var(--gold-bright);
+    color: var(--text-primary);
+    transform: translateY(-0.5px);
+  }
+
+  [data-theme="light"] .brief-inline-source-link:hover {
+    background: rgba(var(--primary-rgb, 170, 0, 0), 0.16);
+    border-color: var(--scarlet);
+    color: var(--scarlet);
+  }
+}
+
 .brief-inline-source-link .ui-icon {
   display: block;
   margin: 0;
   opacity: 0.92;
-}
-
-.daily-brief-sources-details {
-  margin-top: 3px;
-  padding: 5px 9px;
-}
-
-.daily-brief-sources-list {
-  margin-top: 7px;
-  padding-top: 7px;
-  border-top: 1px solid var(--border-subtle);
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.daily-brief-source-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 6px 8px;
-  border-radius: 8px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  text-decoration: none;
-  color: var(--text-primary);
-  min-width: 0;
-  transition: border-color 0.14s ease;
-}
-
-.subcard-panel.daily-news-brief-card .daily-brief-source-row {
-  background: var(--bg-elevated);
-}
-
-.daily-brief-source-row:hover {
-  border-color: var(--gold-border);
-}
-
-.daily-brief-source-main {
-  min-width: 0;
-  flex: 1;
-}
-
-.daily-brief-source-meta {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  flex-wrap: wrap;
-  font-size: 10.5px;
-  color: var(--gold-bright);
-  font-weight: 700;
-}
-
-.daily-brief-source-title {
-  font-size: 12px;
-  line-height: 1.32;
-  color: var(--text-primary);
-  margin-top: 1px;
-  overflow-wrap: anywhere;
 }
 
 .breaking-above-brief-card {
@@ -6570,8 +6393,10 @@ tr.unit-overall-banner.overall-stat-row td {
   transition: transform 0.25s ease;
 }
 
-a.salient-hero-banner:hover .salient-hero-img {
-  transform: scale(1.025);
+@media (hover: hover) and (pointer: fine) {
+  a.salient-hero-banner:hover .salient-hero-img {
+    transform: scale(1.025);
+  }
 }
 
 .salient-hero-scrim {
@@ -7984,8 +7809,10 @@ mark.search-hl {
   white-space: nowrap;
 }
 
-.tweet-linked-article-card:hover .tweet-linked-article-title {
-  color: var(--text-primary);
+@media (hover: hover) and (pointer: fine) {
+  .tweet-linked-article-card:hover .tweet-linked-article-title {
+    color: var(--text-primary);
+  }
 }
 
 /* Container tweaks for Similar Stories / Brief Sources rows holding a nested Linked Article Card */
@@ -10088,8 +9915,10 @@ mark.search-hl {
 .gamelog-row-link {
   cursor: pointer;
 }
-.gamelog-row-link:hover td {
-  background: var(--bg-card-alt);
+@media (hover: hover) and (pointer: fine) {
+  .gamelog-row-link:hover td {
+    background: var(--bg-card-alt);
+  }
 }
 .gamelog-game-lbl {
   font-weight: 700;

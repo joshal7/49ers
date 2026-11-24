@@ -8,10 +8,10 @@ const SW_RAW_SUB = SW_SUB_MATCH ? SW_SUB_MATCH[1] : '49ers';
 const SW_TEAM_SLUG = IS_NFL_HUB_HOST ? 'nfl' : SW_RAW_SUB === '49ers' ? '49ers' : SW_RAW_SUB;
 const SW_DATA_BASE = SW_TEAM_SLUG === '49ers' ? './data' : `./data/teams/${SW_TEAM_SLUG}`;
 const CACHE_NAME = IS_NFL_HUB_HOST
-  ? 'nfl-hub-v21'
+  ? 'nfl-hub-v22'
   : SW_TEAM_SLUG === '49ers'
-    ? '49ers-faithful-v174'
-    : `${SW_TEAM_SLUG}-hq-v45`;
+    ? '49ers-faithful-v175'
+    : `${SW_TEAM_SLUG}-hq-v46`;
 const PRESERVED_CACHE_PREFIXES =
   SW_TEAM_SLUG === '49ers'
     ? ['49ers-podcast-studio-audio-']
@@ -218,14 +218,43 @@ self.addEventListener('activate', event => {
   );
 });
 
+function safeWaitUntil(event, promise) {
+  const safePromise = Promise.resolve(promise).catch(() => {});
+  if (typeof event?.waitUntil === 'function') {
+    event.waitUntil(safePromise);
+  }
+}
+
+async function serveOfflineAudioRange(request, rangeHeader) {
+  try {
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(request.url, { ignoreSearch: true });
+    if (!cached) return Response.error();
+    const buf = await cached.arrayBuffer();
+    const total = buf.byteLength;
+    const m = /^bytes=(\d*)-(\d*)$/i.exec(String(rangeHeader || '').trim());
+    if (!m || total === 0) return cached;
+    const start = m[1] ? Math.min(total - 1, Math.max(0, Number(m[1]))) : 0;
+    const end = m[2] ? Math.min(total - 1, Math.max(start, Number(m[2]))) : total - 1;
+    const slice = buf.slice(start, end + 1);
+    return new Response(slice, {
+      status: 206,
+      statusText: 'Partial Content',
+      headers: {
+        'Content-Type': cached.headers.get('Content-Type') || 'audio/mp4',
+        'Content-Range': `bytes ${start}-${end}/${total}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': String(slice.byteLength)
+      }
+    });
+  } catch {
+    return Response.error();
+  }
+}
+
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   if (!event.request.url.startsWith(self.location.origin)) return;
-
-  // Let browser handle HTTP byte-range audio requests natively when online; fallback to cache offline
-  if (event.request.headers.get('range')) {
-    return;
-  }
 
   const url = new URL(event.request.url);
   if (
@@ -238,15 +267,26 @@ self.addEventListener('fetch', event => {
   }
   const isAudioAsset = url.pathname.endsWith('.m4a') || url.pathname.endsWith('.mp3');
 
+  // Let browser handle HTTP byte-range audio requests natively when online; slice 206 from cache offline (iOS Safari PWA)
+  const rangeHeader = event.request.headers.get('range');
+  if (rangeHeader) {
+    if (!isAudioAsset) return;
+    event.respondWith(
+      fetch(event.request).catch(() => serveOfflineAudioRange(event.request, rangeHeader))
+    );
+    return;
+  }
+
   if (isAudioAsset) {
     event.respondWith(
       caches.open(CACHE_NAME).then(async cache => {
         const cached = await cache.match(event.request);
         if (cached) return cached;
         try {
-          const res = await fetch(event.request);
+          const res = await fetchWithTimeoutSw(event.request.url, {}, 12000);
           if (res && res.status === 200) {
-            cache.put(event.request, res.clone());
+            const clone = res.clone();
+            safeWaitUntil(event, cache.put(event.request, clone));
           }
           return res;
         } catch {
@@ -271,7 +311,8 @@ self.addEventListener('fetch', event => {
           const rawRes = await fetchWithTimeoutSw(event.request.url, { cache: 'no-cache' }, NETWORK_TIMEOUT_MS);
           const outRes = rawRes && rawRes.redirected && rawRes.ok ? await cleanRedirectedResponse(rawRes) : rawRes;
           if (outRes && outRes.status === 200 && !outRes.redirected) {
-            cache.put(canonicalStaticKey, outRes.clone());
+            const clone = outRes.clone();
+            safeWaitUntil(event, cache.put(canonicalStaticKey, clone));
           }
           return outRes;
         } catch {
@@ -291,15 +332,18 @@ self.addEventListener('fetch', event => {
   const isolateRootByTeam = Boolean(rootHtmlCacheKey && (IS_NFL_HUB_HOST || url.searchParams.has('team')));
   event.respondWith(
     (async () => {
+      const activeCache = await caches.open(CACHE_NAME).catch(() => null);
       let cached = null;
-      if (isolateRootByTeam) {
-        cached = await caches.match(rootHtmlCacheKey);
-      } else if (dataCacheKey) {
-        cached = await caches.match(dataCacheKey, { ignoreSearch: true });
-      } else {
-        cached = await caches.match(event.request, { ignoreSearch: true });
-        if (!cached && isNavigation && isRootHtmlPath) {
-          cached = await caches.match('./', { ignoreSearch: true });
+      if (activeCache) {
+        if (isolateRootByTeam) {
+          cached = await activeCache.match(rootHtmlCacheKey);
+        } else if (dataCacheKey) {
+          cached = await activeCache.match(dataCacheKey, { ignoreSearch: true });
+        } else {
+          cached = await activeCache.match(event.request, { ignoreSearch: true });
+          if (!cached && isNavigation && isRootHtmlPath) {
+            cached = await activeCache.match('./', { ignoreSearch: true });
+          }
         }
       }
       const timeoutMs = cached ? FAST_CACHED_NETWORK_TIMEOUT_MS : NETWORK_TIMEOUT_MS;
@@ -334,7 +378,10 @@ self.addEventListener('fetch', event => {
             dataCacheKey ||
             (isNavigation && url.pathname === '/index.html' ? './' : event.request);
           const clone = outRes.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(cacheKey, clone));
+          safeWaitUntil(
+            event,
+            caches.open(CACHE_NAME).then(cache => cache.put(cacheKey, clone))
+          );
         }
         return outRes;
       } catch {
@@ -342,15 +389,14 @@ self.addEventListener('fetch', event => {
           // Stale-while-revalidate self-heal: when the 2.2s cellular fast-timeout falls back to a cached
           // `/data/*.json` feed, continue refreshing the SW cache in the background so the next load is fresh.
           if (dataCacheKey) {
-            event.waitUntil(
-              fetchWithTimeoutSw(event.request.url, { cache: 'no-cache' }, 12000)
-                .then(async bgRes => {
-                  if (!bgRes || bgRes.status !== 200) return;
-                  const cleanBg = bgRes.redirected ? await cleanRedirectedResponse(bgRes) : bgRes;
-                  const c = await caches.open(CACHE_NAME);
-                  await c.put(dataCacheKey, cleanBg.clone());
-                })
-                .catch(() => {})
+            safeWaitUntil(
+              event,
+              fetchWithTimeoutSw(event.request.url, { cache: 'no-cache' }, 12000).then(async bgRes => {
+                if (!bgRes || bgRes.status !== 200) return;
+                const cleanBg = bgRes.redirected ? await cleanRedirectedResponse(bgRes) : bgRes;
+                const c = await caches.open(CACHE_NAME);
+                await c.put(dataCacheKey, cleanBg.clone());
+              })
             );
           }
           return cached.redirected ? cleanRedirectedResponse(cached) : cached;
@@ -418,9 +464,14 @@ self.addEventListener('notificationclick', event => {
   event.notification.close();
   const targetUrl = event.notification?.data?.url || './';
   event.waitUntil(
-    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(async clientList => {
       for (const client of clientList) {
         if ('focus' in client) {
+          if (targetUrl && targetUrl !== './' && typeof client.navigate === 'function') {
+            try {
+              await client.navigate(targetUrl);
+            } catch {}
+          }
           return client.focus();
         }
       }

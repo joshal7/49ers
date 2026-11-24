@@ -15,7 +15,6 @@
 
 import {
   AMBIGUOUS_PLAYER_SURNAMES,
-  decodeHtmlEntities,
   stripHtmlAndDecodeEntities,
   isPaywalledPublisher,
   sanitizeExternalUrl,

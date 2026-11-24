@@ -40,6 +40,7 @@ import {
 } from '../src/engine/geminiStudioPrompts.js';
 import {
   decodeHtmlEntities,
+  isAllowedInlineVideoStreamUrl,
   stripHtmlAndDecodeEntities
 } from '../src/engine/linkIntegrity.js';
 import {
@@ -972,6 +973,9 @@ export default {
       const cacheKeyUrl = new URL(request.url);
       cacheKeyUrl.search = `?event=${encodeURIComponent(eventId)}&mode=${encodeURIComponent(mode)}`;
       const cacheKeyReq = new Request(cacheKeyUrl.toString(), { method: 'GET' });
+      const summaryKeyUrl = new URL(request.url);
+      summaryKeyUrl.search = `?event=${encodeURIComponent(eventId)}&mode=summary`;
+      const summaryKeyReq = new Request(summaryKeyUrl.toString(), { method: 'GET' });
 
       if (edgeCache) {
         try {
@@ -986,27 +990,60 @@ export default {
       }
 
       try {
-        const upRes = await fetch(upstreamUrl, {
-          headers: { Accept: 'application/json' },
-          signal: AbortSignal.timeout(5000)
-        });
-        if (!upRes.ok) {
-          return jsonResp(
-            { error: `Upstream ESPN returned ${upRes.status}` },
-            upRes.status >= 400 && upRes.status < 500 ? upRes.status : 502,
-            cors
-          );
+        // Reuse cached upstream `summary` when `mode=situation` misses so we never double-fetch 400KB ESPN JSON!
+        let rawText = '';
+        let summaryCacheReused = false;
+        if (mode === 'situation' && edgeCache) {
+          try {
+            const sumHit = await edgeCache.match(summaryKeyReq);
+            if (sumHit && sumHit.ok) {
+              rawText = await sumHit.text();
+              summaryCacheReused = Boolean(rawText);
+            }
+          } catch {}
         }
-        const rawText = await upRes.text();
+        if (!rawText) {
+          const upRes = await fetch(upstreamUrl, {
+            headers: { Accept: 'application/json' },
+            signal: AbortSignal.timeout(5000)
+          });
+          if (!upRes.ok) {
+            return jsonResp(
+              { error: `Upstream ESPN returned ${upRes.status}` },
+              upRes.status >= 400 && upRes.status < 500 ? upRes.status : 502,
+              cors
+            );
+          }
+          rawText = await upRes.text();
+        }
         let parsed = null;
         try {
           parsed = JSON.parse(rawText);
         } catch {}
         const comp = parsed?.header?.competitions?.[0] || {};
         const st = String(comp?.status?.type?.state || '').toLowerCase();
+        const summaryTtlSec = st === 'post' ? 3600 : st === 'pre' ? 30 : 3;
+
+        // Populate shared `summary` edge cache when fetched on behalf of `mode=situation`
+        if (mode === 'situation' && !summaryCacheReused && edgeCache && rawText) {
+          const sumPut = edgeCache
+            .put(
+              summaryKeyReq,
+              new Response(rawText, {
+                status: 200,
+                headers: {
+                  'Content-Type': 'application/json; charset=utf-8',
+                  'Cache-Control': `public, max-age=${summaryTtlSec}, s-maxage=${summaryTtlSec}`
+                }
+              })
+            )
+            .catch(() => {});
+          if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(sumPut);
+          else await sumPut;
+        }
 
         let bodyOut = rawText;
-        let ttlSec = st === 'post' ? 3600 : st === 'pre' ? 30 : 3;
+        let ttlSec = summaryTtlSec;
         if (mode === 'situation') {
           ttlSec = st === 'post' ? 60 : 2;
           const sit = parsed?.situation || comp?.situation || {};
@@ -1587,29 +1624,35 @@ export default {
               }
             } catch {}
           }
-          try {
-            const res = await fetch(clean, {
-              method: 'HEAD',
-              redirect: 'follow',
-              headers: { 'User-Agent': 'Mozilla/5.0 (compatible; NFLFaithfulBot/1.0)' },
-              signal: AbortSignal.timeout(4500)
-            });
-            if (res?.url && /^https:\/\//i.test(res.url)) {
-              const resolved = stripEdgeTrackingParams(res.url);
-              expanded[clean] = resolved;
-              if (cache && cacheKey) {
-                await cache
-                  .put(
-                    cacheKey,
-                    new Response(resolved, {
-                      status: 200,
-                      headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' }
-                    })
-                  )
-                  .catch(() => {});
+          for (const method of ['HEAD', 'GET']) {
+            try {
+              const res = await fetch(clean, {
+                method,
+                redirect: 'follow',
+                headers: { 'User-Agent': 'Mozilla/5.0 (compatible; NFLFaithfulBot/1.0)' },
+                signal: AbortSignal.timeout(4000)
+              });
+              if (res?.url) {
+                const dest = new URL(res.url.startsWith('http://') ? `https://${res.url.slice(7)}` : res.url);
+                if (dest.protocol === 'https:' && !ALLOWED_SHORTENER_HOST_RE.test(dest.hostname.toLowerCase())) {
+                  const resolved = stripEdgeTrackingParams(dest.toString());
+                  expanded[clean] = resolved;
+                  if (cache && cacheKey) {
+                    await cache
+                      .put(
+                        cacheKey,
+                        new Response(resolved, {
+                          status: 200,
+                          headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' }
+                        })
+                      )
+                      .catch(() => {});
+                  }
+                  break;
+                }
               }
-            }
-          } catch {}
+            } catch {}
+          }
         })
       );
       return jsonResp({ ok: true, expanded }, 200, cors);
@@ -1747,7 +1790,7 @@ export default {
                 const eUrl = `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/${encodeURIComponent(gameId)}/competitions/${encodeURIComponent(gameId)}/competitors/${tid}/roster`;
                 const eRes = await fetch(eUrl, {
                   headers: { 'User-Agent': 'NFLFaithfulEdge/1.0' },
-                  signal: AbortSignal.timeout(5000)
+                  signal: AbortSignal.timeout(2200)
                 });
                 if (!eRes.ok) return;
                 const eJson = await eRes.json();
@@ -1785,27 +1828,37 @@ export default {
       });
     }
 
-    // 6. Allowlisted Inline MP4 Video Relay (Referer-free)
+    // 6. Allowlisted Inline MP4 Video Relay (Referer-free + post-redirect SSRF guard + explicit headers)
     if ((request.method === 'GET' || request.method === 'HEAD') && url.pathname === '/api/video-stream') {
       const target = String(url.searchParams.get('url') || '').trim();
+      if (!isAllowedInlineVideoStreamUrl(target)) {
+        return jsonResp({ error: 'Video host not allowlisted' }, 403, cors);
+      }
       try {
-        const parsed = new URL(target);
-        if (parsed.protocol !== 'https:' || !ALLOWED_VIDEO_HOSTS.includes(parsed.hostname.toLowerCase())) {
-          return jsonResp({ error: 'Video host not allowlisted' }, 403, cors);
-        }
-        const upstream = await fetch(parsed.toString(), {
+        const upstream = await fetch(target, {
           method: request.method,
           headers: request.headers.get('Range') ? { Range: request.headers.get('Range') } : {},
+          redirect: 'follow',
           signal: AbortSignal.timeout(12000)
         });
-        const headers = new Headers(upstream.headers);
-        Object.entries(cors).forEach(([k, v]) => headers.set(k, v));
+        if (upstream.url && !isAllowedInlineVideoStreamUrl(upstream.url)) {
+          return jsonResp({ error: 'Redirected video host not allowlisted' }, 403, cors);
+        }
+        const headers = new Headers(cors);
+        headers.set('Content-Type', upstream.headers.get('Content-Type') || 'video/mp4');
+        headers.set('Accept-Ranges', upstream.headers.get('Accept-Ranges') || 'bytes');
+        headers.set('Cross-Origin-Resource-Policy', 'cross-origin');
+        headers.set('Cache-Control', 'public, max-age=86400');
+        for (const h of ['Content-Length', 'Content-Range', 'ETag', 'Last-Modified']) {
+          const val = upstream.headers.get(h);
+          if (val) headers.set(h, val);
+        }
         return new Response(request.method === 'HEAD' ? null : upstream.body, {
           status: upstream.status,
           headers
         });
       } catch {
-        return jsonResp({ error: 'Invalid video stream URL' }, 400, cors);
+        return jsonResp({ error: 'Video stream upstream unreachable' }, 502, cors);
       }
     }
 
@@ -1844,6 +1897,9 @@ export default {
 
       if (request.method === 'POST') {
         const rawBodyText = await request.text().catch(() => '');
+        if (rawBodyText.length > 64_000) {
+          return jsonResp({ error: 'Daily news brief payload too large' }, 413, cors, noStoreHeaders);
+        }
         let body = null;
         try {
           body = rawBodyText ? JSON.parse(rawBodyText) : null;
@@ -1862,20 +1918,38 @@ export default {
           return jsonResp({ cached: true, teamAbbr: team.abbr, ...existing }, 200, cors, noStoreHeaders);
         }
 
-        if (body.seedData || body.seedRawText) {
-          const seedCheckText = `${body.seedRawText || ''} ${JSON.stringify(body.seedData || '')}`;
+        if ((body.seedData || body.seedRawText) && !body.prompt) {
+          const validSeedData =
+            body.seedData &&
+            typeof body.seedData === 'object' &&
+            !Array.isArray(body.seedData) &&
+            typeof body.seedData.headline === 'string' &&
+            body.seedData.headline.trim().length > 0 &&
+            Array.isArray(body.seedData.bullets) &&
+            body.seedData.bullets.length >= 2
+              ? body.seedData
+              : null;
+          const cleanSeedRawText =
+            typeof body.seedRawText === 'string' ? body.seedRawText.trim().slice(0, 16000) : '';
+          if (!validSeedData && !cleanSeedRawText) {
+            return jsonResp({ error: 'Invalid daily news brief seed payload' }, 400, cors, noStoreHeaders);
+          }
+          const seedCheckText = `${cleanSeedRawText} ${JSON.stringify(validSeedData || '')}`;
           if (hasCrossTeam49ersLeak(seedCheckText, team)) {
             return jsonResp({ error: 'Rejected cross-team contamination in daily brief seed' }, 422, cors, noStoreHeaders);
           }
           const seeded = {
             teamAbbr: team.abbr,
             cycleKey,
-            modelUsed: body.modelUsed || PRIMARY_GEMINI_REASONING_MODEL,
-            generatedAt: body.generatedAt || new Date().toISOString(),
-            rawText: body.seedRawText || '',
-            data: body.seedData || null
+            modelUsed: String(body.modelUsed || PRIMARY_GEMINI_REASONING_MODEL).slice(0, 64),
+            generatedAt: String(body.generatedAt || new Date().toISOString()).slice(0, 40),
+            rawText: cleanSeedRawText,
+            data: validSeedData
           };
           const serializedSeed = JSON.stringify(seeded);
+          if (serializedSeed.length > 32_000) {
+            return jsonResp({ error: 'Daily news brief seed exceeds size cap' }, 413, cors, noStoreHeaders);
+          }
           await Promise.all([
             env.SHARED_CACHE?.put(kvKey, serializedSeed, { expirationTtl: briefTtlSec }),
             env.SHARED_CACHE?.put(latestKvKey, serializedSeed, { expirationTtl: briefTtlSec })

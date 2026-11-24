@@ -20,6 +20,7 @@
     "test:32teams": "node tests/all-32-teams-qa.mjs",
     "test:unit": "node tests/unit-engines-qa.mjs && node tests/holistic-qa-regressions.mjs && node tests/timeliness-simulation-qa.mjs",
     "test:e2e": "node tests/e2e-mobile-qa.mjs",
-    "test": "node tests/unit-engines-qa.mjs && node tests/holistic-qa-regressions.mjs && node tests/timeliness-simulation-qa.mjs && node tests/e2e-mobile-qa.mjs"
+    "test": "node tests/unit-engines-qa.mjs && node tests/holistic-qa-regressions.mjs && node tests/timeliness-simulation-qa.mjs && node tests/e2e-mobile-qa.mjs",
+    "test:all": "npm test && npm run test:nfl && npm run test:32teams"
   }
 }

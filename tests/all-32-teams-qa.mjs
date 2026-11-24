@@ -25,6 +25,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
+import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import {
@@ -61,7 +62,22 @@ import { runUniversalSearch } from '../src/engine/universalSearchEngine.js';
 import { buildNflTeamsPagesDist } from '../scripts/build-nfl-teams-pages.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
-const CHROME_BIN = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+function resolveChromeBinary() {
+  const candidates = [
+    process.env.CHROME_BIN,
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    '/usr/bin/google-chrome',
+    '/usr/bin/google-chrome-stable',
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser'
+  ].filter(Boolean);
+  for (const p of candidates) {
+    if (fs.existsSync(p)) return p;
+  }
+  throw new Error(`Chrome/Chromium not found (set CHROME_BIN). Checked: ${candidates.join(', ')}`);
+}
+const CHROME_BIN = resolveChromeBinary();
 const REQUIRED_DATA_FILES = [
   'meta.json',
   'roster.json',
@@ -122,7 +138,7 @@ function startStaticServer(rootDir = ROOT) {
 }
 
 async function launchChrome(port) {
-  const userDataDir = `/tmp/chrome-all32-e2e-${Date.now()}-${Math.floor(Math.random() * 9999)}`;
+  const userDataDir = path.join(os.tmpdir(), `chrome-all32-e2e-${Date.now()}-${Math.floor(Math.random() * 9999)}`);
   const proc = spawn(
     CHROME_BIN,
     [

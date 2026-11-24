@@ -2138,6 +2138,38 @@ for (const team of ALL_NFL_TEAMS) {
     ALIAS_TO_TEAM.set(String(a).toLowerCase(), team);
   }
 }
+// Canonical cross-feed NFL/ESPN/PFR/historical aliases so every normalizer resolves identically (incl. ESPN Rams `LA`)
+const EXTRA_CANONICAL_TEAM_ALIASES = {
+  la: 'LAR',
+  stl: 'LAR',
+  sd: 'LAC',
+  oak: 'LV',
+  wsh: 'WAS',
+  jac: 'JAX',
+  arz: 'ARI',
+  blt: 'BAL',
+  clv: 'CLE',
+  hst: 'HOU',
+  gnb: 'GB',
+  kan: 'KC',
+  nwe: 'NE',
+  nor: 'NO',
+  sfo: 'SF',
+  tam: 'TB',
+  ram: 'LAR',
+  rav: 'BAL',
+  crd: 'ARI',
+  htx: 'HOU',
+  clt: 'IND',
+  oti: 'TEN',
+  rai: 'LV',
+  sdg: 'LAC'
+};
+for (const [alias, canonical] of Object.entries(EXTRA_CANONICAL_TEAM_ALIASES)) {
+  if (!ALIAS_TO_TEAM.has(alias) && TEAM_REGISTRY[canonical]) {
+    ALIAS_TO_TEAM.set(alias, TEAM_REGISTRY[canonical]);
+  }
+}
 
 export function normalizeAnyTeamAbbr(raw = '') {
   const clean = String(raw || '').trim().toLowerCase();
@@ -2154,11 +2186,6 @@ export function getTeamByAbbr(abbr = 'SF') {
 export function getTeamBySlug(slug = '49ers') {
   const clean = String(slug || '').trim().toLowerCase();
   return TEAM_BY_SLUG[clean] || ALIAS_TO_TEAM.get(clean) || TEAM_REGISTRY.SF;
-}
-
-export function getTeamByEspnId(espnId) {
-  const id = Number(espnId);
-  return ALL_NFL_TEAMS.find(t => t.espnId === id) || null;
 }
 
 export function resolveTeamConfig(input = null) {

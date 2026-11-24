@@ -661,11 +661,24 @@ With **Brandon Aiyuk** on season-ending IR and **Mike Evans** rehabbing on IR, K
   });
 }
 
-async function launchHeadlessChrome(userDataDir) {
-  const chromePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-  if (!fs.existsSync(chromePath)) {
-    throw new Error(`Google Chrome not found at ${chromePath}`);
+function resolveChromeBinary() {
+  const candidates = [
+    process.env.CHROME_BIN,
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    '/usr/bin/google-chrome',
+    '/usr/bin/google-chrome-stable',
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser'
+  ].filter(Boolean);
+  for (const p of candidates) {
+    if (fs.existsSync(p)) return p;
   }
+  throw new Error(`Google Chrome / Chromium not found (set CHROME_BIN). Checked: ${candidates.join(', ')}`);
+}
+
+async function launchHeadlessChrome(userDataDir) {
+  const chromePath = resolveChromeBinary();
 
   const proc = spawn(
     chromePath,
@@ -5144,8 +5157,9 @@ async function main() {
           );
 
           const kickoffIso = origKickoffIso || '';
-          const hoursUntilKo = (Date.parse(kickoffIso) - Date.now()) / 3600_000;
-          const isEarlyWeek = hoursUntilKo > 98;
+          const anchorMs = Date.parse(st.appData.meta?.updatedAt || '') || Date.now();
+          const hoursUntilKo = (Date.parse(kickoffIso) - anchorMs) / 3600_000;
+          const isEarlyWeek = Number.isFinite(hoursUntilKo) && hoursUntilKo > 98;
 
           return {
             sfSticky,

@@ -894,7 +894,7 @@ ${snapshot.slice(0, 9000)}`;
   for (const model of models) {
     if ((GEMINI_BATCH_TIMEOUT_COUNTS.get(model) || 0) >= 2) continue;
     try {
-      const thinkingConfig = buildGeminiThinkingConfig(model, 'XHIGH');
+      const thinkingConfig = buildGeminiThinkingConfig(model, null, { preferredThinkingLevel: 'XHIGH' });
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
       const res = await fetch(endpoint, {
         method: 'POST',

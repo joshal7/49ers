@@ -67,6 +67,7 @@ import {
   fetchGamecastForGame,
   fetchLiveSituationFingerprint,
   getCachedGamecastModel,
+  syncGamecastScoresBackToAppData,
   loadUserPrefs,
   saveUserPrefs
 } from './services/dataService.js';
@@ -106,7 +107,8 @@ import {
   mergeDailyTopNewsBriefOnUpstreamRefresh,
   shouldTriggerDailyTopNewsBriefRefresh,
   refreshDailyTopNewsBriefIfDue,
-  clearDailyNewsBriefAttemptLock
+  clearDailyNewsBriefAttemptLock,
+  resolveReadOnlyPlatformApiBase
 } from './services/aiWorkerClient.js';
 import {
   deleteEpisodeAudioBlob,
@@ -230,9 +232,12 @@ function syncTopHeaderHeight() {
 
 // Pointer-active guard & coalesced background render scheduler:
 // Guarantees background async hydrations NEVER replace `#mainView` / `#sheetBody` innerHTML
-// between `pointerdown`/`touchstart` and `click`, eliminating swallowed first-clicks on startup!
+// between `pointerdown`/`touchstart` and iOS Safari's synthesized `click` (80–300ms after `pointerup`),
+// or during active momentum scrolling — eliminating swallowed first-clicks on startup!
 let isPointerInteractionActive = false;
 let lastUserInteractionMs = 0;
+let postPointerClickGraceUntilMs = 0;
+let lastScrollEventMs = 0;
 let pointerSafetyTimerId = null;
 let bgRenderFlushTimerId = null;
 let bgRenderRafId = null;
@@ -241,6 +246,7 @@ const pendingBgRender = { main: false, sheet: false, preserveSheetScroll: true }
 function markPointerInteractionStart() {
   isPointerInteractionActive = true;
   lastUserInteractionMs = Date.now();
+  postPointerClickGraceUntilMs = 0;
   if (pointerSafetyTimerId) clearTimeout(pointerSafetyTimerId);
   pointerSafetyTimerId = setTimeout(() => {
     isPointerInteractionActive = false;
@@ -248,18 +254,28 @@ function markPointerInteractionStart() {
     if (pendingBgRender.main || pendingBgRender.sheet) {
       schedulePendingBgRenderFlush(40);
     }
-  }, 650);
+  }, 1500);
 }
 
-function markPointerInteractionEnd(delayFlushMs = 70) {
-  lastUserInteractionMs = Date.now();
+function markPointerInteractionEnd(delayFlushMs = 340) {
+  const now = Date.now();
+  lastUserInteractionMs = now;
   isPointerInteractionActive = false;
+  postPointerClickGraceUntilMs = Math.max(postPointerClickGraceUntilMs, now + Math.max(0, delayFlushMs));
   if (pointerSafetyTimerId) {
     clearTimeout(pointerSafetyTimerId);
     pointerSafetyTimerId = null;
   }
   if (pendingBgRender.main || pendingBgRender.sheet) {
-    schedulePendingBgRenderFlush(delayFlushMs);
+    schedulePendingBgRenderFlush(Math.max(40, delayFlushMs));
+  }
+}
+
+function markSynthesizedClickSettled() {
+  lastUserInteractionMs = Date.now();
+  postPointerClickGraceUntilMs = 0;
+  if (!isPointerInteractionActive && (pendingBgRender.main || pendingBgRender.sheet)) {
+    schedulePendingBgRenderFlush(30);
   }
 }
 
@@ -268,24 +284,37 @@ function schedulePendingBgRenderFlush(delayMs = 0) {
   const runFlush = () => {
     bgRenderFlushTimerId = null;
     if (isPointerInteractionActive) return;
+    const now = Date.now();
+    if (now < postPointerClickGraceUntilMs) {
+      schedulePendingBgRenderFlush(Math.max(25, postPointerClickGraceUntilMs - now + 10));
+      return;
+    }
+    if (now - lastScrollEventMs < 140) {
+      schedulePendingBgRenderFlush(150);
+      return;
+    }
     if (!pendingBgRender.main && !pendingBgRender.sheet) return;
-    const doMain = pendingBgRender.main;
-    const doSheet = pendingBgRender.sheet;
-    const preserveSheetScroll = pendingBgRender.preserveSheetScroll;
-    pendingBgRender.main = false;
-    pendingBgRender.sheet = false;
-    pendingBgRender.preserveSheetScroll = true;
 
     const execute = () => {
       bgRenderRafId = null;
-      if (isPointerInteractionActive) {
-        if (doMain) pendingBgRender.main = true;
-        if (doSheet) {
-          pendingBgRender.sheet = true;
-          pendingBgRender.preserveSheetScroll = preserveSheetScroll;
-        }
+      if (!pendingBgRender.main && !pendingBgRender.sheet) return;
+      if (isPointerInteractionActive) return;
+      const execNow = Date.now();
+      if (execNow < postPointerClickGraceUntilMs) {
+        schedulePendingBgRenderFlush(Math.max(25, postPointerClickGraceUntilMs - execNow + 10));
         return;
       }
+      if (execNow - lastScrollEventMs < 140) {
+        schedulePendingBgRenderFlush(150);
+        return;
+      }
+      const doMain = pendingBgRender.main;
+      const doSheet = pendingBgRender.sheet;
+      const preserveSheetScroll = pendingBgRender.preserveSheetScroll;
+      pendingBgRender.main = false;
+      pendingBgRender.sheet = false;
+      pendingBgRender.preserveSheetScroll = true;
+
       const activeTag = document.activeElement?.tagName;
       const isTyping = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
       if (doMain && state.appData && !isTyping && !hasActivelyPlayingInlineMedia() && !state.jobStatus?.active) {
@@ -319,7 +348,12 @@ function requestBackgroundRender({ main = false, sheet = false, preserveSheetScr
   }
   if (!pendingBgRender.main && !pendingBgRender.sheet) return;
   if (isPointerInteractionActive) return;
-  schedulePendingBgRenderFlush(0);
+  const now = Date.now();
+  const waitMs = Math.max(
+    now < postPointerClickGraceUntilMs ? postPointerClickGraceUntilMs - now + 10 : 0,
+    now - lastScrollEventMs < 140 ? 150 : 0
+  );
+  schedulePendingBgRenderFlush(waitMs);
 }
 
 function fetchWithAbortTimeout(url, init = {}, timeoutMs = 5000) {
@@ -514,6 +548,7 @@ function setCapMovesForYear(yearKey, nextMoves) {
 }
 
 function closeJargonPopover() {
+  if (!activeJargonAnchor) return;
   const pop = document.getElementById('jargonPopover');
   if (pop) {
     pop.hidden = true;
@@ -1051,7 +1086,7 @@ async function toggleQuietPushAlerts() {
     state.prefs.pushAlerts = { ...pushPrefs, enabled: false, endpoint: '', subscribedAt: null };
     state.pushStatusNotice = 'Quiet alerts turned off.';
     saveUserPrefs(state.prefs);
-    renderSheet({ preserveScroll: true });
+    if (state.sheetMode === 'settings') requestBackgroundRender({ sheet: true, preserveSheetScroll: true });
     return;
   }
 
@@ -1078,7 +1113,7 @@ async function toggleQuietPushAlerts() {
   }
   if (perm !== 'granted') {
     state.pushStatusNotice = 'Notification permission was blocked. Enable it in browser site settings.';
-    renderSheet({ preserveScroll: true });
+    if (state.sheetMode === 'settings') requestBackgroundRender({ sheet: true, preserveSheetScroll: true });
     return;
   }
 
@@ -1130,7 +1165,7 @@ async function toggleQuietPushAlerts() {
   };
   state.pushStatusNotice = noticeMsg;
   saveUserPrefs(state.prefs);
-  renderSheet({ preserveScroll: true });
+  if (state.sheetMode === 'settings') requestBackgroundRender({ sheet: true, preserveSheetScroll: true });
 }
 
 async function sendTestQuietAlert() {
@@ -1165,7 +1200,7 @@ async function sendTestQuietAlert() {
   } catch {
     state.pushStatusNotice = 'Test alert triggered (check device notification center).';
   }
-  renderSheet({ preserveScroll: true });
+  if (state.sheetMode === 'settings') requestBackgroundRender({ sheet: true, preserveSheetScroll: true });
 }
 
 function getReportersMap() {
@@ -1337,9 +1372,16 @@ function syncLiveWireButtonsDom() {
   if (sheetSyncBtn) {
     if (state.sheetMode === 'player' && state.appData) {
       sheetSyncBtn.hidden = false;
+      const prevSyncing = sheetSyncBtn.classList.contains('is-syncing');
       sheetSyncBtn.classList.toggle('is-syncing', syncing);
       sheetSyncBtn.setAttribute('aria-busy', syncing ? 'true' : 'false');
-      sheetSyncBtn.innerHTML = `${iconSvg(syncing ? 'loader' : 'bolt', 12, syncing ? 'wire-sync-spin' : '')}<span id="sheetSyncWireLabel">${syncing ? 'Sync…' : esc(syncAge)}</span>`;
+      const existingLabel = sheetSyncBtn.querySelector('#sheetSyncWireLabel');
+      const nextText = syncing ? 'Sync…' : syncAge;
+      if (existingLabel && prevSyncing === syncing) {
+        if (existingLabel.textContent !== nextText) existingLabel.textContent = nextText;
+      } else if (!isPointerInteractionActive) {
+        sheetSyncBtn.innerHTML = `${iconSvg(syncing ? 'loader' : 'bolt', 12, syncing ? 'wire-sync-spin' : '')}<span id="sheetSyncWireLabel">${esc(nextText)}</span>`;
+      }
     } else {
       sheetSyncBtn.hidden = true;
       sheetSyncBtn.classList.remove('is-syncing');
@@ -1350,9 +1392,16 @@ function syncLiveWireButtonsDom() {
   document
     .querySelectorAll('#mainView [data-action="sync-live-wire-now"]')
     .forEach(btn => {
+      const prevSyncing = btn.classList.contains('is-syncing');
       btn.classList.toggle('is-syncing', syncing);
       btn.setAttribute('aria-busy', syncing ? 'true' : 'false');
-      btn.innerHTML = `${iconSvg(syncing ? 'loader' : 'bolt', 12, syncing ? 'wire-sync-spin' : '')}<span>${syncing ? 'Sync…' : esc(syncAge)}</span>`;
+      const existingSpan = btn.querySelector('span');
+      const nextText = syncing ? 'Sync…' : syncAge;
+      if (existingSpan && prevSyncing === syncing) {
+        if (existingSpan.textContent !== nextText) existingSpan.textContent = nextText;
+      } else if (!isPointerInteractionActive) {
+        btn.innerHTML = `${iconSvg(syncing ? 'loader' : 'bolt', 12, syncing ? 'wire-sync-spin' : '')}<span>${esc(nextText)}</span>`;
+      }
     });
 }
 
@@ -1484,8 +1533,8 @@ function renderMain({ isBackground = false } = {}) {
         getCapMovesForYear(primaryCapYear),
         { baseYear: primaryCapYear }
       );
-      const mcSimResult = getMonteCarloResult();
       const { orderedBlocks } = resolveHomeDashboardState();
+      const mcSimResult = orderedBlocks.includes('playoff_picture') ? getMonteCarloResult() : null;
       mainEl.innerHTML = renderHomeDashboardHtml({
         orderedBlocks,
         appData: state.appData,
@@ -1756,11 +1805,11 @@ function bindInlineVideoFallbacks(videoEl) {
   });
 
   videoEl.addEventListener('error', () => {
-    const workerBase = String(state.prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
+    const workerBase = resolveReadOnlyPlatformApiBase(state.prefs || {});
     if (
       !videoEl.dataset.retriedRelay &&
       workerBase &&
-      /^https:\/\//i.test(workerBase) &&
+      /^https?:\/\//i.test(workerBase) &&
       isAllowedInlineVideoStreamUrl(originalSrc)
     ) {
       videoEl.dataset.retriedRelay = '1';
@@ -2194,10 +2243,11 @@ async function openOpponentPlayerSheet({
       error: bundle?.error || 'Unavailable'
     };
   }
-  renderSheet({ preserveScroll: true });
+  requestBackgroundRender({ sheet: true, preserveSheetScroll: true });
 }
 
 function renderSheet({ preserveScroll = false } = {}) {
+  pendingBgRender.sheet = false;
   const backdrop = document.getElementById('bottomSheetBackdrop');
   const eyebrow = document.getElementById('sheetEyebrow');
   const title = document.getElementById('sheetTitle');
@@ -2205,6 +2255,7 @@ function renderSheet({ preserveScroll = false } = {}) {
   if (!backdrop || !body) return;
 
   if (!state.sheetMode) {
+    remoteSheetRequestSeq += 1;
     state.sheetRemoteContext = null;
     applyRemoteTeamThemeToSheet(null);
     backdrop.hidden = true;
@@ -2373,11 +2424,21 @@ function renderMiniPlayer(audioSnapshot) {
   const miniEl = document.getElementById('miniPlayer');
   if (!miniEl) return;
 
+  const activeTagMini = document.activeElement?.tagName;
+  const isTypingMini = activeTagMini === 'INPUT' || activeTagMini === 'TEXTAREA';
+  const syncAudioTabView = () => {
+    if (isPointerInteractionActive || isTypingMini) {
+      requestBackgroundRender({ main: true });
+    } else {
+      renderMain();
+    }
+  };
+
   if (!audioSnapshot?.episode) {
     miniEl.hidden = true;
     document.body.classList.remove('has-mini-player');
     if (prevEpId && state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
-      renderMain();
+      syncAudioTabView();
     }
     return;
   }
@@ -2395,7 +2456,7 @@ function renderMiniPlayer(audioSnapshot) {
     state.studioSubTab === 'podcast' &&
     !state.jobStatus?.active
   ) {
-    renderMain();
+    syncAudioTabView();
   }
 
   const titleEl = document.getElementById('miniPlayerTitle');
@@ -2586,6 +2647,8 @@ function stopGamecastLivePoller() {
     gamecastPollTimerId = null;
   }
   gamecastPollSeq += 1;
+  state.gamecastSyncing = false;
+  state.gamecastLoadingId = null;
 }
 
 function getActiveGamecastTarget() {
@@ -2602,7 +2665,11 @@ function getActiveGamecastTarget() {
 
 function renderGamecastPreservingScroll({ isBackground = false } = {}) {
   if (hasActivelyPlayingInlineMedia()) return;
-  if (isBackground && isPointerInteractionActive) {
+  const now = Date.now();
+  if (
+    isBackground &&
+    (isPointerInteractionActive || now < postPointerClickGraceUntilMs || now - lastScrollEventMs < 140)
+  ) {
     requestBackgroundRender({ main: true });
     return;
   }
@@ -2645,12 +2712,20 @@ async function hydrateGamecastById(meta, { forceRefresh = false, silent = false,
       if (nextPlayId && prevPlayId && nextPlayId !== prevPlayId) {
         state.gamecastFieldAnimKey += 1;
       }
+      state.gamecastModelsById.delete(gameId);
       state.gamecastModelsById.set(gameId, fetched);
+      while (state.gamecastModelsById.size > 6) {
+        const oldestKey = state.gamecastModelsById.keys().next().value;
+        state.gamecastModelsById.delete(oldestKey);
+      }
+      if (state.appData) {
+        syncGamecastScoresBackToAppData(state.appData, fetched);
+      }
       if (state.gamecastLoadingId === gameId) state.gamecastLoadingId = null;
       state.gamecastSyncing = false;
 
       if (state.activeNavTab === 'season' && state.seasonSubTab === 'gamecast' && (changed || (!silent && forceRefresh))) {
-        renderGamecastPreservingScroll({ isBackground: silent });
+        renderGamecastPreservingScroll({ isBackground: silent || Boolean(prevModel) });
       }
       return fetched;
     }
@@ -2761,14 +2836,20 @@ function openGamecastForGameId(gameId, { fromSchedule = false } = {}) {
 }
 
 function bindEvents() {
+  if (typeof window !== 'undefined') {
+    window.__appEventsBound = true;
+    try {
+      window.__detachEarlyTap?.();
+    } catch {}
+  }
   // Global pointer/touch interaction guards so background hydrations NEVER destroy DOM buttons mid-tap
   document.addEventListener('pointerdown', markPointerInteractionStart, { capture: true, passive: true });
-  document.addEventListener('pointerup', () => markPointerInteractionEnd(70), { capture: true, passive: true });
-  document.addEventListener('pointercancel', () => markPointerInteractionEnd(40), { capture: true, passive: true });
+  document.addEventListener('pointerup', () => markPointerInteractionEnd(340), { capture: true, passive: true });
+  document.addEventListener('pointercancel', () => markPointerInteractionEnd(60), { capture: true, passive: true });
   document.addEventListener('touchstart', markPointerInteractionStart, { capture: true, passive: true });
-  document.addEventListener('touchend', () => markPointerInteractionEnd(80), { capture: true, passive: true });
-  document.addEventListener('touchcancel', () => markPointerInteractionEnd(40), { capture: true, passive: true });
-  document.addEventListener('click', () => { lastUserInteractionMs = Date.now(); }, { capture: true, passive: true });
+  document.addEventListener('touchend', () => markPointerInteractionEnd(340), { capture: true, passive: true });
+  document.addEventListener('touchcancel', () => markPointerInteractionEnd(60), { capture: true, passive: true });
+  document.addEventListener('click', markSynthesizedClickSettled, { capture: true, passive: true });
 
   // Bottom Nav Tabs (with per-tab scroll memory; tapping active tab scrolls cleanly to top)
   document.querySelectorAll('.nav-tab-btn').forEach(btn => {
@@ -2798,7 +2879,7 @@ function bindEvents() {
       if (state.activeNavTab === 'audio' && state.prefs.geminiApiKey) {
         checkAndAutoUpdateBestGeminiModel(state.prefs, () => {
           saveUserPrefs(state.prefs);
-          renderMain();
+          if (state.activeNavTab === 'audio') requestBackgroundRender({ main: true });
         });
       }
       if (state.activeNavTab === 'season' && state.seasonSubTab === 'matchup') {
@@ -2970,6 +3051,8 @@ function bindEvents() {
   document.addEventListener(
     'scroll',
     e => {
+      lastScrollEventMs = Date.now();
+      if (!activeJargonAnchor) return;
       if (e.target && e.target.closest && e.target.closest('#jargonPopover')) return;
       closeJargonPopover();
     },
@@ -3976,7 +4059,7 @@ function bindEvents() {
         setTimeout(() => {
           state.bigBoardShareCopied = false;
           if (state.activeNavTab === 'season' && state.seasonSubTab === 'draft_prep') {
-            renderMain();
+            requestBackgroundRender({ main: true });
           }
         }, 1800);
         break;
@@ -4187,7 +4270,9 @@ function bindEvents() {
           } else {
             await audioController.loadAndPlay(ep, 0);
           }
-          renderMain();
+          if (state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
+            renderMain();
+          }
         }
         break;
       }
@@ -4201,7 +4286,9 @@ function bindEvents() {
         if (ep) {
           state.sharedAudioPrep = null;
           await audioController.loadAndPlay(ep, 0);
-          renderMain();
+          if (state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
+            renderMain();
+          }
         }
         break;
       }
@@ -4228,7 +4315,9 @@ function bindEvents() {
           const targetEp = getAllEpisodes().find(x => x.id === turnEpId);
           if (targetEp) {
             await audioController.loadAndPlay(targetEp, sec);
-            renderMain();
+            if (state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
+              requestBackgroundRender({ main: true });
+            }
             break;
           }
         }
@@ -4271,7 +4360,7 @@ function bindEvents() {
             setTimeout(() => {
               if (state.shareToastTargetId === ep.id) {
                 state.shareToastTargetId = null;
-                renderMain();
+                if (state.activeNavTab === 'audio') requestBackgroundRender({ main: true });
               }
             }, 2400);
           }
@@ -4322,7 +4411,7 @@ function bindEvents() {
             setTimeout(() => {
               if (state.shareToastTargetId === rep.id) {
                 state.shareToastTargetId = null;
-                renderMain();
+                if (state.activeNavTab === 'audio') requestBackgroundRender({ main: true });
               }
             }, 2400);
           }
@@ -4483,7 +4572,7 @@ function bindEvents() {
             if (res.record.k !== prevKey) {
               checkAndAutoUpdateBestGeminiModel(state.prefs, () => {
                 saveUserPrefs(state.prefs);
-                if (state.activeNavTab === 'audio') renderMain();
+                if (state.activeNavTab === 'audio') requestBackgroundRender({ main: true });
               });
               triggerDailyMatchupIntelSync().finally(() => triggerDailyTopNewsBriefSync());
             }
@@ -4516,8 +4605,10 @@ function bindEvents() {
         state.prefs.geminiApiKeyUpdatedAt = cleared.updatedAt;
         saveUserPrefs(state.prefs);
         state.geminiKeyNotice = '';
-        renderSheet();
-        renderMain();
+        if (state.sheetMode === 'settings') {
+          requestBackgroundRender({ sheet: true, preserveSheetScroll: true });
+        }
+        requestBackgroundRender({ main: true });
         break;
       }
 
@@ -4637,7 +4728,13 @@ function bindEvents() {
                 message: p.message,
                 subDetail: p.subDetail || ''
               };
-              if (prevStep !== nextStep || !syncActiveJobBannerDomInPlace(state.jobStatus)) {
+              if (
+                state.activeNavTab === 'audio' &&
+                state.studioSubTab === 'podcast' &&
+                !syncActiveJobBannerDomInPlace(state.jobStatus) &&
+                !isPointerInteractionActive &&
+                Date.now() >= postPointerClickGraceUntilMs
+              ) {
                 renderMain();
               }
             }
@@ -4664,14 +4761,16 @@ function bindEvents() {
           state.podTopicDraft = '';
           // Present episode cleanly in "Podcast Ready to Play" state with preloaded Stereo WAV!
           await audioController.loadEpisodeReady(episode);
-          renderMain();
+          if (state.activeNavTab === 'audio') renderMain();
+          else requestBackgroundRender({ main: true });
         } catch (err) {
           state.jobStatus = {
             active: false,
             kind: 'podcast',
             error: err.message || 'Failed to generate podcast.'
           };
-          renderMain();
+          if (state.activeNavTab === 'audio') renderMain();
+          else requestBackgroundRender({ main: true });
           if (err?.code === 'GEMINI_KEY_REQUIRED') {
             document.getElementById('inlineGeminiApiKeyInput')?.focus();
           }
@@ -4747,7 +4846,13 @@ function bindEvents() {
                 message: p.message,
                 subDetail: p.subDetail || ''
               };
-              if (prevStep !== nextStep || !syncActiveJobBannerDomInPlace(state.jobStatus)) {
+              if (
+                state.activeNavTab === 'audio' &&
+                state.studioSubTab === 'analysis' &&
+                !syncActiveJobBannerDomInPlace(state.jobStatus) &&
+                !isPointerInteractionActive &&
+                Date.now() >= postPointerClickGraceUntilMs
+              ) {
                 renderMain();
               }
             }
@@ -4762,14 +4867,16 @@ function bindEvents() {
           saveUserPrefs(state.prefs);
           state.jobStatus = null;
           state.analysisPromptDraft = '';
-          renderMain();
+          if (state.activeNavTab === 'audio') renderMain();
+          else requestBackgroundRender({ main: true });
         } catch (err) {
           state.jobStatus = {
             active: false,
             kind: 'analysis',
             error: err.message || 'Analysis failed.'
           };
-          renderMain();
+          if (state.activeNavTab === 'audio') renderMain();
+          else requestBackgroundRender({ main: true });
           if (err?.code === 'GEMINI_KEY_REQUIRED') {
             document.getElementById('inlineGeminiApiKeyInput')?.focus();
           }
@@ -4876,7 +4983,7 @@ function bindEvents() {
         renderMain();
         btn.innerHTML = `${iconSvg('check', 14)}<span>Saved!</span>`;
         setTimeout(() => {
-          if (state.sheetMode === 'settings') renderSheet();
+          if (state.sheetMode === 'settings') requestBackgroundRender({ sheet: true, preserveSheetScroll: true });
         }, 900);
         break;
       }
@@ -5179,6 +5286,7 @@ let lastEspnOverlayPollMs = 0;
 let wirePollCount = 0;
 let isBackgroundSyncing = false;
 let isWirePolling = false;
+let queuedBackgroundRefresh = null;
 let wirePollTimerId = null;
 let activeWirePollPromise = null;
 let activeWirePollMeta = { manual: false, focusPlayerId: null, startedAtMs: 0 };
@@ -5249,6 +5357,28 @@ function mergeRuntimeStateIntoUpstreamBundle(prevData, nextData) {
   if (Array.isArray(prevData._oppNewsWire) && prevData._oppNewsWire.length > 0 && prevData._oppNewsWireKey === nextOppKey) {
     nextData._oppNewsWire = prevData._oppNewsWire;
     nextData._oppNewsWireKey = prevData._oppNewsWireKey;
+  }
+  // Preserve live Gamecast / ESPN in-progress scores and scoreboard overlays across upstream JSON swaps
+  if (
+    prevData.seasonal?.playoffPicture?.liveScoresByMatchup &&
+    nextData.seasonal?.playoffPicture &&
+    !nextData.seasonal.playoffPicture.liveScoresByMatchup
+  ) {
+    nextData.seasonal.playoffPicture.liveScoresByMatchup = prevData.seasonal.playoffPicture.liveScoresByMatchup;
+  }
+  const prevUm = prevData.scheduleMatchup?.upcomingMatchup;
+  const nextUm = nextData.scheduleMatchup?.upcomingMatchup;
+  if (
+    prevUm?.isGameInProgress &&
+    nextUm &&
+    !nextUm.isGameInProgress &&
+    String(prevUm.gameId || '') === String(nextUm.gameId || '')
+  ) {
+    nextUm.sfScore = prevUm.sfScore;
+    nextUm.oppScore = prevUm.oppScore;
+    nextUm.liveState = prevUm.liveState;
+    nextUm.isGameInProgress = prevUm.isGameInProgress;
+    if (prevUm.statusDetail) nextUm.statusDetail = prevUm.statusDetail;
   }
   if (
     (Array.isArray(prevData.news?.rawStream) && prevData.news.rawStream.some(it => it && it.wireSource)) ||
@@ -5324,18 +5454,11 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
     !hasPlayingIframe &&
     !state.jobStatus?.active
   ) {
-    if (manual) {
-      renderMain();
-      if (state.sheetMode === 'player') {
-        renderSheet({ preserveScroll: true });
-      }
-    } else {
-      requestBackgroundRender({
-        main: true,
-        sheet: state.sheetMode === 'player',
-        preserveSheetScroll: true
-      });
-    }
+    requestBackgroundRender({
+      main: true,
+      sheet: state.sheetMode === 'player',
+      preserveSheetScroll: true
+    });
   } else if (state.sheetMode === 'player') {
     syncLiveWireButtonsDom();
   }
@@ -5425,6 +5548,11 @@ async function pollLowLatencyTweetAndInjuryWire(manual = false) {
       isWirePolling = false;
       activeWirePollPromise = null;
       syncLiveWireButtonsDom();
+      if (queuedBackgroundRefresh && state.appData && !isBackgroundSyncing) {
+        const pendingBg = queuedBackgroundRefresh;
+        queuedBackgroundRefresh = null;
+        refreshLiveFeedsInBackground(Boolean(pendingBg.forceFull));
+      }
     }
   })();
 
@@ -5455,7 +5583,14 @@ function scheduleAdaptiveSubMinuteWireLoop() {
 }
 
 async function refreshLiveFeedsInBackground(forceFull = false) {
-  if (isBackgroundSyncing || isWirePolling || !state.appData) return;
+  if (!state.appData) return;
+  if (isWirePolling) {
+    queuedBackgroundRefresh = {
+      forceFull: Boolean(forceFull || queuedBackgroundRefresh?.forceFull)
+    };
+    return;
+  }
+  if (isBackgroundSyncing) return;
   isBackgroundSyncing = true;
   try {
     let hasNewUpstreamData = false;
@@ -5626,14 +5761,16 @@ async function handleIncomingSharedLink(locationLike = window.location) {
       saveUserPrefs(state.prefs);
     }
 
-    renderMain();
+    requestBackgroundRender({ main: true });
     if (readyEpisode) {
       state.expandedTranscriptIds.delete(readyEpisode.id);
       if (state.sharedAudioPrep && state.sharedAudioPrep.episodeId !== readyEpisode.id) {
         state.sharedAudioPrep = null;
       }
       await audioController.loadEpisodeReady(readyEpisode);
-      renderMain();
+      if (state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
+        requestBackgroundRender({ main: true });
+      }
     }
     return true;
   }
@@ -5659,7 +5796,7 @@ async function handleIncomingSharedLink(locationLike = window.location) {
     }
     state.sharedAnalysisHighlightId = targetReport?.id || sharedRoute.id || null;
     saveUserPrefs(state.prefs);
-    renderMain();
+    requestBackgroundRender({ main: true });
     return true;
   }
 
@@ -5712,9 +5849,28 @@ function syncActiveJobBannerDomInPlace(jobStatus) {
   const stageSecs = Array.isArray(jobStatus.stageElapsedSec) ? jobStatus.stageElapsedSec : [];
 
   for (let s = 1; s <= 3; s++) {
+    const rowEl = banner.querySelector(`[data-pipeline-step="${s}"]`);
     const barEl = banner.querySelector(`[data-stage-bar="${s}"]`);
     const statusEl = banner.querySelector(`[data-stage-status="${s}"]`);
+    const iconEl = rowEl?.querySelector('.stage-step-icon');
     const secVal = Math.max(0, Math.floor(Number(stageSecs[s - 1] || 0)));
+    const stepState = s < activeStep ? 'done' : s === activeStep ? 'current' : 'pending';
+    if (rowEl) {
+      rowEl.classList.remove('done', 'current', 'pending');
+      rowEl.classList.add(stepState);
+      rowEl.setAttribute('data-step-state', stepState);
+    }
+    if (iconEl) {
+      iconEl.classList.remove('done', 'current', 'pending');
+      iconEl.classList.add(stepState);
+      if (stepState === 'done') {
+        iconEl.innerHTML = iconSvg('check', 11);
+      } else if (stepState === 'current') {
+        iconEl.textContent = '';
+      } else {
+        iconEl.textContent = String(s);
+      }
+    }
     if (s < activeStep) {
       if (barEl) barEl.style.width = '100%';
       if (statusEl) statusEl.textContent = secVal > 0 ? `Done · ${secVal}s` : 'Done';
@@ -5897,6 +6053,7 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
 }
 
 let sharedGeminiKeySyncPromise = null;
+let queuedForcedCloudKeySync = null;
 
 async function syncSharedGeminiKeyAcrossTeams({
   triggerBriefs = true,
@@ -5904,7 +6061,12 @@ async function syncSharedGeminiKeyAcrossTeams({
   cloudEndpointOverride = '',
   forceCloudSync = false
 } = {}) {
-  if (sharedGeminiKeySyncPromise) return sharedGeminiKeySyncPromise;
+  if (sharedGeminiKeySyncPromise) {
+    if (forceCloudSync) {
+      queuedForcedCloudKeySync = { triggerBriefs, vaultUrlOverride, cloudEndpointOverride, forceCloudSync: true };
+    }
+    return sharedGeminiKeySyncPromise;
+  }
   sharedGeminiKeySyncPromise = (async () => {
     try {
       const res = await syncPrefsWithSharedGeminiKeyVault(state.prefs, {
@@ -5942,6 +6104,11 @@ async function syncSharedGeminiKeyAcrossTeams({
       return { action: 'noop', changed: false, prevKey: '', nextKey: '', vaultChecked: false, cloudChecked: false };
     } finally {
       sharedGeminiKeySyncPromise = null;
+      if (queuedForcedCloudKeySync) {
+        const nextArgs = queuedForcedCloudKeySync;
+        queuedForcedCloudKeySync = null;
+        syncSharedGeminiKeyAcrossTeams(nextArgs);
+      }
     }
   })();
   return sharedGeminiKeySyncPromise;
@@ -5998,7 +6165,9 @@ async function init() {
         }
       }, 250);
 
-      if (state.activeNavTab === 'audio') renderMain();
+      if (state.activeNavTab === 'audio' && state.studioSubTab === 'podcast') {
+        requestBackgroundRender({ main: true });
+      }
       try {
         const renderedUrl = await synthesizeMissingEpisodeAudio(
           ep,
@@ -6017,34 +6186,80 @@ async function init() {
               subDetail: p.subDetail || state.sharedAudioPrep?.subDetail || '',
               error: ''
             };
-            if (state.activeNavTab === 'audio' && !syncSharedAudioPrepDomInPlace(state.sharedAudioPrep)) {
+            if (
+              state.activeNavTab === 'audio' &&
+              state.studioSubTab === 'podcast' &&
+              !syncSharedAudioPrepDomInPlace(state.sharedAudioPrep) &&
+              !isPointerInteractionActive &&
+              Date.now() >= postPointerClickGraceUntilMs
+            ) {
               renderMain();
             }
           },
           state.prefs
         );
-        state.sharedAudioPrep = null;
+        if (state.sharedAudioPrep?.episodeId === ep.id) {
+          state.sharedAudioPrep = null;
+        }
         return renderedUrl;
       } catch (err) {
-        state.sharedAudioPrep = {
-          active: false,
-          episodeId: ep.id,
-          startedAtMs,
-          percent: 0,
-          message: '',
-          subDetail: '',
-          error:
-            err?.message ||
-            'Unable to prepare studio audio right now. Tap Retry Studio Audio or Listen Now (Device Voice).'
-        };
+        if (!state.sharedAudioPrep || state.sharedAudioPrep.episodeId === ep.id) {
+          state.sharedAudioPrep = {
+            active: false,
+            episodeId: ep.id,
+            startedAtMs,
+            percent: 0,
+            message: '',
+            subDetail: '',
+            error:
+              err?.message ||
+              'Unable to prepare studio audio right now. Tap Retry Studio Audio or Listen Now (Device Voice).'
+          };
+        }
         return null;
       } finally {
         clearInterval(elapsedTicker);
-        if (state.activeNavTab === 'audio') renderMain();
+        if (state.activeNavTab === 'audio') requestBackgroundRender({ main: true });
       }
     }
   });
   bindEvents();
+
+  // Capture any early tap queued by `index.html` while ES modules were still parsing on cold boot.
+  // Apply nav-tab selection BEFORE initial data boot so first paint lands directly on the tapped tab,
+  // and replay overlay triggers (search/settings) cleanly AFTER `bootOrRecoverAppData()` settles.
+  let pendingEarlyBootTap = null;
+  if (typeof window !== 'undefined' && window.__earlyBootTapAction) {
+    pendingEarlyBootTap = window.__earlyBootTapAction;
+    window.__earlyBootTapAction = null;
+    if (pendingEarlyBootTap.type === 'nav-tab' && pendingEarlyBootTap.tab) {
+      state.activeNavTab = pendingEarlyBootTap.tab;
+      renderNavTabs();
+    }
+  }
+
+  // Coalesce visibilitychange + focus + pageshow triple-triggers on iOS PWA / tab resume
+  let lastForegroundResumeMs = 0;
+  const runForegroundResumeCheck = ({ includeFullRefresh = false } = {}) => {
+    const now = Date.now();
+    if (now - lastForegroundResumeMs < 250) return;
+    lastForegroundResumeMs = now;
+    syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
+    if (!state.appData) {
+      bootOrRecoverAppData({ manual: false });
+      return;
+    }
+    if (includeFullRefresh) {
+      triggerFastSharedKvBriefHydration();
+    }
+    if (includeFullRefresh && now - lastLiveCheckMs >= 5 * 60_000) {
+      refreshLiveFeedsInBackground(false);
+    } else if (now - lastWirePollMs >= 15_000) {
+      pollLowLatencyTweetAndInjuryWire(false);
+    } else if (shouldTriggerDailyTopNewsBriefRefresh(state.appData, state.prefs)) {
+      triggerDailyTopNewsBriefSync();
+    }
+  };
 
   // Register recovery & live-sync listeners unconditionally so even an offline cold boot self-heals automatically
   document.addEventListener('visibilitychange', () => {
@@ -6066,33 +6281,14 @@ async function init() {
       if (state.appData && state.activeNavTab === 'season' && state.seasonSubTab === 'gamecast') {
         ensureGamecastHydratedAndPolling({ forceRefresh: false });
       }
-      syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
-      if (!state.appData) {
-        bootOrRecoverAppData({ manual: false });
-      } else {
-        triggerFastSharedKvBriefHydration();
-        if (Date.now() - lastLiveCheckMs >= 5 * 60_000) {
-          refreshLiveFeedsInBackground(false);
-        } else if (Date.now() - lastWirePollMs >= 15_000) {
-          pollLowLatencyTweetAndInjuryWire(false);
-        } else if (shouldTriggerDailyTopNewsBriefRefresh(state.appData, state.prefs)) {
-          triggerDailyTopNewsBriefSync();
-        }
-      }
+      runForegroundResumeCheck({ includeFullRefresh: true });
     }
   });
   window.addEventListener('focus', () => {
-    syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
-    if (!state.appData) {
-      bootOrRecoverAppData({ manual: false });
-    } else if (Date.now() - lastWirePollMs >= 15_000) {
-      pollLowLatencyTweetAndInjuryWire(false);
-    } else if (shouldTriggerDailyTopNewsBriefRefresh(state.appData, state.prefs)) {
-      triggerDailyTopNewsBriefSync();
-    }
+    runForegroundResumeCheck({ includeFullRefresh: false });
   });
   window.addEventListener('pageshow', () => {
-    syncSharedGeminiKeyAcrossTeams({ triggerBriefs: true });
+    runForegroundResumeCheck({ includeFullRefresh: false });
   });
   window.addEventListener('storage', e => {
     if (e.key === SHARED_GEMINI_KEY_STORAGE_KEY) {
@@ -6131,6 +6327,18 @@ async function init() {
   }, 5 * 60_000);
 
   await bootOrRecoverAppData({ manual: false });
+
+  if (pendingEarlyBootTap && state.appData) {
+    try {
+      if (pendingEarlyBootTap.type === 'search') {
+        document.getElementById('openSearchBtn')?.click();
+      } else if (pendingEarlyBootTap.type === 'settings') {
+        document.getElementById('openSettingsBtn')?.click();
+      } else if (pendingEarlyBootTap.type === 'nav-tab' && pendingEarlyBootTap.tab === 'season') {
+        ensureGamecastHydratedAndPolling({ forceRefresh: false });
+      }
+    } catch {}
+  }
 
   // Register Offline-Ready Service Worker AFTER initial boot attempt and NEVER reload mid-boot or mid-job
   if ('serviceWorker' in navigator) {
@@ -6179,7 +6387,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=125', { updateViaCache: 'none' })
+        .register('./sw.js?v=126', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

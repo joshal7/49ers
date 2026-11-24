@@ -9,7 +9,8 @@
 
 import {
   peekCachedEpisodeAudioUrl,
-  getEpisodeAudioUrl
+  getEpisodeAudioUrl,
+  setPinnedEpisodeAudioId
 } from '../services/podcastAudioStore.js';
 import {
   humanizeNflTextForTts,
@@ -374,6 +375,7 @@ export class PodcastAudioController {
     if (!episode || !fullBlobUrl) return;
     if (this.currentEpisode?.id !== episode.id || this._usingDeviceSpeech) return;
 
+    const seq = (this._loadSeq = (this._loadSeq || 0) + 1);
     const wasPlaying = this.isPlaying && !this.audio.paused;
     const resumeSec = Math.max(0, this.audio.currentTime || this.currentTimeSec || 0);
     this.durationSec = Number(episode.durationSec) || this.durationSec;
@@ -381,8 +383,11 @@ export class PodcastAudioController {
     if (wasPlaying) {
       try {
         await this.audio.play();
+        if (seq !== this._loadSeq || this.currentEpisode?.id !== episode.id) return;
         this.isPlaying = true;
-      } catch {}
+      } catch {
+        if (seq !== this._loadSeq || this.currentEpisode?.id !== episode.id) return;
+      }
     }
     this._emit();
   }
@@ -405,8 +410,10 @@ export class PodcastAudioController {
       }
 
       if (typeof this.onSynthesizeMissingAudio === 'function') {
-        this.isBufferingAudio = true;
-        this._emit();
+        if (this.currentEpisode?.id === episode.id) {
+          this.isBufferingAudio = true;
+          this._emit();
+        }
         try {
           const renderedUrl = await this.onSynthesizeMissingAudio(episode);
           if (renderedUrl) {
@@ -417,7 +424,9 @@ export class PodcastAudioController {
             return renderedUrl;
           }
         } finally {
-          this.isBufferingAudio = false;
+          if (!this.currentEpisode || this.currentEpisode.id === episode.id) {
+            this.isBufferingAudio = false;
+          }
         }
       }
 
@@ -462,6 +471,9 @@ export class PodcastAudioController {
    */
   async loadEpisodeReady(episode) {
     if (!episode) return;
+    const seq = (this._loadSeq = (this._loadSeq || 0) + 1);
+    this.isBufferingAudio = false;
+    setPinnedEpisodeAudioId(episode.id);
     this._cancelDeviceSpeech();
     if (!this.audio.paused && !this._isCarrierLooping) {
       this.audio.pause();
@@ -480,7 +492,7 @@ export class PodcastAudioController {
     this._emit();
 
     const srcUrl = await this._resolveEpisodeAudioSrc(episode);
-    if (this.currentEpisode?.id !== episode.id) return;
+    if (seq !== this._loadSeq || this.currentEpisode?.id !== episode.id) return;
 
     if (srcUrl) {
       const shouldAutoStart = this.autoPlayEpisodeId === episode.id;
@@ -489,8 +501,10 @@ export class PodcastAudioController {
       if (shouldAutoStart) {
         try {
           await this.audio.play();
+          if (seq !== this._loadSeq) return;
           this.isPlaying = true;
         } catch {
+          if (seq !== this._loadSeq) return;
           this.isPlaying = false;
         }
       }
@@ -503,6 +517,9 @@ export class PodcastAudioController {
 
   async loadAndPlay(episode, startSec = 0) {
     if (!episode) return;
+    const seq = (this._loadSeq = (this._loadSeq || 0) + 1);
+    this.isBufferingAudio = false;
+    setPinnedEpisodeAudioId(episode.id);
     this._cancelDeviceSpeech({ stopCarrier: false });
     this._enforcePlaybackSession();
 
@@ -519,8 +536,10 @@ export class PodcastAudioController {
       this._emit();
       try {
         await this.audio.play();
+        if (seq !== this._loadSeq) return;
         this.isPlaying = true;
       } catch {
+        if (seq !== this._loadSeq) return;
         this.isPlaying = false;
       }
       this._emit();
@@ -533,7 +552,7 @@ export class PodcastAudioController {
     this._emit();
 
     const asyncUrl = await this._resolveEpisodeAudioSrc(episode);
-    if (this.currentEpisode?.id !== episode.id) return;
+    if (seq !== this._loadSeq || this.currentEpisode?.id !== episode.id) return;
 
     const stillWantsAutoPlay = this.autoPlayEpisodeId === episode.id;
     this.autoPlayEpisodeId = null;
@@ -547,8 +566,10 @@ export class PodcastAudioController {
     this._assignAudioSrcIfNeeded(asyncUrl, this.currentTimeSec || startSec);
     try {
       await this.audio.play();
+      if (seq !== this._loadSeq) return;
       this.isPlaying = true;
     } catch {
+      if (seq !== this._loadSeq) return;
       this.isPlaying = false;
     }
     this._emit();
@@ -572,12 +593,14 @@ export class PodcastAudioController {
 
     this._cancelDeviceSpeech({ stopCarrier: false });
 
+    this._loadSeq = (this._loadSeq || 0) + 1;
     this.currentEpisode = ep;
     this.durationSec = Number(ep.durationSec || 180);
     this.autoPlayEpisodeId = null;
     this.isBufferingAudio = false;
     this._usingDeviceSpeech = true;
     this.isPlaying = true;
+    this._setupMediaSession(ep);
     const sessionToken = ++this._deviceSpeechSession;
 
     const hasWebSpeech =
@@ -664,6 +687,10 @@ export class PodcastAudioController {
         const advanceOnce = () => {
           if (settled || this._deviceSpeechSession !== sessionToken) return;
           settled = true;
+          if (this._speechGapTimer) {
+            clearTimeout(this._speechGapTimer);
+            this._speechGapTimer = null;
+          }
           speakClauseAt(cIdx + 1);
         };
 
@@ -727,20 +754,24 @@ export class PodcastAudioController {
       return;
     }
 
+    const seq = (this._loadSeq = (this._loadSeq || 0) + 1);
     try {
       this._stopSilentCarrierGestureLock();
       this.audio.muted = false;
       this.audio.volume = 1.0;
       this.audio.playbackRate = this.playbackRate;
       await this.audio.play();
+      if (seq !== this._loadSeq) return;
       this.isPlaying = true;
     } catch {
+      if (seq !== this._loadSeq) return;
       this.isPlaying = false;
     }
     this._emit();
   }
 
   pause() {
+    this._loadSeq = (this._loadSeq || 0) + 1;
     this.autoPlayEpisodeId = null;
     if (this._usingDeviceSpeech) {
       this._cancelDeviceSpeech({ stopCarrier: true });
@@ -757,9 +788,17 @@ export class PodcastAudioController {
 
   closePlayer() {
     this.pause();
+    this.isBufferingAudio = false;
+    setPinnedEpisodeAudioId(null);
     this.currentEpisode = null;
     this.currentTimeSec = 0;
     this._activeSrcUrl = '';
+    this._updateMediaSessionState('none');
+    if (typeof navigator !== 'undefined' && navigator.mediaSession) {
+      try {
+        navigator.mediaSession.metadata = null;
+      } catch {}
+    }
     this._emit();
   }
 
