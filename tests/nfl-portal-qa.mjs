@@ -110,10 +110,14 @@ function createCdpClient(wsUrl) {
     const listeners = new Map();
     ws.addEventListener('open', () => {
       resolve({
-        send(method, params = {}) {
+        send(method, params = {}, timeoutMs = 15000) {
           return new Promise((res, rej) => {
             const id = nextId++;
-            pending.set(id, { res, rej });
+            const timer = setTimeout(() => {
+              pending.delete(id);
+              rej(new Error(`CDP timeout on ${method}`));
+            }, timeoutMs);
+            pending.set(id, { res, rej, timer });
             ws.send(JSON.stringify({ id, method, params }));
           });
         },
@@ -122,6 +126,10 @@ function createCdpClient(wsUrl) {
           listeners.get(event).push(fn);
         },
         close() {
+          for (const entry of pending.values()) {
+            clearTimeout(entry.timer);
+          }
+          pending.clear();
           try { ws.close(); } catch {}
         }
       });
@@ -130,7 +138,8 @@ function createCdpClient(wsUrl) {
     ws.addEventListener('message', ev => {
       const msg = JSON.parse(String(ev.data));
       if (msg.id && pending.has(msg.id)) {
-        const { res, rej } = pending.get(msg.id);
+        const { res, rej, timer } = pending.get(msg.id);
+        clearTimeout(timer);
         pending.delete(msg.id);
         if (msg.error) rej(new Error(msg.error.message || JSON.stringify(msg.error)));
         else res(msg.result);

@@ -3363,17 +3363,19 @@ test(
       'Dead .gameday-above-brief-banner CSS must stay removed'
     );
 
-    // Ensure app.js & homeView.js cache-bust updated homeView/newsView modules and SW registration
-    const homeVerMatch = appSrc.match(/from\s+'\.\/views\/homeView\.js\?v=(\d+)'/);
-    const newsVerAppMatch = appSrc.match(/from\s+'\.\/views\/newsView\.js\?v=(\d+)'/);
-    const newsVerHomeMatch = homeSrc.match(/from\s+'\.\/newsView\.js\?v=(\d+)'/);
+    // Ensure single-instance canonical ES module imports (zero ?v= module splits) + top-level HTML/SW cache-busters
+    const indexSrc = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
+    const indexAppVerMatch = indexSrc.match(/src="\.\/src\/app\.js\?v=(\d+)"/);
     const swRegVerMatch = appSrc.match(/\.register\('\.\/sw\.js\?v=(\d+)'/);
-    assert.ok(homeVerMatch && Number(homeVerMatch[1]) >= 89, 'app.js must import cache-busted homeView.js?v>=89');
-    assert.ok(newsVerAppMatch && Number(newsVerAppMatch[1]) >= 92, 'app.js must import cache-busted newsView.js?v>=92');
     assert.ok(
-      newsVerHomeMatch && newsVerHomeMatch[1] === newsVerAppMatch[1],
-      'homeView.js must import the same cache-busted newsView.js?v= specifier as app.js'
+      appSrc.includes("from './views/homeView.js'") && appSrc.includes("from './views/newsView.js'"),
+      'app.js must import canonical homeView.js and newsView.js without ?v= module splits'
     );
+    assert.ok(
+      homeSrc.includes("from './newsView.js'") && !/from\s+'\.\/newsView\.js\?v=/.test(homeSrc),
+      'homeView.js must import canonical newsView.js matching app.js (single module instance)'
+    );
+    assert.ok(indexAppVerMatch && Number(indexAppVerMatch[1]) >= 158, 'index.html must cache-bust ./src/app.js?v>=158');
     assert.ok(swRegVerMatch && Number(swRegVerMatch[1]) >= 110, 'app.js must register cache-busted sw.js?v>=110');
     assert.ok(
       appSrc.includes('pendingSwReload') && appSrc.includes("document.addEventListener('visibilitychange'"),

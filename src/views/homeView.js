@@ -66,7 +66,7 @@ import {
   resolveItemAuthorProfileUrl,
   resolveOriginalTweetUrl
 } from '../engine/beatAttributionEngine.js';
-import { renderDailyTopNewsBriefHtml, renderWireItemCardHtml } from './newsView.js?v=95';
+import { renderDailyTopNewsBriefHtml, renderWireItemCardHtml } from './newsView.js';
 import { buildDeterministicDailyTopNewsBrief } from '../services/aiWorkerClient.js';
 import {
   extractEspnPlayerIdFromRecord,

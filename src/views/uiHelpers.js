@@ -598,7 +598,7 @@ export function playerInitials(name = '') {
 }
 
 export function renderPlayerAvatarHtml(player = {}, size = 40, opts = {}) {
-  const { showJerseyBadge = false, hero = false, extraClass = '' } = opts;
+  const { showJerseyBadge = false, hero = false, eager = hero, extraClass = '' } = opts;
   const rawUrl = String(player?.headshotUrl || '').trim();
   const optImg = /^https:\/\//i.test(rawUrl)
     ? optimizeImageUrlForSlot(rawUrl, hero ? 'hero' : 'avatar')
@@ -608,13 +608,14 @@ export function renderPlayerAvatarHtml(player = {}, size = 40, opts = {}) {
     !showJerseyBadge && player?.jersey != null
       ? `#${player.jersey}`
       : playerInitials(player?.name || '');
+  const loadAttr = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
 
   return `
     <span class="player-avatar ${hero ? 'hero-avatar' : ''} ${hasValidUrl ? '' : 'no-photo'} ${extraClass}" style="--av-size:${Number(size)}px">
       <span class="player-avatar-fallback mono" aria-hidden="true">${esc(fallbackLabel)}</span>
       ${
         hasValidUrl
-          ? `<img class="player-avatar-img" src="${esc(optImg.src)}" ${optImg.fallbackSrc ? `data-fallback-src="${esc(optImg.fallbackSrc)}"` : ''} alt="${esc(player?.name || 'Player')}" width="${Number(size)}" height="${Number(size)}" loading="lazy" decoding="async" />`
+          ? `<img class="player-avatar-img" src="${esc(optImg.src)}" ${optImg.fallbackSrc ? `data-fallback-src="${esc(optImg.fallbackSrc)}"` : ''} alt="${esc(player?.name || 'Player')}" width="${Number(size)}" height="${Number(size)}" ${loadAttr} decoding="async" />`
           : ''
       }
       ${
@@ -626,7 +627,7 @@ export function renderPlayerAvatarHtml(player = {}, size = 40, opts = {}) {
   `;
 }
 
-export function renderTeamLogoHtml(abbr = '', logoUrl = '', size = 24, extraClass = '') {
+export function renderTeamLogoHtml(abbr = '', logoUrl = '', size = 24, extraClass = '', { eager = false } = {}) {
   const activeAbbr = getActiveTeamConfig()?.abbr || 'NFL';
   const cleanAbbr = String(abbr || 'NFL').toUpperCase().trim();
   const isPlaceholderAbbr = /^(?:TBD|NFL|OPP|BYE|NFC|AFC)$/.test(cleanAbbr);
@@ -641,10 +642,11 @@ export function renderTeamLogoHtml(abbr = '', logoUrl = '', size = 24, extraClas
   const resolved = espnTeamLogoUrl(cleanAbbr, logoUrl);
   const optLogo = optimizeImageUrlForSlot(resolved, 'logo');
   const imgSrc = optLogo.src || resolved;
+  const loadAttr = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
   return `
     <span class="team-logo-wrap ${extraClass}" style="--logo-size:${Number(size)}px">
       <span class="team-logo-fallback mono" aria-hidden="true">${esc(cleanAbbr)}</span>
-      <img class="team-logo-img" src="${esc(imgSrc)}" ${optLogo.fallbackSrc ? `data-fallback-src="${esc(optLogo.fallbackSrc)}"` : ''} alt="${esc(cleanAbbr)}" width="${Number(size)}" height="${Number(size)}" loading="lazy" decoding="async" />
+      <img class="team-logo-img" src="${esc(imgSrc)}" ${optLogo.fallbackSrc ? `data-fallback-src="${esc(optLogo.fallbackSrc)}"` : ''} alt="${esc(cleanAbbr)}" width="${Number(size)}" height="${Number(size)}" ${loadAttr} decoding="async" />
     </span>
   `;
 }

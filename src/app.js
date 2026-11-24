@@ -36,12 +36,12 @@ import {
   ALL_DASHBOARD_BLOCKS,
   evaluateSeasonState,
   resolveHomeDashboardState
-} from './engine/seasonStateMachine.js?v=64';
-import { simulateCapScenario } from './engine/capSimulator.js?v=66';
+} from './engine/seasonStateMachine.js';
+import { simulateCapScenario } from './engine/capSimulator.js';
 import {
   runPlayoffMonteCarlo,
   buildOtherConferenceSimulatorConfig
-} from './engine/playoffMonteCarlo.js?v=67';
+} from './engine/playoffMonteCarlo.js';
 import { filterNewsByUserPrefs } from './engine/antiFluffFilter.js';
 import {
   canonicalOpponentHealthSnapshotKey,
@@ -54,8 +54,8 @@ import {
   resolveGameNewsContext,
   sortNewsWithBreakingPriority,
   filterOutCompletedGameAvailabilityItems
-} from './engine/breakingClassifier.js?v=68';
-import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js?v=60';
+} from './engine/breakingClassifier.js';
+import { PodcastAudioController, formatTimeMmSs } from './components/audioPlayer.js';
 import {
   loadAll49ersData,
   fetchFresherUpstreamData,
@@ -69,11 +69,11 @@ import {
   getCachedGamecastModel,
   loadUserPrefs,
   saveUserPrefs
-} from './services/dataService.js?v=105';
+} from './services/dataService.js';
 import {
   isNumericEspnGameId,
   resolveGamecastGamesList
-} from './engine/gamecastEngine.js?v=1';
+} from './engine/gamecastEngine.js';
 import {
   SHARED_GEMINI_KEY_STORAGE_KEY,
   appendSharedKeyHandoffToUrl,
@@ -86,7 +86,7 @@ import {
   readSameOriginSharedGeminiKey,
   syncPrefsWithSharedGeminiKeyVault,
   unlockAndSyncWithPasskey
-} from './services/sharedApiKeyStore.js?v=4';
+} from './services/sharedApiKeyStore.js';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,
@@ -107,7 +107,7 @@ import {
   shouldTriggerDailyTopNewsBriefRefresh,
   refreshDailyTopNewsBriefIfDue,
   clearDailyNewsBriefAttemptLock
-} from './services/aiWorkerClient.js?v=91';
+} from './services/aiWorkerClient.js';
 import {
   deleteEpisodeAudioBlob,
   exportEpisodeShareableAudioFile
@@ -118,7 +118,7 @@ import {
   extractIncomingSharedRoute,
   shareItemNatively,
   shareAudioFileNatively
-} from './services/shareService.js?v=62';
+} from './services/shareService.js';
 
 import {
   resolveNflTeamMeta,
@@ -129,7 +129,7 @@ import {
   fetchRemoteTeamBundle,
   getCachedRemoteTeamBundle,
   clearRemoteTeamCache
-} from './services/remoteTeamDossierService.js?v=3';
+} from './services/remoteTeamDossierService.js';
 
 import {
   esc,
@@ -139,37 +139,37 @@ import {
   renderPlayerAvatarHtml,
   renderMiniMeterHtml,
   registerRosterPlayersForInlineLinks
-} from './views/uiHelpers.js?v=53';
-import { getJargonEntry } from './engine/jargonGlossary.js?v=52';
+} from './views/uiHelpers.js';
+import { getJargonEntry } from './engine/jargonGlossary.js';
 import {
   isAllowedInlineVideoStreamUrl,
   resolveIosStandaloneExternalVideoBreakoutUrl,
   sanitizeExternalUrl
-} from './engine/linkIntegrity.js?v=71';
+} from './engine/linkIntegrity.js';
 import {
   BIG_BOARD_SORT_FIELDS,
   parseBigBoardUrlParams,
   buildBigBoardUrlSearch,
   normalizeBigBoardLens,
   normalizeBigBoardSort
-} from './engine/draftBigBoardEngine.js?v=56';
-import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js?v=49';
-import { iconSvg } from './views/icons.js?v=86';
-import { renderHomeDashboardHtml } from './views/homeView.js?v=93';
+} from './engine/draftBigBoardEngine.js';
+import { resolveLeaderboardModalModel } from './engine/statsLeaderboardEngine.js';
+import { iconSvg } from './views/icons.js';
+import { renderHomeDashboardHtml } from './views/homeView.js';
 import {
   renderNewsViewHtml,
   VALID_NEWS_CATEGORIES
-} from './views/newsView.js?v=95';
-import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js?v=52';
-import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js?v=85';
-import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js?v=103';
-import { renderAudioAiViewHtml } from './views/audioAiView.js?v=69';
+} from './views/newsView.js';
+import { renderRosterCapViewHtml, ROSTER_SORT_FIELDS, normalizeRosterSort } from './views/rosterCapView.js';
+import { renderPlayerDossierSheetHtml } from './views/playerSheetView.js';
+import { renderSeasonMatchupViewHtml } from './views/seasonMatchupView.js';
+import { renderAudioAiViewHtml } from './views/audioAiView.js';
 import {
   renderSettingsSheetHtml,
   renderUniversalSearchSheetHtml,
   renderUniversalSearchResultsHtml,
   renderUniversalSearchScopeBarHtml
-} from './views/settingsArchiveView.js?v=92';
+} from './views/settingsArchiveView.js';
 import {
   normalizeNewsSortMode,
   computeCatchUpState,
@@ -177,7 +177,7 @@ import {
   evaluatePushSupportStatus,
   runUniversalSearch,
   normalizeSearchText
-} from './engine/digestExperienceEngine.js?v=91';
+} from './engine/digestExperienceEngine.js';
 
 const RECENT_SEARCHES_KEY = ACTIVE_TEAM.storageKeys?.recentSearches || '49ers_faithful_recent_searches_v1';
 
@@ -208,14 +208,127 @@ function clearRecentSearchTerms() {
   } catch {}
 }
 
+let headerHeightRafId = null;
 function syncTopHeaderHeight() {
   if (typeof document === 'undefined') return;
-  const headerEl = document.querySelector('.top-header');
-  if (!headerEl) return;
-  const h = Math.ceil(headerEl.getBoundingClientRect().height || 0);
-  if (h > 24) {
-    document.documentElement.style.setProperty('--top-header-h', `${h}px`);
+  const measure = () => {
+    headerHeightRafId = null;
+    const headerEl = document.querySelector('.top-header');
+    if (!headerEl) return;
+    const h = Math.ceil(headerEl.getBoundingClientRect().height || 0);
+    if (h > 24) {
+      document.documentElement.style.setProperty('--top-header-h', `${h}px`);
+    }
+  };
+  if (typeof requestAnimationFrame === 'function') {
+    if (headerHeightRafId) return;
+    headerHeightRafId = requestAnimationFrame(measure);
+  } else {
+    measure();
   }
+}
+
+// Pointer-active guard & coalesced background render scheduler:
+// Guarantees background async hydrations NEVER replace `#mainView` / `#sheetBody` innerHTML
+// between `pointerdown`/`touchstart` and `click`, eliminating swallowed first-clicks on startup!
+let isPointerInteractionActive = false;
+let lastUserInteractionMs = 0;
+let pointerSafetyTimerId = null;
+let bgRenderFlushTimerId = null;
+let bgRenderRafId = null;
+const pendingBgRender = { main: false, sheet: false, preserveSheetScroll: true };
+
+function markPointerInteractionStart() {
+  isPointerInteractionActive = true;
+  lastUserInteractionMs = Date.now();
+  if (pointerSafetyTimerId) clearTimeout(pointerSafetyTimerId);
+  pointerSafetyTimerId = setTimeout(() => {
+    isPointerInteractionActive = false;
+    pointerSafetyTimerId = null;
+    if (pendingBgRender.main || pendingBgRender.sheet) {
+      schedulePendingBgRenderFlush(40);
+    }
+  }, 650);
+}
+
+function markPointerInteractionEnd(delayFlushMs = 70) {
+  lastUserInteractionMs = Date.now();
+  isPointerInteractionActive = false;
+  if (pointerSafetyTimerId) {
+    clearTimeout(pointerSafetyTimerId);
+    pointerSafetyTimerId = null;
+  }
+  if (pendingBgRender.main || pendingBgRender.sheet) {
+    schedulePendingBgRenderFlush(delayFlushMs);
+  }
+}
+
+function schedulePendingBgRenderFlush(delayMs = 0) {
+  if (bgRenderFlushTimerId) clearTimeout(bgRenderFlushTimerId);
+  const runFlush = () => {
+    bgRenderFlushTimerId = null;
+    if (isPointerInteractionActive) return;
+    if (!pendingBgRender.main && !pendingBgRender.sheet) return;
+    const doMain = pendingBgRender.main;
+    const doSheet = pendingBgRender.sheet;
+    const preserveSheetScroll = pendingBgRender.preserveSheetScroll;
+    pendingBgRender.main = false;
+    pendingBgRender.sheet = false;
+    pendingBgRender.preserveSheetScroll = true;
+
+    const execute = () => {
+      bgRenderRafId = null;
+      if (isPointerInteractionActive) {
+        if (doMain) pendingBgRender.main = true;
+        if (doSheet) {
+          pendingBgRender.sheet = true;
+          pendingBgRender.preserveSheetScroll = preserveSheetScroll;
+        }
+        return;
+      }
+      const activeTag = document.activeElement?.tagName;
+      const isTyping = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
+      if (doMain && state.appData && !isTyping && !hasActivelyPlayingInlineMedia() && !state.jobStatus?.active) {
+        renderMain({ isBackground: true });
+      }
+      if (doSheet && state.sheetMode && !isTyping) {
+        renderSheet({ preserveScroll: preserveSheetScroll });
+      }
+    };
+
+    if (typeof requestAnimationFrame === 'function') {
+      if (bgRenderRafId) cancelAnimationFrame(bgRenderRafId);
+      bgRenderRafId = requestAnimationFrame(execute);
+    } else {
+      execute();
+    }
+  };
+
+  if (delayMs > 0) {
+    bgRenderFlushTimerId = setTimeout(runFlush, delayMs);
+  } else {
+    runFlush();
+  }
+}
+
+function requestBackgroundRender({ main = false, sheet = false, preserveSheetScroll = true } = {}) {
+  if (main) pendingBgRender.main = true;
+  if (sheet) {
+    pendingBgRender.sheet = true;
+    pendingBgRender.preserveSheetScroll = Boolean(preserveSheetScroll);
+  }
+  if (!pendingBgRender.main && !pendingBgRender.sheet) return;
+  if (isPointerInteractionActive) return;
+  schedulePendingBgRenderFlush(0);
+}
+
+function fetchWithAbortTimeout(url, init = {}, timeoutMs = 5000) {
+  if (typeof AbortController !== 'function') {
+    return fetch(url, init);
+  }
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  return fetch(url, { ...init, signal: ctrl.signal }).finally(() => clearTimeout(timer));
 }
 
 function syncVisualViewportVars() {
@@ -923,11 +1036,15 @@ async function toggleQuietPushAlerts() {
         const endpoint = sub.endpoint;
         await sub.unsubscribe().catch(() => {});
         if (workerBase && /^https:\/\//i.test(workerBase)) {
-          fetch(`${workerBase}/api/push-unsubscribe`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ endpoint })
-          }).catch(() => {});
+          fetchWithAbortTimeout(
+            `${workerBase}/api/push-unsubscribe`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ endpoint })
+            },
+            4500
+          ).catch(() => {});
         }
       }
     } catch {}
@@ -970,8 +1087,9 @@ async function toggleQuietPushAlerts() {
 
   if (workerBase && /^https:\/\//i.test(workerBase) && 'serviceWorker' in navigator && 'PushManager' in window) {
     try {
-      const cfgRes = await fetch(`${workerBase}/api/push-config`, { signal: AbortSignal.timeout(4500) });
-      const cfg = cfgRes.ok ? await cfgRes.json() : null;
+      const cfgRes = await fetchWithAbortTimeout(`${workerBase}/api/push-config`, {}, 4500);
+      const cfgType = String(cfgRes.headers?.get?.('content-type') || '').toLowerCase();
+      const cfg = cfgRes.ok && !cfgType.includes('text/html') ? await cfgRes.json() : null;
       if (cfg?.vapidPublicKey) {
         const reg = await navigator.serviceWorker.ready;
         const existingSub = await reg.pushManager.getSubscription();
@@ -982,15 +1100,19 @@ async function toggleQuietPushAlerts() {
             applicationServerKey: urlBase64ToUint8Array(cfg.vapidPublicKey)
           }));
         subscribedEndpoint = sub.endpoint || '';
-        const saveRes = await fetch(`${workerBase}/api/push-subscribe`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            subscription: sub.toJSON(),
-            channels: pushPrefs.channels,
-            author: state.prefs.authorName || ACTIVE_TEAM.brandName
-          })
-        });
+        const saveRes = await fetchWithAbortTimeout(
+          `${workerBase}/api/push-subscribe`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              subscription: sub.toJSON(),
+              channels: pushPrefs.channels,
+              author: state.prefs.authorName || ACTIVE_TEAM.brandName
+            })
+          },
+          5000
+        );
         if (saveRes.ok) {
           noticeMsg = 'Quiet Web Push alerts connected to Worker.';
         }
@@ -1296,13 +1418,45 @@ function renderNavTabs() {
   });
 }
 
-function renderMain() {
+function renderMain({ isBackground = false } = {}) {
   if (!state.appData) return;
   const mainEl = document.getElementById('mainView');
   if (!mainEl) return;
 
-  closeJargonPopover();
+  // Explicit user renders supersede any queued background render
+  if (!isBackground) {
+    pendingBgRender.main = false;
+    closeJargonPopover();
+  }
   registerRosterPlayersForInlineLinks(state.appData?.roster?.players);
+
+  // Preserve user-expanded `<details>` disclosures across background renders so live polls never slam them shut
+  const openDetailSignatures = isBackground
+    ? new Set(
+        Array.from(mainEl.querySelectorAll('details[open]')).map(el => {
+          for (const attr of [
+            'data-gameday-active-roster',
+            'data-stats-expander',
+            'data-matchup-stats-expander',
+            'data-ps-elevations-card',
+            'data-cap-positional-spend',
+            'data-news-sources-details',
+            'data-related-cluster-details',
+            'data-rooting-week',
+            'data-prospect-id',
+            'data-gamecast-drive-id'
+          ]) {
+            if (el.hasAttribute(attr)) return `${attr}=${el.getAttribute(attr) || '1'}`;
+          }
+          const sumTxt = String(el.querySelector('summary')?.textContent || '')
+            .replace(/\(\d+\)/g, '')
+            .replace(/\s+/g, ' ')
+            .trim()
+            .slice(0, 60);
+          return sumTxt ? `sum:${sumTxt}` : '';
+        }).filter(Boolean)
+      )
+    : null;
 
   const sortedCapYears = Object.keys(state.appData.cap?.years || {}).sort();
   const primaryCapYear = sortedCapYears[0] || '2026';
@@ -1486,6 +1640,36 @@ function renderMain() {
     }
   });
 
+  if (openDetailSignatures && openDetailSignatures.size > 0) {
+    mainEl.querySelectorAll('details').forEach(el => {
+      for (const attr of [
+        'data-gameday-active-roster',
+        'data-stats-expander',
+        'data-matchup-stats-expander',
+        'data-ps-elevations-card',
+        'data-cap-positional-spend',
+        'data-news-sources-details',
+        'data-related-cluster-details',
+        'data-rooting-week',
+        'data-prospect-id',
+        'data-gamecast-drive-id'
+      ]) {
+        if (el.hasAttribute(attr) && openDetailSignatures.has(`${attr}=${el.getAttribute(attr) || '1'}`)) {
+          el.open = true;
+          return;
+        }
+      }
+      const sumTxt = String(el.querySelector('summary')?.textContent || '')
+        .replace(/\(\d+\)/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 60);
+      if (sumTxt && openDetailSignatures.has(`sum:${sumTxt}`)) {
+        el.open = true;
+      }
+    });
+  }
+
   bindAllMountedInlineVideos();
   // Anchor right-aligned weekly scroll tables (e.g. Weekly Snap Matrix W1..latest) to most recent week
   const rightAnchored = document.querySelectorAll('#mainView [data-scroll-anchor="right"]');
@@ -1497,9 +1681,10 @@ function renderMain() {
         }
       });
     };
-    scrollToRightEdge();
     if (typeof requestAnimationFrame === 'function') {
       requestAnimationFrame(scrollToRightEdge);
+    } else {
+      scrollToRightEdge();
     }
   }
   renderHeader();
@@ -1915,6 +2100,11 @@ async function openOpponentPlayerSheet({
     extraSeed: { id: playerId, name: playerName, position, espnUrl }
   });
 
+  const isSameOpponentRefresh = Boolean(
+    forceRefresh &&
+      state.sheetMode === 'player' &&
+      state.sheetRemoteContext?.teamMeta?.abbr === teamMeta.abbr
+  );
   const cachedBundle = !forceRefresh ? getCachedRemoteTeamBundle(teamMeta) : null;
   if (cachedBundle?.ok) {
     const remotePlayer = findPlayerInTeamRoster(cachedBundle.appData?.roster?.players, {
@@ -1926,9 +2116,14 @@ async function openOpponentPlayerSheet({
     state.sheetMode = 'player';
     state.sheetPlayerId = remotePlayer?.id || seedPlayer.id;
     state.sheetPlayerTab = initialTab || 'overview';
-    state.sheetPlayerStatsMode = '2026';
-    state.sheetPlayerTxScenario = 'cut';
-    state.sheetPlayerMentionsSort = 'top';
+    if (!isSameOpponentRefresh) {
+      state.sheetPlayerStatsMode = '2026';
+      state.sheetPlayerGameLogSub = 'games';
+      state.sheetPlayerGameLogMetric = '';
+      state.sheetPlayerGameLogMetricPickerOpen = false;
+      state.sheetPlayerTxScenario = 'cut';
+      state.sheetPlayerMentionsSort = 'top';
+    }
     state.sheetRemoteContext = {
       teamMeta,
       query: { playerId: seedPlayer.id, name: seedPlayer.name, position: seedPlayer.position, espnUrl },
@@ -1946,19 +2141,24 @@ async function openOpponentPlayerSheet({
   state.sheetMode = 'player';
   state.sheetPlayerId = seedPlayer.id;
   state.sheetPlayerTab = initialTab || 'overview';
-  state.sheetPlayerStatsMode = '2026';
-  state.sheetPlayerTxScenario = 'cut';
-  state.sheetPlayerMentionsSort = 'top';
+  if (!isSameOpponentRefresh) {
+    state.sheetPlayerStatsMode = '2026';
+    state.sheetPlayerGameLogSub = 'games';
+    state.sheetPlayerGameLogMetric = '';
+    state.sheetPlayerGameLogMetricPickerOpen = false;
+    state.sheetPlayerTxScenario = 'cut';
+    state.sheetPlayerMentionsSort = 'top';
+  }
   state.sheetRemoteContext = {
     teamMeta,
     query: { playerId: seedPlayer.id, name: seedPlayer.name, position: seedPlayer.position, espnUrl },
     seedPlayer,
-    bundle: null,
-    remotePlayer: null,
+    bundle: isSameOpponentRefresh ? state.sheetRemoteContext?.bundle || null : null,
+    remotePlayer: isSameOpponentRefresh ? state.sheetRemoteContext?.remotePlayer || null : null,
     status: 'loading',
     error: null
   };
-  renderSheet();
+  renderSheet({ preserveScroll: isSameOpponentRefresh });
 
   const bundle = await fetchRemoteTeamBundle(teamMeta, { forceRefresh });
   if (
@@ -2277,6 +2477,8 @@ function awaitInitialLiveHydrationBounded(maxWaitMs = 15000) {
   ]);
 }
 
+let fastKvBriefPromise = null;
+
 async function triggerDailyMatchupIntelSync() {
   if (!state.appData) return null;
   await awaitInitialLiveHydrationBounded(15000);
@@ -2295,7 +2497,7 @@ async function triggerDailyMatchupIntelSync() {
         (state.activeNavTab === 'home' ||
           (state.activeNavTab === 'season' && state.seasonSubTab === 'matchup'))
       ) {
-        renderMain();
+        requestBackgroundRender({ main: true });
       }
       return res;
     })
@@ -2304,21 +2506,42 @@ async function triggerDailyMatchupIntelSync() {
 
 async function triggerFastSharedKvBriefHydration() {
   if (!state.appData) return null;
-  return hydrateDailyTopNewsBriefFromSharedKv({
-    appData: state.appData,
-    prefs: state.prefs
-  })
-    .then(res => {
+  if (fastKvBriefPromise) return fastKvBriefPromise;
+  fastKvBriefPromise = (async () => {
+    try {
+      const targetRef = state.appData;
+      const res = await hydrateDailyTopNewsBriefFromSharedKv({
+        appData: targetRef,
+        prefs: state.prefs
+      });
+      // Guard against `state.appData` reference replacement during `refreshLiveFeedsInBackground`
+      if (state.appData && state.appData !== targetRef) {
+        hydrateCachedDailyTopNewsBrief(state.appData);
+        if (targetRef?.news?.dailyTopNewsBrief?.generatedAt && state.appData.news) {
+          const merged = mergeDailyTopNewsBriefOnUpstreamRefresh(
+            targetRef.news.dailyTopNewsBrief,
+            state.appData.news.dailyTopNewsBrief,
+            state.appData,
+            Date.now()
+          );
+          if (merged) state.appData.news.dailyTopNewsBrief = merged;
+        }
+      }
       if (
         res?.updated &&
         !hasActivelyPlayingInlineMedia() &&
         (state.activeNavTab === 'home' || state.activeNavTab === 'news')
       ) {
-        renderMain();
+        requestBackgroundRender({ main: true });
       }
       return res;
-    })
-    .catch(() => null);
+    } catch {
+      return null;
+    } finally {
+      fastKvBriefPromise = null;
+    }
+  })();
+  return fastKvBriefPromise;
 }
 
 async function triggerDailyTopNewsBriefSync() {
@@ -2338,7 +2561,7 @@ async function triggerDailyTopNewsBriefSync() {
         !hasActivelyPlayingInlineMedia() &&
         (state.activeNavTab === 'home' || state.activeNavTab === 'news')
       ) {
-        renderMain();
+        requestBackgroundRender({ main: true });
       }
       return res;
     })
@@ -2377,10 +2600,14 @@ function getActiveGamecastTarget() {
   return { listInfo, gameId, meta };
 }
 
-function renderGamecastPreservingScroll() {
+function renderGamecastPreservingScroll({ isBackground = false } = {}) {
   if (hasActivelyPlayingInlineMedia()) return;
+  if (isBackground && isPointerInteractionActive) {
+    requestBackgroundRender({ main: true });
+    return;
+  }
   const prevY = window.scrollY || 0;
-  renderMain();
+  renderMain({ isBackground });
   if (Math.abs((window.scrollY || 0) - prevY) > 4) {
     window.scrollTo({ top: prevY, behavior: 'instant' });
   }
@@ -2422,16 +2649,18 @@ async function hydrateGamecastById(meta, { forceRefresh = false, silent = false,
       if (state.gamecastLoadingId === gameId) state.gamecastLoadingId = null;
       state.gamecastSyncing = false;
 
-      if (state.activeNavTab === 'season' && state.seasonSubTab === 'gamecast' && (changed || !silent)) {
-        renderGamecastPreservingScroll();
+      if (state.activeNavTab === 'season' && state.seasonSubTab === 'gamecast' && (changed || (!silent && forceRefresh))) {
+        renderGamecastPreservingScroll({ isBackground: silent });
       }
       return fetched;
     }
   } catch {
     // Keep existing cached/fallback model cleanly
   } finally {
-    if (state.gamecastLoadingId === gameId) state.gamecastLoadingId = null;
-    state.gamecastSyncing = false;
+    if (pollSeq == null || pollSeq === gamecastPollSeq) {
+      if (state.gamecastLoadingId === gameId) state.gamecastLoadingId = null;
+      state.gamecastSyncing = false;
+    }
   }
   return prevModel;
 }
@@ -2483,7 +2712,7 @@ function scheduleNextGamecastPoll(seq) {
   }, intervalMs);
 }
 
-function ensureGamecastHydratedAndPolling({ forceRefresh = false } = {}) {
+function ensureGamecastHydratedAndPolling({ forceRefresh = false, skipFetchIfLoaded = false } = {}) {
   stopGamecastLivePoller();
   if (state.activeNavTab !== 'season' || state.seasonSubTab !== 'gamecast' || !state.appData) {
     return;
@@ -2494,7 +2723,13 @@ function ensureGamecastHydratedAndPolling({ forceRefresh = false } = {}) {
   const seq = gamecastPollSeq;
   gamecastSituationTickCount = 0;
 
-  hydrateGamecastById(meta, { forceRefresh, silent: false, pollSeq: seq }).then(() => {
+  const hasLoadedModel = Boolean(state.gamecastModelsById.get(gameId) || getCachedGamecastModel(gameId));
+  if (skipFetchIfLoaded && !forceRefresh && hasLoadedModel) {
+    scheduleNextGamecastPoll(seq);
+    return;
+  }
+
+  hydrateGamecastById(meta, { forceRefresh, silent: hasLoadedModel && !forceRefresh, pollSeq: seq }).then(() => {
     if (seq === gamecastPollSeq) {
       scheduleNextGamecastPoll(seq);
     }
@@ -2526,6 +2761,15 @@ function openGamecastForGameId(gameId, { fromSchedule = false } = {}) {
 }
 
 function bindEvents() {
+  // Global pointer/touch interaction guards so background hydrations NEVER destroy DOM buttons mid-tap
+  document.addEventListener('pointerdown', markPointerInteractionStart, { capture: true, passive: true });
+  document.addEventListener('pointerup', () => markPointerInteractionEnd(70), { capture: true, passive: true });
+  document.addEventListener('pointercancel', () => markPointerInteractionEnd(40), { capture: true, passive: true });
+  document.addEventListener('touchstart', markPointerInteractionStart, { capture: true, passive: true });
+  document.addEventListener('touchend', () => markPointerInteractionEnd(80), { capture: true, passive: true });
+  document.addEventListener('touchcancel', () => markPointerInteractionEnd(40), { capture: true, passive: true });
+  document.addEventListener('click', () => { lastUserInteractionMs = Date.now(); }, { capture: true, passive: true });
+
   // Bottom Nav Tabs (with per-tab scroll memory; tapping active tab scrolls cleanly to top)
   document.querySelectorAll('.nav-tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -2572,8 +2816,9 @@ function bindEvents() {
     });
   });
 
-  // Top Header triggers
-  document.getElementById('brandHomeTrigger')?.addEventListener('click', () => {
+  // Top Header triggers (stopPropagation prevents bubbling into delegated `data-action="go-home"` double-fire!)
+  document.getElementById('brandHomeTrigger')?.addEventListener('click', e => {
+    e.stopPropagation();
     if (state.activeNavTab === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
@@ -2633,7 +2878,8 @@ function bindEvents() {
     renderSheet();
   });
 
-  document.getElementById('closeSheetBtn')?.addEventListener('click', () => {
+  document.getElementById('closeSheetBtn')?.addEventListener('click', e => {
+    e.stopPropagation();
     state.sheetMode = null;
     renderSheet();
   });
@@ -3012,8 +3258,8 @@ function bindEvents() {
           state.gamecastTab = nextTab;
           state.activeGamecastClipKey = '';
           renderMain();
-          // Re-tune poll interval immediately (2s on pbp vs 6s on box/team)
-          ensureGamecastHydratedAndPolling({ forceRefresh: false });
+          // Re-tune poll interval immediately (2s on pbp vs 6s on box/team) without redundant immediate re-render
+          ensureGamecastHydratedAndPolling({ forceRefresh: false, skipFetchIfLoaded: true });
         }
         break;
       }
@@ -4158,7 +4404,7 @@ function bindEvents() {
         if (!currentRec || currentRec.c === 1) {
           state.passkeyNotice = 'Add your Gemini API key first before enabling Face ID sync.';
           state.geminiKeyNotice = state.passkeyNotice;
-          if (state.sheetMode === 'settings') renderSheet(true);
+          if (state.sheetMode === 'settings') renderSheet({ preserveScroll: true });
           renderMain();
           break;
         }
@@ -4195,7 +4441,7 @@ function bindEvents() {
         } finally {
           state.passkeyBusy = false;
         }
-        if (state.sheetMode === 'settings') renderSheet(true);
+        if (state.sheetMode === 'settings') renderSheet({ preserveScroll: true });
         renderMain();
         break;
       }
@@ -4248,7 +4494,7 @@ function bindEvents() {
         } finally {
           state.passkeyBusy = false;
         }
-        if (state.sheetMode === 'settings') renderSheet(true);
+        if (state.sheetMode === 'settings') renderSheet({ preserveScroll: true });
         renderMain();
         break;
       }
@@ -4839,7 +5085,7 @@ function bindEvents() {
           return;
         }
         const wrap = target.closest(
-          '.player-avatar, .team-logo-wrap, .brief-hero-media, .salient-hero-banner, .raw-item-thumb, .yt-facade-media, .video-thumb-stage, .beat-podcast-art-wrap, .home-pod-art-item'
+          '.player-avatar, .team-logo-wrap, .salient-hero-banner, .raw-item-thumb, .video-thumb-stage, .beat-podcast-art-wrap, .home-pod-art-item, .tweet-linked-article-media, .ncaa-mini-logo, .gemini-guide-gif-wrap'
         );
         if (wrap) wrap.classList.add('img-error');
       }
@@ -4929,6 +5175,7 @@ const STANDARD_WIRE_POLL_MS = 25_000; // 25s sub-minute latency year-round
 
 let lastLiveCheckMs = 0;
 let lastWirePollMs = 0;
+let lastEspnOverlayPollMs = 0;
 let wirePollCount = 0;
 let isBackgroundSyncing = false;
 let isWirePolling = false;
@@ -5017,22 +5264,31 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
   const gameLive = is49ersGameLiveWindow(state.appData);
   const gameCtx = resolveGameNewsContext(state.appData, Date.now());
   wirePollCount += 1;
+  const nowMs = Date.now();
   const viewingHealthSurface =
     (state.activeNavTab === 'season' && (state.seasonSubTab === 'health' || state.seasonSubTab === 'matchup')) ||
     state.sheetMode === 'player';
-  const hasPendingPracticeSlots = (state.appData?.health?.practiceReport || []).some(
-    r => r.wed === '-' || r.thu === '-' || r.fri === '-'
-  );
-  // During 10s live-game polling, run heavy 8-endpoint standings/roster/injuries overlay every ~30s (every 3rd tick)
-  // while keeping ultra-fast beat wire + live game highlights/scoring plays running on EVERY 10s tick!
+  // Enforce balanced ESPN overlay cadence (24s during live game, 30s immediate post-game, 55s standard/health)
+  // so 9-16 endpoint overlays never hammer cellular/battery on every 25s standard tick while `manual` always runs immediately!
+  const minEspnIntervalMs = gameLive
+    ? 24_000
+    : gameCtx.postGameImmediate
+      ? 30_000
+      : viewingHealthSurface
+        ? 45_000
+        : 60_000;
   const shouldCheckEspn =
     manual ||
-    wirePollCount === 1 ||
-    (gameLive ? wirePollCount % 3 === 0 : Boolean(gameCtx.postGameImmediate) || viewingHealthSurface || hasPendingPracticeSlots || wirePollCount % 2 === 0);
+    lastEspnOverlayPollMs === 0 ||
+    nowMs - lastEspnOverlayPollMs >= minEspnIntervalMs;
 
   // Serialize `hydrateLiveEspnOverlay` BEFORE `hydrateLiveMultiSourceBeatWire` when due so `_livePlayedPlayerIds`,
   // `completed = true`, and `upcomingMatchup.week` advance atomically with zero concurrent mutation!
-  const espnChanged = shouldCheckEspn ? await hydrateLiveEspnOverlay(state.appData) : false;
+  // Pass `skipPostReconcile: true` because `hydrateLiveMultiSourceBeatWire` runs immediately next and reconciles once.
+  const espnChanged = shouldCheckEspn
+    ? await hydrateLiveEspnOverlay(state.appData, { skipPostReconcile: true })
+    : false;
+  if (shouldCheckEspn) lastEspnOverlayPollMs = Date.now();
   const wireResult = await hydrateLiveMultiSourceBeatWire(state.appData, {
     isGameLive: gameLive || Boolean(gameCtx.postGameImmediate),
     workerBaseUrl: state.prefs?.workerBaseUrl || '',
@@ -5052,7 +5308,8 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
 
   const briefChanged = hydrateCachedDailyTopNewsBrief(state.appData);
 
-  if (addedTweets > 0 || espnChanged || briefChanged || gameDayChanged) {
+  // Only invalidate Monte Carlo simulation caches when standings/schedule/scores actually mutated (`espnChanged`)
+  if (espnChanged) {
     invalidateMonteCarloCaches();
   }
   renderHeader();
@@ -5067,9 +5324,17 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
     !hasPlayingIframe &&
     !state.jobStatus?.active
   ) {
-    renderMain();
-    if (state.sheetMode === 'player') {
-      renderSheet({ preserveScroll: true });
+    if (manual) {
+      renderMain();
+      if (state.sheetMode === 'player') {
+        renderSheet({ preserveScroll: true });
+      }
+    } else {
+      requestBackgroundRender({
+        main: true,
+        sheet: state.sheetMode === 'player',
+        preserveSheetScroll: true
+      });
     }
   } else if (state.sheetMode === 'player') {
     syncLiveWireButtonsDom();
@@ -5166,17 +5431,26 @@ async function pollLowLatencyTweetAndInjuryWire(manual = false) {
   return activeWirePollPromise;
 }
 
+function stopAdaptiveSubMinuteWireLoop() {
+  if (wirePollTimerId) {
+    clearTimeout(wirePollTimerId);
+    wirePollTimerId = null;
+  }
+}
+
 function scheduleAdaptiveSubMinuteWireLoop() {
-  if (wirePollTimerId) clearTimeout(wirePollTimerId);
+  stopAdaptiveSubMinuteWireLoop();
+  if (typeof document !== 'undefined' && document.visibilityState === 'hidden') return;
   const nextIntervalMs = is49ersGameLiveWindow(state.appData)
     ? GAME_LIVE_WIRE_POLL_MS
     : STANDARD_WIRE_POLL_MS;
 
   wirePollTimerId = setTimeout(async () => {
+    wirePollTimerId = null;
     if (document.visibilityState === 'visible') {
       await pollLowLatencyTweetAndInjuryWire(false);
+      scheduleAdaptiveSubMinuteWireLoop();
     }
-    scheduleAdaptiveSubMinuteWireLoop();
   }, nextIntervalMs);
 }
 
@@ -5201,9 +5475,10 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
 
     const bgGameCtx = resolveGameNewsContext(state.appData, Date.now());
     const [espnMutated, podsMutated] = await Promise.all([
-      hydrateLiveEspnOverlay(state.appData),
+      hydrateLiveEspnOverlay(state.appData, { skipPostReconcile: true }),
       hydrateLive49ersPodcasts(state.appData)
     ]);
+    lastEspnOverlayPollMs = Date.now();
     const wireResult = await hydrateLiveMultiSourceBeatWire(state.appData, {
       isGameLive: is49ersGameLiveWindow(state.appData) || Boolean(bgGameCtx.postGameImmediate),
       workerBaseUrl: state.prefs?.workerBaseUrl || ''
@@ -5218,8 +5493,10 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
 
     const briefHydratedChanged = hydrateCachedDailyTopNewsBrief(state.appData);
 
-    if (addedLivePosts > 0 || espnMutated || podsMutated || briefHydratedChanged || gameDayChanged) {
+    if (espnMutated) {
       invalidateMonteCarloCaches();
+    }
+    if (addedLivePosts > 0 || espnMutated || podsMutated || briefHydratedChanged || gameDayChanged) {
       hasNewUpstreamData = true;
     }
 
@@ -5236,8 +5513,11 @@ async function refreshLiveFeedsInBackground(forceFull = false) {
     const hasPlayingIframe = hasActivelyPlayingInlineMedia();
 
     if (hasNewUpstreamData && !isTyping && !hasPlayingIframe && !state.jobStatus?.active) {
-      renderMain();
-      if (state.sheetMode) renderSheet({ preserveScroll: true });
+      requestBackgroundRender({
+        main: true,
+        sheet: Boolean(state.sheetMode),
+        preserveSheetScroll: true
+      });
     }
 
     if (shouldTriggerDailyTopNewsBriefRefresh(state.appData, state.prefs)) {
@@ -5536,6 +5816,8 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
         globalThis.__REMOTE_TEAM_DATA_BASE_OVERRIDE__ = override || null;
       },
       syncSharedGeminiKey: (opts = {}) => syncSharedGeminiKeyAcrossTeams({ triggerBriefs: false, ...opts }),
+      requestBackgroundRender: opts => requestBackgroundRender(opts),
+      isPointerInteractionActive: () => isPointerInteractionActive,
       forceRender: () => {
         renderMain();
         if (state.sheetMode) renderSheet();
@@ -5549,6 +5831,9 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
     captureDeltaSnapshotsOnBoot(state.appData);
     renderHeader();
     renderMain();
+    if (state.sheetMode) {
+      renderSheet({ preserveScroll: true });
+    }
 
     if (!hasCompletedBootLifecycle) {
       hasCompletedBootLifecycle = true;
@@ -5567,14 +5852,14 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
         initialLiveHydrationPromise = null;
       });
 
-      // Start <1 min adaptive live tweet & in-game injury wire polling (20s in-game, 45s standard)
+      // Start <1 min adaptive live tweet & in-game injury wire polling (8s in-game, 25s standard)
       scheduleAdaptiveSubMinuteWireLoop();
 
       // Non-blocking sync of shared Cloudflare Worker intelligence feed if configured
       fetchSharedWorkerFeed(state.prefs).then(shared => {
         if (shared) {
           state.workerSharedFeed = shared;
-          if (state.activeNavTab === 'audio') renderMain();
+          if (state.activeNavTab === 'audio') requestBackgroundRender({ main: true });
         }
       });
 
@@ -5582,7 +5867,7 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
       if (state.prefs.geminiApiKey) {
         checkAndAutoUpdateBestGeminiModel(state.prefs, () => {
           saveUserPrefs(state.prefs);
-          if (state.activeNavTab === 'audio') renderMain();
+          if (state.activeNavTab === 'audio') requestBackgroundRender({ main: true });
         });
       }
 
@@ -5636,14 +5921,21 @@ async function syncSharedGeminiKeyAcrossTeams({
           if (state.jobStatus?.error) state.jobStatus = null;
           checkAndAutoUpdateBestGeminiModel(state.prefs, () => {
             saveUserPrefs(state.prefs);
-            if (state.activeNavTab === 'audio') renderMain();
+            if (state.activeNavTab === 'audio') requestBackgroundRender({ main: true });
           });
           if (triggerBriefs && state.appData) {
             triggerDailyMatchupIntelSync().finally(() => triggerDailyTopNewsBriefSync());
           }
         }
-        if (state.appData) renderMain();
-        if (state.sheetMode === 'settings') renderSheet();
+        if (state.appData) {
+          requestBackgroundRender({
+            main: true,
+            sheet: state.sheetMode === 'settings',
+            preserveSheetScroll: true
+          });
+        } else if (state.sheetMode === 'settings') {
+          requestBackgroundRender({ sheet: true, preserveSheetScroll: true });
+        }
       }
       return res;
     } catch {
@@ -5758,6 +6050,7 @@ async function init() {
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') {
       stopGamecastLivePoller();
+      stopAdaptiveSubMinuteWireLoop();
       // Advance persisted visit watermark cleanly after active session (>=15s) so next visit highlights new items
       if (Date.now() - sessionBootMs >= 15_000) {
         state.prefs.lastVisitedAt = new Date().toISOString();
@@ -5767,6 +6060,9 @@ async function init() {
       return;
     }
     if (document.visibilityState === 'visible') {
+      if (state.appData && !wirePollTimerId) {
+        scheduleAdaptiveSubMinuteWireLoop();
+      }
       if (state.appData && state.activeNavTab === 'season' && state.seasonSubTab === 'gamecast') {
         ensureGamecastHydratedAndPolling({ forceRefresh: false });
       }
@@ -5845,9 +6141,18 @@ async function init() {
     const hadController = Boolean(navigator.serviceWorker.controller);
     const tryReloadForUpdatedSw = () => {
       if (!pendingSwReload || !hadController || refreshingSw) return false;
+      const activeTag = document.activeElement?.tagName;
+      const isTyping = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
+      const recentlyInteracted =
+        lastUserInteractionMs > 0 && Date.now() - lastUserInteractionMs < 3000;
       if (
         isBootingAppData ||
         !state.appData ||
+        isPointerInteractionActive ||
+        recentlyInteracted ||
+        isTyping ||
+        Boolean(state.sheetMode) ||
+        Boolean(state.rankModal) ||
         state.jobStatus?.active ||
         state.sharedAudioPrep?.active ||
         state.audioState?.isPlaying ||
@@ -5874,7 +6179,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=124', { updateViaCache: 'none' })
+        .register('./sw.js?v=125', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

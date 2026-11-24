@@ -105,6 +105,17 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+button,
+a,
+summary,
+input,
+select,
+label,
+[role="button"],
+[data-action] {
+  touch-action: manipulation;
+}
+
 html {
   margin: 0;
   padding: 0;
@@ -598,14 +609,6 @@ body.sheet-open {
   text-overflow: ellipsis;
 }
 
-.breaking-wire-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  margin-bottom: 7px;
-}
-
 .card-footer-row {
   margin-top: 11px;
   padding-top: 9px;
@@ -646,40 +649,6 @@ body.sheet-open {
   font-size: 11px;
   font-weight: 600;
   color: var(--emerald);
-}
-
-/* Reorder Toolbar & Controls */
-.reorder-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: var(--radius-md);
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  box-shadow: var(--shadow-card);
-}
-
-.reorder-bar-status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: var(--text-secondary);
-  min-width: 0;
-}
-
-.reorder-status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--gold);
-  flex-shrink: 0;
-}
-.reorder-status-dot.customizing {
-  background: var(--scarlet-bright);
-  box-shadow: 0 0 0 3px var(--scarlet-soft);
 }
 
 .text-muted-inline {
@@ -1701,20 +1670,6 @@ body.sheet-open {
   background: linear-gradient(135deg, rgba(var(--primary-rgb, 170, 0, 0), 0.08), rgba(240, 236, 225, 0.95));
 }
 
-.gm-player-card {
-  padding: 9px 10px;
-  border-radius: 10px;
-  background: var(--bg-card-alt);
-  border: 1px solid var(--border-subtle);
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-.gm-player-card.modified {
-  border-color: var(--gold);
-}
-
 .alert-banner-danger {
   display: flex;
   align-items: center;
@@ -2327,19 +2282,6 @@ body.sheet-open {
   color: #b91c1c;
 }
 
-.library-filter-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  flex-wrap: wrap;
-}
-
-.library-filter-toggle .pill-btn {
-  min-height: 29px;
-  padding: 4px 10px;
-  font-size: 11.5px;
-}
-
 .gemini-guide-banner {
   display: flex;
   flex-direction: column;
@@ -2541,21 +2483,6 @@ body.sheet-open {
   border: 0 !important;
   opacity: 0 !important;
   pointer-events: none !important;
-}
-
-.gemini-connected-strip {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  flex-wrap: wrap;
-  padding: 6px 10px;
-  margin-bottom: 10px;
-  border-radius: 9px;
-  background: var(--bg-card-alt);
-  border: 1px solid rgba(16, 185, 129, 0.34);
-  font-size: 11.5px;
-  color: var(--text-secondary);
 }
 
 .gemini-live-dot {
@@ -2884,58 +2811,6 @@ button.featured-player-chip:active {
   background: linear-gradient(90deg, #D97706, var(--amber));
 }
 
-/* Editorial Hero Media Banner for Synthesized News Briefs */
-.brief-hero-media {
-  position: relative;
-  width: 100%;
-  height: 168px;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid var(--border-strong);
-  background: linear-gradient(135deg, #1B1216, #111620);
-}
-
-.brief-hero-media.img-error {
-  display: none !important;
-}
-
-.brief-hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 22%;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-.brief-hero-media:hover .brief-hero-img {
-  transform: scale(1.02);
-}
-
-.brief-hero-scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(8, 10, 14, 0.08) 25%, rgba(8, 10, 14, 0.82) 100%);
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 9px 11px;
-  pointer-events: none;
-}
-
-.brief-hero-credit {
-  font-size: 10.5px;
-  font-weight: 700;
-  color: rgba(243, 245, 248, 0.9);
-  background: rgba(8, 10, 14, 0.62);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 3px 8px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-}
-
 /* Compact Side-Thumbnail Layout for Home Briefs & Raw Beat Stream */
 .media-split-row {
   display: grid;
@@ -2972,76 +2847,8 @@ button.featured-player-chip:active {
   display: block;
 }
 
-/* Upgraded YouTube HD Film Preview Facade */
-.yt-facade-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 8px 10px;
-  background: linear-gradient(95deg, rgba(20, 24, 33, 0.98), rgba(13, 16, 23, 0.98));
-  color: #F3F5F8;
-}
-
-.yt-facade-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-  flex: 1;
-}
-
-.yt-facade-media {
-  position: relative;
-  width: 98px;
-  height: 56px;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid rgba(var(--secondary-bright-rgb, 231, 210, 155), 0.35);
-  background: #0D1118;
-  flex-shrink: 0;
-  cursor: pointer;
-}
-
-.yt-facade-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: brightness(0.88);
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.yt-facade-media:hover img {
-  transform: scale(1.04);
-  filter: brightness(1);
-}
-
-.yt-facade-media.img-error img,
 .video-thumb-stage.img-error img {
   display: none !important;
-}
-
-.yt-facade-play-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle, rgba(8, 10, 14, 0.45), rgba(8, 10, 14, 0.15));
-  color: #FFFFFF;
-}
-
-.yt-facade-play-pill {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: rgba(var(--primary-bright-rgb, 212, 25, 25), 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 /* Matchup Scoreboard Face-Off Banner */
@@ -3456,12 +3263,6 @@ button.featured-player-chip:active {
   border-color: var(--gold);
 }
 
-.source-links-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 7px;
-}
-
 .source-card-link {
   display: flex;
   flex-direction: column;
@@ -3714,13 +3515,6 @@ button.featured-player-chip:active {
   }
   .header-btn-label {
     display: none;
-  }
-  .brief-hero-media {
-    height: 144px;
-  }
-  .yt-facade-media {
-    width: 80px;
-    height: 48px;
   }
   .raw-item-thumb {
     width: 64px;
@@ -4373,9 +4167,6 @@ button.featured-player-chip:active {
   .news-toolbar-card {
     padding: 9px 11px;
   }
-  .reorder-bar {
-    padding: 7px 10px;
-  }
   .kpi-grid {
     gap: 6px;
     margin: 6px 0;
@@ -4959,7 +4750,6 @@ button.gameday-active-pill:hover {
   text-decoration: underline;
 }
 
-.confirming-reports-details,
 .confirming-reports-toggle {
   margin-top: 4px;
   padding: 4px 8px;
@@ -4968,7 +4758,6 @@ button.gameday-active-pill:hover {
   border: 1px solid var(--border-subtle);
 }
 
-[data-theme="light"] .confirming-reports-details,
 [data-theme="light"] .confirming-reports-toggle {
   background: rgba(0, 0, 0, 0.024);
 }
@@ -5795,15 +5584,6 @@ tr.unit-overall-banner.overall-stat-row td {
   justify-content: space-between;
   gap: 8px;
   min-width: 0;
-}
-
-.daily-brief-eyebrow {
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--gold);
-  margin: 0;
 }
 
 .daily-brief-age {
@@ -7278,53 +7058,6 @@ a.raw-item-thumb.salient-thumb:hover {
   gap: 5px;
 }
 
-.news-topic-chip-strip {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  overflow-x: auto;
-  max-width: 100%;
-  padding-bottom: 1px;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.news-topic-chip-strip::-webkit-scrollbar {
-  display: none;
-}
-
-.topic-chip-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  flex-shrink: 0;
-  padding: 3.5px 9px;
-  border-radius: 999px;
-  border: 1px solid var(--border-subtle);
-  background: var(--bg-elevated);
-  color: var(--text-secondary);
-  font-size: 11.2px;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease;
-}
-
-.topic-chip-btn.active {
-  background: var(--scarlet-soft);
-  border-color: var(--scarlet-bright);
-  color: var(--text-primary);
-}
-
-.topic-chip-cnt {
-  font-size: 10px;
-  color: var(--text-muted);
-}
-
-.topic-chip-btn.active .topic-chip-cnt {
-  color: var(--gold-bright);
-}
-
 /* Catch-Up Watermark Bar, Home Pill & Read/Seen Dimming */
 .catchup-bar {
   display: flex;
@@ -7456,60 +7189,6 @@ a.raw-item-thumb.salient-thumb:hover {
 .brief-card.compact-wire-card {
   padding: 8px 10px;
   gap: 4px;
-}
-
-/* Chronological Full-Coverage Story Timeline */
-.story-timeline-rail {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  border-left: 1.5px solid var(--gold-border);
-  margin-left: 5px;
-  padding-left: 10px;
-}
-
-.story-timeline-step {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.story-timeline-dot {
-  position: absolute;
-  left: -14.5px;
-  top: 5px;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--bg-elevated);
-  border: 1.5px solid var(--gold);
-}
-
-.story-timeline-step.is-lead .story-timeline-dot {
-  background: var(--scarlet-bright);
-  border-color: var(--scarlet-bright);
-}
-
-.story-timeline-head {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  flex-wrap: wrap;
-  font-size: 11.2px;
-}
-
-.story-timeline-marker {
-  font-size: 9.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--gold-bright);
-}
-
-.story-timeline-snippet {
-  font-size: 11.8px;
-  line-height: 1.38;
-  color: var(--text-secondary);
 }
 
 /* Subtle Card Action Strip (Linked Article Chip) */

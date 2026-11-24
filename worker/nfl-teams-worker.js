@@ -42,7 +42,32 @@ import {
   decodeHtmlEntities,
   stripHtmlAndDecodeEntities
 } from '../src/engine/linkIntegrity.js';
+import {
+  NFL_TEAM_OFFICIAL_RSS_URLS,
+  ESPN_NFL_TEAM_IDS,
+  discoverOfficialClubInactivesRssItem,
+  parseOfficialClubInactivesArticle,
+  parseRotoWireInactivesHtml,
+  parseEspnCoreEventRosterInactives
+} from '../src/engine/gameDayRosterEngine.js';
 import { buildKeySyncCspHeader } from '../src/services/sharedApiKeyStore.js';
+
+const ALLOWED_SHORTENER_HOST_RE =
+  /^(?:www\.)?(?:dlvr\.it|bit\.ly|tinyurl\.com|t\.co|ow\.ly|buff\.ly|ift\.tt|trib\.al|goo\.gl|es\.pn|on\.nfl\.com|nbcnews\.to|sbn\.to)$/i;
+
+function stripEdgeTrackingParams(raw) {
+  try {
+    const u = new URL(raw);
+    for (const k of [...u.searchParams.keys()]) {
+      if (/^(?:utm_|fbclid$|gclid$|mc_cid$|mc_eid$|ref_src$|ref_url$|_osource$)/i.test(k)) {
+        u.searchParams.delete(k);
+      }
+    }
+    return u.toString();
+  } catch {
+    return raw;
+  }
+}
 
 const SF_RESERVED_DAILY_CALLS = 6;
 const DAILY_LEAGUE_SOFT_BUDGET = 48;
@@ -76,14 +101,15 @@ function resolveTeamForRequest(request, url) {
   return TEAM_REGISTRY.SF;
 }
 
-function buildCorsHeaders(request) {
+function buildCorsHeaders(request, team = null) {
   const origin = String(request.headers.get('Origin') || '');
   const allowed =
     /^https:\/\/[a-z0-9-]+\.joshal\.com$/i.test(origin) ||
     /^https:\/\/(?:[a-z0-9-]+\.)?nfl-(?:teams|joshal)\.pages\.dev$/i.test(origin) ||
     /^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/i.test(origin);
+  const fallbackOrigin = team?.domain ? `https://${team.domain}` : 'https://49ers.joshal.com';
   return {
-    'Access-Control-Allow-Origin': allowed ? origin : 'https://49ers.joshal.com',
+    'Access-Control-Allow-Origin': allowed ? origin : fallbackOrigin,
     'Access-Control-Allow-Methods': 'GET, POST, HEAD, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, X-Group-Passcode, Range',
     'Access-Control-Max-Age': '86400',
@@ -195,6 +221,16 @@ function rewriteHtmlForTeam(response, team, { isHubMode = false } = {}) {
   const prefsKey = team.storageKeys?.prefs || 'joshal_49ers_hq_prefs_v1';
   const bootScript = `<script>window.__ACTIVE_TEAM_SLUG__=${JSON.stringify(team.slug)};window.__PLATFORM_API_ENABLED__=true;window.__TEAM_PREFS_KEY__=${JSON.stringify(prefsKey)};window.__TEAM_THEME_COLORS__=${JSON.stringify(themeColors)};${hubBootFlag}</script><style id="teamThemeOverrides">${cssVars}</style>`;
 
+  const headers = new Headers(response.headers);
+  headers.set('Content-Type', 'text/html; charset=utf-8');
+  headers.set('Cache-Control', 'public, max-age=0, must-revalidate');
+  headers.set('Vary', 'Host');
+  const baseResponse = new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers
+  });
+
   return new HTMLRewriter()
     .on('html', {
       element(el) {
@@ -279,7 +315,7 @@ function rewriteHtmlForTeam(response, team, { isHubMode = false } = {}) {
         el.setInnerContent(`Initializing ${team.brandName} Intelligence…`);
       }
     })
-    .transform(response);
+    .transform(baseResponse);
 }
 
 async function trackActiveTeamVisit(env, team) {
@@ -437,30 +473,6 @@ async function handleCachedEdgeGet(request, teamAbbr, cacheTtlSec, fetcherFn) {
 
 function decodeWorkerXml(str = '') {
   return stripHtmlAndDecodeEntities(str);
-}
-
-function parseWorkerRotoWireTeamInactives(html = '', teamCfg = null) {
-  if (!html || !teamCfg) return { officialPosted: false, inactives: [], sourceUrl: 'https://www.rotowire.com/football/inactives.php', sourceLabel: 'RotoWire NFL Inactives' };
-  const nickEsc = String(teamCfg.nickname || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const fullEsc = String(teamCfg.fullName || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const secRe = new RegExp(`(?:${fullEsc}|${nickEsc})[\\s\\S]{0,4500}`, 'i');
-  const m = html.match(secRe);
-  if (!m) return { officialPosted: false, inactives: [], sourceUrl: 'https://www.rotowire.com/football/inactives.php', sourceLabel: 'RotoWire NFL Inactives' };
-  const names = [];
-  const seen = new Set();
-  for (const pm of m[0].matchAll(/\/football\/player\/[^"]+"[^>]*>([^<]{4,40})<\/a>/gi)) {
-    const nm = decodeWorkerXml(pm[1]);
-    if (!nm || seen.has(nm.toLowerCase())) continue;
-    seen.add(nm.toLowerCase());
-    names.push(nm);
-    if (names.length >= 10) break;
-  }
-  return {
-    officialPosted: names.length >= 3,
-    inactives: names,
-    sourceUrl: 'https://www.rotowire.com/football/inactives.php',
-    sourceLabel: 'RotoWire NFL Inactives'
-  };
 }
 
 export const OFFICIAL_TEAM_X_HANDLES = Object.freeze({
@@ -778,16 +790,15 @@ function isAllowedKeyVaultRequest(request, host) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    const cors = buildCorsHeaders(request);
-
-    if (request.method === 'OPTIONS') {
-      return new Response(null, { status: 204, headers: cors });
-    }
-
     const host = getRequestHost(request, url);
     const hubHost = isNflHubHost(host);
     const explicitQueryTeam = resolveExplicitQueryTeam(url.search);
     const team = resolveTeamForRequest(request, url);
+    const cors = buildCorsHeaders(request, team);
+
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: cors });
+    }
 
     // 0. Hermetically sealed Same-Site Gemini API Key Sync Vault (`nfl.joshal.com/key-sync` ONLY)
     if ((request.method === 'GET' || request.method === 'HEAD') && (url.pathname === '/key-sync' || url.pathname === '/key-sync.html')) {
@@ -1545,19 +1556,58 @@ export default {
       });
     }
 
-    // 4b. Shortened URL Expander (0 KV writes — uses unlimited `caches.default`)
+    // 4b. Shortened URL Expander (0 KV writes — uses unlimited `caches.default` + 13-host allowlist + UTM strip)
     if (request.method === 'POST' && url.pathname === '/api/expand-urls') {
       const body = await request.json().catch(() => null);
       const rawUrls = Array.isArray(body?.urls) ? body.urls.slice(0, 12) : [];
       const expanded = {};
+      const cache = typeof caches !== 'undefined' ? caches.default : null;
       await Promise.all(
         rawUrls.map(async u => {
           const clean = String(u || '').trim();
-          if (!/^https:\/\/(?:t\.co|dlvr\.it|bit\.ly|tinyurl\.com|ow\.ly|buff\.ly)\//i.test(clean)) return;
+          let parsed = null;
           try {
-            const res = await fetch(clean, { method: 'HEAD', redirect: 'follow', signal: AbortSignal.timeout(4500) });
+            parsed = new URL(clean);
+          } catch {
+            return;
+          }
+          if (parsed.protocol !== 'https:' || !ALLOWED_SHORTENER_HOST_RE.test(parsed.hostname)) return;
+          const cacheKey = cache
+            ? new Request(`https://cache.internal/expand-url?u=${encodeURIComponent(clean)}`, { method: 'GET' })
+            : null;
+          if (cache && cacheKey) {
+            try {
+              const hit = await cache.match(cacheKey);
+              if (hit) {
+                const cachedUrl = await hit.text();
+                if (cachedUrl && /^https:\/\//i.test(cachedUrl)) {
+                  expanded[clean] = cachedUrl;
+                  return;
+                }
+              }
+            } catch {}
+          }
+          try {
+            const res = await fetch(clean, {
+              method: 'HEAD',
+              redirect: 'follow',
+              headers: { 'User-Agent': 'Mozilla/5.0 (compatible; NFLFaithfulBot/1.0)' },
+              signal: AbortSignal.timeout(4500)
+            });
             if (res?.url && /^https:\/\//i.test(res.url)) {
-              expanded[clean] = res.url;
+              const resolved = stripEdgeTrackingParams(res.url);
+              expanded[clean] = resolved;
+              if (cache && cacheKey) {
+                await cache
+                  .put(
+                    cacheKey,
+                    new Response(resolved, {
+                      status: 200,
+                      headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=86400' }
+                    })
+                  )
+                  .catch(() => {});
+              }
             }
           } catch {}
         })
@@ -1565,7 +1615,7 @@ export default {
       return jsonResp({ ok: true, expanded }, 200, cors);
     }
 
-    // 5. Short-TTL Edge-Cached Game-Day Inactives (0 KV writes! Resolves BOTH active team & opponent)
+    // 5. Short-TTL Edge-Cached Game-Day Inactives (0 KV writes! Canonical Club RSS + RotoWire + ESPN Core Roster)
     if (request.method === 'GET' && url.pathname === '/api/gameday-inactives') {
       return handleCachedEdgeGet(request, team.abbr, 120, async () => {
         const teamsParam = String(url.searchParams.get('teams') || team.abbr)
@@ -1574,25 +1624,150 @@ export default {
           .filter(Boolean);
         const primaryAbbr = teamsParam[0] || team.abbr;
         const oppAbbr = teamsParam[1] && teamsParam[1] !== primaryAbbr ? teamsParam[1] : '';
+        const targetTeams = [primaryAbbr, oppAbbr].filter(Boolean);
         const primaryTeam = getTeamByAbbr(primaryAbbr) || team;
         const oppTeam = oppAbbr ? getTeamByAbbr(oppAbbr) : null;
+        const week = Number(url.searchParams.get('week') || 0) || null;
+        const oppName = String(url.searchParams.get('oppName') || oppTeam?.fullName || '').slice(0, 48);
+        const gameId = String(url.searchParams.get('gameId') || '').trim();
+        const kickoffMsParam = Number(url.searchParams.get('kickoffMs') || 0) || 0;
 
-        const [injJson, rotoHtml] = await Promise.all([
+        const [injJson, rotoHtml, ...clubRssXmls] = await Promise.all([
           fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=${primaryTeam.espnId}`, {
-            signal: AbortSignal.timeout(6500)
+            signal: AbortSignal.timeout(5500)
           })
             .then(r => (r.ok ? r.json() : null))
             .catch(() => null),
           fetch('https://www.rotowire.com/football/inactives.php', {
-            signal: AbortSignal.timeout(6500),
+            signal: AbortSignal.timeout(5500),
             headers: { 'User-Agent': 'Mozilla/5.0 (compatible; NFLFaithfulBot/1.0)' }
           })
             .then(r => (r.ok ? r.text() : ''))
-            .catch(() => '')
+            .catch(() => ''),
+          ...targetTeams.map(abbr => {
+            const rssUrl = NFL_TEAM_OFFICIAL_RSS_URLS[abbr];
+            if (!rssUrl) return Promise.resolve('');
+            return fetch(rssUrl, {
+              headers: { 'User-Agent': 'NFLFaithfulEdge/1.0' },
+              signal: AbortSignal.timeout(5000)
+            })
+              .then(r => (r.ok ? r.text() : ''))
+              .catch(() => '');
+          })
         ]);
 
-        const sfInactives = parseWorkerRotoWireTeamInactives(rotoHtml, primaryTeam);
-        const oppInactives = oppTeam ? parseWorkerRotoWireTeamInactives(rotoHtml, oppTeam) : null;
+        const rwByTeam = parseRotoWireInactivesHtml(rotoHtml, targetTeams);
+        const discoveredByTeam = {};
+        const sourceUrlByTeam = {};
+        targetTeams.forEach((abbr, idx) => {
+          const discovered = discoverOfficialClubInactivesRssItem(clubRssXmls[idx] || '', {
+            kickoffMs: kickoffMsParam,
+            week
+          });
+          if (discovered?.url) {
+            discoveredByTeam[abbr] = discovered;
+            sourceUrlByTeam[abbr] = discovered.url;
+          }
+        });
+
+        const clubParsedByTeam = {};
+        await Promise.all(
+          targetTeams.map(async abbr => {
+            const disc = discoveredByTeam[abbr];
+            if (!disc?.url) return;
+            let artHtml = '';
+            try {
+              const artRes = await fetch(disc.url, {
+                headers: { 'User-Agent': 'Mozilla/5.0 (compatible; NFLFaithfulEdge/1.0)' },
+                signal: AbortSignal.timeout(5000)
+              });
+              if (artRes.ok) artHtml = await artRes.text();
+            } catch {}
+            const parseSource = artHtml || disc.inlineHtml || disc.description || '';
+            if (!parseSource) return;
+            const tCfg = abbr === primaryAbbr ? primaryTeam : oppTeam;
+            const parsed = parseOfficialClubInactivesArticle(parseSource, [], {
+              week,
+              teamAbbr: abbr,
+              teamName: tCfg?.fullName || (abbr === oppAbbr ? oppName : '')
+            });
+            if (parsed.officialPosted) {
+              clubParsedByTeam[abbr] = parsed;
+            }
+          })
+        );
+
+        const buildTeamInactivesPayload = abbr => {
+          const tCfg = abbr === primaryAbbr ? primaryTeam : oppTeam;
+          const clubLabel = abbr === 'SF' ? '49ers.com Official' : `${abbr} Official`;
+          let list = [];
+          let activeNames = [];
+          let emergencyQbNames = [];
+          let sourceRank = 0;
+          let sourceLabel = 'RotoWire NFL Inactives';
+          if (clubParsedByTeam[abbr]?.inactives?.length >= 3) {
+            list = clubParsedByTeam[abbr].inactives;
+            emergencyQbNames = list
+              .filter(p =>
+                clubParsedByTeam[abbr].emergencyQbKeys?.has(
+                  String(p.name || '').toLowerCase().replace(/[^a-z0-9]/g, '')
+                )
+              )
+              .map(p => p.name);
+            sourceRank = 4;
+            sourceLabel = clubLabel;
+          } else if ((rwByTeam[abbr] || []).length >= 3) {
+            list = rwByTeam[abbr];
+            sourceRank = 3;
+            sourceLabel = sourceUrlByTeam[abbr] ? clubLabel : 'RotoWire NFL Inactives';
+          }
+          return {
+            teamAbbr: abbr,
+            teamName: tCfg?.fullName || '',
+            officialPosted: list.length >= 3,
+            sourceRank,
+            inactives: list,
+            activeNames,
+            emergencyQbNames,
+            sourceUrl: sourceUrlByTeam[abbr] || 'https://www.rotowire.com/football/inactives.php',
+            sourceLabel
+          };
+        };
+
+        const primaryOut = buildTeamInactivesPayload(primaryAbbr);
+        const oppOut = oppAbbr ? buildTeamInactivesPayload(oppAbbr) : null;
+
+        // Authoritative ESPN Core Event Competitor Roster enrichment (47/48 active list + inactives fallback)
+        if (/^\d{6,12}$/.test(gameId)) {
+          await Promise.all(
+            targetTeams.map(async abbr => {
+              const tid = ESPN_NFL_TEAM_IDS[abbr];
+              if (!tid) return;
+              try {
+                const eUrl = `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/${encodeURIComponent(gameId)}/competitions/${encodeURIComponent(gameId)}/competitors/${tid}/roster`;
+                const eRes = await fetch(eUrl, {
+                  headers: { 'User-Agent': 'NFLFaithfulEdge/1.0' },
+                  signal: AbortSignal.timeout(5000)
+                });
+                if (!eRes.ok) return;
+                const eJson = await eRes.json();
+                const parsed = parseEspnCoreEventRosterInactives(eJson, []);
+                if (!parsed.officialPosted) return;
+                const slot = abbr === primaryAbbr ? primaryOut : oppOut;
+                if (!slot) return;
+                if (parsed.activeNames?.length >= 44) {
+                  slot.activeNames = parsed.activeNames;
+                }
+                if (slot.inactives.length < 3) {
+                  slot.inactives = parsed.inactives;
+                  slot.officialPosted = parsed.inactives.length >= 3;
+                  slot.sourceRank = 3;
+                  slot.sourceLabel = 'ESPN Official Game Roster';
+                }
+              } catch {}
+            })
+          );
+        }
 
         return jsonResp(
           {
@@ -1600,8 +1775,8 @@ export default {
             teamAbbr: primaryTeam.abbr,
             oppAbbr: oppTeam?.abbr || '',
             fetchedAt: new Date().toISOString(),
-            sf: sfInactives,
-            opp: oppInactives,
+            sf: primaryOut,
+            opp: oppOut,
             injuries: injJson?.injuries || []
           },
           200,
@@ -1841,6 +2016,11 @@ export default {
         );
       }
       return jsonResp({ error: 'Use direct browser BYOK mode for interactive generation.' }, 400, cors);
+    }
+
+    // Never let unmatched `/api/*` paths fall through to static SPA HTML (`200 OK` HTML breaks JSON callers)
+    if (url.pathname.startsWith('/api/')) {
+      return jsonResp({ error: 'Not Found' }, 404, cors);
     }
 
     // 10. Static PWA Assets + Edge HTMLRewriter on `/` & `/index.html` (Zero FOUC + Zero Safari Redirect!)

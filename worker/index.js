@@ -456,54 +456,65 @@ async function callGeminiTextWithFallback(env, payload, options = {}) {
       }
     };
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`;
-    let res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(modelPayload)
-    });
-
-    if (res.status === 400 && Array.isArray(modelPayload.tools) && modelPayload.tools.length > 0) {
-      const { tools: _omitTools, ...withoutToolsPayload } = modelPayload;
+    const timeoutMs = modelThinkingConfig?.thinkingLevel === 'XHIGH' ? 58000 : 45000;
+    let res = null;
+    try {
       res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(withoutToolsPayload)
+        body: JSON.stringify(modelPayload),
+        signal: AbortSignal.timeout(timeoutMs)
       });
-    }
 
-    if (res.status === 400 && modelThinkingConfig?.thinkingLevel === 'XHIGH') {
-      const { tools: _omitTools2, ...baseFallback } = modelPayload;
-      const highFallbackPayload = {
-        ...baseFallback,
-        generationConfig: {
-          ...(modelPayload.generationConfig || {}),
-          thinkingConfig: { thinkingLevel: 'HIGH' }
-        }
-      };
-      res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(highFallbackPayload)
-      });
-      if (res.ok) thinkingLevelUsed = 'HIGH';
+      if (res.status === 400 && Array.isArray(modelPayload.tools) && modelPayload.tools.length > 0) {
+        const { tools: _omitTools, ...withoutToolsPayload } = modelPayload;
+        res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(withoutToolsPayload),
+          signal: AbortSignal.timeout(timeoutMs)
+        });
+      }
+
+      if (res.status === 400 && modelThinkingConfig?.thinkingLevel === 'XHIGH') {
+        const { tools: _omitTools2, ...baseFallback } = modelPayload;
+        const highFallbackPayload = {
+          ...baseFallback,
+          generationConfig: {
+            ...(modelPayload.generationConfig || {}),
+            thinkingConfig: { thinkingLevel: 'HIGH' }
+          }
+        };
+        res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(highFallbackPayload),
+          signal: AbortSignal.timeout(45000)
+        });
+        if (res.ok) thinkingLevelUsed = 'HIGH';
+      }
+    } catch {
+      continue;
     }
 
     lastRes = res;
 
     if (res.ok) {
       if (i > 0 && env.SHARED_CACHE) {
-        await env.SHARED_CACHE.put(
-          'meta:best_free_model',
-          JSON.stringify({
-            bestModel: model,
-            thinkingLevel: resolveGeminiThinkingLevelLabel(model),
-            thinkingBudget: Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET),
-            rankedCascade: [model, ...cascade.filter(m => m !== model)],
-            source: 'auto-failover-promotion',
-            checkedAt: new Date().toISOString()
-          }),
-          { expirationTtl: 60 * 60 * 6 }
-        );
+        try {
+          await env.SHARED_CACHE.put(
+            'meta:best_free_model',
+            JSON.stringify({
+              bestModel: model,
+              thinkingLevel: resolveGeminiThinkingLevelLabel(model),
+              thinkingBudget: Number(env.GEMINI_THINKING_BUDGET || HIGH_THINKING_BUDGET),
+              rankedCascade: [model, ...cascade.filter(m => m !== model)],
+              source: 'auto-failover-promotion',
+              checkedAt: new Date().toISOString()
+            }),
+            { expirationTtl: 60 * 60 * 6 }
+          );
+        } catch {}
       }
       return { res, modelUsed: model, thinkingLevelUsed };
     }
@@ -533,11 +544,17 @@ async function callGeminiAudioTtsWithFallback(env, payload) {
   for (let i = 0; i < cascade.length; i++) {
     const audioModel = cascade[i];
     const ttsUrl = `https://generativelanguage.googleapis.com/v1beta/models/${audioModel}:generateContent?key=${env.GEMINI_API_KEY}`;
-    const res = await fetch(ttsUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+    let res = null;
+    try {
+      res = await fetch(ttsUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(50000)
+      });
+    } catch {
+      continue;
+    }
     lastRes = res;
     if (res.ok) {
       return { res, audioModelUsed: audioModel };
@@ -615,10 +632,14 @@ async function collectEdgeLiveWire(
   { maxXHydrate = 22, includeYouTube = true, useCache = true, writeCache = true, liveMode = false } = {}
 ) {
   const kvCacheKey = liveMode ? 'wire:rss_live_v7_live' : 'wire:rss_live_v7';
+  const softMaxAgeMs = (liveMode ? 15 : 25) * 1000;
   if (useCache) {
-    const cachedWire = await env.SHARED_CACHE?.get(kvCacheKey, 'json');
+    const cachedWire = await env.SHARED_CACHE?.get(kvCacheKey, 'json').catch(() => null);
     if (cachedWire && Array.isArray(cachedWire.items)) {
-      return { cached: true, ...cachedWire };
+      const cachedAtMs = Date.parse(cachedWire.updatedAt || '');
+      if (Number.isFinite(cachedAtMs) && Date.now() - cachedAtMs <= softMaxAgeMs) {
+        return { cached: true, ...cachedWire };
+      }
     }
   }
 
@@ -942,7 +963,10 @@ async function collectEdgeLiveWire(
 
   const payload = { updatedAt: new Date().toISOString(), items };
   if (writeCache && env.SHARED_CACHE && items.length > 0 && includeYouTube && maxXHydrate >= 10) {
-    await env.SHARED_CACHE.put(kvCacheKey, JSON.stringify(payload), { expirationTtl: liveMode ? 15 : 25 });
+    // Cloudflare KV enforces a hard minimum expirationTtl of 60 seconds; soft freshness (15s/25s) is checked on read.
+    try {
+      await env.SHARED_CACHE.put(kvCacheKey, JSON.stringify(payload), { expirationTtl: 60 });
+    } catch {}
   }
   return { cached: false, ...payload };
 }
@@ -1961,9 +1985,11 @@ export default {
 
       if (env.SHARED_CACHE && (sfList.length >= 3 || oppList.length >= 3)) {
         const allResolved = sfList.length >= 3 && (!oppAbbr || oppList.length >= 3);
-        await env.SHARED_CACHE.put(kvKey, JSON.stringify(outPayload), {
-          expirationTtl: allResolved ? 6 * 3600 : 45
-        });
+        try {
+          await env.SHARED_CACHE.put(kvKey, JSON.stringify(outPayload), {
+            expirationTtl: Math.max(60, allResolved ? 6 * 3600 : 60)
+          });
+        } catch {}
       }
       return jsonResponse({ cached: false, ...outPayload }, 200, cors);
     }

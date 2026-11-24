@@ -531,15 +531,16 @@ function copyTeamIcons(iconsDir) {
   }
 }
 
-function renderTeamTile(team) {
+function renderTeamTile(team, { highPriority = false } = {}) {
   const href = `https://${team.slug}.joshal.com`;
   const hubHref = `./?team=${encodeURIComponent(team.slug)}`;
   const accent = team.themes?.dark?.primaryBright || '#60A5FA';
   const aria = escapeHtml(`${team.brandName} — ${team.fullName} (${team.domain})`);
   const tip = escapeHtml(`${team.brandName} — ${team.fullName}`);
+  const prioAttr = highPriority ? ' fetchpriority="high"' : '';
   return `<a class="team-tile" href="${href}" data-external-href="${href}" data-hub-href="${hubHref}" data-team="${escapeHtml(team.slug)}" data-abbr="${escapeHtml(team.abbr)}" style="--team-accent:${escapeHtml(accent)}" aria-label="${aria}" title="${tip}">
-                  <span class="logo-wrap">
-                    <img class="team-logo" src="./icons/${escapeHtml(team.slug)}.png?v=${ASSET_VER}" alt="${escapeHtml(team.brandName)}" width="180" height="180" decoding="async" fetchpriority="high">
+                  <span class="logo-wrap" data-abbr="${escapeHtml(team.abbr)}">
+                    <img class="team-logo" src="./icons/${escapeHtml(team.slug)}.png?v=${ASSET_VER}" alt="${escapeHtml(team.brandName)}" width="180" height="180" decoding="async"${prioAttr} onerror="this.style.opacity='0'">
                   </span>
                 </a>`;
 }
@@ -548,13 +549,13 @@ function renderConferenceColumn({ conference, divisions }) {
   const confSlug = conference.toLowerCase();
   const divsHtml = divisions
     .map(
-      ({ name, teams }) => `<div class="division" data-division="${escapeHtml(`${conference} ${name}`)}">
+      ({ name, teams }, divIdx) => `<div class="division" data-division="${escapeHtml(`${conference} ${name}`)}">
               <div class="div-header">
                 <h3 class="div-title">${escapeHtml(name)}</h3>
                 <span class="div-rule" aria-hidden="true"></span>
               </div>
               <div class="team-grid">
-                ${teams.map(renderTeamTile).join('\n                ')}
+                ${teams.map(team => renderTeamTile(team, { highPriority: divIdx === 0 })).join('\n                ')}
               </div>
             </div>`
     )
@@ -763,6 +764,7 @@ function buildIndexHtml(grouped) {
 
     .theme-btn {
       appearance: none;
+      touch-action: manipulation;
       border: 1px solid var(--border);
       background: var(--bg-card);
       color: var(--text-muted);
@@ -922,6 +924,7 @@ function buildIndexHtml(grouped) {
 
     .team-tile {
       display: inline-flex;
+      touch-action: manipulation;
       align-items: center;
       justify-content: center;
       padding: 2px;

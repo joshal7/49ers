@@ -31,17 +31,6 @@ export const NEWS_SORT_MODES = [
 
 export const VALID_NEWS_SORT_MODES = new Set(['top', 'latest']);
 
-export const DEFAULT_PUSH_ALERT_PREFS = {
-  enabled: false,
-  channels: {
-    tier1Breaking: true,
-    dailyBriefReady: true,
-    practiceDowngrades: false
-  },
-  subscribedAt: null,
-  endpoint: ''
-};
-
 export function normalizeNewsSortMode(raw = 'top') {
   const s = String(raw || 'top').toLowerCase().trim();
   return VALID_NEWS_SORT_MODES.has(s) ? s : 'top';

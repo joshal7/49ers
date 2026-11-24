@@ -7,7 +7,7 @@ import { normalizeScheduleGameItem, resolveCompleteScheduleModel } from '../engi
 import {
   extractLiveScoreboardMap,
   mergeTransactionsLedgers
-} from '../engine/teamDeepDiveEngine.js?v=2';
+} from '../engine/teamDeepDiveEngine.js';
 import {
   canonicalInjuryPlayerKey,
   collapseInitialDots,
@@ -120,7 +120,7 @@ import {
   resolveTeamConfig,
   resolveTeamDataBasePath
 } from '../config/teamRegistry.js';
-import { reconcilePrefsWithSameOriginSharedKey } from './sharedApiKeyStore.js?v=4';
+import { reconcilePrefsWithSameOriginSharedKey } from './sharedApiKeyStore.js';
 
 function getTeamStorageKeys() {
   return getActiveTeamConfig().storageKeys;
@@ -688,6 +688,42 @@ async function matchJsonFromCacheStorage(pathUrl) {
   return null;
 }
 
+async function parseJsonSafeResponse(res) {
+  if (!res || !res.ok) return null;
+  const ct = String(res.headers?.get?.('content-type') || '').toLowerCase();
+  if (ct.includes('text/html')) {
+    throw new Error('Unexpected HTML response where JSON was expected');
+  }
+  if (typeof res.text === 'function') {
+    const text = await res.text();
+    const trimmed = String(text || '').trimStart();
+    if (!trimmed || trimmed.startsWith('<')) {
+      throw new Error('Unexpected non-JSON payload');
+    }
+    return JSON.parse(trimmed);
+  }
+  if (typeof res.json === 'function') {
+    return await res.json();
+  }
+  return null;
+}
+
+async function mapWithConcurrency(items = [], limit = 6, mapper = async () => {}) {
+  const list = Array.isArray(items) ? items : [];
+  if (list.length === 0) return [];
+  const cap = Math.max(1, Math.min(limit, list.length));
+  const results = new Array(list.length);
+  let cursor = 0;
+  const worker = async () => {
+    while (cursor < list.length) {
+      const idx = cursor++;
+      results[idx] = await mapper(list[idx], idx);
+    }
+  };
+  await Promise.all(Array.from({ length: cap }, worker));
+  return results;
+}
+
 export async function fetchJsonSafe(pathUrl, { maxAttempts = 3, timeoutMs = 8000, allowGithubRawFallback = null } = {}) {
   let lastErr = null;
   const retryableStatuses = new Set([408, 425, 429, 500, 502, 503, 504]);
@@ -699,7 +735,7 @@ export async function fetchJsonSafe(pathUrl, { maxAttempts = 3, timeoutMs = 8000
       const attemptTimeout = attempt === 1 ? timeoutMs : Math.round(timeoutMs * 1.25);
       const res = await fetchSingleWithTimeout(pathUrl, { cache: cacheMode }, attemptTimeout);
       if (res.ok) {
-        return await res.json();
+        return await parseJsonSafeResponse(res);
       }
       lastErr = new Error(`Failed to load ${pathUrl} (HTTP ${res.status})`);
       if (!retryableStatuses.has(res.status)) {
@@ -707,6 +743,9 @@ export async function fetchJsonSafe(pathUrl, { maxAttempts = 3, timeoutMs = 8000
       }
     } catch (err) {
       lastErr = err;
+      if (/Unexpected (?:HTML|non-JSON)/i.test(String(err?.message || ''))) {
+        break;
+      }
     }
     if (attempt < maxAttempts) {
       await sleepMs(260 * attempt);
@@ -717,7 +756,7 @@ export async function fetchJsonSafe(pathUrl, { maxAttempts = 3, timeoutMs = 8000
   const cachedJson = await matchJsonFromCacheStorage(pathUrl);
   if (cachedJson) return cachedJson;
 
-  // Fallback 2: Cross-origin GitHub Raw mirror when hosted in production (`49ers.joshal.com` / `github.io`)
+  // Fallback 2: Cross-origin GitHub Raw mirror when hosted in production (`*.joshal.com` / `github.io`)
   const useRawFallback =
     allowGithubRawFallback !== null ? Boolean(allowGithubRawFallback) : isProductionHostedOrigin();
   const relMatch = String(pathUrl || '').match(/(?:^|\/)data\/(.+)$/);
@@ -726,7 +765,7 @@ export async function fetchJsonSafe(pathUrl, { maxAttempts = 3, timeoutMs = 8000
       const rawUrl = `${GITHUB_RAW_DATA_BASE}/${relMatch[1].replace(/\?.*$/, '')}`;
       const rawRes = await fetchSingleWithTimeout(rawUrl, { cache: 'no-store' }, timeoutMs);
       if (rawRes.ok) {
-        return await rawRes.json();
+        return await parseJsonSafeResponse(rawRes);
       }
     } catch {}
   }
@@ -1515,13 +1554,18 @@ export async function loadAll49ersData(basePrefix = null) {
       podcastIndex,
       beatPodcasts
     };
-    // Persist last-known-good snapshot off the synchronous critical boot path when IndexedDB is available
+    // Persist last-known-good snapshot during browser idle time so we never block T+1.2s first user interactions
     const hydrated = hydrateBundlePostLoad(rawFiles);
     if (typeof indexedDB !== 'undefined' && indexedDB) {
-      const idbTimer = setTimeout(() => {
-        saveLastKnownGoodRawBundle(structuredCloneFallback(rawFiles)).catch(() => {});
-      }, 1200);
-      if (typeof idbTimer?.unref === 'function') idbTimer.unref();
+      const persistBundle = () => {
+        saveLastKnownGoodRawBundle(rawFiles).catch(() => {});
+      };
+      if (typeof requestIdleCallback === 'function') {
+        requestIdleCallback(persistBundle, { timeout: 4500 });
+      } else {
+        const idbTimer = setTimeout(persistBundle, 2800);
+        if (typeof idbTimer?.unref === 'function') idbTimer.unref();
+      }
     }
     return hydrated;
   } catch (primaryErr) {
@@ -1542,17 +1586,19 @@ function isProductionHostedOrigin() {
 }
 
 /**
- * Checks both same-origin `./data/meta.json` and (in production) GitHub's CORS-enabled
- * `raw.githubusercontent.com/joshal7/49ers/main/data/meta.json` so automated `GITHUB_TOKEN`
- * commits from GitHub Actions always propagate within seconds even without a Jekyll rebuild.
+ * Checks both same-origin `./data/meta.json` (or `./data/teams/<slug>/meta.json`) and (in production) GitHub's
+ * CORS-enabled `raw.githubusercontent.com/joshal7/49ers/main/data/.../meta.json` so automated commits
+ * propagate within seconds across all 32 teams.
  */
 export async function fetchFresherUpstreamData(currentUpdatedAt = '') {
   const activeTeam = getActiveTeamConfig();
   const basePath = resolveTeamDataBasePath(activeTeam);
   const curMs = Date.parse(currentUpdatedAt || '') || 0;
   const candidates = [basePath];
-  if (isProductionHostedOrigin() && activeTeam.abbr === 'SF') {
-    candidates.push(GITHUB_RAW_DATA_BASE);
+  if (isProductionHostedOrigin()) {
+    const rawFallbackBase =
+      activeTeam.abbr === 'SF' ? GITHUB_RAW_DATA_BASE : `${GITHUB_RAW_DATA_BASE}/teams/${activeTeam.slug}`;
+    candidates.push(rawFallbackBase);
   }
 
   let bestPrefix = null;
@@ -1563,7 +1609,7 @@ export async function fetchFresherUpstreamData(currentUpdatedAt = '') {
       try {
         const res = await fetchSingleWithTimeout(`${prefix}/meta.json?t=${Date.now()}`, { cache: 'no-store' }, 6500);
         if (!res.ok) return;
-        const meta = await res.json();
+        const meta = await parseJsonSafeResponse(res);
         const ts = Date.parse(meta?.updatedAt || '') || 0;
         if (ts > bestMs) {
           bestMs = ts;
@@ -1928,8 +1974,7 @@ export async function hydrateLiveBlueskyBeatWire(
 
   const pendingItems = [];
   const shortUrlsToExpand = new Set();
-  await Promise.all(
-    teamAccounts.map(async acct => {
+  await mapWithConcurrency(teamAccounts, 6, async acct => {
       try {
         const limit = acct.isNationalInsider ? 28 : isGameLive || manual ? 30 : 28;
         const apiUrl = `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(acct.actor)}&limit=${limit}&filter=posts_and_author_threads`;
@@ -2183,8 +2228,7 @@ export async function hydrateLiveBlueskyBeatWire(
       } catch {
         // Ignore network/offline errors cleanly
       }
-    })
-  );
+    });
 
   // Batch-unwrap any opaque shortener embed links (e.g. dlvr.it from NFLTradeRumors, bit.ly, trib.al) via Worker when available
   const expandedShortMap =
@@ -2338,8 +2382,7 @@ export async function hydrateLiveEspnPlayerBeatWire(
   const maxAgeMs = maxAgeDays * 86_400_000;
   const discovered = [];
 
-  await Promise.all(
-    cohort.map(async player => {
+  await mapWithConcurrency(cohort, 6, async player => {
       try {
         const perPlayerLimit = focusIdStr && String(player.id) === focusIdStr ? 10 : manual ? 6 : 4;
         const apiUrl = `https://site.web.api.espn.com/apis/fantasy/v2/games/ffl/news/players?playerId=${encodeURIComponent(player.id)}&limit=${perPlayerLimit}`;
@@ -2545,8 +2588,7 @@ export async function hydrateLiveEspnPlayerBeatWire(
       } catch {
         // Ignore transient per-player fetch failures cleanly
       }
-    })
-  );
+    });
 
   if (discovered.length > 0) {
     appData.news.rawStream = sortNewsWithBreakingPriority([...discovered, ...appData.news.rawStream], Date.now(), { appData });
@@ -3981,19 +4023,47 @@ export async function hydrateLiveMultiSourceBeatWire(
     };
   }
 
+  // Per-session (`WeakMap` keyed by `appData` instance) channel cooldowns prevent blasting all 60+ HTTP sockets
+  // on every 8s live / 25s standard tick while keeping breaking wire, live highlights & manual syncs instant!
+  const wireChannelTimestamps = hydrateLiveMultiSourceBeatWire._channelMap || new WeakMap();
+  hydrateLiveMultiSourceBeatWire._channelMap = wireChannelTimestamps;
+  let chState = wireChannelTimestamps.get(appData);
+  if (!chState) {
+    chState = {};
+    wireChannelTimestamps.set(appData, chState);
+  }
+  const nowPollMs = Date.now();
+  const isDue = (key, intervalMs) => {
+    if (manual || !chState[key] || nowPollMs - chState[key] >= intervalMs) {
+      chState[key] = nowPollMs;
+      return true;
+    }
+    return false;
+  };
+
+  const espnWireDue = Boolean(focusPlayerId) || isDue('espnPlayerWire', isGameLive ? 24_000 : 50_000);
+  const rotowireDue = isDue('rotowireRss', isGameLive ? 35_000 : 60_000);
+  const txDue = isDue('transactions', isGameLive ? 45_000 : 75_000);
+  const blueskyDue = isDue('bluesky', isGameLive ? 24_000 : 50_000);
+  const rapidDeskDue = isDue('espnRapidDesk', isGameLive ? 16_000 : 45_000);
+  const officialRssDue = isDue('officialRss', isGameLive ? 45_000 : 90_000);
+  const officialVidDue = isDue('officialVideosRss', isGameLive ? 45_000 : 90_000);
+
   const results = await Promise.allSettled([
-    hydrateLiveEspnPlayerBeatWire(appData, {
-      maxPriority: isGameLive ? 22 : 18,
-      sweepBatchSize: isGameLive ? 14 : 10,
-      focusPlayerId,
-      manual
-    }),
-    hydrateLiveRotoWireBeatRss(appData, { isGameLive }),
-    hydrateLiveTeamTransactionsWire(appData),
-    hydrateLiveBlueskyBeatWire(appData, { isGameLive, manual, workerBaseUrl }),
-    hydrateLiveEspnRapidBreakingDesk(appData),
-    hydrateLive49ersOfficialRss(appData),
-    hydrateLive49ersOfficialVideosRss(appData),
+    espnWireDue
+      ? hydrateLiveEspnPlayerBeatWire(appData, {
+          maxPriority: isGameLive ? 22 : 18,
+          sweepBatchSize: isGameLive ? 14 : 10,
+          focusPlayerId,
+          manual
+        })
+      : Promise.resolve(0),
+    rotowireDue ? hydrateLiveRotoWireBeatRss(appData, { isGameLive }) : Promise.resolve(0),
+    txDue ? hydrateLiveTeamTransactionsWire(appData) : Promise.resolve(0),
+    blueskyDue ? hydrateLiveBlueskyBeatWire(appData, { isGameLive, manual, workerBaseUrl }) : Promise.resolve(0),
+    rapidDeskDue ? hydrateLiveEspnRapidBreakingDesk(appData) : Promise.resolve(0),
+    officialRssDue ? hydrateLive49ersOfficialRss(appData) : Promise.resolve(0),
+    officialVidDue ? hydrateLive49ersOfficialVideosRss(appData) : Promise.resolve(0),
     hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl, isGameLive }),
     hydrateLiveEspnGameHighlightsAndPlays(appData, { isGameLive })
   ]);
@@ -5666,7 +5736,7 @@ export function resolveLiveFranchiseHistoryForOpponent(
   };
 }
 
-export async function hydrateLiveEspnOverlay(appData) {
+export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = false } = {}) {
   if (!appData?.meta || !appData?.scheduleMatchup) return false;
   const activeTeam = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
   let mutated = false;
@@ -5675,7 +5745,7 @@ export async function hydrateLiveEspnOverlay(appData) {
   const fetchCorsJson = async (url, timeoutMs = 7500) => {
     const res = await fetchSingleWithTimeout(url, { cache: 'no-store' }, timeoutMs);
     if (!res.ok) return null;
-    return res.json();
+    return parseJsonSafeResponse(res);
   };
 
   const initialOppAbbr = normalizeTeamAbbrClient(appData.scheduleMatchup?.upcomingMatchup?.oppAbbr || '');
@@ -7782,17 +7852,20 @@ export async function hydrateLiveEspnOverlay(appData) {
     appData.news.clusteredBriefs = filterAndCleanSynthesisClusters(appData.news.clusteredBriefs, appData);
   }
 
-  // 6. Reconcile 49ers Play Likelihood & IR Return Windows with Corroborated Beat/Coaching News
-  if (reconcileRosterAndHealthWithNews(appData)) {
-    mutated = true;
+  // 6. Reconcile Play Likelihood & IR Return Windows with Corroborated Beat/Coaching News
+  // (Skipped when `hydrateLiveMultiSourceBeatWire` runs immediately afterward in the same pass)
+  if (!skipPostReconcile) {
+    if (reconcileRosterAndHealthWithNews(appData)) {
+      mutated = true;
+    }
+
+    // Persist non-destructive weekly W/T/F practice snapshot before applying game-day In/Out overrides
+    persistWeeklyPracticeSnapshot(appData);
+
+    // 7. Game-Day Inactives & Active Roster Window ([T-90m, Final))
+    const gdMutated = await hydrateLiveGameDayRosters(appData).catch(() => false);
+    if (gdMutated) mutated = true;
   }
-
-  // Persist non-destructive weekly W/T/F practice snapshot before applying game-day In/Out overrides
-  persistWeeklyPracticeSnapshot(appData);
-
-  // 7. Game-Day Inactives & Active Roster Window ([T-90m, Final))
-  const gdMutated = await hydrateLiveGameDayRosters(appData).catch(() => false);
-  if (gdMutated) mutated = true;
 
   if (mutated) {
     appData.meta.updatedAt = new Date().toISOString();
@@ -8115,20 +8188,25 @@ export async function hydrateLive49ersPodcasts(appData) {
  * - Completed games are immutable: cached in memory + bounded 4-game `localStorage` LRU (<2ms reopen)
  * ============================================================================ */
 
-const GAMECAST_LOCAL_CACHE_KEY = 'joshal_gamecast_cache_v1';
-const GAMECAST_LOCAL_MAX_GAMES = 4;
+const GAMECAST_CACHE_SCHEMA_VERSION = 2;
+const GAMECAST_LOCAL_MAX_GAMES = 6;
 const gamecastMemoryCache = new Map(); // key `${teamAbbr}:${gameId}` -> { model, fetchedAtMs }
 const gamecastInFlightMap = new Map(); // key `${teamAbbr}:${gameId}` -> Promise<model>
+
+function getGamecastLocalCacheKey(teamAbbr = '') {
+  const abbr = String(teamAbbr || getActiveTeamConfig().abbr || 'SF').toLowerCase();
+  return `joshal_${abbr}_gamecast_cache_v${GAMECAST_CACHE_SCHEMA_VERSION}`;
+}
 
 function buildGamecastCacheKey(gameId, teamAbbr = '') {
   const abbr = String(teamAbbr || getActiveTeamConfig().abbr || 'SF').toUpperCase();
   return `${abbr}:${String(gameId || '').trim()}`;
 }
 
-function readLocalGamecastStore() {
+function readLocalGamecastStore(teamAbbr = '') {
   try {
     if (typeof localStorage === 'undefined') return {};
-    const raw = localStorage.getItem(GAMECAST_LOCAL_CACHE_KEY);
+    const raw = localStorage.getItem(getGamecastLocalCacheKey(teamAbbr));
     if (!raw) return {};
     const parsed = JSON.parse(raw);
     return parsed && typeof parsed === 'object' ? parsed : {};
@@ -8137,25 +8215,20 @@ function readLocalGamecastStore() {
   }
 }
 
-function writeLocalGamecastEntry(cacheKey, model) {
+function writeLocalGamecastEntry(cacheKey, model, teamAbbr = '') {
   if (!model || !model.isFinal || model.isFallback) return;
   try {
     if (typeof localStorage === 'undefined') return;
-    const store = readLocalGamecastStore();
-    store[cacheKey] = { savedAtMs: Date.now(), model };
+    const store = readLocalGamecastStore(teamAbbr);
+    store[cacheKey] = { v: GAMECAST_CACHE_SCHEMA_VERSION, savedAtMs: Date.now(), model };
     const entries = Object.entries(store).sort(
       (a, b) => Number(b[1]?.savedAtMs || 0) - Number(a[1]?.savedAtMs || 0)
     );
     const trimmed = Object.fromEntries(entries.slice(0, GAMECAST_LOCAL_MAX_GAMES));
-    localStorage.setItem(GAMECAST_LOCAL_CACHE_KEY, JSON.stringify(trimmed));
+    localStorage.setItem(getGamecastLocalCacheKey(teamAbbr), JSON.stringify(trimmed));
   } catch {
     // Ignore storage quota errors gracefully
   }
-}
-
-export function clearGamecastMemoryCache() {
-  gamecastMemoryCache.clear();
-  gamecastInFlightMap.clear();
 }
 
 export function getCachedGamecastModel(gameId, { teamAbbr = '' } = {}) {
@@ -8163,10 +8236,11 @@ export function getCachedGamecastModel(gameId, { teamAbbr = '' } = {}) {
   const key = buildGamecastCacheKey(gameId, teamAbbr);
   const mem = gamecastMemoryCache.get(key);
   if (mem?.model) return mem.model;
-  const store = readLocalGamecastStore();
-  const persisted = store[key]?.model;
+  const store = readLocalGamecastStore(teamAbbr);
+  const entry = store[key];
+  const persisted = entry?.v === GAMECAST_CACHE_SCHEMA_VERSION ? entry.model : null;
   if (persisted && persisted.gameId === String(gameId) && persisted.isFinal && !persisted.isFallback) {
-    gamecastMemoryCache.set(key, { model: persisted, fetchedAtMs: Number(store[key]?.savedAtMs || Date.now()) });
+    gamecastMemoryCache.set(key, { model: persisted, fetchedAtMs: Number(entry?.savedAtMs || Date.now()) });
     return persisted;
   }
   return null;
@@ -8180,7 +8254,7 @@ export function primeGamecastCacheFromSummary(summaryJson, { gameMeta = {}, appD
   const key = buildGamecastCacheKey(parsed.gameId, activeTeam.abbr);
   gamecastMemoryCache.set(key, { model: parsed, fetchedAtMs: Date.now() });
   if (parsed.isFinal) {
-    writeLocalGamecastEntry(key, parsed);
+    writeLocalGamecastEntry(key, parsed, activeTeam.abbr);
   }
   return parsed;
 }
@@ -8260,7 +8334,7 @@ export async function fetchGamecastForGame(
       try {
         const res = await fetchSingleWithTimeout(url, { cache: 'no-store' }, 5200);
         if (!res.ok) continue;
-        const json = await res.json();
+        const json = await parseJsonSafeResponse(res);
         if (json && typeof json === 'object' && (json.header || json.boxscore || json.drives)) {
           summaryJson = json;
           break;
@@ -8275,7 +8349,7 @@ export async function fetchGamecastForGame(
       if (parsed) {
         gamecastMemoryCache.set(cacheKey, { model: parsed, fetchedAtMs: Date.now() });
         if (parsed.isFinal) {
-          writeLocalGamecastEntry(cacheKey, parsed);
+          writeLocalGamecastEntry(cacheKey, parsed, activeTeam.abbr);
         }
         if (appData) {
           syncGamecastScoresBackToAppData(appData, parsed);

@@ -9098,9 +9098,11 @@ await testAsync(
     };
     const liveGreen = liveBundle.roster.players.find(p => p.name === 'Renardo Green');
     assert.ok(liveGreen, 'Renardo Green must exist on live 49ers roster');
+    const liveSnapshotNowMs = Date.parse(liveBundle.meta?.updatedAt || '') || Date.now();
     const liveGreenOv = rankPlayerOverviewMentions(liveGreen, {
       rawStream: liveBundle.news.rawStream,
-      appData: liveBundle
+      appData: liveBundle,
+      nowMs: liveSnapshotNowMs
     });
     assert.ok(liveGreenOv.length >= 4, `Expected >=4 fresh Overview mentions for Renardo Green, got ${liveGreenOv.length}`);
     assert.equal(
@@ -9110,7 +9112,8 @@ await testAsync(
     );
     const liveGreenInj = rankPlayerInjuryNews(liveGreen, {
       rawStream: liveBundle.news.rawStream,
-      appData: liveBundle
+      appData: liveBundle,
+      nowMs: liveSnapshotNowMs
     });
     assert.ok(liveGreenInj.length >= 1, 'Renardo Green Injury News must contain fresh injury coverage');
 
@@ -20784,6 +20787,117 @@ await testAsync('NFL 47/48 Game-Day Active Cap, Healthy Scratch vs Medical Injur
   assert.ok(renderedSfHealth.includes('data-inactive-kind="healthy_scratch"'), 'Must annotate healthy scratch chip data attribute');
   assert.ok(renderedSfHealth.includes('gameday-dot-scratch') && renderedSfHealth.includes('gameday-dot-injury'), 'Must render compact injury vs healthy scratch split legend');
   assert.ok(renderedSfHealth.includes("Healthy Scratch (Coach&#39;s Decision)") || renderedSfHealth.includes("Healthy Scratch (Coach's Decision)"), 'Demarcus Robinson chip must say Healthy Scratch (Coach\'s Decision)');
+});
+
+test('Holistic architecture integrity: single-instance ES module graph, KV TTL >= 60, multi-team Worker 404 JSON & canonical inactives, SW Cache-First & HTML-safe JSON fetch', async () => {
+  // 1. Single-instance ES module graph: zero `?v=` query strings on internal relative imports across `src/`
+  const walkJs = dir => {
+    const out = [];
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) out.push(...walkJs(full));
+      else if (entry.name.endsWith('.js')) out.push(full);
+    }
+    return out;
+  };
+  const srcJsFiles = walkJs(path.resolve(rootDir, 'src'));
+  const splitImportViolations = [];
+  for (const file of srcJsFiles) {
+    const src = fs.readFileSync(file, 'utf8');
+    const matches = src.match(/from\s+['"]\.\.?\/[^'"]+\?v=[^'"]+['"]/g) || [];
+    if (matches.length > 0) {
+      splitImportViolations.push(`${path.relative(rootDir, file)}: ${matches.join(', ')}`);
+    }
+  }
+  assert.equal(
+    splitImportViolations.length,
+    0,
+    `Internal ES imports must not append ?v= query strings (causes duplicate module instances): ${splitImportViolations.join(' | ')}`
+  );
+
+  // 2. Cloudflare KV `expirationTtl` hard-minimum (>= 60s) compliance in both Edge Workers
+  for (const relWorker of ['worker/index.js', 'worker/nfl-teams-worker.js']) {
+    const wSrc = fs.readFileSync(path.resolve(rootDir, relWorker), 'utf8');
+    const numericTtls = [...wSrc.matchAll(/expirationTtl:\s*(\d+)\s*[,}\n]/g)].map(m => Number(m[1]));
+    for (const ttl of numericTtls) {
+      assert.ok(ttl >= 60, `${relWorker} has KV expirationTtl ${ttl} < 60s Cloudflare minimum`);
+    }
+    assert.ok(
+      !/expirationTtl:\s*liveMode\s*\?\s*15/.test(wSrc) && !/allResolved\s*\?\s*6\s*\*\s*3600\s*:\s*45/.test(wSrc),
+      `${relWorker} must never pass < 60s expirationTtl to Cloudflare KV`
+    );
+  }
+
+  // 3. Unified 32-Team Worker (`worker/nfl-teams-worker.js`): unmatched `/api/*` returns 404 JSON (never 200 HTML)
+  //    and `/api/gameday-inactives` uses canonical parsers with `activeNames` + `sourceRank`
+  const nflTeamsWorker = (await import('../worker/nfl-teams-worker.js')).default;
+  const mockAssetsEnv = {
+    ASSETS: {
+      async fetch() {
+        return new Response('<!doctype html><html><body>SPA</body></html>', {
+          status: 200,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' }
+        });
+      }
+    }
+  };
+  const missingApiRes = await nflTeamsWorker.fetch(
+    new Request('https://vikings.joshal.com/api/does-not-exist', { method: 'GET' }),
+    mockAssetsEnv
+  );
+  assert.equal(missingApiRes.status, 404, 'Unmatched /api/* route on nfl-teams-worker must return HTTP 404');
+  assert.ok(
+    (missingApiRes.headers.get('content-type') || '').includes('application/json'),
+    'Unmatched /api/* route must return application/json, never SPA HTML'
+  );
+  assert.equal(
+    missingApiRes.headers.get('access-control-allow-origin'),
+    'https://vikings.joshal.com',
+    'Fallback CORS origin must reflect active team domain rather than hardcoding 49ers.joshal.com'
+  );
+
+  // Test canonical `/api/gameday-inactives` on `worker/nfl-teams-worker.js` with ESPN Core Event Roster enrichment
+  const origFetch = globalThis.fetch;
+  globalThis.fetch = async url => {
+    const u = String(url);
+    if (u.includes('sports.core.api.espn.com')) {
+      const entries = Array.from({ length: 53 }, (_, i) => ({
+        displayName: `Vikings Player ${i + 1}`,
+        position: { abbreviation: i < 9 ? 'OL' : 'WR' },
+        active: i >= 5
+      }));
+      return new Response(JSON.stringify({ entries }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+    if (u.includes('site.api.espn.com')) {
+      return new Response(JSON.stringify({ injuries: [] }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+    return new Response('', { status: 200 });
+  };
+  try {
+    const inactRes = await nflTeamsWorker.fetch(
+      new Request('https://vikings.joshal.com/api/gameday-inactives?teams=MIN&week=11&gameId=401873077'),
+      {}
+    );
+    assert.equal(inactRes.status, 200);
+    const inactJson = await inactRes.json();
+    assert.equal(inactJson.sf.officialPosted, true, 'nfl-teams-worker /api/gameday-inactives must parse ESPN Core Roster');
+    assert.equal(inactJson.sf.inactives.length, 5, 'Expected 5 inactives from ESPN Core Roster');
+    assert.equal(inactJson.sf.activeNames.length, 48, 'Expected 48 authoritative activeNames from ESPN Core Roster');
+  } finally {
+    globalThis.fetch = origFetch;
+  }
+
+  // 4. Service Worker (`sw.js`) invariants: Cache-First versioned static assets, `?t=` normalization, batched precache
+  const swSrc = fs.readFileSync(path.resolve(rootDir, 'sw.js'), 'utf8');
+  assert.ok(swSrc.includes('isCacheFirstStaticAsset'), 'sw.js must serve version-scoped static assets Cache-First');
+  assert.ok(swSrc.includes('normalizeDataCacheKey'), 'sw.js must normalize ?t= query strings on /data/*.json');
+  assert.ok(swSrc.includes('precacheInBatches'), 'sw.js must batch install precache fetches');
 });
 
 console.log(`\n======================================================`);

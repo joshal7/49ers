@@ -307,6 +307,14 @@ async function fetchWithTimeout(url, fetchInit = {}, timeoutMs = 8000) {
   }
 }
 
+async function parseJsonResponseOrThrow(res) {
+  const ct = String(res?.headers?.get?.('content-type') || '').toLowerCase();
+  if (ct && ct.includes('text/html')) {
+    throw new Error('API endpoint returned HTML instead of JSON. Check your network or API base URL.');
+  }
+  return await res.json();
+}
+
 export async function fetchSharedWorkerFeed(prefs) {
   const baseUrl = String(prefs?.workerBaseUrl || '').trim().replace(/\/+$/, '');
   if (!baseUrl) return null;
@@ -317,6 +325,8 @@ export async function fetchSharedWorkerFeed(prefs) {
       6500
     );
     if (!res.ok) return null;
+    const ct = String(res.headers?.get?.('content-type') || '').toLowerCase();
+    if (ct && ct.includes('text/html')) return null;
     return await res.json();
   } catch {
     return null;
@@ -350,7 +360,7 @@ export async function verifyGeminiApiKey(rawKey, apiBaseOverride = '') {
     );
   }
 
-  const json = await res.json();
+  const json = await parseJsonResponseOrThrow(res);
   const models = Array.isArray(json?.models) ? json.models : [];
   const catalogIds = models.map(m => String(m?.name || '').replace(/^models\//i, '').trim()).filter(Boolean);
   const cacheKey = `${apiBase}:${key}`;
@@ -682,7 +692,7 @@ async function callGeminiDirectWithCascade({
     }
 
     if (res.ok) {
-      const json = await res.json();
+      const json = await parseJsonResponseOrThrow(res);
       const text = extractGeminiResponseText(json);
       if (text) {
         // Keep higher-priority unexhausted models (e.g. Gemini 4 Hydrogen after a transient 60s RPM blip)
@@ -1179,7 +1189,7 @@ async function synthesizeWithGeminiNotebookLmTts({
       }
 
       if (res.ok) {
-        const json = await res.json();
+        const json = await parseJsonResponseOrThrow(res);
         const audioPart = json?.candidates?.[0]?.content?.parts?.find(p => p?.inlineData?.data);
         if (audioPart?.inlineData?.data) {
           const samples = decodeGeminiAudioInlineDataToPcm24k(
@@ -2084,7 +2094,7 @@ export async function runOnDemandDeepAnalysis({
         },
         95000
       );
-      const json = await res.json();
+      const json = await parseJsonResponseOrThrow(res);
       if (!res.ok) {
         throw new Error(json.error || `Worker HTTP ${res.status}`);
       }
@@ -2319,7 +2329,7 @@ export async function generateOnDemandAutopodcast({
         },
         150000
       );
-      const json = await res.json();
+      const json = await parseJsonResponseOrThrow(res);
       if (!res.ok) {
         throw new Error(json.error || `Worker HTTP ${res.status}`);
       }
@@ -3030,7 +3040,7 @@ export async function refreshDailyMatchupIntelIfDue({
           return { updated: false, inFlight: true, datePt: todayPt };
         }
         if (res.ok) {
-          const json = await res.json();
+          const json = await parseJsonResponseOrThrow(res);
           modelUsed = json?.modelUsed || modelUsed;
           normalized = parseAndSanitizeDailyMatchupIntel(json?.data || json?.rawText, um, rosterPlayers, {
             team: activeTeam,
@@ -5722,7 +5732,7 @@ export async function refreshDailyTopNewsBriefIfDue({
             55000
           );
           if (res.ok) {
-            const json = await res.json();
+            const json = await parseJsonResponseOrThrow(res);
             modelUsed = json?.modelUsed || modelUsed;
             rawSynthesizedText = String(json?.rawText || '');
             normalized = parseAndSanitizeDailyTopNewsBrief(
@@ -5779,8 +5789,9 @@ export async function refreshDailyTopNewsBriefIfDue({
 
         // Seed Shared Worker KV if `baseUrl` is set so other devices immediately adopt the identical brief
         if (normalized && baseUrl && rawSynthesizedText) {
-          await Promise.race([
-            fetch(`${baseUrl}/api/daily-news-brief?team=${encodeURIComponent(activeTeam.abbr)}`, {
+          await fetchWithTimeout(
+            `${baseUrl}/api/daily-news-brief?team=${encodeURIComponent(activeTeam.abbr)}`,
+            {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -5794,9 +5805,9 @@ export async function refreshDailyTopNewsBriefIfDue({
                 modelUsed,
                 generatedAt
               })
-            }).catch(() => {}),
-            new Promise(resolve => setTimeout(resolve, 2500))
-          ]);
+            },
+            2500
+          ).catch(() => {});
         }
       }
 
@@ -5935,7 +5946,7 @@ export async function fetchGeminiFallbackGameDayInactives({
           18000
         );
         if (res.ok) {
-          const json = await res.json();
+          const json = await parseJsonResponseOrThrow(res);
           if (json?.sf || json?.opp) {
             const out = {
               gameCacheId,

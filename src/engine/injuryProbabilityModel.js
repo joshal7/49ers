@@ -2743,10 +2743,6 @@ export function isPureIllnessLabel(label = '') {
   return remainder.length === 0;
 }
 
-function decodeHtmlEntitiesBasic(str = '') {
-  return decodeHtmlEntities(str);
-}
-
 function stripHtmlTagsBasic(html = '') {
   return stripHtmlAndDecodeEntities(html);
 }

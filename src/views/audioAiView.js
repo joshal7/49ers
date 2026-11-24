@@ -21,7 +21,7 @@ import { getActiveTeamConfig } from '../config/teamRegistry.js';
 import { formatTimeMmSs } from '../components/audioPlayer.js';
 import { hasCachedEpisodeAudioSync } from '../services/podcastAudioStore.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
-import { isPasskeyPrfPotentiallySupported } from '../services/sharedApiKeyStore.js?v=4';
+import { isPasskeyPrfPotentiallySupported } from '../services/sharedApiKeyStore.js';
 import {
   PODCAST_PIPELINE_STAGES,
   ANALYSIS_PIPELINE_STAGES,

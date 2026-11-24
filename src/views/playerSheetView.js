@@ -16,7 +16,7 @@ import { renderVideoEmbedOrFacade } from './newsView.js';
 import { renderSpiderChartHtml } from '../components/spiderChart.js';
 import { formatDollars, formatOtcDollars, formatCompactDollars, formatCapActionLabel } from '../engine/capSimulator.js';
 import { resolveCareerTableSchema } from '../engine/statsLeaderboardEngine.js';
-import { buildPlayerWeeklyGameLogModel } from '../engine/teamDeepDiveEngine.js?v=2';
+import { buildPlayerWeeklyGameLogModel } from '../engine/teamDeepDiveEngine.js';
 import {
   SHORT_TWEET_FULL_TEXT_LIMIT,
   isUrgentBreakingBadge,

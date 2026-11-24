@@ -8,10 +8,10 @@ const SW_RAW_SUB = SW_SUB_MATCH ? SW_SUB_MATCH[1] : '49ers';
 const SW_TEAM_SLUG = IS_NFL_HUB_HOST ? 'nfl' : SW_RAW_SUB === '49ers' ? '49ers' : SW_RAW_SUB;
 const SW_DATA_BASE = SW_TEAM_SLUG === '49ers' ? './data' : `./data/teams/${SW_TEAM_SLUG}`;
 const CACHE_NAME = IS_NFL_HUB_HOST
-  ? 'nfl-hub-v20'
+  ? 'nfl-hub-v21'
   : SW_TEAM_SLUG === '49ers'
-    ? '49ers-faithful-v173'
-    : `${SW_TEAM_SLUG}-hq-v44`;
+    ? '49ers-faithful-v174'
+    : `${SW_TEAM_SLUG}-hq-v45`;
 const PRESERVED_CACHE_PREFIXES =
   SW_TEAM_SLUG === '49ers'
     ? ['49ers-podcast-studio-audio-']
@@ -127,23 +127,55 @@ function getPathnameDir(pathname = '/') {
   return idx >= 0 ? clean.slice(0, idx + 1) : '/';
 }
 
+function normalizeDataCacheKey(url) {
+  if (!url) return null;
+  if (url.pathname.startsWith('/data/') && url.pathname.endsWith('.json')) {
+    return `${url.origin}${url.pathname}`;
+  }
+  return null;
+}
+
+function isCacheFirstStaticAsset(url) {
+  if (!url) return false;
+  const p = url.pathname;
+  return (
+    (p.startsWith('/src/') && (p.endsWith('.js') || p.endsWith('.css'))) ||
+    p.startsWith('/assets/') ||
+    p.startsWith('/icons/') ||
+    p.endsWith('.svg') ||
+    p.endsWith('.png') ||
+    p.endsWith('.gif') ||
+    p.endsWith('.webp')
+  );
+}
+
+async function precacheInBatches(cache, urls, batchSize = 8) {
+  for (let i = 0; i < urls.length; i += batchSize) {
+    const slice = urls.slice(i, i + batchSize);
+    await Promise.all(
+      slice.map(url =>
+        fetchWithTimeoutSw(url, { cache: 'no-cache' }, 9000)
+          .then(async res => {
+            if (!res || !res.ok) return null;
+            const cleanRes = await cleanRedirectedResponse(res);
+            return cache.put(url, cleanRes);
+          })
+          .catch(() => null)
+      )
+    );
+  }
+}
+
 self.addEventListener('install', event => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
-      .then(cache =>
-        Promise.all(
-          [...CORE_ASSETS, ...TEAM_DYNAMIC_ASSETS].map(url =>
-            fetchWithTimeoutSw(url, { cache: 'no-cache' }, 9000)
-              .then(async res => {
-                if (!res || !res.ok) return null;
-                const cleanRes = await cleanRedirectedResponse(res);
-                return cache.put(url, cleanRes);
-              })
-              .catch(() => null)
-          )
-        )
-      )
+      .then(cache => {
+        const installUrls = IS_NFL_HUB_HOST
+          ? ['./', './manifest.json', ...TEAM_DYNAMIC_ASSETS]
+          : [...CORE_ASSETS, ...TEAM_DYNAMIC_ASSETS];
+        return precacheInBatches(cache, installUrls, 8);
+      })
       .then(() => self.skipWaiting())
   );
 });
@@ -225,20 +257,45 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Cache-First for version-scoped static JS/CSS/images (`CACHE_NAME` rotates cleanly on every deploy!)
+  // Eliminates 4-level ES module cellular startup waterfalls & prevents duplicate `?v=` cache entries.
+  if (isCacheFirstStaticAsset(url)) {
+    const canonicalStaticKey = `${url.origin}${url.pathname}`;
+    event.respondWith(
+      caches.open(CACHE_NAME).then(async cache => {
+        const cached = await cache.match(canonicalStaticKey, { ignoreSearch: true });
+        if (cached) {
+          return cached.redirected ? cleanRedirectedResponse(cached) : cached;
+        }
+        try {
+          const rawRes = await fetchWithTimeoutSw(event.request.url, { cache: 'no-cache' }, NETWORK_TIMEOUT_MS);
+          const outRes = rawRes && rawRes.redirected && rawRes.ok ? await cleanRedirectedResponse(rawRes) : rawRes;
+          if (outRes && outRes.status === 200 && !outRes.redirected) {
+            cache.put(canonicalStaticKey, outRes.clone());
+          }
+          return outRes;
+        } catch {
+          return Response.error();
+        }
+      })
+    );
+    return;
+  }
+
   // Network-first with fast 2.2s timeout when warm-cached (7.5s cold) & instant offline fallback
-  // Pass event.request.url string so { cache: 'no-cache' } never throws TypeError on mode === 'navigate'
-  // Never serve a redirected Response (res.redirected === true) to Safari navigation requests
-  // Keep root HTML caches strictly isolated per `?team=<slug>` vs `/` portal so `nfl.joshal.com/` and
-  // `nfl.joshal.com/?team=<slug>` can NEVER overwrite or serve each other from CacheStorage.
+  // for HTML navigations and `/data/*.json` feeds (normalizing `?t=` cache-busters so meta.json never leaks entries!)
   const isNavigation = event.request.mode === 'navigate' || event.request.redirect === 'manual';
   const isRootHtmlPath = url.pathname === '/' || url.pathname === '/index.html';
   const rootHtmlCacheKey = isNavigation && isRootHtmlPath ? resolveRootHtmlCacheKey(url) : null;
+  const dataCacheKey = normalizeDataCacheKey(url);
   const isolateRootByTeam = Boolean(rootHtmlCacheKey && (IS_NFL_HUB_HOST || url.searchParams.has('team')));
   event.respondWith(
     (async () => {
       let cached = null;
       if (isolateRootByTeam) {
         cached = await caches.match(rootHtmlCacheKey);
+      } else if (dataCacheKey) {
+        cached = await caches.match(dataCacheKey, { ignoreSearch: true });
       } else {
         cached = await caches.match(event.request, { ignoreSearch: true });
         if (!cached && isNavigation && isRootHtmlPath) {
@@ -272,7 +329,10 @@ self.addEventListener('fetch', event => {
           }
         }
         if (outRes && outRes.status === 200 && !outRes.redirected) {
-          const cacheKey = rootHtmlCacheKey || (isNavigation && url.pathname === '/index.html' ? './' : event.request);
+          const cacheKey =
+            rootHtmlCacheKey ||
+            dataCacheKey ||
+            (isNavigation && url.pathname === '/index.html' ? './' : event.request);
           const clone = outRes.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(cacheKey, clone));
         }
@@ -281,15 +341,14 @@ self.addEventListener('fetch', event => {
         if (cached) {
           // Stale-while-revalidate self-heal: when the 2.2s cellular fast-timeout falls back to a cached
           // `/data/*.json` feed, continue refreshing the SW cache in the background so the next load is fresh.
-          if (url.pathname.startsWith('/data/') && url.pathname.endsWith('.json')) {
-            const cacheKey = event.request;
+          if (dataCacheKey) {
             event.waitUntil(
               fetchWithTimeoutSw(event.request.url, { cache: 'no-cache' }, 12000)
                 .then(async bgRes => {
                   if (!bgRes || bgRes.status !== 200) return;
                   const cleanBg = bgRes.redirected ? await cleanRedirectedResponse(bgRes) : bgRes;
                   const c = await caches.open(CACHE_NAME);
-                  await c.put(cacheKey, cleanBg.clone());
+                  await c.put(dataCacheKey, cleanBg.clone());
                 })
                 .catch(() => {})
             );

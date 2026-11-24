@@ -26,7 +26,7 @@ import {
   AI_STUDIO_DIRECT_KEY_URL,
   renderGeminiApiKeyStepByStepGuideHtml
 } from './audioAiView.js';
-import { isPasskeyPrfPotentiallySupported } from '../services/sharedApiKeyStore.js?v=4';
+import { isPasskeyPrfPotentiallySupported } from '../services/sharedApiKeyStore.js';
 
 export function renderSettingsSheetHtml({
   userPrefs,
@@ -71,11 +71,11 @@ export function renderSettingsSheetHtml({
   const briefCutoffLabel =
     activeTeam.timezone === 'America/Los_Angeles'
       ? '5:00 PM PT'
-      : /New_York|Detroit|Indiana/i.test(activeTeam.timezone || '')
-        ? '5:00 PM ET'
+      : /Denver|Phoenix/i.test(activeTeam.timezone || '')
+        ? '6:00 PM MT'
         : /Chicago/i.test(activeTeam.timezone || '')
-          ? '5:00 PM CT'
-          : '5:00 PM MT';
+          ? '7:00 PM CT'
+          : '8:00 PM ET';
 
   return `
     <!-- Theme & Feed Preferences -->

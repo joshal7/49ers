@@ -706,6 +706,7 @@ class CdpHarness {
   constructor(ws) {
     this.ws = ws;
     this.nextId = 1;
+    this.pending = new Map();
     this.consoleErrors = [];
     this.pageExceptions = [];
     this.localNetworkFailures = [];
@@ -713,6 +714,14 @@ class CdpHarness {
     this.ws.addEventListener('message', evt => {
       try {
         const msg = JSON.parse(evt.data);
+        if (msg.id && this.pending.has(msg.id)) {
+          const entry = this.pending.get(msg.id);
+          this.pending.delete(msg.id);
+          clearTimeout(entry.timer);
+          if (msg.error) entry.reject(new Error(`${entry.method} error: ${JSON.stringify(msg.error)}`));
+          else entry.resolve(msg.result);
+          return;
+        }
         if (msg.method === 'Runtime.consoleAPICalled') {
           if (msg.params?.type === 'error') {
             const text = (msg.params.args || []).map(a => a.value ?? a.description ?? '').join(' ');
@@ -738,17 +747,11 @@ class CdpHarness {
   send(method, params = {}, timeoutMs = 15000) {
     return new Promise((resolve, reject) => {
       const id = this.nextId++;
-      const timer = setTimeout(() => reject(new Error(`CDP timeout on ${method}`)), timeoutMs);
-      const onMsg = evt => {
-        const data = JSON.parse(evt.data);
-        if (data.id === id) {
-          clearTimeout(timer);
-          this.ws.removeEventListener('message', onMsg);
-          if (data.error) reject(new Error(`${method} error: ${JSON.stringify(data.error)}`));
-          else resolve(data.result);
-        }
-      };
-      this.ws.addEventListener('message', onMsg);
+      const timer = setTimeout(() => {
+        this.pending.delete(id);
+        reject(new Error(`CDP timeout on ${method}`));
+      }, timeoutMs);
+      this.pending.set(id, { resolve, reject, timer, method });
       this.ws.send(JSON.stringify({ id, method, params }));
     });
   }
@@ -849,9 +852,24 @@ async function main() {
     await cdp.send('Network.enable');
     await cdp.send('Page.enable');
 
-    // Intercept external youtube.com iframe navigations so headless tests never stall on external ads
+    // Intercept external youtube.com iframes & live third-party polling feeds so headless tests stay 100% deterministic
     await cdp.send('Network.setBlockedURLs', {
-      urls: ['*://www.youtube.com/embed/*']
+      urls: [
+        '*://www.youtube.com/embed/*',
+        '*://site.api.espn.com/*',
+        '*://site.web.api.espn.com/*',
+        '*://sports.core.api.espn.com/*',
+        '*://public.api.bsky.app/*',
+        '*://www.rotowire.com/*',
+        '*://www.49ers.com/*',
+        '*://api.rss2json.com/*',
+        '*://corsproxy.io/*',
+        '*://api.allorigins.win/*',
+        '*://raw.githubusercontent.com/*',
+        '*://nfl.joshal.com/key-sync*',
+        '*://itunes.apple.com/*',
+        '*://api.sleeper.app/*'
+      ]
     });
 
     // Configure primary target device: iPhone 16 Safari Portrait (393 x 852 @3x)
@@ -2258,6 +2276,23 @@ async function main() {
     });
 
     await runStep('Player Dossier 7-Day Mentions (Mike Evans & Nick Bosa) render salient tweets + articles, 100% authors, and full short tweets', async () => {
+      // Rebase static news.json snapshot timestamps to current wall-clock for offline/deterministic 7-day window testing
+      await cdp.eval(() => {
+        const st = window.__49ersDiagnostics?.getState?.();
+        const stream = st?.appData?.news?.rawStream || [];
+        const metaMs = Date.parse(st?.appData?.meta?.updatedAt || '') || 0;
+        const deltaMs = metaMs > 0 ? Math.max(0, Date.now() - metaMs) : 0;
+        if (deltaMs > 12 * 3600 * 1000) {
+          window.__e2eOrigStreamDates = stream.map(it => it?.publishedAt);
+          for (let i = 0; i < stream.length; i++) {
+            const ts = Date.parse(stream[i]?.publishedAt || '');
+            if (Number.isFinite(ts)) {
+              stream[i].publishedAt = new Date(ts + deltaMs).toISOString();
+            }
+          }
+        }
+      });
+      try {
       const mentionsAudit = await cdp.eval(() => {
         document.querySelector('[data-nav-tab="roster"]').click();
         document.querySelector('[data-action="set-roster-sub"][data-roster-sub="roster"]').click();
@@ -2616,6 +2651,19 @@ async function main() {
       );
       assert(playerWireSyncAudit.scrollPreserved, 'Player Card scroll position must be preserved across live refresh');
       assert(playerWireSyncAudit.hiddenOnSettings, '#sheetSyncWireBtn must hide when Settings sheet opens');
+      } finally {
+        await cdp.eval(() => {
+          const st = window.__49ersDiagnostics?.getState?.();
+          const stream = st?.appData?.news?.rawStream || [];
+          const orig = window.__e2eOrigStreamDates;
+          if (Array.isArray(orig)) {
+            for (let i = 0; i < Math.min(stream.length, orig.length); i++) {
+              if (stream[i]) stream[i].publishedAt = orig[i];
+            }
+            delete window.__e2eOrigStreamDates;
+          }
+        });
+      }
     });
 
     console.log('\n=== [6/9] Game & Season Views (Opponent Health & Play Odds + All 8 Sub-Modules + Monte Carlo) ===');
@@ -7754,6 +7802,68 @@ async function main() {
       });
       await cdp.assertNoOverflow('Matchup Ambient Venue/Weather at 320x640');
       await cdp.setViewport(390, 844);
+    });
+
+    await runStep('Startup & interaction responsiveness: pointer-safe background render deferral, touch-action: manipulation, and single-tap brand home trigger', async () => {
+      const tapAudit = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        // Navigate to Home first so a button inside #mainView exists
+        document.querySelector('[data-nav-tab="home"]')?.click();
+        await sleep(80);
+        const targetBtn = document.querySelector('#mainView [data-action="jump-view"][data-target-tab]');
+        const navBtn = document.querySelector('.bottom-nav [data-nav-tab="news"]');
+        const touchNav = navBtn ? getComputedStyle(navBtn).touchAction : '';
+        const touchIcon = document.getElementById('openSettingsBtn')
+          ? getComputedStyle(document.getElementById('openSettingsBtn')).touchAction
+          : '';
+
+        // Simulate pointerdown -> background async hydration firing mid-tap -> pointerup -> click
+        let preservedAcrossTap = false;
+        let navigatedOnFirstTap = false;
+        if (targetBtn && window.__49ersDiagnostics?.requestBackgroundRender) {
+          targetBtn.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true }));
+          const activeDuringDown = Boolean(window.__49ersDiagnostics.isPointerInteractionActive?.());
+          window.__49ersDiagnostics.requestBackgroundRender({ main: true });
+          await sleep(60);
+          // Exact DOM node must still be connected inside #mainView (not destroyed mid-tap!)
+          preservedAcrossTap = activeDuringDown && targetBtn.isConnected;
+          const destTab = targetBtn.getAttribute('data-target-tab') || '';
+          targetBtn.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, cancelable: true }));
+          targetBtn.click();
+          await sleep(80);
+          const curTab = document.querySelector('.bottom-nav .nav-tab-btn.active')?.getAttribute('data-nav-tab') || '';
+          navigatedOnFirstTap = Boolean(destTab) && curTab === destTab;
+        }
+
+        // Test #brandHomeTrigger single-tap return to Home without double-firing
+        document.querySelector('[data-nav-tab="roster"]')?.click();
+        await sleep(60);
+        document.getElementById('brandHomeTrigger')?.click();
+        await sleep(80);
+        const returnedHomeTab = document.querySelector('.bottom-nav .nav-tab-btn.active')?.getAttribute('data-nav-tab') || '';
+
+        return {
+          hasTargetBtn: Boolean(targetBtn),
+          touchNav,
+          touchIcon,
+          preservedAcrossTap,
+          navigatedOnFirstTap,
+          returnedHomeTab
+        };
+      });
+
+      assert(
+        tapAudit.touchNav.includes('manipulation') && tapAudit.touchIcon.includes('manipulation'),
+        `Interactive controls must set touch-action: manipulation: ${JSON.stringify(tapAudit)}`
+      );
+      assert(
+        tapAudit.hasTargetBtn && tapAudit.preservedAcrossTap && tapAudit.navigatedOnFirstTap,
+        `Background render must defer while pointer is active so first tap never drops: ${JSON.stringify(tapAudit)}`
+      );
+      assert(
+        tapAudit.returnedHomeTab === 'home',
+        `#brandHomeTrigger must return cleanly to home tab on first tap: ${JSON.stringify(tapAudit)}`
+      );
     });
 
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {

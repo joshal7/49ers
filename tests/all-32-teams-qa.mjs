@@ -56,6 +56,7 @@ import {
 import { classifySourceLensTag, extractPresserTakeaways } from '../src/engine/digestExperienceEngine.js';
 import { formatCompletedGameRecapForPrompt } from '../src/engine/gameDayRosterEngine.js';
 import { canonicalPlayoffGameKey, normalizeTeamAbbr } from '../src/engine/playoffMonteCarlo.js';
+import { resolveConsistentPowerRankings } from '../src/engine/powerRankingsEngine.js';
 import { runUniversalSearch } from '../src/engine/universalSearchEngine.js';
 import { buildNflTeamsPagesDist } from '../scripts/build-nfl-teams-pages.mjs';
 
@@ -160,16 +161,24 @@ function createCdpClient(wsUrl) {
     const listeners = new Map();
     ws.addEventListener('open', () => {
       resolve({
-        send(method, params = {}) {
-          const id = nextId++;
-          ws.send(JSON.stringify({ id, method, params }));
-          return new Promise((res, rej) => pending.set(id, { res, rej }));
+        send(method, params = {}, timeoutMs = 15000) {
+          return new Promise((res, rej) => {
+            const id = nextId++;
+            const timer = setTimeout(() => {
+              pending.delete(id);
+              rej(new Error(`CDP timeout on ${method}`));
+            }, timeoutMs);
+            pending.set(id, { res, rej, timer });
+            ws.send(JSON.stringify({ id, method, params }));
+          });
         },
         on(ev, fn) {
           if (!listeners.has(ev)) listeners.set(ev, []);
           listeners.get(ev).push(fn);
         },
         close() {
+          for (const entry of pending.values()) clearTimeout(entry.timer);
+          pending.clear();
           ws.close();
         }
       });
@@ -178,7 +187,8 @@ function createCdpClient(wsUrl) {
     ws.addEventListener('message', evt => {
       const msg = JSON.parse(String(evt.data));
       if (msg.id && pending.has(msg.id)) {
-        const { res, rej } = pending.get(msg.id);
+        const { res, rej, timer } = pending.get(msg.id);
+        clearTimeout(timer);
         pending.delete(msg.id);
         if (msg.error) rej(new Error(msg.error.message || JSON.stringify(msg.error)));
         else res(msg.result);
@@ -658,6 +668,23 @@ await test('4. Headless Chrome E2E: Cross-team Matchup opposing player dossiers 
     await cdp.send('Page.enable');
     await cdp.send('Runtime.enable');
     await cdp.send('Network.enable');
+    await cdp.send('Network.setBlockedURLs', {
+      urls: [
+        '*://www.youtube.com/embed/*',
+        '*://site.api.espn.com/*',
+        '*://site.web.api.espn.com/*',
+        '*://sports.core.api.espn.com/*',
+        '*://public.api.bsky.app/*',
+        '*://www.rotowire.com/*',
+        '*://api.rss2json.com/*',
+        '*://corsproxy.io/*',
+        '*://api.allorigins.win/*',
+        '*://raw.githubusercontent.com/*',
+        '*://nfl.joshal.com/key-sync*',
+        '*://itunes.apple.com/*',
+        '*://api.sleeper.app/*'
+      ]
+    });
     await cdp.send('Emulation.setDeviceMetricsOverride', {
       width: 393,
       height: 852,
@@ -801,7 +828,8 @@ await test('4. Headless Chrome E2E: Cross-team Matchup opposing player dossiers 
       await evalJs(cdp, `(document.getElementById('closeSheetBtn') || document.querySelector('[data-action="close-sheet"]'))?.click()`);
       await waitFor(cdp, `document.getElementById('bottomSheetBackdrop').hidden === true`);
 
-      // Verify Stats -> Power Rankings card renders comprehensive multi-source rankings (zero 1-source collapse!)
+      // Verify Stats -> Power Rankings card renders comprehensive multi-source rankings (zero 1-source collapse
+      // at snapshot fetch time, and exact parity with 24h post-game freshness cutoff at live wall-clock time!)
       await evalJs(cdp, `document.querySelector('[data-action="set-season-sub"][data-season-sub="stats"]').click()`);
       await waitFor(cdp, `Boolean(document.getElementById('powerRankingsCard'))`);
       const prDom = await evalJs(
@@ -814,7 +842,24 @@ await test('4. Headless Chrome E2E: Cross-team Matchup opposing player dossiers 
           return { count: items.length, items, eyebrow, overflow };
         })()`
       );
-      assert.ok(prDom.count >= 5, `${slug}: #powerRankingsCard must display >= 5 consistent verified sources (got ${prDom.count}: ${prDom.items.join(',')})`);
+      const snapshotFetchMs = Date.parse(smJson.powerRankings?.fetchedAtIso || '') || Date.now();
+      const snapshotPr = resolveConsistentPowerRankings(smJson.powerRankings, smJson.schedule || [], {
+        teamAbbr: targetTeam.abbr,
+        nowMs: snapshotFetchMs
+      });
+      const livePr = resolveConsistentPowerRankings(smJson.powerRankings, smJson.schedule || [], {
+        teamAbbr: targetTeam.abbr,
+        nowMs: Date.now()
+      });
+      assert.ok(
+        snapshotPr.sources.length >= 5,
+        `${slug}: snapshot powerRankings at fetchedAtIso must yield >= 5 consistent verified sources (got ${snapshotPr.sources.length}: ${snapshotPr.sources.map(s => s.id).join(',')})`
+      );
+      const expectedDomCount = livePr.pastFreshnessCutoff ? livePr.sources.length : Math.max(5, livePr.sources.length);
+      assert.ok(
+        prDom.count >= expectedDomCount,
+        `${slug}: #powerRankingsCard must match consistent verified sources (expected >= ${expectedDomCount}, got ${prDom.count}: ${prDom.items.join(',')})`
+      );
       assert.equal(/Through Week (\d+)\s*•\s*Updating After Week \1\b/i.test(prDom.eyebrow), false, `${slug}: self-contradicting eyebrow "${prDom.eyebrow}"`);
       assert.ok(prDom.overflow <= 1, `${slug}: Stats/Power Rankings horizontal overflow ${prDom.overflow}px`);
     }
@@ -892,6 +937,23 @@ await test('5. Headless Chrome E2E: Standalone NFL Hub (nfl.joshal.com -> ?team=
     await cdp.send('Page.enable');
     await cdp.send('Runtime.enable');
     await cdp.send('Network.enable');
+    await cdp.send('Network.setBlockedURLs', {
+      urls: [
+        '*://www.youtube.com/embed/*',
+        '*://site.api.espn.com/*',
+        '*://site.web.api.espn.com/*',
+        '*://sports.core.api.espn.com/*',
+        '*://public.api.bsky.app/*',
+        '*://www.rotowire.com/*',
+        '*://api.rss2json.com/*',
+        '*://corsproxy.io/*',
+        '*://api.allorigins.win/*',
+        '*://raw.githubusercontent.com/*',
+        '*://nfl.joshal.com/key-sync*',
+        '*://itunes.apple.com/*',
+        '*://api.sleeper.app/*'
+      ]
+    });
     // Emulate iPhone Safari / Chrome standalone Home Screen pseudo-app
     await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
       source: `

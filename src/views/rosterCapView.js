@@ -17,7 +17,7 @@ import { formatOtcDollars, formatCompactDollars } from '../engine/capSimulator.j
 import {
   buildPositionalCapSpendModel,
   buildUpcomingFreeAgentsModel
-} from '../engine/teamDeepDiveEngine.js?v=2';
+} from '../engine/teamDeepDiveEngine.js';
 import { sanitizeExternalUrl } from '../engine/linkIntegrity.js';
 import { getActiveTeamConfig, getOurladsTeamCode } from '../config/teamRegistry.js';
 
