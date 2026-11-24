@@ -781,6 +781,17 @@ body.sheet-open {
   background: rgba(239, 68, 68, 0.14);
 }
 
+.badge-scratch {
+  background: rgba(100, 116, 139, 0.22);
+  color: #CBD5E1;
+  border: 1px solid rgba(148, 163, 184, 0.40);
+}
+[data-theme="light"] .badge-scratch {
+  background: rgba(71, 85, 105, 0.12);
+  color: #334155;
+  border-color: rgba(71, 85, 105, 0.34);
+}
+
 /* Rooting Guide Week Cards */
 .rooting-week-card {
   padding: 10px 11px;
@@ -4689,6 +4700,41 @@ button.featured-player-chip:active {
   padding: 6px 9px;
 }
 
+.gameday-inact-split {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.gameday-inact-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gameday-dot-injury,
+.gameday-dot-scratch {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.gameday-dot-injury {
+  background: var(--crimson);
+}
+
+.gameday-dot-scratch {
+  background: #94A3B8;
+}
+[data-theme="light"] .gameday-dot-scratch {
+  background: #475569;
+}
+
 .gameday-inactives-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
@@ -4704,6 +4750,15 @@ button.featured-player-chip:active {
   background: var(--crimson-soft);
   border: 1px solid rgba(239, 68, 68, 0.28);
   min-width: 0;
+}
+
+.gameday-inactive-chip.is-healthy-scratch {
+  background: rgba(100, 116, 139, 0.16);
+  border-color: rgba(148, 163, 184, 0.36);
+}
+[data-theme="light"] .gameday-inactive-chip.is-healthy-scratch {
+  background: rgba(71, 85, 105, 0.09);
+  border-color: rgba(71, 85, 105, 0.30);
 }
 
 .gameday-inactive-meta {
@@ -4731,6 +4786,20 @@ button.featured-player-chip:active {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.gameday-inactive-chip.is-injury-scratch .gameday-inactive-reason {
+  color: #FCA5A5;
+}
+[data-theme="light"] .gameday-inactive-chip.is-injury-scratch .gameday-inactive-reason {
+  color: #991B1B;
+}
+
+.gameday-inactive-chip.is-healthy-scratch .gameday-inactive-reason {
+  color: #CBD5E1;
+}
+[data-theme="light"] .gameday-inactive-chip.is-healthy-scratch .gameday-inactive-reason {
+  color: #334155;
 }
 
 .gameday-active-collapsible {

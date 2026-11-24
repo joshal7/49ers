@@ -791,8 +791,14 @@ export function parseOfficialClubInactivesArticle(
   const prosePart = chosenHeader ? cleaned.slice(0, chosenHeader.index) : cleaned;
   const listPart = chosenHeader ? cleaned.slice(chosenHeader.endIndex, listBlockEnd) : '';
 
-  const POS_LINE_RE =
-    /^(?:[-•*]\s*)?(?:#?\d{1,2}\s+)?(QB|RB|FB|WR|TE|OL|OT|OG|C|T|G|DL|DE|DT|NT|EDGE|LB|ILB|OLB|CB|DB|S|FS|SS|K|PK|P|LS|Quarterback|Running Back|Fullback|Wide Receiver|Tight End|Offensive Lineman|Offensive Tackle|Tackle|Offensive Guard|Guard|Center|Defensive Lineman|Defensive End|Defensive Tackle|Nose Tackle|Edge Rusher|Edge|Linebacker|Inside Linebacker|Outside Linebacker|Cornerback|Defensive Back|Safety|Free Safety|Strong Safety|Kicker|Punter|Long Snapper)\s+([A-Z][A-Za-z'.-]+(?:\s+[A-Z][A-Za-z'.-]+){1,2}(?:\s+(?:Jr\.?|Sr\.?|II|III|IV|V))?)\b(.*)$/;
+  const POS_TOKEN =
+    '(?:QB|RB|FB|WR|TE|OL|OT|OG|C|T|G|DL|DE|DT|NT|EDGE|LB|ILB|OLB|CB|DB|S|FS|SS|K|PK|P|LS|Quarterback|Running Back|Fullback|Wide Receiver|Tight End|Offensive Lineman|Offensive Tackle|Tackle|Offensive Guard|Guard|Center|Defensive Lineman|Defensive End|Defensive Tackle|Nose Tackle|Edge Rusher|Edge|Linebacker|Inside Linebacker|Outside Linebacker|Cornerback|Defensive Back|Safety|Free Safety|Strong Safety|Kicker|Punter|Long Snapper)';
+  const POS_LINE_RE = new RegExp(
+    `^(?:[-•*]\\s*)?(?:#?\\d{1,2}\\s+)?(${POS_TOKEN})(?:\\s*\\/\\s*${POS_TOKEN})?\\s+(?:#?\\d{1,2}\\s+)?([A-Z][A-Za-z'.-]+(?:\\s+[A-Z][A-Za-z'.-]+){1,2}(?:\\s+(?:Jr\\.?|Sr\\.?|II|III|IV|V))?)\\b(.*)$`
+  );
+  const NAME_POS_LINE_RE = new RegExp(
+    `^(?:[-•*]\\s*)?(?:#?\\d{1,2}\\s+)?([A-Z][A-Za-z'.-]+(?:\\s+[A-Z][A-Za-z'.-]+){1,2}(?:\\s+(?:Jr\\.?|Sr\\.?|II|III|IV|V))?)\\s*(?:,\\s*|\\(\\s*|\\s+[-–—]\\s+)(${POS_TOKEN})(?:\\s*\\/\\s*${POS_TOKEN})?\\)?(.*)$`
+  );
 
   const NON_PLAYER_PROSE_WORDS_RE = /\b(?:will|was|were|have|has|had|are|been|being|against|versus|sunday|monday|thursday|saturday|quarterback|inactives?|active|game|week|season|roster|injury|report)\b/i;
 
@@ -840,25 +846,40 @@ export function parseOfficialClubInactivesArticle(
       }
     }
 
-    // Also parse structured `POS First Last` lines directly (captures Saturday PS elevations & supports Worker calls without candidate list)
+    // Also parse structured `POS [#NN] First Last` and `[#NN] First Last, POS` lines directly
+    // (captures Saturday PS elevations & supports Worker calls without candidate list)
     for (const ln of collectedListLines) {
-      if (ln.length > 110) continue;
-      const m = ln.match(POS_LINE_RE);
-      if (!m) continue;
-      const rawPos = m[1].trim();
-      const rawName = m[2].trim();
-      const tail = m[3] || '';
+      if (ln.length > 120) continue;
+      let rawPos = '';
+      let rawName = '';
+      let tail = '';
+      const mPosFirst = ln.match(POS_LINE_RE);
+      if (mPosFirst) {
+        rawPos = mPosFirst[1].trim();
+        rawName = mPosFirst[2].trim();
+        tail = mPosFirst[3] || '';
+      } else {
+        const mNameFirst = ln.match(NAME_POS_LINE_RE);
+        if (!mNameFirst) continue;
+        rawName = mNameFirst[1].trim();
+        rawPos = mNameFirst[2].trim();
+        tail = mNameFirst[3] || '';
+      }
       if (NON_PLAYER_PROSE_WORDS_RE.test(rawName)) continue;
       const key = normalizeLookupName(rawName);
       if (!key) continue;
       const normPos = FULL_POS_TO_ABBR[rawPos.toLowerCase()] || rawPos.toUpperCase();
+      const parenReasonMatch = tail.match(/\(([^)]{2,40})\)/);
+      const extractedTailReason = parenReasonMatch ? parenReasonMatch[1].trim() : '';
       if (!inactiveMap.has(key)) {
         inactiveMap.set(key, {
           name: rawName,
           position: normPos,
           jersey: null,
-          reason: ''
+          reason: extractedTailReason
         });
+      } else if (extractedTailReason && !inactiveMap.get(key).reason) {
+        inactiveMap.get(key).reason = extractedTailReason;
       }
       if (/\bemergency\s+(?:third|3rd)?\s*(?:quarterback|qb)\b|\(\s*(?:emergency\s+)?(?:3rd|third)\s+qb\s*\)/i.test(tail)) {
         emergencyQbKeys.add(key);
@@ -977,7 +998,7 @@ export function parseRotoWireInactivesHtml(html = '', targetTeams = null) {
  * Strictly guards against pre-T-90m empty/all-active/all-inactive states (requires >=40 total entries & 3..12 inactives).
  */
 export function parseEspnCoreEventRosterInactives(rosterJson = null, candidatePlayers = []) {
-  const empty = { inactives: [], activeKeys: new Set(), officialPosted: false };
+  const empty = { inactives: [], activeKeys: new Set(), activeNames: [], officialPosted: false };
   const entries = Array.isArray(rosterJson?.entries)
     ? rosterJson.entries
     : Array.isArray(rosterJson?.roster)
@@ -993,14 +1014,17 @@ export function parseEspnCoreEventRosterInactives(rosterJson = null, candidatePl
 
   const inactives = [];
   const activeKeys = new Set();
+  const activeNames = [];
 
   for (const entry of entries) {
     const athlete = entry?.athlete && typeof entry.athlete === 'object' ? entry.athlete : entry;
     const name = String(entry?.displayName || entry?.fullName || athlete?.displayName || athlete?.fullName || '').trim();
     const k = normalizeLookupName(name);
     if (!k) continue;
-    const statusText = String(entry?.status?.name || athlete?.status?.name || '').toLowerCase();
-    if (/injured reserve|reserve|pup|nfi|suspended|practice/i.test(statusText)) continue;
+    const statusText = String(
+      entry?.status?.name || entry?.status?.type || athlete?.status?.name || athlete?.status?.type || ''
+    ).toLowerCase();
+    if (/injured[\s_-]?reserve|reserve|pup|nfi|suspended|practice|waived|free[\s_-]?agent/i.test(statusText)) continue;
 
     if (entry.active === false) {
       const matchCand = candByKey.get(k);
@@ -1011,7 +1035,11 @@ export function parseEspnCoreEventRosterInactives(rosterJson = null, candidatePl
         reason: ''
       });
     } else if (entry.active === true) {
-      activeKeys.add(k);
+      if (!activeKeys.has(k)) {
+        activeKeys.add(k);
+        const matchCand = candByKey.get(k);
+        activeNames.push(matchCand?.name || name);
+      }
     }
   }
 
@@ -1020,6 +1048,7 @@ export function parseEspnCoreEventRosterInactives(rosterJson = null, candidatePl
   return {
     inactives: officialPosted ? inactives : [],
     activeKeys: officialPosted ? activeKeys : new Set(),
+    activeNames: officialPosted ? activeNames : [],
     officialPosted
   };
 }
@@ -1586,10 +1615,132 @@ export function extractWireGameDaySignals(newsItems = [], candidatePlayers = [],
   };
 }
 
-function isNonMedicalScratchReason(raw = '') {
-  const clean = String(raw || '').trim();
+const OFFENSIVE_LINE_POSITIONS = new Set(['OL', 'OT', 'OG', 'T', 'G', 'C', 'LT', 'LG', 'RG', 'RT']);
+const SPECIALIST_POSITIONS = new Set(['K', 'PK', 'P', 'LS']);
+const NON_ACTIVE_ROSTER_STATUS_RE =
+  /\b(?:injured\s+reserve|reserve\s*\/\s*(?:injured|pup|nfi|suspended|non-football|covid|exempt)|(?:\bir\b)|pup\b|nfi\b|suspended|practice\s+squad|waived|released|free\s+agent)\b/i;
+
+export function isNonMedicalScratchReason(raw = '') {
+  const clean = String(raw || '')
+    .trim()
+    .replace(/^[\(\[\s]+|[\)\]\s]+$/g, '')
+    .trim();
   if (!clean) return true;
-  return /^(?:healthy scratch.*|coach'?s decision|not injury related.*|nir\b.*|inactive|rest|personal)$/i.test(clean);
+  return /^(?:healthy\s*scratch.*|coach'?s?\s*decision.*|not\s+injury\s+related.*|nir\b.*|inactive(?:\s*\(.*\))?|rest|vet(?:eran)?\s*rest|personal|undisclosed|cleared(?:\s*[—–-]\s*no\s+designation)?|no\s+(?:official\s+)?(?:injury\s+)?designation|injury\s*\(out\)|out|none|n\/a|healthy|emergency\s*(?:3rd|third)?\s*(?:quarterback|qb).*|(?:3rd|third)\s*(?:quarterback|qb).*)$/i.test(
+    clean
+  );
+}
+
+export function extractMedicalInjuryFromNotes(text = '') {
+  const raw = String(text || '').trim();
+  if (!raw) return '';
+  if (
+    /\b(?:no\s+injury|not\s+injury\s+related|healthy\s+scratch|coach'?s?\s+decision|reverted\s+to\s+(?:the\s+)?(?:[\w\s'-]+\s+)?practice\s+squad)\b/i.test(
+      raw
+    ) &&
+    !/\b(?:warmups?\s+injur|pregame\s+injur|suffered\s+a|tweaked|aggravat|illness)\b/i.test(raw)
+  ) {
+    return '';
+  }
+  const m = raw.match(BODY_PART_IN_GAME_RE);
+  if (m && m[1]) {
+    return formatBodyPartTitle(m[1]);
+  }
+  if (/\b(?:illness|sick|flu|migraine|warmup\s+injury|pre-?game\s+injury|tweaked|suffered\s+an?\s+injury)\b/i.test(raw)) {
+    return /\b(?:illness|sick|flu|migraine)\b/i.test(raw) ? 'Illness' : 'Pregame Injury';
+  }
+  return '';
+}
+
+/**
+ * NFL Game-Day Active Roster Limit:
+ * - Maximum **48** active dressed players ONLY when at least **8 offensive linemen** are active.
+ * - Maximum **47** active dressed players otherwise.
+ * (Emergency 3rd QB is designated from the inactives list and does NOT count against the 47/48 active cap.)
+ */
+export function computeNflGameDayActiveLimit(activePlayers = []) {
+  let olCount = 0;
+  for (const p of activePlayers || []) {
+    const pos = String(p?.position || '').trim().toUpperCase();
+    if (OFFENSIVE_LINE_POSITIONS.has(pos)) olCount += 1;
+  }
+  return olCount >= 8 ? 48 : 47;
+}
+
+function scoreGameDayActiveCertainty(p = {}) {
+  let score = 0;
+  if (p.isConfirmedActiveWire) score += 1000;
+  const pos = String(p.position || '').trim().toUpperCase();
+  if (SPECIALIST_POSITIONS.has(pos)) score += 800;
+  if (p.isStarter) score += 600;
+  if (p._fromActiveRoster !== false) score += 300;
+  if (p.depthSlot) score += 200;
+  if (pos === 'QB') {
+    const ds = String(p.depthSlot || '').toUpperCase();
+    if (ds === 'QB1' || ds === 'QB2') score += 180;
+    else if (!ds) score -= 120;
+  }
+  const snap = Number(p.snapPct);
+  if (Number.isFinite(snap) && snap > 0) {
+    score += Math.min(100, snap);
+  }
+  return score;
+}
+
+/**
+ * Reconciles the candidate active list to the strict NFL 47/48 game-day active limit:
+ *  1. Filters out IR/Reserve/Suspended players (unless explicitly confirmed active on game day).
+ *  2. Prefers an authoritative per-game active set (e.g. ESPN Core Event Roster `active: true` list with >=44 matches).
+ *  3. Enforces the hard NFL active cap (`48` with >=8 active OL, `47` otherwise) so stale 55-man ESPN team rosters
+ *     or un-reverted PS elevations can NEVER display 49–52 active players on game day.
+ */
+function reconcileActiveRosterToNflLimit(actives = [], { authoritativeActiveKeySet = null, irKeySet = null } = {}) {
+  let working = (actives || []).filter(p => {
+    const k = normalizeLookupName(p?.name || '');
+    if (irKeySet && k && irKeySet.has(k) && !p.isConfirmedActiveWire) return false;
+    return true;
+  });
+
+  if (authoritativeActiveKeySet instanceof Set && authoritativeActiveKeySet.size >= 44) {
+    const matchedAuth = working.filter(p => authoritativeActiveKeySet.has(normalizeLookupName(p?.name || '')));
+    if (matchedAuth.length >= 44) {
+      working = matchedAuth;
+    }
+  }
+
+  const nflMaxActives = computeNflGameDayActiveLimit(working);
+  if (working.length <= nflMaxActives) {
+    return {
+      actives: working,
+      nflMaxActives,
+      trimmedCount: (actives || []).length - working.length
+    };
+  }
+
+  // Sort by dress certainty descending so starters, specialists, depth-charted players & high-snap rotation stay intact
+  const ranked = [...working].sort((a, b) => {
+    const sDiff = scoreGameDayActiveCertainty(b) - scoreGameDayActiveCertainty(a);
+    if (sDiff !== 0) return sDiff;
+    return (a.jersey ?? 99) - (b.jersey ?? 99) || String(a.name || '').localeCompare(String(b.name || ''));
+  });
+
+  let kept = [];
+  if (nflMaxActives === 48) {
+    // Preserve top 8 OL so the 48-man rule (>=8 OL active) remains internally consistent, then fill remaining 40 slots
+    const olPlayers = ranked.filter(p => OFFENSIVE_LINE_POSITIONS.has(String(p?.position || '').trim().toUpperCase()));
+    const lockedOl = olPlayers.slice(0, 8);
+    const lockedOlKeys = new Set(lockedOl.map(p => normalizeLookupName(p?.name || '')));
+    const remaining = ranked.filter(p => !lockedOlKeys.has(normalizeLookupName(p?.name || '')));
+    kept = [...lockedOl, ...remaining.slice(0, Math.max(0, 48 - lockedOl.length))];
+  } else {
+    kept = ranked.slice(0, nflMaxActives);
+  }
+
+  return {
+    actives: kept,
+    nflMaxActives: computeNflGameDayActiveLimit(kept),
+    trimmedCount: (actives || []).length - kept.length
+  };
 }
 
 /**
@@ -1607,6 +1758,7 @@ export function buildTeamGameDayRosterModel({
   rosterPlayers = null,
   injuryReport = null,
   injuryReportRows = null,
+  irReserve = null,
   competitorEntries = [],
   newsItems = null,
   rawNewsItems = null,
@@ -1622,6 +1774,11 @@ export function buildTeamGameDayRosterModel({
   const effectiveRoster = activeRosterPlayers || rosterPlayers || [];
   const effectiveInjuryReport = injuryReport || injuryReportRows || [];
   const effectiveNews = newsItems || rawNewsItems || [];
+  const irKeySet = new Set(
+    (Array.isArray(irReserve) ? irReserve : [])
+      .map(p => normalizeLookupName(p?.name || ''))
+      .filter(Boolean)
+  );
   const effectiveCompEntries = [
     ...(competitorEntries || []),
     ...((liveFeedData?.inactives || []).map(item => ({
@@ -1652,9 +1809,22 @@ export function buildTeamGameDayRosterModel({
   const mergedRosterMap = new Map();
   for (const p of effectiveRoster) {
     if (p?.rosterBucket && p.rosterBucket !== 'active') continue;
+    const rawPoolStatus = String(p?.health?.status || p?.gameStatus || p?.status || '').trim();
+    if (NON_ACTIVE_ROSTER_STATUS_RE.test(rawPoolStatus)) continue;
     const k = normalizeLookupName(p?.name || '');
     if (!k) continue;
+    if (irKeySet.has(k) && !feedActiveKeySet.has(k)) continue;
     const pid = p.id || p.playerId || null;
+    if (mergedRosterMap.has(k)) {
+      // Preserve primary activeRoster metadata if duplicate entry comes later from injuryReport/keyStarters
+      const existing = mergedRosterMap.get(k);
+      if (!existing.depthSlot && p.depthSlot) existing.depthSlot = p.depthSlot;
+      if (!existing.isStarter && p.isStarter) existing.isStarter = true;
+      if (existing.snapPct == null && (p.primarySnapPct ?? p.snapPct) != null) {
+        existing.snapPct = p.primarySnapPct ?? p.snapPct;
+      }
+      continue;
+    }
     mergedRosterMap.set(k, {
       id: pid,
       playerId: pid,
@@ -1662,20 +1832,23 @@ export function buildTeamGameDayRosterModel({
       position: p.position || 'ATH',
       unit: classifyRosterUnit(p.position, p.unit),
       jersey: p.jersey ?? null,
+      depthSlot: p.depthSlot || null,
       headshotUrl: p.headshotUrl || '',
       espnUrl: p.espnUrl || '',
       snapPct: p.primarySnapPct ?? p.snapPct ?? null,
       isStarter: Boolean(p.isStarter || (p.primarySnapPct ?? p.snapPct ?? 0) >= 55),
       injuryType: p.health?.injuryType || p.injuryType || '',
       gameStatus: p.health?.gameStatus || p.health?.status || p.gameStatus || '',
-      beatNote: p.health?.shortComment || p.beatComment || p.beatNote || ''
+      beatNote: p.health?.shortComment || p.beatComment || p.beatNote || '',
+      _fromActiveRoster: p.rosterBucket === 'active' || !injByKey.has(k)
     });
   }
 
   for (const inj of effectiveInjuryReport) {
     const k = normalizeLookupName(inj?.name || '');
     if (!k || mergedRosterMap.has(k)) continue;
-    if (/injured reserve|\bir\b|suspended|pup/i.test(String(inj.gameStatus || inj.status || ''))) continue;
+    if (NON_ACTIVE_ROSTER_STATUS_RE.test(String(inj.gameStatus || inj.status || ''))) continue;
+    if (irKeySet.has(k) && !feedActiveKeySet.has(k)) continue;
     if (inj.isInGameInjury || inj.isInGameReturned) continue;
     const pid = inj.id || inj.playerId || null;
     mergedRosterMap.set(k, {
@@ -1685,13 +1858,15 @@ export function buildTeamGameDayRosterModel({
       position: inj.position || 'ATH',
       unit: classifyRosterUnit(inj.position, inj.unit),
       jersey: inj.jersey ?? null,
+      depthSlot: inj.depthSlot || null,
       headshotUrl: inj.headshotUrl || '',
       espnUrl: inj.espnUrl || '',
       snapPct: inj.snapPct ?? null,
       isStarter: Boolean(inj.isStarter || (inj.snapPct ?? 0) >= 55),
       injuryType: inj.injuryType || '',
       gameStatus: inj.gameStatus || '',
-      beatNote: inj.beatComment || inj.beatNote || ''
+      beatNote: inj.beatComment || inj.beatNote || '',
+      _fromActiveRoster: false
     });
   }
 
@@ -1718,13 +1893,15 @@ export function buildTeamGameDayRosterModel({
         position: entry.position || 'ATH',
         unit: classifyRosterUnit(entry.position, ''),
         jersey: entry.jersey != null && entry.jersey !== '' ? Number(entry.jersey) : null,
+        depthSlot: null,
         headshotUrl: entry.headshotUrl || '',
         espnUrl: entry.espnUrl || '',
         snapPct: null,
         isStarter: Boolean(entry.starter),
         injuryType: entry.reason || '',
         gameStatus: '',
-        beatNote: ''
+        beatNote: '',
+        _fromActiveRoster: false
       });
     }
   }
@@ -1746,7 +1923,7 @@ export function buildTeamGameDayRosterModel({
     wireSignals.inactiveKeys.size >= 3;
 
   const inactives = [];
-  const actives = [];
+  let actives = [];
   const pendingQuestionables = [];
 
   for (const [k, player] of mergedRosterMap.entries()) {
@@ -1754,11 +1931,14 @@ export function buildTeamGameDayRosterModel({
     const compRow = compByKey.get(k) || null;
     const rawStatus = String(injRow?.preGameStatus || injRow?.gameStatus || player.gameStatus || '').trim();
     const statusLower = rawStatus.toLowerCase();
+    const combinedNote = `${injRow?.beatComment || injRow?.beatNote || injRow?.shortComment || injRow?.longComment || ''} ${player.beatNote || ''}`.trim();
     const rawMedicalCandidates = [injRow?.injuryType, player.injuryType, compRow?.reason]
       .map(s => String(s || '').trim())
       .filter(s => s && !isNonMedicalScratchReason(s));
-    const medicalInjuryType = rawMedicalCandidates[0] || '';
-    const combinedNote = `${injRow?.beatComment || injRow?.beatNote || ''} ${player.beatNote || ''}`;
+    const medicalInjuryType =
+      rawMedicalCandidates[0] ||
+      extractMedicalInjuryFromNotes(compRow?.reason || '') ||
+      extractMedicalInjuryFromNotes(combinedNote);
 
     const isPreDeclaredOut =
       !injRow?.isInGameInjury &&
@@ -1777,7 +1957,9 @@ export function buildTeamGameDayRosterModel({
     const isEmergencyQb =
       wireSignals.emergencyQbKeys.has(k) ||
       feedEmergencyQbSet.has(k) ||
-      /\bemergency\s+(?:third|3rd)\s+(?:quarterback|qb)\b/i.test(combinedNote);
+      /\bemergency\s+(?:third|3rd)\s+(?:quarterback|qb)\b|\(\s*(?:emergency\s+)?(?:3rd|third)\s+qb\s*\)/i.test(
+        `${compRow?.reason || ''} ${injRow?.injuryType || ''} ${combinedNote}`
+      );
 
     const isEmergencyGtd =
       wireSignals.gtdActiveKeys.has(k) ||
@@ -1786,7 +1968,23 @@ export function buildTeamGameDayRosterModel({
       );
 
     if ((isCompInactive || isWireInactive || isPreDeclaredOut) && !isWireActive) {
-      const isHealthyScratch = !medicalInjuryType && !isPreDeclaredOut;
+      const explicitHealthyScratchProse =
+        /\b(?:healthy\s+scratch|coach'?s?\s+decision|not\s+injury\s+related|nir\b|emergency\s+(?:3rd|third)\s*(?:quarterback|qb)|\(3rd\s+qb\))\b/i.test(
+          `${compRow?.reason || ''} ${injRow?.injuryType || ''} ${player.injuryType || ''} ${combinedNote}`
+        );
+      const rawInjLabelForPractice = String(injRow?.injuryType || player.injuryType || '').trim();
+      const hadMedicalPracticeMiss =
+        !explicitHealthyScratchProse &&
+        [injRow?.wed, injRow?.thu, injRow?.fri].some(c => c === 'DNP' || c === 'LP') &&
+        !/vet\s*rest|not\s+injury\s+related|\bnir\b|\brest\b|personal|coach'?s?\s+decision|healthy\s+scratch/i.test(
+          rawInjLabelForPractice
+        );
+      // ESPN `/injuries` marks ALL T-90m inactives (including healthy scratches like Demarcus Robinson / 3rd QBs)
+      // as `status: "Out"` with no medical body part. Only classify as an injury scratch when there is actual
+      // medical injury evidence (body part, illness, warmup injury prose, or non-rest W/T/F practice absence)!
+      const hasVerifiedMedicalInjury =
+        Boolean(medicalInjuryType) || (hadMedicalPracticeMiss && isPreDeclaredOut);
+      const isHealthyScratch = !hasVerifiedMedicalInjury;
       const scratchLabel = isHealthyScratch
         ? isEmergencyQb
           ? 'Healthy Scratch (Emergency 3rd QB)'
@@ -1820,6 +2018,18 @@ export function buildTeamGameDayRosterModel({
         isExplicitActiveGtd: isEmergencyGtd
       });
     }
+  }
+
+  let nflMaxActives = computeNflGameDayActiveLimit(actives);
+  let activeRosterTrimmedCount = 0;
+  if (isOfficialListPosted) {
+    const reconciled = reconcileActiveRosterToNflLimit(actives, {
+      authoritativeActiveKeySet: feedActiveKeySet.size >= 44 ? feedActiveKeySet : null,
+      irKeySet
+    });
+    actives = reconciled.actives;
+    nflMaxActives = reconciled.nflMaxActives;
+    activeRosterTrimmedCount = reconciled.trimmedCount;
   }
 
   // Sort inactives: starters/injured scratches first, then healthy scratches by jersey/name
@@ -1866,6 +2076,9 @@ export function buildTeamGameDayRosterModel({
         ? 'Official Inactives Declared'
         : 'Official Inactives Pending';
 
+  const injuryInactiveCount = inactives.filter(p => !p.isHealthyScratch).length;
+  const healthyScratchCount = inactives.filter(p => p.isHealthyScratch).length;
+
   return {
     isActive: true,
     teamAbbr,
@@ -1882,8 +2095,12 @@ export function buildTeamGameDayRosterModel({
     statusBadgeLabel,
     statusLabel: statusBadgeLabel,
     inactives,
+    injuryInactiveCount,
+    healthyScratchCount,
     activeCount: actives.length,
     totalActives: actives.length,
+    nflMaxActives,
+    activeRosterTrimmedCount,
     activeByUnit,
     activesByUnit: activeByUnit,
     pendingQuestionables,
@@ -1907,10 +2124,15 @@ export function resolveGameDayInjuryRows(rows = [], gameDayModel = null, options
   const inGameSignals = options?.inGameSignals || gameDayModel.inGameSignals || null;
   const activeRosterPlayers = options?.activeRosterPlayers || [];
 
+  const inactiveByKey = new Map(
+    (gameDayModel.inactives || [])
+      .map(p => [normalizeLookupName(p?.name || ''), p])
+      .filter(([k]) => Boolean(k))
+  );
   const inactiveSet =
     gameDayModel.inactiveKeySet instanceof Set
       ? gameDayModel.inactiveKeySet
-      : new Set((gameDayModel.inactives || []).map(p => normalizeLookupName(p?.name || '')));
+      : new Set(inactiveByKey.keys());
   const explicitActiveSet =
     gameDayModel.explicitActiveKeySet instanceof Set
       ? gameDayModel.explicitActiveKeySet
@@ -1933,6 +2155,7 @@ export function resolveGameDayInjuryRows(rows = [], gameDayModel = null, options
     const k = normalizeLookupName(row?.name || '');
     if (k) seenKeys.add(k);
     const isInactive = inactiveSet.has(k);
+    const inactObj = inactiveByKey.get(k) || null;
     const origStatus = row?.preGameStatus || row?.gameStatus || '';
     const statusLower = String(origStatus).toLowerCase();
     const isUnactivatedIrRow =
@@ -1957,6 +2180,42 @@ export function resolveGameDayInjuryRows(rows = [], gameDayModel = null, options
     }
 
     if ((isInactive || statusLower === 'out' || statusLower === 'inactive') && !row?.isInGameInjury && !row?.isInGameReturned) {
+      const rowHasMedicalPracticeMiss =
+        [row?.wed, row?.thu, row?.fri].some(c => c === 'DNP' || c === 'LP') &&
+        !/vet\s*rest|not\s+injury\s+related|\bnir\b|\brest\b|personal|coach'?s?\s+decision|healthy\s+scratch/i.test(
+          String(row?.injuryType || '')
+        );
+      const rowMedicalText = extractMedicalInjuryFromNotes(
+        `${row?.beatComment || row?.beatNote || row?.shortComment || row?.longComment || ''}`
+      );
+      const isHealthyScratchRow = Boolean(
+        inactObj
+          ? inactObj.isHealthyScratch
+          : isNonMedicalScratchReason(row?.injuryType) && !rowHasMedicalPracticeMiss && !rowMedicalText
+      );
+      if (isHealthyScratchRow) {
+        // Depth healthy scratches belong in the Declared Inactives card (in non-injury slate color),
+        // NOT polluting the medical Practice Participation / Injury Report table!
+        if (!row?.isStarter && !inactObj?.isStarter) {
+          continue;
+        }
+        const isEmQb = Boolean(inactObj?.isEmergencyQb);
+        const hsBadge = isEmQb ? 'Inactive • 3rd QB' : 'Healthy Scratch';
+        resolved.push({
+          ...row,
+          preGameStatus: origStatus,
+          injuryType: isEmQb ? 'Emergency 3rd QB' : "Coach's Decision",
+          gameStatus: isEmQb ? 'Healthy Scratch (3rd QB)' : 'Healthy Scratch',
+          playProbabilityPct: 0,
+          tier: 'HEALTHY_SCRATCH',
+          playTier: 'HEALTHY_SCRATCH',
+          badgeLabel: hsBadge,
+          playBadgeLabel: hsBadge,
+          isHealthyScratch: true,
+          isEmergencyQb: isEmQb
+        });
+        continue;
+      }
       resolved.push({
         ...row,
         preGameStatus: origStatus,
@@ -1965,7 +2224,8 @@ export function resolveGameDayInjuryRows(rows = [], gameDayModel = null, options
         tier: 'OUT',
         playTier: 'OUT',
         badgeLabel: '0% • Out (Inactive)',
-        playBadgeLabel: '0% • Out (Inactive)'
+        playBadgeLabel: '0% • Out (Inactive)',
+        isHealthyScratch: false
       });
       continue;
     }
@@ -2046,6 +2306,9 @@ export function resolveGameDayInjuryRows(rows = [], gameDayModel = null, options
     if (!k || seenKeys.has(k)) continue;
     if (!inact.isStarter && inact.isHealthyScratch) continue;
     seenKeys.add(k);
+    const isHs = Boolean(inact.isHealthyScratch);
+    const isEmQb = Boolean(inact.isEmergencyQb);
+    const hsBadge = isEmQb ? 'Inactive • 3rd QB' : 'Healthy Scratch';
     resolved.push({
       playerId: inact.playerId || inact.id || '',
       name: inact.name,
@@ -2060,15 +2323,25 @@ export function resolveGameDayInjuryRows(rows = [], gameDayModel = null, options
       thu: '-',
       fri: '-',
       preGameStatus: 'Inactive',
-      injuryType: inact.injuryType || "Healthy Scratch (Coach's Decision)",
-      gameStatus: 'Inactive',
+      injuryType: isHs
+        ? isEmQb
+          ? 'Emergency 3rd QB'
+          : "Coach's Decision"
+        : inact.injuryType || 'Injury (Out)',
+      gameStatus: isHs
+        ? isEmQb
+          ? 'Healthy Scratch (3rd QB)'
+          : 'Healthy Scratch'
+        : 'Inactive',
       playProbabilityPct: 0,
-      tier: 'OUT',
-      playTier: 'OUT',
-      badgeLabel: '0% • Out (Inactive)',
-      playBadgeLabel: '0% • Out (Inactive)',
-      beatComment: inact.isHealthyScratch
-        ? `${inact.name} is a game-day healthy scratch (Coach's Decision).`
+      tier: isHs ? 'HEALTHY_SCRATCH' : 'OUT',
+      playTier: isHs ? 'HEALTHY_SCRATCH' : 'OUT',
+      badgeLabel: isHs ? hsBadge : '0% • Out (Inactive)',
+      playBadgeLabel: isHs ? hsBadge : '0% • Out (Inactive)',
+      isHealthyScratch: isHs,
+      isEmergencyQb: isEmQb,
+      beatComment: isHs
+        ? `${inact.name} is a game-day healthy scratch (${isEmQb ? 'Emergency 3rd QB' : "Coach's Decision"}).`
         : `${inact.name} (${inact.injuryType}) is officially inactive.`
     });
   }
@@ -2174,9 +2447,15 @@ export function resolveTeamGameDayModel(appData, { is49ers = false, windowState 
         ...(appData?.news?.rawStream || [])
       ];
 
+  const preHydratedExceedsNflLimit = Boolean(
+    preHydrated?.officialPosted &&
+      Number(preHydrated.activeCount ?? preHydrated.totalActives ?? 0) > 48
+  );
+
   let model = null;
   if (
     preHydrated?.isActive &&
+    !preHydratedExceedsNflLimit &&
     (!liveFeedOverride?.officialPosted || preHydrated.officialPosted) &&
     Number(preHydrated.week || win.week) === Number(win.week)
   ) {
@@ -2207,6 +2486,7 @@ export function resolveTeamGameDayModel(appData, { is49ers = false, windowState 
       teamName: activeTeam.fullName,
       activeRosterPlayers: sfActive53,
       injuryReport: appData?.health?._preGamePracticeReport || appData?.health?.practiceReport || [],
+      irReserve: appData?.health?.irAndReserveTracker || [],
       newsItems: combinedNews,
       liveFeedData: liveFeedOverride,
       windowState: win
@@ -2217,6 +2497,7 @@ export function resolveTeamGameDayModel(appData, { is49ers = false, windowState 
       teamName: um?.oppName || um?.oppAbbr || 'Opponent',
       activeRosterPlayers: oppPool,
       injuryReport: oppHealth._preGameInjuryReport || oppHealth.injuryReport || [],
+      irReserve: oppHealth.irReserve || [],
       newsItems: combinedNews,
       liveFeedData: liveFeedOverride,
       windowState: win

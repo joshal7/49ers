@@ -592,7 +592,7 @@ function renderSingleDashboardCard({
                               : `<strong>${esc(op.name)}</strong>`
                         } <span style="color:var(--text-muted)">(${esc(op.position)} • ${esc(op.injuryType)})</span>
                       </span>
-                      <span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(op.playBadgeLabel)}</span>
+                      <span class="badge ${playProbBadgeClass(op.playProbabilityPct, op)} mono">${esc(op.playBadgeLabel)}</span>
                     </div>
                   `;
                     })
@@ -639,7 +639,7 @@ function renderSingleDashboardCard({
               </div>
               <span style="display:inline-flex;align-items:center;gap:5px;flex-shrink:0">
                 ${deltaChipHtml}
-                <span class="badge ${playProbBadgeClass(p.playProbabilityPct)} mono">${esc(p.playBadgeLabel)}</span>
+                <span class="badge ${playProbBadgeClass(p.playProbabilityPct, p)} mono">${esc(p.playBadgeLabel)}</span>
               </span>
             </div>
           `;

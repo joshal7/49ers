@@ -65,6 +65,8 @@ import {
   parseEspnCoreEventRosterInactives,
   extractSleeperGameDaySignals,
   extractLiveInGameInjurySignals,
+  extractMedicalInjuryFromNotes,
+  isNonMedicalScratchReason,
   buildTeamGameDayRosterModel,
   resolveGameDayInjuryRows,
   classifyRosterUnit,
@@ -736,13 +738,30 @@ function isRealMedicalInjuryLabel(label = '') {
   const s = String(label || '').trim();
   if (!s) return false;
   if (isRestOrPersonalInjuryLabel(s)) return false;
+  if (isNonMedicalScratchReason(s)) return false;
   return !/^(?:cleared|undisclosed|coach'?s decision|healthy scratch|none|n\/a)\b/i.test(s);
+}
+
+function isEspnHealthyScratchEntry({
+  rawStatusLower = '',
+  bodyPart = '',
+  shortC = '',
+  longC = '',
+  wasPreviouslyOnReport = false
+} = {}) {
+  if (wasPreviouslyOnReport) return false;
+  if (rawStatusLower !== 'out' && rawStatusLower !== 'inactive') return false;
+  if (isRealMedicalInjuryLabel(bodyPart)) return false;
+  if (extractMedicalInjuryFromNotes(`${shortC} ${longC}`)) return false;
+  return true;
 }
 
 function mergeNonDestructivePreGameRows(existingPreRows = [], latestRows = []) {
   if (!Array.isArray(latestRows) || latestRows.length === 0) return existingPreRows;
   if (!Array.isArray(existingPreRows) || existingPreRows.length === 0) {
-    return latestRows.map(r => ({ ...r }));
+    return latestRows
+      .filter(r => !r?.isHealthyScratch && String(r?.playTier || r?.tier || '').toUpperCase() !== 'HEALTHY_SCRATCH')
+      .map(r => ({ ...r }));
   }
   const latestByKey = new Map(latestRows.map(r => [canonicalInjuryPlayerKey(r.name), r]));
   const seenKeys = new Set();
@@ -762,9 +781,9 @@ function mergeNonDestructivePreGameRows(existingPreRows = [], latestRows = []) {
     } else if (!next.injuryType && fresh.injuryType) {
       next.injuryType = fresh.injuryType;
     }
-    // Only update pre-game probability/status when `fresh` has not been overridden by game-day In/Out badges
+    // Only update pre-game probability/status when `fresh` has not been overridden by game-day In/Out/Scratch badges
     const freshBadge = String(fresh.playBadgeLabel || '');
-    if (!/in \(active\)|out \(inactive\)/i.test(freshBadge)) {
+    if (!/in \(active\)|out \(inactive\)|healthy scratch|3rd qb/i.test(freshBadge) && !fresh.isHealthyScratch) {
       if (fresh.gameStatus) next.gameStatus = fresh.gameStatus;
       if (Number.isFinite(fresh.playProbabilityPct)) next.playProbabilityPct = fresh.playProbabilityPct;
       if (Number.isFinite(fresh.priorDayPlayProbabilityPct)) {
@@ -786,7 +805,7 @@ function mergeNonDestructivePreGameRows(existingPreRows = [], latestRows = []) {
   for (const [k, fresh] of latestByKey.entries()) {
     if (seenKeys.has(k)) continue;
     const freshBadge = String(fresh.playBadgeLabel || '');
-    if (!/in \(active\)|out \(inactive\)/i.test(freshBadge)) {
+    if (!/in \(active\)|out \(inactive\)|healthy scratch|3rd qb/i.test(freshBadge) && !fresh.isHealthyScratch) {
       merged.push({ ...fresh });
     }
   }
@@ -1083,6 +1102,7 @@ function applyCachedGameDayRostersOnBoot(appData) {
       teamName: activeTeamBoot.fullName,
       activeRosterPlayers: sfActivePlayers,
       injuryReport: baseSf,
+      irReserve: appData.health.irAndReserveTracker || [],
       newsItems: appData.news?.rawStream || [],
       liveFeedData: appData.liveGameDay.sf,
       windowState
@@ -1100,10 +1120,26 @@ function applyCachedGameDayRostersOnBoot(appData) {
       const inact = inactByKey.get(k);
       const rep = byName.get(k);
       if (inact) {
-        p.health.status = 'Inactive';
+        const isHs = Boolean(inact.isHealthyScratch);
+        const isEmQb = Boolean(inact.isEmergencyQb);
+        p.health.status = isHs
+          ? isEmQb
+            ? 'Healthy Scratch (3rd QB)'
+            : 'Healthy Scratch'
+          : 'Inactive';
+        p.health.injuryType = isHs
+          ? isEmQb
+            ? 'Emergency 3rd QB'
+            : "Coach's Decision"
+          : inact.injuryType || p.health.injuryType || 'Injury (Out)';
+        p.health.isHealthyScratch = isHs;
         p.health.playProbabilityPct = 0;
-        p.health.playTier = 'OUT';
-        p.health.playBadgeLabel = '0% • Out (Inactive)';
+        p.health.playTier = isHs ? 'HEALTHY_SCRATCH' : 'OUT';
+        p.health.playBadgeLabel = isHs
+          ? isEmQb
+            ? 'Inactive • 3rd QB'
+            : 'Healthy Scratch'
+          : '0% • Out (Inactive)';
       } else if (rep) {
         p.health.status = rep.gameStatus || p.health.status;
         p.health.playProbabilityPct = rep.playProbabilityPct;
@@ -4025,11 +4061,15 @@ function toEspnTeamSlugClient(abbr = '') {
 function extractActiveRosterFromEspnTeamRoster(oppRosterRaw, starterNamesSet = new Set()) {
   const list = [];
   const seen = new Set();
+  const nonActiveStatusRe =
+    /\b(?:injured[\s_-]?reserve|reserve|pup|nfi|suspended|practice[\s_-]?squad|waived|released|free[\s_-]?agent)\b/i;
   for (const grp of oppRosterRaw?.athletes || []) {
     const gKey = String(grp.position || '');
     if (gKey === 'injuredReserveOrOut' || gKey === 'suspended' || gKey === 'practiceSquad') continue;
     const rawUnit = gKey === 'defense' ? 'Defense' : gKey === 'specialTeam' ? 'Special Teams' : 'Offense';
     for (const ath of grp.items || []) {
+      const athStatusStr = `${ath?.status?.type || ''} ${ath?.status?.name || ''}`.trim();
+      if (athStatusStr && nonActiveStatusRe.test(athStatusStr)) continue;
       const nm = ath.fullName || ath.displayName || '';
       const nk = normPlayerNameKey(nm);
       if (!nm || seen.has(nk)) continue;
@@ -4210,11 +4250,15 @@ async function fetchEspnCoreEventRosterInactivesIfDue(
     if (!parsed.officialPosted) return existingSideState || null;
 
     const nameByKey = new Map((candidatePlayers || []).map(p => [normalizeLookupName(p.name), p.name]));
+    const resolvedActiveNames =
+      Array.isArray(parsed.activeNames) && parsed.activeNames.length > 0
+        ? parsed.activeNames
+        : [...parsed.activeKeys].map(k => nameByKey.get(k)).filter(Boolean);
     return {
       officialPosted: true,
       sourceRank: GAME_DAY_SOURCE_RANK.espn_event_roster,
       inactives: parsed.inactives,
-      activeNames: [...parsed.activeKeys].map(k => nameByKey.get(k)).filter(Boolean),
+      activeNames: resolvedActiveNames,
       sourceUrl: buildEspnTeamInjuriesUrl(canonAbbr),
       sourceLabel: 'ESPN Official Game Roster'
     };
@@ -4460,6 +4504,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
           if (p.health) {
             delete p.health.isInGameInjury;
             delete p.health.isInGameReturned;
+            delete p.health.isHealthyScratch;
           }
         }
         delete appData.health._preGamePracticeReport;
@@ -4876,6 +4921,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
       teamName: activeTeamGd.fullName,
       activeRosterPlayers: sfActivePlayers,
       injuryReport: cleanBaseSfReport,
+      irReserve: appData.health.irAndReserveTracker || [],
       newsItems: sfNews,
       liveFeedData: appData.liveGameDay.sf || null,
       windowState
@@ -4917,14 +4963,30 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
       const inactiveMatch = sfInactByKey.get(pKey) || null;
 
       if (inactiveMatch) {
-        p.health.status = 'Inactive';
-        p.health.injuryType = inactiveMatch.injuryType || p.health.injuryType || "Healthy Scratch (Coach's Decision)";
+        const isHs = Boolean(inactiveMatch.isHealthyScratch);
+        const isEmQb = Boolean(inactiveMatch.isEmergencyQb);
+        p.health.status = isHs
+          ? isEmQb
+            ? 'Healthy Scratch (3rd QB)'
+            : 'Healthy Scratch'
+          : 'Inactive';
+        p.health.injuryType = isHs
+          ? isEmQb
+            ? 'Emergency 3rd QB'
+            : "Coach's Decision"
+          : inactiveMatch.injuryType || p.health.injuryType || 'Injury (Out)';
+        p.health.isHealthyScratch = isHs;
         p.health.playProbabilityPct = 0;
-        p.health.playTier = 'OUT';
-        p.health.playBadgeLabel = '0% • Out (Inactive)';
+        p.health.playTier = isHs ? 'HEALTHY_SCRATCH' : 'OUT';
+        p.health.playBadgeLabel = isHs
+          ? isEmQb
+            ? 'Inactive • 3rd QB'
+            : 'Healthy Scratch'
+          : '0% • Out (Inactive)';
         delete p.health.isInGameInjury;
         delete p.health.isInGameReturned;
       } else if (reportMatch) {
+        delete p.health.isHealthyScratch;
         p.health.status = reportMatch.gameStatus || p.health.status;
         if (reportMatch.injuryType) p.health.injuryType = reportMatch.injuryType;
         p.health.playProbabilityPct = reportMatch.playProbabilityPct;
@@ -4975,6 +5037,7 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
           }
         }
       } else if (sfModel.officialPosted || sfModel.explicitActiveKeySet?.has(pKey) || windowState.hasKickoffStarted) {
+        delete p.health.isHealthyScratch;
         p.health.status = 'Active';
         p.health.playProbabilityPct = Math.max(95, Number(p.health.playProbabilityPct || 95));
         p.health.playTier = 'ACTIVE';
@@ -5005,6 +5068,10 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
       ...(appData._oppNewsWire || []),
       ...(appData.news?.rawStream || [])
     ];
+    const oppActiveSource =
+      Array.isArray(oh.activeRoster) && oh.activeRoster.length >= 30
+        ? oh.activeRoster
+        : [...(oh.activeRoster || []), ...cleanBaseOppStarters, ...cleanBaseOppReport];
     const fullOppPool = [
       ...(oh.activeRoster || []),
       ...cleanBaseOppStarters,
@@ -5014,8 +5081,9 @@ export async function hydrateLiveGameDayRosters(appData, nowMs = Date.now(), opt
     const oppModel = buildTeamGameDayRosterModel({
       teamAbbr: oppAbbr,
       teamName: oppName,
-      activeRosterPlayers: fullOppPool,
+      activeRosterPlayers: oppActiveSource,
       injuryReport: cleanBaseOppReport,
+      irReserve: oh.irReserve || [],
       newsItems: oppNewsCombined,
       liveFeedData: appData.liveGameDay.opp || null,
       windowState
@@ -6850,6 +6918,21 @@ export async function hydrateLiveEspnOverlay(appData) {
         const hasEarlyWeekSustainedInjury = earlyWeekBlankPractice && Boolean(bodyPart) && !sfEarlyRoll?.skip;
         const wasOnOfficialReport = Boolean(rp.health.isOnPracticeReport) && !weekAdvancedFlag;
 
+        // Guard against ESPN's T-90m game-day inactives dump marking healthy scratches (e.g. Demarcus Robinson)
+        // as `status: "Out"` with no medical body part: keep them in Declared Inactives as Healthy Scratch, NOT on the medical injury report!
+        if (
+          rp.rosterBucket === 'active' &&
+          isEspnHealthyScratchEntry({
+            rawStatusLower: rawLower,
+            bodyPart,
+            shortC: freshShortProvided ? rawShortIn : shortC,
+            longC: !isBareStatusPlaceholderComment(rawLongField) ? rawLongField : longC,
+            wasPreviouslyOnReport: wasOnOfficialReport
+          })
+        ) {
+          continue;
+        }
+
         if (
           rp.rosterBucket === 'active' &&
           !wasOnOfficialReport &&
@@ -7088,6 +7171,21 @@ export async function hydrateLiveEspnOverlay(appData) {
             : null;
         if (oppEarlyRoll?.skip) {
           mergedByKey.delete(nKey);
+          continue;
+        }
+
+        // Guard against ESPN's T-90m game-day inactives dump marking opponent healthy scratches (e.g. Emergency 3rd QB)
+        // as `status: "Out"` / `"Undisclosed"` on the medical Injury Report!
+        if (
+          !isIrRetQ &&
+          isEspnHealthyScratchEntry({
+            rawStatusLower: stLower,
+            bodyPart,
+            shortC: !isBareStatusPlaceholderComment(rawOppShort) ? rawOppShort : shortC,
+            longC: !isBareStatusPlaceholderComment(rawOppLong) ? rawOppLong : longC,
+            wasPreviouslyOnReport: Boolean(existingRep)
+          })
+        ) {
           continue;
         }
 

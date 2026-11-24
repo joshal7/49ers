@@ -4475,7 +4475,13 @@ async function main() {
       const expYears = Number.isFinite(Number(ath.experience?.years)) ? Number(ath.experience.years) : null;
       const snapPct = getOppSnapPct(nk);
 
-      if (!isIrGroup) {
+      const athStatusStr = `${ath?.status?.type || ''} ${ath?.status?.name || ''}`.trim();
+      const isNonActiveEspnStatus =
+        Boolean(athStatusStr) &&
+        /\b(?:injured[\s_-]?reserve|reserve|pup|nfi|suspended|practice[\s_-]?squad|waived|released|free[\s_-]?agent)\b/i.test(
+          athStatusStr
+        );
+      if (!isIrGroup && !isNonActiveEspnStatus) {
         oppActiveRosterPlayers.push({
           id: espnId,
           name: nm,
@@ -6587,6 +6593,7 @@ async function main() {
         teamName: 'San Francisco 49ers',
         activeRosterPlayers: sfActive53,
         injuryReport: practiceReportPlayers,
+        irReserve: irAndReserveTracker,
         newsItems: rawNewsStream,
         liveFeedData: sfLiveFeed,
         windowState: pipelineGameDayWin
@@ -6594,6 +6601,10 @@ async function main() {
 
       if (upcomingMatchup?.opponentHealth && oppCode) {
         const oh = upcomingMatchup.opponentHealth;
+        const oppActiveSource =
+          Array.isArray(oh.activeRoster) && oh.activeRoster.length >= 30
+            ? oh.activeRoster
+            : [...(oh.activeRoster || []), ...(oh.keyStartersHealthy || []), ...(oh.injuryReport || [])];
         const oppPool = [
           ...(oh.activeRoster || []),
           ...(oh.keyStartersHealthy || []),
@@ -6607,7 +6618,9 @@ async function main() {
         if (oppDisc?.url) {
           const oppArt = await fetchText(oppDisc.url).catch(() => '');
           const parsedOpp = parseOfficialClubInactivesArticle(oppArt, oppPool, {
-            week: pipelineGameDayWin.week
+            week: pipelineGameDayWin.week,
+            teamAbbr: oppCode,
+            teamName: upcomingMatchup.oppName || oppCode
           });
           if (parsedOpp.officialPosted) {
             oppLiveFeed = {
@@ -6630,8 +6643,9 @@ async function main() {
         oh.gameDayRoster = buildTeamGameDayRosterModel({
           teamAbbr: oppCode,
           teamName: upcomingMatchup.oppName || oppCode,
-          activeRosterPlayers: oppPool,
+          activeRosterPlayers: oppActiveSource,
           injuryReport: oh.injuryReport || [],
+          irReserve: oh.irReserve || [],
           newsItems: rawNewsStream,
           liveFeedData: oppLiveFeed,
           windowState: pipelineGameDayWin

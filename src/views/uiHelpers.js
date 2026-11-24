@@ -431,6 +431,9 @@ export function resolvePlayerPlayBadgeLabel(player = null) {
     if (statusLower.includes('left squad')) return '0% • Reinstatement';
     return '0% • IR';
   }
+  if (h.isHealthyScratch || statusLower.includes('healthy scratch')) {
+    return statusLower.includes('3rd qb') ? 'Inactive • 3rd QB' : 'Healthy Scratch';
+  }
   const pct = Number.isFinite(Number(h.playProbabilityPct)) ? Math.round(Number(h.playProbabilityPct)) : 99;
   if (pct >= 85) return `${pct}% • Full Go`;
   if (pct >= 50) return `${pct}% • GTD`;
@@ -443,6 +446,13 @@ export function playProbBadgeClass(pct, meta = null) {
   const tier = String(meta?.playTier || meta?.tier || '').toUpperCase();
   const bucket = String(meta?.rosterBucket || '').toLowerCase();
   const label = String(meta?.playBadgeLabel || meta?.badgeLabel || '').toLowerCase();
+  if (
+    Boolean(meta?.isHealthyScratch) ||
+    tier === 'HEALTHY_SCRATCH' ||
+    /\bhealthy\s+scratch\b|\bcoach'?s?\s+decision\b|\binactive\s*•\s*3rd\s*qb\b/i.test(label)
+  ) {
+    return 'badge-scratch';
+  }
   if (
     (tier === 'PRACTICE_SQUAD' ||
       bucket === 'practice_squad' ||

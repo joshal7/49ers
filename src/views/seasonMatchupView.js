@@ -276,6 +276,19 @@ function renderGameDayRosterCard(
     ? 'subcard-panel gameday-roster-card gameday-subcard'
     : 'card temporal-highlight gameday-roster-card';
 
+  const injuredInactiveCount = inactives.filter(
+    p => !p.isHealthyScratch && !/^(?:healthy\s*scratch|coach'?s?\s*decision|emergency\s*3rd\s*qb)/i.test(String(p.injuryType || p.reason || '').trim())
+  ).length;
+  const healthyScratchCount = inactives.length - injuredInactiveCount;
+  const inactivesSplitHtml =
+    inactives.length > 0 && healthyScratchCount > 0
+      ? `<span class="gameday-inact-split mono">${
+          injuredInactiveCount > 0
+            ? `<span class="gameday-inact-key"><span class="gameday-dot-injury" aria-hidden="true"></span>${injuredInactiveCount} Inj</span><span aria-hidden="true">·</span>`
+            : ''
+        }<span class="gameday-inact-key"><span class="gameday-dot-scratch" aria-hidden="true"></span>${healthyScratchCount} Healthy</span></span>`
+      : '';
+
   return `
     <${tagName} class="${outerCls}" data-gameday-roster-block="${is49ers ? 'sf' : 'opp'}">
       <div class="gameday-roster-head">
@@ -303,8 +316,11 @@ function renderGameDayRosterCard(
 
       <div class="gameday-inactives-section" data-gameday-inactives>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:5px">
-          <div class="sub-label" style="margin-bottom:0">
-            ${gameDayModel.officialPosted ? `Declared Inactives (${inactives.length})` : `Pre-Declared Out / Inactives (${inactives.length})`}
+          <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+            <div class="sub-label" style="margin-bottom:0">
+              ${gameDayModel.officialPosted ? `Declared Inactives (${inactives.length})` : `Pre-Declared Out / Inactives (${inactives.length})`}
+            </div>
+            ${inactivesSplitHtml}
           </div>
           ${
             gameDayModel.sourceUrl && sanitizeExternalUrl(gameDayModel.sourceUrl, null)
@@ -331,14 +347,17 @@ function renderGameDayRosterCard(
                           ? `<a href="${esc(p.espnUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link"><strong>${esc(p.name)}</strong></a>`
                           : `<strong>${esc(p.name)}</strong>`;
                     const rawReason = String(p.injuryType || p.reason || '').trim();
-                    const displayReason =
-                      p.isHealthyScratch || /^healthy scratch$/i.test(rawReason)
-                        ? rawReason.includes('(')
-                          ? rawReason
-                          : "Healthy Scratch (Coach's Decision)"
-                        : rawReason || 'Inactive';
+                    const isHealthyScratchChip =
+                      Boolean(p.isHealthyScratch) ||
+                      /^(?:healthy\s*scratch|coach'?s?\s*decision|emergency\s*3rd\s*qb)/i.test(rawReason);
+                    const displayReason = isHealthyScratchChip
+                      ? p.isEmergencyQb || /emergency\s*(?:3rd|third)\s*qb/i.test(rawReason)
+                        ? 'Healthy Scratch (Emergency 3rd QB)'
+                        : "Healthy Scratch (Coach's Decision)"
+                      : rawReason || 'Injury (Out)';
+                    const chipKindCls = isHealthyScratchChip ? 'is-healthy-scratch' : 'is-injury-scratch';
                     return `
-                      <div class="gameday-inactive-chip" ${clickAttrs}>
+                      <div class="gameday-inactive-chip ${chipKindCls}" data-inactive-kind="${isHealthyScratchChip ? 'healthy_scratch' : 'injury'}" ${clickAttrs}>
                         ${renderPlayerAvatarHtml(p, 24)}
                         <div class="gameday-inactive-meta">
                           <div class="gameday-inactive-name">${nameHtml} <span class="gameday-pos">${esc(p.position)}${p.jersey != null ? ` #${p.jersey}` : ''}</span></div>
@@ -1191,7 +1210,7 @@ function renderUpcomingMatchup(appData, matchupStatsUnit = 'offense', userPrefs 
                       </td>
                       <td>${esc(op.injuryType || op.gameStatus || 'Undisclosed')}</td>
                       <td class="mono">${esc(formatPracCell(op.wed))} / ${esc(formatPracCell(op.thu))} / ${esc(formatPracCell(op.fri))}</td>
-                      <td><span class="badge ${playProbBadgeClass(op.playProbabilityPct)} mono">${esc(formatCompactPlayBadge(op.playBadgeLabel))}</span>${oppDeltaHtml}</td>
+                      <td><span class="badge ${playProbBadgeClass(op.playProbabilityPct, op)} mono">${esc(formatCompactPlayBadge(op.playBadgeLabel))}</span>${oppDeltaHtml}</td>
                     </tr>
                   `;
                     })
@@ -1654,7 +1673,7 @@ function renderTeamHealthAndIr(appData, userPrefs = null, reportersById = null) 
                 </td>
                 <td>${esc(p.injuryType)}</td>
                 <td class="mono">${esc(formatPracCell(p.wed))} / ${esc(formatPracCell(p.thu))} / ${esc(formatPracCell(p.fri))}</td>
-                <td><span class="badge ${playProbBadgeClass(p.playProbabilityPct)} mono">${esc(formatCompactPlayBadge(p.playBadgeLabel))}</span>${trajArrowHtml}</td>
+                <td><span class="badge ${playProbBadgeClass(p.playProbabilityPct, p)} mono">${esc(formatCompactPlayBadge(p.playBadgeLabel))}</span>${trajArrowHtml}</td>
               </tr>
             `;
               })

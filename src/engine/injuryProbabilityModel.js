@@ -6832,6 +6832,14 @@ export function computeTeamHealthSummary({
 
     const prob = Number.isFinite(Number(row?.playProbabilityPct)) ? Number(row.playProbabilityPct) : 50;
     const statusStr = String(row?.gameStatus || '').trim();
+    const tierStr = String(row?.playTier || row?.tier || '').toUpperCase();
+    const isHealthyScratchRow =
+      Boolean(row?.isHealthyScratch) ||
+      tierStr === 'HEALTHY_SCRATCH' ||
+      /\b(?:healthy\s+scratch|coach'?s?\s+decision)\b/i.test(statusStr);
+    if (isHealthyScratchRow) {
+      continue;
+    }
     const isIrWindowRow =
       row?.rosterBucket === 'ir' ||
       Boolean(row?.isIrReturnWindow) ||

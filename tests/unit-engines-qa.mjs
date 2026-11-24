@@ -20534,6 +20534,258 @@ await testAsync('Wave 1 & Wave 2 Deep-Dive Engines (Game Logs, Players, Snap Mat
   assert.ok(statsPlayersHtml.includes('id="teamPlayerStatsCard"') && !statsPlayersHtml.includes('Team Leaders'), 'Players sub-view must render sortable table without redundant Team Leaders cards');
 });
 
+await testAsync('NFL 47/48 Game-Day Active Cap, Healthy Scratch vs Medical Injury Classification & Distinct UI Styling', async () => {
+  const {
+    computeNflGameDayActiveLimit,
+    isNonMedicalScratchReason,
+    parseOfficialClubInactivesArticle,
+    buildTeamGameDayRosterModel,
+    resolveGameDayInjuryRows,
+    resolveTeamGameDayModel
+  } = await import('../src/engine/gameDayRosterEngine.js');
+  const { computeTeamHealthSummary } = await import('../src/engine/injuryProbabilityModel.js');
+  const { playProbBadgeClass } = await import('../src/views/uiHelpers.js');
+  const { renderSeasonMatchupViewHtml } = await import('../src/views/seasonMatchupView.js');
+
+  const koIso = '2026-11-23T01:20:00Z';
+  const koMs = Date.parse(koIso);
+  const windowState = {
+    isActive: true,
+    phase: 'pregame',
+    week: 11,
+    kickoffIso: koIso,
+    kickoffMs: koMs,
+    minutesUntilKickoff: 3,
+    minutesToKickoff: 3,
+    hasKickoffStarted: false,
+    isDelayed: false,
+    oppAbbr: 'MIN',
+    oppName: 'Minnesota Vikings'
+  };
+
+  // 1. Replicate exact Vikings 55-player ESPN activeRoster (+1 Jordan Addison = 56) with 5 declared inactives & 8 active OL
+  const min55 = [];
+  for (let i = 1; i <= 8; i++) {
+    min55.push({ id: `ol_${i}`, name: `Vikings Lineman${i}`, position: i <= 4 ? 'OT' : i <= 6 ? 'G' : 'C', jersey: 60 + i, rosterBucket: 'active', isStarter: i <= 5, depthSlot: i <= 5 ? 'LT' : 'LG2', snapPct: i <= 5 ? 95 : 22 });
+  }
+  min55.push(
+    { id: 'qb1', name: 'Kirk Cousins', position: 'QB', jersey: 8, rosterBucket: 'active', isStarter: true, depthSlot: 'QB1', snapPct: 100 },
+    { id: 'qb2', name: 'Kyler Murray', position: 'QB', jersey: 1, rosterBucket: 'active', isStarter: false, depthSlot: 'QB2', snapPct: 86 },
+    { id: 'qb3', name: 'Carson Wentz', position: 'QB', jersey: 11, rosterBucket: 'active', isStarter: false, depthSlot: 'QB3', snapPct: 12 },
+    { id: 'qb4', name: 'Max Brosmer', position: 'QB', jersey: 12, rosterBucket: 'active', isStarter: false, depthSlot: null, snapPct: 0 },
+    { id: 'cb1', name: 'Isaiah Rodgers', position: 'CB', jersey: 2, rosterBucket: 'active', isStarter: true, depthSlot: 'LCB', snapPct: 83 },
+    { id: 's2', name: 'Jay Ward', position: 'S', jersey: 24, rosterBucket: 'active', isStarter: false, depthSlot: 'SS2', snapPct: 68 },
+    { id: 'k1', name: 'Will Reichard', position: 'PK', jersey: 16, rosterBucket: 'active', isStarter: false, depthSlot: null, snapPct: 35 },
+    { id: 'p1', name: 'Brett Thorson', position: 'P', jersey: 19, rosterBucket: 'active', isStarter: false, depthSlot: null, snapPct: 32 },
+    { id: 'ls1', name: 'Andrew DePaola', position: 'LS', jersey: 42, rosterBucket: 'active', isStarter: false, depthSlot: null, snapPct: 33 }
+  );
+  // Fill remaining 38 activeRoster players (total = 55) with mix of starters, depth, and unranked PS elevations
+  for (let i = 1; i <= 38; i++) {
+    const isOff = i <= 15;
+    const isPsElev = i >= 35;
+    min55.push({
+      id: `p_${i}`,
+      name: `Vikings Player${i}`,
+      position: isOff ? (i % 2 === 0 ? 'WR' : 'RB') : (i % 2 === 0 ? 'LB' : 'CB'),
+      jersey: 20 + i,
+      rosterBucket: 'active',
+      isStarter: i <= 12,
+      depthSlot: isPsElev ? null : (i <= 12 ? 'WR1' : 'LB2'),
+      snapPct: isPsElev ? 5 : (i <= 12 ? 80 : 35)
+    });
+  }
+  assert.equal(min55.length, 55, 'Test fixture must start with 55 ESPN activeRoster players');
+
+  const minInjuryReport = [
+    { name: 'Jordan Addison', position: 'WR', jersey: 3, isStarter: true, snapPct: 92, injuryType: 'Thumb', gameStatus: 'Out', wed: 'DNP', thu: 'DNP', fri: 'DNP' },
+    { name: 'Kyler Murray', position: 'QB', jersey: 1, isStarter: false, snapPct: 86, injuryType: 'Hamstring', gameStatus: 'Out', wed: 'DNP', thu: 'DNP', fri: 'DNP' },
+    { name: 'Isaiah Rodgers', position: 'CB', jersey: 2, isStarter: true, snapPct: 83, injuryType: 'Quad', gameStatus: 'Out', wed: 'FP', thu: 'LP', fri: 'LP' },
+    { name: 'Jay Ward', position: 'S', jersey: 24, isStarter: false, snapPct: 68, injuryType: 'Knee', gameStatus: 'Out', wed: 'DNP', thu: 'LP', fri: 'LP' },
+    // Simulate ESPN T-90m dump marking healthy scratch Max Brosmer as status: "Out", injuryType: "Undisclosed"
+    { name: 'Max Brosmer', position: 'QB', jersey: 12, isStarter: false, snapPct: 0, injuryType: 'Undisclosed', gameStatus: 'Out', wed: '-', thu: '-', fri: '-', shortComment: 'out' }
+  ];
+
+  const minModel = buildTeamGameDayRosterModel({
+    teamAbbr: 'MIN',
+    teamName: 'Minnesota Vikings',
+    activeRosterPlayers: min55,
+    injuryReport: minInjuryReport,
+    liveFeedData: {
+      officialPosted: true,
+      inactives: [
+        { name: 'Jordan Addison', position: 'WR' },
+        { name: 'Kyler Murray', position: 'QB' },
+        { name: 'Isaiah Rodgers', position: 'CB' },
+        { name: 'Jay Ward', position: 'S' },
+        { name: 'Max Brosmer', position: 'QB', reason: '(3rd QB)' }
+      ],
+      emergencyQbNames: ['Max Brosmer'],
+      sourceLabel: 'MIN Official',
+      sourceUrl: 'https://www.vikings.com/news/inactives'
+    },
+    windowState
+  });
+
+  assert.equal(minModel.officialPosted, true);
+  assert.equal(minModel.activeCount, 48, `Expected NFL max 48 active players (>=8 OL), never 51 — got ${minModel.activeCount}`);
+  assert.equal(minModel.totalActives, 48);
+  assert.equal(minModel.nflMaxActives, 48);
+  assert.equal(minModel.activeRosterTrimmedCount, 3, 'Should trim 3 excess stale/PS players from 51 down to 48');
+  // Verify all 8 OL + all 3 specialists + Kirk Cousins remained active
+  const activeMinAll = [...minModel.activeByUnit.Offense, ...minModel.activeByUnit.Defense, ...minModel.activeByUnit['Special Teams']];
+  assert.ok(activeMinAll.some(p => p.name === 'Kirk Cousins'), 'Starting QB must remain active');
+  assert.ok(activeMinAll.some(p => p.name === 'Will Reichard'), 'Kicker must remain active');
+  assert.equal(computeNflGameDayActiveLimit(activeMinAll), 48, 'Must preserve >=8 active OL for 48-man rule');
+
+  // Verify Max Brosmer is classified as Healthy Scratch (Emergency 3rd QB), NOT "Injury (Out)"!
+  const brosmerInact = minModel.inactives.find(p => p.name === 'Max Brosmer');
+  assert.ok(brosmerInact, 'Max Brosmer must remain in Declared Inactives');
+  assert.equal(brosmerInact.isHealthyScratch, true, 'Max Brosmer must be classified as Healthy Scratch despite ESPN Out/Undisclosed');
+  assert.equal(brosmerInact.isEmergencyQb, true);
+  assert.equal(brosmerInact.isInjuryScratch, false);
+  assert.ok(/healthy scratch/i.test(brosmerInact.injuryType) && !/^injury \(out\)$/i.test(brosmerInact.injuryType));
+  // Verify genuinely injured players remain injury scratches
+  for (const injName of ['Jordan Addison', 'Kyler Murray', 'Isaiah Rodgers', 'Jay Ward']) {
+    const chip = minModel.inactives.find(p => p.name === injName);
+    assert.ok(chip && chip.isInjuryScratch && !chip.isHealthyScratch, `${injName} must remain classified as medical injury scratch`);
+  }
+
+  // 2. Verify < 8 OL enforces strict 47-man NFL active roster cap!
+  const sevenOlRoster = min55.map(p => (p.id === 'ol_8' ? { ...p, position: 'TE' } : p));
+  const min47Model = buildTeamGameDayRosterModel({
+    teamAbbr: 'MIN',
+    teamName: 'Minnesota Vikings',
+    activeRosterPlayers: sevenOlRoster,
+    injuryReport: minInjuryReport,
+    liveFeedData: {
+      officialPosted: true,
+      inactives: [
+        { name: 'Jordan Addison', position: 'WR' },
+        { name: 'Kyler Murray', position: 'QB' },
+        { name: 'Isaiah Rodgers', position: 'CB' },
+        { name: 'Jay Ward', position: 'S' },
+        { name: 'Max Brosmer', position: 'QB' }
+      ]
+    },
+    windowState
+  });
+  assert.equal(min47Model.activeCount, 47, `Expected NFL max 47 active players (<8 OL), got ${min47Model.activeCount}`);
+  assert.equal(min47Model.nflMaxActives, 47);
+
+  // 3. Verify 49ers Demarcus Robinson healthy scratch scenario (ESPN `/injuries` marked Out + Cleared — No Designation)
+  const sf53 = [];
+  for (let i = 1; i <= 8; i++) {
+    sf53.push({ id: `sfol_${i}`, name: `Niners OL${i}`, position: 'OT', jersey: 70 + i, rosterBucket: 'active', isStarter: i <= 5, health: { status: 'Active', injuryType: '' } });
+  }
+  sf53.push(
+    { id: 'drob', name: 'Demarcus Robinson', position: 'WR', jersey: 10, rosterBucket: 'active', isStarter: false, primarySnapPct: 28, health: { status: 'Out', injuryType: 'Cleared — No Designation', shortComment: 'out' } },
+    { id: 'mevans', name: 'Mike Evans', position: 'WR', jersey: 13, rosterBucket: 'active', isStarter: true, primarySnapPct: 88, health: { status: 'Out', injuryType: 'Achilles', shortComment: 'Ruled out with right Achilles' } },
+    { id: 'krourke', name: 'Kurtis Rourke', position: 'QB', jersey: 17, rosterBucket: 'active', isStarter: false, primarySnapPct: 0, health: { status: 'Out', injuryType: '', shortComment: 'Inactive' } }
+  );
+  for (let i = 1; i <= 42; i++) {
+    sf53.push({ id: `sfp_${i}`, name: `Niners Active${i}`, position: i <= 20 ? 'LB' : 'CB', jersey: 20 + i, rosterBucket: 'active', isStarter: i <= 15, health: { status: 'Active', injuryType: '' } });
+  }
+  const sfModel = buildTeamGameDayRosterModel({
+    teamAbbr: 'SF',
+    teamName: 'San Francisco 49ers',
+    activeRosterPlayers: sf53,
+    injuryReport: [
+      { playerId: 'mevans', name: 'Mike Evans', position: 'WR', jersey: 13, isStarter: true, injuryType: 'Achilles', gameStatus: 'Out', wed: 'DNP', thu: 'DNP', fri: 'DNP' },
+      { playerId: 'drob', name: 'Demarcus Robinson', position: 'WR', jersey: 10, isStarter: false, injuryType: 'Cleared — No Designation', gameStatus: 'Out', wed: '-', thu: '-', fri: '-', beatComment: 'out' },
+      { playerId: 'krourke', name: 'Kurtis Rourke', position: 'QB', jersey: 17, isStarter: false, injuryType: 'Undisclosed', gameStatus: 'Out', wed: '-', thu: '-', fri: '-' }
+    ],
+    liveFeedData: {
+      officialPosted: true,
+      inactives: [
+        { name: 'Mike Evans', position: 'WR' },
+        { name: 'Demarcus Robinson', position: 'WR' },
+        { name: 'Kurtis Rourke', position: 'QB', reason: '(3rd QB)' }
+      ],
+      emergencyQbNames: ['Kurtis Rourke'],
+      sourceLabel: '49ers.com Official'
+    },
+    windowState
+  });
+  const dRobInact = sfModel.inactives.find(p => p.name === 'Demarcus Robinson');
+  const mEvansInact = sfModel.inactives.find(p => p.name === 'Mike Evans');
+  assert.ok(dRobInact && dRobInact.isHealthyScratch === true && dRobInact.isInjuryScratch === false, 'Demarcus Robinson must be classified as Healthy Scratch (Coach Decision), NOT injured');
+  assert.ok(mEvansInact && mEvansInact.isHealthyScratch === false && mEvansInact.isInjuryScratch === true && mEvansInact.injuryType === 'Achilles', 'Mike Evans must stay injured (Achilles)');
+  assert.ok(sfModel.activeCount <= 48, `49ers active count must be <= 48, got ${sfModel.activeCount}`);
+
+  // 4. resolveGameDayInjuryRows & computeTeamHealthSummary must NOT count healthy scratches as medical injuries
+  const resolvedMinRows = resolveGameDayInjuryRows(minInjuryReport, minModel, { activeRosterPlayers: min55 });
+  assert.ok(!resolvedMinRows.some(r => r.name === 'Max Brosmer'), 'Depth healthy scratch Max Brosmer must not pollute medical Practice Participation table');
+  const minSummary = computeTeamHealthSummary({ injuryReport: resolvedMinRows, irReserve: [], totalStarters: 22 });
+  assert.equal(minSummary.ruledOutCount, 4, `Expected 4 medically ruled-out players (not 5 including healthy scratch), got ${minSummary.ruledOutCount}`);
+  assert.equal(playProbBadgeClass(0, { isHealthyScratch: true }), 'badge-scratch', 'Healthy scratch badge must use distinct non-red badge-scratch class');
+  assert.equal(playProbBadgeClass(0, { isHealthyScratch: false }), 'badge-danger', 'Medical out badge must remain badge-danger');
+  assert.equal(isNonMedicalScratchReason('Undisclosed'), true);
+  assert.equal(isNonMedicalScratchReason('Cleared — No Designation'), true);
+
+  // 5. Upgraded club inactives parser handles `POS #NN Name`, slash positions, and `Name, POS` with empty candidates (Worker mode)
+  const clubHtml = `
+    <h3>Vikings Inactives</h3>
+    <p>WR #3 Jordan Addison (Thumb)</p>
+    <p>OLB/DE #90 Tyrion Ingram-Dawkins</p>
+    <p>Demarcus Robinson, WR</p>
+    <p>Max Brosmer (QB) (Emergency 3rd QB)</p>
+  `;
+  const clubParsed = parseOfficialClubInactivesArticle(clubHtml, [], { teamAbbr: 'MIN', teamName: 'Minnesota Vikings' });
+  assert.equal(clubParsed.officialPosted, true);
+  assert.equal(clubParsed.inactives.length, 4, `Expected all 4 club inactives parsed in Worker mode, got ${clubParsed.inactives.length}`);
+  assert.ok(clubParsed.emergencyQbKeys.has('maxbrosmer'), 'Emergency 3rd QB must be detected from Name (POS) (Emergency 3rd QB)');
+
+  // 6. Stale preHydrated model with 51 active players must self-heal via resolveTeamGameDayModel
+  const healedModel = resolveTeamGameDayModel(
+    {
+      meta: { teamAbbr: 'SF', seasonYear: 2026 },
+      scheduleMatchup: {
+        schedule: [{ id: '401873077', week: 11, dateIso: koIso, completed: false, opponent: { abbr: 'MIN', name: 'Minnesota Vikings' } }],
+        upcomingMatchup: {
+          week: 11,
+          gameId: '401873077',
+          dateIso: koIso,
+          oppAbbr: 'MIN',
+          oppName: 'Minnesota Vikings',
+          opponentHealth: {
+            activeRoster: min55,
+            injuryReport: minInjuryReport,
+            irReserve: [],
+            gameDayRoster: { isActive: true, week: 11, officialPosted: true, activeCount: 51, totalActives: 51, inactives: minModel.inactives }
+          }
+        }
+      },
+      liveGameDay: {
+        week: 11,
+        opp: { officialPosted: true, inactives: minModel.inactives }
+      }
+    },
+    { is49ers: false, windowState, nowMs: koMs - 3 * 60_000 }
+  );
+  assert.equal(healedModel.activeCount, 48, 'resolveTeamGameDayModel must bypass stale 51-active preHydrated cache and clamp to <=48');
+
+  // 7. Rendered Health HTML shows distinct .is-healthy-scratch vs .is-injury-scratch chips & compact legend
+  const ssrKoIso = new Date(Date.now() + 3 * 60_000).toISOString();
+  const renderedSfHealth = renderSeasonMatchupViewHtml({
+    seasonSub: 'health',
+    appData: {
+      meta: { teamAbbr: 'SF', seasonYear: 2026 },
+      roster: { players: sf53 },
+      health: { week: 11, practiceReport: [], irAndReserveTracker: [], gameDayRoster: sfModel, remainingIrDesignations: 5, maxRegularSeasonIrDesignations: 8 },
+      scheduleMatchup: {
+        schedule: [{ id: '401873077', week: 11, dateIso: ssrKoIso, completed: false, opponent: { abbr: 'MIN', name: 'Minnesota Vikings' } }],
+        upcomingMatchup: { week: 11, gameId: '401873077', dateIso: ssrKoIso, oppAbbr: 'MIN', oppName: 'Minnesota Vikings' }
+      },
+      news: { rawStream: [] }
+    }
+  });
+  assert.ok(renderedSfHealth.includes('gameday-inactive-chip is-healthy-scratch'), 'Must render healthy scratch chips with .is-healthy-scratch class');
+  assert.ok(renderedSfHealth.includes('gameday-inactive-chip is-injury-scratch'), 'Must render injury chips with .is-injury-scratch class');
+  assert.ok(renderedSfHealth.includes('data-inactive-kind="healthy_scratch"'), 'Must annotate healthy scratch chip data attribute');
+  assert.ok(renderedSfHealth.includes('gameday-dot-scratch') && renderedSfHealth.includes('gameday-dot-injury'), 'Must render compact injury vs healthy scratch split legend');
+  assert.ok(renderedSfHealth.includes("Healthy Scratch (Coach&#39;s Decision)") || renderedSfHealth.includes("Healthy Scratch (Coach's Decision)"), 'Demarcus Robinson chip must say Healthy Scratch (Coach\'s Decision)');
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

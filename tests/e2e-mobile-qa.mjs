@@ -5217,6 +5217,11 @@ async function main() {
           const sfActiveChips = sfBlock?.querySelectorAll('.gameday-active-chip').length || 0;
           const sfInactiveChips = sfBlock?.querySelectorAll('.gameday-inactive-chip').length || 0;
           const sfHasCoachDecisionNote = (sfBlock?.textContent || '').includes("Healthy Scratch (Coach's Decision)");
+          const sfScratchChip = sfBlock?.querySelector('.gameday-inactive-chip.is-healthy-scratch');
+          const sfInjuryChip = sfBlock?.querySelector('.gameday-inactive-chip.is-injury-scratch');
+          const sfDistinctScratchColor =
+            Boolean(sfScratchChip) &&
+            (!sfInjuryChip || getComputedStyle(sfScratchChip).backgroundColor !== getComputedStyle(sfInjuryChip).backgroundColor);
           if (sfDetails) sfDetails.open = true;
           const sfExpandedOk = Boolean(sfDetails?.open);
           const sfBadges = Array.from(
@@ -5249,7 +5254,12 @@ async function main() {
             document.querySelectorAll('[data-health-table="opp"] tbody td:nth-child(4) .badge')
           ).map(b => b.textContent.trim());
           const oppZeroStaleQuestionable = oppBadges.every(
-            b => b.includes('In (Active)') || b.includes('Out (Inactive)') || b === 'Active • GTD'
+            b =>
+              b.includes('In (Active)') ||
+              b.includes('Out (Inactive)') ||
+              b === 'Active • GTD' ||
+              b === 'Healthy Scratch' ||
+              b === 'Inactive • 3rd QB'
           );
 
           // Simulate Mid-Game Q2 Opponent Injury -> live Opponent Injury Update card pops up below Opponent Health table!
@@ -5294,6 +5304,7 @@ async function main() {
             sfActiveChips,
             sfInactiveChips,
             sfHasCoachDecisionNote,
+            sfDistinctScratchColor,
             sfZeroStaleQuestionable,
             oppBlockExists: Boolean(oppBlock),
             oppHasCoachDecisionNote,
@@ -5327,8 +5338,10 @@ async function main() {
           gameDayLifecycleAudit.sfStartedCollapsed &&
           gameDayLifecycleAudit.sfExpandedOk &&
           gameDayLifecycleAudit.sfHasCoachDecisionNote &&
+          gameDayLifecycleAudit.sfDistinctScratchColor &&
           JSON.stringify(gameDayLifecycleAudit.sfUnits) === JSON.stringify(['Offense', 'Defense', 'Special Teams']) &&
           gameDayLifecycleAudit.sfActiveChips >= 40 &&
+          gameDayLifecycleAudit.sfActiveChips <= 48 &&
           gameDayLifecycleAudit.sfInactiveChips >= 5 &&
           gameDayLifecycleAudit.sfZeroStaleQuestionable,
         `49ers Game-Day Roster lifecycle failed: ${JSON.stringify(gameDayLifecycleAudit)}`
@@ -5340,6 +5353,7 @@ async function main() {
           gameDayLifecycleAudit.oppStartedCollapsed &&
           JSON.stringify(gameDayLifecycleAudit.oppUnits) === JSON.stringify(['Offense', 'Defense', 'Special Teams']) &&
           gameDayLifecycleAudit.oppActiveChips >= 40 &&
+          gameDayLifecycleAudit.oppActiveChips <= 48 &&
           gameDayLifecycleAudit.oppZeroStaleQuestionable &&
           gameDayLifecycleAudit.oppLiveCardShown,
         `Opponent Game-Day Roster lifecycle failed: ${JSON.stringify(gameDayLifecycleAudit)}`

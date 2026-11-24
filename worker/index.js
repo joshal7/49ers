@@ -1710,7 +1710,7 @@ export default {
       const allowAiFallback = url.searchParams.get('aiFallback') === '1';
       const oppAbbr = teams.find(t => t !== 'SF') || '';
 
-      const kvKey = `gameday_inact_v2:${seasonYear}:wk${week || 'cur'}:${teams.join('-')}`;
+      const kvKey = `gameday_inact_v3:${seasonYear}:wk${week || 'cur'}:${teams.join('-')}`;
       const cachedInact = await env.SHARED_CACHE?.get(kvKey, 'json');
       if (
         cachedInact &&
@@ -1781,6 +1781,7 @@ export default {
       );
 
       let sfList = [];
+      let sfActiveNames = [];
       let sfEmergencyQbNames = [];
       let sfSourceRank = 0;
       let sfSourceLabel = 'RotoWire NFL Inactives';
@@ -1798,6 +1799,7 @@ export default {
       }
 
       let oppList = [];
+      let oppActiveNames = [];
       let oppEmergencyQbNames = [];
       let oppSourceRank = 0;
       let oppSourceLabel = 'RotoWire NFL Inactives';
@@ -1818,11 +1820,9 @@ export default {
         }
       }
 
-      // ESPN Core Event Competitor Roster fallback if gameId is known and club/RotoWire haven't posted yet
-      if (/^\d{6,12}$/.test(gameId) && (sfList.length < 3 || (oppAbbr && oppList.length < 3))) {
-        const espnTargets = [];
-        if (sfList.length < 3) espnTargets.push('SF');
-        if (oppAbbr && oppList.length < 3) espnTargets.push(oppAbbr);
+      // ESPN Core Event Competitor Roster fallback & authoritative 47/48 active list enrichment when gameId is known
+      if (/^\d{6,12}$/.test(gameId)) {
+        const espnTargets = ['SF', oppAbbr].filter(Boolean);
         await Promise.all(
           espnTargets.map(async abbr => {
             const tid = ESPN_NFL_TEAM_IDS[abbr];
@@ -1837,14 +1837,20 @@ export default {
               const eJson = await eRes.json();
               const parsed = parseEspnCoreEventRosterInactives(eJson, []);
               if (parsed.officialPosted) {
-                if (abbr === 'SF' && sfList.length < 3) {
-                  sfList = parsed.inactives;
-                  sfSourceRank = 3;
-                  sfSourceLabel = 'ESPN Official Game Roster';
-                } else if (abbr === oppAbbr && oppList.length < 3) {
-                  oppList = parsed.inactives;
-                  oppSourceRank = 3;
-                  oppSourceLabel = 'ESPN Official Game Roster';
+                if (abbr === 'SF') {
+                  if (parsed.activeNames?.length >= 44) sfActiveNames = parsed.activeNames;
+                  if (sfList.length < 3) {
+                    sfList = parsed.inactives;
+                    sfSourceRank = 3;
+                    sfSourceLabel = 'ESPN Official Game Roster';
+                  }
+                } else if (abbr === oppAbbr) {
+                  if (parsed.activeNames?.length >= 44) oppActiveNames = parsed.activeNames;
+                  if (oppList.length < 3) {
+                    oppList = parsed.inactives;
+                    oppSourceRank = 3;
+                    oppSourceLabel = 'ESPN Official Game Roster';
+                  }
                 }
               }
             } catch {}
@@ -1934,6 +1940,7 @@ export default {
           officialPosted: sfList.length >= 3,
           sourceRank: sfSourceRank,
           inactives: sfList,
+          activeNames: sfActiveNames,
           emergencyQbNames: sfEmergencyQbNames,
           sourceUrl: sourceUrlByTeam.SF || 'https://www.rotowire.com/football/inactives.php',
           sourceLabel: sfSourceLabel
@@ -1944,6 +1951,7 @@ export default {
               officialPosted: oppList.length >= 3,
               sourceRank: oppSourceRank,
               inactives: oppList,
+              activeNames: oppActiveNames,
               emergencyQbNames: oppEmergencyQbNames,
               sourceUrl: sourceUrlByTeam[oppAbbr] || 'https://www.rotowire.com/football/inactives.php',
               sourceLabel: oppSourceLabel
