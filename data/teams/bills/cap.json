@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:35:17.766Z",
+  "updatedAt": "2026-11-24T20:08:23.216Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/buffalo-bills",
   "spotracUrl": "https://www.spotrac.com/nfl/buffalo-bills/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 301071601,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 296980411,
+      "totalCapLiabilities": 297090411,
       "top51": 236049761,
-      "teamCapSpace": 4091190,
-      "otcRawTeamCapSpace": 4091190,
-      "effectiveCapSpace": 4091190,
-      "activeCapSpending": 245168173,
+      "teamCapSpace": 3981190,
+      "otcRawTeamCapSpace": 3981190,
+      "effectiveCapSpace": 3981190,
+      "activeCapSpending": 245278173,
       "offenseSpend": 150446778,
-      "defenseSpend": 89150852,
+      "defenseSpend": 89260852,
       "specialSpend": 5570543,
       "deadMoneyTotal": 51812238,
       "injuredReserveTotal": 13112863,
-      "practiceSquadTotal": 4222322,
+      "practiceSquadTotal": 4332322,
       "pupTotal": 0,
       "nfiTotal": 221339,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 17556524,
+      "reserveAndPsTotal": 17666524,
       "topDeadMoneyEntries": [
         {
           "name": "Matt Milano",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 74
+      "totalSignedCount": 75
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 375400517,
       "teamCapSpace": -48857631,
       "otcRawTeamCapSpace": -48857631,
-      "effectiveCapSpace": -56602280,
+      "effectiveCapSpace": -56603963,
       "activeCapSpending": 375400517,
       "offenseSpend": 218055548,
       "defenseSpend": 149044426,
@@ -258,7 +258,7 @@
     }
   },
   "blueprint": {
-    "summary": "Buffalo Bills hold $4.09M in 2026 OverTheCap space and $-48.86M projected for 2027."
+    "summary": "Buffalo Bills hold $3.98M in 2026 OverTheCap space and $-48.86M projected for 2027."
   },
   "players": [
     {

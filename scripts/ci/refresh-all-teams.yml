@@ -4,7 +4,7 @@ name: Refresh All 32 NFL Teams & Deploy Cloudflare Pages
 
 on:
   schedule:
-    # Twice daily (5:05 PM PT / 01:05 UTC + morning 15:05 UTC)
+    # Twice daily full 32-team refresh (5:05 PM PT / 01:05 UTC + morning 15:05 UTC)
     - cron: '5 1,15 * * *'
   workflow_dispatch:
 
@@ -22,17 +22,17 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Refresh 49ers live data
+      - name: Run Unified 32-Team Live Data & Synchronized Seasonal Pipeline
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_NFL_API_KEY }}
-        run: node scripts/fetch-live-49ers-data.mjs
-
-      - name: Refresh all 31 other NFL teams live data
-        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINI_NFL_API_KEY }}
           GEMINI_NFL_API_KEY: ${{ secrets.GEMINI_NFL_API_KEY }}
-        run: node scripts/fetch-team-data.mjs --all
+          GEMINI_NEWS_API_KEY: ${{ secrets.GEMINI_NEWS_API_KEY }}
+          WORKER_BASE_URL: ${{ secrets.WORKER_BASE_URL }}
+          GROUP_PASSCODE: ${{ secrets.GROUP_PASSCODE }}
+          GEMINI_SYNTHESIS_MODEL: auto
+        run: node scripts/refresh-all-nfl-teams.mjs --concurrency=4
 
-      - name: Build dist-nfl-teams/ Pages bundle
+      - name: Build dist-nfl-teams/ Pages bundle (All 32 Teams + nfl.joshal.com)
         run: node scripts/build-nfl-teams-pages.mjs
 
       - name: Deploy all 32 teams to Cloudflare Pages (nfl-teams)

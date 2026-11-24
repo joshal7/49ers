@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:35:23.274Z",
+  "updatedAt": "2026-11-24T20:08:26.352Z",
   "week": 12,
   "units": [
     {
@@ -234,8 +234,8 @@
               "jersey": 70,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15718.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -244,8 +244,8 @@
               "jersey": 72,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428394.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
+              "playProbabilityPct": 18,
+              "statusBadge": "18% • Doubtful",
               "isAvailable": false
             },
             {
@@ -254,9 +254,9 @@
               "jersey": 75,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259646.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
-              "isAvailable": false
+              "playProbabilityPct": 43,
+              "statusBadge": "43% • Long Shot",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -266,8 +266,18 @@
               "jersey": 70,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15718.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4259646",
+              "name": "Alijah Vera-Tucker",
+              "jersey": 75,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259646.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 43,
+              "statusBadge": "43% • Long Shot",
               "isAvailable": true
             },
             {
@@ -276,19 +286,8 @@
               "jersey": 72,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428394.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
-            },
-            {
-              "playerId": "4259646",
-              "name": "Alijah Vera-Tucker",
-              "jersey": 75,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4259646.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "playProbabilityPct": 18,
+              "statusBadge": "18% • Doubtful",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -315,9 +314,9 @@
               "jersey": 77,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362890.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 45,
+              "statusBadge": "45% • Long Shot",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -337,10 +336,9 @@
               "jersey": 77,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362890.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 45,
+              "statusBadge": "45% • Long Shot",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -365,9 +363,9 @@
               "jersey": 77,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362890.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 45,
+              "statusBadge": "45% • Long Shot",
+              "isAvailable": true
             },
             {
               "playerId": "4046545",
@@ -397,10 +395,9 @@
               "jersey": 77,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362890.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 45,
+              "statusBadge": "45% • Long Shot",
+              "isAvailable": true
             },
             {
               "playerId": "4046545",
@@ -426,8 +423,8 @@
               "jersey": 76,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16771.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -458,8 +455,8 @@
               "jersey": 76,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16771.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1227,9 +1224,9 @@
               "jersey": 7,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916923.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 46,
+              "statusBadge": "46% • Long Shot",
+              "isAvailable": true
             },
             {
               "playerId": "4368113",
@@ -1244,6 +1241,16 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "3916923",
+              "name": "Carlton Davis III",
+              "jersey": 7,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916923.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 46,
+              "statusBadge": "46% • Long Shot",
+              "isAvailable": true
+            },
+            {
               "playerId": "4368113",
               "name": "Charles Woods",
               "jersey": 22,
@@ -1252,20 +1259,9 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "3916923",
-              "name": "Carlton Davis III",
-              "jersey": 7,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916923.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "ss",
@@ -1367,9 +1363,9 @@
               "jersey": 41,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4047941.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 73,
+              "statusBadge": "73% • GTD",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -1399,10 +1395,9 @@
               "jersey": 41,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4047941.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 73,
+              "statusBadge": "73% • GTD",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false

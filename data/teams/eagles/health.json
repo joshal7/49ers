@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:34:19.723Z",
+  "updatedAt": "2026-11-24T20:07:58.048Z",
   "week": 12,
   "byeWeek": 10,
   "sourceUrl": "https://www.philadelphiaeagles.com/team/injury-report/",
@@ -9,31 +9,6 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
-    {
-      "playerId": "4689651",
-      "name": "Mac McWilliams",
-      "position": "CB",
-      "jersey": 22,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4689651.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
     {
       "playerId": "4431573",
       "name": "Smael Mondon Jr.",
@@ -47,92 +22,17 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Ankle",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 45,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "45% • Long Shot",
       "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed prior game without practice participation — awaiting Wednesday report"
       ],
-      "beatComment": "Mondon was deemed doubtful entering the weekend after not practicing Thursday or Friday following Philadelphia's Week 10 bye. He could have seen more action on defense after Zack Baun (back) landed on IR on Saturday, but Mondon will instead miss his first game of the campaign. Jeremiah Trotter and Jihaad Campbell figure to be the Eagles' starting inside linebackers Sunday."
-    },
-    {
-      "playerId": "4879250",
-      "name": "Cole Payton",
-      "position": "QB",
-      "jersey": 18,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4879250.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "As the emergency third quarterback, Payton is not allowed to play Sunday unless both starter Joe Milton and backup Tanner McKee are taken out of the game due to injury, illness or ejection."
-    },
-    {
-      "playerId": "4430814",
-      "name": "Jake Majors",
-      "position": "C",
-      "jersey": 75,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430814.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4696203",
-      "name": "Ajani Cornelius",
-      "position": "OT",
-      "jersey": 65,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696203.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
     },
     {
       "playerId": "3929630",
@@ -143,10 +43,10 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "LP",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Arm",
+      "injuryType": "Neck",
       "gameStatus": "Questionable",
       "playProbabilityPct": 76,
       "priorDayPlayProbabilityPct": null,
@@ -155,10 +55,35 @@
       "playBadgeLabel": "76% • GTD",
       "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Questionable tag adjusted by player career prior (76%)",
-        "Coaching/beat trend: trending upward / making progress ahead of game"
+        "Wednesday Limited Participation (LP); player toughness prior = 76%"
       ],
-      "beatComment": "Barkley didn't log a touch after the 8:02 mark of the fourth quarter after he had an apparent left arm injury examined by team trainers, according to Olivia Reiner of The Philadelphia Inquirer. While Barkley wouldn't elaborate on the issue to McGonigal, the running back seemed optimistic about his chances to suit up in Week 12. Barkley finished Sunday's matchup with 17 carries for 75 yards and one touchdown and wasn't targeted by QB Joe Milton. Monday's injury report may provide further clarity on Barkley's situation."
+      "beatComment": "Barkley appeared to be nursing a left arm injury in the aftermath of Sunday's 19-16 win over the Steelers, but it was instead two different health concerns that resulted in him being included on the Eagles' first Week 12 injury report. The Eagles are facing a quick turnaround this week with a Thursday matchup against the Cowboys, so Barkley could be in line for only light activity over the next two days as the team aims to keep him as fresh as possible for that contest. Head coach Nick Sirianni hasn't yet offered any indication that Barkley is in jeopardy of sitting out Thanksgiving Day."
+    },
+    {
+      "playerId": "4257591",
+      "name": "Arnold Ebiketie",
+      "position": "LB",
+      "jersey": 17,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4257591.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Oblique",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 76,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "76% • GTD",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Questionable tag adjusted by player career prior (81%)",
+        "Soft-tissue re-aggravation caution (Oblique)"
+      ],
+      "beatComment": "questionable"
     },
     {
       "playerId": "2971027",
@@ -172,7 +97,7 @@
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Foot",
+      "injuryType": "Ankle",
       "gameStatus": "Questionable",
       "playProbabilityPct": 76,
       "priorDayPlayProbabilityPct": null,
@@ -183,7 +108,7 @@
       "factors": [
         "Questionable tag adjusted by player career prior (76%)"
       ],
-      "beatComment": "Jones is dealing with an apparent right foot injury after recording five total tackles (two solo) and three passes defensed during the team's Week 11 victory. More information on his status will likely come when the Eagles return to practice Wednesday."
+      "beatComment": "Jones suffered an ankle injury during the Eagles' 19-16 win over the Steelers on Sunday. Philadelphia didn't hold practice Monday, so his participation over the next two sessions will shed light on his chances of playing against Dallas on Thanksgiving Day. Quinyon Mitchell (hamstring) was also injured in Week 11, so the Eagles could very well have Riq Woolen and Kelee Ringo as the outside cornerbacks against a Cowboys offense that scored seven touchdowns (four passing, three rushing) in a 51-30 win over the Titans on Sunday."
     },
     {
       "playerId": "4686273",
@@ -204,12 +129,88 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "77% • GTD",
-      "archetypeNote": "Every-down starter workload (93% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Every-down starter workload (92% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Questionable tag adjusted by player career prior (82%)",
         "Soft-tissue re-aggravation caution (Hamstring)"
       ],
       "beatComment": "Mitchell injured his left hamstring in the second half, and medical staff have determined that the injury is severe enough for the third-year defensive back to be sidelined for the remainder of Sunday's contest. Riq Woolen will take over at cornerback the rest of the way."
+    },
+    {
+      "playerId": "3121023",
+      "name": "Dallas Goedert",
+      "position": "TE",
+      "jersey": 88,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3121023.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Shin",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 84,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "84% • GTD",
+      "archetypeNote": "Veteran starter profile (9th NFL season, 74% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Wednesday Limited Participation (LP); player toughness prior = 84%"
+      ],
+      "beatComment": "Philadelphia gauged Goedert as limited to kick off Week 12 prep after he played 47 of 53 snaps while turning his lone target into a 38-yard reception during Sunday's 19-16 win over the Steelers. Goedert won't have much time to heal up from the shin issue while the Eagles prepare for a Thursday matchup with the Cowboys, but the fact that he avoided being listed as a non-participant on the first injury report of the week is generally a good sign for his chances of being cleared for game day."
+    },
+    {
+      "playerId": "4431545",
+      "name": "Will Shipley",
+      "position": "RB",
+      "jersey": 28,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431545.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Illness",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 86,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "86% • Cleared",
+      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Wednesday Limited Participation (LP) with illness"
+      ],
+      "beatComment": "Shipley returned Sunday from a four-game absence due to a foot injury, and he finished that contest with four carries for nine yards and returned three kickoffs for 75 yards. He's still working through that foot issue, but he's now battling an illness, so his listed activity level over the next two days will be worth monitoring ahead of the Eagles' Thanksgiving Day contest against the Cowboys in Dallas. Shipley could operate in an elevated role on offense Thursday depending on the status of Saquon Barkley (neck/illness)."
+    },
+    {
+      "playerId": "4685201",
+      "name": "Tanner McKee",
+      "position": "QB",
+      "jersey": 16,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685201.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "LP",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Ribs",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 86,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "86% • Cleared",
+      "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Wednesday Limited Participation (LP); player toughness prior = 82%",
+        "Manageable pain-tolerance injury profile (Ribs)"
+      ],
+      "beatComment": "It's unclear when McKee picked up the injury, given that he didn't play a single snap during Sunday's 19-16 win over the Steelers while serving as Joe Milton's backup. The Eagles have two more practices on a short week, so McKee's participation in those sessions will determine whether he'll be available against the Cowboys on Thanksgiving Day. Rookie fifth-rounder Cole Payton would serve as the QB2 behind Milton if McKee cannot play Thursday."
     },
     {
       "playerId": "4241478",
@@ -230,7 +231,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (87% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Every-down starter workload (86% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
@@ -262,56 +263,6 @@
       "beatComment": "Carter informed the Eagles' medical staff while he was traveling to the stadium Sunday that his quadriceps was bothering him. The fifth-year defensive tackle has been cleared to suit up, but if he plays under a snap count or is available only as an emergency option, then Ty Robinson and Gabe Hall would be poised to take on larger roles on defense."
     },
     {
-      "playerId": "4685287",
-      "name": "Jihaad Campbell",
-      "position": "LB",
-      "jersey": 11,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685287.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Hamstring/quadriceps",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (82% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Campbell was sidelined for each of the Eagles' two contests prior to the Week 10 bye due to hamstring and quadriceps injuries. The second-year linebacker made the most of the extra rest courtesy of the bye, and he is on track to return against the Steelers on Sunday."
-    },
-    {
-      "playerId": "4426331",
-      "name": "Nolan Smith Jr.",
-      "position": "LB",
-      "jersey": 3,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426331.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Illness",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "An illness limited Smith's practice reps both Wednesday and Thursday, but he was a full participant in Friday's session, which was enough for him to avoid an injury tag for Sunday's contest. The fourth-year edge rusher has 17 tackles (nine solo), including 5.0 sacks, and one pass defense across eight regular-season games."
-    },
-    {
       "playerId": "4240456",
       "name": "Michael Carter II",
       "position": "CB",
@@ -335,56 +286,6 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "An abdominal injury prevented Carter from playing in Week 9 against the Giants. He had extra rest thanks to the Week 10 bye, and his full practice Friday was enough for him to avoid an injury tag for Sunday's contest. Carter's return gives the Eagles a boost in the secondary and another contributor on special teams."
-    },
-    {
-      "playerId": "4431545",
-      "name": "Will Shipley",
-      "position": "RB",
-      "jersey": 28,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431545.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Foot",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Shipley was activated from injured reserve Saturday, and the third-year running back has been officially cleared to return from a four-game absence due to a partial plantar fascia tear that he sustained in Week 5 against the Jaguars. Shipley and Jaydon Blue will operate as the Eagles' rotational running backs behind Saquon Barkley for Sunday's game against a Steelers defense that ranks third in the NFL in rushing yards allowed per game (83.2)."
-    },
-    {
-      "playerId": "3926231",
-      "name": "Britain Covey",
-      "position": "WR",
-      "jersey": 85,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3926231.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Covey was a limited participant in all three practices during Week 11 prep, but the veteran wide receiver has done enough to be cleared to return from a two-game absence due to a knee injury. He'll likely operate as the Eagles' top return option on kickoffs and punts while providing depth at wide receiver."
     }
   ],
   "irAndReserveTracker": [
@@ -409,6 +310,28 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
       "beatNote": "Placed on Injured Reserve (Undisclosed) ahead of Week 8; must miss at least 4 games (earliest eligible Week 13)."
+    },
+    {
+      "playerId": "4429013",
+      "name": "Tank Bigsby",
+      "position": "RB",
+      "jersey": 8,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429013.png",
+      "injuryType": "Abdomen",
+      "status": "Injured Reserve",
+      "isSeasonEnding": false,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 5,
+      "earliestEligibleWeek": 9,
+      "projectedReturnWeek": "Est. Week 13 (Dec 6)",
+      "byeWeekNote": "4-game NFL minimum requirement",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • IR",
+      "beatNote": "4-game minimum satisfied on Injured Reserve (Abdomen); awaiting 21-day practice window designation."
     },
     {
       "playerId": "4428850",
@@ -497,28 +420,6 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
       "beatNote": "4-game minimum satisfied on Injured Reserve (Calf); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4429013",
-      "name": "Tank Bigsby",
-      "position": "RB",
-      "jersey": 8,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429013.png",
-      "injuryType": "Abdomen",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 5,
-      "earliestEligibleWeek": 9,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Abdomen); awaiting 21-day practice window designation."
     },
     {
       "playerId": "4686104",

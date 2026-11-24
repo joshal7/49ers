@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:36:12.807Z",
+  "updatedAt": "2026-11-24T20:08:42.950Z",
   "week": 12,
   "byeWeek": 9,
   "sourceUrl": "https://www.steelers.com/team/injury-report/",
@@ -10,179 +10,29 @@
   "gameDayRoster": null,
   "practiceReport": [
     {
-      "playerId": "4429164",
-      "name": "Nick Herbig",
+      "playerId": "4037333",
+      "name": "Alex Highsmith",
       "position": "LB",
-      "jersey": 51,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429164.png",
+      "jersey": 56,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037333.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Hip",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "injuryType": "Ankle",
+      "gameStatus": "Doubtful",
+      "playProbabilityPct": 11,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "11% • Doubtful",
       "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Official Doubtful tag (NFL historical base ~10–14%)"
       ],
-      "beatComment": "A hip injury prevented Herbig from participating in any of the Steelers' three practice sessions during Week 11 prep. The door was left ajar for him to play Sunday, but he'll observe the game from the sidelines, and his absence means Jack Sawyer will operate in an elevated role at edge rusher behind starters Alex Highsmith and T.J. Watt. Herbig's next opportunity to play is Week 12 against the Broncos on Friday."
-    },
-    {
-      "playerId": "4714771",
-      "name": "Drew Allar",
-      "position": "QB",
-      "jersey": 16,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4714771.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "5081338",
-      "name": "Kaden Wetjen",
-      "position": "WR",
-      "jersey": 10,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Wetjen has operated as the Steelers' top returner on both kickoffs and punts this season. However, with Roman Wilson back from injured reserve and Max Hurleman elevated from the practice squad to the active roster, Wetjen will be a healthy scratch Sunday for the first time this season. Wetjen's next opportunity to play is Friday against the Broncos, although the rookie fourth-rounder's chances of suiting up for that contest would be further diminished if Michael Pittman (foot) is activated from IR before that game."
-    },
-    {
-      "playerId": "4429955",
-      "name": "Will Howard",
-      "position": "QB",
-      "jersey": 18,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429955.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "As has been the case all year, Howard will be the emergency QB3 behind starter Aaron Rodgers and backup Mason Rudolph. As such, Howard is not allowed to see the field Sunday unless both Rodgers and Rudolph leave the game due to injury, illness or ejection."
-    },
-    {
-      "playerId": "3932886",
-      "name": "Sean Murphy-Bunting",
-      "position": "CB",
-      "jersey": 27,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3932886.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4431533",
-      "name": "Gabriel Rubio",
-      "position": "DE",
-      "jersey": 96,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431533.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "5081508",
-      "name": "Eli Heidenreich",
-      "position": "RB",
-      "jersey": 29,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081508.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
+      "beatComment": "Highsmith recorded a pair of sacks across just six snaps before he was forced out in the first quarter of Sunday's 19-16 loss to the Eagles due to the ankle injury. Per Jeremy Fowler of ESPN.com, the Steelers' initial belief is that Highsmith's ankle injury isn't serious, but the edge rusher will nonetheless have difficulty getting clearance to play on a short week. If healthy, Nick Herbig (hip/ribs) -- who was inactive for Week 11 -- will be the most likely candidate to start in place of Highsmith on Friday."
     },
     {
       "playerId": "4431258",
@@ -235,21 +85,21 @@
         "Starter / core rotational role increases 53-man roster activation priority (+3%)",
         "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
       ],
-      "beatComment": "Pittman was able to practice fully both Thursday and Friday, but he is not ready to rejoin the mix just yet -- which Pittsburgh confirmed by omitting Pittman from the list of roster moves it made Saturday. Barring an unannounced setback, Pittman figures to continue practicing, and his next chance to take the field will arrive Black Friday, when the Steelers square off against the Broncos."
+      "beatComment": "Pittman was designated for return from IR this past Wednesday, but despite being listed as a full participant in practice Thursday and Friday, the Steelers elected to not activate the WR (who had been listed as questionable) for Sunday's 19-16 loss to the Eagles. Added context regarding Pittman's status will arrive via Pittsburgh's next practice report, but barring any setbacks, it appears as though he's approaching his first game action since Week 4."
     },
     {
-      "playerId": "4037333",
-      "name": "Alex Highsmith",
+      "playerId": "4429164",
+      "name": "Nick Herbig",
       "position": "LB",
-      "jersey": 56,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037333.png",
+      "jersey": 51,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429164.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Ankle",
+      "injuryType": "Hip",
       "gameStatus": "Questionable",
       "playProbabilityPct": 81,
       "priorDayPlayProbabilityPct": null,
@@ -260,7 +110,7 @@
       "factors": [
         "Questionable tag adjusted by player career prior (81%)"
       ],
-      "beatComment": "Highsmith began the game with a flourish, recording 2.0 sacks in the first quarter. However, he injured his ankle during that opening period and isn't going to be able to re-enter the contest. Jack Sawyer will likely log more defensive snaps with Highsmith sidelined."
+      "beatComment": "questionable"
     },
     {
       "playerId": "4242207",
@@ -311,31 +161,6 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Elliott did not play in Week 10 against the Bengals due to a knee injury he sustained during pregame warmups. He drew the questionable tag for Week 11 after logging full practices Thursday and Friday, and he's been cleared by medical staff to play Sunday. Elliott's return means Robert Spears-Jennings will revert to a rotational role in the secondary."
-    },
-    {
-      "playerId": "4431492",
-      "name": "Roman Wilson",
-      "position": "WR",
-      "jersey": 14,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431492.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Hand/finger",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "The third-year wideout was activated from injured reserve Saturday, foreshadowing his availability for Sunday's contest following a four-game absence. Wilson recorded at least three receptions in his first four games of the season on his way to a 14-188-2 line on 25 targets, and he then failed to reel in the only pass thrown his way in Week 5 against the Colts before exiting that game at halftime with his injury. In his return Sunday against Philadelphia, Wilson should slot into the No. 3 receiver role behind DK Metcalf and rookie Germie Bernard, the latter who leapfrogged Wilson on the depth chart over the last several games while filling in for both him and Michael Pittman (IR, foot)."
     }
   ],
   "irAndReserveTracker": [
@@ -368,7 +193,7 @@
       "jersey": 11,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035687.png",
       "injuryType": "Foot (Plantar Fasciitis)",
-      "status": "IR — Designated to Return (Questionable)",
+      "status": "IR — 21-Day Window Open (Questionable)",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": true,
       "isPracticeWindowExpected": false,
@@ -381,7 +206,7 @@
       "byeWeekNote": "Week 9 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 65,
       "playBadgeLabel": "65% • GTD",
-      "beatNote": "Pittman was able to practice fully both Thursday and Friday, but he is not ready to rejoin the mix just yet -- which Pittsburgh confirmed by omitting Pittman from the list of roster moves it made Saturday. Barring an unannounced setback, Pittman figures to continue practicing, and his next chance to take the field will arrive Black Friday, when the Steelers square off against the Broncos."
+      "beatNote": "Pittman was designated for return from IR this past Wednesday, but despite being listed as a full participant in practice Thursday and Friday, the Steelers elected to not activate the WR (who had been listed as questionable) for Sunday's 19-16 loss to the Eagles. Added context regarding Pittman's status will arrive via Pittsburgh's next practice report, but barring any setbacks, it appears as though he's approaching his first game action since Week 4."
     },
     {
       "playerId": "4368304",

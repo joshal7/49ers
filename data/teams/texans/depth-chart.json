@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:36:19.406Z",
+  "updatedAt": "2026-11-24T20:08:45.704Z",
   "week": 12,
   "units": [
     {
@@ -21,14 +21,14 @@
               "isAvailable": true
             },
             {
-              "playerId": "4432708",
-              "name": "Marvin Harrison Jr.",
-              "jersey": 18,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432708.png",
+              "playerId": "4366031",
+              "name": "Tank Dell",
+              "jersey": 1,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4877706",
@@ -53,15 +53,14 @@
               "isAvailable": true
             },
             {
-              "playerId": "4432708",
-              "name": "Marvin Harrison Jr.",
-              "jersey": 18,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432708.png",
+              "playerId": "4366031",
+              "name": "Tank Dell",
+              "jersey": 1,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4877706",
@@ -92,13 +91,13 @@
               "isAvailable": true
             },
             {
-              "playerId": "4429022",
-              "name": "Kayshon Boutte",
-              "jersey": 14,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png",
+              "playerId": "4432708",
+              "name": "Marvin Harrison Jr.",
+              "jersey": 18,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432708.png",
               "baselineRank": 2,
-              "playProbabilityPct": 76,
-              "statusBadge": "76% • GTD",
+              "playProbabilityPct": 42,
+              "statusBadge": "42% • Long Shot",
               "isAvailable": true
             },
             {
@@ -124,13 +123,13 @@
               "isAvailable": true
             },
             {
-              "playerId": "4429022",
-              "name": "Kayshon Boutte",
-              "jersey": 14,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png",
+              "playerId": "4432708",
+              "name": "Marvin Harrison Jr.",
+              "jersey": 18,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432708.png",
               "baselineRank": 2,
-              "playProbabilityPct": 76,
-              "statusBadge": "76% • GTD",
+              "playProbabilityPct": 42,
+              "statusBadge": "42% • Long Shot",
               "isAvailable": true
             },
             {
@@ -152,13 +151,13 @@
           "slotLabel": "WR (Slot)",
           "baselineChain": [
             {
-              "playerId": "4366031",
-              "name": "Tank Dell",
-              "jersey": 1,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png",
+              "playerId": "4429022",
+              "name": "Kayshon Boutte",
+              "jersey": 14,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 76,
+              "statusBadge": "76% • GTD",
               "isAvailable": true
             },
             {
@@ -174,13 +173,13 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4366031",
-              "name": "Tank Dell",
-              "jersey": 1,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4366031.png",
+              "playerId": "4429022",
+              "name": "Kayshon Boutte",
+              "jersey": 14,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png",
               "baselineRank": 1,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 76,
+              "statusBadge": "76% • GTD",
               "isAvailable": true
             },
             {
@@ -216,9 +215,9 @@
               "jersey": 78,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428656.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -238,10 +237,9 @@
               "jersey": 78,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428656.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -286,9 +284,9 @@
               "jersey": 75,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045474.png",
               "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 81,
+              "statusBadge": "81% • GTD",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -328,10 +326,9 @@
               "jersey": 75,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045474.png",
               "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 81,
+              "statusBadge": "81% • GTD",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -356,9 +353,9 @@
               "jersey": 60,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362732.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4839498",
@@ -383,6 +380,16 @@
               "isAvailable": true
             },
             {
+              "playerId": "4362732",
+              "name": "Jake Andrews",
+              "jersey": 60,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362732.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "4839498",
               "name": "Keylan Rutledge",
               "jersey": 66,
@@ -391,17 +398,6 @@
               "playProbabilityPct": 82,
               "statusBadge": "82% • GTD",
               "isAvailable": true
-            },
-            {
-              "playerId": "4362732",
-              "name": "Jake Andrews",
-              "jersey": 60,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362732.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false
@@ -426,9 +422,9 @@
               "jersey": 75,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045474.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 81,
+              "statusBadge": "81% • GTD",
+              "isAvailable": true
             },
             {
               "playerId": "4880873",
@@ -453,6 +449,16 @@
               "isAvailable": true
             },
             {
+              "playerId": "3045474",
+              "name": "Wyatt Teller",
+              "jersey": 75,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045474.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 81,
+              "statusBadge": "81% • GTD",
+              "isAvailable": true
+            },
+            {
               "playerId": "4880873",
               "name": "Febechi Nwaiwu",
               "jersey": 64,
@@ -461,17 +467,6 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "3045474",
-              "name": "Wyatt Teller",
-              "jersey": 75,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045474.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false
@@ -666,9 +661,9 @@
               "jersey": 9,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362504.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 48,
+              "statusBadge": "48% • Long Shot",
+              "isAvailable": true
             },
             {
               "playerId": "4695705",
@@ -713,6 +708,16 @@
               "isAvailable": true
             },
             {
+              "playerId": "4362504",
+              "name": "Brevin Jordan",
+              "jersey": 9,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362504.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 48,
+              "statusBadge": "48% • Long Shot",
+              "isAvailable": true
+            },
+            {
               "playerId": "4695705",
               "name": "Marlin Klein",
               "jersey": 83,
@@ -731,17 +736,6 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "4362504",
-              "name": "Brevin Jordan",
-              "jersey": 9,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362504.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false
@@ -766,8 +760,8 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
+              "playProbabilityPct": 18,
+              "statusBadge": "18% • Doubtful",
               "isAvailable": false
             },
             {
@@ -818,8 +812,8 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
+              "playProbabilityPct": 18,
+              "statusBadge": "18% • Doubtful",
               "isAvailable": false,
               "demotedDueToInjury": true
             },
@@ -1062,9 +1056,9 @@
               "jersey": 55,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2976560.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 45,
+              "statusBadge": "45% • Long Shot",
+              "isAvailable": true
             },
             {
               "playerId": "16734",
@@ -1099,6 +1093,16 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "2976560",
+              "name": "Danielle Hunter",
+              "jersey": 55,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2976560.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 45,
+              "statusBadge": "45% • Long Shot",
+              "isAvailable": true
+            },
+            {
               "playerId": "16734",
               "name": "Jadeveon Clowney",
               "jersey": 90,
@@ -1107,17 +1111,6 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "2976560",
-              "name": "Danielle Hunter",
-              "jersey": 55,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2976560.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             },
             {
               "playerId": "4243321",
@@ -1142,7 +1135,7 @@
               "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "wlb",
@@ -1334,8 +1327,8 @@
               "jersey": 22,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4594277.png",
               "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1366,8 +1359,8 @@
               "jersey": 22,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4594277.png",
               "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1772,8 +1765,8 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
+              "playProbabilityPct": 18,
+              "statusBadge": "18% • Doubtful",
               "isAvailable": false
             },
             {
@@ -1834,8 +1827,8 @@
               "jersey": 4,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
+              "playProbabilityPct": 18,
+              "statusBadge": "18% • Doubtful",
               "isAvailable": false,
               "demotedDueToInjury": true
             },

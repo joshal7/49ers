@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:37:14.541Z",
+  "updatedAt": "2026-11-24T20:09:09.279Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/las-vegas-raiders",
   "spotracUrl": "https://www.spotrac.com/nfl/las-vegas-raiders/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 314432085,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 304953297,
+      "totalCapLiabilities": 305136097,
       "top51": 234789225,
-      "teamCapSpace": 9478788,
-      "otcRawTeamCapSpace": 9478788,
-      "effectiveCapSpace": 9478788,
-      "activeCapSpending": 243465551,
-      "offenseSpend": 104570338,
+      "teamCapSpace": 9295988,
+      "otcRawTeamCapSpace": 9295988,
+      "effectiveCapSpace": 9295988,
+      "activeCapSpending": 243648351,
+      "offenseSpend": 104753138,
       "defenseSpend": 130662713,
       "specialSpend": 8232500,
       "deadMoneyTotal": 61487746,
       "injuredReserveTotal": 3897409,
-      "practiceSquadTotal": 3820873,
+      "practiceSquadTotal": 4003673,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 7718282,
+      "reserveAndPsTotal": 7901082,
       "topDeadMoneyEntries": [
         {
           "name": "Christian Wilkins",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 74
+      "totalSignedCount": 75
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 260088418,
       "teamCapSpace": 66456045,
       "otcRawTeamCapSpace": 66456045,
-      "effectiveCapSpace": 49255362,
+      "effectiveCapSpace": 48586211,
       "activeCapSpending": 260088418,
       "offenseSpend": 132763775,
       "defenseSpend": 124424643,
@@ -258,7 +258,7 @@
     }
   },
   "blueprint": {
-    "summary": "Las Vegas Raiders hold $9.48M in 2026 OverTheCap space and $66.46M projected for 2027."
+    "summary": "Las Vegas Raiders hold $9.30M in 2026 OverTheCap space and $66.46M projected for 2027."
   },
   "players": [
     {

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:37:14.541Z",
+  "updatedAt": "2026-11-24T20:09:09.279Z",
   "week": 12,
   "units": [
     {
@@ -36,9 +36,9 @@
               "jersey": 19,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5150247.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -68,10 +68,9 @@
               "jersey": 19,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5150247.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -145,9 +144,9 @@
               "jersey": 10,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432775.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -167,10 +166,9 @@
               "jersey": 10,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432775.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -244,9 +242,9 @@
               "jersey": 77,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4612077.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4433889",
@@ -271,6 +269,16 @@
               "isAvailable": true
             },
             {
+              "playerId": "4612077",
+              "name": "Bryce Cabeldue",
+              "jersey": 77,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4612077.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "4433889",
               "name": "Caleb Rogers",
               "jersey": 76,
@@ -279,17 +287,6 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "4612077",
-              "name": "Bryce Cabeldue",
-              "jersey": 77,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4612077.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false
@@ -561,9 +558,9 @@
               "jersey": 89,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432665.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 84,
+              "statusBadge": "84% • GTD",
+              "isAvailable": true
             },
             {
               "playerId": "4429086",
@@ -584,63 +581,41 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "5155825",
-              "name": "Carter Runyon",
-              "jersey": 84,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5155825.png",
-              "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Prac. Squad",
-              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
-            {
-              "playerId": "4429086",
-              "name": "Michael Mayer",
-              "jersey": 87,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429086.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
-              "isAvailable": true
-            },
-            {
-              "playerId": "4045305",
-              "name": "Ian Thomas",
-              "jersey": 80,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4045305.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
             {
               "playerId": "4432665",
               "name": "Brock Bowers",
               "jersey": 89,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432665.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 84,
+              "statusBadge": "84% • GTD",
+              "isAvailable": true
             },
             {
-              "playerId": "5155825",
-              "name": "Carter Runyon",
-              "jersey": 84,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5155825.png",
-              "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Prac. Squad",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playerId": "4429086",
+              "name": "Michael Mayer",
+              "jersey": 87,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429086.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
+              "isAvailable": true
+            },
+            {
+              "playerId": "4045305",
+              "name": "Ian Thomas",
+              "jersey": 80,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4045305.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "rb",
@@ -855,9 +830,9 @@
               "jersey": 97,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429109.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 45,
+              "statusBadge": "45% • Long Shot",
+              "isAvailable": true
             },
             {
               "playerId": "4360749",
@@ -868,53 +843,31 @@
               "playProbabilityPct": 95,
               "statusBadge": "95% • Cleared",
               "isAvailable": true
-            },
-            {
-              "playerId": "4034530",
-              "name": "Chris Williams",
-              "jersey": 72,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4034530.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Prac. Squad",
-              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
-            {
-              "playerId": "4360749",
-              "name": "Thomas Booker IV",
-              "jersey": 99,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360749.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
-              "isAvailable": true
-            },
             {
               "playerId": "4429109",
               "name": "Tonka Hemingway",
               "jersey": 97,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429109.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 45,
+              "statusBadge": "45% • Long Shot",
+              "isAvailable": true
             },
             {
-              "playerId": "4034530",
-              "name": "Chris Williams",
-              "jersey": 72,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4034530.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Prac. Squad",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playerId": "4360749",
+              "name": "Thomas Booker IV",
+              "jersey": 99,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4360749.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 95,
+              "statusBadge": "95% • Cleared",
+              "isAvailable": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "wlb",
@@ -1135,8 +1088,8 @@
               "jersey": 95,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258194.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1157,8 +1110,8 @@
               "jersey": 95,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258194.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1264,9 +1217,9 @@
               "jersey": 43,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4682488.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -1286,10 +1239,9 @@
               "jersey": 43,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4682488.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -1324,9 +1276,9 @@
               "jersey": 27,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4250393.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -1356,10 +1308,9 @@
               "jersey": 27,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4250393.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -1479,8 +1430,8 @@
               "jersey": 14,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4249087.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             }
           ],
@@ -1491,8 +1442,8 @@
               "jersey": 14,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4249087.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             }
           ],
@@ -1566,9 +1517,9 @@
               "jersey": 19,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5150247.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4366963",
@@ -1583,6 +1534,16 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "5150247",
+              "name": "Malik Benson",
+              "jersey": 19,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5150247.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "4366963",
               "name": "Dylan Laube",
               "jersey": 23,
@@ -1591,20 +1552,9 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "5150247",
-              "name": "Malik Benson",
-              "jersey": 19,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5150247.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "kr",

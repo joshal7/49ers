@@ -1498,7 +1498,12 @@ await testAsync('Zero-server client auto-refresh (hydrateLiveEspnOverlay) automa
   const wfPath = path.join(rootDir, 'scripts', 'github-workflow-refresh-data.yml');
   assert.ok(fs.existsSync(wfPath), 'Missing scripts/github-workflow-refresh-data.yml');
   const wfYaml = fs.readFileSync(wfPath, 'utf8');
-  assert.ok(wfYaml.includes('cron:') && wfYaml.includes('node scripts/fetch-live-49ers-data.mjs'));
+  assert.ok(
+    wfYaml.includes('cron:') &&
+      (wfYaml.includes('node scripts/refresh-all-nfl-teams.mjs') ||
+        wfYaml.includes('node scripts/fetch-live-49ers-data.mjs')),
+    'CI workflow must schedule the unified live data pipeline'
+  );
 
   const mockAppData = {
     meta: JSON.parse(fs.readFileSync(path.join(rootDir, 'data', 'meta.json'), 'utf8')),
@@ -5987,7 +5992,10 @@ await testAsync('Schedule Gamecast scoping, Rooting Guide week grouping, 4-color
     appData: fullAppData,
     activeVideosSet: new Set()
   });
-  const activeRootingWk = Number(fullAppData.meta.currentWeek);
+  const rootingWeeks = (fullAppData.seasonal?.playoffPicture?.rootingLeverage || [])
+    .map(g => Number(g.week))
+    .filter(w => Number.isFinite(w) && w > 0);
+  const activeRootingWk = rootingWeeks.length ? Math.min(...rootingWeeks) : Number(fullAppData.meta.currentWeek);
   const nextRootingWk = activeRootingWk + 1;
   assert.ok(playoffsHtml.includes('data-rooting-guide-weeks'), 'Rooting Guide must group games into week cards');
   assert.ok(

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:33:40.115Z",
+  "updatedAt": "2026-11-24T20:07:36.179Z",
   "week": 12,
   "byeWeek": 14,
   "sourceUrl": "https://www.azcardinals.com/team/injury-report/",
@@ -35,56 +35,6 @@
       "beatComment": "Froholdt was a full practice participant both Thursday and Friday, and he's progressed enough in his recovery to clear the league's concussion protocol. With Jon Gaines (ankle) ruled out, Froholdt should reclaim his starting job at center for Sunday's road tilt."
     },
     {
-      "playerId": "3051775",
-      "name": "Andrew Billings",
-      "position": "DT",
-      "jersey": 95,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3051775.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4430841",
-      "name": "Carson Beck",
-      "position": "QB",
-      "jersey": 19,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430841.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Back",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "The Cardinals were already preparing for Josh Johnson to operate as the starting quarterback Sunday, as Beck entered the weekend with the questionable tag due to back spasms. Joey Aguilar will operate as Johnson's backup, and Beck's next opportunity to play is Week 12 against the Commanders on Sunday, Nov. 29."
-    },
-    {
       "playerId": "4367199",
       "name": "Jon Gaines II",
       "position": "G",
@@ -97,67 +47,17 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Ankle",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 49,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "49% • Long Shot",
       "archetypeNote": "Trench/box position (G) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed 5 consecutive games without practice participation — awaiting Wednesday report"
       ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4363408",
-      "name": "Starling Thomas V",
-      "position": "CB",
-      "jersey": 24,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4363408.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4567410",
-      "name": "Kingsley Eguakun",
-      "position": "C",
-      "jersey": 64,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567410.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (C) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
     },
     {
       "playerId": "4240619",
@@ -235,6 +135,31 @@
         "Questionable tag adjusted by player career prior (78%)"
       ],
       "beatComment": ""
+    },
+    {
+      "playerId": "4430841",
+      "name": "Carson Beck",
+      "position": "QB",
+      "jersey": 19,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430841.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Back",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 82,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "82% • GTD",
+      "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Questionable tag adjusted by player career prior (82%)"
+      ],
+      "beatComment": "questionable"
     },
     {
       "playerId": "4685503",
@@ -316,7 +241,7 @@
       "position": "RB",
       "jersey": 4,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4870808.png",
-      "injuryType": "Ankle",
+      "injuryType": "Ankle (Sprain)",
       "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
@@ -330,7 +255,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Ankle) ahead of Week 9; must miss at least 4 games (earliest eligible Week 13)."
+      "beatNote": "\"I'll know a little bit more as this week goes,\" LaFleur noted of Love, who will miss at least one more game before potentially being activated ahead of, and available for, Week 13 action. Love sustained a right high-ankle sprain Nov. 1, and at the time he was thought to be facing a projected recovery timeline of 4-to-5 weeks. However, for this coming weekend's game against the Commanders at least, Tyler Allgeier and Bam Knight will continue to handle Arizona's backfield duties."
     },
     {
       "playerId": "3045523",
@@ -355,13 +280,13 @@
       "beatNote": "Placed on Injured Reserve (Lower Leg) ahead of Week 9; must miss at least 4 games (earliest eligible Week 13)."
     },
     {
-      "playerId": "3045147",
-      "name": "James Conner",
-      "position": "RB",
-      "jersey": 6,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045147.png",
-      "injuryType": "Foot (Surgery)",
-      "status": "Injured Reserve (Designated)",
+      "playerId": "4038524",
+      "name": "Gardner Minshew II",
+      "position": "QB",
+      "jersey": 15,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038524.png",
+      "injuryType": "Elbow",
+      "status": "Injured Reserve",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
@@ -374,7 +299,29 @@
       "byeWeekNote": "Week 14 Bye excluded from NFL 4-game minimum count",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Conner hasn't played in a game since Week 3 of last season, when he sustained a right foot/ankle injury that required surgery. Though he was able to participate in individual drills in training camp, he never advanced to team work before being placed on injured reserve with a designation to return Aug. 30. The Cardinals still haven't cleared Conner to practice nearly three months later, which suggests that he either experienced a setback over the summer or plateaued in his recovery. Whatever the case, Conner doesn't seem close to a return, and the chances of him playing at any point this season will grow dimmer with each week that he doesn't practice."
+      "beatNote": "Placed on Injured Reserve (Elbow) ahead of Week 10; must miss at least 4 games (earliest eligible Week 15)."
+    },
+    {
+      "playerId": "3045147",
+      "name": "James Conner",
+      "position": "RB",
+      "jersey": 6,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045147.png",
+      "injuryType": "Foot",
+      "status": "Injured Reserve",
+      "isSeasonEnding": false,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 10,
+      "earliestEligibleWeek": 15,
+      "projectedReturnWeek": "Est. Week 15 (Dec 20)",
+      "byeWeekNote": "Week 14 Bye excluded from NFL 4-game minimum count",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • IR",
+      "beatNote": "Placed on Injured Reserve (Foot) ahead of Week 10; must miss at least 4 games (earliest eligible Week 15)."
     },
     {
       "playerId": "4360761",
@@ -419,6 +366,28 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
       "beatNote": "Placed on Injured Reserve (Wrist) ahead of Week 11; must miss at least 4 games (earliest eligible Week 16)."
+    },
+    {
+      "playerId": "4428996",
+      "name": "Jordan Burch",
+      "position": "LB",
+      "jersey": 52,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428996.png",
+      "injuryType": "Knee - MCL",
+      "status": "Injured Reserve",
+      "isSeasonEnding": false,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 11,
+      "earliestEligibleWeek": 16,
+      "projectedReturnWeek": "Est. Week 16 (Dec 27)",
+      "byeWeekNote": "Week 14 Bye excluded from NFL 4-game minimum count",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • IR",
+      "beatNote": "Placed on Injured Reserve (Knee - MCL) ahead of Week 11; must miss at least 4 games (earliest eligible Week 16)."
     },
     {
       "playerId": "4692835",
@@ -553,28 +522,6 @@
       "beatNote": "Placed on Injured Reserve (Knee - MCL) on Aug 15, 2026; ineligible to return in 2026 under NFL CBA rules."
     },
     {
-      "playerId": "4038524",
-      "name": "Gardner Minshew II",
-      "position": "QB",
-      "jersey": 15,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038524.png",
-      "injuryType": "Elbow (Surgery)",
-      "status": "Season-Ending IR",
-      "isSeasonEnding": true,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 10,
-      "earliestEligibleWeek": null,
-      "projectedReturnWeek": "Out for Season",
-      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Though the procedure will bring an end to Minshew's season, he's expected to make a full recovery ahead of the 2027 campaign. The veteran quarterback sustained the injury while making his lone start of the season Week 9 in Seattle, but he played though the elbow issue and completed 21 of 30 passes for 166 yards. Rookie third-round pick Carson Beck took over as the Cardinals' starting quarterback in Week 10 and is expected to lead the offense for the remainder of the season."
-    },
-    {
       "playerId": "4240824",
       "name": "Joey Blount",
       "position": "S",
@@ -595,28 +542,6 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
       "beatNote": "Placed on Injured Reserve (Neck) on Aug 8, 2026; ineligible to return in 2026 under NFL CBA rules."
-    },
-    {
-      "playerId": "4428996",
-      "name": "Jordan Burch",
-      "position": "LB",
-      "jersey": 52,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428996.png",
-      "injuryType": "Knee - MCL",
-      "status": "Season-Ending IR",
-      "isSeasonEnding": true,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 11,
-      "earliestEligibleWeek": null,
-      "projectedReturnWeek": "Out for Season",
-      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "This move was a foregone conclusion, as head coach Mike LaFleur said Monday that Burch will miss the remainder of the campaign after suffering an MCL injury to his left knee. The defensive end finished his sophomore NFL season with 19 tackles, including 1.0 sacks, over 10 games. Burch will now look to get healthy in the hope of being ready for the 2027 campaign."
     },
     {
       "playerId": "5084514",

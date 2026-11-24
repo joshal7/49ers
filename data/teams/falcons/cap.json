@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:35:04.119Z",
+  "updatedAt": "2026-11-24T20:08:14.410Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/atlanta-falcons",
   "spotracUrl": "https://www.spotrac.com/nfl/atlanta-falcons/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 304846648,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 272153134,
-      "top51": 183956114,
-      "teamCapSpace": 32693514,
-      "otcRawTeamCapSpace": 32693514,
-      "effectiveCapSpace": 32693514,
-      "activeCapSpending": 195556467,
+      "totalCapLiabilities": 272109962,
+      "top51": 182162781,
+      "teamCapSpace": 32736686,
+      "otcRawTeamCapSpace": 32736686,
+      "effectiveCapSpace": 32736686,
+      "activeCapSpending": 193012673,
       "offenseSpend": 107377928,
-      "defenseSpend": 83944373,
+      "defenseSpend": 81400579,
       "specialSpend": 4234166,
-      "deadMoneyTotal": 76596667,
+      "deadMoneyTotal": 79097289,
       "injuredReserveTotal": 15605772,
-      "practiceSquadTotal": 3801433,
+      "practiceSquadTotal": 3472361,
       "pupTotal": 1330000,
       "nfiTotal": 63658,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 20800863,
+      "reserveAndPsTotal": 20471791,
       "topDeadMoneyEntries": [
         {
           "name": "Kirk Cousins",
@@ -78,6 +78,13 @@
           "otcUrl": "https://overthecap.com/player/david-onyemata/4833/"
         },
         {
+          "name": "Christian Harris",
+          "capCharge": 2300000,
+          "slug": "christian-harris",
+          "otcId": "10120",
+          "otcUrl": "https://overthecap.com/player/christian-harris/10120/"
+        },
+        {
           "name": "Ruke Orhorhoro",
           "capCharge": 2015864,
           "slug": "ruke-orhorhoro",
@@ -125,17 +132,10 @@
           "slug": "jared-ivey",
           "otcId": "12999",
           "otcUrl": "https://overthecap.com/player/jared-ivey/12999/"
-        },
-        {
-          "name": "Azeez Ojulari",
-          "capCharge": 387500,
-          "slug": "azeez-ojulari",
-          "otcId": "9514",
-          "otcUrl": "https://overthecap.com/player/azeez-ojulari/9514/"
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 79
+      "totalSignedCount": 78
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 196560933,
       "teamCapSpace": 103980889,
       "otcRawTeamCapSpace": 103980889,
-      "effectiveCapSpace": 80579944,
+      "effectiveCapSpace": 80994769,
       "activeCapSpending": 196560933,
       "offenseSpend": 118998290,
       "defenseSpend": 72865977,
@@ -272,7 +272,7 @@
     }
   },
   "blueprint": {
-    "summary": "Atlanta Falcons hold $32.69M in 2026 OverTheCap space and $103.98M projected for 2027."
+    "summary": "Atlanta Falcons hold $32.74M in 2026 OverTheCap space and $103.98M projected for 2027."
   },
   "players": [
     {
@@ -3068,64 +3068,6 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 484000
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "4567099",
-      "otcId": "10120",
-      "otcSlug": "christian-harris",
-      "otcUrl": "https://overthecap.com/player/christian-harris/10120/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4567099/christian-harris",
-      "pfrUrl": "https://www.pro-football-reference.com/players/H/HarrCh06.htm",
-      "name": "Christian Harris",
-      "position": "LB",
-      "jersey": 45,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567099.png",
-      "unit": "Defense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "year": 2026,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1485000,
-          "proratedSigning": 500000,
-          "proratedOption": 0,
-          "proratedBonus": 500000,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 765000,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 765000,
-          "guaranteedSalary": 1485000,
-          "capNumber": 2660000,
-          "transactions": {
-            "cut": {
-              "deadMoney": 1985000,
-              "capSavings": 675000
-            },
-            "june_1_cut": {
-              "deadMoney": 1985000,
-              "capSavings": 675000
-            },
-            "trade": {
-              "deadMoney": 500000,
-              "capSavings": 2160000
-            },
-            "june_1_trade": {
-              "deadMoney": 500000,
-              "capSavings": 2160000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 216000
             }
           }
         }
@@ -6570,6 +6512,64 @@
             "june_1_trade": {
               "deadMoney": 0,
               "capSavings": 572500
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4430411",
+      "otcId": "10969",
+      "otcSlug": "jammie-robinson",
+      "otcUrl": "https://overthecap.com/player/jammie-robinson/10969/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4430411/jammie-robinson",
+      "pfrUrl": "https://www.pro-football-reference.com/players/R/RobiJa03.htm",
+      "name": "Jammie Robinson",
+      "position": "S",
+      "jersey": 34,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430411.png",
+      "unit": "Defense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1145000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "proratedBonus": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 445278,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 445278
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 445278
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 445278
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 445278
             },
             "restructure": {
               "deadMoney": 0,

@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T06:34:46.892Z",
+  "updatedAt": "2026-11-24T20:08:08.569Z",
   "windowDays": 7,
-  "totalEpisodes": 13,
+  "totalEpisodes": 12,
   "shows": [
     {
       "id": "buccaneers_locked_on_bucs",
@@ -37,7 +37,7 @@
       "feedUrl": "https://feeds.megaphone.fm/RTERE6185627144",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/pewter-report-podcast/id1216727537?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/d7/3d/60/d73d6058-06f3-1e86-807f-2a142c936c47/mza_8674259041146946255.jpg/600x600bb.jpg",
-      "episodeCount7d": 4
+      "episodeCount7d": 3
     },
     {
       "id": "buccaneers_bucs_players_table",
@@ -53,6 +53,26 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_buccaneers_bucs_players_table_1000803681698",
+      "trackId": 1000803681698,
+      "collectionId": 1436038723,
+      "showId": "buccaneers_bucs_players_table",
+      "showName": "Bucs Players' Table",
+      "showFullTitle": "Bucs Players' Table",
+      "hosts": "Tampa Bay Buccaneers",
+      "network": "Tampa Bay Buccaneers",
+      "title": "Alex Anzalone: Flourishing as a Leader | Bucs Players' Table",
+      "summary": "Team Reporter Casey Phillips chats with Tampa Bay Buccaneers LB Alex Anzalone after Week 11 vs. the Detroit Lions. They discussed the success of his role in HC Todd Bowles’ defense, his return to Florida and what it takes to continue growing as a linebacker in the NFL.See om",
+      "publishedAt": "2026-11-23T16:00:00.000Z",
+      "durationMinutes": 51,
+      "durationDisplay": "51 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/70/1f/ce/701fce2b-0da4-8077-d1df-ee4e92536a9d/mza_10292121732376082390.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/alex-anzalone-flourishing-as-a-leader-bucs-players-table/id1436038723?i=1000803681698&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/bucs-players-table/id1436038723?uo=4",
+      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/47ba869d-38cf-4f27-ab21-aea90029f19b/a957d84b-925d-4e55-bb16-aea90029f1ae/podcast.rss",
+      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/47ba869d-38cf-4f27-ab21-aea90029f19b/aa72775e-298f-4e9c-a0fb-b50b015e3470/audio.mp3?utm_source=Podcast&in_playlist=a957d84b-925d-4e55-bb16-aea90029f1ae"
+    },
     {
       "id": "pod_buccaneers_pewter_report_podcast_1000803516554",
       "trackId": 1000803516554,
@@ -272,46 +292,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-bucs-daily-podcast-on-the-tampa-bay-buccaneers/id1139752021?uo=4",
       "feedUrl": "https://rss.pdrl.fm/ca31e9/feeds.simplecast.com/mOWpQkH2",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/ca31e9/lockedon.simplecastaudio.com/8bf5e17f-ef5a-4b2a-b3a5-27a00de50027/episodes/7e70c6f8-9230-4cd4-ac60-4124d3082770/audio/128/default.mp3?aid=rss_feed&awCollectionId=8bf5e17f-ef5a-4b2a-b3a5-27a00de50027&awEpisodeId=7e70c6f8-9230-4cd4-ac60-4124d3082770&feed=mOWpQkH2"
-    },
-    {
-      "id": "pod_buccaneers_pewter_report_podcast_1000802411596",
-      "trackId": 1000802411596,
-      "collectionId": 1216727537,
-      "showId": "buccaneers_pewter_report_podcast",
-      "showName": "Pewter Report Podcast",
-      "showFullTitle": "Pewter Report Podcast",
-      "hosts": "Bucs",
-      "network": "Bucs",
-      "title": "Baker Mayfield Banged Up Again",
-      "summary": "The bye week for the Bucs came with some new information about quarterback Baker Mayfield as it appears that he might be injured again. We have a conversation about the ramifications of it. Learn more about your ad choices. Visit megaphone.fm/adchoices",
-      "publishedAt": "2026-11-17T05:48:00.000Z",
-      "durationMinutes": 66,
-      "durationDisplay": "66 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/d7/3d/60/d73d6058-06f3-1e86-807f-2a142c936c47/mza_8674259041146946255.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/baker-mayfield-banged-up-again/id1216727537?i=1000802411596&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/pewter-report-podcast/id1216727537?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/RTERE6185627144",
-      "audioStreamUrl": "https://traffic.megaphone.fm/RTERE5538481514.mp3"
-    },
-    {
-      "id": "pod_buccaneers_bucs_players_table_1000802362220",
-      "trackId": 1000802362220,
-      "collectionId": 1436038723,
-      "showId": "buccaneers_bucs_players_table",
-      "showName": "Bucs Players' Table",
-      "showFullTitle": "Bucs Players' Table",
-      "hosts": "Tampa Bay Buccaneers",
-      "network": "Tampa Bay Buccaneers",
-      "title": "Chase McLaughlin: Perfecting the Routine | Bucs Players' Table",
-      "summary": "Team Reporter Casey Phillips chats with Tampa Bay Buccaneers K Chase McLaughlin after the Buccaneers’ bye week. They discussed his journey to becoming a kicker, the routines and breathing techniques he uses and how Special Teams Coordinator Danny Smith elevates his preparati",
-      "publishedAt": "2026-11-16T15:00:00.000Z",
-      "durationMinutes": 51,
-      "durationDisplay": "51 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/70/1f/ce/701fce2b-0da4-8077-d1df-ee4e92536a9d/mza_10292121732376082390.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/chase-mclaughlin-perfecting-the-routine-bucs-players/id1436038723?i=1000802362220&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/bucs-players-table/id1436038723?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/47ba869d-38cf-4f27-ab21-aea90029f19b/a957d84b-925d-4e55-bb16-aea90029f1ae/podcast.rss",
-      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/47ba869d-38cf-4f27-ab21-aea90029f19b/99fcc5f9-de5e-4a8b-9212-b5040166df82/audio.mp3?utm_source=Podcast&in_playlist=a957d84b-925d-4e55-bb16-aea90029f1ae"
     }
   ]
 }

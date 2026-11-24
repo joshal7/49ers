@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:34:40.679Z",
+  "updatedAt": "2026-11-24T20:08:06.208Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/washington-commanders",
   "spotracUrl": "https://www.spotrac.com/nfl/washington-commanders/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 328168366,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 305232865,
+      "totalCapLiabilities": 305168276,
       "top51": 263742627,
-      "teamCapSpace": 22935501,
-      "otcRawTeamCapSpace": 22935501,
-      "effectiveCapSpace": 22935501,
-      "activeCapSpending": 277190368,
-      "offenseSpend": 125427447,
-      "defenseSpend": 147881254,
+      "teamCapSpace": 23000090,
+      "otcRawTeamCapSpace": 23000090,
+      "effectiveCapSpace": 23000090,
+      "activeCapSpending": 276528557,
+      "offenseSpend": 125780914,
+      "defenseSpend": 146865976,
       "specialSpend": 3881667,
-      "deadMoneyTotal": 28042497,
-      "injuredReserveTotal": 84036780,
-      "practiceSquadTotal": 4176144,
+      "deadMoneyTotal": 28639719,
+      "injuredReserveTotal": 83341256,
+      "practiceSquadTotal": 4322944,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 88212924,
+      "reserveAndPsTotal": 87664200,
       "topDeadMoneyEntries": [
         {
           "name": "Deebo Samuel",
@@ -48,6 +48,13 @@
           "slug": "will-harris",
           "otcId": "7872",
           "otcUrl": "https://overthecap.com/player/will-harris/7872/"
+        },
+        {
+          "name": "Isaac Yiadom",
+          "capCharge": 597222,
+          "slug": "isaac-yiadom",
+          "otcId": "6984",
+          "otcUrl": "https://overthecap.com/player/isaac-yiadom/6984/"
         },
         {
           "name": "Van Jefferson",
@@ -125,13 +132,6 @@
           "slug": "trenton-scott",
           "otcId": "7337",
           "otcUrl": "https://overthecap.com/player/trenton-scott/7337/"
-        },
-        {
-          "name": "Jake Moody",
-          "capCharge": 175000,
-          "slug": "jake-moody",
-          "otcId": "10923",
-          "otcUrl": "https://overthecap.com/player/jake-moody/10923/"
         }
       ],
       "contractedCount": 53,
@@ -146,7 +146,7 @@
       "top51": 256502906,
       "teamCapSpace": 70182460,
       "otcRawTeamCapSpace": 70182460,
-      "effectiveCapSpace": 51205168,
+      "effectiveCapSpace": 52407298,
       "activeCapSpending": 256502906,
       "offenseSpend": 132845441,
       "defenseSpend": 122606632,
@@ -251,7 +251,7 @@
     }
   },
   "blueprint": {
-    "summary": "Washington Commanders hold $22.94M in 2026 OverTheCap space and $70.18M projected for 2027."
+    "summary": "Washington Commanders hold $23.00M in 2026 OverTheCap space and $70.18M projected for 2027."
   },
   "players": [
     {
@@ -4597,64 +4597,6 @@
       }
     },
     {
-      "id": "3122797",
-      "otcId": "6984",
-      "otcSlug": "isaac-yiadom",
-      "otcUrl": "https://overthecap.com/player/isaac-yiadom/6984/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3122797/isaac-yiadom",
-      "pfrUrl": "https://www.pro-football-reference.com/players/Y/YiadIs00.htm",
-      "name": "Isaac Yiadom",
-      "position": "CB",
-      "jersey": 37,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3122797.png",
-      "unit": "Defense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "year": 2026,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1300000,
-          "proratedSigning": 0,
-          "proratedOption": 0,
-          "proratedBonus": 0,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 1015278,
-          "transactions": {
-            "cut": {
-              "deadMoney": 0,
-              "capSavings": 1015278
-            },
-            "june_1_cut": {
-              "deadMoney": 0,
-              "capSavings": 1015278
-            },
-            "trade": {
-              "deadMoney": 0,
-              "capSavings": 1015278
-            },
-            "june_1_trade": {
-              "deadMoney": 0,
-              "capSavings": 1015278
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 0
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "4683463",
       "otcId": "13353",
       "otcSlug": "matt-gulbin",
@@ -5017,6 +4959,148 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 208000
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "4575131",
+      "otcId": "12605",
+      "otcSlug": "jacory-croskey-merritt",
+      "otcUrl": "https://overthecap.com/player/jacory-croskey-merritt/12605/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4575131/jacory-croskey-merritt",
+      "pfrUrl": "https://www.pro-football-reference.com/players/C/CrosJa00.htm",
+      "name": "Jacory Croskey-Merritt",
+      "position": "RB",
+      "jersey": 22,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4575131.png",
+      "unit": "Offense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1005000,
+          "proratedSigning": 26357,
+          "proratedOption": 0,
+          "proratedBonus": 26357,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 902191,
+          "transactions": {
+            "cut": {
+              "deadMoney": 79071,
+              "capSavings": 823120
+            },
+            "june_1_cut": {
+              "deadMoney": 26357,
+              "capSavings": 875834
+            },
+            "trade": {
+              "deadMoney": 79071,
+              "capSavings": 823120
+            },
+            "june_1_trade": {
+              "deadMoney": 26357,
+              "capSavings": 875834
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1120000,
+          "proratedSigning": 26357,
+          "proratedOption": 0,
+          "proratedBonus": 26357,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1146357,
+          "transactions": {
+            "cut": {
+              "deadMoney": 52714,
+              "capSavings": 1093643
+            },
+            "june_1_cut": {
+              "deadMoney": 26357,
+              "capSavings": 1120000
+            },
+            "trade": {
+              "deadMoney": 52714,
+              "capSavings": 1093643
+            },
+            "june_1_trade": {
+              "deadMoney": 26357,
+              "capSavings": 1120000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 35000
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 56000
+            }
+          }
+        },
+        "2028": {
+          "year": 2028,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1235000,
+          "proratedSigning": 26357,
+          "proratedOption": 0,
+          "proratedBonus": 26357,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1261357,
+          "transactions": {
+            "cut": {
+              "deadMoney": 26357,
+              "capSavings": 1235000
+            },
+            "june_1_cut": {
+              "deadMoney": 26357,
+              "capSavings": 1235000
+            },
+            "trade": {
+              "deadMoney": 26357,
+              "capSavings": 1235000
+            },
+            "june_1_trade": {
+              "deadMoney": 26357,
+              "capSavings": 1235000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 112000
             }
           }
         }
@@ -6392,106 +6476,6 @@
             },
             "june_1_trade": {
               "deadMoney": 228460,
-              "capSavings": 1235000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 112000
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "4575131",
-      "otcId": "12605",
-      "otcSlug": "jacory-croskey-merritt",
-      "otcUrl": "https://overthecap.com/player/jacory-croskey-merritt/12605/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4575131/jacory-croskey-merritt",
-      "pfrUrl": "https://www.pro-football-reference.com/players/C/CrosJa00.htm",
-      "name": "Jacory Croskey-Merritt",
-      "position": "RB",
-      "jersey": 22,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4575131.png",
-      "unit": "Offense",
-      "rosterBucket": "ir",
-      "contractsByYear": {
-        "2027": {
-          "year": 2027,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1120000,
-          "proratedSigning": 26357,
-          "proratedOption": 0,
-          "proratedBonus": 26357,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 1146357,
-          "transactions": {
-            "cut": {
-              "deadMoney": 52714,
-              "capSavings": 1093643
-            },
-            "june_1_cut": {
-              "deadMoney": 26357,
-              "capSavings": 1120000
-            },
-            "trade": {
-              "deadMoney": 52714,
-              "capSavings": 1093643
-            },
-            "june_1_trade": {
-              "deadMoney": 26357,
-              "capSavings": 1120000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 35000
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 56000
-            }
-          }
-        },
-        "2028": {
-          "year": 2028,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1235000,
-          "proratedSigning": 26357,
-          "proratedOption": 0,
-          "proratedBonus": 26357,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 1261357,
-          "transactions": {
-            "cut": {
-              "deadMoney": 26357,
-              "capSavings": 1235000
-            },
-            "june_1_cut": {
-              "deadMoney": 26357,
-              "capSavings": 1235000
-            },
-            "trade": {
-              "deadMoney": 26357,
-              "capSavings": 1235000
-            },
-            "june_1_trade": {
-              "deadMoney": 26357,
               "capSavings": 1235000
             },
             "restructure": {

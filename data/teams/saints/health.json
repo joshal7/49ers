@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:34:55.608Z",
+  "updatedAt": "2026-11-24T20:08:11.541Z",
   "week": 12,
   "byeWeek": 8,
   "sourceUrl": "https://www.neworleanssaints.com/team/injury-report/",
@@ -10,36 +10,11 @@
   "gameDayRoster": null,
   "practiceReport": [
     {
-      "playerId": "3917331",
-      "name": "Erik McCoy",
-      "position": "C",
-      "jersey": 78,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917331.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Biceps",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Veteran starter profile (8th NFL season, 97% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4606711",
-      "name": "Taliese Fuaga",
+      "playerId": "4430379",
+      "name": "Asim Richards",
       "position": "OT",
-      "jersey": 75,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4606711.png",
+      "jersey": 72,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430379.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
@@ -47,42 +22,17 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Knee",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Doubtful",
+      "playProbabilityPct": 11,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "playBadgeLabel": "11% • Doubtful",
+      "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Official Doubtful tag (NFL historical base ~10–14%)"
       ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4241993",
-      "name": "Pete Werner",
-      "position": "LB",
-      "jersey": 20,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241993.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Hamstring",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Every-down starter workload (74% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Werner injured his hamstring against the Panthers in Week 10, and the injury prevented the sixth-year linebacker from practicing in any capacity during Week 11 prep. He was initially tagged as questionable, but he will observe Sunday's game from the sidelines, and his next opportunity to play is Week 12 against the Bengals on Nov. 29. Danny Stutsman figures to start alongside Kaden Elliss at inside linebacker in Werner's absence."
+      "beatComment": "doubtful"
     },
     {
       "playerId": "4429568",
@@ -97,49 +47,24 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Concussion",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 18,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "18% • Doubtful",
       "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Remains in early stages of NFL 5-Step Concussion Protocol"
       ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
     },
     {
-      "playerId": "4361259",
-      "name": "Zach Wilson",
-      "position": "QB",
-      "jersey": 11,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361259.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "As the emergency QB3, Wilson is not allowed to play Sunday unless starter Tyler Shough and backup Spencer Rattler both leave the game due to injury, illness or ejection. Wilson has yet to appear in a regular-season game in 2026."
-    },
-    {
-      "playerId": "4430379",
-      "name": "Asim Richards",
+      "playerId": "4606711",
+      "name": "Taliese Fuaga",
       "position": "OT",
-      "jersey": 72,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430379.png",
+      "jersey": 75,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4606711.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
@@ -147,42 +72,42 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Knee",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 49,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "playBadgeLabel": "49% • Long Shot",
+      "archetypeNote": "Every-down starter workload (100% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed 2 consecutive games without practice participation — awaiting Wednesday report"
       ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
     },
     {
-      "playerId": "4569682",
-      "name": "Audric Estime",
-      "position": "RB",
-      "jersey": 30,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4569682.png",
+      "playerId": "3917331",
+      "name": "Erik McCoy",
+      "position": "C",
+      "jersey": 78,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917331.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "injuryType": "Biceps",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 50,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "playBadgeLabel": "50% • GTD",
+      "archetypeNote": "Veteran starter profile (8th NFL season, 97% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed 2 consecutive games without practice participation — awaiting Wednesday report"
       ],
-      "beatComment": "Estime's role in the offense was reduced in Week 10 against the Panthers, which marked Travis Etienne's return from a five-game absence due to a hamstring injury. Estime is a healthy scratch for Sunday's game, which means Alvin Kamara and CJ Donaldson will operate as the rotational options out of the backfield behind Etienne. Estime's next opportunity to play is Week 12 against the Bengals on Nov. 29."
+      "beatComment": "questionable"
     },
     {
       "playerId": "3929645",
@@ -208,7 +133,33 @@
         "Questionable tag adjusted by player career prior (78%)",
         "Soft-tissue re-aggravation caution (Hamstring)"
       ],
-      "beatComment": "Johnson visited the sideline tent in the third quarter before the Saints deemed him questionable to return. He didn't catch his only target before his departure."
+      "beatComment": "The Saints expect to have a better feel for Johnson's status Wednesday, when the team holds its first practice of Week 12. Before exiting Sunday in the third quarter, Johnson was targeted just once and failed to record a reception for the second time in 10 appearances on the season. If the hamstring injury prevents Johnson from playing next weekend in Cincinnati, Noah Fant and Oscar Delp would be in line for added snaps at tight end."
+    },
+    {
+      "playerId": "4241993",
+      "name": "Pete Werner",
+      "position": "LB",
+      "jersey": 20,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241993.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Hamstring",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 77,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "77% • GTD",
+      "archetypeNote": "Every-down starter workload (74% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Questionable tag adjusted by player career prior (82%)",
+        "Soft-tissue re-aggravation caution (Hamstring)"
+      ],
+      "beatComment": "questionable"
     },
     {
       "playerId": "4685260",
@@ -229,7 +180,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (90% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Every-down starter workload (92% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
@@ -259,31 +210,6 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Edwards' practice reps were limited Wednesday and Thursday due to a knee injury, but he avoided an injury tag for Week 10 after logging a full session Friday. He has started in each of the Saints' first eight games of the regular season."
-    },
-    {
-      "playerId": "5081999",
-      "name": "CJ Donaldson",
-      "position": "RB",
-      "jersey": 43,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081999.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Shoulder",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Donaldson missed the Saints' last three games due to a shoulder injury, but his full practice Wednesday indicates that he'll be available for Sunday's road game against the Bears. Even if Donaldson does suit up, his role in the backfield figures to be minimal, seeing as Travis Etienne is off injured reserve and Alvin Kamara and Audric Estime are also available for the Saints."
     }
   ],
   "irAndReserveTracker": [

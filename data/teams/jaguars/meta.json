@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:36:35.441Z",
+  "updatedAt": "2026-11-24T20:08:51.500Z",
   "teamAbbr": "JAX",
   "teamSlug": "jaguars",
   "brandName": "Jags DUUUVAL",
@@ -8,7 +8,7 @@
   "teamRecord": "7-3",
   "divisionRecord": "2-1",
   "conferenceRecord": "6-2",
-  "standingSummary": "1st in AFC South • #4 Seed in AFC",
+  "standingSummary": "1st in AFC South • #3 Seed in AFC",
   "pointDifferential": "+120 (287 PF / 167 PA)",
   "byeWeek": 7,
   "coaches": {
@@ -33,7 +33,7 @@
   },
   "teamStatus": {
     "inPlayoffHunt": true,
-    "playoffSeed": 4,
+    "playoffSeed": 3,
     "seasonConcluded": false
   },
   "aiEngine": {

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:35:04.119Z",
+  "updatedAt": "2026-11-24T20:08:14.410Z",
   "sources": [
     {
       "label": "ESPN Falcons Schedule",
@@ -152,6 +152,9 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 0,
+      "spreadLineSf": 6.5,
+      "totalLine": 40.5,
       "broadcast": "NFL TV"
     },
     {
@@ -187,6 +190,9 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 0,
+      "spreadLineSf": 2.5,
+      "totalLine": 43.5,
       "broadcast": "NFL TV"
     },
     {
@@ -222,6 +228,9 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 0,
+      "spreadLineSf": 4.5,
+      "totalLine": 43.5,
       "broadcast": "NFL TV"
     },
     {
@@ -257,6 +266,9 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 3,
+      "spreadLineSf": 1.5,
+      "totalLine": 47.5,
       "broadcast": "NFL TV"
     },
     {
@@ -292,6 +304,9 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": -1,
+      "spreadLineSf": -3.5,
+      "totalLine": 44.5,
       "broadcast": "NFL TV"
     },
     {
@@ -327,6 +342,9 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 0,
+      "spreadLineSf": 1.5,
+      "totalLine": 51.5,
       "broadcast": "NFL TV"
     },
     {
@@ -362,6 +380,9 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 1,
+      "spreadLineSf": 2.5,
+      "totalLine": 49.5,
       "broadcast": "NFL TV"
     },
     {
@@ -397,6 +418,9 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 0,
+      "spreadLineSf": 2.5,
+      "totalLine": 42.5,
       "broadcast": "NFL TV"
     },
     {
@@ -420,7 +444,7 @@
         "abbr": "CIN",
         "name": "Cincinnati Bengals",
         "shortName": "Bengals",
-        "record": "7-2",
+        "record": "7-3",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/cin.png",
         "isTbd": false
       },
@@ -432,6 +456,9 @@
         "isInternational": true,
         "surface": "Turf"
       },
+      "restAdvantageDays": 0,
+      "spreadLineSf": 3,
+      "totalLine": 52.5,
       "broadcast": "NFL TV"
     },
     {
@@ -467,6 +494,9 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 0,
+      "spreadLineSf": 3,
+      "totalLine": 47.5,
       "broadcast": "NFL TV"
     },
     {
@@ -476,7 +506,7 @@
       "weekLabel": "WK 11",
       "isByeWeek": true,
       "statusDetail": "Bye Week",
-      "completed": false,
+      "completed": true,
       "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
       "opponent": {
         "abbr": "BYE",
@@ -528,6 +558,9 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 7,
+      "spreadLineSf": 7,
+      "totalLine": 42.5,
       "broadcast": "NFL TV"
     },
     {
@@ -563,6 +596,9 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": -3,
+      "spreadLineSf": 3.5,
+      "totalLine": 49.5,
       "broadcast": "NFL TV"
     },
     {
@@ -598,6 +634,7 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 0,
       "broadcast": "NFL TV"
     },
     {
@@ -621,7 +658,7 @@
         "abbr": "WAS",
         "name": "Washington Commanders",
         "shortName": "Commanders",
-        "record": "3-5-1",
+        "record": "4-5-1",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png",
         "isTbd": false
       },
@@ -633,6 +670,7 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 0,
       "broadcast": "NFL TV"
     },
     {
@@ -668,6 +706,7 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 0,
       "broadcast": "NFL TV"
     },
     {
@@ -703,6 +742,7 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 0,
       "broadcast": "NFL TV"
     },
     {
@@ -738,6 +778,7 @@
         "isInternational": false,
         "surface": "Turf"
       },
+      "restAdvantageDays": 0,
       "broadcast": "NFL TV"
     }
   ],
@@ -791,7 +832,7 @@
         "abbr": "CIN",
         "name": "Cincinnati Bengals",
         "shortName": "Bengals",
-        "record": "7-2",
+        "record": "7-3",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/cin.png"
       },
       "CLE": {
@@ -966,7 +1007,7 @@
         "abbr": "WAS",
         "name": "Washington Commanders",
         "shortName": "Commanders",
-        "record": "3-5-1",
+        "record": "4-5-1",
         "logoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png"
       }
     },
@@ -1147,8 +1188,8 @@
           "rank": 25,
           "value": 27,
           "displayValue": "27.0%",
-          "leagueAvg": 45.7906,
-          "leagueAvgDisplay": "45.8%",
+          "leagueAvg": 45.7281,
+          "leagueAvgDisplay": "45.7%",
           "leaderboard": [
             {
               "team": "SF",
@@ -1159,8 +1200,8 @@
             {
               "team": "CIN",
               "rank": 2,
-              "val": 90.8,
-              "disp": "90.8%"
+              "val": 88.8,
+              "disp": "88.8%"
             },
             {
               "team": "BUF",
@@ -1353,8 +1394,8 @@
             "rank": 23,
             "value": 20.1,
             "displayValue": "20.1",
-            "leagueAvg": 23.1731,
-            "leagueAvgDisplay": "23.2",
+            "leagueAvg": 23.1398,
+            "leagueAvgDisplay": "23.1",
             "leaderboard": [
               {
                 "team": "SF",
@@ -1369,16 +1410,16 @@
                 "disp": "31.3"
               },
               {
-                "team": "CIN",
-                "rank": 3,
-                "val": 30.8889,
-                "disp": "30.9"
-              },
-              {
                 "team": "DAL",
-                "rank": 4,
+                "rank": 3,
                 "val": 30.6364,
                 "disp": "30.6"
+              },
+              {
+                "team": "CIN",
+                "rank": 4,
+                "val": 29.8,
+                "disp": "29.8"
               },
               {
                 "team": "DET",
@@ -1473,7 +1514,7 @@
               {
                 "team": "WAS",
                 "rank": 20,
-                "val": 21.7778,
+                "val": 21.8,
                 "disp": "21.8"
               },
               {
@@ -4863,8 +4904,8 @@
           "rank": 22,
           "value": 31.9,
           "displayValue": "31.9%",
-          "leagueAvg": 45.125,
-          "leagueAvgDisplay": "45.1%",
+          "leagueAvg": 45.1531,
+          "leagueAvgDisplay": "45.2%",
           "leaderboard": [
             {
               "team": "MIN",
@@ -4959,8 +5000,8 @@
             {
               "team": "CIN",
               "rank": 16,
-              "val": 43.2,
-              "disp": "43.2%"
+              "val": 43.1,
+              "disp": "43.1%"
             },
             {
               "team": "DET",
@@ -4981,16 +5022,16 @@
               "disp": "34.1%"
             },
             {
-              "team": "BAL",
+              "team": "WAS",
               "rank": 20,
-              "val": 32.7,
-              "disp": "32.7%"
+              "val": 33.6,
+              "disp": "33.6%"
             },
             {
-              "team": "WAS",
+              "team": "BAL",
               "rank": 21,
-              "val": 32.6,
-              "disp": "32.6%"
+              "val": 32.7,
+              "disp": "32.7%"
             },
             {
               "team": "ATL",
@@ -5069,8 +5110,8 @@
             "rank": 24,
             "value": 25.8,
             "displayValue": "25.8",
-            "leagueAvg": 23.0524,
-            "leagueAvgDisplay": "23.1",
+            "leagueAvg": 23.0392,
+            "leagueAvgDisplay": "23.0",
             "leaderboard": [
               {
                 "team": "MIN",
@@ -5147,8 +5188,8 @@
               {
                 "team": "CIN",
                 "rank": 13,
-                "val": 21.4444,
-                "disp": "21.4"
+                "val": 21.5,
+                "disp": "21.5"
               },
               {
                 "team": "CLE",
@@ -5189,8 +5230,8 @@
               {
                 "team": "WAS",
                 "rank": 20,
-                "val": 24.7778,
-                "disp": "24.8"
+                "val": 24.3,
+                "disp": "24.3"
               },
               {
                 "team": "MIA",
@@ -10850,7 +10891,7 @@
           "rank": 28,
           "value": 18.8,
           "displayValue": "18.8%",
-          "leagueAvg": 48.7344,
+          "leagueAvg": 48.7,
           "leagueAvgDisplay": "48.7%",
           "leaderboard": [
             {
@@ -10872,16 +10913,16 @@
               "disp": "87.8%"
             },
             {
-              "team": "CIN",
-              "rank": 4,
-              "val": 78.7,
-              "disp": "78.7%"
-            },
-            {
               "team": "BUF",
-              "rank": 5,
+              "rank": 4,
               "val": 78,
               "disp": "78.0%"
+            },
+            {
+              "team": "CIN",
+              "rank": 5,
+              "val": 76.8,
+              "disp": "76.8%"
             },
             {
               "team": "LAR",
@@ -10952,8 +10993,8 @@
             {
               "team": "WAS",
               "rank": 17,
-              "val": 48,
-              "disp": "48.0%"
+              "val": 48.8,
+              "disp": "48.8%"
             },
             {
               "team": "DAL",
@@ -11261,7 +11302,7 @@
             "rank": 26,
             "value": -5.7,
             "displayValue": "-5.7",
-            "leagueAvg": 0.1207,
+            "leagueAvg": 0.1006,
             "leagueAvgDisplay": "+0.1",
             "leaderboard": [
               {
@@ -11291,8 +11332,8 @@
               {
                 "team": "CIN",
                 "rank": 5,
-                "val": 9.4444,
-                "disp": "+9.4"
+                "val": 8.3,
+                "disp": "+8.3"
               },
               {
                 "team": "DET",
@@ -11381,8 +11422,8 @@
               {
                 "team": "WAS",
                 "rank": 20,
-                "val": -3,
-                "disp": "-3.0"
+                "val": -2.5,
+                "disp": "-2.5"
               },
               {
                 "team": "CLE",
@@ -12707,8 +12748,8 @@
         "rank": 25,
         "value": 27,
         "displayValue": "27.0%",
-        "leagueAvg": 45.7906,
-        "leagueAvgDisplay": "45.8%",
+        "leagueAvg": 45.7281,
+        "leagueAvgDisplay": "45.7%",
         "leaderboard": [
           {
             "team": "SF",
@@ -12719,8 +12760,8 @@
           {
             "team": "CIN",
             "rank": 2,
-            "val": 90.8,
-            "disp": "90.8%"
+            "val": 88.8,
+            "disp": "88.8%"
           },
           {
             "team": "BUF",
@@ -12912,8 +12953,8 @@
         "rank": 23,
         "value": 20.1,
         "displayValue": "20.1",
-        "leagueAvg": 23.1731,
-        "leagueAvgDisplay": "23.2",
+        "leagueAvg": 23.1398,
+        "leagueAvgDisplay": "23.1",
         "leaderboard": [
           {
             "team": "SF",
@@ -12928,16 +12969,16 @@
             "disp": "31.3"
           },
           {
-            "team": "CIN",
-            "rank": 3,
-            "val": 30.8889,
-            "disp": "30.9"
-          },
-          {
             "team": "DAL",
-            "rank": 4,
+            "rank": 3,
             "val": 30.6364,
             "disp": "30.6"
+          },
+          {
+            "team": "CIN",
+            "rank": 4,
+            "val": 29.8,
+            "disp": "29.8"
           },
           {
             "team": "DET",
@@ -13032,7 +13073,7 @@
           {
             "team": "WAS",
             "rank": 20,
-            "val": 21.7778,
+            "val": 21.8,
             "disp": "21.8"
           },
           {
@@ -16397,8 +16438,8 @@
         "rank": 22,
         "value": 31.9,
         "displayValue": "31.9%",
-        "leagueAvg": 45.125,
-        "leagueAvgDisplay": "45.1%",
+        "leagueAvg": 45.1531,
+        "leagueAvgDisplay": "45.2%",
         "leaderboard": [
           {
             "team": "MIN",
@@ -16493,8 +16534,8 @@
           {
             "team": "CIN",
             "rank": 16,
-            "val": 43.2,
-            "disp": "43.2%"
+            "val": 43.1,
+            "disp": "43.1%"
           },
           {
             "team": "DET",
@@ -16515,16 +16556,16 @@
             "disp": "34.1%"
           },
           {
-            "team": "BAL",
+            "team": "WAS",
             "rank": 20,
-            "val": 32.7,
-            "disp": "32.7%"
+            "val": 33.6,
+            "disp": "33.6%"
           },
           {
-            "team": "WAS",
+            "team": "BAL",
             "rank": 21,
-            "val": 32.6,
-            "disp": "32.6%"
+            "val": 32.7,
+            "disp": "32.7%"
           },
           {
             "team": "ATL",
@@ -16602,8 +16643,8 @@
         "rank": 24,
         "value": 25.8,
         "displayValue": "25.8",
-        "leagueAvg": 23.0524,
-        "leagueAvgDisplay": "23.1",
+        "leagueAvg": 23.0392,
+        "leagueAvgDisplay": "23.0",
         "leaderboard": [
           {
             "team": "MIN",
@@ -16680,8 +16721,8 @@
           {
             "team": "CIN",
             "rank": 13,
-            "val": 21.4444,
-            "disp": "21.4"
+            "val": 21.5,
+            "disp": "21.5"
           },
           {
             "team": "CLE",
@@ -16722,8 +16763,8 @@
           {
             "team": "WAS",
             "rank": 20,
-            "val": 24.7778,
-            "disp": "24.8"
+            "val": 24.3,
+            "disp": "24.3"
           },
           {
             "team": "MIA",
@@ -22342,7 +22383,7 @@
         "rank": 28,
         "value": 18.8,
         "displayValue": "18.8%",
-        "leagueAvg": 48.7344,
+        "leagueAvg": 48.7,
         "leagueAvgDisplay": "48.7%",
         "leaderboard": [
           {
@@ -22364,16 +22405,16 @@
             "disp": "87.8%"
           },
           {
-            "team": "CIN",
-            "rank": 4,
-            "val": 78.7,
-            "disp": "78.7%"
-          },
-          {
             "team": "BUF",
-            "rank": 5,
+            "rank": 4,
             "val": 78,
             "disp": "78.0%"
+          },
+          {
+            "team": "CIN",
+            "rank": 5,
+            "val": 76.8,
+            "disp": "76.8%"
           },
           {
             "team": "LAR",
@@ -22444,8 +22485,8 @@
           {
             "team": "WAS",
             "rank": 17,
-            "val": 48,
-            "disp": "48.0%"
+            "val": 48.8,
+            "disp": "48.8%"
           },
           {
             "team": "DAL",
@@ -22752,7 +22793,7 @@
         "rank": 26,
         "value": -5.7,
         "displayValue": "-5.7",
-        "leagueAvg": 0.1207,
+        "leagueAvg": 0.1006,
         "leagueAvgDisplay": "+0.1",
         "leaderboard": [
           {
@@ -22782,8 +22823,8 @@
           {
             "team": "CIN",
             "rank": 5,
-            "val": 9.4444,
-            "disp": "+9.4"
+            "val": 8.3,
+            "disp": "+8.3"
           },
           {
             "team": "DET",
@@ -22872,8 +22913,8 @@
           {
             "team": "WAS",
             "rank": 20,
-            "val": -3,
-            "disp": "-3.0"
+            "val": -2.5,
+            "disp": "-2.5"
           },
           {
             "team": "CLE",
@@ -24188,7 +24229,7 @@
       "label": "Points / Game",
       "value": "20.1",
       "rank": 23,
-      "leagueAvg": "23.2",
+      "leagueAvg": "23.1",
       "higherIsBetter": true
     },
     {
@@ -24196,7 +24237,7 @@
       "label": "Points Allowed / Game",
       "value": "25.8",
       "rank": 24,
-      "leagueAvg": "23.1",
+      "leagueAvg": "23.0",
       "higherIsBetter": false
     },
     {
@@ -24313,14 +24354,14 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 23,
-    "averageRank": 22.5,
+    "averageRank": 22.7,
     "medianRank": 22,
-    "previousRank": 22,
+    "previousRank": 23,
     "rangeMin": 20,
-    "rangeMax": 27,
-    "rangeShort": "#20–#27",
-    "rangeDisplay": "#20–#27 across 6 verified models & polls",
-    "synthesizedTakeaway": "6 verified models & polls place the 3-7 Falcons at #23 consensus (avg #22.5) through Week 10, ranging from #20 (Inpredictable) to #27 (ESPN FPI). All listed models include the Falcons' latest result entering Week 12 vs. Vikings.",
+    "rangeMax": 26,
+    "rangeShort": "#20–#26",
+    "rangeDisplay": "#20–#26 across 6 verified models & polls",
+    "synthesizedTakeaway": "6 verified models & polls place the 3-7 Falcons at #23 consensus (avg #22.7) through Week 10, ranging from #20 (Inpredictable) to #26 (ESPN FPI). All listed models include the Falcons' latest result entering Week 12 vs. Vikings.",
     "sources": [
       {
         "id": "inpredictable",
@@ -24328,15 +24369,15 @@
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
         "rank": 20,
-        "previousRank": 18,
-        "delta": "-2",
+        "previousRank": 22,
+        "delta": "+2",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 10,
-        "asOfIso": "2026-11-22",
-        "asOfLabel": "November 22",
+        "asOfIso": "2026-11-24",
+        "asOfLabel": "November 24",
         "verified": true,
-        "blurb": "Betting market rating GPF -2.6 (#16 Offense / #26 Defense) at 3-7 through Week 10.",
+        "blurb": "Betting market rating GPF -2.7 (#16 Offense / #25 Defense) at 3-7 through Week 10.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24370,10 +24411,10 @@
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-22T10:09:03Z",
+        "asOfIso": "2026-11-24T17:12:25Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 4 (42.3% neutral-field win rating, 6.0 proj. wins) at 3-7 through Week 11.",
+        "blurb": "Tier 4 (42.4% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24381,18 +24422,18 @@
         "id": "espn_panel",
         "outlet": "ESPN NFL Power Rankings Panel",
         "shortName": "ESPN Panel",
-        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "url": "https://www.espn.com/nfl/story/_/id/50574413/nfl-power-rankings-week-12-offseason-contract-extension-candidates",
         "rank": 23,
         "previousRank": 23,
         "delta": "0",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
-        "throughWeek": 10,
-        "forWeek": 11,
-        "asOfIso": "2026-11-17T20:45:39Z",
-        "asOfLabel": "Week 11",
+        "throughWeek": 11,
+        "forWeek": 12,
+        "asOfIso": "2026-11-24T16:49:36Z",
+        "asOfLabel": "Week 12",
         "verified": true,
-        "blurb": "Lost to the Chiefs 35-13. Non-QB MVP at midseason: RB Bijan Robinson No surprise here. Robinson is third in the league in rushing yards (951) despite going over 80 yards just once in the Falcons'…",
+        "blurb": "Week 11 bye. Extension candidate: DT LaCale London Unheralded throughout his career, London has found a place in defensive line coach Nate Ollie's attack front.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24401,8 +24442,8 @@
         "outlet": "nfelo Quantitative Elo & EPA Power Ratings",
         "shortName": "nfelo",
         "url": "https://nfeloapp.com/nfl-power-ratings/",
-        "rank": 23,
-        "previousRank": 23,
+        "rank": 25,
+        "previousRank": 25,
         "delta": "0",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
@@ -24410,7 +24451,7 @@
         "asOfIso": null,
         "asOfLabel": "3-7 record",
         "verified": true,
-        "blurb": "nfelo 1428 (-2.6 spread value, #29 Off EPA, #26 Net EPA) at 3-7.",
+        "blurb": "nfelo 1413 (-3.0 spread value, #28 Off EPA, #26 Net EPA) at 3-7.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24419,16 +24460,16 @@
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
         "url": "https://www.espn.com/nfl/fpi",
-        "rank": 27,
+        "rank": 26,
         "previousRank": 25,
-        "delta": "-2",
+        "delta": "-1",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-22T07:00Z",
+        "asOfIso": "2026-11-24T07:00Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "FPI -5.7 (#27 Off / #25 Def efficiency, 5.2 proj. wins, 0.0% SB odds) at 3-7.",
+        "blurb": "FPI -5.8 (#27 Off / #25 Def efficiency, 5.2 proj. wins, 0.0% SB odds) at 3-7.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24440,23 +24481,23 @@
         "shortName": "Inpredictable",
         "url": "https://stats.inpredictable.com/rankings/nfl.php",
         "rank": 20,
-        "previousRank": 18,
-        "delta": "-2",
+        "previousRank": 22,
+        "delta": "+2",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 10,
-        "asOfIso": "2026-11-22",
-        "asOfLabel": "November 22",
+        "asOfIso": "2026-11-24",
+        "asOfLabel": "November 24",
         "verified": true,
-        "blurb": "Betting market rating GPF -2.6 (#16 Offense / #26 Defense) at 3-7 through Week 10."
+        "blurb": "Betting market rating GPF -2.7 (#16 Offense / #25 Defense) at 3-7 through Week 10."
       },
       {
         "id": "nfelo",
         "outlet": "nfelo Quantitative Elo & EPA Power Ratings",
         "shortName": "nfelo",
         "url": "https://nfeloapp.com/nfl-power-ratings/",
-        "rank": 23,
-        "previousRank": 23,
+        "rank": 25,
+        "previousRank": 25,
         "delta": "0",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
@@ -24464,7 +24505,7 @@
         "asOfIso": null,
         "asOfLabel": "3-7 record",
         "verified": true,
-        "blurb": "nfelo 1428 (-2.6 spread value, #29 Off EPA, #26 Net EPA) at 3-7."
+        "blurb": "nfelo 1413 (-3.0 spread value, #28 Off EPA, #26 Net EPA) at 3-7."
       },
       {
         "id": "rbsdm",
@@ -24477,10 +24518,10 @@
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-22T10:09:03Z",
+        "asOfIso": "2026-11-24T17:12:25Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 4 (42.3% neutral-field win rating, 6.0 proj. wins) at 3-7 through Week 11."
+        "blurb": "Tier 4 (42.4% neutral-field win rating, 5.9 proj. wins) at 3-7 through Week 11."
       },
       {
         "id": "cbs",
@@ -24504,38 +24545,38 @@
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
         "url": "https://www.espn.com/nfl/fpi",
-        "rank": 27,
+        "rank": 26,
         "previousRank": 25,
-        "delta": "-2",
+        "delta": "-1",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-22T07:00Z",
+        "asOfIso": "2026-11-24T07:00Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "FPI -5.7 (#27 Off / #25 Def efficiency, 5.2 proj. wins, 0.0% SB odds) at 3-7."
+        "blurb": "FPI -5.8 (#27 Off / #25 Def efficiency, 5.2 proj. wins, 0.0% SB odds) at 3-7."
       },
       {
         "id": "espn_panel",
         "outlet": "ESPN NFL Power Rankings Panel",
         "shortName": "ESPN Panel",
-        "url": "https://www.espn.com/nfl/story/_/id/50503226/nfl-power-rankings-week-11-non-quarterback-mvps-midseason",
+        "url": "https://www.espn.com/nfl/story/_/id/50574413/nfl-power-rankings-week-12-offseason-contract-extension-candidates",
         "rank": 23,
         "previousRank": 23,
         "delta": "0",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
-        "throughWeek": 10,
-        "forWeek": 11,
-        "asOfIso": "2026-11-17T20:45:39Z",
-        "asOfLabel": "Week 11",
+        "throughWeek": 11,
+        "forWeek": 12,
+        "asOfIso": "2026-11-24T16:49:36Z",
+        "asOfLabel": "Week 12",
         "verified": true,
-        "blurb": "Lost to the Chiefs 35-13. Non-QB MVP at midseason: RB Bijan Robinson No surprise here. Robinson is third in the league in rushing yards (951) despite going over 80 yards just once in the Falcons'…"
+        "blurb": "Week 11 bye. Extension candidate: DT LaCale London Unheralded throughout his career, London has found a place in defensive line coach Nate Ollie's attack front."
       }
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-23T06:35:04.348Z"
+    "fetchedAtIso": "2026-11-24T20:54:07.298Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24556,6 +24597,11 @@
       "country": "USA",
       "isInternational": false,
       "surface": "Turf"
+    },
+    "weather": {
+      "indoor": true,
+      "altitudeFt": 840,
+      "source": "stadium"
     },
     "sfRecord": "3-7",
     "sfLogoUrl": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png",
@@ -24627,18 +24673,18 @@
       "sourceUrl": "https://www.vikings.com/team/injury-report/",
       "injuryReport": [
         {
-          "playerId": "4568007",
-          "name": "Jay Ward",
-          "position": "S",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568007.png",
-          "injuryType": "Knee",
-          "gameStatus": "Out",
+          "playerId": "4429205",
+          "name": "Jordan Addison",
+          "position": "WR",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429205.png",
+          "injuryType": "Thumb",
+          "gameStatus": "Doubtful",
           "wed": "-",
           "thu": "-",
           "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "beatComment": "The fourth-year safety has appeared in nine games this season but has logged just 17 snaps on defense while playing 162 on special teams.",
+          "playProbabilityPct": 10,
+          "playBadgeLabel": "10% • Doubtful",
+          "beatComment": "Addison injured his thumb during a Week 10 practice and was sidelined for the Vikings' Nov. 15 win over the Packers before undergoing surgery this past week. He remained out for Sunday's 35-10 loss to the 49ers and looks headed for a third straight absence this weekend, but Addison avoided placement on injured reserve and could have a realistic chance at returning to action in Week 13. Jauan Jennings and Tai Felton are likely to be the main beneficiaries from playing-time standpoints while Addison is unavailable.",
           "priorDayPlayProbabilityPct": null,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
@@ -24649,30 +24695,13 @@
           "position": "CB",
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4044540.png",
           "injuryType": "Quadriceps",
-          "gameStatus": "Out",
+          "gameStatus": "Questionable",
           "wed": "-",
           "thu": "-",
           "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "beatComment": "Rodgers will be forced to miss Week 11 while nursing a quadriceps injury that forced him to log back-to-back limited practices to end the week. In his absence, Charles Demmings and Zemaiah Vaughn will both be in line to see increased opportunities in the secondary versus San Francisco.",
-          "priorDayPlayProbabilityPct": null,
-          "hasPreReportPracticeReturnDelta": false,
-          "isMidWeekAdditionDelta": false
-        },
-        {
-          "playerId": "4573398",
-          "name": "Max Brosmer",
-          "position": "QB",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4573398.png",
-          "injuryType": "Coach's Decision",
-          "gameStatus": "Out",
-          "wed": "-",
-          "thu": "-",
-          "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "beatComment": "Brosmer will operate as the team's No. 3 option at QB for the second straight week. He will only be eligible to enter the game if both starter Kirk Cousins and primary backup Carson Wentz are forced out of the contest.",
+          "playProbabilityPct": 71,
+          "playBadgeLabel": "71% • GTD",
+          "beatComment": "questionable",
           "priorDayPlayProbabilityPct": null,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
@@ -24683,30 +24712,30 @@
           "position": "QB",
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3917315.png",
           "injuryType": "Hamstring",
-          "gameStatus": "Out",
+          "gameStatus": "Questionable",
           "wed": "-",
           "thu": "-",
           "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "beatComment": "inactive",
+          "playProbabilityPct": 75,
+          "playBadgeLabel": "75% • GTD",
+          "beatComment": "questionable",
           "priorDayPlayProbabilityPct": null,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
         },
         {
-          "playerId": "4429205",
-          "name": "Jordan Addison",
-          "position": "WR",
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429205.png",
-          "injuryType": "Thumb",
-          "gameStatus": "Out",
+          "playerId": "4568007",
+          "name": "Jay Ward",
+          "position": "S",
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568007.png",
+          "injuryType": "Knee",
+          "gameStatus": "Questionable",
           "wed": "-",
           "thu": "-",
           "fri": "-",
-          "playProbabilityPct": 0,
-          "playBadgeLabel": "0% • Out",
-          "beatComment": "inactive",
+          "playProbabilityPct": 78,
+          "playBadgeLabel": "78% • GTD",
+          "beatComment": "questionable",
           "priorDayPlayProbabilityPct": null,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
@@ -24730,9 +24759,13 @@
       ]
     },
     "betting": {
-      "spread": "Check ESPN Gamecast",
-      "overUnder": "TBD",
-      "impliedWinProb": "50%"
+      "spread": "MIN -7",
+      "openingSpread": "Opened ATL +4.5 (Draft Kings)",
+      "overUnder": 42.5,
+      "moneyline": "ATL +281 | MIN -351",
+      "impliedScore": "ATL 17.8 – MIN 24.8",
+      "restAdvantage": "+7 Days Rest Advantage (ATL off Week 11 Bye)",
+      "impliedWinProb": "16%"
     },
     "franchiseHistory": {
       "allTimeRecord": "Falcons vs. Vikings",
@@ -26417,11 +26450,6 @@
         "Trench Run-Fit & Two-Way Leverage: DC Jeff Ulbrich balances pass-rush pressure with two-high/split-safety discipline on early downs, while Minnesota Vikings's offense tests Atlanta's edge containment, third-down execution, and red-zone stops."
       ]
     },
-    "keyMatchupsMatrix": [],
-    "weather": {
-      "indoor": true,
-      "altitudeFt": 840,
-      "source": "stadium"
-    }
+    "keyMatchupsMatrix": []
   }
 }

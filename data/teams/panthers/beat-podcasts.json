@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T06:35:10.403Z",
+  "updatedAt": "2026-11-24T20:08:19.243Z",
   "windowDays": 7,
-  "totalEpisodes": 13,
+  "totalEpisodes": 12,
   "shows": [
     {
       "id": "panthers_locked_on_panthers",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/1d/a1/17/1da1178e-87ed-440c-a844-2a2471ca7a8f/mza_4393349406579144163.jpg/600x600bb.jpg",
-      "episodeCount7d": 8
+      "episodeCount7d": 9
     },
     {
       "id": "panthers_panthers_playbook",
@@ -37,10 +37,50 @@
       "feedUrl": "https://feeds.simplecast.com/heiTBv_K",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/bleav-in-carolina-panthers/id1515076603?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/db/ce/4a/dbce4a87-7aa0-ea42-e707-b20fa4fda730/mza_14263913440936147916.jpg/600x600bb.jpg",
-      "episodeCount7d": 3
+      "episodeCount7d": 1
     }
   ],
   "episodes": [
+    {
+      "id": "pod_panthers_locked_on_panthers_1000803743758",
+      "trackId": 1000803743758,
+      "collectionId": 1150966073,
+      "showId": "panthers_locked_on_panthers",
+      "showName": "Locked On Panthers",
+      "showFullTitle": "Locked On Panthers - Daily Podcast On The Carolina Panthers",
+      "hosts": "Locked On Podcast Network, Julian Council",
+      "network": "Locked On Podcast Network, Julian Council",
+      "title": "ACTIVATION WATCH: Carolina Panthers FACE Tough CALL on Brady Christensen & Jonathon Brooks This Week",
+      "summary": "The Carolina Panthers surge past the Baltimore Ravens in a wild 35-33 comeback, fueled by Chuba Hubbard’s dominant ground game and Tyrel Dodson’s clutch defensive plays. With the Panthers now 5-5 and atop the NFC South, questions swirl over key roster decisions—will Jonathon",
+      "publishedAt": "2026-11-24T08:00:00.000Z",
+      "durationMinutes": 32,
+      "durationDisplay": "32 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/60/2a/4b/602a4ba5-b9f9-c37e-0317-ce78d5df6578/mza_11963645012762524004.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/activation-watch-carolina-panthers-face-tough-call/id1150966073?i=1000803743758&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/cb8dee01-c2fc-4404-aa07-2571aa92f610/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=cb8dee01-c2fc-4404-aa07-2571aa92f610&feed=3JTeh8Y2"
+    },
+    {
+      "id": "pod_panthers_locked_on_panthers_1000803645307",
+      "trackId": 1000803645307,
+      "collectionId": 1150966073,
+      "showId": "panthers_locked_on_panthers",
+      "showName": "Locked On Panthers",
+      "showFullTitle": "Locked On Panthers - Daily Podcast On The Carolina Panthers",
+      "hosts": "Locked On Podcast Network, Julian Council",
+      "network": "Locked On Podcast Network, Julian Council",
+      "title": "CAREER STRETCH: Carolina Panthers RIDE Chuba Hubbard Hot Streak, Xavier Legette Left OUT in 35-33 Thriller",
+      "summary": "The Carolina Panthers surge ahead in the NFC South after a wild 35-33 comeback win over the Baltimore Ravens, powered by Chuba Hubbard’s explosive four-week streak and Will Lee’s game-changing defensive heroics. Can this rejuvenated squad maintain control of the division as ",
+      "publishedAt": "2026-11-23T18:28:36.000Z",
+      "durationMinutes": 31,
+      "durationDisplay": "31 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/22/ec/5b/22ec5b84-bce9-26a4-f3fc-982f966664cf/mza_8814951459565679808.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/career-stretch-carolina-panthers-ride-chuba-hubbard/id1150966073?i=1000803645307&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/b0d09ccd-b042-4187-9ada-fe4e569a2024/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=b0d09ccd-b042-4187-9ada-fe4e569a2024&feed=3JTeh8Y2"
+    },
     {
       "id": "pod_panthers_locked_on_panthers_1000803497598",
       "trackId": 1000803497598,
@@ -240,66 +280,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
       "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/94bc9905-18f6-42f2-b2a7-6d505b7d572d/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=94bc9905-18f6-42f2-b2a7-6d505b7d572d&feed=3JTeh8Y2"
-    },
-    {
-      "id": "pod_panthers_bleav_in_carolina_panthers_1000802582249",
-      "trackId": 1000802582249,
-      "collectionId": 1515076603,
-      "showId": "panthers_bleav_in_carolina_panthers",
-      "showName": "Bleav in Panthers",
-      "showFullTitle": "Bleav in Carolina Panthers",
-      "hosts": "Bleav Network",
-      "network": "Bleav",
-      "title": "Panthers vs Ravens Preview | Can Panthers Make It Two In a Row?",
-      "summary": "Desmond Johnson and Jonathan Stewart break down the Carolina Panthers' recent performance, analyzing the team's evolving offensive identity and defensive improvements. They discuss key player contributions, upcoming schedule challenges, and the potential impact of returning ",
-      "publishedAt": "2026-11-17T19:35:00.000Z",
-      "durationMinutes": 34,
-      "durationDisplay": "34 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/e6/f0/a9/e6f0a959-bf08-a3f0-2ce5-e4e0269218c0/mza_8684086409621718036.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/panthers-vs-ravens-preview-can-panthers-make-it-two-in-a-row/id1515076603?i=1000802582249&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/bleav-in-carolina-panthers/id1515076603?uo=4",
-      "feedUrl": "https://feeds.simplecast.com/heiTBv_K",
-      "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/1385/injector.simplecastaudio.com/92fae91c-74fb-45cd-af61-ad255fe2bc9f/episodes/1a3494b1-a5cc-4bab-b450-d73d0e03f1e6/audio/128/default.mp3?aid=rss_feed&awCollectionId=92fae91c-74fb-45cd-af61-ad255fe2bc9f&awEpisodeId=1a3494b1-a5cc-4bab-b450-d73d0e03f1e6&feed=heiTBv_K"
-    },
-    {
-      "id": "pod_panthers_bleav_in_carolina_panthers_1000802496907",
-      "trackId": 1000802496907,
-      "collectionId": 1515076603,
-      "showId": "panthers_bleav_in_carolina_panthers",
-      "showName": "Bleav in Panthers",
-      "showFullTitle": "Bleav in Carolina Panthers",
-      "hosts": "Bleav Network",
-      "network": "Bleav",
-      "title": "Panthers SURVIVE Saints on Walk Off FG, 20-17",
-      "summary": "Desmond Johnson and Jonathan Stewart break down the Carolina Panthers' recent performance, analyzing the team's evolving offensive identity and defensive improvements. They discuss key player contributions, upcoming schedule challenges, and the potential impact of returning ",
-      "publishedAt": "2026-11-17T14:50:00.000Z",
-      "durationMinutes": 42,
-      "durationDisplay": "42 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/b4/21/10/b42110d6-67bd-a954-a044-7d9b148b8536/mza_15862857640572274042.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/panthers-survive-saints-on-walk-off-fg-20-17/id1515076603?i=1000802496907&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/bleav-in-carolina-panthers/id1515076603?uo=4",
-      "feedUrl": "https://feeds.simplecast.com/heiTBv_K",
-      "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/1385/injector.simplecastaudio.com/92fae91c-74fb-45cd-af61-ad255fe2bc9f/episodes/80fe424b-9f16-4122-b812-f3fb74479861/audio/128/default.mp3?aid=rss_feed&awCollectionId=92fae91c-74fb-45cd-af61-ad255fe2bc9f&awEpisodeId=80fe424b-9f16-4122-b812-f3fb74479861&feed=heiTBv_K"
-    },
-    {
-      "id": "pod_panthers_locked_on_panthers_1000802312549",
-      "trackId": 1000802312549,
-      "collectionId": 1150966073,
-      "showId": "panthers_locked_on_panthers",
-      "showName": "Locked On Panthers",
-      "showFullTitle": "Locked On Panthers - Daily Podcast On The Carolina Panthers",
-      "hosts": "Locked On Podcast Network, Julian Council",
-      "network": "Locked On Podcast Network, Julian Council",
-      "title": "RUNNING TO VICTORY: Chuba Hubbard's MONSTER Day PROPELS Carolina Panthers to NFC South Lead",
-      "summary": "Carolina Panthers reclaim sole possession of first place in the NFC South after a dramatic 20-17 walk-off win over the New Orleans Saints. Can Chuba Hubbard’s dominant ground game and a resurgent defense propel Carolina into a December playoff push? Julian Council breaks dow",
-      "publishedAt": "2026-11-16T17:10:34.000Z",
-      "durationMinutes": 27,
-      "durationDisplay": "27 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/9a/9a/12/9a9a12d4-4d42-6c46-6e97-aacfa73756c4/mza_17568308116415467690.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/running-to-victory-chuba-hubbards-monster-day-propels/id1150966073?i=1000802312549&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-panthers-daily-podcast-on-the-carolina-panthers/id1150966073?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/c2438b/feeds.simplecast.com/3JTeh8Y2",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/c2438b/lockedon.simplecastaudio.com/f8b521bd-260a-474f-89c8-e4f147ea9f8a/episodes/0849beb3-f610-485f-b679-8a8a0704d290/audio/128/default.mp3?aid=rss_feed&awCollectionId=f8b521bd-260a-474f-89c8-e4f147ea9f8a&awEpisodeId=0849beb3-f610-485f-b679-8a8a0704d290&feed=3JTeh8Y2"
     }
   ]
 }

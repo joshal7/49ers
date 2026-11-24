@@ -61,14 +61,14 @@ async function main() {
   console.log('================================================================\n');
 
   if (!skipFetch) {
-    console.log('[1/4] Fetching fresh live 2026 data for all 31 non-SF teams...');
-    const fetchRes = run(process.execPath, [path.join(ROOT, 'scripts', 'fetch-team-data.mjs'), '--all']);
+    console.log('[1/5] Fetching fresh live 2026 data for ALL 32 NFL teams (SF + 31 clubs via unified pipeline)...');
+    const fetchRes = run(process.execPath, [path.join(ROOT, 'scripts', 'refresh-all-nfl-teams.mjs')]);
     if (fetchRes.status !== 0) {
       console.error('Data fetch failed. Fix errors above and retry.');
       process.exit(1);
     }
   } else {
-    console.log('[1/4] Skipping live data fetch (--skip-fetch).');
+    console.log('[1/5] Skipping live data fetch (--skip-fetch).');
   }
 
   console.log('\n[2/4] Building dist-nfl-teams/ bundle for all 32 NFL teams...');

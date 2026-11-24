@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T06:36:18.602Z",
+  "updatedAt": "2026-11-24T20:08:44.939Z",
   "windowDays": 7,
-  "totalEpisodes": 14,
+  "totalEpisodes": 11,
   "shows": [
     {
       "id": "texans_locked_on_texans",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/de6246/feeds.simplecast.com/eO87ZWbO",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-texans-daily-podcast-on-the-houston-texans/id1156158142?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/47/cd/4d/47cd4d70-5c8e-c680-384a-115d15c5cefe/mza_2655695750801309032.jpg/600x600bb.jpg",
-      "episodeCount7d": 7
+      "episodeCount7d": 6
     },
     {
       "id": "texans_texans_on_tap",
@@ -25,7 +25,7 @@
       "feedUrl": "https://feeds.simplecast.com/DTDqu9OA",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/texans-on-tap-a-houston-texans-podcast/id1706775831?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/24/1f/80/241f808d-c0a2-cb38-610c-7e96e47b7324/mza_14227551047292992268.jpg/600x600bb.jpg",
-      "episodeCount7d": 2
+      "episodeCount7d": 1
     },
     {
       "id": "texans_texans_today",
@@ -37,10 +37,50 @@
       "feedUrl": "https://feeds.megaphone.fm/BVLLC6295052856",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/texans-today-daily-houston-texans-podcast/id6815401698?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ce/8a/dd/ce8addb0-df64-b057-6f36-65dd0ecacd22/mza_11507396649922582333.jpeg/600x600bb.jpg",
-      "episodeCount7d": 5
+      "episodeCount7d": 4
     }
   ],
   "episodes": [
+    {
+      "id": "pod_texans_locked_on_texans_1000803692498",
+      "trackId": 1000803692498,
+      "collectionId": 1156158142,
+      "showId": "texans_locked_on_texans",
+      "showName": "Locked On Texans",
+      "showFullTitle": "Locked On Texans - Daily Podcast On The Houston Texans",
+      "hosts": "Coty Davis, Locked On Podcast Network, John Hickman",
+      "network": "Coty Davis, Locked On Podcast Network, John Hickman",
+      "title": "INVEST: Houston Texans READY to Develop Marlon Klein After Practice PROVES His Upside",
+      "summary": "Houston Texans fans get a glimpse of the future as rookie tight end Marlon Klein flashes his potential against the Colts. Do the Texans have their next George Kittle in the making? Strong blocking, sharp route execution, and a crucial touchdown highlight Klein’s breakout per",
+      "publishedAt": "2026-11-24T00:42:07.000Z",
+      "durationMinutes": 19,
+      "durationDisplay": "19 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/47/cd/4d/47cd4d70-5c8e-c680-384a-115d15c5cefe/mza_2655695750801309032.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/invest-houston-texans-ready-to-develop-marlon-klein/id1156158142?i=1000803692498&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-texans-daily-podcast-on-the-houston-texans/id1156158142?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/de6246/feeds.simplecast.com/eO87ZWbO",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/de6246/lockedon.simplecastaudio.com/6f716782-2a27-4145-9fbb-3de5b45b2aa7/episodes/18b8252f-0a15-4eca-8106-48a59fb5beec/audio/128/default.mp3?aid=rss_feed&awCollectionId=6f716782-2a27-4145-9fbb-3de5b45b2aa7&awEpisodeId=18b8252f-0a15-4eca-8106-48a59fb5beec&feed=eO87ZWbO"
+    },
+    {
+      "id": "pod_texans_texans_today_1000803650970",
+      "trackId": 1000803650970,
+      "collectionId": 6815401698,
+      "showId": "texans_texans_today",
+      "showName": "Texans Today",
+      "showFullTitle": "Texans Today | Daily Houston Texans Podcast",
+      "hosts": "Fan Arch",
+      "network": "Fan Arch",
+      "title": "The Texans Keep Proving People Wrong... | Daily Houston Texans News & Rumors",
+      "summary": "For a limited time, download the Kalshi app and use code FANARCHFOOTBALL to get $25 dollars when you trade $25 : https://kalshi.com/r/FANARCHFOOTBALL https://kalshi.com/ 18+ only. Restrictions and eligibility requirements apply. Event contract trading involves risk and may n",
+      "publishedAt": "2026-11-23T17:00:00.000Z",
+      "durationMinutes": 20,
+      "durationDisplay": "20 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ce/8a/dd/ce8addb0-df64-b057-6f36-65dd0ecacd22/mza_11507396649922582333.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/the-texans-keep-proving-people-wrong-daily-houston/id6815401698?i=1000803650970&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/texans-today-daily-houston-texans-podcast/id6815401698?uo=4",
+      "feedUrl": "https://feeds.megaphone.fm/BVLLC6295052856",
+      "audioStreamUrl": "https://traffic.megaphone.fm/BVLLC6587397408.mp3"
+    },
     {
       "id": "pod_texans_locked_on_texans_1000803497041",
       "trackId": 1000803497041,
@@ -220,106 +260,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-texans-daily-podcast-on-the-houston-texans/id1156158142?uo=4",
       "feedUrl": "https://rss.pdrl.fm/de6246/feeds.simplecast.com/eO87ZWbO",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/de6246/lockedon.simplecastaudio.com/6f716782-2a27-4145-9fbb-3de5b45b2aa7/episodes/b4319504-4007-4f40-8eb0-a818c47b4ff4/audio/128/default.mp3?aid=rss_feed&awCollectionId=6f716782-2a27-4145-9fbb-3de5b45b2aa7&awEpisodeId=b4319504-4007-4f40-8eb0-a818c47b4ff4&feed=eO87ZWbO"
-    },
-    {
-      "id": "pod_texans_texans_today_1000802544308",
-      "trackId": 1000802544308,
-      "collectionId": 6815401698,
-      "showId": "texans_texans_today",
-      "showName": "Texans Today",
-      "showFullTitle": "Texans Today | Daily Houston Texans Podcast",
-      "hosts": "Fan Arch",
-      "network": "Fan Arch",
-      "title": "This Raises Some Serious Questions... | Daily Houston Texans News & Rumors",
-      "summary": "For a limited time, download the Kalshi app and use code FANARCHFOOTBALL to get $25 dollars when you trade $25. https://kalshi.com/ 18+ only. Restrictions and eligibility requirements apply. Event contract trading involves risk and may not be suitable for all investors. Pric",
-      "publishedAt": "2026-11-17T17:00:00.000Z",
-      "durationMinutes": 26,
-      "durationDisplay": "26 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ce/8a/dd/ce8addb0-df64-b057-6f36-65dd0ecacd22/mza_11507396649922582333.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/this-raises-some-serious-questions-daily-houston-texans/id6815401698?i=1000802544308&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/texans-today-daily-houston-texans-podcast/id6815401698?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/BVLLC6295052856",
-      "audioStreamUrl": "https://traffic.megaphone.fm/BVLLC2497490695.mp3"
-    },
-    {
-      "id": "pod_texans_locked_on_texans_1000802514032",
-      "trackId": 1000802514032,
-      "collectionId": 1156158142,
-      "showId": "texans_locked_on_texans",
-      "showName": "Locked On Texans",
-      "showFullTitle": "Locked On Texans - Daily Podcast On The Houston Texans",
-      "hosts": "Coty Davis, Locked On Podcast Network, John Hickman",
-      "network": "Coty Davis, Locked On Podcast Network, John Hickman",
-      "title": "DYSFUNCTION: Texans Crisis EXPOSED—CJ Stroud’s Future UNCERTAIN Amid Coaching Controversy",
-      "summary": "Houston Texans’ locker room faces crisis as trust erodes and playoff hopes fade. Is a total franchise overhaul coming? Analyst John Hickman and guest Dan Matthews scrutinize DeMeco Ryans’ leadership, highlighting repeated blown leads, mounting penalties, and player-coach fri",
-      "publishedAt": "2026-11-17T16:15:00.000Z",
-      "durationMinutes": 34,
-      "durationDisplay": "34 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/47/cd/4d/47cd4d70-5c8e-c680-384a-115d15c5cefe/mza_2655695750801309032.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/dysfunction-texans-crisis-exposed-cj-strouds-future/id1156158142?i=1000802514032&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-texans-daily-podcast-on-the-houston-texans/id1156158142?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/de6246/feeds.simplecast.com/eO87ZWbO",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/de6246/lockedon.simplecastaudio.com/6f716782-2a27-4145-9fbb-3de5b45b2aa7/episodes/f5fcd460-65f8-45e0-a7f7-e2f533528f15/audio/128/default.mp3?aid=rss_feed&awCollectionId=6f716782-2a27-4145-9fbb-3de5b45b2aa7&awEpisodeId=f5fcd460-65f8-45e0-a7f7-e2f533528f15&feed=eO87ZWbO"
-    },
-    {
-      "id": "pod_texans_texans_on_tap_1000802411597",
-      "trackId": 1000802411597,
-      "collectionId": 1706775831,
-      "showId": "texans_texans_on_tap",
-      "showName": "Texans on Tap",
-      "showFullTitle": "Texans on Tap: A Houston Texans Podcast",
-      "hosts": "Space City Pods, Bleav",
-      "network": "Space City Pods, Bleav",
-      "title": "Are Texans nearing point of wide-sweeping organizational changes?",
-      "summary": "Reacting to quotes from Texans coaches and players following their collapse in Cleveland, what could be the extinction level event for this regime, and why Houston will probably dominate Thursday. Get a FREE $25 when you Trade $25 on Kalshi by clicking here. Disclaimer: 18+ ",
-      "publishedAt": "2026-11-17T05:03:54.000Z",
-      "durationMinutes": 23,
-      "durationDisplay": "23 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/29/2f/43/292f4307-d420-bc70-6ccd-1740796a8077/mza_1960542662094665145.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/are-texans-nearing-point-of-wide-sweeping/id1706775831?i=1000802411597&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/texans-on-tap-a-houston-texans-podcast/id1706775831?uo=4",
-      "feedUrl": "https://feeds.simplecast.com/DTDqu9OA",
-      "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/1385/injector.simplecastaudio.com/34156075-1f1c-48e7-9e0a-5f42dda25f93/episodes/d318686d-947e-4432-ac31-54a3097cb677/audio/128/default.mp3?aid=rss_feed&awCollectionId=34156075-1f1c-48e7-9e0a-5f42dda25f93&awEpisodeId=d318686d-947e-4432-ac31-54a3097cb677&feed=DTDqu9OA"
-    },
-    {
-      "id": "pod_texans_locked_on_texans_1000802382403",
-      "trackId": 1000802382403,
-      "collectionId": 1156158142,
-      "showId": "texans_locked_on_texans",
-      "showName": "Locked On Texans",
-      "showFullTitle": "Locked On Texans - Daily Podcast On The Houston Texans",
-      "hosts": "Coty Davis, Locked On Podcast Network, John Hickman",
-      "network": "Coty Davis, Locked On Podcast Network, John Hickman",
-      "title": "Internal Civil WAR Already Tearing Apart the Houston Texans?",
-      "summary": "Houston Texans face a brewing civil war as players and coaches openly clash over accountability and on-field adjustments. With speculation swirling about Nick Caserio’s future as general manager and questions mounting about DeMeco Ryans’ leadership, is the franchise at a cro",
-      "publishedAt": "2026-11-17T01:41:43.000Z",
-      "durationMinutes": 26,
-      "durationDisplay": "26 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/47/cd/4d/47cd4d70-5c8e-c680-384a-115d15c5cefe/mza_2655695750801309032.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/internal-civil-war-already-tearing-apart-the-houston/id1156158142?i=1000802382403&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-texans-daily-podcast-on-the-houston-texans/id1156158142?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/de6246/feeds.simplecast.com/eO87ZWbO",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/de6246/lockedon.simplecastaudio.com/6f716782-2a27-4145-9fbb-3de5b45b2aa7/episodes/62669419-55db-448e-b9be-d2472b56b21d/audio/128/default.mp3?aid=rss_feed&awCollectionId=6f716782-2a27-4145-9fbb-3de5b45b2aa7&awEpisodeId=62669419-55db-448e-b9be-d2472b56b21d&feed=eO87ZWbO"
-    },
-    {
-      "id": "pod_texans_texans_today_1000802335521",
-      "trackId": 1000802335521,
-      "collectionId": 6815401698,
-      "showId": "texans_texans_today",
-      "showName": "Texans Today",
-      "showFullTitle": "Texans Today | Daily Houston Texans Podcast",
-      "hosts": "Fan Arch",
-      "network": "Fan Arch",
-      "title": "This Is Getting REALLY Frustrating... | Daily Houston Texans News & Rumors",
-      "summary": "For a limited time, download the Kalshi app and use code FANARCHFOOTBALL to get $25 dollars when you trade $25. https://kalshi.com/ 18+ only. Restrictions and eligibility requirements apply. Event contract trading involves risk and may not be suitable for all investors. Pric",
-      "publishedAt": "2026-11-16T17:00:00.000Z",
-      "durationMinutes": 33,
-      "durationDisplay": "33 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ce/8a/dd/ce8addb0-df64-b057-6f36-65dd0ecacd22/mza_11507396649922582333.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/this-is-getting-really-frustrating-daily-houston-texans/id6815401698?i=1000802335521&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/texans-today-daily-houston-texans-podcast/id6815401698?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/BVLLC6295052856",
-      "audioStreamUrl": "https://traffic.megaphone.fm/BVLLC9276494907.mp3"
     }
   ]
 }

@@ -1,120 +1,186 @@
 {
-  "updatedAt": "2026-11-23T06:34:05.130Z",
+  "updatedAt": "2026-11-24T20:07:52.115Z",
   "dailyTopNewsBrief": {
-    "id": "brief_gb_388559268463",
-    "cycleKey": "2026-11-22@17CT",
+    "id": "brief_gb_5a8ba833181d",
+    "cycleKey": "2026-11-23@17CT",
     "scheduledHourPt": 17,
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "6-4",
-    "generatedAt": "2026-11-23T03:46:02.572Z",
-    "modelUsed": "gemini-3.5-flash",
-    "thinkingLevel": "HIGH",
-    "source": "live-gemini-daily",
-    "wordCount": 174,
-    "guardClean": true,
-    "headline": "Green Bay Packers Prepare for Week 12 Matchup Against Los Angeles Rams",
-    "summary": "At 6-4 and holding the NFC’s #7 seed, Head Coach Matt LaFleur’s Green Bay Packers prepare to face the 6-4 Los Angeles Rams on Thanksgiving Eve. Green Bay must navigate key interior offensive line injuries while relying on their league-leading explosive passing attack.",
+    "generatedAt": "2026-11-24T20:07:53.412Z",
+    "modelUsed": "gemini-4-hydrogen",
+    "thinkingLevel": "XHIGH",
+    "source": "deterministic-digest",
+    "wordCount": 80,
+    "headline": "Green Bay Packers Daily Briefing — Week 12",
+    "summary": "Green Bay Packers (6-4, 4th in NFC North • #7 Seed in NFC) top verified storylines, injury status, and upcoming matchup intel.",
     "bullets": [
-      "Starting running back Josh Jacobs, guard Sean Rhyan, guard Kevin Zeitler, and linebacker Zaire Franklin have been ruled out for Wednesday's game against Los Angeles, according to the official [Packers-Rams Injury Report](https://www.packers.com/news/packers-rams-injury-report-nov-22-2026).",
-      "Green Bay signed running back Pierre Strong Jr. to the practice squad and released edge rusher D.J. Johnson to manage backfield depth, per [Green Bay Packers Official](https://www.packers.com/team/transactions/#tx-a24dc24b80ae).",
-      "Pass rusher Micah Parsons remains a game-time decision on the PUP list, with Head Coach Matt LaFleur highlighting his elite athletic caliber ahead of the matchup via [packers.com Video](https://www.packers.com/video/matt-lafleur-on-micah-parsons-he-is-an-elite-player-he-is-an-elite-athlete-nov-22-2026).",
-      "Wide receiver Christian Watson noted 'we know what's at stake' on [packers.com Video](https://www.packers.com/video/christian-watson-we-know-what-s-at-stake-in-matchup-vs-the-rams-nov-22-2026), as Green Bay's #1-ranked explosive pass offense attempts to overcome their #32-ranked rushing attack (67.0 yards per game)."
+      "Micah Parsons: Brought back from PUP list: The Packers reinstated Parsons (knee) from the PUP list on Tuesday. Visit RotoWire.com for more analysis on this update. ([RotoWire NFL Beat](https://www.rotowire.com/football/player/micah-parsons-15182))",
+      "Packers' Micah Parsons activated, expected to make season debut against Rams ([Rob Demovsky](https://www.espn.com/nfl/story/_/id/50577301/sources-packers-micah-parsons-cleared-return-wednesday))",
+      "Packers Officially Activate Micah Parsons Off PUP List ([NFL Trade Rumors](https://nfltraderumors.co/packers-officially-activate-micah-parsons-off-pup-list/))",
+      "Packers’ Micah Parsons Receives Clearance, To Return In Week 12 ([Pro Football Rumors](https://www.profootballrumors.com/2026/11/packers-micah-parsons-receives-clearance-to-return-in-week-12))",
+      "Green Bay Packers vs Los Angeles Rams | 2026 Week 12 Game Preview ([NFL](https://www.youtube.com/watch?v=NdfrTqtRB9Y))"
     ],
     "coveredStoryKeys": [
-      "gb_rss_3335aa2dfab7",
-      "gb_vid_860d724d92c9",
-      "gb_vid_b22d17cced29",
-      "gb_vid_5d57ffbf7ef2",
-      "gb_rss_436e39b97f3e",
-      "gb_vid_039a50ac8547"
+      "gb_roto_04335e78147f",
+      "gb_espn_f122d0eade402",
+      "gb_nfltr_3d0298051426",
+      "gb_pfr_52b50f17aa62",
+      "gb_yt_NdfrTqtRB9Y"
     ],
     "coveredUrls": [
-      "https://www.packers.com/news/packers-rams-injury-report-nov-22-2026",
-      "https://www.packers.com/video/christian-watson-we-know-what-s-at-stake-in-matchup-vs-the-rams-nov-22-2026",
-      "https://www.packers.com/video/matt-lafleur-on-micah-parsons-he-is-an-elite-player-he-is-an-elite-athlete-nov-22-2026",
-      "https://www.packers.com/video/evan-williams-on-matchup-vs-rams-what-an-opportunity-nov-22-2026",
-      "https://www.packers.com/video/jordan-love-sean-rhyan-is-a-guy-that-does-all-the-little-things-right-nov-21-2026",
-      "https://www.packers.com/video/zaire-franklin-we-got-to-go-out-there-and-earn-it-nov-21-2026"
+      "https://www.rotowire.com/football/player/micah-parsons-15182",
+      "https://www.espn.com/nfl/story/_/id/50577301/sources-packers-micah-parsons-cleared-return-wednesday",
+      "https://nfltraderumors.co/packers-officially-activate-micah-parsons-off-pup-list/",
+      "https://www.profootballrumors.com/2026/11/packers-micah-parsons-receives-clearance-to-return-in-week-12",
+      "https://www.youtube.com/watch?v=NdfrTqtRB9Y"
     ],
     "sources": [
       {
+        "sid": "S1",
+        "title": "Micah Parsons: Brought back from PUP list: The Packers reinstated Parsons (knee) from the PUP list on Tuesday. Visit RotoWire.com for more analysis on this update.",
+        "url": "https://www.rotowire.com/football/player/micah-parsons-15182",
+        "author": "RotoWire NFL Beat",
+        "outlet": "RotoWire NFL Beat",
+        "publishedAt": "2026-11-24T19:34:00.000Z"
+      },
+      {
+        "sid": "S2",
+        "title": "Packers' Micah Parsons activated, expected to make season debut against Rams",
+        "url": "https://www.espn.com/nfl/story/_/id/50577301/sources-packers-micah-parsons-cleared-return-wednesday",
+        "author": "Rob Demovsky",
+        "outlet": "ESPN",
+        "publishedAt": "2026-11-24T19:43:48Z"
+      },
+      {
         "sid": "S3",
-        "title": "Packers-Rams Injury Report | Nov. 22, 2026",
-        "url": "https://www.packers.com/news/packers-rams-injury-report-nov-22-2026",
-        "author": "packers.com Official",
-        "outlet": "packers.com Official",
-        "publishedAt": "2026-11-22T21:44:10.000Z"
+        "title": "Packers Officially Activate Micah Parsons Off PUP List",
+        "url": "https://nfltraderumors.co/packers-officially-activate-micah-parsons-off-pup-list/",
+        "author": "NFL Trade Rumors",
+        "outlet": "NFL Trade Rumors",
+        "publishedAt": "2026-11-24T19:32:11.000Z"
       },
       {
         "sid": "S4",
-        "title": "Christian Watson: 'We know what's at stake' in matchup vs. the Rams",
-        "url": "https://www.packers.com/video/christian-watson-we-know-what-s-at-stake-in-matchup-vs-the-rams-nov-22-2026",
-        "author": "packers.com Video",
-        "outlet": "packers.com Video",
-        "publishedAt": "2026-11-22T21:09:55.000Z"
-      },
-      {
-        "sid": "S6",
-        "title": "Matt LaFleur on Micah Parsons: 'He is an elite player, he is an elite athlete'",
-        "url": "https://www.packers.com/video/matt-lafleur-on-micah-parsons-he-is-an-elite-player-he-is-an-elite-athlete-nov-22-2026",
-        "author": "packers.com Video",
-        "outlet": "packers.com Video",
-        "publishedAt": "2026-11-22T17:17:24.000Z"
+        "title": "Packers’ Micah Parsons Receives Clearance, To Return In Week 12",
+        "url": "https://www.profootballrumors.com/2026/11/packers-micah-parsons-receives-clearance-to-return-in-week-12",
+        "author": "Pro Football Rumors",
+        "outlet": "Pro Football Rumors",
+        "publishedAt": "2026-11-24T19:27:23.000Z"
       },
       {
         "sid": "S5",
-        "title": "Evan Williams on matchup vs. Rams: 'What an opportunity'",
-        "url": "https://www.packers.com/video/evan-williams-on-matchup-vs-rams-what-an-opportunity-nov-22-2026",
-        "author": "packers.com Video",
-        "outlet": "packers.com Video",
-        "publishedAt": "2026-11-22T21:09:44.000Z"
+        "title": "Green Bay Packers vs Los Angeles Rams | 2026 Week 12 Game Preview",
+        "url": "https://www.youtube.com/watch?v=NdfrTqtRB9Y",
+        "author": "NFL",
+        "outlet": "NFL",
+        "publishedAt": "2026-11-24T19:25:03.000Z"
+      },
+      {
+        "sid": "S6",
+        "title": "Packers activate EDGE Micah Parsons off PUP",
+        "url": "https://www.packers.com/news/packers-activate-micah-parsons-off-pup-nov-24-2026",
+        "author": "packers.com Official",
+        "outlet": "packers.com Official",
+        "publishedAt": "2026-11-24T19:25:00.000Z"
       },
       {
         "sid": "S7",
-        "title": "Jordan Love: Sean Rhyan is 'a guy that does all the little things right'",
-        "url": "https://www.packers.com/video/jordan-love-sean-rhyan-is-a-guy-that-does-all-the-little-things-right-nov-21-2026",
-        "author": "packers.com Video",
-        "outlet": "packers.com Video",
-        "publishedAt": "2026-11-21T21:15:05.000Z"
+        "title": "Packers list eight questionable vs. Rams | Week 12 Injury Report",
+        "url": "https://www.packers.com/news/packers-list-eight-questionable-vs-rams-week-12-injury-report",
+        "author": "packers.com Official",
+        "outlet": "packers.com Official",
+        "publishedAt": "2026-11-24T18:00:00.000Z"
       },
       {
         "sid": "S8",
-        "title": "Zaire Franklin: 'We got to go out there and earn it'",
-        "url": "https://www.packers.com/video/zaire-franklin-we-got-to-go-out-there-and-earn-it-nov-21-2026",
-        "author": "packers.com Video",
-        "outlet": "packers.com Video",
-        "publishedAt": "2026-11-21T21:08:01.000Z"
-      },
-      {
-        "sid": "S9",
-        "title": "Packers getting healthier on both sides of the ball",
-        "url": "https://www.packers.com/news/packers-getting-healthier-on-both-sides-of-the-ball-nov-21-2026",
-        "author": "packers.com Official",
-        "outlet": "packers.com Official",
-        "publishedAt": "2026-11-21T22:26:00.000Z"
-      },
-      {
-        "sid": "S10",
-        "title": "Sean Rhyan speaks on the upcoming challenge vs. the Rams' DL",
-        "url": "https://www.packers.com/video/sean-rhyan-speaks-on-the-upcoming-challenge-vs-the-rams-dl-nov-21-2026",
-        "author": "packers.com Video",
-        "outlet": "packers.com Video",
-        "publishedAt": "2026-11-21T21:06:35.000Z"
+        "title": "Josh Jacobs: Officially questionable for Wednesday: The Packers list Jacobs (finger) as questionable for Wednesday's game against the Rams, Wes Hodkiewicz of the team's official site reports. Visit RotoWire.com for more analysis on this update.",
+        "url": "https://www.rotowire.com/football/player/josh-jacobs-13582",
+        "author": "RotoWire NFL Beat",
+        "outlet": "RotoWire NFL Beat",
+        "publishedAt": "2026-11-24T18:20:00.000Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
     {
-      "id": "gb_nfltr_24d8d6572d50",
-      "type": "article",
-      "title": "NFC Notes: Micah Parsons, Cam Skattebo, Lions, Packers, Vikings",
-      "summary": "Lions Lions EDGE Aidan Hutchinson tore his ACL while celebrating in Week 10. Giants RB Cam Skattebo has built a reputation for his backflip celebration after scoring touchdowns and said Hutchinson’s injury has made him rethink doing a",
+      "id": "gb_roto_04335e78147f",
+      "type": "tweet",
+      "title": "Micah Parsons: Brought back from PUP list: The Packers reinstated Parsons (knee) from the PUP list on Tuesday. Visit RotoWire.com for more analysis on this update.",
+      "fullText": "Micah Parsons: Brought back from PUP list: The Packers reinstated Parsons (knee) from the PUP list on Tuesday. Visit RotoWire.com for more analysis on this update.",
+      "isFullTweet": true,
+      "summary": "The Packers reinstated Parsons (knee) from the PUP list on Tuesday. Visit RotoWire.com for more analysis on this update.",
       "imageUrl": "",
-      "imageAlt": "NFC Notes: Micah Parsons, Cam Skattebo, Lions, Packers, Vikings",
-      "publishedAt": "2026-11-23T01:00:09.000Z",
-      "url": "https://nfltraderumors.co/nfc-notes-micah-parsons-cam-skattebo-lions-packers-vikings/",
+      "publishedAt": "2026-11-24T19:34:00.000Z",
+      "url": "https://www.rotowire.com/football/player/micah-parsons-15182",
+      "outletId": "rotowire",
+      "outletName": "RotoWire NFL Beat",
+      "reporterId": "rotowire_nfl_beat",
+      "reporterName": "RotoWire NFL Beat",
+      "author": "RotoWire NFL Beat",
+      "authorHandle": "@RotoWireNFL",
+      "authorProfileUrl": "https://www.rotowire.com/football/news.php",
+      "trustTier": 2,
+      "wireSource": "rotowire_rss",
+      "isBreaking": true,
+      "isInGameInjury": false,
+      "breakingBadge": "BREAKING",
+      "breakingPriority": 2.534,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "tier2_roster",
+      "isUrgentBreaking": true,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 79.7146
+    },
+    {
+      "id": "gb_espn_f122d0eade402",
+      "type": "article",
+      "title": "Packers' Micah Parsons activated, expected to make season debut against Rams",
+      "summary": "Packers star Micah Parsons has been cleared and is set for his season debut against the Rams on Wednesday night.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1750399_1296x729_16-9.jpg",
+      "imageCaption": "Micah Parsons' return to game action for the Packers will come 347 days after he not only tore his ACL but also his meniscus in a noncontact injury last season.",
+      "imageAlt": "Packers' Micah Parsons activated, expected to make season debut against Rams",
+      "publishedAt": "2026-11-24T19:43:48Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50577301/sources-packers-micah-parsons-cleared-return-wednesday",
+      "outletId": "espn_gb",
+      "outletName": "ESPN",
+      "reporterId": "rob_demovsky",
+      "reporterName": "Rob Demovsky",
+      "author": "Rob Demovsky",
+      "authorHandle": "@RobDemovsky",
+      "authorProfileUrl": "https://x.com/RobDemovsky",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 34.7806
+    },
+    {
+      "id": "gb_nfltr_3d0298051426",
+      "type": "article",
+      "title": "Packers Officially Activate Micah Parsons Off PUP List",
+      "summary": "The Green Bay Packers announced they have officially activated DE Micah Parsons off the PUP list. Parsons was fully cleared yesterday to return from a knee injury that kept him out since Week 15 of last season. Parsons, 26, was the Cowboys’",
+      "imageUrl": "",
+      "imageAlt": "Packers Officially Activate Micah Parsons Off PUP List",
+      "publishedAt": "2026-11-24T19:32:11.000Z",
+      "url": "https://nfltraderumors.co/packers-officially-activate-micah-parsons-off-pup-list/",
       "outletId": "nfl_trade_rumors",
       "outletName": "NFL Trade Rumors",
       "reporterId": "nfl_trade_rumors",
@@ -137,7 +203,882 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.1822
+      "storyRank": 28.8002
+    },
+    {
+      "id": "gb_pfr_52b50f17aa62",
+      "type": "article",
+      "title": "Packers’ Micah Parsons Receives Clearance, To Return In Week 12",
+      "summary": "NOVEMBER 24: The Packers have activated Parsons, per a team announcement. NOVEMBER 23: Micah Parsons’ Week 12 return is a go. The Packers have cleared the All-Pro edge rusher, NFL.com’s Ian Rapoport reports. Parsons had said earlier today (",
+      "imageUrl": "",
+      "publishedAt": "2026-11-24T19:27:23.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/packers-micah-parsons-receives-clearance-to-return-in-week-12",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/green-bay-packers",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 26.9792
+    },
+    {
+      "id": "gb_yt_NdfrTqtRB9Y",
+      "type": "video",
+      "category": "beat",
+      "videoId": "NdfrTqtRB9Y",
+      "embeddable": false,
+      "title": "Green Bay Packers vs Los Angeles Rams | 2026 Week 12 Game Preview",
+      "summary": "Watch live local and primetime games, NFL RedZone, and NFL Network on Plus.NFL.com Check out our other channels: NFL Pro https://www.youtube.com/@NFLPRO NFL Mundo https://www.youtube.com/mundonfl NFL Brasil https://www.y",
+      "imageUrl": "https://i.ytimg.com/vi/NdfrTqtRB9Y/hqdefault.jpg",
+      "imageAlt": "Green Bay Packers vs Los Angeles Rams | 2026 Week 12 Game Preview",
+      "publishedAt": "2026-11-24T19:25:03.000Z",
+      "url": "https://www.youtube.com/watch?v=NdfrTqtRB9Y",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=NdfrTqtRB9Y",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 26.6052
+    },
+    {
+      "id": "gb_rss_91108ef766d2",
+      "type": "article",
+      "title": "Packers activate EDGE Micah Parsons off PUP",
+      "summary": "General Manager Brian Gutekunst announced the transaction Tuesday",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/wqe0hm5nbxmiqjnxxf7t.png",
+      "imageAlt": "Packers activate EDGE Micah Parsons off PUP",
+      "publishedAt": "2026-11-24T19:25:00.000Z",
+      "url": "https://www.packers.com/news/packers-activate-micah-parsons-off-pup-nov-24-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Official",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Official",
+      "author": "packers.com Official",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 26.5879
+    },
+    {
+      "id": "gb_rss_7f428237aacb",
+      "type": "article",
+      "title": "Packers list eight questionable vs. Rams | Week 12 Injury Report",
+      "summary": "EDGE Micah Parsons, RB Josh Jacobs among those questionable for Thanksgiving Eve",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/k3hpgjd91fehqoganbh4.png",
+      "imageAlt": "Packers list eight questionable vs. Rams | Week 12 Injury Report",
+      "publishedAt": "2026-11-24T18:00:00.000Z",
+      "url": "https://www.packers.com/news/packers-list-eight-questionable-vs-rams-week-12-injury-report",
+      "outletId": "packers_official",
+      "outletName": "packers.com Official",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Official",
+      "author": "packers.com Official",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 19.375
+    },
+    {
+      "id": "gb_roto_94b4e19fca39",
+      "type": "tweet",
+      "title": "Josh Jacobs: Officially questionable for Wednesday: The Packers list Jacobs (finger) as questionable for Wednesday's game against the Rams, Wes Hodkiewicz of the team's official site reports. Visit RotoWire.com for more analysis on this update.",
+      "fullText": "Josh Jacobs: Officially questionable for Wednesday: The Packers list Jacobs (finger) as questionable for Wednesday's game against the Rams, Wes Hodkiewicz of the team's official site reports. Visit RotoWire.com for more analysis on this update.",
+      "isFullTweet": true,
+      "summary": "The Packers list Jacobs (finger) as questionable for Wednesday's game against the Rams, Wes Hodkiewicz of the team's official site reports. Visit RotoWire.com for more analysis on this update.",
+      "imageUrl": "",
+      "publishedAt": "2026-11-24T18:20:00.000Z",
+      "url": "https://www.rotowire.com/football/player/josh-jacobs-13582",
+      "outletId": "rotowire",
+      "outletName": "RotoWire NFL Beat",
+      "reporterId": "rotowire_nfl_beat",
+      "reporterName": "RotoWire NFL Beat",
+      "author": "RotoWire NFL Beat",
+      "authorHandle": "@RotoWireNFL",
+      "authorProfileUrl": "https://www.rotowire.com/football/news.php",
+      "trustTier": 2,
+      "wireSource": "rotowire_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 13.4987
+    },
+    {
+      "id": "gb_vid_0ad3c49aa068",
+      "type": "video",
+      "title": "Trailer: Packers at Rams",
+      "summary": "The Green Bay Packers travel to LA to take on the Rams in a Thanksgiving Eve matchup.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/nmugokhbje0akummdkan.jpg",
+      "imageAlt": "Trailer: Packers at Rams",
+      "publishedAt": "2026-11-24T17:55:00.000Z",
+      "url": "https://www.packers.com/video/trailer-packers-at-rams-week-12-2026",
+      "externalVideoUrl": "https://www.packers.com/video/trailer-packers-at-rams-week-12-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Video",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Video",
+      "author": "packers.com Video",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 11.3593
+    },
+    {
+      "id": "gb_rss_cf4b2057768d",
+      "type": "article",
+      "title": "Packers players to sign autographs in the Lambeau Field Atrium for donations to Salvation Army this holiday season",
+      "summary": "Fans reminded players’ schedules are subject to change; who is signing may change prior to each event",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/lxflu9ee5idqbzxirrz5.png",
+      "imageAlt": "Packers players to sign autographs in the Lambeau Field Atrium for donations to Salvation Army this holiday season",
+      "publishedAt": "2026-11-24T16:21:23.000Z",
+      "url": "https://www.packers.com/news/packers-players-to-sign-autographs-in-the-lambeau-field-atrium-for-donations-to-salvation-army-this-holiday-season-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Official",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Official",
+      "author": "packers.com Official",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.4773
+    },
+    {
+      "id": "gb_rss_43843baae7aa",
+      "type": "article",
+      "title": "Micah Parsons has winning in mind as he inches closer to return",
+      "summary": "Packers edge rusher found peace and perspective on road to recovery",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/fziyj7mgzlrh2crbkxt9.png",
+      "imageAlt": "Micah Parsons has winning in mind as he inches closer to return",
+      "publishedAt": "2026-11-24T15:00:00.000Z",
+      "url": "https://www.packers.com/news/micah-parsons-has-winning-in-mind-as-he-inches-closer-to-return-nov-24-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Official",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Official",
+      "author": "packers.com Official",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.6757
+    },
+    {
+      "id": "gb_vid_d94930df0f25",
+      "type": "video",
+      "title": "Packers Unscripted: High-stakes holiday",
+      "summary": "Mike and Wes preview the big matchup with the Rams, looking at their RB duo (2:30) and future HOF pass rushers (6:04). They also list several keys to victory (9:50, 12:25), examine the current state of the NFC North and ",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/th6zso4senkqc8dlpvzr.jpg",
+      "imageAlt": "Packers Unscripted: High-stakes holiday",
+      "publishedAt": "2026-11-24T14:55:00.000Z",
+      "url": "https://www.packers.com/video/packers-unscripted-high-stakes-holiday-nov-24-2026",
+      "externalVideoUrl": "https://www.packers.com/video/packers-unscripted-high-stakes-holiday-nov-24-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Video",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Video",
+      "author": "packers.com Video",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.5892
+    },
+    {
+      "id": "gb_vid_e3a34d1e5efd",
+      "type": "video",
+      "title": "#922 Packers Unscripted: High-stakes holiday",
+      "summary": "Mike and Wes preview the big matchup with the Rams, looking at their RB duo (2:30) and future HOF pass rushers (6:04). They also list several keys to victory (9:50, 12:25), examine the current state of the NFC North and ",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/x64lloq22o6nq8orscda.png",
+      "imageAlt": "#922 Packers Unscripted: High-stakes holiday",
+      "publishedAt": "2026-11-24T14:50:00.000Z",
+      "url": "https://www.packers.com/audio/922-packers-unscripted-high-stakes-holiday",
+      "externalVideoUrl": "https://www.packers.com/audio/922-packers-unscripted-high-stakes-holiday",
+      "outletId": "packers_official",
+      "outletName": "packers.com Video",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Video",
+      "author": "packers.com Video",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.5055
+    },
+    {
+      "id": "gb_rss_a4a1ca9409f9",
+      "type": "article",
+      "title": "Mike's Mid-Week Chat: Did the extra rest help the Packers?",
+      "summary": "Editor Mike Spofford answered fan questions in his live chat",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/tgpoqp0ncqez2k0ufylk.png",
+      "imageAlt": "Mike's Mid-Week Chat: Did the extra rest help the Packers?",
+      "publishedAt": "2026-11-24T14:45:00.000Z",
+      "url": "https://www.packers.com/news/mike-s-mid-week-chat-did-the-extra-rest-help-the-packers-nov-24-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Official",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Official",
+      "author": "packers.com Official",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.4244
+    },
+    {
+      "id": "gb_rss_9e2c72670b96",
+      "type": "article",
+      "title": "Inbox: The chess match awaits",
+      "summary": "The speed and collisions didn’t compare",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/g0h6iogrgx5ywryoyvkj.jpg",
+      "imageAlt": "Inbox: The chess match awaits",
+      "publishedAt": "2026-11-24T14:30:00.000Z",
+      "url": "https://www.packers.com/news/inbox-the-chess-match-awaits-nov-24-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Official",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Official",
+      "author": "packers.com Official",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.1954
+    },
+    {
+      "id": "gb_espn_d3037e6365b70",
+      "type": "video",
+      "title": "How will Micah Parsons' return impact the Packers?",
+      "summary": "How will Micah Parsons' return impact the Packers?",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1124/ss_20261124_083645536_3759183522/ss_20261124_083645536_3759183522.jpg",
+      "imageCaption": "How will Micah Parsons' return impact the Packers?",
+      "imageAlt": "How will Micah Parsons' return impact the Packers?",
+      "publishedAt": "2026-11-24T14:20:10Z",
+      "url": "https://www.espn.com/video/clip/_/id/50582441/how-micah-parsons-return-impact-packers",
+      "outletId": "espn_gb",
+      "outletName": "ESPN",
+      "reporterId": "espn_gb",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.056
+    },
+    {
+      "id": "gb_vid_36da74df4ba1",
+      "type": "video",
+      "title": "Packers Daily: The Power of Parsons",
+      "summary": "Members of the Green Bay Packers reflect on the abilities of edge rusher Micah Parsons as he continues to impress in practice and showcase what makes him such a disruptive force on the field. Find out more in this editio",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/haz3ht2shbfiwbiidisz.jpg",
+      "imageAlt": "Packers Daily: The Power of Parsons",
+      "publishedAt": "2026-11-24T14:15:00.000Z",
+      "url": "https://www.packers.com/video/packers-daily-the-power-of-parsons-nov-24-2026",
+      "externalVideoUrl": "https://www.packers.com/video/packers-daily-the-power-of-parsons-nov-24-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Video",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Video",
+      "author": "packers.com Video",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.986
+    },
+    {
+      "id": "gb_rss_776ad34bb01c",
+      "type": "article",
+      "title": "Packers-Rams Injury Report | Nov. 23, 2026",
+      "summary": "",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/mgcrp5ck3sf9g0anzr56.png",
+      "imageAlt": "Packers-Rams Injury Report | Nov. 23, 2026",
+      "publishedAt": "2026-11-23T21:29:24.000Z",
+      "url": "https://www.packers.com/news/packers-rams-injury-report-nov-23-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Official",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Official",
+      "author": "packers.com Official",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.4397
+    },
+    {
+      "id": "gb_espn_4f9b62e01ff85",
+      "type": "video",
+      "title": "Micah Parsons cleared to return for the Packers",
+      "summary": "Rob Demovsky reports on Micah Parsons' imminent return to the Packers.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1123/dm_261123_16x9_Packers_IA/dm_261123_16x9_Packers_IA.jpg",
+      "imageCaption": "Rob Demovsky reports on Micah Parsons' imminent return to the Packers.",
+      "imageAlt": "Micah Parsons cleared to return for the Packers",
+      "publishedAt": "2026-11-24T00:48:04Z",
+      "url": "https://www.espn.com/video/clip/_/id/50578005/micah-parsons-cleared-return-packers",
+      "outletId": "espn_gb",
+      "outletName": "ESPN",
+      "reporterId": "espn_gb",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.8841
+    },
+    {
+      "id": "gb_rss_5aba515325c2",
+      "type": "article",
+      "title": "Packers vs. Rams | How to watch, stream & listen | Week 12",
+      "summary": "Green Bay Packers vs. Los Angeles Rams channel listing, radio & streaming options",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/mgsrvwoqhi7nyx1grsqh.png",
+      "imageAlt": "Packers vs. Rams | How to watch, stream & listen | Week 12",
+      "publishedAt": "2026-11-23T23:58:00.000Z",
+      "url": "https://www.packers.com/news/packers-vs-rams-how-to-watch-stream-listen-week-12-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Official",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Official",
+      "author": "packers.com Official",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.8359
+    },
+    {
+      "id": "gb_rss_7d8725d2acca",
+      "type": "article",
+      "title": "Packers head west to face Rams",
+      "summary": "Green Bay is 49-46-2 against the Rams in the regular season",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/wxcxusbl1cswipj5glcm.png",
+      "imageAlt": "Packers head west to face Rams",
+      "publishedAt": "2026-11-23T23:56:47.000Z",
+      "url": "https://www.packers.com/news/packers-head-west-to-face-rams-week-12-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Official",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Official",
+      "author": "packers.com Official",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.8348
+    },
+    {
+      "id": "gb_vid_d791736d9d87",
+      "type": "video",
+      "title": "Micah Parsons: 'If I can be out there, I wanna be out there'",
+      "summary": "Packers edge rusher Micah Parsons spoke to the media on Monday to discuss how he's feeling and his excitement for returning to the field.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/c3m5hxb9c5exl7rhixlo.jpg",
+      "imageAlt": "Micah Parsons: 'If I can be out there, I wanna be out there'",
+      "publishedAt": "2026-11-23T21:32:47.000Z",
+      "url": "https://www.packers.com/video/micah-parsons-if-i-can-be-out-there-i-wanna-be-out-there-nov-23-2026",
+      "externalVideoUrl": "https://www.packers.com/video/micah-parsons-if-i-can-be-out-there-i-wanna-be-out-there-nov-23-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Video",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Video",
+      "author": "packers.com Video",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7187
+    },
+    {
+      "id": "gb_vid_0b79659d6f72",
+      "type": "video",
+      "title": "Javon Bullard speaks on the challenge of facing Matthew Stafford",
+      "summary": "S Javon Bullard spoke to the media on Monday as the Green Bay Packers get set to face the Los Angeles Rams on Thanksgiving Eve.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/adk5a771rcmylgvmlepw.jpg",
+      "imageAlt": "Javon Bullard speaks on the challenge of facing Matthew Stafford",
+      "publishedAt": "2026-11-23T20:56:34.000Z",
+      "url": "https://www.packers.com/video/javon-bullard-speaks-on-the-challenge-of-facing-matthew-stafford-nov-23-2026",
+      "externalVideoUrl": "https://www.packers.com/video/javon-bullard-speaks-on-the-challenge-of-facing-matthew-stafford-nov-23-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Video",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Video",
+      "author": "packers.com Video",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6938
+    },
+    {
+      "id": "gb_espn_a05e2a5dc1214",
+      "type": "video",
+      "title": "Adam Schefter: Micah Parsons could make season debut Wednesday night",
+      "summary": "Adam Schefter: Micah Parsons could make season debut Wednesday night",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1123/ss_20261123_135115369_3758096842/ss_20261123_135115369_3758096842.jpg",
+      "imageCaption": "Adam Schefter: Micah Parsons could make season debut Wednesday night",
+      "imageAlt": "Adam Schefter: Micah Parsons could make season debut Wednesday night",
+      "publishedAt": "2026-11-23T19:07:14Z",
+      "url": "https://www.espn.com/video/clip/_/id/50575243/micah-parsons-make-season-debut-wednesday-night",
+      "outletId": "espn_gb",
+      "outletName": "ESPN",
+      "reporterId": "espn_gb",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6269
+    },
+    {
+      "id": "gb_vid_98294bc00ac1",
+      "type": "video",
+      "title": "Matt LaFleur says 'everyone has a role' as vets return from injury",
+      "summary": "Green Bay Packers Head Coach Matt LaFleur spoke with the media as the team prepares to take on the Los Angeles Rams on Wednesday night.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/g9qdreqm3febssnizsov.jpg",
+      "imageAlt": "Matt LaFleur says 'everyone has a role' as vets return from injury",
+      "publishedAt": "2026-11-23T17:14:56.000Z",
+      "url": "https://www.packers.com/video/matt-lafleur-says-everyone-has-a-role-as-vets-return-from-injury-nov-23-2026",
+      "externalVideoUrl": "https://www.packers.com/video/matt-lafleur-says-everyone-has-a-role-as-vets-return-from-injury-nov-23-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Video",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Video",
+      "author": "packers.com Video",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.569
+    },
+    {
+      "id": "gb_rss_4938462b7a56",
+      "type": "article",
+      "title": "'Be Kaleb' mindset has Kaleb Johnson finding his stride",
+      "summary": "Second-year running back gaining comfort, yards for Packers’ offense",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/eosbenwc6msjkdkt19xs.png",
+      "imageAlt": "'Be Kaleb' mindset has Kaleb Johnson finding his stride",
+      "publishedAt": "2026-11-23T15:00:00.000Z",
+      "url": "https://www.packers.com/news/be-kaleb-mindset-has-kaleb-johnson-finding-his-stride-nov-23-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Official",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Official",
+      "author": "packers.com Official",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5106
+    },
+    {
+      "id": "gb_rss_c4cfbab37beb",
+      "type": "article",
+      "title": "Inbox: Get back on the horse and see where it takes you",
+      "summary": "Tom Jackson and Chris Berman were the perfect tag team",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/ewjqhvzwye3phchwujqb.jpg",
+      "imageAlt": "Inbox: Get back on the horse and see where it takes you",
+      "publishedAt": "2026-11-23T14:30:00.000Z",
+      "url": "https://www.packers.com/news/inbox-get-back-on-the-horse-and-see-where-it-takes-you-nov-23-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Official",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Official",
+      "author": "packers.com Official",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.499
+    },
+    {
+      "id": "gb_vid_24909cb7128b",
+      "type": "video",
+      "title": "Packers Daily: A pivotal Thanksgiving eve matchup",
+      "summary": "As a pair of 6-4 NFC teams meet on Thanksgiving eve, the Packers' locker room is ready for the challenge on the road and the opportunity to improve their position in this edition of Packers Daily.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/okmuuh2okcc0kzeq52ed.jpg",
+      "imageAlt": "Packers Daily: A pivotal Thanksgiving eve matchup",
+      "publishedAt": "2026-11-23T14:15:00.000Z",
+      "url": "https://www.packers.com/video/packers-daily-a-pivotal-thanksgiving-eve-matchup-nov-23-2026",
+      "externalVideoUrl": "https://www.packers.com/video/packers-daily-a-pivotal-thanksgiving-eve-matchup-nov-23-2026",
+      "outletId": "packers_official",
+      "outletName": "packers.com Video",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Video",
+      "author": "packers.com Video",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4934
+    },
+    {
+      "id": "gb_vid_9a05bc683b9c",
+      "type": "video",
+      "title": "Memorable Moments: Lynn Dickey leads Packers to comeback win over Rams",
+      "summary": "The Green Bay Packers defeated the Los Angeles Rams, 35-23, on Sept. 12, 1982.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/c3wexnnrnxpli2nqbyfd.jpg",
+      "imageAlt": "Memorable Moments: Lynn Dickey leads Packers to comeback win over Rams",
+      "publishedAt": "2026-11-23T13:00:00.000Z",
+      "url": "https://www.packers.com/video/memorable-moments-lynn-dickey-leads-packers-to-comeback-win-over-rams",
+      "externalVideoUrl": "https://www.packers.com/video/memorable-moments-lynn-dickey-leads-packers-to-comeback-win-over-rams",
+      "outletId": "packers_official",
+      "outletName": "packers.com Video",
+      "reporterId": "packers_official",
+      "reporterName": "packers.com Video",
+      "author": "packers.com Video",
+      "authorHandle": "@packers",
+      "authorProfileUrl": "https://www.packers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4668
     },
     {
       "id": "gb_rss_3335aa2dfab7",
@@ -170,7 +1111,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.476
+      "storyRank": 0.5842
     },
     {
       "id": "gb_vid_860d724d92c9",
@@ -204,7 +1145,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6178
+      "storyRank": 0.192
     },
     {
       "id": "gb_vid_b22d17cced29",
@@ -238,7 +1179,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.6171
+      "storyRank": 0.192
     },
     {
       "id": "gb_vid_5d57ffbf7ef2",
@@ -272,13 +1213,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.4465
+      "storyRank": 0.2392
     },
     {
       "id": "gb_pfr_1057b1c8f78b",
       "type": "article",
       "title": "Packers’ Micah Parsons Expected To Return In Week 12; Latest On Kevin Zeitler",
-      "summary": "NOVEMBER 23: Parsons is “on track” to make his 2026 debut in Week 12, per NFL Network’s Ian Rapoport (video link). NOVEMBER 16: Micah Parsons’ return timetable continues to be pushed back. At the beginning of the offseason",
+      "summary": "NOVEMBER 23: Parsons is “on track” to make his 2026 debut in Week 12, per NFL Network’s Ian Rapoport (video link). NOVEMBER 16: Micah Parsons’ return timetable continues to be pushed back. At the beginning of the offseason, Week 3 was float",
       "imageUrl": "",
       "publishedAt": "2026-11-22T15:23:12.000Z",
       "url": "https://www.profootballrumors.com/2026/11/packers-micah-parsons-not-certain-for-week-12-latest-on-kevin-zeitler",
@@ -304,13 +1245,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1951
+      "storyRank": 0.2237
     },
     {
       "id": "gb_pfr_ae42553f4d2d",
       "type": "article",
       "title": "NFL Practice Squad Updates: 11/21/26",
-      "summary": "Here are Saturday’s practice squad transactions: Green Bay Packers Signed: RB Pierre Strong Jr. Released: OLB DJ Johnson Los Angeles Rams Signed: OL Michael Niese Released: LS Jake McQuaide McQuaide, the Rams backup long snapper, has ",
+      "summary": "Here are Saturday’s practice squad transactions: Green Bay Packers Signed: RB Pierre Strong Jr. Released: OLB DJ Johnson Los Angeles Rams Signed: OL Michael Niese Released: LS Jake McQuaide McQuaide, the Rams backup long snapper, has filled",
       "imageUrl": "",
       "publishedAt": "2026-11-21T22:39:45.000Z",
       "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-21-26",
@@ -336,7 +1277,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.444
+      "storyRank": 0.1532
     },
     {
       "id": "gb_rss_436e39b97f3e",
@@ -369,7 +1310,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4471
+      "storyRank": 0.155
     },
     {
       "id": "gb_vid_039a50ac8547",
@@ -403,7 +1344,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4258
+      "storyRank": 0.1515
     },
     {
       "id": "gb_vid_79be54eb3fcb",
@@ -437,7 +1378,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4237
+      "storyRank": 0.1511
     },
     {
       "id": "gb_vid_4395c572dedb",
@@ -471,7 +1412,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3048
+      "storyRank": 0.1088
     },
     {
       "id": "gb_rss_54069f85fbca",
@@ -504,7 +1445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4214
+      "storyRank": 0.1508
     },
     {
       "id": "gb_vid_9943638b9cb9",
@@ -538,7 +1479,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.371
+      "storyRank": 0.1416
     },
     {
       "id": "gb_rss_7fbd7ac0c342",
@@ -571,7 +1512,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3257
+      "storyRank": 0.1324
     },
     {
       "id": "gb_tx_a24dc24b80ae",
@@ -605,7 +1546,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2698
+      "storyRank": 0.1196
     },
     {
       "id": "gb_rss_369852b4278d",
@@ -638,7 +1579,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1741
+      "storyRank": 0.0921
     },
     {
       "id": "gb_tx_482839d994b4",
@@ -672,13 +1613,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1524
+      "storyRank": 0.0845
     },
     {
       "id": "gb_pfr_998734380091",
       "type": "article",
       "title": "Minor NFL Transactions: 11/19/26",
-      "summary": "Here’s a look at Thursday’s minor NFL moves… Cincinnati Bengals Designated for return from IR: LB Swayze Bozeman Green Bay Packers Waived: RB Pierre Strong Houston Texans Activated from IR: CB Jaylin Smith Indianapolis Col",
+      "summary": "Here’s a look at Thursday’s minor NFL moves… Cincinnati Bengals Designated for return from IR: LB Swayze Bozeman Green Bay Packers Waived: RB Pierre Strong Houston Texans Activated from IR: CB Jaylin Smith Indianapolis Colts Elevated: CB Na",
       "imageUrl": "",
       "publishedAt": "2026-11-20T00:25:27.000Z",
       "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-19-26",
@@ -704,7 +1645,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1302
+      "storyRank": 0.0756
     },
     {
       "id": "gb_rss_74f0b81bc686",
@@ -737,7 +1678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1285
+      "storyRank": 0.0753
     },
     {
       "id": "gb_vid_9d6e79e766c8",
@@ -771,7 +1712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1227
+      "storyRank": 0.073
     },
     {
       "id": "gb_rss_29fe52b30f53",
@@ -804,7 +1745,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1131
+      "storyRank": 0.069
     },
     {
       "id": "gb_rss_a2f34a77cb1f",
@@ -837,7 +1778,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1122
+      "storyRank": 0.0686
     },
     {
       "id": "gb_vid_a63db56a8cbb",
@@ -871,7 +1812,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1098
+      "storyRank": 0.0675
     },
     {
       "id": "gb_vid_f31b4b2694ed",
@@ -905,7 +1846,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1096
+      "storyRank": 0.0675
     },
     {
       "id": "gb_tx_73a10848aa7a",
@@ -939,7 +1880,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1017
+      "storyRank": 0.064
     },
     {
       "id": "gb_rss_bbaffc23c4ca",
@@ -972,7 +1913,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0862
+      "storyRank": 0.0567
     },
     {
       "id": "gb_rss_e64388554f8c",
@@ -1005,7 +1946,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0845
+      "storyRank": 0.0559
     },
     {
       "id": "gb_rss_9189215983ce",
@@ -1038,7 +1979,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0814
+      "storyRank": 0.0543
     },
     {
       "id": "gb_rss_4c9a995f5788",
@@ -1071,7 +2012,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0804
+      "storyRank": 0.0538
     },
     {
       "id": "gb_espn_727c591ea031c",
@@ -1105,13 +2046,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0803
+      "storyRank": 0.0537
     },
     {
       "id": "gb_pfr_c3043104ec6a",
       "type": "article",
       "title": "Packers, Broncos Explored Trade For Titans RB Tony Pollard",
-      "summary": "The Titans sold off multiple key players before last week’s trade deadline – Amani Hooker to the Bills, Jeffery Simmons to the Bears – but ultimately held onto Tony Pollard. The eight-year running back is on an expiring deal and will ",
+      "summary": "The Titans sold off multiple key players before last week’s trade deadline – Amani Hooker to the Bills, Jeffery Simmons to the Bears – but ultimately held onto Tony Pollard. The eight-year running back is on an expiring deal and will turn 3",
       "imageUrl": "",
       "publishedAt": "2026-11-18T05:40:58.000Z",
       "url": "https://www.profootballrumors.com/2026/11/packers-broncos-explored-trade-for-titans-tony-pollard",
@@ -1137,7 +2078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0712
+      "storyRank": 0.0489
     },
     {
       "id": "gb_rss_93ad6c6de61a",
@@ -1170,7 +2111,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0665
+      "storyRank": 0.0466
     },
     {
       "id": "gb_vid_2ad5375980ff",
@@ -1204,7 +2145,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0664
+      "storyRank": 0.0465
     },
     {
       "id": "gb_rss_5d6a892920e0",
@@ -1237,7 +2178,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0661
+      "storyRank": 0.0464
     },
     {
       "id": "gb_rss_81a783df6d0f",
@@ -1270,7 +2211,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0657
+      "storyRank": 0.0461
     },
     {
       "id": "gb_vid_06462aa2e43f",
@@ -1304,7 +2245,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0657
+      "storyRank": 0.0461
     },
     {
       "id": "gb_vid_75c80b4e6dec",
@@ -1338,7 +2279,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.065
+      "storyRank": 0.0458
     },
     {
       "id": "gb_vid_fc1b26ae8d2d",
@@ -1372,7 +2313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.065
+      "storyRank": 0.0457
     },
     {
       "id": "gb_vid_f2806d71b15d",
@@ -1406,7 +2347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0645
+      "storyRank": 0.0455
     },
     {
       "id": "gb_vid_466a9a4eefb6",
@@ -1440,7 +2381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0645
+      "storyRank": 0.0454
     },
     {
       "id": "gb_vid_4bac606b8f8d",
@@ -1474,7 +2415,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0641
+      "storyRank": 0.0453
     },
     {
       "id": "gb_yt__4lx6_X4P9A",
@@ -1510,7 +2451,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0638
+      "storyRank": 0.0451
     },
     {
       "id": "gb_vid_dcab3d064e0e",
@@ -1544,7 +2485,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0621
+      "storyRank": 0.0441
     },
     {
       "id": "gb_rss_f5bd4bc4d022",
@@ -1577,7 +2518,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0618
+      "storyRank": 0.044
     },
     {
       "id": "gb_vid_774c6d996a95",
@@ -1611,7 +2552,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0616
+      "storyRank": 0.0438
     },
     {
       "id": "gb_rss_af409d7c7a94",
@@ -1644,7 +2585,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0614
+      "storyRank": 0.0438
     },
     {
       "id": "gb_vid_b97f86a1bc29",
@@ -1678,7 +2619,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0613
+      "storyRank": 0.0437
     },
     {
       "id": "gb_espn_c7594e179b64a",
@@ -1712,7 +2653,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0611
+      "storyRank": 0.0436
     },
     {
       "id": "gb_tx_fa69b6a8bb61",
@@ -1746,7 +2687,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0576
+      "storyRank": 0.0416
     },
     {
       "id": "gb_espn_7ab4b7e427750",
@@ -1780,7 +2721,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0522
+      "storyRank": 0.0385
     },
     {
       "id": "gb_espn_d6dbdebf5e948",
@@ -1814,7 +2755,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.052
+      "storyRank": 0.0383
     },
     {
       "id": "gb_rss_ac06da64a814",
@@ -1847,7 +2788,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.052
+      "storyRank": 0.0383
     },
     {
       "id": "gb_rss_830970779c2a",
@@ -1880,7 +2821,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0519
+      "storyRank": 0.0383
     },
     {
       "id": "gb_rss_f702e7317caf",
@@ -1913,7 +2854,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0516
+      "storyRank": 0.0381
     },
     {
       "id": "gb_vid_c8dd399e888d",
@@ -1947,7 +2888,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0515
+      "storyRank": 0.038
     },
     {
       "id": "gb_rss_78eefb0d0888",
@@ -1980,7 +2921,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.049
+      "storyRank": 0.0365
     },
     {
       "id": "gb_vid_afc98cb48567",
@@ -2014,7 +2955,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0489
+      "storyRank": 0.0365
     },
     {
       "id": "gb_tx_1f103a59771c",
@@ -2048,7 +2989,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0464
+      "storyRank": 0.0349
     },
     {
       "id": "gb_rss_0a72417f8672",
@@ -2081,7 +3022,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0435
+      "storyRank": 0.0332
     },
     {
       "id": "gb_rss_cd1cb9eebcf4",
@@ -2114,7 +3055,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0435
+      "storyRank": 0.0332
     },
     {
       "id": "gb_espn_51de93b545d64",
@@ -2148,7 +3089,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0435
+      "storyRank": 0.0332
     },
     {
       "id": "gb_rss_3a99f34cf1e1",
@@ -2181,7 +3122,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0434
+      "storyRank": 0.0331
     },
     {
       "id": "gb_vid_7d1ec2223155",
@@ -2215,7 +3156,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0329
     },
     {
       "id": "gb_espn_31790621109d2",
@@ -2249,7 +3190,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0082
     },
     {
       "id": "gb_vid_b61b77343de3",
@@ -2283,7 +3224,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0328
     },
     {
       "id": "gb_vid_d39fc942cff4",
@@ -2317,7 +3258,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0082
     },
     {
       "id": "gb_vid_bdfe0790414e",
@@ -2351,7 +3292,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0328
     },
     {
       "id": "gb_vid_fae47362a177",
@@ -2385,7 +3326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0328
     },
     {
       "id": "gb_vid_3e742ef03990",
@@ -2419,7 +3360,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0427
+      "storyRank": 0.0326
     },
     {
       "id": "gb_rss_45605a1244a1",
@@ -2452,13 +3393,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0424
+      "storyRank": 0.0325
     },
     {
       "id": "gb_pfr_7dcb4d675377",
       "type": "article",
       "title": "Packers’ Josh Jacobs Undergoes Finger Surgery; RB Chris Brooks Activated",
-      "summary": "NOVEMBER 15: NFL Network’s Ian Rapoport confirms (video link) the Packers are not expecting a lengthy absence in this case. Green Bay’s bye week will follow today’s game, and Rapoport notes a return timeline of two to thre",
+      "summary": "NOVEMBER 15: NFL Network’s Ian Rapoport confirms (video link) the Packers are not expecting a lengthy absence in this case. Green Bay’s bye week will follow today’s game, and Rapoport notes a return timeline of two to three weeks is in stor",
       "imageUrl": "",
       "publishedAt": "2026-11-15T20:40:19.000Z",
       "url": "https://www.profootballrumors.com/2026/11/packers-josh-jacobs-undergoes-finger-surgery-rb-chris-brooks-activated",
@@ -2484,7 +3425,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0416
+      "storyRank": 0.0319
     },
     {
       "id": "gb_vid_0ca930d1f7b4",
@@ -2518,7 +3459,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0422
+      "storyRank": 0.0323
     },
     {
       "id": "gb_vid_137926698ff8",
@@ -2552,7 +3493,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0422
+      "storyRank": 0.0323
     },
     {
       "id": "gb_vid_5f1a2798b55c",
@@ -2586,7 +3527,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0421
+      "storyRank": 0.0322
     },
     {
       "id": "gb_rss_adbeb7befadb",
@@ -2619,7 +3560,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0419
+      "storyRank": 0.0321
     },
     {
       "id": "gb_vid_4a09ab0a3ad3",
@@ -2653,7 +3594,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0419
+      "storyRank": 0.0321
     },
     {
       "id": "gb_rss_b0a363b57cc7",
@@ -2686,7 +3627,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.04
+      "storyRank": 0.031
     },
     {
       "id": "gb_rss_66efdab3797f",
@@ -2719,7 +3660,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.04
+      "storyRank": 0.0309
     },
     {
       "id": "gb_rss_676ef65dc46c",
@@ -2752,7 +3693,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0399
+      "storyRank": 0.0309
     },
     {
       "id": "gb_vid_cc80ebcd25d2",
@@ -2786,7 +3727,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0399
+      "storyRank": 0.0309
     },
     {
       "id": "gb_vid_693a77ad042c",
@@ -2820,7 +3761,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0397
+      "storyRank": 0.0308
     },
     {
       "id": "gb_rss_b0189d255f51",
@@ -2853,7 +3794,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0356
+      "storyRank": 0.028
     },
     {
       "id": "gb_rss_2bb092dee522",
@@ -2886,7 +3827,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0339
+      "storyRank": 0.0269
     },
     {
       "id": "gb_tx_2712c8245f2b",
@@ -2920,13 +3861,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0326
+      "storyRank": 0.026
     },
     {
       "id": "gb_pfr_5f280db66339",
       "type": "article",
       "title": "Packers Making IR Decision For RB Josh Jacobs Tomorrow",
-      "summary": "Packers running back Josh Jacobs exited the team’s most recent game early with a finger injury, and it was reported that Green Bay’s lead rusher would require surgery on the digit. The procedure was scheduled to take place this ",
+      "summary": "Packers running back Josh Jacobs exited the team’s most recent game early with a finger injury, and it was reported that Green Bay’s lead rusher would require surgery on the digit. The procedure was scheduled to take place this week, and Ia",
       "imageUrl": "",
       "publishedAt": "2026-11-14T01:23:48.000Z",
       "url": "https://www.profootballrumors.com/2026/11/packers-making-ir-decision-for-rb-josh-jacobs-tomorrow",
@@ -2952,7 +3893,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0307
+      "storyRank": 0.0247
     },
     {
       "id": "gb_vid_dd7594f1ade9",
@@ -2986,7 +3927,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0304
+      "storyRank": 0.0245
     },
     {
       "id": "gb_vid_2c8d59f80511",
@@ -3020,7 +3961,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0302
+      "storyRank": 0.0244
     },
     {
       "id": "gb_vid_79be9bbf04f8",
@@ -3054,7 +3995,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0297
+      "storyRank": 0.024
     },
     {
       "id": "gb_rss_8c0e30da337a",
@@ -3087,7 +4028,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0293
+      "storyRank": 0.0238
     },
     {
       "id": "gb_rss_cc510e646725",
@@ -3120,7 +4061,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
+      "storyRank": 0.0237
     },
     {
       "id": "gb_vid_a3d34af61353",
@@ -3154,7 +4095,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
+      "storyRank": 0.0237
     },
     {
       "id": "gb_rss_fe7b9e098ade",
@@ -3187,7 +4128,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0266
+      "storyRank": 0.0219
     },
     {
       "id": "gb_rss_006ecce0b993",
@@ -3220,41 +4161,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0675
-    },
-    {
-      "id": "gb_espn_dd3830ced25e2",
-      "type": "article",
-      "title": "Kirk Cousins begins his 2nd stint with Vikings as they face the Packers in an NFC North showdown",
-      "summary": "— Kirk Cousins’ career seemed at a crossroads when he tore his Achilles tendon during his last visit to Lambeau Field.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1115/dm_261115_Vikings/dm_261115_Vikings.jpg",
-      "imageCaption": "Kirk Cousins emotional after victory in Vikings return",
-      "imageAlt": "Kirk Cousins begins his 2nd stint with Vikings as they face the Packers in an NFC North showdown",
-      "publishedAt": "2026-11-12T21:50:35Z",
-      "url": "https://www.espn.com/nfl/preview?gameId=401873060",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "espn_gb",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/gb/green-bay-packers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0265
+      "storyRank": 0.0563
     },
     {
       "id": "gb_vid_3d5fc7531427",
@@ -3288,7 +4195,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0264
+      "storyRank": 0.0217
     },
     {
       "id": "gb_vid_e62be9385d21",
@@ -3322,7 +4229,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0263
+      "storyRank": 0.0217
     },
     {
       "id": "gb_vid_de9333eaf922",
@@ -3356,7 +4263,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0263
+      "storyRank": 0.0217
     },
     {
       "id": "gb_vid_18d2ec6ab4ab",
@@ -3390,7 +4297,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
+      "storyRank": 0.0214
     },
     {
       "id": "gb_rss_826f8a78ed11",
@@ -3423,7 +4330,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0258
+      "storyRank": 0.0212
     },
     {
       "id": "gb_vid_fbd8180b5ba8",
@@ -3457,7 +4364,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0257
+      "storyRank": 0.0212
     },
     {
       "id": "gb_vid_d72890cfff9e",
@@ -3491,7 +4398,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0257
+      "storyRank": 0.0212
     },
     {
       "id": "gb_rss_9cfeb8cdc33f",
@@ -3524,7 +4431,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0257
+      "storyRank": 0.0212
     },
     {
       "id": "gb_vid_0451d10e3138",
@@ -3558,41 +4465,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0256
-    },
-    {
-      "id": "gb_espn_8d6fbc3ce92b7",
-      "type": "article",
-      "title": "Does Packers' Christian Watson + Matthew Golden = 3,000 yards?",
-      "summary": "Watson and Golden are on pace to join a rare club of WR pairs who combined for 3,000 yards.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1111/r1744580_608x342_16-9.jpg",
-      "imageCaption": "Christian Watson, 9, and Matthew Golden have taken flight in 2026 after the Packers pared down their WR corps during the offseason.",
-      "imageAlt": "Does Packers' Christian Watson + Matthew Golden = 3,000 yards?",
-      "publishedAt": "2026-11-12T14:48:44Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50455566/packers-christian-watson-matthew-golden-3000-yards",
-      "outletId": "espn_gb",
-      "outletName": "ESPN",
-      "reporterId": "rob_demovsky",
-      "reporterName": "Rob Demovsky",
-      "author": "Rob Demovsky",
-      "authorHandle": "@RobDemovsky",
-      "authorProfileUrl": "https://x.com/RobDemovsky",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0255
+      "storyRank": 0.0212
     },
     {
       "id": "gb_rss_1fb8992a6187",
@@ -3625,7 +4498,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0255
+      "storyRank": 0.021
     },
     {
       "id": "gb_vid_2fdd290f5431",
@@ -3659,7 +4532,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0254
+      "storyRank": 0.021
     },
     {
       "id": "gb_vid_ff01077c80e7",
@@ -3693,7 +4566,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0253
+      "storyRank": 0.0209
     },
     {
       "id": "gb_vid_ded4151c9a39",
@@ -3727,7 +4600,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0253
+      "storyRank": 0.0209
     },
     {
       "id": "gb_vid_5151d6cd462e",
@@ -3761,13 +4634,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0253
+      "storyRank": 0.0209
     },
     {
       "id": "gb_pfr_276dcb2e0086",
       "type": "article",
       "title": "Minor NFL Transactions: 11/11/26",
-      "summary": "Today’s midweek minor NFL transactions: Arizona Cardinals Designated for return from IR: TE Hunter Long Practice window opened: DT Zachary Carter Atlanta Falcons Activated from IR: T Cameron Williams Dallas Cowboys Practice window ope",
+      "summary": "Today’s midweek minor NFL transactions: Arizona Cardinals Designated for return from IR: TE Hunter Long Practice window opened: DT Zachary Carter Atlanta Falcons Activated from IR: T Cameron Williams Dallas Cowboys Practice window opened: C",
       "imageUrl": "",
       "publishedAt": "2026-11-12T01:03:11.000Z",
       "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-11-26",
@@ -3793,7 +4666,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0233
+      "storyRank": 0.0194
     },
     {
       "id": "gb_rss_a58a81391937",
@@ -3826,7 +4699,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0236
+      "storyRank": 0.0197
     },
     {
       "id": "gb_vid_9cd961cd7ba9",
@@ -3860,7 +4733,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0235
+      "storyRank": 0.0196
     },
     {
       "id": "gb_vid_6dd3a3096565",
@@ -3894,7 +4767,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0049
     },
     {
       "id": "gb_vid_cb92e4a14364",
@@ -3928,7 +4801,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0049
     },
     {
       "id": "gb_rss_eee23351bc45",
@@ -3961,7 +4834,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0233
+      "storyRank": 0.0194
     },
     {
       "id": "gb_rss_67bae36c3be0",
@@ -3994,7 +4867,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0597
+      "storyRank": 0.0506
     },
     {
       "id": "gb_rss_3c85ab63b16c",
@@ -4027,7 +4900,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0232
+      "storyRank": 0.0194
     },
     {
       "id": "gb_vid_94d1b57190cd",
@@ -4061,7 +4934,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.0193
     },
     {
       "id": "gb_vid_47567b305726",
@@ -4095,7 +4968,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.0192
     },
     {
       "id": "gb_rss_acd4f5cb310e",
@@ -4128,7 +5001,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
+      "storyRank": 0.0191
     },
     {
       "id": "gb_rss_84f8c7d1dc03",
@@ -4161,7 +5034,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
+      "storyRank": 0.0191
     },
     {
       "id": "gb_rss_bfdacebaddba",
@@ -4194,7 +5067,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0225
+      "storyRank": 0.0189
     },
     {
       "id": "gb_vid_358c5c41e6e2",
@@ -4228,7 +5101,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0225
+      "storyRank": 0.0188
     },
     {
       "id": "gb_tx_7c9cff10a74b",
@@ -4262,7 +5135,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0218
+      "storyRank": 0.0183
     },
     {
       "id": "gb_vid_2fda614e7eb7",
@@ -4296,7 +5169,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.021
+      "storyRank": 0.0177
     },
     {
       "id": "gb_vid_11ddd38d5315",
@@ -4330,7 +5203,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0208
+      "storyRank": 0.0176
     },
     {
       "id": "gb_rss_abd359703269",
@@ -4363,7 +5236,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0175
     },
     {
       "id": "gb_rss_873c9b65be13",
@@ -4396,7 +5269,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0175
     },
     {
       "id": "gb_rss_f54a41ba5a69",
@@ -4429,7 +5302,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.0175
     },
     {
       "id": "gb_yt_ONCSUG9i00M",
@@ -4465,7 +5338,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.0044
     },
     {
       "id": "gb_vid_d9f453c02817",
@@ -4499,7 +5372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.0174
     },
     {
       "id": "gb_vid_7224f9721df5",
@@ -4533,7 +5406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0174
     },
     {
       "id": "gb_vid_f035a46aefb4",
@@ -4567,7 +5440,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0174
     },
     {
       "id": "gb_vid_3f0e00322f17",
@@ -4601,7 +5474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
+      "storyRank": 0.0173
     },
     {
       "id": "gb_vid_67ac6e310bee",
@@ -4635,40 +5508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
-    },
-    {
-      "id": "gb_rss_2b2adcc648f6",
-      "type": "article",
-      "title": "Inbox: Good football teams need wins like this",
-      "summary": "I guess it was just meant to be for Jordan Love and Matthew Golden",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/v1794283249/packers/pprnrwicd0z9cbisba2c.png",
-      "imageAlt": "Inbox: Good football teams need wins like this",
-      "publishedAt": "2026-11-10T14:30:00.000Z",
-      "url": "https://www.packers.com/news/inbox-good-football-teams-need-wins-like-this-nov-10-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.02
+      "storyRank": 0.0173
     },
     {
       "id": "gb_vid_ed5c58d0a1e0",
@@ -4702,7 +5542,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.02
+      "storyRank": 0.017
     },
     {
       "id": "gb_vid_500236b67039",
@@ -4736,7 +5576,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0043
     },
     {
       "id": "gb_vid_9f7dd16e47d7",
@@ -4770,7 +5610,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.02
+      "storyRank": 0.017
     },
     {
       "id": "gb_tx_4b4909daf2a5",
@@ -4804,40 +5644,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0195
-    },
-    {
-      "id": "gb_rss_8fdb64dc5530",
-      "type": "article",
-      "title": "Packers RB Josh Jacobs to miss time due to surgery on broken finger",
-      "summary": "Length of absence to be determined",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/vkdvdvjthkhzf3fpo2wo.png",
-      "imageAlt": "Packers RB Josh Jacobs to miss time due to surgery on broken finger",
-      "publishedAt": "2026-11-09T22:33:18.000Z",
-      "url": "https://www.packers.com/news/packers-rb-josh-jacobs-to-miss-time-due-to-surgery-on-broken-finger-nov-9-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0187
+      "storyRank": 0.0166
     },
     {
       "id": "gb_vid_0fc97e65c50a",
@@ -4871,171 +5678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0185
-    },
-    {
-      "id": "gb_rss_332baaea69d8",
-      "type": "article",
-      "title": "Long march for field goal proved valuable for Packers",
-      "summary": "Starting from own 2-yard line and getting points extended early lead over Patriots",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/gyfbitg54sczgrlgffmp.png",
-      "imageAlt": "Long march for field goal proved valuable for Packers",
-      "publishedAt": "2026-11-09T20:30:00.000Z",
-      "url": "https://www.packers.com/news/long-march-for-field-goal-proved-valuable-for-packers-week-9-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0185
-    },
-    {
-      "id": "gb_rss_2a37b9d1be6b",
-      "type": "article",
-      "title": "Green Bay Packers laden fans zu besonderen events in München ein",
-      "summary": "Fan Huddle, gemeinsamer Pop-up-Store und „Touchdown School“-Flag-Football-Camp stehen im Mittelpunkt der Aktivitäten rund um das NFL Germany Game",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/vusrz5ctlevhkqxlubb2.jpg",
-      "imageAlt": "Green Bay Packers laden fans zu besonderen events in München ein",
-      "publishedAt": "2026-11-09T20:19:59.000Z",
-      "url": "https://www.packers.com/news/green-bay-packers-laden-fans-zu-besonderen-events-in-muenchen-ein-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0185
-    },
-    {
-      "id": "gb_rss_87029248e790",
-      "type": "article",
-      "title": "Green Bay Packers invite fans to connect with team in Munich ahead of NFL Germany game",
-      "summary": "Fan Huddle event, collaborative retail store and “Touchdown School” flag football camp highlight week's activities",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/wofzwiculddgpq2v8bkl.jpg",
-      "imageAlt": "Green Bay Packers invite fans to connect with team in Munich ahead of NFL Germany game",
-      "publishedAt": "2026-11-09T20:13:53.000Z",
-      "url": "https://www.packers.com/news/green-bay-packers-invite-fans-to-connect-with-team-in-munich-ahead-of-nfl-germany-game-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0185
-    },
-    {
-      "id": "gb_pfr_90f6191c38e2",
-      "type": "article",
-      "title": "Josh Jacobs To Undergo Finger Surgery, Will Miss Time",
-      "summary": "Josh Jacobs’ 2026 season will pause once again. The finger injury he sustained in Foxborough will lead to a short-term absence. Finger surgery is on tap for the embattled Packers running back, CBS Sports’ Matt Zenitz tweets. Jacobs le",
-      "imageUrl": "",
-      "publishedAt": "2026-11-09T20:12:16.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/josh-jacobs-to-undergo-finger-surgery-will-miss-time",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/green-bay-packers",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0182
-    },
-    {
-      "id": "gb_rss_932dbca8b619",
-      "type": "article",
-      "title": "Vote for Jordan Love for FedEx Air Player of Week 9",
-      "summary": "Packers quarterback threw for 372 yards, three TDs in win over Patriots",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/vmlmu9xdypfqjnixlpsc.png",
-      "imageAlt": "Vote for Jordan Love for FedEx Air Player of Week 9",
-      "publishedAt": "2026-11-09T16:58:10.000Z",
-      "url": "https://www.packers.com/news/vote-for-jordan-love-for-fedex-air-player-of-week-9-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0182
+      "storyRank": 0.0159
     },
     {
       "id": "gb_vid_ab09d010bbab",
@@ -5069,40 +5712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0182
-    },
-    {
-      "id": "gb_rss_2bdaeb787271",
-      "type": "article",
-      "title": "Inbox: This unit is crazy fun to watch",
-      "summary": "You just never know in this league",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/v1794236118/packers/iiwkp2t67hecbkv8f9ko.jpg",
-      "imageAlt": "Inbox: This unit is crazy fun to watch",
-      "publishedAt": "2026-11-09T14:30:00.000Z",
-      "url": "https://www.packers.com/news/inbox-this-unit-is-crazy-fun-to-watch-nov-9-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Official",
-      "author": "packers.com Official",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.018
+      "storyRank": 0.0156
     },
     {
       "id": "gb_vid_3f462c955fb0",
@@ -5136,7 +5746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.018
+      "storyRank": 0.0155
     },
     {
       "id": "gb_vid_05dbd24e14b3",
@@ -5170,7 +5780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0172
+      "storyRank": 0.0148
     },
     {
       "id": "gb_vid_0cb49515bcd8",
@@ -5204,7 +5814,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0172
+      "storyRank": 0.0148
     },
     {
       "id": "gb_vid_323a4b1a33ae",
@@ -5238,7 +5848,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0172
+      "storyRank": 0.0148
     },
     {
       "id": "gb_vid_8573813b1c02",
@@ -5272,7 +5882,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0171
+      "storyRank": 0.0148
     },
     {
       "id": "gb_vid_3ea1cfa9b73d",
@@ -5306,7 +5916,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0171
+      "storyRank": 0.0148
     },
     {
       "id": "gb_vid_2d1d0b55b94c",
@@ -5340,7 +5950,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0171
+      "storyRank": 0.0148
     },
     {
       "id": "gb_vid_b8768ff3fddf",
@@ -5374,7 +5984,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0171
+      "storyRank": 0.0148
     },
     {
       "id": "gb_vid_ef5e6ae5c95b",
@@ -5408,7 +6018,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0171
+      "storyRank": 0.0148
     },
     {
       "id": "gb_vid_afc952acad42",
@@ -5442,7 +6052,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0037
     },
     {
       "id": "gb_vid_156bfd2a3a48",
@@ -5476,7 +6086,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0171
+      "storyRank": 0.0148
     },
     {
       "id": "gb_vid_bb8dde0812a4",
@@ -5510,7 +6120,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0171
+      "storyRank": 0.0147
     },
     {
       "id": "gb_vid_4931597868e2",
@@ -5544,7 +6154,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0147
     },
     {
       "id": "gb_vid_b00c7ad0da6d",
@@ -5578,7 +6188,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0147
     },
     {
       "id": "gb_vid_4317e2cca4be",
@@ -5612,7 +6222,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0147
     },
     {
       "id": "gb_vid_cfc56877ea1d",
@@ -5646,7 +6256,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0147
     },
     {
       "id": "gb_vid_584b6e6ada55",
@@ -5680,7 +6290,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0147
     },
     {
       "id": "gb_vid_75fa3de6ddbf",
@@ -5714,7 +6324,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0147
     },
     {
       "id": "gb_vid_2e4e95aab14c",
@@ -5748,7 +6358,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0147
     },
     {
       "id": "gb_vid_2f956160bb09",
@@ -5782,7 +6392,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.017
+      "storyRank": 0.0147
     },
     {
       "id": "gb_vid_c9973b27827b",
@@ -5816,7 +6426,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0146
     },
     {
       "id": "gb_vid_003f5fae9cf7",
@@ -5850,7 +6460,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0146
     },
     {
       "id": "gb_vid_95e03aeb160d",
@@ -5884,279 +6494,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
-    },
-    {
-      "id": "gb_vid_440c5b4367d0",
-      "type": "video",
-      "title": "Evan Williams PICKS it | Packers vs. Patriots",
-      "summary": "Green Bay Packers S Evan Williams intercepts New England Patriots QB Drake Maye during Sunday's Week 9 game.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/rpnsrkbbgtntovnigxze.jpg",
-      "imageAlt": "Evan Williams PICKS it | Packers vs. Patriots",
-      "publishedAt": "2026-11-08T22:25:32.000Z",
-      "url": "https://www.packers.com/video/evan-williams-picks-it-packers-vs-patriots-2026",
-      "externalVideoUrl": "https://www.packers.com/video/evan-williams-picks-it-packers-vs-patriots-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Video",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Video",
-      "author": "packers.com Video",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
-    },
-    {
-      "id": "gb_vid_a11ba4cc42e3",
-      "type": "video",
-      "title": "Matthew Golden catches 43-yard DEEP ball | Packers vs. Patriots",
-      "summary": "Green Bay Packers WR Matthew Golden finished the first quarter of the Week 9 game against the New England Patriots with 126 receiving yards, the most by a Packers player in the first quarter since Antonio Freeman in 1998",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/idsabve1tdf6bfsxwjnd.jpg",
-      "imageAlt": "Matthew Golden catches 43-yard DEEP ball | Packers vs. Patriots",
-      "publishedAt": "2026-11-08T22:23:00.000Z",
-      "url": "https://www.packers.com/video/matthew-golden-catches-43-yard-deep-ball-packers-vs-patriots-2026",
-      "externalVideoUrl": "https://www.packers.com/video/matthew-golden-catches-43-yard-deep-ball-packers-vs-patriots-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Video",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Video",
-      "author": "packers.com Video",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
-    },
-    {
-      "id": "gb_vid_9f62a4458103",
-      "type": "video",
-      "title": "Jordan Love's 100th TOUCHDOWN PASS | Packers vs. Patriots",
-      "summary": "Green Bay Packers QB Jordan Love throws his 100th NFL passing touchdown (regular season) to WR Matthew Golden during Sunday's Week 9 game against the New England Patriots.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/g4wjua9s4cgsi0xdsthm.jpg",
-      "imageAlt": "Jordan Love's 100th TOUCHDOWN PASS | Packers vs. Patriots",
-      "publishedAt": "2026-11-08T22:04:48.000Z",
-      "url": "https://www.packers.com/video/jordan-love-s-100th-touchdown-pass-packers-vs-patriots-2026",
-      "externalVideoUrl": "https://www.packers.com/video/jordan-love-s-100th-touchdown-pass-packers-vs-patriots-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Video",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Video",
-      "author": "packers.com Video",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
-    },
-    {
-      "id": "gb_vid_c9792d3bae9a",
-      "type": "video",
-      "title": "Jordan Love goes DEEP to Matthew Golden | Packers vs. Patriots",
-      "summary": "Green Bay Packers WR Matthew Golden hauls in a 49-yard pass from QB Jordan Love during Sunday's Week 9 game against the New England Patriots.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/ygzmszhdvvvvfd38ijii.jpg",
-      "imageAlt": "Jordan Love goes DEEP to Matthew Golden | Packers vs. Patriots",
-      "publishedAt": "2026-11-08T22:04:04.000Z",
-      "url": "https://www.packers.com/video/jordan-love-goes-deep-to-matthew-golden-packers-vs-patriots-2026",
-      "externalVideoUrl": "https://www.packers.com/video/jordan-love-goes-deep-to-matthew-golden-packers-vs-patriots-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Video",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Video",
-      "author": "packers.com Video",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
-    },
-    {
-      "id": "gb_vid_43975101c0cd",
-      "type": "video",
-      "title": "Jordan Love scrambles for TOUCHDOWN | Packers vs. Patriots",
-      "summary": "Green Bay Packers QB scores a 13-yard rushing touchdown, the longest of his career, during Sunday's Week 9 game against the New England Patriots.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/qveczkm3hbdrnr9g9nsv.jpg",
-      "imageAlt": "Jordan Love scrambles for TOUCHDOWN | Packers vs. Patriots",
-      "publishedAt": "2026-11-08T21:47:46.000Z",
-      "url": "https://www.packers.com/video/jordan-love-scrambles-for-touchdown-packers-vs-patriots-2026",
-      "externalVideoUrl": "https://www.packers.com/video/jordan-love-scrambles-for-touchdown-packers-vs-patriots-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Video",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Video",
-      "author": "packers.com Video",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
-    },
-    {
-      "id": "gb_vid_f86a1884cb8d",
-      "type": "video",
-      "title": "Xavier McKinney INTERCEPTION | Packers vs. Patriots",
-      "summary": "Green Bay Packers S Xavier McKinney picks off New England Patriots QB Drake Maye and returns it 36 yards to the 14-yard line to setup an eventual touchdown during Sunday's Week 9 game.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/dlrevnxzataz4y50cxls.jpg",
-      "imageAlt": "Xavier McKinney INTERCEPTION | Packers vs. Patriots",
-      "publishedAt": "2026-11-08T21:46:04.000Z",
-      "url": "https://www.packers.com/video/xavier-mckinney-interception-packers-vs-patriots-2026",
-      "externalVideoUrl": "https://www.packers.com/video/xavier-mckinney-interception-packers-vs-patriots-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Video",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Video",
-      "author": "packers.com Video",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
-    },
-    {
-      "id": "gb_vid_2ed1cf7641bc",
-      "type": "video",
-      "title": "Final Thoughts: Packers at Patriots",
-      "summary": "Wes and Spoff share their thoughts ahead of the Green Bay Packers' Week 9 matchup with the New England Patriots.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/fyfbukuw8wbbgoka9oum.jpg",
-      "imageAlt": "Final Thoughts: Packers at Patriots",
-      "publishedAt": "2026-11-08T15:20:00.000Z",
-      "url": "https://www.packers.com/video/final-thoughts-packers-at-patriots-nov-7-2026",
-      "externalVideoUrl": "https://www.packers.com/video/final-thoughts-packers-at-patriots-nov-7-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Video",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Video",
-      "author": "packers.com Video",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
-    },
-    {
-      "id": "gb_vid_ad08f0bc9b85",
-      "type": "video",
-      "title": "Trailer: Packers at Patriots",
-      "summary": "The Green Bay Packers take on the New England Patriots at Gillette Stadium in Foxborough, Mass.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/i7wo11oj9wkjif8hmniv.jpg",
-      "imageAlt": "Trailer: Packers at Patriots",
-      "publishedAt": "2026-11-08T15:00:00.000Z",
-      "url": "https://www.packers.com/video/trailer-packers-at-patriots-week-9-2026",
-      "externalVideoUrl": "https://www.packers.com/video/trailer-packers-at-patriots-week-9-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Video",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Video",
-      "author": "packers.com Video",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0146
     },
     {
       "id": "gb_tx_5af6cfe34bcd",
@@ -6190,41 +6528,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
-    },
-    {
-      "id": "gb_vid_68cdc0f85174",
-      "type": "video",
-      "title": "Keisean Nixon: 'I just want to play every week'",
-      "summary": "Green Bay Packers CB Keisean Nixon spoke to the media on Friday about his status for the game against the Patriots and what they present as an opponent.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/packers/s3o6g4xuzk2v7qnacc9p.jpg",
-      "imageAlt": "Keisean Nixon: 'I just want to play every week'",
-      "publishedAt": "2026-11-06T20:49:27.000Z",
-      "url": "https://www.packers.com/video/keisean-nixon-i-just-want-to-play-every-week-nov-6-2026",
-      "externalVideoUrl": "https://www.packers.com/video/keisean-nixon-i-just-want-to-play-every-week-nov-6-2026",
-      "outletId": "packers_official",
-      "outletName": "packers.com Video",
-      "reporterId": "packers_official",
-      "reporterName": "packers.com Video",
-      "author": "packers.com Video",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.014
+      "storyRank": 0.0128
     },
     {
       "id": "gb_tx_5a01a36ef772",
@@ -6258,41 +6562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0114
-    },
-    {
-      "id": "gb_tx_cd23266daeac",
-      "type": "tweet",
-      "title": "Packers roster move: Signed LB D.J. Johnson, QB Cam Miller and S John Saunders Jr. to the practice squad. Released S Kahlef Hailassie from the practice squad.",
-      "fullText": "Packers roster move: Signed LB D.J. Johnson, QB Cam Miller and S John Saunders Jr. to the practice squad. Released S Kahlef Hailassie from the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-03T08:00:00.000Z",
-      "url": "https://www.packers.com/team/transactions/#tx-cd23266daeac",
-      "outletId": "packers_official",
-      "outletName": "packers.com Official",
-      "reporterId": "packers_official",
-      "reporterName": "Green Bay Packers Official",
-      "author": "Green Bay Packers Official",
-      "authorHandle": "@packers",
-      "authorProfileUrl": "https://www.packers.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0102
     },
     {
       "id": "gb_yt_rcF9P1EISPw",
@@ -6328,7 +6598,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0009
     },
     {
       "id": "gb_rss_49cb6f28b5e6",

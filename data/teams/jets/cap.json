@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:35:41.777Z",
+  "updatedAt": "2026-11-24T20:08:32.027Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/new-york-jets",
   "spotracUrl": "https://www.spotrac.com/nfl/new-york-jets/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 323038428,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 313535620,
+      "totalCapLiabilities": 313645620,
       "top51": 181663358,
-      "teamCapSpace": 9502808,
-      "otcRawTeamCapSpace": 9502808,
-      "effectiveCapSpace": 9502808,
-      "activeCapSpending": 193991337,
-      "offenseSpend": 85688117,
+      "teamCapSpace": 9392808,
+      "otcRawTeamCapSpace": 9392808,
+      "effectiveCapSpace": 9392808,
+      "activeCapSpending": 194101337,
+      "offenseSpend": 85798117,
       "defenseSpend": 104927387,
       "specialSpend": 3375833,
       "deadMoneyTotal": 119544283,
       "injuredReserveTotal": 13114910,
-      "practiceSquadTotal": 3793265,
+      "practiceSquadTotal": 3903265,
       "pupTotal": 620054,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 17528229,
+      "reserveAndPsTotal": 17638229,
       "topDeadMoneyEntries": [
         {
           "name": "Aaron Rodgers",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 52,
-      "totalSignedCount": 80
+      "totalSignedCount": 81
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 241249986,
       "teamCapSpace": 85711009,
       "otcRawTeamCapSpace": 85711009,
-      "effectiveCapSpace": 53656318,
+      "effectiveCapSpace": 52908362,
       "activeCapSpending": 241249986,
       "offenseSpend": 110058431,
       "defenseSpend": 129671555,
@@ -243,7 +243,7 @@
     }
   },
   "blueprint": {
-    "summary": "New York Jets hold $9.50M in 2026 OverTheCap space and $85.71M projected for 2027."
+    "summary": "New York Jets hold $9.39M in 2026 OverTheCap space and $85.71M projected for 2027."
   },
   "players": [
     {

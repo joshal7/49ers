@@ -56,7 +56,15 @@ import {
 } from '../src/engine/salientMediaEngine.js';
 import { classifySourceLensTag, extractPresserTakeaways } from '../src/engine/digestExperienceEngine.js';
 import { formatCompletedGameRecapForPrompt } from '../src/engine/gameDayRosterEngine.js';
-import { canonicalPlayoffGameKey, normalizeTeamAbbr } from '../src/engine/playoffMonteCarlo.js';
+import {
+  PLAYOFF_MODEL_VERSION,
+  canonicalPlayoffGameKey,
+  normalizeTeamAbbr
+} from '../src/engine/playoffMonteCarlo.js';
+import {
+  buildPlayoffPictureForTeam,
+  buildSharedLeaguePlayoffContext
+} from '../scripts/lib/leaguePlayoffPipeline.mjs';
 import { resolveConsistentPowerRankings } from '../src/engine/powerRankingsEngine.js';
 import { runUniversalSearch } from '../src/engine/universalSearchEngine.js';
 import { buildNflTeamsPagesDist } from '../scripts/build-nfl-teams-pages.mjs';
@@ -1241,6 +1249,90 @@ await test('6. Holistic 32-Team Unbiased Parity & Zero-49ers-Bias Scrub Verifica
   } finally {
     setActiveTeamConfig('SF');
   }
+});
+
+await test('7. Consolidated 32-team playoff pipeline parity (all 32 seasonal.json synced + conference Monte Carlo invariance)', () => {
+  const models = new Set();
+  const compCounts = new Set();
+  const remCounts = new Set();
+  const sfSeasonal = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'seasonal.json'), 'utf8'));
+  const sfAllTeamOdds = sfSeasonal?.playoffPicture?.baselineSimulation?.allTeamOdds || [];
+  assert.equal(sfAllTeamOdds.length, 16, 'SF seasonal.json must contain all 16 NFC team odds');
+
+  for (const t of ALL_NFL_TEAMS) {
+    const seasonalPath =
+      t.abbr === 'SF'
+        ? path.join(ROOT, 'data', 'seasonal.json')
+        : path.join(ROOT, 'data', 'teams', t.slug, 'seasonal.json');
+    const seasonal = JSON.parse(fs.readFileSync(seasonalPath, 'utf8'));
+    const pp = seasonal?.playoffPicture;
+    const si = pp?.simulatorInputs;
+    assert.ok(pp && si, `${t.abbr}: missing playoffPicture or simulatorInputs`);
+    assert.equal(si.modelVersion, PLAYOFF_MODEL_VERSION, `${t.abbr}: stale modelVersion=${si.modelVersion}`);
+    assert.equal(
+      Object.keys(si.preseasonPriors || {}).length,
+      32,
+      `${t.abbr}: expected 32 preseasonPriors`
+    );
+    assert.ok(
+      Object.keys(si.injuryAdjustmentsByTeam || {}).length >= 28,
+      `${t.abbr}: expected >=28 injuryAdjustmentsByTeam`
+    );
+    models.add(si.modelVersion);
+    compCounts.add((si.completedGames || []).length);
+    remCounts.add((si.remainingGames || []).length);
+    assert.equal(
+      (si.completedGames || []).length + (si.remainingGames || []).length,
+      272,
+      `${t.abbr}: completedGames + remainingGames must equal 272`
+    );
+    for (const card of pp.seedPathCards || []) {
+      assert.equal(
+        card.currentProbPct,
+        card.probabilityPct,
+        `${t.abbr}: seedPathCard "${card.target}" mismatch (${card.currentProbPct} vs ${card.probabilityPct})`
+      );
+    }
+    if (t.conference === 'NFC') {
+      const detRow = (pp.baselineSimulation?.allTeamOdds || []).find(x => x.abbr === t.abbr);
+      const sfViewRow = sfAllTeamOdds.find(x => x.abbr === t.abbr);
+      assert.ok(detRow && sfViewRow, `${t.abbr}: missing NFC allTeamOdds row`);
+      assert.equal(
+        detRow.makePlayoffsPct,
+        sfViewRow.makePlayoffsPct,
+        `${t.abbr}: NFC playoff odds drifted from SF (${detRow.makePlayoffsPct}% vs ${sfViewRow.makePlayoffsPct}%)`
+      );
+    }
+  }
+  assert.equal(models.size, 1, `All 32 teams must share 1 modelVersion (got ${[...models].join(', ')})`);
+  assert.equal(compCounts.size, 1, `All 32 teams must share 1 completedGames count (got ${[...compCounts].join(', ')})`);
+  assert.equal(remCounts.size, 1, `All 32 teams must share 1 remainingGames count (got ${[...remCounts].join(', ')})`);
+
+  // Verify shared leaguePlayoffPipeline builds bit-for-bit identical conference odds across teams
+  const si = sfSeasonal.playoffPicture.simulatorInputs;
+  const standingsByAbbr = new Map();
+  for (const row of si.nfcTeams || []) {
+    standingsByAbbr.set(row.abbr, { ...row, pf: row.pointsFor, pa: row.pointsAgainst, pd: row.pointDiff });
+  }
+  for (const [abbr, row] of Object.entries(si.afcStandings || {})) {
+    standingsByAbbr.set(abbr, { abbr, ...row, pf: row.pointsFor, pa: row.pointsAgainst, pd: row.pointDiff });
+  }
+  const sharedCtx = buildSharedLeaguePlayoffContext({
+    standingsByAbbr,
+    completedGames: si.completedGames,
+    remainingGames: si.remainingGames,
+    preseasonPriors: si.preseasonPriors,
+    injuryAdjustmentsByTeam: si.injuryAdjustmentsByTeam
+  });
+  const sfPic = buildPlayoffPictureForTeam(getTeamByAbbr('SF'), sharedCtx);
+  const detPic = buildPlayoffPictureForTeam(getTeamByAbbr('DET'), sharedCtx);
+  assert.equal(
+    JSON.stringify(sfPic.baselineSimulation.allTeamOdds),
+    JSON.stringify(detPic.baselineSimulation.allTeamOdds),
+    'Shared leaguePlayoffPipeline must produce bit-for-bit identical conference baseline odds'
+  );
+  assert.equal(sfPic.baselineSimulation.targetTeam, 'SF');
+  assert.equal(detPic.baselineSimulation.targetTeam, 'DET');
 });
 
 console.log(`\n==============================================================`);

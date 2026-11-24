@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:35:41.777Z",
+  "updatedAt": "2026-11-24T20:08:32.027Z",
   "week": 12,
   "byeWeek": 13,
   "sourceUrl": "https://www.newyorkjets.com/team/injury-report/",
@@ -22,67 +22,17 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Ankle",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 43,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "43% • Long Shot",
       "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed prior game without practice participation — awaiting Wednesday report"
       ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4683815",
-      "name": "Trevin Wallace",
-      "position": "LB",
-      "jersey": 49,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683815.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Groin",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Wallace will end up missing a third consecutive game due to a groin injury, and his next opportunity to play is Week 12 against the Dolphins on Nov. 29. He's mostly operated on special teams this season, but his absence means the Jets will have less depth at the edge rusher position for Sunday's contest."
-    },
-    {
-      "playerId": "4241410",
-      "name": "Jelani Woods",
-      "position": "TE",
-      "jersey": 86,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241410.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
     },
     {
       "playerId": "4569371",
@@ -97,67 +47,17 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Ribs",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 43,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "43% • Long Shot",
       "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed prior game without practice participation — awaiting Wednesday report"
       ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4426817",
-      "name": "Jarvis Brownlee Jr.",
-      "position": "CB",
-      "jersey": 2,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426817.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4574142",
-      "name": "Nate Lynn",
-      "position": "DE",
-      "jersey": 92,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4574142.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
     },
     {
       "playerId": "4002046",
@@ -184,6 +84,32 @@
         "Requires formal 53-man roster activation prior to weekly NFL transaction deadline"
       ],
       "beatComment": "Onyemata was designated to return from injured reserve Wednesday and strung together three consecutive limited practice sessions. However, the veteran defensive tackle is not quite ready to come off IR, so his next chance to play is Week 12 against the Dolphins on Sunday, Nov. 29. Onyemata has not played since Week 2 against the Packers due to an abdominal injury."
+    },
+    {
+      "playerId": "4683815",
+      "name": "Trevin Wallace",
+      "position": "LB",
+      "jersey": 49,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4683815.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Groin",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 76,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "76% • GTD",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Questionable tag adjusted by player career prior (81%)",
+        "Soft-tissue re-aggravation caution (Groin)"
+      ],
+      "beatComment": "questionable"
     },
     {
       "playerId": "3117255",
@@ -229,7 +155,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (79% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Every-down starter workload (82% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],

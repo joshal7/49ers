@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-23T06:36:04.532Z",
+  "updatedAt": "2026-11-24T20:08:40.209Z",
   "week": 12,
   "byeWeek": 11,
   "sourceUrl": "https://www.clevelandbrowns.com/team/injury-report/",
   "espnInjuryUrl": "https://www.espn.com/nfl/team/injuries/_/name/cle/cleveland-browns",
-  "usedIrDesignations": 3,
-  "remainingIrDesignations": 5,
+  "usedIrDesignations": 4,
+  "remainingIrDesignations": 4,
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
@@ -22,17 +22,17 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Concussion",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 18,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "18% • Doubtful",
       "archetypeNote": "Every-down starter workload (99% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Remains in early stages of NFL 5-Step Concussion Protocol"
       ],
-      "beatComment": "out"
+      "beatComment": "questionable"
     },
     {
       "playerId": "3915535",
@@ -85,6 +85,31 @@
       "beatComment": "Williams has had his practice reps over the last couple of weeks limited while tending to a hamstring injury, but he has yet to miss a regular-season game, and that trend will continue for Sunday's home tilt. The veteran linebacker has accumulated 62 tackles (37 solo), including 1.0 sacks, three pass defenses and four forced fumbles through nine regular-season games."
     },
     {
+      "playerId": "4832800",
+      "name": "Denzel Boston",
+      "position": "WR",
+      "jersey": 12,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4832800.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Toe",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Every-down starter workload (90% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "The rookie wideout entered play Sunday dealing with a toe injury and appeared to aggravate it versus Houston. At less than 100 percent health, Boston was unproductive in the box score and saw a microscopic five percent target share. After popping back up for 6-98-0 receiving last Sunday in New Orleans with Shedeur Sanders at quarterback, Boston reverted to his sluggish ways with Deshaun Watson in Week 10. Over his last four games with Watson, Boston has compiled 11 catches for 95 empty yards. Boston can't be trusted in fantasy lineups until he shows more consistency."
+    },
+    {
       "playerId": "3115336",
       "name": "Derek Barnett",
       "position": "DE",
@@ -132,6 +157,28 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
       "beatNote": "21-day practice window opened; eligible for 53-man roster activation (Quadriceps)."
+    },
+    {
+      "playerId": "4601080",
+      "name": "Raheim Sanders",
+      "position": "RB",
+      "jersey": 23,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4601080.png",
+      "injuryType": "Hip",
+      "status": "IR — 21-Day Window Open",
+      "isSeasonEnding": false,
+      "isPracticeWindowOpen": true,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 6,
+      "earliestEligibleWeek": 10,
+      "projectedReturnWeek": "Week 12 Activation Window (Nov 29)",
+      "byeWeekNote": "4-game NFL minimum requirement",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • IR",
+      "beatNote": "Cleveland elected to open Sanders' practice window following their Week 11 bye, giving the team up to 21 days to evaluate him for a return to the 53-man roster. Before landing on IR on Oct. 13 due to a hip issue, Sanders carried nine times for 43 yards and added 11 receptions for 74 yards on 12 targets over five contests. He'll likely slot in behind Quinshon Judkins and Dylan Sampson on the depth chart at running back once he's activated."
     },
     {
       "playerId": "2515270",
@@ -220,28 +267,6 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
       "beatNote": "4-game minimum satisfied on Injured Reserve (Personal); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4601080",
-      "name": "Raheim Sanders",
-      "position": "RB",
-      "jersey": 23,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4601080.png",
-      "injuryType": "Hip",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 6,
-      "earliestEligibleWeek": 10,
-      "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "4-game NFL minimum requirement",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Hip); awaiting 21-day practice window designation."
     },
     {
       "playerId": "4038457",

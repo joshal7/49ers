@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:36:12.807Z",
+  "updatedAt": "2026-11-24T20:08:42.950Z",
   "week": 12,
   "units": [
     {
@@ -31,14 +31,14 @@
               "isAvailable": true
             },
             {
-              "playerId": "4035687",
-              "name": "Michael Pittman Jr.",
-              "jersey": 11,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035687.png",
+              "playerId": "5192448",
+              "name": "Cole Burgess",
+              "jersey": 85,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5192448.png",
               "baselineRank": 3,
-              "playProbabilityPct": 65,
-              "statusBadge": "65% • GTD",
-              "isAvailable": true
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out for Season",
+              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
@@ -63,14 +63,15 @@
               "isAvailable": true
             },
             {
-              "playerId": "4035687",
-              "name": "Michael Pittman Jr.",
-              "jersey": 11,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035687.png",
+              "playerId": "5192448",
+              "name": "Cole Burgess",
+              "jersey": 85,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5192448.png",
               "baselineRank": 3,
-              "playProbabilityPct": 65,
-              "statusBadge": "65% • GTD",
-              "isAvailable": true
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out for Season",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false
@@ -90,24 +91,14 @@
               "isAvailable": true
             },
             {
-              "playerId": "4694237",
-              "name": "Max Hurleman",
-              "jersey": 84,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4694237.png",
+              "playerId": "5081338",
+              "name": "Kaden Wetjen",
+              "jersey": 10,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "5192448",
-              "name": "Cole Burgess",
-              "jersey": 85,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5192448.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out for Season",
-              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
@@ -122,25 +113,14 @@
               "isAvailable": true
             },
             {
-              "playerId": "4694237",
-              "name": "Max Hurleman",
-              "jersey": 84,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4694237.png",
+              "playerId": "5081338",
+              "name": "Kaden Wetjen",
+              "jersey": 10,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "5192448",
-              "name": "Cole Burgess",
-              "jersey": 85,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5192448.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out for Season",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false
@@ -155,19 +135,19 @@
               "jersey": 14,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431492.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "5081338",
-              "name": "Kaden Wetjen",
-              "jersey": 10,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
+              "playerId": "4035687",
+              "name": "Michael Pittman Jr.",
+              "jersey": 11,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035687.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 65,
+              "statusBadge": "65% • GTD",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -177,20 +157,19 @@
               "jersey": 14,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431492.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "5081338",
-              "name": "Kaden Wetjen",
-              "jersey": 10,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
+              "playerId": "4035687",
+              "name": "Michael Pittman Jr.",
+              "jersey": 11,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035687.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 65,
+              "statusBadge": "65% • GTD",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -476,16 +455,6 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "4426368",
-              "name": "Doug Nester",
-              "jersey": 72,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426368.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -505,16 +474,6 @@
               "jersey": 60,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4570898.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
-              "isAvailable": true
-            },
-            {
-              "playerId": "4426368",
-              "name": "Doug Nester",
-              "jersey": 72,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426368.png",
-              "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -552,9 +511,9 @@
               "jersey": 18,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429955.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4714771",
@@ -562,9 +521,9 @@
               "jersey": 16,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4714771.png",
               "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -594,10 +553,9 @@
               "jersey": 18,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429955.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4714771",
@@ -605,10 +563,9 @@
               "jersey": 16,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4714771.png",
               "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -618,20 +575,20 @@
           "slotLabel": "TE",
           "baselineChain": [
             {
-              "playerId": "4430802",
-              "name": "Darnell Washington",
-              "jersey": 80,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430802.png",
+              "playerId": "4361411",
+              "name": "Pat Freiermuth",
+              "jersey": 88,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361411.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "4361411",
-              "name": "Pat Freiermuth",
-              "jersey": 88,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361411.png",
+              "playerId": "4430802",
+              "name": "Darnell Washington",
+              "jersey": 80,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430802.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -650,20 +607,20 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4430802",
-              "name": "Darnell Washington",
-              "jersey": 80,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430802.png",
+              "playerId": "4361411",
+              "name": "Pat Freiermuth",
+              "jersey": 88,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361411.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "4361411",
-              "name": "Pat Freiermuth",
-              "jersey": 88,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361411.png",
+              "playerId": "4430802",
+              "name": "Darnell Washington",
+              "jersey": 80,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430802.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -732,9 +689,9 @@
               "jersey": 29,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081508.png",
               "baselineRank": 5,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -784,10 +741,9 @@
               "jersey": 29,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081508.png",
               "baselineRank": 5,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -857,9 +813,9 @@
               "jersey": 96,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431533.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -889,10 +845,9 @@
               "jersey": 96,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431533.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -1037,9 +992,9 @@
               "jersey": 51,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429164.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 81,
+              "statusBadge": "81% • GTD",
+              "isAvailable": true
             },
             {
               "playerId": "4360308",
@@ -1064,6 +1019,16 @@
               "isAvailable": true
             },
             {
+              "playerId": "4429164",
+              "name": "Nick Herbig",
+              "jersey": 51,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429164.png",
+              "baselineRank": 2,
+              "playProbabilityPct": 81,
+              "statusBadge": "81% • GTD",
+              "isAvailable": true
+            },
+            {
               "playerId": "4360308",
               "name": "KJ Henry",
               "jersey": 57,
@@ -1072,17 +1037,6 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "4429164",
-              "name": "Nick Herbig",
-              "jersey": 51,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429164.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false
@@ -1195,9 +1149,9 @@
               "jersey": 56,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037333.png",
               "baselineRank": 1,
-              "playProbabilityPct": 81,
-              "statusBadge": "81% • GTD",
-              "isAvailable": true
+              "playProbabilityPct": 11,
+              "statusBadge": "11% • Doubtful",
+              "isAvailable": false
             },
             {
               "playerId": "4431590",
@@ -1212,16 +1166,6 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4037333",
-              "name": "Alex Highsmith",
-              "jersey": 56,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037333.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 81,
-              "statusBadge": "81% • GTD",
-              "isAvailable": true
-            },
-            {
               "playerId": "4431590",
               "name": "Jack Sawyer",
               "jersey": 33,
@@ -1230,9 +1174,20 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4037333",
+              "name": "Alex Highsmith",
+              "jersey": 56,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037333.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 11,
+              "statusBadge": "11% • Doubtful",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": false
+          "starterPromoted": true
         },
         {
           "slotKey": "lcb",
@@ -1264,9 +1219,9 @@
               "jersey": 27,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3932886.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -1296,10 +1251,9 @@
               "jersey": 27,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3932886.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -1620,31 +1574,21 @@
           "slotLabel": "PR",
           "baselineChain": [
             {
-              "playerId": "4694237",
-              "name": "Max Hurleman",
-              "jersey": 84,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4694237.png",
+              "playerId": "5081338",
+              "name": "Kaden Wetjen",
+              "jersey": 10,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "5081338",
-              "name": "Kaden Wetjen",
-              "jersey": 10,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
-            },
-            {
               "playerId": "4685261",
               "name": "Germie Bernard",
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685261.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -1654,7 +1598,7 @@
               "name": "Donte Kent",
               "jersey": 34,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608004.png",
-              "baselineRank": 4,
+              "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Reserve/PUP",
               "isAvailable": false
@@ -1662,10 +1606,10 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4694237",
-              "name": "Max Hurleman",
-              "jersey": 84,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4694237.png",
+              "playerId": "5081338",
+              "name": "Kaden Wetjen",
+              "jersey": 10,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -1676,28 +1620,17 @@
               "name": "Germie Bernard",
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685261.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "5081338",
-              "name": "Kaden Wetjen",
-              "jersey": 10,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             },
             {
               "playerId": "4608004",
               "name": "Donte Kent",
               "jersey": 34,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608004.png",
-              "baselineRank": 4,
+              "baselineRank": 3,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Reserve/PUP",
               "isAvailable": false,
@@ -1711,31 +1644,21 @@
           "slotLabel": "KR",
           "baselineChain": [
             {
-              "playerId": "4694237",
-              "name": "Max Hurleman",
-              "jersey": 84,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4694237.png",
+              "playerId": "5081338",
+              "name": "Kaden Wetjen",
+              "jersey": 10,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "5081338",
-              "name": "Kaden Wetjen",
-              "jersey": 10,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
-            },
-            {
               "playerId": "4428119",
               "name": "Lew Nichols",
               "jersey": 31,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428119.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -1745,7 +1668,7 @@
               "name": "Germie Bernard",
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685261.png",
-              "baselineRank": 4,
+              "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -1755,7 +1678,7 @@
               "name": "Travis Homer",
               "jersey": 21,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037457.png",
-              "baselineRank": 5,
+              "baselineRank": 4,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -1765,17 +1688,17 @@
               "name": "Eli Heidenreich",
               "jersey": 29,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081508.png",
-              "baselineRank": 6,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "baselineRank": 5,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4608004",
               "name": "Donte Kent",
               "jersey": 34,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608004.png",
-              "baselineRank": 7,
+              "baselineRank": 6,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Reserve/PUP",
               "isAvailable": false
@@ -1783,10 +1706,10 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4694237",
-              "name": "Max Hurleman",
-              "jersey": 84,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4694237.png",
+              "playerId": "5081338",
+              "name": "Kaden Wetjen",
+              "jersey": 10,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -1797,7 +1720,7 @@
               "name": "Lew Nichols",
               "jersey": 31,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428119.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -1807,7 +1730,7 @@
               "name": "Germie Bernard",
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685261.png",
-              "baselineRank": 4,
+              "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -1817,39 +1740,27 @@
               "name": "Travis Homer",
               "jersey": 21,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037457.png",
-              "baselineRank": 5,
+              "baselineRank": 4,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "5081338",
-              "name": "Kaden Wetjen",
-              "jersey": 10,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081338.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             },
             {
               "playerId": "5081508",
               "name": "Eli Heidenreich",
               "jersey": 29,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081508.png",
-              "baselineRank": 6,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "baselineRank": 5,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4608004",
               "name": "Donte Kent",
               "jersey": 34,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608004.png",
-              "baselineRank": 7,
+              "baselineRank": 6,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Reserve/PUP",
               "isAvailable": false,

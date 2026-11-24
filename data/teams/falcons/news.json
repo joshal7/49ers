@@ -1,45 +1,91 @@
 {
-  "updatedAt": "2026-11-23T06:35:04.119Z",
+  "updatedAt": "2026-11-24T20:08:14.410Z",
   "dailyTopNewsBrief": {
-    "id": "brief_atl_1be117de4e67",
-    "cycleKey": "2026-11-22@17ET",
+    "id": "brief_atl_2ebf06dd2f29",
+    "cycleKey": "2026-11-23@17ET",
     "scheduledHourPt": 17,
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-7",
-    "generatedAt": "2026-11-23T03:48:49.872Z",
-    "modelUsed": "gemini-3-flash-preview",
-    "thinkingLevel": "HIGH",
-    "source": "live-gemini-daily",
-    "wordCount": 169,
-    "guardClean": true,
-    "headline": "Falcons Face Vikings in Week 12 Amid Roster Transition and Playoff Longshots",
-    "summary": "Atlanta (3-7) enters Week 12 as significant underdogs against the 7-2 Vikings, grappling with a league-worst turnover differential and a roster in transition following the Jessie Bates III trade. Despite a top-10 rushing attack, the Falcons' playoff probability has plummeted to 8.3% under head coach Kevin Stefanski.",
+    "generatedAt": "2026-11-24T20:08:17.797Z",
+    "modelUsed": "gemini-4-hydrogen",
+    "thinkingLevel": "XHIGH",
+    "source": "deterministic-digest",
+    "wordCount": 63,
+    "headline": "Atlanta Falcons Daily Briefing — Week 12",
+    "summary": "Atlanta Falcons (3-7, 4th in NFC South • #13 Seed in NFC) top verified storylines, injury status, and upcoming matchup intel.",
     "bullets": [
-      "Following the trade of safety Jessie Bates III to Jacksonville, Atlanta leadership maintains that winning remains the primary objective despite the significant roster move [S3](https://www.espn.com/nfl/story/_/id/50473666/atlanta-falcons-trade-deadline-jessie-bates-morale).",
-      "Analyst Marc Raimondi reports the team is in a 'familiar spot,' struggling with a mediocre record and quarterback questions that mirror previous seasons [S7](https://www.espn.com/video/clip/_/id/50541233/falcons-familiar-spot) [S9](https://www.espn.com/nfl/story/_/id/50524413/falcons-matt-ryan-michael-penix-kevin-stefanski).",
-      "Atlanta faces a steep statistical disadvantage against Minnesota's top-ranked scoring defense (14.0 PPG), compounded by the Falcons' league-worst -7.39% CPOE and #30 ranked turnover differential [S5](https://www.espn.com/espn/betting/story/_/id/50501650/2026-nfl-week-11-schedule-odds-point-spreads-totals) [S6](https://www.espn.com/nfl/story/_/id/50522208/week-11-picks-predictions-schedule-fantasy-odds-2026).",
-      "With a 3-7 record, Atlanta currently holds the #10 overall pick in the 2027 NFL Draft, with midseason projections focusing on defensive reinforcements to bolster a unit allowing 358.2 yards per game [S10](https://www.espn.com/nfl/draft2027/story/_/id/50502243/2027-nfl-mock-draft-reid-midseason-32-first-round-predictions)."
+      "Week 12 NFL Power Rankings Roundup: Falcons return from bye, Lions contending ([atlantafalcons.com Official](https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars))",
+      "Falcons Waive LB Christian Harris ([Pro Football Rumors](https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris))",
+      "Tracking the NFC South: Panthers build 2-game lead in division ([atlantafalcons.com Official](https://www.atlantafalcons.com/news/nfc-south-panthers-lead-division-buccaneers-falcons-saints))",
+      "Head Coach Kevin Stefanski on team preparations for Week 12 matchup vs. Vikings | Press Conference ([atlantafalcons.com Video](https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-team-preparations-for-week-12-matchup-vs-vikings-press-conference))",
+      "Falcons release LB Christian Harris, sign S Jammie Robinson ([atlantafalcons.com Official](https://www.atlantafalcons.com/news/falcons-release-lb-christian-harris-sign-s-jammie-robinson))"
     ],
     "coveredStoryKeys": [
-      "atl_espn_faaa82c8f2010",
-      "atl_espn_60665e84e7b6e",
-      "atl_espn_7cc8fe35ab6f7",
-      "atl_vid_db08ba1e6bae",
-      "atl_vid_e30bc25c2aa0",
-      "atl_vid_a26fb306bec3"
+      "atl_rss_ef487570b9ea",
+      "atl_pfr_6022e65677ca",
+      "atl_rss_755f7c5a75e4",
+      "atl_vid_f571667ef4c7",
+      "atl_rss_efd5b2e015e7"
     ],
     "coveredUrls": [
-      "https://www.espn.com/nfl/story/_/id/50473666/atlanta-falcons-trade-deadline-jessie-bates-morale",
-      "https://www.espn.com/video/clip/_/id/50541233/falcons-familiar-spot",
-      "https://www.espn.com/nfl/story/_/id/50524413/falcons-matt-ryan-michael-penix-kevin-stefanski",
-      "https://www.atlantafalcons.com/video/every-atlanta-falcons-offensive-touchdown-through-the-first-half-of-the-2026-season-highlights",
-      "https://www.atlantafalcons.com/video/every-drake-london-reception-from-the-first-half-of-the-2026-season-highlights",
-      "https://www.atlantafalcons.com/video/top-bijan-robinson-highlights-from-the-first-half-of-the-2026-season-atlanta-falcons"
+      "https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars",
+      "https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris",
+      "https://www.atlantafalcons.com/news/nfc-south-panthers-lead-division-buccaneers-falcons-saints",
+      "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-team-preparations-for-week-12-matchup-vs-vikings-press-conference",
+      "https://www.atlantafalcons.com/news/falcons-release-lb-christian-harris-sign-s-jammie-robinson"
     ],
     "sources": [
       {
+        "sid": "S1",
+        "title": "Week 12 NFL Power Rankings Roundup: Falcons return from bye, Lions contending",
+        "url": "https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars",
+        "author": "atlantafalcons.com Official",
+        "outlet": "atlantafalcons.com Official",
+        "publishedAt": "2026-11-24T15:56:24.000Z"
+      },
+      {
+        "sid": "S2",
+        "title": "Falcons Waive LB Christian Harris",
+        "url": "https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris",
+        "author": "Pro Football Rumors",
+        "outlet": "Pro Football Rumors",
+        "publishedAt": "2026-11-24T14:58:42.000Z"
+      },
+      {
         "sid": "S3",
+        "title": "Tracking the NFC South: Panthers build 2-game lead in division",
+        "url": "https://www.atlantafalcons.com/news/nfc-south-panthers-lead-division-buccaneers-falcons-saints",
+        "author": "atlantafalcons.com Official",
+        "outlet": "atlantafalcons.com Official",
+        "publishedAt": "2026-11-24T14:17:02.000Z"
+      },
+      {
+        "sid": "S4",
+        "title": "Head Coach Kevin Stefanski on team preparations for Week 12 matchup vs. Vikings | Press Conference",
+        "url": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-team-preparations-for-week-12-matchup-vs-vikings-press-conference",
+        "author": "atlantafalcons.com Video",
+        "outlet": "atlantafalcons.com Video",
+        "publishedAt": "2026-11-23T18:35:00.000Z"
+      },
+      {
+        "sid": "S5",
+        "title": "Falcons release LB Christian Harris, sign S Jammie Robinson",
+        "url": "https://www.atlantafalcons.com/news/falcons-release-lb-christian-harris-sign-s-jammie-robinson",
+        "author": "atlantafalcons.com Official",
+        "outlet": "atlantafalcons.com Official",
+        "publishedAt": "2026-11-23T16:58:19.000Z"
+      },
+      {
+        "sid": "S6",
+        "title": "Falcons roster move: Released LB Christian Harris. Signed S Jammie Robinson from the practice squad to the active roster. Signed CB Terell Smith to the practice squad.",
+        "url": "https://www.atlantafalcons.com/team/transactions/#tx-504fed1c7c04",
+        "author": "Atlanta Falcons Official",
+        "outlet": "atlantafalcons.com Official",
+        "publishedAt": "2026-11-23T08:00:00.000Z"
+      },
+      {
+        "sid": "S7",
         "title": "Falcons insist winning still the goal despite trading Jessie Bates III",
         "url": "https://www.espn.com/nfl/story/_/id/50473666/atlanta-falcons-trade-deadline-jessie-bates-morale",
         "author": "Marc Raimondi",
@@ -47,83 +93,35 @@
         "publishedAt": "2026-11-21T11:59:54Z"
       },
       {
-        "sid": "S7",
-        "title": "Falcons are in a familiar spot 👀",
-        "url": "https://www.espn.com/video/clip/_/id/50541233/falcons-familiar-spot",
-        "author": "ESPN NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-20T15:51:10Z"
-      },
-      {
-        "sid": "S9",
-        "title": "Falcons seek change, but keep ending up in the same spot",
-        "url": "https://www.espn.com/nfl/story/_/id/50524413/falcons-matt-ryan-michael-penix-kevin-stefanski",
-        "author": "Marc Raimondi",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-19T11:39:28Z"
-      },
-      {
-        "sid": "S4",
-        "title": "EVERY Atlanta Falcons offensive touchdown through the first half of the 2026 season | Highlights",
-        "url": "https://www.atlantafalcons.com/video/every-atlanta-falcons-offensive-touchdown-through-the-first-half-of-the-2026-season-highlights",
-        "author": "atlantafalcons.com Video",
-        "outlet": "atlantafalcons.com Video",
-        "publishedAt": "2026-11-17T20:37:29.000Z"
-      },
-      {
-        "sid": "S5",
-        "title": "EVERY Drake London reception from the first half of the 2026 season | Highlights",
-        "url": "https://www.atlantafalcons.com/video/every-drake-london-reception-from-the-first-half-of-the-2026-season-highlights",
-        "author": "atlantafalcons.com Video",
-        "outlet": "atlantafalcons.com Video",
-        "publishedAt": "2026-11-17T20:15:00.000Z"
-      },
-      {
-        "sid": "S6",
-        "title": "TOP Bijan Robinson highlights from the first half of the 2026 season | Atlanta Falcons",
-        "url": "https://www.atlantafalcons.com/video/top-bijan-robinson-highlights-from-the-first-half-of-the-2026-season-atlanta-falcons",
-        "author": "atlantafalcons.com Video",
-        "outlet": "atlantafalcons.com Video",
-        "publishedAt": "2026-11-17T20:11:00.000Z"
-      },
-      {
-        "sid": "S7",
-        "title": "EVERY Atlanta Falcons sack through the first half of the 2026 season | Highlights",
-        "url": "https://www.atlantafalcons.com/video/every-atlanta-falcons-sack-through-the-first-half-of-the-2026-season-highlights",
-        "author": "atlantafalcons.com Video",
-        "outlet": "atlantafalcons.com Video",
-        "publishedAt": "2026-11-17T20:11:00.000Z"
-      },
-      {
         "sid": "S8",
-        "title": "Tracking the NFC South: Panthers expand division lead with win vs. Saints",
-        "url": "https://www.atlantafalcons.com/news/tracking-the-nfc-south-panthers-division-lead-saints-buccaneers-falcons",
-        "author": "atlantafalcons.com Official",
-        "outlet": "atlantafalcons.com Official",
-        "publishedAt": "2026-11-17T17:00:16.000Z"
+        "title": "Falcons Extend OLB Cameron Thomas",
+        "url": "https://www.profootballrumors.com/2026/11/falcons-to-extend-olb-cameron-thomas",
+        "author": "Pro Football Rumors",
+        "outlet": "Pro Football Rumors",
+        "publishedAt": "2026-11-20T15:50:11.000Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
     {
-      "id": "atl_nfltr_ad344f030532",
+      "id": "atl_rss_ef487570b9ea",
       "type": "article",
-      "title": "NFC Notes: Tyler Shough, Justin Reid, Falcons, Panthers, Saints",
-      "summary": "Falcons Falcons DT Brandon Dorlus was fined $7,114 for unsportsmanlike conduct and $7,114 for a hit on a quarterback; DB DeMarcco Hellams was fined $6,509 for unnecessary roughness, and LB Harold Perkins was fined $5,203 for unnecessary rou",
-      "imageUrl": "",
-      "imageAlt": "NFC Notes: Tyler Shough, Justin Reid, Falcons, Panthers, Saints",
-      "publishedAt": "2026-11-23T00:00:00.000Z",
-      "url": "https://nfltraderumors.co/nfc-notes-tyler-shough-justin-reid-falcons-panthers-saints/",
-      "outletId": "nfl_trade_rumors",
-      "outletName": "NFL Trade Rumors",
-      "reporterId": "nfl_trade_rumors",
-      "reporterName": "NFL Trade Rumors",
-      "author": "NFL Trade Rumors",
-      "authorHandle": "@nfltrade_rumors",
-      "authorProfileUrl": "https://nfltraderumors.co/",
-      "trustTier": 2,
-      "wireSource": "nfltr_rss",
+      "title": "Week 12 NFL Power Rankings Roundup: Falcons return from bye, Lions contending",
+      "summary": "Plus, the Jaguars drop after surprising loss to Giants.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/yyzta8dlaitub4m9rqab.jpg",
+      "imageAlt": "Week 12 NFL Power Rankings Roundup: Falcons return from bye, Lions contending",
+      "publishedAt": "2026-11-24T15:56:24.000Z",
+      "url": "https://www.atlantafalcons.com/news/week-12-nfl-power-rankings-roundup-falcons-return-from-bye-lions-contending-giants-jaguars",
+      "outletId": "falcons_official",
+      "outletName": "atlantafalcons.com Official",
+      "reporterId": "falcons_official",
+      "reporterName": "atlantafalcons.com Official",
+      "author": "atlantafalcons.com Official",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -137,7 +135,175 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.425
+      "storyRank": 5.8726
+    },
+    {
+      "id": "atl_pfr_6022e65677ca",
+      "type": "article",
+      "title": "Falcons Waive LB Christian Harris",
+      "summary": "Christian Harris joined the Falcons in free agency this past March. The fifth-year linebacker’s time in Atlanta is now coming to an end. Harris was has been waived, per a team announcement. This move comes after he made seven appearances in",
+      "imageUrl": "",
+      "publishedAt": "2026-11-24T14:58:42.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/falcons-waive-lb-christian-harris",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 4.5688
+    },
+    {
+      "id": "atl_rss_755f7c5a75e4",
+      "type": "article",
+      "title": "Tracking the NFC South: Panthers build 2-game lead in division",
+      "summary": "The Falcons, Saints and Buccaneers are all tied with a 3-7 record behind the Panthers in the division standings.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/acnpljf0z9donjlkd438.png",
+      "imageAlt": "Tracking the NFC South: Panthers build 2-game lead in division",
+      "publishedAt": "2026-11-24T14:17:02.000Z",
+      "url": "https://www.atlantafalcons.com/news/nfc-south-panthers-lead-division-buccaneers-falcons-saints",
+      "outletId": "falcons_official",
+      "outletName": "atlantafalcons.com Official",
+      "reporterId": "falcons_official",
+      "reporterName": "atlantafalcons.com Official",
+      "author": "atlantafalcons.com Official",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.002
+    },
+    {
+      "id": "atl_vid_f571667ef4c7",
+      "type": "video",
+      "title": "Head Coach Kevin Stefanski on team preparations for Week 12 matchup vs. Vikings | Press Conference",
+      "summary": "Atlanta Falcons Head Coach Kevin Stefanski speaks with the media as the Falcons prepare to travel north to take on the Minnesota Vikings this Sunday at 1 pm ET.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/fsuwrs7dlx8nzpemtdt7.jpg",
+      "imageAlt": "Head Coach Kevin Stefanski on team preparations for Week 12 matchup vs. Vikings | Press Conference",
+      "publishedAt": "2026-11-23T18:35:00.000Z",
+      "url": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-team-preparations-for-week-12-matchup-vs-vikings-press-conference",
+      "externalVideoUrl": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-on-team-preparations-for-week-12-matchup-vs-vikings-press-conference",
+      "outletId": "falcons_official",
+      "outletName": "atlantafalcons.com Video",
+      "reporterId": "falcons_official",
+      "reporterName": "atlantafalcons.com Video",
+      "author": "atlantafalcons.com Video",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6091
+    },
+    {
+      "id": "atl_rss_efd5b2e015e7",
+      "type": "article",
+      "title": "Falcons release LB Christian Harris, sign S Jammie Robinson",
+      "summary": "The Falcons have also signed CB Terell Smith to the practice squad.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/jy1vgm3a0l2tmbr6622u.jpg",
+      "imageAlt": "Falcons release LB Christian Harris, sign S Jammie Robinson",
+      "publishedAt": "2026-11-23T16:58:19.000Z",
+      "url": "https://www.atlantafalcons.com/news/falcons-release-lb-christian-harris-sign-s-jammie-robinson",
+      "outletId": "falcons_official",
+      "outletName": "atlantafalcons.com Official",
+      "reporterId": "falcons_official",
+      "reporterName": "atlantafalcons.com Official",
+      "author": "atlantafalcons.com Official",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.561
+    },
+    {
+      "id": "atl_tx_504fed1c7c04",
+      "type": "tweet",
+      "title": "Falcons roster move: Released LB Christian Harris. Signed S Jammie Robinson from the practice squad to the active roster. Signed CB Terell Smith to the practice squad.",
+      "fullText": "Falcons roster move: Released LB Christian Harris. Signed S Jammie Robinson from the practice squad to the active roster. Signed CB Terell Smith to the practice squad.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-23T08:00:00.000Z",
+      "url": "https://www.atlantafalcons.com/team/transactions/#tx-504fed1c7c04",
+      "outletId": "falcons_official",
+      "outletName": "atlantafalcons.com Official",
+      "reporterId": "falcons_official",
+      "reporterName": "Atlanta Falcons Official",
+      "author": "Atlanta Falcons Official",
+      "authorHandle": "@AtlantaFalcons",
+      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3813
     },
     {
       "id": "atl_espn_faaa82c8f2010",
@@ -171,47 +337,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3049
-    },
-    {
-      "id": "atl_espn_60665e84e7b6e",
-      "type": "video",
-      "title": "Falcons are in a familiar spot 👀",
-      "summary": "Marc Raimondi reports on how the Falcons are like 'Groundhog Dog' in terms of where they are compared to last season.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1120/dm_261120_Falcons_are_in_a_familiar_spot614/dm_261120_Falcons_are_in_a_familiar_spot614.jpg",
-      "imageCaption": "Marc Raimondi reports on how the Falcons are like 'Groundhog Dog' in terms of where they are compared to last season.",
-      "imageAlt": "Falcons are in a familiar spot 👀",
-      "publishedAt": "2026-11-20T15:51:10Z",
-      "url": "https://www.espn.com/video/clip/_/id/50541233/falcons-familiar-spot",
-      "outletId": "espn_atl",
-      "outletName": "ESPN",
-      "reporterId": "espn_atl",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/atl/atlanta-falcons",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1792
+      "storyRank": 0.1279
     },
     {
       "id": "atl_pfr_c0947bbebf2d",
       "type": "article",
       "title": "Falcons Extend OLB Cameron Thomas",
-      "summary": "NOVEMBER 20: Thomas’ new deal carries a base value of $27MM, per Spotrac. $9MM is fully locked in at signing, with an additional $5MM guaranteed for injury; incentives could see the pact top out at $33MM. Option bonuses are present in",
+      "summary": "NOVEMBER 20: Thomas’ new deal carries a base value of $27MM, per Spotrac. $9MM is fully locked in at signing, with an additional $5MM guaranteed for injury; incentives could see the pact top out at $33MM. Option bonuses are present in each ",
       "imageUrl": "",
       "publishedAt": "2026-11-20T15:50:11.000Z",
       "url": "https://www.profootballrumors.com/2026/11/falcons-to-extend-olb-cameron-thomas",
@@ -237,7 +369,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1762
+      "storyRank": 0.0922
     },
     {
       "id": "atl_espn_7cc8fe35ab6f7",
@@ -271,7 +403,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1074
+      "storyRank": 0.0665
     },
     {
       "id": "atl_vid_db08ba1e6bae",
@@ -305,13 +437,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0655
+      "storyRank": 0.046
     },
     {
       "id": "atl_pfr_3573f91ee6d8",
       "type": "article",
       "title": "Falcons Extend CB C.J. Henderson",
-      "summary": "NOVEMBER 17: Henderson’s new contract has a base value of $13MM, as detailed by Over the Cap. $7MM in incentives are present to reach the $20MM maximum. Henderson landed $7.12MM in full guarantees, including a $4MM signing bonus. His ",
+      "summary": "NOVEMBER 17: Henderson’s new contract has a base value of $13MM, as detailed by Over the Cap. $7MM in incentives are present to reach the $20MM maximum. Henderson landed $7.12MM in full guarantees, including a $4MM signing bonus. His $1.8MM",
       "imageUrl": "",
       "publishedAt": "2026-11-17T20:20:57.000Z",
       "url": "https://www.profootballrumors.com/2026/11/falcons-extend-cb-c-j-henderson",
@@ -337,7 +469,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0642
+      "storyRank": 0.0451
     },
     {
       "id": "atl_vid_e30bc25c2aa0",
@@ -371,7 +503,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0652
+      "storyRank": 0.0459
     },
     {
       "id": "atl_vid_a26fb306bec3",
@@ -405,7 +537,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0651
+      "storyRank": 0.0458
     },
     {
       "id": "atl_vid_afcbfd238320",
@@ -439,7 +571,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0651
+      "storyRank": 0.0458
     },
     {
       "id": "atl_rss_e8b1b614b76a",
@@ -472,7 +604,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0112
     },
     {
       "id": "atl_rss_3d8d94980edb",
@@ -505,7 +637,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0614
+      "storyRank": 0.0438
     },
     {
       "id": "atl_vid_d2e49f1f9ee6",
@@ -539,7 +671,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0533
+      "storyRank": 0.0391
     },
     {
       "id": "atl_vid_9038f9cf61b8",
@@ -573,7 +705,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0524
+      "storyRank": 0.0386
     },
     {
       "id": "atl_espn_3ed26fa45e367",
@@ -607,7 +739,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.051
+      "storyRank": 0.0377
     },
     {
       "id": "atl_vid_b1a09eb2ea39",
@@ -641,7 +773,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0509
+      "storyRank": 0.0377
     },
     {
       "id": "atl_rss_f66fa5406769",
@@ -674,7 +806,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0499
+      "storyRank": 0.0371
     },
     {
       "id": "atl_espn_9f020e3e0ae5a",
@@ -708,7 +840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0433
+      "storyRank": 0.033
     },
     {
       "id": "atl_espn_848ebddeec81d",
@@ -742,7 +874,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0431
+      "storyRank": 0.0329
     },
     {
       "id": "atl_vid_d5056d939b60",
@@ -776,7 +908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0429
+      "storyRank": 0.0328
     },
     {
       "id": "atl_vid_1f2b2f4bb4b4",
@@ -810,7 +942,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0429
+      "storyRank": 0.0328
     },
     {
       "id": "atl_vid_9710be269fe8",
@@ -844,7 +976,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0426
+      "storyRank": 0.0326
     },
     {
       "id": "atl_rss_630fa9ab4ad4",
@@ -877,7 +1009,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0425
+      "storyRank": 0.0325
     },
     {
       "id": "atl_vid_1de5cb6af681",
@@ -911,7 +1043,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0424
+      "storyRank": 0.0325
     },
     {
       "id": "atl_vid_0b127ce6a8c5",
@@ -945,7 +1077,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0081
     },
     {
       "id": "atl_vid_e4c4e1c496c5",
@@ -979,7 +1111,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0423
+      "storyRank": 0.0324
     },
     {
       "id": "atl_vid_71a21c3f0953",
@@ -1013,7 +1145,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0081
     },
     {
       "id": "atl_vid_71e11d547e1a",
@@ -1047,7 +1179,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0422
+      "storyRank": 0.0324
     },
     {
       "id": "atl_vid_6849242723fa",
@@ -1081,7 +1213,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0081
     },
     {
       "id": "atl_vid_6cc4c7aa99fd",
@@ -1115,7 +1247,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0081
     },
     {
       "id": "atl_vid_0c9f955ba5a3",
@@ -1149,7 +1281,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0421
+      "storyRank": 0.0323
     },
     {
       "id": "atl_vid_5946fb31e919",
@@ -1183,7 +1315,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.008
     },
     {
       "id": "atl_vid_498940465f1e",
@@ -1217,13 +1349,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0418
+      "storyRank": 0.0321
     },
     {
       "id": "atl_pfr_61a6dbaa1f39",
       "type": "article",
       "title": "Minor NFL Transactions: 11/14/26",
-      "summary": "Here are the minor moves and standard gameday practice squad elevations for Week 10’s Sunday slate: Arizona Cardinals Activated from IR: TE Hunter Long Elevated: WR Zay Jones Atlanta Falcons Elevated: LB TJ Quinn, S Jammie Robinson Bu",
+      "summary": "Here are the minor moves and standard gameday practice squad elevations for Week 10’s Sunday slate: Arizona Cardinals Activated from IR: TE Hunter Long Elevated: WR Zay Jones Atlanta Falcons Elevated: LB TJ Quinn, S Jammie Robinson Buffalo ",
       "imageUrl": "",
       "publishedAt": "2026-11-14T23:21:04.000Z",
       "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-14-26",
@@ -1249,7 +1381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0355
+      "storyRank": 0.0279
     },
     {
       "id": "atl_rss_e4947d5197cf",
@@ -1282,13 +1414,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0355
+      "storyRank": 0.028
     },
     {
       "id": "atl_pfr_7cb59f18ee05",
       "type": "article",
       "title": "Bills Pursued Jordan Davis, Jessie Bates Before Trade Deadline",
-      "summary": "Not only are the 7-1 Bills and 6-2 Jaguars among the teams vying for the No. 1 seed in the AFC, but they also chased a couple of the same targets ahead of Tuesday’s trade deadline. Before the Jaguars acquired defensive tackle Jordan D",
+      "summary": "Not only are the 7-1 Bills and 6-2 Jaguars among the teams vying for the No. 1 seed in the AFC, but they also chased a couple of the same targets ahead of Tuesday’s trade deadline. Before the Jaguars acquired defensive tackle Jordan Davis f",
       "imageUrl": "",
       "publishedAt": "2026-11-14T20:40:24.000Z",
       "url": "https://www.profootballrumors.com/2026/11/bills-pursued-jordan-davis-jessie-bates-before-trade-deadline",
@@ -1314,7 +1446,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0087
+      "storyRank": 0.0069
     },
     {
       "id": "atl_tx_5b421c082348",
@@ -1348,7 +1480,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0326
+      "storyRank": 0.026
     },
     {
       "id": "atl_rss_7d49c666a330",
@@ -1381,7 +1513,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0302
+      "storyRank": 0.0244
     },
     {
       "id": "atl_vid_b5e7e908e1df",
@@ -1415,7 +1547,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.0243
     },
     {
       "id": "atl_rss_c83616257292",
@@ -1448,7 +1580,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0753
+      "storyRank": 0.0618
     },
     {
       "id": "atl_rss_1413d95dc2ce",
@@ -1481,7 +1613,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
+      "storyRank": 0.0237
     },
     {
       "id": "atl_rss_4ea0b1f46176",
@@ -1514,7 +1646,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
+      "storyRank": 0.0237
     },
     {
       "id": "atl_tx_01180c486c8b",
@@ -1548,7 +1680,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0281
+      "storyRank": 0.0229
     },
     {
       "id": "atl_rss_ef1def40a3e1",
@@ -1581,7 +1713,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.027
+      "storyRank": 0.0222
     },
     {
       "id": "atl_rss_7ff7091046f3",
@@ -1614,7 +1746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.067
+      "storyRank": 0.0559
     },
     {
       "id": "atl_vid_7b464d4d545d",
@@ -1648,7 +1780,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0261
+      "storyRank": 0.0215
     },
     {
       "id": "atl_rss_43c5cdd7d26f",
@@ -1681,13 +1813,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0253
+      "storyRank": 0.0209
     },
     {
       "id": "atl_pfr_b3d410e28479",
       "type": "article",
       "title": "Giants Inquired About Bijan Robinson",
-      "summary": "Tuesday’s trade deadline passed without the Giants acquiring a running back, but it wasn’t for lack of effort on their part. It was already known the Giants had interest in the Colts’ Jonathan Taylor and the Titans’ ",
+      "summary": "Tuesday’s trade deadline passed without the Giants acquiring a running back, but it wasn’t for lack of effort on their part. It was already known the Giants had interest in the Colts’ Jonathan Taylor and the Titans’ Tony Pollard, and Jordan",
       "imageUrl": "",
       "publishedAt": "2026-11-12T04:40:49.000Z",
       "url": "https://www.profootballrumors.com/2026/11/giants-inquired-about-bijan-robinson",
@@ -1713,7 +1845,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0022
+      "storyRank": 0.001
     },
     {
       "id": "atl_vid_ed78d5a4dce9",
@@ -1747,13 +1879,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0238
+      "storyRank": 0.0199
     },
     {
       "id": "atl_pfr_276dcb2e0086",
       "type": "article",
       "title": "Minor NFL Transactions: 11/11/26",
-      "summary": "Today’s midweek minor NFL transactions: Arizona Cardinals Designated for return from IR: TE Hunter Long Practice window opened: DT Zachary Carter Atlanta Falcons Activated from IR: T Cameron Williams Dallas Cowboys Practice window ope",
+      "summary": "Today’s midweek minor NFL transactions: Arizona Cardinals Designated for return from IR: TE Hunter Long Practice window opened: DT Zachary Carter Atlanta Falcons Activated from IR: T Cameron Williams Dallas Cowboys Practice window opened: C",
       "imageUrl": "",
       "publishedAt": "2026-11-12T01:03:11.000Z",
       "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-11-26",
@@ -1779,7 +1911,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0233
+      "storyRank": 0.0194
     },
     {
       "id": "atl_vid_158cc9299cd7",
@@ -1813,7 +1945,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0049
     },
     {
       "id": "atl_rss_6cef9df7b9fc",
@@ -1846,7 +1978,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0234
+      "storyRank": 0.0195
     },
     {
       "id": "atl_rss_726dcffeda07",
@@ -1879,7 +2011,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0599
+      "storyRank": 0.0507
     },
     {
       "id": "atl_rss_12604ad7fac4",
@@ -1912,7 +2044,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0233
+      "storyRank": 0.0195
     },
     {
       "id": "atl_rss_ac3bd81a97c1",
@@ -1945,7 +2077,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.0193
     },
     {
       "id": "atl_rss_56485a7a2ee5",
@@ -1978,7 +2110,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.0192
     },
     {
       "id": "atl_vid_14e310a16f42",
@@ -2012,7 +2144,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0229
+      "storyRank": 0.0192
     },
     {
       "id": "atl_rss_377400c9cc49",
@@ -2045,7 +2177,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0189
     },
     {
       "id": "atl_tx_74e210c1510b",
@@ -2079,13 +2211,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0218
+      "storyRank": 0.0183
     },
     {
       "id": "atl_pfr_02b898129b94",
       "type": "article",
       "title": "NFL Practice Squad Updates: 11/10/26",
-      "summary": "Today’s practice squad moves: Arizona Cardinals Signed: WR Phillip Dorsett Released: TE Rivaldo Fairweather, RB Jermar Jefferson Atlanta Falcons Signed: C Gus Hartwig, S Delarrin Turner-Yell Released: DE Drake Jackson Baltimore Ravens",
+      "summary": "Today’s practice squad moves: Arizona Cardinals Signed: WR Phillip Dorsett Released: TE Rivaldo Fairweather, RB Jermar Jefferson Atlanta Falcons Signed: C Gus Hartwig, S Delarrin Turner-Yell Released: DE Drake Jackson Baltimore Ravens Signe",
       "imageUrl": "",
       "publishedAt": "2026-11-11T01:37:00.000Z",
       "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-10-26",
@@ -2111,7 +2243,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0208
+      "storyRank": 0.0175
     },
     {
       "id": "atl_rss_e977be8203e5",
@@ -2144,13 +2276,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0176
     },
     {
       "id": "atl_pfr_676d61ed02ff",
       "type": "article",
       "title": "Falcons, Ravens Swap OL Ryan Neuzil, Andrew Vorhees",
-      "summary": "The Ravens have agreed to a last-minute trade just before this afternoon’s deadline. Another addition is being made along the offensive line. Center Ryan Neuzil is being acquired from the Falcons, as first reported by NFL insider Jord",
+      "summary": "The Ravens have agreed to a last-minute trade just before this afternoon’s deadline. Another addition is being made along the offensive line. Center Ryan Neuzil is being acquired from the Falcons, as first reported by NFL insider Jordan Sch",
       "imageUrl": "",
       "publishedAt": "2026-11-10T21:16:44.000Z",
       "url": "https://www.profootballrumors.com/2026/11/falcons-ravens-to-swap-ol-ryan-neuzil-andrew-vorhees",
@@ -2176,7 +2308,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0203
+      "storyRank": 0.0172
     },
     {
       "id": "atl_vid_dd655223124f",
@@ -2210,138 +2342,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
-    },
-    {
-      "id": "atl_rss_d77b9114a23a",
-      "type": "article",
-      "title": "Tracking the NFC South: A 4-way tie between 3-win teams",
-      "summary": "The division is as tight as possible heading into Week 10.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/hm09v7xjtidzanqxiuyp.png",
-      "imageAlt": "Tracking the NFC South: A 4-way tie between 3-win teams",
-      "publishedAt": "2026-11-10T18:55:45.000Z",
-      "url": "https://www.atlantafalcons.com/news/tracking-the-nfc-south-panthers-saints-bucs-falcons-wins",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
-    },
-    {
-      "id": "atl_rss_fb7977b08381",
-      "type": "article",
-      "title": "Week 10 NFL Power Rankings Roundup: Packers on the move, top offenses stand firm",
-      "summary": "Bengals, Broncos and Bears continue to hold strong as frequent flyers as top teams in the league.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/y4j9scqgyzcnumg1aylm.jpg",
-      "imageAlt": "Week 10 NFL Power Rankings Roundup: Packers on the move, top offenses stand firm",
-      "publishedAt": "2026-11-10T18:04:00.000Z",
-      "url": "https://www.atlantafalcons.com/news/week-10-nfl-power-rankings-roundup-packers-on-the-move-top-offenses-stand-firm",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
-    },
-    {
-      "id": "atl_pfr_a1961bb949cc",
-      "type": "article",
-      "title": "Falcons Sign Jake Moody Off Ravens’ Practice Squad, Release Nick Folk",
-      "summary": "Jake Moody made his kicking debut with the Ravens in Week 9, filling in for the injured Tyler Loop. His second Baltimore stint has proven to be short-lived, though. Moody is being signed to the Falcons’ active roster, NFL insider Jord",
-      "imageUrl": "",
-      "publishedAt": "2026-11-10T17:04:45.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/falcons-to-sign-jake-moody-off-ravens-practice-squad-release-nick-folk",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0199
-    },
-    {
-      "id": "atl_rss_f2f796faf1fe",
-      "type": "article",
-      "title": "Kevin Stefanski says 'all of us have to step up' after Jessie Bates trade",
-      "summary": "Atlanta's head coach detailed the team's plans at safety as they move forward without Bates in the lineup.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/tohoxzag35xtamrrsurn.jpg",
-      "imageAlt": "Kevin Stefanski says 'all of us have to step up' after Jessie Bates trade",
-      "publishedAt": "2026-11-10T13:57:28.000Z",
-      "url": "https://www.atlantafalcons.com/news/kevin-stefanski-jessie-bates-trade-falcons-safety-plans",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.02
+      "storyRank": 0.0174
     },
     {
       "id": "atl_tx_f528c4fe1b37",
@@ -2375,105 +2376,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0195
-    },
-    {
-      "id": "atl_pfr_8821c90df473",
-      "type": "article",
-      "title": "Jaguars Acquire Jessie Bates From Falcons",
-      "summary": "Jessie Bates is on the move. The Jaguars have worked out a trade with the Falcons for the veteran safety, as first reported by ESPN’s Adam Schefter. The deal is now official. Jacksonville is sending Atlanta a 2027 second-round pick in",
-      "imageUrl": "",
-      "publishedAt": "2026-11-10T05:27:42.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/jaguars-to-acquire-s-jessie-bates-from-falcons",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/atlanta-falcons",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0189
-    },
-    {
-      "id": "atl_rss_2826f0a942e9",
-      "type": "article",
-      "title": "Trade of Jessie Bates III reflects Ian Cunningham's draft philosophy",
-      "summary": "The Falcons' general manager put his philosophy into action, turning a veteran safety on an expiring contract into two future draft selections.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/uzbqpfmobqpflapqpiiq.jpg",
-      "imageAlt": "Trade of Jessie Bates III reflects Ian Cunningham's draft philosophy",
-      "publishedAt": "2026-11-09T21:58:10.000Z",
-      "url": "https://www.atlantafalcons.com/news/trade-jessie-bates-reflects-ian-cunningham-draft-philosophy-jaguars",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
-    },
-    {
-      "id": "atl_rss_1ddac499f485",
-      "type": "article",
-      "title": "Kevin Stefanski: Trade of Jessie Bates III 'in no way, shape or form' an indication the Falcons are 'punting' on 2026 season",
-      "summary": "The head coach said the Falcons still feel they're in the division race. Though they're locking up future assets, that doesn't change the goal of 2026.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/dwetrkxflmszmdakmenl.jpg",
-      "imageAlt": "Kevin Stefanski: Trade of Jessie Bates III 'in no way, shape or form' an indication the Falcons are 'punting' on 2026 season",
-      "publishedAt": "2026-11-09T20:31:40.000Z",
-      "url": "https://www.atlantafalcons.com/news/kevin-stefanski-trade-of-jessie-bates-iii-in-no-way-shape-or-form-an-indication-the-falcons-are-punting-on-2026-season",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0185
+      "storyRank": 0.0166
     },
     {
       "id": "atl_vid_d60ab025a824",
@@ -2507,7 +2410,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0184
+      "storyRank": 0.0158
     },
     {
       "id": "atl_vid_2dd4f631a635",
@@ -2541,73 +2444,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0184
-    },
-    {
-      "id": "atl_rss_952a334268a1",
-      "type": "article",
-      "title": "Falcons trade Jessie Bates to Jacksonville Jaguars for multiple draft picks",
-      "summary": "In exchange for sending the All-Pro safety to Jacksonville, Atlanta has agreed to receive a second-round pick in the 2027 NFL Draft and a fifth-round pick in the 2028 NFL Draft.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/bvacnqbam9qgcxlxfupv.jpg",
-      "imageAlt": "Falcons trade Jessie Bates to Jacksonville Jaguars for multiple draft picks",
-      "publishedAt": "2026-11-09T18:46:09.000Z",
-      "url": "https://www.atlantafalcons.com/news/falcons-agree-terms-jaguars-trade-jessie-bates-draft-picks",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0184
-    },
-    {
-      "id": "atl_rss_6bba2484a82d",
-      "type": "article",
-      "title": "Cincinnati's offense, Michael Penix Jr's mobility and more notes from Falcons vs. Bengals",
-      "summary": "Catching you up on the news, notes and quotes from the Falcons' game against the Cincinnati Bengals.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/fvipmivdtanjwop0ibgi.jpg",
-      "imageAlt": "Cincinnati's offense, Michael Penix Jr's mobility and more notes from Falcons vs. Bengals",
-      "publishedAt": "2026-11-09T17:34:56.000Z",
-      "url": "https://www.atlantafalcons.com/news/cincinnati-offense-michael-penix-jr-falcons-vs-bengals",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Official",
-      "author": "atlantafalcons.com Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0183
+      "storyRank": 0.0158
     },
     {
       "id": "atl_tx_fc5a0725e987",
@@ -2641,7 +2478,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0175
+      "storyRank": 0.0151
     },
     {
       "id": "atl_vid_64a8458d4d33",
@@ -2675,7 +2512,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0146
     },
     {
       "id": "atl_vid_b85f1a807407",
@@ -2709,7 +2546,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0036
     },
     {
       "id": "atl_vid_3046ec4d8817",
@@ -2743,7 +2580,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0145
     },
     {
       "id": "atl_vid_12fcf6f1a764",
@@ -2777,7 +2614,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0144
     },
     {
       "id": "atl_vid_581f35a285b7",
@@ -2811,7 +2648,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0036
     },
     {
       "id": "atl_vid_3f230acb5302",
@@ -2845,7 +2682,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.0143
     },
     {
       "id": "atl_vid_facbf2e4b5d6",
@@ -2879,7 +2716,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.0143
     },
     {
       "id": "atl_vid_b5a12ab9561d",
@@ -2913,7 +2750,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.0143
     },
     {
       "id": "atl_vid_cd650e6ba285",
@@ -2947,7 +2784,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.0143
     },
     {
       "id": "atl_vid_25734f1e86df",
@@ -2981,7 +2818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.0143
     },
     {
       "id": "atl_vid_532f3a87fc73",
@@ -3015,7 +2852,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0143
     },
     {
       "id": "atl_vid_305223f824da",
@@ -3049,7 +2886,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0142
     },
     {
       "id": "atl_vid_8e3114def61f",
@@ -3083,7 +2920,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0142
     },
     {
       "id": "atl_vid_993aede9b36b",
@@ -3117,7 +2954,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0142
     },
     {
       "id": "atl_vid_72d70aaf36b0",
@@ -3151,7 +2988,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0036
     },
     {
       "id": "atl_vid_a598e1c89a04",
@@ -3185,7 +3022,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0142
     },
     {
       "id": "atl_vid_6f5cdf3017db",
@@ -3219,7 +3056,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0142
     },
     {
       "id": "atl_vid_45f6f7e2d239",
@@ -3253,7 +3090,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.015
+      "storyRank": 0.0132
     },
     {
       "id": "atl_tx_a874b8a93a5c",
@@ -3287,7 +3124,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0153
+      "storyRank": 0.0135
     },
     {
       "id": "atl_vid_9393787fe4f4",
@@ -3321,7 +3158,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0034
+      "storyRank": 0.003
     },
     {
       "id": "atl_vid_8f23f97c2b87",
@@ -3355,7 +3192,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0137
+      "storyRank": 0.0121
     },
     {
       "id": "atl_vid_16e3c14ecc40",
@@ -3389,7 +3226,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0112
     },
     {
       "id": "atl_vid_b7e44187b261",
@@ -3423,7 +3260,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0029
+      "storyRank": 0.0026
     },
     {
       "id": "atl_vid_fa6b5bd3de56",
@@ -3457,7 +3294,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0104
     },
     {
       "id": "atl_tx_c91c06ccefd8",
@@ -3491,177 +3328,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0114
-    },
-    {
-      "id": "atl_vid_a438972cd715",
-      "type": "video",
-      "title": "A.J. Terrell Jr. is Mic'd Up versus the Tampa Bay Buccaneers",
-      "summary": "A.J. Terrell Jr. is mic'd up for the Falcons week eight matchup versus Tampa Bay.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/wyntlmbl8xxkvm3lpijx.png",
-      "imageAlt": "A.J. Terrell Jr. is Mic'd Up versus the Tampa Bay Buccaneers",
-      "publishedAt": "2026-11-03T17:00:00.000Z",
-      "url": "https://www.atlantafalcons.com/video/a-j-terrell-is-mic-d-up-versus-the-tampa-bay-buccaneers",
-      "externalVideoUrl": "https://www.atlantafalcons.com/video/a-j-terrell-is-mic-d-up-versus-the-tampa-bay-buccaneers",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Video",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Video",
-      "author": "atlantafalcons.com Video",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
-    },
-    {
-      "id": "atl_tx_e6a3054673a8",
-      "type": "tweet",
-      "title": "Falcons roster move: Designated LB Yasir Abdullah to return from injured reserve. Placed DE Samson Ebukam on injured reserve. Signed LB Drake Jackson to the practice squad. Released T Colby Sorsdal from the practice squad.",
-      "fullText": "Falcons roster move: Designated LB Yasir Abdullah to return from injured reserve. Placed DE Samson Ebukam on injured reserve. Signed LB Drake Jackson to the practice squad. Released T Colby Sorsdal from the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-03T08:00:00.000Z",
-      "url": "https://www.atlantafalcons.com/team/transactions/#tx-e6a3054673a8",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "Atlanta Falcons Official",
-      "author": "Atlanta Falcons Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
-    },
-    {
-      "id": "atl_vid_6bcda9879ba0",
-      "type": "video",
-      "title": "Head Coach Kevin Stefanski Week 9 Media Availability | Monday, November 2nd | Press Conference",
-      "summary": "Atlanta Falcons Head Coach Kevin Stefanski reflects on Sunday's Week 8 loss to the to Buccaneers as the Falcons prepare to travel to Madrid, Spain to take on the Cincinnati Bengals.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/vthslxf3afdqougg8ayp.jpg",
-      "imageAlt": "Head Coach Kevin Stefanski Week 9 Media Availability | Monday, November 2nd | Press Conference",
-      "publishedAt": "2026-11-02T20:20:00.000Z",
-      "url": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-week-9-media-availability-monday-november-2nd-press-conference",
-      "externalVideoUrl": "https://www.atlantafalcons.com/video/head-coach-kevin-stefanski-week-9-media-availability-monday-november-2nd-press-conference",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Video",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Video",
-      "author": "atlantafalcons.com Video",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
-    },
-    {
-      "id": "atl_tx_5a4232db5c59",
-      "type": "tweet",
-      "title": "Falcons roster move: Waived OLB Jared Ivey. Released OLB Drake Jackson from the practice squad.",
-      "fullText": "Falcons roster move: Waived OLB Jared Ivey. Released OLB Drake Jackson from the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-02T08:00:00.000Z",
-      "url": "https://www.atlantafalcons.com/team/transactions/#tx-5a4232db5c59",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Official",
-      "reporterId": "falcons_official",
-      "reporterName": "Atlanta Falcons Official",
-      "author": "Atlanta Falcons Official",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
-    },
-    {
-      "id": "atl_vid_cd29c305142f",
-      "type": "video",
-      "title": "Atlanta Falcons players speak to the media following Tampa Bay Buccaneers matchup | Press Conference",
-      "summary": "Atlanta Falcons players Bijan Robinson, Jessie Bates III, Kyle Pitts Sr., Kendal Daniels and Jahan Dotson address the media following matchup vs Tampa Bay Buccaneers.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/falcons/vggleyvtxic5xrbqpydt.jpg",
-      "imageAlt": "Atlanta Falcons players speak to the media following Tampa Bay Buccaneers matchup | Press Conference",
-      "publishedAt": "2026-11-02T07:00:00.000Z",
-      "url": "https://www.atlantafalcons.com/video/atlanta-falcons-players-speak-to-the-media-following-tampa-bay-buccaneers-matchup-press-conference",
-      "externalVideoUrl": "https://www.atlantafalcons.com/video/atlanta-falcons-players-speak-to-the-media-following-tampa-bay-buccaneers-matchup-press-conference",
-      "outletId": "falcons_official",
-      "outletName": "atlantafalcons.com Video",
-      "reporterId": "falcons_official",
-      "reporterName": "atlantafalcons.com Video",
-      "author": "atlantafalcons.com Video",
-      "authorHandle": "@AtlantaFalcons",
-      "authorProfileUrl": "https://www.atlantafalcons.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
+      "storyRank": 0.0102
     },
     {
       "id": "atl_rss_f8489ea8b6c2",

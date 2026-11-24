@@ -1,111 +1,735 @@
 {
-  "updatedAt": "2026-11-23T06:33:32.635Z",
+  "updatedAt": "2026-11-24T20:07:33.480Z",
   "dailyTopNewsBrief": {
-    "id": "brief_lar_dfd8a6eabf4c",
-    "cycleKey": "2026-11-22@17PT",
+    "id": "brief_lar_92e1642fa589",
+    "cycleKey": "2026-11-23@17PT",
     "scheduledHourPt": 17,
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "6-4",
-    "generatedAt": "2026-11-23T03:41:08.281Z",
-    "modelUsed": "gemini-3.5-flash",
-    "thinkingLevel": "HIGH",
-    "source": "live-gemini-daily",
-    "wordCount": 177,
-    "guardClean": true,
-    "headline": "Rams Adapt Offensive Formations Ahead of Week 12 Packers Matchup",
-    "summary": "At 6-4 and holding the NFC's ninth seed, Los Angeles prepares to host Green Bay while adjusting personnel groupings to compensate for offensive line injuries. Head coach Sean McVay and offensive coordinator Nathan Scheelhaase continue incorporating multi-tight end sets to maintain offensive rhythm.",
+    "generatedAt": "2026-11-24T20:07:34.745Z",
+    "modelUsed": "gemini-4-hydrogen",
+    "thinkingLevel": "XHIGH",
+    "source": "deterministic-digest",
+    "wordCount": 73,
+    "headline": "Los Angeles Rams Daily Briefing — Week 12",
+    "summary": "Los Angeles Rams (6-4, 2nd in NFC West • #9 Seed in NFC) top verified storylines, injury status, and upcoming matchup intel.",
     "bullets": [
-      "To navigate interior offensive line injuries including guard Steve Avila (Out), Los Angeles has expanded its usage of 20 and 21 personnel groupings to adapt its scheme, as detailed by [therams.com Official](https://www.therams.com/news/it-s-what-this-season-entails-and-requires-20-and-21-personnel-latest-example-of-rams-offense-adjusting-2026).",
-      "Running back Blake Corum has provided second-half sparks, sustaining a six-game scrimmage touchdown streak for a Rams rushing offense averaging 133.0 yards per game (#8 in NFL), per [therams.com Official](https://www.therams.com/news/blake-corum-sparking-rams-second-half-offense-in-past-four-games-amid-six-game-scrimmage-touchdown-streak).",
-      "Defensive coordinator Chris Shula is preparing to face Green Bay's top-ranked explosive passing offense (4.30 20+ yard passes/game), leveraging a Rams defense that ranks second in third-down conversion rate allowed (30.0%), per [therams.com Video](https://www.therams.com/video/aaron-donald-rams-coordinators-discuss-scouting-packers-week-12-midseason-takeaways-press-conference).",
-      "Pass rusher Myles Garrett (Questionable, knee) continues climbing the NFL's all-time sack leaderboard while anchoring Los Angeles' pass rush alongside defensive coordinator Chris Shula's unit, via [Sarah Barshop](https://www.espn.com/nfl/story/_/id/49545945/all-sack-list-tracker-myles-garrett-von-miller-aaron-donald)."
+      "Wednesday night lights: Rams' defense looks to set the tone vs. the Packers on Thanksgiving Eve | Game Preview ([therams.com Official](https://www.therams.com/news/wednesday-night-lights-rams-defense-looks-to-set-the-tone-vs-the-packers-thanksgiving-eve-game-preview))",
+      "Green Bay Packers vs Los Angeles Rams | 2026 Week 12 Game Preview ([NFL](https://www.youtube.com/watch?v=NdfrTqtRB9Y))",
+      "Rams Power Rankings: Week 12 ([therams.com Official](https://www.therams.com/news/rams-power-rankings-week-12-2026))",
+      "3 Keys to Winning for the Rams against the Packers in Week 12 on Thanksgiving Eve ([therams.com Official](https://www.therams.com/news/3-keys-to-winning-for-the-rams-against-the-packers-in-week-12-thanksgiving-eve-wednesday-2026))",
+      "Rams TE Terrance Ferguson needs season-ending ankle surgery, Sean McVay says ([Sarah Barshop](https://www.espn.com/nfl/story/_/id/50575889/rams-te-terrance-ferguson-needs-season-ending-ankle-surgery))"
     ],
     "coveredStoryKeys": [
-      "lar_vid_2d71e26d2e80",
-      "lar_rss_ea2eb5c42239",
-      "lar_vid_34ea8f829e03",
-      "lar_rss_e5bf48dd3090",
-      "lar_rss_05006b9a32a0",
-      "lar_espn_9e02ead6fc444"
+      "lar_rss_96dcdbdeb09e",
+      "lar_yt_NdfrTqtRB9Y",
+      "lar_rss_257ffce22fe7",
+      "lar_rss_0de6f073d2a5",
+      "lar_espn_7e5f2e1eaf848"
     ],
     "coveredUrls": [
-      "https://www.therams.com/video/aaron-donald-rams-coordinators-discuss-scouting-packers-week-12-midseason-takeaways-press-conference",
-      "https://www.therams.com/news/blake-corum-sparking-rams-second-half-offense-in-past-four-games-amid-six-game-scrimmage-touchdown-streak",
-      "https://www.therams.com/news/it-s-what-this-season-entails-and-requires-20-and-21-personnel-latest-example-of-rams-offense-adjusting-2026",
-      "https://www.therams.com/video/rams-legend-steven-jackson-guesses-which-animals-are-real-or-ai-generated",
-      "https://www.therams.com/news/more-than-just-a-first-nfl-touchdown-for-rams-wide-receiver-xavier-smith",
-      "https://www.espn.com/nfl/story/_/id/50556613/sources-rams-puka-nacua-4-5-months-knee-surgery"
+      "https://www.therams.com/news/wednesday-night-lights-rams-defense-looks-to-set-the-tone-vs-the-packers-thanksgiving-eve-game-preview",
+      "https://www.youtube.com/watch?v=NdfrTqtRB9Y",
+      "https://www.therams.com/news/rams-power-rankings-week-12-2026",
+      "https://www.therams.com/news/3-keys-to-winning-for-the-rams-against-the-packers-in-week-12-thanksgiving-eve-wednesday-2026",
+      "https://www.espn.com/nfl/story/_/id/50575889/rams-te-terrance-ferguson-needs-season-ending-ankle-surgery"
     ],
     "sources": [
       {
-        "sid": "S5",
-        "title": "Aaron Donald & Rams Coordinators speak on scouting the Packers ahead of Week 12, midseason takeaways & more",
-        "url": "https://www.therams.com/video/aaron-donald-rams-coordinators-discuss-scouting-packers-week-12-midseason-takeaways-press-conference",
-        "author": "therams.com Video",
-        "outlet": "therams.com Video",
-        "publishedAt": "2026-11-23T00:00:00.000Z"
+        "sid": "S1",
+        "title": "Wednesday night lights: Rams' defense looks to set the tone vs. the Packers on Thanksgiving Eve | Game Preview",
+        "url": "https://www.therams.com/news/wednesday-night-lights-rams-defense-looks-to-set-the-tone-vs-the-packers-thanksgiving-eve-game-preview",
+        "author": "therams.com Official",
+        "outlet": "therams.com Official",
+        "publishedAt": "2026-11-24T19:30:00.000Z"
+      },
+      {
+        "sid": "S2",
+        "title": "Green Bay Packers vs Los Angeles Rams | 2026 Week 12 Game Preview",
+        "url": "https://www.youtube.com/watch?v=NdfrTqtRB9Y",
+        "author": "NFL",
+        "outlet": "NFL",
+        "publishedAt": "2026-11-24T19:25:03.000Z"
+      },
+      {
+        "sid": "S3",
+        "title": "Rams Power Rankings: Week 12",
+        "url": "https://www.therams.com/news/rams-power-rankings-week-12-2026",
+        "author": "therams.com Official",
+        "outlet": "therams.com Official",
+        "publishedAt": "2026-11-24T18:00:17.000Z"
       },
       {
         "sid": "S4",
-        "title": "Blake Corum sparking Rams' second-half offense in past four games amid six-game scrimmage touchdown streak",
-        "url": "https://www.therams.com/news/blake-corum-sparking-rams-second-half-offense-in-past-four-games-amid-six-game-scrimmage-touchdown-streak",
+        "title": "3 Keys to Winning for the Rams against the Packers in Week 12 on Thanksgiving Eve",
+        "url": "https://www.therams.com/news/3-keys-to-winning-for-the-rams-against-the-packers-in-week-12-thanksgiving-eve-wednesday-2026",
         "author": "therams.com Official",
         "outlet": "therams.com Official",
-        "publishedAt": "2026-11-22T22:31:24.000Z"
+        "publishedAt": "2026-11-24T17:00:17.000Z"
       },
       {
         "sid": "S5",
-        "title": "'What this season entails and requires': 20 and 21 personnel latest example of Rams offense adjusting",
-        "url": "https://www.therams.com/news/it-s-what-this-season-entails-and-requires-20-and-21-personnel-latest-example-of-rams-offense-adjusting-2026",
-        "author": "therams.com Official",
-        "outlet": "therams.com Official",
-        "publishedAt": "2026-11-22T03:43:26.000Z"
-      },
-      {
-        "sid": "S3",
-        "title": "Rams Legend Steven Jackson guesses which animals are real or AI generated",
-        "url": "https://www.therams.com/video/rams-legend-steven-jackson-guesses-which-animals-are-real-or-ai-generated",
-        "author": "therams.com Video",
-        "outlet": "therams.com Video",
-        "publishedAt": "2026-11-23T03:00:00.000Z"
-      },
-      {
-        "sid": "S3",
-        "title": "More than just a first NFL touchdown for Rams wide receiver Xavier Smith",
-        "url": "https://www.therams.com/news/more-than-just-a-first-nfl-touchdown-for-rams-wide-receiver-xavier-smith",
-        "author": "therams.com Official",
-        "outlet": "therams.com Official",
-        "publishedAt": "2026-11-23T01:39:39.000Z"
+        "title": "Rams TE Terrance Ferguson needs season-ending ankle surgery, Sean McVay says",
+        "url": "https://www.espn.com/nfl/story/_/id/50575889/rams-te-terrance-ferguson-needs-season-ending-ankle-surgery",
+        "author": "Sarah Barshop",
+        "outlet": "ESPN",
+        "publishedAt": "2026-11-23T20:41:51Z"
       },
       {
         "sid": "S6",
-        "title": "Sources: Rams' Puka Nacua out 4-5 months after knee surgery, will miss playoffs",
-        "url": "https://www.espn.com/nfl/story/_/id/50556613/sources-rams-puka-nacua-4-5-months-knee-surgery",
-        "author": "Adam Schefter",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-22T02:19:36Z"
+        "title": "New dumbest “trick my brain into thinking it’s writing time” technique unlocked: attach my old Olympus reorder to my headphones and just put the buds in my ears. Literally nothing playing. Yet it’s working? What the heck man",
+        "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n325badgo227",
+        "author": "Jourdan Rodrigue",
+        "outlet": "Jourdan Rodrigue",
+        "publishedAt": "2026-11-24T07:39:10.865Z"
       },
       {
         "sid": "S7",
-        "title": "From the Podium: Sean McVay, Matthew Stafford, Aaron Donald and coordinators talk adjustments ahead of Rams' Thanksgiving Eve game against Packers in Week 12",
-        "url": "https://www.therams.com/news/from-the-podium-head-coach-sean-mcvay-quarterback-matthew-stafford-defensive-end-aaron-donald-coordinators-preview-rams-thanksgiving-eve-game-against-packers-week-12-2026-press-conference",
-        "author": "therams.com Official",
-        "outlet": "therams.com Official",
-        "publishedAt": "2026-11-22T00:00:57.000Z"
+        "title": "Sean McVay & Myles Garrett break down the Week 12 injury report, Thanksgiving Eve vs. the Packers & more",
+        "url": "https://www.therams.com/video/sean-mcvay-myles-garrett-break-down-week-12-injury-report-thanksgiving-eve-packers-press-conference",
+        "author": "therams.com Video",
+        "outlet": "therams.com Video",
+        "publishedAt": "2026-11-23T23:30:00.000Z"
       },
       {
         "sid": "S8",
-        "title": "Sean McVay & Matthew Stafford on the Rams' bye week, valuing adaptability, facing the Packers & more",
-        "url": "https://www.therams.com/video/sean-mcvay-matthew-stafford-on-the-rams-bye-week-run-game-success-facing-the-packers-press-conference",
-        "author": "therams.com Video",
-        "outlet": "therams.com Video",
-        "publishedAt": "2026-11-21T23:00:00.000Z"
+        "title": "The 49ers didn’t just attack between the numbers, Purdy threw directly over the center 7 times for 7 completions 114 yards and 2 TDs Wrote about how the 49ers solved the Vikings defense",
+        "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n32v6o33js2f",
+        "author": "Jourdan Rodrigue",
+        "outlet": "Jourdan Rodrigue",
+        "publishedAt": "2026-11-24T14:47:14.408Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
+    {
+      "id": "lar_rss_96dcdbdeb09e",
+      "type": "article",
+      "title": "Wednesday night lights: Rams' defense looks to set the tone vs. the Packers on Thanksgiving Eve | Game Preview",
+      "summary": "J.B. Long looks at how the Los Angeles Rams’ defense continues to lead the way, how it plans to handle the return of Green Bay Packers' star linebacker Micah Parsons, and why Wednesday night’s matchup at SoFi Stadium could have major playof",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/iake3ti9hxfhmp1lonuy.png",
+      "imageAlt": "Wednesday night lights: Rams' defense looks to set the tone vs. the Packers on Thanksgiving Eve | Game Preview",
+      "publishedAt": "2026-11-24T19:30:00.000Z",
+      "url": "https://www.therams.com/news/wednesday-night-lights-rams-defense-looks-to-set-the-tone-vs-the-packers-thanksgiving-eve-game-preview",
+      "outletId": "rams_official",
+      "outletName": "therams.com Official",
+      "reporterId": "rams_official",
+      "reporterName": "therams.com Official",
+      "author": "therams.com Official",
+      "authorHandle": "@RamsNFL",
+      "authorProfileUrl": "https://www.therams.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 28.5388
+    },
+    {
+      "id": "lar_yt_NdfrTqtRB9Y",
+      "type": "video",
+      "category": "beat",
+      "videoId": "NdfrTqtRB9Y",
+      "embeddable": false,
+      "title": "Green Bay Packers vs Los Angeles Rams | 2026 Week 12 Game Preview",
+      "summary": "Watch live local and primetime games, NFL RedZone, and NFL Network on Plus.NFL.com Check out our other channels: NFL Pro https://www.youtube.com/@NFLPRO NFL Mundo https://www.youtube.com/mundonfl NFL Brasil https://www.y",
+      "imageUrl": "https://i.ytimg.com/vi/NdfrTqtRB9Y/hqdefault.jpg",
+      "imageAlt": "Green Bay Packers vs Los Angeles Rams | 2026 Week 12 Game Preview",
+      "publishedAt": "2026-11-24T19:25:03.000Z",
+      "url": "https://www.youtube.com/watch?v=NdfrTqtRB9Y",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=NdfrTqtRB9Y",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://www.youtube.com/@NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 26.7133
+    },
+    {
+      "id": "lar_rss_257ffce22fe7",
+      "type": "article",
+      "title": "Rams Power Rankings: Week 12",
+      "summary": "An aggregate look at where the Los Angeles Rams rank across different outlets in the sports media landscape heading into Week 12 against the Green Bay Packers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/mvwbdgruatzudxckdviw.jpg",
+      "imageAlt": "Rams Power Rankings: Week 12",
+      "publishedAt": "2026-11-24T18:00:17.000Z",
+      "url": "https://www.therams.com/news/rams-power-rankings-week-12-2026",
+      "outletId": "rams_official",
+      "outletName": "therams.com Official",
+      "reporterId": "rams_official",
+      "reporterName": "therams.com Official",
+      "author": "therams.com Official",
+      "authorHandle": "@RamsNFL",
+      "authorProfileUrl": "https://www.therams.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 11.8251
+    },
+    {
+      "id": "lar_rss_0de6f073d2a5",
+      "type": "article",
+      "title": "3 Keys to Winning for the Rams against the Packers in Week 12 on Thanksgiving Eve",
+      "summary": "Here are 3 Keys to the Rams winning their Week 12 game against the Packers on Wednesday, presented by The Law Offices of Jacob Emrani (CallJacob.com).",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/lbyssxcnxo3wvibscjij.jpg",
+      "imageAlt": "3 Keys to Winning for the Rams against the Packers in Week 12 on Thanksgiving Eve",
+      "publishedAt": "2026-11-24T17:00:17.000Z",
+      "url": "https://www.therams.com/news/3-keys-to-winning-for-the-rams-against-the-packers-in-week-12-thanksgiving-eve-wednesday-2026",
+      "outletId": "rams_official",
+      "outletName": "therams.com Official",
+      "reporterId": "rams_official",
+      "reporterName": "therams.com Official",
+      "author": "therams.com Official",
+      "authorHandle": "@RamsNFL",
+      "authorProfileUrl": "https://www.therams.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 8.0824
+    },
+    {
+      "id": "lar_espn_7e5f2e1eaf848",
+      "type": "article",
+      "title": "Rams TE Terrance Ferguson needs season-ending ankle surgery, Sean McVay says",
+      "summary": "Rams tight end Terrance Ferguson's ankle injury will require season-ending surgery.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1750308_1296x729_16-9.jpg",
+      "imageCaption": "Terrance Ferguson [1296x729]",
+      "imageAlt": "Rams TE Terrance Ferguson needs season-ending ankle surgery, Sean McVay says",
+      "publishedAt": "2026-11-23T20:41:51Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50575889/rams-te-terrance-ferguson-needs-season-ending-ankle-surgery",
+      "outletId": "espn_lar",
+      "outletName": "ESPN",
+      "reporterId": "sarah_barshop",
+      "reporterName": "Sarah Barshop",
+      "author": "Sarah Barshop",
+      "authorHandle": "@sarahbarshop",
+      "authorProfileUrl": "https://x.com/sarahbarshop",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "tier1_major",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 3.1953
+    },
+    {
+      "id": "lar_bsky_6b92b7021976",
+      "type": "tweet",
+      "title": "New dumbest “trick my brain into thinking it’s writing time” technique unlocked: attach my old Olympus reorder to my headphones and just put the buds in my ears. Literally nothing playing. Yet it’s working? What the heck man",
+      "fullText": "New dumbest “trick my brain into thinking it’s writing time” technique unlocked: attach my old Olympus reorder to my headphones and just put the buds in my ears. Literally nothing playing. Yet it’s working? What the heck man",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jourdan Rodrigue post",
+      "publishedAt": "2026-11-24T07:39:10.865Z",
+      "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n325badgo227",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_la_public_beat_wire_lar",
+      "outletName": "Jourdan Rodrigue",
+      "reporterId": "jourdan_rodrigue",
+      "reporterName": "Jourdan Rodrigue",
+      "author": "Jourdan Rodrigue",
+      "authorHandle": "@JourdanRodrigue",
+      "authorProfileUrl": "https://x.com/JourdanRodrigue",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 94,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.5164
+    },
+    {
+      "id": "lar_vid_d873a45be4de",
+      "type": "video",
+      "title": "Sean McVay & Myles Garrett break down the Week 12 injury report, Thanksgiving Eve vs. the Packers & more",
+      "summary": "Los Angeles Rams head coach Sean McVay & outside linebacker Myles Garrett break down the Week 12 injury report, discuss playing on Thanksgiving Eve against the Green Bay Packers, and more.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/msiqvwkp02db0ymm9dvk.png",
+      "imageAlt": "Sean McVay & Myles Garrett break down the Week 12 injury report, Thanksgiving Eve vs. the Packers & more",
+      "publishedAt": "2026-11-23T23:30:00.000Z",
+      "url": "https://www.therams.com/video/sean-mcvay-myles-garrett-break-down-week-12-injury-report-thanksgiving-eve-packers-press-conference",
+      "externalVideoUrl": "https://www.therams.com/video/sean-mcvay-myles-garrett-break-down-week-12-injury-report-thanksgiving-eve-packers-press-conference",
+      "outletId": "rams_official",
+      "outletName": "therams.com Video",
+      "reporterId": "rams_official",
+      "reporterName": "therams.com Video",
+      "author": "therams.com Video",
+      "authorHandle": "@RamsNFL",
+      "authorProfileUrl": "https://www.therams.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.6158
+    },
+    {
+      "id": "lar_bsky_c3520904bcb5",
+      "type": "tweet",
+      "title": "The 49ers didn’t just attack between the numbers, Purdy threw directly over the center 7 times for 7 completions 114 yards and 2 TDs Wrote about how the 49ers solved the Vikings defense",
+      "fullText": "The 49ers didn’t just attack between the numbers, Purdy threw directly over the center 7 times for 7 completions 114 yards and 2 TDs Wrote about how the 49ers solved the Vikings defense",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:u7kuhqmolhlmimlfguxqkivn/bafkreiekywmkfrc6unnfhhrfogtw3s4ona2obulqszssg2jikiqzpsmdkq",
+      "imageAlt": "Jourdan Rodrigue post",
+      "publishedAt": "2026-11-24T14:47:14.408Z",
+      "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n32v6o33js2f",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_la_public_beat_wire_lar",
+      "outletName": "Jourdan Rodrigue",
+      "reporterId": "jourdan_rodrigue",
+      "reporterName": "Jourdan Rodrigue",
+      "author": "Jourdan Rodrigue",
+      "authorHandle": "@JourdanRodrigue",
+      "authorProfileUrl": "https://x.com/JourdanRodrigue",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 94,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0793
+    },
+    {
+      "id": "lar_bsky_5fbf287acdbf",
+      "type": "tweet",
+      "title": "Would be cool if they could run the ball",
+      "fullText": "Would be cool if they could run the ball",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jourdan Rodrigue post",
+      "publishedAt": "2026-11-24T04:14:37.817Z",
+      "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n2zrthtr7c26",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_la_public_beat_wire_lar",
+      "outletName": "Jourdan Rodrigue",
+      "reporterId": "jourdan_rodrigue",
+      "reporterName": "Jourdan Rodrigue",
+      "author": "Jourdan Rodrigue",
+      "authorHandle": "@JourdanRodrigue",
+      "authorProfileUrl": "https://x.com/JourdanRodrigue",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 94,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.1076
+    },
+    {
+      "id": "lar_bsky_3e7ddfdb3a70",
+      "type": "tweet",
+      "title": "The ones that change the springs on their garage door on their own.",
+      "fullText": "The ones that change the springs on their garage door on their own.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jourdan Rodrigue post",
+      "publishedAt": "2026-11-24T04:10:51.749Z",
+      "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n2zrmqaqnk2i",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_la_public_beat_wire_lar",
+      "outletName": "Jourdan Rodrigue",
+      "reporterId": "jourdan_rodrigue",
+      "reporterName": "Jourdan Rodrigue",
+      "author": "Jourdan Rodrigue",
+      "authorHandle": "@JourdanRodrigue",
+      "authorProfileUrl": "https://x.com/JourdanRodrigue",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 94,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.1019
+    },
+    {
+      "id": "lar_bsky_5915abdcd190",
+      "type": "tweet",
+      "title": "this must be the same brain chemistry as the people who dive with sharks and jump off cliffs and shit",
+      "fullText": "this must be the same brain chemistry as the people who dive with sharks and jump off cliffs and shit",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jourdan Rodrigue post",
+      "publishedAt": "2026-11-24T04:09:27.000Z",
+      "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n2zrk7gdys26",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_la_public_beat_wire_lar",
+      "outletName": "Jourdan Rodrigue",
+      "reporterId": "jourdan_rodrigue",
+      "reporterName": "Jourdan Rodrigue",
+      "author": "Jourdan Rodrigue",
+      "authorHandle": "@JourdanRodrigue",
+      "authorProfileUrl": "https://x.com/JourdanRodrigue",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 94,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0998
+    },
+    {
+      "id": "lar_vid_31a7dfc92bc5",
+      "type": "video",
+      "title": "Rams vs. Packers: Hungry for more | Game Trailer",
+      "summary": "The Los Angeles Rams will host the Green Bay Packers at SoFi Stadium for the first-ever Thanksgiving Eve matchup in Week 12. Watch this week's game trailer in preparation for Wednesday's NFC battle at 5:00 PM PT on Netfl",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/uyutdsdnvv6nck7es5ka.png",
+      "imageAlt": "Rams vs. Packers: Hungry for more | Game Trailer",
+      "publishedAt": "2026-11-24T00:45:00.000Z",
+      "url": "https://www.therams.com/video/rams-vs-packers-hungry-for-more-game-trailer-week-12-thanksgiving-eve-sofi-stadium",
+      "externalVideoUrl": "https://www.therams.com/video/rams-vs-packers-hungry-for-more-game-trailer-week-12-thanksgiving-eve-sofi-stadium",
+      "outletId": "rams_official",
+      "outletName": "therams.com Video",
+      "reporterId": "rams_official",
+      "reporterName": "therams.com Video",
+      "author": "therams.com Video",
+      "authorHandle": "@RamsNFL",
+      "authorProfileUrl": "https://www.therams.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.8814
+    },
+    {
+      "id": "lar_rss_9c3d5fd577e3",
+      "type": "article",
+      "title": "Kobie Turner: 'Definitely grateful to be back out on the field with the guys'",
+      "summary": "Rams defensive end Kobie Turner is looking forward to his expected return from injury Wednesday night against the Packers at SoFi Stadium.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/s9jowgimcf6r7nv2h1us.jpg",
+      "imageAlt": "Kobie Turner: 'Definitely grateful to be back out on the field with the guys'",
+      "publishedAt": "2026-11-24T00:07:44.000Z",
+      "url": "https://www.therams.com/news/kobie-turner-definitely-grateful-to-be-back-out-on-the-field-with-the-guys",
+      "outletId": "rams_official",
+      "outletName": "therams.com Official",
+      "reporterId": "rams_official",
+      "reporterName": "therams.com Official",
+      "author": "therams.com Official",
+      "authorHandle": "@RamsNFL",
+      "authorProfileUrl": "https://www.therams.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.8452
+    },
+    {
+      "id": "lar_rss_c2f6a9d03417",
+      "type": "article",
+      "title": "McVay: Terrance Ferguson to remain on Injured Reserve for rest of 2026 season",
+      "summary": "Tight end Terrance Ferguson will not be activated off of Injured Reserve like the Rams originally planned due to his ankle injury not improving, per head coach Sean McVay.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/dvl5o3r6sygx0allup19.jpg",
+      "imageAlt": "McVay: Terrance Ferguson to remain on Injured Reserve for rest of 2026 season",
+      "publishedAt": "2026-11-23T22:46:00.000Z",
+      "url": "https://www.therams.com/news/mcvay-rams-tight-end-terrance-ferguson-to-remain-on-injured-reserve-for-rest-of-2026-season",
+      "outletId": "rams_official",
+      "outletName": "therams.com Official",
+      "reporterId": "rams_official",
+      "reporterName": "therams.com Official",
+      "author": "therams.com Official",
+      "authorHandle": "@RamsNFL",
+      "authorProfileUrl": "https://www.therams.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7743
+    },
+    {
+      "id": "lar_vid_a5e0f9549e21",
+      "type": "video",
+      "title": "Engineering rhythm ahead of Week 12, run game strengths, trade deadline decisions & more | The Coach McVay Show",
+      "summary": "J.B. Long sits down with Los Angeles Rams general manager Les Snead to reflect on the Rams' Week 10 win over the Arizona Cardinals. Watch them break down the Rams' evolving offense, trade deadline and free agency moves, ",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/ss0cxn7szr0g69xlneuv.png",
+      "imageAlt": "Engineering rhythm ahead of Week 12, run game strengths, trade deadline decisions & more | The Coach McVay Show",
+      "publishedAt": "2026-11-23T22:00:00.000Z",
+      "url": "https://www.therams.com/video/engineering-rhythm-run-game-strengths-trade-deadline-decisions-les-snead-the-coach-mcvay-show",
+      "externalVideoUrl": "https://www.therams.com/video/engineering-rhythm-run-game-strengths-trade-deadline-decisions-les-snead-the-coach-mcvay-show",
+      "outletId": "rams_official",
+      "outletName": "therams.com Video",
+      "reporterId": "rams_official",
+      "reporterName": "therams.com Video",
+      "author": "therams.com Video",
+      "authorHandle": "@RamsNFL",
+      "authorProfileUrl": "https://www.therams.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7387
+    },
+    {
+      "id": "lar_vid_7fb35c2b4a9d",
+      "type": "video",
+      "title": "NFC battle on Thanksgiving Eve, Blake Corum's midseason report, defensive consistency & more | Between the Horns",
+      "summary": "On this episode of Between the Horns, J.B. Long, D'Marco Farr, and Maurice Jones-Drew reflect on the Los Angeles Rams' Week 10 victory over the Arizona Cardinals. Watch them discuss the wide receiver depth chart, running",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/ennrwcgqdkk8k2s5efzb.png",
+      "imageAlt": "NFC battle on Thanksgiving Eve, Blake Corum's midseason report, defensive consistency & more | Between the Horns",
+      "publishedAt": "2026-11-23T21:30:00.000Z",
+      "url": "https://www.therams.com/video/nfc-battle-on-thanksgiving-eve-blake-corum-midseason-report-defensive-consistency-between-the-horns-week-12",
+      "externalVideoUrl": "https://www.therams.com/video/nfc-battle-on-thanksgiving-eve-blake-corum-midseason-report-defensive-consistency-between-the-horns-week-12",
+      "outletId": "rams_official",
+      "outletName": "therams.com Video",
+      "reporterId": "rams_official",
+      "reporterName": "therams.com Video",
+      "author": "therams.com Video",
+      "authorHandle": "@RamsNFL",
+      "authorProfileUrl": "https://www.therams.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.717
+    },
+    {
+      "id": "lar_bsky_e4b7eaf08a6f",
+      "type": "tweet",
+      "title": "Commanders defense is just awesome so far tonight. Flying around and attacking on every play.",
+      "fullText": "Commanders defense is just awesome so far tonight. Flying around and attacking on every play.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Jourdan Rodrigue post",
+      "publishedAt": "2026-11-24T01:49:17.576Z",
+      "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n2zjpll3us26",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_la_public_beat_wire_lar",
+      "outletName": "Jourdan Rodrigue",
+      "reporterId": "jourdan_rodrigue",
+      "reporterName": "Jourdan Rodrigue",
+      "author": "Jourdan Rodrigue",
+      "authorHandle": "@JourdanRodrigue",
+      "authorProfileUrl": "https://x.com/JourdanRodrigue",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 94,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2297
+    },
+    {
+      "id": "lar_rss_6e34e0a8defa",
+      "type": "article",
+      "title": "12-minute drive against Cardinals provides an unexpected spotlight, but one Ronnie Rivers was grateful for",
+      "summary": "Normally a contributor on special teams exclusively, Rams running back Ronnie Rivers also showed why he remains a trusted part of their offense as well in anchoring a 12-minute drive to close out their Week 10 win over the Cardinals.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/qgsmtfwwd36ewhskd7ho.jpg",
+      "imageAlt": "12-minute drive against Cardinals provides an unexpected spotlight, but one Ronnie Rivers was grateful for",
+      "publishedAt": "2026-11-24T00:41:49.000Z",
+      "url": "https://www.therams.com/news/12-minute-drive-against-cardinals-provides-an-unexpected-spotlight-but-one-rams-running-back-ronnie-rivers-was-grateful-for",
+      "outletId": "rams_official",
+      "outletName": "therams.com Official",
+      "reporterId": "rams_official",
+      "reporterName": "therams.com Official",
+      "author": "therams.com Official",
+      "authorHandle": "@RamsNFL",
+      "authorProfileUrl": "https://www.therams.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2195
+    },
     {
       "id": "lar_vid_2d71e26d2e80",
       "type": "video",
@@ -138,40 +762,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.0325
-    },
-    {
-      "id": "lar_nfltr_0f47b3226b80",
-      "type": "article",
-      "title": "NFC Notes: Kliff Kingsbury, Sean McVay, 49ers, Cardinals, Rams",
-      "summary": "49ers 49ers DB Siran Neal and DB Marques Sigle were each fined $ 8,639 and $ 6,142, respectively, for unnecessary roughness. Cardinals Cardinals LB Mack Wilson was fined $12,537 for unnecessary roughness. Rams Rams assistant ",
-      "imageUrl": "",
-      "imageAlt": "NFC Notes: Kliff Kingsbury, Sean McVay, 49ers, Cardinals, Rams",
-      "publishedAt": "2026-11-23T02:00:59.000Z",
-      "url": "https://nfltraderumors.co/nfc-notes-kliff-kingsbury-sean-mcvay-49ers-cardinals-rams/",
-      "outletId": "nfl_trade_rumors",
-      "outletName": "NFL Trade Rumors",
-      "reporterId": "nfl_trade_rumors",
-      "reporterName": "NFL Trade Rumors",
-      "author": "NFL Trade Rumors",
-      "authorHandle": "@nfltrade_rumors",
-      "authorProfileUrl": "https://nfltraderumors.co/",
-      "trustTier": 2,
-      "wireSource": "nfltr_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 5.284
+      "storyRank": 0.3197
     },
     {
       "id": "lar_rss_ea2eb5c42239",
@@ -204,7 +795,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.9312
+      "storyRank": 0.3061
     },
     {
       "id": "lar_bsky_7688035d903f",
@@ -241,7 +832,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4621
+      "storyRank": 0.2819
     },
     {
       "id": "lar_vid_34ea8f829e03",
@@ -275,7 +866,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4989
+      "storyRank": 0.2904
     },
     {
       "id": "lar_rss_e5bf48dd3090",
@@ -308,118 +899,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7321
-    },
-    {
-      "id": "lar_bsky_055968c991cc",
-      "type": "tweet",
-      "title": "John Harbaugh is like “did I really just let Cam Skattebo convince me to burn that challenge”",
-      "fullText": "John Harbaugh is like “did I really just let Cam Skattebo convince me to burn that challenge”",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Jourdan Rodrigue post",
-      "publishedAt": "2026-11-22T22:10:58.810Z",
-      "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n2wn2c5q7c2s",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "the_athletic_la_public_beat_wire_lar",
-      "outletName": "Jourdan Rodrigue",
-      "reporterId": "jourdan_rodrigue",
-      "reporterName": "Jourdan Rodrigue",
-      "author": "Jourdan Rodrigue",
-      "authorHandle": "@JourdanRodrigue",
-      "authorProfileUrl": "https://x.com/JourdanRodrigue",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 94,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.5094
-    },
-    {
-      "id": "lar_bsky_4dca592406b6",
-      "type": "tweet",
-      "title": "I think I’m into the Watt/Nantz booth. Good energy and I like how excited Watt is about finding patterns and little details and Nantz sets him up well for it.",
-      "fullText": "I think I’m into the Watt/Nantz booth. Good energy and I like how excited Watt is about finding patterns and little details and Nantz sets him up well for it.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Jourdan Rodrigue post",
-      "publishedAt": "2026-11-22T21:49:34.642Z",
-      "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n2wltzhzvc26",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "the_athletic_la_public_beat_wire_lar",
-      "outletName": "Jourdan Rodrigue",
-      "reporterId": "jourdan_rodrigue",
-      "reporterName": "Jourdan Rodrigue",
-      "author": "Jourdan Rodrigue",
-      "authorHandle": "@JourdanRodrigue",
-      "authorProfileUrl": "https://x.com/JourdanRodrigue",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 94,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.3827
-    },
-    {
-      "id": "lar_bsky_aa5dfd7fadc8",
-      "type": "tweet",
-      "title": "Giants are pushing around the Jags’ offense (literally), and pushing them around on ST too.",
-      "fullText": "Giants are pushing around the Jags’ offense (literally), and pushing them around on ST too.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Jourdan Rodrigue post",
-      "publishedAt": "2026-11-22T23:00:52.312Z",
-      "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n2wptiy5ys2x",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "the_athletic_la_public_beat_wire_lar",
-      "outletName": "Jourdan Rodrigue",
-      "reporterId": "jourdan_rodrigue",
-      "reporterName": "Jourdan Rodrigue",
-      "author": "Jourdan Rodrigue",
-      "authorHandle": "@JourdanRodrigue",
-      "authorProfileUrl": "https://x.com/JourdanRodrigue",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 94,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.7136
+      "storyRank": 0.2776
     },
     {
       "id": "lar_bsky_4af4502765f2",
@@ -456,81 +936,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6559
-    },
-    {
-      "id": "lar_bsky_5bbe4b2b58f0",
-      "type": "tweet",
-      "title": "Wrong Washington there, Trev",
-      "fullText": "Wrong Washington there, Trev",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Jourdan Rodrigue post",
-      "publishedAt": "2026-11-22T21:53:49.082Z",
-      "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n2wm3m4whc26",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "the_athletic_la_public_beat_wire_lar",
-      "outletName": "Jourdan Rodrigue",
-      "reporterId": "jourdan_rodrigue",
-      "reporterName": "Jourdan Rodrigue",
-      "author": "Jourdan Rodrigue",
-      "authorHandle": "@JourdanRodrigue",
-      "authorProfileUrl": "https://x.com/JourdanRodrigue",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 94,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.6017
-    },
-    {
-      "id": "lar_bsky_79312614512a",
-      "type": "tweet",
-      "title": "Three snaps (run, pass, pass), three totally different defensive structures for Jags and it was sure pretty to watch. Particularly the way they attacked the pocket on the two passing downs. They mix things up front and back so much both pre and at snap.",
-      "fullText": "Three snaps (run, pass, pass), three totally different defensive structures for Jags and it was sure pretty to watch. Particularly the way they attacked the pocket on the two passing downs. They mix things up front and back so much both pre and at snap.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Jourdan Rodrigue post",
-      "publishedAt": "2026-11-22T21:40:15.214Z",
-      "url": "https://bsky.app/profile/jourdanrodrigue.bsky.social/post/3n2wlddxnic26",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "the_athletic_la_public_beat_wire_lar",
-      "outletName": "Jourdan Rodrigue",
-      "reporterId": "jourdan_rodrigue",
-      "reporterName": "Jourdan Rodrigue",
-      "author": "Jourdan Rodrigue",
-      "authorHandle": "@JourdanRodrigue",
-      "authorProfileUrl": "https://x.com/JourdanRodrigue",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 94,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.5827
+      "storyRank": 0.067
     },
     {
       "id": "lar_rss_05006b9a32a0",
@@ -563,7 +969,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5703
+      "storyRank": 0.1729
     },
     {
       "id": "lar_espn_9e02ead6fc444",
@@ -597,7 +1003,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5326
+      "storyRank": 0.1678
     },
     {
       "id": "lar_rss_cb8d206d457c",
@@ -630,7 +1036,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4789
+      "storyRank": 0.16
     },
     {
       "id": "lar_vid_100e53aa6d27",
@@ -664,7 +1070,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4582
+      "storyRank": 0.1568
     },
     {
       "id": "lar_rss_af9bf9dd2b6b",
@@ -697,7 +1103,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3759
+      "storyRank": 0.1425
     },
     {
       "id": "lar_tx_ba25f253ba78",
@@ -731,7 +1137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2699
+      "storyRank": 0.1196
     },
     {
       "id": "lar_vid_fab186d666b2",
@@ -765,7 +1171,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1914
+      "storyRank": 0.0977
     },
     {
       "id": "lar_rss_87e0a4947918",
@@ -798,7 +1204,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4219
+      "storyRank": 0.2261
     },
     {
       "id": "lar_espn_59e6ad7122955",
@@ -832,7 +1238,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1895
+      "storyRank": 0.0971
     },
     {
       "id": "lar_espn_529e3f95148f6",
@@ -866,7 +1272,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1868
+      "storyRank": 0.0962
     },
     {
       "id": "lar_rss_7b62d860a688",
@@ -899,7 +1305,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1723
+      "storyRank": 0.0914
     },
     {
       "id": "lar_espn_85ce8047d438d",
@@ -933,7 +1339,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1287
+      "storyRank": 0.0754
     },
     {
       "id": "lar_vid_288b77ed372e",
@@ -967,7 +1373,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1325
+      "storyRank": 0.078
     },
     {
       "id": "lar_espn_27c55e60549a7",
@@ -1001,7 +1407,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.126
+      "storyRank": 0.0743
     },
     {
       "id": "lar_rss_fd1f3fb705c0",
@@ -1034,7 +1440,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1248
+      "storyRank": 0.0739
     },
     {
       "id": "lar_vid_5deff699c699",
@@ -1068,7 +1474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1207
+      "storyRank": 0.0722
     },
     {
       "id": "lar_rss_0393ffc4e60b",
@@ -1101,7 +1507,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1187
+      "storyRank": 0.0714
     },
     {
       "id": "lar_rss_b35d25c56077",
@@ -1134,7 +1540,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.115
+      "storyRank": 0.0698
     },
     {
       "id": "lar_vid_534b4d6c1f10",
@@ -1168,7 +1574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.115
+      "storyRank": 0.0698
     },
     {
       "id": "lar_tx_2b9af098c3d7",
@@ -1202,7 +1608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1017
+      "storyRank": 0.064
     },
     {
       "id": "lar_rss_b8aee8348f0c",
@@ -1235,7 +1641,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.086
+      "storyRank": 0.0566
     },
     {
       "id": "lar_rss_567d7c6175da",
@@ -1268,7 +1674,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.083
+      "storyRank": 0.0551
     },
     {
       "id": "lar_espn_e59bfbbb54efc",
@@ -1302,7 +1708,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.077
+      "storyRank": 0.0521
     },
     {
       "id": "lar_tx_5c5a203afcf3",
@@ -1336,7 +1742,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0744
+      "storyRank": 0.0507
     },
     {
       "id": "lar_vid_6db755b70003",
@@ -1370,7 +1776,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0672
+      "storyRank": 0.0469
     },
     {
       "id": "lar_rss_6bf3d7dfcb4b",
@@ -1403,7 +1809,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0668
+      "storyRank": 0.0467
     },
     {
       "id": "lar_rss_0ab73cf3bc6c",
@@ -1436,7 +1842,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0639
+      "storyRank": 0.0452
     },
     {
       "id": "lar_rss_39e16bbc5cfa",
@@ -1469,7 +1875,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0633
+      "storyRank": 0.0448
     },
     {
       "id": "lar_espn_16beeafd3881f",
@@ -1503,7 +1909,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0622
+      "storyRank": 0.0442
     },
     {
       "id": "lar_espn_e6b40686e782f",
@@ -1537,7 +1943,8 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0547
+      "storyRank": 0.0399,
+      "isSupersededInjuryUpdate": true
     },
     {
       "id": "lar_tx_9872dc5c4fb9",
@@ -1571,7 +1978,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0464
+      "storyRank": 0.0349
     },
     {
       "id": "lar_rss_fdbdde59ff5d",
@@ -1604,7 +2011,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0443
+      "storyRank": 0.0336
     },
     {
       "id": "lar_rss_398206577501",
@@ -1637,41 +2044,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0443
-    },
-    {
-      "id": "lar_espn_52d1dece6deeb",
-      "type": "article",
-      "title": "Aaron Donald savors first sack in 1,050 days, but Rams' win 'felt even better'",
-      "summary": "Aaron Donald recorded his first sack since New Year's Eve in 2023 and helped the Rams top the Cardinals for their fourth straight win.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/0830/r1709151_600x400_3-2.jpg",
-      "imageCaption": "aaron donald return [600x400]",
-      "imageAlt": "Aaron Donald savors first sack in 1,050 days, but Rams' win 'felt even better'",
-      "publishedAt": "2026-11-16T02:10:09Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50497324/rams-aaron-donald-savors-first-sack-1050-days-vs-cardinals",
-      "outletId": "espn_lar",
-      "outletName": "ESPN",
-      "reporterId": "sarah_barshop",
-      "reporterName": "Sarah Barshop",
-      "author": "Sarah Barshop",
-      "authorHandle": "@sarahbarshop",
-      "authorProfileUrl": "https://x.com/sarahbarshop",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0442
+      "storyRank": 0.0336
     },
     {
       "id": "lar_vid_95bc5a9c3274",
@@ -1705,7 +2078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.011
+      "storyRank": 0.0084
     },
     {
       "id": "lar_vid_59241be2869b",
@@ -1739,7 +2112,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.044
+      "storyRank": 0.0335
     },
     {
       "id": "lar_rss_93d7890092d9",
@@ -1772,41 +2145,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.044
-    },
-    {
-      "id": "lar_espn_61dcc68379309",
-      "type": "article",
-      "title": "Rams win their 4th straight game, overcoming a slow start to crush the Cardinals 34-6",
-      "summary": "— Beaux Limmer was snapping the ball, Xavier Smith and Davis Allen were catching it and Kamren Kinchens came up with a key interception.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1116/5075e49a-b686-43f2-8f04-605dd1ede5fe/5075e49a-b686-43f2-8f04-605dd1ede5fe.jpg",
-      "imageCaption": "Aaron Donald tallies his first sack of the season for Rams",
-      "imageAlt": "Rams win their 4th straight game, overcoming a slow start to crush the Cardinals 34-6",
-      "publishedAt": "2026-11-16T01:21:36Z",
-      "url": "https://www.espn.com/nfl/recap?gameId=401873061",
-      "outletId": "espn_lar",
-      "outletName": "ESPN",
-      "reporterId": "espn_lar",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lar/los-angeles-rams",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0439
+      "storyRank": 0.0334
     },
     {
       "id": "lar_vid_3ee77d3ab2bc",
@@ -1840,7 +2179,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0439
+      "storyRank": 0.0334
     },
     {
       "id": "lar_vid_af7f3680558f",
@@ -1874,7 +2213,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0439
+      "storyRank": 0.0334
     },
     {
       "id": "lar_vid_3c406553deb1",
@@ -1908,7 +2247,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.011
+      "storyRank": 0.0083
     },
     {
       "id": "lar_rss_b3601c9cfe1c",
@@ -1941,7 +2280,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0438
+      "storyRank": 0.0333
     },
     {
       "id": "lar_rss_238b57389a6b",
@@ -1974,7 +2313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0438
+      "storyRank": 0.0333
     },
     {
       "id": "lar_rss_8424dfa0b795",
@@ -2007,7 +2346,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0437
+      "storyRank": 0.0333
     },
     {
       "id": "lar_vid_d2d6e236dbc2",
@@ -2041,7 +2380,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0109
+      "storyRank": 0.0083
     },
     {
       "id": "lar_vid_2904456c3e7b",
@@ -2075,7 +2414,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0433
+      "storyRank": 0.033
     },
     {
       "id": "lar_vid_43baa402a868",
@@ -2109,7 +2448,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0432
+      "storyRank": 0.033
     },
     {
       "id": "lar_vid_292a495de995",
@@ -2143,7 +2482,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0431
+      "storyRank": 0.0329
     },
     {
       "id": "lar_vid_7b7f5c4ea8f5",
@@ -2177,7 +2516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0329
     },
     {
       "id": "lar_vid_be1676838f43",
@@ -2211,7 +2550,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0329
     },
     {
       "id": "lar_vid_f50d98d1f428",
@@ -2245,7 +2584,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0328
     },
     {
       "id": "lar_vid_cd6b2977a1a7",
@@ -2279,7 +2618,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0328
     },
     {
       "id": "lar_vid_455ce0769c7c",
@@ -2313,7 +2652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0429
+      "storyRank": 0.0328
     },
     {
       "id": "lar_vid_738e7f7b70d5",
@@ -2347,7 +2686,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0428
+      "storyRank": 0.0327
     },
     {
       "id": "lar_bsky_d2bf7a17637f",
@@ -2384,7 +2723,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0413
+      "storyRank": 0.0316
     },
     {
       "id": "lar_vid_d53f2c8e5601",
@@ -2418,7 +2757,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0427
+      "storyRank": 0.0326
     },
     {
       "id": "lar_vid_9a6990198c78",
@@ -2452,7 +2791,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0425
+      "storyRank": 0.0325
     },
     {
       "id": "lar_vid_1e0248bcd0f6",
@@ -2486,7 +2825,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0425
+      "storyRank": 0.0325
     },
     {
       "id": "lar_rss_0c869319022d",
@@ -2519,7 +2858,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0408
+      "storyRank": 0.0314
     },
     {
       "id": "lar_vid_90b8e0d7d51c",
@@ -2553,7 +2892,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0353
+      "storyRank": 0.0279
     },
     {
       "id": "lar_rss_a576b24b0cea",
@@ -2586,7 +2925,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0351
+      "storyRank": 0.0277
     },
     {
       "id": "lar_rss_ffa9b8913353",
@@ -2619,7 +2958,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0346
+      "storyRank": 0.0274
     },
     {
       "id": "lar_tx_e8f856ec3f99",
@@ -2653,7 +2992,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0326
+      "storyRank": 0.026
     },
     {
       "id": "lar_rss_4886d125d0ea",
@@ -2686,7 +3025,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0306
+      "storyRank": 0.0247
     },
     {
       "id": "lar_vid_612ebf7f54f2",
@@ -2720,7 +3059,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0304
+      "storyRank": 0.0245
     },
     {
       "id": "lar_rss_10262fb0d761",
@@ -2753,7 +3092,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0301
+      "storyRank": 0.0243
     },
     {
       "id": "lar_vid_6a1be6c1e1d0",
@@ -2787,7 +3126,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.0243
     },
     {
       "id": "lar_vid_fdf5d0d872ca",
@@ -2821,7 +3160,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0298
+      "storyRank": 0.0241
     },
     {
       "id": "lar_tx_51203a730c85",
@@ -2855,7 +3194,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0281
+      "storyRank": 0.0229
     },
     {
       "id": "lar_rss_1a24e0383ec4",
@@ -2888,7 +3227,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.027
+      "storyRank": 0.0222
     },
     {
       "id": "lar_vid_09d0fd9bb02c",
@@ -2922,7 +3261,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0269
+      "storyRank": 0.0221
     },
     {
       "id": "lar_vid_8ed4ed12aad4",
@@ -2956,7 +3295,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0055
     },
     {
       "id": "lar_rss_a421d71a9e07",
@@ -2989,7 +3328,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0266
+      "storyRank": 0.0219
     },
     {
       "id": "lar_rss_200b131d12e9",
@@ -3022,7 +3361,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0237
+      "storyRank": 0.0198
     },
     {
       "id": "lar_rss_f5470df3587d",
@@ -3055,7 +3394,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0237
+      "storyRank": 0.0198
     },
     {
       "id": "lar_vid_e777d7ed871e",
@@ -3089,7 +3428,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0236
+      "storyRank": 0.0197
     },
     {
       "id": "lar_rss_e49c47a30e12",
@@ -3122,7 +3461,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0234
+      "storyRank": 0.0195
     },
     {
       "id": "lar_rss_6fbe7f795be7",
@@ -3155,7 +3494,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0208
+      "storyRank": 0.0176
     },
     {
       "id": "lar_vid_6c0eae2cd3c9",
@@ -3189,40 +3528,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
-    },
-    {
-      "id": "lar_rss_2c34c1a564ba",
-      "type": "article",
-      "title": "Rams Power Rankings: Week 10",
-      "summary": "An aggregate look at where the Los Angeles Rams rank across different outlets in the sports media landscape heading into Week 10 at the Arizona Cardinals.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/lmmvfcq5hdxbvf3jxunw.jpg",
-      "imageAlt": "Rams Power Rankings: Week 10",
-      "publishedAt": "2026-11-10T18:00:15.000Z",
-      "url": "https://www.therams.com/news/rams-power-rankings-week-10-2026",
-      "outletId": "rams_official",
-      "outletName": "therams.com Official",
-      "reporterId": "rams_official",
-      "reporterName": "therams.com Official",
-      "author": "therams.com Official",
-      "authorHandle": "@RamsNFL",
-      "authorProfileUrl": "https://www.therams.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0204
+      "storyRank": 0.0173
     },
     {
       "id": "lar_vid_edf814edbbac",
@@ -3256,7 +3562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0203
+      "storyRank": 0.0172
     },
     {
       "id": "lar_tx_d7f0ea418f25",
@@ -3290,7 +3596,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0195
+      "storyRank": 0.0166
     },
     {
       "id": "lar_vid_624eecb65e5e",
@@ -3324,7 +3630,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0189
+      "storyRank": 0.0161
     },
     {
       "id": "lar_vid_aedb2988e89e",
@@ -3358,40 +3664,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0187
-    },
-    {
-      "id": "lar_rss_d1443363cf55",
-      "type": "article",
-      "title": "5 Interesting Stats from Rams' 20-13 Week 9 win over Commanders: Myles Garrett and Aaron Donald's combined impact, more history for Puka Nacua, and more",
-      "summary": "Here are five interesting stats from the Rams' 20-13 road win over the Commanders, presented by DraftKings Daily Fantasy Sports.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/eifsgk3j8ifi9dqoyw7y.jpg",
-      "imageAlt": "5 Interesting Stats from Rams' 20-13 Week 9 win over Commanders: Myles Garrett and Aaron Donald's combined impact, more history for Puka Nacua, and more",
-      "publishedAt": "2026-11-09T19:01:18.000Z",
-      "url": "https://www.therams.com/news/5-interesting-stats-from-rams-20-13-week-9-win-over-commanders-myles-garrett-and-aaron-donald-s-combined-impact-more-history-for-puka-nacua-and-more",
-      "outletId": "rams_official",
-      "outletName": "therams.com Official",
-      "reporterId": "rams_official",
-      "reporterName": "therams.com Official",
-      "author": "therams.com Official",
-      "authorHandle": "@RamsNFL",
-      "authorProfileUrl": "https://www.therams.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0184
+      "storyRank": 0.016
     },
     {
       "id": "lar_vid_55835f9cd02d",
@@ -3425,7 +3698,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0146
     },
     {
       "id": "lar_vid_9f4f39b8a870",
@@ -3459,7 +3732,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0146
     },
     {
       "id": "lar_vid_13fa21666dd3",
@@ -3493,7 +3766,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0146
     },
     {
       "id": "lar_vid_f2e967299d92",
@@ -3527,7 +3800,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0146
     },
     {
       "id": "lar_vid_2303ba0a3a55",
@@ -3561,7 +3834,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0037
     },
     {
       "id": "lar_vid_339b064cda18",
@@ -3595,7 +3868,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0146
     },
     {
       "id": "lar_vid_d8231e901900",
@@ -3629,7 +3902,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0146
     },
     {
       "id": "lar_vid_42434ec0c0af",
@@ -3663,7 +3936,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0145
     },
     {
       "id": "lar_vid_18bc8050c000",
@@ -3697,7 +3970,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0145
     },
     {
       "id": "lar_vid_e7199bb3d1b4",
@@ -3731,7 +4004,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0145
     },
     {
       "id": "lar_vid_8ac4a610cad2",
@@ -3765,7 +4038,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0145
     },
     {
       "id": "lar_vid_626a42de037a",
@@ -3799,7 +4072,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0144
     },
     {
       "id": "lar_vid_1520f6908fbf",
@@ -3833,7 +4106,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0144
     },
     {
       "id": "lar_vid_17404cf324c4",
@@ -3867,7 +4140,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0144
     },
     {
       "id": "lar_tx_6228c0f2bc30",
@@ -3901,7 +4174,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
+      "storyRank": 0.0128
     },
     {
       "id": "lar_vid_26c80d014745",
@@ -3935,7 +4208,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0373
+      "storyRank": 0.0331
     },
     {
       "id": "lar_vid_ea3fec9f3eeb",
@@ -3969,7 +4242,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.0123
     },
     {
       "id": "lar_vid_a882db48692f",
@@ -4003,7 +4276,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0138
+      "storyRank": 0.0122
     },
     {
       "id": "lar_vid_83413a9e9012",
@@ -4037,7 +4310,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013
+      "storyRank": 0.0116
     },
     {
       "id": "lar_vid_1b5114d33f41",
@@ -4071,7 +4344,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0029
     },
     {
       "id": "lar_tx_17526c671109",
@@ -4105,7 +4378,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
+      "storyRank": 0.011
     },
     {
       "id": "lar_vid_0bbcc28e70ad",
@@ -4139,7 +4412,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.012
+      "storyRank": 0.0107
     },
     {
       "id": "lar_vid_1b94ae600ac9",
@@ -4173,7 +4446,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0027
     },
     {
       "id": "lar_tx_c1222ad7f816",
@@ -4207,143 +4480,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0114
-    },
-    {
-      "id": "lar_vid_29bb7fabe296",
-      "type": "video",
-      "title": "\"Score every time we touch it!\" | Matthew Stafford Mic'd Up for the Rams' Week 8 victory over the Chargers",
-      "summary": "Los Angeles Rams quarterback Matthew Stafford was Mic'd Up for the Rams' Week 8 victory over the Chargers at SoFi Stadium. Watch him direct the offense, celebrate big-time plays, lead the huddles, and more.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/eb94js5mtowj0ddk1wpw.png",
-      "imageAlt": "\"Score every time we touch it!\" | Matthew Stafford Mic'd Up for the Rams' Week 8 victory over the Chargers",
-      "publishedAt": "2026-11-03T20:00:00.000Z",
-      "url": "https://www.therams.com/video/score-every-time-we-touch-it-matthew-stafford-micd-up-rams-week-8-victory-over-the-chargers-sofi-stadium",
-      "externalVideoUrl": "https://www.therams.com/video/score-every-time-we-touch-it-matthew-stafford-micd-up-rams-week-8-victory-over-the-chargers-sofi-stadium",
-      "outletId": "rams_official",
-      "outletName": "therams.com Video",
-      "reporterId": "rams_official",
-      "reporterName": "therams.com Video",
-      "author": "therams.com Video",
-      "authorHandle": "@RamsNFL",
-      "authorProfileUrl": "https://www.therams.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 72,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
-    },
-    {
-      "id": "lar_tx_1f8bbc8da69a",
-      "type": "tweet",
-      "title": "Rams roster move: Signed DB Cam Lampkin from the practice squad to the active roster. Signed DB Nyzier Fourqurean to the practice squad. Placed RB Dean Connors on injured reserve. Released WR Alex Bachman. Released LB Garrett Nelson from the practice squad.",
-      "fullText": "Rams roster move: Signed DB Cam Lampkin from the practice squad to the active roster. Signed DB Nyzier Fourqurean to the practice squad. Placed RB Dean Connors on injured reserve. Released WR Alex Bachman. Released LB Garrett Nelson from the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-03T08:00:00.000Z",
-      "url": "https://www.therams.com/team/transactions/#tx-1f8bbc8da69a",
-      "outletId": "rams_official",
-      "outletName": "therams.com Official",
-      "reporterId": "rams_official",
-      "reporterName": "Los Angeles Rams Official",
-      "author": "Los Angeles Rams Official",
-      "authorHandle": "@RamsNFL",
-      "authorProfileUrl": "https://www.therams.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
-    },
-    {
-      "id": "lar_vid_dbc144906f1c",
-      "type": "video",
-      "title": "Game-changing defense in Week 8, playing complimentary football, run game efficiency & more | The Coach McVay Show",
-      "summary": "J.B. Long sits down with Los Angeles Rams head coach Sean McVay to break down the Rams' Week 8 win over the Chargers at SoFi Stadium. Watch them discuss game-changing defensive stops, what it means to play complimentary ",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/r9soygxcgbh7c3jsc1ag.png",
-      "imageAlt": "Game-changing defense in Week 8, playing complimentary football, run game efficiency & more | The Coach McVay Show",
-      "publishedAt": "2026-11-03T01:00:00.000Z",
-      "url": "https://www.therams.com/video/game-changing-defensive-efforts-playing-complimentary-football-run-game-efficiency-coach-mcvay-show-week-8-chargers",
-      "externalVideoUrl": "https://www.therams.com/video/game-changing-defensive-efforts-playing-complimentary-football-run-game-efficiency-coach-mcvay-show-week-8-chargers",
-      "outletId": "rams_official",
-      "outletName": "therams.com Video",
-      "reporterId": "rams_official",
-      "reporterName": "therams.com Video",
-      "author": "therams.com Video",
-      "authorHandle": "@RamsNFL",
-      "authorProfileUrl": "https://www.therams.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
-    },
-    {
-      "id": "lar_vid_7d3d8e1a4aae",
-      "type": "video",
-      "title": "Sean McVay, Trent McDuffie & Wesley Bailey discuss injury updates, key defensive stops vs. the Chargers, takeaways from Week 8 & more",
-      "summary": "Los Angeles Rams head coach Sean McVay, cornerback Trent McDuffie, and outside linebacker Wesley Bailey discuss injury updates, key defensive stops against the Chargers, takeaways from their Week 8 victory, and more.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/qh1ofp5nhfkkl7pjckcd.png",
-      "imageAlt": "Sean McVay, Trent McDuffie & Wesley Bailey discuss injury updates, key defensive stops vs. the Chargers, takeaways from Week 8 & more",
-      "publishedAt": "2026-11-02T23:30:00.000Z",
-      "url": "https://www.therams.com/video/sean-mcvay-trent-mcduffie-wesley-bailey-injury-updates-key-defensive-stops-vs-chargers-takeaways-week-8-press-conference",
-      "externalVideoUrl": "https://www.therams.com/video/sean-mcvay-trent-mcduffie-wesley-bailey-injury-updates-key-defensive-stops-vs-chargers-takeaways-week-8-press-conference",
-      "outletId": "rams_official",
-      "outletName": "therams.com Video",
-      "reporterId": "rams_official",
-      "reporterName": "therams.com Video",
-      "author": "therams.com Video",
-      "authorHandle": "@RamsNFL",
-      "authorProfileUrl": "https://www.therams.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0102
     },
     {
       "id": "lar_rss_6673f156ff5c",
@@ -4387,39 +4524,6 @@
       "imageAlt": "Injury Report, Week 10 at Cardinals: Steve Avila and Terrance Ferguson ruled out; Trent McDuffie and Kam Curl questionable",
       "publishedAt": "2026-11-13T22:39:40.000Z",
       "url": "https://www.therams.com/news/rams-injury-report-week-10-2026-at-cardinals-trent-mcduffie-steve-avila",
-      "outletId": "rams_official",
-      "outletName": "therams.com Official",
-      "reporterId": "rams_official",
-      "reporterName": "therams.com Official",
-      "author": "therams.com Official",
-      "authorHandle": "@RamsNFL",
-      "authorProfileUrl": "https://www.therams.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": -10,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "stale_pregame",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": true,
-      "storyRank": -1000
-    },
-    {
-      "id": "lar_rss_d2a5fb0dcb56",
-      "type": "article",
-      "title": "Injury Updates: Puka Nacua likely going on Injured Reserve after sustaining MCL and PCL sprain and turf toe against Commanders; latest on Steve Avila and Trent McDuffie",
-      "summary": "Rams head coach Sean McVay discusses the statuses of wide receiver Puka Nacua, offensive lineman Steve Avila and cornerback Trent McDuffie entering Week 10 against the Cardinals.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/rams/dntivrudk1bzgjavvmht.jpg",
-      "imageAlt": "Injury Updates: Puka Nacua likely going on Injured Reserve after sustaining MCL and PCL sprain and turf toe against Commanders; latest on Steve Avila and Trent McDuffie",
-      "publishedAt": "2026-11-10T00:04:44.000Z",
-      "url": "https://www.therams.com/news/rams-injury-updates-puka-nacua-likely-going-on-injured-reserve-after-sustaining-mcl-pcl-sprain-and-turf-toe-against-commanders-latest-on-steve-avila-and-trent-mcduffie",
       "outletId": "rams_official",
       "outletName": "therams.com Official",
       "reporterId": "rams_official",

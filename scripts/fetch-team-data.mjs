@@ -67,14 +67,13 @@ import {
 } from './lib/teamTradeIntelligence.mjs';
 import {
   canonicalPlayoffGameKey,
-  computeCalibratedTeamPowerRating,
-  computeLeaguePowerRatings,
-  computeRootingGuideLeverage,
   estimateTeamInjurySpreadAdjustments,
-  reconcileAndDedupePlayoffGames,
-  runPlayoffMonteCarlo,
-  PLAYOFF_MODEL_VERSION
+  reconcileAndDedupePlayoffGames
 } from '../src/engine/playoffMonteCarlo.js';
+import {
+  buildPlayoffPictureForTeam,
+  buildSharedLeaguePlayoffContext
+} from './lib/leaguePlayoffPipeline.mjs';
 import {
   NFL_TEAM_NAMES,
   computeLeaguePositionalLeaderboards,
@@ -538,198 +537,52 @@ function buildTeamStatsForClub(team, leagueCtx) {
 }
 
 function buildConferencePlayoffPicture(team, leagueCtx, { healthData = null, rosterPlayers = null } = {}) {
-  const parseWlt = str => {
-    const p = String(str || '0-0').split('-').map(x => Number(x) || 0);
-    return { w: p[0] || 0, l: p[1] || 0, t: p[2] || 0 };
-  };
-
-  const targetConf = team.conference;
-  const confTeams = [];
-  const otherPowerRatings = {};
-  const otherStandings = {};
-  const otherNextGameDeltas = {};
-
-  const standingsObj = {};
-  for (const t of ALL_NFL_TEAMS) {
-    const st = leagueCtx.standingsByAbbr.get(t.abbr);
-    if (st) {
-      standingsObj[t.abbr] = {
-        wins: st.wins,
-        losses: st.losses,
-        ties: st.ties,
-        pointDiff: st.pd,
-        pointsFor: st.pf,
-        pointsAgainst: st.pa
-      };
-    }
-  }
   const mergedInjuryAdjustments = {
     ...(leagueCtx.sharedInjuryAdjustments || {})
   };
+  let needsFreshContext = !leagueCtx.sharedPlayoffCtx;
   if (healthData || (Array.isArray(rosterPlayers) && rosterPlayers.length > 0)) {
-    const remForTeam = (leagueCtx.remainingGames || []).filter(
-      g => g.home === team.abbr || g.away === team.abbr
-    ).length || 6;
-    const teamSt = standingsObj[team.abbr];
-    const teamGp = teamSt ? (Number(teamSt.wins) || 0) + (Number(teamSt.losses) || 0) + (Number(teamSt.ties) || 0) : null;
-    mergedInjuryAdjustments[team.abbr] = estimateTeamInjurySpreadAdjustments({
+    const remForTeam =
+      (leagueCtx.remainingGames || []).filter(g => g.home === team.abbr || g.away === team.abbr).length || 6;
+    const teamSt = leagueCtx.standingsByAbbr.get(team.abbr);
+    const teamGp = teamSt
+      ? (Number(teamSt.wins) || 0) + (Number(teamSt.losses) || 0) + (Number(teamSt.ties) || 0)
+      : null;
+    const freshAdj = estimateTeamInjurySpreadAdjustments({
       healthData,
       rosterPlayers: rosterPlayers || [],
       remainingGamesCount: remForTeam,
       teamGamesPlayed: teamGp
     });
-  }
-  const leagueRatings = computeLeaguePowerRatings({
-    completedGames: leagueCtx.completedGames,
-    remainingGames: leagueCtx.remainingGames,
-    preseasonPriors: leagueCtx.sharedPreseasonPriors || {},
-    weeklyTeamStats: leagueCtx.sharedWeeklyTeamStats || null,
-    standingsByAbbr: standingsObj,
-    injuryAdjustmentsByTeam: Object.keys(mergedInjuryAdjustments).length > 0 ? mergedInjuryAdjustments : null
-  }).byAbbr;
-
-  for (const t of ALL_NFL_TEAMS) {
-    const st = leagueCtx.standingsByAbbr.get(t.abbr) || {
-      wins: 0, losses: 0, ties: 0, pf: 0, pa: 0, pd: 0, record: '0-0', divRec: '0-0', confRec: '0-0',
-      logoUrl: `https://a.espncdn.com/i/teamlogos/nfl/500/${t.espnAbbr}.png`
-    };
-    const lr = leagueRatings[t.abbr] || null;
-    const rating =
-      lr?.powerRating ??
-      computeCalibratedTeamPowerRating({
-        wins: st.wins,
-        losses: st.losses,
-        ties: st.ties,
-        pointDiff: st.pd,
-        pointsFor: st.pf,
-        pointsAgainst: st.pa,
-        preseasonPriorSpread: leagueCtx.sharedPreseasonPriors?.[t.abbr] ?? 0
-      });
-    if (t.conference === targetConf) {
-      const dr = parseWlt(st.divRec);
-      const cr = parseWlt(st.confRec);
-      confTeams.push({
-        abbr: t.abbr,
-        name: t.fullName,
-        logoUrl: st.logoUrl,
-        division: t.division,
-        wins: st.wins,
-        losses: st.losses,
-        ties: st.ties,
-        divWins: dr.w,
-        divLosses: dr.l,
-        divTies: dr.t,
-        confWins: cr.w,
-        confLosses: cr.l,
-        confTies: cr.t,
-        pointDiff: st.pd,
-        pointsFor: st.pf,
-        pointsAgainst: st.pa,
-        divRec: st.divRec,
-        confRec: st.confRec,
-        homeRec: st.homeRec || '',
-        awayRec: st.awayRec || '',
-        streak: st.streak || '',
-        clincher: st.clincher || '',
-        playoffSeed: st.seed || null,
-        preseasonPriorSpread: lr?.preseasonPriorSpread ?? 0,
-        preseasonPriorElo: lr?.preseasonPriorElo ?? 1500,
-        sosSpreadAdj: lr?.sosSpreadAdj ?? 0,
-        remainingSosSpread: lr?.remainingSosSpread ?? 0,
-        remainingSosRank: lr?.remainingSosRank ?? 16,
-        qbInjuryEloAdj: lr?.qbInjuryEloAdj ?? 0,
-        nonQbInjuryEloAdj: lr?.nonQbInjuryEloAdj ?? 0,
-        nextGameEloDelta: lr?.nextGameEloDelta ?? 0,
-        ...(lr?.qbStatusNote ? { qbStatusNote: lr.qbStatusNote } : {}),
-        powerRating: Math.round(rating)
-      });
-    } else {
-      otherPowerRatings[t.abbr] = Math.round(rating);
-      otherNextGameDeltas[t.abbr] = lr?.nextGameEloDelta ?? 0;
-      otherStandings[t.abbr] = {
-        wins: st.wins,
-        losses: st.losses,
-        ties: st.ties,
-        pointDiff: st.pd,
-        pointsFor: st.pf,
-        pointsAgainst: st.pa,
-        divRec: st.divRec,
-        confRec: st.confRec,
-        homeRec: st.homeRec || '',
-        awayRec: st.awayRec || '',
-        streak: st.streak || '',
-        clincher: st.clincher || '',
-        playoffSeed: st.seed || null,
-        preseasonPriorSpread: lr?.preseasonPriorSpread ?? 0,
-        preseasonPriorElo: lr?.preseasonPriorElo ?? 1500,
-        sosSpreadAdj: lr?.sosSpreadAdj ?? 0,
-        remainingSosSpread: lr?.remainingSosSpread ?? 0,
-        remainingSosRank: lr?.remainingSosRank ?? 16,
-        qbInjuryEloAdj: lr?.qbInjuryEloAdj ?? 0,
-        nonQbInjuryEloAdj: lr?.nonQbInjuryEloAdj ?? 0,
-        nextGameEloDelta: lr?.nextGameEloDelta ?? 0,
-        ...(lr?.qbStatusNote ? { qbStatusNote: lr.qbStatusNote } : {})
-      };
+    const prevAdj = mergedInjuryAdjustments[team.abbr];
+    if (
+      !prevAdj ||
+      Math.abs((prevAdj.totalGameSpreadAdj || 0) - (freshAdj.totalGameSpreadAdj || 0)) > 0.05 ||
+      Math.abs((prevAdj.totalSeasonSpreadAdj || 0) - (freshAdj.totalSeasonSpreadAdj || 0)) > 0.05
+    ) {
+      mergedInjuryAdjustments[team.abbr] = freshAdj;
+      needsFreshContext = true;
     }
   }
 
-  const nowSimIso = new Date().toISOString();
-  const simulatorInputs = {
-    modelVersion: PLAYOFF_MODEL_VERSION,
-    lastSimulatedAt: nowSimIso,
-    targetTeam: team.abbr,
-    conference: targetConf,
-    conferenceTeams: confTeams,
-    nfcTeams: confTeams,
-    otherConferencePowerRatings: otherPowerRatings,
-    afcPowerRatings: otherPowerRatings,
-    afcRatings: otherPowerRatings,
-    otherConferenceStandings: otherStandings,
-    afcStandings: otherStandings,
-    otherConferenceNextGameDeltas: otherNextGameDeltas,
-    preseasonPriors: leagueCtx.sharedPreseasonPriors || {},
-    ...(leagueCtx.sharedWeeklyTeamStats ? { weeklyTeamStats: leagueCtx.sharedWeeklyTeamStats } : {}),
-    ...(Object.keys(mergedInjuryAdjustments).length > 0 ? { injuryAdjustmentsByTeam: mergedInjuryAdjustments } : {}),
-    completedGames: leagueCtx.completedGames,
-    remainingGames: leagueCtx.remainingGames
-  };
+  const playoffCtx = needsFreshContext
+    ? buildSharedLeaguePlayoffContext({
+        standingsByAbbr: leagueCtx.standingsByAbbr,
+        completedGames: leagueCtx.completedGames,
+        remainingGames: leagueCtx.remainingGames,
+        preseasonPriors: leagueCtx.sharedPreseasonPriors || {},
+        weeklyTeamStats: leagueCtx.sharedWeeklyTeamStats || null,
+        injuryAdjustmentsByTeam:
+          Object.keys(mergedInjuryAdjustments).length > 0 ? mergedInjuryAdjustments : null,
+        liveScoresByMatchup: leagueCtx.liveScoresByMatchup || {}
+      })
+    : leagueCtx.sharedPlayoffCtx;
 
-  const baselineSimulation = runPlayoffMonteCarlo({
-    ...simulatorInputs,
-    iterations: 10000,
-    seed: 492026
-  });
-  const rootingLeverage = computeRootingGuideLeverage(simulatorInputs, 12);
-  const myOdds = baselineSimulation.teamOdds || baselineSimulation.sfOdds || {};
+  if (!leagueCtx.sharedPlayoffCtx) {
+    leagueCtx.sharedPlayoffCtx = playoffCtx;
+  }
 
-  const seedPathCards = [
-    {
-      target: `#1 ${targetConf} Seed (First-Round Bye)`,
-      probabilityPct: myOdds.seed1ByePct ?? 0,
-      pathSummary: `${team.fullName} project to ${myOdds.projectedWins ?? 10} wins (${myOdds.seed1ByePct ?? 0}% #1 ${targetConf} seed probability across 10,000 Empirical-Bayes simulations).`
-    },
-    {
-      target: `${team.division} Division Title`,
-      probabilityPct: myOdds.winDivisionPct ?? 0,
-      pathSummary: `${myOdds.winDivisionPct ?? 0}% probability to claim the ${team.division} crown and host at least one playoff game at ${team.stadium}.`
-    },
-    {
-      target: `${targetConf} Playoff Berth`,
-      probabilityPct: myOdds.makePlayoffsPct ?? 0,
-      pathSummary: `${myOdds.makePlayoffsPct ?? 0}% overall playoff berth odds (${myOdds.wildCardPct ?? 0}% via Wild Card seeds #5–#7).`
-    }
-  ];
-
-  return {
-    sources: [
-      { label: 'ESPN Live NFL Standings', url: 'https://www.espn.com/nfl/standings' },
-      { label: 'Empirical-Bayes 10k Monte Carlo', url: `https://www.espn.com/nfl/team/_/name/${team.espnAbbr}/${team.otcSlug}` }
-    ],
-    baselineSimulation,
-    rootingLeverage,
-    seedPathCards,
-    simulatorInputs
-  };
+  return buildPlayoffPictureForTeam(team, playoffCtx);
 }
 
 async function fetchTeamBlueskyPosts(team, reportersData) {

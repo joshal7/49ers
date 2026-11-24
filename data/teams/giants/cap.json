@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:34:32.908Z",
+  "updatedAt": "2026-11-24T20:08:03.604Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/new-york-giants",
   "spotracUrl": "https://www.spotrac.com/nfl/new-york-giants/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 300195334,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 293623741,
+      "totalCapLiabilities": 293880541,
       "top51": 232132108,
-      "teamCapSpace": 6571593,
-      "otcRawTeamCapSpace": 6571593,
-      "effectiveCapSpace": 6571593,
-      "activeCapSpending": 245600660,
-      "offenseSpend": 85908272,
-      "defenseSpend": 155255722,
+      "teamCapSpace": 6314793,
+      "otcRawTeamCapSpace": 6314793,
+      "effectiveCapSpace": 6314793,
+      "activeCapSpending": 245857460,
+      "offenseSpend": 86055072,
+      "defenseSpend": 155365722,
       "specialSpend": 4436666,
       "deadMoneyTotal": 48023081,
       "injuredReserveTotal": 48893763,
-      "practiceSquadTotal": 3456888,
+      "practiceSquadTotal": 3713688,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 52350651,
+      "reserveAndPsTotal": 52607451,
       "topDeadMoneyEntries": [
         {
           "name": "Dexter Lawrence",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 52,
-      "totalSignedCount": 81
+      "totalSignedCount": 83
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 304913726,
       "teamCapSpace": 18969045,
       "otcRawTeamCapSpace": 18969045,
-      "effectiveCapSpace": 1927092,
+      "effectiveCapSpace": 2034744,
       "activeCapSpending": 304913726,
       "offenseSpend": 124431736,
       "defenseSpend": 173825324,
@@ -225,7 +225,7 @@
     }
   },
   "blueprint": {
-    "summary": "New York Giants hold $6.57M in 2026 OverTheCap space and $18.97M projected for 2027."
+    "summary": "New York Giants hold $6.31M in 2026 OverTheCap space and $18.97M projected for 2027."
   },
   "players": [
     {

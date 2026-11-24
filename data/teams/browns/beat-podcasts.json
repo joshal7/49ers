@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T06:36:03.872Z",
+  "updatedAt": "2026-11-24T20:08:39.425Z",
   "windowDays": 7,
-  "totalEpisodes": 10,
+  "totalEpisodes": 9,
   "shows": [
     {
       "id": "browns_locked_on_browns",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/10/6d/43/106d43ad-fd8c-6e60-5dda-6fe02d487ee8/mza_12975464127955923763.jpg/600x600bb.jpg",
-      "episodeCount7d": 6
+      "episodeCount7d": 5
     },
     {
       "id": "browns_orange_and_brown_report",
@@ -41,6 +41,46 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_browns_locked_on_browns_1000803650663",
+      "trackId": 1000803650663,
+      "collectionId": 1149989450,
+      "showId": "browns_locked_on_browns",
+      "showName": "Locked On Browns",
+      "showFullTitle": "Locked On Browns - Daily Podcast On The Cleveland Browns",
+      "hosts": "Locked On Podcast Network, Spencer German",
+      "network": "Locked On Podcast Network, Spencer German",
+      "title": "BIG WIN: Cleveland Browns WON WEEK 11 Despite Sitting Idle On Bye Week | Record Prediction Do-Over",
+      "summary": "Cleveland Browns emerge as surprise winners during their bye week as key AFC rivals falter, tightening their grip on a playoff spot. Spencer German spotlights how losses by the Pittsburgh Steelers, Baltimore Ravens, and Las Vegas Raiders propelled the Browns up the AFC stand",
+      "publishedAt": "2026-11-23T19:01:12.000Z",
+      "durationMinutes": 30,
+      "durationDisplay": "30 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/6c/8b/f8/6c8bf85f-9ebf-e054-739b-862fc212db19/mza_8182257530352037631.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/big-win-cleveland-browns-won-week-11-despite-sitting/id1149989450?i=1000803650663&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/bc2558/lockedon.simplecastaudio.com/7969d75c-8081-4d02-9f33-3da05de0f18c/episodes/c2559f3a-d9b3-4530-9bed-290585e642a9/audio/128/default.mp3?aid=rss_feed&awCollectionId=7969d75c-8081-4d02-9f33-3da05de0f18c&awEpisodeId=c2559f3a-d9b3-4530-9bed-290585e642a9&feed=KHgFdYZS"
+    },
+    {
+      "id": "pod_browns_orange_and_brown_talk_1000803528068",
+      "trackId": 1000803528068,
+      "collectionId": 1334701895,
+      "showId": "browns_orange_and_brown_talk",
+      "showName": "Orange and Brown Talk",
+      "showFullTitle": "Orange and Brown Talk: Cleveland Browns Podcast",
+      "hosts": "Cleveland.com - Advance Local",
+      "network": "Cleveland.com - Advance Local",
+      "title": "Who are the top non-quarterbacks in the NFL Draft the Browns could target?",
+      "summary": "The NFL Draft has become a bit of an afterthought for Browns fans after their 6-4 start. They still have some big decisions to make this April, though, especially with two first-round picks. What better time to check in on college football and the NFL Draft than during the B",
+      "publishedAt": "2026-11-23T05:01:00.000Z",
+      "durationMinutes": 50,
+      "durationDisplay": "50 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e4/71/36/e4713632-fd35-6f67-ed8d-fb9c5e5690b1/mza_5063397547146275556.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/who-are-the-top-non-quarterbacks-in-the-nfl-draft/id1334701895?i=1000803528068&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
+      "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
+      "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM1280505943.mp3"
+    },
     {
       "id": "pod_browns_locked_on_browns_1000803304745",
       "trackId": 1000803304745,
@@ -180,66 +220,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
       "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM8475956615.mp3"
-    },
-    {
-      "id": "pod_browns_locked_on_browns_1000802452145",
-      "trackId": 1000802452145,
-      "collectionId": 1149989450,
-      "showId": "browns_locked_on_browns",
-      "showName": "Locked On Browns",
-      "showFullTitle": "Locked On Browns - Daily Podcast On The Cleveland Browns",
-      "hosts": "Locked On Podcast Network, Spencer German",
-      "network": "Locked On Podcast Network, Spencer German",
-      "title": "Deshaun Watson’s BEST Game Yet? | How Mike Rutenberg and Todd Monken FUELED Cleveland Browns Win",
-      "summary": "The Cleveland Browns mounted a thrilling comeback against the Houston Texans and it was Deshaun Watson leading the way. But was the performance his best in a Browns uniform? Lance Reisland stops by the show to break down Watson's performance with Spencer German. Later, the c",
-      "publishedAt": "2026-11-17T10:34:40.000Z",
-      "durationMinutes": 35,
-      "durationDisplay": "35 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/f4/fc/36/f4fc366c-7f6c-5294-58c6-fcfa2ee3d46a/mza_17578865497430730695.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/deshaun-watsons-best-game-yet-how-mike-rutenberg-and/id1149989450?i=1000802452145&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/bc2558/lockedon.simplecastaudio.com/7969d75c-8081-4d02-9f33-3da05de0f18c/episodes/fbd8e717-3bbe-4689-8792-72d3d61655af/audio/128/default.mp3?aid=rss_feed&awCollectionId=7969d75c-8081-4d02-9f33-3da05de0f18c&awEpisodeId=fbd8e717-3bbe-4689-8792-72d3d61655af&feed=KHgFdYZS"
-    },
-    {
-      "id": "pod_browns_orange_and_brown_talk_1000802405346",
-      "trackId": 1000802405346,
-      "collectionId": 1334701895,
-      "showId": "browns_orange_and_brown_talk",
-      "showName": "Orange and Brown Talk",
-      "showFullTitle": "Orange and Brown Talk: Cleveland Browns Podcast",
-      "hosts": "Cleveland.com - Advance Local",
-      "network": "Cleveland.com - Advance Local",
-      "title": "Can the Browns win the AFC North? Hey, Mary Kay!",
-      "summary": "The Browns currently occupy the seventh seed in the AFC and are one of the surprises in the NFL. Can they do something even more surprsing and win the AFC North? That’s the first question Mary Kay Cabot and Dan Labbe tackle in a Hey, Mary Kay! edition of the Orange and Brown",
-      "publishedAt": "2026-11-17T05:01:00.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e4/71/36/e4713632-fd35-6f67-ed8d-fb9c5e5690b1/mza_5063397547146275556.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/can-the-browns-win-the-afc-north-hey-mary-kay/id1334701895?i=1000802405346&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/orange-and-brown-talk-cleveland-browns-podcast/id1334701895?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/orangebrowntalk",
-      "audioStreamUrl": "https://pdst.fm/e/traffic.megaphone.fm/ADLM7488782859.mp3"
-    },
-    {
-      "id": "pod_browns_locked_on_browns_1000802356454",
-      "trackId": 1000802356454,
-      "collectionId": 1149989450,
-      "showId": "browns_locked_on_browns",
-      "showName": "Locked On Browns",
-      "showFullTitle": "Locked On Browns - Daily Podcast On The Cleveland Browns",
-      "hosts": "Locked On Podcast Network, Spencer German",
-      "network": "Locked On Podcast Network, Spencer German",
-      "title": "Deshaun Watson's Touchdown Drought Has Cleveland Browns' Fans Losing The Plot",
-      "summary": "While Cleveland Browns continue winning Deshaun Watson’s touchdown drought sparks debate—does it really matter while the playoffs are in focus? Spencer German rallies against those pointing out Watson’s five-week stretch without a passing TD, arguing that those talking about",
-      "publishedAt": "2026-11-16T22:03:38.000Z",
-      "durationMinutes": 30,
-      "durationDisplay": "30 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/b1/98/fb/b198fb83-0fc7-976f-0c6a-56efb891b0b9/mza_13465434005387879935.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/deshaun-watsons-touchdown-drought-has-cleveland-browns/id1149989450?i=1000802356454&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-browns-daily-podcast-on-the-cleveland-browns/id1149989450?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/bc2558/feeds.simplecast.com/KHgFdYZS",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/bc2558/lockedon.simplecastaudio.com/7969d75c-8081-4d02-9f33-3da05de0f18c/episodes/e5175a8a-6833-44d7-a930-729e2055c995/audio/128/default.mp3?aid=rss_feed&awCollectionId=7969d75c-8081-4d02-9f33-3da05de0f18c&awEpisodeId=e5175a8a-6833-44d7-a930-729e2055c995&feed=KHgFdYZS"
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:34:05.130Z",
+  "updatedAt": "2026-11-24T20:07:52.115Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/green-bay-packers",
   "spotracUrl": "https://www.spotrac.com/nfl/green-bay-packers/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 314259464,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 307420890,
+      "totalCapLiabilities": 307673090,
       "top51": 242953368,
-      "teamCapSpace": 6838574,
-      "otcRawTeamCapSpace": 6838574,
-      "effectiveCapSpace": 6838574,
-      "activeCapSpending": 257777095,
-      "offenseSpend": 146392757,
-      "defenseSpend": 106595205,
+      "teamCapSpace": 6586374,
+      "otcRawTeamCapSpace": 6586374,
+      "effectiveCapSpace": 6586374,
+      "activeCapSpending": 257988045,
+      "offenseSpend": 146631207,
+      "defenseSpend": 106567705,
       "specialSpend": 4789133,
-      "deadMoneyTotal": 49643795,
+      "deadMoneyTotal": 49685045,
       "injuredReserveTotal": 35411286,
-      "practiceSquadTotal": 3450867,
+      "practiceSquadTotal": 3661817,
       "pupTotal": 21898533,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 60760686,
+      "reserveAndPsTotal": 60971636,
       "topDeadMoneyEntries": [
         {
           "name": "Rashan Gary",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 52,
-      "totalSignedCount": 80
+      "totalSignedCount": 82
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 322945701,
       "teamCapSpace": -5901697,
       "otcRawTeamCapSpace": -5901697,
-      "effectiveCapSpace": -15318229,
+      "effectiveCapSpace": -15259080,
       "activeCapSpending": 322945701,
       "offenseSpend": 180563466,
       "defenseSpend": 136583102,
@@ -265,7 +265,7 @@
     }
   },
   "blueprint": {
-    "summary": "Green Bay Packers hold $6.84M in 2026 OverTheCap space and $-5.90M projected for 2027."
+    "summary": "Green Bay Packers hold $6.59M in 2026 OverTheCap space and $-5.90M projected for 2027."
   },
   "players": [
     {
@@ -6446,7 +6446,7 @@
       "jersey": 1,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361423.png",
       "unit": "Defense",
-      "rosterBucket": "ir",
+      "rosterBucket": "active",
       "contractsByYear": {
         "2027": {
           "year": 2027,

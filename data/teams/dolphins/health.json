@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:35:32.547Z",
+  "updatedAt": "2026-11-24T20:08:29.160Z",
   "week": 12,
   "byeWeek": 6,
   "sourceUrl": "https://www.miamidolphins.com/team/injury-report/",
@@ -9,31 +9,6 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
-    {
-      "playerId": "4426446",
-      "name": "Caedan Wallace",
-      "position": "OT",
-      "jersey": 77,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426446.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
     {
       "playerId": "2977680",
       "name": "Bradley Pinion",
@@ -47,117 +22,18 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Groin",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 39,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "39% • Long Shot",
       "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed prior game without practice participation — awaiting Wednesday report",
+        "Soft-tissue re-aggravation caution (Groin)"
       ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4431664",
-      "name": "Dante Trader Jr.",
-      "position": "S",
-      "jersey": 11,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431664.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Shoulder",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Every-down starter workload (85% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Trader's inactive status is not surprising given that he didn't practice all week and entered the weekend tagged as doubtful to suit up. Sunday will mark the second-year pro's first career absence. Kyle Louis and/or Zayne Anderson could get a big bump in work at safety in Trader's stead."
-    },
-    {
-      "playerId": "4567225",
-      "name": "Jaylin Simpson",
-      "position": "S",
-      "jersey": 32,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567225.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Simpson was previously doubtful for Sunday's game after not practicing Wednesday or Thursday and ending the week with limited participation. The 26-year-old plays the majority of snaps on special teams, so his absence shouldn't greatly impact the defense."
-    },
-    {
-      "playerId": "4912052",
-      "name": "Justin Joly",
-      "position": "TE",
-      "jersey": 80,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4912052.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4362135",
-      "name": "Christian Haynes",
-      "position": "G",
-      "jersey": 64,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362135.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (G) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
     },
     {
       "playerId": "4430681",
@@ -172,17 +48,68 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Quadriceps",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 42,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "42% • Long Shot",
       "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed 2 consecutive games without practice participation — awaiting Wednesday report",
+        "Soft-tissue re-aggravation caution (Quadriceps)"
       ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
+    },
+    {
+      "playerId": "4431664",
+      "name": "Dante Trader Jr.",
+      "position": "S",
+      "jersey": 11,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431664.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Shoulder",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 45,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "45% • Long Shot",
+      "archetypeNote": "Every-down starter workload (85% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Missed prior game without practice participation — awaiting Wednesday report"
+      ],
+      "beatComment": "questionable"
+    },
+    {
+      "playerId": "4567225",
+      "name": "Jaylin Simpson",
+      "position": "S",
+      "jersey": 32,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567225.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Knee",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 72,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "72% • GTD",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Missed prior game after logging Limited/Full practices — positive recovery ramp"
+      ],
+      "beatComment": "questionable"
     },
     {
       "playerId": "4360488",
@@ -198,42 +125,17 @@
       "fri": "-",
       "injuryType": "Shoulder",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 86,
+      "playProbabilityPct": 78,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "86% • Cleared",
+      "playBadgeLabel": "78% • GTD",
       "archetypeNote": "Every-down starter workload (70% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Questionable tag adjusted by player career prior (82%)",
+        "Exited prior game with injury and did not return — awaiting Wednesday practice evaluation",
         "Manageable pain-tolerance injury profile (Shoulder)"
       ],
-      "beatComment": "Brents was hurt in the fourth quarter and is uncertain to re-enter the contest. Darrell Baker has taken over for Brents at outside cornerback."
-    },
-    {
-      "playerId": "4040537",
-      "name": "Aaron Brewer",
-      "position": "C",
-      "jersey": 55,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040537.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Concussion",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Veteran starter profile (7th NFL season, 100% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Brewer missed last Sunday's game against Indianapolis due to a concussion, but he's since cleared the NFL's five-step protocol, including being cleared by an independent neurologist. As such, the All-Pro will be able to return to his usual role as the anchor of Miami's offensive line at center."
+      "beatComment": "Brents didn't return to Sunday's loss to the Bills after sustaining a shoulder injury. The 26-year-old is still expected to undergo further tests but appears to have avoided anything serious. Brents has 36 tackles (21 solo) and two pass deflections through 10 regular-season games."
     },
     {
       "playerId": "4819257",
@@ -259,81 +161,6 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Savaiinaea injured his ankle in the second quarter, but the second-year pro is back on the field for the start of the second half. He'll return to his normal spot at right guard while Jarrett Kingston shifts to the sidelines."
-    },
-    {
-      "playerId": "4036660",
-      "name": "Darrell Baker Jr.",
-      "position": "CB",
-      "jersey": 22,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4036660.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Baker had been on the reserve/PUP list all season before being activated Saturday. He logged a week of full practices, which led to the veteran cornerback being active for what will be his Dolphins debut Sunday. Baker may initially work in a rotational role behind starters JuJu Brents and Jason Marshall."
-    },
-    {
-      "playerId": "4869961",
-      "name": "Chris Bell",
-      "position": "WR",
-      "jersey": 18,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4869961.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Chest",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Bell suffered a chest injury late in the first half and was subsequently deemed questionable to return. However, the rookie wideout got back into the game shortly after halftime. Bell will look to be more productive after finishing the first half without a reception."
-    },
-    {
-      "playerId": "4362064",
-      "name": "Andrew Meyer",
-      "position": "C",
-      "jersey": 60,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362064.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Neck",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Trench/box position (C) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Meyer suffered a stinger against the Colts in Week 10, but his full practice Friday was enough for him to avoid an injury tag for Sunday's AFC East game. He would likely start at center for a second consecutive week if Aaron Brewer (concussion) is not cleared to play."
     }
   ],
   "irAndReserveTracker": [
@@ -357,7 +184,7 @@
       "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "Placed on Injured Reserve (Abdomen) ahead of Week 10; must miss at least 4 games (earliest eligible Week 14)."
+      "beatNote": "That said, per Marcel Louis-Jacques of ESPN.com, Hafley added that the Dolphins will evaluate the QB's status again depending on how he feels at the end of his minimum required stay on IR. For now, Willis is out for at least three more games, with Kyle McCord currently filling in as 1-9 Miami's starting signal-caller."
     },
     {
       "playerId": "3057956",
@@ -380,6 +207,28 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
       "beatNote": "Placed on Injured Reserve (Biceps) ahead of Week 10; must miss at least 4 games (earliest eligible Week 14)."
+    },
+    {
+      "playerId": "4837188",
+      "name": "Jordan Phillips",
+      "position": "DT",
+      "jersey": 94,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4837188.png",
+      "injuryType": "Biceps",
+      "status": "Injured Reserve",
+      "isSeasonEnding": false,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 11,
+      "earliestEligibleWeek": 15,
+      "projectedReturnWeek": "Est. Week 15 (Dec 20)",
+      "byeWeekNote": "4-game NFL minimum requirement",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • IR",
+      "beatNote": "Placed on Injured Reserve (Biceps) ahead of Week 11; must miss at least 4 games (earliest eligible Week 15)."
     },
     {
       "playerId": "4683276",
@@ -454,20 +303,20 @@
       "jersey": 56,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3859006.png",
       "injuryType": "Hamstring",
-      "status": "Injured Reserve",
+      "status": "Injured Reserve (Designated)",
       "isSeasonEnding": false,
       "isPracticeWindowOpen": false,
       "isPracticeWindowExpected": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "placedBeforeWeek": 5,
-      "earliestEligibleWeek": 10,
+      "placedBeforeWeek": 8,
+      "earliestEligibleWeek": 12,
       "projectedReturnWeek": "TBD (21d Window Not Open)",
-      "byeWeekNote": "Week 6 Bye excluded from NFL 4-game minimum count",
+      "byeWeekNote": "4-game NFL minimum requirement",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
-      "beatNote": "4-game minimum satisfied on Injured Reserve (Hamstring); awaiting 21-day practice window designation."
+      "beatNote": "Harrison suffered a hamstring injury in Week 1 that landed him on injured reserve. The fact the Dolphins opted to open his practice window after nine weeks suggests Harrison may be nearing a return."
     },
     {
       "playerId": "4879212",
@@ -490,28 +339,6 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
       "beatNote": "4-game minimum satisfied on Injured Reserve (Ankle); awaiting 21-day practice window designation."
-    },
-    {
-      "playerId": "4837188",
-      "name": "Jordan Phillips",
-      "position": "DT",
-      "jersey": 94,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4837188.png",
-      "injuryType": "Biceps (Surgery)",
-      "status": "Season-Ending IR",
-      "isSeasonEnding": true,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 11,
-      "earliestEligibleWeek": null,
-      "projectedReturnWeek": "Out for Season",
-      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "Phillips was recently placed on injured reserve with a season-ending biceps injury sustained in Week 10 versus the Colts. The 22-year-old ends his season with 28 tackles (11 solo) through nine games. Kenneth Grant and Keith Cooper are top candidates to see more reps at defensive tackle as the season continues."
     },
     {
       "playerId": "4698109",

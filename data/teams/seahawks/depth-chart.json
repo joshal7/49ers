@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:33:26.457Z",
+  "updatedAt": "2026-11-24T20:07:30.082Z",
   "week": 12,
   "units": [
     {
@@ -144,9 +144,9 @@
               "jersey": 67,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426376.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 49,
+              "statusBadge": "49% • Long Shot",
+              "isAvailable": true
             },
             {
               "playerId": "3914630",
@@ -154,6 +154,16 @@
               "jersey": 74,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3914630.png",
               "baselineRank": 2,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
+              "playerId": "2576789",
+              "name": "Bobby Hart",
+              "jersey": 68,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2576789.png",
+              "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -161,6 +171,16 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "4426376",
+              "name": "Charles Cross",
+              "jersey": 67,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426376.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 49,
+              "statusBadge": "49% • Long Shot",
+              "isAvailable": true
+            },
+            {
               "playerId": "3914630",
               "name": "Josh Jones",
               "jersey": 74,
@@ -171,18 +191,17 @@
               "isAvailable": true
             },
             {
-              "playerId": "4426376",
-              "name": "Charles Cross",
-              "jersey": 67,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426376.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playerId": "2576789",
+              "name": "Bobby Hart",
+              "jersey": 68,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2576789.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "lg",
@@ -194,8 +213,8 @@
               "jersey": 53,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3129308.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
+              "playProbabilityPct": 12,
+              "statusBadge": "12% • Doubtful",
               "isAvailable": false
             },
             {
@@ -256,8 +275,8 @@
               "jersey": 53,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3129308.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
+              "playProbabilityPct": 12,
+              "statusBadge": "12% • Doubtful",
               "isAvailable": false,
               "demotedDueToInjury": true
             },
@@ -432,9 +451,9 @@
               "jersey": 14,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912547.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 45,
+              "statusBadge": "45% • Long Shot",
+              "isAvailable": true
             },
             {
               "playerId": "3924327",
@@ -459,6 +478,16 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "3912547",
+              "name": "Sam Darnold",
+              "jersey": 14,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912547.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 45,
+              "statusBadge": "45% • Long Shot",
+              "isAvailable": true
+            },
+            {
               "playerId": "3924327",
               "name": "Drew Lock",
               "jersey": 2,
@@ -477,20 +506,9 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "3912547",
-              "name": "Sam Darnold",
-              "jersey": 14,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3912547.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "te",
@@ -607,24 +625,24 @@
               "isAvailable": true
             },
             {
-              "playerId": "4429835",
-              "name": "George Holani",
-              "jersey": 36,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429835.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 68,
-              "statusBadge": "68% • GTD",
-              "isAvailable": true
-            },
-            {
               "playerId": "4887558",
               "name": "Emanuel Wilson",
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4887558.png",
-              "baselineRank": 4,
+              "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4429835",
+              "name": "George Holani",
+              "jersey": 36,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429835.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
@@ -649,24 +667,25 @@
               "isAvailable": true
             },
             {
-              "playerId": "4429835",
-              "name": "George Holani",
-              "jersey": 36,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429835.png",
-              "baselineRank": 3,
-              "playProbabilityPct": 68,
-              "statusBadge": "68% • GTD",
-              "isAvailable": true
-            },
-            {
               "playerId": "4887558",
               "name": "Emanuel Wilson",
               "jersey": 23,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4887558.png",
-              "baselineRank": 4,
+              "baselineRank": 3,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4429835",
+              "name": "George Holani",
+              "jersey": 36,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429835.png",
+              "baselineRank": 4,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false
@@ -737,9 +756,9 @@
               "jersey": 99,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971622.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 54,
+              "statusBadge": "54% • GTD",
+              "isAvailable": true
             },
             {
               "playerId": "4572055",
@@ -754,6 +773,16 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "2971622",
+              "name": "Leonard Williams",
+              "jersey": 99,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971622.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 54,
+              "statusBadge": "54% • GTD",
+              "isAvailable": true
+            },
+            {
               "playerId": "4572055",
               "name": "Mike Morris",
               "jersey": 94,
@@ -762,20 +791,9 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "2971622",
-              "name": "Leonard Williams",
-              "jersey": 99,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971622.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "nt",
@@ -1136,11 +1154,21 @@
               "isAvailable": true
             },
             {
+              "playerId": "4040966",
+              "name": "Trevon Diggs",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040966.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "4592837",
               "name": "Terrion Arnold",
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4592837.png",
-              "baselineRank": 3,
+              "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
               "isAvailable": false
@@ -1168,11 +1196,21 @@
               "isAvailable": true
             },
             {
+              "playerId": "4040966",
+              "name": "Trevon Diggs",
+              "jersey": 16,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040966.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
+            },
+            {
               "playerId": "4592837",
               "name": "Terrion Arnold",
               "jersey": 17,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4592837.png",
-              "baselineRank": 3,
+              "baselineRank": 4,
               "playProbabilityPct": 0,
               "statusBadge": "0% • Out",
               "isAvailable": false,
@@ -1536,24 +1574,24 @@
               "isAvailable": true
             },
             {
-              "playerId": "4429835",
-              "name": "George Holani",
-              "jersey": 36,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429835.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 68,
-              "statusBadge": "68% • GTD",
-              "isAvailable": true
-            },
-            {
               "playerId": "4597703",
               "name": "Tory Horton",
               "jersey": 15,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4597703.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4429835",
+              "name": "George Holani",
+              "jersey": 36,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429835.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false
             }
           ],
           "projectedActiveChain": [
@@ -1568,24 +1606,25 @@
               "isAvailable": true
             },
             {
-              "playerId": "4429835",
-              "name": "George Holani",
-              "jersey": 36,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429835.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 68,
-              "statusBadge": "68% • GTD",
-              "isAvailable": true
-            },
-            {
               "playerId": "4597703",
               "name": "Tory Horton",
               "jersey": 15,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4597703.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4429835",
+              "name": "George Holani",
+              "jersey": 36,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429835.png",
+              "baselineRank": 3,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • IR",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
           "starterPromoted": false

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:34:05.130Z",
+  "updatedAt": "2026-11-24T20:07:52.115Z",
   "week": 12,
   "units": [
     {
@@ -263,8 +263,8 @@
               "jersey": 65,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242390.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 92,
+              "statusBadge": "92% • Cleared",
               "isAvailable": true
             },
             {
@@ -305,8 +305,8 @@
               "jersey": 65,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242390.png",
               "baselineRank": 2,
-              "playProbabilityPct": 99,
-              "statusBadge": "99% • Full Go",
+              "playProbabilityPct": 92,
+              "statusBadge": "92% • Cleared",
               "isAvailable": true
             },
             {
@@ -342,9 +342,9 @@
               "jersey": 75,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426411.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 69,
+              "statusBadge": "69% • GTD",
+              "isAvailable": true
             },
             {
               "playerId": "2312707",
@@ -379,6 +379,16 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "4426411",
+              "name": "Sean Rhyan",
+              "jersey": 75,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426411.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 69,
+              "statusBadge": "69% • GTD",
+              "isAvailable": true
+            },
+            {
               "playerId": "2312707",
               "name": "John Williams",
               "jersey": 73,
@@ -399,17 +409,6 @@
               "isAvailable": true
             },
             {
-              "playerId": "4426411",
-              "name": "Sean Rhyan",
-              "jersey": 75,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426411.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
-            },
-            {
               "playerId": "4428037",
               "name": "Jacob Monk",
               "jersey": 62,
@@ -421,7 +420,7 @@
               "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "rg",
@@ -433,9 +432,9 @@
               "jersey": 70,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/14931.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 81,
+              "statusBadge": "81% • GTD",
+              "isAvailable": true
             },
             {
               "playerId": "4361904",
@@ -443,8 +442,8 @@
               "jersey": 79,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361904.png",
               "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 86,
+              "statusBadge": "86% • Cleared",
               "isAvailable": true
             },
             {
@@ -490,13 +489,23 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "14931",
+              "name": "Kevin Zeitler",
+              "jersey": 70,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/14931.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 81,
+              "statusBadge": "81% • GTD",
+              "isAvailable": true
+            },
+            {
               "playerId": "4361904",
               "name": "Travis Glover",
               "jersey": 79,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361904.png",
               "baselineRank": 2,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 86,
+              "statusBadge": "86% • Cleared",
               "isAvailable": true
             },
             {
@@ -530,17 +539,6 @@
               "isAvailable": true
             },
             {
-              "playerId": "14931",
-              "name": "Kevin Zeitler",
-              "jersey": 70,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/14931.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
-            },
-            {
               "playerId": "4428037",
               "name": "Jacob Monk",
               "jersey": 62,
@@ -552,7 +550,7 @@
               "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "rt",
@@ -584,8 +582,8 @@
               "jersey": 79,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361904.png",
               "baselineRank": 3,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 86,
+              "statusBadge": "86% • Cleared",
               "isAvailable": true
             },
             {
@@ -626,8 +624,8 @@
               "jersey": 79,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361904.png",
               "baselineRank": 3,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 86,
+              "statusBadge": "86% • Cleared",
               "isAvailable": true
             },
             {
@@ -834,8 +832,8 @@
               "jersey": 8,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4047365.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
+              "playProbabilityPct": 20,
+              "statusBadge": "20% • Long Shot",
               "isAvailable": false
             },
             {
@@ -906,8 +904,8 @@
               "jersey": 8,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4047365.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
+              "playProbabilityPct": 20,
+              "statusBadge": "20% • Long Shot",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1190,9 +1188,9 @@
               "jersey": 44,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3124005.png",
               "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 74,
+              "statusBadge": "74% • GTD",
+              "isAvailable": true
             },
             {
               "playerId": "4036141",
@@ -1217,6 +1215,16 @@
           ],
           "projectedActiveChain": [
             {
+              "playerId": "3124005",
+              "name": "Zaire Franklin",
+              "jersey": 44,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3124005.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 74,
+              "statusBadge": "74% • GTD",
+              "isAvailable": true
+            },
+            {
               "playerId": "4036141",
               "name": "Nick Niemann",
               "jersey": 31,
@@ -1235,20 +1243,9 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "3124005",
-              "name": "Zaire Franklin",
-              "jersey": 44,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3124005.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": true
+          "starterPromoted": false
         },
         {
           "slotKey": "rilb",
@@ -1260,8 +1257,8 @@
               "jersey": 58,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4239947.png",
               "baselineRank": 1,
-              "playProbabilityPct": 85,
-              "statusBadge": "85% • Cleared",
+              "playProbabilityPct": 96,
+              "statusBadge": "96% • Cleared",
               "isAvailable": true
             },
             {
@@ -1292,8 +1289,8 @@
               "jersey": 58,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4239947.png",
               "baselineRank": 1,
-              "playProbabilityPct": 85,
-              "statusBadge": "85% • Cleared",
+              "playProbabilityPct": 96,
+              "statusBadge": "96% • Cleared",
               "isAvailable": true
             },
             {
@@ -1330,9 +1327,9 @@
               "jersey": 1,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361423.png",
               "baselineRank": 1,
-              "playProbabilityPct": 62,
-              "statusBadge": "62% • GTD",
-              "isAvailable": true
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out for Season",
+              "isAvailable": false
             },
             {
               "playerId": "4683643",
@@ -1357,16 +1354,6 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4361423",
-              "name": "Micah Parsons",
-              "jersey": 1,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361423.png",
-              "baselineRank": 1,
-              "playProbabilityPct": 62,
-              "statusBadge": "62% • GTD",
-              "isAvailable": true
-            },
-            {
               "playerId": "4683643",
               "name": "Barryn Sorrell",
               "jersey": 99,
@@ -1385,9 +1372,20 @@
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
+            },
+            {
+              "playerId": "4361423",
+              "name": "Micah Parsons",
+              "jersey": 1,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361423.png",
+              "baselineRank": 1,
+              "playProbabilityPct": 0,
+              "statusBadge": "0% • Out for Season",
+              "isAvailable": false,
+              "demotedDueToInjury": true
             }
           ],
-          "starterPromoted": false
+          "starterPromoted": true
         },
         {
           "slotKey": "lcb",
@@ -1547,8 +1545,8 @@
               "jersey": 2,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5076652.png",
               "baselineRank": 1,
-              "playProbabilityPct": 84,
-              "statusBadge": "84% • GTD",
+              "playProbabilityPct": 96,
+              "statusBadge": "96% • Cleared",
               "isAvailable": true
             },
             {
@@ -1569,8 +1567,8 @@
               "jersey": 2,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5076652.png",
               "baselineRank": 1,
-              "playProbabilityPct": 84,
-              "statusBadge": "84% • GTD",
+              "playProbabilityPct": 96,
+              "statusBadge": "96% • Cleared",
               "isAvailable": true
             },
             {

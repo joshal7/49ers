@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-11-23T06:35:58.908Z",
+  "updatedAt": "2026-11-24T20:08:37.440Z",
   "teamAbbr": "CIN",
   "teamSlug": "bengals",
   "brandName": "Bengals Who Dey",
   "seasonYear": 2026,
-  "currentWeek": 11,
-  "teamRecord": "7-2",
+  "currentWeek": 12,
+  "teamRecord": "7-3",
   "divisionRecord": "2-1",
   "conferenceRecord": "5-2",
-  "standingSummary": "1st in AFC North • #3 Seed in AFC",
-  "pointDifferential": "+85 (278 PF / 193 PA)",
+  "standingSummary": "1st in AFC North • #4 Seed in AFC",
+  "pointDifferential": "+83 (298 PF / 215 PA)",
   "byeWeek": 6,
   "coaches": {
     "hc": "Zac Taylor",
@@ -33,7 +33,7 @@
   },
   "teamStatus": {
     "inPlayoffHunt": true,
-    "playoffSeed": 3,
+    "playoffSeed": 4,
     "seasonConcluded": false
   },
   "aiEngine": {

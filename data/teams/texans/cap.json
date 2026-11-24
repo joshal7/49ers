@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:36:19.406Z",
+  "updatedAt": "2026-11-24T20:08:45.704Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/houston-texans",
   "spotracUrl": "https://www.spotrac.com/nfl/houston-texans/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 310062068,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 301978628,
+      "totalCapLiabilities": 302297100,
       "top51": 211509272,
-      "teamCapSpace": 8083440,
-      "otcRawTeamCapSpace": 8083440,
-      "effectiveCapSpace": 8083440,
-      "activeCapSpending": 226503516,
-      "offenseSpend": 105330284,
-      "defenseSpend": 113371789,
+      "teamCapSpace": 7764968,
+      "otcRawTeamCapSpace": 7764968,
+      "effectiveCapSpace": 7764968,
+      "activeCapSpending": 226821988,
+      "offenseSpend": 105525284,
+      "defenseSpend": 113495261,
       "specialSpend": 7801443,
       "deadMoneyTotal": 75475112,
-      "injuredReserveTotal": 19679237,
-      "practiceSquadTotal": 4330000,
+      "injuredReserveTotal": 20222431,
+      "practiceSquadTotal": 4105278,
       "pupTotal": 3985294,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 27994531,
+      "reserveAndPsTotal": 28313003,
       "topDeadMoneyEntries": [
         {
           "name": "Tytus Howard",
@@ -146,7 +146,7 @@
       "top51": 365640372,
       "teamCapSpace": -40472623,
       "otcRawTeamCapSpace": -40472623,
-      "effectiveCapSpace": -53406634,
+      "effectiveCapSpace": -53421219,
       "activeCapSpending": 366830372,
       "offenseSpend": 159890341,
       "defenseSpend": 196811697,
@@ -258,7 +258,7 @@
     }
   },
   "blueprint": {
-    "summary": "Houston Texans hold $8.08M in 2026 OverTheCap space and $-40.47M projected for 2027."
+    "summary": "Houston Texans hold $7.76M in 2026 OverTheCap space and $-40.47M projected for 2027."
   },
   "players": [
     {

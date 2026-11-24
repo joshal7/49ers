@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T06:34:55.024Z",
+  "updatedAt": "2026-11-24T20:08:11.188Z",
   "windowDays": 7,
-  "totalEpisodes": 16,
+  "totalEpisodes": 14,
   "shows": [
     {
       "id": "saints_locked_on_saints",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/83ac39/feeds.simplecast.com/aKgoC4uX",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-saints-daily-podcast-on-the-new-orleans-saints/id997872651?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/e2/d8/d8/e2d8d8b9-642e-7108-c0fe-e8e970baf5c5/mza_11287861227660812670.jpg/600x600bb.jpg",
-      "episodeCount7d": 9
+      "episodeCount7d": 8
     },
     {
       "id": "saints_neworleans_football",
@@ -25,7 +25,7 @@
       "feedUrl": "https://feeds.transistor.fm/neworleans-football-saints-podcast",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/neworleans-football-saints-podcast/id1153789570?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/29/f2/c5/29f2c53b-3c1a-7c1d-7e7d-b5e60050799b/mza_8828544940031436709.jpg/600x600bb.jpg",
-      "episodeCount7d": 4
+      "episodeCount7d": 3
     },
     {
       "id": "saints_saints_happy_hour",
@@ -41,6 +41,26 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_saints_locked_on_saints_1000803609658",
+      "trackId": 1000803609658,
+      "collectionId": 997872651,
+      "showId": "saints_locked_on_saints",
+      "showName": "Locked On Saints",
+      "showFullTitle": "Locked On Saints - Daily Podcast On The New Orleans Saints",
+      "hosts": "Locked On Podcast Network, Ross Jackson",
+      "network": "Locked On Podcast Network, Ross Jackson",
+      "title": "Saints' Achilles' Heel: The Numbers Behind Kellen Moore's Failing Offense",
+      "summary": "The New Orleans Saints’ offense became the teams Achilles' heel in a loss to the Chicago Bears, raising major questions about Kellen Moore, Tyler Shough's comfort, protection and the team’s rebuilding foundation. New Orleans crossed midfield on seven drives but scored only o",
+      "publishedAt": "2026-11-23T14:50:04.000Z",
+      "durationMinutes": 30,
+      "durationDisplay": "30 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/b1/e5/01/b1e501b7-2790-6c17-eb57-3b4f5ba7a23c/mza_7570565664109314600.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/saints-achilles-heel-the-numbers-behind-kellen-moores/id997872651?i=1000803609658&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-saints-daily-podcast-on-the-new-orleans-saints/id997872651?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/83ac39/feeds.simplecast.com/aKgoC4uX",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/83ac39/lockedon.simplecastaudio.com/26a658f6-15f1-4878-ab5f-d78d7d886aa9/episodes/b0ae2853-14fe-45ca-acec-1f670631637c/audio/128/default.mp3?aid=rss_feed&awCollectionId=26a658f6-15f1-4878-ab5f-d78d7d886aa9&awEpisodeId=b0ae2853-14fe-45ca-acec-1f670631637c&feed=aKgoC4uX"
+    },
     {
       "id": "pod_saints_locked_on_saints_1000803513111",
       "trackId": 1000803513111,
@@ -300,66 +320,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/saints-happy-hour/id1023150373?uo=4",
       "feedUrl": "https://rss.art19.com/saints-happy-hour",
       "audioStreamUrl": "https://rss.art19.com/episodes/5bf52e51-77a2-4d8b-9a40-9ad7bac4ca72.mp3?rss_browser=BAhJIglpVE1TBjoGRVQ%3D--4577cbcc3cc5282be318e551563630a2c5c2f06f"
-    },
-    {
-      "id": "pod_saints_neworleans_football_1000802539229",
-      "trackId": 1000802539229,
-      "collectionId": 1153789570,
-      "showId": "saints_neworleans_football",
-      "showName": "NewOrleans.Football",
-      "showFullTitle": "NewOrleans.Football: Saints Podcast",
-      "hosts": "NewOrleans.Football",
-      "network": "NewOrleans.Football",
-      "title": "Terron Armstead explains why the Saints need a go-to run",
-      "summary": "When the Saints need four yards to put a game away, what run can they call? Terron Armstead joins Nick Underhill to break down what’s missing up front, how Cesar Ruiz looked at center and the pressure Dennis Allen could bring in Chicago. Nick also looks at how long it takes ",
-      "publishedAt": "2026-11-17T19:43:15.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/b3/79/ba/b379ba3d-de4a-e8cc-9eaa-d083daa27242/mza_7163296038715495679.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/terron-armstead-explains-why-the-saints-need-a-go-to-run/id1153789570?i=1000802539229&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/neworleans-football-saints-podcast/id1153789570?uo=4",
-      "feedUrl": "https://feeds.transistor.fm/neworleans-football-saints-podcast",
-      "audioStreamUrl": "https://pscrb.fm/rss/p/media.transistor.fm/e430d466/f03ce7e3.mp3"
-    },
-    {
-      "id": "pod_saints_locked_on_saints_1000802503071",
-      "trackId": 1000802503071,
-      "collectionId": 997872651,
-      "showId": "saints_locked_on_saints",
-      "showName": "Locked On Saints",
-      "showFullTitle": "Locked On Saints - Daily Podcast On The New Orleans Saints",
-      "hosts": "Locked On Podcast Network, Ross Jackson",
-      "network": "Locked On Podcast Network, Ross Jackson",
-      "title": "Why Kellen Moore's 'Go Win the Game' Drive Was Doomed From the Start for the Saints",
-      "summary": "The New Orleans Saints let a “go-win-the-game drive” slip away, with Tyler Shough’s three checkdowns and Alvin Kamara’s clock-stopping choices opening the door for the Carolina Panthers’ game-winning field goal. Kellen Moore’s late-game decisions, situational awareness, and ",
-      "publishedAt": "2026-11-17T15:22:55.000Z",
-      "durationMinutes": 29,
-      "durationDisplay": "29 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/ef/a1/25/efa12565-9d67-dafa-b2e2-09281664cf86/mza_2133356520831895695.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/why-kellen-moores-go-win-the-game-drive-was-doomed/id997872651?i=1000802503071&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-saints-daily-podcast-on-the-new-orleans-saints/id997872651?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/83ac39/feeds.simplecast.com/aKgoC4uX",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/83ac39/lockedon.simplecastaudio.com/26a658f6-15f1-4878-ab5f-d78d7d886aa9/episodes/86a34524-53ba-4490-880b-6ed46b4cbb33/audio/128/default.mp3?aid=rss_feed&awCollectionId=26a658f6-15f1-4878-ab5f-d78d7d886aa9&awEpisodeId=86a34524-53ba-4490-880b-6ed46b4cbb33&feed=aKgoC4uX"
-    },
-    {
-      "id": "pod_saints_locked_on_saints_1000802204204",
-      "trackId": 1000802204204,
-      "collectionId": 997872651,
-      "showId": "saints_locked_on_saints",
-      "showName": "Locked On Saints",
-      "showFullTitle": "Locked On Saints - Daily Podcast On The New Orleans Saints",
-      "hosts": "Locked On Podcast Network, Ross Jackson",
-      "network": "Locked On Podcast Network, Ross Jackson",
-      "title": "The Numbers Putting Kellen Moore's Saints Tenure on the Clock",
-      "summary": "The New Orleans Saints’ 20-17 loss to the Carolina Panthers exposed a troubling Kellen Moore pattern: New Orleans has trailed in all 26 games under the head coach and led at halftime only once. The Saints’ minus-128 first-quarter scoring margin since 2025, 1-13 record when l",
-      "publishedAt": "2026-11-16T08:05:00.000Z",
-      "durationMinutes": 29,
-      "durationDisplay": "29 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/2c/14/f3/2c14f350-9634-2aa9-c6b1-d2510f3e4d0a/mza_11590241336737329721.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/the-numbers-putting-kellen-moores-saints-tenure-on/id997872651?i=1000802204204&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-saints-daily-podcast-on-the-new-orleans-saints/id997872651?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/83ac39/feeds.simplecast.com/aKgoC4uX",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/83ac39/lockedon.simplecastaudio.com/26a658f6-15f1-4878-ab5f-d78d7d886aa9/episodes/abd7655a-f16d-49c0-ba58-db6c96047cf5/audio/128/default.mp3?aid=rss_feed&awCollectionId=26a658f6-15f1-4878-ab5f-d78d7d886aa9&awEpisodeId=abd7655a-f16d-49c0-ba58-db6c96047cf5&feed=aKgoC4uX"
     }
   ]
 }

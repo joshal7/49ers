@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:34:19.723Z",
+  "updatedAt": "2026-11-24T20:07:58.048Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/philadelphia-eagles",
   "spotracUrl": "https://www.spotrac.com/nfl/philadelphia-eagles/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 316096635,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 306342628,
+      "totalCapLiabilities": 306819428,
       "top51": 206783470,
-      "teamCapSpace": 9754007,
-      "otcRawTeamCapSpace": 9754007,
-      "effectiveCapSpace": 9754007,
-      "activeCapSpending": 214006407,
-      "offenseSpend": 141135394,
-      "defenseSpend": 65654347,
+      "teamCapSpace": 9277207,
+      "otcRawTeamCapSpace": 9277207,
+      "effectiveCapSpace": 9277207,
+      "activeCapSpending": 214483207,
+      "offenseSpend": 141355394,
+      "defenseSpend": 65911147,
       "specialSpend": 7216666,
       "deadMoneyTotal": 92336221,
-      "injuredReserveTotal": 35840692,
-      "practiceSquadTotal": 3010351,
+      "injuredReserveTotal": 44540451,
+      "practiceSquadTotal": 3487151,
       "pupTotal": 0,
       "nfiTotal": 515000,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 39366043,
+      "reserveAndPsTotal": 48542602,
       "topDeadMoneyEntries": [
         {
           "name": "A.J. Brown",
@@ -134,8 +134,8 @@
           "otcUrl": "https://overthecap.com/player/reed-blankenship/10500/"
         }
       ],
-      "contractedCount": 50,
-      "totalSignedCount": 73
+      "contractedCount": 51,
+      "totalSignedCount": 77
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 235708826,
       "teamCapSpace": 28594484,
       "otcRawTeamCapSpace": 28594484,
-      "effectiveCapSpace": 6528537,
+      "effectiveCapSpace": 10049540,
       "activeCapSpending": 235708826,
       "offenseSpend": 155928107,
       "defenseSpend": 71365052,
@@ -300,7 +300,7 @@
     }
   },
   "blueprint": {
-    "summary": "Philadelphia Eagles hold $9.75M in 2026 OverTheCap space and $28.59M projected for 2027."
+    "summary": "Philadelphia Eagles hold $9.28M in 2026 OverTheCap space and $28.59M projected for 2027."
   },
   "players": [
     {
@@ -5604,6 +5604,106 @@
       }
     },
     {
+      "id": "4431545",
+      "otcId": "11735",
+      "otcSlug": "will-shipley",
+      "otcUrl": "https://overthecap.com/player/will-shipley/11735/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4431545/will-shipley",
+      "pfrUrl": "https://www.pro-football-reference.com/players/S/ShipWi00.htm",
+      "name": "Will Shipley",
+      "position": "RB",
+      "jersey": 28,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431545.png",
+      "unit": "Offense",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1075000,
+          "proratedSigning": 179241,
+          "proratedOption": 0,
+          "proratedBonus": 179241,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1254241,
+          "transactions": {
+            "cut": {
+              "deadMoney": 358482,
+              "capSavings": 895759
+            },
+            "june_1_cut": {
+              "deadMoney": 179241,
+              "capSavings": 1075000
+            },
+            "trade": {
+              "deadMoney": 358482,
+              "capSavings": 895759
+            },
+            "june_1_trade": {
+              "deadMoney": 179241,
+              "capSavings": 1075000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        },
+        "2027": {
+          "year": 2027,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1190000,
+          "proratedSigning": 179241,
+          "proratedOption": 0,
+          "proratedBonus": 179241,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 1369241,
+          "transactions": {
+            "cut": {
+              "deadMoney": 179241,
+              "capSavings": 1190000
+            },
+            "june_1_cut": {
+              "deadMoney": 179241,
+              "capSavings": 1190000
+            },
+            "trade": {
+              "deadMoney": 179241,
+              "capSavings": 1190000
+            },
+            "june_1_trade": {
+              "deadMoney": 179241,
+              "capSavings": 1190000
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 56000
+            }
+          }
+        }
+      }
+    },
+    {
       "id": "4685201",
       "otcId": "11012",
       "otcSlug": "tanner-mckee",
@@ -8034,64 +8134,6 @@
             "extension": {
               "deadMoney": 0,
               "capSavings": 78140000
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "4431545",
-      "otcId": "11735",
-      "otcSlug": "will-shipley",
-      "otcUrl": "https://overthecap.com/player/will-shipley/11735/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4431545/will-shipley",
-      "pfrUrl": "https://www.pro-football-reference.com/players/S/ShipWi00.htm",
-      "name": "Will Shipley",
-      "position": "RB",
-      "jersey": 28,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431545.png",
-      "unit": "Offense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2027": {
-          "year": 2027,
-          "rosterBucket": "active",
-          "isVoidYear": false,
-          "baseSalary": 1190000,
-          "proratedSigning": 179241,
-          "proratedOption": 0,
-          "proratedBonus": 179241,
-          "rosterBonusRegular": 0,
-          "rosterBonusPerGame": 0,
-          "workoutBonus": 0,
-          "otherBonus": 0,
-          "currentYearBonuses": 0,
-          "guaranteedSalary": 0,
-          "capNumber": 1369241,
-          "transactions": {
-            "cut": {
-              "deadMoney": 179241,
-              "capSavings": 1190000
-            },
-            "june_1_cut": {
-              "deadMoney": 179241,
-              "capSavings": 1190000
-            },
-            "trade": {
-              "deadMoney": 179241,
-              "capSavings": 1190000
-            },
-            "june_1_trade": {
-              "deadMoney": 179241,
-              "capSavings": 1190000
-            },
-            "restructure": {
-              "deadMoney": 0,
-              "capSavings": 0
-            },
-            "extension": {
-              "deadMoney": 0,
-              "capSavings": 56000
             }
           }
         }

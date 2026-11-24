@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:36:43.926Z",
+  "updatedAt": "2026-11-24T20:08:56.896Z",
   "windowDays": 7,
   "totalEpisodes": 11,
   "shows": [
@@ -41,6 +41,46 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_titans_titans_podcast_network_1000803813498",
+      "trackId": 1000803813498,
+      "collectionId": 1245825506,
+      "showId": "titans_titans_podcast_network",
+      "showName": "Titans Podcast Network",
+      "showFullTitle": "Titans Podcast Network | Official Podcasts of the Tennessee Titans",
+      "hosts": "Tennessee Titans",
+      "network": "Tennessee Titans",
+      "title": "Robert Saleh Breaks Down the Tape & Brad Hopkins Joins the Show for Thanksgiving Week | The OTP",
+      "summary": "Thanksgiving week on the OTP — Head Coach Robert Saleh gives an honest review of Dallas, the film behind Cam Ward's three touchdowns, Carnell Tate's effort plays, and why he's seen this stage of a build before. Then Titans legend Brad Hopkins joins Taylor Zarzour in studio —",
+      "publishedAt": "2026-11-24T15:18:44.000Z",
+      "durationMinutes": 45,
+      "durationDisplay": "45 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/8a/1f/5c/8a1f5cfe-86a0-6244-d917-474c9844c5df/mza_13853274334203036501.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/robert-saleh-breaks-down-the-tape-brad-hopkins-joins/id1245825506?i=1000803813498&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/titans-podcast-network-official-podcasts-of/id1245825506?uo=4",
+      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/31142dcb-0076-4343-b172-aeac0126b451/a3093306-f091-44f3-ab3a-aeac0126b469/podcast.rss",
+      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/31142dcb-0076-4343-b172-aeac0126b451/0f4de281-1ef1-4a9f-bce9-b50c00fa41d5/audio.mp3?utm_source=Podcast&in_playlist=a3093306-f091-44f3-ab3a-aeac0126b469"
+    },
+    {
+      "id": "pod_titans_locked_on_titans_1000803686258",
+      "trackId": 1000803686258,
+      "collectionId": 1151215065,
+      "showId": "titans_locked_on_titans",
+      "showName": "Locked On Titans",
+      "showFullTitle": "Locked On Titans - Daily Podcast On The Tennessee Titans",
+      "hosts": "Locked On Podcast Network, Tyler Rowland",
+      "network": "Locked On Podcast Network, Tyler Rowland",
+      "title": "The Tennessee Titans WILL NOT FIRE Robert Saleh After FAILING 2027, But NFL HISTORY Says THEY SHOULD",
+      "summary": "The Tennessee Titans are having a TERRIBLE season in Robert Saleh's first year as the head coach and it should be ringing alarm bells for all Titans fans. Saleh probably won't be fired as the Titans try to remain patient, but the truth is history shows firing Saleh and movin",
+      "publishedAt": "2026-11-23T23:42:30.000Z",
+      "durationMinutes": 30,
+      "durationDisplay": "30 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/ba/51/38/ba51386e-1f38-fcfa-484e-f38f00953963/mza_15411607329702436730.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/the-tennessee-titans-will-not-fire-robert-saleh-after/id1151215065?i=1000803686258&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-titans-daily-podcast-on-the-tennessee-titans/id1151215065?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/54f99a/feeds.simplecast.com/ZHgqzawD",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/54f99a/lockedon.simplecastaudio.com/7c0057a0-41a8-42ab-830d-af8d7eab8ff5/episodes/4b18491c-e19f-441f-8370-e0ae5eb95487/audio/128/default.mp3?aid=rss_feed&awCollectionId=7c0057a0-41a8-42ab-830d-af8d7eab8ff5&awEpisodeId=4b18491c-e19f-441f-8370-e0ae5eb95487&feed=ZHgqzawD"
+    },
     {
       "id": "pod_titans_locked_on_titans_1000803490057",
       "trackId": 1000803490057,
@@ -220,46 +260,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-titans-daily-podcast-on-the-tennessee-titans/id1151215065?uo=4",
       "feedUrl": "https://rss.pdrl.fm/54f99a/feeds.simplecast.com/ZHgqzawD",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/54f99a/lockedon.simplecastaudio.com/7c0057a0-41a8-42ab-830d-af8d7eab8ff5/episodes/5bbf2032-09d5-417e-b54b-c42d2fbe7e92/audio/128/default.mp3?aid=rss_feed&awCollectionId=7c0057a0-41a8-42ab-830d-af8d7eab8ff5&awEpisodeId=5bbf2032-09d5-417e-b54b-c42d2fbe7e92&feed=ZHgqzawD"
-    },
-    {
-      "id": "pod_titans_titans_podcast_network_1000802500554",
-      "trackId": 1000802500554,
-      "collectionId": 1245825506,
-      "showId": "titans_titans_podcast_network",
-      "showName": "Titans Podcast Network",
-      "showFullTitle": "Titans Podcast Network | Official Podcasts of the Tennessee Titans",
-      "hosts": "Tennessee Titans",
-      "network": "Tennessee Titans",
-      "title": "Captain Tony Pollard Joins the Show & Saleh Breaks Down Cam's Rise | The OTP",
-      "summary": "Captain Tony Pollard joins Taylor Zarzour in studio — the C on his chest, chasing a fifth straight 1,000-yard season, playing bigger than his frame, and his first trip back to Dallas since leaving America's Team. Plus, Head Coach Robert Saleh breaks down the film behind Cam ",
-      "publishedAt": "2026-11-17T15:13:02.000Z",
-      "durationMinutes": 57,
-      "durationDisplay": "57 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/8a/1f/5c/8a1f5cfe-86a0-6244-d917-474c9844c5df/mza_13853274334203036501.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/captain-tony-pollard-joins-the-show-saleh-breaks-down/id1245825506?i=1000802500554&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/titans-podcast-network-official-podcasts-of/id1245825506?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/31142dcb-0076-4343-b172-aeac0126b451/a3093306-f091-44f3-ab3a-aeac0126b469/podcast.rss",
-      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/31142dcb-0076-4343-b172-aeac0126b451/5a0c3cd2-5b22-4d66-b576-b50500f9b119/audio.mp3?utm_source=Podcast&in_playlist=a3093306-f091-44f3-ab3a-aeac0126b469"
-    },
-    {
-      "id": "pod_titans_locked_on_titans_1000802354373",
-      "trackId": 1000802354373,
-      "collectionId": 1151215065,
-      "showId": "titans_locked_on_titans",
-      "showName": "Locked On Titans",
-      "showFullTitle": "Locked On Titans - Daily Podcast On The Tennessee Titans",
-      "hosts": "Locked On Podcast Network, Tyler Rowland",
-      "network": "Locked On Podcast Network, Tyler Rowland",
-      "title": "Cam Ward FINALLY GETS HELP from Tennessee Titans & Brian Daboll as COACHING MALPRACTICE Gets Obvious",
-      "summary": "The Tennessee Titans have gotten some good football out of Cam Ward as of late and an admission from Robert Saleh indicates a change was made mid-season to cater to Ward that has resulted in the recent success. The question is why did it take so long? Why did it take Brian D",
-      "publishedAt": "2026-11-16T21:54:18.000Z",
-      "durationMinutes": 30,
-      "durationDisplay": "30 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/98/5a/bf/985abfa3-70fd-220c-7a24-b6725eab4142/mza_3813335638904861647.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/cam-ward-finally-gets-help-from-tennessee-titans-brian/id1151215065?i=1000802354373&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-titans-daily-podcast-on-the-tennessee-titans/id1151215065?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/54f99a/feeds.simplecast.com/ZHgqzawD",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/54f99a/lockedon.simplecastaudio.com/7c0057a0-41a8-42ab-830d-af8d7eab8ff5/episodes/0b19d236-b852-477c-81ef-884d7e68b268/audio/128/default.mp3?aid=rss_feed&awCollectionId=7c0057a0-41a8-42ab-830d-af8d7eab8ff5&awEpisodeId=0b19d236-b852-477c-81ef-884d7e68b268&feed=ZHgqzawD"
     }
   ]
 }

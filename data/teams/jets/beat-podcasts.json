@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T06:35:41.274Z",
+  "updatedAt": "2026-11-24T20:08:31.166Z",
   "windowDays": 7,
-  "totalEpisodes": 16,
+  "totalEpisodes": 15,
   "shows": [
     {
       "id": "jets_locked_on_jets",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/118578/feeds.simplecast.com/x5WGS9vX",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-jets-daily-podcast-on-the-new-york-jets/id1149033319?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/d9/19/bf/d919bf93-e799-c221-a67c-df0bd0d0ca1f/mza_1440374589601243224.jpg/600x600bb.jpg",
-      "episodeCount7d": 10
+      "episodeCount7d": 9
     },
     {
       "id": "jets_play_like_a_jet",
@@ -53,6 +53,46 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_jets_play_like_a_jet_1000803580040",
+      "trackId": 1000803580040,
+      "collectionId": 1236901698,
+      "showId": "jets_play_like_a_jet",
+      "showName": "Play Like A Jet",
+      "showFullTitle": "Play Like A Jet: New York Jets",
+      "hosts": "Play Like a Jet",
+      "network": "Play Like a Jet",
+      "title": "Episode 2,912 - Jets vs Chargers Postgame Report w/Glenn Naughton",
+      "summary": "Scott Mason talks with Glenn Naughton of Jetnation,com to recap the Jets' 27-24 week 11 victory over the LA Chargers at SoFi Stadium! Glenn discusses: -The end of the Jets TD drought -David Bailey's continued dominance -An unexpected hero -Postgame pressers featuring Aaron G",
+      "publishedAt": "2026-11-23T11:10:00.000Z",
+      "durationMinutes": 31,
+      "durationDisplay": "31 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/c6/f8/d6/c6f8d643-6c34-8ab0-9a51-c8a71dc00b4a/mza_6308063978955440002.jpeg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/episode-2-912-jets-vs-chargers-postgame-report-w-glenn/id1236901698?i=1000803580040&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/play-like-a-jet-new-york-jets/id1236901698?uo=4",
+      "feedUrl": "https://feeds.megaphone.fm/otjetspod",
+      "audioStreamUrl": "https://pdst.fm/e/tracking.swap.fm/track/t7yC0rGPUqahTF4et8YD/traffic.megaphone.fm/AMPP1983449060.mp3"
+    },
+    {
+      "id": "pod_jets_locked_on_jets_1000803527358",
+      "trackId": 1000803527358,
+      "collectionId": 1149033319,
+      "showId": "jets_locked_on_jets",
+      "showName": "Locked On Jets",
+      "showFullTitle": "Locked On Jets - Daily Podcast On The New York Jets",
+      "hosts": "Locked On Podcast Network, John Butchko",
+      "network": "Locked On Podcast Network, John Butchko",
+      "title": "New York Jets: Why Winning Over The Chargers Didn’t Hurt Their Future",
+      "summary": "The conversation focuses on fan perspectives regarding draft positioning, the value of late-season wins, and historical examples from Jets history—including missed opportunities with quarterbacks like Matt Ryan and Trevor Lawrence. A key theme is the scrutiny of coaching dec",
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "durationMinutes": 30,
+      "durationDisplay": "30 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/4c/0e/e9/4c0ee93d-de34-9bbf-7531-36c664d0eb5f/mza_17106463294048157189.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/new-york-jets-why-winning-over-the-chargers-didnt/id1149033319?i=1000803527358&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-jets-daily-podcast-on-the-new-york-jets/id1149033319?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/118578/feeds.simplecast.com/x5WGS9vX",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/118578/lockedon.simplecastaudio.com/b4965cc8-c978-4924-980c-6904ce8a533a/episodes/595c3c66-fa3e-44eb-bbba-e9387ba36155/audio/128/default.mp3?aid=rss_feed&awCollectionId=b4965cc8-c978-4924-980c-6904ce8a533a&awEpisodeId=595c3c66-fa3e-44eb-bbba-e9387ba36155&feed=x5WGS9vX"
+    },
     {
       "id": "pod_jets_locked_on_jets_1000803499081",
       "trackId": 1000803499081,
@@ -312,66 +352,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/play-like-a-jet-new-york-jets/id1236901698?uo=4",
       "feedUrl": "https://feeds.megaphone.fm/otjetspod",
       "audioStreamUrl": "https://pdst.fm/e/tracking.swap.fm/track/t7yC0rGPUqahTF4et8YD/traffic.megaphone.fm/AMPP6033157736.mp3"
-    },
-    {
-      "id": "pod_jets_play_like_a_jet_1000802424265",
-      "trackId": 1000802424265,
-      "collectionId": 1236901698,
-      "showId": "jets_play_like_a_jet",
-      "showName": "Play Like A Jet",
-      "showFullTitle": "Play Like A Jet: New York Jets",
-      "hosts": "Play Like a Jet",
-      "network": "Play Like a Jet",
-      "title": "There's Always Next Year w/Brian Bassett - There's Always The West Coast",
-      "summary": "Brian Bassett and pals Travis Milton and Josh Conrad as \"Play Like A Jet\" presents \"There's Always Next Year!\" Check out the Play Like A Jet store and get your \"Play Like A Jet\" logo shirt RIGHT NOW! Hoodies, hats, mugs, etc.....also available! https://www.teepublic.com/t-sh",
-      "publishedAt": "2026-11-17T07:26:00.000Z",
-      "durationMinutes": 52,
-      "durationDisplay": "52 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/c6/f8/d6/c6f8d643-6c34-8ab0-9a51-c8a71dc00b4a/mza_6308063978955440002.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/theres-always-next-year-w-brian-bassett-theres-always/id1236901698?i=1000802424265&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/play-like-a-jet-new-york-jets/id1236901698?uo=4",
-      "feedUrl": "https://feeds.megaphone.fm/otjetspod",
-      "audioStreamUrl": "https://pdst.fm/e/tracking.swap.fm/track/t7yC0rGPUqahTF4et8YD/traffic.megaphone.fm/AMPP9831690205.mp3"
-    },
-    {
-      "id": "pod_jets_locked_on_jets_1000802404564",
-      "trackId": 1000802404564,
-      "collectionId": 1149033319,
-      "showId": "jets_locked_on_jets",
-      "showName": "Locked On Jets",
-      "showFullTitle": "Locked On Jets - Daily Podcast On The New York Jets",
-      "hosts": "Locked On Podcast Network, John Butchko",
-      "network": "Locked On Podcast Network, John Butchko",
-      "title": "The Real Reason Geno Smith Should Start Over Cade Klubnik For The New York Jets",
-      "summary": "New York Jets should resist calls for a Cade Klubnik takeover, prioritizing his development over immediate action—even as the team’s playoff hopes fade. Why is sticking with Geno Smith the right call with the season lost and fans clamoring for change? John B. spotlights Klub",
-      "publishedAt": "2026-11-17T05:00:00.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/29/40/78/2940785e-ab30-6f33-e095-b8a659d149d1/mza_4839754594943875497.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/the-real-reason-geno-smith-should-start-over-cade/id1149033319?i=1000802404564&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-jets-daily-podcast-on-the-new-york-jets/id1149033319?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/118578/feeds.simplecast.com/x5WGS9vX",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/118578/lockedon.simplecastaudio.com/b4965cc8-c978-4924-980c-6904ce8a533a/episodes/d76ce928-24d2-4228-aacb-8038293be7d4/audio/128/default.mp3?aid=rss_feed&awCollectionId=b4965cc8-c978-4924-980c-6904ce8a533a&awEpisodeId=d76ce928-24d2-4228-aacb-8038293be7d4&feed=x5WGS9vX"
-    },
-    {
-      "id": "pod_jets_locked_on_jets_1000802213055",
-      "trackId": 1000802213055,
-      "collectionId": 1149033319,
-      "showId": "jets_locked_on_jets",
-      "showName": "Locked On Jets",
-      "showFullTitle": "Locked On Jets - Daily Podcast On The New York Jets",
-      "hosts": "Locked On Podcast Network, John Butchko",
-      "network": "Locked On Podcast Network, John Butchko",
-      "title": "These Numbers Reveal Why Aaron Glenn Is a Historically Bad Coach for the New York Jets",
-      "summary": "John B. breaks down the Jets’ latest blowout loss to the Buffalo Bills, spotlighting Glenn’s league-worst coaching record, questionable personnel decisions, and a defense failing at its main purpose—stopping the run. The discussion explores Breece Hall vs. Braelon Allen’s us",
-      "publishedAt": "2026-11-16T09:12:42.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/65/38/bb/6538bb80-9e7e-d82b-ba38-a3bd8f2ed64a/mza_8052969169332017686.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/these-numbers-reveal-why-aaron-glenn-is-a/id1149033319?i=1000802213055&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-jets-daily-podcast-on-the-new-york-jets/id1149033319?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/118578/feeds.simplecast.com/x5WGS9vX",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/118578/lockedon.simplecastaudio.com/b4965cc8-c978-4924-980c-6904ce8a533a/episodes/0331e510-8b28-4121-ae3b-cfa94cf15135/audio/128/default.mp3?aid=rss_feed&awCollectionId=b4965cc8-c978-4924-980c-6904ce8a533a&awEpisodeId=0331e510-8b28-4121-ae3b-cfa94cf15135&feed=x5WGS9vX"
     }
   ]
 }

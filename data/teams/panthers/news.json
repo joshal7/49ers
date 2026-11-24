@@ -1,120 +1,118 @@
 {
-  "updatedAt": "2026-11-23T06:35:11.166Z",
+  "updatedAt": "2026-11-24T20:08:19.759Z",
   "dailyTopNewsBrief": {
-    "id": "brief_car_3b31690f3158",
-    "cycleKey": "2026-11-22@postgame-wk11",
+    "id": "brief_car_2ebf06dd2f29",
+    "cycleKey": "2026-11-23@17ET",
     "scheduledHourPt": 17,
-    "isPostGame": true,
+    "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "5-5",
-    "generatedAt": "2026-11-23T03:49:32.814Z",
-    "modelUsed": "gemini-3.5-flash",
-    "thinkingLevel": "HIGH",
-    "source": "live-gemini-daily",
-    "wordCount": 139,
-    "guardClean": true,
-    "headline": "Panthers Hold NFC South Lead Following Thrilling 35-33 Win Over Ravens",
-    "summary": "Carolina (5-5) holds a two-game lead in the NFC South following a 35-33 victory over Baltimore, despite ranking 31st defensively in red-zone TD rate allowed (76.9%) and 32nd in penalty yards per game (87.4).",
+    "generatedAt": "2026-11-24T20:08:21.492Z",
+    "modelUsed": "gemini-4-hydrogen",
+    "thinkingLevel": "XHIGH",
+    "source": "deterministic-digest",
+    "wordCount": 67,
+    "headline": "Carolina Panthers Daily Briefing — Week 12",
+    "summary": "Carolina Panthers (5-5, 1st in NFC South • #4 Seed in NFC) top verified storylines, injury status, and upcoming matchup intel.",
     "bullets": [
-      "Head coach Dave Canales challenged Carolina to operate with a lead, and the team responded by extending its division edge, as detailed by [panthers.com Official](https://www.panthers.com/news/dave-canales-challenged-his-team-to-learn-how-to-operate-with-a-lead-and-they-answered-nfc-south).",
-      "Quarterback Bryce Young directed a clutch game-winning drive while running back Chuba Hubbard delivered his second straight multi-touchdown performance, per [panthers.com Official](https://www.panthers.com/news/chuba-hubbard-does-it-again-and-gets-a-little-help-trevor-etienne).",
-      "Linebacker Tyrel Dodson secured the game-winning interception off a wild crunch-time ricochet to halt Baltimore's final comeback attempt, as captured by [panthers.com Video](https://www.panthers.com/video/can-t-miss-play-game-winning-int-tyrel-dodson-secures-brissett-s-pass-in-crunch-time-after-wild-ricochet).",
-      "Defensive coordinator Todd Wash's unit generated key situational turnovers, including cornerback Will Lee III forcing a fumble on Derrick Henry, according to [panthers.com Video](https://www.panthers.com/video/will-lee-iii-forces-king-henry-to-fumble-on-close-call)."
+      "Spanish-language broadcast pulls off an exciting double header with dramatic Panthers' and Charlotte FC wins ([panthers.com Official](https://www.panthers.com/news/spanish-language-broadcast-pulls-off-an-exciting-double-header-with-dramatic-panthers-and-charlotte-fc-wins))",
+      "Princely Umanmielen on finding his power play, leaving anger behind, and his first multi-sack game ([panthers.com Official](https://www.panthers.com/news/princely-umanmielen-on-finding-his-power-play-leaving-anger-behind-and-his-first-multi-sack-game))",
+      "Ravens at Panthers: Mini-Movie 🎬 | Volume 21 🍿 ([panthers.com Video](https://www.panthers.com/video/ravens-at-panthers-mini-movie-volume-21))",
+      "Dave Canales: 'You got to want it more' | Panther Talk ([panthers.com Video](https://www.panthers.com/video/dave-canales-you-got-to-want-it-more-panther-talk))",
+      "Princely Umanmielen's Morning Routine | Panther Bites ([panthers.com Video](https://www.panthers.com/video/princely-umanmielen-s-morning-routine-panther-bites))"
     ],
     "coveredStoryKeys": [
-      "car_rss_5480d6bc2c0c",
-      "car_espn_a0caad20a15b2",
-      "car_rss_fd398ed90b3d",
-      "car_rss_8ac185499b78",
-      "car_vid_9b13fd275a56",
-      "car_espn_43feb3a96b1bc"
+      "car_rss_d2afb84c4fcd",
+      "car_rss_3998352805e4",
+      "car_vid_ed7cdec09869",
+      "car_vid_80b873277def",
+      "car_vid_a470444821f1"
     ],
     "coveredUrls": [
-      "https://www.panthers.com/news/dave-canales-challenged-his-team-to-learn-how-to-operate-with-a-lead-and-they-answered-nfc-south",
-      "https://www.panthers.com/news/chuba-hubbard-does-it-again-and-gets-a-little-help-trevor-etienne",
-      "https://www.panthers.com/video/bryce-young-we-found-a-way",
-      "https://www.panthers.com/news/bryce-young-leads-another-game-winning-drive-and-doesn-t-back-down-ravens-panthers-trey-hendrickson",
-      "https://www.panthers.com/video/dave-canales-this-is-how-we-play-football",
-      "https://www.panthers.com/news/play-of-the-day-panthers-trick-play-starts-jalen-coker-mitchell-evans-bryce-young"
+      "https://www.panthers.com/news/spanish-language-broadcast-pulls-off-an-exciting-double-header-with-dramatic-panthers-and-charlotte-fc-wins",
+      "https://www.panthers.com/news/princely-umanmielen-on-finding-his-power-play-leaving-anger-behind-and-his-first-multi-sack-game",
+      "https://www.panthers.com/video/ravens-at-panthers-mini-movie-volume-21",
+      "https://www.panthers.com/video/dave-canales-you-got-to-want-it-more-panther-talk",
+      "https://www.panthers.com/video/princely-umanmielen-s-morning-routine-panther-bites"
     ],
     "sources": [
       {
-        "sid": "S4",
-        "title": "Dave Canales \"challenged\" his team to learn how to operate with a lead, and they answered",
-        "url": "https://www.panthers.com/news/dave-canales-challenged-his-team-to-learn-how-to-operate-with-a-lead-and-they-answered-nfc-south",
+        "sid": "S1",
+        "title": "Spanish-language broadcast pulls off an exciting double header with dramatic Panthers' and Charlotte FC wins",
+        "url": "https://www.panthers.com/news/spanish-language-broadcast-pulls-off-an-exciting-double-header-with-dramatic-panthers-and-charlotte-fc-wins",
         "author": "panthers.com Official",
         "outlet": "panthers.com Official",
-        "publishedAt": "2026-11-23T01:41:00.000Z"
+        "publishedAt": "2026-11-24T17:59:15.000Z"
+      },
+      {
+        "sid": "S2",
+        "title": "Princely Umanmielen on finding his power play, leaving anger behind, and his first multi-sack game",
+        "url": "https://www.panthers.com/news/princely-umanmielen-on-finding-his-power-play-leaving-anger-behind-and-his-first-multi-sack-game",
+        "author": "panthers.com Official",
+        "outlet": "panthers.com Official",
+        "publishedAt": "2026-11-24T15:40:35.000Z"
+      },
+      {
+        "sid": "S3",
+        "title": "Ravens at Panthers: Mini-Movie 🎬 | Volume 21 🍿",
+        "url": "https://www.panthers.com/video/ravens-at-panthers-mini-movie-volume-21",
+        "author": "panthers.com Video",
+        "outlet": "panthers.com Video",
+        "publishedAt": "2026-11-24T01:54:27.000Z"
+      },
+      {
+        "sid": "S4",
+        "title": "Dave Canales: 'You got to want it more' | Panther Talk",
+        "url": "https://www.panthers.com/video/dave-canales-you-got-to-want-it-more-panther-talk",
+        "author": "panthers.com Video",
+        "outlet": "panthers.com Video",
+        "publishedAt": "2026-11-23T23:15:00.000Z"
       },
       {
         "sid": "S5",
-        "title": "Chuba Hubbard does it again, and gets a little help",
-        "url": "https://www.panthers.com/news/chuba-hubbard-does-it-again-and-gets-a-little-help-trevor-etienne",
-        "author": "panthers.com Official",
-        "outlet": "panthers.com Official",
-        "publishedAt": "2026-11-23T00:26:45.000Z"
-      },
-      {
-        "sid": "S7",
-        "title": "Bryce Young: 'We found a way'",
-        "url": "https://www.panthers.com/video/bryce-young-we-found-a-way",
+        "title": "Princely Umanmielen's Morning Routine | Panther Bites",
+        "url": "https://www.panthers.com/video/princely-umanmielen-s-morning-routine-panther-bites",
         "author": "panthers.com Video",
         "outlet": "panthers.com Video",
-        "publishedAt": "2026-11-22T21:54:30.000Z"
-      },
-      {
-        "sid": "S8",
-        "title": "Bryce Young leads another game-winning drive, and doesn't back down",
-        "url": "https://www.panthers.com/news/bryce-young-leads-another-game-winning-drive-and-doesn-t-back-down-ravens-panthers-trey-hendrickson",
-        "author": "panthers.com Official",
-        "outlet": "panthers.com Official",
-        "publishedAt": "2026-11-22T23:46:05.000Z"
-      },
-      {
-        "sid": "S9",
-        "title": "Dave Canales: 'This is how we play football'",
-        "url": "https://www.panthers.com/video/dave-canales-this-is-how-we-play-football",
-        "author": "panthers.com Video",
-        "outlet": "panthers.com Video",
-        "publishedAt": "2026-11-22T21:44:03.000Z"
+        "publishedAt": "2026-11-23T22:30:00.000Z"
       },
       {
         "sid": "S6",
-        "title": "Play of the Day: Panthers' trick play starts an onslaught of scoring in Week 11 win",
-        "url": "https://www.panthers.com/news/play-of-the-day-panthers-trick-play-starts-jalen-coker-mitchell-evans-bryce-young",
-        "author": "panthers.com Official",
-        "outlet": "panthers.com Official",
-        "publishedAt": "2026-11-23T01:25:47.000Z"
+        "title": "Dave Canales praises Chuba Hubbard",
+        "url": "https://www.panthers.com/video/dave-canales-praises-chuba-hubbard",
+        "author": "panthers.com Video",
+        "outlet": "panthers.com Video",
+        "publishedAt": "2026-11-23T21:29:08.000Z"
       },
       {
         "sid": "S7",
-        "title": "Bryce Young, Chuba Hubbard help Panthers add to NFC South lead with 35-33 victory over the Ravens",
-        "url": "https://www.espn.com/nfl/recap?gameId=401873068",
-        "author": "ESPN NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T00:34:34Z"
+        "title": "Princely Umanmielen & Monroe Freeling | Locker Room Sound",
+        "url": "https://www.panthers.com/video/princely-umanmielen-monroe-freeling-locker-room-sound",
+        "author": "panthers.com Video",
+        "outlet": "panthers.com Video",
+        "publishedAt": "2026-11-23T20:39:45.000Z"
       },
       {
         "sid": "S8",
-        "title": "Postgame Locker Room Sound | Panthers vs. Ravens",
-        "url": "https://www.panthers.com/video/postgame-locker-room-sound-panthers-vs-ravens",
-        "author": "panthers.com Video",
-        "outlet": "panthers.com Video",
-        "publishedAt": "2026-11-23T00:00:34.000Z"
+        "title": "Defense embraced opportunity to end the game, but knows run defense has to be better",
+        "url": "https://www.panthers.com/news/defense-embraced-opportunity-to-end-the-game-but-knows-run-defense-has-to-be-better",
+        "author": "panthers.com Official",
+        "outlet": "panthers.com Official",
+        "publishedAt": "2026-11-23T14:00:04.000Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
     {
-      "id": "car_rss_5480d6bc2c0c",
+      "id": "car_rss_d2afb84c4fcd",
       "type": "article",
-      "title": "Play of the Day: Panthers' trick play starts an onslaught of scoring in Week 11 win",
-      "summary": "A direct snap to Jalen Coker resulted in a long touchdown pass from Bryce Young to Mitchell Evans, on an early trick play that put the Panthers on the board in a shootout win.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/bdh9gjefhcaxmkwvwtpe.jpg",
-      "imageAlt": "Play of the Day: Panthers' trick play starts an onslaught of scoring in Week 11 win",
-      "publishedAt": "2026-11-23T01:25:47.000Z",
-      "url": "https://www.panthers.com/news/play-of-the-day-panthers-trick-play-starts-jalen-coker-mitchell-evans-bryce-young",
+      "title": "Spanish-language broadcast pulls off an exciting double header with dramatic Panthers' and Charlotte FC wins",
+      "summary": "The Spanish-language broadcast for the Carolina Panthers and Charlotte FC pulled off their third double-header ever with an exciting Panthers' win followed by a dramatic Charlotte FC playoff win in Chicago. And the day still wasn't over.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/v1795541257/panthers/rtkz34do2rfbawo6fusz.jpg",
+      "imageAlt": "Spanish-language broadcast pulls off an exciting double header with dramatic Panthers' and Charlotte FC wins",
+      "publishedAt": "2026-11-24T17:59:15.000Z",
+      "url": "https://www.panthers.com/news/spanish-language-broadcast-pulls-off-an-exciting-double-header-with-dramatic-panthers-and-charlotte-fc-wins",
       "outletId": "panthers_official",
       "outletName": "panthers.com Official",
       "reporterId": "panthers_official",
@@ -127,61 +125,27 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.871,
+      "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "post_game_recap",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.5209
+      "storyRank": 11.6707
     },
     {
-      "id": "car_espn_a0caad20a15b2",
+      "id": "car_rss_3998352805e4",
       "type": "article",
-      "title": "Bryce Young, Chuba Hubbard help Panthers add to NFC South lead with 35-33 victory over the Ravens",
-      "summary": "— Dave Canales is like most NFL coaches — he wants to keep his team's focus on the next game and avoid any potential outside distractions.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/52758d50-ef3b-458d-94bd-b1e783266396/52758d50-ef3b-458d-94bd-b1e783266396.jpg",
-      "imageCaption": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
-      "imageAlt": "Bryce Young, Chuba Hubbard help Panthers add to NFC South lead with 35-33 victory over the Ravens",
-      "publishedAt": "2026-11-23T00:34:34Z",
-      "url": "https://www.espn.com/nfl/recap?gameId=401873068",
-      "outletId": "espn_car",
-      "outletName": "ESPN",
-      "reporterId": "espn_car",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/car/carolina-panthers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.789,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 6.3234
-    },
-    {
-      "id": "car_rss_fd398ed90b3d",
-      "type": "article",
-      "title": "Chuba Hubbard does it again, and gets a little help",
-      "summary": "The team captain and workhorse running back had his second straight two-touchdown day, scored a key two-point conversion, and helped the Panthers build a two-game lead in the NFC South. And he got a little breather along the way.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/htm6xjsmts48azgdmnzd.jpg",
-      "imageAlt": "Chuba Hubbard does it again, and gets a little help",
-      "publishedAt": "2026-11-23T00:26:45.000Z",
-      "url": "https://www.panthers.com/news/chuba-hubbard-does-it-again-and-gets-a-little-help-trevor-etienne",
+      "title": "Princely Umanmielen on finding his power play, leaving anger behind, and his first multi-sack game",
+      "summary": "The second-year outside linebacker had his first multi-sack game in the Panthers' Week 11 win, achieving a personal goal. It was a result of changing his approach to pass-rushing and controlling his emotions before and during the game.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/vifxmmcggutkq1gdjrm7.jpg",
+      "imageAlt": "Princely Umanmielen on finding his power play, leaving anger behind, and his first multi-sack game",
+      "publishedAt": "2026-11-24T15:40:35.000Z",
+      "url": "https://www.panthers.com/news/princely-umanmielen-on-finding-his-power-play-leaving-anger-behind-and-his-first-multi-sack-game",
       "outletId": "panthers_official",
       "outletName": "panthers.com Official",
       "reporterId": "panthers_official",
@@ -194,28 +158,28 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.777,
+      "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "post_game_recap",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.1698
+      "storyRank": 5.4838
     },
     {
-      "id": "car_vid_9b13fd275a56",
+      "id": "car_vid_ed7cdec09869",
       "type": "video",
-      "title": "Postgame Locker Room Sound | Panthers vs. Ravens",
-      "summary": "Watch Carolina Panthers players Tyrel Dodson, Tre'von Moehrig, Chuba Hubbard, Will Lee III, Jaelan Phillips, Darren Waller, Derrick Brown, Tetairoa McMillan speak to the media after Sunday's home win over the Balitmore R",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/yupwueft0xhr01e7gnyc.jpg",
-      "imageAlt": "Postgame Locker Room Sound | Panthers vs. Ravens",
-      "publishedAt": "2026-11-23T00:00:34.000Z",
-      "url": "https://www.panthers.com/video/postgame-locker-room-sound-panthers-vs-ravens",
-      "externalVideoUrl": "https://www.panthers.com/video/postgame-locker-room-sound-panthers-vs-ravens",
+      "title": "Ravens at Panthers: Mini-Movie 🎬 | Volume 21 🍿",
+      "summary": "Relive the best moments from the Panthers' 35-33 win over the Baltimore Ravens in Week 11 of the 2026 regular season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/eerw1yutt0dl2w1vvkge.png",
+      "imageAlt": "Ravens at Panthers: Mini-Movie 🎬 | Volume 21 🍿",
+      "publishedAt": "2026-11-24T01:54:27.000Z",
+      "url": "https://www.panthers.com/video/ravens-at-panthers-mini-movie-volume-21",
+      "externalVideoUrl": "https://www.panthers.com/video/ravens-at-panthers-mini-movie-volume-21",
       "outletId": "panthers_official",
       "outletName": "panthers.com Video",
       "reporterId": "panthers_official",
@@ -228,17 +192,388 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.739,
+      "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "post_game_recap",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.6997
+      "storyRank": 0.9554
+    },
+    {
+      "id": "car_vid_80b873277def",
+      "type": "video",
+      "title": "Dave Canales: 'You got to want it more' | Panther Talk",
+      "summary": "Panthers head coach Dave Canales joins Panther Talk to recap the Panthers 35-33 win over the Baltimore Ravens, and lookahead to the Panthers' critical rematch against the Tampa Bay Buccaneers on Monday Night Football.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/ow5rav7abheba2cdsf8h.webp",
+      "imageAlt": "Dave Canales: 'You got to want it more' | Panther Talk",
+      "publishedAt": "2026-11-23T23:15:00.000Z",
+      "url": "https://www.panthers.com/video/dave-canales-you-got-to-want-it-more-panther-talk",
+      "externalVideoUrl": "https://www.panthers.com/video/dave-canales-you-got-to-want-it-more-panther-talk",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7976
+    },
+    {
+      "id": "car_vid_a470444821f1",
+      "type": "video",
+      "title": "Princely Umanmielen's Morning Routine | Panther Bites",
+      "summary": "In the very first episode Panthers Bites we go to Princely Umanmielen's home as he shows us how he prepares for the day. The Outside Linebacker takes us through his morning routine as well as sharing how he keeps his mor",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/h0xpnpgwjs2rg4txwssq.png",
+      "imageAlt": "Princely Umanmielen's Morning Routine | Panther Bites",
+      "publishedAt": "2026-11-23T22:30:00.000Z",
+      "url": "https://www.panthers.com/video/princely-umanmielen-s-morning-routine-panther-bites",
+      "externalVideoUrl": "https://www.panthers.com/video/princely-umanmielen-s-morning-routine-panther-bites",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.761
+    },
+    {
+      "id": "car_vid_364b9310dda8",
+      "type": "video",
+      "title": "Dave Canales praises Chuba Hubbard",
+      "summary": "Carolina Panthers head coach Dave Canales discusses the team's running back split moving forward.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/zkqrcjhg8ebkqnawtemj.jpg",
+      "imageAlt": "Dave Canales praises Chuba Hubbard",
+      "publishedAt": "2026-11-23T21:29:08.000Z",
+      "url": "https://www.panthers.com/video/dave-canales-praises-chuba-hubbard",
+      "externalVideoUrl": "https://www.panthers.com/video/dave-canales-praises-chuba-hubbard",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7158
+    },
+    {
+      "id": "car_vid_8f01dc56cc15",
+      "type": "video",
+      "title": "Princely Umanmielen & Monroe Freeling | Locker Room Sound",
+      "summary": "Watch Princely Umanmielen and Monroe Freeling speak to the media Monday after their win against the Baltimore Ravens.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/exeuhoar3lczryevzdrx.jpg",
+      "imageAlt": "Princely Umanmielen & Monroe Freeling | Locker Room Sound",
+      "publishedAt": "2026-11-23T20:39:45.000Z",
+      "url": "https://www.panthers.com/video/princely-umanmielen-monroe-freeling-locker-room-sound",
+      "externalVideoUrl": "https://www.panthers.com/video/princely-umanmielen-monroe-freeling-locker-room-sound",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6825
+    },
+    {
+      "id": "car_rss_5dacd8360a41",
+      "type": "article",
+      "title": "Defense embraced opportunity to end the game, but knows run defense has to be better",
+      "summary": "The Panthers defense forced three turnovers, sacked Jacoby Brissett twice, and shored up tackling in the second half to help deliver a huge Week 11 win over the Ravens. But the group also knows run defense has to improve.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/xk7xo6m5esxuixmk62y6.jpg",
+      "imageAlt": "Defense embraced opportunity to end the game, but knows run defense has to be better",
+      "publishedAt": "2026-11-23T14:00:04.000Z",
+      "url": "https://www.panthers.com/news/defense-embraced-opportunity-to-end-the-game-but-knows-run-defense-has-to-be-better",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Official",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Official",
+      "author": "panthers.com Official",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.132,
+      "category": "film",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0075
+    },
+    {
+      "id": "car_rss_4050880f3ea1",
+      "type": "article",
+      "title": "Monday Brew: Still finding things to work on after a win",
+      "summary": "Dave Canales said they saw too many missed tackles when they watched tape of the win over the Ravens. Plus Jalen Coker cleared, and other updates from Monday.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/sma20tka4pite7o1rgyl.jpg",
+      "imageAlt": "Monday Brew: Still finding things to work on after a win",
+      "publishedAt": "2026-11-23T19:41:30.000Z",
+      "url": "https://www.panthers.com/news/monday-brew-still-finding-things-to-work-on-after-a-win-jalen-coker-jaycee-horn-brady-christensen",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Official",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Official",
+      "author": "panthers.com Official",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6464
+    },
+    {
+      "id": "car_vid_1cb947c88efc",
+      "type": "video",
+      "title": "Dave Canales: 'Good things come to those who run'",
+      "summary": "Watch Panthers head coach Dave Canales meet with the media the day after the Panthers' home win over the Baltimore Ravens. Canales praises the physicality across all three phases, from the offensive line and Chuba Hubbar",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/zkqrcjhg8ebkqnawtemj.jpg",
+      "imageAlt": "Dave Canales: 'Good things come to those who run'",
+      "publishedAt": "2026-11-23T19:21:56.000Z",
+      "url": "https://www.panthers.com/video/dave-canales-good-things-come-to-those-who-run",
+      "externalVideoUrl": "https://www.panthers.com/video/dave-canales-good-things-come-to-those-who-run",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.635
+    },
+    {
+      "id": "car_vid_b1e075740362",
+      "type": "video",
+      "title": "Bryce Young on Panthers' final drive, trust in Tetairoa McMillan",
+      "summary": "Carolina Panthers quarterback Bryce Young provides his recollection of the Panthers' final offensive possession during Week 11 of the 2026 NFL season and how instrumental wide receiver Tetairoa McMillan was to the team's",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/xyoaufbgvdplboz31ons.jpg",
+      "imageAlt": "Bryce Young on Panthers' final drive, trust in Tetairoa McMillan",
+      "publishedAt": "2026-11-23T19:05:50.000Z",
+      "url": "https://www.panthers.com/video/bryce-young-on-panthers-final-drive-trust-in-tetairoa-mcmillan",
+      "externalVideoUrl": "https://www.panthers.com/video/bryce-young-on-panthers-final-drive-trust-in-tetairoa-mcmillan",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6259
+    },
+    {
+      "id": "car_espn_792a8281c2d38",
+      "type": "article",
+      "title": "How Panthers rookie's big play became an all-timer for Dave Canales",
+      "summary": "Cornerback Will Lee III came up with a momentum-shifting play that helped stave off Baltimore's potential TD.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1123/r1749948_608x342_16-9.jpg",
+      "imageCaption": "Panthers cornerback Will Lee lll punches the ball loose from Ravens running back Justice Hill's hands, causing a touchback on Sunday at Bank of America Stadium in Charlotte, North Carolnia.",
+      "imageAlt": "How Panthers rookie's big play became an all-timer for Dave Canales",
+      "publishedAt": "2026-11-23T17:00:04Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50567919/carolina-panthers-rookie-lee-iii-big-play",
+      "outletId": "charlotte_observer_public_beat_wire_car",
+      "outletName": "ESPN",
+      "reporterId": "mike_kaye",
+      "reporterName": "Mike Kaye",
+      "author": "Mike Kaye",
+      "authorHandle": "@mike_e_kaye",
+      "authorProfileUrl": "https://x.com/mike_e_kaye",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5618
+    },
+    {
+      "id": "car_rss_3f7827909f3a",
+      "type": "article",
+      "title": "Inside The Numbers: Panthers vs Ravens in Week 11",
+      "summary": "A look at some of the key stats from the game, as well as the snap counts from Sunday's win over the Ravens in Week 11.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/ejf0mtd9r1rmbfguxth7.jpg",
+      "imageAlt": "Inside The Numbers: Panthers vs Ravens in Week 11",
+      "publishedAt": "2026-11-23T11:18:46.000Z",
+      "url": "https://www.panthers.com/news/inside-the-numbers-panthers-vs-ravens-in-week-11",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Official",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Official",
+      "author": "panthers.com Official",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.4344
+    },
+    {
+      "id": "car_vid_03519ac18060",
+      "type": "video",
+      "title": "Ravens vs. Panthers Week 11 Recap NFL Daily",
+      "summary": "Gregg Rosenthal, Jourdan Rodrigue, and Nick Shook recap the Week 11 game between the Ravens and Panthers.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/ze5fek16ngt5snqrxytl.jpg",
+      "imageAlt": "Ravens vs. Panthers Week 11 Recap NFL Daily",
+      "publishedAt": "2026-11-23T06:44:59.000Z",
+      "url": "https://www.panthers.com/video/ravens-vs-panthers-week-11-recap-nfl-daily",
+      "externalVideoUrl": "https://www.panthers.com/video/ravens-vs-panthers-week-11-recap-nfl-daily",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.091
     },
     {
       "id": "car_rss_8ac185499b78",
@@ -271,7 +606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.9959
+      "storyRank": 0.3061
     },
     {
       "id": "car_espn_43feb3a96b1bc",
@@ -305,41 +640,40 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.7557
+      "storyRank": 0.3041
     },
     {
-      "id": "car_vid_a017549fca6b",
-      "type": "video",
-      "title": "Panthers vs. Ravens Week 11 Postgame Reaction",
-      "summary": "Panthers Postgame Radio Show gives you instant analysis after Bryce Young and the Carolina Panthers knock off the Baltimore Ravens at Bank of America Stadium in Charlotte.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/zhlfpgcwtw8jbcffunjv.jpg",
-      "imageAlt": "Panthers vs. Ravens Week 11 Postgame Reaction",
-      "publishedAt": "2026-11-22T22:43:20.000Z",
-      "url": "https://www.panthers.com/video/panthers-vs-ravens-week-11-postgame-reaction",
-      "externalVideoUrl": "https://www.panthers.com/video/panthers-vs-ravens-week-11-postgame-reaction",
+      "id": "car_rss_5480d6bc2c0c",
+      "type": "article",
+      "title": "Play of the Day: Panthers' trick play starts an onslaught of scoring in Week 11 win",
+      "summary": "A direct snap to Jalen Coker resulted in a long touchdown pass from Bryce Young to Mitchell Evans, on an early trick play that put the Panthers on the board in a shootout win.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/bdh9gjefhcaxmkwvwtpe.jpg",
+      "imageAlt": "Play of the Day: Panthers' trick play starts an onslaught of scoring in Week 11 win",
+      "publishedAt": "2026-11-23T01:25:47.000Z",
+      "url": "https://www.panthers.com/news/play-of-the-day-panthers-trick-play-starts-jalen-coker-mitchell-evans-bryce-young",
       "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
+      "outletName": "panthers.com Official",
       "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
+      "reporterName": "panthers.com Official",
+      "author": "panthers.com Official",
       "authorHandle": "@Panthers",
       "authorProfileUrl": "https://www.panthers.com/news/",
       "trustTier": 1,
-      "wireSource": "club_video_rss",
+      "wireSource": "club_official_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.637,
+      "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "post_game_recap",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.6214
+      "storyRank": 0.3037
     },
     {
       "id": "car_rss_a30b944b05d7",
@@ -372,7 +706,74 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9849
+      "storyRank": 0.2962
+    },
+    {
+      "id": "car_espn_a0caad20a15b2",
+      "type": "article",
+      "title": "Bryce Young, Chuba Hubbard help Panthers add to NFC South lead with 35-33 victory over the Ravens",
+      "summary": "— Dave Canales is like most NFL coaches — he wants to keep his team's focus on the next game and avoid any potential outside distractions.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/52758d50-ef3b-458d-94bd-b1e783266396/52758d50-ef3b-458d-94bd-b1e783266396.jpg",
+      "imageCaption": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
+      "imageAlt": "Bryce Young, Chuba Hubbard help Panthers add to NFC South lead with 35-33 victory over the Ravens",
+      "publishedAt": "2026-11-23T00:34:34Z",
+      "url": "https://www.espn.com/nfl/recap?gameId=401873068",
+      "outletId": "espn_car",
+      "outletName": "ESPN",
+      "reporterId": "espn_car",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/car/carolina-panthers",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2956
+    },
+    {
+      "id": "car_rss_fd398ed90b3d",
+      "type": "article",
+      "title": "Chuba Hubbard does it again, and gets a little help",
+      "summary": "The team captain and workhorse running back had his second straight two-touchdown day, scored a key two-point conversion, and helped the Panthers build a two-game lead in the NFC South. And he got a little breather along the way.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/htm6xjsmts48azgdmnzd.jpg",
+      "imageAlt": "Chuba Hubbard does it again, and gets a little help",
+      "publishedAt": "2026-11-23T00:26:45.000Z",
+      "url": "https://www.panthers.com/news/chuba-hubbard-does-it-again-and-gets-a-little-help-trevor-etienne",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Official",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Official",
+      "author": "panthers.com Official",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2944
     },
     {
       "id": "car_espn_a394f7cfaad73",
@@ -406,18 +807,18 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.8176
+      "storyRank": 0.2942
     },
     {
-      "id": "car_vid_af33434fbec6",
+      "id": "car_vid_9b13fd275a56",
       "type": "video",
-      "title": "Bryce Young: 'We found a way'",
-      "summary": "Watch Panthers quarterback Bryce Young speak after the Panthers' 35-33 win over the Ravens. Young credited the offensive line, walked through his first time not taking the snap on the trick-play touchdown to Mitchell Eva",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/sx5vexdj5isfplvae13s.jpg",
-      "imageAlt": "Bryce Young: 'We found a way'",
-      "publishedAt": "2026-11-22T21:54:30.000Z",
-      "url": "https://www.panthers.com/video/bryce-young-we-found-a-way",
-      "externalVideoUrl": "https://www.panthers.com/video/bryce-young-we-found-a-way",
+      "title": "Postgame Locker Room Sound | Panthers vs. Ravens",
+      "summary": "Watch Carolina Panthers players Tyrel Dodson, Tre'von Moehrig, Chuba Hubbard, Will Lee III, Jaelan Phillips, Darren Waller, Derrick Brown, Tetairoa McMillan speak to the media after Sunday's home win over the Balitmore R",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/yupwueft0xhr01e7gnyc.jpg",
+      "imageAlt": "Postgame Locker Room Sound | Panthers vs. Ravens",
+      "publishedAt": "2026-11-23T00:00:34.000Z",
+      "url": "https://www.panthers.com/video/postgame-locker-room-sound-panthers-vs-ravens",
+      "externalVideoUrl": "https://www.panthers.com/video/postgame-locker-room-sound-panthers-vs-ravens",
       "outletId": "panthers_official",
       "outletName": "panthers.com Video",
       "reporterId": "panthers_official",
@@ -427,73 +828,6 @@
       "authorProfileUrl": "https://www.panthers.com/news/",
       "trustTier": 1,
       "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.58,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.1093
-    },
-    {
-      "id": "car_vid_59efcb601c84",
-      "type": "video",
-      "title": "Dave Canales: 'This is how we play football'",
-      "summary": "Watch head coach Dave Canales' press conference after the Panthers' 35-33 win over the Ravens. Canales praised the team's fight through seven lead changes and Will Lee's standout return, including two forced fumbles and ",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/f56xyfkd390sppm8x7vc.jpg",
-      "imageAlt": "Dave Canales: 'This is how we play football'",
-      "publishedAt": "2026-11-22T21:44:03.000Z",
-      "url": "https://www.panthers.com/video/dave-canales-this-is-how-we-play-football",
-      "externalVideoUrl": "https://www.panthers.com/video/dave-canales-this-is-how-we-play-football",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.568,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.0125
-    },
-    {
-      "id": "car_nfltr_ad344f030532",
-      "type": "article",
-      "title": "NFC Notes: Tyler Shough, Justin Reid, Falcons, Panthers, Saints",
-      "summary": "Falcons Falcons DT Brandon Dorlus was fined $7,114 for unsportsmanlike conduct and $7,114 for a hit on a quarterback; DB DeMarcco Hellams was fined $6,509 for unnecessary roughness, and LB Harold Perkins was fined $5,203 for unnecessary rou",
-      "imageUrl": "",
-      "imageAlt": "NFC Notes: Tyler Shough, Justin Reid, Falcons, Panthers, Saints",
-      "publishedAt": "2026-11-23T00:00:00.000Z",
-      "url": "https://nfltraderumors.co/nfc-notes-tyler-shough-justin-reid-falcons-panthers-saints/",
-      "outletId": "nfl_trade_rumors",
-      "outletName": "NFL Trade Rumors",
-      "reporterId": "nfl_trade_rumors",
-      "reporterName": "NFL Trade Rumors",
-      "author": "NFL Trade Rumors",
-      "authorHandle": "@nfltrade_rumors",
-      "authorProfileUrl": "https://nfltraderumors.co/",
-      "trustTier": 2,
-      "wireSource": "nfltr_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -507,7 +841,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.4617
+      "storyRank": 0.2904
     },
     {
       "id": "car_rss_8fb5f9205d08",
@@ -540,448 +874,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3752
-    },
-    {
-      "id": "car_vid_c27ff9f4fbf0",
-      "type": "video",
-      "title": "Panthers' top plays vs. Ravens Week 11",
-      "summary": "Watch the top plays from the Carolina Panthers vs. the Baltimore Ravens in Week 11 of the 2026 NFL season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/ybg6kuituuyggnyj7wlu.jpg",
-      "imageAlt": "Panthers' top plays vs. Ravens Week 11",
-      "publishedAt": "2026-11-22T22:15:49.000Z",
-      "url": "https://www.panthers.com/video/panthers-top-plays-vs-ravens-week-11",
-      "externalVideoUrl": "https://www.panthers.com/video/panthers-top-plays-vs-ravens-week-11",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.6397
-    },
-    {
-      "id": "car_espn_671a45fa034bb",
-      "type": "video",
-      "title": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
-      "summary": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/52758d50-ef3b-458d-94bd-b1e783266396/52758d50-ef3b-458d-94bd-b1e783266396.jpg",
-      "imageCaption": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
-      "imageAlt": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
-      "publishedAt": "2026-11-22T21:40:55Z",
-      "url": "https://www.espn.com/video/clip/_/id/50565408/game-highlights",
-      "outletId": "espn_car",
-      "outletName": "ESPN",
-      "reporterId": "espn_car",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/car/carolina-panthers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.4257
-    },
-    {
-      "id": "car_vid_98a78189114f",
-      "type": "video",
-      "title": "Can't-Miss Play: Game-winning INT! Tyrel Dodson secures Brissett's pass in crunch time after wild ricochet",
-      "summary": "Carolina Panthers linebacker Tyrel Dodson intercepts Baltimore Ravens quarterback Jacoby Brissett.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/tnnlk5lfpkpptfcoxydg.jpg",
-      "imageAlt": "Can't-Miss Play: Game-winning INT! Tyrel Dodson secures Brissett's pass in crunch time after wild ricochet",
-      "publishedAt": "2026-11-22T21:32:31.000Z",
-      "url": "https://www.panthers.com/video/can-t-miss-play-game-winning-int-tyrel-dodson-secures-brissett-s-pass-in-crunch-time-after-wild-ricochet",
-      "externalVideoUrl": "https://www.panthers.com/video/can-t-miss-play-game-winning-int-tyrel-dodson-secures-brissett-s-pass-in-crunch-time-after-wild-ricochet",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.3786
-    },
-    {
-      "id": "car_vid_ef5ef268347c",
-      "type": "video",
-      "title": "Princely Umanmielen gets his second sack of the game on Jacoby Brissett",
-      "summary": "Carolina Panthers linebacker Princely Umanmielen sacks Baltimore Ravens quarterback Jacoby Brissett for a 5-yard loss.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/istshhhlfrvk35v0ghfa.jpg",
-      "imageAlt": "Princely Umanmielen gets his second sack of the game on Jacoby Brissett",
-      "publishedAt": "2026-11-22T21:31:11.000Z",
-      "url": "https://www.panthers.com/video/princely-umanmielen-gets-his-second-sack-of-the-game-on-jacoby-brissett",
-      "externalVideoUrl": "https://www.panthers.com/video/princely-umanmielen-gets-his-second-sack-of-the-game-on-jacoby-brissett",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.3713
-    },
-    {
-      "id": "car_vid_c427d6592483",
-      "type": "video",
-      "title": "Ryan Fitzgerald gives the Panthers a 35-33 lead with 37-yard FG",
-      "summary": "Carolina Panthers kicker Ryan Fitzgerald makes a 37-yard field goal.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/wouqdntufbayebb8zbsm.jpg",
-      "imageAlt": "Ryan Fitzgerald gives the Panthers a 35-33 lead with 37-yard FG",
-      "publishedAt": "2026-11-22T21:24:54.000Z",
-      "url": "https://www.panthers.com/video/ryan-fitzgerald-gives-the-panthers-a-35-33-lead-with-37-yard-fg",
-      "externalVideoUrl": "https://www.panthers.com/video/ryan-fitzgerald-gives-the-panthers-a-35-33-lead-with-37-yard-fg",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.3373
-    },
-    {
-      "id": "car_rss_6732d6e86cda",
-      "type": "article",
-      "title": "Rapid Reactions: Panthers win second straight, stay in first",
-      "summary": "The Panthers needed every moment, but came back from an early hole to improve to 5-5 and two games clear for the division lead.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/ijbygd3iqkcvw5rcokte.jpg",
-      "imageAlt": "Rapid Reactions: Panthers win second straight, stay in first",
-      "publishedAt": "2026-11-22T21:18:38.000Z",
-      "url": "https://www.panthers.com/news/rapid-reactions-panthers-win-second-straight-stay-in-first",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Official",
-      "author": "panthers.com Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.3041
-    },
-    {
-      "id": "car_vid_dd8fec097253",
-      "type": "video",
-      "title": "Will Lee III forces King Henry to fumble on close call",
-      "summary": "Carolina Panthers cornerback Will Lee III forces Baltimore Ravens running back Derrick Henry to fumble.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/laedo5se9pl36rda67ku.jpg",
-      "imageAlt": "Will Lee III forces King Henry to fumble on close call",
-      "publishedAt": "2026-11-22T20:50:32.000Z",
-      "url": "https://www.panthers.com/video/will-lee-iii-forces-king-henry-to-fumble-on-close-call",
-      "externalVideoUrl": "https://www.panthers.com/video/will-lee-iii-forces-king-henry-to-fumble-on-close-call",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.165
-    },
-    {
-      "id": "car_vid_c72a71a3a624",
-      "type": "video",
-      "title": "Princely Umanmielen and Devin Lloyd have a team meeting at the QB in huge sack of Jacoby Brissett",
-      "summary": "Carolina Panthers linebackers Princely Umanmielen and Devin Lloyd sack Baltimore Ravens quarterback Jacoby Brissett for a 7-yard loss.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/siy01jijauaj6p08m4fv.jpg",
-      "imageAlt": "Princely Umanmielen and Devin Lloyd have a team meeting at the QB in huge sack of Jacoby Brissett",
-      "publishedAt": "2026-11-22T20:29:57.000Z",
-      "url": "https://www.panthers.com/video/princely-umanmielen-and-devin-lloyd-have-a-team-meeting-at-the-qb-in-huge-sack-of-brissett",
-      "externalVideoUrl": "https://www.panthers.com/video/princely-umanmielen-and-devin-lloyd-have-a-team-meeting-at-the-qb-in-huge-sack-of-brissett",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.072
-    },
-    {
-      "id": "car_vid_35e54fa4670e",
-      "type": "video",
-      "title": "Darren Waller hauls in a strike from Bryce Young for 27-yards",
-      "summary": "Carolina Panthers tight end Darren Waller catches a 27-yard pass from quarterback Bryce Young.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/mydvtwzuyxpxfc5geerx.jpg",
-      "imageAlt": "Darren Waller hauls in a strike from Bryce Young for 27-yards",
-      "publishedAt": "2026-11-22T20:22:53.000Z",
-      "url": "https://www.panthers.com/video/darren-waller-hauls-in-a-dot-from-bryce-young-on-27-yard-pass",
-      "externalVideoUrl": "https://www.panthers.com/video/darren-waller-hauls-in-a-dot-from-bryce-young-on-27-yard-pass",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.0417
-    },
-    {
-      "id": "car_vid_6459bf5de92d",
-      "type": "video",
-      "title": "Chuba Hubbard gets into space for a 26-yard gain",
-      "summary": "Carolina Panthers running back Chuba Hubbard rushes for 26 yards.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/zfzukptghylduhgybuwu.jpg",
-      "imageAlt": "Chuba Hubbard gets into space for a 26-yard gain",
-      "publishedAt": "2026-11-22T20:12:45.000Z",
-      "url": "https://www.panthers.com/video/chuba-hubbard-gets-into-space-for-a-26-yard-gain",
-      "externalVideoUrl": "https://www.panthers.com/video/chuba-hubbard-gets-into-space-for-a-26-yard-gain",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.9994
-    },
-    {
-      "id": "car_vid_c5620c6507e1",
-      "type": "video",
-      "title": "Chuba Hubbard rumbles for two-point conversion",
-      "summary": "Carolina Panthers running back Chuba Hubbard converts a two-point conversion.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/yivrdk0jghhkbsujapgj.jpg",
-      "imageAlt": "Chuba Hubbard rumbles for two-point conversion",
-      "publishedAt": "2026-11-22T19:31:51.000Z",
-      "url": "https://www.panthers.com/video/chuba-hubbard-rumbles-for-two-point-conversion",
-      "externalVideoUrl": "https://www.panthers.com/video/chuba-hubbard-rumbles-for-two-point-conversion",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.8432
-    },
-    {
-      "id": "car_vid_fbe90a7561de",
-      "type": "video",
-      "title": "Can't-Miss Play: Will Lee III last-second takeaway turns Justice Hill's would-be TD into touchback",
-      "summary": "Carolina Panthers cornerback Will Lee III forces Baltimore Ravens running back Justice Hill to fumble out of the end zone.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/qywfpabbkm6xczvi7fdn.jpg",
-      "imageAlt": "Can't-Miss Play: Will Lee III last-second takeaway turns Justice Hill's would-be TD into touchback",
-      "publishedAt": "2026-11-22T19:09:01.000Z",
-      "url": "https://www.panthers.com/video/can-t-miss-play-will-lee-iii-last-second-takeaway-turns-justice-hill-s-would-be-td-into-touchback",
-      "externalVideoUrl": "https://www.panthers.com/video/can-t-miss-play-will-lee-iii-last-second-takeaway-turns-justice-hill-s-would-be-td-into-touchback",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.7649
-    },
-    {
-      "id": "car_vid_72cdf8f47c00",
-      "type": "video",
-      "title": "Bryce Young dials launch codes to Jalen Coker for 35-yard gain down the sideline",
-      "summary": "Carolina Panthers quarterback Bryce Young throws a 35-yard pass to wide receiver Jalen Coker.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/wlmkxmbpy1vg2oyf4mgf.jpg",
-      "imageAlt": "Bryce Young dials launch codes to Jalen Coker for 35-yard gain down the sideline",
-      "publishedAt": "2026-11-22T18:56:00.000Z",
-      "url": "https://www.panthers.com/video/bryce-young-dials-launch-codes-to-jalen-coker-for-35-yard-gain-down-the-sideline",
-      "externalVideoUrl": "https://www.panthers.com/video/bryce-young-dials-launch-codes-to-jalen-coker-for-35-yard-gain-down-the-sideline",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.7227
+      "storyRank": 0.2882
     },
     {
       "id": "car_vid_4b29b7d81124",
@@ -1015,7 +908,75 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7518
+      "storyRank": 0.0706
+    },
+    {
+      "id": "car_vid_a017549fca6b",
+      "type": "video",
+      "title": "Panthers vs. Ravens Week 11 Postgame Reaction",
+      "summary": "Panthers Postgame Radio Show gives you instant analysis after Bryce Young and the Carolina Panthers knock off the Baltimore Ravens at Bank of America Stadium in Charlotte.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/zhlfpgcwtw8jbcffunjv.jpg",
+      "imageAlt": "Panthers vs. Ravens Week 11 Postgame Reaction",
+      "publishedAt": "2026-11-22T22:43:20.000Z",
+      "url": "https://www.panthers.com/video/panthers-vs-ravens-week-11-postgame-reaction",
+      "externalVideoUrl": "https://www.panthers.com/video/panthers-vs-ravens-week-11-postgame-reaction",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2792
+    },
+    {
+      "id": "car_vid_c27ff9f4fbf0",
+      "type": "video",
+      "title": "Panthers' top plays vs. Ravens Week 11",
+      "summary": "Watch the top plays from the Carolina Panthers vs. the Baltimore Ravens in Week 11 of the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/ybg6kuituuyggnyj7wlu.jpg",
+      "imageAlt": "Panthers' top plays vs. Ravens Week 11",
+      "publishedAt": "2026-11-22T22:15:49.000Z",
+      "url": "https://www.panthers.com/video/panthers-top-plays-vs-ravens-week-11",
+      "externalVideoUrl": "https://www.panthers.com/video/panthers-top-plays-vs-ravens-week-11",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2754
     },
     {
       "id": "car_vid_eb7a0e3e84b6",
@@ -1049,7 +1010,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6323
+      "storyRank": 0.0683
+    },
+    {
+      "id": "car_vid_af33434fbec6",
+      "type": "video",
+      "title": "Bryce Young: 'We found a way'",
+      "summary": "Watch Panthers quarterback Bryce Young speak after the Panthers' 35-33 win over the Ravens. Young credited the offensive line, walked through his first time not taking the snap on the trick-play touchdown to Mitchell Eva",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/sx5vexdj5isfplvae13s.jpg",
+      "imageAlt": "Bryce Young: 'We found a way'",
+      "publishedAt": "2026-11-22T21:54:30.000Z",
+      "url": "https://www.panthers.com/video/bryce-young-we-found-a-way",
+      "externalVideoUrl": "https://www.panthers.com/video/bryce-young-we-found-a-way",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2725
     },
     {
       "id": "car_vid_a3c9b329be84",
@@ -1083,7 +1078,346 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6252
+      "storyRank": 0.0681
+    },
+    {
+      "id": "car_vid_59efcb601c84",
+      "type": "video",
+      "title": "Dave Canales: 'This is how we play football'",
+      "summary": "Watch head coach Dave Canales' press conference after the Panthers' 35-33 win over the Ravens. Canales praised the team's fight through seven lead changes and Will Lee's standout return, including two forced fumbles and ",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/f56xyfkd390sppm8x7vc.jpg",
+      "imageAlt": "Dave Canales: 'This is how we play football'",
+      "publishedAt": "2026-11-22T21:44:03.000Z",
+      "url": "https://www.panthers.com/video/dave-canales-this-is-how-we-play-football",
+      "externalVideoUrl": "https://www.panthers.com/video/dave-canales-this-is-how-we-play-football",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2711
+    },
+    {
+      "id": "car_espn_671a45fa034bb",
+      "type": "video",
+      "title": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
+      "summary": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/52758d50-ef3b-458d-94bd-b1e783266396/52758d50-ef3b-458d-94bd-b1e783266396.jpg",
+      "imageCaption": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
+      "imageAlt": "Baltimore Ravens vs. Carolina Panthers: Game Highlights",
+      "publishedAt": "2026-11-22T21:40:55Z",
+      "url": "https://www.espn.com/video/clip/_/id/50565408/game-highlights",
+      "outletId": "espn_car",
+      "outletName": "ESPN",
+      "reporterId": "espn_car",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/car/carolina-panthers",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2707
+    },
+    {
+      "id": "car_vid_98a78189114f",
+      "type": "video",
+      "title": "Can't-Miss Play: Game-winning INT! Tyrel Dodson secures Brissett's pass in crunch time after wild ricochet",
+      "summary": "Carolina Panthers linebacker Tyrel Dodson intercepts Baltimore Ravens quarterback Jacoby Brissett.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/tnnlk5lfpkpptfcoxydg.jpg",
+      "imageAlt": "Can't-Miss Play: Game-winning INT! Tyrel Dodson secures Brissett's pass in crunch time after wild ricochet",
+      "publishedAt": "2026-11-22T21:32:31.000Z",
+      "url": "https://www.panthers.com/video/can-t-miss-play-game-winning-int-tyrel-dodson-secures-brissett-s-pass-in-crunch-time-after-wild-ricochet",
+      "externalVideoUrl": "https://www.panthers.com/video/can-t-miss-play-game-winning-int-tyrel-dodson-secures-brissett-s-pass-in-crunch-time-after-wild-ricochet",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2696
+    },
+    {
+      "id": "car_vid_ef5ef268347c",
+      "type": "video",
+      "title": "Princely Umanmielen gets his second sack of the game on Jacoby Brissett",
+      "summary": "Carolina Panthers linebacker Princely Umanmielen sacks Baltimore Ravens quarterback Jacoby Brissett for a 5-yard loss.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/istshhhlfrvk35v0ghfa.jpg",
+      "imageAlt": "Princely Umanmielen gets his second sack of the game on Jacoby Brissett",
+      "publishedAt": "2026-11-22T21:31:11.000Z",
+      "url": "https://www.panthers.com/video/princely-umanmielen-gets-his-second-sack-of-the-game-on-jacoby-brissett",
+      "externalVideoUrl": "https://www.panthers.com/video/princely-umanmielen-gets-his-second-sack-of-the-game-on-jacoby-brissett",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2694
+    },
+    {
+      "id": "car_vid_c427d6592483",
+      "type": "video",
+      "title": "Ryan Fitzgerald gives the Panthers a 35-33 lead with 37-yard FG",
+      "summary": "Carolina Panthers kicker Ryan Fitzgerald makes a 37-yard field goal.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/wouqdntufbayebb8zbsm.jpg",
+      "imageAlt": "Ryan Fitzgerald gives the Panthers a 35-33 lead with 37-yard FG",
+      "publishedAt": "2026-11-22T21:24:54.000Z",
+      "url": "https://www.panthers.com/video/ryan-fitzgerald-gives-the-panthers-a-35-33-lead-with-37-yard-fg",
+      "externalVideoUrl": "https://www.panthers.com/video/ryan-fitzgerald-gives-the-panthers-a-35-33-lead-with-37-yard-fg",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2686
+    },
+    {
+      "id": "car_rss_6732d6e86cda",
+      "type": "article",
+      "title": "Rapid Reactions: Panthers win second straight, stay in first",
+      "summary": "The Panthers needed every moment, but came back from an early hole to improve to 5-5 and two games clear for the division lead.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/ijbygd3iqkcvw5rcokte.jpg",
+      "imageAlt": "Rapid Reactions: Panthers win second straight, stay in first",
+      "publishedAt": "2026-11-22T21:18:38.000Z",
+      "url": "https://www.panthers.com/news/rapid-reactions-panthers-win-second-straight-stay-in-first",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Official",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Official",
+      "author": "panthers.com Official",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2678
+    },
+    {
+      "id": "car_vid_dd8fec097253",
+      "type": "video",
+      "title": "Will Lee III forces King Henry to fumble on close call",
+      "summary": "Carolina Panthers cornerback Will Lee III forces Baltimore Ravens running back Derrick Henry to fumble.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/laedo5se9pl36rda67ku.jpg",
+      "imageAlt": "Will Lee III forces King Henry to fumble on close call",
+      "publishedAt": "2026-11-22T20:50:32.000Z",
+      "url": "https://www.panthers.com/video/will-lee-iii-forces-king-henry-to-fumble-on-close-call",
+      "externalVideoUrl": "https://www.panthers.com/video/will-lee-iii-forces-king-henry-to-fumble-on-close-call",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2641
+    },
+    {
+      "id": "car_vid_c72a71a3a624",
+      "type": "video",
+      "title": "Princely Umanmielen and Devin Lloyd have a team meeting at the QB in huge sack of Jacoby Brissett",
+      "summary": "Carolina Panthers linebackers Princely Umanmielen and Devin Lloyd sack Baltimore Ravens quarterback Jacoby Brissett for a 7-yard loss.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/siy01jijauaj6p08m4fv.jpg",
+      "imageAlt": "Princely Umanmielen and Devin Lloyd have a team meeting at the QB in huge sack of Jacoby Brissett",
+      "publishedAt": "2026-11-22T20:29:57.000Z",
+      "url": "https://www.panthers.com/video/princely-umanmielen-and-devin-lloyd-have-a-team-meeting-at-the-qb-in-huge-sack-of-brissett",
+      "externalVideoUrl": "https://www.panthers.com/video/princely-umanmielen-and-devin-lloyd-have-a-team-meeting-at-the-qb-in-huge-sack-of-brissett",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2615
+    },
+    {
+      "id": "car_vid_35e54fa4670e",
+      "type": "video",
+      "title": "Darren Waller hauls in a strike from Bryce Young for 27-yards",
+      "summary": "Carolina Panthers tight end Darren Waller catches a 27-yard pass from quarterback Bryce Young.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/mydvtwzuyxpxfc5geerx.jpg",
+      "imageAlt": "Darren Waller hauls in a strike from Bryce Young for 27-yards",
+      "publishedAt": "2026-11-22T20:22:53.000Z",
+      "url": "https://www.panthers.com/video/darren-waller-hauls-in-a-dot-from-bryce-young-on-27-yard-pass",
+      "externalVideoUrl": "https://www.panthers.com/video/darren-waller-hauls-in-a-dot-from-bryce-young-on-27-yard-pass",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2606
+    },
+    {
+      "id": "car_vid_6459bf5de92d",
+      "type": "video",
+      "title": "Chuba Hubbard gets into space for a 26-yard gain",
+      "summary": "Carolina Panthers running back Chuba Hubbard rushes for 26 yards.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/zfzukptghylduhgybuwu.jpg",
+      "imageAlt": "Chuba Hubbard gets into space for a 26-yard gain",
+      "publishedAt": "2026-11-22T20:12:45.000Z",
+      "url": "https://www.panthers.com/video/chuba-hubbard-gets-into-space-for-a-26-yard-gain",
+      "externalVideoUrl": "https://www.panthers.com/video/chuba-hubbard-gets-into-space-for-a-26-yard-gain",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2594
     },
     {
       "id": "car_vid_d34beade6205",
@@ -1117,7 +1451,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4981
+      "storyRank": 0.0648
+    },
+    {
+      "id": "car_vid_c5620c6507e1",
+      "type": "video",
+      "title": "Chuba Hubbard rumbles for two-point conversion",
+      "summary": "Carolina Panthers running back Chuba Hubbard converts a two-point conversion.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/yivrdk0jghhkbsujapgj.jpg",
+      "imageAlt": "Chuba Hubbard rumbles for two-point conversion",
+      "publishedAt": "2026-11-22T19:31:51.000Z",
+      "url": "https://www.panthers.com/video/chuba-hubbard-rumbles-for-two-point-conversion",
+      "externalVideoUrl": "https://www.panthers.com/video/chuba-hubbard-rumbles-for-two-point-conversion",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2544
     },
     {
       "id": "car_vid_1ac0650c51dc",
@@ -1151,7 +1519,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4512
+      "storyRank": 0.0633
+    },
+    {
+      "id": "car_vid_fbe90a7561de",
+      "type": "video",
+      "title": "Can't-Miss Play: Will Lee III last-second takeaway turns Justice Hill's would-be TD into touchback",
+      "summary": "Carolina Panthers cornerback Will Lee III forces Baltimore Ravens running back Justice Hill to fumble out of the end zone.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/qywfpabbkm6xczvi7fdn.jpg",
+      "imageAlt": "Can't-Miss Play: Will Lee III last-second takeaway turns Justice Hill's would-be TD into touchback",
+      "publishedAt": "2026-11-22T19:09:01.000Z",
+      "url": "https://www.panthers.com/video/can-t-miss-play-will-lee-iii-last-second-takeaway-turns-justice-hill-s-would-be-td-into-touchback",
+      "externalVideoUrl": "https://www.panthers.com/video/can-t-miss-play-will-lee-iii-last-second-takeaway-turns-justice-hill-s-would-be-td-into-touchback",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2517
     },
     {
       "id": "car_vid_cd5c42354e6c",
@@ -1185,7 +1587,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4399
+      "storyRank": 0.0629
     },
     {
       "id": "car_vid_099570d74cf7",
@@ -1219,7 +1621,41 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4367
+      "storyRank": 0.0628
+    },
+    {
+      "id": "car_vid_72cdf8f47c00",
+      "type": "video",
+      "title": "Bryce Young dials launch codes to Jalen Coker for 35-yard gain down the sideline",
+      "summary": "Carolina Panthers quarterback Bryce Young throws a 35-yard pass to wide receiver Jalen Coker.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/wlmkxmbpy1vg2oyf4mgf.jpg",
+      "imageAlt": "Bryce Young dials launch codes to Jalen Coker for 35-yard gain down the sideline",
+      "publishedAt": "2026-11-22T18:56:00.000Z",
+      "url": "https://www.panthers.com/video/bryce-young-dials-launch-codes-to-jalen-coker-for-35-yard-gain-down-the-sideline",
+      "externalVideoUrl": "https://www.panthers.com/video/bryce-young-dials-launch-codes-to-jalen-coker-for-35-yard-gain-down-the-sideline",
+      "outletId": "panthers_official",
+      "outletName": "panthers.com Video",
+      "reporterId": "panthers_official",
+      "reporterName": "panthers.com Video",
+      "author": "panthers.com Video",
+      "authorHandle": "@Panthers",
+      "authorProfileUrl": "https://www.panthers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2502
     },
     {
       "id": "car_vid_27d9b5aa5cc5",
@@ -1253,7 +1689,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4287
+      "storyRank": 0.0625
     },
     {
       "id": "car_vid_31e5fd30ff4b",
@@ -1287,7 +1723,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4145
+      "storyRank": 0.0619
     },
     {
       "id": "car_rss_fbccbf606be5",
@@ -1320,7 +1756,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.235
+      "storyRank": 0.0879
     },
     {
       "id": "car_rss_2b883cbe693b",
@@ -1353,13 +1789,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.235
+      "storyRank": 0.0879
     },
     {
       "id": "car_pfr_d2f9242efa19",
       "type": "article",
       "title": "Panthers Activate CB Michael Jackson",
-      "summary": "NOVEMBER 21: As expected, the Panthers have announced that Jackson will come off IR and be activated to the 53-man roster. He’ll join rookie fourth-rounder Will Lee III in the secondary after Lee missed the team’s past two conte",
+      "summary": "NOVEMBER 21: As expected, the Panthers have announced that Jackson will come off IR and be activated to the 53-man roster. He’ll join rookie fourth-rounder Will Lee III in the secondary after Lee missed the team’s past two contests with a h",
       "imageUrl": "",
       "publishedAt": "2026-11-21T21:10:27.000Z",
       "url": "https://www.profootballrumors.com/2026/11/panthers-cb-michael-jackson-rb-jonathon-brooks-return-to-practice",
@@ -1385,7 +1821,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1045
+      "storyRank": 0.0625
     },
     {
       "id": "car_rss_ea7c31d97ed5",
@@ -1418,7 +1854,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1055
+      "storyRank": 0.0633
     },
     {
       "id": "car_rss_6ec009715afa",
@@ -1451,7 +1887,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0939
+      "storyRank": 0.0598
     },
     {
       "id": "car_rss_b5a4768c1332",
@@ -1484,7 +1920,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0789
+      "storyRank": 0.0546
     },
     {
       "id": "car_tx_ca63ef20e1c7",
@@ -1518,13 +1954,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0675
+      "storyRank": 0.0502
     },
     {
       "id": "car_pfr_3b3fb834c85c",
       "type": "article",
       "title": "NFL Practice Squad Updates: 11/20/26",
-      "summary": "Today’s only practice squad transaction: Carolina Panthers Released (with injury settlement): WR Ihmir Smith-Marsette Smith-Marsette came into the NFL as a fifth-round pick not only because of what he did as a receiver during his time",
+      "summary": "Today’s only practice squad transaction: Carolina Panthers Released (with injury settlement): WR Ihmir Smith-Marsette Smith-Marsette came into the NFL as a fifth-round pick not only because of what he did as a receiver during his time at Io",
       "imageUrl": "",
       "publishedAt": "2026-11-21T00:37:17.000Z",
       "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-20-26",
@@ -1550,7 +1986,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0543
+      "storyRank": 0.044
     },
     {
       "id": "car_vid_a1aeb9ffe8a2",
@@ -1584,7 +2020,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0523
+      "storyRank": 0.0433
     },
     {
       "id": "car_vid_20945585ad9f",
@@ -1618,7 +2054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0517
+      "storyRank": 0.043
     },
     {
       "id": "car_rss_f070453fa303",
@@ -1651,7 +2087,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0493
+      "storyRank": 0.0418
     },
     {
       "id": "car_rss_e9ff18aba127",
@@ -1684,7 +2120,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0474
+      "storyRank": 0.0408
     },
     {
       "id": "car_vid_49d8e704f97e",
@@ -1718,7 +2154,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0468
+      "storyRank": 0.0404
     },
     {
       "id": "car_rss_73f6ef08a68b",
@@ -1751,7 +2187,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0117
+      "storyRank": 0.0101
     },
     {
       "id": "car_rss_bcca30ef81c6",
@@ -1784,7 +2220,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0427
+      "storyRank": 0.0382
     },
     {
       "id": "car_rss_1def4fbca0e2",
@@ -1817,7 +2253,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0378
     },
     {
       "id": "car_tx_cb7fe53d7c42",
@@ -1851,13 +2287,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0381
+      "storyRank": 0.0355
     },
     {
       "id": "car_pfr_49c36ddfbc1c",
       "type": "article",
       "title": "NFL Practice Squad Updates: 11/19/26",
-      "summary": "Here are the NFL’s latest practice squad changes… Carolina Panthers Signed: T Albert Reese Released: T Da’Metrius Weatherspoon Cleveland Browns Signed: TE Carsen Ryan Los Angeles Chargers Signed: TE Josiah Deguara Released: G Da",
+      "summary": "Here are the NFL’s latest practice squad changes… Carolina Panthers Signed: T Albert Reese Released: T Da’Metrius Weatherspoon Cleveland Browns Signed: TE Carsen Ryan Los Angeles Chargers Signed: TE Josiah Deguara Released: G Daniel Brunski",
       "imageUrl": "",
       "publishedAt": "2026-11-20T01:25:08.000Z",
       "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-19-26",
@@ -1883,7 +2319,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0332
+      "storyRank": 0.0321
     },
     {
       "id": "car_espn_87934e12e2247",
@@ -1917,7 +2353,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0334
+      "storyRank": 0.0325
     },
     {
       "id": "car_vid_4419ed9cb671",
@@ -1951,7 +2387,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0332
+      "storyRank": 0.0324
     },
     {
       "id": "car_rss_beb1d7a2f99c",
@@ -1984,7 +2420,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0323
+      "storyRank": 0.0318
     },
     {
       "id": "car_rss_dd07f435b07e",
@@ -2017,7 +2453,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0317
+      "storyRank": 0.0314
     },
     {
       "id": "car_vid_e7a02f9fc49f",
@@ -2051,7 +2487,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0078
     },
     {
       "id": "car_rss_aa07e617969a",
@@ -2084,7 +2520,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0699
+      "storyRank": 0.0725
     },
     {
       "id": "car_rss_4973f21825c8",
@@ -2117,7 +2553,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0298
+      "storyRank": 0.03
     },
     {
       "id": "car_vid_b044ba01dc5e",
@@ -2151,7 +2587,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.0074
     },
     {
       "id": "car_espn_08adec8a8d5e8",
@@ -2185,7 +2621,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0278
+      "storyRank": 0.0286
     },
     {
       "id": "car_tx_430e9a7908b8",
@@ -2219,13 +2655,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0254
+      "storyRank": 0.0269
     },
     {
       "id": "car_pfr_70041b3c4411",
       "type": "article",
       "title": "NFL Practice Squad Updates: 11/18/26",
-      "summary": "Here are today’s practice squad transactions: Arizona Cardinals Signed: WR Bub Means Baltimore Ravens Signed: G Michael Jordan Carolina Panthers Signed: OLB Nick Hampton Placed on practice squad/injured list: LB Claudin Cherelus Detro",
+      "summary": "Here are today’s practice squad transactions: Arizona Cardinals Signed: WR Bub Means Baltimore Ravens Signed: G Michael Jordan Carolina Panthers Signed: OLB Nick Hampton Placed on practice squad/injured list: LB Claudin Cherelus Detroit Lio",
       "imageUrl": "",
       "publishedAt": "2026-11-19T01:20:47.000Z",
       "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-18-26",
@@ -2251,7 +2687,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
+      "storyRank": 0.0247
     },
     {
       "id": "car_vid_d64f96036e30",
@@ -2285,7 +2721,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0062
     },
     {
       "id": "car_rss_9fb281f48c69",
@@ -2318,7 +2754,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0223
+      "storyRank": 0.0244
     },
     {
       "id": "car_espn_56fa8c933b33e",
@@ -2352,7 +2788,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0223
+      "storyRank": 0.0244
     },
     {
       "id": "car_rss_493be180f59f",
@@ -2385,7 +2821,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0242
     },
     {
       "id": "car_vid_bd21355dbe4d",
@@ -2419,7 +2855,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.006
     },
     {
       "id": "car_vid_d9ec1c240871",
@@ -2453,7 +2889,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0242
     },
     {
       "id": "car_vid_33ecf741a614",
@@ -2487,7 +2923,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0219
+      "storyRank": 0.024
     },
     {
       "id": "car_rss_665779ecc63c",
@@ -2520,7 +2956,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0218
+      "storyRank": 0.024
     },
     {
       "id": "car_vid_6a5148b0a1e0",
@@ -2554,7 +2990,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054
+      "storyRank": 0.006
     },
     {
       "id": "car_rss_8360d252b67b",
@@ -2587,7 +3023,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0502
+      "storyRank": 0.0572
     },
     {
       "id": "car_rss_ef2038fd35ed",
@@ -2620,7 +3056,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0213
+      "storyRank": 0.0236
     },
     {
       "id": "car_rss_3cc88065f8f0",
@@ -2653,7 +3089,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0231
     },
     {
       "id": "car_rss_33987dd203b2",
@@ -2686,7 +3122,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0057
     },
     {
       "id": "car_tx_350f0b2e061f",
@@ -2720,7 +3156,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
+      "storyRank": 0.0213
     },
     {
       "id": "car_pfr_b8ba66f816a2",
@@ -2752,7 +3188,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0175
+      "storyRank": 0.0203
     },
     {
       "id": "car_rss_b5f57ec14c5e",
@@ -2785,7 +3221,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0165
+      "storyRank": 0.0194
     },
     {
       "id": "car_rss_570cf3fa45e4",
@@ -2818,7 +3254,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0193
     },
     {
       "id": "car_vid_35c82a63bfe7",
@@ -2852,41 +3288,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
-    },
-    {
-      "id": "car_espn_d96b7d2d50e3e",
-      "type": "article",
-      "title": "Is Chuba Hubbard the biggest X factor to spark a Panthers turnaround?",
-      "summary": "Meet Carolina's team captain, a locker room leader and a relentless running back who is \"chasing greatness myself.\"",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1115/r1746308_2_576x324_16-9.jpg",
-      "imageCaption": "Chuba Hubbard",
-      "imageAlt": "Is Chuba Hubbard the biggest X factor to spark a Panthers turnaround?",
-      "publishedAt": "2026-11-17T19:29:01Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50463509/chuba-hubbard-x-factor-spark-carolina-panthers",
-      "outletId": "charlotte_observer_public_beat_wire_car",
-      "outletName": "ESPN",
-      "reporterId": "mike_kaye",
-      "reporterName": "Mike Kaye",
-      "author": "Mike Kaye",
-      "authorHandle": "@mike_e_kaye",
-      "authorProfileUrl": "https://x.com/mike_e_kaye",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.0192
     },
     {
       "id": "car_rss_88b3e3d96e2f",
@@ -2919,7 +3321,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0162
+      "storyRank": 0.0191
     },
     {
       "id": "car_rss_628869fc7cc9",
@@ -2952,7 +3354,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0154
+      "storyRank": 0.0184
     },
     {
       "id": "car_tx_b20a95911bdc",
@@ -2986,13 +3388,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0144
+      "storyRank": 0.0175
     },
     {
       "id": "car_pfr_e6aa64d4de47",
       "type": "article",
       "title": "Minor NFL Transactions: 11/16/26",
-      "summary": "Today’s minor moves: Carolina Panthers Signed to active roster: CB Marco Wilson Waived: LB Nick Hampton Detroit Lions Claimed off waivers (from Cowboys): LB Tyrus Wheat Indianapolis Colts Signed to active roster: CB Johnathan Edwards ",
+      "summary": "Today’s minor moves: Carolina Panthers Signed to active roster: CB Marco Wilson Waived: LB Nick Hampton Detroit Lions Claimed off waivers (from Cowboys): LB Tyrus Wheat Indianapolis Colts Signed to active roster: CB Johnathan Edwards Miami ",
       "imageUrl": "",
       "publishedAt": "2026-11-17T00:52:07.000Z",
       "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-16-26",
@@ -3018,7 +3420,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132
+      "storyRank": 0.0163
     },
     {
       "id": "car_vid_8536f74477bb",
@@ -3052,7 +3454,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0134
+      "storyRank": 0.0165
     },
     {
       "id": "car_vid_4248927144fb",
@@ -3086,7 +3488,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133
+      "storyRank": 0.0163
     },
     {
       "id": "car_vid_5735fd992714",
@@ -3120,7 +3522,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0131
+      "storyRank": 0.0162
     },
     {
       "id": "car_rss_f6fa875c4a71",
@@ -3153,7 +3555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.004
     },
     {
       "id": "car_rss_e70e8afe965f",
@@ -3186,7 +3588,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.0159
     },
     {
       "id": "car_vid_d6ece2c56a5b",
@@ -3220,7 +3622,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.0159
     },
     {
       "id": "car_vid_7aedb7ddcf52",
@@ -3254,7 +3656,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0158
     },
     {
       "id": "car_rss_ad4799ccc4ba",
@@ -3287,7 +3689,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.012
+      "storyRank": 0.015
     },
     {
       "id": "car_tx_52989f9e15d7",
@@ -3321,7 +3723,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0147
     },
     {
       "id": "car_rss_776c9c2d57a2",
@@ -3354,7 +3756,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
+      "storyRank": 0.0141
     },
     {
       "id": "car_vid_97203fd04504",
@@ -3388,7 +3790,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0109
+      "storyRank": 0.0139
     },
     {
       "id": "car_rss_03a843d0f523",
@@ -3421,7 +3823,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0139
     },
     {
       "id": "car_rss_683cab27283d",
@@ -3454,7 +3856,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0138
     },
     {
       "id": "car_vid_7d5561fc7486",
@@ -3488,7 +3890,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0138
     },
     {
       "id": "car_rss_6273d3d9867a",
@@ -3521,7 +3923,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0138
     },
     {
       "id": "car_vid_dcced0a86257",
@@ -3555,7 +3957,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0138
     },
     {
       "id": "car_vid_fa91153a3386",
@@ -3589,7 +3991,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0137
     },
     {
       "id": "car_vid_8cc564c3d9a8",
@@ -3623,7 +4025,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0137
     },
     {
       "id": "car_vid_3e892c89dd0c",
@@ -3657,7 +4059,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0137
     },
     {
       "id": "car_vid_ce0a1400fc92",
@@ -3691,7 +4093,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0034
     },
     {
       "id": "car_vid_69902921d39b",
@@ -3725,7 +4127,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0137
     },
     {
       "id": "car_vid_7a5663a25304",
@@ -3759,7 +4161,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0034
     },
     {
       "id": "car_rss_397b85aa9c66",
@@ -3792,7 +4194,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0137
     },
     {
       "id": "car_vid_a92764b56ad0",
@@ -3826,7 +4228,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0136
     },
     {
       "id": "car_vid_b4823e29f249",
@@ -3860,7 +4262,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0034
     },
     {
       "id": "car_vid_68578c77e170",
@@ -3894,7 +4296,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0136
     },
     {
       "id": "car_vid_066673177a01",
@@ -3928,7 +4330,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0135
     },
     {
       "id": "car_vid_42d45d54a680",
@@ -3962,7 +4364,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0135
     },
     {
       "id": "car_vid_93d4ae0db6cd",
@@ -3996,7 +4398,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
+      "storyRank": 0.0034
     },
     {
       "id": "car_vid_ed7c82ab4392",
@@ -4030,7 +4432,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0135
     },
     {
       "id": "car_vid_9f602e6af9ee",
@@ -4064,7 +4466,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0104
+      "storyRank": 0.0134
     },
     {
       "id": "car_rss_55f878e7c7a9",
@@ -4097,7 +4499,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
+      "storyRank": 0.0129
     },
     {
       "id": "car_rss_48352baea165",
@@ -4130,7 +4532,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0099
+      "storyRank": 0.0129
     },
     {
       "id": "car_rss_83b0da0c7421",
@@ -4163,13 +4565,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0089
+      "storyRank": 0.0118
     },
     {
       "id": "car_pfr_0d754fafaca8",
       "type": "article",
       "title": "Panthers Activate Xavier Legette From IR",
-      "summary": "After a six-game absence, Panthers wide receiver Xavier Legette could return to action in Week 10. The Panthers have activated Legette from injured reserve, per Darin Gantt of the team’s website. Legette, who has been out with a knee ",
+      "summary": "After a six-game absence, Panthers wide receiver Xavier Legette could return to action in Week 10. The Panthers have activated Legette from injured reserve, per Darin Gantt of the team’s website. Legette, who has been out with a knee injury",
       "imageUrl": "",
       "publishedAt": "2026-11-14T19:26:20.000Z",
       "url": "https://www.profootballrumors.com/2026/11/panthers-activate-xavier-legette-from-ir",
@@ -4195,7 +4597,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0086
+      "storyRank": 0.0115
     },
     {
       "id": "car_rss_d81b0cc7a187",
@@ -4228,7 +4630,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0116
     },
     {
       "id": "car_rss_2f3f8067e075",
@@ -4261,7 +4663,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0085
+      "storyRank": 0.0113
     },
     {
       "id": "car_tx_e1a102cbfd05",
@@ -4295,7 +4697,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0109
     },
     {
       "id": "car_vid_03f4afdcbe8c",
@@ -4329,7 +4731,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0104
     },
     {
       "id": "car_vid_6ac648a8b34c",
@@ -4363,7 +4765,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0102
     },
     {
       "id": "car_rss_8045086699db",
@@ -4396,7 +4798,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0102
     },
     {
       "id": "car_vid_a1469cab5035",
@@ -4430,7 +4832,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0101
     },
     {
       "id": "car_rss_a48781986465",
@@ -4463,7 +4865,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0101
     },
     {
       "id": "car_rss_bba45035fc82",
@@ -4496,7 +4898,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0019
+      "storyRank": 0.0025
     },
     {
       "id": "car_rss_f8b553511c58",
@@ -4529,7 +4931,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.0099
     },
     {
       "id": "car_rss_1a730ed0bc1d",
@@ -4562,7 +4964,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0092
     },
     {
       "id": "car_vid_90a6a750e969",
@@ -4596,7 +4998,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0092
     },
     {
       "id": "car_vid_d4f2e20a8a85",
@@ -4630,7 +5032,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0017
+      "storyRank": 0.0023
     },
     {
       "id": "car_rss_202fd505e75a",
@@ -4663,7 +5065,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0092
     },
     {
       "id": "car_rss_4d01894b03b3",
@@ -4696,7 +5098,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0167
+      "storyRank": 0.0235
     },
     {
       "id": "car_vid_609ab0768531",
@@ -4730,7 +5132,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0016
+      "storyRank": 0.0022
     },
     {
       "id": "car_rss_09bb3e3f7102",
@@ -4763,7 +5165,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0089
     },
     {
       "id": "car_vid_124fbd6db75a",
@@ -4797,7 +5199,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0083
     },
     {
       "id": "car_vid_827154354513",
@@ -4831,7 +5233,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0082
     },
     {
       "id": "car_rss_3ee6f04a2ed3",
@@ -4864,7 +5266,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0082
     },
     {
       "id": "car_rss_d539ab81aada",
@@ -4897,7 +5299,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0082
     },
     {
       "id": "car_vid_665e7dff3b34",
@@ -4931,7 +5333,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0015
+      "storyRank": 0.002
     },
     {
       "id": "car_vid_18ac409b271a",
@@ -4965,7 +5367,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0081
     },
     {
       "id": "car_vid_2dae1e00083f",
@@ -4999,7 +5401,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0081
     },
     {
       "id": "car_vid_3acde5e0dece",
@@ -5033,7 +5435,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0081
     },
     {
       "id": "car_rss_a43cdf39dd95",
@@ -5066,7 +5468,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0148
+      "storyRank": 0.0211
     },
     {
       "id": "car_rss_bd4e550579f7",
@@ -5099,7 +5501,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0081
     },
     {
       "id": "car_rss_6b76c4ab2858",
@@ -5132,7 +5534,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.008
     },
     {
       "id": "car_rss_8feb35a97666",
@@ -5165,7 +5567,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0014
+      "storyRank": 0.002
     },
     {
       "id": "car_tx_76f9b28132c4",
@@ -5199,13 +5601,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054
+      "storyRank": 0.0077
     },
     {
       "id": "car_pfr_02b898129b94",
       "type": "article",
       "title": "NFL Practice Squad Updates: 11/10/26",
-      "summary": "Today’s practice squad moves: Arizona Cardinals Signed: WR Phillip Dorsett Released: TE Rivaldo Fairweather, RB Jermar Jefferson Atlanta Falcons Signed: C Gus Hartwig, S Delarrin Turner-Yell Released: DE Drake Jackson Baltimore Ravens",
+      "summary": "Today’s practice squad moves: Arizona Cardinals Signed: WR Phillip Dorsett Released: TE Rivaldo Fairweather, RB Jermar Jefferson Atlanta Falcons Signed: C Gus Hartwig, S Delarrin Turner-Yell Released: DE Drake Jackson Baltimore Ravens Signe",
       "imageUrl": "",
       "publishedAt": "2026-11-11T01:37:00.000Z",
       "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-10-26",
@@ -5231,13 +5633,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.0074
     },
     {
       "id": "car_pfr_2c71eb6e13f3",
       "type": "article",
       "title": "Minor NFL Transactions: 11/10/26",
-      "summary": "Today’s minor moves: Arizona Cardinals Placed on IR: QB Gardner Minshew (story), WR Michael Wilson (story) Baltimore Ravens Released: G Kyle Hergel, TE Nick Vannett Carolina Panthers Released: WR David Moore Denver Broncos Waived: CB ",
+      "summary": "Today’s minor moves: Arizona Cardinals Placed on IR: QB Gardner Minshew (story), WR Michael Wilson (story) Baltimore Ravens Released: G Kyle Hergel, TE Nick Vannett Carolina Panthers Released: WR David Moore Denver Broncos Waived: CB Sean F",
       "imageUrl": "",
       "publishedAt": "2026-11-11T00:57:43.000Z",
       "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-10-26",
@@ -5263,7 +5665,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.0073
     },
     {
       "id": "car_rss_f792c43dd51c",
@@ -5296,7 +5698,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.0074
     },
     {
       "id": "car_rss_24e2d6a16bd5",
@@ -5329,73 +5731,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
-    },
-    {
-      "id": "car_rss_3ed717b36821",
-      "type": "article",
-      "title": "Panthers release wide receiver David Moore, among other moves",
-      "summary": "The veteran wideout has seen a reduced role on special teams in recent weeks, so they created a roster spot with a number of players close to returning from injuries.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/qnneggmpdp4z8s5qpqob.png",
-      "imageAlt": "Panthers release wide receiver David Moore, among other moves",
-      "publishedAt": "2026-11-10T20:07:26.000Z",
-      "url": "https://www.panthers.com/news/panthers-release-wide-receiver-david-moore-among-other-moves",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Official",
-      "author": "panthers.com Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
-    },
-    {
-      "id": "car_rss_58352f1009ed",
-      "type": "article",
-      "title": "Around the NFC South: Another topsy-turvy week after Week 9",
-      "summary": "The Panthers still sit atop the division after three teams fall in Week 9, including an international opener to the day and a prime time thriller on Sunday night.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/uzjbh39viobvi6stqady.jpg",
-      "imageAlt": "Around the NFC South: Another topsy-turvy week after Week 9",
-      "publishedAt": "2026-11-10T20:06:00.000Z",
-      "url": "https://www.panthers.com/news/around-the-nfc-south-another-topsy-turvy-week-after-week-9",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Official",
-      "author": "panthers.com Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0074
     },
     {
       "id": "car_vid_07cbee83707d",
@@ -5429,39 +5765,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
-    },
-    {
-      "id": "car_pfr_0f168483863a",
-      "type": "article",
-      "title": "NFL Restructures: Madubuike, Ravens, Henry, Patriots, Panthers",
-      "summary": "With hours to go until the 2026 trade deadline — well, we’ve been told that was the case, yet zero trades have happened today — teams have cleared some cap space via restructures. Here are the latest conversions: The Raven",
-      "imageUrl": "",
-      "publishedAt": "2026-11-10T17:20:07.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/nfl-restructures-madubuike-ravens-henry-patriots-panthers",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/carolina-panthers",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0073
     },
     {
       "id": "car_tx_0f81cd5c118d",
@@ -5495,40 +5799,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
-    },
-    {
-      "id": "car_rss_ab8404b93fda",
-      "type": "article",
-      "title": "Panthers see the positive results from Canales' calm approach",
-      "summary": "The head coach isn't one to rant or rave during or after a game, and the Panthers' coach has found success in the approach. And in the long run, it's the kind of mindset that helps teams win games, according to Tommy Tremble.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/hsuhaie6aud8cme1ocyx.jpg",
-      "imageAlt": "Panthers see the positive results from Canales' calm approach",
-      "publishedAt": "2026-11-09T23:00:18.000Z",
-      "url": "https://www.panthers.com/news/panthers-see-the-positive-results-from-canales-calm-approach",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Official",
-      "author": "panthers.com Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
+      "storyRank": 0.007
     },
     {
       "id": "car_vid_2b85081751e2",
@@ -5562,104 +5833,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
-    },
-    {
-      "id": "car_rss_a9f607ca1ccc",
-      "type": "article",
-      "title": "Monday Brew: Getting some guys back soon",
-      "summary": "A couple of guys could return to practice as soon as this week. Plus, Canales on penalties, and Lee Hunter's snap counts from Week 9.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/d0ahdlenvmzt7b7dhdbw.jpg",
-      "imageAlt": "Monday Brew: Getting some guys back soon",
-      "publishedAt": "2026-11-09T20:20:06.000Z",
-      "url": "https://www.panthers.com/news/monday-brew-getting-some-guys-back-soon-xavier-legette-jaycee-horn-mike-jackson-officials-replay",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Official",
-      "author": "panthers.com Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
-    },
-    {
-      "id": "car_pfr_eabc700aaa05",
-      "type": "article",
-      "title": "DT Rumors: Eagles, Pats, Panthers, Colts",
-      "summary": "The Eagles shelled out significant long-term commitments to defensive tackles Jalen Carter (four years, $152MM) and Jordan Davis (three years, $78MM) during the offseason, which could make retaining impending free agent D-tackle Moro Ojomo ",
-      "imageUrl": "",
-      "publishedAt": "2026-11-09T19:46:45.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/dt-rumors-eagles-pats-panthers-colts",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/carolina-panthers",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
-    },
-    {
-      "id": "car_pfr_09b9dcb81ff3",
-      "type": "article",
-      "title": "Panthers To Open WR Xavier Legette’s Practice Window",
-      "summary": "Xavier Legette has seen subsequent additions drop him in the Panthers’ pecking order, with the team most recently illustrating this by extending Jalen Coker this offseason. Carolina’s 2024 first-round pick also has missed most o",
-      "imageUrl": "",
-      "publishedAt": "2026-11-09T19:34:09.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/panthers-to-open-wr-xavier-legettes-practice-window",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/carolina-panthers",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0045
+      "storyRank": 0.0067
     },
     {
       "id": "car_vid_eb7533635138",
@@ -5693,40 +5867,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
-    },
-    {
-      "id": "car_rss_e8119eb4d087",
-      "type": "article",
-      "title": "Inside The Numbers: Panthers vs. Denver in Week 9",
-      "summary": "A look at some of the key stats from the game, as well as the snap counts from Sunday's loss to the Broncos in Week 9.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/du6ilsh3w1sixpdjoke9.jpg",
-      "imageAlt": "Inside The Numbers: Panthers vs. Denver in Week 9",
-      "publishedAt": "2026-11-09T11:22:08.000Z",
-      "url": "https://www.panthers.com/news/inside-the-numbers-panthers-vs-denver-in-week-9",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Official",
-      "author": "panthers.com Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0044
+      "storyRank": 0.0066
     },
     {
       "id": "car_vid_4a6533212da7",
@@ -5760,7 +5901,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0015
     },
     {
       "id": "car_vid_bf2e2193ac17",
@@ -5794,7 +5935,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0062
     },
     {
       "id": "car_vid_edb3591283b8",
@@ -5828,7 +5969,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0015
     },
     {
       "id": "car_vid_82a8420f5c5b",
@@ -5862,7 +6003,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "car_vid_485a8502bee6",
@@ -5896,7 +6037,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "car_vid_43ae5f92e302",
@@ -5930,7 +6071,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0015
     },
     {
       "id": "car_vid_6a3b27dad08a",
@@ -5964,7 +6105,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "car_vid_6b7e509c3966",
@@ -5998,7 +6139,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "car_vid_91679e61b7e6",
@@ -6032,7 +6173,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "car_vid_aec3feda6973",
@@ -6066,7 +6207,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0015
     },
     {
       "id": "car_vid_59cf89065c40",
@@ -6100,7 +6241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "car_vid_e11c81d53ada",
@@ -6134,7 +6275,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0015
     },
     {
       "id": "car_vid_f51ffd77405b",
@@ -6168,7 +6309,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "car_vid_fb6920194abe",
@@ -6202,7 +6343,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0015
     },
     {
       "id": "car_vid_38af3f8a55c3",
@@ -6236,7 +6377,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "car_vid_89bc0c7a9faa",
@@ -6270,7 +6411,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0015
     },
     {
       "id": "car_vid_4b4dc4eb1309",
@@ -6304,7 +6445,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "car_vid_2049a35adf06",
@@ -6338,7 +6479,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.001
+      "storyRank": 0.0015
     },
     {
       "id": "car_tx_4273a081456b",
@@ -6372,7 +6513,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0036
+      "storyRank": 0.0054
     },
     {
       "id": "car_vid_812a40003e4b",
@@ -6406,75 +6547,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
-    },
-    {
-      "id": "car_vid_747cb5c91552",
-      "type": "video",
-      "title": "Broncos at Panthers: Week 9 | Game Trailer",
-      "summary": "Denver Broncos at Carolina Panthers, Sunday, Nov. 8 at 1:00 pm ET on CBS. #KeepPounding",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/cfrqebsrn1gc1zx4v977.png",
-      "imageAlt": "Broncos at Panthers: Week 9 | Game Trailer",
-      "publishedAt": "2026-11-06T21:55:00.000Z",
-      "url": "https://www.panthers.com/video/broncos-at-panthers-week-9-game-trailer",
-      "externalVideoUrl": "https://www.panthers.com/video/broncos-at-panthers-week-9-game-trailer",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
-    },
-    {
-      "id": "car_vid_d3407c44e0e4",
-      "type": "video",
-      "title": "Dave Canales gives final updates before Sunday's game against the Broncos",
-      "summary": "Watch Panthers head coach Dave Canales give his final updates before Sunday's matchup with the Denver Broncos. Canales said Bryce Young had a phenomenal week of practice and shared where things stand with Damien Lewis, W",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/agupws9opulghcvvbluc.jpg",
-      "imageAlt": "Dave Canales gives final updates before Sunday's game against the Broncos",
-      "publishedAt": "2026-11-06T17:50:12.000Z",
-      "url": "https://www.panthers.com/video/dave-canales-gives-final-updates-before-sunday-s-game-against-the-broncos",
-      "externalVideoUrl": "https://www.panthers.com/video/dave-canales-gives-final-updates-before-sunday-s-game-against-the-broncos",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0052
     },
     {
       "id": "car_tx_52463b5ccbda",
@@ -6508,177 +6581,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
-    },
-    {
-      "id": "car_vid_1f274237a88c",
-      "type": "video",
-      "title": "Locker Room Sound | Week 9 vs. Denver Broncos",
-      "summary": "Watch wide receiver Jalen Coker, running back Chuba Hubbard, offensive line coach Joe Gilbert and assistant head coach/run game coordinator Harold Goodwin speak to the media after Thursday's practice as the team preps fo",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/ye1fkkbvzddeuj9d6at6.jpg",
-      "imageAlt": "Locker Room Sound | Week 9 vs. Denver Broncos",
-      "publishedAt": "2026-11-05T22:28:14.000Z",
-      "url": "https://www.panthers.com/video/locker-room-sound-week-9-vs-denver-broncos-x5710",
-      "externalVideoUrl": "https://www.panthers.com/video/locker-room-sound-week-9-vs-denver-broncos-x5710",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0008
-    },
-    {
-      "id": "car_vid_1fb7f163460c",
-      "type": "video",
-      "title": "Luke & J-Stew talk Todd Wash, Broncos and Birdies | Golf Catty",
-      "summary": "Grab your clubs! Luke Kuechly and Jonathan Stewart hit the links for Episode 3 of Golf Catty. Luke explains what a coordinator change really means for a defense, from who runs the meeting room to whose voice Devin Lloyd ",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/ygewalkgzaghiwgt3b3a.jpg",
-      "imageAlt": "Luke & J-Stew talk Todd Wash, Broncos and Birdies | Golf Catty",
-      "publishedAt": "2026-11-05T22:23:38.000Z",
-      "url": "https://www.panthers.com/video/luke-j-stew-talk-todd-wash-broncos-and-birdies-golf-catty",
-      "externalVideoUrl": "https://www.panthers.com/video/luke-j-stew-talk-todd-wash-broncos-and-birdies-golf-catty",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
-    },
-    {
-      "id": "car_vid_891c8e225421",
-      "type": "video",
-      "title": "Coordinators Press Conference | Week 9 vs. Denver Broncos",
-      "summary": "Panthers offensive coordinator Brad Idzik and interim defensive coordinator Todd Wash speak to the media Thursday in the week leading up to Sunday's home matchup against the Denver Broncos.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/i2unzoityly6lygyw2mf.jpg",
-      "imageAlt": "Coordinators Press Conference | Week 9 vs. Denver Broncos",
-      "publishedAt": "2026-11-05T16:08:37.000Z",
-      "url": "https://www.panthers.com/video/coordinators-press-conference-week-9-vs-denver-broncos",
-      "externalVideoUrl": "https://www.panthers.com/video/coordinators-press-conference-week-9-vs-denver-broncos",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0008
-    },
-    {
-      "id": "car_vid_09bbe83ac915",
-      "type": "video",
-      "title": "Dave Canales discusses how the defense has responded after making a change at DC",
-      "summary": "Carolina Panthers head coach Dave Canales addresses the media ahead of Week 9.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/zil2bh7z64lg4ppbkell.jpg",
-      "imageAlt": "Dave Canales discusses how the defense has responded after making a change at DC",
-      "publishedAt": "2026-11-04T18:50:39.000Z",
-      "url": "https://www.panthers.com/video/dave-canales-discusses-how-the-defense-has-responded-after-making-a-change-at-dc",
-      "externalVideoUrl": "https://www.panthers.com/video/dave-canales-discusses-how-the-defense-has-responded-after-making-a-change-at-dc",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.003
-    },
-    {
-      "id": "car_vid_ec038bfdab90",
-      "type": "video",
-      "title": "Bryce Young discusses what the Panthers must do to be at their best",
-      "summary": "Carolina Panthers quarterback Bryce Young discusses what the Panthers must do to be at their best.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/wkqvv4nzipgcposhasmv.jpg",
-      "imageAlt": "Bryce Young discusses what the Panthers must do to be at their best",
-      "publishedAt": "2026-11-04T18:44:45.000Z",
-      "url": "https://www.panthers.com/video/bryce-young-discusses-what-the-panthers-must-do-to-be-at-their-best",
-      "externalVideoUrl": "https://www.panthers.com/video/bryce-young-discusses-what-the-panthers-must-do-to-be-at-their-best",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.005
     },
     {
       "id": "car_tx_9fdfcf4a3aab",
@@ -6712,109 +6615,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0029
-    },
-    {
-      "id": "car_vid_3f6c5c39f8bd",
-      "type": "video",
-      "title": "Locker Room Sound | Week 9 vs. Denver Broncos",
-      "summary": "Watch Derrick Brown, Devin Lloyd, Tetairoa McMillan, Nick Scott and Marco Wilson speak to the media after Tuesday's practice as the team preps for this Sunday's home matchup against the Denver Broncos.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/panthers/uputgxj0bhywnodphfgb.jpg",
-      "imageAlt": "Locker Room Sound | Week 9 vs. Denver Broncos",
-      "publishedAt": "2026-11-04T00:08:44.000Z",
-      "url": "https://www.panthers.com/video/locker-room-sound-week-9-vs-denver-broncos",
-      "externalVideoUrl": "https://www.panthers.com/video/locker-room-sound-week-9-vs-denver-broncos",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Video",
-      "reporterId": "panthers_official",
-      "reporterName": "panthers.com Video",
-      "author": "panthers.com Video",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
-    },
-    {
-      "id": "car_tx_13840a7408ef",
-      "type": "tweet",
-      "title": "Panthers roster move: Designated G Brady Christensen to return from injured reserve. Released DB Robert Rochell from the practice squad.",
-      "fullText": "Panthers roster move: Designated G Brady Christensen to return from injured reserve. Released DB Robert Rochell from the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-03T08:00:00.000Z",
-      "url": "https://www.panthers.com/team/transactions/#tx-13840a7408ef",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "Carolina Panthers Official",
-      "author": "Carolina Panthers Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
-    },
-    {
-      "id": "car_tx_2f40afc6afe9",
-      "type": "tweet",
-      "title": "Panthers roster move: Designated OL Brady Christensen to return from injured reserve. Signed LB Mohamoud Diabate to the practice squad. Released LB Maema Njongmeta from the practice squad.",
-      "fullText": "Panthers roster move: Designated OL Brady Christensen to return from injured reserve. Signed LB Mohamoud Diabate to the practice squad. Released LB Maema Njongmeta from the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-02T08:00:00.000Z",
-      "url": "https://www.panthers.com/team/transactions/#tx-2f40afc6afe9",
-      "outletId": "panthers_official",
-      "outletName": "panthers.com Official",
-      "reporterId": "panthers_official",
-      "reporterName": "Carolina Panthers Official",
-      "author": "Carolina Panthers Official",
-      "authorHandle": "@Panthers",
-      "authorProfileUrl": "https://www.panthers.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0025
+      "storyRank": 0.0043
     },
     {
       "id": "car_rss_da688cc105e1",

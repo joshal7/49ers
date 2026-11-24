@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:36:44.622Z",
+  "updatedAt": "2026-11-24T20:08:57.188Z",
   "week": 12,
   "units": [
     {
@@ -21,10 +21,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "4431353",
-              "name": "Xavier Restrepo",
-              "jersey": 87,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431353.png",
+              "playerId": "3925357",
+              "name": "Calvin Ridley",
+              "jersey": 0,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3925357.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -43,10 +43,10 @@
               "isAvailable": true
             },
             {
-              "playerId": "4431353",
-              "name": "Xavier Restrepo",
-              "jersey": 87,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431353.png",
+              "playerId": "3925357",
+              "name": "Calvin Ridley",
+              "jersey": 0,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3925357.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -60,20 +60,20 @@
           "slotLabel": "WR (Z)",
           "baselineChain": [
             {
-              "playerId": "4883647",
-              "name": "Elic Ayomanor",
-              "jersey": 5,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4883647.png",
+              "playerId": "4431268",
+              "name": "Chimere Dike",
+              "jersey": 17,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431268.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "3925357",
-              "name": "Calvin Ridley",
-              "jersey": 0,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3925357.png",
+              "playerId": "4431353",
+              "name": "Xavier Restrepo",
+              "jersey": 87,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431353.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -82,20 +82,20 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4883647",
-              "name": "Elic Ayomanor",
-              "jersey": 5,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4883647.png",
+              "playerId": "4431268",
+              "name": "Chimere Dike",
+              "jersey": 17,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431268.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
-              "playerId": "3925357",
-              "name": "Calvin Ridley",
-              "jersey": 0,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3925357.png",
+              "playerId": "4431353",
+              "name": "Xavier Restrepo",
+              "jersey": 87,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431353.png",
               "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -109,10 +109,10 @@
           "slotLabel": "WR (Slot)",
           "baselineChain": [
             {
-              "playerId": "4431268",
-              "name": "Chimere Dike",
-              "jersey": 17,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431268.png",
+              "playerId": "4883647",
+              "name": "Elic Ayomanor",
+              "jersey": 5,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4883647.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -131,10 +131,10 @@
           ],
           "projectedActiveChain": [
             {
-              "playerId": "4431268",
-              "name": "Chimere Dike",
-              "jersey": 17,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431268.png",
+              "playerId": "4883647",
+              "name": "Elic Ayomanor",
+              "jersey": 5,
+              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4883647.png",
               "baselineRank": 1,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
@@ -482,9 +482,9 @@
               "jersey": 78,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426987.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -514,10 +514,9 @@
               "jersey": 78,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4426987.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -696,21 +695,11 @@
               "isAvailable": true
             },
             {
-              "playerId": "4240657",
-              "name": "Michael Carter",
-              "jersey": 35,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240657.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Prac. Squad",
-              "isAvailable": false
-            },
-            {
               "playerId": "4367567",
               "name": "Julius Chestnut",
               "jersey": 36,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4367567.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
@@ -720,17 +709,17 @@
               "name": "Nicholas Singleton",
               "jersey": 32,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685555.png",
-              "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4428557",
               "name": "Tyjae Spears",
               "jersey": 2,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428557.png",
-              "baselineRank": 5,
+              "baselineRank": 4,
               "playProbabilityPct": 44,
               "statusBadge": "44% • Long Shot",
               "isAvailable": false
@@ -752,39 +741,27 @@
               "name": "Julius Chestnut",
               "jersey": 36,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4367567.png",
-              "baselineRank": 3,
+              "baselineRank": 2,
               "playProbabilityPct": 99,
               "statusBadge": "99% • Full Go",
               "isAvailable": true
-            },
-            {
-              "playerId": "4240657",
-              "name": "Michael Carter",
-              "jersey": 35,
-              "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240657.png",
-              "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Prac. Squad",
-              "isAvailable": false,
-              "demotedDueToInjury": true
             },
             {
               "playerId": "4685555",
               "name": "Nicholas Singleton",
               "jersey": 32,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685555.png",
-              "baselineRank": 4,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "baselineRank": 3,
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4428557",
               "name": "Tyjae Spears",
               "jersey": 2,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428557.png",
-              "baselineRank": 5,
+              "baselineRank": 4,
               "playProbabilityPct": 44,
               "statusBadge": "44% • Long Shot",
               "isAvailable": false,
@@ -879,8 +856,8 @@
               "jersey": 91,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3120464.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -899,9 +876,9 @@
               "jersey": 96,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081785.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -911,8 +888,8 @@
               "jersey": 91,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3120464.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -931,10 +908,9 @@
               "jersey": 96,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5081785.png",
               "baselineRank": 3,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false
@@ -1118,9 +1094,9 @@
               "jersey": 44,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567403.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4371940",
@@ -1150,10 +1126,9 @@
               "jersey": 44,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567403.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             },
             {
               "playerId": "4371940",
@@ -1228,8 +1203,8 @@
               "jersey": 50,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3926229.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1250,8 +1225,8 @@
               "jersey": 50,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3926229.png",
               "baselineRank": 1,
-              "playProbabilityPct": 95,
-              "statusBadge": "95% • Cleared",
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
               "isAvailable": true
             },
             {
@@ -1288,9 +1263,9 @@
               "jersey": 42,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685145.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "projectedActiveChain": [
@@ -1310,10 +1285,9 @@
               "jersey": 42,
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685145.png",
               "baselineRank": 2,
-              "playProbabilityPct": 0,
-              "statusBadge": "0% • Out",
-              "isAvailable": false,
-              "demotedDueToInjury": true
+              "playProbabilityPct": 99,
+              "statusBadge": "99% • Full Go",
+              "isAvailable": true
             }
           ],
           "starterPromoted": false

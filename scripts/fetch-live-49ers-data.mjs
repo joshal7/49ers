@@ -86,18 +86,17 @@ import {
   fetchEspnAthleteDetailsBatch
 } from './lib/liveHealthAndRosterResolver.mjs';
 import {
-  runPlayoffMonteCarlo,
-  computeCalibratedTeamPowerRating,
   computePreseasonPriorsFromHistory,
-  computeLeaguePowerRatings,
-  estimateTeamInjurySpreadAdjustments,
-  computeRootingGuideLeverage,
   normalizeTeamAbbr,
-  NFC_DIVISIONS,
-  ALL_NFL_DIVISIONS,
-  PLAYOFF_MODEL_VERSION
+  ALL_NFL_DIVISIONS
 } from '../src/engine/playoffMonteCarlo.js';
-import { ALL_NFL_TEAMS } from '../src/config/teamRegistry.js';
+import {
+  buildPlayoffPictureForTeam,
+  buildSharedLeaguePlayoffContext,
+  computeAll32TeamInjuryAdjustments,
+  parseEspnStandingsToMap
+} from './lib/leaguePlayoffPipeline.mjs';
+import { ALL_NFL_TEAMS, getTeamByAbbr } from '../src/config/teamRegistry.js';
 import { cleanSensationalistText, scoreContentSignal } from '../src/engine/antiFluffFilter.js';
 import {
   buildNflCalendarForSeasonYear,
@@ -5916,23 +5915,7 @@ async function main() {
     prevTeamQbByAbbr
   });
 
-  // Compute 32-team live injury spread adjustments (QB1 IR/Out/Doubtful + non-QB key starters) from ESPN league injuries + SF health
-  const remCountByTeam = new Map();
-  for (const rg of remaining2026Games) {
-    remCountByTeam.set(rg.home, (remCountByTeam.get(rg.home) || 0) + 1);
-    remCountByTeam.set(rg.away, (remCountByTeam.get(rg.away) || 0) + 1);
-  }
-  const injuryAdjustmentsByTeam = {};
-  const espnTeamNameToAbbr = new Map([
-    ['49ers', 'SF'], ['seahawks', 'SEA'], ['rams', 'LAR'], ['cardinals', 'ARI'],
-    ['lions', 'DET'], ['vikings', 'MIN'], ['packers', 'GB'], ['bears', 'CHI'],
-    ['eagles', 'PHI'], ['cowboys', 'DAL'], ['giants', 'NYG'], ['commanders', 'WAS'],
-    ['buccaneers', 'TB'], ['saints', 'NO'], ['falcons', 'ATL'], ['panthers', 'CAR'],
-    ['bills', 'BUF'], ['dolphins', 'MIA'], ['patriots', 'NE'], ['jets', 'NYJ'],
-    ['ravens', 'BAL'], ['bengals', 'CIN'], ['browns', 'CLE'], ['steelers', 'PIT'],
-    ['texans', 'HOU'], ['colts', 'IND'], ['jaguars', 'JAX'], ['titans', 'TEN'],
-    ['broncos', 'DEN'], ['chiefs', 'KC'], ['raiders', 'LV'], ['chargers', 'LAC']
-  ]);
+  // Compute 32-team live injury spread adjustments & calibrated 10,000-run Monte Carlo via canonical shared league pipeline
   const currentStarterByTeam = {};
   const currentStarterNameByTeam = {};
   for (const g of [...completed2026Games, ...remaining2026Games]) {
@@ -5949,283 +5932,43 @@ async function main() {
       if (g.away_qb_name) currentStarterNameByTeam[a] = g.away_qb_name;
     }
   }
-  const gpByTeam = new Map();
-  for (const g of completed2026Games || []) {
-    const h = normalizeTeamAbbr(g.home);
-    const a = normalizeTeamAbbr(g.away);
-    if (h) gpByTeam.set(h, (gpByTeam.get(h) || 0) + 1);
-    if (a) gpByTeam.set(a, (gpByTeam.get(a) || 0) + 1);
-  }
-  const slugByAbbr = new Map(ALL_NFL_TEAMS.map(t => [normalizeTeamAbbr(t.abbr), t.slug]));
-  const loadDiskRosterForAbbr = abbr => {
-    const slug = slugByAbbr.get(abbr);
-    if (!slug) return [];
-    try {
-      const rpPath = path.join(ROOT, 'data', 'teams', slug, 'roster.json');
-      if (fs.existsSync(rpPath)) {
-        const parsed = JSON.parse(fs.readFileSync(rpPath, 'utf8'));
-        return Array.isArray(parsed?.players) ? parsed.players : [];
-      }
-    } catch {}
-    return [];
-  };
-  for (const teamEntry of espnInjuries?.injuries || []) {
-    const dispLower = String(teamEntry?.displayName || '').toLowerCase();
-    let abbr = null;
-    for (const [nick, code] of espnTeamNameToAbbr.entries()) {
-      if (dispLower.includes(nick)) {
-        abbr = code;
-        break;
-      }
+  const injuryAdjustmentsByTeam = computeAll32TeamInjuryAdjustments({
+    rootDir,
+    completedGames: completed2026Games,
+    remainingGames: remaining2026Games,
+    espnInjuriesRaw: espnInjuries,
+    qbRatingsById,
+    currentStarterNameByTeam,
+    inMemoryHealthByAbbr: {
+      SF: { practiceReport: practiceReportPlayers, irReserve: irTrackerPlayers }
+    },
+    inMemoryRosterByAbbr: {
+      SF: rosterPlayers
     }
-    if (!abbr || abbr === 'SF') continue;
-    const injList = [];
-    const irList = [];
-    const qbStarterName = currentStarterNameByTeam[abbr] || '';
-    for (const item of teamEntry.injuries || []) {
-      const nm = item.athlete?.displayName || '';
-      const pos = item.athlete?.position?.abbreviation || '';
-      const st = String(item.status || '');
-      const row = {
-        name: nm,
-        position: pos,
-        status: st,
-        gameStatus: st,
-        notes: `${item.shortComment || ''} ${item.longComment || ''}`.trim(),
-        isStarter: Boolean(qbStarterName && pos === 'QB' && nm.toLowerCase() === qbStarterName.toLowerCase())
-      };
-      if (/injured reserve|ir|pup|nfi/i.test(st)) irList.push(row);
-      else injList.push(row);
-    }
-    const teamRoster = loadDiskRosterForAbbr(abbr);
-    const adj = estimateTeamInjurySpreadAdjustments({
-      healthData: { injuryReport: injList, irReserve: irList },
-      rosterPlayers: teamRoster,
-      remainingGamesCount: remCountByTeam.get(abbr) || 6,
-      teamGamesPlayed: gpByTeam.get(abbr) ?? null,
-      qbRatingsById
-    });
-    if (Math.abs(adj.totalGameSpreadAdj) > 0.01 || Math.abs(adj.totalSeasonSpreadAdj) > 0.01 || adj.qbStatusNote) {
-      injuryAdjustmentsByTeam[abbr] = adj;
-    }
-  }
-  injuryAdjustmentsByTeam.SF = estimateTeamInjurySpreadAdjustments({
-    healthData: { practiceReport: practiceReportPlayers, irReserve: irTrackerPlayers },
-    rosterPlayers,
-    remainingGamesCount: remCountByTeam.get('SF') || 6,
-    teamGamesPlayed: gpByTeam.get('SF') ?? null,
-    qbRatingsById
   });
 
-  const nfcConf = (espnStandings.children || []).find(
-    c => c.abbreviation === 'NFC' || c.name?.includes('National')
-  );
-  const afcConf = (espnStandings.children || []).find(
-    c => c.abbreviation === 'AFC' || c.name?.includes('American')
-  );
-
-  // Build standings fallback map & run 32-team Hierarchical Bayesian Iterative SRS + MOV-Elo + QB/Injury engine
-  const allStandingsForRatings = {};
-  for (const conf of [nfcConf, afcConf]) {
-    for (const entry of conf?.standings?.entries || []) {
-      const abbr = normalizeTeamAbbr(entry.team?.abbreviation);
-      const getStat = name => entry.stats?.find(s => s.name === name);
-      allStandingsForRatings[abbr] = {
-        wins: Number(getStat('wins')?.value || 0),
-        losses: Number(getStat('losses')?.value || 0),
-        ties: Number(getStat('ties')?.value || 0),
-        pointDiff: Number(getStat('pointDifferential')?.value || 0),
-        pointsFor: Number(getStat('pointsFor')?.value || 0),
-        pointsAgainst: Number(getStat('pointsAgainst')?.value || 0),
-        netEpaPerGame: netEpaByTeam.get(abbr) ?? null
-      };
-    }
-  }
-  const leaguePowerResult = computeLeaguePowerRatings({
+  const standingsMapForPlayoffs = parseEspnStandingsToMap(espnStandings);
+  const sharedPlayoffCtx = buildSharedLeaguePlayoffContext({
+    standingsByAbbr: standingsMapForPlayoffs,
     completedGames: completed2026Games,
     remainingGames: remaining2026Games,
     preseasonPriors,
     weeklyTeamStats: Object.keys(weeklyTeamStats).length > 0 ? weeklyTeamStats : null,
-    standingsByAbbr: allStandingsForRatings,
+    netEpaByTeam,
     qbContext: {
       qbRatingsById,
       currentStarterByTeam
     },
     injuryAdjustmentsByTeam,
-    currentWeek
-  });
-  const leagueRatingsByAbbr = leaguePowerResult.byAbbr;
-
-  const nfcTeamsBaseline = (nfcConf?.standings?.entries || []).map(entry => {
-    const abbr = normalizeTeamAbbr(entry.team?.abbreviation);
-    const getStat = name => entry.stats?.find(s => s.name === name);
-    const wins = Number(getStat('wins')?.value || 0);
-    const losses = Number(getStat('losses')?.value || 0);
-    const ties = Number(getStat('ties')?.value || 0);
-    const pointDiff = Number(getStat('pointDifferential')?.value || 0);
-    const pointsFor = Number(getStat('pointsFor')?.value || 0);
-    const pointsAgainst = Number(getStat('pointsAgainst')?.value || 0);
-    const divStr = getStat('vs. Div.')?.displayValue || getStat('divisionRecord')?.displayValue || '0-0';
-    const confStr = getStat('vs. Conf.')?.displayValue || getStat('conferenceRecord')?.displayValue || '0-0';
-    const homeRec = getStat('Home')?.displayValue || getStat('home')?.displayValue || '';
-    const awayRec = getStat('Road')?.displayValue || getStat('Away')?.displayValue || getStat('away')?.displayValue || '';
-    const streak = getStat('streak')?.displayValue || '';
-    const clincher = getStat('clincher')?.displayValue || '';
-    const playoffSeed = Number(getStat('playoffSeed')?.value || 0) || null;
-    const [dw = 0, dl = 0, dt = 0] = divStr.split('-').map(Number);
-    const [cw = 0, cl = 0, ct = 0] = confStr.split('-').map(Number);
-
-    const netEpaPerGame = netEpaByTeam.get(abbr) ?? null;
-    const lr = leagueRatingsByAbbr[abbr] || null;
-    const sosSpreadAdj = lr?.sosSpreadAdj ?? 0;
-    const powerRating =
-      lr?.powerRating ??
-      computeCalibratedTeamPowerRating({
-        wins,
-        losses,
-        ties,
-        pointDiff,
-        pointsFor,
-        pointsAgainst,
-        netEpaPerGame,
-        sosSpreadAdj,
-        preseasonPriorSpread: preseasonPriors[abbr] ?? 0
-      });
-
-    return {
-      abbr,
-      name: entry.team?.displayName || abbr,
-      logoUrl: resolveTeamLogoUrl(abbr, entry.team),
-      division: NFC_DIVISIONS[abbr] || 'NFC West',
-      wins,
-      losses,
-      ties,
-      divWins: dw,
-      divLosses: dl,
-      divTies: dt,
-      confWins: cw,
-      confLosses: cl,
-      confTies: ct,
-      divRec: divStr,
-      confRec: confStr,
-      homeRec,
-      awayRec,
-      pointsFor,
-      pointsAgainst,
-      pointDiff,
-      streak,
-      clincher,
-      playoffSeed,
-      netEpaPerGame,
-      preseasonPriorSpread: lr?.preseasonPriorSpread ?? preseasonPriors[abbr] ?? 0,
-      preseasonPriorElo: lr?.preseasonPriorElo ?? Math.round(1500 + (preseasonPriors[abbr] ?? 0) * 25),
-      sosSpreadAdj,
-      remainingSosSpread: lr?.remainingSosSpread ?? 0,
-      remainingSosRank: lr?.remainingSosRank ?? 16,
-      qbInjuryEloAdj: lr?.qbInjuryEloAdj ?? 0,
-      nonQbInjuryEloAdj: lr?.nonQbInjuryEloAdj ?? 0,
-      nextGameEloDelta: lr?.nextGameEloDelta ?? 0,
-      ...(lr?.qbStatusNote ? { qbStatusNote: lr.qbStatusNote } : {}),
-      powerRating
-    };
+    currentWeek,
+    liveScoresByMatchup: extractLiveScoreboardMap(espnScoreboard),
+    logoResolver: (abbr, st) => teamRecordsMap.get(abbr)?.logoUrl || st?.logoUrl || resolveTeamLogoUrl(abbr),
+    nowIso: new Date().toISOString()
   });
 
-  // Calibrated AFC power ratings & standings (Hierarchical Bayesian Iterative SRS + MOV-Elo + Preseason Priors + QB/Injuries)
-  const afcRatings = {};
-  const afcStandings = {};
-  const afcNextGameDeltas = {};
-  for (const entry of afcConf?.standings?.entries || []) {
-    const abbr = normalizeTeamAbbr(entry.team?.abbreviation);
-    const getStat = name => entry.stats?.find(s => s.name === name);
-    const wins = Number(getStat('wins')?.value || 0);
-    const losses = Number(getStat('losses')?.value || 0);
-    const ties = Number(getStat('ties')?.value || 0);
-    const pointDiff = Number(getStat('pointDifferential')?.value || 0);
-    const pointsFor = Number(getStat('pointsFor')?.value || 0);
-    const pointsAgainst = Number(getStat('pointsAgainst')?.value || 0);
-    const divRec = getStat('vs. Div.')?.displayValue || getStat('divisionRecord')?.displayValue || '0-0';
-    const confRec = getStat('vs. Conf.')?.displayValue || getStat('conferenceRecord')?.displayValue || '0-0';
-    const homeRec = getStat('Home')?.displayValue || getStat('home')?.displayValue || '';
-    const awayRec = getStat('Road')?.displayValue || getStat('Away')?.displayValue || getStat('away')?.displayValue || '';
-    const streak = getStat('streak')?.displayValue || '';
-    const clincher = getStat('clincher')?.displayValue || '';
-    const playoffSeed = Number(getStat('playoffSeed')?.value || 0) || null;
-    const lr = leagueRatingsByAbbr[abbr] || null;
-    const ratingVal =
-      lr?.powerRating ??
-      computeCalibratedTeamPowerRating({
-        wins,
-        losses,
-        ties,
-        pointDiff,
-        pointsFor,
-        pointsAgainst,
-        netEpaPerGame: netEpaByTeam.get(abbr) ?? null,
-        sosSpreadAdj: lr?.sosSpreadAdj ?? 0,
-        preseasonPriorSpread: preseasonPriors[abbr] ?? 0
-      });
-    afcStandings[abbr] = {
-      wins,
-      losses,
-      ties,
-      pointDiff,
-      pointsFor,
-      pointsAgainst,
-      divRec,
-      confRec,
-      homeRec,
-      awayRec,
-      streak,
-      clincher,
-      playoffSeed,
-      netEpaPerGame: netEpaByTeam.get(abbr) ?? null,
-      preseasonPriorSpread: lr?.preseasonPriorSpread ?? preseasonPriors[abbr] ?? 0,
-      preseasonPriorElo: lr?.preseasonPriorElo ?? Math.round(1500 + (preseasonPriors[abbr] ?? 0) * 25),
-      sosSpreadAdj: lr?.sosSpreadAdj ?? 0,
-      remainingSosSpread: lr?.remainingSosSpread ?? 0,
-      remainingSosRank: lr?.remainingSosRank ?? 16,
-      qbInjuryEloAdj: lr?.qbInjuryEloAdj ?? 0,
-      nonQbInjuryEloAdj: lr?.nonQbInjuryEloAdj ?? 0,
-      nextGameEloDelta: lr?.nextGameEloDelta ?? 0,
-      ...(lr?.qbStatusNote ? { qbStatusNote: lr.qbStatusNote } : {})
-    };
-    afcRatings[abbr] = ratingVal;
-    afcNextGameDeltas[abbr] = lr?.nextGameEloDelta ?? 0;
-  }
-
-  const baselineMonteCarlo = runPlayoffMonteCarlo({
-    nfcTeams: nfcTeamsBaseline,
-    afcPowerRatings: afcRatings,
-    afcRatings,
-    afcStandings,
-    otherConferenceNextGameDeltas: afcNextGameDeltas,
-    completedGames: completed2026Games,
-    remainingGames: remaining2026Games,
-    iterations: 10000,
-    seed: 492026
-  });
-  if (Array.isArray(baselineMonteCarlo.allTeamOdds)) {
-    baselineMonteCarlo.allTeamOdds = baselineMonteCarlo.allTeamOdds.map(t => ({
-      ...t,
-      logoUrl: teamRecordsMap.get(t.abbr)?.logoUrl || resolveTeamLogoUrl(t.abbr)
-    }));
-  }
-
-  const rootingLeverage = computeRootingGuideLeverage(
-    {
-      nfcTeams: nfcTeamsBaseline,
-      afcPowerRatings: afcRatings,
-      afcRatings,
-      afcStandings,
-      completedGames: completed2026Games,
-      remainingGames: remaining2026Games
-    },
-    12
-  ).map(g => ({
-    ...g,
-    awayLogoUrl: teamRecordsMap.get(g.away)?.logoUrl || resolveTeamLogoUrl(g.away),
-    homeLogoUrl: teamRecordsMap.get(g.home)?.logoUrl || resolveTeamLogoUrl(g.home)
-  }));
+  const sfPlayoffPicture = buildPlayoffPictureForTeam(getTeamByAbbr('SF'), sharedPlayoffCtx);
+  const baselineMonteCarlo = sfPlayoffPicture.baselineSimulation;
+  const nfcTeamsBaseline = sfPlayoffPicture.simulatorInputs.nfcTeams;
 
   // Build current-season Draft Class & Next-Year Draft Prep + Live Tankathon Pick Inventory
   const sfDraft2026Rows = draftPicksRows.filter(
@@ -6233,7 +5976,7 @@ async function main() {
   );
   let existingSfDraftClass = null;
   try {
-    const existingSeasonalPath = path.join(ROOT, 'data', 'seasonal.json');
+    const existingSeasonalPath = path.join(rootDir, 'data', 'seasonal.json');
     if (fs.existsSync(existingSeasonalPath)) {
       existingSfDraftClass = JSON.parse(fs.readFileSync(existingSeasonalPath, 'utf8'))?.draftClass2026 || null;
     }
@@ -6977,47 +6720,7 @@ async function main() {
   writeCleanJson(path.join(dataDir, 'seasonal.json'), {
     updatedAt: nowIso,
     tradeWarRoom,
-    playoffPicture: {
-      sources: [
-        { label: 'ESPN NFL Standings', url: 'https://www.espn.com/nfl/standings' },
-        { label: 'NFL Official Playoff Picture', url: 'https://www.nfl.com/standings/playoff-picture' }
-      ],
-      baselineSimulation: baselineMonteCarlo,
-      rootingLeverage,
-      liveScoresByMatchup: liveScoreboardMap,
-      seedPathCards: [
-        {
-          target: '#1 Seed & First-Round Bye',
-          currentProbPct: baselineMonteCarlo.sfOdds?.seed1ByePct ?? 36.9,
-          pathSummary: `At ${sfStandingsDetail.record} (${sfStandingsDetail.divRecord} NFC West, ${sfStandingsDetail.confRecord} NFC; ${baselineMonteCarlo.sfOdds?.projectedWins ?? 12.0} projected wins), SF leads a deep NFC field at ${baselineMonteCarlo.sfOdds?.seed1ByePct ?? 36.9}% in Empirical-Bayes + EPA + SOS simulations—ahead of Minnesota, Chicago, and Detroit—with direct head-to-head NFC tiebreaker leverage across its ${remainingRegGamesCount} remaining games.`
-        },
-        {
-          target: 'NFC West Division Title (Seeds #1–#4)',
-          currentProbPct: baselineMonteCarlo.sfOdds?.winDivisionPct ?? 83.7,
-          pathSummary: `Sitting at ${sfStandingsDetail.record} overall and ${sfStandingsDetail.divRecord} inside the NFC West (${sfStandingsDetail.pointDiff >= 0 ? '+' : ''}${sfStandingsDetail.pointDiff} pt diff), banked divisional head-to-head tiebreakers anchor NFC West division equity at ${baselineMonteCarlo.sfOdds?.winDivisionPct ?? 83.7}%.`
-        },
-        {
-          target: 'Playoff Berth (Seeds #1–#7)',
-          currentProbPct: baselineMonteCarlo.sfOdds?.makePlayoffsPct ?? 93.7,
-          pathSummary: `With ${sfStandingsDetail.wins} wins banked through ${gamesPlayedTotal} games (${sfStandingsDetail.confRecord} conference record), reaching 10+ total wins across the remaining ${remainingRegGamesCount} games yields ${baselineMonteCarlo.sfOdds?.makePlayoffsPct ?? 93.7}% overall postseason probability.`
-        }
-      ],
-      simulatorInputs: {
-        modelVersion: PLAYOFF_MODEL_VERSION,
-        lastSimulatedAt: nowIso,
-        nfcTeams: nfcTeamsBaseline,
-        afcPowerRatings: afcRatings,
-        afcRatings,
-        afcStandings,
-        otherConferenceNextGameDeltas: afcNextGameDeltas,
-        preseasonPriors,
-        weeklyTeamStats,
-        injuryAdjustmentsByTeam,
-        completedGames: completed2026Games,
-        remainingGames: remaining2026Games
-      },
-      lastSimulatedAt: nowIso
-    },
+    playoffPicture: sfPlayoffPicture,
     draftPrep2027,
     draftClass2026: draft2026Payload
   });

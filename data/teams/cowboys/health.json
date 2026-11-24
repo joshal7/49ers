@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:34:26.098Z",
+  "updatedAt": "2026-11-24T20:08:00.706Z",
   "week": 12,
   "byeWeek": 14,
   "sourceUrl": "https://www.dallascowboys.com/team/injury-report/",
@@ -9,31 +9,6 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
-    {
-      "playerId": "4242355",
-      "name": "Jake Ferguson",
-      "position": "TE",
-      "jersey": 87,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242355.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
     {
       "playerId": "4685263",
       "name": "Tyler Booker",
@@ -57,7 +32,7 @@
       "factors": [
         "Officially ruled Out on weekly game status report"
       ],
-      "beatComment": "inactive"
+      "beatComment": "out"
     },
     {
       "playerId": "3929850",
@@ -72,67 +47,42 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Concussion",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 18,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "18% • Doubtful",
       "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Remains in early stages of NFL 5-Step Concussion Protocol"
       ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
     },
     {
-      "playerId": "2980097",
-      "name": "Jonathan Bullard",
-      "position": "DT",
-      "jersey": 90,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2980097.png",
+      "playerId": "4242355",
+      "name": "Jake Ferguson",
+      "position": "TE",
+      "jersey": 87,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242355.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "DNP",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "injuryType": "Knee",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 28,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "playBadgeLabel": "28% • Long Shot",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Did Not Participate (DNP) on Wednesday; remains sidelined from practice"
       ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4685266",
-      "name": "Jaishawn Barham",
-      "position": "LB",
-      "jersey": 55,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685266.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Hip",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Barham didn't practice on Friday due to hip and groin issues. He was listed as questionable for Sunday's meeting with the Titans, though he has since been ruled out. With the rookie unavailable to play in Week 11, DeMarvion Overshown could see more snaps."
+      "beatComment": "Per Todd Archer of ESPN.com, Ferguson was present for the Cowboys' walkthrough Monday, but he wouldn't have been able to take any reps had the team held a traditional practice session. Ferguson, who has missed two straight contests, will have two more chances to potentially upgrade his practice activity this week before the Cowboys make a call on his status for Thursday's game against the Eagles."
     },
     {
       "playerId": "4426485",
@@ -147,42 +97,17 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Ankle",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 47,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "47% • Long Shot",
       "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed 2 consecutive games without practice participation — awaiting Wednesday report"
       ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4428914",
-      "name": "Dee Winters",
-      "position": "LB",
-      "jersey": 53,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428914.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 45,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "45% • Long Shot",
-      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Missed prior game without practice participation — awaiting Wednesday report"
-      ],
-      "beatComment": "Winters has hurt in the second quarter and had to be helped off the field by trainers. He was initially deemed questionable to return before being ruled out in the second half. Winters will finish the game with two tackles (both solo). The Cowboys next play on Thanksgiving against Philadelphia, and it's unclear if Winters will be able to suit up for that contest."
+      "beatComment": "questionable"
     },
     {
       "playerId": "4043089",
@@ -213,29 +138,54 @@
       "beatComment": "Thompson was a full participant in practice both Thursday and Friday, but the veteran safety is not quite ready to be activated from injured reserve. He'll end up missing an eighth consecutive game due to a hamstring injury he picked up in Week 3 against the Ravens. Thompson's next opportunity to play is Week 12 against the Eagles on Thanksgiving Day."
     },
     {
-      "playerId": "4367210",
-      "name": "Otito Ogbonnia",
-      "position": "DT",
-      "jersey": 91,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4367210.png",
+      "playerId": "4428914",
+      "name": "Dee Winters",
+      "position": "LB",
+      "jersey": 53,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428914.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Finger",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
+      "injuryType": "Knee",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 81,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "playBadgeLabel": "81% • GTD",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
-        "Cleared without restrictive game-day designation"
+        "Questionable tag adjusted by player career prior (81%)"
       ],
-      "beatComment": "Ogbonnia suffered a finger injury in the second quarter and was subsequently deemed questionable to return. However, he was able to get back on the field after halftime. Ogbonnia will thus continue to play a key role along Dallas' defensive line."
+      "beatComment": "The veteran linebacker was injured in Sunday's win over the Titans and was unable to return to the contest. Now on a short week ahead of Thursday's game against the Eagles, Winters will be up against the clock to get ready for the Thanksgiving contest. DeMarvion Overshown would likely draw the start in Winters' place if the latter is unable to play."
+    },
+    {
+      "playerId": "4685266",
+      "name": "Jaishawn Barham",
+      "position": "LB",
+      "jersey": 55,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685266.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Hip",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 81,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "81% • GTD",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Questionable tag adjusted by player career prior (81%)"
+      ],
+      "beatComment": "questionable"
     },
     {
       "playerId": "4683848",
@@ -261,31 +211,6 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Ezeiruaku didn't play against the 49ers in Week 10 due to an ankle injury. He's avoided an injury tag for Week 11 after logging a full practice Friday, and his return means less rotational snaps at the edge rusher position will be available for James Houston and Von Miller. Ezeiruaku has 32 tackles (16 solo), including 2.5 sacks, and one forced fumble across nine regular-season games."
-    },
-    {
-      "playerId": "4372096",
-      "name": "Luke Schoonmaker",
-      "position": "TE",
-      "jersey": 86,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4372096.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Illness",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Schoonmaker was unable to practice Thursday or Friday because he was under the weather, but the tight end appears to be feeling well enough to suit up Sunday. Meanwhile, Jake Ferguson (knee/ankle) will miss his second straight game, opening the door for Schoonmaker to potentially log a larger workload than usual on offense. With Ferguson out last Sunday versus San Francisco, Schoonmaker posted a season-high 35 percent offensive snap share and caught one of two targets for 12 yards."
     }
   ],
   "irAndReserveTracker": [
@@ -354,28 +279,6 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
       "beatNote": "Placed on Injured Reserve (Knee - ACL + MCL) ahead of Week 10; must miss at least 4 games (earliest eligible Week 15)."
-    },
-    {
-      "playerId": "4248911",
-      "name": "DaRon Bland",
-      "position": "CB",
-      "jersey": 26,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4248911.png",
-      "injuryType": "Ankle (Sprain)",
-      "status": "Injured Reserve",
-      "isSeasonEnding": false,
-      "isPracticeWindowOpen": false,
-      "isPracticeWindowExpected": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "placedBeforeWeek": 11,
-      "earliestEligibleWeek": 16,
-      "projectedReturnWeek": "Est. Week 16 (Dec 27)",
-      "byeWeekNote": "Week 14 Bye excluded from NFL 4-game minimum count",
-      "playProbabilityPct": 0,
-      "playBadgeLabel": "0% • IR",
-      "beatNote": "Bland was expected to miss multiple games due to an ankle injury that he sustained in Week 10 against the 49ers. His placement on IR means he's required to miss at least four games, so the earliest he can return is Week 16 against the Jaguars on Sunday, Dec. 27. Ameer Speed and Cobie Durant are both in line for larger roles in Dallas' secondary in Bland's absence."
     },
     {
       "playerId": "4702577",
@@ -464,6 +367,28 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • IR",
       "beatNote": "4-game minimum satisfied on Injured Reserve (Neck); awaiting 21-day practice window designation."
+    },
+    {
+      "playerId": "4248911",
+      "name": "DaRon Bland",
+      "position": "CB",
+      "jersey": 26,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4248911.png",
+      "injuryType": "Ankle (Sprain)",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 11,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "Bland was placed on injured reserve Sunday after suffering an ankle injury during the Week 10 loss to the 49ers, but the injury is not expected to be season-ending. The earliest Bland will be eligible to make his return is the Week 16 matchup versus Jacksonville, and Ameer Speed and Cobie Durant should continue to see increased playing time in his absence."
     },
     {
       "playerId": "4242442",

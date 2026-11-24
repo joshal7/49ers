@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:34:47.615Z",
+  "updatedAt": "2026-11-24T20:08:08.884Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/tampa-bay-buccaneers",
   "spotracUrl": "https://www.spotrac.com/nfl/tampa-bay-buccaneers/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 316695507,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 301405099,
+      "totalCapLiabilities": 301770699,
       "top51": 274825685,
-      "teamCapSpace": 15290408,
-      "otcRawTeamCapSpace": 15290408,
-      "effectiveCapSpace": 15290408,
-      "activeCapSpending": 283200100,
-      "offenseSpend": 164503351,
+      "teamCapSpace": 14924808,
+      "otcRawTeamCapSpace": 14924808,
+      "effectiveCapSpace": 14924808,
+      "activeCapSpending": 283565700,
+      "offenseSpend": 164868951,
       "defenseSpend": 110821749,
       "specialSpend": 7875000,
       "deadMoneyTotal": 18204999,
       "injuredReserveTotal": 4855555,
-      "practiceSquadTotal": 4053583,
+      "practiceSquadTotal": 4419183,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 8909138,
+      "reserveAndPsTotal": 9274738,
       "topDeadMoneyEntries": [
         {
           "name": "Mike Evans",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 73
+      "totalSignedCount": 75
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 332433037,
       "teamCapSpace": -6064022,
       "otcRawTeamCapSpace": -6064022,
-      "effectiveCapSpace": -29536923,
+      "effectiveCapSpace": -30616617,
       "activeCapSpending": 332433037,
       "offenseSpend": 209106288,
       "defenseSpend": 123326749,
@@ -251,7 +251,7 @@
     }
   },
   "blueprint": {
-    "summary": "Tampa Bay Buccaneers hold $15.29M in 2026 OverTheCap space and $-6.06M projected for 2027."
+    "summary": "Tampa Bay Buccaneers hold $14.92M in 2026 OverTheCap space and $-6.06M projected for 2027."
   },
   "players": [
     {

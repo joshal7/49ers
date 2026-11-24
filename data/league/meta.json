@@ -1,9 +1,11 @@
 {
-  "updatedAt": "2026-11-23T06:33:25.506Z",
+  "updatedAt": "2026-11-24T20:49:57.934Z",
   "seasonYear": 2026,
   "standingsCount": 32,
-  "completedLeagueGames": 162,
-  "remainingLeagueGames": 110,
+  "completedLeagueGames": 163,
+  "remainingLeagueGames": 109,
   "leagueTradesCount": 22,
-  "sellerTradeCandidates": 154
+  "sellerTradeCandidates": 155,
+  "playoffModelVersion": "2026.3-hb-srs-var",
+  "syncedTeamsCount": 32
 }

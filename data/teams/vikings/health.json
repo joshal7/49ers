@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:33:56.506Z",
+  "updatedAt": "2026-11-24T20:07:46.730Z",
   "week": 12,
   "byeWeek": 6,
   "sourceUrl": "https://www.vikings.com/team/injury-report/",
@@ -9,31 +9,6 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
-    {
-      "playerId": "4044540",
-      "name": "Isaiah Rodgers",
-      "position": "CB",
-      "jersey": 2,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4044540.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Quadriceps",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Every-down starter workload (83% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Rodgers will be forced to miss Week 11 while nursing a quadriceps injury that forced him to log back-to-back limited practices to end the week. In his absence, Charles Demmings and Zemaiah Vaughn will both be in line to see increased opportunities in the secondary versus San Francisco."
-    },
     {
       "playerId": "4429205",
       "name": "Jordan Addison",
@@ -47,42 +22,17 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Thumb",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Doubtful",
+      "playProbabilityPct": 11,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "11% • Doubtful",
       "archetypeNote": "Every-down starter workload (92% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Official Doubtful tag (NFL historical base ~10–14%)"
       ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4568007",
-      "name": "Jay Ward",
-      "position": "S",
-      "jersey": 24,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568007.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Knee",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "The fourth-year safety has appeared in nine games this season but has logged just 17 snaps on defense while playing 162 on special teams."
+      "beatComment": "Addison injured his thumb during a Week 10 practice and was sidelined for the Vikings' Nov. 15 win over the Packers before undergoing surgery this past week. He remained out for Sunday's 35-10 loss to the 49ers and looks headed for a third straight absence this weekend, but Addison avoided placement on injured reserve and could have a realistic chance at returning to action in Week 13. Jauan Jennings and Tai Felton are likely to be the main beneficiaries from playing-time standpoints while Addison is unavailable."
     },
     {
       "playerId": "3917315",
@@ -97,42 +47,70 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Hamstring",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 42,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "42% • Long Shot",
       "archetypeNote": "Dual-threat QB; rushing workload can be scaled when managing lower-extremity tags.",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed 3 consecutive games without practice participation — awaiting Wednesday report",
+        "Matches player's documented chronic history (Hamstring)",
+        "Soft-tissue re-aggravation caution (Hamstring)"
       ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
     },
     {
-      "playerId": "4573398",
-      "name": "Max Brosmer",
-      "position": "QB",
-      "jersey": 12,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4573398.png",
+      "playerId": "4044540",
+      "name": "Isaiah Rodgers",
+      "position": "CB",
+      "jersey": 2,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4044540.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "injuryType": "Quadriceps",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 77,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "77% • GTD",
+      "archetypeNote": "Every-down starter workload (83% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Questionable tag adjusted by player career prior (82%)",
+        "Soft-tissue re-aggravation caution (Quadriceps)"
+      ],
+      "beatComment": "questionable"
+    },
+    {
+      "playerId": "4568007",
+      "name": "Jay Ward",
+      "position": "S",
+      "jersey": 24,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4568007.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Knee",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 78,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "78% • GTD",
       "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Questionable tag adjusted by player career prior (78%)"
       ],
-      "beatComment": "Brosmer will operate as the team's No. 3 option at QB for the second straight week. He will only be eligible to enter the game if both starter Kirk Cousins and primary backup Carson Wentz are forced out of the contest."
+      "beatComment": "questionable"
     },
     {
       "playerId": "3133487",
@@ -153,7 +131,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Veteran starter profile (8th NFL season, 81% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "archetypeNote": "Veteran starter profile (8th NFL season, 79% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
@@ -203,36 +181,11 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (94% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Every-down starter workload (91% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Darrisaw was sidelined with a shoulder injury prior to halftime, but he was able to return to the field following the break. The 27-year-old is back in his starting role at left tackle against the 49ers."
-    },
-    {
-      "playerId": "3728281",
-      "name": "Blake Cashman",
-      "position": "LB",
-      "jersey": 51,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3728281.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Concussion",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Veteran starter profile (8th NFL season, 95% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Cashman will end up missing one game (Week 10 against the Packers) while in the league's concussion protocol, and his return means Ivan Pace will revert to a rotational role at inside linebacker for Sunday's contest. Cashman has accumulated 76 tackles (41 solo), including a career-high-tying 4.5 sacks, seven pass defenses and one fumble recovery across eight regular-season games."
     },
     {
       "playerId": "4046537",
@@ -253,36 +206,11 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Veteran starter profile (7th NFL season, 99% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "archetypeNote": "Veteran starter profile (7th NFL season, 98% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Metellus was added to the Vikings' practice report Friday due to a shoulder issue, but the injury won't prevent the seventh-year pro from suiting up for Sunday's NFC North showdown. He has 58 tackles (29 solo), including 0.5 sacks, and four pass defenses through eight regular-season games."
-    },
-    {
-      "playerId": "2573079",
-      "name": "Carson Wentz",
-      "position": "QB",
-      "jersey": 11,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2573079.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Veteran starter profile (11th NFL season, 89% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Kyler Murray (hamstring) is out for another week but may eventually replace Wentz as the No. 2 quarterback. Wentz's miserable performance against the Bills last week likely was a factor in the Vikings trading for Cousins."
     },
     {
       "playerId": "4360637",

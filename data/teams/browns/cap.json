@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:36:04.532Z",
+  "updatedAt": "2026-11-24T20:08:40.209Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/cleveland-browns",
   "spotracUrl": "https://www.spotrac.com/nfl/cleveland-browns/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 338447347,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 326200062,
+      "totalCapLiabilities": 326310062,
       "top51": 193211511,
-      "teamCapSpace": 12247285,
-      "otcRawTeamCapSpace": 12247285,
-      "effectiveCapSpace": 12247285,
-      "activeCapSpending": 204529634,
-      "offenseSpend": 104630344,
+      "teamCapSpace": 12137285,
+      "otcRawTeamCapSpace": 12137285,
+      "effectiveCapSpace": 12137285,
+      "activeCapSpending": 204639634,
+      "offenseSpend": 104740344,
       "defenseSpend": 96208040,
       "specialSpend": 3691250,
       "deadMoneyTotal": 121670428,
       "injuredReserveTotal": 11721606,
-      "practiceSquadTotal": 3282933,
+      "practiceSquadTotal": 3392933,
       "pupTotal": 4772765,
       "nfiTotal": 108149,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 19885453,
+      "reserveAndPsTotal": 19995453,
       "topDeadMoneyEntries": [
         {
           "name": "Joel Bitonio",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 79
+      "totalSignedCount": 80
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 214094824,
       "teamCapSpace": 61248914,
       "otcRawTeamCapSpace": 61248914,
-      "effectiveCapSpace": 42177414,
+      "effectiveCapSpace": 42103996,
       "activeCapSpending": 214094824,
       "offenseSpend": 108997075,
       "defenseSpend": 105097749,
@@ -265,7 +265,7 @@
     }
   },
   "blueprint": {
-    "summary": "Cleveland Browns hold $12.25M in 2026 OverTheCap space and $61.25M projected for 2027."
+    "summary": "Cleveland Browns hold $12.14M in 2026 OverTheCap space and $61.25M projected for 2027."
   },
   "players": [
     {

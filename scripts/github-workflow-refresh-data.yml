@@ -45,14 +45,14 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Run Live 49ers Data Ingestion & Grounded AI Synthesis Pipeline
+      - name: Run Unified Live 49ers + All-32-Team Playoff Seasonal Sync Pipeline
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_NEWS_API_KEY: ${{ secrets.GEMINI_NEWS_API_KEY }}
           WORKER_BASE_URL: ${{ secrets.WORKER_BASE_URL }}
           GROUP_PASSCODE: ${{ secrets.GROUP_PASSCODE }}
           GEMINI_SYNTHESIS_MODEL: auto
-        run: node scripts/fetch-live-49ers-data.mjs
+        run: node scripts/refresh-all-nfl-teams.mjs --sf-fast
 
       - name: Validate JSON Integrity & Unit Engine Suite Before Commit
         run: |
@@ -82,12 +82,12 @@ jobs:
         run: |
           git config user.name "49ers-faithful-bot"
           git config user.email "49ers-faithful-bot@users.noreply.github.com"
-          git add data/*.json data/podcasts/index.json
+          git add data/*.json data/league/*.json data/teams/*/seasonal.json data/podcasts/index.json
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0
           fi
-          git commit -m "chore(data): auto-refresh live 49ers roster, injuries, cap, schedule & beat wire"
+          git commit -m "chore(data): auto-refresh live 49ers feeds & synced all-32-team playoff seasonal data"
           git pull --rebase --autostash origin main
           git push origin HEAD:main
 

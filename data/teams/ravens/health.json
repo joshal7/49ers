@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:35:50.138Z",
+  "updatedAt": "2026-11-24T20:08:34.892Z",
   "week": 12,
   "byeWeek": 13,
   "sourceUrl": "https://www.baltimoreravens.com/team/injury-report/",
@@ -9,31 +9,6 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
-    {
-      "playerId": "3126356",
-      "name": "Marlon Humphrey",
-      "position": "CB",
-      "jersey": 44,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Personal",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Veteran starter profile (10th NFL season, 79% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
     {
       "playerId": "4035245",
       "name": "Nnamdi Madubuike",
@@ -47,17 +22,18 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Hamstring",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 41,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "41% • Long Shot",
       "archetypeNote": "Veteran starter profile (7th NFL season, 70% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed prior game without practice participation — awaiting Wednesday report",
+        "Soft-tissue re-aggravation caution (Hamstring)"
       ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
     },
     {
       "playerId": "3858276",
@@ -72,24 +48,24 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Knee",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 50,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "50% • GTD",
       "archetypeNote": "Veteran starter profile (7th NFL season, 81% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed 5 consecutive games without practice participation — awaiting Wednesday report"
       ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
     },
     {
-      "playerId": "4685736",
-      "name": "Emery Jones Jr.",
-      "position": "OT",
-      "jersey": 51,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685736.png",
+      "playerId": "3126356",
+      "name": "Marlon Humphrey",
+      "position": "CB",
+      "jersey": 44,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3126356.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
@@ -97,92 +73,18 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 60,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "playBadgeLabel": "60% • GTD",
+      "archetypeNote": "Veteran starter profile (10th NFL season, 79% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed prior game without practice participation — awaiting Wednesday report",
+        "Beat/podium consensus (beat report): on track to suit up"
       ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "5088338",
-      "name": "Elijah Sarratt",
-      "position": "WR",
-      "jersey": 13,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5088338.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Sarratt has been active for two games this season, most recently appearing in Week 4 versus the Titans. Since then, he's been held out. His next opportunity to play will come in Week 12 versus the Texans."
-    },
-    {
-      "playerId": "4685526",
-      "name": "Adam Randall",
-      "position": "RB",
-      "jersey": 23,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4685526.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Randall was recently reinstated from injured reserve. However, with Derrick Henry, Justice Hill and Rasheen Ali available versus the Panthers, Randall will be inactive."
-    },
-    {
-      "playerId": "4428512",
-      "name": "Kedon Slovis",
-      "position": "QB",
-      "jersey": 18,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428512.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Slovis will be inactive once again. However, if Jacoby Brissett and Joe Fagnano exit Sunday's meeting with Carolina due to an injury, illness or ejection, Slovis will be available to play."
+      "beatComment": "The Ravens sent Humphrey home Thursday and made him a healthy inactive for this past Sunday's 35-33 loss to the Panthers after he made a negative comment about the city of Baltimore on his podcast. Though Humphrey is expected to be a full participant in practice throughout Week 12, Minter suggested that he'll determine at the end of the week whether he wants to make the 30-year-old cornerback available Sunday."
     },
     {
       "playerId": "4832793",
@@ -203,7 +105,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (86% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Every-down starter workload (88% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],

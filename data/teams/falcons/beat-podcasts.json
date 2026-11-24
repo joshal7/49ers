@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T06:35:03.432Z",
+  "updatedAt": "2026-11-24T20:08:13.996Z",
   "windowDays": 7,
-  "totalEpisodes": 8,
+  "totalEpisodes": 9,
   "shows": [
     {
       "id": "falcons_locked_on_falcons",
@@ -25,7 +25,7 @@
       "feedUrl": "https://feeds.simplecast.com/GVQXOdsn",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/bleav-in-falcons/id1563021906?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/a8/5a/95/a85a950a-11a1-8778-9033-56016efacb05/mza_12751434438582302513.jpg/600x600bb.jpg",
-      "episodeCount7d": 0
+      "episodeCount7d": 1
     },
     {
       "id": "falcons_outta_your_falcon_mind",
@@ -41,6 +41,46 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_falcons_bleav_in_falcons_1000803818771",
+      "trackId": 1000803818771,
+      "collectionId": 1563021906,
+      "showId": "falcons_bleav_in_falcons",
+      "showName": "Bleav in Falcons",
+      "showFullTitle": "Bleav in Falcons",
+      "hosts": "Bleav Network",
+      "network": "Bleav",
+      "title": "Kirk Cousins Revenge Game & Are the Falcons TANKING?! | Falcons vs Vikings Preview",
+      "summary": "Coming off the bye week at 3-7, Ovie Mughelli and John Abraham break down the state of the Atlanta Falcons following the shocking mid-season trade of Jessie Bates and debate whether the franchise has officially entered tank mode. Ahead of Sunday's showdown against the Minnes",
+      "publishedAt": "2026-11-24T15:19:00.000Z",
+      "durationMinutes": 26,
+      "durationDisplay": "26 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/a8/5a/95/a85a950a-11a1-8778-9033-56016efacb05/mza_12751434438582302513.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/kirk-cousins-revenge-game-are-the-falcons-tanking/id1563021906?i=1000803818771&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/bleav-in-falcons/id1563021906?uo=4",
+      "feedUrl": "https://feeds.simplecast.com/GVQXOdsn",
+      "audioStreamUrl": "https://pscrb.fm/rss/p/mgln.ai/e/1385/injector.simplecastaudio.com/e2862340-1358-45e8-a196-bb786adb04f1/episodes/eaba70c7-68cc-45fc-83ba-d2c214e1c738/audio/128/default.mp3?aid=rss_feed&awCollectionId=e2862340-1358-45e8-a196-bb786adb04f1&awEpisodeId=eaba70c7-68cc-45fc-83ba-d2c214e1c738&feed=GVQXOdsn"
+    },
+    {
+      "id": "pod_falcons_locked_on_falcons_1000803720983",
+      "trackId": 1000803720983,
+      "collectionId": 1147245791,
+      "showId": "falcons_locked_on_falcons",
+      "showName": "Locked On Falcons",
+      "showFullTitle": "Locked On Falcons - Daily Podcast On The Atlanta Falcons",
+      "hosts": "Locked On Podcast Network, Aaron Freeman",
+      "network": "Locked On Podcast Network, Aaron Freeman",
+      "title": "Kirk Cousins vs. Michael Penix: Is the Atlanta Falcons' Right QB on the WRONG Sideline?",
+      "summary": "Atlanta Falcons vs. Kirk Cousins and the Vikings: was cutting Kirk the mistake, or drafting Michael Penix? Charles McDonald (The Athletic Live) joins Aaron Freeman to discuss whether the Falcons moving on from Cousins was right decision and whether drafting Penix at No. 8 wa",
+      "publishedAt": "2026-11-24T05:00:00.000Z",
+      "durationMinutes": 31,
+      "durationDisplay": "31 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/11/ee/a8/11eea849-6a88-84b7-9ee3-db85845c55b0/mza_15384080943245434848.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/kirk-cousins-vs-michael-penix-is-the-atlanta-falcons/id1147245791?i=1000803720983&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-falcons-daily-podcast-on-the-atlanta-falcons/id1147245791?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/d31f4c/feeds.simplecast.com/l96cnojt",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d31f4c/lockedon.simplecastaudio.com/5982be9c-a349-4b02-ae14-690ca847153b/episodes/589a2082-c7ba-4056-9782-9d4c6b489c8b/audio/128/default.mp3?aid=rss_feed&awCollectionId=5982be9c-a349-4b02-ae14-690ca847153b&awEpisodeId=589a2082-c7ba-4056-9782-9d4c6b489c8b&feed=l96cnojt"
+    },
     {
       "id": "pod_falcons_locked_on_falcons_1000803498471",
       "trackId": 1000803498471,
@@ -180,26 +220,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-falcons-daily-podcast-on-the-atlanta-falcons/id1147245791?uo=4",
       "feedUrl": "https://rss.pdrl.fm/d31f4c/feeds.simplecast.com/l96cnojt",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d31f4c/lockedon.simplecastaudio.com/5982be9c-a349-4b02-ae14-690ca847153b/episodes/44f56edc-fbae-47fd-8513-d7f3fac26114/audio/128/default.mp3?aid=rss_feed&awCollectionId=5982be9c-a349-4b02-ae14-690ca847153b&awEpisodeId=44f56edc-fbae-47fd-8513-d7f3fac26114&feed=l96cnojt"
-    },
-    {
-      "id": "pod_falcons_locked_on_falcons_1000802405397",
-      "trackId": 1000802405397,
-      "collectionId": 1147245791,
-      "showId": "falcons_locked_on_falcons",
-      "showName": "Locked On Falcons",
-      "showFullTitle": "Locked On Falcons - Daily Podcast On The Atlanta Falcons",
-      "hosts": "Locked On Podcast Network, Aaron Freeman",
-      "network": "Locked On Podcast Network, Aaron Freeman",
-      "title": "Was Kevin Stefanski the WRONG Hire? Why the Atlanta Falcons’ FIX Falls on Ian Cunningham",
-      "summary": "Was Kevin Stefanski the right hire? Ten games in, the Atlanta Falcons are 3-7 again, and the real fix falls on GM Ian Cunningham. Aaron Freeman revisits Matt Ryan’s “safe choice” and lays out a realistic path forward. Do two Coach of the Year awards really prove Stefanski is",
-      "publishedAt": "2026-11-17T05:00:00.000Z",
-      "durationMinutes": 32,
-      "durationDisplay": "32 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/19/04/46/1904466c-054d-5941-e657-6aee7335e80a/mza_10453147619500948565.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/was-kevin-stefanski-the-wrong-hire-why-the/id1147245791?i=1000802405397&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-falcons-daily-podcast-on-the-atlanta-falcons/id1147245791?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/d31f4c/feeds.simplecast.com/l96cnojt",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/d31f4c/lockedon.simplecastaudio.com/5982be9c-a349-4b02-ae14-690ca847153b/episodes/40bf0e9e-a5da-4fcb-8acd-dab50f37ca72/audio/128/default.mp3?aid=rss_feed&awCollectionId=5982be9c-a349-4b02-ae14-690ca847153b&awEpisodeId=40bf0e9e-a5da-4fcb-8acd-dab50f37ca72&feed=l96cnojt"
     }
   ]
 }

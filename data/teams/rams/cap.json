@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:33:32.635Z",
+  "updatedAt": "2026-11-24T20:07:33.480Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/los-angeles-rams",
   "spotracUrl": "https://www.spotrac.com/nfl/los-angeles-rams/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 313607830,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 310267795,
+      "totalCapLiabilities": 310359345,
       "top51": 282497190,
-      "teamCapSpace": 3340035,
-      "otcRawTeamCapSpace": 3340035,
-      "effectiveCapSpace": 3340035,
-      "activeCapSpending": 295045631,
-      "offenseSpend": 189329994,
+      "teamCapSpace": 3248485,
+      "otcRawTeamCapSpace": 3248485,
+      "effectiveCapSpace": 3248485,
+      "activeCapSpending": 294939665,
+      "offenseSpend": 189549994,
       "defenseSpend": 100646838,
-      "specialSpend": 5068799,
-      "deadMoneyTotal": 15222164,
+      "specialSpend": 4742833,
+      "deadMoneyTotal": 15419680,
       "injuredReserveTotal": 54106423,
-      "practiceSquadTotal": 3485332,
+      "practiceSquadTotal": 3379366,
       "pupTotal": 4154267,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 4867078,
-      "reserveAndPsTotal": 66613100,
+      "reserveAndPsTotal": 66507134,
       "topDeadMoneyEntries": [
         {
           "name": "Rob Havenstein",
@@ -92,18 +92,18 @@
           "otcUrl": "https://overthecap.com/player/chris-paul-jr/12532/"
         },
         {
-          "name": "Marquez Valdes-Scantling",
-          "capCharge": 238889,
-          "slug": "marquez-valdes-scantling",
-          "otcId": "7059",
-          "otcUrl": "https://overthecap.com/player/marquez-valdes-scantling/7059/"
-        },
-        {
           "name": "Xavier Smith",
           "capCharge": 238889,
           "slug": "xavier-smith",
           "otcId": "11126",
           "otcUrl": "https://overthecap.com/player/xavier-smith/11126/"
+        },
+        {
+          "name": "Marquez Valdes-Scantling",
+          "capCharge": 238889,
+          "slug": "marquez-valdes-scantling",
+          "otcId": "7059",
+          "otcUrl": "https://overthecap.com/player/marquez-valdes-scantling/7059/"
         },
         {
           "name": "Cam Lampkin",
@@ -127,15 +127,15 @@
           "otcUrl": "https://overthecap.com/player/keir-thomas/10404/"
         },
         {
-          "name": "Eli Neal",
-          "capCharge": 180416,
-          "slug": "eli-neal",
-          "otcId": "11983",
-          "otcUrl": "https://overthecap.com/player/eli-neal/11983/"
+          "name": "Jake McQuaide",
+          "capCharge": 197516,
+          "slug": "jake-mcquaide",
+          "otcId": "1326",
+          "otcUrl": "https://overthecap.com/player/jake-mcquaide/1326/"
         }
       ],
       "contractedCount": 51,
-      "totalSignedCount": 81
+      "totalSignedCount": 82
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 249030031,
       "teamCapSpace": 75272049,
       "otcRawTeamCapSpace": 75272049,
-      "effectiveCapSpace": 60548754,
+      "effectiveCapSpace": 60602315,
       "activeCapSpending": 249030031,
       "offenseSpend": 95253329,
       "defenseSpend": 151976702,
@@ -265,7 +265,7 @@
     }
   },
   "blueprint": {
-    "summary": "Los Angeles Rams hold $3.34M in 2026 OverTheCap space and $75.27M projected for 2027."
+    "summary": "Los Angeles Rams hold $3.25M in 2026 OverTheCap space and $75.27M projected for 2027."
   },
   "players": [
     {

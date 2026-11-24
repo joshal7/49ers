@@ -1,111 +1,672 @@
 {
-  "updatedAt": "2026-11-23T06:37:14.541Z",
+  "updatedAt": "2026-11-24T20:09:09.279Z",
   "dailyTopNewsBrief": {
-    "id": "brief_lv_3b31690f3158",
-    "cycleKey": "2026-11-22@postgame-wk11",
+    "id": "brief_lv_92e1642fa589",
+    "cycleKey": "2026-11-23@17PT",
     "scheduledHourPt": 17,
-    "isPostGame": true,
+    "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "4-7",
-    "generatedAt": "2026-11-23T03:55:28.037Z",
-    "modelUsed": "gemini-3-flash-preview",
-    "thinkingLevel": "HIGH",
-    "source": "live-gemini-daily",
-    "wordCount": 165,
-    "guardClean": true,
-    "headline": "Mendoza Flashes Potential but Raiders Fall to 4-7 After Denver Loss",
-    "summary": "Despite three passing touchdowns from rookie quarterback Fernando Mendoza, Las Vegas dropped to 4-7 following a 38-24 defeat to the Broncos, highlighting persistent defensive struggles that rank last in the NFL for points allowed.",
+    "generatedAt": "2026-11-24T20:09:12.533Z",
+    "modelUsed": "gemini-4-hydrogen",
+    "thinkingLevel": "XHIGH",
+    "source": "deterministic-digest",
+    "wordCount": 132,
+    "headline": "Las Vegas Raiders Daily Briefing — Week 12",
+    "summary": "Las Vegas Raiders (4-7, 3rd in AFC West • #10 Seed in AFC) top verified storylines, injury status, and upcoming matchup intel.",
     "bullets": [
-      "Rookie QB Fernando Mendoza threw three touchdowns, including a 68-yard strike to Ashton Jeanty and a 6-yard connection to Jack Bech, but the offense faded late in the divisional loss [S6](https://www.raiders.com/video/fernando-mendoza-jack-bech-touchdown-broncos-nfl-week-11-2026-season) [S7](https://www.raiders.com/news/nfl-game-recap-fernando-mendoza-flashes-brilliance-but-raiders-fade-late-against-broncos)",
-      "Running back Ashton Jeanty provided explosive production with a 46-yard run and a 68-yard receiving score, yet the team remains league-worst in rushing EPA and yards per carry [S9](https://www.raiders.com/video/ashton-jeanty-fernando-mendoza-68-yard-touchdown-broncos-nfl-week-11-2026) [S13](https://www.raiders.com/video/ashton-jeanty-46-yard-run-broncos-nfl-week-11-2026-season)",
-      "Head Coach Klint Kubiak emphasized the need for consistency after Denver's Jonah Coleman powered a 38-point performance against a Las Vegas defense allowing 29.7 points per game [S1](https://www.raiders.com/video/klint-kubiak-postgame-presser-broncos-nfl-week-11-2026-season) [S10](https://www.espn.com/nfl/recap?gameId=401873075)",
-      "Looking ahead to Week 12 at Cleveland, the Raiders must overcome the absence of star tight end Brock Bowers (ankle) while leveraging their #1 ranked special teams units [S14](https://www.raiders.com/video/raiders-vs-broncos-full-game-highlights-nfl-week-11-2026-season)"
+      "1976 Unsung Hero: Dave Dalby ([raiders.com Official](https://www.raiders.com/news/1976-unsung-hero-dave-dalby))",
+      "Klint Kubiak on SNF against the Browns: 'All eyes are on you' ([raiders.com Video](https://www.raiders.com/video/klint-kubiak-browns-nfl-week-12-2026-season))",
+      "I'll be livestreaming The Tashan Reed Show at 3pm ET today. With Thanksgiving later this week, I'll be recapping the #Commanders' win over the Bengals and previewing their matchup with the Cardinals in the same episode. Pull up: open.substack.com/live-stream/... ([Tashan Reed](https://bsky.app/profile/tashanreed.bsky.social/post/3n334ctpz3k2d))",
+      "“You live and you learn.\" The #Commanders’ late-game management has been a mess. This time, they got it right. In their upset over the Bengals, they showed they're learning how to close games: www.washingtonpost.com/sports/2026/... ([Tashan Reed](https://bsky.app/profile/tashanreed.bsky.social/post/3n32wp5kuzk2h))",
+      "“Throw the fucking ball!” Stefon Diggs shouted. Well, the #Commanders threw the ball, and they didn't punt for the rest of the game. On Washington's crazy comeback win over the Bengals: www.washingtonpost.com/sports/2026/... ([Tashan Reed](https://bsky.app/profile/tashanreed.bsky.social/post/3n2zvgdrmi22u))"
     ],
     "coveredStoryKeys": [
-      "lv_rss_1e0d9e6e7d8f",
-      "lv_roto_ebf90a443b01",
-      "lv_vid_c8cb7d152b52",
-      "lv_vid_0746e76f4dda",
-      "lv_espn_dff65d955a316",
-      "lv_vid_bd5e51ddcf43"
+      "lv_rss_22533034cddf",
+      "lv_vid_e6d636b3e529",
+      "lv_bsky_02c62ddb865e",
+      "lv_bsky_988bc10f3983",
+      "lv_bsky_546d1af71887"
     ],
     "coveredUrls": [
-      "https://www.raiders.com/video/klint-kubiak-postgame-presser-broncos-nfl-week-11-2026-season",
-      "https://www.raiders.com/video/fernando-mendoza-jack-bech-touchdown-broncos-nfl-week-11-2026-season",
-      "https://www.raiders.com/news/nfl-game-recap-fernando-mendoza-flashes-brilliance-but-raiders-fade-late-against-broncos",
-      "https://www.raiders.com/video/ashton-jeanty-fernando-mendoza-68-yard-touchdown-broncos-nfl-week-11-2026",
-      "https://www.espn.com/nfl/recap?gameId=401873075",
-      "https://www.raiders.com/video/raiders-vs-broncos-full-game-highlights-nfl-week-11-2026-season"
+      "https://www.raiders.com/news/1976-unsung-hero-dave-dalby",
+      "https://www.raiders.com/video/klint-kubiak-browns-nfl-week-12-2026-season",
+      "https://bsky.app/profile/tashanreed.bsky.social/post/3n334ctpz3k2d",
+      "https://bsky.app/profile/tashanreed.bsky.social/post/3n32wp5kuzk2h",
+      "https://bsky.app/profile/tashanreed.bsky.social/post/3n2zvgdrmi22u"
     ],
     "sources": [
       {
         "sid": "S1",
-        "title": "Klint Kubiak Postgame Presser - 11.22.26 | Week 11",
-        "url": "https://www.raiders.com/video/klint-kubiak-postgame-presser-broncos-nfl-week-11-2026-season",
-        "author": "raiders.com Video",
-        "outlet": "raiders.com Video",
-        "publishedAt": "2026-11-23T01:56:59.000Z"
-      },
-      {
-        "sid": "S6",
-        "title": "Jackpot! Jack Bech fights to the goal line for 6-yard TD from Fernando Mendoza",
-        "url": "https://www.raiders.com/video/fernando-mendoza-jack-bech-touchdown-broncos-nfl-week-11-2026-season",
-        "author": "raiders.com Video",
-        "outlet": "raiders.com Video",
-        "publishedAt": "2026-11-23T00:26:51.000Z"
-      },
-      {
-        "sid": "S7",
-        "title": "Game Recap: Fernando Mendoza flashes brilliance, but Raiders fade late against Broncos",
-        "url": "https://www.raiders.com/news/nfl-game-recap-fernando-mendoza-flashes-brilliance-but-raiders-fade-late-against-broncos",
+        "title": "1976 Unsung Hero: Dave Dalby",
+        "url": "https://www.raiders.com/news/1976-unsung-hero-dave-dalby",
         "author": "raiders.com Official",
         "outlet": "raiders.com Official",
-        "publishedAt": "2026-11-23T03:30:00.000Z"
-      },
-      {
-        "sid": "S9",
-        "title": "Must-See-Play! Ashton Jeanty is too fast on 68-yard TD from Fernando Mendoza",
-        "url": "https://www.raiders.com/video/ashton-jeanty-fernando-mendoza-68-yard-touchdown-broncos-nfl-week-11-2026",
-        "author": "raiders.com Video",
-        "outlet": "raiders.com Video",
-        "publishedAt": "2026-11-22T22:55:26.000Z"
-      },
-      {
-        "sid": "S10",
-        "title": "Jonah Coleman powers Broncos past Raiders 38-24 as Denver honors the late Tom Jackson",
-        "url": "https://www.espn.com/nfl/recap?gameId=401873075",
-        "author": "ESPN NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-23T02:48:33Z"
-      },
-      {
-        "sid": "S8",
-        "title": "Full Game Highlights: Raiders vs. Broncos - Week 11",
-        "url": "https://www.raiders.com/video/raiders-vs-broncos-full-game-highlights-nfl-week-11-2026-season",
-        "author": "raiders.com Video",
-        "outlet": "raiders.com Video",
-        "publishedAt": "2026-11-23T01:23:24.000Z"
+        "publishedAt": "2026-11-24T20:00:10.000Z"
       },
       {
         "sid": "S2",
-        "title": "Fernando Mendoza Postgame Presser - 11.22.26 | Week 11",
-        "url": "https://www.raiders.com/video/fernando-mendoza-postgame-presser-broncos-nfl-week-11-2026-season",
+        "title": "Klint Kubiak on SNF against the Browns: 'All eyes are on you'",
+        "url": "https://www.raiders.com/video/klint-kubiak-browns-nfl-week-12-2026-season",
         "author": "raiders.com Video",
         "outlet": "raiders.com Video",
-        "publishedAt": "2026-11-23T01:55:00.000Z"
+        "publishedAt": "2026-11-24T18:55:47.000Z"
+      },
+      {
+        "sid": "S3",
+        "title": "I'll be livestreaming The Tashan Reed Show at 3pm ET today. With Thanksgiving later this week, I'll be recapping the #Commanders' win over the Bengals and previewing their matchup with the Cardinals in the same episode. Pull up: open.substack.com/live-stream/...",
+        "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n334ctpz3k2d",
+        "author": "Tashan Reed",
+        "outlet": "Tashan Reed",
+        "publishedAt": "2026-11-24T16:54:50.745Z"
+      },
+      {
+        "sid": "S4",
+        "title": "“You live and you learn.\" The #Commanders’ late-game management has been a mess. This time, they got it right. In their upset over the Bengals, they showed they're learning how to close games: www.washingtonpost.com/sports/2026/...",
+        "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n32wp5kuzk2h",
+        "author": "Tashan Reed",
+        "outlet": "Tashan Reed",
+        "publishedAt": "2026-11-24T15:14:21.268Z"
+      },
+      {
+        "sid": "S5",
+        "title": "“Throw the fucking ball!” Stefon Diggs shouted. Well, the #Commanders threw the ball, and they didn't punt for the rest of the game. On Washington's crazy comeback win over the Bengals: www.washingtonpost.com/sports/2026/...",
+        "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2zvgdrmi22u",
+        "author": "Tashan Reed",
+        "outlet": "Tashan Reed",
+        "publishedAt": "2026-11-24T05:18:52.311Z"
+      },
+      {
+        "sid": "S6",
+        "title": "Daniels hits Williams. #Commanders are at the 50 with 23 seconds left. They don't have any timeouts.",
+        "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2zrxtfijk2q",
+        "author": "Tashan Reed",
+        "outlet": "Tashan Reed",
+        "publishedAt": "2026-11-24T04:17:04.151Z"
       },
       {
         "sid": "S7",
-        "title": "Courtland Sutton: Goes without catch in Week 11: Sutton didn't corral either of his two targets during Sunday's 38-24 victory versus the Raiders. Visit RotoWire.com for more analysis on this update.",
-        "url": "https://www.rotowire.com/football/player/courtland-sutton-12586",
-        "author": "RotoWire NFL Beat",
-        "outlet": "RotoWire NFL Beat",
-        "publishedAt": "2026-11-23T02:32:00.000Z"
+        "title": "App Giveaway coming this Friday!",
+        "url": "https://www.raiders.com/news/app-giveaway-coming-this-friday",
+        "author": "raiders.com Official",
+        "outlet": "raiders.com Official",
+        "publishedAt": "2026-11-23T20:00:05.000Z"
+      },
+      {
+        "sid": "S8",
+        "title": "Una mejor versión de los Raiders no alcanza ante Denver",
+        "url": "https://www.raiders.com/news/una-mejor-version-de-los-raiders-no-alcanza-ante-denver",
+        "author": "raiders.com Official",
+        "outlet": "raiders.com Official",
+        "publishedAt": "2026-11-23T19:40:54.000Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
+    {
+      "id": "lv_rss_22533034cddf",
+      "type": "article",
+      "title": "1976 Unsung Hero: Dave Dalby",
+      "summary": "Dalby took over for Hall of Fame center Jim Otto, keeping the ball rolling en route to the Raiders first Super Bowl win.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/vmvhajgfru5qjs1ycgxa.png",
+      "imageAlt": "1976 Unsung Hero: Dave Dalby",
+      "publishedAt": "2026-11-24T20:00:10.000Z",
+      "url": "https://www.raiders.com/news/1976-unsung-hero-dave-dalby",
+      "outletId": "raiders_official",
+      "outletName": "raiders.com Official",
+      "reporterId": "raiders_official",
+      "reporterName": "raiders.com Official",
+      "author": "raiders.com Official",
+      "authorHandle": "@Raiders",
+      "authorProfileUrl": "https://www.raiders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 45.0926
+    },
+    {
+      "id": "lv_vid_e6d636b3e529",
+      "type": "video",
+      "title": "Klint Kubiak on SNF against the Browns: 'All eyes are on you'",
+      "summary": "Head Coach Klint Kubiak on running back Ashton Jeanty, tight end Ian Thomas staying ready and facing Deshaun Watson and the Browns on Sunday Night Football.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/udbhp3bzvwlwgltv6gib.png",
+      "imageAlt": "Klint Kubiak on SNF against the Browns: 'All eyes are on you'",
+      "publishedAt": "2026-11-24T18:55:47.000Z",
+      "url": "https://www.raiders.com/video/klint-kubiak-browns-nfl-week-12-2026-season",
+      "externalVideoUrl": "https://www.raiders.com/video/klint-kubiak-browns-nfl-week-12-2026-season",
+      "outletId": "raiders_official",
+      "outletName": "raiders.com Video",
+      "reporterId": "raiders_official",
+      "reporterName": "raiders.com Video",
+      "author": "raiders.com Video",
+      "authorHandle": "@Raiders",
+      "authorProfileUrl": "https://www.raiders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 18.7459
+    },
+    {
+      "id": "lv_bsky_02c62ddb865e",
+      "type": "tweet",
+      "title": "I'll be livestreaming The Tashan Reed Show at 3pm ET today. With Thanksgiving later this week, I'll be recapping the #Commanders' win over the Bengals and previewing their matchup with the Cardinals in the same episode. Pull up: open.substack.com/live-stream/...",
+      "fullText": "I'll be livestreaming The Tashan Reed Show at 3pm ET today. With Thanksgiving later this week, I'll be recapping the #Commanders' win over the Bengals and previewing their matchup with the Cardinals in the same episode. Pull up: open.substack.com/live-stream/...",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:bgdq5f65djok5tnfc6tikptz/bafkreibxqqg2ssav653ul4u5lvlw3vhuydb75i6dn5gaxctktbfaozfo2m",
+      "imageAlt": "Tashan Reed post",
+      "publishedAt": "2026-11-24T16:54:50.745Z",
+      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n334ctpz3k2d",
+      "externalUrl": "https://open.substack.com/live-stream/472685",
+      "externalTitle": "LIVE SOON: The Tashan Reed Show: The Commanders pull off a dramatic upset over the Bengals | Previewing their trip to Arizona",
+      "outletId": "the_athletic_las_vegas_public_beat_wire_",
+      "outletName": "Tashan Reed",
+      "reporterId": "tashan_reed",
+      "reporterName": "Tashan Reed",
+      "author": "Tashan Reed",
+      "authorHandle": "@tashanreed",
+      "authorProfileUrl": "https://x.com/tashanreed",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 7.5176
+    },
+    {
+      "id": "lv_bsky_988bc10f3983",
+      "type": "tweet",
+      "title": "“You live and you learn.\" The #Commanders’ late-game management has been a mess. This time, they got it right. In their upset over the Bengals, they showed they're learning how to close games: www.washingtonpost.com/sports/2026/...",
+      "fullText": "“You live and you learn.\" The #Commanders’ late-game management has been a mess. This time, they got it right. In their upset over the Bengals, they showed they're learning how to close games: www.washingtonpost.com/sports/2026/...",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:bgdq5f65djok5tnfc6tikptz/bafkreigjsnmmpohrsuvlz2xumsskxcnhynhvv37ptz3uye6szamxftx6na",
+      "imageAlt": "Tashan Reed post",
+      "publishedAt": "2026-11-24T15:14:21.268Z",
+      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n32wp5kuzk2h",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_las_vegas_public_beat_wire_",
+      "outletName": "Tashan Reed",
+      "reporterId": "tashan_reed",
+      "reporterName": "Tashan Reed",
+      "author": "Tashan Reed",
+      "authorHandle": "@tashanreed",
+      "authorProfileUrl": "https://x.com/tashanreed",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.1879
+    },
+    {
+      "id": "lv_bsky_546d1af71887",
+      "type": "tweet",
+      "title": "“Throw the fucking ball!” Stefon Diggs shouted. Well, the #Commanders threw the ball, and they didn't punt for the rest of the game. On Washington's crazy comeback win over the Bengals: www.washingtonpost.com/sports/2026/...",
+      "fullText": "“Throw the fucking ball!” Stefon Diggs shouted. Well, the #Commanders threw the ball, and they didn't punt for the rest of the game. On Washington's crazy comeback win over the Bengals: www.washingtonpost.com/sports/2026/...",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:bgdq5f65djok5tnfc6tikptz/bafkreibtrkqqgmai4o52bn6ryn4y6jdtkuv55e5ylvwyxqlmb5ulfonzku",
+      "imageAlt": "Tashan Reed post",
+      "publishedAt": "2026-11-24T05:18:52.311Z",
+      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2zvgdrmi22u",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_las_vegas_public_beat_wire_",
+      "outletName": "Tashan Reed",
+      "reporterId": "tashan_reed",
+      "reporterName": "Tashan Reed",
+      "author": "Tashan Reed",
+      "authorHandle": "@tashanreed",
+      "authorProfileUrl": "https://x.com/tashanreed",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.2106
+    },
+    {
+      "id": "lv_bsky_c2c4a058858f",
+      "type": "tweet",
+      "title": "Daniels hits Williams. #Commanders are at the 50 with 23 seconds left. They don't have any timeouts.",
+      "fullText": "Daniels hits Williams. #Commanders are at the 50 with 23 seconds left. They don't have any timeouts.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Tashan Reed post",
+      "publishedAt": "2026-11-24T04:17:04.151Z",
+      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2zrxtfijk2q",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_las_vegas_public_beat_wire_",
+      "outletName": "Tashan Reed",
+      "reporterId": "tashan_reed",
+      "reporterName": "Tashan Reed",
+      "author": "Tashan Reed",
+      "authorHandle": "@tashanreed",
+      "authorProfileUrl": "https://x.com/tashanreed",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.1088
+    },
+    {
+      "id": "lv_rss_23cf4446d47a",
+      "type": "article",
+      "title": "App Giveaway coming this Friday!",
+      "summary": "On Friday, Nov. 27 at 12 p.m. PT, the Raiders are giving away exclusive Black Friday Raiders prizes.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/wkj1ybytz6sbtakuqezc.png",
+      "imageAlt": "App Giveaway coming this Friday!",
+      "publishedAt": "2026-11-23T20:00:05.000Z",
+      "url": "https://www.raiders.com/news/app-giveaway-coming-this-friday",
+      "outletId": "raiders_official",
+      "outletName": "raiders.com Official",
+      "reporterId": "raiders_official",
+      "reporterName": "raiders.com Official",
+      "author": "raiders.com Official",
+      "authorHandle": "@Raiders",
+      "authorProfileUrl": "https://www.raiders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.657
+    },
+    {
+      "id": "lv_rss_6b52bd0b3972",
+      "type": "article",
+      "title": "Una mejor versión de los Raiders no alcanza ante Denver",
+      "summary": "Mendoza, Jeanty y Bech encabezaron una ofensiva que fue creciendo durante el partido, pero los Malosos no pudieron ser constantes.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/cksdvlwwxrs7z7m5nz4z.png",
+      "imageAlt": "Una mejor versión de los Raiders no alcanza ante Denver",
+      "publishedAt": "2026-11-23T19:40:54.000Z",
+      "url": "https://www.raiders.com/news/una-mejor-version-de-los-raiders-no-alcanza-ante-denver",
+      "outletId": "raiders_official",
+      "outletName": "raiders.com Official",
+      "reporterId": "raiders_official",
+      "reporterName": "raiders.com Official",
+      "author": "raiders.com Official",
+      "authorHandle": "@Raiders",
+      "authorProfileUrl": "https://www.raiders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6455
+    },
+    {
+      "id": "lv_rss_d7193cd2d947",
+      "type": "article",
+      "title": "Gutierrez: Hope abounds with Fernando Mendoza in his second start",
+      "summary": "Through two starts, Mendoza has provided excitement for the future to Raider Nation.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/z4pwaoqknljhfmurztnv.png",
+      "imageAlt": "Gutierrez: Hope abounds with Fernando Mendoza in his second start",
+      "publishedAt": "2026-11-23T19:30:00.000Z",
+      "url": "https://www.raiders.com/news/gutierrez-hope-abounds-with-fernando-mendoza-in-his-second-start-raiders",
+      "outletId": "raiders_official",
+      "outletName": "raiders.com Official",
+      "reporterId": "raiders_official",
+      "reporterName": "raiders.com Official",
+      "author": "raiders.com Official",
+      "authorHandle": "@Raiders",
+      "authorProfileUrl": "https://www.raiders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6392
+    },
+    {
+      "id": "lv_bsky_c8b30319db5f",
+      "type": "tweet",
+      "title": "As we all predicted, the #Commanders pull off a massive, potentially season-changing upset win over the Bengals. What an insane, back-and-forth ending. Washington's been in a lot of tight games this year. They may be learning how to close them.",
+      "fullText": "As we all predicted, the #Commanders pull off a massive, potentially season-changing upset win over the Bengals. What an insane, back-and-forth ending. Washington's been in a lot of tight games this year. They may be learning how to close them.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Tashan Reed post",
+      "publishedAt": "2026-11-24T04:32:18.852Z",
+      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2zst3q62k25",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_las_vegas_public_beat_wire_",
+      "outletName": "Tashan Reed",
+      "reporterId": "tashan_reed",
+      "reporterName": "Tashan Reed",
+      "author": "Tashan Reed",
+      "authorHandle": "@tashanreed",
+      "authorProfileUrl": "https://x.com/tashanreed",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2831
+    },
+    {
+      "id": "lv_bsky_d4310ff792e2",
+      "type": "tweet",
+      "title": "It's good. #Commanders win.",
+      "fullText": "It's good. #Commanders win.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Tashan Reed post",
+      "publishedAt": "2026-11-24T04:18:59.500Z",
+      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2zs3bfnzs2q",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_las_vegas_public_beat_wire_",
+      "outletName": "Tashan Reed",
+      "reporterId": "tashan_reed",
+      "reporterName": "Tashan Reed",
+      "author": "Tashan Reed",
+      "authorHandle": "@tashanreed",
+      "authorProfileUrl": "https://x.com/tashanreed",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2779
+    },
+    {
+      "id": "lv_bsky_a485c96cb3cc",
+      "type": "tweet",
+      "title": "Wow. Williams gets well into field goal range and the #Commanders spike it. They'll attempt the game-winning FG.",
+      "fullText": "Wow. Williams gets well into field goal range and the #Commanders spike it. They'll attempt the game-winning FG.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Tashan Reed post",
+      "publishedAt": "2026-11-24T04:18:05.167Z",
+      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2zrznlkhk2q",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_las_vegas_public_beat_wire_",
+      "outletName": "Tashan Reed",
+      "reporterId": "tashan_reed",
+      "reporterName": "Tashan Reed",
+      "author": "Tashan Reed",
+      "authorHandle": "@tashanreed",
+      "authorProfileUrl": "https://x.com/tashanreed",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2776
+    },
+    {
+      "id": "lv_bsky_48afbce4f9e0",
+      "type": "tweet",
+      "title": "The Bengals' FG is good. Sheesh.",
+      "fullText": "The Bengals' FG is good. Sheesh.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Tashan Reed post",
+      "publishedAt": "2026-11-24T04:14:22.619Z",
+      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2zrszdwgk2q",
+      "externalUrl": null,
+      "externalTitle": null,
+      "outletId": "the_athletic_las_vegas_public_beat_wire_",
+      "outletName": "Tashan Reed",
+      "reporterId": "tashan_reed",
+      "reporterName": "Tashan Reed",
+      "author": "Tashan Reed",
+      "authorHandle": "@tashanreed",
+      "authorProfileUrl": "https://x.com/tashanreed",
+      "trustTier": 1,
+      "wireSource": "bluesky_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2762
+    },
+    {
+      "id": "lv_vid_0d9384cb3b5e",
+      "type": "video",
+      "title": "Klint Kubiak on the Raiders' run blocking: 'A step in the right direction'",
+      "summary": "Head Coach Klint Kubiak addresses the media to recap the Raiders' Week 11 matchup against the Denver Broncos.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/jipyykjj5y2esahgpd1p.png",
+      "imageAlt": "Klint Kubiak on the Raiders' run blocking: 'A step in the right direction'",
+      "publishedAt": "2026-11-23T18:50:56.000Z",
+      "url": "https://www.raiders.com/video/klint-kubiak-recap-broncos-week-11-2026-season",
+      "externalVideoUrl": "https://www.raiders.com/video/klint-kubiak-recap-broncos-week-11-2026-season",
+      "outletId": "raiders_official",
+      "outletName": "raiders.com Video",
+      "reporterId": "raiders_official",
+      "reporterName": "raiders.com Video",
+      "author": "raiders.com Video",
+      "authorHandle": "@Raiders",
+      "authorProfileUrl": "https://www.raiders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6172
+    },
+    {
+      "id": "lv_rss_6d3db11449ec",
+      "type": "article",
+      "title": "By the Numbers: Ashton Jeanty, Jack Bech step up against Broncos to overcome absence of Brock Bowers",
+      "summary": "A look back at the Raiders’ Week 11 showing, with some statistics to highlight the good and the bad of the contest against the Broncos.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/lcmxasbaz5eno9cbnluq.png",
+      "imageAlt": "By the Numbers: Ashton Jeanty, Jack Bech step up against Broncos to overcome absence of Brock Bowers",
+      "publishedAt": "2026-11-24T01:30:00.000Z",
+      "url": "https://www.raiders.com/news/by-the-numbers-ashton-jeanty-jack-bech-step-up-against-broncos-to-overcome-absence-of-brock-bowers",
+      "outletId": "raiders_official",
+      "outletName": "raiders.com Official",
+      "reporterId": "raiders_official",
+      "reporterName": "raiders.com Official",
+      "author": "raiders.com Official",
+      "authorHandle": "@Raiders",
+      "authorProfileUrl": "https://www.raiders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2317
+    },
+    {
+      "id": "lv_espn_9b9c804674f0a",
+      "type": "video",
+      "title": "The good and bad of Fernando Mendoza's 2nd start",
+      "summary": "Ryan McFadden analyzes Mendoza's last two starts and what they mean for his future as Las Vegas' franchise QB.",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1123/dm_261123_11-23_Raiders_IA/dm_261123_11-23_Raiders_IA.jpg",
+      "imageCaption": "Ryan McFadden analyzes Mendoza's last two starts and what they mean for his future as Las Vegas' franchise QB.",
+      "imageAlt": "The good and bad of Fernando Mendoza's 2nd start",
+      "publishedAt": "2026-11-23T15:02:33Z",
+      "url": "https://www.espn.com/video/clip/_/id/50573256/the-good-bad-fernando-mendoza-2nd-start",
+      "outletId": "espn_lv",
+      "outletName": "ESPN",
+      "reporterId": "espn_lv",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lv/las-vegas-raiders",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5111
+    },
     {
       "id": "lv_espn_a4eba2b639535",
       "type": "article",
@@ -128,50 +689,17 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 1.332,
+      "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 95,
-      "storyTier": "post_game_recap",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 25.2801
-    },
-    {
-      "id": "lv_rss_1e0d9e6e7d8f",
-      "type": "article",
-      "title": "Game Recap: Fernando Mendoza flashes brilliance, but Raiders fade late against Broncos",
-      "summary": "Mendoza's three passing touchdowns not enough to complete comeback bid against Denver, as the 2026 No. 1 pick is still working out the kinks to start his NFL career.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/otx67awryumvxtdbldam.png",
-      "imageAlt": "Game Recap: Fernando Mendoza flashes brilliance, but Raiders fade late against Broncos",
-      "publishedAt": "2026-11-23T03:30:00.000Z",
-      "url": "https://www.raiders.com/news/nfl-game-recap-fernando-mendoza-flashes-brilliance-but-raiders-fade-late-against-broncos",
-      "outletId": "raiders_official",
-      "outletName": "raiders.com Official",
-      "reporterId": "raiders_official",
-      "reporterName": "raiders.com Official",
-      "author": "raiders.com Official",
-      "authorHandle": "@Raiders",
-      "authorProfileUrl": "https://www.raiders.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1.102,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 12.8494
+      "storyRank": 0.3436
     },
     {
       "id": "lv_vid_3ece43f2757f",
@@ -205,116 +733,48 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.8711
+      "storyRank": 0.3303
     },
     {
-      "id": "lv_pft_435685e3fc8d",
+      "id": "lv_rss_1e0d9e6e7d8f",
       "type": "article",
-      "title": "Raiders fall to Broncos but young QB Fernando Mendoza gets valuable reps",
-      "summary": "Mike Florio breaks down the Broncos’ 38-24 win over the Raiders, including encouraging signs from Fernando Mendoza and Ashton Jeanty despite Las Vegas running out of opportunities to revive its playoff hopes.",
-      "imageUrl": "https://link.theplatform.com/s/BxmELC/media/WcITUsO1h_QI?auto=true",
-      "imageAlt": "Raiders fall to Broncos but young QB Fernando Mendoza gets valuable reps",
-      "publishedAt": "2026-11-23T02:39:48.000Z",
-      "url": "https://www.nbcsports.com/watch/nfl/profootballtalk/pft-pm/raiders-fall-to-broncos-but-young-qb-fernando-mendoza-gets-valuable-reps",
-      "outletId": "profootballtalk",
-      "outletName": "ProFootballTalk",
-      "reporterId": "profootballtalk",
-      "reporterName": "ProFootballTalk",
-      "author": "ProFootballTalk",
-      "authorHandle": "@ProFootballTalk",
-      "authorProfileUrl": "https://x.com/ProFootballTalk",
-      "trustTier": 2,
-      "wireSource": "pft_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 1,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 88,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 9.9257
-    },
-    {
-      "id": "lv_vid_c8cb7d152b52",
-      "type": "video",
-      "title": "Klint Kubiak Postgame Presser - 11.22.26 | Week 11",
-      "summary": "Head Coach Klint Kubiak addresses the media following the Raiders' Week 11 matchup against the Denver Broncos.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/ojaauycncy9aaatryv9e.png",
-      "imageAlt": "Klint Kubiak Postgame Presser - 11.22.26 | Week 11",
-      "publishedAt": "2026-11-23T01:56:59.000Z",
-      "url": "https://www.raiders.com/video/klint-kubiak-postgame-presser-broncos-nfl-week-11-2026-season",
-      "externalVideoUrl": "https://www.raiders.com/video/klint-kubiak-postgame-presser-broncos-nfl-week-11-2026-season",
+      "title": "Game Recap: Fernando Mendoza flashes brilliance, but Raiders fade late against Broncos",
+      "summary": "Mendoza's three passing touchdowns not enough to complete comeback bid against Denver, as the 2026 No. 1 pick is still working out the kinks to start his NFL career.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/otx67awryumvxtdbldam.png",
+      "imageAlt": "Game Recap: Fernando Mendoza flashes brilliance, but Raiders fade late against Broncos",
+      "publishedAt": "2026-11-23T03:30:00.000Z",
+      "url": "https://www.raiders.com/news/nfl-game-recap-fernando-mendoza-flashes-brilliance-but-raiders-fade-late-against-broncos",
       "outletId": "raiders_official",
-      "outletName": "raiders.com Video",
+      "outletName": "raiders.com Official",
       "reporterId": "raiders_official",
-      "reporterName": "raiders.com Video",
-      "author": "raiders.com Video",
+      "reporterName": "raiders.com Official",
+      "author": "raiders.com Official",
       "authorHandle": "@Raiders",
       "authorProfileUrl": "https://www.raiders.com/news/",
       "trustTier": 1,
-      "wireSource": "club_video_rss",
+      "wireSource": "club_official_rss",
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.921,
+      "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "post_game_recap",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.3923
-    },
-    {
-      "id": "lv_vid_0746e76f4dda",
-      "type": "video",
-      "title": "Fernando Mendoza Postgame Presser - 11.22.26 | Week 11",
-      "summary": "Quarterback Fernando Mendoza addresses the media following the Raiders' Week 11 matchup against the Denver Broncos.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/zqdhmonwuuxsf0mwsdq2.png",
-      "imageAlt": "Fernando Mendoza Postgame Presser - 11.22.26 | Week 11",
-      "publishedAt": "2026-11-23T01:55:00.000Z",
-      "url": "https://www.raiders.com/video/fernando-mendoza-postgame-presser-broncos-nfl-week-11-2026-season",
-      "externalVideoUrl": "https://www.raiders.com/video/fernando-mendoza-postgame-presser-broncos-nfl-week-11-2026-season",
-      "outletId": "raiders_official",
-      "outletName": "raiders.com Video",
-      "reporterId": "raiders_official",
-      "reporterName": "raiders.com Video",
-      "author": "raiders.com Video",
-      "authorHandle": "@Raiders",
-      "authorProfileUrl": "https://www.raiders.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.917,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 8.3274
+      "storyRank": 0.3248
     },
     {
       "id": "lv_espn_dff65d955a316",
       "type": "article",
       "title": "Jonah Coleman powers Broncos past Raiders 38-24 as Denver honors the late Tom Jackson",
       "summary": "— Forty years after his retirement from football and 48 hours after his death at age 75, the Denver Broncos set aside a game ball for Tom Jackson...",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/f515e9f778244292a3f1b85fe6f4512c1192/f515e9f778244292a3f1b85fe6f4512c1192.jpg",
-      "imageCaption": "Jonah Coleman punches in his third TD of the game for Denver",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1123/d8520b75-b54b-492a-8f97-12c3e6a5582a/d8520b75-b54b-492a-8f97-12c3e6a5582a.jpg",
+      "imageCaption": "Jack Bech hauls in a tough catch for a Raiders TD",
       "imageAlt": "Jonah Coleman powers Broncos past Raiders 38-24 as Denver honors the late Tom Jackson",
       "publishedAt": "2026-11-23T02:48:33Z",
       "url": "https://www.espn.com/nfl/recap?gameId=401873075",
@@ -340,18 +800,18 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.6432
+      "storyRank": 0.3174
     },
     {
-      "id": "lv_vid_bd5e51ddcf43",
+      "id": "lv_vid_c8cb7d152b52",
       "type": "video",
-      "title": "Jackpot! Jack Bech fights to the goal line for 6-yard TD from Fernando Mendoza",
-      "summary": "Watch as rookie quarterback Fernando Mendoza finds wide receiver Jack Bech for a 6-yard touchdown during the fourth quarter against the Broncos.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/swskczjhwmomssvjgjqg.png",
-      "imageAlt": "Jackpot! Jack Bech fights to the goal line for 6-yard TD from Fernando Mendoza",
-      "publishedAt": "2026-11-23T00:26:51.000Z",
-      "url": "https://www.raiders.com/video/fernando-mendoza-jack-bech-touchdown-broncos-nfl-week-11-2026-season",
-      "externalVideoUrl": "https://www.raiders.com/video/fernando-mendoza-jack-bech-touchdown-broncos-nfl-week-11-2026-season",
+      "title": "Klint Kubiak Postgame Presser - 11.22.26 | Week 11",
+      "summary": "Head Coach Klint Kubiak addresses the media following the Raiders' Week 11 matchup against the Denver Broncos.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/ojaauycncy9aaatryv9e.png",
+      "imageAlt": "Klint Kubiak Postgame Presser - 11.22.26 | Week 11",
+      "publishedAt": "2026-11-23T01:56:59.000Z",
+      "url": "https://www.raiders.com/video/klint-kubiak-postgame-presser-broncos-nfl-week-11-2026-season",
+      "externalVideoUrl": "https://www.raiders.com/video/klint-kubiak-postgame-presser-broncos-nfl-week-11-2026-season",
       "outletId": "raiders_official",
       "outletName": "raiders.com Video",
       "reporterId": "raiders_official",
@@ -364,17 +824,51 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.774,
+      "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "post_game_recap",
+      "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.1319
+      "storyRank": 0.3086
+    },
+    {
+      "id": "lv_vid_0746e76f4dda",
+      "type": "video",
+      "title": "Fernando Mendoza Postgame Presser - 11.22.26 | Week 11",
+      "summary": "Quarterback Fernando Mendoza addresses the media following the Raiders' Week 11 matchup against the Denver Broncos.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/zqdhmonwuuxsf0mwsdq2.png",
+      "imageAlt": "Fernando Mendoza Postgame Presser - 11.22.26 | Week 11",
+      "publishedAt": "2026-11-23T01:55:00.000Z",
+      "url": "https://www.raiders.com/video/fernando-mendoza-postgame-presser-broncos-nfl-week-11-2026-season",
+      "externalVideoUrl": "https://www.raiders.com/video/fernando-mendoza-postgame-presser-broncos-nfl-week-11-2026-season",
+      "outletId": "raiders_official",
+      "outletName": "raiders.com Video",
+      "reporterId": "raiders_official",
+      "reporterName": "raiders.com Video",
+      "author": "raiders.com Video",
+      "authorHandle": "@Raiders",
+      "authorProfileUrl": "https://www.raiders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3083
     },
     {
       "id": "lv_vid_66f2dd3913f6",
@@ -408,109 +902,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.6328
-    },
-    {
-      "id": "lv_vid_9d0b814a2fb0",
-      "type": "video",
-      "title": "Must-See-Play! Ashton Jeanty is too fast on 68-yard TD from Fernando Mendoza",
-      "summary": "Watch as rookie quarterback Fernando Mendoza connects with running back Ashton Jeanty for a 68-yard touchdown pass against the Denver Broncos.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/mzfgkkwhpxp2ffmwyrq3.png",
-      "imageAlt": "Must-See-Play! Ashton Jeanty is too fast on 68-yard TD from Fernando Mendoza",
-      "publishedAt": "2026-11-22T22:55:26.000Z",
-      "url": "https://www.raiders.com/video/ashton-jeanty-fernando-mendoza-68-yard-touchdown-broncos-nfl-week-11-2026",
-      "externalVideoUrl": "https://www.raiders.com/video/ashton-jeanty-fernando-mendoza-68-yard-touchdown-broncos-nfl-week-11-2026",
-      "outletId": "raiders_official",
-      "outletName": "raiders.com Video",
-      "reporterId": "raiders_official",
-      "reporterName": "raiders.com Video",
-      "author": "raiders.com Video",
-      "authorHandle": "@Raiders",
-      "authorProfileUrl": "https://www.raiders.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.649,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.7404
-    },
-    {
-      "id": "lv_espn_e9ee16d94b886",
-      "type": "video",
-      "title": "Mendoza throws 3 TDs, but Raiders fall to Broncos in Denver",
-      "summary": "Mendoza throws 3 TDs, but Raiders fall to Broncos in Denver",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1123/974cccdc-04cd-4e6a-b27b-7698ea742463/974cccdc-04cd-4e6a-b27b-7698ea742463.jpg",
-      "imageCaption": "Mendoza throws 3 TDs, but Raiders fall to Broncos in Denver",
-      "imageAlt": "Mendoza throws 3 TDs, but Raiders fall to Broncos in Denver",
-      "publishedAt": "2026-11-23T00:50:54Z",
-      "url": "https://www.espn.com/video/clip/_/id/50567555/mendoza-throws-3-tds-raiders-fall-broncos-denver",
-      "outletId": "espn_lv",
-      "outletName": "ESPN",
-      "reporterId": "espn_lv",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lv/las-vegas-raiders",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.1241
-    },
-    {
-      "id": "lv_vid_445454a279e8",
-      "type": "video",
-      "title": "Ashton Jeanty finds daylight on HUGE 46-yard run!",
-      "summary": "Watch as running back Ashton Jeanty breaks free for a 46-yard run during the second quarter against the Denver Broncos.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/zeqardof99klcypbmxl3.png",
-      "imageAlt": "Ashton Jeanty finds daylight on HUGE 46-yard run!",
-      "publishedAt": "2026-11-22T22:29:20.000Z",
-      "url": "https://www.raiders.com/video/ashton-jeanty-46-yard-run-broncos-nfl-week-11-2026-season",
-      "externalVideoUrl": "https://www.raiders.com/video/ashton-jeanty-46-yard-run-broncos-nfl-week-11-2026-season",
-      "outletId": "raiders_official",
-      "outletName": "raiders.com Video",
-      "reporterId": "raiders_official",
-      "reporterName": "raiders.com Video",
-      "author": "raiders.com Video",
-      "authorHandle": "@Raiders",
-      "authorProfileUrl": "https://www.raiders.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.717
+      "storyRank": 0.3031
     },
     {
       "id": "lv_vid_9ec03c04bb69",
@@ -544,7 +936,75 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1522
+      "storyRank": 0.0757
+    },
+    {
+      "id": "lv_espn_e9ee16d94b886",
+      "type": "video",
+      "title": "Mendoza throws 3 TDs, but Raiders fall to Broncos in Denver",
+      "summary": "Mendoza throws 3 TDs, but Raiders fall to Broncos in Denver",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1123/974cccdc-04cd-4e6a-b27b-7698ea742463/974cccdc-04cd-4e6a-b27b-7698ea742463.jpg",
+      "imageCaption": "Mendoza throws 3 TDs, but Raiders fall to Broncos in Denver",
+      "imageAlt": "Mendoza throws 3 TDs, but Raiders fall to Broncos in Denver",
+      "publishedAt": "2026-11-23T00:50:54Z",
+      "url": "https://www.espn.com/video/clip/_/id/50567555/mendoza-throws-3-tds-raiders-fall-broncos-denver",
+      "outletId": "espn_lv",
+      "outletName": "ESPN",
+      "reporterId": "espn_lv",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/lv/las-vegas-raiders",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.298
+    },
+    {
+      "id": "lv_vid_bd5e51ddcf43",
+      "type": "video",
+      "title": "Jackpot! Jack Bech fights to the goal line for 6-yard TD from Fernando Mendoza",
+      "summary": "Watch as rookie quarterback Fernando Mendoza finds wide receiver Jack Bech for a 6-yard touchdown during the fourth quarter against the Broncos.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/swskczjhwmomssvjgjqg.png",
+      "imageAlt": "Jackpot! Jack Bech fights to the goal line for 6-yard TD from Fernando Mendoza",
+      "publishedAt": "2026-11-23T00:26:51.000Z",
+      "url": "https://www.raiders.com/video/fernando-mendoza-jack-bech-touchdown-broncos-nfl-week-11-2026-season",
+      "externalVideoUrl": "https://www.raiders.com/video/fernando-mendoza-jack-bech-touchdown-broncos-nfl-week-11-2026-season",
+      "outletId": "raiders_official",
+      "outletName": "raiders.com Video",
+      "reporterId": "raiders_official",
+      "reporterName": "raiders.com Video",
+      "author": "raiders.com Video",
+      "authorHandle": "@Raiders",
+      "authorProfileUrl": "https://www.raiders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2943
     },
     {
       "id": "lv_vid_49743e2cfb28",
@@ -578,7 +1038,75 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8221
+      "storyRank": 0.0718
+    },
+    {
+      "id": "lv_vid_9d0b814a2fb0",
+      "type": "video",
+      "title": "Must-See-Play! Ashton Jeanty is too fast on 68-yard TD from Fernando Mendoza",
+      "summary": "Watch as rookie quarterback Fernando Mendoza connects with running back Ashton Jeanty for a 68-yard touchdown pass against the Denver Broncos.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/mzfgkkwhpxp2ffmwyrq3.png",
+      "imageAlt": "Must-See-Play! Ashton Jeanty is too fast on 68-yard TD from Fernando Mendoza",
+      "publishedAt": "2026-11-22T22:55:26.000Z",
+      "url": "https://www.raiders.com/video/ashton-jeanty-fernando-mendoza-68-yard-touchdown-broncos-nfl-week-11-2026",
+      "externalVideoUrl": "https://www.raiders.com/video/ashton-jeanty-fernando-mendoza-68-yard-touchdown-broncos-nfl-week-11-2026",
+      "outletId": "raiders_official",
+      "outletName": "raiders.com Video",
+      "reporterId": "raiders_official",
+      "reporterName": "raiders.com Video",
+      "author": "raiders.com Video",
+      "authorHandle": "@Raiders",
+      "authorProfileUrl": "https://www.raiders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2808
+    },
+    {
+      "id": "lv_vid_445454a279e8",
+      "type": "video",
+      "title": "Ashton Jeanty finds daylight on HUGE 46-yard run!",
+      "summary": "Watch as running back Ashton Jeanty breaks free for a 46-yard run during the second quarter against the Denver Broncos.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/zeqardof99klcypbmxl3.png",
+      "imageAlt": "Ashton Jeanty finds daylight on HUGE 46-yard run!",
+      "publishedAt": "2026-11-22T22:29:20.000Z",
+      "url": "https://www.raiders.com/video/ashton-jeanty-46-yard-run-broncos-nfl-week-11-2026-season",
+      "externalVideoUrl": "https://www.raiders.com/video/ashton-jeanty-46-yard-run-broncos-nfl-week-11-2026-season",
+      "outletId": "raiders_official",
+      "outletName": "raiders.com Video",
+      "reporterId": "raiders_official",
+      "reporterName": "raiders.com Video",
+      "author": "raiders.com Video",
+      "authorHandle": "@Raiders",
+      "authorProfileUrl": "https://www.raiders.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2771
     },
     {
       "id": "lv_rss_7ca795ed52f2",
@@ -611,7 +1139,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5503
+      "storyRank": 0.1114
     },
     {
       "id": "lv_vid_92c1d97100f5",
@@ -645,7 +1173,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4332
+      "storyRank": 0.1053
     },
     {
       "id": "lv_rss_38873c3f9c73",
@@ -678,81 +1206,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1296
-    },
-    {
-      "id": "lv_bsky_24793749d6d7",
-      "type": "tweet",
-      "title": "Croskey-Merritt, Patrick, White and Robertson are all questionable, but DQ said earlier that the first three will likely play.",
-      "fullText": "Croskey-Merritt, Patrick, White and Robertson are all questionable, but DQ said earlier that the first three will likely play.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Tashan Reed post",
-      "publishedAt": "2026-11-21T21:08:44.728Z",
-      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2tz43luq22w",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "the_athletic_las_vegas_public_beat_wire_",
-      "outletName": "Tashan Reed",
-      "reporterId": "tashan_reed",
-      "reporterName": "Tashan Reed",
-      "author": "Tashan Reed",
-      "authorHandle": "@tashanreed",
-      "authorProfileUrl": "https://x.com/tashanreed",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1025
-    },
-    {
-      "id": "lv_bsky_5f6b40ea8bbe",
-      "type": "tweet",
-      "title": "Jones on how Vikings DC Brian Flores influenced him: \"His courage to not even be in the box, right? There’s no box with him at all. You don’t know what thought he may come up with.” How Jones has brought that philosophy to Washington:",
-      "fullText": "Jones on how Vikings DC Brian Flores influenced him: \"His courage to not even be in the box, right? There’s no box with him at all. You don’t know what thought he may come up with.” How Jones has brought that philosophy to Washington:",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Tashan Reed post",
-      "publishedAt": "2026-11-21T18:40:07.376Z",
-      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2tqsde2zk2c",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "the_athletic_las_vegas_public_beat_wire_",
-      "outletName": "Tashan Reed",
-      "reporterId": "tashan_reed",
-      "reporterName": "Tashan Reed",
-      "author": "Tashan Reed",
-      "authorHandle": "@tashanreed",
-      "authorProfileUrl": "https://x.com/tashanreed",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0233
+      "storyRank": 0.0696
     },
     {
       "id": "lv_rss_8af82885ad7c",
@@ -785,81 +1239,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0938
-    },
-    {
-      "id": "lv_bsky_019a15e163b0",
-      "type": "tweet",
-      "title": "“They feel like they can play with anybody,” Daronte Jones told me. After a rough start to the season, the #Commanders' defense is rolling. My exclusive with the coordinator who engineered the unit's turnaround: www.washingtonpost.com/sports/2026/...",
-      "fullText": "“They feel like they can play with anybody,” Daronte Jones told me. After a rough start to the season, the #Commanders' defense is rolling. My exclusive with the coordinator who engineered the unit's turnaround: www.washingtonpost.com/sports/2026/...",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:bgdq5f65djok5tnfc6tikptz/bafkreiatc4alech24dk4aqls55er3vmn4ygnrkxjbqxfzsbus3bc6a7p6q",
-      "imageAlt": "Tashan Reed post",
-      "publishedAt": "2026-11-21T16:36:29.642Z",
-      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2tjvbamck2m",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "the_athletic_las_vegas_public_beat_wire_",
-      "outletName": "Tashan Reed",
-      "reporterId": "tashan_reed",
-      "reporterName": "Tashan Reed",
-      "author": "Tashan Reed",
-      "authorHandle": "@tashanreed",
-      "authorProfileUrl": "https://x.com/tashanreed",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0862
-    },
-    {
-      "id": "lv_bsky_71de33039f69",
-      "type": "tweet",
-      "title": "#Commanders CB Amik Robertson (leg) and RB Rachaad White (heel) aren't at practice today.",
-      "fullText": "#Commanders CB Amik Robertson (leg) and RB Rachaad White (heel) aren't at practice today.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Tashan Reed post",
-      "publishedAt": "2026-11-21T16:31:11.186Z",
-      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2tjlrk35c2m",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "the_athletic_las_vegas_public_beat_wire_",
-      "outletName": "Tashan Reed",
-      "reporterId": "tashan_reed",
-      "reporterName": "Tashan Reed",
-      "author": "Tashan Reed",
-      "authorHandle": "@tashanreed",
-      "authorProfileUrl": "https://x.com/tashanreed",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0215
+      "storyRank": 0.0598
     },
     {
       "id": "lv_vid_68d083123f7f",
@@ -893,7 +1273,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0858
+      "storyRank": 0.0571
     },
     {
       "id": "lv_espn_0478924c7ef87",
@@ -927,7 +1307,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0856
+      "storyRank": 0.0571
     },
     {
       "id": "lv_espn_184c9fc7fe1b2",
@@ -961,7 +1341,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0739
+      "storyRank": 0.0528
     },
     {
       "id": "lv_tx_e42fffd61a58",
@@ -995,7 +1375,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0675
+      "storyRank": 0.0502
     },
     {
       "id": "lv_rss_5ae74953f83a",
@@ -1028,7 +1408,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0509
+      "storyRank": 0.0426
     },
     {
       "id": "lv_vid_f8746b84b637",
@@ -1062,7 +1442,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0502
+      "storyRank": 0.0423
     },
     {
       "id": "lv_vid_1b1398ae68fc",
@@ -1096,7 +1476,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0498
+      "storyRank": 0.042
     },
     {
       "id": "lv_rss_b0ae29a23c4c",
@@ -1129,7 +1509,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.046
+      "storyRank": 0.04
     },
     {
       "id": "lv_rss_82f552ec3372",
@@ -1162,15 +1542,15 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0344
+      "storyRank": 0.0331
     },
     {
       "id": "lv_espn_090c64b75fe77",
       "type": "article",
       "title": "Raiders rookie Fernando Mendoza to face another elite defense in the sack-hungry Broncos",
       "summary": "— Top draft pick Fernando Mendoza's first career road start comes against Denver's dominant defense, one week after he was sacked half a dozen times by the Seattle Seahawks in his",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1122/f515e9f778244292a3f1b85fe6f4512c1192/f515e9f778244292a3f1b85fe6f4512c1192.jpg",
-      "imageCaption": "Jonah Coleman punches in his third TD of the game for Denver",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1123/7243759b-f0e0-443e-b952-2d5e5e64afba/7243759b-f0e0-443e-b952-2d5e5e64afba.jpg",
+      "imageCaption": "Broncos seal the win with pick-six late in the fourth quarter",
       "imageAlt": "Raiders rookie Fernando Mendoza to face another elite defense in the sack-hungry Broncos",
       "publishedAt": "2026-11-20T01:02:33Z",
       "url": "https://www.espn.com/nfl/preview?gameId=401873075",
@@ -1196,7 +1576,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0335
+      "storyRank": 0.0325
     },
     {
       "id": "lv_vid_0b6d6122f0a1",
@@ -1230,7 +1610,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0084
+      "storyRank": 0.0081
     },
     {
       "id": "lv_vid_d9cc5f20a7ff",
@@ -1264,7 +1644,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0079
     },
     {
       "id": "lv_vid_c5af75e24f4f",
@@ -1298,7 +1678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.032
+      "storyRank": 0.0315
     },
     {
       "id": "lv_vid_4966d640e169",
@@ -1332,7 +1712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0319
+      "storyRank": 0.0315
     },
     {
       "id": "lv_rss_857f30421fa5",
@@ -1365,7 +1745,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.0302
     },
     {
       "id": "lv_rss_0c74e6697fef",
@@ -1398,7 +1778,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0292
+      "storyRank": 0.0296
     },
     {
       "id": "lv_vid_0ad759fa4e33",
@@ -1432,7 +1812,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0287
+      "storyRank": 0.0293
     },
     {
       "id": "lv_vid_c135cc77f926",
@@ -1466,7 +1846,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.025
     },
     {
       "id": "lv_vid_ace048c77cd2",
@@ -1500,7 +1880,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0228
+      "storyRank": 0.0249
     },
     {
       "id": "lv_vid_aecd620c0aca",
@@ -1534,7 +1914,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0062
     },
     {
       "id": "lv_vid_76c5245d8e44",
@@ -1568,7 +1948,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
+      "storyRank": 0.0245
     },
     {
       "id": "lv_vid_4919472a15b9",
@@ -1602,7 +1982,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0221
+      "storyRank": 0.0243
     },
     {
       "id": "lv_rss_7b36209b7570",
@@ -1635,7 +2015,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0218
+      "storyRank": 0.024
     },
     {
       "id": "lv_espn_ec4272d0bb6de",
@@ -1669,41 +2049,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0215
-    },
-    {
-      "id": "lv_espn_dede4a78d0e8e",
-      "type": "article",
-      "title": "NFL flexes Raiders-Browns to replace Pats-Chargers in SNF slot for Week 12",
-      "summary": "The NFL has flexed the Raiders-Browns Week 12 game into NBC's \"Sunday Night Football\" slot.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1116/r1746654_1296x729_16-9.jpg",
-      "imageCaption": "Quarterback Fernando Mendoza faces a stiff test in Week 11 on the road against the Broncos.",
-      "imageAlt": "NFL flexes Raiders-Browns to replace Pats-Chargers in SNF slot for Week 12",
-      "publishedAt": "2026-11-18T11:41:02Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50512634/nfl-flexes-raiders-browns-snf-slot-week-12",
-      "outletId": "espn_cle",
-      "outletName": "ESPN",
-      "reporterId": "daniel_oyefusi",
-      "reporterName": "Daniel Oyefusi",
-      "author": "Daniel Oyefusi",
-      "authorHandle": "@DanielOyefusi",
-      "authorProfileUrl": "https://x.com/DanielOyefusi",
-      "trustTier": 3,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 78,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0661
+      "storyRank": 0.0237
     },
     {
       "id": "lv_rss_373a5ea0fb34",
@@ -1736,7 +2082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0173
+      "storyRank": 0.0201
     },
     {
       "id": "lv_rss_047ffea80420",
@@ -1769,7 +2115,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0164
+      "storyRank": 0.0193
     },
     {
       "id": "lv_vid_21b2b3c566ec",
@@ -1803,7 +2149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0161
+      "storyRank": 0.0191
     },
     {
       "id": "lv_rss_8f901c5aa1e2",
@@ -1836,7 +2182,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0642
+      "storyRank": 0.0453
     },
     {
       "id": "lv_vid_04c159bc186f",
@@ -1870,7 +2216,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.004
+      "storyRank": 0.0047
     },
     {
       "id": "lv_rss_bf9169c05433",
@@ -1903,7 +2249,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0136
+      "storyRank": 0.0167
     },
     {
       "id": "lv_rss_2be94dde0047",
@@ -1936,7 +2282,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133
+      "storyRank": 0.0164
     },
     {
       "id": "lv_rss_6bc2ff42595f",
@@ -1969,7 +2315,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0158
     },
     {
       "id": "lv_tx_78143c6f4294",
@@ -2003,7 +2349,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0147
     },
     {
       "id": "lv_vid_73104450883f",
@@ -2037,7 +2383,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0111
+      "storyRank": 0.0142
     },
     {
       "id": "lv_vid_dd689710caca",
@@ -2071,7 +2417,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.011
+      "storyRank": 0.014
     },
     {
       "id": "lv_vid_93248fcf69a6",
@@ -2105,7 +2451,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.011
+      "storyRank": 0.014
     },
     {
       "id": "lv_vid_ded3d7cc3459",
@@ -2139,7 +2485,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.011
+      "storyRank": 0.014
     },
     {
       "id": "lv_vid_eb5a2655d8fa",
@@ -2173,7 +2519,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0109
+      "storyRank": 0.014
     },
     {
       "id": "lv_vid_046b5366019c",
@@ -2207,7 +2553,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0109
+      "storyRank": 0.014
     },
     {
       "id": "lv_vid_c6be0f7a6267",
@@ -2241,7 +2587,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0035
     },
     {
       "id": "lv_vid_cb59ee2fe134",
@@ -2275,7 +2621,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0139
     },
     {
       "id": "lv_vid_bb7230b1d9a4",
@@ -2309,7 +2655,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0108
+      "storyRank": 0.0139
     },
     {
       "id": "lv_vid_11669603c5c0",
@@ -2343,7 +2689,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0138
     },
     {
       "id": "lv_vid_969a9d84171d",
@@ -2377,7 +2723,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0137
     },
     {
       "id": "lv_vid_189692913fb3",
@@ -2411,7 +2757,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0137
     },
     {
       "id": "lv_vid_b3ac8dd186f6",
@@ -2445,7 +2791,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0137
     },
     {
       "id": "lv_rss_08fc787421ed",
@@ -2478,7 +2824,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
+      "storyRank": 0.0136
     },
     {
       "id": "lv_vid_7d58291a8c54",
@@ -2512,7 +2858,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0135
     },
     {
       "id": "lv_rss_8fd3125fdef4",
@@ -2545,7 +2891,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.0135
     },
     {
       "id": "lv_rss_99858d2c34e9",
@@ -2578,7 +2924,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0116
     },
     {
       "id": "lv_vid_168db94ed921",
@@ -2612,7 +2958,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0116
     },
     {
       "id": "lv_tx_b2037878c404",
@@ -2646,7 +2992,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0081
+      "storyRank": 0.0109
     },
     {
       "id": "lv_rss_629ad0eefff9",
@@ -2679,7 +3025,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0079
+      "storyRank": 0.0106
     },
     {
       "id": "lv_rss_17ada766ae5d",
@@ -2712,7 +3058,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0193
+      "storyRank": 0.0265
     },
     {
       "id": "lv_vid_de676b793cc7",
@@ -2746,7 +3092,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0103
     },
     {
       "id": "lv_vid_3b29bda692a3",
@@ -2780,7 +3126,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0076
+      "storyRank": 0.0103
     },
     {
       "id": "lv_vid_c6fdc0e1013e",
@@ -2814,7 +3160,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0019
+      "storyRank": 0.0026
     },
     {
       "id": "lv_rss_ad3cf945b69f",
@@ -2847,7 +3193,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.0102
     },
     {
       "id": "lv_rss_f18aa3353481",
@@ -2880,7 +3226,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.0101
     },
     {
       "id": "lv_rss_771d48487f60",
@@ -2913,7 +3259,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0074
+      "storyRank": 0.01
     },
     {
       "id": "lv_vid_42aaa7cf276b",
@@ -2947,7 +3293,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0017
+      "storyRank": 0.0023
     },
     {
       "id": "lv_rss_60eab24d07f6",
@@ -2980,7 +3326,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0093
     },
     {
       "id": "lv_rss_381d43b8ee38",
@@ -3013,7 +3359,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0092
     },
     {
       "id": "lv_rss_8583cb5d4fdd",
@@ -3046,7 +3392,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0092
     },
     {
       "id": "lv_vid_4134cbd9f158",
@@ -3080,7 +3426,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0092
     },
     {
       "id": "lv_vid_c2faf8a52364",
@@ -3114,7 +3460,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0067
+      "storyRank": 0.0092
     },
     {
       "id": "lv_vid_24ca85672bc9",
@@ -3148,7 +3494,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.009
     },
     {
       "id": "lv_rss_1e40282eb4c0",
@@ -3181,7 +3527,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.0089
     },
     {
       "id": "lv_rss_63287c8ce6ba",
@@ -3214,7 +3560,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0089
     },
     {
       "id": "lv_rss_4ac0048e3739",
@@ -3247,7 +3593,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0083
     },
     {
       "id": "lv_rss_19688c3265bb",
@@ -3280,7 +3626,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0082
     },
     {
       "id": "lv_vid_8f72fda341e4",
@@ -3314,7 +3660,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0082
     },
     {
       "id": "lv_vid_cda98db86fb3",
@@ -3348,7 +3694,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0082
     },
     {
       "id": "lv_vid_ca2220956581",
@@ -3382,7 +3728,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0015
+      "storyRank": 0.002
     },
     {
       "id": "lv_vid_b6bced07bf4b",
@@ -3416,7 +3762,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0081
     },
     {
       "id": "lv_tx_b1da53b68436",
@@ -3450,7 +3796,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0054
+      "storyRank": 0.0077
     },
     {
       "id": "lv_rss_9c7cba4c8ee8",
@@ -3483,7 +3829,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0075
     },
     {
       "id": "lv_vid_c4de43ba091e",
@@ -3517,7 +3863,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0019
     },
     {
       "id": "lv_rss_7050211db8b8",
@@ -3550,7 +3896,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0053
+      "storyRank": 0.0075
     },
     {
       "id": "lv_vid_6b96748a971b",
@@ -3584,7 +3930,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.0075
     },
     {
       "id": "lv_rss_71b1e9e0fe76",
@@ -3617,7 +3963,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.0074
     },
     {
       "id": "lv_rss_8968433b1bb5",
@@ -3650,7 +3996,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
+      "storyRank": 0.0074
     },
     {
       "id": "lv_rss_0b2212f39569",
@@ -3683,40 +4029,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
-    },
-    {
-      "id": "lv_rss_432e8ef2c038",
-      "type": "article",
-      "title": "Power Rankings: A look at where Raiders rank after Week 9 clash in The Bay",
-      "summary": "Take a look at the latest power rankings from around the media.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/rtndwyfwd9y2gqilrtav.png",
-      "imageAlt": "Power Rankings: A look at where Raiders rank after Week 9 clash in The Bay",
-      "publishedAt": "2026-11-10T19:30:20.000Z",
-      "url": "https://www.raiders.com/news/power-rankings-a-look-at-where-raiders-rank-after-week-9-clash-in-the-bay",
-      "outletId": "raiders_official",
-      "outletName": "raiders.com Official",
-      "reporterId": "raiders_official",
-      "reporterName": "raiders.com Official",
-      "author": "raiders.com Official",
-      "authorHandle": "@Raiders",
-      "authorProfileUrl": "https://www.raiders.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0074
     },
     {
       "id": "lv_vid_55f702157f32",
@@ -3750,40 +4063,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
-    },
-    {
-      "id": "lv_rss_6b50e6ac3855",
-      "type": "article",
-      "title": "1976 Unsung Hero: David Humm",
-      "summary": "Humm spent seven seasons as backup quarterback for the Silver and Black, serving as the holder for the Super Bowl XI champions.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/lewhbq5jdptauhwffcjc.png",
-      "imageAlt": "1976 Unsung Hero: David Humm",
-      "publishedAt": "2026-11-10T18:00:00.000Z",
-      "url": "https://www.raiders.com/news/david-humm-1976-unsung-hero",
-      "outletId": "raiders_official",
-      "outletName": "raiders.com Official",
-      "reporterId": "raiders_official",
-      "reporterName": "raiders.com Official",
-      "author": "raiders.com Official",
-      "authorHandle": "@Raiders",
-      "authorProfileUrl": "https://www.raiders.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
+      "storyRank": 0.0073
     },
     {
       "id": "lv_tx_781e03c50205",
@@ -3817,40 +4097,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
-    },
-    {
-      "id": "lv_rss_b7e338e365a6",
-      "type": "article",
-      "title": "By the Numbers: Raiders' failure to protect football adds up in loss to 49ers",
-      "summary": "While Brock Bowers and Dylan Laube were bright spots for Raiders against 49ers, their second half turnovers were too much to overcome.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/iglwxpjdy3v2bcdepfdp.png",
-      "imageAlt": "By the Numbers: Raiders' failure to protect football adds up in loss to 49ers",
-      "publishedAt": "2026-11-10T02:47:33.000Z",
-      "url": "https://www.raiders.com/news/by-the-numbers-raiders-failure-to-protect-football-adds-up-in-loss-to-49ers-nfl-2026",
-      "outletId": "raiders_official",
-      "outletName": "raiders.com Official",
-      "reporterId": "raiders_official",
-      "reporterName": "raiders.com Official",
-      "author": "raiders.com Official",
-      "authorHandle": "@Raiders",
-      "authorProfileUrl": "https://www.raiders.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0048
+      "storyRank": 0.007
     },
     {
       "id": "lv_vid_b3746b91f805",
@@ -3884,73 +4131,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
-    },
-    {
-      "id": "lv_rss_a91d5b1dacb7",
-      "type": "article",
-      "title": "Pérdidas de balón complican la visita de los Raiders a San Francisco",
-      "summary": "Cinco entregas de balón condicionaron el partido para Las Vegas, que no pudo aprovechar las oportunidades que tuvieron para acercarse en el marcador ante los 49ers.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/ehvhuatgqyen8c1zqhck.png",
-      "imageAlt": "Pérdidas de balón complican la visita de los Raiders a San Francisco",
-      "publishedAt": "2026-11-09T20:00:38.000Z",
-      "url": "https://www.raiders.com/news/perdidas-de-balon-complican-la-visita-de-los-raiders-a-san-francisco",
-      "outletId": "raiders_official",
-      "outletName": "raiders.com Official",
-      "reporterId": "raiders_official",
-      "reporterName": "raiders.com Official",
-      "author": "raiders.com Official",
-      "authorHandle": "@Raiders",
-      "authorProfileUrl": "https://www.raiders.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
-    },
-    {
-      "id": "lv_rss_e2e2326316ee",
-      "type": "article",
-      "title": "Gutierrez: Raiders' second-half sloppiness negates all chances to beat 49ers",
-      "summary": "Despite having multiple opportunities to comeback on 49ers, the Raiders were hampered by crucial mistakes.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/adylcvdgmjpwrc6zkogn.png",
-      "imageAlt": "Gutierrez: Raiders' second-half sloppiness negates all chances to beat 49ers",
-      "publishedAt": "2026-11-09T19:26:58.000Z",
-      "url": "https://www.raiders.com/news/gutierrez-raiders-second-half-sloppiness-negates-all-chances-to-beat-49ers",
-      "outletId": "raiders_official",
-      "outletName": "raiders.com Official",
-      "reporterId": "raiders_official",
-      "reporterName": "raiders.com Official",
-      "author": "raiders.com Official",
-      "authorHandle": "@Raiders",
-      "authorProfileUrl": "https://www.raiders.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
+      "storyRank": 0.0067
     },
     {
       "id": "lv_vid_b438f0f7d237",
@@ -3984,7 +4165,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0062
     },
     {
       "id": "lv_vid_903fa9db4dfe",
@@ -4018,7 +4199,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0062
     },
     {
       "id": "lv_vid_44bcc5c1a002",
@@ -4052,7 +4233,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0062
     },
     {
       "id": "lv_vid_853685a86a5c",
@@ -4086,7 +4267,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0062
     },
     {
       "id": "lv_vid_1e020685d1e0",
@@ -4120,7 +4301,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0062
     },
     {
       "id": "lv_vid_76cea3a18903",
@@ -4154,7 +4335,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "lv_vid_449cf958a587",
@@ -4188,7 +4369,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "lv_vid_1d69bf419aa6",
@@ -4222,7 +4403,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0015
     },
     {
       "id": "lv_vid_e7a10ab13762",
@@ -4256,7 +4437,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "lv_vid_2d8235beb923",
@@ -4290,7 +4471,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "lv_vid_f602fb49d7fc",
@@ -4324,7 +4505,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "lv_vid_c71efa5f0259",
@@ -4358,7 +4539,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0061
     },
     {
       "id": "lv_vid_1db7fcbb1869",
@@ -4392,7 +4573,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0038
+      "storyRank": 0.0056
     },
     {
       "id": "lv_tx_9b43f0288a9a",
@@ -4426,7 +4607,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0036
+      "storyRank": 0.0054
     },
     {
       "id": "lv_vid_1a4fb8dd21d1",
@@ -4460,7 +4641,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0052
     },
     {
       "id": "lv_vid_f50af0286d49",
@@ -4494,7 +4675,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0052
     },
     {
       "id": "lv_vid_6f856dda5a3f",
@@ -4528,7 +4709,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0009
+      "storyRank": 0.0013
     },
     {
       "id": "lv_tx_196b24581e23",
@@ -4562,7 +4743,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0033
+      "storyRank": 0.005
     },
     {
       "id": "lv_vid_ff460e2a4e1e",
@@ -4596,7 +4777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0008
+      "storyRank": 0.0012
     },
     {
       "id": "lv_vid_e10199d72e11",
@@ -4630,7 +4811,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0048
     },
     {
       "id": "lv_vid_aa26c5405997",
@@ -4664,7 +4845,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0048
     },
     {
       "id": "lv_tx_3266d8cd1203",
@@ -4698,7 +4879,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0031
+      "storyRank": 0.0046
     },
     {
       "id": "lv_vid_659b3934747e",
@@ -4732,7 +4913,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0045
     },
     {
       "id": "lv_vid_ad303cf15e2f",
@@ -4766,75 +4947,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
-    },
-    {
-      "id": "lv_vid_830009a6a81b",
-      "type": "video",
-      "title": "Raiders' Week 8 win vs. New York Jets | Sounds of the Game",
-      "summary": "Watch exclusive behind-the-scenes footage of the Las Vegas Raiders' Week 8 victory over the New York Jets.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/rfydghdmb5gp98lkcpyk.png",
-      "imageAlt": "Raiders' Week 8 win vs. New York Jets | Sounds of the Game",
-      "publishedAt": "2026-11-04T23:00:00.000Z",
-      "url": "https://www.raiders.com/video/recap-raiders-week-8-nfl-jets-sounds-of-the-game-2026",
-      "externalVideoUrl": "https://www.raiders.com/video/recap-raiders-week-8-nfl-jets-sounds-of-the-game-2026",
-      "outletId": "raiders_official",
-      "outletName": "raiders.com Video",
-      "reporterId": "raiders_official",
-      "reporterName": "raiders.com Video",
-      "author": "raiders.com Video",
-      "authorHandle": "@Raiders",
-      "authorProfileUrl": "https://www.raiders.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.003
-    },
-    {
-      "id": "lv_vid_a946a7bd8738",
-      "type": "video",
-      "title": "Maxx Crosby, Quay Walker, Dylan Laube, Eric Stokes and Trey Zuhn Scrums | Week 9 vs. 49ers",
-      "summary": "DE Maxx Crosby, LB Quay Walker, RB Dylan Laube, CB Eric Stokes and guard Trey Zuhn III address the media in the locker room.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/mhfmwdsyuivrheeet58q.png",
-      "imageAlt": "Maxx Crosby, Quay Walker, Dylan Laube, Eric Stokes and Trey Zuhn Scrums | Week 9 vs. 49ers",
-      "publishedAt": "2026-11-04T23:00:00.000Z",
-      "url": "https://www.raiders.com/video/maxx-crosby-quay-walker-dylan-laube-eric-stokes-trey-zuhn-scrums-week-9-49ers-2026-season",
-      "externalVideoUrl": "https://www.raiders.com/video/maxx-crosby-quay-walker-dylan-laube-eric-stokes-trey-zuhn-scrums-week-9-49ers-2026-season",
-      "outletId": "raiders_official",
-      "outletName": "raiders.com Video",
-      "reporterId": "raiders_official",
-      "reporterName": "raiders.com Video",
-      "author": "raiders.com Video",
-      "authorHandle": "@Raiders",
-      "authorProfileUrl": "https://www.raiders.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
+      "storyRank": 0.0045
     },
     {
       "id": "lv_tx_6109b8e28eb9",
@@ -4868,41 +4981,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0029
-    },
-    {
-      "id": "lv_tx_a70002de88a4",
-      "type": "tweet",
-      "title": "Raiders roster move: Signed DE Anthony Goodlow to the practice squad. Released T Darian Kinnard from the practice squad.",
-      "fullText": "Raiders roster move: Signed DE Anthony Goodlow to the practice squad. Released T Darian Kinnard from the practice squad.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-03T08:00:00.000Z",
-      "url": "https://www.raiders.com/team/transactions/#tx-a70002de88a4",
-      "outletId": "raiders_official",
-      "outletName": "raiders.com Official",
-      "reporterId": "raiders_official",
-      "reporterName": "Las Vegas Raiders Official",
-      "author": "Las Vegas Raiders Official",
-      "authorHandle": "@Raiders",
-      "authorProfileUrl": "https://www.raiders.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0027
+      "storyRank": 0.0043
     },
     {
       "id": "lv_rss_68ae6645b6e4",
@@ -4931,43 +5010,6 @@
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 86,
-      "storyTier": "stale_pregame",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": true,
-      "storyRank": -1000
-    },
-    {
-      "id": "lv_bsky_8e9409f55c3a",
-      "type": "tweet",
-      "title": "Quinn said WR Treylon Burks (foot) will also be good to go Monday",
-      "fullText": "Quinn said WR Treylon Burks (foot) will also be good to go Monday",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Tashan Reed post",
-      "publishedAt": "2026-11-21T17:46:04.944Z",
-      "url": "https://bsky.app/profile/tashanreed.bsky.social/post/3n2tnrp4oos2h",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "the_athletic_las_vegas_public_beat_wire_",
-      "outletName": "Tashan Reed",
-      "reporterId": "tashan_reed",
-      "reporterName": "Tashan Reed",
-      "author": "Tashan Reed",
-      "authorHandle": "@tashanreed",
-      "authorProfileUrl": "https://x.com/tashanreed",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": -10,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
       "storyTier": "stale_pregame",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,

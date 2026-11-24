@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:34:26.098Z",
+  "updatedAt": "2026-11-24T20:08:00.706Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/dallas-cowboys",
   "spotracUrl": "https://www.spotrac.com/nfl/dallas-cowboys/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 331353087,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 314141925,
+      "totalCapLiabilities": 314361925,
       "top51": 253626648,
-      "teamCapSpace": 17211162,
-      "otcRawTeamCapSpace": 17211162,
-      "effectiveCapSpace": 17211162,
-      "activeCapSpending": 263990497,
-      "offenseSpend": 161277416,
-      "defenseSpend": 93729748,
+      "teamCapSpace": 16991162,
+      "otcRawTeamCapSpace": 16991162,
+      "effectiveCapSpace": 16991162,
+      "activeCapSpending": 264210497,
+      "offenseSpend": 161387416,
+      "defenseSpend": 93839748,
       "specialSpend": 8983333,
       "deadMoneyTotal": 50151428,
-      "injuredReserveTotal": 12020341,
-      "practiceSquadTotal": 3610633,
+      "injuredReserveTotal": 20439959,
+      "practiceSquadTotal": 3830633,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 15630974,
+      "reserveAndPsTotal": 24270592,
       "topDeadMoneyEntries": [
         {
           "name": "Osa Odighizuwa",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 52,
-      "totalSignedCount": 76
+      "totalSignedCount": 78
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 325977572,
       "teamCapSpace": 298206,
       "otcRawTeamCapSpace": 298206,
-      "effectiveCapSpace": -17707717,
+      "effectiveCapSpace": -17663786,
       "activeCapSpending": 325977572,
       "offenseSpend": 207914336,
       "defenseSpend": 109884902,
@@ -265,7 +265,7 @@
     }
   },
   "blueprint": {
-    "summary": "Dallas Cowboys hold $17.21M in 2026 OverTheCap space and $0.30M projected for 2027."
+    "summary": "Dallas Cowboys hold $16.99M in 2026 OverTheCap space and $0.30M projected for 2027."
   },
   "players": [
     {

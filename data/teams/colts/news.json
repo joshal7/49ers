@@ -1,118 +1,250 @@
 {
-  "updatedAt": "2026-11-23T06:36:27.358Z",
+  "updatedAt": "2026-11-24T20:08:48.668Z",
   "dailyTopNewsBrief": {
-    "id": "brief_ind_1be117de4e67",
-    "cycleKey": "2026-11-22@17ET",
+    "id": "brief_ind_2ebf06dd2f29",
+    "cycleKey": "2026-11-23@17ET",
     "scheduledHourPt": 17,
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-8",
-    "generatedAt": "2026-11-23T06:36:33.651Z",
+    "generatedAt": "2026-11-24T20:08:49.785Z",
     "modelUsed": "gemini-4-hydrogen",
     "thinkingLevel": "XHIGH",
     "source": "deterministic-digest",
-    "wordCount": 71,
+    "wordCount": 47,
     "headline": "Indianapolis Colts Daily Briefing — Week 12",
     "summary": "Indianapolis Colts (3-8, 3rd in AFC South • #13 Seed in AFC) top verified storylines, injury status, and upcoming matchup intel.",
     "bullets": [
-      "AFC Notes: Robert Saleh, Jaylen Harrell, Colts, Texans, Titans ([NFL Trade Rumors](https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/))",
-      "Sources: Colts shut down Alec Pierce for season, plan for WR's return in 2027 ([Ian Rapoport](https://www.espn.com/nfl/story/_/id/50551004/sources-colts-shutting-alec-pierce-rest-season))",
-      "Sources: Ex-Colts QB Daniel Jones likely to wait before signing with new team ([Adam Schefter](https://www.espn.com/nfl/story/_/id/50557657/sources-daniel-jones-likely-wait-joining-new-team))",
-      "Colts Shut Down WR Alec Pierce For Remainder Of Season ([Pro Football Rumors](https://www.profootballrumors.com/2026/11/colts-shut-down-wr-alec-pierce-for-remainder-of-season))",
-      "Colts Cheerleaders host Junior Cheer clinic at John Boner Fitness and Legacy Center ([colts.com Official](https://www.colts.com/news/colts-cheerleaders-host-junior-cheer-clinic-at-john-boner-fitness-and-legacy-center))"
+      "Colts Work Out Three Quarterbacks ([Pro Football Rumors](https://www.profootballrumors.com/2026/11/colts-work-out-three-quarterbacks))",
+      "Colts make series of roster moves ([colts.com Official](https://www.colts.com/news/colts-make-series-of-roster-moves))",
+      "Colts, Irsays to highlight nonprofits with 'My Cause My Cleats' this Sunday ([colts.com Official](https://www.colts.com/news/new-york-giants-carlie-irsay-gordon-shane-steichen-anthony-richardson-2026-nfl-schedule-my-cause-my-cleats-lucas-oil-stadium))",
+      "My Cause My Cleats ([colts.com Video](https://www.colts.com/video/my-cause-my-cleats-indianapolis-colts-2026-new-york-giants-nfl-schedule))",
+      "Colts Signing OT Wanya Morris Off Cowboys’ PS ([NFL Trade Rumors](https://nfltraderumors.co/colts-signing-ot-wanya-morris-off-cowboys-ps/))"
     ],
     "coveredStoryKeys": [
-      "ind_nfltr_97b62337f4f2",
-      "ind_espn_ca4e834e831bf",
-      "ind_espn_878b9df448c16",
-      "ind_pfr_6f837a0252c7",
-      "ind_rss_524b276473fd"
+      "ind_pfr_3183d873d24f",
+      "ind_rss_76854cbd1c26",
+      "ind_rss_f657c27c7384",
+      "ind_vid_95d27eca2658",
+      "ind_nfltr_b5b4e460b7b5"
     ],
     "coveredUrls": [
-      "https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/",
-      "https://www.espn.com/nfl/story/_/id/50551004/sources-colts-shutting-alec-pierce-rest-season",
-      "https://www.espn.com/nfl/story/_/id/50557657/sources-daniel-jones-likely-wait-joining-new-team",
-      "https://www.profootballrumors.com/2026/11/colts-shut-down-wr-alec-pierce-for-remainder-of-season",
-      "https://www.colts.com/news/colts-cheerleaders-host-junior-cheer-clinic-at-john-boner-fitness-and-legacy-center"
+      "https://www.profootballrumors.com/2026/11/colts-work-out-three-quarterbacks",
+      "https://www.colts.com/news/colts-make-series-of-roster-moves",
+      "https://www.colts.com/news/new-york-giants-carlie-irsay-gordon-shane-steichen-anthony-richardson-2026-nfl-schedule-my-cause-my-cleats-lucas-oil-stadium",
+      "https://www.colts.com/video/my-cause-my-cleats-indianapolis-colts-2026-new-york-giants-nfl-schedule",
+      "https://nfltraderumors.co/colts-signing-ot-wanya-morris-off-cowboys-ps/"
     ],
     "sources": [
       {
         "sid": "S1",
-        "title": "AFC Notes: Robert Saleh, Jaylen Harrell, Colts, Texans, Titans",
-        "url": "https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/",
-        "author": "NFL Trade Rumors",
-        "outlet": "NFL Trade Rumors",
-        "publishedAt": "2026-11-23T00:30:48.000Z"
+        "title": "Colts Work Out Three Quarterbacks",
+        "url": "https://www.profootballrumors.com/2026/11/colts-work-out-three-quarterbacks",
+        "author": "Pro Football Rumors",
+        "outlet": "Pro Football Rumors",
+        "publishedAt": "2026-11-24T19:52:25.000Z"
       },
       {
         "sid": "S2",
-        "title": "Sources: Colts shut down Alec Pierce for season, plan for WR's return in 2027",
-        "url": "https://www.espn.com/nfl/story/_/id/50551004/sources-colts-shutting-alec-pierce-rest-season",
-        "author": "Ian Rapoport",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-22T16:20:24Z"
+        "title": "Colts make series of roster moves",
+        "url": "https://www.colts.com/news/colts-make-series-of-roster-moves",
+        "author": "colts.com Official",
+        "outlet": "colts.com Official",
+        "publishedAt": "2026-11-24T19:50:22.000Z"
       },
       {
         "sid": "S3",
-        "title": "Sources: Ex-Colts QB Daniel Jones likely to wait before signing with new team",
-        "url": "https://www.espn.com/nfl/story/_/id/50557657/sources-daniel-jones-likely-wait-joining-new-team",
-        "author": "Adam Schefter",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-22T15:07:28Z"
+        "title": "Colts, Irsays to highlight nonprofits with 'My Cause My Cleats' this Sunday",
+        "url": "https://www.colts.com/news/new-york-giants-carlie-irsay-gordon-shane-steichen-anthony-richardson-2026-nfl-schedule-my-cause-my-cleats-lucas-oil-stadium",
+        "author": "colts.com Official",
+        "outlet": "colts.com Official",
+        "publishedAt": "2026-11-24T19:00:21.000Z"
       },
       {
         "sid": "S4",
-        "title": "Colts Shut Down WR Alec Pierce For Remainder Of Season",
-        "url": "https://www.profootballrumors.com/2026/11/colts-shut-down-wr-alec-pierce-for-remainder-of-season",
-        "author": "Pro Football Rumors",
-        "outlet": "Pro Football Rumors",
-        "publishedAt": "2026-11-22T14:14:54.000Z"
+        "title": "My Cause My Cleats",
+        "url": "https://www.colts.com/video/my-cause-my-cleats-indianapolis-colts-2026-new-york-giants-nfl-schedule",
+        "author": "colts.com Video",
+        "outlet": "colts.com Video",
+        "publishedAt": "2026-11-24T18:59:00.000Z"
       },
       {
         "sid": "S5",
-        "title": "Colts Cheerleaders host Junior Cheer clinic at John Boner Fitness and Legacy Center",
-        "url": "https://www.colts.com/news/colts-cheerleaders-host-junior-cheer-clinic-at-john-boner-fitness-and-legacy-center",
-        "author": "colts.com Official",
-        "outlet": "colts.com Official",
-        "publishedAt": "2026-11-22T12:00:00.000Z"
+        "title": "Colts Signing OT Wanya Morris Off Cowboys’ PS",
+        "url": "https://nfltraderumors.co/colts-signing-ot-wanya-morris-off-cowboys-ps/",
+        "author": "NFL Trade Rumors",
+        "outlet": "NFL Trade Rumors",
+        "publishedAt": "2026-11-24T18:00:23.000Z"
       },
       {
         "sid": "S6",
-        "title": "Confidence, joy and a whole lot of fun at the Colts Cheer Community Tuesday",
-        "url": "https://www.colts.com/video/confidence-joy-and-a-whole-lot-of-fun-at-the-colts-cheer-community-tuesday",
+        "title": "How Kicking The Stigma is hoping to change the conversation around mental health with Brett Kramer | The Colts Show",
+        "url": "https://www.colts.com/video/indianapolis-colts-how-kicking-the-stigma-is-hoping-to-change-the-conversation-around-mental-health-nfl-with-brett-kramer-the-colts-show",
         "author": "colts.com Video",
         "outlet": "colts.com Video",
-        "publishedAt": "2026-11-22T11:30:49.000Z"
+        "publishedAt": "2026-11-24T11:00:00.000Z"
       },
       {
         "sid": "S7",
-        "title": "Eugene Hilton Jr. breaks out his father's 'T-Y' touchdown celebration",
-        "url": "https://www.espn.com/college-football/story/_/id/50553909/eugene-hilton-jr-wisconsin-ty-celebration",
-        "author": "J.J. Post",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-21T22:08:59Z"
+        "title": "NFL Practice Squad Updates: 11/23/26",
+        "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-23-26",
+        "author": "Pro Football Rumors",
+        "outlet": "Pro Football Rumors",
+        "publishedAt": "2026-11-24T00:46:03.000Z"
       },
       {
         "sid": "S8",
-        "title": "Colts Waive QB Daniel Jones",
-        "url": "https://www.profootballrumors.com/2026/11/colts-release-qb-daniel-jones",
+        "title": "QB Daniel Jones Clears Waivers",
+        "url": "https://www.profootballrumors.com/2026/11/qb-daniel-jones-clears-waivers",
         "author": "Pro Football Rumors",
         "outlet": "Pro Football Rumors",
-        "publishedAt": "2026-11-21T16:00:28.000Z"
+        "publishedAt": "2026-11-23T22:11:54.000Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
     {
-      "id": "ind_nfltr_97b62337f4f2",
+      "id": "ind_pfr_3183d873d24f",
       "type": "article",
-      "title": "AFC Notes: Robert Saleh, Jaylen Harrell, Colts, Texans, Titans",
-      "summary": "Colts Colts DT Adetomiwa Adebawore was fined $11,941 for unnecessary roughness. Texans Texans WR Nico Collins was fined $14,926 for unsportsmanlike conduct, and DB M.J. Stewart was fined $11,667 for unnecessary roughness. Titans Titans stat",
+      "title": "Colts Work Out Three Quarterbacks",
+      "summary": "Daniel Jones woke up last Friday morning as the Colts’ starting quarterback, but he ended the day without a roster spot. The Colts unexpectedly waived Jones, leaving Anthony Richardson and Riley Leonard as the only two signal-callers in the",
       "imageUrl": "",
-      "imageAlt": "AFC Notes: Robert Saleh, Jaylen Harrell, Colts, Texans, Titans",
-      "publishedAt": "2026-11-23T00:30:48.000Z",
-      "url": "https://nfltraderumors.co/afc-notes-robert-saleh-jaylen-harrell-colts-texans-titans/",
+      "publishedAt": "2026-11-24T19:52:25.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/colts-work-out-three-quarterbacks",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/indianapolis-colts",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 38.8144
+    },
+    {
+      "id": "ind_rss_76854cbd1c26",
+      "type": "article",
+      "title": "Colts make series of roster moves",
+      "summary": "The roster moves were made Tuesday.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/su8xussxobiy9ptnytxa.png",
+      "imageAlt": "Colts make series of roster moves",
+      "publishedAt": "2026-11-24T19:50:22.000Z",
+      "url": "https://www.colts.com/news/colts-make-series-of-roster-moves",
+      "outletId": "colts_official",
+      "outletName": "colts.com Official",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Official",
+      "author": "colts.com Official",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 38.1152
+    },
+    {
+      "id": "ind_rss_f657c27c7384",
+      "type": "article",
+      "title": "Colts, Irsays to highlight nonprofits with 'My Cause My Cleats' this Sunday",
+      "summary": "More than 60 Indianapolis Colts players – as well as the Irsay family, Head Coach Shane Steichen and others – will wear customized cleats and shoes highlighting charitable organizations in Indiana and beyond during this season’s My Cause My",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/nl23ey9scxtpeb1wzs7s.jpg",
+      "imageAlt": "Colts, Irsays to highlight nonprofits with 'My Cause My Cleats' this Sunday",
+      "publishedAt": "2026-11-24T19:00:21.000Z",
+      "url": "https://www.colts.com/news/new-york-giants-carlie-irsay-gordon-shane-steichen-anthony-richardson-2026-nfl-schedule-my-cause-my-cleats-lucas-oil-stadium",
+      "outletId": "colts_official",
+      "outletName": "colts.com Official",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Official",
+      "author": "colts.com Official",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 19.727
+    },
+    {
+      "id": "ind_vid_95d27eca2658",
+      "type": "video",
+      "title": "My Cause My Cleats",
+      "summary": "Each year, Indianapolis Colts players, coaches and leadership participate in My Cause My Cleats, using customized cleats and shoes to spotlight charitable organizations and causes that are meaningful to them in Indiana a",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/hpt4my3lphvrrmeiqmtl.jpg",
+      "imageAlt": "My Cause My Cleats",
+      "publishedAt": "2026-11-24T18:59:00.000Z",
+      "url": "https://www.colts.com/video/my-cause-my-cleats-indianapolis-colts-2026-new-york-giants-nfl-schedule",
+      "externalVideoUrl": "https://www.colts.com/video/my-cause-my-cleats-indianapolis-colts-2026-new-york-giants-nfl-schedule",
+      "outletId": "colts_official",
+      "outletName": "colts.com Video",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Video",
+      "author": "colts.com Video",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 19.4506
+    },
+    {
+      "id": "ind_nfltr_b5b4e460b7b5",
+      "type": "article",
+      "title": "Colts Signing OT Wanya Morris Off Cowboys’ PS",
+      "summary": "ESPN’s Adam Schefter reports the Colts are signing OT Wanya Morris to their active roster off the Cowboys’ practice squad. Morris, 26, transferred to Oklahoma after two seasons at Tennessee and earned Freshman All-American and SEC All-Fresh",
+      "imageUrl": "",
+      "imageAlt": "Colts Signing OT Wanya Morris Off Cowboys’ PS",
+      "publishedAt": "2026-11-24T18:00:23.000Z",
+      "url": "https://nfltraderumors.co/colts-signing-ot-wanya-morris-off-cowboys-ps/",
       "outletId": "nfl_trade_rumors",
       "outletName": "NFL Trade Rumors",
       "reporterId": "nfl_trade_rumors",
@@ -135,7 +267,304 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7568
+      "storyRank": 11.5322
+    },
+    {
+      "id": "ind_vid_88e126d758f4",
+      "type": "video",
+      "title": "How Kicking The Stigma is hoping to change the conversation around mental health with Brett Kramer | The Colts Show",
+      "summary": "JJ Stankevitz is joined by director of Kicking The Stigma Brett Kramer for a conversation about one of the Colts' many initiatives: mental health. Brett, who has been with KTS since 2023, leads the growth and direction o",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/xiocz6fpravw6cvw3vgw.png",
+      "imageAlt": "How Kicking The Stigma is hoping to change the conversation around mental health with Brett Kramer | The Colts Show",
+      "publishedAt": "2026-11-24T11:00:00.000Z",
+      "url": "https://www.colts.com/video/indianapolis-colts-how-kicking-the-stigma-is-hoping-to-change-the-conversation-around-mental-health-nfl-with-brett-kramer-the-colts-show",
+      "externalVideoUrl": "https://www.colts.com/video/indianapolis-colts-how-kicking-the-stigma-is-hoping-to-change-the-conversation-around-mental-health-nfl-with-brett-kramer-the-colts-show",
+      "outletId": "colts_official",
+      "outletName": "colts.com Video",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Video",
+      "author": "colts.com Video",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.3263
+    },
+    {
+      "id": "ind_pfr_2fe42aa5dcec",
+      "type": "article",
+      "title": "NFL Practice Squad Updates: 11/23/26",
+      "summary": "Today’s practice squad moves: Chicago Bears Signed: DB Marlen Sewell Released: QB Miller Moss Cincinnati Bengals Released: TE Josh Kattus Houston Texans Placed on IR: LB Chris Braswell Indianapolis Colts Signed: RB Eric Gray Seattle Seahawk",
+      "imageUrl": "",
+      "publishedAt": "2026-11-24T00:46:03.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-23-26",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/indianapolis-colts",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.8666
+    },
+    {
+      "id": "ind_pfr_a3c01896ebf6",
+      "type": "article",
+      "title": "QB Daniel Jones Clears Waivers",
+      "summary": "For the second time in his career, Daniel Jones has cleared waivers after being cut in-season, according to the NFL’s transaction wire. The recently waived quarterback will now be free to sign with any team. Considering Jones’ lucrative Col",
+      "imageUrl": "",
+      "publishedAt": "2026-11-23T22:11:54.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/qb-daniel-jones-clears-waivers",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/indianapolis-colts",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7343
+    },
+    {
+      "id": "ind_pfr_6f837a0252c7",
+      "type": "article",
+      "title": "Colts Shut Down WR Alec Pierce For Remainder Of Season",
+      "summary": "NOVEMBER 23: Colts head coach Shane Steichen pushed back on the idea of Pierce being out for the year. He said (via ESPN’s Stephen Holder) a final call has yet to be made in this case, with Pierce’s rehab still ongoing. Even so, there is of",
+      "imageUrl": "",
+      "publishedAt": "2026-11-23T21:00:54.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/colts-shut-down-wr-alec-pierce-for-remainder-of-season",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/indianapolis-colts",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6846
+    },
+    {
+      "id": "ind_rss_b82dd62d785e",
+      "type": "article",
+      "title": "Colts sign RB Eric Gray to practice squad",
+      "summary": "The roster move was made Monday.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/r0kkbql9cy8kvvcvi4zl.png",
+      "imageAlt": "Colts sign RB Eric Gray to practice squad",
+      "publishedAt": "2026-11-23T20:08:56.000Z",
+      "url": "https://www.colts.com/news/colts-sign-rb-eric-gray-to-practice-squad",
+      "outletId": "colts_official",
+      "outletName": "colts.com Official",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Official",
+      "author": "colts.com Official",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6627
+    },
+    {
+      "id": "ind_rss_e1e53b3e3646",
+      "type": "article",
+      "title": "5 Colts Things, non-QB version: Alec Pierce injury update, O-line shuffle, Adetomiwa Adebawore handling double teams well",
+      "summary": "There was plenty to note from the Colts last week beyond a major change at quarterback. Here are five things, mostly from the Colts' Thursday loss to the Texans, that are worth noting – and don't involve the QB position:",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/xyh6h120rbu1guq07qsf.png",
+      "imageAlt": "5 Colts Things, non-QB version: Alec Pierce injury update, O-line shuffle, Adetomiwa Adebawore handling double teams well",
+      "publishedAt": "2026-11-23T20:07:36.000Z",
+      "url": "https://www.colts.com/news/5-colts-things-non-qb-version-alec-pierce-injury-update-o-line-shuffle-adetomiwa-adebawore-handling-double-teams-well",
+      "outletId": "colts_official",
+      "outletName": "colts.com Official",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Official",
+      "author": "colts.com Official",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6619
+    },
+    {
+      "id": "ind_vid_e9aaf832a199",
+      "type": "video",
+      "title": "Shane Steichen on Anthony Richardson Sr.'s opportunity, injury updates",
+      "summary": "Head coach Shane Steichen is looking forward to the challenge ahead against the New York Giants on Sunday. With a quarterback change, Steichen is excited for Anthony Richardson Sr. to showcase his unique skillset, and Ri",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/owy0oi2hdm6psv6ihoeo.jpg",
+      "imageAlt": "Shane Steichen on Anthony Richardson Sr.'s opportunity, injury updates",
+      "publishedAt": "2026-11-23T19:50:00.000Z",
+      "url": "https://www.colts.com/video/indianapolis-colts-head-coach-shane-steichen-on-anthony-richardson-sr-opportunity-injury-updates-releasing-daniel-jones-alec-pierce-seth-mcgowan",
+      "externalVideoUrl": "https://www.colts.com/video/indianapolis-colts-head-coach-shane-steichen-on-anthony-richardson-sr-opportunity-injury-updates-releasing-daniel-jones-alec-pierce-seth-mcgowan",
+      "outletId": "colts_official",
+      "outletName": "colts.com Video",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Video",
+      "author": "colts.com Video",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6512
+    },
+    {
+      "id": "ind_rss_62fe74aca3b9",
+      "type": "article",
+      "title": "Registration open for Colts 'Sunday Night 7-on-7 Series'",
+      "summary": "Open to high school football players, this three-Sunday series provides an opportunity for athletes to take part in off-season development and training.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/asxhwftgojxlkprebodt.jpg",
+      "imageAlt": "Registration open for Colts 'Sunday Night 7-on-7 Series'",
+      "publishedAt": "2026-11-23T15:00:16.000Z",
+      "url": "https://www.colts.com/news/sunday-night-7-on-7-boys-tackle-girls-flag-football-high-school-registration-2027",
+      "outletId": "colts_official",
+      "outletName": "colts.com Official",
+      "reporterId": "colts_official",
+      "reporterName": "colts.com Official",
+      "author": "colts.com Official",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5103
+    },
+    {
+      "id": "ind_tx_2ee7f07c72cf",
+      "type": "tweet",
+      "title": "Colts roster move: Signed RB Eric Gray to the practice squad.",
+      "fullText": "Colts roster move: Signed RB Eric Gray to the practice squad.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "publishedAt": "2026-11-23T08:00:00.000Z",
+      "url": "https://www.colts.com/team/transactions/#tx-2ee7f07c72cf",
+      "outletId": "colts_official",
+      "outletName": "colts.com Official",
+      "reporterId": "colts_official",
+      "reporterName": "Indianapolis Colts Official",
+      "author": "Indianapolis Colts Official",
+      "authorHandle": "@Colts",
+      "authorProfileUrl": "https://www.colts.com/news/",
+      "trustTier": 1,
+      "wireSource": "official_transactions",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.3812
     },
     {
       "id": "ind_espn_ca4e834e831bf",
@@ -169,7 +598,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3176
+      "storyRank": 0.2331
     },
     {
       "id": "ind_espn_878b9df448c16",
@@ -203,39 +632,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1843
-    },
-    {
-      "id": "ind_pfr_6f837a0252c7",
-      "type": "article",
-      "title": "Colts Shut Down WR Alec Pierce For Remainder Of Season",
-      "summary": "The Colts took great pains to re-sign both quarterback Daniel Jones and wide receiver Alec Pierce this offseason. To say they have not gotten quality returns on those investments would be an understatement. Two days after waiving Jones amid",
-      "imageUrl": "",
-      "publishedAt": "2026-11-22T14:14:54.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/colts-shut-down-wr-alec-pierce-for-remainder-of-season",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/indianapolis-colts",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.0836
+      "storyRank": 0.2258
     },
     {
       "id": "ind_rss_524b276473fd",
@@ -268,7 +665,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9298
+      "storyRank": 0.2088
     },
     {
       "id": "ind_vid_36f975ff64e1",
@@ -302,7 +699,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8986
+      "storyRank": 0.2063
     },
     {
       "id": "ind_espn_5f18e675a818f",
@@ -336,13 +733,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4411
+      "storyRank": 0.1541
     },
     {
       "id": "ind_pfr_7890a695a61a",
       "type": "article",
       "title": "Colts Waive QB Daniel Jones",
-      "summary": "NOVEMBER 21: The Ravens asked after Jones before trading for Jacoby Brissett, according to The Ringer’s Tom Pelissero, offering a “mid-round pick swap that would’ve returned a pick to Indianapolis if Baltimore made the playoffs.",
+      "summary": "NOVEMBER 21: The Ravens asked after Jones before trading for Jacoby Brissett, according to The Ringer’s Tom Pelissero, offering a “mid-round pick swap that would’ve returned a pick to Indianapolis if Baltimore made the playoffs.” Again, the",
       "imageUrl": "",
       "publishedAt": "2026-11-21T16:00:28.000Z",
       "url": "https://www.profootballrumors.com/2026/11/colts-release-qb-daniel-jones",
@@ -368,7 +765,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3428
+      "storyRank": 0.135
     },
     {
       "id": "ind_pfr_02d2a1215dc5",
@@ -400,41 +797,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2267
-    },
-    {
-      "id": "ind_espn_91ec81b890f3d",
-      "type": "video",
-      "title": "Colts release QB Daniel Jones",
-      "summary": "Stephen Holder details the latest on Daniel Jones and the Colts' quarterback crisis after releasing him.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1120/dm_261120_Colts_release_QB_Daniel_Jones/dm_261120_Colts_release_QB_Daniel_Jones.jpg",
-      "imageCaption": "Stephen Holder details the latest on Daniel Jones and the Colts' quarterback crisis after releasing him.",
-      "imageAlt": "Colts release QB Daniel Jones",
-      "publishedAt": "2026-11-20T23:07:42Z",
-      "url": "https://www.espn.com/video/clip/_/id/50544264/colts-release-qb-daniel-jones",
-      "outletId": "espn_ind",
-      "outletName": "ESPN",
-      "reporterId": "espn_ind",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ind/indianapolis-colts",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2122
+      "storyRank": 0.1075
     },
     {
       "id": "ind_espn_fb3e8b9b030e5",
@@ -468,7 +831,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1969
+      "storyRank": 0.0994
     },
     {
       "id": "ind_rss_f6898756253b",
@@ -501,7 +864,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1934
+      "storyRank": 0.0983
     },
     {
       "id": "ind_rss_a240e8ba6f98",
@@ -534,7 +897,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1908
+      "storyRank": 0.0975
     },
     {
       "id": "ind_yt_Qu0Tg0l47ME",
@@ -570,7 +933,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1908
+      "storyRank": 0.0975
     },
     {
       "id": "ind_vid_269af39565ab",
@@ -604,41 +967,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1905
-    },
-    {
-      "id": "ind_espn_212c692f8649b",
-      "type": "video",
-      "title": "Schefter on Daniel Jones’ release: Colts ‘could’ve and should’ve traded him’",
-      "summary": "Schefter on Daniel Jones’ release: Colts ‘could’ve and should’ve traded him’",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1120/ss_20261120_131705160_3751127806/ss_20261120_131705160_3751127806.jpg",
-      "imageCaption": "Schefter on Daniel Jones’ release: Colts ‘could’ve and should’ve traded him’",
-      "imageAlt": "Schefter on Daniel Jones’ release: Colts ‘could’ve and should’ve traded him’",
-      "publishedAt": "2026-11-20T18:28:58Z",
-      "url": "https://www.espn.com/video/clip/_/id/50542310/colts-couldve-shouldve-traded-him",
-      "outletId": "espn_ind",
-      "outletName": "ESPN",
-      "reporterId": "espn_ind",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ind/indianapolis-colts",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.19
+      "storyRank": 0.0974
     },
     {
       "id": "ind_rss_18ac474bcf77",
@@ -671,7 +1000,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1883
+      "storyRank": 0.0967
     },
     {
       "id": "ind_espn_158f845793561",
@@ -705,47 +1034,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1865
-    },
-    {
-      "id": "ind_espn_505e76b149b4e",
-      "type": "video",
-      "title": "Colts dismantled by the Texans",
-      "summary": "Stephen Holder breaks down the Colts' struggles against the Texans.",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1120/dm_261120_Colts/dm_261120_Colts.jpg",
-      "imageCaption": "Stephen Holder breaks down the Colts' struggles against the Texans.",
-      "imageAlt": "Colts dismantled by the Texans",
-      "publishedAt": "2026-11-20T17:28:20Z",
-      "url": "https://www.espn.com/video/clip/_/id/50542056/colts-dismantled-texans",
-      "outletId": "espn_ind",
-      "outletName": "ESPN",
-      "reporterId": "espn_ind",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/ind/indianapolis-colts",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.1857
+      "storyRank": 0.0961
     },
     {
       "id": "ind_pfr_986a6c224c48",
       "type": "article",
       "title": "Colts HC Shane Steichen Noncommittal On Week 12 QB Starter",
-      "summary": "Daniel Jones’ poor run of 2026 performances continued last night. The Colts were handily beaten by the Texans, and it remains to be seen how they will handle the quarterback position in the long run. With respect to the immediate futu",
+      "summary": "Daniel Jones’ poor run of 2026 performances continued last night. The Colts were handily beaten by the Texans, and it remains to be seen how they will handle the quarterback position in the long run. With respect to the immediate future, Co",
       "imageUrl": "",
       "publishedAt": "2026-11-20T16:51:21.000Z",
       "url": "https://www.profootballrumors.com/2026/11/colts-hc-shane-steichen-noncommittal-on-week-12-qb-starter",
@@ -771,7 +1066,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1801
+      "storyRank": 0.0935
     },
     {
       "id": "ind_rss_e524be8a2495",
@@ -804,7 +1099,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1721
+      "storyRank": 0.0914
     },
     {
       "id": "ind_tx_d71909e740e6",
@@ -838,7 +1133,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1523
+      "storyRank": 0.0845
     },
     {
       "id": "ind_vid_0521b66a916b",
@@ -872,7 +1167,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1511
+      "storyRank": 0.084
     },
     {
       "id": "ind_vid_79bd0eb820c8",
@@ -906,7 +1201,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1463
+      "storyRank": 0.0823
     },
     {
       "id": "ind_vid_c346ca801f2b",
@@ -940,7 +1235,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1461
+      "storyRank": 0.0822
     },
     {
       "id": "ind_vid_a74cf61dbb2f",
@@ -974,7 +1269,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1458
+      "storyRank": 0.0821
     },
     {
       "id": "ind_espn_8009380056ffb",
@@ -1008,7 +1303,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1454
+      "storyRank": 0.0819
     },
     {
       "id": "ind_rss_31098123bfcb",
@@ -1041,7 +1336,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1449
+      "storyRank": 0.0817
     },
     {
       "id": "ind_espn_7eb40fcb22b0c",
@@ -1075,7 +1370,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0358
+      "storyRank": 0.0203
     },
     {
       "id": "ind_espn_816c979b95571",
@@ -1109,7 +1404,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1427
+      "storyRank": 0.0809
     },
     {
       "id": "ind_vid_da50c9e4b63c",
@@ -1143,7 +1438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1421
+      "storyRank": 0.0807
     },
     {
       "id": "ind_rss_97e0dfb7135e",
@@ -1176,7 +1471,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1414
+      "storyRank": 0.0804
     },
     {
       "id": "ind_vid_ecdf3387b15d",
@@ -1210,7 +1505,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0344
+      "storyRank": 0.0198
     },
     {
       "id": "ind_vid_bc00f8dfab68",
@@ -1244,7 +1539,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1362
+      "storyRank": 0.0784
     },
     {
       "id": "ind_vid_dfa2c1d8c4be",
@@ -1278,7 +1573,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1356
+      "storyRank": 0.0782
     },
     {
       "id": "ind_vid_8e2914b331fd",
@@ -1312,7 +1607,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1356
+      "storyRank": 0.0782
     },
     {
       "id": "ind_vid_c3b630791d6a",
@@ -1346,13 +1641,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1352
+      "storyRank": 0.078
     },
     {
       "id": "ind_pfr_998734380091",
       "type": "article",
       "title": "Minor NFL Transactions: 11/19/26",
-      "summary": "Here’s a look at Thursday’s minor NFL moves… Cincinnati Bengals Designated for return from IR: LB Swayze Bozeman Green Bay Packers Waived: RB Pierre Strong Houston Texans Activated from IR: CB Jaylin Smith Indianapolis Col",
+      "summary": "Here’s a look at Thursday’s minor NFL moves… Cincinnati Bengals Designated for return from IR: LB Swayze Bozeman Green Bay Packers Waived: RB Pierre Strong Houston Texans Activated from IR: CB Jaylin Smith Indianapolis Colts Elevated: CB Na",
       "imageUrl": "",
       "publishedAt": "2026-11-20T00:25:27.000Z",
       "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-19-26",
@@ -1378,7 +1673,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1301
+      "storyRank": 0.0756
     },
     {
       "id": "ind_rss_a0549549104f",
@@ -1411,7 +1706,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1247
+      "storyRank": 0.0739
     },
     {
       "id": "ind_vid_d1737ffa400c",
@@ -1445,7 +1740,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1113
+      "storyRank": 0.0682
     },
     {
       "id": "ind_rss_6f3600950f9b",
@@ -1478,7 +1773,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1096
+      "storyRank": 0.0675
     },
     {
       "id": "ind_vid_8599915a79c7",
@@ -1512,7 +1807,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1063
+      "storyRank": 0.066
     },
     {
       "id": "ind_espn_125f3a58a0bb3",
@@ -1546,7 +1841,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1063
+      "storyRank": 0.066
     },
     {
       "id": "ind_tx_903fc6f1296e",
@@ -1580,7 +1875,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1017
+      "storyRank": 0.064
     },
     {
       "id": "ind_rss_0e84cf3e82b9",
@@ -1613,7 +1908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0851
+      "storyRank": 0.0561
     },
     {
       "id": "ind_espn_fa26439649e51",
@@ -1647,7 +1942,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0213
+      "storyRank": 0.014
     },
     {
       "id": "ind_rss_4fd0ae6e74ac",
@@ -1680,7 +1975,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0829
+      "storyRank": 0.0551
     },
     {
       "id": "ind_vid_a3b3128cb32f",
@@ -1714,7 +2009,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0138
     },
     {
       "id": "ind_rss_f1d4cf2513d1",
@@ -1747,7 +2042,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0799
+      "storyRank": 0.0536
     },
     {
       "id": "ind_rss_43ad79fb9b3e",
@@ -1780,13 +2075,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0659
+      "storyRank": 0.0463
     },
     {
       "id": "ind_pfr_ee50bded996b",
       "type": "article",
       "title": "Colts Place LB Jaylon Carlies On IR",
-      "summary": "A neck injury kept Jaylon Carlies out of practice last week and he was not in the Colts’ lineup on Sunday. The third-year linebacker will not be making a return in the near future. Indianapolis has placed Carlies on injured reserve, p",
+      "summary": "A neck injury kept Jaylon Carlies out of practice last week and he was not in the Colts’ lineup on Sunday. The third-year linebacker will not be making a return in the near future. Indianapolis has placed Carlies on injured reserve, per a t",
       "imageUrl": "",
       "publishedAt": "2026-11-17T21:05:45.000Z",
       "url": "https://www.profootballrumors.com/2026/11/colts-place-lb-jaylon-carlies-on-ir",
@@ -1812,7 +2107,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0647
+      "storyRank": 0.0454
     },
     {
       "id": "ind_vid_9fd91cf41f97",
@@ -1846,7 +2141,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0658
+      "storyRank": 0.0462
     },
     {
       "id": "ind_vid_7f6989d453d3",
@@ -1880,7 +2175,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0657
+      "storyRank": 0.0461
     },
     {
       "id": "ind_vid_9369fa62a81e",
@@ -1914,7 +2209,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0656
+      "storyRank": 0.0461
     },
     {
       "id": "ind_rss_bf1ba9feb3ae",
@@ -1947,7 +2242,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0647
+      "storyRank": 0.0456
     },
     {
       "id": "ind_rss_2afd1401a413",
@@ -1980,7 +2275,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0617
+      "storyRank": 0.0439
     },
     {
       "id": "ind_vid_43eebeedc7bc",
@@ -2014,7 +2309,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0617
+      "storyRank": 0.0439
     },
     {
       "id": "ind_vid_e6d1b5299b8a",
@@ -2048,7 +2343,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0617
+      "storyRank": 0.0439
     },
     {
       "id": "ind_vid_1e41528a27df",
@@ -2082,7 +2377,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0593
+      "storyRank": 0.0426
     },
     {
       "id": "ind_tx_432ffb11edda",
@@ -2116,13 +2411,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0575
+      "storyRank": 0.0416
     },
     {
       "id": "ind_pfr_7159479bf80f",
       "type": "article",
       "title": "NFL Practice Squad Updates: 11/16/26",
-      "summary": "Today’s practice squad moves: Indianapolis Colts Signed: WR Samori Toure Las Vegas Raiders Signed: QB Brett Rypien Released: DE Bralen Trice Philadelphia Eagles Signed: RB Jaydon Blue, LB Chance Campbell, TE Hayden Rucci Released: DB ",
+      "summary": "Today’s practice squad moves: Indianapolis Colts Signed: WR Samori Toure Las Vegas Raiders Signed: QB Brett Rypien Released: DE Bralen Trice Philadelphia Eagles Signed: RB Jaydon Blue, LB Chance Campbell, TE Hayden Rucci Released: DB Shaun ",
       "imageUrl": "",
       "publishedAt": "2026-11-17T01:04:36.000Z",
       "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-16-26",
@@ -2148,13 +2443,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.053
+      "storyRank": 0.0388
     },
     {
       "id": "ind_pfr_e6aa64d4de47",
       "type": "article",
       "title": "Minor NFL Transactions: 11/16/26",
-      "summary": "Today’s minor moves: Carolina Panthers Signed to active roster: CB Marco Wilson Waived: LB Nick Hampton Detroit Lions Claimed off waivers (from Cowboys): LB Tyrus Wheat Indianapolis Colts Signed to active roster: CB Johnathan Edwards ",
+      "summary": "Today’s minor moves: Carolina Panthers Signed to active roster: CB Marco Wilson Waived: LB Nick Hampton Detroit Lions Claimed off waivers (from Cowboys): LB Tyrus Wheat Indianapolis Colts Signed to active roster: CB Johnathan Edwards Miami ",
       "imageUrl": "",
       "publishedAt": "2026-11-17T00:52:07.000Z",
       "url": "https://www.profootballrumors.com/2026/11/minor-nfl-transactions-11-16-26",
@@ -2180,7 +2475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0529
+      "storyRank": 0.0387
     },
     {
       "id": "ind_rss_9993cebf9114",
@@ -2213,7 +2508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0531
+      "storyRank": 0.039
     },
     {
       "id": "ind_rss_fbadd8b815dc",
@@ -2246,7 +2541,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.052
+      "storyRank": 0.0384
     },
     {
       "id": "ind_rss_a67fdbea11a0",
@@ -2279,7 +2574,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0514
+      "storyRank": 0.038
     },
     {
       "id": "ind_vid_a67ba57d2e2d",
@@ -2313,7 +2608,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0513
+      "storyRank": 0.0379
     },
     {
       "id": "ind_vid_2589acaa2715",
@@ -2347,7 +2642,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0512
+      "storyRank": 0.0379
     },
     {
       "id": "ind_rss_2ff2872b07f3",
@@ -2380,7 +2675,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0512
+      "storyRank": 0.0379
     },
     {
       "id": "ind_rss_4951c82c7e12",
@@ -2413,7 +2708,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0496
+      "storyRank": 0.0369
     },
     {
       "id": "ind_vid_972dcab17069",
@@ -2447,7 +2742,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0489
+      "storyRank": 0.0365
     },
     {
       "id": "ind_tx_1d5ce2ec1f1f",
@@ -2481,7 +2776,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0463
+      "storyRank": 0.0349
     },
     {
       "id": "ind_rss_b20f2e6d0712",
@@ -2514,7 +2809,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.045
+      "storyRank": 0.0341
     },
     {
       "id": "ind_vid_7b219a521529",
@@ -2548,7 +2843,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0437
+      "storyRank": 0.0333
     },
     {
       "id": "ind_vid_4da0dd58a097",
@@ -2582,7 +2877,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0433
+      "storyRank": 0.033
     },
     {
       "id": "ind_vid_6ce4b843f8c5",
@@ -2616,7 +2911,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0431
+      "storyRank": 0.0329
     },
     {
       "id": "ind_rss_ab121b483fe9",
@@ -2649,7 +2944,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0328
     },
     {
       "id": "ind_vid_72ce3e228ea8",
@@ -2683,7 +2978,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0427
+      "storyRank": 0.0327
     },
     {
       "id": "ind_vid_5dff568eaf15",
@@ -2717,7 +3012,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0427
+      "storyRank": 0.0327
     },
     {
       "id": "ind_vid_f2d8d05b9a13",
@@ -2751,7 +3046,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0427
+      "storyRank": 0.0327
     },
     {
       "id": "ind_vid_4da4ea8de05f",
@@ -2785,7 +3080,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0427
+      "storyRank": 0.0327
     },
     {
       "id": "ind_vid_c842f6d24df8",
@@ -2819,7 +3114,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
+      "storyRank": 0.0082
     },
     {
       "id": "ind_vid_a10996c03faa",
@@ -2853,7 +3148,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0426
+      "storyRank": 0.0326
     },
     {
       "id": "ind_rss_4b278902b9ed",
@@ -2886,7 +3181,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0425
+      "storyRank": 0.0325
     },
     {
       "id": "ind_vid_48f1ced453c9",
@@ -2920,7 +3215,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0425
+      "storyRank": 0.0325
     },
     {
       "id": "ind_vid_84a8870351bc",
@@ -2954,7 +3249,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0422
+      "storyRank": 0.0323
     },
     {
       "id": "ind_vid_7e1d1e73978a",
@@ -2988,7 +3283,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.042
+      "storyRank": 0.0322
     },
     {
       "id": "ind_vid_f26912ef86d7",
@@ -3022,7 +3317,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0419
+      "storyRank": 0.0321
     },
     {
       "id": "ind_vid_81065832dad1",
@@ -3056,7 +3351,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.008
     },
     {
       "id": "ind_vid_2fcc296fadad",
@@ -3090,7 +3385,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0105
+      "storyRank": 0.008
     },
     {
       "id": "ind_vid_e80930aa4e6d",
@@ -3124,7 +3419,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0418
+      "storyRank": 0.0321
     },
     {
       "id": "ind_vid_ad200b637567",
@@ -3158,7 +3453,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.032
     },
     {
       "id": "ind_vid_3bebb346f611",
@@ -3192,7 +3487,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0417
+      "storyRank": 0.032
     },
     {
       "id": "ind_vid_e7166a65b0bc",
@@ -3226,7 +3521,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0402
+      "storyRank": 0.0311
     },
     {
       "id": "ind_rss_33b229791d5f",
@@ -3259,7 +3554,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0399
+      "storyRank": 0.0309
     },
     {
       "id": "ind_rss_2e7960f5d82a",
@@ -3292,13 +3587,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0338
+      "storyRank": 0.0262
     },
     {
       "id": "ind_pfr_68fbe16798ee",
       "type": "article",
       "title": "Colts Activate DE Arden Key From IR",
-      "summary": "The Colts executed a flurry of roster moves on Saturday to prepare for their Week 10 matchup with the Dolphins (via ESPN’s Adam Schefter). Headlining the list is the activation of defensive end Arden Key from injured reserve, ending h",
+      "summary": "The Colts executed a flurry of roster moves on Saturday to prepare for their Week 10 matchup with the Dolphins (via ESPN’s Adam Schefter). Headlining the list is the activation of defensive end Arden Key from injured reserve, ending his fiv",
       "imageUrl": "",
       "publishedAt": "2026-11-14T18:51:15.000Z",
       "url": "https://www.profootballrumors.com/2026/11/colts-activate-de-arden-key-from-ir",
@@ -3324,7 +3619,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0344
+      "storyRank": 0.0272
     },
     {
       "id": "ind_rss_d82f96ee30f7",
@@ -3357,7 +3652,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0346
+      "storyRank": 0.0274
     },
     {
       "id": "ind_tx_8f7158e2ae97",
@@ -3391,7 +3686,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0326
+      "storyRank": 0.026
     },
     {
       "id": "ind_vid_ca86d9a8f4d7",
@@ -3425,7 +3720,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0304
+      "storyRank": 0.0245
     },
     {
       "id": "ind_vid_5e3efb7beb5a",
@@ -3459,7 +3754,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.03
+      "storyRank": 0.0243
     },
     {
       "id": "ind_vid_a44b371ad4a4",
@@ -3493,7 +3788,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0075
+      "storyRank": 0.006
     },
     {
       "id": "ind_rss_fe520c24f1a1",
@@ -3526,39 +3821,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0291
-    },
-    {
-      "id": "ind_pfr_15a66169d862",
-      "type": "article",
-      "title": "49ers Pursued Josh Downs, Pivoted To Keenan Allen",
-      "summary": "The Josh Downs derby included at least four teams. The Chiefs won out, and the Steelers joined the Commanders in exploring the market for the four-year Colts slot receiver. As it turns out, the 49ers were involved here as well. Generally ac",
-      "imageUrl": "",
-      "publishedAt": "2026-11-13T01:03:45.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/49ers-pursued-josh-downs-pivoted-to-keenan-allen",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/indianapolis-colts",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0236
     },
     {
       "id": "ind_rss_489573e9d8c2",
@@ -3591,7 +3854,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0671
+      "storyRank": 0.056
     },
     {
       "id": "ind_rss_797ab8667317",
@@ -3624,7 +3887,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0263
+      "storyRank": 0.0216
     },
     {
       "id": "ind_vid_44f3f7b185eb",
@@ -3658,7 +3921,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0054
     },
     {
       "id": "ind_vid_daba5245e389",
@@ -3692,7 +3955,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0261
+      "storyRank": 0.0215
     },
     {
       "id": "ind_vid_f9e959caf9b5",
@@ -3726,7 +3989,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.026
+      "storyRank": 0.0214
     },
     {
       "id": "ind_vid_e11982d9e4ed",
@@ -3760,7 +4023,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0259
+      "storyRank": 0.0214
     },
     {
       "id": "ind_vid_f9ae37907c1f",
@@ -3794,7 +4057,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0257
+      "storyRank": 0.0212
     },
     {
       "id": "ind_rss_2c4e51156b35",
@@ -3827,71 +4090,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0254
-    },
-    {
-      "id": "ind_pfr_b3d410e28479",
-      "type": "article",
-      "title": "Giants Inquired About Bijan Robinson",
-      "summary": "Tuesday’s trade deadline passed without the Giants acquiring a running back, but it wasn’t for lack of effort on their part. It was already known the Giants had interest in the Colts’ Jonathan Taylor and the Titans’ ",
-      "imageUrl": "",
-      "publishedAt": "2026-11-12T04:40:49.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/giants-inquired-about-bijan-robinson",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/indianapolis-colts",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "side_note",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
-    },
-    {
-      "id": "ind_pfr_112419fc0d8a",
-      "type": "article",
-      "title": "Colts Turned Down Pair Of Day 3 Picks For DT Grover Stewart",
-      "summary": "The Colts apparently let another potential trade slip away before Tuesday’s deadline. Another team was willing to give up two Day 3 picks, including a fourth-rounder, for defensive tackle Grover Stewart, per NFL insider Jordan Schultz",
-      "imageUrl": "",
-      "publishedAt": "2026-11-12T04:23:25.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/colts-turned-down-pair-of-day-3-picks-for-dt-grover-stewart",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/indianapolis-colts",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0237
+      "storyRank": 0.021
     },
     {
       "id": "ind_rss_d02b1860bf67",
@@ -3924,7 +4123,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0596
+      "storyRank": 0.0504
     },
     {
       "id": "ind_rss_048316313b85",
@@ -3957,7 +4156,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0232
+      "storyRank": 0.0194
     },
     {
       "id": "ind_vid_0c8cfac72e78",
@@ -3991,7 +4190,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.0192
     },
     {
       "id": "ind_vid_710435642d1f",
@@ -4025,7 +4224,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.0192
     },
     {
       "id": "ind_vid_44983b14e83b",
@@ -4059,7 +4258,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.023
+      "storyRank": 0.0192
     },
     {
       "id": "ind_rss_1e4eb4e574de",
@@ -4092,7 +4291,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.019
     },
     {
       "id": "ind_rss_0fb1d03f9cd2",
@@ -4125,7 +4324,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0225
+      "storyRank": 0.0189
     },
     {
       "id": "ind_vid_689c5028a290",
@@ -4159,7 +4358,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0225
+      "storyRank": 0.0189
     },
     {
       "id": "ind_rss_e7ad7f69ede2",
@@ -4192,7 +4391,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0224
+      "storyRank": 0.0188
     },
     {
       "id": "ind_tx_a8f9d3191bcc",
@@ -4226,7 +4425,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0218
+      "storyRank": 0.0183
     },
     {
       "id": "ind_vid_90423f8c9281",
@@ -4260,7 +4459,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0209
+      "storyRank": 0.0177
     },
     {
       "id": "ind_rss_dedca6761b0e",
@@ -4293,7 +4492,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0175
     },
     {
       "id": "ind_rss_2e790f25fc78",
@@ -4326,7 +4525,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0175
     },
     {
       "id": "ind_rss_739b367e6c91",
@@ -4359,7 +4558,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0207
+      "storyRank": 0.0175
     },
     {
       "id": "ind_rss_24e7d8b61f11",
@@ -4392,7 +4591,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.0175
     },
     {
       "id": "ind_rss_7eb464aa4f44",
@@ -4425,7 +4624,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0206
+      "storyRank": 0.0174
     },
     {
       "id": "ind_vid_3c983efe5597",
@@ -4459,7 +4658,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0174
     },
     {
       "id": "ind_vid_ffa2095bdceb",
@@ -4493,7 +4692,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0174
     },
     {
       "id": "ind_vid_e9a566fdf4f1",
@@ -4527,7 +4726,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0205
+      "storyRank": 0.0174
     },
     {
       "id": "ind_vid_976adc2370fe",
@@ -4561,7 +4760,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0171
     },
     {
       "id": "ind_vid_f25904392d4c",
@@ -4595,7 +4794,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0197
+      "storyRank": 0.0168
     },
     {
       "id": "ind_tx_8cf2b8b3f951",
@@ -4629,40 +4828,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0195
-    },
-    {
-      "id": "ind_rss_fcbb5302c46d",
-      "type": "article",
-      "title": "5 Colts Things: Adetomiwa Adebawore, Seth McGowan flash vs. Cowboys; why Shane Steichen went for the win late in Week 9",
-      "summary": "The Colts' 27-23 loss to the Dallas Cowboys dropped them to 2-7 on the 2026 season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/hmwdov7pmuvp79gf4xgj.jpg",
-      "imageAlt": "5 Colts Things: Adetomiwa Adebawore, Seth McGowan flash vs. Cowboys; why Shane Steichen went for the win late in Week 9",
-      "publishedAt": "2026-11-09T22:04:53.000Z",
-      "url": "https://www.colts.com/news/5-colts-things-adetomiwa-adebawore-seth-mcgowan-flash-vs-cowboys-why-shane-steichen-went-for-the-win-late-in-week-9",
-      "outletId": "colts_official",
-      "outletName": "colts.com Official",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Official",
-      "author": "colts.com Official",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
+      "storyRank": 0.0166
     },
     {
       "id": "ind_vid_f3aa686e919a",
@@ -4696,40 +4862,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0186
-    },
-    {
-      "id": "ind_rss_c137163fd45e",
-      "type": "article",
-      "title": "Limited time only! No fees on single-game tickets for remaining 2026 Colts home games",
-      "summary": "Limited time offer available today through Nov. 11",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/djsosqty4qjpyt7gydbf.jpg",
-      "imageAlt": "Limited time only! No fees on single-game tickets for remaining 2026 Colts home games",
-      "publishedAt": "2026-11-09T14:00:00.000Z",
-      "url": "https://www.colts.com/news/colts-tickets-no-fees-deal-2026-indianapolis-miami-dolphins-new-york-giants-cincinnati-bengals-jacksonville-jaguars-nfl-season-schedule-lucas-oil-stadium-home",
-      "outletId": "colts_official",
-      "outletName": "colts.com Official",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Official",
-      "author": "colts.com Official",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.018
+      "storyRank": 0.0159
     },
     {
       "id": "ind_vid_6b816842f3e6",
@@ -4763,73 +4896,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0178
-    },
-    {
-      "id": "ind_rss_0a8b5fb96263",
-      "type": "article",
-      "title": "Colts x Lobster & Lemonade: Limitierte \"Blue\"-Kollektion kommt zur NFL Game Week nach München",
-      "summary": "Die limitierte Kollektion ist ab dem 12. November im NFL Shop München erhältlich; „Blue“ wird vor Ort den Deutschlandstart der Kollektion begleiten.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/ze6c7478w9n2evb0agk4.png",
-      "imageAlt": "Colts x Lobster & Lemonade: Limitierte \"Blue\"-Kollektion kommt zur NFL Game Week nach München",
-      "publishedAt": "2026-11-09T09:00:00.000Z",
-      "url": "https://www.colts.com/news/colts-x-lobster-lemonade-limitierte-blue-kollektion-kommt-zur-nfl-game-week-nach-muenchen",
-      "outletId": "colts_official",
-      "outletName": "colts.com Official",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Official",
-      "author": "colts.com Official",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
-    },
-    {
-      "id": "ind_rss_0d896d757223",
-      "type": "article",
-      "title": "Colts x Lobster & Lemonade 'Blue' Collection Arrives in Germany for Munich Game Week",
-      "summary": "The Indianapolis Colts and German lifestyle brand Lobster & Lemonade are bringing their limited-edition “Blue” Collection to Germany, with the collection available in-store at NFL Shop Munich beginning Thurs., Nov. 12 at 10 a.m. CET.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/hgg0j0e955jk0xudppwv.png",
-      "imageAlt": "Colts x Lobster & Lemonade 'Blue' Collection Arrives in Germany for Munich Game Week",
-      "publishedAt": "2026-11-09T09:00:00.000Z",
-      "url": "https://www.colts.com/news/colts-x-lobster-lemonade-blue-collection-arrives-in-germany-for-munich-game-week",
-      "outletId": "colts_official",
-      "outletName": "colts.com Official",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Official",
-      "author": "colts.com Official",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0176
+      "storyRank": 0.0153
     },
     {
       "id": "ind_vid_023c4ff1ade0",
@@ -4863,7 +4930,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0146
     },
     {
       "id": "ind_vid_9a96bcbec977",
@@ -4897,7 +4964,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0146
     },
     {
       "id": "ind_vid_3b9a2a93af73",
@@ -4931,7 +4998,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0169
+      "storyRank": 0.0146
     },
     {
       "id": "ind_vid_0dbcef9c2972",
@@ -4965,7 +5032,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0146
     },
     {
       "id": "ind_vid_ea974ddf439f",
@@ -4999,7 +5066,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0036
     },
     {
       "id": "ind_vid_475848041dac",
@@ -5033,7 +5100,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0145
     },
     {
       "id": "ind_vid_e1bf209ebc36",
@@ -5067,7 +5134,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0145
     },
     {
       "id": "ind_vid_10296cc4a826",
@@ -5101,7 +5168,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0168
+      "storyRank": 0.0145
     },
     {
       "id": "ind_vid_fce440f67cfd",
@@ -5135,7 +5202,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0036
     },
     {
       "id": "ind_vid_97a2b7d43d72",
@@ -5169,7 +5236,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0042
+      "storyRank": 0.0036
     },
     {
       "id": "ind_vid_82e9abc9f522",
@@ -5203,7 +5270,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0144
     },
     {
       "id": "ind_vid_5f64b19d03e7",
@@ -5237,7 +5304,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0166
+      "storyRank": 0.0144
     },
     {
       "id": "ind_vid_4de8702b935e",
@@ -5271,7 +5338,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0163
+      "storyRank": 0.0142
     },
     {
       "id": "ind_tx_3f0f9c322c1e",
@@ -5305,7 +5372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0145
+      "storyRank": 0.0128
     },
     {
       "id": "ind_vid_4328d17a9f7a",
@@ -5339,7 +5406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.0123
     },
     {
       "id": "ind_vid_97e394d719cd",
@@ -5373,7 +5440,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0139
+      "storyRank": 0.0123
     },
     {
       "id": "ind_vid_b56e44ca3d31",
@@ -5407,7 +5474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0137
+      "storyRank": 0.0121
     },
     {
       "id": "ind_vid_2ca68eef2ec8",
@@ -5441,7 +5508,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0128
+      "storyRank": 0.0113
     },
     {
       "id": "ind_vid_4a8fb96f38df",
@@ -5475,7 +5542,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0113
     },
     {
       "id": "ind_vid_43dead594043",
@@ -5509,7 +5576,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0127
+      "storyRank": 0.0113
     },
     {
       "id": "ind_vid_9fb8f5610a6d",
@@ -5543,7 +5610,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0125
+      "storyRank": 0.0111
     },
     {
       "id": "ind_vid_da5d7a36c6ec",
@@ -5577,7 +5644,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0118
+      "storyRank": 0.0106
     },
     {
       "id": "ind_vid_23dbf6cd9a28",
@@ -5611,7 +5678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0118
+      "storyRank": 0.0105
     },
     {
       "id": "ind_vid_5e1ae4aaf06c",
@@ -5645,279 +5712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0118
-    },
-    {
-      "id": "ind_vid_9f9deb624ec1",
-      "type": "video",
-      "title": "Lou Anarumo on CJ Allen's first career start and what the defense has to clean up | Colts vs. Cowboys, Week 9",
-      "summary": "Defensive coordinator Lou Anarumo breaks down rookie linebacker CJ Allen's first career start against the Jaguars Sunday. Anarumo then dives into what the defense needs to clean up after giving up 42 points and multiple ",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/ecgw3a6plbprnzjfown3.jpg",
-      "imageAlt": "Lou Anarumo on CJ Allen's first career start and what the defense has to clean up | Colts vs. Cowboys, Week 9",
-      "publishedAt": "2026-11-03T20:00:00.000Z",
-      "url": "https://www.colts.com/video/lou-anarumo-on-cj-allen-s-first-career-start-and-what-the-defense-has-to-clean-up-colts-vs-cowboys-week-9",
-      "externalVideoUrl": "https://www.colts.com/video/lou-anarumo-on-cj-allen-s-first-career-start-and-what-the-defense-has-to-clean-up-colts-vs-cowboys-week-9",
-      "outletId": "colts_official",
-      "outletName": "colts.com Video",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Video",
-      "author": "colts.com Video",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.011
-    },
-    {
-      "id": "ind_vid_4c6341e71f97",
-      "type": "video",
-      "title": "Jim Bob Cooter on improving the pass game | Colts vs. Cowboys, Week 9",
-      "summary": "Offensive coordinator Jim Bob Cooter shares how he and fellow offensive coaches tuned out the noise from wide receiver Josh Downs's trade request last Wednesday, and how he coaches through that. Cooter wants the pass gam",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/qpf0mkweyi39umwpvron.jpg",
-      "imageAlt": "Jim Bob Cooter on improving the pass game | Colts vs. Cowboys, Week 9",
-      "publishedAt": "2026-11-03T19:55:00.000Z",
-      "url": "https://www.colts.com/video/jim-bob-cooter-on-improving-the-pass-game-colts-vs-cowboys-week-9",
-      "externalVideoUrl": "https://www.colts.com/video/jim-bob-cooter-on-improving-the-pass-game-colts-vs-cowboys-week-9",
-      "outletId": "colts_official",
-      "outletName": "colts.com Video",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Video",
-      "author": "colts.com Video",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.011
-    },
-    {
-      "id": "ind_vid_56f5b747b5a7",
-      "type": "video",
-      "title": "Brian Mason knows that ST penalties have been an issue | Colts vs. Cowboys, Week 9",
-      "summary": "Colts special teams coordinator Brian Mason has seen an uptick in special teams penalties this year, and wants the Colts to clean up that side of the ball. Mason has been impressed with rookie running back Seth McGowan i",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/daplnva20z4ygkghnusi.jpg",
-      "imageAlt": "Brian Mason knows that ST penalties have been an issue | Colts vs. Cowboys, Week 9",
-      "publishedAt": "2026-11-03T19:50:00.000Z",
-      "url": "https://www.colts.com/video/brian-mason-knows-that-st-penalties-have-been-an-issue-colts-vs-cowboys-week-9",
-      "externalVideoUrl": "https://www.colts.com/video/brian-mason-knows-that-st-penalties-have-been-an-issue-colts-vs-cowboys-week-9",
-      "outletId": "colts_official",
-      "outletName": "colts.com Video",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Video",
-      "author": "colts.com Video",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.011
-    },
-    {
-      "id": "ind_vid_f0bfc12272c2",
-      "type": "video",
-      "title": "Bernhard Raimann reflects on Quenton Nelson's impact and The Raimann Family Foundation | The Colts Show",
-      "summary": "On this week's episode of The Colts Show, JJ Stankevitz is joined by Colts offensive tackle Bernhard Raimann. Raimann opens up about veteran guard Quenton Nelson and shares what he's learned from him over the last few ye",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/hwefyfbnjmowpb4f6n4q.jpg",
-      "imageAlt": "Bernhard Raimann reflects on Quenton Nelson's impact and The Raimann Family Foundation | The Colts Show",
-      "publishedAt": "2026-11-03T11:01:00.000Z",
-      "url": "https://www.colts.com/video/bernhard-raimann-reflects-on-quenton-nelson-s-impact-and-the-raimann-family-foundation-the-colts-show",
-      "externalVideoUrl": "https://www.colts.com/video/bernhard-raimann-reflects-on-quenton-nelson-s-impact-and-the-raimann-family-foundation-the-colts-show",
-      "outletId": "colts_official",
-      "outletName": "colts.com Video",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Video",
-      "author": "colts.com Video",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0107
-    },
-    {
-      "id": "ind_tx_2191a835cd6d",
-      "type": "tweet",
-      "title": "Colts roster move: Signed DT Adetomiwa Adebawore to a contract extension.",
-      "fullText": "Colts roster move: Signed DT Adetomiwa Adebawore to a contract extension.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "publishedAt": "2026-11-03T08:00:00.000Z",
-      "url": "https://www.colts.com/team/transactions/#tx-2191a835cd6d",
-      "outletId": "colts_official",
-      "outletName": "colts.com Official",
-      "reporterId": "colts_official",
-      "reporterName": "Indianapolis Colts Official",
-      "author": "Indianapolis Colts Official",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "official_transactions",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0106
-    },
-    {
-      "id": "ind_vid_bcb0907b7a33",
-      "type": "video",
-      "title": "Shane Steichen: Week 8 recap, Colts at Jaguars",
-      "summary": "Head coach Shane Steichen shares that Daniel Jones will remain the Colts starting quarterback, and explains the reasoning behind the decision. He breaks down what he saw from watching film of Sunday's big loss and what h",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/p8w082worftsgak7n68f.jpg",
-      "imageAlt": "Shane Steichen: Week 8 recap, Colts at Jaguars",
-      "publishedAt": "2026-11-02T20:55:00.000Z",
-      "url": "https://www.colts.com/video/shane-steichen-week-8-recap-colts-at-jaguars",
-      "externalVideoUrl": "https://www.colts.com/video/shane-steichen-week-8-recap-colts-at-jaguars",
-      "outletId": "colts_official",
-      "outletName": "colts.com Video",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Video",
-      "author": "colts.com Video",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
-    },
-    {
-      "id": "ind_vid_8595b3973aa8",
-      "type": "video",
-      "title": "Laquon Treadwell & Jaylahn Tuimoloau | Colts at Jaguars, Locker Talk Week 8 recap",
-      "summary": "Wide receiver Laquon Treadwell shares who and what he leans on as the team struggles this season. He then opens up what he's seen from quarterback Daniel Jones during the week in preparation for each game. Next, defensiv",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/wnrl7o3ks9sqejp5dwxp.jpg",
-      "imageAlt": "Laquon Treadwell & Jaylahn Tuimoloau | Colts at Jaguars, Locker Talk Week 8 recap",
-      "publishedAt": "2026-11-02T20:50:00.000Z",
-      "url": "https://www.colts.com/video/laquon-treadwell-jaylahn-tuimoloau-colts-at-jaguars-locker-talk-week-8-recap",
-      "externalVideoUrl": "https://www.colts.com/video/laquon-treadwell-jaylahn-tuimoloau-colts-at-jaguars-locker-talk-week-8-recap",
-      "outletId": "colts_official",
-      "outletName": "colts.com Video",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Video",
-      "author": "colts.com Video",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
-    },
-    {
-      "id": "ind_vid_248ab8c757cc",
-      "type": "video",
-      "title": "2026 Peyton Manning Children's Hospital Homecoming Celebration",
-      "summary": "This high-energy, heartfelt Homecoming-themed event transformed Lucas Oil Stadium into a celebration zone. The evening included a sports-themed runway show featuring PMCH ambassadors escorted by Indianapolis Colts Wide R",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/colts/be7rloujctrkdxqtlj65.jpg",
-      "imageAlt": "2026 Peyton Manning Children's Hospital Homecoming Celebration",
-      "publishedAt": "2026-11-02T16:35:00.000Z",
-      "url": "https://www.colts.com/video/2026-peyton-manning-children-s-hospital-homecoming-celebration",
-      "externalVideoUrl": "https://www.colts.com/video/2026-peyton-manning-children-s-hospital-homecoming-celebration",
-      "outletId": "colts_official",
-      "outletName": "colts.com Video",
-      "reporterId": "colts_official",
-      "reporterName": "colts.com Video",
-      "author": "colts.com Video",
-      "authorHandle": "@Colts",
-      "authorProfileUrl": "https://www.colts.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
+      "storyRank": 0.0105
     },
     {
       "id": "ind_rss_525b06082155",

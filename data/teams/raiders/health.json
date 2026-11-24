@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:37:14.541Z",
+  "updatedAt": "2026-11-24T20:09:09.279Z",
   "week": 12,
   "byeWeek": 13,
   "sourceUrl": "https://www.raiders.com/team/injury-report/",
@@ -9,181 +9,6 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
-    {
-      "playerId": "4432665",
-      "name": "Brock Bowers",
-      "position": "TE",
-      "jersey": 89,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432665.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "High-snap focal-point tight end with high active conversion on minor mid-week tags.",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Bowers \"was not ready to play\" against Denver, per Kubiak, but the head coach believes Vegas' star tight end could be ready to return in Week 12 against the Browns on SNF. Bowers was held to 18 yards by the Seahawks during Fernando Mendoza's first regular-season start in Week 10 after mustering at least 70 receiving yards in each of his seven games with Kirk Cousins."
-    },
-    {
-      "playerId": "4429109",
-      "name": "Tonka Hemingway",
-      "position": "DT",
-      "jersey": 97,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429109.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Upper Body",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4250393",
-      "name": "Tristin McCollum",
-      "position": "S",
-      "jersey": 27,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4250393.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4432775",
-      "name": "Dont'e Thornton Jr.",
-      "position": "WR",
-      "jersey": 10,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432775.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Thornton is dealing with a back injury, but he wasn't listed on Las Vegas' practice report during Week 11 prep. As such, it appears the second-year wideout is a healthy scratch Sunday. Tre Tucker, Jalen Nailor, Jack Bech, Dareke Young and Cody White will make up the Raiders' WR corps."
-    },
-    {
-      "playerId": "4682488",
-      "name": "Dalton Johnson",
-      "position": "S",
-      "jersey": 43,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4682488.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4612077",
-      "name": "Bryce Cabeldue",
-      "position": "G",
-      "jersey": 77,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4612077.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (G) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "5150247",
-      "name": "Malik Benson",
-      "position": "WR",
-      "jersey": 19,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5150247.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
     {
       "playerId": "2972342",
       "name": "Adam Butler",
@@ -208,6 +33,31 @@
         "Remains in early stages of NFL 5-Step Concussion Protocol"
       ],
       "beatComment": "Butler took a blow to the head late in the first half, and his night has now officially come to a premature end due to a concussion. With Tim Keenan (knee) also done for the night, JJ Pegues is the last man standing at defensive tackle for Las Vegas."
+    },
+    {
+      "playerId": "4429109",
+      "name": "Tonka Hemingway",
+      "position": "DT",
+      "jersey": 97,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429109.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Upper Body",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 45,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "45% • Long Shot",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Missed prior game without practice participation — awaiting Wednesday report"
+      ],
+      "beatComment": "questionable"
     },
     {
       "playerId": "4401805",
@@ -285,29 +135,29 @@
       "beatComment": "Keenan went down with a knee injury in the first half, and he will now officially be sidelined for the rest of Week 11. With Adam Butler (concussion) also done for the day, JJ Pegues will handle the bulk of the workload at defensive tackle versus the Broncos."
     },
     {
-      "playerId": "4258194",
-      "name": "Kwity Paye",
-      "position": "DE",
-      "jersey": 95,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4258194.png",
+      "playerId": "4432665",
+      "name": "Brock Bowers",
+      "position": "TE",
+      "jersey": 89,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432665.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "-",
       "thu": "-",
       "fri": "-",
-      "injuryType": "Neck",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
+      "injuryType": "Ankle",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 84,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "playBadgeLabel": "84% • GTD",
+      "archetypeNote": "High-snap focal-point tight end with high active conversion on minor mid-week tags.",
       "factors": [
-        "Cleared without restrictive game-day designation"
+        "Questionable tag adjusted by player career prior (90%)"
       ],
-      "beatComment": "Paye made an early exit in the second half of Sunday's loss to the Seahawks with a neck injury. The linebacker did not return to the contest, but the issue does not seem to have been serious. Paye is healthy and appears ready to log consistent full practices throughout Week 11 prep."
+      "beatComment": "questionable"
     },
     {
       "playerId": "4429086",
@@ -328,7 +178,7 @@
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (80% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Every-down starter workload (79% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
@@ -359,31 +209,6 @@
         "Beat/podium consensus: on track to suit up"
       ],
       "beatComment": "An ankle injury has sidelined Booker for each of the Raiders' last two games. However, his full session Wednesday indicates that he's recovered from his injury and on track to play in Sunday's AFC West tilt against the Broncos. Booker has accumulated 13 tackles (nine solo) across seven regular-season games."
-    },
-    {
-      "playerId": "4249087",
-      "name": "Matt Gay",
-      "position": "PK",
-      "jersey": 14,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4249087.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Hip",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Gay sandwiched two limited practices this week around Thursday's DNP due to a right hip injury and entered the weekend listed as questionable for Sunday. Because the Raiders didn't elevate Kansei Matsuzawa from the practice squad Saturday, it was an indication that Gay was good to go for Week 11, which now has been confirmed. In 10 games this season, Gay has connected on 21 of 23 field-goal attempts and all 22 point-after tries."
     },
     {
       "playerId": "3045172",

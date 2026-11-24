@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:35:04.119Z",
+  "updatedAt": "2026-11-24T20:08:14.410Z",
   "week": 12,
   "byeWeek": 11,
   "sourceUrl": "https://www.atlantafalcons.com/team/injury-report/",
@@ -9,31 +9,6 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
-    {
-      "playerId": "4037626",
-      "name": "Divine Deablo",
-      "position": "LB",
-      "jersey": 0,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037626.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Forearm",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Every-down starter workload (78% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "out"
-    },
     {
       "playerId": "4870612",
       "name": "Zachariah Branch",
@@ -47,17 +22,43 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Hamstring",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 42,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "42% • Long Shot",
       "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed 2 consecutive games without practice participation — awaiting Wednesday report",
+        "Soft-tissue re-aggravation caution (Hamstring)"
       ],
-      "beatComment": "out"
+      "beatComment": "questionable"
+    },
+    {
+      "playerId": "4037626",
+      "name": "Divine Deablo",
+      "position": "LB",
+      "jersey": 0,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4037626.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Forearm",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 45,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "45% • Long Shot",
+      "archetypeNote": "Every-down starter workload (78% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Missed prior game without practice participation — awaiting Wednesday report"
+      ],
+      "beatComment": "questionable"
     },
     {
       "playerId": "4595343",

@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-23T06:35:22.753Z",
+  "updatedAt": "2026-11-24T20:08:25.477Z",
   "windowDays": 7,
-  "totalEpisodes": 11,
+  "totalEpisodes": 8,
   "shows": [
     {
       "id": "patriots_locked_on_patriots",
@@ -13,7 +13,7 @@
       "feedUrl": "https://rss.pdrl.fm/b4173b/feeds.simplecast.com/wbru9pmV",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-patriots-daily-podcast-on-the-new-england/id1140512627?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/54/72/a1/5472a1aa-a46f-2c70-0d72-3044482eaccd/mza_5379826296413758334.jpg/600x600bb.jpg",
-      "episodeCount7d": 6
+      "episodeCount7d": 5
     },
     {
       "id": "patriots_patriots_unfiltered",
@@ -25,7 +25,7 @@
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/73e7109b-287b-452a-a1ac-aea9013f8eb9/fe972ea1-2d5b-44c5-ba0c-aea9013f8ec7/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-unfiltered/id187310910?uo=4",
       "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/05/dc/f7/05dcf76f-0d78-4aa9-5949-488b1c2754e9/mza_11752285431019223546.jpg/600x600bb.jpg",
-      "episodeCount7d": 3
+      "episodeCount7d": 2
     },
     {
       "id": "patriots_patriots_catch",
@@ -36,8 +36,8 @@
       "network": "New England Patriots",
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/fe294560-4c66-449e-9a9d-af200122c7cd/c0ed4fea-6fcc-49d3-a960-af2001232f20/podcast.rss",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-catch-22/id1648381074?uo=4",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/d9/86/4a/d9864a70-4448-809f-8629-40562bac49a0/mza_13498841964890647813.jpg/600x600bb.jpg",
-      "episodeCount7d": 2
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/c2/e4/0d/c2e40da1-4fd3-83a5-3493-9e6fa79f6e82/mza_5230631419629437128.jpg/600x600bb.jpg",
+      "episodeCount7d": 1
     },
     {
       "id": "patriots_patriots_postgame_show",
@@ -53,6 +53,26 @@
     }
   ],
   "episodes": [
+    {
+      "id": "pod_patriots_locked_on_patriots_1000803550533",
+      "trackId": 1000803550533,
+      "collectionId": 1140512627,
+      "showId": "patriots_locked_on_patriots",
+      "showName": "Locked On Patriots",
+      "showFullTitle": "Locked On Patriots - Daily Podcast On The New England Patriots",
+      "hosts": "Locked On Podcast Network, Mike D’Abate",
+      "network": "Locked On Podcast Network, Mike D’Abate",
+      "title": "Wake-Up Call: Patriots’ Top-Paid Players Need to Step Up Without Drake Maye",
+      "summary": "New England Patriots’ highest-paid players are under fire as the season slips away. With Drake Maye likely sidelined, stars like Christian Gonzalez, Milton Williams, and A.J. Brown haven’t delivered the elite performances expected. Missed tackles, coverage breakdowns, and la",
+      "publishedAt": "2026-11-23T08:00:00.000Z",
+      "durationMinutes": 29,
+      "durationDisplay": "29 min",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/a8/65/f7/a865f734-9a33-8306-3933-78d442691b5e/mza_17395255222398806796.jpg/160x160bb.jpg",
+      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/wake-up-call-patriots-top-paid-players-need-to-step/id1140512627?i=1000803550533&uo=4",
+      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-patriots-daily-podcast-on-the-new-england/id1140512627?uo=4",
+      "feedUrl": "https://rss.pdrl.fm/b4173b/feeds.simplecast.com/wbru9pmV",
+      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/b4173b/lockedon.simplecastaudio.com/1589f227-a5c3-4487-863b-d2fad4dc1539/episodes/9c4f984c-88f6-46c2-899f-b09bfb6c334d/audio/128/default.mp3?aid=rss_feed&awCollectionId=1589f227-a5c3-4487-863b-d2fad4dc1539&awEpisodeId=9c4f984c-88f6-46c2-899f-b09bfb6c334d&feed=wbru9pmV"
+    },
     {
       "id": "pod_patriots_locked_on_patriots_1000803199685",
       "trackId": 1000803199685,
@@ -127,7 +147,7 @@
       "publishedAt": "2026-11-19T16:52:47.000Z",
       "durationMinutes": 58,
       "durationDisplay": "58 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/d9/86/4a/d9864a70-4448-809f-8629-40562bac49a0/mza_13498841964890647813.jpg/160x160bb.jpg",
+      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/1e/0f/fa/1e0ffabe-fa71-738a-f1ae-4deec8175d04/mza_960897493484635553.jpg/160x160bb.jpg",
       "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/patriots-catch-22-11-19-week-1-10-standouts-listener/id1648381074?i=1000802962608&uo=4",
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-catch-22/id1648381074?uo=4",
       "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/fe294560-4c66-449e-9a9d-af200122c7cd/c0ed4fea-6fcc-49d3-a960-af2001232f20/podcast.rss",
@@ -192,86 +212,6 @@
       "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-patriots-daily-podcast-on-the-new-england/id1140512627?uo=4",
       "feedUrl": "https://rss.pdrl.fm/b4173b/feeds.simplecast.com/wbru9pmV",
       "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/b4173b/lockedon.simplecastaudio.com/1589f227-a5c3-4487-863b-d2fad4dc1539/episodes/36b39b73-7572-4d2a-95b8-2b0a04594550/audio/128/default.mp3?aid=rss_feed&awCollectionId=1589f227-a5c3-4487-863b-d2fad4dc1539&awEpisodeId=36b39b73-7572-4d2a-95b8-2b0a04594550&feed=wbru9pmV"
-    },
-    {
-      "id": "pod_patriots_patriots_unfiltered_1000802538504",
-      "trackId": 1000802538504,
-      "collectionId": 187310910,
-      "showId": "patriots_patriots_unfiltered",
-      "showName": "Patriots Unfiltered",
-      "showFullTitle": "Patriots Unfiltered",
-      "hosts": "New England Patriots",
-      "network": "New England Patriots",
-      "title": "Patriots Unfiltered 11/17: Lions Recap, Injury Updates/Reports, Patriots Self-Scout",
-      "summary": "Tune in as the PU Crew break down the Patriots 35-10 loss to the Detroit Lions in Munich. They discuss everything that went wrong during gameplay, like missed tackling, lack of effort, and an overall inability to finish. They discuss Drake Maye's injury, the reports surround",
-      "publishedAt": "2026-11-17T17:00:00.000Z",
-      "durationMinutes": 118,
-      "durationDisplay": "118 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/05/dc/f7/05dcf76f-0d78-4aa9-5949-488b1c2754e9/mza_11752285431019223546.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/patriots-unfiltered-11-17-lions-recap-injury-updates/id187310910?i=1000802538504&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-unfiltered/id187310910?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/73e7109b-287b-452a-a1ac-aea9013f8eb9/fe972ea1-2d5b-44c5-ba0c-aea9013f8ec7/podcast.rss",
-      "audioStreamUrl": "https://traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/73e7109b-287b-452a-a1ac-aea9013f8eb9/cd645653-7164-49a7-b01b-b505013eacd1/audio.mp3?utm_source=Podcast&in_playlist=fe972ea1-2d5b-44c5-ba0c-aea9013f8ec7"
-    },
-    {
-      "id": "pod_patriots_patriots_catch_1000802513856",
-      "trackId": 1000802513856,
-      "collectionId": 1648381074,
-      "showId": "patriots_patriots_catch",
-      "showName": "Patriots Catch-22",
-      "showFullTitle": "Patriots Catch-22",
-      "hosts": "New England Patriots",
-      "network": "New England Patriots",
-      "title": "Patriots Catch-22 11/17: Lions Breakdown - The Good, The Bad, The Stuff That Gets You Beat, Maye Injury, Impact & Recoup",
-      "summary": "Tune in as Evan Lazar and Alex Barth do a full breakdown of the gameplay and moments from the Patriots 35-10 loss to the Lions. They open by discussing Drake Maye's glaring injury, the troubling reports on its severity, and the hunt to potentially replace him for the remaind",
-      "publishedAt": "2026-11-17T16:25:56.000Z",
-      "durationMinutes": 57,
-      "durationDisplay": "57 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/d9/86/4a/d9864a70-4448-809f-8629-40562bac49a0/mza_13498841964890647813.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/patriots-catch-22-11-17-lions-breakdown-the-good-the/id1648381074?i=1000802513856&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/patriots-catch-22/id1648381074?uo=4",
-      "feedUrl": "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/fe294560-4c66-449e-9a9d-af200122c7cd/c0ed4fea-6fcc-49d3-a960-af2001232f20/podcast.rss",
-      "audioStreamUrl": "https://podtrac.com/pts/redirect.mp3/traffic.omny.fm/d/clips/e73c998e-6e60-432f-8610-ae210140c5b1/fe294560-4c66-449e-9a9d-af200122c7cd/30345359-c757-4464-9b2f-b505010c62b9/audio.mp3?utm_source=Podcast&in_playlist=c0ed4fea-6fcc-49d3-a960-af2001232f20"
-    },
-    {
-      "id": "pod_patriots_locked_on_patriots_1000802428146",
-      "trackId": 1000802428146,
-      "collectionId": 1140512627,
-      "showId": "patriots_locked_on_patriots",
-      "showName": "Locked On Patriots",
-      "showFullTitle": "Locked On Patriots - Daily Podcast On The New England Patriots",
-      "hosts": "Locked On Podcast Network, Mike D’Abate",
-      "network": "Locked On Podcast Network, Mike D’Abate",
-      "title": "Pass: Patriots Should Focus on Tommy DeVito and Behren Morton, Not Jimmy Garoppolo",
-      "summary": "New England Patriots’ quarterback crisis deepens as Tommy DeVito’s rough outing against the Detroit Lions raises questions—should the Patriots turn to Jimmy Garoppolo, or stick with their in-house options? Nick Cattles dissects DeVito’s missed reads, the offensive miscues in",
-      "publishedAt": "2026-11-17T08:00:00.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/9a/59/43/9a59436e-4ab5-67c5-f12b-efd75ff4c361/mza_11117561904547524821.jpg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/pass-patriots-should-focus-on-tommy-devito-and-behren/id1140512627?i=1000802428146&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-patriots-daily-podcast-on-the-new-england/id1140512627?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/b4173b/feeds.simplecast.com/wbru9pmV",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/b4173b/lockedon.simplecastaudio.com/1589f227-a5c3-4487-863b-d2fad4dc1539/episodes/f73485ad-3611-46e3-b7d8-e1dc09d1f68f/audio/128/default.mp3?aid=rss_feed&awCollectionId=1589f227-a5c3-4487-863b-d2fad4dc1539&awEpisodeId=f73485ad-3611-46e3-b7d8-e1dc09d1f68f&feed=wbru9pmV"
-    },
-    {
-      "id": "pod_patriots_locked_on_patriots_1000802291449",
-      "trackId": 1000802291449,
-      "collectionId": 1140512627,
-      "showId": "patriots_locked_on_patriots",
-      "showName": "Locked On Patriots",
-      "showFullTitle": "Locked On Patriots - Daily Podcast On The New England Patriots",
-      "hosts": "Locked On Podcast Network, Mike D’Abate",
-      "network": "Locked On Podcast Network, Mike D’Abate",
-      "title": "BREAKING: Drake Maye Reportedly OUT INDEFINITELY With Ankle Injury",
-      "summary": "Drake Maye left the game against the Detroit Lions after the first drive in Germany, during yesterday’s game. Now, Maye is reportedly dealing with a significant ankle injury that might cost him the rest of the season. Host Nick Cattles dives into what that means for Maye, th",
-      "publishedAt": "2026-11-16T15:08:15.000Z",
-      "durationMinutes": 31,
-      "durationDisplay": "31 min",
-      "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/44/02/b5/4402b5b0-b464-044b-ba27-61be730e34b6/mza_12514599245335950829.jpeg/160x160bb.jpg",
-      "appleEpisodeUrl": "https://podcasts.apple.com/us/podcast/breaking-drake-maye-reportedly-out-indefinitely-with/id1140512627?i=1000802291449&uo=4",
-      "appleShowUrl": "https://podcasts.apple.com/us/podcast/locked-on-patriots-daily-podcast-on-the-new-england/id1140512627?uo=4",
-      "feedUrl": "https://rss.pdrl.fm/b4173b/feeds.simplecast.com/wbru9pmV",
-      "audioStreamUrl": "https://dts.podtrac.com/redirect.mp3/pdrl.fm/b4173b/lockedon.simplecastaudio.com/1589f227-a5c3-4487-863b-d2fad4dc1539/episodes/39369f85-9ec1-4f9a-a5eb-a8a3d852c512/audio/128/default.mp3?aid=rss_feed&awCollectionId=1589f227-a5c3-4487-863b-d2fad4dc1539&awEpisodeId=39369f85-9ec1-4f9a-a5eb-a8a3d852c512&feed=wbru9pmV"
     }
   ]
 }

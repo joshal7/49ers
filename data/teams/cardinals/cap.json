@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:33:40.115Z",
+  "updatedAt": "2026-11-24T20:07:36.179Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/arizona-cardinals",
   "spotracUrl": "https://www.spotrac.com/nfl/arizona-cardinals/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 327509324,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 319069190,
+      "totalCapLiabilities": 319435990,
       "top51": 200396083,
-      "teamCapSpace": 8440134,
-      "otcRawTeamCapSpace": 8440134,
-      "effectiveCapSpace": 8440134,
-      "activeCapSpending": 215039438,
-      "offenseSpend": 102189982,
-      "defenseSpend": 108011956,
+      "teamCapSpace": 8073334,
+      "otcRawTeamCapSpace": 8073334,
+      "effectiveCapSpace": 8073334,
+      "activeCapSpending": 215406238,
+      "offenseSpend": 102409982,
+      "defenseSpend": 108158756,
       "specialSpend": 4837500,
       "deadMoneyTotal": 104029752,
       "injuredReserveTotal": 55064156,
-      "practiceSquadTotal": 2876350,
+      "practiceSquadTotal": 3243150,
       "pupTotal": 1579067,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 59519573,
+      "reserveAndPsTotal": 59886373,
       "topDeadMoneyEntries": [
         {
           "name": "Kyler Murray",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 51,
-      "totalSignedCount": 82
+      "totalSignedCount": 85
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 209187557,
       "teamCapSpace": 95167102,
       "otcRawTeamCapSpace": 95167102,
-      "effectiveCapSpace": 73599367,
+      "effectiveCapSpace": 72469001,
       "activeCapSpending": 209187557,
       "offenseSpend": 126781261,
       "defenseSpend": 82406296,
@@ -246,7 +246,7 @@
     }
   },
   "blueprint": {
-    "summary": "Arizona Cardinals hold $8.44M in 2026 OverTheCap space and $95.17M projected for 2027."
+    "summary": "Arizona Cardinals hold $8.07M in 2026 OverTheCap space and $95.17M projected for 2027."
   },
   "players": [
     {

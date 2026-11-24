@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:34:55.608Z",
+  "updatedAt": "2026-11-24T20:08:11.541Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/new-orleans-saints",
   "spotracUrl": "https://www.spotrac.com/nfl/new-orleans-saints/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 316722549,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 308693859,
+      "totalCapLiabilities": 309300526,
       "top51": 170045165,
-      "teamCapSpace": 8028690,
-      "otcRawTeamCapSpace": 8028690,
-      "effectiveCapSpace": 8028690,
-      "activeCapSpending": 180340163,
-      "offenseSpend": 101707639,
+      "teamCapSpace": 7422023,
+      "otcRawTeamCapSpace": 7422023,
+      "effectiveCapSpace": 7422023,
+      "activeCapSpending": 180862664,
+      "offenseSpend": 101867639,
       "defenseSpend": 74790441,
-      "specialSpend": 3559166,
-      "deadMoneyTotal": 128636613,
+      "specialSpend": 3921667,
+      "deadMoneyTotal": 128720779,
       "injuredReserveTotal": 10501697,
-      "practiceSquadTotal": 3585137,
+      "practiceSquadTotal": 3660971,
       "pupTotal": 2433904,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 16520738,
+      "reserveAndPsTotal": 16596572,
       "topDeadMoneyEntries": [
         {
           "name": "Derek Carr",
@@ -134,8 +134,8 @@
           "otcUrl": "https://overthecap.com/player/isaiah-foskey/10864/"
         }
       ],
-      "contractedCount": 52,
-      "totalSignedCount": 77
+      "contractedCount": 53,
+      "totalSignedCount": 78
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 276791303,
       "teamCapSpace": 29733246,
       "otcRawTeamCapSpace": 29733246,
-      "effectiveCapSpace": 12983826,
+      "effectiveCapSpace": 12569002,
       "activeCapSpending": 276791303,
       "offenseSpend": 153651637,
       "defenseSpend": 117619666,
@@ -279,7 +279,7 @@
     }
   },
   "blueprint": {
-    "summary": "New Orleans Saints hold $8.03M in 2026 OverTheCap space and $29.73M projected for 2027."
+    "summary": "New Orleans Saints hold $7.42M in 2026 OverTheCap space and $29.73M projected for 2027."
   },
   "players": [
     {
@@ -7133,6 +7133,64 @@
             "june_1_trade": {
               "deadMoney": 0,
               "capSavings": 597222
+            },
+            "restructure": {
+              "deadMoney": 0,
+              "capSavings": 0
+            },
+            "extension": {
+              "deadMoney": 0,
+              "capSavings": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "5208518",
+      "otcId": "11605",
+      "otcSlug": "charlie-smyth",
+      "otcUrl": "https://overthecap.com/player/charlie-smyth/11605/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/5208518/charlie-smyth",
+      "pfrUrl": "https://www.pro-football-reference.com/players/S/SmytCh00.htm",
+      "name": "Charlie Smyth",
+      "position": "PK",
+      "jersey": 39,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5208518.png",
+      "unit": "Special Teams",
+      "rosterBucket": "active",
+      "contractsByYear": {
+        "2026": {
+          "year": 2026,
+          "rosterBucket": "active",
+          "isVoidYear": false,
+          "baseSalary": 1005000,
+          "proratedSigning": 0,
+          "proratedOption": 0,
+          "proratedBonus": 0,
+          "rosterBonusRegular": 0,
+          "rosterBonusPerGame": 0,
+          "workoutBonus": 0,
+          "otherBonus": 0,
+          "currentYearBonuses": 0,
+          "guaranteedSalary": 0,
+          "capNumber": 446667,
+          "transactions": {
+            "cut": {
+              "deadMoney": 0,
+              "capSavings": 446667
+            },
+            "june_1_cut": {
+              "deadMoney": 0,
+              "capSavings": 446667
+            },
+            "trade": {
+              "deadMoney": 0,
+              "capSavings": 446667
+            },
+            "june_1_trade": {
+              "deadMoney": 0,
+              "capSavings": 446667
             },
             "restructure": {
               "deadMoney": 0,

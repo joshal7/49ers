@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:36:19.406Z",
+  "updatedAt": "2026-11-24T20:08:45.704Z",
   "week": 12,
   "byeWeek": 8,
   "sourceUrl": "https://www.houstontexans.com/team/injury-report/",
@@ -9,81 +9,6 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
-    {
-      "playerId": "2976560",
-      "name": "Danielle Hunter",
-      "position": "DE",
-      "jersey": 55,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2976560.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Hamstring",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Veteran starter profile (12th NFL season, 76% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": ""
-    },
-    {
-      "playerId": "4362732",
-      "name": "Jake Andrews",
-      "position": "C",
-      "jersey": 60,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362732.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (C) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "3045474",
-      "name": "Wyatt Teller",
-      "position": "G",
-      "jersey": 75,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045474.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Back",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (G) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Teller was unavailable in Week 10 against the Browns due to an illness, and he'll be sidelined in Week 11 by a back injury. In his absence, rookie fourth-rounder Febechi Nwaiwu projects as the Texans' top option off the bench at guard."
-    },
     {
       "playerId": "4429059",
       "name": "Woody Marks",
@@ -97,67 +22,17 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Concussion",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 18,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "18% • Doubtful",
       "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Remains in early stages of NFL 5-Step Concussion Protocol"
       ],
-      "beatComment": "inactive"
-    },
-    {
-      "playerId": "4362504",
-      "name": "Brevin Jordan",
-      "position": "TE",
-      "jersey": 9,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362504.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Foot",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": ""
-    },
-    {
-      "playerId": "4428656",
-      "name": "Nate Thomas",
-      "position": "OT",
-      "jersey": 78,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428656.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Coach's Decision",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "inactive"
+      "beatComment": "After sustaining a concussion in a Nov. 15 loss to the Browns, Marks was unable to clear the five-step protocol on a short week and ended up sitting out this past Thursday's 26-3 win over the Colts. Since then, Marks appears to have progressed on some level through the protocol, though it's not yet clear if he'll be available to practice when the Texans kick off Week 12 prep Wednesday. If Marks ends up getting the green light to play versus the Ravens, he may be part of a timeshare in the backfield or be forced to settle for No. 2 duties behind David Montgomery (groin), who returned from a four-game absence in Week 11 to run for a season-high 107 yards."
     },
     {
       "playerId": "4432708",
@@ -172,17 +47,69 @@
       "thu": "-",
       "fri": "-",
       "injuryType": "Hamstring",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 42,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
+      "playBadgeLabel": "42% • Long Shot",
       "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Officially ruled Out on weekly game status report"
+        "Missed 2 consecutive games without practice participation — awaiting Wednesday report",
+        "Soft-tissue re-aggravation caution (Hamstring)"
       ],
-      "beatComment": "inactive"
+      "beatComment": "questionable"
+    },
+    {
+      "playerId": "2976560",
+      "name": "Danielle Hunter",
+      "position": "DE",
+      "jersey": 55,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2976560.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Hamstring",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 45,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "45% • Long Shot",
+      "archetypeNote": "Veteran starter profile (12th NFL season, 76% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Missed 2 consecutive games without practice participation — awaiting Wednesday report",
+        "Soft-tissue re-aggravation caution (Hamstring)"
+      ],
+      "beatComment": "questionable"
+    },
+    {
+      "playerId": "4362504",
+      "name": "Brevin Jordan",
+      "position": "TE",
+      "jersey": 9,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362504.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Foot",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 48,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "48% • Long Shot",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Missed 2 consecutive games without practice participation — awaiting Wednesday report"
+      ],
+      "beatComment": "questionable"
     },
     {
       "playerId": "4429022",
@@ -208,6 +135,31 @@
         "Questionable tag adjusted by player career prior (76%)"
       ],
       "beatComment": "The wideout had one of his more productive games of the season before being injured, as he caught both of his targets for 40 yards and a touchdown. His 40 yards were the second-most he's produced in a game this season. Boutte is up to 21 grabs for 359 yards and three touchdowns on 31 targets across 10 games in 2026."
+    },
+    {
+      "playerId": "3045474",
+      "name": "Wyatt Teller",
+      "position": "G",
+      "jersey": 75,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045474.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Back",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 81,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "81% • GTD",
+      "archetypeNote": "Trench/box position (G) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Questionable tag adjusted by player career prior (81%)"
+      ],
+      "beatComment": "questionable"
     },
     {
       "playerId": "2970204",
@@ -309,31 +261,6 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "The linebacker suffered the injury in Week 1, returned for Week 10 and then carried a questionable tag into this contest, but he appears ready to play through the injury for the second consecutive game. Hummel logged two tackles (one solo) across 21 special-teams snaps against the Browns last week."
-    },
-    {
-      "playerId": "4594277",
-      "name": "Jaylin Smith",
-      "position": "CB",
-      "jersey": 22,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4594277.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Hamstring",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "The cornerback was activated from injured reserve earlier in the day Thursday and will be making his first appearance since Week 4. Smith played just seven defensive snaps across the first four games of the season."
     }
   ],
   "irAndReserveTracker": [

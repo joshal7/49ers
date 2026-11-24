@@ -1,111 +1,509 @@
 {
-  "updatedAt": "2026-11-23T06:34:47.615Z",
+  "updatedAt": "2026-11-24T20:08:08.884Z",
   "dailyTopNewsBrief": {
-    "id": "brief_tb_3b31690f3158",
-    "cycleKey": "2026-11-22@postgame-wk11",
+    "id": "brief_tb_2ebf06dd2f29",
+    "cycleKey": "2026-11-23@17ET",
     "scheduledHourPt": 17,
-    "isPostGame": true,
+    "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "3-7",
-    "generatedAt": "2026-11-23T03:48:17.138Z",
-    "modelUsed": "gemini-3.5-flash",
-    "thinkingLevel": "HIGH",
-    "source": "live-gemini-daily",
-    "wordCount": 177,
-    "guardClean": true,
-    "headline": "Buccaneers Fall to 3-7 After 31-21 Loss in Detroit",
-    "summary": "Tampa Bay drops to 3-7 following a 31-21 road defeat against the Detroit Lions, leaving their playoff probability at 32.5% heading into Week 12. Despite fielding the NFL's top-ranked rushing attack, pass protection vulnerabilities continue to hamper offensive efficiency.",
+    "generatedAt": "2026-11-24T20:08:10.102Z",
+    "modelUsed": "gemini-4-hydrogen",
+    "thinkingLevel": "XHIGH",
+    "source": "deterministic-digest",
+    "wordCount": 59,
+    "headline": "Tampa Bay Buccaneers Daily Briefing — Week 12",
+    "summary": "Tampa Bay Buccaneers (3-7, 2nd in NFC South • #12 Seed in NFC) top verified storylines, injury status, and upcoming matchup intel.",
     "bullets": [
-      "Quarterback Baker Mayfield absorbed four sacks during Sunday's 31-21 defeat, underscoring ongoing pass protection issues for an offense ranking #30 in sack rate allowed (10.1%), per [buccaneers.com Official](https://www.buccaneers.com/news/bucs-lions-week-11-recap-postgame-report-2026).",
-      "Head coach Todd Bowles oversees an extreme statistical divide, as Tampa Bay ranks #1 in rushing (163.9 yards per game) but #32 in passing offense (141.9 yards per game), noted via [buccaneers.com Video](https://www.buccaneers.com/video/todd-bowles-on-outcome-in-detroit-press-conference).",
-      "Detroit pulled away late with two fourth-quarter rushing touchdowns from Jahmyr Gibbs, breaking through a Tampa Bay defense that otherwise leads the NFL in run defense (79.1 yards allowed per game), according to [ESPN NFL Nation](https://www.espn.com/nfl/recap?gameId=401873072).",
-      "Linebacker Alex Anzalone and the defense turn focus to Week 12 against the 5-5 Carolina Panthers, who bring the league's #8 passing attack (252.8 yards per game) to Tampa, per [buccaneers.com Video](https://www.buccaneers.com/video/alex-anzalone-discusses-first-game-back-in-detroit-press-conference)."
+      "Rob Gronkowski Among 52 Remaining Candidates for Hall of Fame ([buccaneers.com Official](https://www.buccaneers.com/news/rob-gronkowski-among-52-remaining-candidates-hall-of-fame))",
+      "Alex Anzalone Maximizing Role in Bucs' 2026 Defense ([buccaneers.com Official](https://www.buccaneers.com/news/alex-anzalone-maximizing-role-in-bucs-2026-defense))",
+      "Bucs' Release Week 12 Depth Chart: Kenny Gainwell Picks Up Snaps ([buccaneers.com Official](https://www.buccaneers.com/news/bucs-release-week-12-depth-chart-kenny-gainwell-picks-up-snaps))",
+      "Intermediate Third Downs and Another Backfield Threat | By the Numbers, Week 12 ([buccaneers.com Official](https://www.buccaneers.com/news/intermediate-third-downs-and-another-backfield-threat-by-the-numbers-week-12))",
+      "2026 Bucs NFL Power Rankings Week 12 ([buccaneers.com Official](https://www.buccaneers.com/news/2026-bucs-nfl-power-rankings-week-12))"
     ],
     "coveredStoryKeys": [
-      "tb_rss_594fde348b8b",
-      "tb_vid_973d82765aee",
-      "tb_vid_0cf27068bbfe",
-      "tb_vid_a64b08f04e11",
-      "tb_vid_c4e37877baf8",
-      "tb_vid_f0e3a63f825b"
+      "tb_rss_4e335d013fba",
+      "tb_rss_b4ea567debe9",
+      "tb_rss_d2035fc89ebb",
+      "tb_rss_7e005c9cf1ed",
+      "tb_rss_b16eb6d258fa"
     ],
     "coveredUrls": [
-      "https://www.buccaneers.com/news/bucs-lions-week-11-recap-postgame-report-2026",
-      "https://www.espn.com/nfl/recap?gameId=401873072",
-      "https://www.buccaneers.com/video/todd-bowles-on-outcome-in-detroit-press-conference",
-      "https://www.buccaneers.com/video/full-game-highlights-bucs-lions-loss-score-31-21-week-11",
-      "https://www.buccaneers.com/video/baker-mayfield-thoughts-following-bucs-vs-lions-press-conference",
-      "https://www.buccaneers.com/video/hurst-td-2-bucs-lions-nfl-season-week-11-big-play-2026"
+      "https://www.buccaneers.com/news/rob-gronkowski-among-52-remaining-candidates-hall-of-fame",
+      "https://www.buccaneers.com/news/alex-anzalone-maximizing-role-in-bucs-2026-defense",
+      "https://www.buccaneers.com/news/bucs-release-week-12-depth-chart-kenny-gainwell-picks-up-snaps",
+      "https://www.buccaneers.com/news/intermediate-third-downs-and-another-backfield-threat-by-the-numbers-week-12",
+      "https://www.buccaneers.com/news/2026-bucs-nfl-power-rankings-week-12"
     ],
     "sources": [
       {
-        "sid": "S6",
-        "title": "Lions Pull Away in Fourth Quarter, Deny Bucs' Upset Bid in Detroit",
-        "url": "https://www.buccaneers.com/news/bucs-lions-week-11-recap-postgame-report-2026",
+        "sid": "S1",
+        "title": "Rob Gronkowski Among 52 Remaining Candidates for Hall of Fame",
+        "url": "https://www.buccaneers.com/news/rob-gronkowski-among-52-remaining-candidates-hall-of-fame",
         "author": "buccaneers.com Official",
         "outlet": "buccaneers.com Official",
-        "publishedAt": "2026-11-22T23:00:00.000Z"
+        "publishedAt": "2026-11-24T18:37:00.000Z"
+      },
+      {
+        "sid": "S2",
+        "title": "Alex Anzalone Maximizing Role in Bucs' 2026 Defense",
+        "url": "https://www.buccaneers.com/news/alex-anzalone-maximizing-role-in-bucs-2026-defense",
+        "author": "buccaneers.com Official",
+        "outlet": "buccaneers.com Official",
+        "publishedAt": "2026-11-24T18:33:07.000Z"
+      },
+      {
+        "sid": "S3",
+        "title": "Bucs' Release Week 12 Depth Chart: Kenny Gainwell Picks Up Snaps",
+        "url": "https://www.buccaneers.com/news/bucs-release-week-12-depth-chart-kenny-gainwell-picks-up-snaps",
+        "author": "buccaneers.com Official",
+        "outlet": "buccaneers.com Official",
+        "publishedAt": "2026-11-24T17:56:00.000Z"
+      },
+      {
+        "sid": "S4",
+        "title": "Intermediate Third Downs and Another Backfield Threat | By the Numbers, Week 12",
+        "url": "https://www.buccaneers.com/news/intermediate-third-downs-and-another-backfield-threat-by-the-numbers-week-12",
+        "author": "buccaneers.com Official",
+        "outlet": "buccaneers.com Official",
+        "publishedAt": "2026-11-24T17:06:00.000Z"
+      },
+      {
+        "sid": "S5",
+        "title": "2026 Bucs NFL Power Rankings Week 12",
+        "url": "https://www.buccaneers.com/news/2026-bucs-nfl-power-rankings-week-12",
+        "author": "buccaneers.com Official",
+        "outlet": "buccaneers.com Official",
+        "publishedAt": "2026-11-24T10:56:00.000Z"
+      },
+      {
+        "sid": "S6",
+        "title": "David Walker Builds Case for Higher Snap Count with Standout Effort in Week 11",
+        "url": "https://www.buccaneers.com/news/david-walker-builds-case-for-higher-snap-count-with-standout-effort-week-11",
+        "author": "buccaneers.com Official",
+        "outlet": "buccaneers.com Official",
+        "publishedAt": "2026-11-23T20:32:33.000Z"
       },
       {
         "sid": "S7",
-        "title": "Jared Goff throws 2 TDs, Jahmyr Gibbs runs for 2 more and Lions beat Bucs 31-21 for 6th straight win",
-        "url": "https://www.espn.com/nfl/recap?gameId=401873072",
-        "author": "ESPN NFL Nation",
-        "outlet": "ESPN",
-        "publishedAt": "2026-11-22T22:33:44Z"
-      },
-      {
-        "sid": "S10",
-        "title": "Todd Bowles on Outcome in Detroit | Press Conference",
-        "url": "https://www.buccaneers.com/video/todd-bowles-on-outcome-in-detroit-press-conference",
-        "author": "buccaneers.com Video",
-        "outlet": "buccaneers.com Video",
-        "publishedAt": "2026-11-22T22:10:00.000Z"
-      },
-      {
-        "sid": "S8",
-        "title": "Bucs vs. Lions Full Game Highlights | Tampa Bay Falls 31-21",
-        "url": "https://www.buccaneers.com/video/full-game-highlights-bucs-lions-loss-score-31-21-week-11",
-        "author": "buccaneers.com Video",
-        "outlet": "buccaneers.com Video",
-        "publishedAt": "2026-11-22T22:30:00.000Z"
-      },
-      {
-        "sid": "S9",
-        "title": "Baker Mayfield's Thoughts Following Bucs vs. Lions | Press Conference",
-        "url": "https://www.buccaneers.com/video/baker-mayfield-thoughts-following-bucs-vs-lions-press-conference",
-        "author": "buccaneers.com Video",
-        "outlet": "buccaneers.com Video",
-        "publishedAt": "2026-11-22T22:14:00.000Z"
-      },
-      {
-        "sid": "S6",
-        "title": "Mayfield Throws Second TD to Hurst III | Bucs vs. Lions Highlights",
-        "url": "https://www.buccaneers.com/video/hurst-td-2-bucs-lions-nfl-season-week-11-big-play-2026",
-        "author": "buccaneers.com Video",
-        "outlet": "buccaneers.com Video",
-        "publishedAt": "2026-11-22T20:59:00.000Z"
-      },
-      {
-        "sid": "S7",
-        "title": "Bucky Irving Scores 1-Yard Touchdown | Bucs vs. Lions Highlights",
-        "url": "https://www.buccaneers.com/video/bucky-td-bucs-lions-nfl-season-week-11-big-play-2026",
-        "author": "buccaneers.com Video",
-        "outlet": "buccaneers.com Video",
-        "publishedAt": "2026-11-22T20:13:08.000Z"
-      },
-      {
-        "sid": "S8",
-        "title": "Rapid Reaction: Lions 31, Buccaneers 21",
-        "url": "https://www.buccaneers.com/news/bucs-lose-detroit-lions-week-11-2026-score-31-21",
+        "title": "Ted Hurst III Shows Resilience in Career Day vs. Detroit",
+        "url": "https://www.buccaneers.com/news/ted-hurst-iii-shows-resilience-in-career-day-vs-detroit",
         "author": "buccaneers.com Official",
         "outlet": "buccaneers.com Official",
-        "publishedAt": "2026-11-22T22:09:00.000Z"
+        "publishedAt": "2026-11-24T13:32:14.000Z"
+      },
+      {
+        "sid": "S8",
+        "title": "Alex Anzalone: Flourishing as a Leader | Bucs Players' Table",
+        "url": "https://www.buccaneers.com/video/alex-anzalone-flourishing-as-a-leader-bucs-players-table",
+        "author": "buccaneers.com Video",
+        "outlet": "buccaneers.com Video",
+        "publishedAt": "2026-11-23T23:00:00.000Z"
       }
     ]
   },
   "clusteredBriefs": [],
   "rawStream": [
+    {
+      "id": "tb_rss_4e335d013fba",
+      "type": "article",
+      "title": "Rob Gronkowski Among 52 Remaining Candidates for Hall of Fame",
+      "summary": "TE Rob Gronkowski, who caught two touchdown passes for the Buccaneers in their Super Bowl LV win, is one of seven Pro Football Hall of Fame Candidates with ties to the Buccaneers to make it through the most recent vote",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/pp3bbqtyyiehnqxedwbd.png",
+      "imageAlt": "Rob Gronkowski Among 52 Remaining Candidates for Hall of Fame",
+      "publishedAt": "2026-11-24T18:37:00.000Z",
+      "url": "https://www.buccaneers.com/news/rob-gronkowski-among-52-remaining-candidates-hall-of-fame",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 15.8299
+    },
+    {
+      "id": "tb_rss_b4ea567debe9",
+      "type": "article",
+      "title": "Alex Anzalone Maximizing Role in Bucs' 2026 Defense",
+      "summary": "On the Bucs Players’ Table Show, inside linebacker Alex Anzalone discussed his contrasting role in Todd Bowles’ defense from previous years in his tenure that has sparked interceptions, along with a preview of Carolina ahead of Week 12",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/rijf0vssiegzqosjdynv.png",
+      "imageAlt": "Alex Anzalone Maximizing Role in Bucs' 2026 Defense",
+      "publishedAt": "2026-11-24T18:33:07.000Z",
+      "url": "https://www.buccaneers.com/news/alex-anzalone-maximizing-role-in-bucs-2026-defense",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 15.2942
+    },
+    {
+      "id": "tb_rss_d2035fc89ebb",
+      "type": "article",
+      "title": "Bucs' Release Week 12 Depth Chart: Kenny Gainwell Picks Up Snaps",
+      "summary": "RB Kenny Gainwell played 41% of the offensive snaps in Detroit and for the fourth game in a row produced 50-plus yards from scrimmage…David Walker once again made the most of limited snaps",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/nj1deheiyi2llqk1sbr6.jpg",
+      "imageAlt": "Bucs' Release Week 12 Depth Chart: Kenny Gainwell Picks Up Snaps",
+      "publishedAt": "2026-11-24T17:56:00.000Z",
+      "url": "https://www.buccaneers.com/news/bucs-release-week-12-depth-chart-kenny-gainwell-picks-up-snaps",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 1,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 12.9324
+    },
+    {
+      "id": "tb_rss_7e005c9cf1ed",
+      "type": "article",
+      "title": "Intermediate Third Downs and Another Backfield Threat | By the Numbers, Week 12",
+      "summary": "The Buccaneers found some answers in the passing game on mid-range third downs in Detroit, a promising sign going forward…Carolina's underrated back Chuba Hubbard poses yet another challenge for a tough Bucs run defense",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/nrhrfmvlachofs0du6yy.jpg",
+      "imageAlt": "Intermediate Third Downs and Another Backfield Threat | By the Numbers, Week 12",
+      "publishedAt": "2026-11-24T17:06:00.000Z",
+      "url": "https://www.buccaneers.com/news/intermediate-third-downs-and-another-backfield-threat-by-the-numbers-week-12",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 8.3182
+    },
+    {
+      "id": "tb_rss_b16eb6d258fa",
+      "type": "article",
+      "title": "2026 Bucs NFL Power Rankings Week 12",
+      "summary": "Where do the Tampa Bay Buccaneers rank in Week 12 across Power Rankings?",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/nxgozwiy8uxlvq2nmcox.png",
+      "imageAlt": "2026 Bucs NFL Power Rankings Week 12",
+      "publishedAt": "2026-11-24T10:56:00.000Z",
+      "url": "https://www.buccaneers.com/news/2026-bucs-nfl-power-rankings-week-12",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 2.3087
+    },
+    {
+      "id": "tb_rss_c36937bb9f2f",
+      "type": "article",
+      "title": "David Walker Builds Case for Higher Snap Count with Standout Effort in Week 11",
+      "summary": "With a sack on Jared Goff, two tackles for loss and two quarterback hits in Week 11, David Walker produced a standout performance, likely garnering additional playing time for Tampa Bay",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/vyatcihnn8ecfyamwtzw.png",
+      "imageAlt": "David Walker Builds Case for Higher Snap Count with Standout Effort in Week 11",
+      "publishedAt": "2026-11-23T20:32:33.000Z",
+      "url": "https://www.buccaneers.com/news/david-walker-builds-case-for-higher-snap-count-with-standout-effort-week-11",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.199,
+      "category": "film",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.3679
+    },
+    {
+      "id": "tb_rss_c5eb8a7d66a0",
+      "type": "article",
+      "title": "Ted Hurst III Shows Resilience in Career Day vs. Detroit",
+      "summary": "Ted Hurst III’s two-touchdown day in Detroit points to a potential second-half surge for the third-round rookie",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/lnskh2afv5qfrlus2v6l.png",
+      "imageAlt": "Ted Hurst III Shows Resilience in Career Day vs. Detroit",
+      "publishedAt": "2026-11-24T13:32:14.000Z",
+      "url": "https://www.buccaneers.com/news/ted-hurst-iii-shows-resilience-in-career-day-vs-detroit",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.8686
+    },
+    {
+      "id": "tb_vid_6a6cde17a186",
+      "type": "video",
+      "title": "Alex Anzalone: Flourishing as a Leader | Bucs Players' Table",
+      "summary": "Team Reporter Casey Phillips chats with Tampa Bay Buccaneers LB Alex Anzalone after Week 11 vs. the Detroit Lions. They discussed the success of his role in HC Todd Bowles' defense, his return to Florida and what it take",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/g5kwabuvxzfvjyhxiode.jpg",
+      "imageAlt": "Alex Anzalone: Flourishing as a Leader | Bucs Players' Table",
+      "publishedAt": "2026-11-23T23:00:00.000Z",
+      "url": "https://www.buccaneers.com/video/alex-anzalone-flourishing-as-a-leader-bucs-players-table",
+      "externalVideoUrl": "https://www.buccaneers.com/video/alex-anzalone-flourishing-as-a-leader-bucs-players-table",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7852
+    },
+    {
+      "id": "tb_rss_febb7a4d749e",
+      "type": "article",
+      "title": "Bucs May Be Testing Corner Depth in Week 12",
+      "summary": "Both Jacob Parrish (back) and Benjamin Morrison (hamstring) were scheduled to have MRIs on Monday after leaving Sunday's game in Detroit with injuries, and their status could require the Bucs to ready some other cornerback options against t",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/enngzeahvnijdkhaqns3.jpg",
+      "imageAlt": "Bucs May Be Testing Corner Depth in Week 12",
+      "publishedAt": "2026-11-23T19:44:00.000Z",
+      "url": "https://www.buccaneers.com/news/bucs-may-be-testing-corner-depth-in-week-12",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.648
+    },
+    {
+      "id": "tb_rss_1d1fe153a9d7",
+      "type": "article",
+      "title": "Baker Mayfield Hits the Century Mark as a Buc | Data Crunch",
+      "summary": "QB Baker Mayfield has now thrown 100 touchdown passes since joining the Buccaneers after his two to Ted Hurst in Detroit, which put Hurst among the rookie leaders in that category in 2026",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/pcmkfculxwixmmlpfvyw.jpg",
+      "imageAlt": "Baker Mayfield Hits the Century Mark as a Buc | Data Crunch",
+      "publishedAt": "2026-11-23T18:13:00.000Z",
+      "url": "https://www.buccaneers.com/news/baker-mayfield-hits-the-century-mark-as-a-buc-data-crunch",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5976
+    },
+    {
+      "id": "tb_vid_68d6fbf4ecac",
+      "type": "video",
+      "title": "Todd Bowles on Path Forward: 'It Starts With Us' | Press Conference",
+      "summary": "Tampa Bay Buccaneers Head Coach Todd Bowles spoke to the media the day after the Bucs' game against the Detroit Lions in Week 11 of the 2026 NFL Season. HC Bowles discussed the state of the CB room, continuing to adjust ",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/ai5kyppgbmm4a1ydkotp.jpg",
+      "imageAlt": "Todd Bowles on Path Forward: 'It Starts With Us' | Press Conference",
+      "publishedAt": "2026-11-23T18:01:27.000Z",
+      "url": "https://www.buccaneers.com/video/todd-bowles-path-forward-it-starts-with-us-press-conference",
+      "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-path-forward-it-starts-with-us-press-conference",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5917
+    },
+    {
+      "id": "tb_rss_d9a1c55852b5",
+      "type": "article",
+      "title": "Takeaways from Buccaneers-Lions | Week 11",
+      "summary": "Top observations from the Buccaneers’ 31-21 loss to the Lions at Ford Field in Week 11",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/moyglrzxbfu1obar3vna.png",
+      "imageAlt": "Takeaways from Buccaneers-Lions | Week 11",
+      "publishedAt": "2026-11-23T15:07:33.000Z",
+      "url": "https://www.buccaneers.com/news/takeaways-from-buccaneers-lions-week-11-2026",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5135
+    },
     {
       "id": "tb_rss_594fde348b8b",
       "type": "article",
@@ -127,108 +525,6 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
-      "breakingPriority": 0.658,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 4.8269
-    },
-    {
-      "id": "tb_vid_973d82765aee",
-      "type": "video",
-      "title": "Mayfield Throws Second TD to Hurst III | Bucs vs. Lions Highlights",
-      "summary": "QB Baker Mayfield throws a 5-yard touchdown pass to WR Ted Hurst III against the Detroit Lions in Week 11 of the 2026 NFL season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/zzfp9edwi8pvzbxwnx7e.jpg",
-      "imageAlt": "Mayfield Throws Second TD to Hurst III | Bucs vs. Lions Highlights",
-      "publishedAt": "2026-11-22T20:59:00.000Z",
-      "url": "https://www.buccaneers.com/video/hurst-td-2-bucs-lions-nfl-season-week-11-big-play-2026",
-      "externalVideoUrl": "https://www.buccaneers.com/video/hurst-td-2-bucs-lions-nfl-season-week-11-big-play-2026",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.521,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.6399
-    },
-    {
-      "id": "tb_vid_0cf27068bbfe",
-      "type": "video",
-      "title": "Bucky Irving Scores 1-Yard Touchdown | Bucs vs. Lions Highlights",
-      "summary": "RB Bucky Irving scores a touchdown against the Detroit Lions in Week 11 of the 2026 NFL season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/sdavoxhxf3n2ov8zrqzz.jpg",
-      "imageAlt": "Bucky Irving Scores 1-Yard Touchdown | Bucs vs. Lions Highlights",
-      "publishedAt": "2026-11-22T20:13:08.000Z",
-      "url": "https://www.buccaneers.com/video/bucky-td-bucs-lions-nfl-season-week-11-big-play-2026",
-      "externalVideoUrl": "https://www.buccaneers.com/video/bucky-td-bucs-lions-nfl-season-week-11-big-play-2026",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0.477,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "post_game_recap",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 3.3162
-    },
-    {
-      "id": "tb_vid_a64b08f04e11",
-      "type": "video",
-      "title": "Bucs vs. Lions Full Game Highlights | Tampa Bay Falls 31-21",
-      "summary": "View plays from the Tampa Bay Buccaneers' game against the Detroit Lions in Week 11 of the 2026 NFL Season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/tincwwkr0pdknyugnnyp.jpg",
-      "imageAlt": "Bucs vs. Lions Full Game Highlights | Tampa Bay Falls 31-21",
-      "publishedAt": "2026-11-22T22:30:00.000Z",
-      "url": "https://www.buccaneers.com/video/full-game-highlights-bucs-lions-loss-score-31-21-week-11",
-      "externalVideoUrl": "https://www.buccaneers.com/video/full-game-highlights-bucs-lions-loss-score-31-21-week-11",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
       "breakingPriority": 0,
       "category": "beat",
       "signalScore": 70,
@@ -239,242 +535,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.7387
-    },
-    {
-      "id": "tb_vid_c4e37877baf8",
-      "type": "video",
-      "title": "Baker Mayfield's Thoughts Following Bucs vs. Lions | Press Conference",
-      "summary": "Tampa Bay Buccaneers Quarterback Baker Mayfield spoke to the media after the Bucs' game against the Detroit Lions in Week 11 of the 2026 NFL Season. QB Mayfield discussed RB Bucky Irving's heart, continuing to stay motiv",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/bdysuoyulwvvhtmvsgdb.jpg",
-      "imageAlt": "Baker Mayfield's Thoughts Following Bucs vs. Lions | Press Conference",
-      "publishedAt": "2026-11-22T22:14:00.000Z",
-      "url": "https://www.buccaneers.com/video/baker-mayfield-thoughts-following-bucs-vs-lions-press-conference",
-      "externalVideoUrl": "https://www.buccaneers.com/video/baker-mayfield-thoughts-following-bucs-vs-lions-press-conference",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.6302
-    },
-    {
-      "id": "tb_vid_f0e3a63f825b",
-      "type": "video",
-      "title": "Todd Bowles on Outcome in Detroit | Press Conference",
-      "summary": "Tampa Bay Buccaneers Head Coach Todd Bowles spoke to the media after the Bucs' game against the Detroit Lions in Week 11 of the 2026 NFL Season. HC Bowles discussed injury updates, limiting mistakes and WR Ted Hurst III'",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/pr4un5qekpd1x7e0bjka.jpg",
-      "imageAlt": "Todd Bowles on Outcome in Detroit | Press Conference",
-      "publishedAt": "2026-11-22T22:10:00.000Z",
-      "url": "https://www.buccaneers.com/video/todd-bowles-on-outcome-in-detroit-press-conference",
-      "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-on-outcome-in-detroit-press-conference",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.6042
-    },
-    {
-      "id": "tb_rss_de56872ef1bc",
-      "type": "article",
-      "title": "Rapid Reaction: Lions 31, Buccaneers 21",
-      "summary": "The Tampa Bay Buccaneers fell to the Detroit Lions 31-21 at Ford Field in Week 11",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/o4wqmnmawrqjbdhfx2t7.jpg",
-      "imageAlt": "Rapid Reaction: Lions 31, Buccaneers 21",
-      "publishedAt": "2026-11-22T22:09:00.000Z",
-      "url": "https://www.buccaneers.com/news/bucs-lose-detroit-lions-week-11-2026-score-31-21",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.5978
-    },
-    {
-      "id": "tb_espn_9463dd92e41c3",
-      "type": "video",
-      "title": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
-      "summary": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/e00e71c3-755b-4a2c-853f-3367f6e4ff36/e00e71c3-755b-4a2c-853f-3367f6e4ff36.jpg",
-      "imageCaption": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
-      "imageAlt": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
-      "publishedAt": "2026-11-22T21:53:57Z",
-      "url": "https://www.espn.com/video/clip/_/id/50565430/game-highlights",
-      "outletId": "espn_tb",
-      "outletName": "ESPN",
-      "reporterId": "espn_tb",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/tb/tampa-bay-buccaneers",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.5043
-    },
-    {
-      "id": "tb_vid_2244ed4cf550",
-      "type": "video",
-      "title": "Mayfield Tosses TD to Hurst III Before Halftime | Bucs vs. Lions Highlights",
-      "summary": "QB Baker Mayfield throws a 23-yard touchdown pass to WR Ted Hurst III against the Detroit Lions in Week 11 of the 2026 NFL season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/qxdyt8bbsnyn68hqb0ag.jpg",
-      "imageAlt": "Mayfield Tosses TD to Hurst III Before Halftime | Bucs vs. Lions Highlights",
-      "publishedAt": "2026-11-22T19:22:16.000Z",
-      "url": "https://www.buccaneers.com/video/baker-hurst-score-bucs-lions-nfl-season-week-11-big-play-2026",
-      "externalVideoUrl": "https://www.buccaneers.com/video/baker-hurst-score-bucs-lions-nfl-season-week-11-big-play-2026",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.8109
-    },
-    {
-      "id": "tb_rss_237ca059efce",
-      "type": "article",
-      "title": "Buccaneers 14, Lions 17 | Third Quarter Updates",
-      "summary": "Keep informed with our daily updates: News, notes and more throughout the month of November",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/llcfhcev5lgio9nwwpxw.jpg",
-      "imageAlt": "Buccaneers 14, Lions 17 | Third Quarter Updates",
-      "publishedAt": "2026-11-22T18:34:00.000Z",
-      "url": "https://www.buccaneers.com/news/rookie-te-bauer-sharp-making-impact-as-a-blocker-updates",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.6564
-    },
-    {
-      "id": "tb_rss_368f369f4cca",
-      "type": "article",
-      "title": "Bucs vs. Lions Game Blog | Week 11 2026",
-      "summary": "Get all the in-game updates, highlights, stats and analysis for the Tampa Bay Buccaneers' Week 11 game vs. the Detroit Lions",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/ccmsm3rrgasbotdcklqf.png",
-      "imageAlt": "Bucs vs. Lions Game Blog | Week 11 2026",
-      "publishedAt": "2026-11-22T18:00:00.000Z",
-      "url": "https://www.buccaneers.com/news/bucs-vs-lions-game-blog-week-11-2026",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.5606
+      "storyRank": 0.2816
     },
     {
       "id": "tb_espn_aea129f88ee07",
@@ -508,7 +569,209 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6913
+      "storyRank": 0.0695
+    },
+    {
+      "id": "tb_vid_a64b08f04e11",
+      "type": "video",
+      "title": "Bucs vs. Lions Full Game Highlights | Tampa Bay Falls 31-21",
+      "summary": "View plays from the Tampa Bay Buccaneers' game against the Detroit Lions in Week 11 of the 2026 NFL Season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/tincwwkr0pdknyugnnyp.jpg",
+      "imageAlt": "Bucs vs. Lions Full Game Highlights | Tampa Bay Falls 31-21",
+      "publishedAt": "2026-11-22T22:30:00.000Z",
+      "url": "https://www.buccaneers.com/video/full-game-highlights-bucs-lions-loss-score-31-21-week-11",
+      "externalVideoUrl": "https://www.buccaneers.com/video/full-game-highlights-bucs-lions-loss-score-31-21-week-11",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2774
+    },
+    {
+      "id": "tb_vid_c4e37877baf8",
+      "type": "video",
+      "title": "Baker Mayfield's Thoughts Following Bucs vs. Lions | Press Conference",
+      "summary": "Tampa Bay Buccaneers Quarterback Baker Mayfield spoke to the media after the Bucs' game against the Detroit Lions in Week 11 of the 2026 NFL Season. QB Mayfield discussed RB Bucky Irving's heart, continuing to stay motiv",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/bdysuoyulwvvhtmvsgdb.jpg",
+      "imageAlt": "Baker Mayfield's Thoughts Following Bucs vs. Lions | Press Conference",
+      "publishedAt": "2026-11-22T22:14:00.000Z",
+      "url": "https://www.buccaneers.com/video/baker-mayfield-thoughts-following-bucs-vs-lions-press-conference",
+      "externalVideoUrl": "https://www.buccaneers.com/video/baker-mayfield-thoughts-following-bucs-vs-lions-press-conference",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2752
+    },
+    {
+      "id": "tb_vid_f0e3a63f825b",
+      "type": "video",
+      "title": "Todd Bowles on Outcome in Detroit | Press Conference",
+      "summary": "Tampa Bay Buccaneers Head Coach Todd Bowles spoke to the media after the Bucs' game against the Detroit Lions in Week 11 of the 2026 NFL Season. HC Bowles discussed injury updates, limiting mistakes and WR Ted Hurst III'",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/pr4un5qekpd1x7e0bjka.jpg",
+      "imageAlt": "Todd Bowles on Outcome in Detroit | Press Conference",
+      "publishedAt": "2026-11-22T22:10:00.000Z",
+      "url": "https://www.buccaneers.com/video/todd-bowles-on-outcome-in-detroit-press-conference",
+      "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-on-outcome-in-detroit-press-conference",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2746
+    },
+    {
+      "id": "tb_rss_790bc147b13e",
+      "type": "article",
+      "title": "Buccaneers' Next Game: Showdown with Panthers in Tampa",
+      "summary": "After a loss in Detroit, the Buccaneers are two games back in the NFC South but they can cut that deficit in half with the Carolina Panthers coming to town in Week 12",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/bejdhiuax6sqpnvqrema.jpg",
+      "imageAlt": "Buccaneers' Next Game: Showdown with Panthers in Tampa",
+      "publishedAt": "2026-11-22T22:09:00.000Z",
+      "url": "https://www.buccaneers.com/news/next-game-carolina-panthers-vs-tampa-bay-buccaneers-nfl-season-week-12-2026",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2745
+    },
+    {
+      "id": "tb_rss_de56872ef1bc",
+      "type": "article",
+      "title": "Rapid Reaction: Lions 31, Buccaneers 21",
+      "summary": "The Tampa Bay Buccaneers fell to the Detroit Lions 31-21 at Ford Field in Week 11",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/o4wqmnmawrqjbdhfx2t7.jpg",
+      "imageAlt": "Rapid Reaction: Lions 31, Buccaneers 21",
+      "publishedAt": "2026-11-22T22:08:00.000Z",
+      "url": "https://www.buccaneers.com/news/bucs-lose-detroit-lions-week-11-2026-score-31-21",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2744
+    },
+    {
+      "id": "tb_espn_9463dd92e41c3",
+      "type": "video",
+      "title": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
+      "summary": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1122/e00e71c3-755b-4a2c-853f-3367f6e4ff36/e00e71c3-755b-4a2c-853f-3367f6e4ff36.jpg",
+      "imageCaption": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
+      "imageAlt": "Tampa Bay Buccaneers vs. Detroit Lions: Game Highlights",
+      "publishedAt": "2026-11-22T21:53:57Z",
+      "url": "https://www.espn.com/video/clip/_/id/50565430/game-highlights",
+      "outletId": "espn_tb",
+      "outletName": "ESPN",
+      "reporterId": "espn_tb",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/tb/tampa-bay-buccaneers",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2725
     },
     {
       "id": "tb_vid_94a7d70ab992",
@@ -542,7 +805,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5849
+      "storyRank": 0.0672
     },
     {
       "id": "tb_rss_5291c0dcf3cc",
@@ -575,7 +838,175 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5592
+      "storyRank": 0.0665
+    },
+    {
+      "id": "tb_vid_973d82765aee",
+      "type": "video",
+      "title": "Mayfield Throws Second TD to Hurst III | Bucs vs. Lions Highlights",
+      "summary": "QB Baker Mayfield throws a 5-yard touchdown pass to WR Ted Hurst III against the Detroit Lions in Week 11 of the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/zzfp9edwi8pvzbxwnx7e.jpg",
+      "imageAlt": "Mayfield Throws Second TD to Hurst III | Bucs vs. Lions Highlights",
+      "publishedAt": "2026-11-22T20:59:00.000Z",
+      "url": "https://www.buccaneers.com/video/hurst-td-2-bucs-lions-nfl-season-week-11-big-play-2026",
+      "externalVideoUrl": "https://www.buccaneers.com/video/hurst-td-2-bucs-lions-nfl-season-week-11-big-play-2026",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2652
+    },
+    {
+      "id": "tb_vid_0cf27068bbfe",
+      "type": "video",
+      "title": "Bucky Irving Scores 1-Yard Touchdown | Bucs vs. Lions Highlights",
+      "summary": "RB Bucky Irving scores a touchdown against the Detroit Lions in Week 11 of the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/sdavoxhxf3n2ov8zrqzz.jpg",
+      "imageAlt": "Bucky Irving Scores 1-Yard Touchdown | Bucs vs. Lions Highlights",
+      "publishedAt": "2026-11-22T20:13:08.000Z",
+      "url": "https://www.buccaneers.com/video/bucky-td-bucs-lions-nfl-season-week-11-big-play-2026",
+      "externalVideoUrl": "https://www.buccaneers.com/video/bucky-td-bucs-lions-nfl-season-week-11-big-play-2026",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2595
+    },
+    {
+      "id": "tb_vid_2244ed4cf550",
+      "type": "video",
+      "title": "Mayfield Tosses TD to Hurst III Before Halftime | Bucs vs. Lions Highlights",
+      "summary": "QB Baker Mayfield throws a 23-yard touchdown pass to WR Ted Hurst III against the Detroit Lions in Week 11 of the 2026 NFL season.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/qxdyt8bbsnyn68hqb0ag.jpg",
+      "imageAlt": "Mayfield Tosses TD to Hurst III Before Halftime | Bucs vs. Lions Highlights",
+      "publishedAt": "2026-11-22T19:22:16.000Z",
+      "url": "https://www.buccaneers.com/video/baker-hurst-score-bucs-lions-nfl-season-week-11-big-play-2026",
+      "externalVideoUrl": "https://www.buccaneers.com/video/baker-hurst-score-bucs-lions-nfl-season-week-11-big-play-2026",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Video",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Video",
+      "author": "buccaneers.com Video",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2533
+    },
+    {
+      "id": "tb_rss_237ca059efce",
+      "type": "article",
+      "title": "Buccaneers 14, Lions 17 | Third Quarter Updates",
+      "summary": "Keep informed with our daily updates: News, notes and more throughout the month of November",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/llcfhcev5lgio9nwwpxw.jpg",
+      "imageAlt": "Buccaneers 14, Lions 17 | Third Quarter Updates",
+      "publishedAt": "2026-11-22T18:34:00.000Z",
+      "url": "https://www.buccaneers.com/news/rookie-te-bauer-sharp-making-impact-as-a-blocker-updates",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2477
+    },
+    {
+      "id": "tb_rss_368f369f4cca",
+      "type": "article",
+      "title": "Bucs vs. Lions Game Blog | Week 11 2026",
+      "summary": "Get all the in-game updates, highlights, stats and analysis for the Tampa Bay Buccaneers' Week 11 game vs. the Detroit Lions",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/ccmsm3rrgasbotdcklqf.png",
+      "imageAlt": "Bucs vs. Lions Game Blog | Week 11 2026",
+      "publishedAt": "2026-11-22T18:00:00.000Z",
+      "url": "https://www.buccaneers.com/news/bucs-vs-lions-game-blog-week-11-2026",
+      "outletId": "buccaneers_official",
+      "outletName": "buccaneers.com Official",
+      "reporterId": "buccaneers_official",
+      "reporterName": "buccaneers.com Official",
+      "author": "buccaneers.com Official",
+      "authorHandle": "@Buccaneers",
+      "authorProfileUrl": "https://www.buccaneers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2439
     },
     {
       "id": "tb_espn_1e1dd9a4b0dad",
@@ -609,7 +1040,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3398
+      "storyRank": 0.0986
     },
     {
       "id": "tb_rss_554726f4632d",
@@ -642,7 +1073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3191
+      "storyRank": 0.0968
     },
     {
       "id": "tb_vid_87d7ec130f0a",
@@ -676,7 +1107,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2719
+      "storyRank": 0.0922
     },
     {
       "id": "tb_rss_f3683165a33c",
@@ -709,7 +1140,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1056
+      "storyRank": 0.0633
     },
     {
       "id": "tb_rss_44ebfb224a14",
@@ -742,13 +1173,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1056
+      "storyRank": 0.0633
     },
     {
       "id": "tb_pfr_8c083815b28f",
       "type": "article",
       "title": "Buccaneers QB Baker Mayfield To Play In Week 11",
-      "summary": "Buccaneers quarterback Baker Mayfield’s status for Week 11 was up in the air, but ESPN’s Ian Rapoport says Mayfield will play (Tom Pelissero of The Ringer originally reported the signal-caller would suit up against the Lions unless he",
+      "summary": "Buccaneers quarterback Baker Mayfield’s status for Week 11 was up in the air, but ESPN’s Ian Rapoport says Mayfield will play (Tom Pelissero of The Ringer originally reported the signal-caller would suit up against the Lions unless he suffe",
       "imageUrl": "",
       "publishedAt": "2026-11-21T18:17:24.000Z",
       "url": "https://www.profootballrumors.com/2026/11/buccaneers-qb-baker-mayfield-on-track-to-start-in-week-11",
@@ -774,7 +1205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0934
+      "storyRank": 0.0591
     },
     {
       "id": "tb_tx_3de3f37fe9b8",
@@ -808,7 +1239,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0675
+      "storyRank": 0.0502
     },
     {
       "id": "tb_rss_75abb42efff1",
@@ -841,7 +1272,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0482
+      "storyRank": 0.0412
     },
     {
       "id": "tb_vid_7ae55a4fdc85",
@@ -875,7 +1306,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.047
+      "storyRank": 0.0405
     },
     {
       "id": "tb_rss_fc98f2c92677",
@@ -908,7 +1339,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.044
+      "storyRank": 0.0389
     },
     {
       "id": "tb_rss_d7eb90743a83",
@@ -941,7 +1372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0437
+      "storyRank": 0.0388
     },
     {
       "id": "tb_rss_3e0bd2d6ba22",
@@ -974,7 +1405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0422
+      "storyRank": 0.0379
     },
     {
       "id": "tb_rss_3cb740f68193",
@@ -1007,7 +1438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0405
+      "storyRank": 0.0369
     },
     {
       "id": "tb_espn_dac2aef086042",
@@ -1041,7 +1472,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0325
+      "storyRank": 0.0319
     },
     {
       "id": "tb_rss_7ca4ff45ce41",
@@ -1074,7 +1505,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0317
+      "storyRank": 0.0313
     },
     {
       "id": "tb_rss_a8c3ceb88e82",
@@ -1107,7 +1538,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0718
+      "storyRank": 0.0738
     },
     {
       "id": "tb_vid_a9aa8e043d2b",
@@ -1141,7 +1572,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0314
+      "storyRank": 0.0311
     },
     {
       "id": "tb_vid_5bbbfbb66975",
@@ -1175,7 +1606,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0311
+      "storyRank": 0.0309
     },
     {
       "id": "tb_vid_22ae2d5c5c47",
@@ -1209,7 +1640,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0309
+      "storyRank": 0.0308
     },
     {
       "id": "tb_vid_1af94bfae636",
@@ -1277,7 +1708,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0297
+      "storyRank": 0.03
     },
     {
       "id": "tb_rss_04dd3b93edfe",
@@ -1310,7 +1741,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0287
+      "storyRank": 0.0293
     },
     {
       "id": "tb_vid_f10da9dc5c0a",
@@ -1344,7 +1775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.027
+      "storyRank": 0.028
     },
     {
       "id": "tb_rss_5e70146bc6fd",
@@ -1377,7 +1808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0262
+      "storyRank": 0.0274
     },
     {
       "id": "tb_rss_d573bace9482",
@@ -1410,7 +1841,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0222
+      "storyRank": 0.0243
     },
     {
       "id": "tb_rss_4c49904bc7a3",
@@ -1443,7 +1874,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0514
+      "storyRank": 0.0582
     },
     {
       "id": "tb_vid_7bbfcab98571",
@@ -1477,7 +1908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0218
+      "storyRank": 0.024
     },
     {
       "id": "tb_vid_7a3dbfb7489c",
@@ -1511,7 +1942,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0202
+      "storyRank": 0.0227
     },
     {
       "id": "tb_rss_d025ecec36e8",
@@ -1544,7 +1975,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0197
+      "storyRank": 0.0223
     },
     {
       "id": "tb_pfr_570423ef835d",
@@ -1576,7 +2007,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0177
+      "storyRank": 0.0204
     },
     {
       "id": "tb_rss_4a89c050d6d3",
@@ -1609,7 +2040,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0159
+      "storyRank": 0.0189
     },
     {
       "id": "tb_rss_a510d7c86754",
@@ -1642,7 +2073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0188
     },
     {
       "id": "tb_rss_54441f423df0",
@@ -1675,13 +2106,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0155
+      "storyRank": 0.0185
     },
     {
       "id": "tb_pfr_7159479bf80f",
       "type": "article",
       "title": "NFL Practice Squad Updates: 11/16/26",
-      "summary": "Today’s practice squad moves: Indianapolis Colts Signed: WR Samori Toure Las Vegas Raiders Signed: QB Brett Rypien Released: DE Bralen Trice Philadelphia Eagles Signed: RB Jaydon Blue, LB Chance Campbell, TE Hayden Rucci Released: DB ",
+      "summary": "Today’s practice squad moves: Indianapolis Colts Signed: WR Samori Toure Las Vegas Raiders Signed: QB Brett Rypien Released: DE Bralen Trice Philadelphia Eagles Signed: RB Jaydon Blue, LB Chance Campbell, TE Hayden Rucci Released: DB Shaun ",
       "imageUrl": "",
       "publishedAt": "2026-11-17T01:04:36.000Z",
       "url": "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-16-26",
@@ -1707,7 +2138,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133
+      "storyRank": 0.0163
     },
     {
       "id": "tb_vid_8bf95dfc1bd2",
@@ -1741,7 +2172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0132
+      "storyRank": 0.0163
     },
     {
       "id": "tb_rss_126add23431e",
@@ -1774,7 +2205,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013
+      "storyRank": 0.0161
     },
     {
       "id": "tb_rss_2db6ff022a09",
@@ -1807,7 +2238,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.013
+      "storyRank": 0.0161
     },
     {
       "id": "tb_rss_e314669a29ae",
@@ -1840,7 +2271,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0129
+      "storyRank": 0.016
     },
     {
       "id": "tb_vid_fd399165d73a",
@@ -1874,7 +2305,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.004
     },
     {
       "id": "tb_pfr_444e3a165aeb",
@@ -1906,7 +2337,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0123
+      "storyRank": 0.0154
     },
     {
       "id": "tb_tx_0a1b5e64a45c",
@@ -1940,13 +2371,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0147
     },
     {
       "id": "tb_pfr_2801768185c8",
       "type": "article",
       "title": "Buccaneers Received ‘Strong Interest’ In DT A’Shawn Robinson",
-      "summary": "The Buccaneers’ 1-5 record to start the regular season positioned them as potential sellers ahead of last week’s trade deadline. A 2-1 stretch after Baker Mayfield’s return kept their NFC South hopes alive and precluded tr",
+      "summary": "The Buccaneers’ 1-5 record to start the regular season positioned them as potential sellers ahead of last week’s trade deadline. A 2-1 stretch after Baker Mayfield’s return kept their NFC South hopes alive and precluded trading any veterans",
       "imageUrl": "",
       "publishedAt": "2026-11-16T03:47:11.000Z",
       "url": "https://www.profootballrumors.com/2026/11/buccaneers-received-strong-interest-in-dt-ashawn-robinson",
@@ -1972,7 +2403,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.011
+      "storyRank": 0.014
     },
     {
       "id": "tb_pfr_cccdbcf36e07",
@@ -2004,7 +2435,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0101
+      "storyRank": 0.0131
     },
     {
       "id": "tb_espn_0094a682d16ef",
@@ -2038,7 +2469,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0103
+      "storyRank": 0.0133
     },
     {
       "id": "tb_vid_1f1b411076a1",
@@ -2072,7 +2503,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0088
+      "storyRank": 0.0116
     },
     {
       "id": "tb_vid_651af7de1f7c",
@@ -2106,7 +2537,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0086
+      "storyRank": 0.0114
     },
     {
       "id": "tb_vid_6cd03fc26adc",
@@ -2140,7 +2571,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0073
+      "storyRank": 0.01
     },
     {
       "id": "tb_vid_f7df9496a0ad",
@@ -2174,13 +2605,13 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0071
+      "storyRank": 0.0097
     },
     {
       "id": "tb_pfr_8c297f35434f",
       "type": "article",
       "title": "Bruce Arians Interested In NFL Head Coaching Job",
-      "summary": "Bruce Arians cited health reasons when he stepped down as the Buccaneers’ head coach in 2022 and retired from the NFL for a second time. But successful open-heart surgery has revitalized the 74-year-old’s interest in returning t",
+      "summary": "Bruce Arians cited health reasons when he stepped down as the Buccaneers’ head coach in 2022 and retired from the NFL for a second time. But successful open-heart surgery has revitalized the 74-year-old’s interest in returning to coaching. ",
       "imageUrl": "",
       "publishedAt": "2026-11-12T21:38:19.000Z",
       "url": "https://www.profootballrumors.com/2026/11/bruce-arians-interested-in-nfl-head-coaching-job",
@@ -2206,7 +2637,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0065
+      "storyRank": 0.009
     },
     {
       "id": "tb_vid_cd55225bfbb9",
@@ -2240,7 +2671,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0066
+      "storyRank": 0.0091
     },
     {
       "id": "tb_rss_60eb4eb76063",
@@ -2273,7 +2704,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0064
+      "storyRank": 0.0089
     },
     {
       "id": "tb_vid_b3ceeeedf07d",
@@ -2307,7 +2738,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0016
+      "storyRank": 0.0022
     },
     {
       "id": "tb_rss_c4594931e27a",
@@ -2340,7 +2771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0253
+      "storyRank": 0.0209
     },
     {
       "id": "tb_vid_6b286706aa56",
@@ -2374,7 +2805,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0058
+      "storyRank": 0.0082
     },
     {
       "id": "tb_vid_df6c70b256f9",
@@ -2408,7 +2839,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0081
     },
     {
       "id": "tb_rss_3206ca897e93",
@@ -2441,7 +2872,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0057
+      "storyRank": 0.0081
     },
     {
       "id": "tb_rss_8ab8e5860c8f",
@@ -2474,7 +2905,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0056
+      "storyRank": 0.0079
     },
     {
       "id": "tb_vid_1776af545dfe",
@@ -2508,40 +2939,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0052
-    },
-    {
-      "id": "tb_rss_ee960ff0a3c3",
-      "type": "article",
-      "title": "Top Play Breakdown: Tykee Smith's Interception Against the Bears",
-      "summary": "A behind-the-scenes look at the moment that impacted the Bucs Week Nine clash with the Bears, building momentum for the visiting team at Soldier Field",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/cdhd1x9rt0za5yx5qi0v.png",
-      "imageAlt": "Top Play Breakdown: Tykee Smith's Interception Against the Bears",
-      "publishedAt": "2026-11-10T19:42:53.000Z",
-      "url": "https://www.buccaneers.com/news/top-play-breakdown-tykee-smith-interception-against-bears-week-9",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0013
+      "storyRank": 0.0074
     },
     {
       "id": "tb_vid_09fa02e6b5f2",
@@ -2575,73 +2973,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0051
-    },
-    {
-      "id": "tb_rss_f3c0e99d980b",
-      "type": "article",
-      "title": "Todd Bowles: Bucs Need to Lighten Bucky Irving's Workload",
-      "summary": "Dynamic RB Bucky Irving has 111 carries in the last five games and is the fourth-leading rusher in the NFL, but managing his workload over 17 games is an issue the Bucs will be studying during their bye week",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/o4z3gvgb3ewmuuex8gcw.jpg",
-      "imageAlt": "Todd Bowles: Bucs Need to Lighten Bucky Irving's Workload",
-      "publishedAt": "2026-11-10T15:54:00.000Z",
-      "url": "https://www.buccaneers.com/news/todd-bowles-bucs-need-lighten-bucky-irving-workload",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.005
-    },
-    {
-      "id": "tb_rss_542f9a2c083f",
-      "type": "article",
-      "title": "2026 Bucs NFL Power Rankings Week 10",
-      "summary": "Where do the Tampa Bay Buccaneers rank in Week Ten across Power Rankings?",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/im881fqsplaqfa30dsil.png",
-      "imageAlt": "2026 Bucs NFL Power Rankings Week 10",
-      "publishedAt": "2026-11-10T14:57:53.000Z",
-      "url": "https://www.buccaneers.com/news/2026-bucs-nfl-power-rankings-week-10",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.005
+      "storyRank": 0.0073
     },
     {
       "id": "tb_tx_38386ef4ca33",
@@ -2675,139 +3007,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0049
-    },
-    {
-      "id": "tb_rss_ca2e5e366070",
-      "type": "article",
-      "title": "Bucs' Pick Party Continues | Data Crunch",
-      "summary": "Tampa Bay's defense is the first one with consecutive four-interception games in nearly a decade…The Bucs last five games have drawn a comparison with one of the greatest teams of all time",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/hiammkientdlks4gbcg9.jpg",
-      "imageAlt": "Bucs' Pick Party Continues | Data Crunch",
-      "publishedAt": "2026-11-09T22:00:00.000Z",
-      "url": "https://www.buccaneers.com/news/bucs-pick-party-continues-data-crunch",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0047
-    },
-    {
-      "id": "tb_rss_dda90f35a0a5",
-      "type": "article",
-      "title": "Zyon McCollum's Vision in Zone Leads to Two-Pick Performance in Chicago",
-      "summary": "In Week Nine on Sunday Night Football, cornerback Zyon McCollum secured two interceptions from off coverage with patience and vision. He broke down the plays following the loss at Soldier Field",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/lrstusj8oelxfmwug7df.png",
-      "imageAlt": "Zyon McCollum's Vision in Zone Leads to Two-Pick Performance in Chicago",
-      "publishedAt": "2026-11-09T21:45:00.000Z",
-      "url": "https://www.buccaneers.com/news/zyon-mccollum-vision-zone-leads-two-pick-performance-chicago-week-9-2026",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0012
-    },
-    {
-      "id": "tb_rss_7207ea27fa4a",
-      "type": "article",
-      "title": "Alex Anzalone: 'We Have a Lot to Fight For'",
-      "summary": "Despite a close loss on Sunday Night Football, captain Alex Anzalone’s message in the locker room was clear",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/olaocgxvqmdp8hkjt5hl.jpg",
-      "imageAlt": "Alex Anzalone: 'We Have a Lot to Fight For'",
-      "publishedAt": "2026-11-09T21:31:00.000Z",
-      "url": "https://www.buccaneers.com/news/alex-anzalone-we-have-a-lot-to-fight-for",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
-    },
-    {
-      "id": "tb_rss_54c8c3cc29db",
-      "type": "article",
-      "title": "Takeaways from Buccaneers-Bears | Week 9",
-      "summary": "Top observations from the Buccaneers’ 27-24 loss to the Bears at Soldier Field in Week Nine",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/j10buukvth8qdjr7fotn.png",
-      "imageAlt": "Takeaways from Buccaneers-Bears | Week 9",
-      "publishedAt": "2026-11-09T18:45:26.000Z",
-      "url": "https://www.buccaneers.com/news/takeaways-from-buccaneers-bears-week-9-2026",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
+      "storyRank": 0.007
     },
     {
       "id": "tb_vid_00ac70801ea9",
@@ -2841,40 +3041,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0046
-    },
-    {
-      "id": "tb_rss_80cc119cc106",
-      "type": "article",
-      "title": "Buccaneers' Next Game: Off to Detroit After Well-Timed Bye",
-      "summary": "The Buccaneers will have an opportunity to rest and recharge with their bye in Week 10 before resuming what has been an oft-contested rivalry with the Lions in Detroit in Week 11",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/kj2wekjywvqaiaqb8ye8.jpg",
-      "imageAlt": "Buccaneers' Next Game: Off to Detroit After Well-Timed Bye",
-      "publishedAt": "2026-11-09T11:00:00.000Z",
-      "url": "https://www.buccaneers.com/news/next-game-tampa-bay-buccaneers-vs-detroit-lions-nfl-season-week-11-2026",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Official",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Official",
-      "author": "buccaneers.com Official",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0044
+      "storyRank": 0.0066
     },
     {
       "id": "tb_vid_6bc67d2e2254",
@@ -2908,7 +3075,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_cff02b6f0061",
@@ -2942,7 +3109,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0011
+      "storyRank": 0.0016
     },
     {
       "id": "tb_vid_8f646fa58b36",
@@ -2976,7 +3143,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_96396157410f",
@@ -3010,7 +3177,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_b94eac85f2e3",
@@ -3044,7 +3211,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_c326358ae1e8",
@@ -3078,7 +3245,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_430780133621",
@@ -3112,7 +3279,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_8e8324fddb94",
@@ -3146,7 +3313,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0063
     },
     {
       "id": "tb_vid_4389f8307256",
@@ -3180,7 +3347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0062
     },
     {
       "id": "tb_vid_467d4c7d30b4",
@@ -3214,7 +3381,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0062
     },
     {
       "id": "tb_vid_94d149c10841",
@@ -3248,7 +3415,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0062
     },
     {
       "id": "tb_vid_4d14dc97df10",
@@ -3282,7 +3449,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0062
     },
     {
       "id": "tb_vid_80f697649488",
@@ -3316,7 +3483,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0062
     },
     {
       "id": "tb_vid_0b0cdc501d9d",
@@ -3350,7 +3517,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0043
+      "storyRank": 0.0062
     },
     {
       "id": "tb_vid_4b42b8b492d7",
@@ -3384,7 +3551,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0041
+      "storyRank": 0.0059
     },
     {
       "id": "tb_vid_f92810653d09",
@@ -3418,7 +3585,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0035
+      "storyRank": 0.0051
     },
     {
       "id": "tb_vid_91c47f98012a",
@@ -3452,7 +3619,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0048
     },
     {
       "id": "tb_vid_e762058139bf",
@@ -3486,7 +3653,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0048
     },
     {
       "id": "tb_vid_1f57cdf4aa76",
@@ -3520,7 +3687,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0048
     },
     {
       "id": "tb_vid_bcdaba3f3c56",
@@ -3554,7 +3721,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0047
     },
     {
       "id": "tb_vid_a2c9b7abf915",
@@ -3588,7 +3755,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0032
+      "storyRank": 0.0047
     },
     {
       "id": "tb_vid_b084cee964a5",
@@ -3622,7 +3789,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0045
     },
     {
       "id": "tb_vid_6034bd5a2e17",
@@ -3656,7 +3823,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0045
     },
     {
       "id": "tb_vid_749771942c59",
@@ -3690,7 +3857,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0045
     },
     {
       "id": "tb_vid_b784e17037f6",
@@ -3724,7 +3891,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0045
     },
     {
       "id": "tb_vid_35a9c95fe7d9",
@@ -3758,7 +3925,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.003
+      "storyRank": 0.0044
     },
     {
       "id": "tb_tx_f351b06fca25",
@@ -3792,7 +3959,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0029
+      "storyRank": 0.0043
     },
     {
       "id": "tb_vid_6ee9f260610f",
@@ -3826,109 +3993,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0028
-    },
-    {
-      "id": "tb_vid_0f88eb0aa171",
-      "type": "video",
-      "title": "Alex Anzalone's Interception vs. Falcons | Call of the Game",
-      "summary": "Tony Castricone, the Voice of the Buccaneers, calls the moment LB Alex Anzalone intercepted a pass from QB Michael Penix Jr. against the Atlanta Falcons during Week 8 of the 2026 NFL season.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/xykcmm5muzwwhvicspgo.png",
-      "imageAlt": "Alex Anzalone's Interception vs. Falcons | Call of the Game",
-      "publishedAt": "2026-11-03T15:00:00.000Z",
-      "url": "https://www.buccaneers.com/video/alex-anzalone-interception-vs-falcons-call-of-the-game",
-      "externalVideoUrl": "https://www.buccaneers.com/video/alex-anzalone-interception-vs-falcons-call-of-the-game",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0007
-    },
-    {
-      "id": "tb_vid_9e087467210d",
-      "type": "video",
-      "title": "Tez Johnson and Ted Hurst III: Fighting For Each Other | Bucs Players' Table",
-      "summary": "Team Reporter Casey Phillips chats with Tampa Bay Buccaneers WR Tez Johnson and WR Ted Hurst III after Week 8 vs. the Atlanta Falcons. They discussed the biggest takeaways from their second divisional win this season, th",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/zz716ifkb1axfdcw6jb0.jpg",
-      "imageAlt": "Tez Johnson and Ted Hurst III: Fighting For Each Other | Bucs Players' Table",
-      "publishedAt": "2026-11-02T23:00:00.000Z",
-      "url": "https://www.buccaneers.com/video/tez-johnson-and-ted-hurst-iii-fighting-for-each-other-bucs-players-table",
-      "externalVideoUrl": "https://www.buccaneers.com/video/tez-johnson-and-ted-hurst-iii-fighting-for-each-other-bucs-players-table",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0026
-    },
-    {
-      "id": "tb_vid_cba7b20e7372",
-      "type": "video",
-      "title": "Todd Bowles: 'Everybody is Onboard' | Press Conference",
-      "summary": "Tampa Bay Buccaneers Head Coach Todd Bowles spoke to the media the day after the Bucs' game against the Atlanta Falcons in Week 8 of the 2026 NFL Season. HC Bowles discussed getting the tough, gritty win, everybody being",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/buccaneers/c6mngau4uddo2q0xdtpy.jpg",
-      "imageAlt": "Todd Bowles: 'Everybody is Onboard' | Press Conference",
-      "publishedAt": "2026-11-02T14:39:00.000Z",
-      "url": "https://www.buccaneers.com/video/todd-bowles-everybody-is-onboard-press-conference",
-      "externalVideoUrl": "https://www.buccaneers.com/video/todd-bowles-everybody-is-onboard-press-conference",
-      "outletId": "buccaneers_official",
-      "outletName": "buccaneers.com Video",
-      "reporterId": "buccaneers_official",
-      "reporterName": "buccaneers.com Video",
-      "author": "buccaneers.com Video",
-      "authorHandle": "@Buccaneers",
-      "authorProfileUrl": "https://www.buccaneers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0025
+      "storyRank": 0.0042
     },
     {
       "id": "tb_yt_6evN6yrebQk",
@@ -3964,7 +4029,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0002
+      "storyRank": 0.0003
     },
     {
       "id": "tb_rss_60dc96f5ea76",

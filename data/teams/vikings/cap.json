@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T06:33:56.506Z",
+  "updatedAt": "2026-11-24T20:07:46.730Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/minnesota-vikings",
   "spotracUrl": "https://www.spotrac.com/nfl/minnesota-vikings/cap/",
@@ -10,23 +10,23 @@
       "capCeiling": 314384729,
       "baseLeagueCap": 301200000,
       "capCeilingProjected": false,
-      "totalCapLiabilities": 309186704,
+      "totalCapLiabilities": 309480304,
       "top51": 242676194,
-      "teamCapSpace": 5198025,
-      "otcRawTeamCapSpace": 5198025,
-      "effectiveCapSpace": 5198025,
-      "activeCapSpending": 251889327,
-      "offenseSpend": 152981667,
-      "defenseSpend": 95412505,
+      "teamCapSpace": 4904425,
+      "otcRawTeamCapSpace": 4904425,
+      "effectiveCapSpace": 4904425,
+      "activeCapSpending": 252182927,
+      "offenseSpend": 153128467,
+      "defenseSpend": 95559305,
       "specialSpend": 3495155,
       "deadMoneyTotal": 57297377,
       "injuredReserveTotal": 17753215,
-      "practiceSquadTotal": 3009739,
+      "practiceSquadTotal": 3303339,
       "pupTotal": 0,
       "nfiTotal": 0,
       "exemptTotal": 0,
       "suspendedTotal": 0,
-      "reserveAndPsTotal": 20762954,
+      "reserveAndPsTotal": 21056554,
       "topDeadMoneyEntries": [
         {
           "name": "Jonathan Allen",
@@ -135,7 +135,7 @@
         }
       ],
       "contractedCount": 53,
-      "totalSignedCount": 76
+      "totalSignedCount": 78
     },
     "2027": {
       "year": 2027,
@@ -146,7 +146,7 @@
       "top51": 286117743,
       "teamCapSpace": 24868180,
       "otcRawTeamCapSpace": 24868180,
-      "effectiveCapSpace": 12686630,
+      "effectiveCapSpace": 12350222,
       "activeCapSpending": 286117743,
       "offenseSpend": 181963321,
       "defenseSpend": 101866767,
@@ -279,7 +279,7 @@
     }
   },
   "blueprint": {
-    "summary": "Minnesota Vikings hold $5.20M in 2026 OverTheCap space and $24.87M projected for 2027."
+    "summary": "Minnesota Vikings hold $4.90M in 2026 OverTheCap space and $24.87M projected for 2027."
   },
   "players": [
     {
