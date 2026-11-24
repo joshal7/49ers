@@ -107,6 +107,8 @@ import {
   computeCalibratedTeamPowerRating,
   computePreseasonPriorsFromHistory,
   computeLeaguePowerRatings,
+  estimateQbSpreadValuePts,
+  estimateNonQbPlayerSpreadVar,
   estimateTeamInjurySpreadAdjustments,
   reconcileLiveScoreboardIntoPlayoffGames,
   computeGameSituationalElo,
@@ -815,6 +817,127 @@ test('Hierarchical Bayesian multi-factor engine: preseason priors fade properly,
   assert.ok(
     qb1WkOutAdj.qbSpreadGame < qb1WkOutAdj.qbSpreadSeason - 1.5,
     `1-week QB1 Out must hit immediate game (${qb1WkOutAdj.qbSpreadGame}) harder than full rest-of-season (${qb1WkOutAdj.qbSpreadSeason})`
+  );
+
+  // 3b. Player-Specific Value Above Replacement (VAR): QB1-vs-QB2 gap, Non-QB stars (LB/LT/EDGE/WR1 vs WR4),
+  //     Zero Double-Counting for Week-1 IR, Returning Star positive boost, and canonical `playProbabilityPct`.
+  const billsRoster = [
+    { name: 'Josh Allen', position: 'QB', capHit2026: 44200000, primarySnapPct: 98, snapSummary: { gamesLogged: 9 }, stats2026: { passing: { attempts: 290, sacks: 14, epa: 58 }, rushing: { carries: 60, epa: 18 } } },
+    { name: 'Kyle Allen', position: 'QB', capHit2026: 1900000, primarySnapPct: 2, snapSummary: { gamesLogged: 1 }, stats2026: { passing: { attempts: 0, sacks: 0, epa: 0 } } }
+  ];
+  const hawksRoster = [
+    { name: 'Sam Darnold', position: 'QB', capHit2026: 33500000, primarySnapPct: 72, snapSummary: { gamesLogged: 7 }, stats2026: { passing: { attempts: 240, sacks: 18, epa: -14 }, rushing: { carries: 15, epa: 0 } } },
+    { name: 'Drew Lock', position: 'QB', capHit2026: 2750000, primarySnapPct: 28, snapSummary: { gamesLogged: 3 }, stats2026: { passing: { attempts: 95, sacks: 4, epa: 26 }, rushing: { carries: 10, epa: 4 } } }
+  ];
+  const joshAllenOut = estimateTeamInjurySpreadAdjustments({
+    healthData: { irReserve: [{ name: 'Josh Allen', position: 'QB', status: 'Season-Ending IR' }] },
+    rosterPlayers: billsRoster,
+    remainingGamesCount: 8,
+    teamGamesPlayed: 9
+  });
+  const darnoldOut = estimateTeamInjurySpreadAdjustments({
+    healthData: { irReserve: [{ name: 'Sam Darnold', position: 'QB', status: 'Season-Ending IR' }] },
+    rosterPlayers: hawksRoster,
+    remainingGamesCount: 8,
+    teamGamesPlayed: 9
+  });
+  assert.ok(
+    joshAllenOut.qbDropBase >= 4.5 && joshAllenOut.qbSpreadSeason <= -3.8,
+    `Josh Allen -> Kyle Allen must yield steep VAR drop-off (drop=${joshAllenOut.qbDropBase}, season=${joshAllenOut.qbSpreadSeason})`
+  );
+  assert.ok(
+    darnoldOut.qbDropBase <= 1.6 && darnoldOut.qbSpreadSeason >= -1.5,
+    `Sam Darnold -> Drew Lock must yield modest VAR drop-off (drop=${darnoldOut.qbDropBase}, season=${darnoldOut.qbSpreadSeason})`
+  );
+  assert.ok(
+    Math.abs(joshAllenOut.qbSpreadSeason) >= Math.abs(darnoldOut.qbSpreadSeason) * 2.5,
+    `Josh Allen injury must be >=2.5x as impactful as Darnold->Lock (${joshAllenOut.qbSpreadSeason} vs ${darnoldOut.qbSpreadSeason})`
+  );
+  assert.ok(estimateQbSpreadValuePts(billsRoster[0]) > estimateQbSpreadValuePts(hawksRoster[0]) + 1.5);
+
+  const warnerPlayer = { name: 'Fred Warner', position: 'LB', capHit2026: 17900000, primarySnapPct: 96, snapSummary: { gamesLogged: 9 } };
+  const trentPlayer = { name: 'Trent Williams', position: 'OT', capHit2026: 20000000, contractsByYear: { 2026: { capNumber: 20000000 }, 2027: { capNumber: 28000000 } }, primarySnapPct: 93, snapSummary: { gamesLogged: 9 } };
+  const bosaPlayer = { name: 'Nick Bosa', position: 'DE', capHit2026: 23000000, contractsByYear: { 2026: { capNumber: 23000000 }, 2027: { capNumber: 39000000 } }, primarySnapPct: 86, snapSummary: { gamesLogged: 9 } };
+  const wr4Backup = { name: 'Backup WR4', position: 'WR', capHit2026: 950000, primarySnapPct: 16, snapSummary: { gamesLogged: 9 } };
+  const pearsallWk1Ir = { name: 'Ricky Pearsall', position: 'WR', capHit2026: 3400000, primarySnapPct: 0, snapSummary: { gamesLogged: 0 } };
+  const coreRoster = [warnerPlayer, trentPlayer, bosaPlayer, wr4Backup, pearsallWk1Ir];
+
+  const warnerVar = estimateNonQbPlayerSpreadVar(warnerPlayer);
+  const trentVar = estimateNonQbPlayerSpreadVar(trentPlayer);
+  const bosaVar = estimateNonQbPlayerSpreadVar(bosaPlayer);
+  const wr4Var = estimateNonQbPlayerSpreadVar(wr4Backup);
+  assert.ok(warnerVar >= 0.70, `All-Pro LB Fred Warner VAR must be >=0.70 pts (${warnerVar})`);
+  assert.ok(trentVar >= 0.90 && bosaVar >= 0.95, `All-Pro OT/EDGE VAR must be >=0.90 pts (trent=${trentVar}, bosa=${bosaVar})`);
+  assert.ok(wr4Var <= 0.10, `Backup WR4 VAR must be <=0.10 pts (${wr4Var})`);
+  assert.ok(warnerVar >= wr4Var * 7, `All-Pro LB VAR (${warnerVar}) must dwarf Backup WR4 (${wr4Var})`);
+
+  const warnerOut = estimateTeamInjurySpreadAdjustments({
+    healthData: { irReserve: [{ name: 'Fred Warner', position: 'LB', status: 'Season-Ending IR' }] },
+    rosterPlayers: coreRoster,
+    remainingGamesCount: 8,
+    teamGamesPlayed: 9
+  });
+  const wr4Out = estimateTeamInjurySpreadAdjustments({
+    healthData: { irReserve: [{ name: 'Backup WR4', position: 'WR', status: 'Season-Ending IR' }] },
+    rosterPlayers: coreRoster,
+    remainingGamesCount: 8,
+    teamGamesPlayed: 9
+  });
+  const pearsallAlreadyIr = estimateTeamInjurySpreadAdjustments({
+    healthData: { irReserve: [{ name: 'Ricky Pearsall', position: 'WR', status: 'Season-Ending IR' }] },
+    rosterPlayers: coreRoster,
+    remainingGamesCount: 8,
+    teamGamesPlayed: 9
+  });
+  const clusterOut = estimateTeamInjurySpreadAdjustments({
+    healthData: {
+      irReserve: [
+        { name: 'Fred Warner', position: 'LB', status: 'Season-Ending IR' },
+        { name: 'Trent Williams', position: 'OT', status: 'Season-Ending IR' },
+        { name: 'Nick Bosa', position: 'DE', status: 'Season-Ending IR' }
+      ]
+    },
+    rosterPlayers: coreRoster,
+    remainingGamesCount: 8,
+    teamGamesPlayed: 9
+  });
+  assert.ok(warnerOut.nonQbSpreadSeason <= -0.70, `Fred Warner (9/9 gp) Season-Ending IR must apply full VAR penalty (${warnerOut.nonQbSpreadSeason})`);
+  assert.ok(Math.abs(wr4Out.nonQbSpreadSeason) <= 0.10, `Backup WR4 Season-Ending IR must be near zero (${wr4Out.nonQbSpreadSeason})`);
+  assert.ok(Math.abs(pearsallAlreadyIr.nonQbSpreadSeason) <= 0.10, `0/9 games played Season-Ending IR must NOT double-count (${pearsallAlreadyIr.nonQbSpreadSeason})`);
+  assert.ok(clusterOut.nonQbSpreadSeason <= -2.1, `Multi-All-Pro cluster (Warner+Trent+Bosa) must drop team >=2.1 pts (${clusterOut.nonQbSpreadSeason})`);
+
+  // Star returning healthy from multi-week IR yields positive Elo boost
+  const bosaReturningRoster = [
+    { ...bosaPlayer, rosterBucket: 'active', snapSummary: { gamesLogged: 4 }, health: { playProbabilityPct: 99 } }
+  ];
+  const bosaReturnAdj = estimateTeamInjurySpreadAdjustments({
+    healthData: { practiceReport: [], irReserve: [] },
+    rosterPlayers: bosaReturningRoster,
+    remainingGamesCount: 8,
+    teamGamesPlayed: 9
+  });
+  assert.ok(
+    bosaReturnAdj.nonQbSpreadSeason >= 0.25 && bosaReturnAdj.qbStatusNote.includes('Returned'),
+    `Returning All-Pro DE after missing 5/9 games must yield positive boost (${bosaReturnAdj.nonQbSpreadSeason}, note="${bosaReturnAdj.qbStatusNote}")`
+  );
+
+  // Canonical `playProbabilityPct` field scales Questionable game impact continuously
+  const wr1Star = { name: 'Star WR1', position: 'WR', capHit2026: 30000000, primarySnapPct: 92, snapSummary: { gamesLogged: 9 } };
+  const qLow = estimateTeamInjurySpreadAdjustments({
+    healthData: { practiceReport: [{ name: 'Star WR1', position: 'WR', gameStatus: 'Questionable', playProbabilityPct: 30 }] },
+    rosterPlayers: [wr1Star],
+    remainingGamesCount: 8,
+    teamGamesPlayed: 9
+  });
+  const qHigh = estimateTeamInjurySpreadAdjustments({
+    healthData: { practiceReport: [{ name: 'Star WR1', position: 'WR', gameStatus: 'Questionable', playProbabilityPct: 85 }] },
+    rosterPlayers: [wr1Star],
+    remainingGamesCount: 8,
+    teamGamesPlayed: 9
+  });
+  assert.ok(
+    qLow.nonQbSpreadGame < qHigh.nonQbSpreadGame - 0.35,
+    `Canonical playProbabilityPct must scale game penalty continuously (30%=${qLow.nonQbSpreadGame} vs 85%=${qHigh.nonQbSpreadGame})`
   );
 
   // 4. League-wide iterative rating: elite 7-1 team losing QB1 to Season-Ending IR drops sharply in future Monte Carlo odds!

@@ -8808,6 +8808,22 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
           g => normalizeTeamAbbrClient(g.home) === ab || normalizeTeamAbbrClient(g.away) === ab
         ).length || 6;
 
+      const confListForGp =
+        Array.isArray(simInInj.conferenceTeams) && simInInj.conferenceTeams.length > 0
+          ? simInInj.conferenceTeams
+          : simInInj.nfcTeams || [];
+      const otherStForGp =
+        simInInj.otherConferenceStandings && Object.keys(simInInj.otherConferenceStandings).length > 0
+          ? simInInj.otherConferenceStandings
+          : simInInj.afcStandings || {};
+      const getTeamGpFor = ab => {
+        const cHit = confListForGp.find(t => normalizeTeamAbbrClient(t?.abbr) === ab);
+        if (cHit) return (Number(cHit.wins) || 0) + (Number(cHit.losses) || 0) + (Number(cHit.ties) || 0);
+        const oHit = otherStForGp[ab];
+        if (oHit) return (Number(oHit.wins) || 0) + (Number(oHit.losses) || 0) + (Number(oHit.ties) || 0);
+        return null;
+      };
+
       if (!simInInj.injuryAdjustmentsByTeam || typeof simInInj.injuryAdjustmentsByTeam !== 'object') {
         simInInj.injuryAdjustmentsByTeam = {};
       }
@@ -8819,7 +8835,8 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
           irReserve: appData.health?.irAndReserveTracker || appData.health?.irReserve || []
         },
         rosterPlayers: appData.roster?.players || [],
-        remainingGamesCount: countRemFor(activeAbbrInj)
+        remainingGamesCount: countRemFor(activeAbbrInj),
+        teamGamesPlayed: getTeamGpFor(activeAbbrInj)
       });
       let injuryRatingChanged =
         Math.abs(Number(liveSfAdj.totalGameSpreadAdj || 0) - Number(prevSfAdj?.totalGameSpreadAdj || 0)) >= 0.15 ||
@@ -8832,7 +8849,8 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
         const prevOppAdj = simInInj.injuryAdjustmentsByTeam[oppAbbrInj] || null;
         const liveOppAdj = estimateTeamInjurySpreadAdjustments({
           healthData: appData.scheduleMatchup.upcomingMatchup.opponentHealth,
-          remainingGamesCount: countRemFor(oppAbbrInj)
+          remainingGamesCount: countRemFor(oppAbbrInj),
+          teamGamesPlayed: getTeamGpFor(oppAbbrInj)
         });
         const oppDeltaChanged =
           Math.abs(Number(liveOppAdj.totalGameSpreadAdj || 0) - Number(prevOppAdj?.totalGameSpreadAdj || 0)) >= 0.15 ||

@@ -70,6 +70,7 @@ import {
   computeCalibratedTeamPowerRating,
   computeLeaguePowerRatings,
   computeRootingGuideLeverage,
+  estimateTeamInjurySpreadAdjustments,
   reconcileAndDedupePlayoffGames,
   runPlayoffMonteCarlo,
   PLAYOFF_MODEL_VERSION
@@ -536,7 +537,7 @@ function buildTeamStatsForClub(team, leagueCtx) {
   return { teamStats: tpl, teamStatRankings };
 }
 
-function buildConferencePlayoffPicture(team, leagueCtx) {
+function buildConferencePlayoffPicture(team, leagueCtx, { healthData = null, rosterPlayers = null } = {}) {
   const parseWlt = str => {
     const p = String(str || '0-0').split('-').map(x => Number(x) || 0);
     return { w: p[0] || 0, l: p[1] || 0, t: p[2] || 0 };
@@ -562,13 +563,29 @@ function buildConferencePlayoffPicture(team, leagueCtx) {
       };
     }
   }
+  const mergedInjuryAdjustments = {
+    ...(leagueCtx.sharedInjuryAdjustments || {})
+  };
+  if (healthData || (Array.isArray(rosterPlayers) && rosterPlayers.length > 0)) {
+    const remForTeam = (leagueCtx.remainingGames || []).filter(
+      g => g.home === team.abbr || g.away === team.abbr
+    ).length || 6;
+    const teamSt = standingsObj[team.abbr];
+    const teamGp = teamSt ? (Number(teamSt.wins) || 0) + (Number(teamSt.losses) || 0) + (Number(teamSt.ties) || 0) : null;
+    mergedInjuryAdjustments[team.abbr] = estimateTeamInjurySpreadAdjustments({
+      healthData,
+      rosterPlayers: rosterPlayers || [],
+      remainingGamesCount: remForTeam,
+      teamGamesPlayed: teamGp
+    });
+  }
   const leagueRatings = computeLeaguePowerRatings({
     completedGames: leagueCtx.completedGames,
     remainingGames: leagueCtx.remainingGames,
     preseasonPriors: leagueCtx.sharedPreseasonPriors || {},
     weeklyTeamStats: leagueCtx.sharedWeeklyTeamStats || null,
     standingsByAbbr: standingsObj,
-    injuryAdjustmentsByTeam: leagueCtx.sharedInjuryAdjustments || null
+    injuryAdjustmentsByTeam: Object.keys(mergedInjuryAdjustments).length > 0 ? mergedInjuryAdjustments : null
   }).byAbbr;
 
   for (const t of ALL_NFL_TEAMS) {
@@ -672,7 +689,7 @@ function buildConferencePlayoffPicture(team, leagueCtx) {
     otherConferenceNextGameDeltas: otherNextGameDeltas,
     preseasonPriors: leagueCtx.sharedPreseasonPriors || {},
     ...(leagueCtx.sharedWeeklyTeamStats ? { weeklyTeamStats: leagueCtx.sharedWeeklyTeamStats } : {}),
-    ...(leagueCtx.sharedInjuryAdjustments ? { injuryAdjustmentsByTeam: leagueCtx.sharedInjuryAdjustments } : {}),
+    ...(Object.keys(mergedInjuryAdjustments).length > 0 ? { injuryAdjustmentsByTeam: mergedInjuryAdjustments } : {}),
     completedGames: leagueCtx.completedGames,
     remainingGames: leagueCtx.remainingGames
   };
@@ -2619,7 +2636,10 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
   }).catch(() => ({ consensusRank: null, sources: [], allSources: [], summary: '' }));
 
   // 11. Playoff Monte Carlo (NFC for Lions, AFC for Bills!)
-  const playoffPicture = buildConferencePlayoffPicture(team, leagueCtx);
+  const playoffPicture = buildConferencePlayoffPicture(team, leagueCtx, {
+    healthData: { practiceReport, irReserve: irAndReserveTracker },
+    rosterPlayers: players
+  });
 
   // 12. Assemble Meta, Schedule-Matchup, Cap, Seasonal, News & Reconcile Health
   const divPeerAbbrs = [team.abbr, ...(team.divisionRivals || [])];

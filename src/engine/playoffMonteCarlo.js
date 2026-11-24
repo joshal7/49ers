@@ -105,7 +105,7 @@ export const FUTURE_INJURY_SHOCK_PROB = 0.015;
 export const FUTURE_INJURY_SHOCK_ELO = 45;
 export const LN10_DIV_400 = Math.LN10 / 400;
 
-export const PLAYOFF_MODEL_VERSION = '2026.2-hb-srs-qb';
+export const PLAYOFF_MODEL_VERSION = '2026.3-hb-srs-var';
 
 /**
  * Deterministic fast PRNG (Mulberry32) so identical scenarios produce reproducible percentages.
@@ -486,17 +486,201 @@ export function computePreseasonPriorsFromHistory({
 }
 
 /**
+ * Computes a player's effective multi-year NFL market APY from `contractsByYear` (excluding void years),
+ * falling back to `capHit2026` / `apy`. Avoids under-valuing stars whose Year-1 cap hit was restructured.
+ */
+function estimatePlayerEffectiveApy(player = null) {
+  if (!player || typeof player !== 'object') return 0;
+  const directApy = Number(player.apy ?? player.contract?.apy ?? 0);
+  if (Number.isFinite(directApy) && directApy > 0) return directApy;
+
+  const cby = player.contractsByYear;
+  if (cby && typeof cby === 'object') {
+    const caps = Object.values(cby)
+      .filter(yr => yr && !yr.isVoidYear && Number(yr.capNumber || 0) > 0)
+      .map(yr => Number(yr.capNumber));
+    if (caps.length > 0) {
+      const avg = caps.reduce((a, b) => a + b, 0) / caps.length;
+      return Math.max(avg, Number(player.capHit2026 || 0));
+    }
+  }
+  return Math.max(0, Number(player.capHit2026 || player.capHit || 0));
+}
+
+/**
+ * Estimates a quarterback's individual spread value (points vs a league-average starter = 0.0)
+ * combining multi-season nflverse QB EPA, current-season live QB passing+rushing EPA/QBR,
+ * and NFL contract market valuation (so MVP-tier Josh Allen vs Kyle Allen produces ~5.5+ pts
+ * drop-off while a struggling/average starter vs high-floor backup Drew Lock produces ~0.6–1.5 pts).
+ */
+export function estimateQbSpreadValuePts(player = null, qbRatingsById = null) {
+  if (!player || typeof player !== 'object') return -1.8;
+
+  // 1. Contract market valuation prior (NFL GM markets price elite franchise QBs vs veteran backups sharply)
+  const apyM = estimatePlayerEffectiveApy(player) / 1_000_000;
+  const snapPct = Number(player.primarySnapPct ?? player.snapSharePct ?? 0);
+  const marketPriorPts =
+    apyM >= 45
+      ? 2.8 + Math.min(1.0, (apyM - 45) / 20)
+      : apyM >= 30
+        ? 1.4 + ((apyM - 30) / 15) * 1.4
+        : apyM >= 15
+          ? 0.2 + ((apyM - 15) / 15) * 1.2
+          : apyM >= 4
+            ? snapPct >= 60
+              ? 0.0
+              : -0.95 + ((apyM - 4) / 11) * 0.55
+            : apyM >= 2.2
+              ? snapPct >= 50
+                ? -0.3
+                : -1.15
+              : snapPct >= 60
+                ? -0.5 // Rookie / low-cap starter
+                : -1.9; // Journeyman / unproven backup
+
+  // 2. Multi-season nflverse QB EPA rating if available
+  const gsisId = player.gsisId || player.playerId || '';
+  const histEntry = gsisId && qbRatingsById ? qbRatingsById[gsisId] : null;
+  if (histEntry && Number.isFinite(Number(histEntry.valuePts)) && Number(histEntry.plays || 0) >= 80) {
+    const hPlays = Number(histEntry.plays);
+    const wHist = hPlays / (hPlays + 180);
+    return Number(Math.max(-3.5, Math.min(5.2, wHist * Number(histEntry.valuePts) + (1 - wHist) * marketPriorPts)).toFixed(3));
+  }
+
+  // 3. Live current-season QB passing + rushing EPA (Bayesian shrunk toward market prior)
+  const pass = player.stats2026?.passing || null;
+  const rush = player.stats2026?.rushing || null;
+  const dropbacks = (Number(pass?.attempts || 0) || 0) + (Number(pass?.sacks || 0) || 0);
+  const carries = Number(rush?.carries || 0) || 0;
+  const totalPlays = dropbacks + carries;
+  if (totalPlays >= 25 && (pass?.epa != null || rush?.epa != null)) {
+    const totalEpa = (Number(pass?.epa || 0) || 0) + (Number(rush?.epa || 0) || 0);
+    const epaPerPlay = totalEpa / totalPlays;
+    const perfPts = Math.max(-3.8, Math.min(5.5, (epaPerPlay - 0.04) * 16.5));
+    const priorPlays = 220;
+    const shrunk = (totalPlays * perfPts + priorPlays * marketPriorPts) / (totalPlays + priorPlays);
+    return Number(Math.max(-3.5, Math.min(5.2, shrunk)).toFixed(3));
+  }
+
+  return Number(Math.max(-3.5, Math.min(5.0, marketPriorPts)).toFixed(3));
+}
+
+// Positional base starter VAR (spread pts/game for an average NFL starter) & elite APY benchmarks (in $M)
+const NON_QB_POS_VAR_CONFIG = {
+  OT: { base: 0.42, eliteApyM: 22 },
+  LT: { base: 0.44, eliteApyM: 23 },
+  RT: { base: 0.39, eliteApyM: 21 },
+  T: { base: 0.42, eliteApyM: 22 },
+  EDGE: { base: 0.42, eliteApyM: 28 },
+  DE: { base: 0.42, eliteApyM: 28 },
+  OLB: { base: 0.38, eliteApyM: 25 },
+  WR: { base: 0.38, eliteApyM: 28 },
+  CB: { base: 0.38, eliteApyM: 21 },
+  DT: { base: 0.30, eliteApyM: 22 },
+  NT: { base: 0.27, eliteApyM: 18 },
+  IDL: { base: 0.30, eliteApyM: 22 },
+  LB: { base: 0.29, eliteApyM: 17 },
+  MLB: { base: 0.30, eliteApyM: 17 },
+  ILB: { base: 0.29, eliteApyM: 17 },
+  TE: { base: 0.28, eliteApyM: 15 },
+  S: { base: 0.26, eliteApyM: 16 },
+  FS: { base: 0.26, eliteApyM: 16 },
+  SS: { base: 0.26, eliteApyM: 16 },
+  DB: { base: 0.30, eliteApyM: 18 },
+  OG: { base: 0.23, eliteApyM: 17 },
+  G: { base: 0.23, eliteApyM: 17 },
+  C: { base: 0.24, eliteApyM: 15 },
+  OL: { base: 0.28, eliteApyM: 18 },
+  RB: { base: 0.23, eliteApyM: 13 },
+  FB: { base: 0.14, eliteApyM: 6 },
+  K: { base: 0.12, eliteApyM: 5.5 },
+  PK: { base: 0.12, eliteApyM: 5.5 },
+  P: { base: 0.08, eliteApyM: 3.5 },
+  LS: { base: 0.04, eliteApyM: 1.5 }
+};
+
+/**
+ * Estimates a non-QB player's Value Above Replacement (VAR) in NFL spread points per game
+ * based on position, NFL contract APY relative to positional All-Pro benchmark, and snap share.
+ *
+ * Calibrated to PFF WAR & Vegas line-movement benchmarks:
+ *  - All-Pro OT / EDGE / WR1 / CB1 (Trent Williams, Nick Bosa, Justin Jefferson): ~0.90–1.15 pts (~23–29 Elo)
+ *  - All-Pro MLB / TE / RB / DT (Fred Warner, George Kittle, CMC): ~0.60–0.80 pts (~15–20 Elo)
+ *  - Solid Starter (65%+ snaps, mid contract): ~0.28–0.48 pts (~7–12 Elo)
+ *  - Backup / Depth WR4 (<35% snaps, low cap): ~0.04–0.09 pts (~1–2 Elo)
+ */
+export function estimateNonQbPlayerSpreadVar(player = null, row = null) {
+  const pos = String(player?.position || row?.position || '').toUpperCase();
+  const cfg = NON_QB_POS_VAR_CONFIG[pos] || { base: 0.14, eliteApyM: 12 };
+
+  const apyM = estimatePlayerEffectiveApy(player || row) / 1_000_000;
+  const rawSnap = player?.primarySnapPct ?? row?.primarySnapPct ?? row?.snapSharePct ?? null;
+  const hasSnap = rawSnap !== null && rawSnap !== undefined && Number.isFinite(Number(rawSnap));
+  const snapPct = hasSnap ? Number(rawSnap) : null;
+  const isStarterHint = Boolean(row?.isStarter || player?.isStarter || Number(row?.depthRank ?? player?.depthRank) === 1);
+
+  // Market tier multiplier from APY relative to positional All-Pro benchmark
+  const apyRatio = cfg.eliteApyM > 0 ? apyM / cfg.eliteApyM : 0;
+  let marketMult =
+    apyRatio >= 0.90
+      ? 2.25 + Math.min(0.45, (apyRatio - 0.90) * 0.60) // All-Pro cornerstone (Warner, Trent, Bosa, Jefferson)
+      : apyRatio >= 0.60
+        ? 1.55 + ((apyRatio - 0.60) / 0.30) * 0.70 // Pro Bowl / High-end starter
+        : apyRatio >= 0.30
+          ? 1.05 + ((apyRatio - 0.30) / 0.30) * 0.50 // Solid veteran starter
+          : apyRatio >= 0.12
+            ? 0.60 + ((apyRatio - 0.12) / 0.18) * 0.45 // Rookie-deal starter or key rotational
+            : 0.30; // Vet-min / backup / depth
+
+  // Usage/snap multiplier (prevents over-valuing injured/benched backups and recognizes high-snap rookie starters!)
+  let usageMult = 1.0;
+  if (snapPct !== null) {
+    if (snapPct >= 80) {
+      usageMult = 1.12;
+      if (marketMult < 1.05) marketMult = Math.max(marketMult, 1.05); // High-snap rookie starter
+    } else if (snapPct >= 60) {
+      usageMult = 1.0;
+      if (marketMult < 0.90) marketMult = Math.max(marketMult, 0.90);
+    } else if (snapPct >= 35) {
+      usageMult = 0.72;
+    } else if (snapPct > 0) {
+      usageMult = 0.35; // True backup / special teamer
+    } else {
+      // 0% snaps (e.g. preseason IR): rely on market valuation + starter hint
+      usageMult = isStarterHint || apyRatio >= 0.45 ? 0.95 : 0.45;
+    }
+  } else if (isStarterHint) {
+    marketMult = Math.max(marketMult, 1.0);
+  } else if (apyM === 0) {
+    // Unknown player with no roster join (e.g. ESPN-only league list without roster file)
+    marketMult = 0.55;
+  }
+
+  const varPts = cfg.base * marketMult * usageMult;
+  return Number(Math.max(0.03, Math.min(1.25, varPts)).toFixed(3));
+}
+
+/**
  * Estimates starting QB and non-QB key-starter spread adjustments (immediate game vs rest-of-season)
- * directly from live team health & roster payloads (works both in build pipeline and in-browser live overlay).
+ * directly from live team health & roster payloads using true Value Above Replacement (VAR):
+ *  - Computes exact `QB1 - QB2` drop-off (so Josh Allen -> Kyle Allen is ~5.5+ pts while
+ *    a mid-tier starter -> high-floor backup Drew Lock is ~0.6–1.5 pts).
+ *  - Values non-QB stars by position × market APY × snap share (so All-Pro Fred Warner / Trent Williams /
+ *    Nick Bosa / WR1 are worth 0.70–1.15 pts while a backup WR4 is worth ~0.06 pts).
+ *  - Prevents double-counting via `FutureAvail - HistExposure`: a star who played 9/9 games and tears an
+ *    ACL gets 100% penalty, while a player on IR since Week 1 (0/9 games) is already baked into the team's
+ *    in-season record and only discounts the fading preseason prior; a star returning from multi-week IR
+ *    produces a positive boost!
  */
 export function estimateTeamInjurySpreadAdjustments({
   healthData = null,
   rosterPlayers = [],
   remainingGamesCount = 8,
-  qbValueAboveReplacement = 3.8
+  teamGamesPlayed = null,
+  qbRatingsById = null,
+  qbValueAboveReplacement = null
 } = {}) {
   const remGames = Math.max(1, Number(remainingGamesCount) || 8);
-  const qbDropBase = Math.max(1.5, Math.min(6.0, Number(qbValueAboveReplacement) || 3.8));
   const irRows = Array.isArray(healthData?.irReserve) ? healthData.irReserve : [];
   const injRows = Array.isArray(healthData?.injuryReport) ? healthData.injuryReport : [];
   const pracRows = Array.isArray(healthData?.practiceReport) ? healthData.practiceReport : [];
@@ -508,17 +692,63 @@ export function estimateTeamInjurySpreadAdjustments({
       .replace(/\b(jr|sr|ii|iii|iv|v)\b/g, '')
       .replace(/[^a-z]/g, '');
 
-  // Identify primary starting QB (QB1 by depthRank === 1 or highest snaps/starter flag)
+  const rosterByKey = new Map();
+  let inferredTeamGp = 0;
+  for (const p of rosterList) {
+    if (!p?.name) continue;
+    rosterByKey.set(normName(p.name), p);
+    const gl = Number(p.snapSummary?.gamesLogged ?? p.stats2026?.games ?? 0);
+    if (gl > inferredTeamGp) inferredTeamGp = gl;
+  }
+  const gpTeam =
+    teamGamesPlayed !== null && teamGamesPlayed !== undefined && Number.isFinite(Number(teamGamesPlayed))
+      ? Math.max(0, Number(teamGamesPlayed))
+      : inferredTeamGp;
+
+  // Remaining preseason prior share in the team's current rating (preseason prior assumed healthy Week 1 roster)
+  const wPrior = PRIOR_INIT_GAMES * Math.exp(-gpTeam / PRIOR_DECAY_GAMES);
+  const effMean = MEAN_SHRINK_GAMES * (1 - Math.exp(-gpTeam / 4.0));
+  const priorShare = gpTeam > 0 ? wPrior / (wPrior + effMean + gpTeam) : 1.0;
+
+  // Identify QB1 (primary starter) & QB2 (primary backup) to compute exact `QB1 - QB2` drop-off!
   const rosterQbs = rosterList
     .filter(p => String(p?.position || '').toUpperCase() === 'QB')
     .sort((a, b) => {
       const da = Number(a?.depthRank || 99);
       const db = Number(b?.depthRank || 99);
       if (da !== db) return da - db;
-      return Number(b?.snaps || b?.capHit2026 || 0) - Number(a?.snaps || a?.capHit2026 || 0);
+      const scoreA =
+        (estimatePlayerEffectiveApy(a) / 1_000_000) * 12 +
+        Number(a?.primarySnapPct || 0) * 4 +
+        Number(a?.stats2026?.passing?.attempts || 0) * 0.5 +
+        (String(a?.rosterBucket || 'active') === 'active' ? 40 : 0);
+      const scoreB =
+        (estimatePlayerEffectiveApy(b) / 1_000_000) * 12 +
+        Number(b?.primarySnapPct || 0) * 4 +
+        Number(b?.stats2026?.passing?.attempts || 0) * 0.5 +
+        (String(b?.rosterBucket || 'active') === 'active' ? 40 : 0);
+      return scoreB - scoreA;
     });
-  const qb1Name = rosterQbs[0]?.name || '';
+  const qb1Player = rosterQbs[0] || null;
+  const qb2Player = rosterQbs[1] || null;
+  const qb1Name = qb1Player?.name || '';
   const qb1Key = normName(qb1Name);
+
+  const computedQbDrop =
+    qb1Player
+      ? Math.max(
+          0.5,
+          Math.min(
+            6.2,
+            estimateQbSpreadValuePts(qb1Player, qbRatingsById) -
+              (qb2Player ? estimateQbSpreadValuePts(qb2Player, qbRatingsById) : -1.8)
+          )
+        )
+      : 3.6;
+  const qbDropBase =
+    qbValueAboveReplacement !== null && qbValueAboveReplacement !== undefined && Number.isFinite(Number(qbValueAboveReplacement))
+      ? Math.max(0.5, Math.min(6.2, Number(qbValueAboveReplacement)))
+      : computedQbDrop;
 
   const combinedRows = [];
   const seenKey = new Set();
@@ -538,11 +768,25 @@ export function estimateTeamInjurySpreadAdjustments({
   let qbSpreadSeason = 0;
   let qbStatusNote = '';
   let qbName = qb1Name;
-  let nonQbGameRaw = 0;
-  let nonQbSeasonRaw = 0;
+  let nonQbGameNet = 0;
+  let nonQbSeasonNet = 0;
+  const topNonQbNotes = [];
+
+  const getPlayerHistExposure = (rp, isIrStatus) => {
+    if (gpTeam <= 0) return 1.0; // Preseason: full prior exposure
+    if (!rp) return isIrStatus ? Math.max(priorShare, 0.55) : 0.90;
+    const pGames = rp.snapSummary?.gamesLogged ?? rp.stats2026?.games ?? null;
+    if (pGames === null || pGames === undefined || !Number.isFinite(Number(pGames))) {
+      return isIrStatus ? Math.max(priorShare, 0.55) : 0.90;
+    }
+    const playedShare = Math.max(0, Math.min(1, Number(pGames) / gpTeam));
+    return priorShare * 1.0 + (1 - priorShare) * playedShare;
+  };
 
   for (const row of combinedRows) {
-    const pos = String(row.position || '').toUpperCase();
+    const rKey = normName(row.name);
+    const rp = rosterByKey.get(rKey) || null;
+    const pos = String(rp?.position || row.position || '').toUpperCase();
     const statusText = `${row.gameStatus || ''} ${row.status || ''} ${row.designation || ''} ${row.playBadgeLabel || ''} ${row.timelineLabel || ''} ${row.notes || ''}`.toLowerCase();
     const isSeasonEnding =
       /season[\s-]*ending|out for (?:the )?season|torn acl|torn achilles|season over/.test(statusText);
@@ -552,86 +796,161 @@ export function estimateTeamInjurySpreadAdjustments({
     const isOut = !isIr && /\b(out|inactive|ruled out|dnp.*out)\b/.test(statusText);
     const isDoubtful = !isIr && !isOut && /\bdoubtful\b/.test(statusText);
     const isQuestionable = !isIr && !isOut && !isDoubtful && /\bquestionable\b/.test(statusText);
-    const playProb = Number.isFinite(Number(row.playLikelihood))
-      ? Math.max(0, Math.min(100, Number(row.playLikelihood))) / 100
-      : isIr || isOut
-        ? 0
-        : isDoubtful
-          ? 0.2
-          : isQuestionable
-            ? 0.65
-            : 0.98;
+
+    // Read BOTH `playProbabilityPct` (canonical app field) and `playLikelihood` (test/legacy alias)
+    const rawProbNum =
+      row.playProbabilityPct !== null && row.playProbabilityPct !== undefined && Number.isFinite(Number(row.playProbabilityPct))
+        ? Number(row.playProbabilityPct)
+        : row.playLikelihood !== null && row.playLikelihood !== undefined && Number.isFinite(Number(row.playLikelihood))
+          ? Number(row.playLikelihood)
+          : null;
+    const playProb =
+      rawProbNum !== null
+        ? Math.max(0, Math.min(100, rawProbNum)) / 100
+        : isIr || isOut
+          ? 0
+          : isDoubtful
+            ? 0.2
+            : isQuestionable
+              ? 0.65
+              : 0.98;
     const missProb = 1 - playProb;
     if (missProb < 0.08 && !isIr && !isOut && !isDoubtful) continue;
 
-    const rKey = normName(row.name);
     const isStarterQb =
       pos === 'QB' &&
       (qb1Key ? rKey === qb1Key : Boolean(row.isStarter || Number(row.depthRank) === 1));
 
+    const histExposure = getPlayerHistExposure(rp, isIr);
+
     if (isStarterQb) {
       qbName = row.name;
+      // Scale QB impact by `histExposure` (prevents double-counting if QB1 already missed 8/9 games,
+      // while applying 100% impact when QB1 played the season so far and just went down!)
+      const expFactor = Math.max(0.20, histExposure);
+      const bkpTag = qb2Player?.name ? ` → ${qb2Player.name}` : '';
       if (isSeasonEnding) {
-        qbSpreadGame = -qbDropBase * 0.90;
-        qbSpreadSeason = -qbDropBase * 0.85;
-        qbStatusNote = `${row.name} (QB1 Season-Ending IR)`;
+        qbSpreadGame = -qbDropBase * 0.90 * expFactor;
+        qbSpreadSeason = -qbDropBase * 0.85 * expFactor;
+        qbStatusNote = `${row.name} (QB1 Season-Ending IR${bkpTag})`;
       } else if (isIr) {
         const expectedMissWks = /21[\s-]*day|window open|designated to return/.test(statusText) ? 1.5 : 4.0;
         const frac = Math.min(1, expectedMissWks / remGames);
-        qbSpreadGame = -qbDropBase * 0.85;
-        qbSpreadSeason = -qbDropBase * 0.85 * Math.max(0.30, frac);
-        qbStatusNote = `${row.name} (QB1 IR)`;
+        qbSpreadGame = -qbDropBase * 0.85 * expFactor;
+        qbSpreadSeason = -qbDropBase * 0.85 * Math.max(0.30, frac) * expFactor;
+        qbStatusNote = `${row.name} (QB1 IR${bkpTag})`;
       } else if (isOut) {
-        qbSpreadGame = -qbDropBase * 0.85;
-        qbSpreadSeason = -qbDropBase * 0.35;
-        qbStatusNote = `${row.name} (QB1 Out)`;
+        qbSpreadGame = -qbDropBase * 0.85 * expFactor;
+        qbSpreadSeason = -qbDropBase * 0.35 * expFactor;
+        qbStatusNote = `${row.name} (QB1 Out${bkpTag})`;
       } else if (isDoubtful) {
-        qbSpreadGame = -qbDropBase * 0.70;
-        qbSpreadSeason = -qbDropBase * 0.22;
-        qbStatusNote = `${row.name} (QB1 Doubtful)`;
+        qbSpreadGame = -qbDropBase * 0.70 * expFactor;
+        qbSpreadSeason = -qbDropBase * 0.22 * expFactor;
+        qbStatusNote = `${row.name} (QB1 Doubtful${bkpTag})`;
       } else if (isQuestionable && missProb >= 0.20) {
-        qbSpreadGame = -qbDropBase * 0.75 * missProb;
-        qbSpreadSeason = -qbDropBase * 0.15 * missProb;
-        qbStatusNote = `${row.name} (QB1 Questionable ${Math.round(playProb * 100)}%)`;
+        qbSpreadGame = -qbDropBase * 0.75 * missProb * expFactor;
+        qbSpreadSeason = -qbDropBase * 0.15 * missProb * expFactor;
+        qbStatusNote = `${row.name} (QB1 Q ${Math.round(playProb * 100)}%)`;
       }
       continue;
     }
 
     if (pos === 'QB') continue;
 
-    // Non-QB positional WAR weights (empirically calibrated against 2014–2025 NFL injury reports)
-    const isKeyStarter = Boolean(row.isStarter || Number(row.depthRank) === 1 || Number(row.snapSharePct || 0) >= 55);
-    const starterMult = isKeyStarter ? 1.25 : 0.75;
-    const posWeight =
-      pos === 'OT' || pos === 'LT' || pos === 'RT' || pos === 'T' || pos === 'DE' || pos === 'EDGE' || pos === 'OLB'
-        ? 0.32
-        : pos === 'WR' || pos === 'CB'
-          ? 0.28
-          : pos === 'DT' || pos === 'NT' || pos === 'TE' || pos === 'S' || pos === 'FS' || pos === 'SS'
-            ? 0.18
-            : pos === 'OG' || pos === 'G' || pos === 'C' || pos === 'LB' || pos === 'ILB' || pos === 'MLB'
-              ? 0.14
-              : pos === 'RB'
-                ? 0.12
-                : 0.06;
+    // Non-QB Player-Specific Value Above Replacement (VAR) × (FutureAvail - HistExposure)
+    const varPts = estimateNonQbPlayerSpreadVar(rp, row);
+    const gameAvail = isIr || isOut ? 0.0 : playProb;
+    const gameDelta = varPts * (gameAvail - histExposure);
+    // Only apply negative game delta when player is actually less available than historical baseline
+    if (gameDelta < 0) {
+      nonQbGameNet += gameDelta;
+    }
 
-    const effGame = posWeight * starterMult * (isIr || isOut ? 1.0 : missProb);
-    nonQbGameRaw += effGame;
+    let seasonAvail = 1.0;
     if (isSeasonEnding) {
-      nonQbSeasonRaw += effGame * 0.65;
+      seasonAvail = 0.0;
     } else if (isIr) {
-      nonQbSeasonRaw += effGame * Math.min(0.60, 3.5 / remGames);
-    } else if (isOut || isDoubtful) {
-      nonQbSeasonRaw += effGame * 0.20;
+      const expectedMissWks = /21[\s-]*day|window open|designated to return/.test(statusText) ? 1.5 : 4.0;
+      seasonAvail = Math.max(0, 1 - Math.min(1, expectedMissWks / remGames));
+    } else if (isOut) {
+      seasonAvail = Math.max(0, 1 - Math.min(1, 1.5 / remGames));
+    } else if (isDoubtful) {
+      seasonAvail = Math.max(0, 1 - Math.min(1, 1.1 / remGames));
+    } else {
+      seasonAvail = Math.max(0, 1 - Math.min(1, (0.8 * missProb) / remGames));
+    }
+
+    const seasonDelta = varPts * (seasonAvail - histExposure);
+    if (seasonDelta < 0) {
+      nonQbSeasonNet += seasonDelta;
+    }
+    if (seasonDelta <= -0.22 || gameDelta <= -0.35) {
+      const shortSt = isSeasonEnding ? 'Season IR' : isIr ? 'IR' : isOut ? 'Out' : isDoubtful ? 'D' : `Q ${Math.round(playProb * 100)}%`;
+      topNonQbNotes.push({
+        label: `${row.name} (${pos} ${shortSt})`,
+        impact: Math.abs(Math.min(0, seasonDelta)) + Math.abs(Math.min(0, gameDelta)) * 0.35
+      });
     }
   }
 
-  const nonQbSpreadGame = -Math.min(1.5, Number((nonQbGameRaw * 0.35).toFixed(3)));
-  const nonQbSpreadSeason = -Math.min(0.85, Number((nonQbSeasonRaw * 0.35).toFixed(3)));
+  // Positive return boost: check active healthy stars who missed a large chunk of the season on IR
+  // and are NOW back healthy (`futureAvail = 1.0 > histExposure`)!
+  const returningNotes = [];
+  if (gpTeam >= 4 && rosterList.length > 0) {
+    for (const p of rosterList) {
+      if (!p?.name || String(p.rosterBucket || 'active') !== 'active') continue;
+      const pk = normName(p.name);
+      if (seenKey.has(pk)) continue; // Still on injury/IR report
+      const pos = String(p.position || '').toUpperCase();
+      if (pos === 'QB') continue; // QB returns are handled directly via `currQbVal - histQbVal`
+      const hProb = Number(p.health?.playProbabilityPct ?? 99);
+      if (hProb < 85) continue;
+      const gl = p.snapSummary?.gamesLogged ?? p.stats2026?.games ?? null;
+      if (gl === null || !Number.isFinite(Number(gl))) continue;
+      const missedGames = gpTeam - Number(gl);
+      if (missedGames < 3) continue; // Only meaningful multi-week returns (e.g. off 4-game IR!)
+      const apyM = estimatePlayerEffectiveApy(p) / 1_000_000;
+      const cfg = NON_QB_POS_VAR_CONFIG[pos] || { base: 0.14, eliteApyM: 12 };
+      if (apyM < cfg.eliteApyM * 0.45) continue; // Only proven core starters/stars returning from IR
+      const varPts = estimateNonQbPlayerSpreadVar(p, { isStarter: true });
+      const histExp = getPlayerHistExposure(p, false);
+      const returnBoost = varPts * Math.max(0, 1.0 - histExp) * 0.75;
+      if (returnBoost >= 0.15) {
+        nonQbGameNet += returnBoost;
+        nonQbSeasonNet += returnBoost;
+        returningNotes.push({ label: `${p.name} (${pos} Returned)`, impact: returnBoost });
+      }
+    }
+  }
+
+  const nonQbSpreadGame = Number(Math.max(-2.8, Math.min(1.6, nonQbGameNet)).toFixed(3));
+  const nonQbSpreadSeason = Number(Math.max(-2.4, Math.min(1.4, nonQbSeasonNet)).toFixed(3));
+
+  topNonQbNotes.sort((a, b) => b.impact - a.impact);
+  returningNotes.sort((a, b) => b.impact - a.impact);
+  let topNonQbSummary = '';
+  if (nonQbSpreadSeason > 0.12 && returningNotes.length > 0) {
+    const retStr = returningNotes.slice(0, 2).map(x => x.label).join(', ');
+    topNonQbSummary =
+      topNonQbNotes.length > 0 && nonQbSpreadGame <= -0.35
+        ? `${retStr}; ${topNonQbNotes[0].label}`
+        : retStr;
+  } else if (topNonQbNotes.length > 0) {
+    topNonQbSummary = topNonQbNotes.slice(0, 2).map(x => x.label).join(', ');
+  } else if (nonQbSpreadSeason > 0.12 && returningNotes.length > 0) {
+    topNonQbSummary = returningNotes.slice(0, 2).map(x => x.label).join(', ');
+  }
+  const combinedStatusNote = qbStatusNote
+    ? topNonQbSummary
+      ? `${qbStatusNote}; ${topNonQbSummary}`
+      : qbStatusNote
+    : topNonQbSummary;
 
   return {
     qbName,
-    qbStatusNote,
+    qbBackupName: qb2Player?.name || '',
+    qbDropBase: Number(qbDropBase.toFixed(2)),
+    qbStatusNote: combinedStatusNote,
     qbSpreadGame: Number(qbSpreadGame.toFixed(3)),
     qbSpreadSeason: Number(qbSpreadSeason.toFixed(3)),
     nonQbSpreadGame,

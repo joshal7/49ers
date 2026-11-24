@@ -3192,9 +3192,11 @@ function renderPlayoffSimulator(
         const injTone = totalInjElo <= -35 ? 'is-danger' : totalInjElo < 0 ? 'is-warn' : 'is-positive';
         const injLabel = qbNote
           ? `${qbNote} (${fmtSigned(totalInjElo, 'Elo')})`
-          : totalInjElo !== 0
-            ? `${fmtSigned(totalInjElo, 'Elo')} (Key Injuries)`
-            : 'Healthy Starter (±0 Elo)';
+          : totalInjElo > 0
+            ? `${fmtSigned(totalInjElo, 'Elo')} (Returning Stars)`
+            : totalInjElo < 0
+              ? `${fmtSigned(totalInjElo, 'Elo')} (Key Injuries)`
+              : 'Healthy Core (±0 Elo)';
         const simTs = pp.lastSimulatedAt || simIn.lastSimulatedAt || appData?.meta?.updatedAt || '';
         const simRel = simTs ? formatRelativeAge(simTs) : 'Live';
         return `

@@ -97,6 +97,7 @@ import {
   ALL_NFL_DIVISIONS,
   PLAYOFF_MODEL_VERSION
 } from '../src/engine/playoffMonteCarlo.js';
+import { ALL_NFL_TEAMS } from '../src/config/teamRegistry.js';
 import { cleanSensationalistText, scoreContentSignal } from '../src/engine/antiFluffFilter.js';
 import {
   buildNflCalendarForSeasonYear,
@@ -5948,6 +5949,26 @@ async function main() {
       if (g.away_qb_name) currentStarterNameByTeam[a] = g.away_qb_name;
     }
   }
+  const gpByTeam = new Map();
+  for (const g of completed2026Games || []) {
+    const h = normalizeTeamAbbr(g.home);
+    const a = normalizeTeamAbbr(g.away);
+    if (h) gpByTeam.set(h, (gpByTeam.get(h) || 0) + 1);
+    if (a) gpByTeam.set(a, (gpByTeam.get(a) || 0) + 1);
+  }
+  const slugByAbbr = new Map(ALL_NFL_TEAMS.map(t => [normalizeTeamAbbr(t.abbr), t.slug]));
+  const loadDiskRosterForAbbr = abbr => {
+    const slug = slugByAbbr.get(abbr);
+    if (!slug) return [];
+    try {
+      const rpPath = path.join(ROOT, 'data', 'teams', slug, 'roster.json');
+      if (fs.existsSync(rpPath)) {
+        const parsed = JSON.parse(fs.readFileSync(rpPath, 'utf8'));
+        return Array.isArray(parsed?.players) ? parsed.players : [];
+      }
+    } catch {}
+    return [];
+  };
   for (const teamEntry of espnInjuries?.injuries || []) {
     const dispLower = String(teamEntry?.displayName || '').toLowerCase();
     let abbr = null;
@@ -5976,24 +5997,24 @@ async function main() {
       if (/injured reserve|ir|pup|nfi/i.test(st)) irList.push(row);
       else injList.push(row);
     }
-    const qid = currentStarterByTeam[abbr];
-    const qbValAboveRep = qid && qbRatingsById[qid] ? Math.max(2.0, qbRatingsById[qid].valuePts - -1.7) : 3.6;
+    const teamRoster = loadDiskRosterForAbbr(abbr);
     const adj = estimateTeamInjurySpreadAdjustments({
       healthData: { injuryReport: injList, irReserve: irList },
+      rosterPlayers: teamRoster,
       remainingGamesCount: remCountByTeam.get(abbr) || 6,
-      qbValueAboveReplacement: qbValAboveRep
+      teamGamesPlayed: gpByTeam.get(abbr) ?? null,
+      qbRatingsById
     });
     if (Math.abs(adj.totalGameSpreadAdj) > 0.01 || Math.abs(adj.totalSeasonSpreadAdj) > 0.01 || adj.qbStatusNote) {
       injuryAdjustmentsByTeam[abbr] = adj;
     }
   }
-  const sfQid = currentStarterByTeam.SF;
-  const sfQbValAboveRep = sfQid && qbRatingsById[sfQid] ? Math.max(2.2, qbRatingsById[sfQid].valuePts - -1.7) : 4.2;
   injuryAdjustmentsByTeam.SF = estimateTeamInjurySpreadAdjustments({
     healthData: { practiceReport: practiceReportPlayers, irReserve: irTrackerPlayers },
     rosterPlayers,
     remainingGamesCount: remCountByTeam.get('SF') || 6,
-    qbValueAboveReplacement: sfQbValAboveRep
+    teamGamesPlayed: gpByTeam.get('SF') ?? null,
+    qbRatingsById
   });
 
   const nfcConf = (espnStandings.children || []).find(
