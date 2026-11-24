@@ -935,3 +935,175 @@ export function evaluatePushSupportStatus() {
     isIosBrowserTab: false
   };
 }
+
+/* ============================================================================
+ * 13. Reading Position & Zero-Flicker Background Refresh Stability Helpers
+ * ============================================================================ */
+
+/**
+ * Strips volatile relative-time text (e.g. `4m ago`, `2h ago`, `Sync…`) from rendered HTML
+ * strictly for background no-op diffing so routine clock ticks never trigger a destructive
+ * `#mainView` innerHTML wipe and image flicker.
+ */
+export function stripVolatileRelativeTimesFromHtml(html = '') {
+  const raw = String(html || '');
+  if (!raw) return '';
+  return raw
+    .replace(
+      /(<span\b[^>]*\bdata-wire-age\b[^>]*>)([^<]*)(<\/span>)/gi,
+      (_, open, inner, close) =>
+        `${open}${String(inner).replace(/(?:Just now|now|Recently updated|\d+\s*[mhd]\s*ago)\s*$/i, '__AGE__')}${close}`
+    )
+    .replace(
+      /(<span\b[^>]*\bdata-daily-brief-age\b[^>]*>)([^<]*)(<\/span>)/gi,
+      '$1__AGE__$3'
+    )
+    .replace(
+      /(<span\b[^>]*\bclass="[^"]*\bsource-row-age\b[^"]*"[^>]*>)([^<]*)(<\/span>)/gi,
+      '$1__AGE__$3'
+    )
+    .replace(
+      /(<span\b[^>]*\bclass="[^"]*\bpresser-strip-meta\b[^"]*"[^>]*>)([^<]*)(<\/span>)/gi,
+      (_, open, inner, close) =>
+        `${open}${String(inner).replace(/·\s*(?:Just now|now|Recently updated|\d+\s*[mhd]\s*ago)/gi, '· __AGE__')}${close}`
+    )
+    .replace(
+      /(<button\b[^>]*\bdata-action="sync-live-wire-now"[^>]*>)([\s\S]*?)(<\/button>)/gi,
+      '$1__SYNC_BTN__$3'
+    )
+    .replace(
+      /(<span\b[^>]*\bclass="[^"]*\bcatchup-bar-text\b[^"]*"[^>]*>[\s\S]*?\bsince\s+)([^<]+)(<\/span>)/gi,
+      '$1__SINCE__$3'
+    );
+}
+
+/**
+ * Extracts a lightweight structural snapshot of the rendered News & Film feed from HTML
+ * so background polls can tell whether actual new stories or a new Daily Brief arrived
+ * without parsing the full DOM.
+ */
+export function extractNewsFeedSnapshotFromHtml(html = '') {
+  const raw = String(html || '');
+  const itemKeys = [];
+  const seen = new Set();
+  const breakingKeys = [];
+  const breakingSeen = new Set();
+
+  const cardTagRe = /<div\b[^>]*\bclass="[^"]*\bbrief-card\b[^"]*"[^>]*>/gi;
+  let m;
+  while ((m = cardTagRe.exec(raw)) !== null) {
+    const tag = m[0];
+    const keyM = tag.match(/\bdata-read-key="([^"]+)"/i);
+    if (!keyM) continue;
+    const key = keyM[1];
+    if (!seen.has(key)) {
+      seen.add(key);
+      itemKeys.push(key);
+    }
+    if (/\bbreaking-elevated\b/i.test(tag) && !breakingSeen.has(key)) {
+      breakingSeen.add(key);
+      breakingKeys.push(key);
+    }
+  }
+
+  let briefSig = '';
+  const briefTagM = raw.match(/<(?:section|div)\b[^>]*\bdata-daily-news-brief="([^"]*)"[^>]*>/i);
+  if (briefTagM) {
+    const tag = briefTagM[0];
+    const id = briefTagM[1] || '';
+    const genM = tag.match(/\bdata-brief-gen="([^"]*)"/i);
+    const hlM = tag.match(/\bdata-brief-headline="([^"]*)"/i);
+    briefSig = `${id}|${genM ? genM[1] : ''}|${hlM ? hlM[1] : ''}`;
+  }
+
+  return { itemKeys, breakingKeys, briefSig };
+}
+
+/**
+ * Decides whether a background News & Film update should defer DOM replacement to protect
+ * the user's current reading position, and computes the unobtrusive pending-updates pill state.
+ */
+export function evaluateNewsBackgroundUpdate({
+  renderedSnapshot = null,
+  nextSnapshot = null,
+  scrollY = 0,
+  deferScrollThresholdPx = 72,
+  existingPendingKeys = [],
+  existingBriefPending = false
+} = {}) {
+  const renderedSet = new Set(Array.isArray(renderedSnapshot?.itemKeys) ? renderedSnapshot.itemKeys : []);
+  const nextKeys = Array.isArray(nextSnapshot?.itemKeys) ? nextSnapshot.itemKeys : [];
+  const nextBreakingSet = new Set(Array.isArray(nextSnapshot?.breakingKeys) ? nextSnapshot.breakingKeys : []);
+
+  const newlyAdded = [];
+  for (const key of nextKeys) {
+    if (key && !renderedSet.has(key)) {
+      newlyAdded.push(key);
+    }
+  }
+
+  const nextKeySet = new Set(nextKeys);
+  const pendingKeySet = new Set();
+  for (const prevPending of Array.isArray(existingPendingKeys) ? existingPendingKeys : []) {
+    if (prevPending && nextKeySet.has(prevPending) && !renderedSet.has(prevPending)) {
+      pendingKeySet.add(prevPending);
+    }
+  }
+  for (const key of newlyAdded) {
+    pendingKeySet.add(key);
+  }
+  const pendingKeys = Array.from(pendingKeySet);
+  const addedCount = pendingKeys.length;
+  const hasBreakingAdded = pendingKeys.some(k => nextBreakingSet.has(k));
+
+  const prevBriefSig = String(renderedSnapshot?.briefSig || '');
+  const nextBriefSig = String(nextSnapshot?.briefSig || '');
+  const briefChanged = Boolean(
+    existingBriefPending || (prevBriefSig && nextBriefSig && prevBriefSig !== nextBriefSig)
+  );
+
+  const safeScrollY = Number.isFinite(Number(scrollY)) ? Math.max(0, Number(scrollY)) : 0;
+  const shouldDeferDomSwap = safeScrollY > deferScrollThresholdPx;
+  const shouldShowPendingPill = Boolean(shouldDeferDomSwap && (addedCount > 0 || briefChanged));
+
+  let pillLabel = '';
+  if (addedCount > 0) {
+    const noun = addedCount === 1 ? 'new update' : 'new updates';
+    pillLabel = hasBreakingAdded ? `Breaking · ${addedCount} new` : `${addedCount} ${noun}`;
+  } else if (briefChanged) {
+    pillLabel = 'Top Brief updated';
+  }
+
+  return {
+    addedKeys: newlyAdded,
+    pendingKeys,
+    addedCount,
+    hasBreakingAdded,
+    briefChanged,
+    shouldDeferDomSwap,
+    shouldShowPendingPill,
+    pillLabel
+  };
+}
+
+/**
+ * Computes the exact window.scrollY needed to keep an anchored reading element at the same
+ * viewport Y coordinate after a DOM re-render inserts, removes, or resizes content above it.
+ */
+export function computeScrollAnchorTargetY({
+  prevAnchorTop = 0,
+  nextAnchorTop = 0,
+  currentScrollY = 0,
+  maxScrollY = Infinity
+} = {}) {
+  const prevTop = Number(prevAnchorTop);
+  const nextTop = Number(nextAnchorTop);
+  const curY = Number(currentScrollY);
+  if (!Number.isFinite(prevTop) || !Number.isFinite(nextTop) || !Number.isFinite(curY)) {
+    return Math.max(0, Number.isFinite(curY) ? Math.round(curY) : 0);
+  }
+  const deltaY = nextTop - prevTop;
+  const unclamped = Math.round(curY + deltaY);
+  const hi = Number.isFinite(Number(maxScrollY)) ? Math.max(0, Math.round(Number(maxScrollY))) : Infinity;
+  return Math.max(0, Math.min(hi, unclamped));
+}

@@ -502,13 +502,13 @@ export function renderDailyTopNewsBriefHtml(
       : '';
 
   return `
-    <${tagName} class="${outerCls}" data-daily-news-brief="${esc(brief.id || 'daily')}">
+    <${tagName} class="${outerCls}" data-daily-news-brief="${esc(brief.id || 'daily')}" data-brief-gen="${esc(brief.generatedAt || '')}" data-brief-headline="${esc(String(brief.headline || '').slice(0, 80))}">
       <div class="daily-brief-head">
         <div style="min-width:0;flex:1">
           <div class="card-eyebrow">Top News Brief</div>
           <h3 class="card-title daily-brief-headline">${escJargon(brief.headline || `${getActiveTeamConfig().nickname} Daily Briefing`, { maxTerms: 6, maxPlayers: 3, seenKeys: seenJargon })}</h3>
         </div>
-        <span class="mono daily-brief-age" data-daily-brief-age title="${esc(briefAgeTooltip || `Generated ${brief.generatedAt || ''}`)}">${esc(ageTiny)}</span>
+        <span class="mono daily-brief-age" data-daily-brief-age data-published-at="${esc(brief.generatedAt || '')}" title="${esc(briefAgeTooltip || `Generated ${brief.generatedAt || ''}`)}">${esc(ageTiny)}</span>
       </div>
       ${briefHeroHtml}
       <ul class="brief-bullets coaching-bullets daily-brief-bullets">
@@ -708,8 +708,9 @@ function renderRelatedStoriesDrawerHtml(
     })
     .join('');
 
+  const parentReadKey = getItemReadKey(item);
   return `
-    <details class="compact-details confirming-reports-toggle similar-stories-drawer" data-confirming-reports data-similar-stories="true" data-story-timeline="true" data-cluster-kind="${esc(clusterKind)}">
+    <details class="compact-details confirming-reports-toggle similar-stories-drawer" data-confirming-reports data-similar-stories="true" data-story-timeline="true" data-cluster-kind="${esc(clusterKind)}"${parentReadKey ? ` data-parent-read-key="${esc(parentReadKey)}"` : ''}>
       <summary class="compact-details-summary">
         <span>${esc(summaryLabel)}</span>
       </summary>
@@ -893,7 +894,7 @@ export function renderWireItemCardHtml(
               : `<strong class="wire-author-label">${esc(authorName)}</strong>`
           }
         </div>
-        <span class="mono wire-card-age" data-wire-age>${esc(rightMetaPrefix)}${esc(formatRelativeAge(item.publishedAt))}</span>
+        <span class="mono wire-card-age" data-wire-age data-published-at="${esc(item.publishedAt || '')}" data-age-prefix="${esc(rightMetaPrefix)}">${esc(rightMetaPrefix)}${esc(formatRelativeAge(item.publishedAt))}</span>
       </div>
       <div class="wire-card-main-row ${hasThumb ? 'media-split-row' : ''}">
         <div class="wire-card-body-col">

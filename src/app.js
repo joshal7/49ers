@@ -179,7 +179,11 @@ import {
   urlBase64ToUint8Array,
   evaluatePushSupportStatus,
   runUniversalSearch,
-  normalizeSearchText
+  normalizeSearchText,
+  stripVolatileRelativeTimesFromHtml,
+  extractNewsFeedSnapshotFromHtml,
+  evaluateNewsBackgroundUpdate,
+  computeScrollAnchorTargetY
 } from './engine/digestExperienceEngine.js';
 
 const RECENT_SEARCHES_KEY = ACTIVE_TEAM.storageKeys?.recentSearches || '49ers_faithful_recent_searches_v1';
@@ -242,7 +246,7 @@ let lastScrollEventMs = 0;
 let pointerSafetyTimerId = null;
 let bgRenderFlushTimerId = null;
 let bgRenderRafId = null;
-const pendingBgRender = { main: false, sheet: false, preserveSheetScroll: true };
+const pendingBgRender = { main: false, sheet: false, preserveSheetScroll: true, forceNewsApply: false };
 
 function markPointerInteractionStart() {
   isPointerInteractionActive = true;
@@ -290,7 +294,7 @@ function schedulePendingBgRenderFlush(delayMs = 0) {
       schedulePendingBgRenderFlush(Math.max(25, postPointerClickGraceUntilMs - now + 10));
       return;
     }
-    if (now - lastScrollEventMs < 140) {
+    if (now - lastScrollEventMs < 140 && !pendingBgRender.forceNewsApply) {
       schedulePendingBgRenderFlush(150);
       return;
     }
@@ -301,25 +305,27 @@ function schedulePendingBgRenderFlush(delayMs = 0) {
       if (!pendingBgRender.main && !pendingBgRender.sheet) return;
       if (isPointerInteractionActive) return;
       const execNow = Date.now();
-      if (execNow < postPointerClickGraceUntilMs) {
+      if (execNow < postPointerClickGraceUntilMs && !pendingBgRender.forceNewsApply) {
         schedulePendingBgRenderFlush(Math.max(25, postPointerClickGraceUntilMs - execNow + 10));
         return;
       }
-      if (execNow - lastScrollEventMs < 140) {
+      if (execNow - lastScrollEventMs < 140 && !pendingBgRender.forceNewsApply) {
         schedulePendingBgRenderFlush(150);
         return;
       }
       const doMain = pendingBgRender.main;
       const doSheet = pendingBgRender.sheet;
       const preserveSheetScroll = pendingBgRender.preserveSheetScroll;
+      const forceNewsApply = pendingBgRender.forceNewsApply;
       pendingBgRender.main = false;
       pendingBgRender.sheet = false;
       pendingBgRender.preserveSheetScroll = true;
+      pendingBgRender.forceNewsApply = false;
 
       const activeTag = document.activeElement?.tagName;
       const isTyping = activeTag === 'INPUT' || activeTag === 'TEXTAREA';
       if (doMain && state.appData && !isTyping && !hasActivelyPlayingInlineMedia() && !state.jobStatus?.active) {
-        renderMain({ isBackground: true });
+        renderMain({ isBackground: true, forceNewsApply });
       }
       if (doSheet && state.sheetMode && !isTyping) {
         renderSheet({ preserveScroll: preserveSheetScroll });
@@ -341,8 +347,14 @@ function schedulePendingBgRenderFlush(delayMs = 0) {
   }
 }
 
-function requestBackgroundRender({ main = false, sheet = false, preserveSheetScroll = true } = {}) {
+function requestBackgroundRender({
+  main = false,
+  sheet = false,
+  preserveSheetScroll = true,
+  forceNewsApply = false
+} = {}) {
   if (main) pendingBgRender.main = true;
+  if (forceNewsApply) pendingBgRender.forceNewsApply = true;
   if (sheet) {
     pendingBgRender.sheet = true;
     pendingBgRender.preserveSheetScroll = Boolean(preserveSheetScroll);
@@ -350,10 +362,12 @@ function requestBackgroundRender({ main = false, sheet = false, preserveSheetScr
   if (!pendingBgRender.main && !pendingBgRender.sheet) return;
   if (isPointerInteractionActive) return;
   const now = Date.now();
-  const waitMs = Math.max(
-    now < postPointerClickGraceUntilMs ? postPointerClickGraceUntilMs - now + 10 : 0,
-    now - lastScrollEventMs < 140 ? 150 : 0
-  );
+  const waitMs = pendingBgRender.forceNewsApply
+    ? 0
+    : Math.max(
+        now < postPointerClickGraceUntilMs ? postPointerClickGraceUntilMs - now + 10 : 0,
+        now - lastScrollEventMs < 140 ? 150 : 0
+      );
   schedulePendingBgRenderFlush(waitMs);
 }
 
@@ -399,6 +413,7 @@ const state = {
   activeVideosSet: new Set(),
   lastWireSyncAt: null,
   isSyncingWire: false,
+  pendingNewsRefresh: null, // { addedCount, hasBreakingAdded, briefChanged, pillLabel, pendingKeys }
   sessionLastVisitedAt: null,
   tabScrollPositions: {},
   universalSearchQuery: '',
@@ -1470,8 +1485,212 @@ function renderNavTabs() {
 
 let lastRenderedMainTab = '';
 let lastRenderedMainHtml = '';
+let lastRenderedMainStableHtml = '';
+let lastRenderedNewsSnapshot = null;
+const failedImageUrls = new Set();
 
-function renderMain({ isBackground = false } = {}) {
+function recordFailedImageUrl(src) {
+  const clean = String(src || '').trim();
+  if (!clean) return;
+  if (failedImageUrls.size >= 220) {
+    const first = failedImageUrls.values().next().value;
+    if (first) failedImageUrls.delete(first);
+  }
+  failedImageUrls.add(clean);
+}
+
+function reapplyKnownFailedImageWrappers(rootEl) {
+  if (!rootEl || failedImageUrls.size === 0) return;
+  rootEl.querySelectorAll('img[src]').forEach(img => {
+    const src = String(img.getAttribute('src') || '').trim();
+    if (!src || !failedImageUrls.has(src)) return;
+    const wrap = img.closest(
+      '.player-avatar, .team-logo-wrap, .gc-ldr-avatar, .salient-hero-banner, .raw-item-thumb, .video-thumb-stage, .beat-podcast-art-wrap, .home-pod-art-item, .tweet-linked-article-media, .ncaa-mini-logo, .gemini-guide-gif-wrap'
+    );
+    if (wrap) wrap.classList.add('img-error');
+  });
+}
+
+function syncVisibleRelativeAgesInPlace(rootEl) {
+  if (!rootEl) return;
+  rootEl.querySelectorAll('[data-wire-age][data-published-at]').forEach(el => {
+    const iso = el.getAttribute('data-published-at');
+    if (!iso) return;
+    const prefix = el.getAttribute('data-age-prefix') || '';
+    const nextTxt = `${prefix}${formatRelativeAge(iso)}`;
+    if (el.textContent !== nextTxt) el.textContent = nextTxt;
+  });
+  rootEl.querySelectorAll('[data-daily-brief-age][data-published-at]').forEach(el => {
+    const iso = el.getAttribute('data-published-at');
+    if (!iso) return;
+    const nextTxt = formatRelativeAge(iso);
+    if (el.textContent !== nextTxt) el.textContent = nextTxt;
+  });
+}
+
+function clearPendingNewsRefresh() {
+  state.pendingNewsRefresh = null;
+  syncPendingNewsUpdatesPillDom();
+}
+
+function syncPendingNewsUpdatesPillDom() {
+  const pill = document.getElementById('newsPendingUpdatesPill');
+  if (!pill) return;
+  const pending = state.pendingNewsRefresh;
+  const shouldShow =
+    Boolean(pending && pending.pillLabel) &&
+    state.activeNavTab === 'news' &&
+    !state.sheetMode &&
+    !state.rankModal;
+  if (!shouldShow) {
+    pill.hidden = true;
+    pill.classList.remove('is-breaking');
+    return;
+  }
+  pill.classList.toggle('is-breaking', Boolean(pending.hasBreakingAdded));
+  const nextHtml = `<span class="news-pending-updates-pill-arrow" aria-hidden="true">↑</span><span>${esc(pending.pillLabel)}</span>`;
+  if (pill.innerHTML !== nextHtml) {
+    pill.innerHTML = nextHtml;
+  }
+  pill.setAttribute('aria-label', `${pending.pillLabel} — jump to top to view`);
+  pill.hidden = false;
+}
+
+const ANCHOR_CANDIDATE_SELECTOR =
+  '.brief-card[data-read-key], [data-daily-news-brief], [data-dashboard-block], [data-gamecast-drive-id], .card[id]';
+
+function getReadingAnchorKey(el) {
+  if (!el) return '';
+  if (el.classList?.contains('brief-card') && el.hasAttribute('data-read-key')) {
+    return `brief-card:${el.getAttribute('data-read-key')}`;
+  }
+  if (el.hasAttribute('data-daily-news-brief')) {
+    return 'daily-brief';
+  }
+  if (el.hasAttribute('data-dashboard-block')) {
+    return `block:${el.getAttribute('data-dashboard-block')}`;
+  }
+  if (el.hasAttribute('data-gamecast-drive-id')) {
+    return `drive:${el.getAttribute('data-gamecast-drive-id')}`;
+  }
+  if (el.id) {
+    return `id:${el.id}`;
+  }
+  return '';
+}
+
+function findReadingAnchorElement(rootEl, anchorKey) {
+  if (!rootEl || !anchorKey) return null;
+  if (anchorKey === 'daily-brief') {
+    return rootEl.querySelector('[data-daily-news-brief]');
+  }
+  if (anchorKey.startsWith('brief-card:')) {
+    const k = anchorKey.slice('brief-card:'.length);
+    return rootEl.querySelector(`.brief-card[data-read-key="${CSS.escape(k)}"]`);
+  }
+  if (anchorKey.startsWith('block:')) {
+    const k = anchorKey.slice('block:'.length);
+    return rootEl.querySelector(`[data-dashboard-block="${CSS.escape(k)}"]`);
+  }
+  if (anchorKey.startsWith('drive:')) {
+    const k = anchorKey.slice('drive:'.length);
+    return rootEl.querySelector(`[data-gamecast-drive-id="${CSS.escape(k)}"]`);
+  }
+  if (anchorKey.startsWith('id:')) {
+    const id = anchorKey.slice('id:'.length);
+    return rootEl.querySelector(`#${CSS.escape(id)}`);
+  }
+  return null;
+}
+
+function captureViewportReadingAnchors(mainEl) {
+  if (!mainEl || typeof window === 'undefined') return null;
+  const scrollY = window.scrollY || 0;
+  if (scrollY <= 8) return null;
+  const headerBottom = Math.max(
+    0,
+    Math.round(document.querySelector('.top-header')?.getBoundingClientRect()?.bottom || 58)
+  );
+  const vh = window.innerHeight || document.documentElement?.clientHeight || 844;
+  const candidates = Array.from(mainEl.querySelectorAll(ANCHOR_CANDIDATE_SELECTOR));
+  const inView = [];
+  const straddling = [];
+  for (const el of candidates) {
+    const key = getReadingAnchorKey(el);
+    if (!key) continue;
+    const rect = el.getBoundingClientRect();
+    if (rect.height <= 0) continue;
+    if (rect.bottom <= headerBottom + 4) continue;
+    if (rect.top >= vh) break;
+    if (rect.top >= headerBottom - 12) {
+      inView.push({ key, prevTop: rect.top });
+    } else {
+      straddling.push({ key, prevTop: rect.top });
+    }
+    if (inView.length >= 3) break;
+  }
+  const ordered = [...inView, ...straddling].slice(0, 4);
+  if (ordered.length === 0) return null;
+  return { prevScrollY: scrollY, anchors: ordered };
+}
+
+function restoreViewportReadingAnchors(mainEl, captured) {
+  if (!mainEl || !captured || !Array.isArray(captured.anchors) || captured.anchors.length === 0) {
+    return;
+  }
+  const curY = window.scrollY || 0;
+  const maxScrollY = Math.max(
+    0,
+    (document.documentElement?.scrollHeight || 0) - (window.innerHeight || 0)
+  );
+  for (const anchor of captured.anchors) {
+    const nextEl = findReadingAnchorElement(mainEl, anchor.key);
+    if (!nextEl) continue;
+    const nextRect = nextEl.getBoundingClientRect();
+    if (nextRect.height <= 0 && nextRect.top === 0) continue;
+    const targetY = computeScrollAnchorTargetY({
+      prevAnchorTop: anchor.prevTop,
+      nextAnchorTop: nextRect.top,
+      currentScrollY: curY,
+      maxScrollY
+    });
+    if (Math.abs(targetY - curY) >= 1) {
+      window.scrollTo({ top: targetY, behavior: 'instant' });
+    }
+    return;
+  }
+}
+
+function getDetailsPreservationSignature(el) {
+  if (!el) return '';
+  if (el.hasAttribute('data-parent-read-key')) {
+    return `similar-parent=${el.getAttribute('data-parent-read-key')}`;
+  }
+  for (const attr of [
+    'data-gameday-active-roster',
+    'data-stats-expander',
+    'data-matchup-stats-expander',
+    'data-ps-elevations-card',
+    'data-cap-positional-spend',
+    'data-daily-brief-sources',
+    'data-presser-takeaways',
+    'data-news-sources-details',
+    'data-related-cluster-details',
+    'data-rooting-week',
+    'data-prospect-id',
+    'data-gamecast-drive-id'
+  ]) {
+    if (el.hasAttribute(attr)) return `${attr}=${el.getAttribute(attr) || '1'}`;
+  }
+  const sumTxt = String(el.querySelector('summary')?.textContent || '')
+    .replace(/\(\d+\)/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 60);
+  return sumTxt ? `sum:${sumTxt}` : '';
+}
+
+function renderMain({ isBackground = false, forceNewsApply = false, preserveScrollAnchor = false } = {}) {
   if (!state.appData) return;
   const mainEl = document.getElementById('mainView');
   if (!mainEl) return;
@@ -1479,35 +1698,26 @@ function renderMain({ isBackground = false } = {}) {
   // Explicit user renders supersede any queued background render
   if (!isBackground) {
     pendingBgRender.main = false;
+    pendingBgRender.forceNewsApply = false;
     closeJargonPopover();
   }
   registerRosterPlayersForInlineLinks(state.appData?.roster?.players);
 
-  // Preserve user-expanded `<details>` disclosures across background renders so live polls never slam them shut
-  const openDetailSignatures = isBackground
+  const shouldPreserveReadingState = Boolean(isBackground || preserveScrollAnchor);
+
+  // Preserve user-expanded `<details>` disclosures and inline "Show more" summaries across renders
+  const openDetailSignatures = shouldPreserveReadingState
     ? new Set(
-        Array.from(mainEl.querySelectorAll('details[open]')).map(el => {
-          for (const attr of [
-            'data-gameday-active-roster',
-            'data-stats-expander',
-            'data-matchup-stats-expander',
-            'data-ps-elevations-card',
-            'data-cap-positional-spend',
-            'data-news-sources-details',
-            'data-related-cluster-details',
-            'data-rooting-week',
-            'data-prospect-id',
-            'data-gamecast-drive-id'
-          ]) {
-            if (el.hasAttribute(attr)) return `${attr}=${el.getAttribute(attr) || '1'}`;
-          }
-          const sumTxt = String(el.querySelector('summary')?.textContent || '')
-            .replace(/\(\d+\)/g, '')
-            .replace(/\s+/g, ' ')
-            .trim()
-            .slice(0, 60);
-          return sumTxt ? `sum:${sumTxt}` : '';
-        }).filter(Boolean)
+        Array.from(mainEl.querySelectorAll('details[open]'))
+          .map(getDetailsPreservationSignature)
+          .filter(Boolean)
+      )
+    : null;
+  const expandedSummaryKeys = shouldPreserveReadingState
+    ? new Set(
+        Array.from(mainEl.querySelectorAll('.brief-card[data-read-key] [data-expandable-summary="expanded"]'))
+          .map(el => el.closest('.brief-card[data-read-key]')?.getAttribute('data-read-key'))
+          .filter(Boolean)
       )
     : null;
 
@@ -1692,47 +1902,106 @@ function renderMain({ isBackground = false } = {}) {
     });
   }
 
-  // Skip identical background DOM re-renders to eliminate unnecessary visual flicker
-  if (isBackground && nextMainHtml !== null && tab === lastRenderedMainTab && nextMainHtml === lastRenderedMainHtml) {
+  const nextStableHtml = nextMainHtml !== null ? stripVolatileRelativeTimesFromHtml(nextMainHtml) : null;
+
+  // 1. Skip no-op background re-renders (including routine relative-age ticks) to eliminate visual flicker
+  if (
+    isBackground &&
+    nextMainHtml !== null &&
+    tab === lastRenderedMainTab &&
+    (nextMainHtml === lastRenderedMainHtml || nextStableHtml === lastRenderedMainStableHtml)
+  ) {
+    syncVisibleRelativeAgesInPlace(mainEl);
+    renderHeader();
+    syncNavUnreadBadge();
+    syncPendingNewsUpdatesPillDom();
     return;
   }
+
+  // 2. While scrolled down reading News & Film, NEVER replace the DOM underneath the user on background polls.
+  //    Instead preserve the exact reading position with 0 flicker and surface a floating pill when new stories arrive.
+  if (
+    isBackground &&
+    !forceNewsApply &&
+    tab === 'news' &&
+    lastRenderedMainTab === 'news' &&
+    nextMainHtml !== null
+  ) {
+    const nextSnapshot = extractNewsFeedSnapshotFromHtml(nextMainHtml);
+    const evalRes = evaluateNewsBackgroundUpdate({
+      renderedSnapshot: lastRenderedNewsSnapshot,
+      nextSnapshot,
+      scrollY: window.scrollY || 0,
+      deferScrollThresholdPx: 72,
+      existingPendingKeys: state.pendingNewsRefresh?.pendingKeys || [],
+      existingBriefPending: Boolean(state.pendingNewsRefresh?.briefChanged)
+    });
+    if (evalRes.shouldDeferDomSwap) {
+      if (evalRes.shouldShowPendingPill) {
+        state.pendingNewsRefresh = {
+          addedCount: evalRes.addedCount,
+          hasBreakingAdded: evalRes.hasBreakingAdded,
+          briefChanged: evalRes.briefChanged,
+          pillLabel: evalRes.pillLabel,
+          pendingKeys: evalRes.pendingKeys
+        };
+      }
+      syncVisibleRelativeAgesInPlace(mainEl);
+      renderHeader();
+      syncNavUnreadBadge();
+      syncPendingNewsUpdatesPillDom();
+      return;
+    }
+  }
+
+  // 3. Whenever a background or in-place render DOES update the DOM while scrolled, capture the
+  //    current viewport reading anchor so the user's visible card stays locked in place vertically.
+  const capturedReadingAnchor =
+    shouldPreserveReadingState && tab === lastRenderedMainTab
+      ? captureViewportReadingAnchors(mainEl)
+      : null;
 
   preserveFocusAroundRender(() => {
     if (nextMainHtml !== null) {
       mainEl.innerHTML = nextMainHtml;
       lastRenderedMainTab = tab;
       lastRenderedMainHtml = nextMainHtml;
+      lastRenderedMainStableHtml = nextStableHtml || '';
+      lastRenderedNewsSnapshot = tab === 'news' ? extractNewsFeedSnapshotFromHtml(nextMainHtml) : null;
     }
   });
 
+  if (tab === 'news') {
+    state.pendingNewsRefresh = null;
+  } else {
+    state.pendingNewsRefresh = null;
+  }
+
   if (openDetailSignatures && openDetailSignatures.size > 0) {
     mainEl.querySelectorAll('details').forEach(el => {
-      for (const attr of [
-        'data-gameday-active-roster',
-        'data-stats-expander',
-        'data-matchup-stats-expander',
-        'data-ps-elevations-card',
-        'data-cap-positional-spend',
-        'data-news-sources-details',
-        'data-related-cluster-details',
-        'data-rooting-week',
-        'data-prospect-id',
-        'data-gamecast-drive-id'
-      ]) {
-        if (el.hasAttribute(attr) && openDetailSignatures.has(`${attr}=${el.getAttribute(attr) || '1'}`)) {
-          el.open = true;
-          return;
-        }
-      }
-      const sumTxt = String(el.querySelector('summary')?.textContent || '')
-        .replace(/\(\d+\)/g, '')
-        .replace(/\s+/g, ' ')
-        .trim()
-        .slice(0, 60);
-      if (sumTxt && openDetailSignatures.has(`sum:${sumTxt}`)) {
+      const sig = getDetailsPreservationSignature(el);
+      if (sig && openDetailSignatures.has(sig)) {
         el.open = true;
       }
     });
+  }
+
+  if (expandedSummaryKeys && expandedSummaryKeys.size > 0) {
+    expandedSummaryKeys.forEach(rk => {
+      const box = mainEl.querySelector(`.brief-card[data-read-key="${CSS.escape(rk)}"] [data-expandable-summary]`);
+      if (!box) return;
+      box.setAttribute('data-expandable-summary', 'expanded');
+      const prevEl = box.querySelector('[data-summary-preview]');
+      const fullEl = box.querySelector('[data-summary-full]');
+      if (prevEl) prevEl.hidden = true;
+      if (fullEl) fullEl.hidden = false;
+    });
+  }
+
+  reapplyKnownFailedImageWrappers(mainEl);
+
+  if (capturedReadingAnchor) {
+    restoreViewportReadingAnchors(mainEl, capturedReadingAnchor);
   }
 
   bindAllMountedInlineVideos();
@@ -1755,6 +2024,7 @@ function renderMain({ isBackground = false } = {}) {
   renderHeader();
   renderNavTabs();
   syncNavUnreadBadge();
+  syncPendingNewsUpdatesPillDom();
 }
 
 function safePlayInlineVideo(videoEl) {
@@ -2278,6 +2548,7 @@ function renderSheet({ preserveScroll = false } = {}) {
     backdrop.removeAttribute('data-sheet-mode');
     document.body.classList.remove('sheet-open');
     syncLiveWireButtonsDom();
+    syncPendingNewsUpdatesPillDom();
     return;
   }
 
@@ -2295,6 +2566,7 @@ function renderSheet({ preserveScroll = false } = {}) {
   document.body.classList.add('sheet-open');
   syncVisualViewportVars();
   syncLiveWireButtonsDom();
+  syncPendingNewsUpdatesPillDom();
 
   preserveFocusAroundRender(() => {
     registerRosterPlayersForInlineLinks(state.appData?.roster?.players, {
@@ -2888,6 +3160,10 @@ function bindEvents() {
     btn.addEventListener('click', () => {
       const nextTab = btn.getAttribute('data-nav-tab') || 'home';
       if (nextTab === state.activeNavTab) {
+        if (nextTab === 'news' && state.pendingNewsRefresh) {
+          clearPendingNewsRefresh();
+          renderMain();
+        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
         state.tabScrollPositions[getActiveScrollMemoryKey()] = 0;
         return;
@@ -3643,6 +3919,16 @@ function bindEvents() {
         renderSheet();
         break;
 
+      case 'apply-pending-news-refresh': {
+        clearPendingNewsRefresh();
+        if (state.activeNavTab === 'news') {
+          renderMain();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          state.tabScrollPositions[getActiveScrollMemoryKey()] = 0;
+        }
+        break;
+      }
+
       case 'set-news-category': {
         const reqCat = btn.getAttribute('data-category') || 'all';
         state.newsCategoryFilter = VALID_NEWS_CATEGORIES.has(reqCat) ? reqCat : 'all';
@@ -3713,7 +3999,7 @@ function bindEvents() {
           if (state.sheetMode === 'player') {
             renderSheet({ preserveScroll: true });
           } else {
-            renderMain();
+            renderMain({ preserveScrollAnchor: true });
           }
           activateInlineVideoElement(key);
         }
@@ -5227,6 +5513,7 @@ function bindEvents() {
           '.player-avatar, .team-logo-wrap, .gc-ldr-avatar, .salient-hero-banner, .raw-item-thumb, .video-thumb-stage, .beat-podcast-art-wrap, .home-pod-art-item, .tweet-linked-article-media, .ncaa-mini-logo, .gemini-guide-gif-wrap'
         );
         if (wrap) wrap.classList.add('img-error');
+        recordFailedImageUrl(target.getAttribute('src'));
       }
     },
     true
@@ -5523,7 +5810,8 @@ async function executeSingleWirePollPass({ manual = false, focusPlayerId = null 
     requestBackgroundRender({
       main: true,
       sheet: state.sheetMode === 'player',
-      preserveSheetScroll: true
+      preserveSheetScroll: true,
+      forceNewsApply: Boolean(manual)
     });
   } else if (state.sheetMode === 'player') {
     syncLiveWireButtonsDom();
@@ -6042,6 +6330,8 @@ async function bootOrRecoverAppData({ manual = false } = {}) {
       },
       syncSharedGeminiKey: (opts = {}) => syncSharedGeminiKeyAcrossTeams({ triggerBriefs: false, ...opts }),
       requestBackgroundRender: opts => requestBackgroundRender(opts),
+      renderMainBackground: opts => renderMain({ isBackground: true, ...(opts || {}) }),
+      getPendingNewsRefresh: () => state.pendingNewsRefresh,
       isPointerInteractionActive: () => isPointerInteractionActive,
       forceRender: () => {
         renderMain();
@@ -6382,6 +6672,7 @@ async function init() {
       teamStatus: state.appData.meta?.teamStatus
     });
     renderHeader();
+    syncVisibleRelativeAgesInPlace(document.getElementById('mainView'));
   }, 60_000);
 
   // Periodic background check for full upstream JSON bundles & podcasts every 5 minutes
@@ -6456,7 +6747,7 @@ async function init() {
     });
     const registerSw = () => {
       navigator.serviceWorker
-        .register('./sw.js?v=127', { updateViaCache: 'none' })
+        .register('./sw.js?v=128', { updateViaCache: 'none' })
         .then(reg => {
           activeSwReg = reg;
           return reg.update().catch(() => {});

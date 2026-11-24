@@ -7942,6 +7942,188 @@ async function main() {
       );
     });
 
+    await runStep('News browsing stability: zero flicker & zero vertical scroll jump on general refreshes and newly arriving articles/tweets', async () => {
+      const stabilityAudit = await cdp.eval(async () => {
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const diag = window.__49ersDiagnostics;
+        if (!diag?.getState || !diag?.renderMainBackground) {
+          return { ok: false, reason: 'missing diagnostics' };
+        }
+
+        // 1. Open News & Film -> All and scroll well into the feed
+        document.querySelector('[data-nav-tab="news"]')?.click();
+        await sleep(120);
+        const allBtn = document.querySelector('[data-action="set-news-category"][data-category="all"]');
+        if (allBtn && !allBtn.classList.contains('active')) {
+          allBtn.click();
+          await sleep(100);
+        }
+
+        const cards = Array.from(document.querySelectorAll('#mainView .brief-card[data-read-key]'));
+        if (cards.length < 5) {
+          return { ok: false, reason: `too few cards: ${cards.length}` };
+        }
+        const targetCard = cards[Math.min(4, cards.length - 1)];
+        const targetKey = targetCard.getAttribute('data-read-key');
+        const targetTopDoc = targetCard.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: Math.max(240, Math.round(targetTopDoc - 140)), behavior: 'instant' });
+        await sleep(60);
+
+        const scrollBeforeGeneral = window.scrollY;
+        const rectBeforeGeneral = targetCard.getBoundingClientRect().top;
+
+        // 2. General background refresh (only lastWireSyncAt ticked, zero new news items)
+        const st = diag.getState();
+        const prevSyncAt = st.lastWireSyncAt;
+        st.lastWireSyncAt = new Date(Date.now() - 180_000).toISOString();
+        diag.renderMainBackground();
+        await sleep(50);
+
+        const exactNodeAfterGeneral = targetCard.isConnected;
+        const scrollDeltaGeneral = Math.abs(window.scrollY - scrollBeforeGeneral);
+        const rectDeltaGeneral = Math.abs(targetCard.getBoundingClientRect().top - rectBeforeGeneral);
+        const pillHiddenAfterGeneral = Boolean(document.getElementById('newsPendingUpdatesPill')?.hidden);
+
+        // 3. New breaking tweet + new article arrive via background poll while scrolled down reading
+        const origRawStream = Array.isArray(st.appData?.news?.rawStream) ? [...st.appData.news.rawStream] : [];
+        const injectedBreaking = {
+          id: 'qa_scroll_stability_breaking_1',
+          type: 'tweet',
+          category: 'beat',
+          author: 'Matt Maiocco',
+          authorHandle: '@MaioccoNBCS',
+          outletName: 'NBC Sports Bay Area',
+          title: 'BREAKING: 49ers activate key All-Pro contributor ahead of prime-time matchup',
+          fullText: 'BREAKING: 49ers activate key All-Pro contributor ahead of prime-time matchup.',
+          url: 'https://x.com/MaioccoNBCS/status/999999999999999991',
+          publishedAt: new Date().toISOString(),
+          breakingBadge: 'BREAKING',
+          salienceScore: 98,
+          wireSource: 'qa_sim'
+        };
+        const injectedArticle = {
+          id: 'qa_scroll_stability_art_2',
+          type: 'article',
+          category: 'beat',
+          author: 'Matt Barrows',
+          outletName: 'ESPN',
+          title: 'Film notebook: Kyle Shanahan red-zone motion adjustments for Week 12',
+          summary: 'Detailed breakdown of condensed splits and play-action geometry.',
+          url: 'https://www.espn.com/nfl/story/_/id/9999999992/qa-scroll-stability-film',
+          publishedAt: new Date(Date.now() - 15_000).toISOString(),
+          salienceScore: 86,
+          wireSource: 'qa_sim'
+        };
+        st.appData.news.rawStream = [injectedBreaking, injectedArticle, ...origRawStream];
+        diag.renderMainBackground();
+        await sleep(60);
+
+        const exactNodeAfterNewItems = targetCard.isConnected;
+        const scrollDeltaNewItems = Math.abs(window.scrollY - scrollBeforeGeneral);
+        const rectDeltaNewItems = Math.abs(targetCard.getBoundingClientRect().top - rectBeforeGeneral);
+        const pillEl = document.getElementById('newsPendingUpdatesPill');
+        const pillVisibleAfterNewItems = Boolean(pillEl && !pillEl.hidden);
+        const pillText = String(pillEl?.textContent || '').trim();
+        const pendingInfo = diag.getPendingNewsRefresh?.() || null;
+
+        // 4. Tapping the floating pill applies the new stories cleanly and scrolls to top
+        pillEl?.click();
+        await sleep(120);
+        const pillHiddenAfterApply = Boolean(document.getElementById('newsPendingUpdatesPill')?.hidden);
+        const breakingCardRendered = Boolean(
+          document.querySelector('#mainView .brief-card[data-read-key="qa_scroll_stability_breaking_1"]')
+        );
+
+        // 5. Force-apply background render while scrolled down (e.g. manual Sync or Home background update):
+        //    scroll anchor must keep the reading card at the same viewport Y when a new card is inserted above it!
+        const postCards = Array.from(document.querySelectorAll('#mainView .brief-card[data-read-key]'));
+        const anchorCard = postCards[Math.min(5, postCards.length - 1)];
+        const anchorKey = anchorCard?.getAttribute('data-read-key') || '';
+        const anchorDocTop = anchorCard ? anchorCard.getBoundingClientRect().top + window.scrollY : 0;
+        window.scrollTo({ top: Math.max(260, Math.round(anchorDocTop - 150)), behavior: 'instant' });
+        await sleep(50);
+        const anchorTopBeforeForce = anchorCard ? anchorCard.getBoundingClientRect().top : 0;
+
+        const injectedThird = {
+          id: 'qa_scroll_stability_breaking_3',
+          type: 'tweet',
+          category: 'beat',
+          author: 'Adam Schefter',
+          authorHandle: '@AdamSchefter',
+          outletName: 'ESPN',
+          title: 'BREAKING: Major roster elevation finalized for Sunday night showdown',
+          fullText: 'BREAKING: Major roster elevation finalized for Sunday night showdown.',
+          url: 'https://x.com/AdamSchefter/status/999999999999999993',
+          publishedAt: new Date(Date.now() + 2000).toISOString(),
+          breakingBadge: 'BREAKING',
+          salienceScore: 99,
+          wireSource: 'qa_sim'
+        };
+        st.appData.news.rawStream = [injectedThird, ...st.appData.news.rawStream];
+        diag.renderMainBackground({ forceNewsApply: true });
+        await sleep(60);
+        const anchorElAfterForce = anchorKey
+          ? document.querySelector(`#mainView .brief-card[data-read-key="${CSS.escape(anchorKey)}"]`)
+          : null;
+        const anchorTopAfterForce = anchorElAfterForce ? anchorElAfterForce.getBoundingClientRect().top : -9999;
+        const anchorDriftAfterForce = Math.abs(anchorTopAfterForce - anchorTopBeforeForce);
+
+        // Clean up simulated items & restore original stream
+        st.appData.news.rawStream = origRawStream;
+        st.lastWireSyncAt = prevSyncAt;
+        diag.forceRender();
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        await sleep(50);
+
+        return {
+          ok: true,
+          targetKey,
+          exactNodeAfterGeneral,
+          scrollDeltaGeneral,
+          rectDeltaGeneral,
+          pillHiddenAfterGeneral,
+          exactNodeAfterNewItems,
+          scrollDeltaNewItems,
+          rectDeltaNewItems,
+          pillVisibleAfterNewItems,
+          pillText,
+          pendingAddedCount: pendingInfo?.addedCount || 0,
+          pillHiddenAfterApply,
+          breakingCardRendered,
+          anchorDriftAfterForce
+        };
+      });
+
+      assert(stabilityAudit.ok, `News scroll stability audit failed setup: ${JSON.stringify(stabilityAudit)}`);
+      assert(
+        stabilityAudit.exactNodeAfterGeneral &&
+          stabilityAudit.scrollDeltaGeneral <= 1 &&
+          stabilityAudit.rectDeltaGeneral <= 1 &&
+          stabilityAudit.pillHiddenAfterGeneral,
+        `General background refresh must NEVER replace DOM nodes, flicker, or shift scroll: ${JSON.stringify(stabilityAudit)}`
+      );
+      assert(
+        stabilityAudit.exactNodeAfterNewItems &&
+          stabilityAudit.scrollDeltaNewItems <= 1 &&
+          stabilityAudit.rectDeltaNewItems <= 1,
+        `New articles/tweets arriving while scrolled down must NOT replace DOM or move reading location: ${JSON.stringify(stabilityAudit)}`
+      );
+      assert(
+        stabilityAudit.pillVisibleAfterNewItems &&
+          stabilityAudit.pendingAddedCount >= 2 &&
+          /Breaking|new/i.test(stabilityAudit.pillText),
+        `Deferred background news updates must surface clean floating pill with count: ${JSON.stringify(stabilityAudit)}`
+      );
+      assert(
+        stabilityAudit.pillHiddenAfterApply && stabilityAudit.breakingCardRendered,
+        `Tapping pending updates pill must apply fresh stories and hide pill: ${JSON.stringify(stabilityAudit)}`
+      );
+      assert(
+        stabilityAudit.anchorDriftAfterForce <= 4,
+        `Forced background DOM update while scrolled must anchor reading card vertically (<=4px drift): ${JSON.stringify(stabilityAudit)}`
+      );
+    });
+
     await runStep('Zero console errors, zero uncaught page exceptions, and zero local HTTP 404/500 errors', async () => {
       assert(
         cdp.consoleErrors.length === 0,

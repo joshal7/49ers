@@ -6339,10 +6339,10 @@ tr.unit-overall-banner.overall-stat-row td {
    Salient Visual Media System (Google News × Bleacher Report × The Athletic)
    ============================================================================ */
 
-/* Skip off-screen layout/paint for long News & Film feeds without hurting scroll smoothness */
+/* Preserve deterministic card heights on scroll/refresh (content-visibility: auto causes
+   off-screen intrinsic-height collapse and vertical scroll jumps across WebKit & Blink) */
 .brief-card {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 138px;
+  overflow-anchor: auto;
 }
 
 .brief-card.has-lead-hero {
@@ -6829,6 +6829,54 @@ a.raw-item-thumb.salient-thumb:hover {
 .pull-refresh-pill.armed {
   color: var(--gold-bright);
   border-color: var(--gold-border);
+}
+
+/* Floating Non-Intrusive "N new updates" Pill (appears when scrolled down reading News so
+   background wire polls NEVER hijack scroll position or flicker the cards being read) */
+.news-pending-updates-pill {
+  position: fixed;
+  top: calc(var(--top-header-h, 58px) + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: linear-gradient(180deg, var(--scarlet-bright), var(--scarlet));
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24), 0 2px 6px rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+  touch-action: manipulation;
+  white-space: nowrap;
+  max-width: calc(100vw - 32px);
+}
+
+.news-pending-updates-pill[hidden] {
+  display: none !important;
+}
+
+.news-pending-updates-pill:active {
+  transform: translateX(-50%) scale(0.97);
+}
+
+.news-pending-updates-pill.is-breaking {
+  border-color: var(--gold-border);
+  box-shadow: 0 10px 24px rgba(var(--primary-rgb), 0.36), 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.news-pending-updates-pill-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  line-height: 1;
 }
 
 /* Keep News Toolbar Head ultra-compact on narrow portrait screens */

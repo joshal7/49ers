@@ -156,7 +156,11 @@ import {
   matchNewsItemSearchQuery,
   highlightSearchTextHtml,
   damerauLevenshtein,
-  urlBase64ToUint8Array
+  urlBase64ToUint8Array,
+  stripVolatileRelativeTimesFromHtml,
+  extractNewsFeedSnapshotFromHtml,
+  evaluateNewsBackgroundUpdate,
+  computeScrollAnchorTargetY
 } from '../src/engine/digestExperienceEngine.js';
 import {
   extractBeatAttributionFromText,
@@ -22197,6 +22201,111 @@ await testAsync('Playoff clinch guard (never 100% unclinched), stale brief/live 
     const b = sm?.upcomingMatchup?.betting || {};
     assert.ok(b.impliedScore && b.openingSpread && b.moneyline && b.restAdvantage, `${slug} schedule-matchup.json missing betting/rest fields: ${JSON.stringify(b)}`);
   }
+});
+
+test('News background refresh zero-flicker & reading-position stability helpers (volatile-time stripping, deferred pill, scroll-anchor math)', () => {
+  // 1. Volatile relative ages & sync button text normalize identically so clock ticks never trigger innerHTML wipes
+  const htmlT0 = `
+    <button data-action="sync-live-wire-now"><span>1m ago</span></button>
+    <section class="card daily-news-brief-card" data-daily-news-brief="daily-1" data-brief-gen="2026-11-24T17:00:00Z" data-brief-headline="Week 12 Film Study">
+      <span class="mono daily-brief-age" data-daily-brief-age data-published-at="2026-11-24T17:00:00Z">2h ago</span>
+    </section>
+    <div class="brief-card" data-read-key="art-1">
+      <span class="mono wire-card-age" data-wire-age data-published-at="2026-11-24T19:00:00Z" data-age-prefix="2m read • ">2m read • 14m ago</span>
+    </div>
+    <div class="brief-card breaking-elevated" data-read-key="tw-2">
+      <span class="mono wire-card-age" data-wire-age data-published-at="2026-11-24T19:10:00Z" data-age-prefix="">4m ago</span>
+    </div>
+  `;
+  const htmlT1 = htmlT0
+    .replace('<span>1m ago</span>', '<span>2m ago</span>')
+    .replace('>2h ago<', '>3h ago<')
+    .replace('2m read • 14m ago', '2m read • 15m ago')
+    .replace('>4m ago<', '>5m ago<');
+  assert.equal(
+    stripVolatileRelativeTimesFromHtml(htmlT0),
+    stripVolatileRelativeTimesFromHtml(htmlT1),
+    'Routine relative-time ticks must produce identical stable HTML fingerprints'
+  );
+
+  // 2. Real content change (new article/tweet) still differs cleanly
+  const htmlWithNew = `${htmlT1}<div class="brief-card breaking-elevated" data-read-key="tw-new-3"><span data-wire-age>1m ago</span></div>`;
+  assert.notEqual(
+    stripVolatileRelativeTimesFromHtml(htmlT0),
+    stripVolatileRelativeTimesFromHtml(htmlWithNew),
+    'Newly added wire cards must invalidate stable HTML fingerprint'
+  );
+
+  // 3. Snapshot extraction & background deferral logic while scrolled down reading News
+  const snap0 = extractNewsFeedSnapshotFromHtml(htmlT0);
+  assert.deepEqual(snap0.itemKeys, ['art-1', 'tw-2']);
+  assert.deepEqual(snap0.breakingKeys, ['tw-2']);
+  assert.ok(snap0.briefSig.includes('daily-1|2026-11-24T17:00:00Z|Week 12 Film Study'));
+
+  const snapNew = extractNewsFeedSnapshotFromHtml(htmlWithNew);
+  const deferredNew = evaluateNewsBackgroundUpdate({
+    renderedSnapshot: snap0,
+    nextSnapshot: snapNew,
+    scrollY: 640
+  });
+  assert.equal(deferredNew.shouldDeferDomSwap, true, 'Scrolled-down News view must defer background DOM swap');
+  assert.equal(deferredNew.shouldShowPendingPill, true, 'New story arriving while scrolled down must surface floating pill');
+  assert.equal(deferredNew.addedCount, 1);
+  assert.equal(deferredNew.hasBreakingAdded, true);
+  assert.equal(deferredNew.pillLabel, 'Breaking · 1 new');
+
+  // 4. General refresh / reorder with ZERO new items while scrolled down must defer DOM swap AND NOT show an empty pill
+  const snapReorderedOnly = { ...snap0, itemKeys: ['tw-2', 'art-1'] };
+  const deferredReorder = evaluateNewsBackgroundUpdate({
+    renderedSnapshot: snap0,
+    nextSnapshot: snapReorderedOnly,
+    scrollY: 640
+  });
+  assert.equal(deferredReorder.shouldDeferDomSwap, true, 'Scrolled-down News must not reorder underneath the reader');
+  assert.equal(deferredReorder.shouldShowPendingPill, false, 'Zero new items must not show a spurious pill');
+
+  // 5. At top of page (scrollY <= 72), allow clean background update
+  const atTopRes = evaluateNewsBackgroundUpdate({
+    renderedSnapshot: snap0,
+    nextSnapshot: snapNew,
+    scrollY: 0
+  });
+  assert.equal(atTopRes.shouldDeferDomSwap, false, 'Top-of-feed user should receive live updates directly');
+
+  // 6. Brief update while scrolled down surfaces "Top Brief updated" pill
+  const snapBriefUpdated = { ...snap0, briefSig: 'daily-2|2026-11-25T01:00:00Z|Postgame Wrap' };
+  const deferredBrief = evaluateNewsBackgroundUpdate({
+    renderedSnapshot: snap0,
+    nextSnapshot: snapBriefUpdated,
+    scrollY: 420
+  });
+  assert.equal(deferredBrief.shouldDeferDomSwap, true);
+  assert.equal(deferredBrief.shouldShowPendingPill, true);
+  assert.equal(deferredBrief.pillLabel, 'Top Brief updated');
+
+  // 7. Scroll-anchor target Y math keeps reading card pinned at exact same viewport Y
+  assert.equal(
+    computeScrollAnchorTargetY({ prevAnchorTop: 180, nextAnchorTop: 460, currentScrollY: 500, maxScrollY: 3000 }),
+    780,
+    'Inserting 280px above reading card must shift scrollY +280px to hold card at exact same screen position'
+  );
+  assert.equal(
+    computeScrollAnchorTargetY({ prevAnchorTop: 220, nextAnchorTop: 100, currentScrollY: 400, maxScrollY: 3000 }),
+    280,
+    'Removing 120px above reading card must shift scrollY -120px to hold card steady'
+  );
+  assert.equal(
+    computeScrollAnchorTargetY({ prevAnchorTop: 220, nextAnchorTop: 10, currentScrollY: 50, maxScrollY: 3000 }),
+    0,
+    'Scroll-anchor target clamps cleanly at 0'
+  );
+
+  // 8. Verify .brief-card no longer uses content-visibility: auto (prevents off-screen height amnesia scroll jumps)
+  const cssSrc = fs.readFileSync(path.join(rootDir, 'src', 'styles.css'), 'utf8');
+  assert.ok(
+    !/\.brief-card\s*\{[^}]*content-visibility\s*:\s*auto/i.test(cssSrc),
+    '.brief-card must not use content-visibility: auto (causes vertical scroll jumps across WebKit & Blink)'
+  );
 });
 
 console.log(`\n======================================================`);

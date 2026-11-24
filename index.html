@@ -27,7 +27,7 @@
   <link rel="dns-prefetch" href="https://static.clubs.nfl.com" />
   <link rel="dns-prefetch" href="https://i.ytimg.com" />
   <link rel="dns-prefetch" href="https://is1-ssl.mzstatic.com" />
-  <link rel="stylesheet" href="./src/styles.css?v=88" />
+  <link rel="stylesheet" href="./src/styles.css?v=89" />
 </head>
 <body>
   <script>
@@ -122,6 +122,7 @@
     <div id="pullRefreshIndicator" class="pull-refresh-pill" hidden aria-live="polite">
       <span id="pullRefreshLabel">Pull to refresh live wire</span>
     </div>
+    <button type="button" id="newsPendingUpdatesPill" class="news-pending-updates-pill" data-action="apply-pending-news-refresh" hidden aria-live="polite" title="Jump to top and load newly arrived stories"></button>
     <!-- Primary Dynamic View Container -->
     <main id="mainView" class="main-view" role="main" aria-live="polite">
       <div class="card">
@@ -286,6 +287,6 @@
   <!-- Subtle Quick-Bubble Popover for Football, Analytics & CBA Jargon -->
   <div id="jargonPopover" class="jargon-popover" hidden role="dialog" aria-label="Football &amp; Salary Cap Term Definition"></div>
 
-  <script type="module" src="./src/app.js?v=166"></script>
+  <script type="module" src="./src/app.js?v=167"></script>
 </body>
 </html>
