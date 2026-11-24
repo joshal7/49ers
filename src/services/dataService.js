@@ -2113,9 +2113,69 @@ function hydrateBundlePostLoad(rawFiles) {
         pp.rootingLeverage = dedupedRooting;
       }
     }
-    if (hadDupOrOverlap || rootingHadDups) {
+    const needsBootModelUpgrade = simInBoot.modelVersion !== PLAYOFF_MODEL_VERSION;
+    if (hadDupOrOverlap || rootingHadDups || needsBootModelUpgrade) {
       try {
         const bootTeam = getActiveTeamConfig();
+        if (needsBootModelUpgrade) {
+          const confListBoot =
+            Array.isArray(simInBoot.conferenceTeams) && simInBoot.conferenceTeams.length > 0
+              ? simInBoot.conferenceTeams
+              : simInBoot.nfcTeams || [];
+          const otherStBoot =
+            simInBoot.otherConferenceStandings && Object.keys(simInBoot.otherConferenceStandings).length > 0
+              ? simInBoot.otherConferenceStandings
+              : simInBoot.afcStandings || {};
+          const stBoot = {};
+          const epaBoot = {};
+          for (const nt of confListBoot) {
+            const ab = normalizeTeamAbbrClient(nt.abbr);
+            stBoot[ab] = { wins: nt.wins, losses: nt.losses, ties: nt.ties, pointDiff: nt.pointDiff, pointsFor: nt.pointsFor, pointsAgainst: nt.pointsAgainst, netEpaPerGame: nt.netEpaPerGame ?? null };
+            if (nt.netEpaPerGame != null) epaBoot[ab] = { netEpaPerGame: Number(nt.netEpaPerGame) };
+          }
+          for (const [rab, st] of Object.entries(otherStBoot)) {
+            const ab = normalizeTeamAbbrClient(rab);
+            stBoot[ab] = { wins: st.wins, losses: st.losses, ties: st.ties, pointDiff: st.pointDiff, pointsFor: st.pointsFor, pointsAgainst: st.pointsAgainst, netEpaPerGame: st.netEpaPerGame ?? null };
+            if (st.netEpaPerGame != null) epaBoot[ab] = { netEpaPerGame: Number(st.netEpaPerGame) };
+          }
+          const bootRatings = computeLeaguePowerRatings({
+            completedGames: simInBoot.completedGames || [],
+            remainingGames: simInBoot.remainingGames || [],
+            preseasonPriors: simInBoot.preseasonPriors || {},
+            weeklyTeamStats: simInBoot.weeklyTeamStats || null,
+            teamAggregateEpa: Object.keys(epaBoot).length > 0 ? epaBoot : null,
+            standingsByAbbr: stBoot,
+            injuryAdjustmentsByTeam: simInBoot.injuryAdjustmentsByTeam || null,
+            currentWeek: Number(meta?.currentWeek || 0) || null
+          }).byAbbr;
+          for (const list of [confListBoot, ...(simInBoot.nfcTeams && simInBoot.nfcTeams !== confListBoot ? [simInBoot.nfcTeams] : [])]) {
+            for (const nt of list) {
+              const lr = bootRatings[normalizeTeamAbbrClient(nt.abbr)];
+              if (!lr) continue;
+              nt.powerRating = lr.powerRating;
+              nt.preseasonPriorSpread = lr.preseasonPriorSpread;
+              nt.preseasonPriorElo = lr.preseasonPriorElo;
+              nt.sosSpreadAdj = lr.sosSpreadAdj;
+              nt.remainingSosSpread = lr.remainingSosSpread;
+              nt.remainingSosRank = lr.remainingSosRank;
+              nt.qbInjuryEloAdj = lr.qbInjuryEloAdj;
+              nt.nonQbInjuryEloAdj = lr.nonQbInjuryEloAdj;
+              nt.nextGameEloDelta = lr.nextGameEloDelta;
+              if (lr.qbStatusNote) nt.qbStatusNote = lr.qbStatusNote;
+            }
+          }
+          if (!simInBoot.otherConferenceNextGameDeltas) simInBoot.otherConferenceNextGameDeltas = {};
+          for (const rab of Object.keys(otherStBoot)) {
+            const ab = normalizeTeamAbbrClient(rab);
+            const lr = bootRatings[ab];
+            if (!lr) continue;
+            if (simInBoot.afcRatings) simInBoot.afcRatings[ab] = lr.powerRating;
+            if (simInBoot.afcPowerRatings) simInBoot.afcPowerRatings[ab] = lr.powerRating;
+            if (simInBoot.otherConferencePowerRatings) simInBoot.otherConferencePowerRatings[ab] = lr.powerRating;
+            simInBoot.otherConferenceNextGameDeltas[ab] = lr.nextGameEloDelta;
+          }
+          simInBoot.modelVersion = PLAYOFF_MODEL_VERSION;
+        }
         const freshBootMc = runPlayoffMonteCarlo({
           ...simInBoot,
           targetTeam: simInBoot.targetTeam || bootTeam.abbr,
@@ -2125,6 +2185,7 @@ function hydrateBundlePostLoad(rawFiles) {
         });
         if (freshBootMc?.sfOdds) {
           pp.baselineSimulation = freshBootMc;
+          pp.lastSimulatedAt = pp.lastSimulatedAt || meta?.updatedAt || new Date().toISOString();
         }
         pp.rootingLeverage = computeRootingGuideLeverage(
           {
@@ -8761,9 +8822,8 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
         remainingGamesCount: countRemFor(activeAbbrInj)
       });
       let injuryRatingChanged =
-        !prevSfAdj ||
-        Math.abs(Number(liveSfAdj.totalGameSpreadAdj || 0) - Number(prevSfAdj.totalGameSpreadAdj || 0)) >= 0.15 ||
-        Math.abs(Number(liveSfAdj.totalSeasonSpreadAdj || 0) - Number(prevSfAdj.totalSeasonSpreadAdj || 0)) >= 0.15;
+        Math.abs(Number(liveSfAdj.totalGameSpreadAdj || 0) - Number(prevSfAdj?.totalGameSpreadAdj || 0)) >= 0.15 ||
+        Math.abs(Number(liveSfAdj.totalSeasonSpreadAdj || 0) - Number(prevSfAdj?.totalSeasonSpreadAdj || 0)) >= 0.15;
       if (injuryRatingChanged) {
         simInInj.injuryAdjustmentsByTeam[activeAbbrInj] = liveSfAdj;
       }
@@ -8775,9 +8835,8 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
           remainingGamesCount: countRemFor(oppAbbrInj)
         });
         const oppDeltaChanged =
-          !prevOppAdj ||
-          Math.abs(Number(liveOppAdj.totalGameSpreadAdj || 0) - Number(prevOppAdj.totalGameSpreadAdj || 0)) >= 0.15 ||
-          Math.abs(Number(liveOppAdj.totalSeasonSpreadAdj || 0) - Number(prevOppAdj.totalSeasonSpreadAdj || 0)) >= 0.15;
+          Math.abs(Number(liveOppAdj.totalGameSpreadAdj || 0) - Number(prevOppAdj?.totalGameSpreadAdj || 0)) >= 0.15 ||
+          Math.abs(Number(liveOppAdj.totalSeasonSpreadAdj || 0) - Number(prevOppAdj?.totalSeasonSpreadAdj || 0)) >= 0.15;
         if (oppDeltaChanged) {
           simInInj.injuryAdjustmentsByTeam[oppAbbrInj] = liveOppAdj;
           injuryRatingChanged = true;
@@ -8856,6 +8915,31 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
           simInInj.lastSimulatedAt = simTs;
           appData.seasonal.playoffPicture.lastSimulatedAt = simTs;
           appData.seasonal.playoffPicture.baselineSimulation = reSim;
+          if (Array.isArray(appData.seasonal.playoffPicture.seedPathCards)) {
+            const sf = reSim.sfOdds;
+            for (const card of appData.seasonal.playoffPicture.seedPathCards) {
+              let nextPct = null;
+              if (/bye|#1\s*seed/i.test(card.target)) {
+                nextPct = sf.seed1ByePct;
+              } else if (/division|nfc\s*west|afc\s*west|nfc\s*north|afc\s*north|nfc\s*east|afc\s*east|nfc\s*south|afc\s*south/i.test(card.target)) {
+                nextPct = sf.winDivisionPct;
+              } else if (/playoff\s*berth|make\s*playoffs|seeds\s*#1/i.test(card.target)) {
+                nextPct = sf.makePlayoffsPct;
+              } else if (/wild\s*card/i.test(card.target)) {
+                nextPct = sf.wildCardPct;
+              }
+              if (nextPct !== null) {
+                const prevPct = card.currentProbPct;
+                card.currentProbPct = nextPct;
+                if (card.pathSummary && prevPct != null && Number(prevPct) !== Number(nextPct)) {
+                  card.pathSummary = String(card.pathSummary).replace(
+                    new RegExp(`\\b${String(prevPct).replace('.', '\\.')}%`),
+                    `${nextPct}%`
+                  );
+                }
+              }
+            }
+          }
           mutated = true;
         }
       }

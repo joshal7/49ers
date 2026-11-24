@@ -14,6 +14,7 @@
 import {
   esc,
   escJargon,
+  formatRelativeAge,
   jargonTerm,
   jargonInfoIcon,
   playProbBadgeClass,
@@ -3195,7 +3196,7 @@ function renderPlayoffSimulator(
             ? `${fmtSigned(totalInjElo, 'Elo')} (Key Injuries)`
             : 'Healthy Starter (±0 Elo)';
         const simTs = pp.lastSimulatedAt || simIn.lastSimulatedAt || appData?.meta?.updatedAt || '';
-        const simRel = simTs ? formatRelativeTime(simTs) : 'Live';
+        const simRel = simTs ? formatRelativeAge(simTs) : 'Live';
         return `
         <details class="playoff-model-factors-disclosure" data-playoff-model-factors>
           <summary class="playoff-model-factors-summary">

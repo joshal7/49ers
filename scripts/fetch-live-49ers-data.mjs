@@ -88,9 +88,14 @@ import {
 import {
   runPlayoffMonteCarlo,
   computeCalibratedTeamPowerRating,
+  computePreseasonPriorsFromHistory,
+  computeLeaguePowerRatings,
+  estimateTeamInjurySpreadAdjustments,
   computeRootingGuideLeverage,
   normalizeTeamAbbr,
-  NFC_DIVISIONS
+  NFC_DIVISIONS,
+  ALL_NFL_DIVISIONS,
+  PLAYOFF_MODEL_VERSION
 } from '../src/engine/playoffMonteCarlo.js';
 import { cleanSensationalistText, scoreContentSignal } from '../src/engine/antiFluffFilter.js';
 import {
@@ -5667,20 +5672,30 @@ async function main() {
     `[power-rankings] Resolved ${powerRankings.sources?.length || 0} consistent sources (${powerRankings.weekLabel || 'N/A'}) -> Consensus #${powerRankings.consensusRank ?? '—'} (${powerRankings.rangeShort || '—'}), excluded stale: ${powerRankings.disregardedStaleCount || 0}`
   );
 
-  // 10. Build NFC Standings & Remaining Games for Calibrated 10,000-Run Monte Carlo (`data/seasonal.json`)
+  // 10. Build 32-Team Hierarchical Bayesian Ratings & 10,000-Run Monte Carlo (`data/seasonal.json`)
   const intlSfWeeks = new Set(
     scheduleItems.filter(s => (s.seasonType || 'REG') === 'REG' && s.venue?.isInternational).map(s => Number(s.week))
   );
   let completed2026Games = nflGames2026
     .filter(g => g.home_score !== '' && g.away_score !== '')
-    .map(g => ({
-      id: g.game_id,
-      week: Number(g.week),
-      home: normalizeTeamAbbr(g.home_team),
-      away: normalizeTeamAbbr(g.away_team),
-      homeScore: Number(g.home_score),
-      awayScore: Number(g.away_score)
-    }));
+    .map(g => {
+      const home = normalizeTeamAbbr(g.home_team);
+      const away = normalizeTeamAbbr(g.away_team);
+      return {
+        id: g.game_id,
+        week: Number(g.week),
+        home,
+        away,
+        homeScore: Number(g.home_score),
+        awayScore: Number(g.away_score),
+        neutral: String(g.location || '').toLowerCase().includes('neutral'),
+        divGame: Number(g.div_game) === 1 || ALL_NFL_DIVISIONS[home] === ALL_NFL_DIVISIONS[away],
+        homeRest: num(g.home_rest, 7),
+        awayRest: num(g.away_rest, 7),
+        ...(g.home_qb_id ? { homeQbId: g.home_qb_id } : {}),
+        ...(g.away_qb_id ? { awayQbId: g.away_qb_id } : {})
+      };
+    });
 
   let remaining2026Games = nflGames2026
     .filter(g => g.home_score === '' || g.away_score === '')
@@ -5695,7 +5710,12 @@ async function main() {
         away,
         neutral:
           String(g.location || '').toLowerCase().includes('neutral') ||
-          ((home === 'SF' || away === 'SF') && intlSfWeeks.has(wk))
+          ((home === 'SF' || away === 'SF') && intlSfWeeks.has(wk)),
+        divGame: Number(g.div_game) === 1 || ALL_NFL_DIVISIONS[home] === ALL_NFL_DIVISIONS[away],
+        homeRest: num(g.home_rest, 7),
+        awayRest: num(g.away_rest, 7),
+        ...(g.home_qb_id ? { homeQbId: g.home_qb_id } : {}),
+        ...(g.away_qb_id ? { awayQbId: g.away_qb_id } : {})
       };
     });
 
@@ -5768,8 +5788,9 @@ async function main() {
     remaining2026Games = stillRemaining;
   }
 
-  // Compute 32-team Net EPA/game (Offense EPA - Defense EPA Allowed) from nflverse weekly team stats
+  // Build per-game weekly team EPA map (Pass / Rush / Total) & aggregate Net EPA/game from nflverse
   const netEpaByTeam = new Map();
+  const weeklyTeamStats = {};
   const offEpaSum = new Map();
   const defEpaAllowedSum = new Map();
   const teamEpaGames = new Map();
@@ -5777,7 +5798,17 @@ async function main() {
     if (row.season_type !== 'REG' || !row.team) continue;
     const tm = normalizeTeamAbbr(row.team);
     const opp = row.opponent_team ? normalizeTeamAbbr(row.opponent_team) : null;
-    const playEpa = num(row.passing_epa) + num(row.rushing_epa);
+    const wk = Number(row.week || 0);
+    const passEpa = num(row.passing_epa);
+    const rushEpa = num(row.rushing_epa);
+    const playEpa = passEpa + rushEpa;
+    if (wk > 0) {
+      weeklyTeamStats[`${wk}:${tm}`] = {
+        passEpa: Number(passEpa.toFixed(2)),
+        rushEpa: Number(rushEpa.toFixed(2)),
+        totalEpa: Number(playEpa.toFixed(2))
+      };
+    }
     offEpaSum.set(tm, (offEpaSum.get(tm) || 0) + playEpa);
     teamEpaGames.set(tm, (teamEpaGames.get(tm) || 0) + 1);
     if (opp) {
@@ -5797,6 +5828,174 @@ async function main() {
     }
   }
 
+  // Build walk-forward QB value ratings (spread pts vs league-average starter) from multi-season nflverse QB EPA
+  const qbAccum = new Map();
+  const ingestQbRows = (rows, seasonWeight) => {
+    for (const r of rows || []) {
+      if (r.season_type && r.season_type !== 'REG') continue;
+      if (r.position !== 'QB' && r.position_group !== 'QB') continue;
+      const qid = r.player_id;
+      if (!qid) continue;
+      const plays = num(r.attempts) + num(r.sacks_suffered) + num(r.carries);
+      if (plays < 5) continue;
+      const totalEpa = num(r.passing_epa) + num(r.rushing_epa);
+      const cur = qbAccum.get(qid) || { epa: 0, plays: 0, name: r.player_display_name || r.player_name || '' };
+      cur.epa += totalEpa * seasonWeight;
+      cur.plays += plays * seasonWeight;
+      if (r.player_display_name) cur.name = r.player_display_name;
+      qbAccum.set(qid, cur);
+    }
+  };
+  ingestQbRows(statsPlayerPrev3, 0.42);
+  ingestQbRows(statsPlayerPrev2, 0.58);
+  ingestQbRows(statsPlayerPrev1, 0.78);
+  ingestQbRows(statsPlayerWeekCurrent, 1.0);
+  const qbRatingsById = {};
+  for (const [qid, st] of qbAccum.entries()) {
+    const rawPts = (st.epa / Math.max(1, st.plays) - 0.04) * 16.0;
+    const shrunk = (st.plays * rawPts + 260 * -1.7) / (st.plays + 260);
+    qbRatingsById[qid] = {
+      name: st.name,
+      plays: Math.round(st.plays),
+      valuePts: Number(Math.max(-4.5, Math.min(5.0, shrunk)).toFixed(3))
+    };
+  }
+
+  // Compute 32-team preseason spread priors from prior-season opponent-adjusted results + offseason QB changes + W1 spreads
+  const prevSeasonGames = (gamesRows || [])
+    .filter(g => Number(g.season) === prevSeasonYear && g.game_type === 'REG' && g.home_score !== '' && g.away_score !== '')
+    .map(g => ({
+      week: Number(g.week),
+      home: normalizeTeamAbbr(g.home_team),
+      away: normalizeTeamAbbr(g.away_team),
+      homeScore: Number(g.home_score),
+      awayScore: Number(g.away_score),
+      neutral: String(g.location || '').toLowerCase().includes('neutral'),
+      divGame: Number(g.div_game) === 1,
+      homeRest: num(g.home_rest, 7),
+      awayRest: num(g.away_rest, 7),
+      homeQbId: g.home_qb_id || '',
+      awayQbId: g.away_qb_id || ''
+    }));
+  const prevTeamQbCounts = new Map();
+  for (const g of prevSeasonGames) {
+    for (const [tm, qid] of [[g.home, g.homeQbId], [g.away, g.awayQbId]]) {
+      if (!qid) continue;
+      if (!prevTeamQbCounts.has(tm)) prevTeamQbCounts.set(tm, new Map());
+      prevTeamQbCounts.get(tm).set(qid, (prevTeamQbCounts.get(tm).get(qid) || 0) + 1);
+    }
+  }
+  const prevTeamQbByAbbr = {};
+  for (const [tm, m] of prevTeamQbCounts.entries()) {
+    let bestQ = null;
+    let bestC = -1;
+    for (const [q, c] of m.entries()) {
+      if (c > bestC) {
+        bestC = c;
+        bestQ = q;
+      }
+    }
+    if (bestQ && qbRatingsById[bestQ]) prevTeamQbByAbbr[tm] = qbRatingsById[bestQ].valuePts;
+  }
+  const currentSeasonW1Games = (nflGames2026 || [])
+    .filter(g => Number(g.week) === 1)
+    .map(g => ({
+      home: normalizeTeamAbbr(g.home_team),
+      away: normalizeTeamAbbr(g.away_team),
+      spreadLine: g.spread_line !== '' && g.spread_line !== 'NA' ? Number(g.spread_line) : null,
+      neutral: String(g.location || '').toLowerCase().includes('neutral'),
+      divGame: Number(g.div_game) === 1,
+      homeQbId: g.home_qb_id || '',
+      awayQbId: g.away_qb_id || ''
+    }));
+  const preseasonPriors = computePreseasonPriorsFromHistory({
+    prevSeasonGames,
+    currentSeasonW1Games,
+    qbRatingsById,
+    prevTeamQbByAbbr
+  });
+
+  // Compute 32-team live injury spread adjustments (QB1 IR/Out/Doubtful + non-QB key starters) from ESPN league injuries + SF health
+  const remCountByTeam = new Map();
+  for (const rg of remaining2026Games) {
+    remCountByTeam.set(rg.home, (remCountByTeam.get(rg.home) || 0) + 1);
+    remCountByTeam.set(rg.away, (remCountByTeam.get(rg.away) || 0) + 1);
+  }
+  const injuryAdjustmentsByTeam = {};
+  const espnTeamNameToAbbr = new Map([
+    ['49ers', 'SF'], ['seahawks', 'SEA'], ['rams', 'LAR'], ['cardinals', 'ARI'],
+    ['lions', 'DET'], ['vikings', 'MIN'], ['packers', 'GB'], ['bears', 'CHI'],
+    ['eagles', 'PHI'], ['cowboys', 'DAL'], ['giants', 'NYG'], ['commanders', 'WAS'],
+    ['buccaneers', 'TB'], ['saints', 'NO'], ['falcons', 'ATL'], ['panthers', 'CAR'],
+    ['bills', 'BUF'], ['dolphins', 'MIA'], ['patriots', 'NE'], ['jets', 'NYJ'],
+    ['ravens', 'BAL'], ['bengals', 'CIN'], ['browns', 'CLE'], ['steelers', 'PIT'],
+    ['texans', 'HOU'], ['colts', 'IND'], ['jaguars', 'JAX'], ['titans', 'TEN'],
+    ['broncos', 'DEN'], ['chiefs', 'KC'], ['raiders', 'LV'], ['chargers', 'LAC']
+  ]);
+  const currentStarterByTeam = {};
+  const currentStarterNameByTeam = {};
+  for (const g of [...completed2026Games, ...remaining2026Games]) {
+    if (g.homeQbId) currentStarterByTeam[g.home] = g.homeQbId;
+    if (g.awayQbId) currentStarterByTeam[g.away] = g.awayQbId;
+  }
+  for (const g of nflGames2026 || []) {
+    if (Number(g.week) === Number(currentWeek)) {
+      const h = normalizeTeamAbbr(g.home_team);
+      const a = normalizeTeamAbbr(g.away_team);
+      if (g.home_qb_id) currentStarterByTeam[h] = g.home_qb_id;
+      if (g.away_qb_id) currentStarterByTeam[a] = g.away_qb_id;
+      if (g.home_qb_name) currentStarterNameByTeam[h] = g.home_qb_name;
+      if (g.away_qb_name) currentStarterNameByTeam[a] = g.away_qb_name;
+    }
+  }
+  for (const teamEntry of espnInjuries?.injuries || []) {
+    const dispLower = String(teamEntry?.displayName || '').toLowerCase();
+    let abbr = null;
+    for (const [nick, code] of espnTeamNameToAbbr.entries()) {
+      if (dispLower.includes(nick)) {
+        abbr = code;
+        break;
+      }
+    }
+    if (!abbr || abbr === 'SF') continue;
+    const injList = [];
+    const irList = [];
+    const qbStarterName = currentStarterNameByTeam[abbr] || '';
+    for (const item of teamEntry.injuries || []) {
+      const nm = item.athlete?.displayName || '';
+      const pos = item.athlete?.position?.abbreviation || '';
+      const st = String(item.status || '');
+      const row = {
+        name: nm,
+        position: pos,
+        status: st,
+        gameStatus: st,
+        notes: `${item.shortComment || ''} ${item.longComment || ''}`.trim(),
+        isStarter: Boolean(qbStarterName && pos === 'QB' && nm.toLowerCase() === qbStarterName.toLowerCase())
+      };
+      if (/injured reserve|ir|pup|nfi/i.test(st)) irList.push(row);
+      else injList.push(row);
+    }
+    const qid = currentStarterByTeam[abbr];
+    const qbValAboveRep = qid && qbRatingsById[qid] ? Math.max(2.0, qbRatingsById[qid].valuePts - -1.7) : 3.6;
+    const adj = estimateTeamInjurySpreadAdjustments({
+      healthData: { injuryReport: injList, irReserve: irList },
+      remainingGamesCount: remCountByTeam.get(abbr) || 6,
+      qbValueAboveReplacement: qbValAboveRep
+    });
+    if (Math.abs(adj.totalGameSpreadAdj) > 0.01 || Math.abs(adj.totalSeasonSpreadAdj) > 0.01 || adj.qbStatusNote) {
+      injuryAdjustmentsByTeam[abbr] = adj;
+    }
+  }
+  const sfQid = currentStarterByTeam.SF;
+  const sfQbValAboveRep = sfQid && qbRatingsById[sfQid] ? Math.max(2.2, qbRatingsById[sfQid].valuePts - -1.7) : 4.2;
+  injuryAdjustmentsByTeam.SF = estimateTeamInjurySpreadAdjustments({
+    healthData: { practiceReport: practiceReportPlayers, irReserve: irTrackerPlayers },
+    rosterPlayers,
+    remainingGamesCount: remCountByTeam.get('SF') || 6,
+    qbValueAboveReplacement: sfQbValAboveRep
+  });
+
   const nfcConf = (espnStandings.children || []).find(
     c => c.abbreviation === 'NFC' || c.name?.includes('National')
   );
@@ -5804,45 +6003,37 @@ async function main() {
     c => c.abbreviation === 'AFC' || c.name?.includes('American')
   );
 
-  // Pass 1: Unadjusted Empirical-Bayes spread estimate (points vs avg) across all 32 teams for opponent SOS adjustment
-  const rawTeamSpreadMap = new Map();
+  // Build standings fallback map & run 32-team Hierarchical Bayesian Iterative SRS + MOV-Elo + QB/Injury engine
+  const allStandingsForRatings = {};
   for (const conf of [nfcConf, afcConf]) {
     for (const entry of conf?.standings?.entries || []) {
       const abbr = normalizeTeamAbbr(entry.team?.abbreviation);
       const getStat = name => entry.stats?.find(s => s.name === name);
-      const wins = Number(getStat('wins')?.value || 0);
-      const losses = Number(getStat('losses')?.value || 0);
-      const ties = Number(getStat('ties')?.value || 0);
-      const pointDiff = Number(getStat('pointDifferential')?.value || 0);
-      const rawElo = computeCalibratedTeamPowerRating({
-        wins,
-        losses,
-        ties,
-        pointDiff,
-        netEpaPerGame: netEpaByTeam.get(abbr) ?? null,
-        sosSpreadAdj: 0
-      });
-      rawTeamSpreadMap.set(abbr, (rawElo - 1500) / 25);
+      allStandingsForRatings[abbr] = {
+        wins: Number(getStat('wins')?.value || 0),
+        losses: Number(getStat('losses')?.value || 0),
+        ties: Number(getStat('ties')?.value || 0),
+        pointDiff: Number(getStat('pointDifferential')?.value || 0),
+        pointsFor: Number(getStat('pointsFor')?.value || 0),
+        pointsAgainst: Number(getStat('pointsAgainst')?.value || 0),
+        netEpaPerGame: netEpaByTeam.get(abbr) ?? null
+      };
     }
   }
-
-  // Average opponent spread rating faced in completed games (`sosSpreadAdj` in points)
-  const sosSpreadAdjByTeam = new Map();
-  const oppSums = new Map();
-  const oppCounts = new Map();
-  for (const g of completed2026Games) {
-    if (rawTeamSpreadMap.has(g.away)) {
-      oppSums.set(g.home, (oppSums.get(g.home) || 0) + rawTeamSpreadMap.get(g.away));
-      oppCounts.set(g.home, (oppCounts.get(g.home) || 0) + 1);
-    }
-    if (rawTeamSpreadMap.has(g.home)) {
-      oppSums.set(g.away, (oppSums.get(g.away) || 0) + rawTeamSpreadMap.get(g.home));
-      oppCounts.set(g.away, (oppCounts.get(g.away) || 0) + 1);
-    }
-  }
-  for (const [tm, cnt] of oppCounts.entries()) {
-    sosSpreadAdjByTeam.set(tm, Number(((oppSums.get(tm) || 0) / Math.max(1, cnt)).toFixed(3)));
-  }
+  const leaguePowerResult = computeLeaguePowerRatings({
+    completedGames: completed2026Games,
+    remainingGames: remaining2026Games,
+    preseasonPriors,
+    weeklyTeamStats: Object.keys(weeklyTeamStats).length > 0 ? weeklyTeamStats : null,
+    standingsByAbbr: allStandingsForRatings,
+    qbContext: {
+      qbRatingsById,
+      currentStarterByTeam
+    },
+    injuryAdjustmentsByTeam,
+    currentWeek
+  });
+  const leagueRatingsByAbbr = leaguePowerResult.byAbbr;
 
   const nfcTeamsBaseline = (nfcConf?.standings?.entries || []).map(entry => {
     const abbr = normalizeTeamAbbr(entry.team?.abbreviation);
@@ -5864,15 +6055,21 @@ async function main() {
     const [cw = 0, cl = 0, ct = 0] = confStr.split('-').map(Number);
 
     const netEpaPerGame = netEpaByTeam.get(abbr) ?? null;
-    const sosSpreadAdj = sosSpreadAdjByTeam.get(abbr) ?? 0;
-    const powerRating = computeCalibratedTeamPowerRating({
-      wins,
-      losses,
-      ties,
-      pointDiff,
-      netEpaPerGame,
-      sosSpreadAdj
-    });
+    const lr = leagueRatingsByAbbr[abbr] || null;
+    const sosSpreadAdj = lr?.sosSpreadAdj ?? 0;
+    const powerRating =
+      lr?.powerRating ??
+      computeCalibratedTeamPowerRating({
+        wins,
+        losses,
+        ties,
+        pointDiff,
+        pointsFor,
+        pointsAgainst,
+        netEpaPerGame,
+        sosSpreadAdj,
+        preseasonPriorSpread: preseasonPriors[abbr] ?? 0
+      });
 
     return {
       abbr,
@@ -5899,14 +6096,23 @@ async function main() {
       clincher,
       playoffSeed,
       netEpaPerGame,
+      preseasonPriorSpread: lr?.preseasonPriorSpread ?? preseasonPriors[abbr] ?? 0,
+      preseasonPriorElo: lr?.preseasonPriorElo ?? Math.round(1500 + (preseasonPriors[abbr] ?? 0) * 25),
       sosSpreadAdj,
+      remainingSosSpread: lr?.remainingSosSpread ?? 0,
+      remainingSosRank: lr?.remainingSosRank ?? 16,
+      qbInjuryEloAdj: lr?.qbInjuryEloAdj ?? 0,
+      nonQbInjuryEloAdj: lr?.nonQbInjuryEloAdj ?? 0,
+      nextGameEloDelta: lr?.nextGameEloDelta ?? 0,
+      ...(lr?.qbStatusNote ? { qbStatusNote: lr.qbStatusNote } : {}),
       powerRating
     };
   });
 
-  // Calibrated AFC power ratings & standings (Empirical-Bayes + EPA + SOS)
+  // Calibrated AFC power ratings & standings (Hierarchical Bayesian Iterative SRS + MOV-Elo + Preseason Priors + QB/Injuries)
   const afcRatings = {};
   const afcStandings = {};
+  const afcNextGameDeltas = {};
   for (const entry of afcConf?.standings?.entries || []) {
     const abbr = normalizeTeamAbbr(entry.team?.abbreviation);
     const getStat = name => entry.stats?.find(s => s.name === name);
@@ -5923,6 +6129,20 @@ async function main() {
     const streak = getStat('streak')?.displayValue || '';
     const clincher = getStat('clincher')?.displayValue || '';
     const playoffSeed = Number(getStat('playoffSeed')?.value || 0) || null;
+    const lr = leagueRatingsByAbbr[abbr] || null;
+    const ratingVal =
+      lr?.powerRating ??
+      computeCalibratedTeamPowerRating({
+        wins,
+        losses,
+        ties,
+        pointDiff,
+        pointsFor,
+        pointsAgainst,
+        netEpaPerGame: netEpaByTeam.get(abbr) ?? null,
+        sosSpreadAdj: lr?.sosSpreadAdj ?? 0,
+        preseasonPriorSpread: preseasonPriors[abbr] ?? 0
+      });
     afcStandings[abbr] = {
       wins,
       losses,
@@ -5936,16 +6156,20 @@ async function main() {
       awayRec,
       streak,
       clincher,
-      playoffSeed
-    };
-    afcRatings[abbr] = computeCalibratedTeamPowerRating({
-      wins,
-      losses,
-      ties,
-      pointDiff,
+      playoffSeed,
       netEpaPerGame: netEpaByTeam.get(abbr) ?? null,
-      sosSpreadAdj: sosSpreadAdjByTeam.get(abbr) ?? 0
-    });
+      preseasonPriorSpread: lr?.preseasonPriorSpread ?? preseasonPriors[abbr] ?? 0,
+      preseasonPriorElo: lr?.preseasonPriorElo ?? Math.round(1500 + (preseasonPriors[abbr] ?? 0) * 25),
+      sosSpreadAdj: lr?.sosSpreadAdj ?? 0,
+      remainingSosSpread: lr?.remainingSosSpread ?? 0,
+      remainingSosRank: lr?.remainingSosRank ?? 16,
+      qbInjuryEloAdj: lr?.qbInjuryEloAdj ?? 0,
+      nonQbInjuryEloAdj: lr?.nonQbInjuryEloAdj ?? 0,
+      nextGameEloDelta: lr?.nextGameEloDelta ?? 0,
+      ...(lr?.qbStatusNote ? { qbStatusNote: lr.qbStatusNote } : {})
+    };
+    afcRatings[abbr] = ratingVal;
+    afcNextGameDeltas[abbr] = lr?.nextGameEloDelta ?? 0;
   }
 
   const baselineMonteCarlo = runPlayoffMonteCarlo({
@@ -5953,6 +6177,7 @@ async function main() {
     afcPowerRatings: afcRatings,
     afcRatings,
     afcStandings,
+    otherConferenceNextGameDeltas: afcNextGameDeltas,
     completedGames: completed2026Games,
     remainingGames: remaining2026Games,
     iterations: 10000,
@@ -6757,13 +6982,20 @@ async function main() {
         }
       ],
       simulatorInputs: {
+        modelVersion: PLAYOFF_MODEL_VERSION,
+        lastSimulatedAt: nowIso,
         nfcTeams: nfcTeamsBaseline,
         afcPowerRatings: afcRatings,
         afcRatings,
         afcStandings,
+        otherConferenceNextGameDeltas: afcNextGameDeltas,
+        preseasonPriors,
+        weeklyTeamStats,
+        injuryAdjustmentsByTeam,
         completedGames: completed2026Games,
         remainingGames: remaining2026Games
-      }
+      },
+      lastSimulatedAt: nowIso
     },
     draftPrep2027,
     draftClass2026: draft2026Payload

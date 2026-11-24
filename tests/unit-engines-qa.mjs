@@ -105,9 +105,15 @@ import {
   runPlayoffMonteCarlo,
   computeRootingGuideLeverage,
   computeCalibratedTeamPowerRating,
+  computePreseasonPriorsFromHistory,
+  computeLeaguePowerRatings,
+  estimateTeamInjurySpreadAdjustments,
+  reconcileLiveScoreboardIntoPlayoffGames,
+  computeGameSituationalElo,
   buildOtherConferenceSimulatorConfig,
   buildLeagueStandingsSnapshot,
-  computeSimulationRivalImpacts
+  computeSimulationRivalImpacts,
+  PLAYOFF_MODEL_VERSION
 } from '../src/engine/playoffMonteCarlo.js';
 import {
   parseTankathonTeamPicksHtml,
@@ -749,6 +755,150 @@ test('32-team League Standings Snapshot & AFC Monte Carlo flip compute full ESPN
   assert.equal(emptySnap.leagueRanked.length, 32);
   assert.equal(emptySnap.byAbbr.get('SF').winPctDisplay, '.000');
   assert.equal(emptySnap.byAbbr.get('SF').streak, '—');
+});
+
+test('Hierarchical Bayesian multi-factor engine: preseason priors fade properly, iterative SOS adjusts opponent strength, and QB/IR injuries adjust future odds', () => {
+  // 1. Preseason Priors: zero-centered, incorporates YoY carryover + Week 1 market spreads
+  const priors = computePreseasonPriorsFromHistory({
+    prevSeasonGames: [
+      { week: 1, home: 'SF', away: 'ARI', homeScore: 34, awayScore: 10 },
+      { week: 2, home: 'DET', away: 'SF', homeScore: 20, awayScore: 27 },
+      { week: 3, home: 'KC', away: 'LV', homeScore: 31, awayScore: 13 }
+    ],
+    currentSeasonW1Games: [
+      { home: 'SF', away: 'CAR', spreadLine: 8.5 },
+      { home: 'KC', away: 'NYJ', spreadLine: 7.5 }
+    ]
+  });
+  const priorVals = Object.values(priors);
+  assert.equal(priorVals.length, 32, 'Preseason priors must cover all 32 teams');
+  const priorMean = priorVals.reduce((a, b) => a + b, 0) / 32;
+  assert.ok(Math.abs(priorMean) < 0.05, `Preseason priors must be zero-centered (mean=${priorMean})`);
+  assert.ok(priors.SF > priors.CAR + 2.5, `Contender SF prior (${priors.SF}) must exceed rebuilding CAR (${priors.CAR})`);
+
+  // 2. Two-component shrinkage: preseason prior dominates at gp=0 and fades smoothly by gp=12
+  const sfPreseason = computeCalibratedTeamPowerRating({ wins: 0, losses: 0, preseasonPriorSpread: 4.0 });
+  assert.equal(sfPreseason, 1600, 'At 0-0, +4.0 spread prior must equal 1600 Elo');
+  const sfHotStartSamePrior = computeCalibratedTeamPowerRating({
+    wins: 10,
+    losses: 2,
+    pointDiff: 120,
+    preseasonPriorSpread: -3.0
+  });
+  assert.ok(
+    sfHotStartSamePrior > 1580,
+    `By 10-2 (+10/gm), fast-fading negative preseason prior must not anchor team down (${sfHotStartSamePrior})`
+  );
+
+  // 3. Starting QB Season-Ending IR vs Healthy vs Returning Starter
+  const qbIrAdj = estimateTeamInjurySpreadAdjustments({
+    healthData: {
+      irReserve: [{ name: 'Brock Purdy', position: 'QB', status: 'Season-Ending IR (Torn ACL)', isStarter: true }],
+      practiceReport: []
+    },
+    rosterPlayers: [{ name: 'Brock Purdy', position: 'QB', depthRank: 1 }],
+    remainingGamesCount: 8,
+    qbValueAboveReplacement: 4.5
+  });
+  assert.ok(qbIrAdj.qbSpreadSeason <= -3.5, `QB1 Season-Ending IR must apply steep season penalty (${qbIrAdj.qbSpreadSeason})`);
+  assert.ok(qbIrAdj.qbStatusNote.includes('Season-Ending IR'), 'Must surface QB1 Season-Ending IR note');
+
+  const qb1WkOutAdj = estimateTeamInjurySpreadAdjustments({
+    healthData: {
+      practiceReport: [{ name: 'Brock Purdy', position: 'QB', gameStatus: 'Out', playLikelihood: 0 }],
+      irReserve: []
+    },
+    rosterPlayers: [{ name: 'Brock Purdy', position: 'QB', depthRank: 1 }],
+    remainingGamesCount: 8,
+    qbValueAboveReplacement: 4.5
+  });
+  assert.ok(
+    qb1WkOutAdj.qbSpreadGame < qb1WkOutAdj.qbSpreadSeason - 1.5,
+    `1-week QB1 Out must hit immediate game (${qb1WkOutAdj.qbSpreadGame}) harder than full rest-of-season (${qb1WkOutAdj.qbSpreadSeason})`
+  );
+
+  // 4. League-wide iterative rating: elite 7-1 team losing QB1 to Season-Ending IR drops sharply in future Monte Carlo odds!
+  const mockCompleted = [
+    { week: 1, home: 'SF', away: 'ARI', homeScore: 34, awayScore: 13, homeQbId: 'QB_PURDY', awayQbId: 'QB_ARI' },
+    { week: 2, home: 'SEA', away: 'SF', homeScore: 17, awayScore: 28, homeQbId: 'QB_SEA', awayQbId: 'QB_PURDY' },
+    { week: 3, home: 'SF', away: 'LAR', homeScore: 31, awayScore: 14, homeQbId: 'QB_PURDY', awayQbId: 'QB_LAR' },
+    { week: 4, home: 'SF', away: 'DET', homeScore: 27, awayScore: 20, homeQbId: 'QB_PURDY', awayQbId: 'QB_DET' }
+  ];
+  const mockRemaining = [
+    { id: 'r1', week: 5, home: 'SF', away: 'PHI', homeRest: 14, awayRest: 7, divGame: false },
+    { id: 'r2', week: 6, home: 'LAR', away: 'SF', homeRest: 7, awayRest: 7, divGame: true }
+  ];
+  const healthyLeague = computeLeaguePowerRatings({
+    completedGames: mockCompleted,
+    remainingGames: mockRemaining,
+    preseasonPriors: priors,
+    qbContext: {
+      qbRatingsById: { QB_PURDY: { valuePts: 3.2, plays: 600 }, QB_BACKUP: { valuePts: -1.8, plays: 40 } },
+      currentStarterByTeam: { SF: 'QB_PURDY' }
+    }
+  });
+  const injuredQbLeague = computeLeaguePowerRatings({
+    completedGames: mockCompleted,
+    remainingGames: mockRemaining,
+    preseasonPriors: priors,
+    qbContext: {
+      qbRatingsById: { QB_PURDY: { valuePts: 3.2, plays: 600 }, QB_BACKUP: { valuePts: -1.8, plays: 40 } },
+      currentStarterByTeam: { SF: 'QB_BACKUP' },
+      seasonEndingIrByTeam: { SF: true }
+    }
+  });
+  assert.equal(healthyLeague.modelVersion, PLAYOFF_MODEL_VERSION);
+  assert.ok(
+    healthyLeague.byAbbr.SF.powerRating - injuredQbLeague.byAbbr.SF.powerRating >= 85,
+    `Season-ending QB1 injury must drop SF season Elo by >=85 pts (${healthyLeague.byAbbr.SF.powerRating} vs ${injuredQbLeague.byAbbr.SF.powerRating})`
+  );
+  assert.ok(
+    healthyLeague.byAbbr.SF.remainingSosRank >= 1 && healthyLeague.byAbbr.SF.remainingSosRank <= 32,
+    'Remaining SOS rank must be populated in [1..32]'
+  );
+
+  // 5. Situational Elo: Post-bye rest advantage & divisional HFA compression & neutral site
+  const regHome = computeGameSituationalElo({ neutral: false, divGame: false, homeRest: 7, awayRest: 7 });
+  const divHome = computeGameSituationalElo({ neutral: false, divGame: true, homeRest: 7, awayRest: 7 });
+  const byeHome = computeGameSituationalElo({ neutral: false, divGame: false, homeRest: 14, awayRest: 7 });
+  const neutralGame = computeGameSituationalElo({ neutral: true, divGame: false, homeRest: 7, awayRest: 7 });
+  assert.ok(divHome < regHome, `Divisional HFA (${divHome}) must be lower than non-div HFA (${regHome})`);
+  assert.ok(byeHome > regHome + 10, `Post-bye +7d rest (${byeHome}) must add positive Elo over normal rest (${regHome})`);
+  assert.equal(neutralGame, 0, 'Neutral site equal-rest game must have 0 situational Elo');
+
+  // 6. Live Scoreboard Reconciliation moves ANY newly completed NFL game into completedGames with exact scores
+  const mockSimIn = {
+    completedGames: [{ id: '2026_10_SF_ARI', week: 10, home: 'ARI', away: 'SF', homeScore: 17, awayScore: 31 }],
+    remainingGames: [
+      { id: '2026_11_DET_GB', week: 11, home: 'GB', away: 'DET', homeRest: 7, awayRest: 7, divGame: true },
+      { id: '2026_11_KC_BUF', week: 11, home: 'BUF', away: 'KC', homeRest: 14, awayRest: 7, divGame: false }
+    ]
+  };
+  const liveSb = {
+    season: { type: 2 },
+    week: { number: 11 },
+    events: [
+      {
+        id: '401873999',
+        week: { number: 11 },
+        competitions: [
+          {
+            status: { type: { completed: true } },
+            competitors: [
+              { homeAway: 'home', team: { abbreviation: 'GB' }, score: '24' },
+              { homeAway: 'away', team: { abbreviation: 'DET' }, score: '27' }
+            ]
+          }
+        ]
+      }
+    ]
+  };
+  const recOut = reconcileLiveScoreboardIntoPlayoffGames(mockSimIn, liveSb);
+  assert.equal(recOut.movedCount, 1, 'Live ESPN Final game must move from remainingGames to completedGames');
+  assert.equal(mockSimIn.completedGames.length, 2);
+  assert.equal(mockSimIn.remainingGames.length, 1);
+  const movedGbDet = mockSimIn.completedGames.find(g => g.home === 'GB' && g.away === 'DET');
+  assert.ok(movedGbDet && movedGbDet.homeScore === 24 && movedGbDet.awayScore === 27, 'Moved live Final game must preserve exact scores');
 });
 
 console.log('\n=== [5/6] Anti-Fluff Classifier & Per-User Reporter Filter QA ===');

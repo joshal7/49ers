@@ -2293,7 +2293,8 @@ async function main() {
       await cdp.eval(() => {
         const st = window.__49ersDiagnostics?.getState?.();
         const stream = st?.appData?.news?.rawStream || [];
-        const metaMs = Date.parse(st?.appData?.meta?.updatedAt || '') || 0;
+        const metaMs =
+          Date.parse(st?.appData?.news?.updatedAt || st?.appData?.meta?._upstreamUpdatedAt || st?.appData?.meta?.updatedAt || '') || 0;
         const deltaMs = metaMs > 0 ? Math.max(0, Date.now() - metaMs) : 0;
         if (deltaMs > 12 * 3600 * 1000) {
           window.__e2eOrigStreamDates = stream.map(it => it?.publishedAt);
@@ -7413,6 +7414,21 @@ async function main() {
         document.querySelector('[data-action="toggle-playoff-seed-bars"]')?.click();
         await sleep(40);
 
+        // Model Factors disclosure starts collapsed and reveals Preseason Prior, SOS Played, Remaining SOS, QB & Key Injuries
+        const factorsEl = document.querySelector('details[data-playoff-model-factors]');
+        const factorsStartsCollapsed = Boolean(factorsEl && !factorsEl.open);
+        factorsEl?.querySelector('summary')?.click();
+        await sleep(40);
+        const factorsText = factorsEl?.textContent || '';
+        const factorsHasAllPillars =
+          Boolean(factorsEl?.open) &&
+          factorsText.includes('Preseason Prior') &&
+          factorsText.includes('SOS Played') &&
+          factorsText.includes('Remaining SOS') &&
+          factorsText.includes('QB & Key Injuries');
+        factorsEl?.querySelector('summary')?.click();
+        await sleep(30);
+
         // Single 4-tab bar with 0px horizontal overflow
         const tabBar = document.querySelector('[data-playoff-standings-tabs]');
         const tabBtns = Array.from(tabBar?.querySelectorAll('[data-action="set-playoff-standings-view"]') || []);
@@ -7476,6 +7492,8 @@ async function main() {
           standingsAboveRooting,
           barsInitiallyHidden,
           barsExpandedCount,
+          factorsStartsCollapsed,
+          factorsHasAllPillars,
           tabLabels,
           tabBarNoScroll,
           matchupPillCount,
@@ -7501,6 +7519,10 @@ async function main() {
       assert(poCheck.scenariosVisible >= 3, `Seeding Scenarios must remain visible in Card 1: ${JSON.stringify(poCheck)}`);
       assert(poCheck.standingsAboveRooting, 'Standings & Playoff Picture card must sit above Rooting Guide');
       assert(poCheck.barsInitiallyHidden && poCheck.barsExpandedCount === 7, `Seed distribution toggle failed: ${JSON.stringify(poCheck)}`);
+      assert(
+        poCheck.factorsStartsCollapsed && poCheck.factorsHasAllPillars,
+        `Model Factors progressive disclosure failed: ${JSON.stringify(poCheck)}`
+      );
       assert(
         JSON.stringify(poCheck.tabLabels) === JSON.stringify(['Picture', 'Division', 'Conference', 'League']) && poCheck.tabBarNoScroll,
         `Standings 4-tab bar mismatch or overflow: ${JSON.stringify(poCheck)}`
