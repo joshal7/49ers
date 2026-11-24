@@ -9,7 +9,7 @@ import {
   getPracticeReportLeadDays,
   scopeBeatTextToPlayer
 } from './injuryProbabilityModel.js';
-import { decodeHtmlEntities, stripHtmlAndDecodeEntities } from './linkIntegrity.js';
+import { decodeHtmlEntities, sanitizePlayerDisplayName, stripHtmlAndDecodeEntities } from './linkIntegrity.js';
 import { getActiveTeamConfig, resolveTeamConfig } from '../config/teamRegistry.js';
 
 export { getPracticeReportLeadDays };
@@ -69,7 +69,8 @@ const ST_POS_ORDER = {
 };
 
 export function normalizeLookupName(name = '') {
-  return String(name || '')
+  const clean = sanitizePlayerDisplayName(name);
+  return clean
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
@@ -678,6 +679,8 @@ export function parseOfficialClubInactivesArticle(
   let cleaned = String(htmlOrText)
     .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
     .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<!--?\[(?:if\b[^\]]*|endif)\](?:--)?>/gi, ' ')
     .replace(/<(?:nav|header|footer|aside)\b[\s\S]*?<\/(?:nav|header|footer|aside)>/gi, ' ')
     .replace(/<\/(?:p|li|div|h1|h2|h3|h4|br|tr)>/gi, '\n')
     .replace(/<[^>]+>/g, ' ');
@@ -1801,8 +1804,13 @@ export function buildTeamGameDayRosterModel({
 
   const injByKey = new Map();
   for (const row of effectiveInjuryReport) {
-    const k = normalizeLookupName(row?.name || '');
-    if (k) injByKey.set(k, row);
+    const cleanRowName = sanitizePlayerDisplayName(row?.name || '');
+    const k = normalizeLookupName(cleanRowName);
+    if (!k) continue;
+    const prev = injByKey.get(k);
+    if (!prev || (!prev.headshotUrl && row?.headshotUrl) || (isNonMedicalScratchReason(prev.injuryType) && !isNonMedicalScratchReason(row?.injuryType))) {
+      injByKey.set(k, { ...row, name: cleanRowName });
+    }
   }
 
   // Merge activeRosterPlayers + any injuryReport players not yet in activeRosterPlayers
@@ -1811,8 +1819,9 @@ export function buildTeamGameDayRosterModel({
     if (p?.rosterBucket && p.rosterBucket !== 'active') continue;
     const rawPoolStatus = String(p?.health?.status || p?.gameStatus || p?.status || '').trim();
     if (NON_ACTIVE_ROSTER_STATUS_RE.test(rawPoolStatus)) continue;
-    const k = normalizeLookupName(p?.name || '');
-    if (!k) continue;
+    const cleanName = sanitizePlayerDisplayName(p?.name || '');
+    const k = normalizeLookupName(cleanName);
+    if (!k || !cleanName) continue;
     if (irKeySet.has(k) && !feedActiveKeySet.has(k)) continue;
     const pid = p.id || p.playerId || null;
     if (mergedRosterMap.has(k)) {
@@ -1820,6 +1829,8 @@ export function buildTeamGameDayRosterModel({
       const existing = mergedRosterMap.get(k);
       if (!existing.depthSlot && p.depthSlot) existing.depthSlot = p.depthSlot;
       if (!existing.isStarter && p.isStarter) existing.isStarter = true;
+      if (existing.jersey == null && p.jersey != null) existing.jersey = p.jersey;
+      if (!existing.headshotUrl && p.headshotUrl) existing.headshotUrl = p.headshotUrl;
       if (existing.snapPct == null && (p.primarySnapPct ?? p.snapPct) != null) {
         existing.snapPct = p.primarySnapPct ?? p.snapPct;
       }
@@ -1828,7 +1839,7 @@ export function buildTeamGameDayRosterModel({
     mergedRosterMap.set(k, {
       id: pid,
       playerId: pid,
-      name: p.name,
+      name: cleanName,
       position: p.position || 'ATH',
       unit: classifyRosterUnit(p.position, p.unit),
       jersey: p.jersey ?? null,
@@ -1845,8 +1856,9 @@ export function buildTeamGameDayRosterModel({
   }
 
   for (const inj of effectiveInjuryReport) {
-    const k = normalizeLookupName(inj?.name || '');
-    if (!k || mergedRosterMap.has(k)) continue;
+    const cleanInjName = sanitizePlayerDisplayName(inj?.name || '');
+    const k = normalizeLookupName(cleanInjName);
+    if (!k || !cleanInjName || mergedRosterMap.has(k)) continue;
     if (NON_ACTIVE_ROSTER_STATUS_RE.test(String(inj.gameStatus || inj.status || ''))) continue;
     if (irKeySet.has(k) && !feedActiveKeySet.has(k)) continue;
     if (inj.isInGameInjury || inj.isInGameReturned) continue;
@@ -1854,7 +1866,7 @@ export function buildTeamGameDayRosterModel({
     mergedRosterMap.set(k, {
       id: pid,
       playerId: pid,
-      name: inj.name,
+      name: cleanInjName,
       position: inj.position || 'ATH',
       unit: classifyRosterUnit(inj.position, inj.unit),
       jersey: inj.jersey ?? null,
@@ -1874,9 +1886,9 @@ export function buildTeamGameDayRosterModel({
   const compByKey = new Map();
   let compExplicitInactiveCount = 0;
   for (const entry of effectiveCompEntries) {
-    const nm = entry?.displayName || entry?.fullName || entry?.name || '';
+    const nm = sanitizePlayerDisplayName(entry?.displayName || entry?.fullName || entry?.name || '');
     const k = normalizeLookupName(nm);
-    if (!k) continue;
+    if (!k || !nm) continue;
     const isExplicitlyInactive = entry.active === false || entry.isInactive === true;
     if (isExplicitlyInactive) compExplicitInactiveCount += 1;
     compByKey.set(k, {
@@ -2148,10 +2160,49 @@ export function resolveGameDayInjuryRows(rows = [], gameDayModel = null, options
         );
 
   const lockAllQuestionables = Boolean(gameDayModel.isOfficialListPosted || gameDayModel.hasKickoffStarted);
+  // Pre-sanitize & deduplicate rows so stale cached HTML-comment names (`<!--[if IE 9]> ...`)
+  // self-heal and merge cleanly into the canonical player row without duplicating the Health table.
+  const dedupedInputRows = [];
+  const dedupedInputByKey = new Map();
+  for (const rawRow of rows) {
+    if (!rawRow || typeof rawRow !== 'object') continue;
+    const cleanRowName = sanitizePlayerDisplayName(rawRow.name || '');
+    const k = normalizeLookupName(cleanRowName);
+    if (!k || !cleanRowName) continue;
+    const cleanRow = rawRow.name === cleanRowName ? rawRow : { ...rawRow, name: cleanRowName };
+    const existingIdx = dedupedInputByKey.get(k);
+    if (existingIdx == null) {
+      dedupedInputByKey.set(k, dedupedInputRows.length);
+      dedupedInputRows.push(cleanRow);
+      continue;
+    }
+    const prev = dedupedInputRows[existingIdx];
+    const prevGenericInj = !prev.injuryType || /^(?:injury|injury report)$/i.test(String(prev.injuryType).trim()) || isNonMedicalScratchReason(prev.injuryType);
+    const nextGenericInj = !cleanRow.injuryType || /^(?:injury|injury report)$/i.test(String(cleanRow.injuryType).trim()) || isNonMedicalScratchReason(cleanRow.injuryType);
+    const preferNext =
+      (!prev.headshotUrl && Boolean(cleanRow.headshotUrl)) ||
+      (prevGenericInj && !nextGenericInj) ||
+      (prev.jersey == null && cleanRow.jersey != null);
+    const primary = preferNext ? { ...cleanRow } : { ...prev };
+    const secondary = preferNext ? prev : cleanRow;
+    for (const slot of ['wed', 'thu', 'fri']) {
+      if ((!primary[slot] || primary[slot] === '-' || primary[slot] === '—') && secondary[slot] && secondary[slot] !== '-' && secondary[slot] !== '—') {
+        primary[slot] = secondary[slot];
+      }
+    }
+    if (!primary.headshotUrl && secondary.headshotUrl) primary.headshotUrl = secondary.headshotUrl;
+    if (primary.jersey == null && secondary.jersey != null) primary.jersey = secondary.jersey;
+    if (!primary.beatComment && secondary.beatComment) primary.beatComment = secondary.beatComment;
+    if (!primary.shortComment && secondary.shortComment) primary.shortComment = secondary.shortComment;
+    if (!primary.longComment && secondary.longComment) primary.longComment = secondary.longComment;
+    if (!primary.isStarter && secondary.isStarter) primary.isStarter = true;
+    dedupedInputRows[existingIdx] = primary;
+  }
+
   const seenKeys = new Set();
   const resolved = [];
 
-  for (const row of rows) {
+  for (const row of dedupedInputRows) {
     const k = normalizeLookupName(row?.name || '');
     if (k) seenKeys.add(k);
     const isInactive = inactiveSet.has(k);
@@ -2451,11 +2502,22 @@ export function resolveTeamGameDayModel(appData, { is49ers = false, windowState 
     preHydrated?.officialPosted &&
       Number(preHydrated.activeCount ?? preHydrated.totalActives ?? 0) > 48
   );
+  const preHydratedHasCorruptedNames = Boolean(
+    preHydrated?.isActive &&
+      [
+        ...(preHydrated.inactives || []),
+        ...Object.values(preHydrated.activeByUnit || preHydrated.activesByUnit || {}).flat()
+      ].some(p => {
+        const nm = String(p?.name || '');
+        return nm.includes('<') || nm.includes('if IE');
+      })
+  );
 
   let model = null;
   if (
     preHydrated?.isActive &&
     !preHydratedExceedsNflLimit &&
+    !preHydratedHasCorruptedNames &&
     (!liveFeedOverride?.officialPosted || preHydrated.officialPosted) &&
     Number(preHydrated.week || win.week) === Number(win.week)
   ) {

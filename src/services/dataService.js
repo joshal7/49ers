@@ -97,6 +97,7 @@ import {
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
   sanitizeExternalUrl,
+  sanitizePlayerDisplayName,
   stripAggregatorBoilerplate,
   stripHistoricalSfBioSentences,
   stripHtmlAndDecodeEntities
@@ -891,16 +892,59 @@ function isEspnHealthyScratchEntry({
   return true;
 }
 
+function sanitizeAndDedupeHealthReportRows(rows = []) {
+  if (!Array.isArray(rows) || rows.length === 0) return [];
+  const out = [];
+  const idxByKey = new Map();
+  for (const raw of rows) {
+    if (!raw || typeof raw !== 'object') continue;
+    const cleanName = sanitizePlayerDisplayName(raw.name || '');
+    const k = canonicalInjuryPlayerKey(cleanName);
+    if (!k || !cleanName) continue;
+    const cleanRow = raw.name === cleanName ? { ...raw } : { ...raw, name: cleanName };
+    const existingIdx = idxByKey.get(k);
+    if (existingIdx == null) {
+      idxByKey.set(k, out.length);
+      out.push(cleanRow);
+      continue;
+    }
+    const prev = out[existingIdx];
+    const prevRealMed = isRealMedicalInjuryLabel(prev.injuryType);
+    const nextRealMed = isRealMedicalInjuryLabel(cleanRow.injuryType);
+    const preferNext =
+      (!prev.headshotUrl && Boolean(cleanRow.headshotUrl)) ||
+      (!prevRealMed && nextRealMed) ||
+      (prev.jersey == null && cleanRow.jersey != null);
+    const primary = preferNext ? { ...cleanRow } : { ...prev };
+    const secondary = preferNext ? prev : cleanRow;
+    for (const slot of ['wed', 'thu', 'fri']) {
+      if ((!primary[slot] || primary[slot] === '-' || primary[slot] === '—') && secondary[slot] && secondary[slot] !== '-' && secondary[slot] !== '—') {
+        primary[slot] = secondary[slot];
+      }
+    }
+    if (!primary.headshotUrl && secondary.headshotUrl) primary.headshotUrl = secondary.headshotUrl;
+    if (primary.jersey == null && secondary.jersey != null) primary.jersey = secondary.jersey;
+    if (!primary.beatComment && secondary.beatComment) primary.beatComment = secondary.beatComment;
+    if (!primary.shortComment && secondary.shortComment) primary.shortComment = secondary.shortComment;
+    if (!primary.longComment && secondary.longComment) primary.longComment = secondary.longComment;
+    if (!primary.isStarter && secondary.isStarter) primary.isStarter = true;
+    out[existingIdx] = primary;
+  }
+  return out;
+}
+
 function mergeNonDestructivePreGameRows(existingPreRows = [], latestRows = []) {
-  if (!Array.isArray(latestRows) || latestRows.length === 0) return existingPreRows;
-  if (!Array.isArray(existingPreRows) || existingPreRows.length === 0) {
-    return latestRows
+  const cleanExisting = sanitizeAndDedupeHealthReportRows(existingPreRows);
+  const cleanLatest = sanitizeAndDedupeHealthReportRows(latestRows);
+  if (cleanLatest.length === 0) return cleanExisting;
+  if (cleanExisting.length === 0) {
+    return cleanLatest
       .filter(r => !r?.isHealthyScratch && String(r?.playTier || r?.tier || '').toUpperCase() !== 'HEALTHY_SCRATCH')
       .map(r => ({ ...r }));
   }
-  const latestByKey = new Map(latestRows.map(r => [canonicalInjuryPlayerKey(r.name), r]));
+  const latestByKey = new Map(cleanLatest.map(r => [canonicalInjuryPlayerKey(r.name), r]));
   const seenKeys = new Set();
-  const merged = existingPreRows.map(prev => {
+  const merged = cleanExisting.map(prev => {
     const k = canonicalInjuryPlayerKey(prev.name);
     seenKeys.add(k);
     const fresh = latestByKey.get(k);
@@ -1222,7 +1266,47 @@ export function hydrateCachedWeeklyPracticeAndInactives(appData) {
   } catch {}
 }
 
+function sanitizeCachedHealthAndGameDayData(appData) {
+  if (!appData || typeof appData !== 'object') return;
+  const isDirtyGameDayModel = gd => {
+    if (!gd || typeof gd !== 'object') return false;
+    if (gd.officialPosted && Number(gd.activeCount ?? gd.totalActives ?? 0) > 48) return true;
+    const all = [
+      ...(gd.inactives || []),
+      ...Object.values(gd.activeByUnit || gd.activesByUnit || {}).flat()
+    ];
+    return all.some(p => {
+      const nm = String(p?.name || '');
+      return nm.includes('<') || nm.includes('if IE');
+    });
+  };
+  if (appData.health) {
+    if (Array.isArray(appData.health.practiceReport)) {
+      appData.health.practiceReport = sanitizeAndDedupeHealthReportRows(appData.health.practiceReport);
+    }
+    if (Array.isArray(appData.health._preGamePracticeReport)) {
+      appData.health._preGamePracticeReport = sanitizeAndDedupeHealthReportRows(appData.health._preGamePracticeReport);
+    }
+    if (isDirtyGameDayModel(appData.health.gameDayRoster)) {
+      appData.health.gameDayRoster = null;
+    }
+  }
+  const oh = appData.scheduleMatchup?.upcomingMatchup?.opponentHealth;
+  if (oh) {
+    if (Array.isArray(oh.injuryReport)) {
+      oh.injuryReport = sanitizeAndDedupeHealthReportRows(oh.injuryReport);
+    }
+    if (Array.isArray(oh._preGameInjuryReport)) {
+      oh._preGameInjuryReport = sanitizeAndDedupeHealthReportRows(oh._preGameInjuryReport);
+    }
+    if (isDirtyGameDayModel(oh.gameDayRoster)) {
+      oh.gameDayRoster = null;
+    }
+  }
+}
+
 function applyCachedGameDayRostersOnBoot(appData) {
+  sanitizeCachedHealthAndGameDayData(appData);
   if (!appData?.liveGameDay) return;
   const um = appData.scheduleMatchup?.upcomingMatchup || null;
   const windowState = evaluateGameDayWindow(appData.scheduleMatchup?.schedule || [], um, Date.now());
@@ -1231,7 +1315,7 @@ function applyCachedGameDayRostersOnBoot(appData) {
   const sfActivePlayers = (appData.roster?.players || []).filter(p => p.rosterBucket === 'active');
   if (appData.health && appData.liveGameDay.sf?.officialPosted) {
     if (!Array.isArray(appData.health._preGamePracticeReport) && Array.isArray(appData.health.practiceReport)) {
-      appData.health._preGamePracticeReport = appData.health.practiceReport.map(r => ({ ...r }));
+      appData.health._preGamePracticeReport = sanitizeAndDedupeHealthReportRows(appData.health.practiceReport);
     }
     const activeTeamBoot = resolveTeamConfig(appData?.meta?.teamAbbr || getActiveTeamConfig());
     const baseSf = appData.health._preGamePracticeReport || appData.health.practiceReport || [];
@@ -1293,6 +1377,33 @@ function applyCachedGameDayRostersOnBoot(appData) {
       }
     }
     synchronizeDepthChartForGameDay(appData);
+  }
+
+  const ohBoot = um?.opponentHealth;
+  const oppAbbrBoot = normalizeTeamAbbrClient(um?.oppAbbr || '');
+  if (ohBoot && oppAbbrBoot && appData.liveGameDay.opp?.officialPosted) {
+    if (!Array.isArray(ohBoot._preGameInjuryReport) && Array.isArray(ohBoot.injuryReport)) {
+      ohBoot._preGameInjuryReport = sanitizeAndDedupeHealthReportRows(ohBoot.injuryReport);
+    }
+    const baseOpp = ohBoot._preGameInjuryReport || ohBoot.injuryReport || [];
+    const oppPoolBoot =
+      Array.isArray(ohBoot.activeRoster) && ohBoot.activeRoster.length >= 30
+        ? ohBoot.activeRoster
+        : [...(ohBoot.activeRoster || []), ...(ohBoot.keyStartersHealthy || []), ...baseOpp];
+    const oppModel = buildTeamGameDayRosterModel({
+      teamAbbr: oppAbbrBoot,
+      teamName: um?.oppName || oppAbbrBoot,
+      activeRosterPlayers: oppPoolBoot,
+      injuryReport: baseOpp,
+      irReserve: ohBoot.irReserve || [],
+      newsItems: appData.news?.rawStream || [],
+      liveFeedData: appData.liveGameDay.opp,
+      windowState
+    });
+    ohBoot.gameDayRoster = oppModel;
+    ohBoot.injuryReport = resolveGameDayInjuryRows(baseOpp, oppModel, {
+      activeRosterPlayers: oppPoolBoot
+    });
   }
 }
 
@@ -8351,7 +8462,7 @@ export async function hydrateLive49ersPodcasts(appData) {
  * - Completed games are immutable: cached in memory + bounded 4-game `localStorage` LRU (<2ms reopen)
  * ============================================================================ */
 
-const GAMECAST_CACHE_SCHEMA_VERSION = 2;
+const GAMECAST_CACHE_SCHEMA_VERSION = 3;
 const GAMECAST_LOCAL_MAX_GAMES = 6;
 const GAMECAST_MEMORY_MAX_GAMES = 8;
 const gamecastMemoryCache = new Map(); // key `${teamAbbr}:${gameId}` -> { model, fetchedAtMs }

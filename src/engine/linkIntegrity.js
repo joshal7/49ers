@@ -1694,6 +1694,8 @@ const HTML5_WIN1252_C1_MAP = Object.freeze({
 });
 
 const HTML_ENTITY_TOKEN_RE = /&(?:#[xX]([0-9a-fA-F]{1,6})|#(\d{1,7})|([a-zA-Z][a-zA-Z0-9]{1,12}));/g;
+const HTML_COMMENT_RE = /<!--[\s\S]*?-->/g;
+const IE_CONDITIONAL_COMMENT_RE = /<!--?\[(?:if\b[^\]]*|endif)\](?:--)?>/gi;
 const REAL_HTML_TAG_RE = /<\/?[a-zA-Z][a-zA-Z0-9:-]*(?:\s+[^<>]*)?\/?>/g;
 const KNOWN_ESCAPED_HTML_TAG_RE =
   /<\/?(?:a|abbr|article|aside|b|blockquote|br|caption|code|dd|del|details|div|dl|dt|em|figcaption|figure|font|footer|h[1-6]|header|hr|i|iframe|img|ins|li|main|mark|nav|ol|p|picture|pre|q|s|section|small|source|span|strong|sub|summary|sup|table|tbody|td|tfoot|th|thead|time|tr|u|ul|video)(?:\s+[^<>]*)?\/?>/gi;
@@ -1744,7 +1746,8 @@ export function decodeHtmlEntities(str = '', { maxPasses = 2 } = {}) {
 }
 
 /**
- * Strips CDATA wrappers, script/style blocks, and HTML tags (both raw and RSS-escaped)
+ * Strips CDATA wrappers, script/style blocks, HTML comments (including NFL CMS IE9 `<picture>`
+ * conditional comments `<!--[if IE 9]><video ...><![endif]-->`), and HTML tags (both raw and RSS-escaped)
  * while decoding all HTML/XML entities without corrupting literal comparisons (`3 < 5 && 7 > 4`, `>>>`).
  */
 export function stripHtmlAndDecodeEntities(str = '') {
@@ -1754,6 +1757,8 @@ export function stripHtmlAndDecodeEntities(str = '') {
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
     .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
     .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
+    .replace(HTML_COMMENT_RE, ' ')
+    .replace(IE_CONDITIONAL_COMMENT_RE, ' ')
     .replace(/<br\s*\/?>/gi, ' ')
     .replace(REAL_HTML_TAG_RE, ' ');
   if (out.includes('&')) {
@@ -1762,8 +1767,23 @@ export function stripHtmlAndDecodeEntities(str = '') {
       out = out
         .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
         .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
+        .replace(HTML_COMMENT_RE, ' ')
+        .replace(IE_CONDITIONAL_COMMENT_RE, ' ')
         .replace(KNOWN_ESCAPED_HTML_TAG_RE, ' ');
     }
   }
   return out.replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Sanitizes a player display name against leaked HTML comments (e.g. `<!--[if IE 9]> ...`),
+ * residual markup tags, or encoded entities while preserving legitimate apostrophes, hyphens, and suffixes.
+ */
+export function sanitizePlayerDisplayName(raw = '') {
+  const s = String(raw ?? '').trim();
+  if (!s) return '';
+  if (!s.includes('<') && !s.includes('>') && !s.includes('&')) return s;
+  return stripHtmlAndDecodeEntities(s)
+    .replace(/^[^A-Za-z0-9]+/, '')
+    .trim();
 }

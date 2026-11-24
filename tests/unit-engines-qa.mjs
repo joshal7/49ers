@@ -21282,6 +21282,200 @@ await testAsync('Holistic architecture integrity: single-instance ES module grap
   }
 });
 
+await testAsync('NFL CMS <!--[if IE 9]> HTML Comment Stripping, Self-Healing Cache Deduplication & 48-Man Game-Day Roster Cap (Commanders MNF Regression)', async () => {
+  const { stripHtmlAndDecodeEntities, sanitizePlayerDisplayName } = await import('../src/engine/linkIntegrity.js');
+  const { parseOfficial49ersInjuryReportHtml, canonicalInjuryPlayerKey } = await import(
+    '../src/engine/injuryProbabilityModel.js'
+  );
+  const { parseOfficial49ersRosterHtml } = await import('../scripts/lib/liveHealthAndRosterResolver.mjs');
+  const {
+    normalizeLookupName,
+    buildTeamGameDayRosterModel,
+    resolveGameDayInjuryRows,
+    resolveTeamGameDayModel
+  } = await import('../src/engine/gameDayRosterEngine.js');
+
+  // 1. stripHtmlAndDecodeEntities & sanitizePlayerDisplayName strip NFL CMS IE9 conditional comments,
+  //    standard HTML comments, orphaned IE9 tags, and escaped comments without corrupting math comparisons.
+  const nflCmsPlayerCell = `<div class="d3-o-media-object"><figure class="d3-o-media-object__figure"><a href="/team/players-roster/jayden-daniels/"> <picture is-lazy="/t_lazy"><!--[if IE 9]><video style="display:none"><![endif]--><source data-srcset="https://static.www.nfl.com/img.jpg"><source><!--[if IE 9]></video><![endif]--><img alt="Jayden Daniels headshot" src="data:image/gif;base64,R0lGODlhAQAB"></picture> </a></figure><span class="d3-o-player-roster__player-name"> <a href="/team/players-roster/jayden-daniels/"> Jayden Daniels </a> </span></div>`;
+  assert.equal(stripHtmlAndDecodeEntities(nflCmsPlayerCell), 'Jayden Daniels');
+  assert.equal(
+    stripHtmlAndDecodeEntities('<!--[if IE 9]> <![endif]--> <!--[if IE 9]> <![endif]--> Jacory Croskey-Merritt'),
+    'Jacory Croskey-Merritt'
+  );
+  assert.equal(stripHtmlAndDecodeEntities('<!--[if IE 9]> < Rachaad White'), '< Rachaad White');
+  assert.equal(sanitizePlayerDisplayName('<!--[if IE 9]> <![endif]--> <!--[if IE 9]> <![endif]--> Rachaad White'), 'Rachaad White');
+  assert.equal(sanitizePlayerDisplayName('<!--[if IE 9]> <'), '');
+  assert.equal(stripHtmlAndDecodeEntities('&lt;!--[if IE 9]&gt;&lt;![endif]--&gt; Ji&#x27;Ayir Brown'), "Ji'Ayir Brown");
+  assert.equal(stripHtmlAndDecodeEntities('3 < 5 && 7 > 4 >>> EPA'), '3 < 5 && 7 > 4 >>> EPA');
+  assert.equal(canonicalInjuryPlayerKey('<!--[if IE 9]> <![endif]--> Jayden Daniels'), 'jaydendaniels');
+  assert.equal(normalizeLookupName('<!--[if IE 9]> <![endif]--> Jacory Croskey-Merritt'), 'jacorycroskeymerritt');
+
+  // 2. parseOfficial49ersInjuryReportHtml & parseOfficial49ersRosterHtml parse live-format Commanders MNF HTML cleanly
+  const mockCommandersInjHtml = `
+    <h2>Washington Commanders Injury Report</h2>
+    <table>
+      <thead><tr><th>Player</th><th>Position</th><th>Injury</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Game Status</th></tr></thead>
+      <tbody>
+        <tr><td>${nflCmsPlayerCell}</td><td>QB</td><td></td><td>FP</td><td>FP</td><td>FP</td><td>UNSPECIFIED</td></tr>
+        <tr><td><figure><picture><!--[if IE 9]><video style="display:none"><![endif]--><!--[if IE 9]></video><![endif]--></picture></figure><span>Rachaad White</span></td><td>RB</td><td></td><td></td><td>LP</td><td>DNP</td><td>QUESTIONABLE</td></tr>
+        <tr><td><figure><picture><!--[if IE 9]><video style="display:none"><![endif]--><!--[if IE 9]></video><![endif]--></picture></figure><span>Amik Robertson</span></td><td>CB</td><td></td><td></td><td></td><td>DNP</td><td>QUESTIONABLE</td></tr>
+      </tbody>
+    </table>
+    <h2>Cincinnati Bengals Injury Report</h2>
+    <table>
+      <thead><tr><th>Player</th><th>Position</th><th>Injury</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Game Status</th></tr></thead>
+      <tbody>
+        <tr><td><figure><picture><!--[if IE 9]><video style="display:none"><![endif]--><!--[if IE 9]></video><![endif]--></picture></figure><span>Joe Burrow</span></td><td>QB</td><td><span>Illness</span></td><td>FP</td><td>FP</td><td>FP</td><td>UNSPECIFIED</td></tr>
+      </tbody>
+    </table>
+  `;
+  const parsedWasInj = parseOfficial49ersInjuryReportHtml(mockCommandersInjHtml, 'Cincinnati Bengals', 'WAS');
+  assert.equal(parsedWasInj.hasSfReport, true);
+  assert.equal(parsedWasInj.hasOppReport, true);
+  assert.equal(parsedWasInj.sfByKey.get('jaydendaniels')?.name, 'Jayden Daniels');
+  assert.equal(parsedWasInj.sfByKey.get('rachaadwhite')?.name, 'Rachaad White');
+  assert.equal(parsedWasInj.oppByKey.get('joeburrow')?.name, 'Joe Burrow');
+  for (const rec of [...parsedWasInj.sfByKey.values(), ...parsedWasInj.oppByKey.values()]) {
+    assert.ok(!rec.name.includes('<') && !rec.name.includes('if IE'), `Leaked HTML comment in parsed injury name: ${rec.name}`);
+  }
+
+  const mockRosterHtml = `
+    <table>
+      <caption>Active</caption>
+      <tbody>
+        ${Array.from({ length: 48 }, (_, i) => `<tr><td><picture><!--[if IE 9]><video style="display:none"><![endif]--><!--[if IE 9]></video><![endif]--></picture><span>Player ${i + 1}</span></td><td>${i + 1}</td></tr>`).join('')}
+      </tbody>
+    </table>
+  `;
+  const parsedRoster = parseOfficial49ersRosterHtml(mockRosterHtml);
+  assert.equal(parsedRoster.hasAuthoritativeData, true);
+  assert.equal(parsedRoster.byKey.get('player1')?.name, 'Player 1');
+
+  // 3. Self-healing cache deduplication & strict 48-man cap when fed 60-man ESPN roster + 13 poisoned IE9 rows + stale 69-player preHydrated model
+  const espn60Roster = [
+    { id: '1', name: 'Jayden Daniels', position: 'QB', jersey: 5, isStarter: true, rosterBucket: 'active' },
+    { id: '2', name: 'Marcus Mariota', position: 'QB', jersey: 8, rosterBucket: 'active' },
+    { id: '3', name: 'Rachaad White', position: 'RB', jersey: 21, rosterBucket: 'active' },
+    { id: '4', name: 'Jacory Croskey-Merritt', position: 'RB', jersey: 22, rosterBucket: 'active' },
+    { id: '5', name: 'Amik Robertson', position: 'CB', jersey: 24, isStarter: true, rosterBucket: 'active' },
+    { id: '6', name: 'Ricky Barber', position: 'DT', jersey: 91, rosterBucket: 'active' },
+    { id: '7', name: 'Athan Kaliakmanis', position: 'QB', jersey: 15, rosterBucket: 'active' },
+    { id: '8', name: 'Robert Henry Jr.', position: 'RB', jersey: 34, rosterBucket: 'active' },
+    { id: '9', name: 'Tanoa Togiai', position: 'OG', jersey: 77, rosterBucket: 'active' },
+    ...Array.from({ length: 9 }, (_, i) => ({
+      id: `ol_${i}`,
+      name: `Lineman Active${i + 1}`,
+      position: i % 2 === 0 ? 'OT' : 'OG',
+      jersey: 60 + i,
+      isStarter: i < 5,
+      rosterBucket: 'active'
+    })),
+    ...Array.from({ length: 42 }, (_, i) => ({
+      id: `pl_${i}`,
+      name: `Commander Depth${i + 1}`,
+      position: i < 20 ? 'WR' : i < 39 ? 'LB' : i === 39 ? 'K' : i === 40 ? 'P' : 'LS',
+      jersey: 35 + (i % 50),
+      isStarter: i < 12,
+      rosterBucket: 'active'
+    }))
+  ];
+  const poisonedInjRows = [
+    { name: 'Rachaad White', position: 'RB', injuryType: 'Heel', wed: '-', thu: 'LP', fri: 'DNP', gameStatus: 'Questionable', headshotUrl: 'https://a.espncdn.com/white.png' },
+    { name: '<!--[if IE 9]> <![endif]--> <!--[if IE 9]> <![endif]--> Rachaad White', position: 'RB', injuryType: 'Injury', wed: '-', thu: 'LP', fri: 'DNP', gameStatus: 'Questionable', headshotUrl: '' },
+    { name: '<!--[if IE 9]> <![endif]--> <!--[if IE 9]> <![endif]--> Jayden Daniels', position: 'QB', injuryType: 'Injury', wed: 'FP', thu: 'FP', fri: 'FP', gameStatus: 'Active', headshotUrl: '' },
+    { name: '<!--[if IE 9]> <![endif]--> <!--[if IE 9]> <![endif]--> Jacory Croskey-Merritt', position: 'RB', injuryType: 'Injury', wed: 'FP', thu: 'FP', fri: 'FP', gameStatus: 'Questionable', headshotUrl: '' },
+    { name: 'Amik Robertson', position: 'CB', injuryType: 'Ankle', wed: '-', thu: '-', fri: 'DNP', gameStatus: 'Questionable', headshotUrl: 'https://a.espncdn.com/amik.png' },
+    { name: '<!--[if IE 9]> <![endif]--> <!--[if IE 9]> <![endif]--> Amik Robertson', position: 'CB', injuryType: 'Injury', wed: '-', thu: '-', fri: 'DNP', gameStatus: 'Questionable', headshotUrl: '' }
+  ];
+  const mnfKickoffIso = new Date(Date.now() - 45 * 60_000).toISOString();
+  const winState = { isActive: true, hasKickoffStarted: true, phase: 'in_game', week: 11, kickoffMs: Date.now() - 45 * 60_000 };
+
+  const builtModel = buildTeamGameDayRosterModel({
+    teamAbbr: 'WAS',
+    teamName: 'Washington Commanders',
+    activeRosterPlayers: espn60Roster,
+    injuryReport: poisonedInjRows,
+    liveFeedData: {
+      officialPosted: true,
+      inactives: [
+        { name: 'Amik Robertson', position: 'CB' },
+        { name: 'Ricky Barber', position: 'DT' },
+        { name: 'Athan Kaliakmanis', position: 'QB' },
+        { name: 'Robert Henry', position: 'RB' },
+        { name: 'Tanoa Togiai', position: 'OG' }
+      ]
+    },
+    windowState: winState
+  });
+  assert.equal(builtModel.officialPosted, true);
+  assert.equal(builtModel.activeCount, 48, `Expected strict 48-man cap (never 69!), got ${builtModel.activeCount}`);
+  const builtActives = Object.values(builtModel.activeByUnit).flat();
+  assert.equal(builtActives.length, 48);
+  assert.ok(builtActives.every(p => !p.name.includes('<') && !p.name.includes('if IE')), 'Active roster must have zero IE9 comment names');
+  assert.equal(
+    new Set(builtActives.map(p => normalizeLookupName(p.name))).size,
+    builtActives.length,
+    'Active roster must have zero duplicate players'
+  );
+
+  // resolveGameDayInjuryRows must self-heal and deduplicate poisoned cached rows while keeping real medical injury & headshot
+  const resolvedRows = resolveGameDayInjuryRows(poisonedInjRows, builtModel, { activeRosterPlayers: espn60Roster });
+  const rachaadRows = resolvedRows.filter(r => normalizeLookupName(r.name) === 'rachaadwhite');
+  assert.equal(rachaadRows.length, 1, 'Duplicate poisoned IE9 Rachaad White row must collapse into 1 clean row');
+  assert.equal(rachaadRows[0].name, 'Rachaad White');
+  assert.equal(rachaadRows[0].injuryType, 'Heel', 'Deduplication must retain real medical injury (Heel) over generic "Injury"');
+  assert.equal(rachaadRows[0].headshotUrl, 'https://a.espncdn.com/white.png');
+  assert.ok(resolvedRows.every(r => !r.name.includes('<') && !r.name.includes('if IE')), 'Health rows must have zero IE9 strings');
+
+  // resolveTeamGameDayModel must reject stale preHydrated 69-player / IE9-corrupted cached model and rebuild cleanly
+  const healedModel = resolveTeamGameDayModel(
+    {
+      scheduleMatchup: {
+        schedule: [{ id: '401873078', week: 11, dateIso: mnfKickoffIso, statusState: 'in', isLive: true, opponent: { abbr: 'WAS', name: 'Washington Commanders' } }],
+        upcomingMatchup: {
+          week: 11,
+          gameId: '401873078',
+          dateIso: mnfKickoffIso,
+          oppAbbr: 'WAS',
+          oppName: 'Washington Commanders',
+          opponentHealth: {
+            activeRoster: espn60Roster,
+            injuryReport: poisonedInjRows,
+            gameDayRoster: {
+              isActive: true,
+              officialPosted: true,
+              week: 11,
+              activeCount: 69,
+              totalActives: 69,
+              inactives: [{ name: 'Amik Robertson' }],
+              activeByUnit: { Offense: [{ name: '<!--[if IE 9]> <![endif]--> Jayden Daniels' }], Defense: [], 'Special Teams': [] }
+            }
+          }
+        }
+      },
+      liveGameDay: {
+        opp: {
+          officialPosted: true,
+          inactives: [
+            { name: 'Amik Robertson', position: 'CB' },
+            { name: 'Ricky Barber', position: 'DT' },
+            { name: 'Athan Kaliakmanis', position: 'QB' },
+            { name: 'Robert Henry', position: 'RB' },
+            { name: 'Tanoa Togiai', position: 'OG' }
+          ]
+        }
+      }
+    },
+    { is49ers: false, nowMs: Date.now() }
+  );
+  assert.ok(healedModel?.isActive && healedModel.activeCount <= 48, `Expected self-healed <=48 active roster, got ${healedModel?.activeCount}`);
+  assert.ok(
+    Object.values(healedModel.activeByUnit).flat().every(p => !p.name.includes('<') && !p.name.includes('if IE')),
+    'Self-healed game-day model must contain zero IE9 comment names'
+  );
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

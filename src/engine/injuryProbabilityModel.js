@@ -2747,7 +2747,12 @@ function stripHtmlTagsBasic(html = '') {
 }
 
 export function canonicalInjuryPlayerKey(rawName = '') {
-  const k = String(rawName || '')
+  const raw = String(rawName || '');
+  const clean =
+    raw.includes('<') || raw.includes('&')
+      ? stripHtmlAndDecodeEntities(raw)
+      : raw;
+  const k = clean
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
@@ -2899,10 +2904,12 @@ export function parseOfficial49ersInjuryReportHtml(html = '', oppTeamName = '', 
 
     const tbody = tableHtml.match(/<tbody[\s\S]*?<\/tbody>/i)?.[0] || '';
     for (const rowMatch of tbody.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)) {
-      const cells = [...rowMatch[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(c => stripHtmlTagsBasic(c[1]));
-      const playerName = cells[pIdx] || '';
+      const cells = [...rowMatch[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(c =>
+        stripHtmlTagsBasic(String(c[1] || '').replace(/<picture\b[\s\S]*?<\/picture>/gi, ' '))
+      );
+      const playerName = (cells[pIdx] || '').replace(/^[^A-Za-z0-9]+/, '').trim();
       const key = canonicalInjuryPlayerKey(playerName);
-      if (!key) continue;
+      if (!key || !playerName) continue;
 
       const rawInjury = injIdx >= 0 ? cells[injIdx] || '' : '';
       const cleanInjury = formatCleanOfficialInjuryLabel(rawInjury);

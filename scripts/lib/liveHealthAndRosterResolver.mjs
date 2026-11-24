@@ -67,10 +67,12 @@ export function parseOfficial49ersRosterHtml(html = '') {
     if (!bucket) continue;
     const tbody = tableHtml.match(/<tbody[\s\S]*?<\/tbody>/i)?.[0] || '';
     for (const rowMatch of tbody.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)) {
-      const cells = [...rowMatch[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(c => stripTags(c[1]));
-      const playerName = cells[0] || '';
+      const cells = [...rowMatch[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(c =>
+        stripTags(String(c[1] || '').replace(/<picture\b[\s\S]*?<\/picture>/gi, ' '))
+      );
+      const playerName = (cells[0] || '').replace(/^[^A-Za-z0-9]+/, '').trim();
       const key = canonicalPlayerKey(playerName);
-      if (!key) continue;
+      if (!key || !playerName) continue;
       byKey.set(key, {
         name: playerName,
         bucket,
