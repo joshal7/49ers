@@ -320,6 +320,7 @@ import {
   parseEspnSummaryToGamecast,
   extractFastSituationFingerprint,
   buildFallbackGamecastFromSchedule,
+  buildPlayHeadline,
   yardsToEndzoneToFieldX,
   parseSpotTextToFieldX
 } from '../src/engine/gamecastEngine.js';
@@ -20255,9 +20256,49 @@ test('parseEspnSummaryToGamecast parses Box Score, Team Stats, Play-by-Play, Fie
   const pbpHtml = renderGamecastViewHtml({ appData: appDataMock, selectedGameId: '401873077', gamecastTab: 'pbp', gamecastModel: parsed });
   const fieldPos = pbpHtml.indexOf('data-gamecast-field');
   const quarterPos = pbpHtml.indexOf('data-gamecast-quarter-scoreboard');
-  assert.ok(fieldPos > 0 && quarterPos > fieldPos, 'Play-by-Play must place Quarter Scoreboard directly BELOW the animated football field');
-  assert.ok(pbpHtml.includes('SF Win Prob 71%'), 'Play-by-Play must render expandable Win Prob meter');
+  const toolbarPos = pbpHtml.indexOf('data-gamecast-pbp-toolbar');
+  const drivePos = pbpHtml.indexOf('data-gamecast-drive-id');
+  const wpCardPos = pbpHtml.indexOf('data-gamecast-winprob');
+  const leadersPos = pbpHtml.indexOf('data-gamecast-leaders');
+  assert.ok(fieldPos > 0 && quarterPos > fieldPos, 'Play-by-Play must place Quarter Scoreboard directly BELOW the 3D football field');
+  assert.ok(toolbarPos > quarterPos && drivePos > toolbarPos, 'Single-line PBP filter toolbar must appear directly above drives');
+  assert.ok(wpCardPos > drivePos, 'Fully expanded Win Probability graph must render at the bottom below drives');
+  assert.ok(leadersPos > wpCardPos, 'Game Leaders (Top Players) card must render at the bottom below Win Probability');
+
+  // Verify 3D field geometry, goalposts, realistic football, arrows/pass arcs, and top Win % next to Last Play
+  assert.ok(pbpHtml.includes('CURRENT DRIVE') && pbpHtml.includes('gc-sit-kpi-bar'), 'Hero Current Drive header & Down/Ball On KPI strip must render');
+  assert.ok(pbpHtml.includes('gc-goalposts') && pbpHtml.includes('gc-ball-leather'), '3D field must include goalposts and realistic leather football');
+  assert.ok(pbpHtml.includes('gc-pass-arc') && pbpHtml.includes('gc-arrow-pass'), 'Pass play must render up-and-down dashed pass arc with arrowhead');
+  assert.ok(pbpHtml.includes('data-gamecast-last-play') && pbpHtml.includes('data-gamecast-top-winprob') && pbpHtml.includes('71.0%'), 'Top Last Play panel must show prominent headline and live Win %');
+  assert.ok(pbpHtml.includes('19-yd Pass TD') && pbpHtml.includes('4-yd Run'), 'Play rows must feature bold ESPN-style play headlines');
+  assert.ok(pbpHtml.includes('gc-pbp-divider') && (pbpHtml.match(/gc-pbp-group/g) || []).length >= 2, 'PBP controls must delineate play filter and quarter filter on one line');
+  assert.ok(pbpHtml.includes('gc-logo-bare') && pbpHtml.includes('--logo-size:44px'), 'Scorebug must render larger unboxed team icons');
+  assert.ok(pbpHtml.includes('data-timeouts-remaining="2"') && pbpHtml.includes('data-timeouts-remaining="3"'), 'Scorebug must display timeout dots under both teams during live games');
+  assert.ok(pbpHtml.includes('gc-wp-clip-top') && pbpHtml.includes('gc-wp-clip-bot') && pbpHtml.includes('>Q1<') && pbpHtml.includes('>Q4<'), 'Expanded Win Probability graph must include two-tone area clips and Q1-Q4 dividers');
+  assert.ok(pbpHtml.includes('Game Leaders') && pbpHtml.includes('Passing Yards') && pbpHtml.includes('Full Box Score'), 'Game Leaders card must surface top players and Full Box Score CTA');
+  assert.ok(!boxHtml.includes('data-gamecast-winprob') && !teamHtml.includes('data-gamecast-winprob'), 'Win Probability graph must only render on Play-by-Play');
   assert.ok(pbpHtml.includes('data-action="play-gamecast-clip"'), 'Play-by-Play must surface inline HD highlight clip button');
+
+  // Verify buildPlayHeadline nomenclature & deterministic live timeout inference when ESPN omits situation timeouts
+  assert.equal(buildPlayHeadline({ statYardage: 10, type: { text: 'Pass Reception' }, text: 'J.Burrow pass short left to J.Chase for 10 yards.' }).headline, '10-yd Pass');
+  assert.equal(buildPlayHeadline({ statYardage: 1, type: { text: 'Rush' }, text: 'C.Brown up the middle to CIN 19 for 1 yard.' }).headline, '1-yd Run');
+  assert.equal(buildPlayHeadline({ statYardage: -7, type: { text: 'Sack' }, text: 'J.Burrow sacked at CIN 12 for -7 yards.' }).headline, 'Sack (-7 yds)');
+  assert.equal(buildPlayHeadline({ statYardage: 0, type: { text: 'Pass Incompletion' }, text: 'J.Burrow pass incomplete short left.' }).headline, 'Incomplete Pass');
+  assert.equal(buildPlayHeadline({ statYardage: 42, scoringPlay: true, type: { text: 'Field Goal Good' }, text: 'E.McPherson 42 yard field goal is GOOD.' }).headline, '42-yd Field Goal');
+
+  const noSitTimeoutsSummary = structuredClone(mockSummary);
+  delete noSitTimeoutsSummary.situation.awayTimeouts;
+  delete noSitTimeoutsSummary.situation.homeTimeouts;
+  noSitTimeoutsSummary.drives.current.plays.unshift({
+    id: 'p_to1',
+    period: { number: 3 },
+    clock: { displayValue: '8:10' },
+    type: { text: 'Timeout' },
+    text: 'Timeout #1 by MIN at 08:10.'
+  });
+  const parsedInferredTo = parseEspnSummaryToGamecast(noSitTimeoutsSummary);
+  assert.equal(parsedInferredTo.away.timeoutsRemaining, 2, 'Live timeout inference must deduct MIN charged 2nd-half timeout (3 -> 2)');
+  assert.equal(parsedInferredTo.home.timeoutsRemaining, 3, 'Live timeout inference must keep SF at 3 remaining timeouts');
 });
 
 test('extractFastSituationFingerprint detects play/down/spot changes & folded Draft view supports legacy draft_class route', () => {
@@ -21290,6 +21331,7 @@ await testAsync('NFL CMS <!--[if IE 9]> HTML Comment Stripping, Self-Healing Cac
   const { parseOfficial49ersRosterHtml } = await import('../scripts/lib/liveHealthAndRosterResolver.mjs');
   const {
     normalizeLookupName,
+    parseOfficialClubInactivesArticle,
     buildTeamGameDayRosterModel,
     resolveGameDayInjuryRows,
     resolveTeamGameDayModel
@@ -21473,6 +21515,49 @@ await testAsync('NFL CMS <!--[if IE 9]> HTML Comment Stripping, Self-Healing Cac
   assert.ok(
     Object.values(healedModel.activeByUnit).flat().every(p => !p.name.includes('<') && !p.name.includes('if IE')),
     'Self-healed game-day model must contain zero IE9 comment names'
+  );
+
+  // 4. Dual-team official club inactives articles with bare team subheadings ("Cincinnati Bengals" / "Washington Commanders")
+  //    must strictly isolate each team's 5 scratches without bleeding opponent inactives across sections.
+  const dualTeamHtml = `
+    <h1>Bengals-Commanders Inactives: Five Cincinnati Players Out for Week 11</h1>
+    <p>A look at who is inactive for the Cincinnati Bengals and the Washington Commanders in Week 11.</p>
+    <h3>Cincinnati Bengals</h3>
+    <ul>
+      <li>29 S Kyle Dugger</li>
+      <li>66 G Dalton Risner</li>
+      <li>77 OT Myles Hinton</li>
+      <li>85 TE Cam Grandy</li>
+      <li>96 DT Landon Robinson</li>
+    </ul>
+    <h3>Washington Commanders</h3>
+    <ul>
+      <li>2 CB Amik Robertson</li>
+      <li>16 QB Athan Kaliakmanis (Emergency Third QB)</li>
+      <li>34 RB Robert Henry Jr.</li>
+      <li>50 DT Ricky Barber</li>
+      <li>62 G Tanoa Togiai</li>
+    </ul>
+  `;
+  const cinDual = parseOfficialClubInactivesArticle(dualTeamHtml, [], {
+    week: 11,
+    teamAbbr: 'CIN',
+    teamName: 'Cincinnati Bengals'
+  });
+  const wasDual = parseOfficialClubInactivesArticle(dualTeamHtml, [], {
+    week: 11,
+    teamAbbr: 'WAS',
+    teamName: 'Washington Commanders'
+  });
+  assert.equal(cinDual.inactives.length, 5, `CIN must isolate 5 Bengals inactives, got ${cinDual.inactives.length}`);
+  assert.equal(wasDual.inactives.length, 5, `WAS must isolate 5 Commanders inactives, got ${wasDual.inactives.length}`);
+  assert.ok(
+    !cinDual.inactives.some(p => /robertson|kaliakmanis|barber|togiai/i.test(p.name)),
+    'CIN inactives must not bleed WAS players from dual-team article'
+  );
+  assert.ok(
+    wasDual.inactives.some(p => /kaliakmanis/i.test(p.name) && /emergency/i.test(p.reason || '')),
+    'WAS inactives must preserve Athan Kaliakmanis Emergency Third QB reason'
   );
 });
 

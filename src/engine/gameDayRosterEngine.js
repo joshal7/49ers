@@ -806,11 +806,42 @@ export function parseOfficialClubInactivesArticle(
   const NON_PLAYER_PROSE_WORDS_RE = /\b(?:will|was|were|have|has|had|are|been|being|against|versus|sunday|monday|thursday|saturday|quarterback|inactives?|active|game|week|season|roster|injury|report)\b/i;
 
   if (listPart) {
+    const detectStandaloneTeamSubheading = ln => {
+      const trimmed = String(ln || '').replace(/:$/, '').trim();
+      if (!trimmed || trimmed.length > 42) return null;
+      if (/\b(?:vs\.?|at|against|\d{1,2})\b/i.test(trimmed)) return null;
+      if (trimmed.split(/\s+/).length > 4) return null;
+      const abbr = detectTeamAbbrInHeading(trimmed);
+      if (!abbr) return null;
+      const stripped = trimmed
+        .replace(/\binactives?\b|\blist\b|\bplayers?\b/gi, '')
+        .trim()
+        .toLowerCase();
+      const aliases = NFL_TEAM_NICKNAME_MAP[abbr] || [];
+      return aliases.some(al => stripped === al || stripped.endsWith(` ${al}`) || stripped.startsWith(`${al} `))
+        ? abbr
+        : null;
+    };
+
     // Stop list block if prose paragraphs resume after the bullet/position list or opposing team section starts
-    const listLines = listPart.split(/\n+/).map(l => l.trim()).filter(Boolean);
+    let listLines = listPart.split(/\n+/).map(l => l.trim()).filter(Boolean);
+    if (targetCanon) {
+      const targetSubIdx = listLines.findIndex(ln => detectStandaloneTeamSubheading(ln) === targetCanon);
+      if (targetSubIdx >= 0) {
+        listLines = listLines.slice(targetSubIdx + 1);
+      }
+    }
     const collectedListLines = [];
     for (const ln of listLines) {
-      // Stop if another team's Inactives header appears inline
+      // Stop if another team's standalone section header (e.g. "Washington Commanders" or "Vikings Inactives") appears
+      const subHeadingTeam = detectStandaloneTeamSubheading(ln);
+      if (
+        collectedListLines.length >= 2 &&
+        subHeadingTeam &&
+        (!targetCanon || subHeadingTeam !== targetCanon)
+      ) {
+        break;
+      }
       if (
         collectedListLines.length >= 2 &&
         /\binactives?\b/i.test(ln) &&
