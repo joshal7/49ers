@@ -253,22 +253,159 @@ function normalizeDriveResultBadge(rawResult = '', isLiveDrive = false) {
 function classifyPlayKind(play = {}) {
   const typeText = String(play?.type?.text || '').toLowerCase();
   const text = String(play?.text || '').toLowerCase();
+  const isSack = /\bsack/.test(typeText) || /\bsacked\b/.test(text);
+  const isInterception = /\binterception\b/.test(typeText) || /\bintercepted\b/.test(text);
+  const isIncomplete =
+    !isInterception &&
+    !isSack &&
+    (/\bincomplete\b/.test(typeText) || /\bpass\s+incomplete\b|\bincomplete\s+(?:short|deep|to)\b/.test(text));
   const isPass =
     /\bpass\b|interception|sack/.test(typeText) ||
     /\bpass\s+(?:short|deep|incomplete|complete|to\b)|sacked\b|intercepted\b/.test(text);
   const isRun =
     !isPass &&
     (/\brush\b|scramble|kneel/.test(typeText) ||
-      /\b(up the middle|left guard|right guard|left tackle|right tackle|left end|right end|scrambles|rush|rushed)\b/.test(
+      /\b(up the middle|left guard|right guard|left tackle|right tackle|left end|right end|scrambles|rush|rushed|kneels)\b/.test(
         text
       ));
-  const isSack = /\bsack/.test(typeText) || /\bsacked\b/.test(text);
+  const isFumble = /\bfumble/.test(typeText) || /\bfumbles?\b/.test(text);
   const isTurnover =
-    /\b(interception|fumble\s+recovery\s*\(opponent\)|fumble\s+return)/.test(typeText) ||
-    /\b(intercepted|fumbles.*recovered\s+by)\b/.test(text);
+    isInterception ||
+    /\b(fumble\s+recovery\s*\(opponent\)|fumble\s+return)/.test(typeText) ||
+    /\bfumbles.*recovered\s+by\b/.test(text);
   const isPenalty = /\bpenalty\b/.test(typeText) || /^penalty\b/.test(text);
-  const isKickOrPunt = /\b(kickoff|punt|field\s+goal|extra\s+point|two-point)\b/.test(typeText);
-  return { isPass, isRun, isSack, isTurnover, isPenalty, isKickOrPunt };
+  const isFieldGoal = /\bfield\s+goal\b/.test(typeText) || /\bfield\s+goal\b/.test(text);
+  const isExtraPoint = /\bextra\s+point\b/.test(typeText) || /\bextra\s+point\b/.test(text);
+  const isTwoPoint = /\btwo-point\b/.test(typeText) || /\btwo-point\b/.test(text);
+  const isPunt = /\bpunt\b/.test(typeText) || /\bpunts\s+\d+\s+yard/.test(text);
+  const isKickoff = /\bkickoff\b/.test(typeText) || /\bkicks\s+\d+\s+yard/.test(text);
+  const isTimeout = /\btimeout\b/.test(typeText) || /^timeout\s+#?\d/i.test(text);
+  const isKickOrPunt = isFieldGoal || isExtraPoint || isTwoPoint || isPunt || isKickoff;
+  const isTouchdown = Boolean(play?.scoringPlay) && /\btouchdown\b/.test(`${typeText} ${text}`);
+  return {
+    isPass,
+    isRun,
+    isSack,
+    isIncomplete,
+    isInterception,
+    isFumble,
+    isTurnover,
+    isPenalty,
+    isFieldGoal,
+    isExtraPoint,
+    isTwoPoint,
+    isPunt,
+    isKickoff,
+    isTimeout,
+    isKickOrPunt,
+    isTouchdown
+  };
+}
+
+/**
+ * Generates an ESPN-style prominent play headline (e.g. "10-yd Pass", "1-yd Run",
+ * "Sack (-7 yds)", "Incomplete Pass", "19-yd Pass TD") + semantic tone.
+ */
+export function buildPlayHeadline(play = {}, kind = null, yardsInput = null) {
+  const k = kind || classifyPlayKind(play);
+  const text = String(play?.text || '').trim();
+  const typeText = String(play?.type?.text || '').trim();
+  const rawYds = yardsInput != null ? Number(yardsInput) : Number(play?.statYardage);
+  const yards = Number.isFinite(rawYds) ? rawYds : 0;
+
+  if (k.isTimeout) {
+    return { headline: 'Timeout', tone: 'neu' };
+  }
+  if (/two-minute warning/i.test(`${typeText} ${text}`)) {
+    return { headline: 'Two-Minute Warning', tone: 'neu' };
+  }
+  if (/end (?:of )?(?:period|quarter|half|game)/i.test(`${typeText} ${text}`)) {
+    return { headline: typeText || 'End of Quarter', tone: 'neu' };
+  }
+  if (k.isSack) {
+    const sackYds = yards !== 0 ? yards : -Math.abs(Number((text.match(/for\s+-?(\d+)\s+yard/i) || [])[1] || 0));
+    return {
+      headline: sackYds ? `Sack (${sackYds > 0 ? `-${sackYds}` : sackYds} yds)` : 'Sack',
+      tone: 'neg'
+    };
+  }
+  if (k.isInterception) {
+    return { headline: k.isTouchdown ? 'Pick-Six TD' : 'Interception', tone: k.isTouchdown ? 'td' : 'neg' };
+  }
+  if (k.isIncomplete) {
+    return { headline: 'Incomplete Pass', tone: 'neu' };
+  }
+  if (k.isFieldGoal) {
+    const fgDist = Number((text.match(/(\d{2})\s+yard\s+field\s+goal/i) || [])[1] || 0) || Math.abs(yards);
+    const isGood = /is\s+good\b/i.test(text) || Boolean(play?.scoringPlay);
+    const isBlocked = /\bblocked\b/i.test(`${typeText} ${text}`);
+    if (isGood) return { headline: fgDist ? `${fgDist}-yd Field Goal` : 'Field Goal Good', tone: 'td' };
+    if (isBlocked) return { headline: fgDist ? `Blocked ${fgDist}-yd FG` : 'Blocked FG', tone: 'neg' };
+    return { headline: fgDist ? `Missed ${fgDist}-yd FG` : 'Missed Field Goal', tone: 'neg' };
+  }
+  if (k.isExtraPoint) {
+    const isGood = /is\s+good\b/i.test(text) || Boolean(play?.scoringPlay);
+    return { headline: isGood ? 'Extra Point Good' : 'Extra Point Missed', tone: isGood ? 'pos' : 'neg' };
+  }
+  if (k.isTwoPoint) {
+    const good = Boolean(play?.scoringPlay) || /succeeds|is good|good\b/i.test(text);
+    return { headline: good ? '2-Pt Conversion Good' : '2-Pt Conversion Failed', tone: good ? 'td' : 'neg' };
+  }
+  if (k.isPunt) {
+    const puntYds = Number((text.match(/punts\s+(\d{1,3})\s+yard/i) || [])[1] || 0);
+    return { headline: puntYds ? `${puntYds}-yd Punt` : 'Punt', tone: 'neu' };
+  }
+  if (k.isKickoff) {
+    if (/touchback/i.test(text)) return { headline: 'Kickoff (Touchback)', tone: 'neu' };
+    return { headline: 'Kickoff', tone: 'neu' };
+  }
+  if (k.isPenalty) {
+    const penYds = Number((text.match(/,\s*(\d{1,2})\s+yard/i) || [])[1] || 0) || Math.abs(yards);
+    const declined = /\bdeclined\b/i.test(text);
+    if (declined) return { headline: 'Penalty (Declined)', tone: 'neu' };
+    return { headline: penYds ? `Penalty (${penYds} yds)` : 'Penalty', tone: 'neg' };
+  }
+  if (k.isPass) {
+    const lbl = `${yards}-yd Pass${k.isTouchdown ? ' TD' : ''}`;
+    const tone = k.isTouchdown ? 'td' : k.isTurnover ? 'neg' : yards >= 15 ? 'pos' : yards < 0 ? 'neg' : 'neu';
+    return { headline: lbl, tone };
+  }
+  if (k.isRun) {
+    const isKneel = /\bkneel/i.test(`${typeText} ${text}`);
+    if (isKneel) return { headline: 'QB Kneel', tone: 'neu' };
+    const lbl = `${yards}-yd Run${k.isTouchdown ? ' TD' : ''}`;
+    const tone = k.isTouchdown ? 'td' : k.isTurnover ? 'neg' : yards >= 10 ? 'pos' : yards < 0 ? 'neg' : 'neu';
+    return { headline: lbl, tone };
+  }
+  if (k.isFumble) {
+    return { headline: k.isTurnover ? 'Fumble Lost' : 'Fumble', tone: 'neg' };
+  }
+  if (k.isTouchdown) {
+    return { headline: yards ? `${yards}-yd Touchdown` : 'Touchdown', tone: 'td' };
+  }
+  if (typeText) {
+    return {
+      headline: yards !== 0 ? `${yards}-yd ${typeText}` : typeText,
+      tone: yards >= 15 ? 'pos' : yards < 0 ? 'neg' : 'neu'
+    };
+  }
+  return { headline: yards !== 0 ? `${yards}-yd Play` : 'Play', tone: 'neu' };
+}
+
+function parseClockSecondsRemaining(clockStr = '', period = 1) {
+  const m = String(clockStr || '').trim().match(/^(\d{1,2}):(\d{2})$/);
+  const quarterDurSec = Number(period) >= 5 ? 600 : 900;
+  if (!m) return null;
+  const secs = Number(m[1]) * 60 + Number(m[2]);
+  return Math.max(0, Math.min(quarterDurSec, secs));
+}
+
+function computeGameClockProgress01(period = 1, clockStr = '', totalPeriods = 4) {
+  const p = Math.max(1, Math.min(totalPeriods, Number(period) || 1));
+  const quarterDurSec = p >= 5 ? 600 : 900;
+  const rem = parseClockSecondsRemaining(clockStr, p);
+  const fracInQuarter = rem != null ? (quarterDurSec - rem) / quarterDurSec : 0.5;
+  return Math.max(0, Math.min(1, (p - 1 + fracInQuarter) / totalPeriods));
 }
 
 function extractVideoClipEntry(vid) {
@@ -327,21 +464,47 @@ function matchVideoClipToPlay(playText, isScoring, isTurnover, clips = [], usedI
   return bestClip;
 }
 
-function buildCompactWinProbSeries(rawWinProb = [], teamIsHome = true, maxPoints = 44) {
-  if (!Array.isArray(rawWinProb) || rawWinProb.length === 0) {
-    return { teamPct: null, oppPct: null, series: [], deltaByPlayId: {} };
-  }
+function buildCompactWinProbSeries(
+  rawWinProb = [],
+  teamIsHome = true,
+  { playTimingById = null, totalPeriods = 4, isFinal = false, currentPeriod = 1, maxPoints = 72 } = {}
+) {
+  const empty = {
+    teamPct: null,
+    oppPct: null,
+    teamPctExact: null,
+    oppPctExact: null,
+    leadingSide: 'tied',
+    totalPeriods: Math.max(4, Number(totalPeriods) || 4),
+    series: [],
+    points: [],
+    deltaByPlayId: {}
+  };
+  if (!Array.isArray(rawWinProb) || rawWinProb.length === 0) return empty;
+
+  const periodsCount = Math.max(4, Number(totalPeriods) || 4);
   const normalized = [];
   const deltaByPlayId = {};
   let prevTeamPct = null;
+  let matchedTimingCount = 0;
 
-  for (const pt of rawWinProb) {
+  for (let i = 0; i < rawWinProb.length; i += 1) {
+    const pt = rawWinProb[i];
     const homeWin = Number(pt?.homeWinPercentage);
     if (!Number.isFinite(homeWin)) continue;
     const teamRaw = teamIsHome ? homeWin : 1 - homeWin;
     const teamPctExact = Math.max(0, Math.min(100, teamRaw * 100));
-    normalized.push(teamPctExact);
     const playId = pt?.playId != null ? String(pt.playId) : '';
+    const timing = playId && playTimingById instanceof Map ? playTimingById.get(playId) : null;
+    if (timing) matchedTimingCount += 1;
+
+    normalized.push({
+      teamPct: Math.round(teamPctExact * 10) / 10,
+      playId,
+      x01Raw: timing ? timing.x01 : null,
+      period: timing ? timing.period : null
+    });
+
     if (playId && prevTeamPct != null) {
       const diff = teamPctExact - prevTeamPct;
       if (Math.abs(diff) >= 0.4) {
@@ -351,26 +514,66 @@ function buildCompactWinProbSeries(rawWinProb = [], teamIsHome = true, maxPoints
     prevTeamPct = teamPctExact;
   }
 
-  if (normalized.length === 0) {
-    return { teamPct: null, oppPct: null, series: [], deltaByPlayId: {} };
+  if (normalized.length === 0) return empty;
+
+  // Assign monotonic X coordinates in [0, 1] across the 4-quarter (or 5-period OT) timeline
+  const fallbackSpan = isFinal
+    ? 1
+    : Math.max(0.08, Math.min(1, ((Number(currentPeriod) || 1) - 0.15) / periodsCount));
+  const useRealTiming = matchedTimingCount >= Math.max(2, Math.floor(normalized.length * 0.35));
+
+  let maxSeenX = 0;
+  const timedPoints = normalized.map((item, idx) => {
+    let x01;
+    if (useRealTiming && item.x01Raw != null) {
+      x01 = Math.max(maxSeenX, item.x01Raw);
+    } else if (useRealTiming) {
+      // Interpolate linearly between neighbors when a single playId is unmatched
+      const frac = normalized.length > 1 ? idx / (normalized.length - 1) : 0;
+      x01 = Math.max(maxSeenX, frac * fallbackSpan);
+    } else {
+      const frac = normalized.length > 1 ? idx / (normalized.length - 1) : 0;
+      x01 = frac * fallbackSpan;
+    }
+    maxSeenX = Math.min(1, x01);
+    return {
+      x01: Math.round(maxSeenX * 1000) / 1000,
+      teamPct: item.teamPct,
+      period: item.period
+    };
+  });
+
+  if (isFinal && timedPoints.length > 0) {
+    timedPoints[timedPoints.length - 1].x01 = 1;
+  }
+  if (timedPoints.length > 0 && timedPoints[0].x01 > 0.03) {
+    timedPoints.unshift({ x01: 0, teamPct: timedPoints[0].teamPct, period: 1 });
   }
 
-  const latestTeamPct = Math.round(normalized[normalized.length - 1]);
-  const series = [];
-  if (normalized.length <= maxPoints) {
-    for (const v of normalized) series.push(Math.round(v * 10) / 10);
-  } else {
-    const step = (normalized.length - 1) / (maxPoints - 1);
+  let sampledPoints = timedPoints;
+  if (timedPoints.length > maxPoints) {
+    sampledPoints = [];
+    const step = (timedPoints.length - 1) / (maxPoints - 1);
     for (let i = 0; i < maxPoints; i += 1) {
-      const idx = i === maxPoints - 1 ? normalized.length - 1 : Math.round(i * step);
-      series.push(Math.round(normalized[idx] * 10) / 10);
+      const idx = i === maxPoints - 1 ? timedPoints.length - 1 : Math.round(i * step);
+      sampledPoints.push(timedPoints[idx]);
     }
   }
+
+  const latestExact = Math.round(normalized[normalized.length - 1].teamPct * 10) / 10;
+  const oppExact = Math.round(Math.max(0, 100 - latestExact) * 10) / 10;
+  const latestTeamPct = Math.round(latestExact);
+  const leadingSide = latestExact > 50.05 ? 'team' : latestExact < 49.95 ? 'opp' : 'tied';
 
   return {
     teamPct: latestTeamPct,
     oppPct: Math.max(0, 100 - latestTeamPct),
-    series,
+    teamPctExact: latestExact,
+    oppPctExact: oppExact,
+    leadingSide,
+    totalPeriods: periodsCount,
+    series: sampledPoints.map(p => p.teamPct),
+    points: sampledPoints,
     deltaByPlayId
   };
 }
@@ -570,6 +773,203 @@ function parseTeamBoxScoreGroups(summaryJson, targetAbbr) {
   return out;
 }
 
+function buildEspnPlayerHeadshotUrl(athleteId, rawUrl = null) {
+  const cleanRaw = sanitizeExternalUrl(rawUrl || '', null);
+  if (cleanRaw) return cleanRaw;
+  const id = String(athleteId || '').trim();
+  if (/^\d{4,10}$/.test(id)) {
+    return `https://a.espncdn.com/i/headshots/nfl/players/full/${id}.png`;
+  }
+  return null;
+}
+
+function inferTimeoutsRemainingFromDrives(drivesChrono = [], currentPeriod = 1, away = {}, home = {}) {
+  const per = Math.max(1, Number(currentPeriod) || 1);
+  const isOt = per >= 5;
+  const halfPeriods = isOt ? [per] : per <= 2 ? [1, 2] : [3, 4];
+  const startingTimeouts = isOt ? 2 : 3;
+  let awayUsed = 0;
+  let homeUsed = 0;
+
+  const awayTokens = [away.abbr, away.shortName, away.name].filter(Boolean).map(s => String(s).toLowerCase());
+  const homeTokens = [home.abbr, home.shortName, home.name].filter(Boolean).map(s => String(s).toLowerCase());
+
+  for (const drv of drivesChrono || []) {
+    for (const pl of drv?.plays || []) {
+      if (!halfPeriods.includes(Number(pl.period || 1))) continue;
+      const txt = String(pl.text || '');
+      if (!/\btimeout\b/i.test(txt) || /official|tv|injury|two-minute|booth/i.test(txt)) continue;
+      // ESPN format: "Timeout #1 by CIN at 04:12." or "Timeout #2 by SF at 01:08."
+      const m = txt.match(/by\s+([A-Za-z0-9 .'-]{2,24}?)(?:\s+at\b|\.|,|$)/i);
+      const who = String(m?.[1] || '').trim().toLowerCase();
+      if (who) {
+        const whoAbbr = normalizeCanonicalTeamAbbr(who).toLowerCase();
+        if (awayTokens.some(t => t === who || t === whoAbbr || who.includes(t))) {
+          awayUsed += 1;
+        } else if (homeTokens.some(t => t === who || t === whoAbbr || who.includes(t))) {
+          homeUsed += 1;
+        }
+      }
+    }
+  }
+
+  return {
+    away: Math.max(0, Math.min(3, startingTimeouts - awayUsed)),
+    home: Math.max(0, Math.min(3, startingTimeouts - homeUsed))
+  };
+}
+
+/**
+ * Extracts ESPN-style mirrored Game Leaders (Passing Yards, Rushing Yards,
+ * Receiving Yards, Sacks, Tackles) for both Away and Home sides.
+ */
+function extractGameLeaders(summaryJson, awayBoxGroups = [], homeBoxGroups = [], away = {}, home = {}) {
+  const headshotById = new Map();
+  const rawLeaders = Array.isArray(summaryJson?.leaders) ? summaryJson.leaders : [];
+  for (const teamBlock of rawLeaders) {
+    for (const cat of teamBlock?.leaders || []) {
+      for (const item of cat?.leaders || []) {
+        const ath = item?.athlete;
+        const id = ath?.id != null ? String(ath.id) : '';
+        const hs = sanitizeExternalUrl(ath?.headshot?.href || '', null);
+        if (id && hs) headshotById.set(id, hs);
+      }
+    }
+  }
+
+  const findStatIdx = (labels = [], candidates = []) => {
+    const upper = labels.map(l => String(l || '').trim().toUpperCase());
+    for (const c of candidates) {
+      const idx = upper.indexOf(c.toUpperCase());
+      if (idx >= 0) return idx;
+    }
+    return -1;
+  };
+
+  const pickBestAthlete = (groups, catKey, primaryCols, subBuilder, { allowZero = false } = {}) => {
+    const grp = (groups || []).find(g => g.key === catKey);
+    if (!grp || !Array.isArray(grp.athletes) || grp.athletes.length === 0) return null;
+    const pIdx = findStatIdx(grp.labels, primaryCols);
+    if (pIdx < 0) return null;
+
+    let best = null;
+    let bestVal = -Infinity;
+    for (const ath of grp.athletes) {
+      const rawStr = String(ath.stats?.[pIdx] ?? '').trim();
+      const num = parseFloat(rawStr);
+      if (!Number.isFinite(num)) continue;
+      if (!allowZero && num <= 0) continue;
+      if (num > bestVal) {
+        bestVal = num;
+        best = { ath, rawStr, num };
+      }
+    }
+    if (!best) return null;
+
+    const { ath, rawStr, num } = best;
+    const subStat = typeof subBuilder === 'function' ? subBuilder(ath, grp.labels) : '';
+    const displayVal = Number.isInteger(num) ? String(num) : rawStr;
+    return {
+      id: ath.id || '',
+      name: ath.name || ath.shortName || '',
+      shortName: ath.shortName || ath.name || '',
+      position: ath.position || '',
+      headshotUrl: buildEspnPlayerHeadshotUrl(ath.id, ath.headshotUrl || headshotById.get(ath.id)),
+      espnUrl: ath.espnUrl || null,
+      primaryStat: displayVal,
+      primaryNum: num,
+      subStat
+    };
+  };
+
+  const fmtSub = (ath, labels, colCandidates, suffix = '') => {
+    const idx = findStatIdx(labels, colCandidates);
+    if (idx < 0) return '';
+    const v = String(ath.stats?.[idx] ?? '').trim();
+    if (!v || v === '—' || v === '0') return '';
+    return suffix ? `${v} ${suffix}` : v;
+  };
+
+  const specs = [
+    {
+      key: 'passing',
+      label: 'Passing Yards',
+      catKey: 'passing',
+      primaryCols: ['YDS'],
+      allowZero: true,
+      subBuilder: (ath, labels) => {
+        const ca = fmtSub(ath, labels, ['C/A', 'C/ATT']);
+        const td = fmtSub(ath, labels, ['TD']);
+        return td ? `${ca} · ${td} TD` : ca;
+      }
+    },
+    {
+      key: 'rushing',
+      label: 'Rushing Yards',
+      catKey: 'rushing',
+      primaryCols: ['YDS'],
+      allowZero: true,
+      subBuilder: (ath, labels) => {
+        const car = fmtSub(ath, labels, ['CAR'], 'CAR');
+        const td = fmtSub(ath, labels, ['TD']);
+        return td ? `${car} · ${td} TD` : car;
+      }
+    },
+    {
+      key: 'receiving',
+      label: 'Receiving Yards',
+      catKey: 'receiving',
+      primaryCols: ['YDS'],
+      allowZero: false,
+      subBuilder: (ath, labels) => {
+        const rec = fmtSub(ath, labels, ['REC'], 'REC');
+        const td = fmtSub(ath, labels, ['TD']);
+        return td ? `${rec} · ${td} TD` : rec;
+      }
+    },
+    {
+      key: 'sacks',
+      label: 'Sacks',
+      catKey: 'defensive',
+      primaryCols: ['SCK', 'SACKS'],
+      allowZero: false,
+      subBuilder: (ath, labels) => {
+        const tfl = fmtSub(ath, labels, ['TFL'], 'TFL');
+        const qbh = fmtSub(ath, labels, ['QBH', 'QB HTS'], 'QBH');
+        return tfl || qbh || '';
+      }
+    },
+    {
+      key: 'tackles',
+      label: 'Tackles',
+      catKey: 'defensive',
+      primaryCols: ['TOT'],
+      allowZero: false,
+      subBuilder: (ath, labels) => fmtSub(ath, labels, ['SOLO'], 'SOLO')
+    }
+  ];
+
+  const rows = [];
+  for (const spec of specs) {
+    const awayLeader = pickBestAthlete(awayBoxGroups, spec.catKey, spec.primaryCols, spec.subBuilder, {
+      allowZero: spec.allowZero
+    });
+    const homeLeader = pickBestAthlete(homeBoxGroups, spec.catKey, spec.primaryCols, spec.subBuilder, {
+      allowZero: spec.allowZero
+    });
+    if (!awayLeader && !homeLeader) continue;
+    rows.push({
+      key: spec.key,
+      label: spec.label,
+      away: awayLeader,
+      home: homeLeader,
+      awayAbbr: away.abbr || '',
+      homeAbbr: home.abbr || ''
+    });
+  }
+  return rows;
+}
+
 /**
  * Primary deterministic parser: transforms raw ESPN `summary?event=<gameId>` JSON
  * into a unified Gamecast model powering Scorebug, Animated Field, Box Score,
@@ -618,7 +1018,7 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
       linescores: rawLines,
       isActive,
       winner: Boolean(raw?.winner),
-      timeoutsRemaining: null,
+      timeoutsRemaining: raw?.timeoutsRemaining != null ? Math.max(0, Math.min(3, Number(raw.timeoutsRemaining))) : null,
       hasPossession: false
     };
   };
@@ -631,19 +1031,13 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
 
   const gameId = String(gameMeta.id || comp.id || summaryJson.header?.id || '').trim();
   const periodCount = Math.max(4, away.linescores.length, home.linescores.length);
+  const currentPeriod = Number(comp.status?.period || 0) || 1;
   const quarterHeaders = [];
   for (let i = 1; i <= periodCount; i += 1) {
     quarterHeaders.push(i <= 4 ? String(i) : i === 5 ? 'OT' : `${i - 4}OT`);
   }
   while (away.linescores.length < periodCount) away.linescores.push(isFinal ? '0' : '—');
   while (home.linescores.length < periodCount) home.linescores.push(isFinal ? '0' : '—');
-
-  // Win Probability + per-play WP delta
-  const winProb = buildCompactWinProbSeries(summaryJson.winprobability || [], teamIsHome);
-  if (isFinal && activeSide.score != null && oppSide.score != null && winProb.teamPct == null) {
-    winProb.teamPct = activeSide.score > oppSide.score ? 100 : activeSide.score < oppSide.score ? 0 : 50;
-    winProb.oppPct = 100 - winProb.teamPct;
-  }
 
   // Highlight video clips for inline Play-by-Play matching
   const videos = (Array.isArray(summaryJson.videos) ? summaryJson.videos : [])
@@ -672,6 +1066,9 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
   }
 
   const quartersSet = new Set();
+  const playTimingById = new Map();
+  let lastPlayRawTimeouts = { away: null, home: null };
+
   const parsedDrivesChrono = allRawDrives.map(({ drive, isLiveDrive }, dIdx) => {
     const dTeamAbbr = normalizeCanonicalTeamAbbr(drive?.team?.abbreviation || '');
     const dTeamSide = dTeamAbbr === away.abbr ? 'away' : 'home';
@@ -687,10 +1084,17 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
         const text = String(pl?.text || '').trim();
         if (!text) return null;
         const pid = String(pl?.id || `${drive.id || dIdx}_${pIdx}`);
-        const per = pl?.period?.number || startPeriod;
+        const per = Number(pl?.period?.number || startPeriod) || 1;
         const qLbl = parseQuarterLabel(per);
         quartersSet.add(qLbl);
         const clock = String(pl?.clock?.displayValue || '').trim();
+        playTimingById.set(pid, {
+          period: per,
+          x01: computeGameClockProgress01(per, clock, periodCount)
+        });
+        if (pl?.end?.awayTimeouts != null) lastPlayRawTimeouts.away = Number(pl.end.awayTimeouts);
+        if (pl?.end?.homeTimeouts != null) lastPlayRawTimeouts.home = Number(pl.end.homeTimeouts);
+
         const downDist = String(pl?.start?.shortDownDistanceText || pl?.start?.downDistanceText || '').trim();
         const spot = String(pl?.start?.possessionText || '').trim();
         const downDistanceSpot =
@@ -701,6 +1105,7 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
         const yards = Number.isFinite(yds) ? yds : 0;
         const isScoring = Boolean(pl?.scoringPlay);
         const kind = classifyPlayKind(pl);
+        const { headline, tone: headlineTone } = buildPlayHeadline(pl, kind, yards);
         const downNum = Number(pl?.start?.down || 0);
         const isKeyPlay =
           isScoring ||
@@ -722,12 +1127,16 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
 
         return {
           id: pid,
-          period: Number(per) || 1,
+          period: per,
           quarterLabel: qLbl,
           clock,
           down: downNum || null,
           distance: Number(pl?.start?.distance || 0) || null,
+          downOnly: downDist,
+          spotOnly: spot,
           downDistanceSpot,
+          headline,
+          headlineTone,
           text,
           yards,
           isScoring,
@@ -735,11 +1144,12 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
           isPass: kind.isPass,
           isRun: kind.isRun,
           isSack: kind.isSack,
+          isIncomplete: kind.isIncomplete,
           isTurnover: kind.isTurnover,
           isPenalty: kind.isPenalty,
           awayScoreAfter: pl?.awayScore != null ? Number(pl.awayScore) : null,
           homeScoreAfter: pl?.homeScore != null ? Number(pl.homeScore) : null,
-          wpDelta: winProb.deltaByPlayId[pid] || '',
+          wpDelta: '',
           startPos,
           endPos,
           clip
@@ -792,6 +1202,26 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
     };
   });
 
+  // Win Probability + quarter-aligned series + per-play WP delta
+  const winProb = buildCompactWinProbSeries(summaryJson.winprobability || [], teamIsHome, {
+    playTimingById,
+    totalPeriods: periodCount,
+    isFinal,
+    currentPeriod
+  });
+  if (isFinal && activeSide.score != null && oppSide.score != null && winProb.teamPct == null) {
+    winProb.teamPct = activeSide.score > oppSide.score ? 100 : activeSide.score < oppSide.score ? 0 : 50;
+    winProb.oppPct = 100 - winProb.teamPct;
+    winProb.teamPctExact = winProb.teamPct;
+    winProb.oppPctExact = winProb.oppPct;
+    winProb.leadingSide = winProb.teamPct > 50 ? 'team' : winProb.teamPct < 50 ? 'opp' : 'tied';
+  }
+  for (const drv of parsedDrivesChrono) {
+    for (const pl of drv.plays) {
+      if (winProb.deltaByPlayId[pl.id]) pl.wpDelta = winProb.deltaByPlayId[pl.id];
+    }
+  }
+
   // Live situation & animated field geometry
   const rawSit = summaryJson.situation || comp.situation || null;
   const latestDrive = parsedDrivesChrono.length > 0 ? parsedDrivesChrono[parsedDrivesChrono.length - 1] : null;
@@ -807,8 +1237,21 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
   if (isLive) {
     away.hasPossession = possessionSide === 'away';
     home.hasPossession = possessionSide === 'home';
-    if (rawSit?.awayTimeouts != null) away.timeoutsRemaining = Math.max(0, Math.min(3, Number(rawSit.awayTimeouts)));
-    if (rawSit?.homeTimeouts != null) home.timeoutsRemaining = Math.max(0, Math.min(3, Number(rawSit.homeTimeouts)));
+    const inferredTo = inferTimeoutsRemainingFromDrives(parsedDrivesChrono, currentPeriod, away, home);
+    if (rawSit?.awayTimeouts != null) {
+      away.timeoutsRemaining = Math.max(0, Math.min(3, Number(rawSit.awayTimeouts)));
+    } else if (lastPlayRawTimeouts.away != null) {
+      away.timeoutsRemaining = Math.max(0, Math.min(3, lastPlayRawTimeouts.away));
+    } else if (away.timeoutsRemaining == null) {
+      away.timeoutsRemaining = inferredTo.away;
+    }
+    if (rawSit?.homeTimeouts != null) {
+      home.timeoutsRemaining = Math.max(0, Math.min(3, Number(rawSit.homeTimeouts)));
+    } else if (lastPlayRawTimeouts.home != null) {
+      home.timeoutsRemaining = Math.max(0, Math.min(3, lastPlayRawTimeouts.home));
+    } else if (home.timeoutsRemaining == null) {
+      home.timeoutsRemaining = inferredTo.home;
+    }
   }
 
   let ballPos = null;
@@ -842,12 +1285,40 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
       ? `TOUCHDOWN ${possessionAbbr}!`
       : latestPlay?.downDistanceSpot || '');
 
+  // Clean split of Down ("3rd & 3") and Ball On ("CIN 37") for ESPN-style Hero KPI bar
+  const rawShortDown = String(rawSit?.shortDownDistanceText || '').trim();
+  const downParts = downDistanceText.split(/\s+(?:at|•|on)\s+/i);
+  const downOnlyText =
+    rawShortDown ||
+    (downParts.length >= 2 ? downParts[0].trim() : latestPlay?.downOnly || downDistanceText);
+  const formatFieldXToSpot = x => {
+    const rounded = Math.round(Math.max(0, Math.min(100, Number(x) || 50)));
+    if (rounded === 50) return '50';
+    if (rounded < 50) return `${away.abbr} ${rounded}`;
+    return `${home.abbr} ${100 - rounded}`;
+  };
+  const spotOnlyText =
+    String(rawSit?.possessionText || '').trim() ||
+    (downParts.length >= 2 ? downParts[1].trim() : '') ||
+    formatFieldXToSpot(ballPos);
+
+  const lastPlayText = String(rawSit?.lastPlay?.text || latestPlay?.text || '').trim();
+  const lastPlayHeadlineObj = latestPlay
+    ? { headline: latestPlay.headline, tone: latestPlay.headlineTone }
+    : rawSit?.lastPlay
+      ? buildPlayHeadline(rawSit.lastPlay)
+      : { headline: '', tone: 'neu' };
+
+  const possessingTeamObj = possessionSide === 'away' ? away : home;
+
   const situation = {
     possessionSide,
     possessionAbbr,
     downDistanceText,
-    shortDownDistanceText: String(rawSit?.shortDownDistanceText || downDistanceText).trim(),
-    possessionText: String(rawSit?.possessionText || '').trim(),
+    shortDownDistanceText: rawShortDown || downDistanceText,
+    downOnlyText,
+    spotOnlyText,
+    possessionText: String(rawSit?.possessionText || spotOnlyText).trim(),
     isRedZone,
     isTouchdownLastPlay,
     ballPos0to100: Math.max(0, Math.min(100, ballPos)),
@@ -858,11 +1329,19 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
         : Math.max(0, Math.min(100, prevPos)),
     firstDownPos0to100: Math.max(0, Math.min(100, firstDownPos)),
     lastPlayId: String(rawSit?.lastPlay?.id || latestPlay?.id || ''),
-    lastPlayText: String(rawSit?.lastPlay?.text || latestPlay?.text || '').trim(),
+    lastPlayText,
+    lastPlayHeadline: lastPlayHeadlineObj.headline,
+    lastPlayHeadlineTone: lastPlayHeadlineObj.tone,
     lastPlayIsPass: Boolean(latestPlay?.isPass),
     lastPlayIsRun: Boolean(latestPlay?.isRun),
+    lastPlayIsSack: Boolean(latestPlay?.isSack),
+    lastPlayIsIncomplete: Boolean(latestPlay?.isIncomplete),
+    lastPlayIsTurnover: Boolean(latestPlay?.isTurnover),
     lastPlayYards: latestPlay?.yards ?? 0,
-    currentDriveSummary: latestDrive?.summary || ''
+    currentDriveSummary: latestDrive?.summary || '',
+    currentDriveTeamAbbr: latestDrive?.teamAbbr || possessingTeamObj.abbr || possessionAbbr,
+    currentDriveTeamLogo: latestDrive?.teamLogoUrl || possessingTeamObj.logoUrl || buildEspnTeamLogoUrl(possessionAbbr),
+    currentDriveTeamName: latestDrive?.teamName || possessingTeamObj.shortName || possessionAbbr
   };
 
   // Quarter filter ordering
@@ -872,6 +1351,11 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
   // Box Score (both teams)
   const teamBoxGroups = parseTeamBoxScoreGroups(summaryJson, activeSide.abbr);
   const oppBoxGroups = parseTeamBoxScoreGroups(summaryJson, oppSide.abbr);
+  const awayBoxGroups = teamIsHome ? oppBoxGroups : teamBoxGroups;
+  const homeBoxGroups = teamIsHome ? teamBoxGroups : oppBoxGroups;
+
+  // Game Leaders (Top Players for Passing, Rushing, Receiving, Sacks, Tackles)
+  const gameLeaders = extractGameLeaders(summaryJson, awayBoxGroups, homeBoxGroups, away, home);
 
   // Single-Game Team Stats
   const teamStatsGroups = parseTeamStatsComparisonGroups(summaryJson, away.abbr, home.abbr);
@@ -905,6 +1389,7 @@ export function parseEspnSummaryToGamecast(summaryJson, { gameMeta = {}, activeT
       team: teamBoxGroups,
       opponent: oppBoxGroups
     },
+    gameLeaders,
     teamStatsGroups,
     drivesChrono: parsedDrivesChrono,
     quartersAvailable,
@@ -981,7 +1466,7 @@ export function buildFallbackGamecastFromSchedule(gameMeta, appData = {}) {
         : ['—', '—', '—', '—'],
     isActive: true,
     winner: gameMeta.result === 'W',
-    timeoutsRemaining: null,
+    timeoutsRemaining: gameMeta.isLive ? 3 : null,
     hasPossession: false
   };
 
@@ -999,7 +1484,7 @@ export function buildFallbackGamecastFromSchedule(gameMeta, appData = {}) {
       : ['—', '—', '—', '—'],
     isActive: false,
     winner: gameMeta.result === 'L',
-    timeoutsRemaining: null,
+    timeoutsRemaining: gameMeta.isLive ? 3 : null,
     hasPossession: false
   };
 
@@ -1071,7 +1556,12 @@ export function buildFallbackGamecastFromSchedule(gameMeta, appData = {}) {
     winProb: {
       teamPct: gameMeta.completed && gameMeta.result ? (gameMeta.result === 'W' ? 100 : gameMeta.result === 'L' ? 0 : 50) : null,
       oppPct: gameMeta.completed && gameMeta.result ? (gameMeta.result === 'W' ? 0 : gameMeta.result === 'L' ? 100 : 50) : null,
+      teamPctExact: gameMeta.completed && gameMeta.result ? (gameMeta.result === 'W' ? 100 : gameMeta.result === 'L' ? 0 : 50) : null,
+      oppPctExact: gameMeta.completed && gameMeta.result ? (gameMeta.result === 'W' ? 0 : gameMeta.result === 'L' ? 100 : 50) : null,
+      leadingSide: gameMeta.completed && gameMeta.result ? (gameMeta.result === 'W' ? 'team' : gameMeta.result === 'L' ? 'opp' : 'tied') : 'tied',
+      totalPeriods: 4,
       series: [],
+      points: [],
       deltaByPlayId: {}
     },
     situation: {
@@ -1079,6 +1569,8 @@ export function buildFallbackGamecastFromSchedule(gameMeta, appData = {}) {
       possessionAbbr: activeAbbr,
       downDistanceText: gameMeta.isLive ? gameMeta.statusDetail || 'In Progress' : '',
       shortDownDistanceText: '',
+      downOnlyText: '',
+      spotOnlyText: '',
       possessionText: '',
       isRedZone: false,
       isTouchdownLastPlay: false,
@@ -1088,12 +1580,21 @@ export function buildFallbackGamecastFromSchedule(gameMeta, appData = {}) {
       firstDownPos0to100: 60,
       lastPlayId: '',
       lastPlayText: '',
+      lastPlayHeadline: '',
+      lastPlayHeadlineTone: 'neu',
       lastPlayIsPass: false,
       lastPlayIsRun: false,
+      lastPlayIsSack: false,
+      lastPlayIsIncomplete: false,
+      lastPlayIsTurnover: false,
       lastPlayYards: 0,
-      currentDriveSummary: ''
+      currentDriveSummary: '',
+      currentDriveTeamAbbr: activeAbbr,
+      currentDriveTeamLogo: activeObj.logoUrl,
+      currentDriveTeamName: activeObj.shortName
     },
     boxScore: { team: [], opponent: [] },
+    gameLeaders: [],
     teamStatsGroups,
     drivesChrono: [],
     quartersAvailable: [],

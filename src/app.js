@@ -2777,6 +2777,22 @@ function scheduleNextGamecastPoll(seq) {
       if (seq !== gamecastPollSeq) return;
       const fpChanged = Boolean(fp?.fingerprint && fp.fingerprint !== state.gamecastLastSituationFp);
       if (fp?.fingerprint) state.gamecastLastSituationFp = fp.fingerprint;
+      // Immediately patch live timeout counts onto active model if ESPN's summary omitted them
+      const curActiveModel = state.gamecastModelsById.get(gameId);
+      if (curActiveModel && fp) {
+        let toChanged = false;
+        if (fp.awayTimeouts != null && curActiveModel.away && curActiveModel.away.timeoutsRemaining !== fp.awayTimeouts) {
+          curActiveModel.away.timeoutsRemaining = fp.awayTimeouts;
+          toChanged = true;
+        }
+        if (fp.homeTimeouts != null && curActiveModel.home && curActiveModel.home.timeoutsRemaining !== fp.homeTimeouts) {
+          curActiveModel.home.timeoutsRemaining = fp.homeTimeouts;
+          toChanged = true;
+        }
+        if (toChanged && !fpChanged && state.activeNavTab === 'season' && state.seasonSubTab === 'gamecast') {
+          renderGamecastPreservingScroll({ isBackground: true });
+        }
+      }
       if (fpChanged || gamecastSituationTickCount % 5 === 0) {
         await hydrateGamecastById(latest.meta, { forceRefresh: true, silent: true, pollSeq: seq });
       }
@@ -5192,7 +5208,7 @@ function bindEvents() {
           return;
         }
         const wrap = target.closest(
-          '.player-avatar, .team-logo-wrap, .salient-hero-banner, .raw-item-thumb, .video-thumb-stage, .beat-podcast-art-wrap, .home-pod-art-item, .tweet-linked-article-media, .ncaa-mini-logo, .gemini-guide-gif-wrap'
+          '.player-avatar, .team-logo-wrap, .gc-ldr-avatar, .salient-hero-banner, .raw-item-thumb, .video-thumb-stage, .beat-podcast-art-wrap, .home-pod-art-item, .tweet-linked-article-media, .ncaa-mini-logo, .gemini-guide-gif-wrap'
         );
         if (wrap) wrap.classList.add('img-error');
       }

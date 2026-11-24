@@ -7290,6 +7290,16 @@ async function main() {
         const hasBackBtn = Boolean(document.querySelector('[data-action="back-to-schedule-from-gamecast"]'));
         const hasStickyTabs = Boolean(document.querySelector('[data-gamecast-tabs]'));
         const gameSelectOptions = document.querySelectorAll('select[data-action="select-gamecast-game"] option').length;
+        const sbLogoEl = document.querySelector('.gc-sb-logo.gc-logo-bare');
+        const sbLogoStyle = sbLogoEl ? getComputedStyle(sbLogoEl) : null;
+        const sbLogoRect = sbLogoEl ? sbLogoEl.getBoundingClientRect() : null;
+        const sbLogoUnboxedAndLarge = Boolean(
+          sbLogoEl &&
+            sbLogoStyle &&
+            parseFloat(sbLogoStyle.borderTopWidth || '0') === 0 &&
+            sbLogoRect &&
+            sbLogoRect.width >= 40
+        );
 
         // 2. Box Score tab: Quarter Scoreboard MUST NOT appear
         document.querySelector('[data-action="set-gamecast-tab"][data-gamecast-tab="box"]')?.click();
@@ -7303,10 +7313,12 @@ async function main() {
         const teamHasQuarter = Boolean(document.querySelector('[data-gamecast-quarter-scoreboard]'));
         const teamOverflow = document.documentElement.scrollWidth > window.innerWidth + 1;
 
-        // 4. Play-by-Play tab: Quarter Scoreboard MUST appear
+        // 4. Play-by-Play tab: Quarter Scoreboard MUST appear, and PBP toolbar (if present) stays single-line
         document.querySelector('[data-action="set-gamecast-tab"][data-gamecast-tab="pbp"]')?.click();
         await sleep(30);
         const pbpHasQuarter = Boolean(document.querySelector('[data-gamecast-quarter-scoreboard]'));
+        const pbpToolbarEl = document.querySelector('[data-gamecast-pbp-toolbar]');
+        const pbpToolbarSingleLine = !pbpToolbarEl || pbpToolbarEl.getBoundingClientRect().height <= 42;
         const pbpOverflow = document.documentElement.scrollWidth > window.innerWidth + 1;
 
         // 5. Return cleanly via <- Sched breadcrumb
@@ -7321,11 +7333,13 @@ async function main() {
           hasBackBtn,
           hasStickyTabs,
           gameSelectOptions,
+          sbLogoUnboxedAndLarge,
           boxHasQuarter,
           boxOverflow,
           teamHasQuarter,
           teamOverflow,
           pbpHasQuarter,
+          pbpToolbarSingleLine,
           pbpOverflow,
           returnedToSchedule
         };
@@ -7333,9 +7347,10 @@ async function main() {
 
       assert(gcRes.hasSchedGamecastBtn, 'Schedule completed row must render in-app Box Score / Gamecast button');
       assert(gcRes.hasScorebug && gcRes.hasStickyTabs && gcRes.gameSelectOptions >= 10, `Gamecast chrome incomplete: ${JSON.stringify(gcRes)}`);
+      assert(gcRes.sbLogoUnboxedAndLarge, `Scorebug team logo must be unboxed (0px border) and >=40px at 375px: ${JSON.stringify(gcRes)}`);
       assert(gcRes.hasBackBtn && gcRes.returnedToSchedule, `Schedule <-> Gamecast back navigation failed: ${JSON.stringify(gcRes)}`);
       assert(!gcRes.boxHasQuarter && !gcRes.teamHasQuarter, `Quarter scoreboard must be hidden on Box Score & Team Stats: ${JSON.stringify(gcRes)}`);
-      assert(gcRes.pbpHasQuarter, `Quarter scoreboard must render on Play-by-Play: ${JSON.stringify(gcRes)}`);
+      assert(gcRes.pbpHasQuarter && gcRes.pbpToolbarSingleLine, `Quarter scoreboard and single-line PBP toolbar must render cleanly: ${JSON.stringify(gcRes)}`);
       assert(!gcRes.boxOverflow && !gcRes.teamOverflow && !gcRes.pbpOverflow, `Gamecast overflow detected at 375px: ${JSON.stringify(gcRes)}`);
 
       // Also verify 320x640 narrow mobile overflow on Gamecast
