@@ -603,8 +603,8 @@ export function buildCompactAnalysisSystemPrompt(
           .filter(Boolean)
           .join(' | ');
   const lengthDirective = isDeep
-    ? 'Deliver a thorough, high-signal Markdown report (~550–900 words) with crisp subheadings, selective bullets/tables where numbers clarify trade-offs, and a clear verdict.'
-    : 'Deliver a crisp, scannable, high-IQ Markdown analysis (~350–600 words unless the user explicitly asks for an exhaustive breakdown) with tight subheadings and selective bullets/tables only where numbers clarify a comparison.';
+    ? 'Deliver a thorough, high-signal Markdown report (~450–650 words) with crisp subheadings, selective bullets/tables where numbers clarify trade-offs, and a clear verdict.'
+    : 'Deliver a crisp, scannable, high-IQ Markdown analysis (~250–450 words unless the user explicitly asks for an exhaustive breakdown) with tight subheadings and selective bullets/tables only where numbers clarify a comparison.';
 
   return [
     `You are an independent Lead NFL Film, Analytics & Salary Cap Analyst writing for "${team.brandName}".`,

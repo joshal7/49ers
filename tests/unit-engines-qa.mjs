@@ -7806,8 +7806,13 @@ await testAsync('Cross-surface Gemini 4 Hydrogen thinking-level split audit: XHI
       !captured.some(c => c.url.includes('bsky.app') || c.url.includes('espn.com')),
       'Fast mode must NOT block on pre-flight Bluesky/ESPN network fetches'
     );
-    const fastSysLen = String(liveH2Calls[0]?.body?.systemInstruction?.parts?.[0]?.text || '').length;
+    const fastSysText = String(liveH2Calls[0]?.body?.systemInstruction?.parts?.[0]?.text || '');
+    const fastSysLen = fastSysText.length;
     const fastUsrLen = String(liveH2Calls[0]?.body?.contents?.[0]?.parts?.[0]?.text || '').length;
+    assert.ok(
+      fastSysText.includes('~250–450 words'),
+      'Fast analysis system prompt must target ~250–450 words'
+    );
     assert.ok(
       fastSysLen + fastUsrLen < 16000,
       `Deduplicated Fast analysis prompt must stay compact (<16k chars), got ${fastSysLen + fastUsrLen}`
@@ -7827,6 +7832,10 @@ await testAsync('Cross-surface Gemini 4 Hydrogen thinking-level split audit: XHI
     assert.equal(liveDeepReport.useGoogleSearch, true);
     const liveDeepCall = captured.find(c => /models\/gemini-4-hydrogen:(?:streamGenerateContent|generateContent)/.test(c.url));
     assert.deepEqual(liveDeepCall?.body?.generationConfig?.thinkingConfig, { thinkingLevel: 'HIGH' });
+    assert.ok(
+      String(liveDeepCall?.body?.systemInstruction?.parts?.[0]?.text || '').includes('~450–650 words'),
+      'Deep analysis system prompt must target ~450–650 words'
+    );
     assert.ok(Array.isArray(liveDeepCall?.body?.tools) && liveDeepCall.body.tools.length === 1, 'Deep mode must attach google_search tool');
 
     // 4B. Verify XHIGH -> HIGH retry resilience on same model when XHIGH is requested and endpoint returns 400 INVALID_ARGUMENT
