@@ -274,13 +274,13 @@ const SALIENT_CAP_AND_CONTRACT_SIGNAL_REGEX =
   /\b(salary cap|cap space|cap hit|cap charge|cap number|cap savings|cap relief|cap room|cap table|cap ledger|dead cap|dead money|void years?|option bonus|signing bonus|roster bonus|workout bonus|per-game roster bonus|base salary|prorat(?:ed|ion)|restructure[sd]?|pay cut|contract extension|contract details|contract breakdown|contract terms|multi-year deal|new deal|agreed to terms|franchise tag|transition tag|fifth-year option|5th-year option|bonus forfeiture|bonus repayment|cba (?:article|rollover)|cap rollover|overthecap|over the cap|spotrac)\b/i;
 
 const DEDICATED_PURE_FILM_CHANNEL_REGEX =
-  /\b(the qb school|qb school|jt o['’]?sullivan|jonnydel|sulligenthub|football academy|alex rollins|qb confidential|kurt warner|baldy|baldynfl|brett kollmann|film room|grustasbrady|brady grustas|throwthedamball|judah fortgang|jrfortgang|ghatz_28|george hatzadony|collinsworthpff|nate_tice|nate tice|benjaminsolak|ben solak|fball_insights|football insights|benbbaldwin|ben baldwin|sethwalder|seth walder|sumersports|pff_jeff)\b/i;
+  /\b(the qb school|qb school|jt o['’]?sullivan|jonnydel|sulligenthub|football academy|alex rollins|qb confidential|kurt warner|baldy|baldynfl|trench warfare|brandon thorn|brandonthornnfl|ted nguyen|fb_filmanalysis|brett kollmann|film room|qbklass|derrik klassen|dan orlovsky|danorlovsky7|throwthedamball|judah fortgang|jrfortgang|ghatz_28|george hatzadony|collinsworthpff|nate_tice|nate tice|benjaminsolak|ben solak|fball_insights|football insights|benbbaldwin|ben baldwin|sethwalder|seth walder|sumersports|tejfbanalytics|pff_moo)\b/i;
 
 const TRUE_FILM_VIDEO_CHANNEL_REGEX =
-  /\b(jonnydel|sulligenthub|football academy|the qb school|qb school|jt o['’]?sullivan|chase daniel|alex rollins|film room|brett kollmann|baldy|baldynfl|kurt warner|qb confidential|all[ _-]?22|grustasbrady|brady grustas|nate_tice|nate tice|benjaminsolak|ben solak|throwthedamball|ghatz_28|collinsworthpff|fball_insights|benbbaldwin|sethwalder|pff_jeff)\b/i;
+  /\b(jonnydel|sulligenthub|football academy|the qb school|qb school|jt o['’]?sullivan|chase daniel|alex rollins|film room|brett kollmann|baldy|baldynfl|trench warfare|brandon thorn|ted nguyen|fb_filmanalysis|kurt warner|qb confidential|qbklass|dan orlovsky|all[ _-]?22|nate_tice|nate tice|benjaminsolak|ben solak|throwthedamball|ghatz_28|collinsworthpff|fball_insights|benbbaldwin|sethwalder|sumersports|tejfbanalytics|pff_moo)\b/i;
 
 const TRUE_FILM_VIDEO_TITLE_REGEX =
-  /\b(all-22|all 22|film breakdown|film review|film study|film room|tape breakdown|tape study|film analysis|49ers playbook|qb film|qb school|scheme breakdown|x['’]?s (?:and|&) o['’]?s|pass[- ]rush(?:er|ing)? breakdown|coverage breakdown|coaching tape|coaches['’]? film|baldy['’]?s?\s*breakdowns?|play[- ]design|review video|endzone angle|coverage efficiency|separation prevented|on[- ]ball grade)\b/i;
+  /\b(all-22|all 22|film breakdown|film review|film study|film room|tape breakdown|tape study|film analysis|playbook|qb film|qb school|scheme breakdown|x['’]?s (?:and|&) o['’]?s|pass[- ]rush(?:er|ing)? breakdown|coverage breakdown|coaching tape|coaches['’]? film|baldy['’]?s?\s*breakdowns?|play[- ]design|review video|endzone angle|end[- ]zone angle|coverage efficiency|separation prevented|on[- ]ball grade)\b/i;
 
 const HIGHLIGHT_AND_TEAM_INTEREST_VIDEO_REGEX =
   /\b(game highlights|full game highlights|\bhighlights\b|best plays|every touchdown|every catch|every throw|every completed pass|rushing highlights|receiving highlights|pick[- ]?6|interceptions?|top plays|condensed game|end of game|final drive|game-winning|\btd\b|end zone|outlast|thriller|49hours|forty niner way|brick by brick|mic['’]?d up|from the trenches|locker room|victory speech|postgame recap|game recap|week \d+ recap|sights and sounds|wired|sideline|behind the scenes|tim ryan|knbr)\b/i;
@@ -289,11 +289,13 @@ const POST_GAME_RECAP_OR_PRESSER_SIGNAL_REGEX =
   /\b(\d+-\d+\s+(?:win|loss|victory|thriller|shootout|comeback)|outlast(?:s|ed)?|beat(?:s)?\s+(?:the\s+)?[a-z]+|defeat(?:s|ed)?\s+(?:the\s+)?[a-z]+|postgame|post-game|locker room|victory speech|shanahan\s+(?:on|after|said|explains|addresses|recaps)|purdy\s+(?:on|after)|mccaffrey\s+(?:on|after)|final score|instant analysis|takeaways\s+from|grades\s+from|snap counts?\s+from|touchdowns?|pick[- ]?6|\btd\b|end zone)\b/i;
 
 const WRITTEN_FILM_AND_TRENCH_SIGNAL_REGEX =
-  /\b(all-22|all 22|film breakdown|film study|tape breakdown|coaching tape|coaches['’]? film|baldy['’]?s?\s*breakdowns?|play[- ]design|review video|snap count|snap share|pass[- ]block(?:ing)?|run[- ]block(?:ing)?|\bpbwr\b|\bprwr\b|\brswr\b|pressure rate|pass[- ]rush(?:er|ing)?|qb sack|pff\s+grad|pff\s+gard|via\s+@?pff\b|offensive\s+grade|defensive\s+grade|rushing\s+grade|coverage\s+grade|blocking\s+grade|on[- ]ball\s+grade|coverage\s+efficiency|separation(?:\s+prevented)?|passer\s+rating(?:\s+allowed)?|yards\s*(?:\/|per)\s*(?:target|att|attempt|route)|comp\s+pct|dropbacks?|epa\/play|passing epa|rushing epa|yards per play|\bcpoe\b|\bdvoa\b|\byprr\b|\badot\b|\bryoe\b|success rate|wide-9|stunt|sim pressure|simulated pressure|blitz rate|11 personnel|12 personnel|21 personnel|22 personnel|two-high|single-high|quarters coverage|cover [12346]|man coverage|zone coverage|split-safety|motion rate|play-action|red-zone|third-down|trench(?:es)?|pass protection|o-linem[ae]n|offensive line|defensive line|run defense|run fits?|blocking scheme|route concept|route running|route tree|all\s+routes|strong swat|swat against|check\s*down|swim move|rip move|bull rush|spin move|hand placement|pad level|leverage|pulling|pull block|lead block|combo block|ball placement|location of this (?:pitch|throw|pass)|precision[\s\S]{0,40}accuracy|pocket presence|eye discipline|stats and facts|what he brings to the offense|questions at corner|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards|min\.?\s+\d+\s+(?:snaps|targets|dropbacks))\b/i;
+  /\b(all-22|all 22|film breakdown|film study|tape breakdown|coaching tape|coaches['’]? film|baldy['’]?s?\s*breakdowns?|play[- ]design|review video|snap count|snap share|pass[- ]block(?:ing)?|run[- ]block(?:ing)?|pass[- ]set|kick[- ]slide|\bpbwr\b|\bprwr\b|\brswr\b|pressure rate|pass[- ]rush(?:er|ing)?|qb sack|pff\s+grad|pff\s+gard|via\s+@?pff\b|offensive\s+grade|defensive\s+grade|rushing\s+grade|coverage\s+grade|blocking\s+grade|on[- ]ball\s+grade|coverage\s+efficiency|separation(?:\s+prevented)?|passer\s+rating(?:\s+allowed)?|yards\s*(?:\/|per)\s*(?:target|att|attempt|route)|comp\s+pct|dropbacks?|epa\/play|passing epa|rushing epa|yards per play|\bcpoe\b|\bdvoa\b|\byprr\b|\badot\b|\bryoe\b|success rate|wide-9|stunt|twist\b|sim pressure|simulated pressure|blitz rate|11 personnel|12 personnel|21 personnel|22 personnel|two-high|single-high|quarters coverage|cover [12346]|man coverage|zone coverage|match coverage|split-safety|motion rate|pre-snap motion|play-action|red-zone|third-down|trench(?:es)?|pass protection|o-linem[ae]n|offensive line|defensive line|run defense|run fits?|blocking scheme|route concept|route running|route stem|route tree|all\s+routes|swat\b|hand fighting|hand placement|long[- ]arm|swim move|rip move|bull rush|spin move|ghost move|speed[- ]to[- ]power|pad level|leverage|pulling|pull block|lead block|combo block|reach block|base block|seal block|down block|ball placement|layered throw|layering|anticipation|progression|check\s*down|pocket presence|pocket movement|eye discipline|footwork|spacing|stressing a (?:specific )?defense|stats and facts|what he brings to the offense|questions at corner|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards|min\.?\s+\d+\s+(?:snaps|targets|dropbacks|routes))\b/i;
 
 const TRENCH_POSITION_SET = new Set(['OL', 'OT', 'OG', 'C', 'G', 'T', 'LT', 'LG', 'RG', 'RT', 'DL', 'DE', 'DT', 'NT', 'EDGE']);
-const TRENCH_CLIP_COMMENTARY_REGEX =
-  /\b(lt|lg|rg|rt|o-?line|d-?line|trench|pass[- ]?rush(?:er|ing)?|block(?:ed|ing|er)?|pull(?:ing|ed)?|swat|rip|bull rush|leverage|rep\b|reps\b|dump truck|in his lap|check\s*down|pocket|protection|double team|chip|seal|pancake|gap|stunt|blitz|edge|interior|guard|tackle|center|nose)\b/i;
+const FILM_CRAFT_CLIP_COMMENTARY_REGEX =
+  /\b(lt|lg|rg|rt|o-?line|d-?line|trench|pass[- ]?rush(?:er|ing)?|block(?:ed|ing|er)?|pull(?:ing|ed)?|combo|seal|anchor|kick[- ]slide|pass[- ]set|swat|rip|swim|bull rush|spin move|long[- ]arm|bend|leverage|pad level|hand placement|rep\b|reps\b|check\s*down|pocket|protection|double team|chip|pancake|gap|run fit|stunt|twist|blitz|edge|interior|guard|tackle|center|nose|route|release|stem|separation|coverage|shell|zone|man|press|disguise|motion|spacing|play[- ]?design|progression|read\b|anticipation|ball placement|timing|footwork|precision|accuracy)\b/i;
+const PURE_CELEBRATION_OR_HYPE_ONLY_REGEX =
+  /^(?:it had to be done|what a (?:catch|play|throw|run|hit|win)|touchdown|let['’]?s go|wow|sheesh|cooked|got him|bang|mood|vibes)\b/i;
 
 const NON_FILM_PODIUM_OR_RECAP_VIDEO_REGEX =
   /\b(press conference|media availability|locker room|podium|postgame interview|explains why|reveals (?:why|what)|discusses addition|pumped about|previews week \d+|ways to watch|highlights|reacts to|trade rumor|mailbag)\b/i;
@@ -372,28 +374,35 @@ export function classifyNewsItemCategory(item = {}) {
     Array.isArray(item.mentionedPlayers) &&
     item.mentionedPlayers.some(mp => TRENCH_POSITION_SET.has(String(mp?.position || '').toUpperCase()));
 
+  const resolvedRep = resolveReporterFromNameOrHandle(
+    item.reporterId || item.authorHandle || item.author || item.reporterName || ''
+  );
+  const repCategory = String(item.reporterCategory || resolvedRep?.category || '').toLowerCase();
+  const isRegisteredFilmOrAnalyticsCreator =
+    repCategory === 'film' || repCategory === 'film_analyst' || repCategory === 'analytics';
+
   if (item.type === 'video' || Boolean(item.videoId) || Boolean(item.videoStreamUrl)) {
     const isTweetStreamClip = Boolean(item.videoStreamUrl) && (item.type === 'tweet' || item.type === 'social');
     const isDedicatedPureFilmChannel =
-      (DEDICATED_PURE_FILM_CHANNEL_REGEX.test(channelOrAuthor) ||
-        /\b(theqbschool|jonnydels|jonnydelsfa|jonnydel|sulligenthub|baldynfl|grustasbrady|throwthedamball|ghatz_28|collinsworthpff|nate_tice|benjaminsolak|fball_insights|benbbaldwin|sethwalder)\b/i.test(
-          channelOrAuthor
-        )) &&
+      (isRegisteredFilmOrAnalyticsCreator || DEDICATED_PURE_FILM_CHANNEL_REGEX.test(channelOrAuthor)) &&
       !/\b(mailbag|q\s*&\s*a|live\s*stream\s*q&a|podcast)\b/i.test(title);
     const isTapeChannel = TRUE_FILM_VIDEO_CHANNEL_REGEX.test(channelOrAuthor);
     const isTapeTitle = TRUE_FILM_VIDEO_TITLE_REGEX.test(combined);
     const isPodiumOrVlog = NON_FILM_PODIUM_OR_RECAP_VIDEO_REGEX.test(title) && !isTapeTitle;
-    if (isDedicatedPureFilmChannel || ((!isTweetStreamClip && isTapeChannel || isTapeTitle) && !isPodiumOrVlog)) {
+    if (isDedicatedPureFilmChannel || (((!isTweetStreamClip && isTapeChannel) || isTapeTitle) && !isPodiumOrVlog)) {
       return 'film';
     }
-    // Beat reporter All-22 GIFs / short trench clips (e.g. Dieter Kurtenbach OL pull GIF or Brady Grustas EDGE pass-rush clip)
+    // Generalized beat reporter All-22 GIFs & football-craft video clips across all 32 teams
+    // (while keeping hype/celebration highlight clips cleanly in Highlights & Videos!)
     const isPureInjuryClip = /\b(injury report|injury update|did not practice|carted|concussion|questionable|ruled out|inactives?)\b/i.test(lead);
+    const isPureHypeClip = PURE_CELEBRATION_OR_HYPE_ONLY_REGEX.test(title) && !FILM_CRAFT_CLIP_COMMENTARY_REGEX.test(combined);
     if (
       isTweetStreamClip &&
       !isPodiumOrVlog &&
       !isPureInjuryClip &&
-      (isAnimatedGif && (hasTrenchPlayerMention || TRENCH_CLIP_COMMENTARY_REGEX.test(combined)) ||
-        (TRENCH_CLIP_COMMENTARY_REGEX.test(combined) &&
+      !isPureHypeClip &&
+      ((isAnimatedGif && (hasTrenchPlayerMention || FILM_CRAFT_CLIP_COMMENTARY_REGEX.test(combined))) ||
+        (FILM_CRAFT_CLIP_COMMENTARY_REGEX.test(combined) &&
           (hasTrenchPlayerMention || WRITTEN_FILM_AND_TRENCH_SIGNAL_REGEX.test(combined))))
     ) {
       return 'film';
@@ -434,7 +443,7 @@ export function classifyNewsItemCategory(item = {}) {
   const headlineHasFilmCue =
     !isMockOrOffseasonDraft &&
     (TRUE_FILM_VIDEO_TITLE_REGEX.test(title) ||
-      /\b(snap count|film|all-22|tape|playbook|scheme|trench|pass[- ]rush(?:er|ing)?|pff\s+grad|pff\s+gard|via\s+@?pff\b|offensive\s+grade|defensive\s+grade|rushing\s+grade|on[- ]ball\s+grade|coverage\s+efficiency|separation(?:\s+prevented)?|passer\s+rating|yards\/att|yards\/target|dropbacks?|o-linem[ae]n|offensive line|run defense|epa|cpoe|dvoa|wide-9|coverage|play[- ]design|baldy['’]?s?\s*breakdowns?|strong swat|check\s*down|all\s+routes|questions at corner|what he brings to the offense|stats and facts|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards|play-action|red-zone|third-down)\b/i.test(
+      /\b(snap count|film|all-22|tape|playbook|scheme|trench|pass[- ]rush(?:er|ing)?|pff\s+grad|pff\s+gard|via\s+@?pff\b|offensive\s+grade|defensive\s+grade|rushing\s+grade|coverage\s+grade|blocking\s+grade|on[- ]ball\s+grade|coverage\s+efficiency|separation(?:\s+prevented)?|passer\s+rating|yards\/att|yards\/target|dropbacks?|o-linem[ae]n|offensive line|run defense|epa|cpoe|dvoa|yprr|adot|ryoe|pbwr|prwr|wide-9|coverage|play[- ]design|baldy['’]?s?\s*breakdowns?|hand fighting|check\s*down|all\s+routes|questions at corner|what he brings to the offense|stats and facts|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards|play-action|red-zone|third-down)\b/i.test(
         title
       ));
   const isPureInjuryLead =

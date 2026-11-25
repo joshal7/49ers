@@ -43,9 +43,9 @@ import {
 } from './lib/seasonalContentBuilder.mjs';
 import {
   NATIONAL_FILM_ANALYTICS_X_HANDLES,
-  SF_BEAT_FILM_X_HANDLES,
   fetchXTimelinesBatch,
-  filterXTimelineItemsForTeam
+  filterXTimelineItemsForTeam,
+  selectTeamLocalXHandles
 } from './lib/xBeatMediaFetcher.mjs';
 import {
   parseTankathonTeamPicksHtml,
@@ -2293,12 +2293,29 @@ async function main() {
         rosterPlayers
       }
     ).catch(() => []),
-    fetchXTimelinesBatch([...SF_BEAT_FILM_X_HANDLES, ...NATIONAL_FILM_ANALYTICS_X_HANDLES], {
-      concurrency: 6,
-      timeoutMs: 4200,
-      maxAgeHours: 120,
-      maxItems: 14
-    }).catch(() => [])
+    fetchXTimelinesBatch(
+      [
+        ...selectTeamLocalXHandles(
+          getTeamByAbbr('SF'),
+          (() => {
+            try {
+              const p = path.join(ROOT, 'data', 'reporters.json');
+              return fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : null;
+            } catch {
+              return null;
+            }
+          })(),
+          12
+        ),
+        ...NATIONAL_FILM_ANALYTICS_X_HANDLES
+      ],
+      {
+        concurrency: 6,
+        timeoutMs: 4200,
+        maxAgeHours: 120,
+        maxItems: 12
+      }
+    ).catch(() => [])
   ]);
   const timelineXTweets = filterXTimelineItemsForTeam(rawTimelineXItems, {
     team: getTeamByAbbr('SF'),

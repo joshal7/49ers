@@ -194,6 +194,20 @@
       "defaultEnabled": true
     },
     {
+      "id": "deuce_windham_no",
+      "name": "Deuce Windham",
+      "handle": "@RevDeuceWindham",
+      "outletId": "canal_street_chronicles",
+      "role": "Saints All-22 Film, Trench & Scouting Analyst",
+      "category": "film_analyst",
+      "styleTag": "all22-scheme",
+      "baseScore": 91,
+      "trustTier": 2,
+      "xUrl": "https://x.com/RevDeuceWindham",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
       "id": "saints_pr",
       "name": "New Orleans Saints PR",
       "handle": "@SaintsPR",

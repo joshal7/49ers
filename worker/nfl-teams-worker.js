@@ -526,26 +526,58 @@ const AMBIGUOUS_NFL_SURNAMES = new Set([
 ]);
 
 /**
- * Extracts active team player names & unique surnames from an ESPN live `summary?event=` payload
- * so official `@NFL` highlight clips (e.g., `"George Kittle..."`) match the active team with zero cross-game leaks.
+ * Extracts active team player names, unique surnames, AND dynamic roster-derived player @handle tokens
+ * from the active club's live `roster.json` + optional ESPN live `summary?event=` payload
+ * so `@NFL` and national film/analytics clips match ANY of the 32 clubs dynamically as rosters change.
  */
-export function buildActiveTeamGameDayMatchers(liveSummaryJson = null, team = null) {
+export function buildActiveTeamGameDayMatchers(liveSummaryJson = null, team = null, rosterPlayers = []) {
   const fullNames = new Set();
   const uniqueSurnames = new Set();
+  const handleProfiles = [];
+  const seenProfileKeys = new Set();
   const teamAbbrUpper = String(team?.abbr || '').toUpperCase();
   const teamEspnIdStr = String(team?.espnId || '');
   const oppAbbrs = new Set();
 
-  const addName = rawName => {
+  const addName = (rawName, jerseyRaw = '') => {
     const clean = String(rawName || '').trim().replace(/\s+/g, ' ');
     if (clean.length < 5) return;
-    fullNames.add(clean.toLowerCase());
-    const parts = clean.replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').split(' ');
+    const fullLow = clean.toLowerCase();
+    fullNames.add(fullLow);
+    const stripped = clean.replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim();
+    const parts = stripped.split(/\s+/).filter(Boolean);
+    const first = (parts[0] || '').replace(/[^a-zA-Z]/g, '').toLowerCase();
     const last = (parts[parts.length - 1] || '').toLowerCase().replace(/[^a-z'-]/g, '');
+    const compactLast = last.replace(/[^a-z]/g, '');
+    const compoundTail =
+      parts.length >= 3 && /^(st\.?|de|la|le|van|von|mc|mac)$/i.test(parts[parts.length - 2])
+        ? `${parts[parts.length - 2]}${parts[parts.length - 1]}`.replace(/[^a-z]/gi, '').toLowerCase()
+        : '';
+    const hyphenParts = last.includes('-')
+      ? last.split('-').map(s => s.replace(/[^a-z]/g, '')).filter(s => s.length >= 5)
+      : [];
     if (last.length >= 4 && !AMBIGUOUS_NFL_SURNAMES.has(last)) {
       uniqueSurnames.add(last);
     }
+    const key = `${first}|${compactLast}`;
+    if (compactLast.length >= 4 && !seenProfileKeys.has(key)) {
+      seenProfileKeys.add(key);
+      handleProfiles.push({
+        first,
+        last,
+        compactLast,
+        compoundTail,
+        hyphenParts,
+        compactFull: `${first}${compoundTail || compactLast}`,
+        jersey: String(jerseyRaw || '').replace(/[^0-9]/g, ''),
+        isAmbiguous: AMBIGUOUS_NFL_SURNAMES.has(last)
+      });
+    }
   };
+
+  for (const p of Array.isArray(rosterPlayers) ? rosterPlayers : []) {
+    if (p?.name) addName(p.name, p.jersey || '');
+  }
 
   if (liveSummaryJson && typeof liveSummaryJson === 'object') {
     const comps = liveSummaryJson?.header?.competitions?.[0]?.competitors || [];
@@ -559,7 +591,7 @@ export function buildActiveTeamGameDayMatchers(liveSummaryJson = null, team = nu
       if ((teamAbbrUpper && ab === teamAbbrUpper) || (teamEspnIdStr && id === teamEspnIdStr)) {
         for (const statGrp of Array.isArray(tb.statistics) ? tb.statistics : []) {
           for (const ath of Array.isArray(statGrp?.athletes) ? statGrp.athletes : []) {
-            addName(ath?.athlete?.displayName || ath?.athlete?.fullName || '');
+            addName(ath?.athlete?.displayName || ath?.athlete?.fullName || '', ath?.athlete?.jersey || '');
           }
         }
       }
@@ -576,7 +608,114 @@ export function buildActiveTeamGameDayMatchers(liveSummaryJson = null, team = nu
     }
   }
 
-  return { fullNames, uniqueSurnames, oppAbbrs };
+  return { fullNames, uniqueSurnames, handleProfiles, oppAbbrs };
+}
+
+function matchesDynamicPlayerHandle(relevanceBlob = '', handleProfiles = []) {
+  if (!relevanceBlob || !Array.isArray(handleProfiles) || handleProfiles.length === 0) return false;
+  const atHandles = [...String(relevanceBlob).toLowerCase().matchAll(/@([a-z0-9_]{3,25})\b/g)].map(m => m[1]);
+  if (atHandles.length === 0) return false;
+  for (const h of atHandles) {
+    const hAlpha = h.replace(/[^a-z]/g, '');
+    for (const prof of handleProfiles) {
+      if (prof.compactFull.length >= 7 && hAlpha.includes(prof.compactFull)) return true;
+      if (
+        (prof.compoundTail && prof.compoundTail.length >= 6 && hAlpha.includes(prof.compoundTail)) ||
+        prof.hyphenParts.some(hp => hp.length >= 6 && hAlpha.includes(hp))
+      ) {
+        return true;
+      }
+      if (prof.compactLast.length >= 5 && hAlpha.includes(prof.compactLast)) {
+        if (
+          !prof.isAmbiguous ||
+          (prof.first && (hAlpha.startsWith(prof.first[0]) || h.includes(`_${prof.first[0]}`) || (prof.jersey && h.endsWith(prof.jersey))))
+        ) {
+          return true;
+        }
+      }
+      if (prof.compactLast.length === 4 && hAlpha.includes(prof.compactLast)) {
+        const hasFirstInit = Boolean(
+          prof.first && new RegExp(`^[a-z]{0,2}${prof.first[0]}[a-z_]*${prof.compactLast}`).test(h)
+        );
+        const hasJersey = Boolean(prof.jersey && h.endsWith(prof.jersey));
+        if (hasFirstInit || (hasJersey && !prof.isAmbiguous)) return true;
+      }
+    }
+  }
+  return false;
+}
+
+const WORKER_NATIONAL_FILM_X_SPECS = Object.freeze([
+  { handle: 'BaldyNFL', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
+  { handle: 'FB_FilmAnalysis', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
+  { handle: 'BrandonThornNFL', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
+  { handle: 'throwthedamball', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: true },
+  { handle: 'ghatz_28', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: true }
+]);
+
+const WORKER_NATIONAL_OUTLET_IDS = new Set(['espn_national', 'nfl_network', 'national_film', 'overthecap']);
+const WORKER_NATIONAL_HANDLE_SET = new Set([
+  'adamschefter', 'rapsheet', 'tompelissero', 'mikegarafolo', 'dmrussini', 'jfowlerespn',
+  'albertbreer', 'fieldyates', 'schultz_report', 'dangrazianoespn', 'jason_otc', 'stephania_espn',
+  'dpbrugler', 'movethesticks', 'baldynfl', 'brandonthornnfl', 'fb_filmanalysis', 'qbklass',
+  'kurt13warner', 'danorlovsky7', 'collinsworthpff', 'throwthedamball', 'ghatz_28', 'tejfbanalytics',
+  'sumersports', 'pff_moo', 'nate_tice', 'benjaminsolak', 'minakimes', 'brettkollmann',
+  'theqbschool', 'pff', 'nextgenstats', 'fball_insights', 'benbbaldwin', 'sethwalder', 'nfl', 'espnnfl', 'nflnetwork'
+]);
+
+/**
+ * Unified 32-team Edge X-timeline selector: selects up to `maxLocal` local club film/clip/beat X handles
+ * from the active team's own `reporters.json` + the 5 shared national film/analytics accounts identically for ALL 32 clubs.
+ */
+export function selectEdgeLiveWireXSpecs(team, reportersJson = null, maxLocal = 4) {
+  const officialLow = String(OFFICIAL_TEAM_X_HANDLES[team?.abbr] || '').toLowerCase();
+  const seen = new Set(officialLow ? [officialLow] : []);
+  for (const ns of WORKER_NATIONAL_FILM_X_SPECS) seen.add(ns.handle.toLowerCase());
+
+  const localSpecs = [];
+  const reps = Array.isArray(reportersJson?.reporters) ? reportersJson.reporters : [];
+  const localReps = reps.filter(r => {
+    if (!r || r.isPodiumSubject || r.scope === 'national') return false;
+    if (WORKER_NATIONAL_OUTLET_IDS.has(String(r.outletId || ''))) return false;
+    if (['national_insider', 'draft', 'injury_analyst', 'official'].includes(String(r.category || '').toLowerCase())) return false;
+    const h = String(r.handle || '').replace(/^@/, '').trim().toLowerCase();
+    return Boolean(h && !WORKER_NATIONAL_HANDLE_SET.has(h));
+  });
+
+  const isFilm = r =>
+    ['film', 'film_analyst', 'analytics'].includes(String(r.category || '').toLowerCase()) ||
+    /all[- ]?22|film|tape|scheme|analytics|trench/i.test(`${r.role || ''} ${r.styleTag || ''}`);
+  const isClip = r =>
+    ['video_pod', 'audio_beat'].includes(String(r.category || '').toLowerCase()) ||
+    /clip|video|pod|highlight/i.test(`${r.role || ''} ${r.styleTag || ''}`);
+  const scoreDesc = (a, b) => (Number(b.baseScore) || 85) - (Number(a.baseScore) || 85);
+
+  const prioritized = [
+    ...localReps.filter(isFilm).sort(scoreDesc).slice(0, 2),
+    ...localReps.filter(r => !isFilm(r) && isClip(r)).sort(scoreDesc).slice(0, 1),
+    ...localReps.filter(r => !isFilm(r) && !isClip(r)).sort((a, b) => (Number(a.trustTier) || 2) - (Number(b.trustTier) || 2) || scoreDesc(a, b)),
+    ...localReps.filter(isFilm).sort(scoreDesc).slice(2)
+  ];
+
+  for (const r of prioritized) {
+    if (localSpecs.length >= maxLocal) break;
+    const rawH =
+      r.id === 'jonnydel'
+        ? 'SulligentHUB'
+        : String(r.handle || '').replace(/^@/, '').trim();
+    if (!rawH || !/^[A-Za-z0-9_]{2,25}$/.test(rawH)) continue;
+    const low = rawH.toLowerCase();
+    if (seen.has(low)) continue;
+    seen.add(low);
+    localSpecs.push({
+      handle: rawH,
+      isLeagueAccount: false,
+      isBeatOrFilmAccount: true,
+      allowLeagueWideFilmCharts: false
+    });
+  }
+
+  return [...localSpecs, ...WORKER_NATIONAL_FILM_X_SPECS];
 }
 
 /**
@@ -732,6 +871,9 @@ export function parseOfficialXSyndicationTimelineHtml(
             matchesTeam = true;
             break;
           }
+        }
+        if (!matchesTeam && gameDayMatchers.handleProfiles?.length) {
+          matchesTeam = matchesDynamicPlayerHandle(relevanceBlob, gameDayMatchers.handleProfiles);
         }
         if (!matchesTeam) {
           for (const sn of gameDayMatchers.uniqueSurnames) {
@@ -1190,22 +1332,24 @@ export default {
           'Accept-Language': 'en-US,en;q=0.9'
         };
 
-        const edgeFilmAndBeatXSpecs = isSfTeam
-          ? [
-              { handle: 'SulligentHUB', isLeagueAccount: false, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
-              { handle: 'BaldyNFL', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
-              { handle: 'dieter', isLeagueAccount: false, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
-              { handle: 'StatsOnFire', isLeagueAccount: false, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
-              { handle: 'GrustasBrady', isLeagueAccount: false, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
-              { handle: 'throwthedamball', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: true },
-              { handle: 'ghatz_28', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: true }
-            ]
-          : [
-              { handle: 'BaldyNFL', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
-              { handle: 'throwthedamball', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: true },
-              { handle: 'ghatz_28', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: true },
-              { handle: 'CollinsworthPFF', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false }
-            ];
+        // Load the active club's own static `reporters.json` & `roster.json` directly from local Pages ASSETS (0ms!)
+        // so ALL 32 clubs get identical data-driven local beat/film X polling, dynamic player @handle matching,
+        // and embedded X allowlisting with zero SF-only hardcoding.
+        const teamDataBasePath = isSfTeam ? '/data' : `/data/teams/${team.slug}`;
+        const readLocalTeamJson = async fileName => {
+          if (!env?.ASSETS) return null;
+          try {
+            const res = await env.ASSETS.fetch(new Request(`${url.origin}${teamDataBasePath}/${fileName}`));
+            return res.ok ? await res.json() : null;
+          } catch {
+            return null;
+          }
+        };
+        const [teamReportersJson, teamRosterJson] = await Promise.all([
+          readLocalTeamJson('reporters.json'),
+          readLocalTeamJson('roster.json')
+        ]);
+        const edgeFilmAndBeatXSpecs = selectEdgeLiveWireXSpecs(team, teamReportersJson, 4);
 
         let teamXStatus = 0;
         let nflXStatus = 0;
@@ -1327,8 +1471,12 @@ export default {
           return bestUrl;
         };
 
-        // 4a-0. Direct Official @<teamXHandle> & @NFL X Syndication Live Timelines (instant native `video.twimg.com` TD clips!)
-        const gameDayMatchers = buildActiveTeamGameDayMatchers(liveSummaryJson, team);
+        // 4a-0. Direct Official @<teamXHandle>, Local Club Beat/Film & National Film/Analytics X Live Timelines
+        const gameDayMatchers = buildActiveTeamGameDayMatchers(
+          liveSummaryJson,
+          team,
+          Array.isArray(teamRosterJson?.players) ? teamRosterJson.players : []
+        );
         const officialTeamXItems = parseOfficialXSyndicationTimelineHtml(teamXTimelineHtml, {
           handle: teamOfficialXHandle,
           team,
@@ -1570,11 +1718,22 @@ export default {
           });
         }
 
-        // Parse SF Tier 1-3 Beat RSS feeds (NBCSBA, Niners Nation, 49ers Webzone, SF Standard, Niners Wire, KNBR)
-        // AND harvest embedded X status URLs (incl. Tier 2 & 3 reporters + native MP4 highlight clips)
+        // Harvest embedded X status URLs across ALL 32 clubs using the active club's own reporters + national insiders/film analysts
         const discoveredXStatusMap = new Map();
         const xStatusRe = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
-        const sfTrustedXRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|victafur|harrisonrich_|mattblively|chrisbiderman|dieter|dkurtenbach|grantcohn|sportslarryk|brianajeannel|kp_show|rohanchakrav|akashanav|steph49k|jasonaponte2103|vishkumaran|bdpeacock|crocky209|jl_chapman|guyhaberman|pff_jeff|alsacco49|jonnydels|sulligenthub|grustasbrady|theqbschool|baldynfl|collinsworthpff|ghatz_28|throwthedamball|nate_tice|benjaminsolak|minakimes|brettkollmann|pff|nextgenstats|fball_insights|benbbaldwin|sethwalder|graham_sfn|thesfniners|49erswebzone|nbcs49ers|ninersnation|ninerswire|knbr|957thegame|oursf49ers|coach_yac|49ershive|rob_lowder|statsonfire|samwarren83|bynoahfurtado|adamschefter|rapsheet|tompelissero|mikegarafolo|dmrussini|fieldyates|nfl|espnnfl|nflnetwork)$/i;
+        const allowedTeamEmbeddedXHandles = new Set(WORKER_NATIONAL_HANDLE_SET);
+        if (teamOfficialXHandle) allowedTeamEmbeddedXHandles.add(teamOfficialXHandle.toLowerCase());
+        for (const spec of edgeFilmAndBeatXSpecs) {
+          if (spec?.handle) allowedTeamEmbeddedXHandles.add(spec.handle.toLowerCase());
+        }
+        for (const r of Array.isArray(teamReportersJson?.reporters) ? teamReportersJson.reporters : []) {
+          const rh = String(r?.handle || '').replace(/^@/, '').trim().toLowerCase();
+          if (rh) allowedTeamEmbeddedXHandles.add(rh);
+          for (const ha of Array.isArray(r?.handleAliases) ? r.handleAliases : []) {
+            const ah = String(ha || '').replace(/^@/, '').trim().toLowerCase();
+            if (ah) allowedTeamEmbeddedXHandles.add(ah);
+          }
+        }
         const scanXmlForX = rawXml => {
           if (!rawXml) return;
           for (const xm of String(rawXml).replace(/\\\//g, '/').matchAll(xStatusRe)) {
@@ -1582,7 +1741,7 @@ export default {
             const sid = xm[2];
             if (
               !/^(i|intent|share|hashtag|search)$/i.test(h) &&
-              (sfTrustedXRe.test(h) || (teamOfficialXHandle && h.toLowerCase() === teamOfficialXHandle.toLowerCase())) &&
+              allowedTeamEmbeddedXHandles.has(h.toLowerCase()) &&
               !discoveredXStatusMap.has(sid)
             ) {
               discoveredXStatusMap.set(sid, h);

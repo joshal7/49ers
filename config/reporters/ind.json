@@ -208,6 +208,20 @@
       "defaultEnabled": true
     },
     {
+      "id": "zach_hicks_ind",
+      "name": "Zach Hicks",
+      "handle": "@ZachHicks2",
+      "outletId": "a_to_z_sports_indy_ind",
+      "role": "Colts All-22 Film, Trench & Scheme Analyst",
+      "category": "film_analyst",
+      "styleTag": "all22-scheme",
+      "baseScore": 91,
+      "trustTier": 2,
+      "xUrl": "https://x.com/ZachHicks2",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
       "id": "colts_pr",
       "name": "Indianapolis Colts PR",
       "handle": "@ColtsPR",

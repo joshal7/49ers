@@ -202,7 +202,11 @@ function loadMergedReportersForTeam(team) {
   }
   const repById = new Map();
   const tierLabels = { 1: 'Tier 1 • Primary Trusted', 2: 'Tier 2 • Analytical Beat', 3: 'Tier 3 • Watchlist' };
-  for (const r of [...(loc.reporters || []), ...(nat.reporters || [])]) {
+  const mergedRawReps = [
+    ...(loc.reporters || []).map(r => ({ ...r, scope: r.scope || 'local' })),
+    ...(nat.reporters || []).map(r => ({ ...r, scope: 'national' }))
+  ];
+  for (const r of mergedRawReps) {
     if (!r?.id || repById.has(r.id)) continue;
     const out = outletsById.get(r.outletId);
     const tier = Number(r.trustTier) || 2;
@@ -2515,11 +2519,11 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
 
   // 9f. Verified Team Local X Timelines + Shared National Film/Analytics X Pool + Embedded RSS X Tweets + Bluesky Beat Posts
   const [localXRaw, embeddedXItems] = await Promise.all([
-    fetchXTimelinesBatch(selectTeamLocalXHandles(team, reportersData, 5), {
-      concurrency: 5,
-      timeoutMs: 3800,
+    fetchXTimelinesBatch(selectTeamLocalXHandles(team, reportersData, 12), {
+      concurrency: 6,
+      timeoutMs: 4000,
       maxAgeHours: 120,
-      maxItems: 10
+      maxItems: 12
     }).catch(() => []),
     harvestEmbeddedXForTeamRss([clubNewsRssXml, pfrTeamRssXml, JSON.stringify(espnNewsRaw || {})], {
       team,

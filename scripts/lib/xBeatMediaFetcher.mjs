@@ -32,6 +32,7 @@ import {
   formatTweetBodyForDisplay
 } from '../../src/engine/breakingClassifier.js';
 import {
+  NATIONAL_NFL_SETTINGS_REPORTER_IDS,
   extractXSnowflakeTimestampMs,
   resolveItemAuthorProfileUrl,
   resolveReporterFromNameOrHandle
@@ -80,9 +81,17 @@ export const OFFICIAL_TEAM_X_HANDLES_BY_ABBR = Object.freeze({
  */
 export const NATIONAL_FILM_ANALYTICS_X_HANDLES = Object.freeze([
   'BaldyNFL',
+  'BrandonThornNFL',
+  'FB_FilmAnalysis',
+  'QBKlass',
+  'kurt13warner',
+  'danorlovsky7',
   'CollinsworthPFF',
   'throwthedamball',
   'ghatz_28',
+  'tejfbanalytics',
+  'SumerSports',
+  'PFF_Moo',
   'Nate_Tice',
   'BenjaminSolak',
   'minakimes',
@@ -96,25 +105,22 @@ export const NATIONAL_FILM_ANALYTICS_X_HANDLES = Object.freeze([
 ]);
 
 /**
- * Curated 49ers beat, All-22 film, GIF, and highlight X accounts.
+ * Fallback 49ers beat & film X handles used ONLY when `reportersData` is not supplied.
+ * In normal operation, ALL 32 clubs (including SF) select handles dynamically from their `reporters.json`.
  */
 export const SF_BEAT_FILM_X_HANDLES = Object.freeze([
   '49ers',
-  'dieter',
   'SulligentHUB',
-  'StatsOnFire',
   'GrustasBrady',
+  'dieter',
+  'StatsOnFire',
   'MaioccoNBCS',
   'mattbarrows',
   'LombardiHimself',
   'nwagoner',
   'KP_Show',
   'akashanav',
-  'Crocky209',
-  'NBCS49ers',
-  'OurSF49ers',
-  'Coach_Yac',
-  'PFF_Jeff'
+  'Crocky209'
 ]);
 
 const NON_NFL_OTHER_SPORT_RE =
@@ -338,41 +344,107 @@ export async function fetchXTimelinesBatch(
   return all;
 }
 
+const NATIONAL_OUTLET_IDS = new Set(['espn_national', 'nfl_network', 'national_film', 'overthecap']);
+const NATIONAL_HANDLE_SET_LOWER = new Set(NATIONAL_FILM_ANALYTICS_X_HANDLES.map(h => h.toLowerCase()));
+
 /**
- * Selects local beat & film X handles for any of the 32 NFL clubs from its `reportersData` + official handle.
+ * Selects local beat & film X handles uniformly for ANY of the 32 NFL clubs (including SF)
+ * from its `reportersData` + official club handle, ensuring local `film`/`film_analyst`/`analytics`
+ * accounts are prioritized alongside top beat reporters (never accidentally dropped as national!).
  */
-export function selectTeamLocalXHandles(team, reportersData = null, maxHandles = 6) {
+export function selectTeamLocalXHandles(team, reportersData = null, maxHandles = 12) {
   const active = resolveTeamConfig(team);
-  if (active.abbr === 'SF') return [...SF_BEAT_FILM_X_HANDLES];
   const out = [];
   const seen = new Set();
   const push = raw => {
     const h = String(raw || '').replace(/^@/, '').trim();
     if (!h || !/^[A-Za-z0-9_]{2,25}$/.test(h)) return;
     const low = h.toLowerCase();
-    if (seen.has(low)) return;
+    if (seen.has(low) || NATIONAL_HANDLE_SET_LOWER.has(low)) return;
     seen.add(low);
     out.push(h);
   };
   const official = OFFICIAL_TEAM_X_HANDLES_BY_ABBR[active.abbr];
   if (official) push(official);
+
   const reps = Array.isArray(reportersData?.reporters) ? reportersData.reporters : [];
-  const localReps = reps
-    .filter(
-      r =>
-        r &&
-        r.handle &&
-        !['national_insider', 'film_analyst', 'cap_analyst', 'draft', 'injury_analyst'].includes(
-          String(r.category || '').toLowerCase()
-        )
-    )
-    .sort((a, b) => (Number(a.trustTier) || 2) - (Number(b.trustTier) || 2) || (Number(b.baseScore) || 0) - (Number(a.baseScore) || 0));
-  for (const r of localReps) {
+  if (reps.length === 0 && active.abbr === 'SF') {
+    for (const h of SF_BEAT_FILM_X_HANDLES) {
+      if (out.length >= maxHandles) break;
+      push(h);
+    }
+    return out;
+  }
+
+  const isNationalRep = r =>
+    !r ||
+    r.scope === 'national' ||
+    NATIONAL_NFL_SETTINGS_REPORTER_IDS.has(r.id) ||
+    NATIONAL_OUTLET_IDS.has(String(r.outletId || '')) ||
+    ['national_insider', 'draft', 'injury_analyst'].includes(String(r.category || '').toLowerCase());
+
+  const localReps = reps.filter(
+    r =>
+      r &&
+      !r.isPodiumSubject &&
+      !isNationalRep(r) &&
+      (r.handle || (Array.isArray(r.handleAliases) && r.handleAliases.length > 0))
+  );
+
+  const extractBestHandle = r => {
+    // Prefer active X timeline alias when primary handle is a legacy YouTube handle (e.g. @SulligentHUB)
+    const aliases = Array.isArray(r.handleAliases) ? r.handleAliases : [];
+    const primary = String(r.handle || '').replace(/^@/, '').trim();
+    if (r.id === 'jonnydel') {
+      const activeAlias = aliases.find(a => /sulligenthub/i.test(String(a)));
+      if (activeAlias) return activeAlias;
+    }
+    return primary || aliases[0] || '';
+  };
+
+  const isLocalFilmOrAnalyt = r =>
+    ['film', 'film_analyst', 'analytics'].includes(String(r.category || '').toLowerCase()) ||
+    /all[- ]?22|film|tape|scheme|analytics|chart|grade|trench/i.test(`${r.role || ''} ${r.styleTag || ''}`);
+  const isLocalClipOrPod = r =>
+    ['video_pod', 'audio_beat'].includes(String(r.category || '').toLowerCase()) ||
+    /clip|video|pod|highlight/i.test(`${r.role || ''} ${r.styleTag || ''}`);
+
+  const byScoreDesc = (a, b) =>
+    (Number(b.baseScore) || 85) - (Number(a.baseScore) || 85) ||
+    (Number(a.trustTier) || 2) - (Number(b.trustTier) || 2);
+
+  const filmReps = localReps.filter(isLocalFilmOrAnalyt).sort(byScoreDesc);
+  const clipReps = localReps.filter(r => !isLocalFilmOrAnalyt(r) && isLocalClipOrPod(r)).sort(byScoreDesc);
+  const beatReps = localReps
+    .filter(r => !isLocalFilmOrAnalyt(r) && !isLocalClipOrPod(r) && String(r.category || '').toLowerCase() !== 'official')
+    .sort((a, b) => (Number(a.trustTier) || 2) - (Number(b.trustTier) || 2) || byScoreDesc(a, b));
+
+  // Balanced high-SNR allocation: official + up to ~40% local film/analytics + ~25% clip/pod + top beat writers
+  const filmCap = Math.max(2, Math.floor(maxHandles * 0.42));
+  const clipCap = Math.max(1, Math.floor(maxHandles * 0.25));
+  for (const r of filmReps.slice(0, filmCap)) {
     if (out.length >= maxHandles) break;
-    push(r.handle);
+    push(extractBestHandle(r));
+  }
+  for (const r of clipReps.slice(0, clipCap)) {
+    if (out.length >= maxHandles) break;
+    push(extractBestHandle(r));
+  }
+  for (const r of [...beatReps, ...filmReps.slice(filmCap), ...clipReps.slice(clipCap)]) {
+    if (out.length >= maxHandles) break;
+    push(extractBestHandle(r));
   }
   return out;
 }
+
+const ROSTER_CONDITIONAL_PLAYER_INITIALISMS = Object.freeze({
+  'christian mccaffrey': /\bcmc\b/i,
+  'justin jefferson': /\bjjettas?\b/i,
+  'amon-ra st. brown': /\barsb\b/i,
+  'jaxon smith-njigba': /\bjsn\b/i,
+  'trevor lawrence': /\btlaw\b/i,
+  'ceedee lamb': /\bcd\s*lamb\b/i
+});
 
 function buildTeamRelevanceMatcher(team, rosterPlayers = []) {
   const active = resolveTeamConfig(team);
@@ -392,6 +464,7 @@ function buildTeamRelevanceMatcher(team, rosterPlayers = []) {
       active.coachesSeed?.hc,
       active.coachesSeed?.gm,
       active.stadium,
+      ...(Array.isArray(active.aliases) ? active.aliases.filter(a => String(a).length >= 5) : []),
       ...(active.abbr === 'SF' ? ['49ers', 'niners', 'san francisco', 'santa clara', 'shanahan'] : [])
     ]
       .filter(Boolean)
@@ -407,14 +480,35 @@ function buildTeamRelevanceMatcher(team, rosterPlayers = []) {
     if (!p?.name) continue;
     const cleanFull = stripPlayerSuffix(p.name);
     const parts = cleanFull.split(/\s+/).filter(Boolean);
-    const last = (parts[parts.length - 1] || '').replace(/[^a-zA-Z'-]/g, '').toLowerCase();
-    if (last.length >= 4) lastCounts.set(last, (lastCounts.get(last) || 0) + 1);
-    parsedPlayers.push({ player: p, cleanFull, last, first: (parts[0] || '').toLowerCase() });
+    const first = (parts[0] || '').replace(/[^a-zA-Z]/g, '').toLowerCase();
+    const rawLast = (parts[parts.length - 1] || '').replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    // Support compound surnames like "St. Brown" -> "stbrown" and hyphenated "Smith-Njigba" -> "smithnjigba" + "njigba"
+    const compoundTail =
+      parts.length >= 3 && /^(st\.?|de|la|le|van|von|mc|mac)$/i.test(parts[parts.length - 2])
+        ? `${parts[parts.length - 2]}${parts[parts.length - 1]}`.replace(/[^a-z]/gi, '').toLowerCase()
+        : '';
+    const compactLast = rawLast.replace(/[^a-z]/g, '');
+    const hyphenParts = rawLast.includes('-') ? rawLast.split('-').map(s => s.replace(/[^a-z]/g, '')).filter(s => s.length >= 5) : [];
+    const compactFull = `${first}${compoundTail || compactLast}`;
+    if (rawLast.length >= 4) lastCounts.set(rawLast, (lastCounts.get(rawLast) || 0) + 1);
+    parsedPlayers.push({
+      player: p,
+      cleanFull,
+      fullLower: cleanFull.toLowerCase(),
+      first,
+      last: rawLast,
+      compactLast,
+      compoundTail,
+      hyphenParts,
+      compactFull,
+      jersey: String(p.jersey || '').replace(/[^0-9]/g, '')
+    });
   }
 
   const matchPlayers = (text = '', { allowAllSingleSurnames = false, allowUniqueSurnames = true } = {}) => {
     const raw = String(text || '');
     const lower = raw.toLowerCase();
+    const atHandles = [...lower.matchAll(/@([a-z0-9_]{3,25})\b/g)].map(m => m[1]);
     const matched = [];
     const seen = new Set();
     const addP = p => {
@@ -431,22 +525,62 @@ function buildTeamRelevanceMatcher(team, rosterPlayers = []) {
     };
 
     for (const entry of parsedPlayers) {
-      const fullLower = entry.cleanFull.toLowerCase();
-      if (fullLower.length >= 6 && new RegExp(`(?<![a-z0-9])${escapeRe(fullLower)}(?![a-z0-9])`, 'i').test(lower)) {
+      if (entry.fullLower.length >= 6 && new RegExp(`(?<![a-z0-9])${escapeRe(entry.fullLower)}(?![a-z0-9])`, 'i').test(lower)) {
         addP(entry.player);
         continue;
       }
-      // Match X @handles containing player name (e.g., @brockpurdy13, @gkittle46, @cmc_22)
-      if (
-        entry.last.length >= 5 &&
-        new RegExp(`@[a-z0-9_]*${escapeRe(entry.last)}[a-z0-9_]*\\b`, 'i').test(lower) &&
-        (!AMBIGUOUS_PLAYER_SURNAMES.has(entry.last) ||
-          (entry.first && new RegExp(`@${escapeRe(entry.first[0])}[a-z0-9_]*${escapeRe(entry.last)}`, 'i').test(lower)))
-      ) {
-        addP(entry.player);
-        continue;
+      // Dynamic roster-derived X @handle matching for ALL 32 teams (updates automatically as rosters change):
+      // e.g. @brockpurdy13, @gkittle46, @PatrickMahomes, @JoshAllenQB, @jgoff16, @j_love10, @amonra_stbrown, @jsmithnjigba
+      if (atHandles.length > 0) {
+        let handleHit = false;
+        for (const h of atHandles) {
+          const hAlpha = h.replace(/[^a-z]/g, '');
+          // 1. Concatenated full name inside handle (e.g. @patrickmahomes, @lamarjackson, @joshallenqb, @trevorlawrence)
+          if (entry.compactFull.length >= 7 && hAlpha.includes(entry.compactFull)) {
+            handleHit = true;
+            break;
+          }
+          // 2. Compound or hyphenated surname inside handle (e.g. @amonra_stbrown, @jsmithnjigba)
+          if (
+            (entry.compoundTail && entry.compoundTail.length >= 6 && hAlpha.includes(entry.compoundTail)) ||
+            entry.hyphenParts.some(hp => hp.length >= 6 && hAlpha.includes(hp))
+          ) {
+            handleHit = true;
+            break;
+          }
+          // 3. 5+ letter surname inside handle (with first-initial guard if surname is ambiguous)
+          if (entry.compactLast.length >= 5 && hAlpha.includes(entry.compactLast)) {
+            if (
+              !AMBIGUOUS_PLAYER_SURNAMES.has(entry.last) ||
+              (entry.first &&
+                (hAlpha.startsWith(entry.first[0]) ||
+                  h.includes(`_${entry.first[0]}`) ||
+                  (entry.jersey && h.endsWith(entry.jersey))))
+            ) {
+              handleHit = true;
+              break;
+            }
+          }
+          // 4. 4-letter surname inside handle ONLY when paired with first-initial or jersey number (e.g. @jgoff16, @j_love10, @cdlamb88, @tjwatt90, @n_bosa97)
+          if (entry.compactLast.length === 4 && hAlpha.includes(entry.compactLast)) {
+            const hasFirstInit = Boolean(
+              entry.first &&
+                new RegExp(`^[a-z]{0,2}${escapeRe(entry.first[0])}[a-z_]*${escapeRe(entry.compactLast)}`).test(h)
+            );
+            const hasJersey = Boolean(entry.jersey && h.endsWith(entry.jersey));
+            if (hasFirstInit || (hasJersey && !AMBIGUOUS_PLAYER_SURNAMES.has(entry.last))) {
+              handleHit = true;
+              break;
+            }
+          }
+        }
+        if (handleHit) {
+          addP(entry.player);
+          continue;
+        }
       }
-      if (entry.player.name === 'Christian McCaffrey' && /\bcmc\b/i.test(lower)) {
+      const initRe = ROSTER_CONDITIONAL_PLAYER_INITIALISMS[entry.fullLower];
+      if (initRe && initRe.test(lower)) {
         addP(entry.player);
         continue;
       }
@@ -568,6 +702,7 @@ export function filterXTimelineItemsForTeam(
       author: authorName,
       reporterName: authorName,
       authorHandle,
+      reporterCategory: dirEntry?.category || '',
       outletName,
       mentionedPlayers: mentioned,
       videoStreamUrl: raw.mp4Url || undefined,

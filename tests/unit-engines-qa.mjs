@@ -23877,6 +23877,190 @@ await testAsync(
       false,
       'Single-other-team chart without active team mention must NOT pass league-wide chart filter'
     );
+
+    // 6. Anti-Overfit & Dynamic 32-Team Generalization Proofs:
+    //    (a) Dynamic player @handle matching across non-SF clubs (4-letter surnames, hyphenated/compound surnames, concatenated names, & roster swaps!)
+    //    (b) Local `film_analyst` selection across ALL 32 clubs in BOTH pipeline (`selectTeamLocalXHandles`) and Edge Worker (`selectEdgeLiveWireXSpecs`)!
+    //    (c) Unseen non-SF film GIFs & craft clips classify as `film` WITHOUT any example-specific buzzwords, while hype clips stay `beat`!
+    const { selectTeamLocalXHandles } = await import('../scripts/lib/xBeatMediaFetcher.mjs');
+    const {
+      buildActiveTeamGameDayMatchers: buildWorkerMatchers,
+      parseOfficialXSyndicationTimelineHtml: parseWorkerXHtml,
+      selectEdgeLiveWireXSpecs
+    } = await import('../worker/nfl-teams-worker.js');
+
+    // (a) Dynamic player @handle matching on Detroit Lions (zero hardcoded names: 4-letter Goff, compound St. Brown, 5+ Sewell)
+    const detRoster = [
+      { id: 'det_1', name: 'Jared Goff', position: 'QB', jersey: '16', rosterBucket: 'active' },
+      { id: 'det_2', name: 'Amon-Ra St. Brown', position: 'WR', jersey: '14', rosterBucket: 'active' },
+      { id: 'det_3', name: 'Penei Sewell', position: 'OT', jersey: '58', rosterBucket: 'active' }
+    ];
+    const unseenDetTweets = [
+      ...parseXTimelineHtml(
+        makeMockTimelineHtml([
+          {
+            id_str: '2199100000000000001',
+            created_at: hAgo(4),
+            full_text: 'Beautiful anticipation from @jgoff16 finding @amonra_stbrown against two-high spacing.',
+            user: { screen_name: 'FB_FilmAnalysis', name: 'Ted Nguyen' },
+            extended_entities: {
+              media: [
+                {
+                  type: 'video',
+                  media_url_https: 'https://pbs.twimg.com/ext_tw_video_thumb/DetGoffClip.jpg',
+                  video_info: {
+                    duration_millis: 28000,
+                    variants: [{ bitrate: 1800000, content_type: 'video/mp4', url: 'https://video.twimg.com/ext_tw_video/DetGoffClip/vid/720x1280/a.mp4' }]
+                  }
+                }
+              ]
+            }
+          }
+        ]),
+        { handle: 'FB_FilmAnalysis', nowMs }
+      ),
+      ...parseXTimelineHtml(
+        makeMockTimelineHtml([
+          {
+            id_str: '2199100000000000002',
+            created_at: hAgo(3),
+            full_text: 'Watch Sewell kick-slide and anchor against the bull rush on 3rd down.',
+            user: { screen_name: 'davebirkett', name: 'Dave Birkett' },
+            extended_entities: {
+              media: [
+                {
+                  type: 'animated_gif',
+                  media_url_https: 'https://pbs.twimg.com/tweet_video_thumb/SewellGif.jpg',
+                  video_info: {
+                    variants: [{ bitrate: 0, content_type: 'video/mp4', url: 'https://video.twimg.com/tweet_video/SewellGif.mp4' }]
+                  }
+                }
+              ]
+            }
+          }
+        ]),
+        { handle: 'davebirkett', nowMs }
+      ),
+      ...parseXTimelineHtml(
+        makeMockTimelineHtml([
+          {
+            id_str: '2199100000000000003',
+            created_at: hAgo(2),
+            full_text: 'WHAT A CATCH! #OnePride',
+            user: { screen_name: 'davebirkett', name: 'Dave Birkett' },
+            extended_entities: {
+              media: [
+                {
+                  type: 'video',
+                  media_url_https: 'https://pbs.twimg.com/ext_tw_video_thumb/DetHype.jpg',
+                  video_info: {
+                    duration_millis: 18000,
+                    variants: [{ bitrate: 1800000, content_type: 'video/mp4', url: 'https://video.twimg.com/ext_tw_video/DetHype/vid/720x1280/b.mp4' }]
+                  }
+                }
+              ]
+            }
+          }
+        ]),
+        { handle: 'davebirkett', nowMs }
+      )
+    ];
+
+    const detReporters = JSON.parse(fs.readFileSync(path.join(rootDir, 'config', 'reporters', 'det.json'), 'utf8'));
+    const detFiltered = filterXTimelineItemsForTeam(unseenDetTweets, {
+      team: getTeamByAbbr('DET'),
+      rosterPlayers: detRoster,
+      reportersData: detReporters,
+      isNationalPool: false,
+      nowMs
+    });
+    assert.equal(detFiltered.length, 3, 'All 3 unseen Detroit Lions clips must pass dynamic matching without SF hardcoding');
+    const detGoffClip = detFiltered.find(x => x.id.endsWith('2199100000000000001'));
+    const detSewellGif = detFiltered.find(x => x.id.endsWith('2199100000000000002'));
+    const detHypeClip = detFiltered.find(x => x.id.endsWith('2199100000000000003'));
+    assert.ok(
+      detGoffClip.mentionedPlayers.some(p => p.name === 'Jared Goff') &&
+        detGoffClip.mentionedPlayers.some(p => p.name === 'Amon-Ra St. Brown'),
+      'Dynamic player @handle matcher must resolve 4-letter @jgoff16 and compound @amonra_stbrown from live DET roster'
+    );
+    assert.equal(detGoffClip.category, 'film', 'Ted Nguyen @FB_FilmAnalysis Lions clip must classify as film');
+    assert.equal(detSewellGif.category, 'film', 'Unseen Lions OL kick-slide GIF (no SF buzzwords) must classify as film');
+    assert.equal(detSewellGif.isAnimatedGif, true, 'Unseen Lions OL GIF must preserve isAnimatedGif');
+    assert.equal(detHypeClip.category, 'beat', 'Pure celebration clip ("WHAT A CATCH! #OnePride") must stay non-film for Highlights & Videos');
+
+    // Roster change test: if Jared Goff is removed from detRoster, @jgoff16 must stop matching DET!
+    const detWithoutGoff = filterXTimelineItemsForTeam([unseenDetTweets[0]], {
+      team: getTeamByAbbr('DET'),
+      rosterPlayers: [{ id: 'det_9', name: 'Hendon Hooker', position: 'QB', jersey: '2', rosterBucket: 'active' }],
+      reportersData: detReporters,
+      isNationalPool: true,
+      nowMs
+    });
+    assert.equal(detWithoutGoff.length, 0, 'When a player leaves the roster, their @handle must dynamically stop matching that team');
+
+    // (b) Worker dynamic roster @handle matching outside live games (liveSummaryJson = null)
+    const workerDetMatchers = buildWorkerMatchers(null, getTeamByAbbr('DET'), detRoster);
+    const workerDetParsed = parseWorkerXHtml(
+      makeMockTimelineHtml([
+        {
+          id_str: '2199100000000000099',
+          created_at: hAgo(1),
+          full_text: 'Look at @jgoff16 layering this throw to @amonra_stbrown.',
+          user: { screen_name: 'BaldyNFL', name: 'Brian Baldinger' },
+          extended_entities: {
+            media: [
+              {
+                type: 'video',
+                media_url_https: 'https://pbs.twimg.com/ext_tw_video_thumb/WorkerGoff.jpg',
+                video_info: {
+                  duration_millis: 20000,
+                  variants: [{ bitrate: 1500000, content_type: 'video/mp4', url: 'https://video.twimg.com/ext_tw_video/WorkerGoff/vid/720x1280/c.mp4' }]
+                }
+              }
+            ]
+          }
+        }
+      ]),
+      {
+        handle: 'BaldyNFL',
+        team: getTeamByAbbr('DET'),
+        isLeagueAccount: true,
+        isBeatOrFilmAccount: true,
+        gameDayMatchers: workerDetMatchers,
+        nowMs
+      }
+    );
+    assert.equal(workerDetParsed.length, 1, 'Edge Worker must dynamically match @jgoff16/@amonra_stbrown from static roster.json even outside live games');
+
+    // (c) All 32 teams (PHI, KC, GB, IND, ARI, JAX, NO, SF) must select their own local film analysts in BOTH pipeline AND Edge Worker!
+    for (const [abbr, expectedLocalFilmHandle] of [
+      ['PHI', 'EaglesXOs'],
+      ['KC', 'RealMNchiefsfan'],
+      ['GB', 'AndyHermanNFL'],
+      ['IND', 'ZachHicks2'],
+      ['ARI', 'SCoxFB'],
+      ['JAX', 'gus_logue'],
+      ['NO', 'RevDeuceWindham']
+    ]) {
+      const repCfg = JSON.parse(fs.readFileSync(path.join(rootDir, 'config', 'reporters', `${abbr.toLowerCase()}.json`), 'utf8'));
+      const natCfg = JSON.parse(fs.readFileSync(path.join(rootDir, 'config', 'reporters', 'national.json'), 'utf8'));
+      const mergedRep = {
+        reporters: [
+          ...repCfg.reporters.map(r => ({ ...r, scope: 'local' })),
+          ...natCfg.reporters.map(r => ({ ...r, scope: 'national' }))
+        ]
+      };
+      const pipelineLocal = selectTeamLocalXHandles(getTeamByAbbr(abbr), mergedRep, 12);
+      const workerSpecs = selectEdgeLiveWireXSpecs(getTeamByAbbr(abbr), mergedRep, 4);
+      assert.ok(
+        pipelineLocal.some(h => h.toLowerCase() === expectedLocalFilmHandle.toLowerCase()),
+        `${abbr} pipeline selectTeamLocalXHandles must include local film analyst @${expectedLocalFilmHandle} (got: ${pipelineLocal.join(', ')})`
+      );
+      assert.ok(
+        workerSpecs.some(s => s.handle.toLowerCase() === expectedLocalFilmHandle.toLowerCase() && !s.isLeagueAccount),
+        `${abbr} Edge Worker selectEdgeLiveWireXSpecs must include local film analyst @${expectedLocalFilmHandle}`
+      );
+    }
   }
 );
 

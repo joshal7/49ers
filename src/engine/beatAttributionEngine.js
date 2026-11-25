@@ -59,21 +59,29 @@ export const BEAT_REPORTER_DIRECTORY = [
   { id: 'john_chapman', name: 'John Chapman', handle: '@JL_Chapman', outletId: 'youtube_film', outletName: '49ers Rush', trustTier: 2, credibilityScore: 90, teamAbbr: 'SF' },
   { id: 'brian_peacock', name: 'Brian Peacock', handle: '@BDPeacock', outletId: 'youtube_film', outletName: 'Locked On 49ers', trustTier: 2, credibilityScore: 90, teamAbbr: 'SF' },
   { id: 'eric_crocker', name: 'Eric Crocker', handle: '@Crocky209', outletId: 'youtube_film', outletName: 'Locked On 49ers', trustTier: 2, credibilityScore: 91, handleAliases: ['@eric_crocker'], teamAbbr: 'SF' },
-  { id: 'jonnydel', name: "Jonnydel's Football Academy", handle: '@jonnydels', outletId: 'youtube_film', outletName: "Jonnydel's FA", trustTier: 2, credibilityScore: 93, aliases: ['jonnydel'], handleAliases: ['@SulligentHUB', '@jonnydelsfa'], teamAbbr: 'SF' },
-  { id: 'brady_grustas', name: 'Brady Grustas', handle: '@GrustasBrady', outletId: 'youtube_film', outletName: '49ers Film Clips', trustTier: 2, credibilityScore: 87, teamAbbr: 'SF' },
-  { id: 'brian_baldinger', name: 'Brian Baldinger', handle: '@BaldyNFL', outletId: 'national_film', outletName: "Baldy's Breakdowns", trustTier: 1, credibilityScore: 95, aliases: ['baldy', "baldy's breakdowns"] },
-  { id: 'cris_collinsworth', name: 'Cris Collinsworth', handle: '@CollinsworthPFF', outletId: 'national_film', outletName: 'PFF', trustTier: 2, credibilityScore: 91, aliases: ['collinsworth'] },
-  { id: 'judah_fortgang', name: 'Judah Fortgang', handle: '@throwthedamball', outletId: 'national_film', outletName: 'PFF Analytics', trustTier: 2, credibilityScore: 91, aliases: ['jrfortgang', 'judah fortgang (pff)'] },
-  { id: 'george_hatzadony', name: 'George Hatzadony', handle: '@ghatz_28', outletId: 'national_film', outletName: 'Statyx NFL', trustTier: 2, credibilityScore: 88, aliases: ['statyx'] },
-  { id: 'nate_tice', name: 'Nate Tice', handle: '@Nate_Tice', outletId: 'national_film', outletName: 'Yahoo Sports NFL', trustTier: 1, credibilityScore: 93 },
-  { id: 'ben_baldwin', name: 'Ben Baldwin', handle: '@benbbaldwin', outletId: 'national_film', outletName: 'rbsdm / NFL Analytics', trustTier: 2, credibilityScore: 91 },
-  { id: 'seth_walder', name: 'Seth Walder', handle: '@SethWalder', outletId: 'espn', outletName: 'ESPN Analytics', trustTier: 2, credibilityScore: 91 },
-  { id: 'pff_official', name: 'PFF', handle: '@PFF', outletId: 'national_film', outletName: 'PFF', trustTier: 2, credibilityScore: 90, aliases: ['pro football focus'] },
-  { id: 'next_gen_stats', name: 'Next Gen Stats', handle: '@NextGenStats', outletId: 'nfl_network', outletName: 'NFL Next Gen Stats', trustTier: 1, credibilityScore: 93 },
-  { id: 'football_insights', name: 'Football Insights', handle: '@fball_insights', outletId: 'national_film', outletName: 'Football Insights', trustTier: 2, credibilityScore: 88 },
-  { id: 'jt_osullivan', name: "JT O'Sullivan", handle: '@theqbschool', outletId: 'youtube_film', outletName: 'The QB School', trustTier: 2, credibilityScore: 92, aliases: ['the qb school', 'qb school'], handleAliases: ['@jt_osullivan'] },
-  { id: 'chase_daniel', name: 'Chase Daniel', handle: '@ChaseDaniel', outletId: 'youtube_film', outletName: 'Chase Daniel Film', trustTier: 2, credibilityScore: 90, aliases: ["chase daniel and bussin' with the boys"] },
-  { id: 'alex_rollins', name: 'Alex Rollins', handle: '@AlexRollinsNFL', outletId: 'youtube_film', outletName: 'Alex Rollins NFL', trustTier: 2, credibilityScore: 91, aliases: ['alex rollins nfl'] },
+  { id: 'jonnydel', name: "Jonnydel's Football Academy", handle: '@jonnydels', outletId: 'youtube_film', outletName: "Jonnydel's FA", category: 'film', trustTier: 2, credibilityScore: 93, aliases: ['jonnydel'], handleAliases: ['@SulligentHUB', '@jonnydelsfa'], teamAbbr: 'SF' },
+  { id: 'brady_grustas', name: 'Brady Grustas', handle: '@GrustasBrady', outletId: 'youtube_film', outletName: '49ers Film Clips', category: 'film', trustTier: 2, credibilityScore: 87, teamAbbr: 'SF' },
+  { id: 'brian_baldinger', name: 'Brian Baldinger', handle: '@BaldyNFL', outletId: 'national_film', outletName: "Baldy's Breakdowns", category: 'film_analyst', scope: 'national', trustTier: 1, credibilityScore: 95, aliases: ['baldy', "baldy's breakdowns"] },
+  { id: 'brandon_thorn', name: 'Brandon Thorn', handle: '@BrandonThornNFL', outletId: 'national_film', outletName: 'Trench Warfare', category: 'film_analyst', scope: 'national', trustTier: 1, credibilityScore: 94, aliases: ['trench warfare'] },
+  { id: 'ted_nguyen', name: 'Ted Nguyen', handle: '@FB_FilmAnalysis', outletId: 'national_film', outletName: 'The Athletic Film', category: 'film_analyst', scope: 'national', trustTier: 1, credibilityScore: 94 },
+  { id: 'tej_seth', name: 'Tej Seth', handle: '@tejfbanalytics', outletId: 'national_film', outletName: 'SumerSports Analytics', category: 'analytics', scope: 'national', trustTier: 2, credibilityScore: 91 },
+  { id: 'sumersports', name: 'SumerSports', handle: '@SumerSports', outletId: 'national_film', outletName: 'SumerSports', category: 'analytics', scope: 'national', trustTier: 2, credibilityScore: 91 },
+  { id: 'timo_riske', name: 'Timo Riske', handle: '@PFF_Moo', outletId: 'national_film', outletName: 'PFF Analytics', category: 'analytics', scope: 'national', trustTier: 2, credibilityScore: 90 },
+  { id: 'derrik_klassen', name: 'Derrik Klassen', handle: '@QBKlass', outletId: 'national_film', outletName: 'All-22 Film', category: 'film_analyst', scope: 'national', trustTier: 2, credibilityScore: 91 },
+  { id: 'dan_orlovsky', name: 'Dan Orlovsky', handle: '@danorlovsky7', outletId: 'espn', outletName: 'ESPN NFL Film', category: 'film_analyst', scope: 'national', trustTier: 2, credibilityScore: 90 },
+  { id: 'kurt_warner', name: 'Kurt Warner', handle: '@kurt13warner', outletId: 'national_film', outletName: 'QB Confidential', category: 'film_analyst', scope: 'national', trustTier: 1, credibilityScore: 93, aliases: ['qb confidential'] },
+  { id: 'cris_collinsworth', name: 'Cris Collinsworth', handle: '@CollinsworthPFF', outletId: 'national_film', outletName: 'PFF', category: 'analytics', scope: 'national', trustTier: 2, credibilityScore: 91, aliases: ['collinsworth'] },
+  { id: 'judah_fortgang', name: 'Judah Fortgang', handle: '@throwthedamball', outletId: 'national_film', outletName: 'PFF Analytics', category: 'analytics', scope: 'national', trustTier: 2, credibilityScore: 91, aliases: ['jrfortgang', 'judah fortgang (pff)'] },
+  { id: 'george_hatzadony', name: 'George Hatzadony', handle: '@ghatz_28', outletId: 'national_film', outletName: 'Statyx NFL', category: 'analytics', scope: 'national', trustTier: 2, credibilityScore: 88, aliases: ['statyx'] },
+  { id: 'nate_tice', name: 'Nate Tice', handle: '@Nate_Tice', outletId: 'national_film', outletName: 'Yahoo Sports NFL', category: 'film_analyst', scope: 'national', trustTier: 1, credibilityScore: 93 },
+  { id: 'ben_baldwin', name: 'Ben Baldwin', handle: '@benbbaldwin', outletId: 'national_film', outletName: 'rbsdm / NFL Analytics', category: 'analytics', scope: 'national', trustTier: 2, credibilityScore: 91 },
+  { id: 'seth_walder', name: 'Seth Walder', handle: '@SethWalder', outletId: 'espn', outletName: 'ESPN Analytics', category: 'analytics', scope: 'national', trustTier: 2, credibilityScore: 91 },
+  { id: 'pff_official', name: 'PFF', handle: '@PFF', outletId: 'national_film', outletName: 'PFF', category: 'analytics', scope: 'national', trustTier: 2, credibilityScore: 90, aliases: ['pro football focus'] },
+  { id: 'next_gen_stats', name: 'Next Gen Stats', handle: '@NextGenStats', outletId: 'nfl_network', outletName: 'NFL Next Gen Stats', category: 'analytics', scope: 'national', trustTier: 1, credibilityScore: 93 },
+  { id: 'football_insights', name: 'Football Insights', handle: '@fball_insights', outletId: 'national_film', outletName: 'Football Insights', category: 'analytics', scope: 'national', trustTier: 2, credibilityScore: 88 },
+  { id: 'jt_osullivan', name: "JT O'Sullivan", handle: '@theqbschool', outletId: 'youtube_film', outletName: 'The QB School', category: 'film_analyst', scope: 'national', trustTier: 2, credibilityScore: 92, aliases: ['the qb school', 'qb school'], handleAliases: ['@jt_osullivan'] },
+  { id: 'chase_daniel', name: 'Chase Daniel', handle: '@ChaseDaniel', outletId: 'youtube_film', outletName: 'Chase Daniel Film', category: 'film_analyst', scope: 'national', trustTier: 2, credibilityScore: 90, aliases: ["chase daniel and bussin' with the boys"] },
+  { id: 'alex_rollins', name: 'Alex Rollins', handle: '@AlexRollinsNFL', outletId: 'youtube_film', outletName: 'Alex Rollins NFL', category: 'film_analyst', scope: 'national', trustTier: 2, credibilityScore: 91, aliases: ['alex rollins nfl'] },
   { id: 'mike_florio', name: 'ProFootballTalk', handle: '@ProFootballTalk', outletId: 'nfl_network', outletName: 'NBC ProFootballTalk', trustTier: 2, credibilityScore: 88, aliases: ['mike florio', 'pft'] },
   { id: 'jeff_deeney', name: 'Jeff Deeney', handle: '@PFF_Jeff', outletId: 'youtube_film', outletName: '49ers Analytics', trustTier: 2, credibilityScore: 89, teamAbbr: 'SF' },
   { id: 'brad_graham', name: 'Brad Graham', handle: '@Graham_SFN', outletId: 'youtube_film', outletName: 'TheSFNiners', trustTier: 2, credibilityScore: 88, handleAliases: ['@TheSFNiners'], teamAbbr: 'SF' },
@@ -306,9 +314,12 @@ export function configureBeatAttributionForTeam(teamInput = null, reportersData 
 
   const reps = Array.isArray(reportersData?.reporters) ? reportersData.reporters : [];
   for (const r of reps) {
-    const isLocalTeamVoice = !['national_insider', 'film_analyst', 'cap_analyst', 'draft'].includes(
-      String(r?.category || '').toLowerCase()
-    );
+    const isNationalVoice =
+      r?.scope === 'national' ||
+      NATIONAL_NFL_SETTINGS_REPORTER_IDS.has(r?.id) ||
+      ['national_insider', 'draft'].includes(String(r?.category || '').toLowerCase()) ||
+      ['espn_national', 'nfl_network', 'national_film', 'overthecap'].includes(String(r?.outletId || ''));
+    const isLocalTeamVoice = !isNationalVoice;
     registerReporterEntry(
       isLocalTeamVoice && !r?.teamAbbr ? { ...r, teamAbbr: team.abbr } : r,
       outletNameById
@@ -886,6 +897,9 @@ export const NATIONAL_NFL_SETTINGS_REPORTER_IDS = new Set([
   'albert_breer',
   'field_yates',
   'jordan_schultz',
+  'dan_graziano',
+  'jason_otc',
+  'stephania_bell',
   'dane_brugler',
   'daniel_jeremiah',
   'ben_solak',
@@ -893,12 +907,23 @@ export const NATIONAL_NFL_SETTINGS_REPORTER_IDS = new Set([
   'mina_kimes',
   'brett_kollmann',
   'brian_baldinger',
+  'brandon_thorn',
+  'ted_nguyen',
+  'tej_seth',
+  'sumersports',
+  'timo_riske',
+  'derrik_klassen',
+  'dan_orlovsky',
+  'kurt_warner',
   'cris_collinsworth',
   'judah_fortgang',
   'george_hatzadony',
   'nate_tice',
   'ben_baldwin',
-  'seth_walder'
+  'seth_walder',
+  'pff_official',
+  'next_gen_stats',
+  'football_insights'
 ]);
 
 /**

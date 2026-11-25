@@ -201,6 +201,20 @@
       "defaultEnabled": true
     },
     {
+      "id": "seth_cox_ari",
+      "name": "Seth Cox",
+      "handle": "@SCoxFB",
+      "outletId": "revenge_of_the_birds",
+      "role": "Revenge of the Birds • Cardinals All-22 Film & Scheme",
+      "category": "film_analyst",
+      "styleTag": "all22-scheme",
+      "baseScore": 90,
+      "trustTier": 2,
+      "xUrl": "https://x.com/SCoxFB",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
       "id": "cardinals_pr",
       "name": "Arizona Cardinals PR",
       "handle": "@AZCardsPR",

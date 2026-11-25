@@ -208,6 +208,20 @@
       "defaultEnabled": true
     },
     {
+      "id": "gus_logue_jax",
+      "name": "Gus Logue",
+      "handle": "@gus_logue",
+      "outletId": "big_cat_country",
+      "role": "Jaguars All-22 Film, Analytics & Draft Breakdowns",
+      "category": "film_analyst",
+      "styleTag": "all22-scheme",
+      "baseScore": 90,
+      "trustTier": 2,
+      "xUrl": "https://x.com/gus_logue",
+      "bskyHandle": null,
+      "defaultEnabled": true
+    },
+    {
       "id": "jaguars_pr",
       "name": "Jacksonville Jaguars PR",
       "handle": "@JaguarsPR",
