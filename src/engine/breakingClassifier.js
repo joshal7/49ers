@@ -2385,8 +2385,31 @@ function resolveAuthorDiversityKey(item = {}) {
   return raw;
 }
 
+function resolvePlayerDiversityKey(item = {}) {
+  if (!item || typeof item !== 'object') return '';
+  if (isMultiTopicDigestOrRoundup(item)) return '';
+  const lead = extractPrimaryClaimText(item);
+  if (!lead) return '';
+  const players = Array.isArray(item.mentionedPlayers) ? item.mentionedPlayers : [];
+  if (players.length === 0 || players.length > 3) return '';
+  const primary = players.find(mp => {
+    const surname = String(mp?.name || '')
+      .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+      .trim()
+      .split(/\s+/)
+      .slice(-1)[0];
+    return surname && surname.length >= 3 && new RegExp(`\\b${escapeRegexToken(surname)}\\b`, 'i').test(lead);
+  });
+  const picked = primary || (players.length === 1 ? players[0] : null);
+  if (!picked) return '';
+  return String(picked.name || picked.id || '')
+    .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+}
+
 /**
- * Ensures injury prioritization and high-frequency individual reporters never crowd out
+ * Ensures injury prioritization, single-player sagas, and high-frequency individual reporters never crowd out
  * diverse Tier 1/2/3 beat voices, trades/roster moves, All-22 film breakdowns, or standout
  * human-interest stories in `Top` mode, while never displacing urgent live breaking news.
  */
@@ -2398,7 +2421,8 @@ export function balanceFeedTopSalience(
     appData = null,
     maxConsecutiveInjuries = 2,
     maxConsecutiveSameAuthor = 2,
-    maxAuthorInTopWindow = 3
+    maxAuthorInTopWindow = 3,
+    maxConsecutiveSamePlayer = 1
   } = {}
 ) {
   if (!Array.isArray(items) || items.length <= maxConsecutiveInjuries) return items;
@@ -2410,6 +2434,8 @@ export function balanceFeedTopSalience(
   let consecutiveInj = 0;
   let lastAuthorKey = '';
   let consecutiveAuthor = 0;
+  let lastPlayerKey = '';
+  let consecutivePlayer = 0;
   const topAuthorCounts = new Map();
 
   const recordPicked = picked => {
@@ -2433,6 +2459,18 @@ export function balanceFeedTopSalience(
     } else {
       lastAuthorKey = '';
       consecutiveAuthor = 0;
+    }
+    const pKey = resolvePlayerDiversityKey(picked);
+    if (pKey) {
+      if (pKey === lastPlayerKey) {
+        consecutivePlayer += 1;
+      } else {
+        lastPlayerKey = pKey;
+        consecutivePlayer = 1;
+      }
+    } else {
+      lastPlayerKey = '';
+      consecutivePlayer = 0;
     }
   };
 
@@ -2473,27 +2511,35 @@ export function balanceFeedTopSalience(
       }
     }
 
-    // Enforce balanced reporter distribution in Top 18 (prevent one prolific reporter like Matt Maiocco
-    // from monopolizing consecutive slots when fresh Tier 1/2/3 beat posts are waiting right below)
+    // Enforce balanced reporter & single-player-saga distribution in Top 22 (prevent one prolific reporter
+    // or a multi-phase player saga from stacking consecutive cards when fresh diverse stories sit right below)
     const head = remaining[0];
     const headAuthor = resolveAuthorDiversityKey(head);
+    const headPlayer = resolvePlayerDiversityKey(head);
     const headIsUrgent = isUrgentBreakingBadge(head?.breakingBadge);
     const headOverConsecutive =
       Boolean(headAuthor) && headAuthor === lastAuthorKey && consecutiveAuthor >= maxConsecutiveSameAuthor;
     const headOverTopCap =
       Boolean(headAuthor) && result.length < 18 && (topAuthorCounts.get(headAuthor) || 0) >= maxAuthorInTopWindow;
+    const headOverSamePlayer =
+      Boolean(headPlayer) &&
+      maxConsecutiveSamePlayer > 0 &&
+      headPlayer === lastPlayerKey &&
+      consecutivePlayer >= maxConsecutiveSamePlayer;
 
-    if (!headIsUrgent && (headOverConsecutive || headOverTopCap) && result.length < 22) {
+    if (!headIsUrgent && (headOverConsecutive || headOverTopCap || headOverSamePlayer) && result.length < 22) {
       const headPubMs = resolveEffectivePublishTimestampMs(head, nowMs) || 0;
       const altIdx = remaining.findIndex((cand, idx) => {
         if (idx === 0 || idx > 16 || cand?.isClickbait) return false;
         if (cand?.storyTier === 'side_note') return false;
         if (consecutiveInj >= maxConsecutiveInjuries && isPureInjuryCard(cand)) return false;
         const candAuthor = resolveAuthorDiversityKey(cand);
-        if (candAuthor && candAuthor === headAuthor) return false;
+        const candPlayer = resolvePlayerDiversityKey(cand);
+        if ((headOverConsecutive || headOverTopCap) && candAuthor && candAuthor === headAuthor) return false;
         if (candAuthor && (topAuthorCounts.get(candAuthor) || 0) >= maxAuthorInTopWindow) return false;
+        if (headOverSamePlayer && candPlayer && candPlayer === headPlayer) return false;
         const candPubMs = resolveEffectivePublishTimestampMs(cand, nowMs) || 0;
-        // Keep temporal coherence: only pull forward an alternate voice within 36h of the displaced item
+        // Keep temporal coherence: only pull forward an alternate voice/story within 36h of the displaced item
         if (headPubMs && candPubMs && headPubMs - candPubMs > 36 * 3_600_000) return false;
         return true;
       });
@@ -3129,6 +3175,103 @@ function extractArticleSummaryTokens(item = {}) {
   return new Set(words);
 }
 
+let NON_PLAYER_PROPER_SLUG_CACHE = null;
+function getNonPlayerProperSlugSet(teamInput = null) {
+  if (!NON_PLAYER_PROPER_SLUG_CACHE) {
+    const base = new Set([
+      'sanfrancisco', 'kyleshanahan', 'johnlynch', 'probowl', 'superbowl', 'nfltrade', 'traderumors',
+      'bayarea', 'nbcsports', 'injurylists', 'injuredreserve', 'practicereport', 'injuryreport',
+      'lasvegas', 'newyork', 'losangeles', 'greenbay', 'tampabay', 'kansascity', 'newengland', 'neworleans',
+      'freeagent', 'freeagency', 'multipleteams', 'nfcteam', 'afcteam', 'ninerswire', 'arizonastate',
+      'airforce', 'coloradosprings', 'practicesquad', 'activeroster', 'waiverwire', 'landingspots',
+      'headcoach', 'generalmanager', 'widereceiver', 'tightend', 'defensiveend', 'runningback',
+      'quarterback', 'offensiveline', 'defensiveline', 'passrusher', 'offensivecoordinator', 'defensivecoordinator',
+      'adamschefter', 'ianrapoport', 'tompelissero', 'mikegarafolo', 'diannarussini', 'drewrosenhaus',
+      'jordanranaan', 'nickwagoner', 'mattbarrows', 'mattmaiocco', 'davidlombardi', 'jenniferleechan',
+      'ericbranch', 'grantcohn', 'sanjeshsingh', 'timkawakami', 'caminman', 'davidbonilla',
+      'nflnetwork', 'profootballtalk', 'bleacherreport', 'sportsillustrated', 'yahoosports', 'cbssports',
+      'nbcsportsbayarea', '49erswebzone', 'ninersnation', 'mondaynight', 'sundaynight', 'thursdaynight',
+      'mexicocity', 'santaclara', 'trainingcamp', 'tradedeadline', 'footballteam'
+    ]);
+    for (const t of ALL_NFL_TEAMS) {
+      for (const raw of [t.fullName, t.city, t.nickname, `${t.city} ${t.nickname}`]) {
+        const s = String(raw || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (s.length >= 4) base.add(s);
+      }
+    }
+    NON_PLAYER_PROPER_SLUG_CACHE = base;
+  }
+  const active = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  if (!active?.coachesSeed) return NON_PLAYER_PROPER_SLUG_CACHE;
+  const hcSlug = String(active.coachesSeed.hc || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const gmSlug = String(active.coachesSeed.gm || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  if ((hcSlug && !NON_PLAYER_PROPER_SLUG_CACHE.has(hcSlug)) || (gmSlug && !NON_PLAYER_PROPER_SLUG_CACHE.has(gmSlug))) {
+    const ext = new Set(NON_PLAYER_PROPER_SLUG_CACHE);
+    if (hcSlug) ext.add(hcSlug);
+    if (gmSlug) ext.add(gmSlug);
+    return ext;
+  }
+  return NON_PLAYER_PROPER_SLUG_CACHE;
+}
+
+const UNAMBIGUOUS_NFL_CITY_TO_ABBR = [
+  ['washington', 'was'],
+  ['pittsburgh', 'pit'],
+  ['baltimore', 'bal'],
+  ['cincinnati', 'cin'],
+  ['cleveland', 'cle'],
+  ['philadelphia', 'phi'],
+  ['seattle', 'sea'],
+  ['dallas', 'dal'],
+  ['detroit', 'det'],
+  ['denver', 'den'],
+  ['miami', 'mia'],
+  ['atlanta', 'atl'],
+  ['minnesota', 'min'],
+  ['carolina', 'car'],
+  ['arizona', 'ari'],
+  ['houston', 'hou'],
+  ['indianapolis', 'ind'],
+  ['jacksonville', 'jax'],
+  ['tennessee', 'ten'],
+  ['buffalo', 'buf'],
+  ['chicago', 'chi'],
+  ['green bay', 'gb'],
+  ['kansas city', 'kc'],
+  ['new england', 'ne'],
+  ['new orleans', 'no'],
+  ['tampa bay', 'tb'],
+  ['las vegas', 'lv']
+];
+
+function extractNonActiveTeamAbbrsInText(text = '', activeTeam = null) {
+  const lower = String(text || '').toLowerCase();
+  if (!lower) return [];
+  const activeAbbr = String(activeTeam?.abbr || getActiveTeamConfig()?.abbr || 'SF').toLowerCase();
+  const found = [];
+  const add = abbr => {
+    if (abbr && abbr !== activeAbbr && !found.includes(abbr)) found.push(abbr);
+  };
+  for (const t of ALL_NFL_TEAMS) {
+    const abbr = String(t.abbr || '').toLowerCase();
+    if (!abbr || abbr === activeAbbr) continue;
+    const nick = String(t.nickname || '').toLowerCase();
+    if (nick && new RegExp(`\\b${escapeRegexToken(nick)}\\b`, 'i').test(lower)) {
+      add(abbr);
+    }
+  }
+  for (const [city, abbr] of UNAMBIGUOUS_NFL_CITY_TO_ABBR) {
+    if (abbr === activeAbbr || found.includes(abbr)) continue;
+    if (new RegExp(`\\b${escapeRegexToken(city)}\\b`, 'i').test(lower)) {
+      // Guard against college/non-NFL city refs (e.g., "Arizona State", "Colorado Springs")
+      if (city === 'arizona' && /\barizona\s+state\b/i.test(lower)) continue;
+      if (city === 'washington' && /\bwashington\s+(?:state|huskies|dc)\b/i.test(lower)) continue;
+      add(abbr);
+    }
+  }
+  return found;
+}
+
 function extractLeadProperNameSlugs(lead = '') {
   const slugs = [];
   // Strip NFL position/league prefixes before capitalized player names so `"49ers DE Nick Bosa"` extracts `nickbosa`, NOT `denick`!
@@ -3136,11 +3279,7 @@ function extractLeadProperNameSlugs(lead = '') {
     .replace(/^[#"'“‘]+/, '')
     .replace(/\b(?:QB|RB|FB|WR|TE|OL|OT|OG|DL|DE|DT|NT|EDGE|LB|ILB|OLB|CB|DB|FS|SS|PK|LS|NFL|NFC|AFC)\s+(?=[A-Z]\.?[A-Za-z])/g, '');
   const re = /\b([A-Z]\.?[A-Za-z'.-]{1,14}\s+[A-Z][a-zA-Z'.-]{2,16})(?:\s+(?:Jr\.?|Sr\.?|II|III|IV|V))?\b/g;
-  const ignore = new Set([
-    'sanfrancisco', 'kyleshanahan', 'johnlynch', 'probowl', 'superbowl', 'nfltrade', 'traderumors',
-    'bayarea', 'nbcsports', 'injurylists', 'injuredreserve', 'practicereport', 'injuryreport',
-    'lasvegas', 'newyork', 'losangeles', 'greenbay', 'tampabay', 'kansascity', 'newengland', 'neworleans'
-  ]);
+  const ignore = getNonPlayerProperSlugSet();
   let m;
   while ((m = re.exec(clean)) !== null) {
     const slug = m[1].toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -3153,17 +3292,18 @@ function extractLeadProperNameSlugs(lead = '') {
 
 function extractEntitySet(item = {}) {
   const set = new Set();
+  const ignoreNonPlayers = getNonPlayerProperSlugSet();
   for (const mp of item?.mentionedPlayers || []) {
     const nameSlug = String(mp?.name || mp?.id || '')
       .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
       .toLowerCase()
       .replace(/[^a-z0-9]/g, '');
-    if (nameSlug) set.add(`pname:${nameSlug}`);
+    if (nameSlug && !ignoreNonPlayers.has(nameSlug)) set.add(`pname:${nameSlug}`);
   }
   const urlMatch = String(item?.url || '').match(/espn\.com\/nfl\/player\/_\/id\/\d+\/([a-z0-9-]+)/i);
   if (urlMatch?.[1]) {
     const uSlug = urlMatch[1].toLowerCase().replace(/[^a-z0-9]/g, '');
-    if (uSlug) set.add(`pname:${uSlug}`);
+    if (uSlug && !ignoreNonPlayers.has(uSlug)) set.add(`pname:${uSlug}`);
   }
   for (const leadSlug of extractLeadProperNameSlugs(extractPrimaryClaimText(item))) {
     set.add(`pname:${leadSlug}`);
@@ -3183,11 +3323,8 @@ function extractEntitySet(item = {}) {
       }
     }
   }
-  for (const t of ALL_NFL_TEAMS) {
-    if (t.abbr === activeEntTeam?.abbr) continue;
-    if (new RegExp(`\\b${escapeRegexToken(t.nickname.toLowerCase())}\\b`, 'i').test(lead)) {
-      set.add(`opp:${t.abbr.toLowerCase()}`);
-    }
+  for (const oppAbbr of extractNonActiveTeamAbbrsInText(lead, activeEntTeam)) {
+    set.add(`opp:${oppAbbr}`);
   }
   return set;
 }
@@ -3364,12 +3501,229 @@ function resolveFallback49ersShorthandSlug(lead = '') {
   return '';
 }
 
-function buildStorySignatureKey(item = {}) {
+const TRANSACTION_SAGA_SIGNING_RE =
+  /\b(officially\s+sign(?:s|ed|ing)?|have\s+signed|has\s+signed|signing\s+(?:a\s+)?(?:\d+-year|one-year|two-year|three-year|multi-year|free-agent)?\s*(?:deal|contract)?|agree[sd]?\s+to\s+(?:terms|a\s+\d+-year|a\s+(?:one|two|three)-year|a\s+deal|sign)|claimed\s+(?:[a-z .'-]{0,28}\s+)?off\s+waivers|awarded\s+(?:[a-z .'-]{0,28}\s+)?off\s+waivers|in\s+agreement\s+to\s+sign)\b/i;
+
+const TRANSACTION_SAGA_VISIT_RE =
+  /\b(scheduled\s+(?:for\s+(?:a\s+|an\s+)?|to\s+)visit|set\s+to\s+visit|expected\s+to\s+visit|plans?\s+to\s+visit|will\s+visit|visiting\s+(?:with\s+)?(?:the\s+)?|to\s+visit\s+(?:with\s+)?(?:the\s+)?|host(?:s|ed|ing)?\s+(?:[a-z .'-]{0,28}\s+)?for\s+(?:a\s+|an\s+)?(?:free[- ]agent\s+)?(?:visit|workout|meeting)|working\s+out\s+for|workout\s+with|meeting\s+with\s+(?:the\s+)?)\b/i;
+
+const TRANSACTION_SAGA_SPECULATIVE_OUTLOOK_RE =
+  /\b(potential\s+(?:[a-z0-9 .'-]{0,28}\s+)?landing\s+spots?|landing\s+spots?|best\s+(?:fits?|destinations?|landing\s+spots?)|top\s+(?:\d+\s+|five\s+|three\s+|four\s+|six\s+)?(?:destinations?|fits?|suitors?|landing\s+spots?|teams?\s+(?:that\s+)?(?:could|should|might))|what['’]?s\s+next\s+for|where\s+(?:could|might|will|should)\s+[a-z .'-]{2,28}\s+(?:land|sign|go|play)|next\s+team\s+(?:odds|favorites?)|favorites?\s+to\s+(?:sign|land)|emerges?\s+as\s+(?:a\s+|the\s+)?favorite\s+to\s+(?:sign|land)|could\s+(?:sign|land)\s+with|makes?\s+sense\s+(?:for|as)\s+(?:a\s+)?(?:fit|destination|suitor))\b/i;
+
+const TRANSACTION_SAGA_FA_CONTEXT_RE =
+  /\b(waiv(?:e[sd]?|ing|ers?)|releas(?:e[sd]?|ing)|free[- ]?agen(?:t|cy)|cut\b|unclaimed|sign(?:s|ed|ing)?|landing\s+spots?|destinations?|suitors?|next\s+team|visit(?:s|ed|ing)?|trade[sd]?|divorce|part(?:s|ed|ing)?\s+ways|moved\s+on)\b/i;
+
+const TRANSACTION_SAGA_WAIVER_CLEAR_RE =
+  /\b(clear(?:s|ed|ing)?\s+waivers|went\s+unclaimed|goes?\s+unclaimed|unclaimed\s+on\s+waivers|passed\s+through\s+waivers|now\s+a\s+free\s+agent|officially\s+a\s+free\s+agent)\b/i;
+
+const TRANSACTION_SAGA_MARKET_INTEREST_RE =
+  /\b(drawing\s+interest|expected\s+to\s+draw\s+interest|generating\s+interest|receiving\s+interest|attracting\s+interest|multiple\s+(?:nfl\s+)?teams\s+(?:interested|expected\s+to\s+pursue|in\s+the\s+mix|pursuing)|several\s+(?:nfl\s+)?teams\s+(?:interested|in\s+the\s+mix))\b/i;
+
+const TRANSACTION_SAGA_DEPARTURE_RE =
+  /\b(releas(?:e[sd]?|ing)|waiv(?:e[sd]?|ing)|cut(?:s|ting)?\s+ties\s+with|part(?:s|ed|ing)?\s+ways\s+with|moved\s+on\s+from|ending\s+(?:messy\s+|tumultuous\s+)?divorce|officially\s+released|officially\s+waived)\b/i;
+
+const TRANSACTION_SAGA_CAP_BREAKDOWN_EXCLUSION_RE =
+  /\b(salary\s+cap|cap\s+hit|cap\s+space|cap\s+savings|cap\s+implications|cap\s+impact|dead\s+cap|dead\s+money|contract\s+breakdown|financial\s+impact)\b/i;
+
+const MYSTERY_TEAM_CLICKBAIT_RE =
+  /\b(nfc|afc|one|mystery|surprising|this|sleeper|dark[- ]horse|rival)\s+(?:team|club|contender|franchise|squad)\b/i;
+
+const TRUNCATED_PAYWALL_TEASER_RE =
+  /(?:\.\.\.|…)\s*(?:https?:\/\/)?(?:www\.)?(?:nytimes\.com\/athletic|theathletic\.com|sfchronicle\.com|mercurynews\.com)\//i;
+
+const MULTI_PLAYER_SECOND_TX_CLAUSE_RE =
+  /(?:,|;|\bwhile\b)\s*[A-Z][a-zA-Z'.-]+\s+[A-Z][a-zA-Z'.-]+(?:\s+(?:Jr\.?|Sr\.?|II|III|IV|V))?\s+(?:released|waived|signed|cut|placed|elevated|promoted|activated|claimed)/;
+
+/**
+ * Classifies single-primary-player roster-departure / waiver / free-agency / team-visit / signing
+ * sagas into clean, mutually interpretable lifecycle facets across all 32 NFL clubs so redundant
+ * echoes on the same milestone fold into `Similar stories (N)` while genuinely distinct phases &
+ * perspectives (e.g. Commanders Visit vs. Cleared Waivers & Market Interest vs. Speculative Landing
+ * Spots vs. Original Release) each earn a clean dedicated card.
+ */
+export function analyzePlayerTransactionSaga(item = {}, rosterPlayers = [], teamInput = null) {
+  const empty = {
+    isSaga: false,
+    playerSlug: '',
+    facet: null,
+    stage: 0,
+    subStage: 0,
+    destTeamAbbr: '',
+    sigKey: null,
+    isMultiPlayerCombo: false,
+    isClickbaitMystery: false,
+    isSpeculative: false
+  };
+  if (!item || typeof item !== 'object') return empty;
+  if (isMultiTopicDigestOrRoundup(item)) return empty;
+  if (item.type === 'video' || Boolean(item.videoId)) return empty;
+
+  const lead = extractPrimaryClaimText(item);
+  if (!lead) return empty;
+  const leadLower = lead.toLowerCase();
+  if (NON_TRANSACTION_RELEASE_REGEX.test(lead)) return empty;
+  if (SECONDARY_COMMENTARY_OR_REACTION_REGEX.test(lead)) return empty;
+  if (RETROSPECTIVE_UNEXECUTED_TRADE_REGEX.test(lead)) return empty;
+  if (HUMAN_INTEREST_SIDE_NOTE_REGEX.test(lead)) return empty;
+  if (TRUE_FILM_VIDEO_TITLE_REGEX.test(lead)) return empty;
+  if (resolveInjuryMilestoneBucket(lead)) return empty;
+  if (/\b(?:contract\s+extension|multi-?year\s+extension|extended\s+(?:his|their)\s+contract|agree[sd]?\s+to\s+(?:a\s+)?(?:\d+-year\s+)?extension)\b/i.test(lead)) {
+    return empty;
+  }
+
+  const isArt = item.type === 'article' || item.type === 'post';
+  const summaryHead = isArt ? cleanWireSummaryForMatching(item.summary || '').slice(0, 180) : '';
+  const probe = `${lead} ${summaryHead}`;
+  if (!TRANSACTION_SAGA_FA_CONTEXT_RE.test(probe)) return empty;
+
+  const activeTeam = resolveTeamConfig(teamInput || getActiveTeamConfig());
+  const ignoreNonPlayers = getNonPlayerProperSlugSet(activeTeam);
+
+  // Resolve earliest/primary subject player in the lead sentence
+  let primarySlug = resolvePrimaryInjuredPlayerSlug(item, rosterPlayers, activeTeam);
+  if (primarySlug && ignoreNonPlayers.has(primarySlug)) primarySlug = '';
+  if (!primarySlug) {
+    let bestPos = Infinity;
+    for (const mp of item?.mentionedPlayers || []) {
+      const cleanName = String(mp?.name || '')
+        .replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '')
+        .trim();
+      const slug = cleanName.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (!slug || ignoreNonPlayers.has(slug)) continue;
+      const surname = cleanName.split(/\s+/).slice(-1)[0]?.toLowerCase() || '';
+      const fullIdx = cleanName.length >= 5 ? findWordBoundaryIndexLower(leadLower, cleanName.toLowerCase()) : -1;
+      const snIdx = surname.length >= 4 ? findWordBoundaryIndexLower(leadLower, surname) : -1;
+      const pos = fullIdx >= 0 ? fullIdx : snIdx;
+      if (pos >= 0 && pos < bestPos) {
+        bestPos = pos;
+        primarySlug = slug;
+      }
+    }
+  }
+  if (!primarySlug) {
+    const leadSlugs = extractLeadProperNameSlugs(lead);
+    if (leadSlugs.length > 0) primarySlug = leadSlugs[0];
+  }
+  if (!primarySlug && activeTeam?.abbr === 'SF') {
+    primarySlug = resolveFallback49ersShorthandSlug(lead);
+  }
+  if (!primarySlug || ignoreNonPlayers.has(primarySlug)) return empty;
+
+  // Detect multi-player combo transaction headlines (e.g. "49ers news: Brandon Aiyuk clears waivers, Robert Beal Jr. released")
+  const leadNameSlugs = extractLeadProperNameSlugs(lead);
+  const distinctPlayersInLead = new Set([primarySlug]);
+  for (const s of leadNameSlugs) distinctPlayersInLead.add(s);
+  const isMultiPlayerCombo =
+    distinctPlayersInLead.size >= 2 &&
+    (MULTI_PLAYER_SECOND_TX_CLAUSE_RE.test(lead) ||
+      /,\s*[a-z .'-]{2,28}\s+(?:released|waived|signed|cut)\b/i.test(lead));
+
+  const nonActiveTeams = extractNonActiveTeamAbbrsInText(lead, activeTeam);
+  const destTeamAbbr = nonActiveTeams.length === 1 ? nonActiveTeams[0] : '';
+  const isClickbaitMystery =
+    MYSTERY_TEAM_CLICKBAIT_RE.test(lead) && nonActiveTeams.length === 0;
+
+  // 1. Confirmed Free-Agent Signing / Waiver Claim (Stage 4)
+  if (
+    TRANSACTION_SAGA_SIGNING_RE.test(lead) &&
+    !TRANSACTION_SAGA_SPECULATIVE_OUTLOOK_RE.test(lead) &&
+    !/\b(could|might|should|predicted|projected|expected|favorite|rumor|potential)\s+to\s+sign\b/i.test(lead) &&
+    !/\b(practice\s+squad)\b/i.test(lead)
+  ) {
+    return {
+      isSaga: true,
+      playerSlug: primarySlug,
+      facet: 'fa_signing_deal',
+      stage: 4,
+      subStage: 4.0,
+      destTeamAbbr,
+      sigKey: destTeamAbbr ? `${primarySlug}::fa_signing::${destTeamAbbr}` : `${primarySlug}::fa_signing`,
+      isMultiPlayerCombo,
+      isClickbaitMystery,
+      isSpeculative: false
+    };
+  }
+
+  // 2. Concrete Scheduled Team Visit / Workout / Meeting (Stage 3)
+  if (TRANSACTION_SAGA_VISIT_RE.test(lead)) {
+    return {
+      isSaga: true,
+      playerSlug: primarySlug,
+      facet: 'team_visit_pursuit',
+      stage: 3,
+      subStage: 3.0,
+      destTeamAbbr,
+      sigKey: destTeamAbbr ? `${primarySlug}::fa_visit::${destTeamAbbr}` : `${primarySlug}::fa_visit`,
+      isMultiPlayerCombo,
+      isClickbaitMystery,
+      isSpeculative: false
+    };
+  }
+
+  // 3. Speculative / Analytical Landing Spots, "What's Next", or Mystery-Team Favorite (Stage 0 Perspective)
+  if (TRANSACTION_SAGA_SPECULATIVE_OUTLOOK_RE.test(lead)) {
+    return {
+      isSaga: true,
+      playerSlug: primarySlug,
+      facet: 'speculative_outlook',
+      stage: 0,
+      subStage: isClickbaitMystery ? -0.5 : 0.0,
+      destTeamAbbr,
+      sigKey: `${primarySlug}::fa_speculative_outlook`,
+      isMultiPlayerCombo,
+      isClickbaitMystery,
+      isSpeculative: true
+    };
+  }
+
+  // 4. Cleared Waivers / Unclaimed / Free-Agent Market Interest (Stage 2; subStage 2.5 confirmed clear > 2.0 interest)
+  const isConfirmedWaiverClear = TRANSACTION_SAGA_WAIVER_CLEAR_RE.test(lead);
+  const isMarketInterest = TRANSACTION_SAGA_MARKET_INTEREST_RE.test(lead);
+  if (isConfirmedWaiverClear || isMarketInterest) {
+    return {
+      isSaga: true,
+      playerSlug: primarySlug,
+      facet: 'waiver_clear_market',
+      stage: 2,
+      subStage: isConfirmedWaiverClear ? 2.5 : 2.0,
+      destTeamAbbr,
+      sigKey: `${primarySlug}::fa_waiver_market`,
+      isMultiPlayerCombo,
+      isClickbaitMystery,
+      isSpeculative: false
+    };
+  }
+
+  // 5. Original Club Release / Waiver / Departure (Stage 1)
+  //    Exclude cap-breakdown & reaction pieces so unique CBA/analytical perspectives keep their own dedicated card!
+  if (
+    TRANSACTION_SAGA_DEPARTURE_RE.test(lead) &&
+    !TRANSACTION_SAGA_CAP_BREAKDOWN_EXCLUSION_RE.test(lead) &&
+    !/\bafter\s+(?:being\s+)?(?:waived|released|release|cut)\b/i.test(lead)
+  ) {
+    return {
+      isSaga: true,
+      playerSlug: primarySlug,
+      facet: 'departure_release',
+      stage: 1,
+      subStage: 1.0,
+      destTeamAbbr: '',
+      sigKey: `${primarySlug}::roster_departure`,
+      isMultiPlayerCombo,
+      isClickbaitMystery: false,
+      isSpeculative: false
+    };
+  }
+
+  return empty;
+}
+
+function buildStorySignatureKey(item = {}, { rosterPlayers = [], teamConfig = null } = {}) {
   const lead = extractPrimaryClaimText(item);
   if (!lead) return null;
   const lower = lead.toLowerCase();
 
-  const activeSigTeam = getActiveTeamConfig();
+  const activeSigTeam = resolveTeamConfig(teamConfig || getActiveTeamConfig());
   const isSfSig = activeSigTeam?.abbr === 'SF';
   const teamNamesPat = isSfSig
     ? '49ers|san francisco|niners'
@@ -3506,6 +3860,12 @@ function buildStorySignatureKey(item = {}) {
     if (milestone) {
       return `${pKey}::${milestone}`;
     }
+  }
+
+  // 7b. Player-specific Roster Departure / Waiver / Free-Agency / Team Visit / Speculative Outlook Saga Facet (All 32 Teams)
+  const sagaInfo = analyzePlayerTransactionSaga(item, rosterPlayers, activeSigTeam);
+  if (sagaInfo.isSaga && sagaInfo.sigKey) {
+    return sagaInfo.sigKey;
   }
 
   // 8. Recurring Weekly NFL News & Beat Quote Archetypes (bounded by 36h sliding window so distinct weeks never collide)
@@ -3647,15 +4007,32 @@ function setOverlapSimilarity(setA, setB) {
   };
 }
 
-function scoreClusterLeadQuality(item = {}) {
+function scoreClusterLeadQuality(item = {}, sagaInfo = null) {
   const trustTier = Number(item.trustTier) || 2;
   const isVideo = item.type === 'video' || Boolean(item.videoId);
   const isArticle = item.type === 'article' || item.type === 'post';
   const isPlayerBioBlurb = isPlayerBioWireBlurbItem(item);
   const titleText = String(item.title || item.headline || '').trim();
+  const fullOrTitle = String(item.fullText || item.title || item.headline || '').trim();
   const isPromoLinkTweet = !isArticle && /\bread:\s*$/i.test(titleText);
   const isConversationalAside = /^(?:if it helps|pretty interesting|fwiw|fun fact)\b/i.test(titleText);
   const isRewriteAgg = AGGREGATOR_REWRITE_OUTLET_REGEX.test(`${item.outletName || ''} ${item.url || ''}`);
+  const isTruncatedPaywallTeaser =
+    !isArticle &&
+    (TRUNCATED_PAYWALL_TEASER_RE.test(fullOrTitle) ||
+      (/(?:\.\.\.|…)\s*$/.test(titleText) &&
+        /(?:nytimes\.com\/athletic|theathletic\.com|sfchronicle\.com|mercurynews\.com)/i.test(
+          `${fullOrTitle} ${item.externalUrl || ''}`
+        )));
+  const isMysteryClickbait =
+    Boolean(sagaInfo?.isClickbaitMystery) ||
+    (MYSTERY_TEAM_CLICKBAIT_RE.test(titleText) &&
+      extractNonActiveTeamAbbrsInText(titleText).length === 0 &&
+      /\b(favorite|emerges|landing|sign|trade|suitor|pursuing)\b/i.test(titleText));
+  const isMultiPlayerCombo = Boolean(sagaInfo?.isMultiPlayerCombo);
+  const hasSpecificNamedTeam =
+    Boolean(sagaInfo?.destTeamAbbr) &&
+    (sagaInfo?.facet === 'team_visit_pursuit' || sagaInfo?.facet === 'fa_signing_deal');
 
   const tierScore = isRewriteAgg ? 8 : trustTier === 1 ? 29 : trustTier === 2 ? 23 : 19;
   const formatScore = isPlayerBioBlurb
@@ -3668,6 +4045,10 @@ function scoreClusterLeadQuality(item = {}) {
           ? 2
           : 12;
   const conversationalPenalty = isConversationalAside ? -10 : 0;
+  const mysteryClickbaitPenalty = isMysteryClickbait ? -14 : 0;
+  const truncatedPaywallPenalty = isTruncatedPaywallTeaser ? -12 : 0;
+  const multiPlayerComboPenalty = isMultiPlayerCombo ? -10 : 0;
+  const specificityBonus = hasSpecificNamedTeam ? 4 : 0;
   const thumbBonus = !isVideo && !isPlayerBioBlurb && item.imageUrl && /^https:\/\//i.test(item.imageUrl) ? 6 : 0;
   const sigBonus = Math.min(18, (Number(item.signalScore) || 65) * 0.18);
   const primaryMoveBonus =
@@ -3680,6 +4061,10 @@ function scoreClusterLeadQuality(item = {}) {
     tierScore +
     formatScore +
     conversationalPenalty +
+    mysteryClickbaitPenalty +
+    truncatedPaywallPenalty +
+    multiPlayerComboPenalty +
+    specificityBonus +
     thumbBonus +
     sigBonus +
     primaryMoveBonus +
@@ -3688,6 +4073,87 @@ function scoreClusterLeadQuality(item = {}) {
     nativeStreamBonus +
     youtubeVideoBonus
   );
+}
+
+function bestSnapshotSetOverlap(targetSet, leadSet, memberSnapshots = [], field = 'tokens') {
+  let best = setOverlapSimilarity(targetSet, leadSet);
+  for (const snap of memberSnapshots) {
+    const s = snap?.[field];
+    if (!s || !s.size) continue;
+    const cand = setOverlapSimilarity(targetSet, s);
+    if (cand.jaccard > best.jaccard || (cand.jaccard === best.jaccard && cand.containment > best.containment)) {
+      best = cand;
+    }
+  }
+  return best;
+}
+
+const MAX_ACTIVE_SAGA_CARDS_PER_PLAYER = 4;
+
+/**
+ * Merges `donor` cluster into `receiver` cluster (used in Pass-2 twin/saga consolidation),
+ * preserving all members in `confirmingReports` and keeping the stronger/higher-stage lead on top.
+ */
+function mergeClusterInto(receiver, donor, { nowMs = Date.now(), forceKeepReceiverLead = false } = {}) {
+  const donorAll = [
+    { ...donor.lead, confirmingReports: undefined, isUrgentBreaking: false, isBreaking: false },
+    ...(Array.isArray(donor.lead.confirmingReports) ? donor.lead.confirmingReports : [])
+  ];
+  for (const m of donor.members || []) receiver.members.push(m);
+  if (donor.oldestMs && (!receiver.oldestMs || donor.oldestMs < receiver.oldestMs)) {
+    receiver.oldestMs = donor.oldestMs;
+  }
+  if (donor.newestMs && (!receiver.newestMs || donor.newestMs > receiver.newestMs)) {
+    receiver.newestMs = donor.newestMs;
+  }
+  if (!forceKeepReceiverLead) {
+    const recStage = receiver.sagaInfo?.isSaga ? Number(receiver.sagaInfo.subStage || 0) : -1;
+    const donStage = donor.sagaInfo?.isSaga ? Number(donor.sagaInfo.subStage || 0) : -1;
+    const recQual = scoreClusterLeadQuality(receiver.lead, receiver.sagaInfo);
+    const donQual = scoreClusterLeadQuality(donor.lead, donor.sagaInfo);
+    const donBetter =
+      donStage > recStage ||
+      (donStage === recStage && donQual > recQual + 3);
+    if (donBetter) {
+      const prevRecLead = {
+        ...receiver.lead,
+        isUrgentBreaking: false,
+        isBreaking: false
+      };
+      const prevRecConf = Array.isArray(prevRecLead.confirmingReports) ? prevRecLead.confirmingReports : [];
+      delete prevRecLead.confirmingReports;
+      const bestImg = isEditorialPhotoUrl(donor.lead.imageUrl)
+        ? donor.lead.imageUrl
+        : isEditorialPhotoUrl(prevRecLead.imageUrl)
+          ? prevRecLead.imageUrl
+          : donor.lead.imageUrl || prevRecLead.imageUrl || '';
+      receiver.lead = {
+        ...donor.lead,
+        imageUrl: bestImg,
+        breakingPriority: Math.max(donor.lead.breakingPriority || 0, prevRecLead.breakingPriority || 0),
+        confirmingReports: [prevRecLead, ...prevRecConf, ...(Array.isArray(donor.lead.confirmingReports) ? donor.lead.confirmingReports : [])]
+      };
+      receiver.sagaInfo = donor.sagaInfo || receiver.sagaInfo;
+      if (donor.sigKey) receiver.sigKey = donor.sigKey;
+      if (donStage > recStage) receiver.hasSagaProgressionAdvance = true;
+      return;
+    }
+  }
+  if (!Array.isArray(receiver.lead.confirmingReports)) receiver.lead.confirmingReports = [];
+  receiver.lead.confirmingReports.push(...donorAll);
+  if (
+    (!isEditorialPhotoUrl(receiver.lead.imageUrl) && isEditorialPhotoUrl(donor.lead.imageUrl)) ||
+    (!receiver.lead.imageUrl && donor.lead.imageUrl)
+  ) {
+    receiver.lead.imageUrl = donor.lead.imageUrl;
+  }
+  receiver.lead.breakingPriority = Math.max(
+    receiver.lead.breakingPriority || 0,
+    donor.lead.breakingPriority || 0
+  );
+  if (donor.hasSagaProgressionAdvance) receiver.hasSagaProgressionAdvance = true;
+  if (donor.hasInjuryProgressionAdvance) receiver.hasInjuryProgressionAdvance = true;
+  void nowMs;
 }
 
 /**
@@ -3774,7 +4240,11 @@ export function deduplicateAndGroupWireItems(
   for (const item of items) {
     if (!item || typeof item !== 'object') continue;
     const itemMs = resolveEffectivePublishTimestampMs(item, nowMs) || 0;
-    const sigKey = buildStorySignatureKey(item);
+    const itemSagaInfo = analyzePlayerTransactionSaga(item, rosterPlayersForGroup, ctx?.teamConfig || null);
+    const sigKey = buildStorySignatureKey(item, {
+      rosterPlayers: rosterPlayersForGroup,
+      teamConfig: ctx?.teamConfig || null
+    });
     const tokens = extractHeadlineTokens(item);
     const summaryTokens = extractArticleSummaryTokens(item);
     const combinedUnigrams = new Set();
@@ -3796,7 +4266,7 @@ export function deduplicateAndGroupWireItems(
     const itemIsBioBlurb = isPlayerBioWireBlurbItem(item);
     const itemSpeaker = extractOfficialSpeakerKey(item);
     const itemTopicDomain = resolveBriefingTopicDomain(item);
-    const itemPrimaryPlayer = extractPrimaryPlayerSlug(item);
+    const itemPrimaryPlayer = extractPrimaryPlayerSlug(item) || (itemSagaInfo.isSaga ? itemSagaInfo.playerSlug : '');
     const itemInjInfo = analyzeSinglePlayerInjuryItem(item, rosterPlayersForGroup, ctx?.teamConfig || null);
     const itemReporterKey = String(item.reporterId || item.reporterName || item.author || '').toLowerCase().trim();
     const itemPrimaryUrl = canonicalComparableUrl(item.url || '');
@@ -3820,9 +4290,23 @@ export function deduplicateAndGroupWireItems(
         continue;
       }
 
-      // 36-hour sliding temporal window
-      if (itemMs && cl.anchorMs && Math.abs(cl.anchorMs - itemMs) > 36 * 3_600_000) {
-        continue;
+      // Adaptive sliding temporal window:
+      // - Speculative/analytical outlook pieces trickle over 48h (e.g. "What's next" + "5 landing spots" + "favorite")
+      // - Active events use 36h rolling window against lead/newest timestamp, bounded by 48h total cluster span
+      const isSpeculativeOutlookPair =
+        itemSagaInfo.facet === 'speculative_outlook' && cl.sagaInfo?.facet === 'speculative_outlook';
+      const maxWindowMs = (isSpeculativeOutlookPair ? 48 : 36) * 3_600_000;
+      const maxSpanMs = (isSpeculativeOutlookPair ? 60 : 48) * 3_600_000;
+      if (itemMs && cl.anchorMs) {
+        const minGap = Math.min(
+          Math.abs(cl.anchorMs - itemMs),
+          cl.newestMs ? Math.abs(cl.newestMs - itemMs) : Infinity
+        );
+        const projectedSpan =
+          Math.max(cl.newestMs || cl.anchorMs, itemMs) - Math.min(cl.oldestMs || cl.anchorMs, itemMs);
+        if (minGap > maxWindowMs || projectedSpan > maxSpanMs) {
+          continue;
+        }
       }
 
       // 0. Exact shared article URL (`tweet.externalUrl === article.url` or vice versa)
@@ -3850,7 +4334,7 @@ export function deduplicateAndGroupWireItems(
           itemAngle &&
           itemAngle === clAngle &&
           (itemAngle === 'beef_feud' || itemAngle === 'jersey_number') &&
-          setOverlapSimilarity(entities, cl.entities).jaccard > 0
+          setOverlapSimilarity(entities, cl.leadEntities).jaccard > 0
         ) {
           matchedCluster = cl;
           bestSim = 0.98;
@@ -3858,8 +4342,9 @@ export function deduplicateAndGroupWireItems(
         }
       }
 
-      const tokSim = setOverlapSimilarity(tokens, cl.tokens);
-      const entSim = setOverlapSimilarity(entities, cl.entities);
+      // Anti-dilution similarity: compare against cluster lead + core member snapshots rather than a ballooned union!
+      const tokSim = bestSnapshotSetOverlap(tokens, cl.leadTokens, cl.memberSnapshots, 'tokens');
+      const entSim = bestSnapshotSetOverlap(entities, cl.leadEntities, cl.memberSnapshots, 'entities');
 
       // 1b. Same-Player Active Injury Episode Consolidation:
       //     Consolidates tightly related updates on the SAME injured player & compatible body part
@@ -3956,7 +4441,7 @@ export function deduplicateAndGroupWireItems(
         }
       }
 
-      // Prevent merging items that have DIFFERENT explicit player-specific injury milestones or semantic signatures
+      // Prevent merging items that have DIFFERENT explicit player-specific injury milestones, saga facets, or semantic signatures
       if (sigKey && cl.sigKey && sigKey !== cl.sigKey) {
         continue;
       }
@@ -4014,17 +4499,25 @@ export function deduplicateAndGroupWireItems(
         continue;
       }
 
-      // 3. Cross-outlet TF-IDF Headline Token + Entity Hybrid Similarity (Google News single-pass threshold)
+      // 3. Cross-outlet TF-IDF Headline Token + Entity Hybrid Similarity (non-diluted against lead & core snapshots)
       //    Require shared player entities (`pname:*`) when both items mention players so unrelated player stories never merge via shared coach/opponent!
       const bothHavePlayers =
         (item.mentionedPlayers?.length || 0) > 0 && (cl.lead.mentionedPlayers?.length || 0) > 0;
-      if (bothHavePlayers && !shareAnyPlayerEntity(entities, cl.entities)) {
+      if (bothHavePlayers && !shareAnyPlayerEntity(entities, cl.leadEntities)) {
         continue;
       }
 
+      const hasTopicDomainConflict = Boolean(
+        itemTopicDomain && cl.topicDomain && itemTopicDomain !== cl.topicDomain
+      );
       const hybridScore = 0.62 * tokSim.jaccard + 0.38 * entSim.jaccard;
       const strongHeadlineEcho = tokSim.jaccard >= 0.48 || (tokSim.containment >= 0.72 && tokens.size >= 4);
-      if ((hybridScore >= 0.46 || strongHeadlineEcho) && hybridScore > bestSim) {
+      if (
+        !statusOrEscalationConflict &&
+        !hasTopicDomainConflict &&
+        (hybridScore >= 0.46 || strongHeadlineEcho) &&
+        hybridScore > bestSim
+      ) {
         bestSim = hybridScore;
         matchedCluster = cl;
         continue;
@@ -4048,11 +4541,11 @@ export function deduplicateAndGroupWireItems(
         ((itemIsArt && leadIsArt && entSim.jaccard >= 0.34) || (sameSinglePlayer && entSim.jaccard >= 0.45)) &&
         (!itemMs || !cl.anchorMs || Math.abs(cl.anchorMs - itemMs) <= bridgeWindowMs)
       ) {
-        const subSim = setOverlapSimilarity(combinedUnigrams, cl.combinedUnigrams);
+        const subSim = bestSnapshotSetOverlap(combinedUnigrams, cl.leadUnigrams, cl.memberSnapshots, 'unigrams');
         let sharedContentCount = 0;
         for (const t of combinedUnigrams) {
           if (
-            cl.combinedUnigrams.has(t) &&
+            cl.leadUnigrams.has(t) &&
             !entityNameWords.has(t) &&
             !GENERIC_PLAY_BY_PLAY_BRIDGE_WORDS.has(t)
           ) {
@@ -4118,9 +4611,14 @@ export function deduplicateAndGroupWireItems(
         topicDomain: itemTopicDomain,
         primaryPlayer: itemPrimaryPlayer,
         injInfo: itemInjInfo,
+        sagaInfo: itemSagaInfo,
         anchorMs: itemMs,
         oldestMs: itemMs,
         newestMs: itemMs,
+        leadTokens: new Set(tokens),
+        leadUnigrams: new Set(combinedUnigrams),
+        leadEntities: new Set(entities),
+        memberSnapshots: [{ tokens: new Set(tokens), unigrams: new Set(combinedUnigrams), entities: new Set(entities) }],
         tokens: new Set(tokens),
         combinedUnigrams: new Set(combinedUnigrams),
         entities: new Set(entities),
@@ -4138,12 +4636,19 @@ export function deduplicateAndGroupWireItems(
       if (!matchedCluster.oldestMs || itemMs < matchedCluster.oldestMs) matchedCluster.oldestMs = itemMs;
       if (!matchedCluster.newestMs || itemMs > matchedCluster.newestMs) matchedCluster.newestMs = itemMs;
     }
+    if (matchedCluster.memberSnapshots.length < 5) {
+      matchedCluster.memberSnapshots.push({
+        tokens: new Set(tokens),
+        unigrams: new Set(combinedUnigrams),
+        entities: new Set(entities)
+      });
+    }
     for (const t of tokens) matchedCluster.tokens.add(t);
     for (const t of combinedUnigrams) matchedCluster.combinedUnigrams.add(t);
     for (const e of entities) matchedCluster.entities.add(e);
 
-    const existingQual = scoreClusterLeadQuality(matchedCluster.lead);
-    const candQual = scoreClusterLeadQuality(item);
+    const existingQual = scoreClusterLeadQuality(matchedCluster.lead, matchedCluster.sagaInfo);
+    const candQual = scoreClusterLeadQuality(item, itemSagaInfo);
     const existingMs = resolveEffectivePublishTimestampMs(matchedCluster.lead, nowMs) || 0;
     const xUpgradesBskyLead =
       isDirectXStatusUrl(item.url) &&
@@ -4178,6 +4683,29 @@ export function deduplicateAndGroupWireItems(
         itemMs >= existingMs - 10 * 60_000);
     const existingHasHigherInjuryStage =
       (!existingIsSpeculativeInj && candIsSpeculativeInj) || existingProg > candProg;
+
+    // Progression- & specificity-aware transaction-saga lead promotion:
+    // Inside a player transaction/FA saga cluster (e.g. waiver_clear_market: confirmed waiver clear 2.5 > rumored interest 2.0),
+    // higher confirmed stage promotes to Top Story (blocking clickbait mystery headlines and multi-player combos from hijacking).
+    const isSagaCluster = Boolean(itemSagaInfo.isSaga && matchedCluster.sagaInfo?.isSaga);
+    const candSubStage = isSagaCluster ? Number(itemSagaInfo.subStage || 0) : 0;
+    const existingSubStage = isSagaCluster ? Number(matchedCluster.sagaInfo.subStage || 0) : 0;
+    const candIsLowQualitySaga =
+      itemSagaInfo.isClickbaitMystery ||
+      itemSagaInfo.isMultiPlayerCombo ||
+      AGGREGATOR_REWRITE_OUTLET_REGEX.test(`${item.outletName || ''} ${item.url || ''}`);
+    const existingIsLowQualitySaga =
+      Boolean(matchedCluster.sagaInfo?.isClickbaitMystery) ||
+      Boolean(matchedCluster.sagaInfo?.isMultiPlayerCombo) ||
+      AGGREGATOR_REWRITE_OUTLET_REGEX.test(`${matchedCluster.lead.outletName || ''} ${matchedCluster.lead.url || ''}`);
+    const candAdvancesSagaStage =
+      isSagaCluster &&
+      candSubStage > existingSubStage &&
+      (!candIsLowQualitySaga || existingIsLowQualitySaga);
+    const existingHasHigherSagaStage =
+      isSagaCluster &&
+      existingSubStage > candSubStage &&
+      (!existingIsLowQualitySaga || candIsLowQualitySaga);
 
     let candidateIsBetterLead = false;
     if (candAdvancesInjuryStage) {
@@ -4216,11 +4744,24 @@ export function deduplicateAndGroupWireItems(
                 candQual > existingQual + 2 ||
                 (Math.abs(candQual - existingQual) <= 2 && !isBlueskyPostUrl(item.url) && itemMs > existingMs)));
         }
-      } else {
+      } else if (candAdvancesSagaStage) {
+        candidateIsBetterLead = true;
+      } else if (!existingHasHigherSagaStage) {
+        const candTier = Number(item.trustTier) || 2;
+        const existingTier = Number(matchedCluster.lead.trustTier) || 2;
+        const meaningfullyFresherSaga =
+          isSagaCluster &&
+          !candIsLowQualitySaga &&
+          !isBlueskyPostUrl(item.url) &&
+          candTier <= existingTier &&
+          itemMs > existingMs + 2 * 3_600_000 &&
+          candQual >= existingQual - 6;
         candidateIsBetterLead =
           xUpgradesBskyLead ||
           candQual > existingQual + 5 ||
+          meaningfullyFresherSaga ||
           (Math.abs(candQual - existingQual) <= 5 &&
+            !candIsLowQualitySaga &&
             !isBlueskyPostUrl(item.url) &&
             itemMs > existingMs + 15 * 60_000 &&
             String(item.fullText || item.title || '').length >=
@@ -4230,6 +4771,9 @@ export function deduplicateAndGroupWireItems(
 
     if (candAdvancesInjuryStage) {
       matchedCluster.hasInjuryProgressionAdvance = true;
+    }
+    if (candAdvancesSagaStage) {
+      matchedCluster.hasSagaProgressionAdvance = true;
     }
 
     if (candidateIsBetterLead) {
@@ -4269,8 +4813,12 @@ export function deduplicateAndGroupWireItems(
         confirmingReports: [demotedPrev, ...priorConfirming]
       };
       matchedCluster.outletKey = outletKey || matchedCluster.outletKey;
+      matchedCluster.leadTokens = new Set(tokens);
+      matchedCluster.leadUnigrams = new Set(combinedUnigrams);
+      matchedCluster.leadEntities = new Set(entities);
       if (sigKey) matchedCluster.sigKey = sigKey;
       if (itemInjInfo.isInjury) matchedCluster.injInfo = itemInjInfo;
+      if (itemSagaInfo.isSaga) matchedCluster.sagaInfo = itemSagaInfo;
     } else {
       matchedCluster.lead.confirmingReports.push({
         ...item,
@@ -4295,8 +4843,123 @@ export function deduplicateAndGroupWireItems(
     }
   }
 
+  // Pass 2: Twin-Cluster Consolidation, Same-Team Visit -> Signing Fold, Per-Player Saga Card Cap (<=4),
+  //         and Superseded Earlier-Phase Rank Dampening across all 32 NFL clubs!
+  const activeClusters = clusters.filter(Boolean);
+  const removedClusterSet = new Set();
+
+  // 2a. Merge any twin clusters sharing identical sigKey within 48h (can happen when order-dependent leads shifted)
+  for (let i = 0; i < activeClusters.length; i++) {
+    const a = activeClusters[i];
+    if (removedClusterSet.has(a) || !a.sigKey) continue;
+    for (let j = i + 1; j < activeClusters.length; j++) {
+      const b = activeClusters[j];
+      if (removedClusterSet.has(b) || !b.sigKey || a.sigKey !== b.sigKey) continue;
+      if (preserveFormat && matchesPreservedFormat(a.lead) !== matchesPreservedFormat(b.lead)) continue;
+      const gap =
+        a.newestMs && b.newestMs ? Math.abs(a.newestMs - b.newestMs) : 0;
+      if (gap <= 48 * 3_600_000) {
+        mergeClusterInto(a, b, { nowMs });
+        removedClusterSet.add(b);
+      }
+    }
+  }
+
+  // 2b. Per-player Transaction-Saga Lifecycle Consolidation:
+  //     - When a player signs with Team X (`fa_signing_deal`), fold any prior `team_visit_pursuit` for Team X within 48h into the signing card.
+  //     - Cap active transaction-saga cards per single player at `MAX_ACTIVE_SAGA_CARDS_PER_PLAYER` (4) within 60h by folding the oldest superseded milestone.
+  //     - Apply gentle rank dampening to superseded earlier phases (e.g. yesterday's release once waivers cleared / visit scheduled / signed).
+  const sagaByPlayer = new Map();
+  for (const cl of activeClusters) {
+    if (removedClusterSet.has(cl)) continue;
+    if (!cl.sagaInfo?.isSaga || !cl.sagaInfo.playerSlug) continue;
+    const pSlug = cl.sagaInfo.playerSlug;
+    if (!sagaByPlayer.has(pSlug)) sagaByPlayer.set(pSlug, []);
+    sagaByPlayer.get(pSlug).push(cl);
+  }
+
+  for (const playerClusters of sagaByPlayer.values()) {
+    // Same-team visit -> signing fold
+    const signings = playerClusters.filter(c => !removedClusterSet.has(c) && c.sagaInfo.facet === 'fa_signing_deal');
+    for (const signCl of signings) {
+      const sTeam = signCl.sagaInfo.destTeamAbbr;
+      for (const visCl of playerClusters) {
+        if (removedClusterSet.has(visCl) || visCl === signCl) continue;
+        if (visCl.sagaInfo.facet !== 'team_visit_pursuit') continue;
+        const vTeam = visCl.sagaInfo.destTeamAbbr;
+        if (sTeam && vTeam && sTeam !== vTeam) continue;
+        if (!sTeam || vTeam === sTeam) {
+          const gap =
+            signCl.newestMs && visCl.newestMs ? Math.abs(signCl.newestMs - visCl.newestMs) : 0;
+          if (gap <= 48 * 3_600_000) {
+            mergeClusterInto(signCl, visCl, { nowMs, forceKeepReceiverLead: true });
+            signCl.hasSagaProgressionAdvance = true;
+            removedClusterSet.add(visCl);
+          }
+        }
+      }
+    }
+
+    // Enforce MAX_ACTIVE_SAGA_CARDS_PER_PLAYER (4) within active 60h window
+    let liveSaga = playerClusters.filter(c => !removedClusterSet.has(c));
+    const newestSagaMs = liveSaga.reduce((mx, c) => Math.max(mx, c.newestMs || c.anchorMs || 0), 0);
+    const recentLiveSaga = liveSaga.filter(
+      c => !newestSagaMs || !c.newestMs || newestSagaMs - c.newestMs <= 60 * 3_600_000
+    );
+    if (recentLiveSaga.length > MAX_ACTIVE_SAGA_CARDS_PER_PLAYER) {
+      const foldPriority = c => {
+        const f = c.sagaInfo?.facet;
+        if (f === 'departure_release') return 1;
+        if (f === 'waiver_clear_market') return 2;
+        if (f === 'speculative_outlook') return 3;
+        if (f === 'team_visit_pursuit') return 4;
+        return 5; // fa_signing_deal never folded
+      };
+      const foldCandidates = [...recentLiveSaga].sort((a, b) => {
+        const pDiff = foldPriority(a) - foldPriority(b);
+        if (pDiff !== 0) return pDiff;
+        return (a.newestMs || 0) - (b.newestMs || 0);
+      });
+      let activeCount = recentLiveSaga.length;
+      for (const donor of foldCandidates) {
+        if (activeCount <= MAX_ACTIVE_SAGA_CARDS_PER_PLAYER) break;
+        if (donor.sagaInfo?.facet === 'fa_signing_deal') break;
+        const survivors = recentLiveSaga.filter(c => c !== donor && !removedClusterSet.has(c));
+        // Fold into the nearest higher-stage concrete milestone (e.g. release -> waiver_clear_market -> team_visit -> signing)
+        const receiver =
+          survivors
+            .filter(c => (c.sagaInfo?.stage || 0) >= (donor.sagaInfo?.stage || 0))
+            .sort((a, b) => (a.sagaInfo?.stage || 0) - (b.sagaInfo?.stage || 0))[0] ||
+          survivors.sort((a, b) => (b.newestMs || 0) - (a.newestMs || 0))[0];
+        if (receiver) {
+          mergeClusterInto(receiver, donor, { nowMs, forceKeepReceiverLead: true });
+          removedClusterSet.add(donor);
+          activeCount -= 1;
+        }
+      }
+    }
+
+    // Superseded earlier-phase rank dampening so newest concrete milestones naturally rise above older phases
+    liveSaga = playerClusters.filter(c => !removedClusterSet.has(c));
+    const maxConcreteStage = liveSaga.reduce((mx, c) => Math.max(mx, c.sagaInfo?.stage || 0), 0);
+    if (maxConcreteStage >= 2) {
+      for (const cl of liveSaga) {
+        const f = cl.sagaInfo?.facet;
+        if (f === 'departure_release') {
+          cl._sagaSupersededMultiplier = maxConcreteStage >= 4 ? 0.62 : 0.74;
+        } else if (f === 'speculative_outlook' && maxConcreteStage >= 4) {
+          cl._sagaSupersededMultiplier = 0.65;
+        } else if (f === 'waiver_clear_market' && maxConcreteStage >= 4) {
+          cl._sagaSupersededMultiplier = 0.72;
+        }
+      }
+    }
+  }
+
+  const survivingClusters = activeClusters.filter(cl => !removedClusterSet.has(cl));
+
   // Finalize cluster metadata, classify clusterKind (`corroboration` vs `similar`), sort related coverage, and re-rank!
-  const finalized = clusters.map(cl => {
+  const finalized = survivingClusters.map(cl => {
     const lead = cl.lead;
     if (Array.isArray(lead.confirmingReports) && lead.confirmingReports.length > 0) {
       // Deduplicate identical URLs or near-identical snippets inside confirmingReports
@@ -4318,6 +4981,19 @@ export function deduplicateAndGroupWireItems(
           if (Math.abs(tDiff) > 5 * 60_000) return tDiff;
           return scoreClusterLeadQuality(b) - scoreClusterLeadQuality(a);
         });
+      } else if (cl.sagaInfo?.isSaga) {
+        uniqueRelated.sort((a, b) => {
+          const sA = analyzePlayerTransactionSaga(a, rosterPlayersForGroup, ctx?.teamConfig || null);
+          const sB = analyzePlayerTransactionSaga(b, rosterPlayersForGroup, ctx?.teamConfig || null);
+          const stageDiff = (sB.subStage || 0) - (sA.subStage || 0);
+          if (Math.abs(stageDiff) >= 0.4) return stageDiff;
+          const qDiff = scoreClusterLeadQuality(b, sB) - scoreClusterLeadQuality(a, sA);
+          if (Math.abs(qDiff) >= 6) return qDiff;
+          return (
+            (resolveEffectivePublishTimestampMs(b, nowMs) || 0) -
+            (resolveEffectivePublishTimestampMs(a, nowMs) || 0)
+          );
+        });
       } else {
         uniqueRelated.sort((a, b) => scoreClusterLeadQuality(b) - scoreClusterLeadQuality(a));
       }
@@ -4337,12 +5013,13 @@ export function deduplicateAndGroupWireItems(
       const isLowSalienceRoundup = /^team::(power_rankings|watch_guide|pff_grades)$/.test(cl.sigKey || '');
       const isBreakingCorroboration =
         !isLowSalienceRoundup &&
+        !cl.sagaInfo?.isSpeculative &&
         (isUrgentBreakingBadge(lead.breakingBadge) ||
           lead.storyTier === 'tier1_major' ||
           lead.storyTier === 'tier2_roster' ||
           lead.category === 'injury' ||
           lead.category === 'roster' ||
-          /::(ir_roster_move|diagnostic_result|diagnostic_scheduled|diagnostic_imaging|recovery_timeline|in_game_injury_status|weekly_injury_report|trade_acquisition|contract_restructure|practice_return_hope|cb_roster_moves_positive)$/.test(
+          /::(ir_roster_move|diagnostic_result|diagnostic_scheduled|diagnostic_imaging|recovery_timeline|in_game_injury_status|weekly_injury_report|trade_acquisition|contract_restructure|practice_return_hope|cb_roster_moves_positive|fa_signing|fa_visit|fa_waiver_market|roster_departure)(?:::[a-z]+)?$/.test(
             cl.sigKey || ''
           ));
       lead.clusterKind = isBreakingCorroboration ? 'corroboration' : 'similar';
@@ -4353,20 +5030,26 @@ export function deduplicateAndGroupWireItems(
       const oldestAge = cl.oldestMs ? Math.max(0, (nowMs - cl.oldestMs) / 3_600_000) : leadAge;
       const newestAge = cl.newestMs ? Math.max(0, (nowMs - cl.newestMs) / 3_600_000) : leadAge;
       // Anchor age rewards fresh multi-source developments (<12h) and immediately refreshes to `newestAge`
-      // whenever a material injury progression (e.g. Tent -> QTR -> Ruled Out -> MRI) supersedes earlier reports!
+      // whenever a material injury or transaction-saga progression supersedes earlier reports!
       lead._clusterNewestAgeHours = newestAge;
-      lead._clusterAnchorAgeHours = cl.hasInjuryProgressionAdvance
-        ? Math.min(leadAge, newestAge)
-        : oldestAge > 14
-          ? Math.max(leadAge, oldestAge * 0.6)
-          : 0.4 * leadAge + 0.6 * newestAge;
+      lead._clusterAnchorAgeHours =
+        cl.hasInjuryProgressionAdvance || cl.hasSagaProgressionAdvance
+          ? Math.min(leadAge, newestAge)
+          : oldestAge > 14
+            ? Math.max(leadAge, oldestAge * 0.6)
+            : 0.4 * leadAge + 0.6 * newestAge;
       const priorStoryRank = Number.isFinite(Number(lead.storyRank)) ? Number(lead.storyRank) : 0;
       const recomputedRank = computeWireStoryRank(lead, nowMs, ctx);
-      lead.storyRank = isLowSalienceRoundup
+      const baseRank = isLowSalienceRoundup
         ? Math.min(priorStoryRank || recomputedRank, recomputedRank)
         : ctx
           ? recomputedRank
           : Math.max(priorStoryRank, recomputedRank);
+      lead.storyRank = cl._sagaSupersededMultiplier
+        ? Number((baseRank * cl._sagaSupersededMultiplier).toFixed(4))
+        : baseRank;
+    } else if (cl._sagaSupersededMultiplier && Number.isFinite(Number(lead.storyRank))) {
+      lead.storyRank = Number((Number(lead.storyRank) * cl._sagaSupersededMultiplier).toFixed(4));
     }
     return lead;
   });
@@ -4470,7 +5153,7 @@ export function isRedundantProfileSelfLink(externalUrl = '', itemUrl = '') {
 }
 
 const NON_ARTICLE_EXTERNAL_HOST_REGEX =
-  /(^|\.)(x\.com|twitter\.com|bsky\.app|instagram\.com|threads\.net|facebook\.com|tiktok\.com|reddit\.com|t\.me|youtube\.com|youtu\.be|vimeo\.com|twitch\.tv|dailymotion\.com|open\.spotify\.com|spotify\.com|podcasts\.apple\.com|music\.amazon\.com|megaphone\.fm|art19\.com|soundcloud\.com|omny\.fm|anchor\.fm|overcast\.fm|pocketcasts\.com)$/i;
+  /(^|\.)(x\.com|twitter\.com|bsky\.app|nitter\.net|nitter\.[a-z]+|xcancel\.com|vxtwitter\.com|fxtwitter\.com|instagram\.com|threads\.net|facebook\.com|tiktok\.com|reddit\.com|t\.me|youtube\.com|youtu\.be|vimeo\.com|twitch\.tv|dailymotion\.com|open\.spotify\.com|spotify\.com|podcasts\.apple\.com|music\.amazon\.com|megaphone\.fm|art19\.com|soundcloud\.com|omny\.fm|anchor\.fm|overcast\.fm|pocketcasts\.com)$/i;
 
 const NON_ARTICLE_EXTERNAL_PATH_REGEX =
   /^\/(?:video|videos|watch|shorts|clips|podcast|podcasts|episodes|mlb|nba|nhl|wnba|mls|golf|tennis|soccer)(?:\/|$)|\/nfl\/player\/_\/id\/\d+/i;
@@ -5131,7 +5814,8 @@ const LINKED_ARTICLE_PUBLISHER_MAP = {
 const PODCAST_EXTERNAL_HOST_RE =
   /(^|\.)(open\.spotify\.com|spotify\.com|podcasts\.apple\.com|music\.amazon\.com|megaphone\.fm|art19\.com|soundcloud\.com|omny\.fm|anchor\.fm|overcast\.fm|pocketcasts\.com)$/i;
 
-const SOCIAL_ORIGIN_LINK_RE = /^https?:\/\/(?:www\.)?(?:x\.com|twitter\.com|bsky\.app)\//i;
+const SOCIAL_ORIGIN_LINK_RE =
+  /^https?:\/\/(?:www\.)?(?:x\.com|twitter\.com|bsky\.app|nitter\.net|nitter\.[a-z]+|xcancel\.com|vxtwitter\.com|fxtwitter\.com)\//i;
 
 const linkedArticleStreamIndexCache = new WeakMap();
 

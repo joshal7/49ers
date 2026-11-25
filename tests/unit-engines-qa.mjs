@@ -22509,6 +22509,524 @@ await testAsync('Ad & Promotional Filter: blocks Mountain Mikes & all 32-team co
   assert.ok(parsedX[0].title.includes('Brock Purdy hits George Kittle'), 'Retained item must be the real football tweet');
 });
 
+await testAsync(
+  'Balanced Story Clustering & Saga Lifecycle: 10 redundant Brandon Aiyuk stories collapse into 4 distinct phase/perspective cards, elect best Top Story, evolve cleanly over time, preserve unique cap/other-player perspectives, guard against token dilution & Nitter cards, and generalize across all 32 NFL teams',
+  async () => {
+    const {
+      analyzePlayerTransactionSaga,
+      deduplicateAndGroupWireItems,
+      sortNewsWithBreakingPriority,
+      balanceFeedTopSalience,
+      resolveTweetLinkedArticlePreview
+    } = await import('../src/engine/breakingClassifier.js');
+    const { setActiveTeamConfig } = await import('../src/config/teamRegistry.js');
+
+    const nowMs = Date.parse('2026-11-25T16:40:00Z'); // 8:40 AM PT Wed Nov 25, 2026
+    const hAgo = h => new Date(nowMs - h * 3_600_000).toISOString();
+    const aiyukPlayer = { id: '4360438', name: 'Brandon Aiyuk', shortName: 'B. Aiyuk', position: 'WR', jersey: 11 };
+    const bealPlayer = { id: '4241986', name: 'Robert Beal Jr.', shortName: 'R. Beal Jr.', position: 'DE', jersey: 51 };
+
+    // Exact reproduction of the 10 Brandon Aiyuk cards + corroborating echoes + non-Aiyuk stories
+    const aiyukSagaStream = [
+      // 1. ESPN Commanders Visit (5h ago) + 6 corroborating visit echoes (testing anti-dilution!)
+      {
+        id: 'aiyuk_espn_visit',
+        type: 'article',
+        outletName: 'ESPN',
+        author: 'ESPN',
+        trustTier: 1,
+        signalScore: 86,
+        title: 'Brandon Aiyuk scheduled for visit Wednesday with Commanders, agent says',
+        summary: "Wide receiver Brandon Aiyuk is scheduled to visit Wednesday with the Commanders, agent Drew Rosenhaus told ESPN's Adam Schefter.",
+        imageUrl: 'https://a.espncdn.com/photo/2026/1125/aiyuk_visit.jpg',
+        url: 'https://www.espn.com/nfl/story/_/id/50999001/brandon-aiyuk-commanders-visit',
+        publishedAt: hAgo(5),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      ...Array.from({ length: 6 }, (_, idx) => ({
+        id: `aiyuk_visit_echo_${idx}`,
+        type: idx % 2 === 0 ? 'article' : 'tweet',
+        outletName: ['NBC Sports Bay Area', 'ProFootballTalk', 'CBS Sports', 'Yahoo Sports', 'Niners Nation', '49ers Webzone'][idx],
+        author: ['Matt Maiocco', 'Mike Florio', 'Jonathan Jones', 'Charles Robinson', 'Kyle Posey', 'David Bonilla'][idx],
+        trustTier: idx < 2 ? 1 : 2,
+        signalScore: 72,
+        title: [
+          'Brandon Aiyuk set to visit with Washington Commanders on Wednesday after clearing waivers',
+          'Commanders hosting former 49ers WR Brandon Aiyuk for free-agent visit Wednesday',
+          'Former 49ers star Brandon Aiyuk plans to visit Commanders on Wednesday, per report',
+          'Brandon Aiyuk expected to visit Washington Commanders Wednesday for potential reunion with Jayden Daniels',
+          '49ers news: Brandon Aiyuk visiting with Commanders on Wednesday following waiver clearance',
+          'Brandon Aiyuk scheduled to visit Commanders Wednesday as reunion with former ASU teammate looms'
+        ][idx],
+        fullText: '',
+        url: `https://example-nfl-${idx}.com/aiyuk-commanders-visit-${idx}`,
+        publishedAt: hAgo(5.1 + idx * 0.1),
+        mentionedPlayers: [aiyukPlayer]
+      })),
+      // 2. Adam Schefter tweet (6h ago, WITH nitter.net externalUrl bug reproduction + 2nd sentence mentioning Jayden Daniels)
+      {
+        id: 'aiyuk_schefter_visit',
+        type: 'tweet',
+        outletName: 'ESPN',
+        author: 'Adam Schefter',
+        reporterId: 'adam_schefter',
+        trustTier: 1,
+        signalScore: 88,
+        title: 'Free-agent WR Brandon Aiyuk is scheduled to visit Wednesday with the Washington Commanders, per his agent Drew Rosenhaus. Aiyuk and Commanders QB Jayden Daniels played together at Arizona State during the 2019 season.',
+        fullText: 'Free-agent WR Brandon Aiyuk is scheduled to visit Wednesday with the Washington Commanders, per his agent Drew Rosenhaus. Aiyuk and Commanders QB Jayden Daniels played together at Arizona State during the 2019 season.',
+        url: 'https://x.com/AdamSchefter/status/2199990000000000001',
+        externalUrl: 'https://nitter.net/AdamSchefter/status/2199990000000000001',
+        publishedAt: hAgo(6),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      // 3. Clickbait mystery-team favorite (6h ago) — must fold into Speculative Outlook & NEVER hijack Top Story
+      {
+        id: 'aiyuk_webzone_favorite',
+        type: 'article',
+        outletName: '49ers Webzone',
+        author: '49ers Webzone',
+        trustTier: 2,
+        signalScore: 54,
+        title: 'NFC team emerges as favorite to sign free agent WR Brandon Aiyuk',
+        summary: "Niners Wire - It's no surprise one team quickly emerged as a favorite to land former San Francisco 49ers wide receiver Brandon Aiyuk.",
+        url: 'https://www.49erswebzone.com/articles/nfc-team-emerges-favorite-aiyuk',
+        publishedAt: hAgo(6),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      // 4. Multi-player combo headline (6h ago) — primary subject Aiyuk clears waivers + secondary PS Beal Jr.
+      {
+        id: 'aiyuk_webzone_beal_combo',
+        type: 'article',
+        outletName: '49ers Webzone',
+        author: '49ers Webzone',
+        trustTier: 2,
+        signalScore: 68,
+        title: '49ers news: Brandon Aiyuk clears waivers, Robert Beal Jr. released',
+        summary: 'The 49ers have officially moved on from Brandon Aiyuk, who cleared waivers, while San Francisco released defensive end Robert Beal Jr. from its practice squad.',
+        url: 'https://www.49erswebzone.com/articles/aiyuk-clears-waivers-beal-released',
+        publishedAt: hAgo(6),
+        mentionedPlayers: [aiyukPlayer, bealPlayer]
+      },
+      // 5. Matt Barrows confirmed waiver clearance tweet (6h ago)
+      {
+        id: 'aiyuk_barrows_unclaimed',
+        type: 'tweet',
+        outletName: 'The Athletic',
+        author: 'Matt Barrows',
+        reporterId: 'matt_barrows',
+        trustTier: 1,
+        signalScore: 84,
+        title: 'Receiver Brandon Aiyuk goes unclaimed on waivers, is now a free agent',
+        fullText: 'Receiver Brandon Aiyuk goes unclaimed on waivers, is now a free agent',
+        imageUrl: 'https://pbs.twimg.com/media/aiyuk_barrows.jpg',
+        url: 'https://x.com/mattbarrows/status/2199990000000000005',
+        publishedAt: hAgo(6),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      // 6. NFLTradeRumors cleared waivers + interest (6h ago)
+      {
+        id: 'aiyuk_nfltr_cleared',
+        type: 'article',
+        outletName: 'NFLTradeRumors.co',
+        author: 'NFLTradeRumors.co',
+        trustTier: 2,
+        signalScore: 70,
+        title: 'Brandon Aiyuk Cleared Waivers, Expected To Draw Interest From Multiple Teams Including Commanders',
+        summary: 'Former 49ers WR Brandon Aiyuk passed through waivers unclaimed and is expected to draw interest from multiple teams.',
+        url: 'https://nfltraderumors.co/brandon-aiyuk-cleared-waivers-interest/',
+        publishedAt: hAgo(6),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      // 7. NBC Sports Bay Area earlier rumored interest while waived (12h ago, stage 2.0)
+      {
+        id: 'aiyuk_nbcsba_interest',
+        type: 'article',
+        outletName: 'NBC Sports Bay Area',
+        author: 'NBC Sports Bay Area',
+        trustTier: 1,
+        signalScore: 78,
+        title: 'WR Brandon Aiyuk reportedly drawing interest from multiple NFL teams after being waived by 49ers',
+        summary: 'Former San Francisco 49ers wide receiver Brandon Aiyuk reportedly is drawing interest from multiple NFL teams after being released.',
+        imageUrl: 'https://media.nbcsportsbayarea.com/aiyuk_interest.jpg',
+        url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-interest/101/',
+        publishedAt: hAgo(12),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      // 8. Sanjesh Singh speculative landing spots (20h ago)
+      {
+        id: 'aiyuk_sanjesh_landing_spots',
+        type: 'article',
+        outletName: 'NBC Sports Bay Area',
+        author: 'Sanjesh Singh',
+        trustTier: 1,
+        signalScore: 76,
+        title: 'Five potential Brandon Aiyuk landing spots after WR was waived by 49ers',
+        summary: 'Examining five logical NFL landing spots for wide receiver Brandon Aiyuk after the 49ers moved on.',
+        imageUrl: 'https://media.nbcsportsbayarea.com/aiyuk_spots.jpg',
+        url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/five-potential-brandon-aiyuk-landing-spots/102/',
+        publishedAt: hAgo(20),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      // 9. ESPN speculative "What's next" (24h ago)
+      {
+        id: 'aiyuk_espn_whats_next',
+        type: 'article',
+        outletName: 'ESPN',
+        author: 'ESPN',
+        trustTier: 1,
+        signalScore: 79,
+        title: "What's next for Brandon Aiyuk after release by 49ers?",
+        summary: 'Breaking down potential next teams and contract market for Brandon Aiyuk after his release.',
+        imageUrl: 'https://a.espncdn.com/photo/2026/1124/aiyuk_next.jpg',
+        url: 'https://www.espn.com/nfl/story/_/id/50998888/whats-next-brandon-aiyuk-49ers',
+        publishedAt: hAgo(24),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      // 10a. Matt Barrows truncated paywall teaser tweet (25h ago)
+      {
+        id: 'aiyuk_barrows_release_teaser',
+        type: 'tweet',
+        outletName: 'The Athletic',
+        author: 'Matt Barrows',
+        reporterId: 'matt_barrows',
+        trustTier: 1,
+        signalScore: 75,
+        title: '49ers releasing WR Brandon Aiyuk, finally ending messy divorce ... www.nytimes.com/athletic/7081234/',
+        fullText: '49ers releasing WR Brandon Aiyuk, finally ending messy divorce ... www.nytimes.com/athletic/7081234/',
+        url: 'https://x.com/mattbarrows/status/2199990000000000010',
+        publishedAt: hAgo(25),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      // 10b. ESPN full non-paywalled original release report (25h ago) — should beat truncated paywall teaser!
+      {
+        id: 'aiyuk_espn_release_full',
+        type: 'article',
+        outletName: 'ESPN',
+        author: 'Nick Wagoner',
+        trustTier: 1,
+        signalScore: 86,
+        title: '49ers officially waive WR Brandon Aiyuk, ending tumultuous tenure',
+        summary: 'San Francisco formally placed wide receiver Brandon Aiyuk on waivers Tuesday afternoon.',
+        imageUrl: 'https://a.espncdn.com/photo/2026/1124/aiyuk_release.jpg',
+        url: 'https://www.espn.com/nfl/story/_/id/50998777/49ers-waive-brandon-aiyuk',
+        publishedAt: hAgo(25.1),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      // Non-Aiyuk stories to verify feed interleaving
+      {
+        id: 'lynch_ext',
+        type: 'article',
+        outletName: 'ESPN',
+        author: 'ESPN',
+        trustTier: 1,
+        signalScore: 85,
+        title: 'Source: 49ers, GM John Lynch agree to contract extension',
+        summary: 'The 49ers and general manager John Lynch have agreed to a multiyear contract extension.',
+        url: 'https://www.espn.com/nfl/story/_/id/50998999/49ers-john-lynch-extension',
+        publishedAt: hAgo(20)
+      },
+      {
+        id: 'purdy_mvp',
+        type: 'article',
+        outletName: '49ers Webzone',
+        author: '49ers Webzone',
+        trustTier: 2,
+        signalScore: 76,
+        title: 'Week 12 NFL MVP tracker: Brock Purdy reclaims No. 1 spot',
+        summary: 'Brock Purdy climbs back to No. 1 in the Week 12 MVP rankings.',
+        url: 'https://www.49erswebzone.com/articles/purdy-mvp-week-12',
+        publishedAt: hAgo(5),
+        mentionedPlayers: [{ id: '4361741', name: 'Brock Purdy', position: 'QB' }]
+      },
+      {
+        id: 'brown_feature',
+        type: 'article',
+        outletName: '49ers Webzone',
+        author: '49ers Webzone',
+        trustTier: 2,
+        signalScore: 74,
+        title: "One year after Ji'Ayir Brown's curious claim of elite status, 49ers safety sounds prophetic",
+        summary: "Ji'Ayir Brown has emerged as a playmaking force in the 49ers secondary.",
+        url: 'https://www.49erswebzone.com/articles/jiayir-brown-elite',
+        publishedAt: hAgo(4),
+        mentionedPlayers: [{ id: '4429013', name: "Ji'Ayir Brown", position: 'S' }]
+      }
+    ];
+
+    // 1. Verify Nitter linked preview guard blocks "Read full story on nitter.net"
+    const nitterPreview = resolveTweetLinkedArticlePreview(
+      aiyukSagaStream.find(x => x.id === 'aiyuk_schefter_visit'),
+      { rawStream: aiyukSagaStream }
+    );
+    assert.equal(nitterPreview, null, 'nitter.net external URLs must NEVER render as a linked article preview card');
+
+    // 2. Run prioritization + clustering on all 17 Aiyuk items (from 10 fragmented cards) + 3 non-Aiyuk items
+    const sorted = sortNewsWithBreakingPriority(aiyukSagaStream, nowMs);
+    const grouped = deduplicateAndGroupWireItems(sorted, { nowMs, groupSimilarStories: true });
+    const aiyukCards = grouped.filter(it => /aiyuk/i.test(`${it.title || ''} ${it.fullText || ''}`));
+
+    assert.equal(
+      aiyukCards.length,
+      4,
+      `17 Brandon Aiyuk items across 10 formerly redundant cards must collapse cleanly into 4 distinct phase/perspective cards (got ${aiyukCards.length}: ${aiyukCards.map(c => c.id).join(', ')})`
+    );
+
+    // 2a. Card 1: Commanders Visit consolidates ESPN + Adam Schefter + ALL 6 echoes (anti-dilution verified!)
+    const visitCard = aiyukCards.find(c => analyzePlayerTransactionSaga(c).facet === 'team_visit_pursuit');
+    assert.ok(visitCard, 'Commanders Visit must have its own dedicated card');
+    assert.equal(
+      visitCard.confirmingReports?.length,
+      7,
+      'Commanders Visit card must consolidate Adam Schefter tweet + all 6 visit echoes into Similar stories (7) without token dilution'
+    );
+    assert.ok(
+      visitCard.id === 'aiyuk_espn_visit' || visitCard.id === 'aiyuk_schefter_visit',
+      'Commanders Visit Top Story must be Tier-1 ESPN or Adam Schefter'
+    );
+
+    // 2b. Card 2: Cleared Waivers & Market Interest consolidates Barrows + NBCSBA + NFLTradeRumors + Webzone Beal combo
+    const waiverCard = aiyukCards.find(c => analyzePlayerTransactionSaga(c).facet === 'waiver_clear_market');
+    assert.ok(waiverCard, 'Cleared Waivers & Market Interest must have its own dedicated card');
+    assert.equal(
+      waiverCard.confirmingReports?.length,
+      3,
+      'Waiver clearance card must consolidate Barrows, NBCSBA, NFLTradeRumors & Webzone combo into 1 card + 3 similar'
+    );
+    assert.notEqual(
+      waiverCard.id,
+      'aiyuk_nbcsba_interest',
+      'Confirmed 6h-ago waiver clearance (stage 2.5) must supersede 12h-ago pre-clear rumored interest (stage 2.0) as Top Story'
+    );
+    assert.notEqual(
+      waiverCard.id,
+      'aiyuk_webzone_beal_combo',
+      'Multi-player combo roundup must NOT hijack Top Story over dedicated single-subject Aiyuk waiver clearance'
+    );
+
+    // 2c. Card 3: Speculative Outlook consolidates Sanjesh Singh + ESPN What's Next + clickbait Webzone favorite
+    const specCard = aiyukCards.find(c => analyzePlayerTransactionSaga(c).facet === 'speculative_outlook');
+    assert.ok(specCard, 'Speculative Landing Spots / What\'s Next must have 1 dedicated perspective card');
+    assert.equal(
+      specCard.confirmingReports?.length,
+      2,
+      'All 3 speculative/landing-spot pieces (Sanjesh Singh, ESPN What\'s Next, Webzone favorite) must merge into 1 card + 2 similar'
+    );
+    assert.notEqual(
+      specCard.id,
+      'aiyuk_webzone_favorite',
+      'Clickbait mystery-team headline ("NFC team emerges as favorite") must NEVER beat substantive ESPN/NBCSBA analysis as Top Story'
+    );
+
+    // 2d. Card 4: Original Release elects full non-paywalled ESPN report over truncated NYTimes paywall teaser tweet
+    const releaseCard = aiyukCards.find(c => analyzePlayerTransactionSaga(c).facet === 'departure_release');
+    assert.ok(releaseCard, 'Original 49ers release milestone keeps 1 card while total active saga cards <= 4');
+    assert.equal(
+      releaseCard.id,
+      'aiyuk_espn_release_full',
+      'Full non-paywalled Tier-1 ESPN release report must beat truncated NYTimes paywall teaser tweet as Top Story'
+    );
+    assert.ok(
+      (visitCard.storyRank || 0) > (releaseCard.storyRank || 0),
+      'Newer Commanders Visit (5h ago) must rank strictly above superseded yesterday Release (25h ago)'
+    );
+
+    // 3. Single-player feed diversity spacing: 4 Aiyuk cards must NOT stack consecutively when non-Aiyuk stories exist
+    const balanced = balanceFeedTopSalience(grouped, { nowMs });
+    for (let i = 1; i < Math.min(6, balanced.length); i++) {
+      const prevAiyuk = /aiyuk/i.test(balanced[i - 1].title || '');
+      const curAiyuk = /aiyuk/i.test(balanced[i].title || '');
+      assert.ok(
+        !(prevAiyuk && curAiyuk),
+        `balanceFeedTopSalience must interleave single-player saga cards with other team stories (consecutive Aiyuk cards at indices ${i - 1}, ${i})`
+      );
+    }
+
+    // 4. Temporal Evolution: 6h later, Commanders SIGN Brandon Aiyuk + a unique CBA Cap Breakdown & Replacement WR signing arrive!
+    const laterMs = nowMs + 6 * 3_600_000;
+    const evolvedStream = [
+      ...aiyukSagaStream,
+      {
+        id: 'aiyuk_commanders_sign',
+        type: 'tweet',
+        outletName: 'ESPN',
+        author: 'Adam Schefter',
+        reporterId: 'adam_schefter',
+        trustTier: 1,
+        signalScore: 95,
+        title: 'Former 49ers WR Brandon Aiyuk has agreed to terms on a one-year deal with the Washington Commanders, per his agent Drew Rosenhaus.',
+        fullText: 'Former 49ers WR Brandon Aiyuk has agreed to terms on a one-year deal with the Washington Commanders, per his agent Drew Rosenhaus.',
+        url: 'https://x.com/AdamSchefter/status/2199990000000000099',
+        publishedAt: new Date(laterMs - 20 * 60_000).toISOString(),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      {
+        id: 'aiyuk_steelers_visit',
+        type: 'article',
+        outletName: 'ESPN',
+        author: 'ESPN',
+        trustTier: 1,
+        signalScore: 82,
+        title: 'Brandon Aiyuk also scheduled to visit Steelers before choosing destination',
+        summary: 'Wide receiver Brandon Aiyuk also lined up a free-agent visit with Pittsburgh.',
+        url: 'https://www.espn.com/nfl/story/_/id/50999111/aiyuk-steelers-visit',
+        publishedAt: new Date(laterMs - 4 * 3_600_000).toISOString(),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      {
+        id: 'aiyuk_cap_breakdown',
+        type: 'article',
+        category: 'cap',
+        outletName: 'OverTheCap',
+        author: 'Jason Fitzgerald',
+        trustTier: 1,
+        signalScore: 90,
+        title: "Breaking down the 49ers' $28M dead cap hit and salary cap implications after Brandon Aiyuk release",
+        summary: 'Detailed CBA Article 13 dead money and 2027 rollover math following Brandon Aiyuk waiver.',
+        url: 'https://overthecap.com/49ers-brandon-aiyuk-dead-cap-breakdown',
+        publishedAt: new Date(laterMs - 2 * 3_600_000).toISOString(),
+        mentionedPlayers: [aiyukPlayer]
+      },
+      {
+        id: 'replacement_wr_signed',
+        type: 'article',
+        outletName: '49ers.com Official',
+        author: '49ers.com Official',
+        trustTier: 1,
+        signalScore: 84,
+        title: '49ers sign veteran WR Kendrick Bourne to active roster after moving on from Brandon Aiyuk',
+        summary: 'San Francisco adds veteran wide receiver depth following Brandon Aiyuk departure.',
+        url: 'https://www.49ers.com/news/49ers-sign-kendrick-bourne',
+        publishedAt: new Date(laterMs - 90 * 60_000).toISOString(),
+        mentionedPlayers: [{ id: '3045523', name: 'Kendrick Bourne', position: 'WR' }, aiyukPlayer]
+      }
+    ];
+    const evolvedGrouped = deduplicateAndGroupWireItems(
+      sortNewsWithBreakingPriority(evolvedStream, laterMs),
+      { nowMs: laterMs, groupSimilarStories: true }
+    );
+    const signCard = evolvedGrouped.find(c => c.id === 'aiyuk_commanders_sign');
+    assert.ok(signCard, 'Stage-4 Commanders signing must lead its own top card');
+    assert.ok(
+      signCard.confirmingReports?.some(r => r.id === 'aiyuk_espn_visit' || r.id === 'aiyuk_schefter_visit'),
+      'Same-team Commanders visit card must automatically fold into Commanders signing card Similar stories once signed'
+    );
+    const activeAiyukSagaOnly = evolvedGrouped.filter(
+      c => analyzePlayerTransactionSaga(c).isSaga && analyzePlayerTransactionSaga(c).playerSlug === 'brandonaiyuk'
+    );
+    assert.ok(
+      activeAiyukSagaOnly.length <= 4,
+      `Per-player active transaction-saga card cap must hold <= 4 even with 2 visits + signing + waivers + speculation + release (got ${activeAiyukSagaOnly.length})`
+    );
+    assert.ok(
+      evolvedGrouped.some(c => c.id === 'aiyuk_cap_breakdown'),
+      'Unique CBA dead-cap analytical breakdown must keep its OWN dedicated card and NEVER be swallowed by release/signing saga'
+    );
+    assert.ok(
+      evolvedGrouped.some(c => c.id === 'replacement_wr_signed'),
+      'Distinct move primarily about another player (Kendrick Bourne) must keep its OWN dedicated card'
+    );
+
+    // 5. All-32-Team Generalization: Verify exact same saga logic works seamlessly for Kansas City Chiefs (zero 49ers hardcoding)
+    try {
+      setActiveTeamConfig('chiefs');
+      const rashee = { id: '4428331', name: 'Rashee Rice', position: 'WR' };
+      const kcStream = [
+        {
+          id: 'kc_visit_espn',
+          type: 'article',
+          outletName: 'ESPN',
+          author: 'ESPN',
+          trustTier: 1,
+          signalScore: 86,
+          title: 'Rashee Rice scheduled for visit Wednesday with Bills, agent says',
+          summary: 'Free agent WR Rashee Rice will visit Buffalo on Wednesday.',
+          url: 'https://www.espn.com/nfl/story/_/id/51000001/rashee-rice-bills-visit',
+          publishedAt: hAgo(3),
+          mentionedPlayers: [rashee]
+        },
+        {
+          id: 'kc_visit_tweet',
+          type: 'tweet',
+          outletName: 'NFL Network',
+          author: 'Ian Rapoport',
+          trustTier: 1,
+          signalScore: 86,
+          title: 'Free-agent WR Rashee Rice is scheduled to visit Wednesday with the Buffalo Bills, per sources.',
+          fullText: 'Free-agent WR Rashee Rice is scheduled to visit Wednesday with the Buffalo Bills, per sources.',
+          url: 'https://x.com/RapSheet/status/2199990000000000501',
+          publishedAt: hAgo(3.5),
+          mentionedPlayers: [rashee]
+        },
+        {
+          id: 'kc_waiver_clear',
+          type: 'tweet',
+          outletName: 'Kansas City Star',
+          author: 'Nate Taylor',
+          trustTier: 1,
+          signalScore: 84,
+          title: 'WR Rashee Rice goes unclaimed on waivers, is now a free agent',
+          fullText: 'WR Rashee Rice goes unclaimed on waivers, is now a free agent',
+          url: 'https://x.com/ByNateTaylor/status/2199990000000000502',
+          publishedAt: hAgo(5),
+          mentionedPlayers: [rashee]
+        },
+        {
+          id: 'kc_waiver_interest',
+          type: 'article',
+          outletName: 'Arrowhead Pride',
+          author: 'Arrowhead Pride',
+          trustTier: 2,
+          signalScore: 74,
+          title: 'WR Rashee Rice reportedly drawing interest from multiple NFL teams after being waived by Chiefs',
+          summary: 'Former Chiefs WR Rashee Rice is drawing multi-team interest.',
+          url: 'https://www.arrowheadpride.com/rashee-rice-interest',
+          publishedAt: hAgo(11),
+          mentionedPlayers: [rashee]
+        },
+        {
+          id: 'kc_landing_spots',
+          type: 'article',
+          outletName: 'ESPN',
+          author: 'ESPN',
+          trustTier: 1,
+          signalScore: 78,
+          title: 'Five potential Rashee Rice landing spots after WR was waived by Chiefs',
+          summary: 'Best destinations for Rashee Rice.',
+          url: 'https://www.espn.com/nfl/story/_/id/51000002/rashee-rice-landing-spots',
+          publishedAt: hAgo(18),
+          mentionedPlayers: [rashee]
+        },
+        {
+          id: 'kc_mystery_fav',
+          type: 'article',
+          outletName: 'Chiefs Wire',
+          author: 'Chiefs Wire',
+          trustTier: 2,
+          signalScore: 52,
+          title: 'AFC team emerges as favorite to sign free agent WR Rashee Rice',
+          summary: 'One AFC contender is favored to land Rashee Rice.',
+          url: 'https://chiefswire.usatoday.com/afc-team-favorite-rashee-rice',
+          publishedAt: hAgo(4),
+          mentionedPlayers: [rashee]
+        }
+      ];
+      const kcGrouped = deduplicateAndGroupWireItems(
+        sortNewsWithBreakingPriority(kcStream, nowMs),
+        { nowMs, groupSimilarStories: true }
+      );
+      assert.equal(
+        kcGrouped.length,
+        3,
+        `6 Chiefs Rashee Rice saga items must collapse cleanly into 3 cards (Bills Visit, Waivers/Interest, Landing Spots); got ${kcGrouped.length}`
+      );
+      const kcSpec = kcGrouped.find(c => analyzePlayerTransactionSaga(c).facet === 'speculative_outlook');
+      assert.equal(kcSpec?.id, 'kc_landing_spots', 'Chiefs ESPN landing spots must beat AFC mystery-team clickbait');
+    } finally {
+      setActiveTeamConfig('49ers');
+    }
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

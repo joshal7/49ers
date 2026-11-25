@@ -607,7 +607,7 @@ function renderRelatedStoriesDrawerHtml(
       .toLowerCase();
 
   const rowsHtml = confirmingList
-    .slice(0, 8)
+    .slice(0, 12)
     .map(cr => {
       const crIsTw = cr?.type === 'tweet' || cr?.type === 'social';
       const crIsVid = cr?.type === 'video' || Boolean(cr?.videoId);
