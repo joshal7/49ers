@@ -23027,6 +23027,266 @@ await testAsync(
   }
 );
 
+await testAsync(
+  'Pre-Game Availability Shelf Life & Scale-Matched Top Ranking: prunes/sinks practice-return speculation once inactives drop, kickoff starts, or game completes (SF & all 32 teams)',
+  async () => {
+    const { computeTopSignalScore } = await import('../src/engine/digestExperienceEngine.js');
+    const { isOfficialGameDayInactivesAnnouncement } = await import('../src/engine/breakingClassifier.js');
+    const { setActiveTeamConfig } = await import('../src/config/teamRegistry.js');
+
+    const wk11KoMs = Date.parse('2026-11-23T01:20:00Z');
+    const postGameNow = Date.parse('2026-11-25T17:25:00Z'); // ~64h after Week 11 kickoff
+    const tMinus60m = wk11KoMs - 60 * 60_000; // Official inactives window [T-95m, Kickoff)
+    const inGameNow = wk11KoMs + 75 * 60_000; // Q2 live in-game
+
+    const evansSpecArticle = {
+      id: 'nn_evans_hoping',
+      type: 'article',
+      author: 'Kyle Posey',
+      outletName: 'Niners Nation',
+      trustTier: 2,
+      signalScore: 76,
+      title: "The 49ers are 'hoping' Mike Evans returns to practice, but it's 'still too early' to tell",
+      summary: "The only injury the San Francisco 49ers had in Week 10 was cornerback Renardo Green's back injury. Kyle Shanahan said Green is day-to-day, and the team will further assess him on Wednesday",
+      url: 'https://www.ninersnation.com/2026/11/17/mike-evans-practice-hope',
+      publishedAt: '2026-11-17T18:30:00Z',
+      mentionedPlayers: [{ id: '16737', name: 'Mike Evans' }, { id: '4427325', name: 'Renardo Green' }]
+    };
+    const evansSpecEcho1 = {
+      id: 'x_evans_hoping_1',
+      type: 'tweet',
+      author: 'Matt Barrows',
+      outletName: 'The Athletic',
+      trustTier: 1,
+      signalScore: 78,
+      title: 'Mike Evans and other rehabbing 49ers will fly into Colorado Springs today. Shanahan hoping to have Mike Evans back at practice this week.',
+      fullText: 'Mike Evans and other rehabbing 49ers will fly into Colorado Springs today. Shanahan hoping to have Mike Evans back at practice this week.',
+      url: 'https://x.com/mattbarrows/status/2122447687304073701',
+      publishedAt: '2026-11-16T21:52:09Z',
+      mentionedPlayers: [{ id: '16737', name: 'Mike Evans' }]
+    };
+    const evansSpecEcho2 = {
+      id: 'espn_evans_hoping_2',
+      type: 'article',
+      wireSource: 'espn_player_wire',
+      author: 'Nick Wagoner',
+      outletName: 'ESPN',
+      trustTier: 1,
+      signalScore: 72,
+      title: 'Head coach Kyle Shanahan said Monday that the 49ers are "hoping to" have Evans (Achilles) back at practice this week.',
+      url: 'https://www.espn.com/nfl/player/_/id/16737/mike-evans',
+      publishedAt: '2026-11-16T22:05:14Z',
+      mentionedPlayers: [{ id: '16737', name: 'Mike Evans' }]
+    };
+    const officialInactivesItem = {
+      id: 'official_wk11_inactives',
+      type: 'article',
+      author: '49ers.com Official',
+      outletName: '49ers.com',
+      trustTier: 1,
+      signalScore: 84,
+      title: 'Mike Evans Active vs. Vikings; 49ers Official Week 11 Inactives',
+      summary: 'WR Mike Evans is officially active for Sunday night in Mexico City.',
+      url: 'https://www.49ers.com/news/mike-evans-active-vs-vikings-inactives-week-11',
+      publishedAt: new Date(wk11KoMs - 88 * 60_000).toISOString(),
+      mentionedPlayers: [{ id: '16737', name: 'Mike Evans' }]
+    };
+    const permanentRosterMove = {
+      id: 'branch_roster_moves',
+      type: 'tweet',
+      author: 'Eric Branch',
+      outletName: 'San Francisco Chronicle',
+      trustTier: 1,
+      signalScore: 80,
+      title: '#49ers roster moves: Activated DT CJ West from injured reserve, Waived WR Brandin Cooks, Downgraded CB Nate Hobbs from questionable to out',
+      fullText: '#49ers roster moves: Activated DT CJ West from injured reserve, Waived WR Brandin Cooks, Downgraded CB Nate Hobbs from questionable to out',
+      url: 'https://x.com/Eric_Branch/status/2122999999999999991',
+      publishedAt: new Date(postGameNow - 72 * 3600_000).toISOString(),
+      mentionedPlayers: [{ id: '4686308', name: 'C.J. West' }]
+    };
+    const jlcFreshPff = {
+      id: 'jlc_pff_14m',
+      type: 'article',
+      author: 'Jennifer Lee Chan',
+      outletName: 'NBC Sports Bay Area',
+      trustTier: 1,
+      signalScore: 82,
+      title: "What PFF grades say about Brock Purdy, 49ers' plan in blowout Week 11 win vs. Vikings in Mexico City",
+      summary: 'Kyle Shanahan understood what he was facing and put Brock Purdy in a perfect position to succeed Sunday night.',
+      url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/pff-grades-purdy-vikings/9001/',
+      publishedAt: new Date(postGameNow - 14 * 60_000).toISOString(),
+      mentionedPlayers: [{ id: '4361741', name: 'Brock Purdy' }]
+    };
+    const olderPffPartner = {
+      id: 'wz_pff_38h',
+      type: 'article',
+      author: '49ers Webzone',
+      outletName: '49ers Webzone',
+      trustTier: 2,
+      signalScore: 74,
+      title: '49ers Week 11 PFF grades: Offense dominates Vikings in Mexico City',
+      summary: 'Complete Week 11 PFF grades from the Mexico City win.',
+      url: 'https://www.49erswebzone.com/articles/week-11-pff-grades/',
+      publishedAt: new Date(postGameNow - 38 * 3600_000).toISOString(),
+      mentionedPlayers: [{ id: '4361741', name: 'Brock Purdy' }]
+    };
+    const nbcsbaHistory1d = {
+      id: 'nbcsba_history_1d',
+      type: 'article',
+      author: '49ers on NBCSBA',
+      outletName: 'NBC Sports Bay Area',
+      trustTier: 1,
+      signalScore: 80,
+      title: 'How Brock Purdy-George Kittle tandem made 49ers franchise history in Week 11 win vs. Vikings',
+      summary: 'Brock Purdy and George Kittle made San Francisco 49ers franchise history in Week 11.',
+      url: 'https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/purdy-kittle-history/9002/',
+      publishedAt: new Date(postGameNow - 24 * 3600_000).toISOString(),
+      mentionedPlayers: [{ id: '4361741', name: 'Brock Purdy' }, { id: '3040151', name: 'George Kittle' }]
+    };
+    const webzoneMsg1d = {
+      id: 'webzone_msg_1d',
+      type: 'article',
+      author: '49ers Webzone',
+      outletName: '49ers Webzone',
+      trustTier: 2,
+      signalScore: 78,
+      title: '49ers send a message to the NFL with dismantling of Vikings defense',
+      summary: 'The 49ers dismantled the Vikings elite defense in Mexico City.',
+      url: 'https://www.49erswebzone.com/articles/49ers-message-vikings-defense/',
+      publishedAt: new Date(postGameNow - 26 * 3600_000).toISOString(),
+      mentionedPlayers: [{ id: '4361741', name: 'Brock Purdy' }]
+    };
+    const evansGameStat2d = {
+      id: 'maiocco_evans_stats_2d',
+      type: 'tweet',
+      author: 'Matt Maiocco',
+      outletName: 'NBC Sports Bay Area',
+      trustTier: 1,
+      signalScore: 84,
+      title: 'Mike Evans: Seven targets, six receptions, 109 yards, one TD.',
+      fullText: 'Mike Evans: Seven targets, six receptions, 109 yards, one TD.',
+      url: 'https://x.com/MaioccoNBCS/status/2123999999999999999',
+      publishedAt: new Date(postGameNow - 48 * 3600_000).toISOString(),
+      mentionedPlayers: [{ id: '16737', name: 'Mike Evans' }]
+    };
+
+    // 1. Classification precision: pre-game practice/return speculation detected, permanent moves & post-game recaps excluded
+    assert.equal(isPreGamePlayAvailabilityItem(evansSpecArticle), true, 'Practice-return hope + too-early-to-tell article must classify as pre-game availability');
+    assert.equal(isPreGamePlayAvailabilityItem(evansSpecEcho1), true, 'Rehabbing travel + hoping back at practice tweet must classify as pre-game availability');
+    assert.equal(isPreGamePlayAvailabilityItem(evansSpecEcho2), true, 'ESPN blurb with parenthetical (Achilles) hoping back at practice must classify as pre-game availability');
+    assert.equal(isOfficialGameDayInactivesAnnouncement(officialInactivesItem), true, 'Official active/inactives article must be recognized distinctly from earlier speculation');
+    assert.equal(isOfficialGameDayInactivesAnnouncement(evansSpecArticle), false, 'Mid-week speculation must NOT be treated as official inactives');
+    assert.equal(isPreGamePlayAvailabilityItem(permanentRosterMove), false, 'Official IR activation + waiver roster move must NOT be pruned as pre-game speculation');
+    assert.equal(isPreGamePlayAvailabilityItem(jlcFreshPff), false, 'Post-game PFF grades article must NOT classify as pre-game availability');
+    assert.equal(isPreGamePlayAvailabilityItem(evansGameStat2d), false, 'Post-game stat line must NOT classify as pre-game availability');
+
+    const makeSchedAppData = wk11Completed => ({
+      meta: { teamAbbr: 'SF', teamSlug: '49ers', currentWeek: wk11Completed ? 12 : 11 },
+      roster: {
+        players: [
+          { id: '16737', name: 'Mike Evans', position: 'WR', rosterBucket: 'active' },
+          { id: '4361741', name: 'Brock Purdy', position: 'QB', rosterBucket: 'active' },
+          { id: '3040151', name: 'George Kittle', position: 'TE', rosterBucket: 'active' },
+          { id: '4427325', name: 'Renardo Green', position: 'CB', rosterBucket: 'active' },
+          { id: '4686308', name: 'C.J. West', position: 'DT', rosterBucket: 'active' }
+        ]
+      },
+      health: {
+        gameDayRoster: { week: 11, officialPosted: !wk11Completed }
+      },
+      scheduleMatchup: {
+        upcomingMatchup: wk11Completed
+          ? { week: 12, oppAbbr: 'SEA', oppName: 'Seattle Seahawks', dateIso: '2026-11-29T21:25:00Z' }
+          : { week: 11, oppAbbr: 'MIN', oppName: 'Minnesota Vikings', dateIso: '2026-11-23T01:20:00Z' },
+        schedule: [
+          { week: 10, completed: true, dateIso: '2026-11-15T21:25:00Z', opponent: { abbr: 'DAL', name: 'Dallas Cowboys' } },
+          { week: 11, completed: wk11Completed, dateIso: '2026-11-23T01:20:00Z', opponent: { abbr: 'MIN', name: 'Minnesota Vikings' } },
+          { week: 12, completed: false, dateIso: '2026-11-29T21:25:00Z', opponent: { abbr: 'SEA', name: 'Seattle Seahawks' } }
+        ]
+      }
+    });
+
+    // 2. T-60m Official Inactives Declared Window: earlier Mon-Tue speculation sinks below official inactives & normal stories in Top
+    const preKoData = makeSchedAppData(false);
+    const t60Prioritized = sortNewsWithBreakingPriority(
+      [evansSpecArticle, evansSpecEcho1, evansSpecEcho2, officialInactivesItem, permanentRosterMove],
+      tMinus60m,
+      { appData: preKoData }
+    );
+    const t60Grouped = deduplicateAndGroupWireItems(t60Prioritized, { nowMs: tMinus60m, appData: preKoData, groupSimilarStories: true });
+    const t60Top = sortNewsFeedByMode(t60Grouped, 'top', { nowMs: tMinus60m, appData: preKoData });
+    const t60SpecIdx = t60Top.findIndex(x => x.id === 'nn_evans_hoping' || x.id === 'x_evans_hoping_1');
+    const t60InactIdx = t60Top.findIndex(x => x.id === 'official_wk11_inactives');
+    assert.ok(t60InactIdx >= 0 && t60SpecIdx > t60InactIdx, 'Once official inactives drop at T-95m, earlier practice-return speculation must sink below official inactives in Top');
+    assert.ok(computeTopSignalScore(t60Top[t60SpecIdx], tMinus60m) < 0, 'Stale pre-inactives speculation must have a strictly negative Top score (never resurrected to positive salience)');
+
+    // 3. During Live Game (kickoff started): BOTH earlier speculation AND pre-game inactives sink to bottom of Top (never resurrected!)
+    const inGamePrioritized = sortNewsWithBreakingPriority(
+      [evansSpecArticle, officialInactivesItem, permanentRosterMove],
+      inGameNow,
+      { appData: preKoData }
+    );
+    const inGameTop = sortNewsFeedByMode(inGamePrioritized, 'top', { nowMs: inGameNow, appData: preKoData });
+    assert.equal(inGameTop[0].id, 'branch_roster_moves', 'Non-availability roster move must outrank both pre-game speculation and pre-game inactives once game starts');
+    assert.ok(computeTopSignalScore(inGameTop[inGameTop.length - 1], inGameNow) < 0, 'Pre-game availability items must stay strictly negative in Top during live game');
+
+    // 4. Post-Game (Week 11 completed): Mike Evans practice-hope article is filtered out, AND fresh 14m PFF grades + 1d Week 11 recaps lead Top cleanly!
+    const postData = makeSchedAppData(true);
+    assert.equal(isStaleCompletedGameAvailabilityItem(evansSpecArticle, postData, postGameNow), true, 'Pre-Week-11 Mike Evans practice-hope article must be pruned after Week 11 finishes');
+    const postFiltered = filterOutCompletedGameAvailabilityItems(
+      [evansSpecArticle, evansSpecEcho1, evansSpecEcho2, jlcFreshPff, olderPffPartner, nbcsbaHistory1d, webzoneMsg1d, evansGameStat2d, permanentRosterMove],
+      postData,
+      postGameNow
+    );
+    assert.ok(!postFiltered.some(x => x.id === 'nn_evans_hoping' || x.id === 'x_evans_hoping_1' || x.id === 'espn_evans_hoping_2'), 'All pre-Week-11 Mike Evans practice-return speculation echoes must be pruned post-game');
+
+    // Even if unpruned items are passed directly to Top sort (or static schedule has completed:false past kickoff),
+    // stale pre-game speculation MUST sink to the very bottom below all post-game articles AND fresh 14m PFF article MUST rank #1!
+    const staleStaticData = makeSchedAppData(false); // completed: false, yet dateIso is 64h in the past!
+    const directPrioritized = sortNewsWithBreakingPriority(
+      [evansSpecArticle, evansSpecEcho1, evansSpecEcho2, jlcFreshPff, olderPffPartner, nbcsbaHistory1d, webzoneMsg1d, evansGameStat2d, permanentRosterMove],
+      postGameNow,
+      { appData: staleStaticData }
+    );
+    const directGrouped = deduplicateAndGroupWireItems(directPrioritized, { nowMs: postGameNow, appData: staleStaticData, groupSimilarStories: true });
+    const directTop = sortNewsFeedByMode(directGrouped, 'top', { nowMs: postGameNow, appData: staleStaticData });
+    assert.equal(directTop[0].id, 'jlc_pff_14m', 'Fresh 14m-old PFF grades article must lead Top even when clustered with a 38h-old PFF article');
+    const staleEvansRankIdx = directTop.findIndex(x => x.id === 'nn_evans_hoping' || x.id === 'x_evans_hoping_1');
+    const nbcsbaIdx = directTop.findIndex(x => x.id === 'nbcsba_history_1d');
+    const webzoneIdx = directTop.findIndex(x => x.id === 'webzone_msg_1d');
+    assert.ok(staleEvansRankIdx > nbcsbaIdx && staleEvansRankIdx > webzoneIdx, '7d-old Mike Evans practice-hope cluster must sink to the very bottom below all 1d Week 11 articles even on stale static schedule JSON');
+
+    // 5. All-32-team parity check (Minnesota Vikings): pre-game practice speculation sinks below post-game recaps after kickoff
+    setActiveTeamConfig('vikings');
+    try {
+      const minData = {
+        meta: { teamAbbr: 'MIN', teamSlug: 'vikings', currentWeek: 12 },
+        roster: { players: [{ id: '4262921', name: 'Justin Jefferson', position: 'WR', rosterBucket: 'active' }] },
+        scheduleMatchup: {
+          upcomingMatchup: { week: 12, oppAbbr: 'GB', oppName: 'Green Bay Packers', dateIso: '2026-11-29T18:00:00Z' },
+          schedule: [
+            { week: 11, completed: true, dateIso: '2026-11-23T01:20:00Z', opponent: { abbr: 'SF', name: 'San Francisco 49ers' } },
+            { week: 12, completed: false, dateIso: '2026-11-29T18:00:00Z', opponent: { abbr: 'GB', name: 'Green Bay Packers' } }
+          ]
+        }
+      };
+      const minSpec = {
+        id: 'min_jj_hope',
+        type: 'article',
+        author: 'Vikings Beat',
+        outletName: 'Daily Norseman',
+        title: "Vikings are 'hoping' Justin Jefferson returns to practice, but it's 'still too early' to tell",
+        url: 'https://www.dailynorseman.com/2026/11/17/jefferson-practice',
+        publishedAt: '2026-11-17T18:00:00Z',
+        mentionedPlayers: [{ id: '4262921', name: 'Justin Jefferson' }]
+      };
+      assert.equal(isStaleCompletedGameAvailabilityItem(minSpec, minData, postGameNow), true, 'Vikings pre-Week-11 practice-return speculation must also prune cleanly after Week 11 completes');
+    } finally {
+      setActiveTeamConfig('49ers');
+    }
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

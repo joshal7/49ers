@@ -14,6 +14,9 @@
 
 import { computeNewsSalienceScore } from './antiFluffFilter.js';
 import {
+  isOfficialGameDayInactivesAnnouncement,
+  isPreGamePlayAvailabilityItem,
+  isStaleCompletedGameAvailabilityItem,
   isUrgentBreakingBadge,
   stripRedundantAuthorBoilerplate
 } from './breakingClassifier.js';
@@ -150,23 +153,50 @@ function getItemTimestampMs(item = {}) {
   return Number.isFinite(ms) ? ms : 0;
 }
 
-export function computeTopSignalScore(item = {}, nowMs = Date.now()) {
+export function computeTopSignalScore(item = {}, nowMs = Date.now(), { appData = null } = {}) {
+  const storyRank = Number(item.storyRank);
+  // Strictly honor stale pre-game availability demotion & negative priority/rank
+  // (never fall back to positive salience when storyRank is negative or item is stale pre-game!).
+  if (
+    item.isStalePreGameAvailability ||
+    (Number(item.breakingPriority) || 0) < 0 ||
+    (Number.isFinite(storyRank) && storyRank < 0) ||
+    (appData && isStaleCompletedGameAvailabilityItem(item, appData, nowMs))
+  ) {
+    return Number.isFinite(storyRank) && storyRank < 0 ? storyRank : -500;
+  }
+
   const pubMs = getItemTimestampMs(item);
   const ageHours = pubMs > 0 ? Math.max(0, (nowMs - pubMs) / 3_600_000) : 72;
-  const storyRank = Number(item.storyRank);
-  const baseSignal = Number.isFinite(storyRank) && storyRank > 0
+  const hasStoryRank = Number.isFinite(storyRank) && storyRank > 0;
+  const baseSignal = hasStoryRank
     ? storyRank
     : computeNewsSalienceScore(item) * 2.2;
+
+  const isSpeculativePreGameAvail =
+    isPreGamePlayAvailabilityItem(item) && !isOfficialGameDayInactivesAnnouncement(item);
+
+  // Scale-matched multiplicative corroboration lift that decays with age so multi-day
+  // clusters never overwhelm fresh power-law decayed `storyRank` items!
   const relatedCount = item.confirmingReports?.length || 0;
-  const corroborationBonus = item._isLowSalienceRoundupCluster
-    ? 0
-    : item.clusterKind === 'similar'
-      ? Math.min(12, relatedCount * 3.5)
-      : Math.min(28, relatedCount * 8);
-  const urgentBonus = isUrgentBreakingBadge(item.breakingBadge) ? 35 : 0;
-  // Gentle 60-hour half-life so top stories/film breakdowns of the cycle dominate while stale multi-day items decay cleanly
-  const gentleDecay = Math.pow(0.5, Math.max(0, ageHours - 6) / 60);
-  return (baseSignal + corroborationBonus + urgentBonus) * gentleDecay;
+  const corrFreshness = Math.pow(0.5, Math.max(0, ageHours - 3) / 30);
+  const corrMultiplier =
+    relatedCount <= 0 || item._isLowSalienceRoundupCluster || isSpeculativePreGameAvail
+      ? 1
+      : item.clusterKind === 'similar'
+        ? 1 + Math.min(0.18, Math.log2(1 + relatedCount) * 0.08) * corrFreshness
+        : 1 + Math.min(0.45, Math.log2(1 + relatedCount) * 0.18) * corrFreshness;
+
+  const urgentBonus = isUrgentBreakingBadge(item.breakingBadge)
+    ? Math.max(35, baseSignal * 0.5)
+    : 0;
+
+  // Speculative pre-game play/practice availability has a short 14h half-life even mid-week;
+  // general stories use a gentle 60h half-life on top of `storyRank` time gravity.
+  const decayHalfLife = isSpeculativePreGameAvail ? 14 : 60;
+  const decayGraceHours = isSpeculativePreGameAvail ? 2 : 6;
+  const gentleDecay = Math.pow(0.5, Math.max(0, ageHours - decayGraceHours) / decayHalfLife);
+  return (baseSignal * corrMultiplier + urgentBonus) * gentleDecay;
 }
 
 export function compareLatestNewsItems(a = {}, b = {}) {
@@ -176,7 +206,7 @@ export function compareLatestNewsItems(a = {}, b = {}) {
   return getItemTimestampMs(b) - getItemTimestampMs(a);
 }
 
-export function sortNewsFeedByMode(items = [], sortMode = 'top', { nowMs = Date.now() } = {}) {
+export function sortNewsFeedByMode(items = [], sortMode = 'top', { nowMs = Date.now(), appData = null } = {}) {
   const mode = normalizeNewsSortMode(sortMode);
   const list = Array.isArray(items) ? [...items] : [];
   if (list.length <= 1) return list;
@@ -185,13 +215,23 @@ export function sortNewsFeedByMode(items = [], sortMode = 'top', { nowMs = Date.
     return list.sort(compareLatestNewsItems);
   }
 
-  // Default: 'top' (storyRank impact + freshness + corroboration decay, with live in-game urgent injuries pinned #1)
+  // Default: 'top' (storyRank impact + freshness + scale-matched corroboration decay,
+  // with live in-game urgent injuries pinned #1 and stale pre-game availability sunk to the bottom)
+  const scoreOpts = appData ? { appData } : undefined;
   return list.sort((a, b) => {
     const aLiveInj = a?.isInGameInjury && isUrgentBreakingBadge(a?.breakingBadge) ? 1 : 0;
     const bLiveInj = b?.isInGameInjury && isUrgentBreakingBadge(b?.breakingBadge) ? 1 : 0;
     if (aLiveInj !== bLiveInj) return bLiveInj - aLiveInj;
-    const diff = computeTopSignalScore(b, nowMs) - computeTopSignalScore(a, nowMs);
-    if (Math.abs(diff) >= 0.4) return diff;
+
+    const aScore = computeTopSignalScore(a, nowMs, scoreOpts);
+    const bScore = computeTopSignalScore(b, nowMs, scoreOpts);
+    const aStale = aScore < 0 ? 1 : 0;
+    const bStale = bScore < 0 ? 1 : 0;
+    if (aStale !== bStale) return aStale - bStale;
+
+    const diff = bScore - aScore;
+    const threshold = Math.max(0.02, Math.min(0.4, Math.max(Math.abs(aScore), Math.abs(bScore)) * 0.04));
+    if (Math.abs(diff) >= threshold) return diff;
     return getItemTimestampMs(b) - getItemTimestampMs(a);
   });
 }

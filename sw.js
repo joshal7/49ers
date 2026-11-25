@@ -10,8 +10,8 @@ const SW_DATA_BASE = SW_TEAM_SLUG === '49ers' ? './data' : `./data/teams/${SW_TE
 const CACHE_NAME = IS_NFL_HUB_HOST
   ? 'nfl-hub-v28'
   : SW_TEAM_SLUG === '49ers'
-    ? '49ers-faithful-v184'
-    : `${SW_TEAM_SLUG}-hq-v55`;
+    ? '49ers-faithful-v185'
+    : `${SW_TEAM_SLUG}-hq-v56`;
 const PRESERVED_CACHE_PREFIXES =
   SW_TEAM_SLUG === '49ers'
     ? ['49ers-podcast-studio-audio-']

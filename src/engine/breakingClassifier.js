@@ -209,13 +209,16 @@ const EXPECTED_ROUTINE_PRACTICE_ABSENCE_REGEX =
   /\b(isn['’]?t surprising|not (?:a )?(?:particularly )?surprising|wasn['’]?t expected to practice|not expected to be ready this week|having previously reported|veteran rest|vet rest|not injury related|\bnir\b)\b/i;
 
 const PRE_GAME_AVAILABILITY_NOISE_REGEX =
-  /\b(inactives?\b|is inactive|are inactive|as inactive|officially inactive|declared inactive|officially active|active vs\.?|active against|expected to be active|will be active|won['’]?t play|will not play|not playing today|not playing tonight|ruled out|rule[sd]? out (?:one|two|three|four|five|\d+)|unlikely to play|likely to play|expected to play|could play|hopes to play|plans to play|set to play|good to go|cleared to play|cleared for week \d+|expected to take on a full workload|full workload|game-time decision|remains on injured reserve|didn['’]?t activate|did not activate|not activated from|doesn['’]?t have a (?:game |injury )?designation|does not carry an? (?:official )?(?:injury |game )?designation|no (?:injury |game )?designation|listed as (?:questionable|doubtful|out)|deemed (?:questionable|doubtful|out))\b/i;
+  /\b(inactives?\b|is inactive|are inactive|as inactive|officially inactive|declared inactive|officially active|active vs\.?|active against|expected to be active|will be active|won['’]?t play|will not play|not playing today|not playing tonight|ruled out|rule[sd]? out (?:one|two|three|four|five|\d+)|unlikely to play|likely to play|expected to play|could play|hopes to play|hoping to play|plans to play|set to play|good to go|cleared to play|cleared for week \d+|expected to take on a full workload|full workload|game-time decision|remains on injured reserve|didn['’]?t activate|did not activate|not activated from|doesn['’]?t have a (?:game |injury )?designation|does not carry an? (?:official )?(?:injury |game )?designation|no (?:injury |game )?designation|listed as (?:questionable|doubtful|out)|deemed (?:questionable|doubtful|out)|hoping['"“”‘’]?\s+(?:to['"“”‘’]?\s+have\s+)?[a-z0-9 .()'-]{0,44}\b(?:returns?|back)\s+(?:to|at|in)\s+practice|hopes?\s+(?:to\s+(?:have|get)\s+)?[a-z0-9 .()'-]{0,44}\b(?:returns?|back)\s+(?:to|at|in)\s+practice|hopeful\s+to\s+(?:get|have)\s+[a-z0-9 .()'-]{0,44}\b(?:back|return)\s+(?:to|at|in)\s+practice|still\s+too\s+early\s+to\s+(?:tell|know|say)|not\s+expect(?:ed|ing)\s+[a-z0-9 .()'-]{0,40}(?:to\s+(?:practice|play|be\s+ready)|this\s+week)|trending\s+toward\s+playing|chance\s+to\s+(?:play|return\s+(?:to\s+practice|this\s+week))|further\s+assess\s+[a-z .'-]{0,20}\s+on\s+(?:wednesday|thursday|friday))\b/i;
+
+const OFFICIAL_GAMEDAY_INACTIVES_REGEX =
+  /\b(official(?:ly)?\s+(?:week\s+\d+\s+)?inactives?\b|inactives?\s+(?:vs\.?|versus|against|at|for\s+week\s+\d+)|week\s+\d+\s+inactives?\b|declared\s+inactive|officially\s+inactive|officially\s+active|active\s+(?:vs\.?|versus|against)\b|inactives?\s*[:—–-])\b/i;
 
 const LEAD_PERMANENT_OR_POSTGAME_EXCLUSION_REGEX =
-  /\b(arrested|taken into custody|charged with|indicted|suspended|commissioner['’]?s exempt|under (?:nfl |league |police |federal )?investigation|lawsuit|\btrade[!: ]|agree[sd]? to (?:a )?trade|completing a trade|finalizing a trade|sending [\s\S]{0,60}to (?:the )?(?:49ers|san francisco|niners)|traded (?:to|for)|(?:49ers|san francisco|niners) (?:officially )?(?:acquire[sd]?|acquiring|re-acquir(?:e[sd]?|ing)|trade[sd]? for)|has been traded|agreed to terms|contract extension|signed a \d+-year|signs a \d+-year|restructured his contract|reinstat(?:e|ed|ement)|left squad|hires? [a-z .'-]+ as agent|eyes return to (?:the )?nfl|bonus (?:repayment|forfeiture)|placed on injured reserve|placed [a-z .'()-]+ on (?:injured reserve|ir)\b|put [a-z .'()-]+ on ir\b|lose [a-z .'()-]+ to (?:ir|season-ending)|49ers roster move:|signed [a-z .'()-]+ to (?:the )?(?:active roster|practice squad)|out for (?:the )?(?:rest of (?:the )?)?(?:\d{4} )?season|miss the (?:remainder|rest) of the (?:\d{4} )?season|season-ending|done for the season|season likely over|fractured|broken (?:ankle|leg|arm|foot|collarbone|wrist|hand|fibula|tibia)|torn (?:acl|achilles|pectoral|meniscus|patellar)|carted (?:off|to|away|from|back|into|down)|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming\s+)?out|air\s*cast|questionable to return|doubtful to return|ruled out for the rest|will not return|won['’]?t return|did not return|left (?:sunday|monday|thursday|saturday|the )['’]?s? game|exited (?:sunday|monday|thursday|saturday|the )['’]?s? game|suffered (?:a|an|injuries)\b|sustained (?:a|an)\b|\d+-\d+ (?:win|loss|victory)|beat(?:s)? (?:the )?[a-z]+|reaches career milestone|amid [a-z]+ game|notebook:|reacts? to (?:bounce-back )?win|react following)\b/i;
+  /\b(arrested|taken into custody|charged with|indicted|suspended|commissioner['’]?s exempt|under (?:nfl |league |police |federal )?investigation|lawsuit|\btrade[!: ]|agree[sd]? to (?:a )?trade|completing a trade|finalizing a trade|sending [\s\S]{0,60}to (?:the )?(?:49ers|san francisco|niners)|traded (?:to|for)|(?:49ers|san francisco|niners) (?:officially )?(?:acquire[sd]?|acquiring|re-acquir(?:e[sd]?|ing)|trade[sd]? for)|has been traded|agreed to terms|contract extension|signed a \d+-year|signs a \d+-year|restructured his contract|reinstat(?:e|ed|ement)|left squad|hires? [a-z .'-]+ as agent|eyes return to (?:the )?nfl|bonus (?:repayment|forfeiture)|placed on injured reserve|placed [a-z .'()-]+ on (?:injured reserve|ir)\b|put [a-z .'()-]+ on ir\b|lose [a-z .'()-]+ to (?:ir|season-ending)|designate[sd]? (?:dt |wr |rb |cb |lb |te |ol |de |qb |s )?[a-z .'-]{2,28} (?:for|to) return|open(?:ed|s|ing)? [a-z .'-]{0,32}(?:21-day )?practice window|21-day (?:practice )?window|activated (?:[a-z .'-]{2,28} )?(?:from|off) (?:ir|injured reserve)|\bwaived\b|officially released|has been released|have released|49ers roster move:|roster moves?:|signed [a-z .'()-]+ to (?:the )?(?:active roster|53-man roster|practice squad)|out for (?:the )?(?:rest of (?:the )?)?(?:\d{4} )?season|miss the (?:remainder|rest) of the (?:\d{4} )?season|season-ending|done for the season|season likely over|fractured|broken (?:ankle|leg|arm|foot|collarbone|wrist|hand|fibula|tibia)|torn (?:acl|achilles|pectoral|meniscus|patellar)|carted (?:off|to|away|from|back|into|down)|(?:onto|on|into)\s+(?:a|the)\s+(?:medical\s+)?cart|cart\s+(?:is\s+)?(?:coming\s+)?out|air\s*cast|questionable to return|doubtful to return|ruled out for the rest|will not return|won['’]?t return|did not return|left (?:sunday|monday|thursday|saturday|the )['’]?s? game|exited (?:sunday|monday|thursday|saturday|the )['’]?s? game|suffered (?:a|an|injuries)\b|sustained (?:a|an)\b|\d+-\d+ (?:win|loss|victory)|beat(?:s)? (?:the )?[a-z]+|blowout\s+(?:week\s+\d+\s+)?win|dismantl(?:e|es|ed|ing)|franchise history|pff\s+grades?|snap\s+counts?|reaches career milestone|amid [a-z]+ game|notebook:|reacts? to (?:bounce-back )?win|react following)\b/i;
 
 const PRE_GAME_PLAY_AVAILABILITY_REGEX =
-  /\b(inactives?\b|officially inactive|declared inactive|is inactive|are inactive|as inactive|officially active|active vs\.?|active against|expected to be active|will be active|won['’]?t play|will not play|not playing today|not playing tonight|unlikely to play|likely to play|expected to play|could play|hopes to play|planning to play|plans to play|set to play|good to go|cleared to play|cleared for week \d+|prepared to return (?:sunday|monday|thursday|saturday|today|tonight)|to return in week \d+|welcoming back [a-z0-9 -]+ for [a-z0-9 .'-]+ game|ruled out|rule[sd]? out (?:one|two|three|four|five|\d+)|will miss (?:sunday|monday|thursday|saturday|today|tonight|week \d+)|won['’]?t be available (?:sunday|monday|thursday|saturday|today|tonight|in week \d+)|expect [a-z .'-]+ to be available (?:sunday|monday|thursday|saturday|today|tonight)|listed as (?:questionable|doubtful|out)|deemed (?:questionable|doubtful|out)|questionable (?:designation|game status|for (?:sunday|monday|thursday|saturday|today|tonight|week \d+))|doubtful for (?:sunday|monday|thursday|saturday|today|tonight|week \d+)|game-time decision|expected to take on a full workload|full workload (?:sunday|monday|thursday|saturday|today|tonight|against|vs)|doesn['’]?t have a (?:game |injury )?designation|does not carry an? (?:official )?(?:injury |game )?designation|carries no (?:game |injury )?designation|no (?:injury |game )?designation for|questionable (?:designation|game status)[\s\S]{0,25}removed|off the injury report|didn['’]?t activate|did not activate|not activated from|remains on injured reserve|(?:final )?(?:injury|availability|status) updates?\b[\s\S]{0,45}\b(?:before|ahead of|on\b)|final updates? ahead of (?:week \d+|sunday|monday|thursday|saturday)|makes?\s+(?:an?\s+)?(?:[a-z0-9 .'-]{0,40}\s+)?announcement\s+(?:on\s+[a-z0-9 .'-]{2,45}\s+)?(?:before|ahead of)\s+[a-z0-9 .'-]{2,25}\s+game|suffers? [a-z ]*injury ahead of [a-z0-9 .'-]+ game|limited (?:at|in) (?:wednesday|thursday|friday|today)['’]?s? practice|limited at practice today|practiced on a limited basis|didn['’]?t (?:participate in(?: [a-z]+['’]?s?)? practice|practice (?:wednesday|thursday|friday|today))|will not practice today|not going today but hopefully a chance tomorrow|returns? to full practice ahead of|eyes return[\s\S]{0,60}\b(?:could play|questionable|hamstring|ankle|knee|injury|sunday|week \d+))\b/i;
+  /\b(inactives?\b|officially inactive|declared inactive|is inactive|are inactive|as inactive|officially active|active vs\.?|active against|expected to be active|will be active|won['’]?t play|will not play|not playing today|not playing tonight|unlikely to play|likely to play|expected to play|could play|hopes to play|hoping to play|planning to play|plans to play|set to play|good to go|cleared to play|cleared for week \d+|prepared to return (?:sunday|monday|thursday|saturday|today|tonight)|to return in week \d+|welcoming back [a-z0-9 -]+ for [a-z0-9 .'-]+ game|ruled out|rule[sd]? out (?:one|two|three|four|five|\d+)|will miss (?:sunday|monday|thursday|saturday|today|tonight|week \d+)|won['’]?t be available (?:sunday|monday|thursday|saturday|today|tonight|in week \d+)|expect [a-z .'-]+ to be available (?:sunday|monday|thursday|saturday|today|tonight)|listed as (?:questionable|doubtful|out)|deemed (?:questionable|doubtful|out)|questionable (?:designation|game status|for (?:sunday|monday|thursday|saturday|today|tonight|week \d+))|doubtful for (?:sunday|monday|thursday|saturday|today|tonight|week \d+)|game-time decision|expected to take on a full workload|full workload (?:sunday|monday|thursday|saturday|today|tonight|against|vs)|doesn['’]?t have a (?:game |injury )?designation|does not carry an? (?:official )?(?:injury |game )?designation|carries no (?:game |injury )?designation|no (?:injury |game )?designation for|questionable (?:designation|game status)[\s\S]{0,25}removed|off the injury report|didn['’]?t activate|did not activate|not activated from|remains on injured reserve|(?:final )?(?:injury|availability|status) updates?\b[\s\S]{0,45}\b(?:before|ahead of|on\b)|final updates? ahead of (?:week \d+|sunday|monday|thursday|saturday)|makes?\s+(?:an?\s+)?(?:[a-z0-9 .'-]{0,40}\s+)?announcement\s+(?:on\s+[a-z0-9 .'-]{2,45}\s+)?(?:before|ahead of)\s+[a-z0-9 .'-]{2,25}\s+game|suffers? [a-z ]*injury ahead of [a-z0-9 .'-]+ game|limited (?:at|in) (?:wednesday|thursday|friday|today)['’]?s? practice|limited at practice today|practiced on a limited basis|didn['’]?t (?:participate in(?: [a-z]+['’]?s?)? practice|practice (?:wednesday|thursday|friday|today))|did not participate in practice|will not practice today|not practicing (?:wednesday|thursday|friday|today)|not seen at practice|not going today but hopefully a chance tomorrow|returns? to full practice ahead of|eyes return[\s\S]{0,60}\b(?:could play|questionable|hamstring|ankle|knee|injury|sunday|week \d+)|hoping['"“”‘’]?\s+(?:to['"“”‘’]?\s+have\s+)?[a-z0-9 .()'-]{0,44}\b(?:returns?|back)\s+(?:to|at|in)\s+practice|hopes?\s+(?:to\s+(?:have|get)\s+)?[a-z0-9 .()'-]{0,44}\b(?:returns?|back)\s+(?:to|at|in)\s+practice|hopeful\s+to\s+(?:get|have)\s+[a-z0-9 .()'-]{0,44}\b(?:back|return)\s+(?:to|at|in)\s+practice|(?:could|might|expected|set|unlikely|not expected)\s+(?:to\s+)?(?:return\s+to\s+practice|practice\s+(?:this\s+week|wednesday|thursday|friday))|not\s+expect(?:ed|ing)\s+[a-z0-9 .()'-]{0,40}(?:to\s+(?:practice|play|be\s+ready)|this\s+week)|(?:still\s+)?too\s+early\s+to\s+(?:tell|know|say)[\s\S]{0,50}\b(?:practice|play|return|status|week|sunday|monday|thursday)|(?:practice|return|play|status)[\s\S]{0,50}\b(?:still\s+)?too\s+early\s+to\s+(?:tell|know|say)|further\s+assess\s+[a-z .'-]{0,20}\s+on\s+(?:wednesday|thursday|friday)|trending\s+toward\s+(?:playing|returning|missing)|optimistic\s+(?:about\s+)?[a-z0-9 .()'-]{0,40}\b(?:will\s+play|can\s+play|playing|returns?\s+to\s+practice|chances?\s+to\s+play)|chance\s+to\s+(?:play|return\s+(?:to\s+practice|this\s+week|sunday|monday|thursday|week\s+\d+))|status\s+(?:for\s+(?:week\s+\d+|sunday|monday|thursday|saturday|tonight|today)|remains?\s+up\s+in\s+the\s+air)|rehabbing\s+[a-z0-9 .'-]{0,28}\s+(?:will\s+)?fly(?:ing)?\s+(?:to|into)|flying\s+(?:to|into)\s+[a-z ]{2,24}\s+tonight\s+to\s+be\s+with)\b/i;
 
 const CLUSTER_PLAY_AVAILABILITY_HEADLINE_REGEX =
   /\b(cleared for week \d+|cleared to play|inactives?\b|who plays|likely to play|unlikely to play|won['’]?t play|will not play|ruled out|expected to play|game-time decision|play likelihood|play probability|practice & availability|availability report|injury designations|availability outlook|active vs\.?|inactive vs\.?)\b/i;
@@ -439,10 +442,21 @@ export function classifyNewsItemCategory(item = {}) {
 }
 
 /**
+ * Returns true if `item` is an official game-day actives/inactives announcement
+ * (distinct from earlier mid-week speculation about whether a player might practice or play).
+ */
+export function isOfficialGameDayInactivesAnnouncement(item = {}) {
+  if (!item || typeof item !== 'object') return false;
+  const rawLead = extractPrimaryClaimText(item);
+  if (!rawLead) return false;
+  return OFFICIAL_GAMEDAY_INACTIVES_REGEX.test(`${rawLead} ${item.title || item.headline || ''}`);
+}
+
+/**
  * Returns true if `item` (article, tweet, video, or sourceLink) is primarily about
  * single-game pre-kickoff player availability / who is likely to play / won't play /
- * game-day active or inactive status / weekly practice participation, rather than a
- * permanent roster move, post-game injury diagnosis, trade, or game recap.
+ * game-day active or inactive status / weekly practice participation or return-to-practice
+ * speculation, rather than a permanent roster move, post-game injury diagnosis, trade, or game recap.
  */
 export function isPreGamePlayAvailabilityItem(item = {}) {
   if (!item || typeof item !== 'object') return false;
@@ -504,8 +518,22 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
   const completedWeeks = [];
   let latestCompleted = null;
   let latestKoMs = -Infinity;
+  let latestElapsedKoMs = -Infinity;
   for (const g of schedule) {
-    if (!g || !g.completed || g.isByeWeek) continue;
+    if (!g || g.isByeWeek) continue;
+    const koMs = Date.parse(g.dateIso || '');
+    const statusLower = String(g.statusDetail || '').toLowerCase();
+    const stateLower = String(g.statusState || '').toLowerCase();
+    const isTbd = Boolean(g.opponent?.isTbd || String(g.opponent?.abbr || '').toUpperCase() === 'TBD');
+    const isDelayedOrCancelled = /\b(postponed|canceled|cancelled|delayed|weather delay|lightning delay|suspended)\b/.test(statusLower);
+    const statusIndicatesLive =
+      stateLower === 'in' ||
+      Boolean(g.isLive) ||
+      /\b(q1|q2|q3|q4|1st|2nd|3rd|4th|halftime|in progress|ot|overtime|end of (?:1st|2nd|3rd|4th))\b/.test(statusLower);
+    if (!isTbd && !isDelayedOrCancelled && !statusIndicatesLive && Number.isFinite(koMs) && ts > koMs + 5.5 * 3600_000) {
+      if (koMs > latestElapsedKoMs) latestElapsedKoMs = koMs;
+    }
+    if (!g.completed) continue;
     const wkNum = Number(g.week);
     if (
       String(g.seasonType || 'REG').toUpperCase() !== 'PRE' &&
@@ -515,7 +543,6 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     ) {
       completedWeeks.push(wkNum);
     }
-    const koMs = Date.parse(g.dateIso || '');
     if (Number.isFinite(koMs) && koMs > latestKoMs && koMs <= ts + 6 * 3600_000) {
       latestKoMs = koMs;
       latestCompleted = g;
@@ -538,8 +565,20 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
   );
   const upcomingKickoffMs = Number.isFinite(rawUpcomingKoMs) ? rawUpcomingKoMs : null;
 
+  // Detect T-95m pre-kickoff official inactives/actives declaration window (or explicit officialPosted telemetry)
+  const gameDayRoster = appData?.health?.gameDayRoster || appData?.scheduleMatchup?.upcomingMatchup?.gameDayRoster || null;
+  const inactivesOfficialPosted = Boolean(
+    gameDayRoster?.officialPosted &&
+      (!upcomingWeek || !gameDayRoster?.week || Number(gameDayRoster.week) === Number(upcomingWeek))
+  );
+  const inactivesDeclaredWindow = Boolean(
+    (upcomingKickoffMs !== null && ts >= upcomingKickoffMs - 95 * 60_000 && ts < upcomingKickoffMs) ||
+      (inactivesOfficialPosted && (upcomingKickoffMs === null || ts < upcomingKickoffMs))
+  );
+
   const latestCompletedWeek = latestCompleted ? Number(latestCompleted.week) || null : null;
   const latestCompletedKickoffMs = Number.isFinite(latestKoMs) ? latestKoMs : null;
+  const latestElapsedKickoffMs = Number.isFinite(latestElapsedKoMs) ? latestElapsedKoMs : latestCompletedKickoffMs;
   const latestCompletedAtMs = latestCompleted?.completedAt ? Date.parse(latestCompleted.completedAt) : NaN;
   const latestCompletedEndMs = Number.isFinite(latestCompletedAtMs)
     ? Math.min(ts, latestCompletedAtMs)
@@ -554,6 +593,7 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     teamConfig: resolvedTeam,
     latestCompletedWeek,
     latestCompletedKickoffMs,
+    latestElapsedKickoffMs,
     latestCompletedEndMs,
     latestCompletedOppAbbr,
     latestCompletedOppNickname,
@@ -562,6 +602,8 @@ export function resolveGameNewsContext(appData = null, nowMs = Date.now()) {
     upcomingKickoffMs,
     upcomingOppAbbr,
     upcomingOppNickname,
+    inactivesDeclaredWindow,
+    inactivesOfficialPosted,
     tradeDeadlineMs,
     rosterPlayers: Array.isArray(appData?.roster?.players) ? appData.roster.players : []
   };
@@ -1423,8 +1465,38 @@ export function classifyBreakingItem(item = {}, nowMs = Date.now(), gameContext 
     }
   }
 
-  // Demote any pre-game availability item from a completed game regardless of post-game hour window
-  const completedKoRef = ctx?.completedKickoffMs ?? ctx?.latestCompletedKickoffMs ?? null;
+  // 1b. T-95m PRE-KICKOFF OFFICIAL INACTIVES DECLARED WINDOW:
+  //     Once official actives/inactives drop ahead of kickoff, earlier Mon-Sat speculation hypothesizing
+  //     whether a player might practice or play is immediately superseded (while official active/inactive
+  //     announcements posted within 3h of kickoff stay visible until kickoff).
+  if (
+    !ctx?.inGame &&
+    ctx?.inactivesDeclaredWindow &&
+    matchesPreGameAvailabilityNoise &&
+    !LEAD_PERMANENT_OR_POSTGAME_EXCLUSION_REGEX.test(leadClaim)
+  ) {
+    const isFreshOfficialInactives =
+      isOfficialGameDayInactivesAnnouncement(item) &&
+      Number.isFinite(pubMs) &&
+      (Number.isFinite(ctx.upcomingKickoffMs)
+        ? pubMs >= ctx.upcomingKickoffMs - 3 * 3_600_000
+        : ageHours <= 3);
+    if (!isFreshOfficialInactives) {
+      return {
+        isBreaking: false,
+        isUrgentBreaking: false,
+        isInGameInjury: false,
+        isStalePreGameAvailability: true,
+        storyTier: 'stale_pregame',
+        breakingPriority: -8.0,
+        breakingBadge: null,
+        ageHours
+      };
+    }
+  }
+
+  // Demote any pre-game availability item from a completed (or elapsed-past-kickoff) game regardless of post-game hour window
+  const completedKoRef = ctx?.completedKickoffMs ?? ctx?.latestElapsedKickoffMs ?? ctx?.latestCompletedKickoffMs ?? null;
   if (!ctx?.inGame && Number.isFinite(completedKoRef) && Number.isFinite(pubMs) && pubMs < completedKoRef + 20 * 60_000) {
     if (matchesPreGameAvailabilityNoise && !LEAD_PERMANENT_OR_POSTGAME_EXCLUSION_REGEX.test(leadClaim)) {
       return {
@@ -1859,6 +1931,14 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
       ? 16 * Math.pow(0.5, rawAgeHours / 2.25)
       : 0;
 
+  // Speculative pre-game play/practice availability has a much shorter relevancy shelf life
+  // than permanent roster moves, film breakdowns, or post-game analysis even mid-week.
+  const isSpeculativePreGameAvail =
+    isPreGamePlayAvailabilityItem(item) && !isOfficialGameDayInactivesAnnouncement(item);
+  if (isSpeculativePreGameAvail) {
+    gravity = Math.max(gravity, 1.72);
+  }
+
   const numerator = Math.max(
     8,
     eventMagnitude + authorityBonus + velocityBonus + substanceBonus + socialPlatformBonus + phaseFormatBonus
@@ -1866,13 +1946,17 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
   const denom = Math.pow(clusterAnchorAge + tau, gravity);
   let baseRank = numerator / denom + activeBreakingFloorBoost;
 
-  // Kickoff Epoch Wall: once a game kicks off or completes (within 72h), demote non-Tier-1 chatter published
+  if (isSpeculativePreGameAvail && clusterAnchorAge > 36) {
+    baseRank *= 0.45;
+  }
+
+  // Kickoff Epoch Wall: once a game kicks off or completes (up to 7 days), demote non-Tier-1 chatter published
   // BEFORE that game's kickoff unless it explicitly targets the upcoming week/opponent
   const refKoMs = ctx?.inGame ? ctx.activeKickoffMs : ctx?.latestCompletedKickoffMs;
   if (
     Number.isFinite(refKoMs) &&
     Number.isFinite(pubMs) &&
-    nowMs - refKoMs <= 72 * 3_600_000 &&
+    nowMs - refKoMs <= 168 * 3_600_000 &&
     pubMs < refKoMs - 10 * 60_000 &&
     storyTier !== 'tier1_major'
   ) {
@@ -1884,7 +1968,14 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
         ctx.upcomingOppAbbr !== ctx?.latestCompletedOppAbbr &&
         new RegExp(`\\b${escapeRegexToken(ctx.upcomingOppNickname)}\\b`, 'i').test(checkTxt));
     if (!targetsUpcoming) {
-      const epochMult = ctx?.inGame || ctx?.postGameImmediate ? 0.25 : 0.42;
+      const within72h = nowMs - refKoMs <= 72 * 3_600_000;
+      const epochMult = isSpeculativePreGameAvail
+        ? 0.12
+        : ctx?.inGame || ctx?.postGameImmediate
+          ? 0.25
+          : within72h
+            ? 0.42
+            : 0.48;
       baseRank *= epochMult;
     }
   }
@@ -5013,6 +5104,7 @@ export function deduplicateAndGroupWireItems(
       const isLowSalienceRoundup = /^team::(power_rankings|watch_guide|pff_grades)$/.test(cl.sigKey || '');
       const isBreakingCorroboration =
         !isLowSalienceRoundup &&
+        !lead.isStalePreGameAvailability &&
         !cl.sagaInfo?.isSpeculative &&
         (isUrgentBreakingBadge(lead.breakingBadge) ||
           lead.storyTier === 'tier1_major' ||
@@ -5030,13 +5122,17 @@ export function deduplicateAndGroupWireItems(
       const oldestAge = cl.oldestMs ? Math.max(0, (nowMs - cl.oldestMs) / 3_600_000) : leadAge;
       const newestAge = cl.newestMs ? Math.max(0, (nowMs - cl.newestMs) / 3_600_000) : leadAge;
       // Anchor age rewards fresh multi-source developments (<12h) and immediately refreshes to `newestAge`
-      // whenever a material injury or transaction-saga progression supersedes earlier reports!
+      // whenever a material injury or transaction-saga progression supersedes earlier reports, while
+      // preventing an old lead (>6h) from resetting to 0h on minor follow-ups AND preventing a genuinely
+      // fresh lead (<=6h) from being dragged backward 20h+ by an older clustered roundup!
       lead._clusterNewestAgeHours = newestAge;
       lead._clusterAnchorAgeHours =
         cl.hasInjuryProgressionAdvance || cl.hasSagaProgressionAdvance
           ? Math.min(leadAge, newestAge)
           : oldestAge > 14
-            ? Math.max(leadAge, oldestAge * 0.6)
+            ? leadAge <= 6
+              ? Math.min(Math.max(leadAge, newestAge) + 2, 0.7 * leadAge + 0.3 * oldestAge)
+              : Math.max(leadAge, oldestAge * 0.6)
             : 0.4 * leadAge + 0.6 * newestAge;
       const priorStoryRank = Number.isFinite(Number(lead.storyRank)) ? Number(lead.storyRank) : 0;
       const recomputedRank = computeWireStoryRank(lead, nowMs, ctx);
