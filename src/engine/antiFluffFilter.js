@@ -28,11 +28,11 @@ const CLICKBAIT_PATTERNS = [
 ];
 
 const ANALYTICAL_SIGNAL_PATTERNS = [
-  /\b(epa|cpoe|dvoa|success rate|pressure rate|win rate|pbwr|rswr|ryoe|yac|yprr|target share|wopr|adot|dadot|ras|separation|explosive play rate)\b/i,
-  /\b(11 personnel|12 personnel|21 personnel|22 personnel|wide-9|nickel|dime|quarters|cover [12346]|two-high|single-high|sim pressure|stunt|duo|outside zone|play-action|motion rate|box count|neutral script|early-down|red-zone)\b/i,
+  /\b(epa|cpoe|dvoa|success rate|pressure rate|win rate|pbwr|prwr|rswr|ryoe|yac|yprr|target share|wopr|adot|dadot|ras|separation|explosive play rate|passer rating|yards\/att|yards\/target|dropbacks|coverage efficiency|on[- ]ball grade|offensive grade|defensive grade|rushing grade|pff)\b/i,
+  /\b(11 personnel|12 personnel|21 personnel|22 personnel|wide-9|nickel|dime|quarters|cover [12346]|two-high|single-high|sim pressure|stunt|duo|outside zone|play-action|motion rate|box count|neutral script|early-down|red-zone|play[- ]design|pass[- ]rush(?:er|ing)?|swat|check\s*down)\b/i,
   /\b(cap hit|dead money|dead cap|restructure|void year|post-june 1|pre-june 1|prorat|option bonus|base salary|sixth-round|comp pick|article 13|top-51|fifth-year option|franchise tag|practice squad elevation)\b/i,
   /\b(dnp|limited participation|full participation|injured reserve|practice window|21-day|questionable|doubtful|concussion protocol|syndesmosis)\b/i,
-  /\b(all-22|film|tape|snap count|snaps|pass block|run block)\b/i,
+  /\b(all-22|film|tape|snap count|snaps|pass block|run block|baldy['’]?s?\s*breakdowns?|review video)\b/i,
   /\b(trade talks|trade discussions|in talks to acquire|fielding calls|exploring a trade|agreed to terms|contract extension|arrested|charged with|suspended|commissioner'?s exempt|under investigation)\b/i,
   /\b(1-on-1|one-on-one|sit-down|exclusive interview|locker room|opened up about|spoke candidly|mic'?d up|players'? tribune|candid interview)\b/i,
   /\b(warmups?|kickoff|crowd|raucous|big screen|boos|touchdown|\btd\b|highlight|big catch|strip-sack|interception|milestone|career-high|teammates?|rivalry|notebook|takeaways|mailbag|column|podcast|knbr|storyline)\b/i

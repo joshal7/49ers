@@ -39,8 +39,11 @@ import {
   resolveGeminiThinkingLevelLabel
 } from '../src/engine/geminiStudioPrompts.js';
 import {
+  TEAM_CANONICAL_HASHTAGS,
   decodeHtmlEntities,
+  extractXSyndicationMedia,
   isAllowedInlineVideoStreamUrl,
+  isLeagueWideFilmAnalyticsTweet,
   isPromotionalAdvertisement,
   stripHtmlAndDecodeEntities
 } from '../src/engine/linkIntegrity.js';
@@ -79,7 +82,10 @@ const ALLOWED_VIDEO_HOSTS = [
   'media.video-cdn.espn.com',
   'cdn.espn.com',
   'a.espncdn.com',
-  's.espncdn.com'
+  's.espncdn.com',
+  'media.tenor.com',
+  'c.tenor.com',
+  'video.bsky.app'
 ];
 
 function getRequestHost(request, url) {
@@ -583,6 +589,8 @@ export function parseOfficialXSyndicationTimelineHtml(
     handle = '49ers',
     team = null,
     isLeagueAccount = false,
+    isBeatOrFilmAccount = false,
+    allowLeagueWideFilmCharts = false,
     liveMode = false,
     teamMentionRe = null,
     gameDayMatchers = null,
@@ -604,8 +612,15 @@ export function parseOfficialXSyndicationTimelineHtml(
   if (!Array.isArray(entries) || entries.length === 0) return [];
 
   const maxAgeMs = maxAgeHours * 3_600_000;
-  const teamXHandle = OFFICIAL_TEAM_X_HANDLES[String(team?.abbr || '').toUpperCase()] || handle;
-  const teamHandleRe = new RegExp(`[@#]${String(teamXHandle).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+  const teamAbbrUpper = String(team?.abbr || '').toUpperCase();
+  const teamXHandle = OFFICIAL_TEAM_X_HANDLES[teamAbbrUpper] || handle;
+  const teamHashtags = (TEAM_CANONICAL_HASHTAGS[teamAbbrUpper] || [])
+    .map(h => String(h).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .filter(Boolean);
+  const teamHandleRe = new RegExp(
+    `(?:[@#]${String(teamXHandle).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b${teamHashtags.length ? `|#(?:${teamHashtags.join('|')})\\b` : ''})`,
+    'i'
+  );
   const abbrEsc = String(team?.abbr || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const oppMatchupHashtagRe =
     abbrEsc && gameDayMatchers?.oppAbbrs?.size
@@ -632,8 +647,10 @@ export function parseOfficialXSyndicationTimelineHtml(
     if (!vidMedia) {
       return {
         mp4Url: '',
+        isAnimatedGif: false,
         durationMs: 0,
-        thumbUrl: String(photoMedia?.media_url_https || '')
+        thumbUrl: String(photoMedia?.media_url_https || ''),
+        isPhoto: Boolean(photoMedia?.media_url_https)
       };
     }
     const mp4Variants = (Array.isArray(vidMedia.video_info.variants) ? vidMedia.video_info.variants : [])
@@ -644,10 +661,14 @@ export function parseOfficialXSyndicationTimelineHtml(
       )
       .sort((a, b) => (Number(b.bitrate) || 0) - (Number(a.bitrate) || 0));
     const crispMobile = mp4Variants.find(v => (Number(v.bitrate) || 0) > 0 && Number(v.bitrate) <= 2_400_000) || mp4Variants[0];
+    const mp4Url = String(crispMobile?.url || crispMobile?.src || '');
+    const isAnimatedGif = Boolean(mp4Url && (vidMedia.type === 'animated_gif' || /\/tweet_video\//i.test(mp4Url)));
     return {
-      mp4Url: String(crispMobile?.url || crispMobile?.src || ''),
+      mp4Url,
+      isAnimatedGif,
       durationMs: Number(vidMedia.video_info?.duration_millis || 0),
-      thumbUrl: String(vidMedia.media_url_https || photoMedia?.media_url_https || '')
+      thumbUrl: String(vidMedia.media_url_https || photoMedia?.media_url_https || ''),
+      isPhoto: false
     };
   };
 
@@ -673,9 +694,9 @@ export function parseOfficialXSyndicationTimelineHtml(
       .replace(/https?:\/\/t\.co\/[A-Za-z0-9]+/gi, '')
       .replace(/\s+/g, ' ')
       .trim();
-    const { mp4Url, durationMs, thumbUrl } = pickBestMp4FromTweet(tw);
+    const { mp4Url, isAnimatedGif, durationMs, thumbUrl, isPhoto } = pickBestMp4FromTweet(tw);
     const caption = rawText || quotedText;
-    if (!caption || (caption.length < 10 && !mp4Url)) continue;
+    if (!caption || (caption.length < (mp4Url || thumbUrl ? 6 : 12) && !mp4Url)) continue;
     const expandedTweetUrls = [
       ...(Array.isArray(tw?.entities?.urls) ? tw.entities.urls.map(u => u?.expanded_url || u?.unwound_url || '') : []),
       ...(Array.isArray(tw?.quoted_status?.entities?.urls)
@@ -695,8 +716,11 @@ export function parseOfficialXSyndicationTimelineHtml(
     }
 
     const relevanceBlob = `${caption} ${quotedText}`;
+    let isLeagueWideFilmChart = false;
+    let filmOnlyScope = false;
     if (isLeagueAccount) {
-      // Strictly gate @NFL clips to active team, matchup hashtag, or active team's game-day players!
+      // Strictly gate national/league accounts to active team, fan hashtag, matchup hashtag, game-day players,
+      // OR verified league-wide analytics charts (strictly scoped to Film & Trench via filmOnlyScope: true)!
       const relLower = relevanceBlob.toLowerCase();
       let matchesTeam =
         (teamMentionRe && teamMentionRe.test(relevanceBlob)) ||
@@ -718,38 +742,73 @@ export function parseOfficialXSyndicationTimelineHtml(
           }
         }
       }
-      if (!matchesTeam) continue;
+      if (!matchesTeam) {
+        if (
+          allowLeagueWideFilmCharts &&
+          isLeagueWideFilmAnalyticsTweet(
+            {
+              title: caption,
+              fullText: caption,
+              summary: quotedText,
+              authorHandle: `@${tw.user?.screen_name || handle}`,
+              imageUrl: thumbUrl,
+              videoStreamUrl: mp4Url
+            },
+            team
+          )
+        ) {
+          isLeagueWideFilmChart = true;
+          filmOnlyScope = true;
+        } else {
+          continue;
+        }
+      }
     }
 
     const screenName = String(tw.user?.screen_name || handle).trim();
     const postUrl = `https://x.com/${screenName}/status/${idStr}`;
-    const hasVideo = Boolean(mp4Url && (durationMs === 0 || durationMs >= 3500));
+    const hasVideo = Boolean(mp4Url && (isAnimatedGif || durationMs === 0 || durationMs >= 3500));
     const durFmt =
-      durationMs >= 4000
+      !isAnimatedGif && durationMs >= 4000
         ? `${Math.floor(durationMs / 60000)}:${String(Math.round((durationMs % 60000) / 1000)).padStart(2, '0')}`
         : '';
-    const isHighlightVideo = hasVideo && (durationMs >= 4000 || isLeagueAccount || liveMode);
+    const isHighlightVideo = hasVideo && (isAnimatedGif || durationMs >= 4000 || durationMs === 0 || isLeagueAccount || liveMode);
 
     seenIds.add(idStr);
     results.push({
       id: `x_tl_${screenName.toLowerCase()}_${idStr}`,
-      type: hasVideo ? 'video' : 'tweet',
+      type: hasVideo && !isBeatOrFilmAccount ? 'video' : 'tweet',
       title: caption.slice(0, 320),
       fullText: caption,
       summary: quotedText && quotedText !== caption ? quotedText.slice(0, 220) : '',
       url: postUrl,
       imageUrl: /^https:\/\//i.test(thumbUrl) ? thumbUrl : '',
       videoStreamUrl: hasVideo ? mp4Url : undefined,
+      isAnimatedGif: isAnimatedGif || undefined,
       isHighlightClip: isHighlightVideo,
       isLiveGameHighlight: Boolean(hasVideo && liveMode),
+      hasInlineChartImage: Boolean(isPhoto && (isLeagueWideFilmChart || allowLeagueWideFilmCharts || isBeatOrFilmAccount)) || undefined,
+      isLeagueWideFilmChart: isLeagueWideFilmChart || undefined,
+      filmOnlyScope: filmOnlyScope || undefined,
       duration: durFmt || undefined,
       embeddable: true,
-      outletId: isLeagueAccount ? 'nfl_official' : `${team?.slug || 'team'}_official`,
-      outletName: isLeagueAccount ? 'NFL Official' : `@${screenName} Official`,
-      author: isLeagueAccount ? 'NFL' : decodeHtmlEntities(tw.user?.name || team?.fullName || `@${screenName}`),
+      outletId: isBeatOrFilmAccount
+        ? 'x_beat'
+        : isLeagueAccount
+          ? 'nfl_official'
+          : `${team?.slug || 'team'}_official`,
+      outletName: isBeatOrFilmAccount
+        ? 'X Beat'
+        : isLeagueAccount
+          ? 'NFL Official'
+          : `@${screenName} Official`,
+      author:
+        isLeagueAccount && !isBeatOrFilmAccount
+          ? 'NFL'
+          : decodeHtmlEntities(tw.user?.name || team?.fullName || `@${screenName}`),
       authorHandle: `@${screenName}`,
       authorProfileUrl: `https://x.com/${screenName}`,
-      trustTier: 1,
+      trustTier: isBeatOrFilmAccount ? 2 : 1,
       publishedAt: new Date(Math.min(nowMs, pubMs)).toISOString()
     });
   }
@@ -1131,6 +1190,23 @@ export default {
           'Accept-Language': 'en-US,en;q=0.9'
         };
 
+        const edgeFilmAndBeatXSpecs = isSfTeam
+          ? [
+              { handle: 'SulligentHUB', isLeagueAccount: false, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
+              { handle: 'BaldyNFL', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
+              { handle: 'dieter', isLeagueAccount: false, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
+              { handle: 'StatsOnFire', isLeagueAccount: false, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
+              { handle: 'GrustasBrady', isLeagueAccount: false, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
+              { handle: 'throwthedamball', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: true },
+              { handle: 'ghatz_28', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: true }
+            ]
+          : [
+              { handle: 'BaldyNFL', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false },
+              { handle: 'throwthedamball', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: true },
+              { handle: 'ghatz_28', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: true },
+              { handle: 'CollinsworthPFF', isLeagueAccount: true, isBeatOrFilmAccount: true, allowLeagueWideFilmCharts: false }
+            ];
+
         let teamXStatus = 0;
         let nflXStatus = 0;
         const [
@@ -1142,6 +1218,7 @@ export default {
           teamXTimelineHtml,
           nflXTimelineHtml,
           nflYtRssXml,
+          extraFilmXHtmls,
           ...sfFeedXmls
         ] = await Promise.all([
           fetch(team.clubRssUrls[0], { signal: AbortSignal.timeout(4500) })
@@ -1195,6 +1272,16 @@ export default {
                 .then(r => (r.ok ? r.text() : ''))
                 .catch(() => '')
             : Promise.resolve(''),
+          Promise.all(
+            edgeFilmAndBeatXSpecs.map(spec =>
+              fetch(`https://syndication.twitter.com/srv/timeline-profile/screen-name/${encodeURIComponent(spec.handle)}`, {
+                headers: xSyndicationHeaders,
+                signal: AbortSignal.timeout(2800)
+              })
+                .then(r => (r.ok ? r.text() : ''))
+                .catch(() => '')
+            )
+          ),
           ...sfExtraRssFeeds.map(src =>
             fetch(src.url, {
               headers: { 'User-Agent': '49ersFaithfulEdge/2.1' },
@@ -1266,7 +1353,26 @@ export default {
               maxItems: 10
             })
           : [];
-        for (const xIt of [...officialTeamXItems, ...officialNflXItems]) {
+        const extraFilmAndBeatXItems = [];
+        edgeFilmAndBeatXSpecs.forEach((spec, idx) => {
+          const html = Array.isArray(extraFilmXHtmls) ? extraFilmXHtmls[idx] : '';
+          if (!html) return;
+          const parsedList = parseOfficialXSyndicationTimelineHtml(html, {
+            handle: spec.handle,
+            team,
+            isLeagueAccount: spec.isLeagueAccount,
+            isBeatOrFilmAccount: spec.isBeatOrFilmAccount,
+            allowLeagueWideFilmCharts: spec.allowLeagueWideFilmCharts,
+            liveMode,
+            teamMentionRe,
+            gameDayMatchers,
+            nowMs: nowEdgeMs,
+            maxAgeHours: 96,
+            maxItems: 8
+          });
+          extraFilmAndBeatXItems.push(...parsedList);
+        });
+        for (const xIt of [...officialTeamXItems, ...officialNflXItems, ...extraFilmAndBeatXItems]) {
           if (!xIt?.url || seenUrls.has(xIt.url)) continue;
           seenUrls.add(xIt.url);
           items.push(xIt);
@@ -1468,13 +1574,17 @@ export default {
         // AND harvest embedded X status URLs (incl. Tier 2 & 3 reporters + native MP4 highlight clips)
         const discoveredXStatusMap = new Map();
         const xStatusRe = /https?:\/\/(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{2,25})\/status\/(\d{15,22})/gi;
-        const sfTrustedXRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|victafur|harrisonrich_|mattblively|chrisbiderman|dieter|dkurtenbach|grantcohn|sportslarryk|brianajeannel|kp_show|rohanchakrav|akashanav|steph49k|jasonaponte2103|vishkumaran|bdpeacock|crocky209|jl_chapman|guyhaberman|pff_jeff|alsacco49|jonnydels|theqbschool|graham_sfn|thesfNiners|49erswebzone|nbcs49ers|ninersnation|ninerswire|knbr|957thegame|oursf49ers|coach_yac|49ershive|rob_lowder|statsonfire|samwarren83|bynoahfurtado|adamschefter|rapsheet|tompelissero|mikegarafolo|dmrussini|fieldyates|nfl|espnnfl|nflnetwork)$/i;
+        const sfTrustedXRe = /^(49ers|maiocconbcs|mattbarrows|jenniferleechan|lombardihimself|nwagoner|caminman|eric_branch|timkawakami|victafur|harrisonrich_|mattblively|chrisbiderman|dieter|dkurtenbach|grantcohn|sportslarryk|brianajeannel|kp_show|rohanchakrav|akashanav|steph49k|jasonaponte2103|vishkumaran|bdpeacock|crocky209|jl_chapman|guyhaberman|pff_jeff|alsacco49|jonnydels|sulligenthub|grustasbrady|theqbschool|baldynfl|collinsworthpff|ghatz_28|throwthedamball|nate_tice|benjaminsolak|minakimes|brettkollmann|pff|nextgenstats|fball_insights|benbbaldwin|sethwalder|graham_sfn|thesfniners|49erswebzone|nbcs49ers|ninersnation|ninerswire|knbr|957thegame|oursf49ers|coach_yac|49ershive|rob_lowder|statsonfire|samwarren83|bynoahfurtado|adamschefter|rapsheet|tompelissero|mikegarafolo|dmrussini|fieldyates|nfl|espnnfl|nflnetwork)$/i;
         const scanXmlForX = rawXml => {
           if (!rawXml) return;
           for (const xm of String(rawXml).replace(/\\\//g, '/').matchAll(xStatusRe)) {
             const h = xm[1];
             const sid = xm[2];
-            if (!/^(i|intent|share|hashtag|search)$/i.test(h) && sfTrustedXRe.test(h) && !discoveredXStatusMap.has(sid)) {
+            if (
+              !/^(i|intent|share|hashtag|search)$/i.test(h) &&
+              (sfTrustedXRe.test(h) || (teamOfficialXHandle && h.toLowerCase() === teamOfficialXHandle.toLowerCase())) &&
+              !discoveredXStatusMap.has(sid)
+            ) {
               discoveredXStatusMap.set(sid, h);
             }
           }
@@ -1532,8 +1642,8 @@ export default {
           }
         });
 
-        // Hydrate up to 16 diverse newest X status tweets (max 3 per handle so Tier 2/3 & all beat voices get fair coverage!)
-        if (isSfTeam && discoveredXStatusMap.size > 0) {
+        // Hydrate up to 16 diverse newest X status tweets (max 3 per handle across ALL 32 teams!)
+        if (discoveredXStatusMap.size > 0) {
           const sortedAllX = [...discoveredXStatusMap.entries()].sort((a, b) => (BigInt(b[0]) > BigInt(a[0]) ? 1 : -1));
           const handleCounts = new Map();
           const diverseXBatch = [];
@@ -1553,7 +1663,8 @@ export default {
                 if (!sr.ok) return;
                 const syn = await sr.json();
                 const txt = typeof syn?.text === 'string' ? decodeHtmlEntities(syn.text).replace(/\s+/g, ' ').trim() : '';
-                if (!txt || txt.length < 16) return;
+                const synMedia = extractXSyndicationMedia(syn);
+                if (!txt || txt.length < (synMedia.mp4Url || synMedia.imageUrl ? 6 : 16)) return;
                 const synExpandedUrls = Array.isArray(syn?.entities?.urls)
                   ? syn.entities.urls.map(u => u?.expanded_url || '').filter(Boolean)
                   : [];
@@ -1561,17 +1672,13 @@ export default {
                   return;
                 }
                 const handle = syn.user?.screen_name || fallbackHandle;
-                const variants = [
-                  ...(Array.isArray(syn.video?.variants) ? syn.video.variants : []),
-                  ...(Array.isArray(syn.mediaDetails?.[0]?.video_info?.variants)
-                    ? syn.mediaDetails[0].video_info.variants
-                    : [])
-                ].filter(v => (v?.type === 'video/mp4' || v?.content_type === 'video/mp4') && /^https:\/\/video\.twimg\.com\//i.test(v?.src || v?.url || ''));
-                variants.sort((a, b) => (Number(b.bitrate) || 0) - (Number(a.bitrate) || 0));
-                const bestMp4 = variants[0]?.src || variants[0]?.url || '';
-                const durMs = Number(syn.video?.durationMs || syn.mediaDetails?.[0]?.video_info?.duration_millis || 0);
-                const durFmt = durMs >= 5000 ? `${Math.floor(durMs / 60000)}:${String(Math.round((durMs % 60000) / 1000)).padStart(2, '0')}` : '';
-                const thumb = syn.photos?.[0]?.url || syn.mediaDetails?.[0]?.media_url_https || syn.video?.poster || '';
+                const bestMp4 = synMedia.mp4Url;
+                const durMs = synMedia.durationMs;
+                const durFmt =
+                  !synMedia.isAnimatedGif && durMs >= 4000
+                    ? `${Math.floor(durMs / 60000)}:${String(Math.round((durMs % 60000) / 1000)).padStart(2, '0')}`
+                    : '';
+                const thumb = synMedia.imageUrl || '';
                 const snowMs = Number((BigInt(sid) >> 22n) + 1288834974657n);
                 const postUrl = `https://x.com/${handle}/status/${sid}`;
                 if (seenUrls.has(postUrl)) return;
@@ -1584,8 +1691,10 @@ export default {
                   url: postUrl,
                   imageUrl: thumb.startsWith('https://') ? thumb : '',
                   videoStreamUrl: bestMp4 || undefined,
-                  isHighlightClip: Boolean(bestMp4 && durMs >= 6000),
-                  isLiveGameHighlight: Boolean(liveMode && bestMp4 && durMs >= 6000),
+                  isAnimatedGif: synMedia.isAnimatedGif || undefined,
+                  isHighlightClip: Boolean(bestMp4 && (synMedia.isAnimatedGif || durMs >= 4000 || durMs === 0)),
+                  isLiveGameHighlight: Boolean(liveMode && bestMp4 && (synMedia.isAnimatedGif || durMs >= 4000 || durMs === 0)),
+                  hasInlineChartImage: synMedia.isPhoto || undefined,
                   duration: durFmt || undefined,
                   embeddable: true,
                   outletId: 'x_beat',

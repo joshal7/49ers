@@ -97,6 +97,7 @@ import {
   hasExplicit49ersEntity,
   hasSafeStandaloneSurnameMatch,
   is49ersRelevantWireItem,
+  isLeagueWideFilmAnalyticsTweet,
   isCompatiblePositionToken,
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
@@ -245,7 +246,58 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     authorHandle: '@minakimes',
     outletId: 'espn',
     outletName: 'ESPN NFL',
-    isNationalInsider: true
+    isNationalInsider: true,
+    allowLeagueWideFilmCharts: true
+  },
+  {
+    actor: 'throwthedamball.bsky.social',
+    reporterId: 'judah_fortgang',
+    reporterName: 'Judah Fortgang',
+    authorHandle: '@throwthedamball',
+    outletId: 'national_film',
+    outletName: 'PFF Analytics',
+    isNationalInsider: true,
+    allowLeagueWideFilmCharts: true
+  },
+  {
+    actor: 'benbbaldwin.bsky.social',
+    reporterId: 'ben_baldwin',
+    reporterName: 'Ben Baldwin',
+    authorHandle: '@benbbaldwin',
+    outletId: 'national_film',
+    outletName: 'rbsdm / NFL Analytics',
+    isNationalInsider: true,
+    allowLeagueWideFilmCharts: true
+  },
+  {
+    actor: 'natetice.bsky.social',
+    reporterId: 'nate_tice',
+    reporterName: 'Nate Tice',
+    authorHandle: '@Nate_Tice',
+    outletId: 'national_film',
+    outletName: 'Yahoo Sports NFL',
+    isNationalInsider: true,
+    allowLeagueWideFilmCharts: true
+  },
+  {
+    actor: 'bensolak.bsky.social',
+    reporterId: 'ben_solak',
+    reporterName: 'Ben Solak',
+    authorHandle: '@BenjaminSolak',
+    outletId: 'espn',
+    outletName: 'ESPN NFL',
+    isNationalInsider: true,
+    allowLeagueWideFilmCharts: true
+  },
+  {
+    actor: 'brettkollmann.bsky.social',
+    reporterId: 'brett_kollmann',
+    reporterName: 'Brett Kollmann',
+    authorHandle: '@BrettKollmann',
+    outletId: 'youtube_film',
+    outletName: 'The Film Room',
+    isNationalInsider: true,
+    allowLeagueWideFilmCharts: true
   },
   {
     actor: 'adamscheftermirror.bsky.social',
@@ -2670,7 +2722,8 @@ function getLiveBlueskyBeatAccountsForTeam(appData = null) {
       outletId: rep.outletId || `${activeTeam.slug}_beat`,
       outletName: rep.outletName || rep.name,
       trustTier: Number(rep.trustTier) || 2,
-      isNationalInsider: ['national_insider', 'film_analyst', 'cap_analyst', 'analytics', 'draft'].includes(rep.category)
+      isNationalInsider: ['national_insider', 'film_analyst', 'cap_analyst', 'analytics', 'draft'].includes(rep.category),
+      allowLeagueWideFilmCharts: rep.category === 'film_analyst' || rep.category === 'analytics'
     });
   }
   return out;
@@ -2728,7 +2781,18 @@ export async function hydrateLiveBlueskyBeatWire(
             .replace(/\s+/g, ' ')
             .replace(/\s*(?:Original post|View original post)\s*$/i, '')
             .trim();
-          if (!rawOrig || rawOrig.length < 18) continue;
+          const bskyPhotoPre =
+            post?.embed?.images?.[0]?.fullsize ||
+            post?.embed?.media?.images?.[0]?.fullsize ||
+            post?.embed?.images?.[0]?.thumb ||
+            post?.embed?.media?.images?.[0]?.thumb ||
+            '';
+          const bskyHasMediaPre = Boolean(
+            bskyPhotoPre ||
+              post?.embed?.$type === 'app.bsky.embed.video#view' ||
+              post?.embed?.media?.$type === 'app.bsky.embed.video#view'
+          );
+          if (!rawOrig || rawOrig.length < (bskyHasMediaPre ? 6 : 18)) continue;
 
           const parsedAttr = extractBeatAttributionFromText(rawOrig, acct);
           const cleanFull = stripAggregatorBoilerplate(cleanSensationalistText(parsedAttr.cleanedText || rawOrig));
@@ -2747,6 +2811,9 @@ export async function hydrateLiveBlueskyBeatWire(
             allowUniqueSurnames: !acct.isNationalInsider || hasExplicitSfInBody
           });
 
+          let isLeagueWideChart = false;
+          let filmOnlyScope = false;
+
           if (
             isOffTopicLeagueFiller({
               url: extLink.uri || '',
@@ -2756,11 +2823,29 @@ export async function hydrateLiveBlueskyBeatWire(
               isDedicatedTeamBeat: !acct.isNationalInsider
             })
           ) {
-            continue;
+            if (
+              acct.allowLeagueWideFilmCharts &&
+              isLeagueWideFilmAnalyticsTweet(
+                {
+                  title: cleanFull,
+                  fullText: cleanFull,
+                  summary: `${cleanExtTitle} ${nonBioExtDesc}`,
+                  authorHandle: parsedAttr.authorHandle || acct.authorHandle || '',
+                  imageUrl: bskyPhotoPre || extLink.thumb || ''
+                },
+                activeTeam
+              )
+            ) {
+              isLeagueWideChart = true;
+              filmOnlyScope = true;
+            } else {
+              continue;
+            }
           }
 
           if (
             acct.isNationalInsider &&
+            !isLeagueWideChart &&
             !is49ersRelevantWireItem({
               title: cleanFull,
               fullText: cleanFull,
@@ -2771,49 +2856,66 @@ export async function hydrateLiveBlueskyBeatWire(
               bodyRosterMatchCount: bodyMentioned.length
             })
           ) {
-            // Buffer upcoming-opponent insider injury/practice/trend tweets into `_oppNewsWire` (strictly separate from 49ers feed!)
-            const umOpp = appData.scheduleMatchup?.upcomingMatchup;
-            const oppHealthObj = umOpp?.opponentHealth;
-            const oppMascotWord = umOpp?.oppName ? String(umOpp.oppName).trim().split(/\s+/).pop() : '';
-            if (oppHealthObj && oppMascotWord && oppMascotWord.length >= 4) {
-              const oppPoolAll = [
-                ...(oppHealthObj.injuryReport || []),
-                ...(oppHealthObj.keyStartersHealthy || []),
-                ...(oppHealthObj.activeRoster || [])
-              ];
-              const oppTeamMatchRe = new RegExp(
-                `\\b(${escapeClientRegex(umOpp.oppName)}|${escapeClientRegex(oppMascotWord)})\\b`,
-                'i'
-              );
-              const mentionsOppTeam = oppTeamMatchRe.test(combinedNonBioCheck);
-              const oppMatched = matchPlayersClient(combinedNonBioCheck, oppPoolAll, 6, {
-                allowUniqueSurnames: mentionsOppTeam
-              });
-              if (
-                (mentionsOppTeam || oppMatched.length > 0) &&
-                /\b(injur|practice|questionable|doubtful|ruled out|out for|trending|optimistic|setback|concussion|expected to play|unlikely|long shot|window|activated|ir\b|dnp|limited|full participant|illness|downgraded|inactive|inactives|officially active|is active|are active|scratch|warmups?|suiting up|won['’]?t play|will not play|medical tent|locker room|carted|to return|exited|left (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s) game)\b/i.test(
-                  combinedNonBioCheck
-                )
-              ) {
-                const oppRkey = String(post?.uri || '').split('/').pop() || hashWireKey(cleanFull);
-                const oppPubIso = rec?.createdAt || post?.indexedAt || new Date().toISOString();
-                bufferOpponentNewsWireItem(appData, {
-                  id: `bsky_opp_${parsedAttr.reporterId || acct.actor}_${oppRkey}`,
-                  type: 'tweet',
+            if (
+              acct.allowLeagueWideFilmCharts &&
+              isLeagueWideFilmAnalyticsTweet(
+                {
                   title: cleanFull,
                   fullText: cleanFull,
-                  summary: `${cleanExtTitle} ${nonBioExtDesc}`.trim(),
-                  publishedAt: oppPubIso,
-                  url: `https://bsky.app/profile/${post?.author?.handle || acct.actor}/post/${oppRkey}`,
-                  author: parsedAttr.reporterName || acct.reporterName,
+                  summary: `${cleanExtTitle} ${nonBioExtDesc}`,
                   authorHandle: parsedAttr.authorHandle || acct.authorHandle || '',
-                  outletName: parsedAttr.outletName || acct.outletName || 'NFL Insider Wire',
-                  trustTier: parsedAttr.trustTier || 1,
-                  wireSource: 'bsky_mirror'
+                  imageUrl: bskyPhotoPre || extLink.thumb || ''
+                },
+                activeTeam
+              )
+            ) {
+              isLeagueWideChart = true;
+              filmOnlyScope = true;
+            } else {
+              // Buffer upcoming-opponent insider injury/practice/trend tweets into `_oppNewsWire` (strictly separate from 49ers feed!)
+              const umOpp = appData.scheduleMatchup?.upcomingMatchup;
+              const oppHealthObj = umOpp?.opponentHealth;
+              const oppMascotWord = umOpp?.oppName ? String(umOpp.oppName).trim().split(/\s+/).pop() : '';
+              if (oppHealthObj && oppMascotWord && oppMascotWord.length >= 4) {
+                const oppPoolAll = [
+                  ...(oppHealthObj.injuryReport || []),
+                  ...(oppHealthObj.keyStartersHealthy || []),
+                  ...(oppHealthObj.activeRoster || [])
+                ];
+                const oppTeamMatchRe = new RegExp(
+                  `\\b(${escapeClientRegex(umOpp.oppName)}|${escapeClientRegex(oppMascotWord)})\\b`,
+                  'i'
+                );
+                const mentionsOppTeam = oppTeamMatchRe.test(combinedNonBioCheck);
+                const oppMatched = matchPlayersClient(combinedNonBioCheck, oppPoolAll, 6, {
+                  allowUniqueSurnames: mentionsOppTeam
                 });
+                if (
+                  (mentionsOppTeam || oppMatched.length > 0) &&
+                  /\b(injur|practice|questionable|doubtful|ruled out|out for|trending|optimistic|setback|concussion|expected to play|unlikely|long shot|window|activated|ir\b|dnp|limited|full participant|illness|downgraded|inactive|inactives|officially active|is active|are active|scratch|warmups?|suiting up|won['’]?t play|will not play|medical tent|locker room|carted|to return|exited|left (?:the|tonight['’]?s|sunday['’]?s|monday['’]?s|thursday['’]?s) game)\b/i.test(
+                    combinedNonBioCheck
+                  )
+                ) {
+                  const oppRkey = String(post?.uri || '').split('/').pop() || hashWireKey(cleanFull);
+                  const oppPubIso = rec?.createdAt || post?.indexedAt || new Date().toISOString();
+                  bufferOpponentNewsWireItem(appData, {
+                    id: `bsky_opp_${parsedAttr.reporterId || acct.actor}_${oppRkey}`,
+                    type: 'tweet',
+                    title: cleanFull,
+                    fullText: cleanFull,
+                    summary: `${cleanExtTitle} ${nonBioExtDesc}`.trim(),
+                    publishedAt: oppPubIso,
+                    url: `https://bsky.app/profile/${post?.author?.handle || acct.actor}/post/${oppRkey}`,
+                    author: parsedAttr.reporterName || acct.reporterName,
+                    authorHandle: parsedAttr.authorHandle || acct.authorHandle || '',
+                    outletName: parsedAttr.outletName || acct.outletName || 'NFL Insider Wire',
+                    trustTier: parsedAttr.trustTier || 1,
+                    wireSource: 'bsky_mirror'
+                  });
+                }
               }
+              continue;
             }
-            continue;
           }
 
           const mentioned = matchPlayersClient(combinedNonBioCheck, rosterPlayers, 12, {
@@ -2853,14 +2955,15 @@ export async function hydrateLiveBlueskyBeatWire(
               : post?.embed?.media?.$type === 'app.bsky.embed.video#view'
                 ? post.embed.media
                 : post?.embed?.video || null;
-          const imgThumb = vidEmbed?.thumbnail || post?.embed?.images?.[0]?.thumb || extLink.thumb || '';
+          const imgThumb = vidEmbed?.thumbnail || bskyPhotoPre || extLink.thumb || '';
           const rawExtUri = extLink.uri || '';
+          const isTenorGif = /^https:\/\/(?:media|c)\.tenor\.com\/.+\.(?:gif|mp4)(?:\?|$)/i.test(rawExtUri);
           const isSportsShortener =
             rawExtUri && /^https?:\/\/(?:www\.)?(?:es\.pn|on\.nfl\.com|nbcnews\.to|sbn\.to)\//i.test(rawExtUri);
           if (rawExtUri && (isOpaqueShortenerUrl(rawExtUri) || isSportsShortener)) {
             shortUrlsToExpand.add(rawExtUri);
           }
-          const safeExtUrl = sanitizeExternalUrl(rawExtUri, null);
+          const safeExtUrl = isTenorGif ? null : sanitizeExternalUrl(rawExtUri, null);
           const ytMatch = String(safeExtUrl || rawOrig).match(
             /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/i
           );
@@ -2892,20 +2995,28 @@ export async function hydrateLiveBlueskyBeatWire(
           }
 
           const resolvedExternalVideoUrl =
-            !extractedYtVideoId && hasNativeSocialVideo
+            !extractedYtVideoId && !isTenorGif && hasNativeSocialVideo
               ? safeExtUrl && clubVideoPrefixRe.test(safeExtUrl)
                 ? safeExtUrl
                 : postUrl || bskyPermalink
               : undefined;
 
-          const resolvedCategory = classifyNewsItemCategory({
-            type: 'tweet',
-            title: tweetDisplay.text,
-            fullText: cleanFull,
-            summary: `${cleanExtTitle} ${nonBioExtDesc}`.trim(),
-            videoId: extractedYtVideoId,
-            outletName: parsedAttr.outletName
-          });
+          const resolvedCategory = isLeagueWideChart
+            ? 'film'
+            : classifyNewsItemCategory({
+                type: 'tweet',
+                title: tweetDisplay.text,
+                fullText: cleanFull,
+                summary: `${cleanExtTitle} ${nonBioExtDesc}`.trim(),
+                videoId: extractedYtVideoId,
+                videoStreamUrl: isTenorGif ? rawExtUri : undefined,
+                isAnimatedGif: isTenorGif,
+                author: parsedAttr.reporterName,
+                authorHandle: parsedAttr.authorHandle || acct.authorHandle || '',
+                outletName: parsedAttr.outletName,
+                mentionedPlayers: mentioned,
+                isLeagueWideFilmChart: isLeagueWideChart
+              });
           pendingItems.push({
             _rawExtUri: rawExtUri,
             _cleanExtTitle: cleanExtTitle,
@@ -2918,10 +3029,15 @@ export async function hydrateLiveBlueskyBeatWire(
               isFullTweet: tweetDisplay.isFullTweet,
               summary: safeExtUrl && cleanExtTitle ? cleanExtTitle : '',
               videoId: extractedYtVideoId,
+              videoStreamUrl: isTenorGif ? rawExtUri : undefined,
+              isAnimatedGif: isTenorGif || undefined,
               externalVideoUrl: resolvedExternalVideoUrl,
-              embeddable: Boolean(extractedYtVideoId),
+              embeddable: Boolean(extractedYtVideoId || isTenorGif),
               isHighlightClip:
-                Boolean(extractedYtVideoId || resolvedExternalVideoUrl) && resolvedCategory !== 'film',
+                Boolean(extractedYtVideoId || isTenorGif || resolvedExternalVideoUrl) && resolvedCategory !== 'film',
+              hasInlineChartImage: Boolean(bskyPhotoPre && (resolvedCategory === 'film' || isLeagueWideChart)) || undefined,
+              isLeagueWideFilmChart: isLeagueWideChart || undefined,
+              filmOnlyScope: filmOnlyScope || undefined,
               imageUrl: typeof imgThumb === 'string' && imgThumb.startsWith('https://') ? imgThumb : '',
               imageAlt: `${parsedAttr.reporterName} update`,
               mentionedPlayers: mentioned,
@@ -4605,7 +4721,9 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
       const bodyMatchesEdge = matchPlayersClient(nonBioSummary, rosterPlayers, 8, {
         allowUniqueSurnames: !isNationalEdgeOutlet || hasExplicit49ersEntity(`${leadTextEdge} ${nonBioSummary}`)
       });
+      const isEdgeLeagueWideFilmChart = Boolean(raw.isLeagueWideFilmChart);
       if (
+        !isEdgeLeagueWideFilmChart &&
         isOffTopicLeagueFiller({
           url: raw.externalUrl || url || '',
           title: leadTextEdge,
@@ -4617,6 +4735,7 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
         continue;
       }
       if (
+        !isEdgeLeagueWideFilmChart &&
         isNationalEdgeOutlet &&
         !is49ersRelevantWireItem({
           title,
@@ -4682,8 +4801,12 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
         summary: type === 'tweet' ? '' : summary,
         videoId: raw.videoId || undefined,
         videoStreamUrl: safeStream,
+        isAnimatedGif: Boolean(raw.isAnimatedGif || /\/tweet_video\//i.test(safeStream || '')) || undefined,
         isHighlightClip: Boolean(raw.isHighlightClip && (safeStream || raw.externalVideoUrl)),
         isLiveGameHighlight: Boolean(raw.isLiveGameHighlight),
+        hasInlineChartImage: Boolean(raw.hasInlineChartImage) || undefined,
+        isLeagueWideFilmChart: Boolean(raw.isLeagueWideFilmChart) || undefined,
+        filmOnlyScope: Boolean(raw.filmOnlyScope) || undefined,
         externalVideoUrl: raw.externalVideoUrl && /^https:\/\//i.test(raw.externalVideoUrl) ? raw.externalVideoUrl : undefined,
         duration: raw.duration || undefined,
         embeddable: typeof raw.embeddable === 'boolean' ? raw.embeddable : true,
@@ -4708,14 +4831,22 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
         isInGameInjury: brk.isInGameInjury,
         breakingBadge: brk.breakingBadge,
         breakingPriority: brk.breakingPriority,
-        category: classifyNewsItemCategory({
-          type,
-          title,
-          fullText,
-          summary: nonBioSummary,
-          videoId: raw.videoId,
-          outletName: raw.outletName
-        }),
+        category: raw.isLeagueWideFilmChart
+          ? 'film'
+          : classifyNewsItemCategory({
+              type,
+              title,
+              fullText,
+              summary: nonBioSummary,
+              videoId: raw.videoId,
+              videoStreamUrl: safeStream,
+              isAnimatedGif: Boolean(raw.isAnimatedGif || /\/tweet_video\//i.test(safeStream || '')),
+              author: raw.author || '',
+              authorHandle: raw.authorHandle || '',
+              outletName: raw.outletName,
+              mentionedPlayers: mentioned,
+              isLeagueWideFilmChart: Boolean(raw.isLeagueWideFilmChart)
+            }),
         signalScore: Math.max(78, sig.signalScore),
         fluffScore: sig.fluffScore,
         isClickbait: false

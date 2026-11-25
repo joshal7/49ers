@@ -60,6 +60,13 @@ import {
 } from './lib/powerRankingsFetcher.mjs';
 import { buildTeamDraftPrep2027 } from './lib/teamDraftIntelBuilder.mjs';
 import { attachDraftClassHighlightVideos } from './lib/draftVideoResolver.mjs';
+import {
+  NATIONAL_FILM_ANALYTICS_X_HANDLES,
+  fetchXTimelinesBatch,
+  filterXTimelineItemsForTeam,
+  harvestEmbeddedXForTeamRss,
+  selectTeamLocalXHandles
+} from './lib/xBeatMediaFetcher.mjs';
 import { parseTankathonTeamPicksHtml } from './lib/aiSynthesisEngine.mjs';
 import {
   buildTeamTradeWindow,
@@ -117,6 +124,8 @@ import {
   createPlayerIdentityResolver,
   decodeHtmlEntities,
   getPlayerLookupKeys,
+  hasExplicit49ersEntity,
+  isLeagueWideFilmAnalyticsTweet,
   isOffTopicLeagueFiller,
   isPaywalledPublisher,
   normalizePlayerKey,
@@ -243,7 +252,8 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     tkMockHtml,
     dtMockHtml,
     wfMock1Html,
-    wfMock2Html
+    wfMock2Html,
+    nationalFilmXItems
   ] = await Promise.all([
     fetchJsonSafe('https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings', 14000),
     fetchTextSafe('https://overthecap.com/salary-cap-space', 14000),
@@ -257,7 +267,13 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     fetchTextSafe('https://www.tankathon.com/nfl/mock_draft', 14000),
     fetchTextSafe(`https://www.drafttek.com/${nextDraftYear}-NFL-Mock-Draft/${nextDraftYear}-NFL-Mock-Draft-Round-1.asp`, 14000),
     fetchTextSafe(`https://walterfootball.com/draft${nextDraftYear}.php`, 14000),
-    fetchTextSafe(`https://walterfootball.com/draft${nextDraftYear}_1.php`, 14000)
+    fetchTextSafe(`https://walterfootball.com/draft${nextDraftYear}_1.php`, 14000),
+    fetchXTimelinesBatch(NATIONAL_FILM_ANALYTICS_X_HANDLES, {
+      concurrency: 6,
+      timeoutMs: 4200,
+      maxAgeHours: 120,
+      maxItems: 14
+    }).catch(() => [])
   ]);
 
   // Parse 32-team standings from ESPN
@@ -458,7 +474,8 @@ async function loadSharedLeagueContext(seasonYear = 2026) {
     sharedBigBoardMeta: sfSeasonal?.draftPrep2027?.bigBoardMeta || null,
     sharedBigBoardMethodology: sfSeasonal?.draftPrep2027?.bigBoardMethodology || null,
     sharedCombineLeaderboard: sfSeasonal?.draftPrep2027?.combineLeaderboard || null,
-    leagueMockHtmls: { tkMockHtml, dtMockHtml, wfMock1Html, wfMock2Html }
+    leagueMockHtmls: { tkMockHtml, dtMockHtml, wfMock1Html, wfMock2Html },
+    nationalFilmXItems: Array.isArray(nationalFilmXItems) ? nationalFilmXItems : []
   };
 }
 
@@ -589,11 +606,11 @@ async function fetchTeamBlueskyPosts(team, reportersData) {
   const items = [];
   const bskyReps = (reportersData.reporters || []).filter(r => r.bskyHandle);
   const nickRe = new RegExp(`\\b(${team.keywordRules.requiredNicknames.join('|')})\\b`, 'i');
-  const handlesToPoll = bskyReps.slice(0, 8);
+  const handlesToPoll = bskyReps.slice(0, 12);
 
   const settled = await Promise.allSettled(
     handlesToPoll.map(async rep => {
-      const url = `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(rep.bskyHandle)}&limit=8&filter=posts_no_replies`;
+      const url = `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(rep.bskyHandle)}&limit=10&filter=posts_no_replies`;
       const json = await fetchJsonSafe(url, 7000);
       if (!json?.feed?.length) return [];
       const out = [];
@@ -602,16 +619,38 @@ async function fetchTeamBlueskyPosts(team, reportersData) {
         const rec = post?.record;
         if (!post || !rec?.text) continue;
         const text = decodeHtmlEntities(String(rec.text)).replace(/\s+/g, ' ').trim();
-        if (text.length < 18) continue;
+        const embedPhoto =
+          post.embed?.images?.[0]?.fullsize ||
+          post.embed?.media?.images?.[0]?.fullsize ||
+          post.embed?.images?.[0]?.thumb ||
+          post.embed?.media?.images?.[0]?.thumb ||
+          '';
+        const embedImg = embedPhoto || post.embed?.external?.thumb || '';
+        const extUrl = sanitizeExternalUrl(post.embed?.external?.uri || '', null);
+        const isTenorGif = Boolean(extUrl && /^https:\/\/(?:media|c)\.tenor\.com\/.+\.(?:gif|mp4)(?:\?|$)/i.test(extUrl));
+        if (text.length < (embedImg || isTenorGif ? 6 : 18)) continue;
         const isNational = rep.category === 'national_insider' || rep.category === 'film_analyst' || rep.category === 'cap_analyst';
-        if (isNational && !nickRe.test(text)) continue;
+        let isLeagueWideChart = false;
+        let filmOnlyScope = false;
+        if (isNational && !nickRe.test(text) && !hasExplicit49ersEntity(text)) {
+          if (
+            rep.category === 'film_analyst' &&
+            isLeagueWideFilmAnalyticsTweet(
+              { title: text, fullText: text, authorHandle: rep.handle || '', imageUrl: embedImg },
+              team
+            )
+          ) {
+            isLeagueWideChart = true;
+            filmOnlyScope = true;
+          } else {
+            continue;
+          }
+        }
         const rkey = String(post.uri || '').split('/').pop() || '';
         const bskyUrl = `https://bsky.app/profile/${rep.bskyHandle}/post/${rkey}`;
         const pubIso = rec.createdAt || post.indexedAt || new Date().toISOString();
         const ageDays = (Date.now() - Date.parse(pubIso)) / 86_400_000;
         if (!Number.isFinite(ageDays) || ageDays > 10) continue;
-        const embedImg = post.embed?.images?.[0]?.thumb || post.embed?.external?.thumb || '';
-        const extUrl = sanitizeExternalUrl(post.embed?.external?.uri || '', null);
         const tweetDisplay = formatTweetBodyForDisplay(text, SHORT_TWEET_FULL_TEXT_LIMIT);
         out.push({
           id: `${team.abbr.toLowerCase()}_bsky_${hashShort(bskyUrl)}`,
@@ -621,11 +660,17 @@ async function fetchTeamBlueskyPosts(team, reportersData) {
           isFullTweet: tweetDisplay.isFullTweet,
           summary: '',
           imageUrl: embedImg,
+          videoStreamUrl: isTenorGif ? extUrl : undefined,
+          isAnimatedGif: isTenorGif || undefined,
+          embeddable: isTenorGif ? true : undefined,
+          hasInlineChartImage: Boolean(embedPhoto && (isLeagueWideChart || rep.category === 'film_analyst')) || undefined,
+          isLeagueWideFilmChart: isLeagueWideChart || undefined,
+          filmOnlyScope: filmOnlyScope || undefined,
           imageAlt: `${rep.name} post`,
           publishedAt: new Date(pubIso).toISOString(),
           url: bskyUrl,
-          externalUrl: extUrl && !isPaywalledPublisher(extUrl) ? extUrl : null,
-          externalTitle: extUrl && !isPaywalledPublisher(extUrl) ? (post.embed?.external?.title ? decodeHtmlEntities(post.embed.external.title) : null) : null,
+          externalUrl: !isTenorGif && extUrl && !isPaywalledPublisher(extUrl) ? extUrl : null,
+          externalTitle: !isTenorGif && extUrl && !isPaywalledPublisher(extUrl) ? (post.embed?.external?.title ? decodeHtmlEntities(post.embed.external.title) : null) : null,
           outletId: rep.outletId,
           outletName: rep.name,
           reporterId: rep.id,
@@ -2468,7 +2513,34 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     });
   }
 
-  // 9f. Verified Bluesky Beat Posts
+  // 9f. Verified Team Local X Timelines + Shared National Film/Analytics X Pool + Embedded RSS X Tweets + Bluesky Beat Posts
+  const [localXRaw, embeddedXItems] = await Promise.all([
+    fetchXTimelinesBatch(selectTeamLocalXHandles(team, reportersData, 5), {
+      concurrency: 5,
+      timeoutMs: 3800,
+      maxAgeHours: 120,
+      maxItems: 10
+    }).catch(() => []),
+    harvestEmbeddedXForTeamRss([clubNewsRssXml, pfrTeamRssXml, JSON.stringify(espnNewsRaw || {})], {
+      team,
+      rosterPlayers: players,
+      reportersData,
+      maxHydrate: 12
+    }).catch(() => [])
+  ]);
+  const localXItems = filterXTimelineItemsForTeam(localXRaw, {
+    team,
+    rosterPlayers: players,
+    reportersData,
+    isNationalPool: false
+  });
+  const nationalFilmXForTeam = filterXTimelineItemsForTeam(leagueCtx.nationalFilmXItems || [], {
+    team,
+    rosterPlayers: players,
+    reportersData,
+    isNationalPool: true
+  });
+  for (const xi of [...localXItems, ...embeddedXItems, ...nationalFilmXForTeam]) pushNewsItem(xi);
   for (const bp of bskyPosts) pushNewsItem(bp);
 
   // 10. Live Power Rankings (teamStats & teamStatRankings already built in Step 5)

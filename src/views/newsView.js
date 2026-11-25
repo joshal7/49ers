@@ -19,6 +19,7 @@ import {
   registerRosterPlayersForInlineLinks
 } from './uiHelpers.js';
 import {
+  isInlineFilmPhotoOrChartTweet,
   optimizeImageUrlForSlot,
   resolveDailyBriefHeroMedia,
   resolveSalientCardVisual
@@ -526,7 +527,14 @@ export function renderWireSignalBadgeHtml(item, isVideo, isTweet) {
     return `<span class="badge ${urgentCls}">${iconSvg('bolt', 11)}<span>${esc(badge)}</span></span>`;
   }
   if (badge === 'FILM & TRENCH' || item?.category === 'film') {
-    return `<span class="badge badge-positive">${iconSvg(isVideo ? 'video' : 'target', 11)}<span>${isVideo ? 'All-22 Film' : 'Film & Trench'}</span></span>`;
+    const isGifClip = Boolean(
+      item?.isAnimatedGif ||
+        /\/tweet_video\//i.test(String(item?.videoStreamUrl || '')) ||
+        /\.gif(?:\?|$)/i.test(String(item?.videoStreamUrl || ''))
+    );
+    const hasFilmMediaClip = Boolean(isVideo || item?.videoId || item?.videoStreamUrl);
+    const filmLabel = isGifClip ? 'All-22 GIF' : hasFilmMediaClip ? 'All-22 Film' : 'Film & Trench';
+    return `<span class="badge badge-positive">${iconSvg(hasFilmMediaClip ? 'video' : 'target', 11)}<span>${filmLabel}</span></span>`;
   }
   if (badge === 'ROSTER MOVE' || badge === 'TRADE INTEL') {
     return `<span class="badge badge-gold"><span>${esc(badge)}</span></span>`;
@@ -595,7 +603,7 @@ function isSummaryRedundantWithTitle(title = '', summary = '') {
 function renderRelatedStoriesDrawerHtml(
   item,
   confirmingList = [],
-  { prioritizedRaw = [], rosterPlayers = [], readKeysSet = null, parentShownUrls = null } = {}
+  { prioritizedRaw = [], rosterPlayers = [], readKeysSet = null, parentShownUrls = null, activeVideosSet = new Set() } = {}
 ) {
   if (!Array.isArray(confirmingList) || confirmingList.length === 0) return '';
   const clusterKind = item?.clusterKind === 'corroboration' ? 'corroboration' : 'similar';
@@ -608,9 +616,18 @@ function renderRelatedStoriesDrawerHtml(
 
   const rowsHtml = confirmingList
     .slice(0, 12)
-    .map(cr => {
+    .map((cr, crIdx) => {
       const crIsTw = cr?.type === 'tweet' || cr?.type === 'social';
-      const crIsVid = cr?.type === 'video' || Boolean(cr?.videoId);
+      const crStreamUrl =
+        cr?.videoStreamUrl && /^https:\/\//i.test(String(cr.videoStreamUrl).trim())
+          ? String(cr.videoStreamUrl).trim()
+          : '';
+      const crIsGif = Boolean(
+        cr?.isAnimatedGif ||
+          /\/tweet_video\//i.test(crStreamUrl) ||
+          /\.gif(?:\?|$)/i.test(crStreamUrl)
+      );
+      const crIsVid = cr?.type === 'video' || Boolean(cr?.videoId) || Boolean(crStreamUrl);
       const crHref = crIsTw
         ? sanitizeExternalUrl(resolveOriginalTweetUrl(cr, prioritizedRaw), '#')
         : sanitizeExternalUrl(cr?.url, '#');
@@ -622,8 +639,21 @@ function renderRelatedStoriesDrawerHtml(
           ? `${crAuthor} • ${crOutlet}`
           : crAuthor || crOutlet || crBeatFallback;
       const crIsInjuryWire = cr?.wireSource === 'espn_player_wire' || String(cr?.id || '').startsWith('espn_pwire_');
-      const typeLabel = crIsTw ? 'Tweet' : crIsVid ? 'Video' : crIsInjuryWire ? 'Injury Wire' : 'Article';
-      const badgeCls = crIsTw ? 'badge-gold' : crIsVid ? 'badge-scarlet' : 'badge-neutral';
+      const typeLabel = crIsGif
+        ? 'GIF'
+        : crIsVid
+          ? cr?.duration
+            ? `Clip ${cr.duration}`
+            : 'Video'
+          : crIsTw
+            ? 'Tweet'
+            : crIsInjuryWire
+              ? 'Injury Wire'
+              : 'Article';
+      const badgeCls = crIsGif || crIsVid ? 'badge-scarlet' : crIsTw ? 'badge-gold' : 'badge-neutral';
+      const crHasInlineClip = Boolean(cr?.videoId || crStreamUrl);
+      const crVidKey = crHasInlineClip ? `rel_${cr?.id || `${item?.id || 'item'}_${crIdx}`}` : '';
+      const crVidOpen = Boolean(crVidKey && activeVideosSet.has(crVidKey));
       const rawBody = crIsTw
         ? formatTweetBodyForDisplay(
             stripRedundantAuthorBoilerplate(cr?.fullText || cr?.title || cr?.headline || '', crAuthor)
@@ -678,6 +708,58 @@ function renderRelatedStoriesDrawerHtml(
               ${effectiveCrThumbHtml}
             </div>
             ${crLinkedCardHtml}
+          </div>
+        `;
+      }
+
+      if (crHasInlineClip) {
+        const divCls = `synthesis-source-sheet-row similar-story-row has-inline-clip ${crThumbHtml ? 'has-source-thumb' : ''} ${crIsRead ? 'is-read-item' : ''}`.trim();
+        const inlineRelPlayerHtml = crVidOpen
+          ? renderVideoEmbedOrFacade(
+              crVidKey,
+              cr.videoId || '',
+              0,
+              displayHeadline || 'Watch Clip',
+              crOutlet || crAuthor,
+              true,
+              cr.embeddable !== false,
+              {
+                compactFooter: true,
+                videoStreamUrl: crStreamUrl,
+                posterUrl: cr.imageUrl || '',
+                externalWatchUrl: isValidLink ? crHref : '',
+                isAnimatedGif: crIsGif,
+                durationLabel: cr.duration || ''
+              }
+            )
+          : '';
+        return `
+          <div class="${divCls}" data-similar-story-row data-read-key="${esc(crReadKey)}">
+            <div class="similar-story-top-row">
+              <div style="min-width:0;flex:1">
+                <div class="source-row-meta">
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0">
+                    <span class="badge ${badgeCls}" style="font-size:9.8px;padding:1.5px 6px">${esc(typeLabel)}</span>
+                    <strong class="source-row-author">${esc(attribution)}</strong>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+                    ${
+                      !crVidOpen
+                        ? `<button type="button" class="btn-ghost btn-compact similar-story-play-btn" data-action="play-inline-video" data-vid-key="${esc(crVidKey)}" aria-label="Play ${esc(crIsGif ? 'GIF' : 'clip')} inline">${iconSvg('play', 10)}<span>${crIsGif ? 'GIF' : 'Play'}</span></button>`
+                        : ''
+                    }
+                    <span class="mono source-row-age">${cr?.publishedAt ? esc(formatRelativeAge(cr.publishedAt)) : ''}</span>
+                  </div>
+                </div>
+                ${
+                  isValidLink
+                    ? `<a href="${esc(crHref)}" target="_blank" rel="noopener noreferrer" class="source-row-headline ${crIsTw ? 'is-tweet-body' : ''} similar-story-tweet-link" data-mark-read-key="${esc(crReadKey)}">${esc(displayHeadline)} <span class="wire-inline-ext">${iconSvg('externalLink', 11)}</span></a>`
+                    : `<div class="source-row-headline ${crIsTw ? 'is-tweet-body' : ''}">${esc(displayHeadline)}</div>`
+                }
+              </div>
+              ${crVidOpen ? '' : crThumbHtml}
+            </div>
+            ${inlineRelPlayerHtml}
           </div>
         `;
       }
@@ -738,6 +820,11 @@ export function renderWireItemCardHtml(
     item.videoStreamUrl && /^https:\/\//i.test(String(item.videoStreamUrl).trim())
       ? String(item.videoStreamUrl).trim()
       : '';
+  const isAnimatedGif = Boolean(
+    item.isAnimatedGif ||
+      /\/tweet_video\//i.test(safeStreamCandidate) ||
+      /\.gif(?:\?|$)/i.test(safeStreamCandidate)
+  );
   const isTweet = item.type === 'tweet' || item.type === 'social';
   const isVideo = item.type === 'video';
   const isUrgent = isUrgentBreakingBadge(item.breakingBadge);
@@ -801,11 +888,38 @@ export function renderWireItemCardHtml(
     : '';
   const linkedCardOwnsMedia = Boolean(linkedArticlePreview?.imageUrl && linkedArticleCardHtml);
   const thumbTargetHref = resolvedItemUrl || safeExtUrl || '';
+  const showInlineChartPhoto = Boolean(
+    !isCompactMode &&
+      !linkedCardOwnsMedia &&
+      !isVideo &&
+      !hasPlayableVideo &&
+      isInlineFilmPhotoOrChartTweet(item)
+  );
+  const inlineChartPhotoOpt = showInlineChartPhoto
+    ? optimizeImageUrlForSlot(item.imageUrl, 'chart')
+    : { src: '', fallbackSrc: '' };
+  const inlineChartPhotoHtml =
+    showInlineChartPhoto && inlineChartPhotoOpt.src
+      ? (() => {
+          const chartTarget = thumbTargetHref || item.imageUrl;
+          const safeChartHref = sanitizeExternalUrl(chartTarget, null);
+          const loadAttr = eagerImage ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
+          const imgEl = `<img src="${esc(inlineChartPhotoOpt.src)}" ${inlineChartPhotoOpt.fallbackSrc ? `data-fallback-src="${esc(inlineChartPhotoOpt.fallbackSrc)}"` : ''} alt="${esc(displayTitle || `${getActiveTeamConfig().nickname} film chart`)}" class="wire-inline-photo-img" ${loadAttr} decoding="async" />`;
+          return safeChartHref
+            ? `<a href="${esc(safeChartHref)}" target="_blank" rel="noopener noreferrer" class="wire-inline-photo-box" data-inline-chart-media="true" data-mark-read-key="${esc(readKey)}">${imgEl}</a>`
+            : `<div class="wire-inline-photo-box" data-inline-chart-media="true">${imgEl}</div>`;
+        })()
+      : '';
   const wantsLeadHeroSlot = Boolean(
-    !isCompactMode && !linkedCardOwnsMedia && (isLeadFeatured || isUrgent) && !isVideo && !hasPlayableVideo
+    !isCompactMode &&
+      !linkedCardOwnsMedia &&
+      !inlineChartPhotoHtml &&
+      (isLeadFeatured || isUrgent) &&
+      !isVideo &&
+      !hasPlayableVideo
   );
   const salientVisual =
-    !isCompactMode && !linkedCardOwnsMedia && !isVideo && !hasPlayableVideo
+    !isCompactMode && !linkedCardOwnsMedia && !inlineChartPhotoHtml && !isVideo && !hasPlayableVideo
       ? resolveSalientCardVisual(item, {
           rosterPlayers,
           slot: wantsLeadHeroSlot ? 'hero' : 'thumb',
@@ -865,16 +979,19 @@ export function renderWireItemCardHtml(
           prioritizedRaw,
           rosterPlayers,
           readKeysSet,
-          parentShownUrls
+          parentShownUrls,
+          activeVideosSet
         })
       : '';
 
   const rightMetaPrefix =
-    hasPlayableVideo && item.duration
-      ? `${item.duration} • `
-      : effortCue
-        ? `${effortCue} • `
-        : '';
+    hasPlayableVideo && isAnimatedGif
+      ? 'GIF • '
+      : hasPlayableVideo && item.duration
+        ? `${item.duration} • `
+        : effortCue
+          ? `${effortCue} • `
+          : '';
 
   const playerChipsHtml =
     !isCompactMode && item.mentionedPlayers?.length
@@ -921,13 +1038,14 @@ export function renderWireItemCardHtml(
         </div>
         ${sideThumbHtml}
       </div>
+      ${inlineChartPhotoHtml}
       ${
         hasPlayableVideo
           ? renderVideoEmbedOrFacade(
               vidKey,
               item.videoId || '',
               0,
-              item.title || `Watch Clip (${item.duration || 'Video'})`,
+              item.title || `Watch Clip (${isAnimatedGif ? 'GIF' : item.duration || 'Video'})`,
               item.outletName,
               isVidOpen,
               effectiveEmbeddable,
@@ -939,7 +1057,9 @@ export function renderWireItemCardHtml(
                   sanitizeExternalUrl(item.externalVideoUrl, null) ||
                   resolvedItemUrl ||
                   sanitizeExternalUrl(item.url, '') ||
-                  ''
+                  '',
+                isAnimatedGif,
+                durationLabel: item.duration || ''
               }
             )
           : ''
@@ -1031,26 +1151,29 @@ export function renderNewsViewHtml({
     return activeSort === 'latest' ? sorted : balanceFeedTopSalience(sorted, { nowMs, appData });
   };
 
+  const teamScopedPrioritizedRaw = prioritizedRaw.filter(i => !i.filmOnlyScope);
   const dedupedRaw = applySortAndBalance(
-    deduplicateAndGroupWireItems(prioritizedRaw, { nowMs, appData, groupSimilarStories: shouldGroupSimilar })
+    deduplicateAndGroupWireItems(teamScopedPrioritizedRaw, { nowMs, appData, groupSimilarStories: shouldGroupSimilar })
   );
   const dedupedTweets = applySortAndBalance(
     deduplicateAndGroupWireItems(
-      prioritizedRaw.filter(i => i.type === 'tweet' || i.type === 'social'),
+      teamScopedPrioritizedRaw.filter(i => i.type === 'tweet' || i.type === 'social'),
       { nowMs, preserveFormat: 'tweets', appData, groupSimilarStories: shouldGroupSimilar }
     )
   );
   const dedupedArticles = applySortAndBalance(
     deduplicateAndGroupWireItems(
-      prioritizedRaw.filter(i => i.type === 'article' || i.type === 'post'),
+      teamScopedPrioritizedRaw.filter(i => i.type === 'article' || i.type === 'post'),
       { nowMs, preserveFormat: 'articles', appData, groupSimilarStories: shouldGroupSimilar }
     )
   );
-  // Highlights & Videos: strictly non-film videos + native X/ESPN/49ers.com highlight clips (0% overlap with Film & Trench)
+  // Highlights & Videos: strictly non-film videos + native X/ESPN/beat video & GIF highlight clips (0% overlap with Film & Trench)
   const rawHighlightsAndVideos = deduplicateAndGroupWireItems(
-    prioritizedRaw.filter(
+    teamScopedPrioritizedRaw.filter(
       i =>
-        (i.type === 'video' || Boolean(i.isHighlightClip && (i.videoStreamUrl || i.externalVideoUrl))) &&
+        (i.type === 'video' ||
+          Boolean(i.videoStreamUrl) ||
+          Boolean(i.isHighlightClip && (i.videoStreamUrl || i.externalVideoUrl))) &&
         i.category !== 'film'
     ),
     { nowMs, preserveFormat: 'videos', appData, groupSimilarStories: shouldGroupSimilar }
@@ -1063,13 +1186,17 @@ export function renderNewsViewHtml({
             scoreHighlightAndTeamVideoSalience(b, appData, nowMs) -
             scoreHighlightAndTeamVideoSalience(a, appData, nowMs)
         );
-  // Film & Trench: All-22 film videos (incl. JT O'Sullivan's The QB School & Jonnydel) + written film/trench breakdowns
+  // Film & Trench: All-22 film videos & beat GIF/video breakdowns + written film/trench/chart breakdowns (incl. league-wide analytics charts)
   const dedupedFilmVideos = deduplicateAndGroupWireItems(
-    prioritizedRaw.filter(i => i.category === 'film' && i.type === 'video'),
+    prioritizedRaw.filter(
+      i => i.category === 'film' && (i.type === 'video' || Boolean(i.videoId) || Boolean(i.videoStreamUrl))
+    ),
     { nowMs, preserveFormat: 'videos', appData, groupSimilarStories: shouldGroupSimilar }
   );
   const dedupedFilmArticlesAndTweets = deduplicateAndGroupWireItems(
-    prioritizedRaw.filter(i => i.category === 'film' && i.type !== 'video'),
+    prioritizedRaw.filter(
+      i => i.category === 'film' && i.type !== 'video' && !i.videoId && !i.videoStreamUrl
+    ),
     { nowMs, appData, groupSimilarStories: shouldGroupSimilar }
   );
   const dedupedFilmAndTrench = sortNewsFeedByMode(
@@ -1080,7 +1207,7 @@ export function renderNewsViewHtml({
   // Trades & Roster: Trades, official roster moves, AND salient salary cap / contract news (excluding videos to avoid redundancy)
   const dedupedTradesAndRoster = sortNewsFeedByMode(
     deduplicateAndGroupWireItems(
-      prioritizedRaw.filter(
+      teamScopedPrioritizedRaw.filter(
         i => i.type !== 'video' && (i.category === 'roster' || i.category === 'cap' || isSalientCapOrContractItem(i))
       ),
       { nowMs, appData, groupSimilarStories: shouldGroupSimilar }
@@ -1300,13 +1427,13 @@ export function renderNewsViewHtml({
         : '';
 
     const briefHtml = renderDailyTopNewsBriefHtml(dailyBrief, {
-      rawStream: prioritizedRaw,
+      rawStream: teamScopedPrioritizedRaw,
       appData,
       asSubcard: false,
       readKeysSet
     });
 
-    const presserTakeaways = extractPresserTakeaways(prioritizedRaw, { nowMs });
+    const presserTakeaways = extractPresserTakeaways(teamScopedPrioritizedRaw, { nowMs });
     const presserStripHtml = renderPresserTakeawaysStripHtml(presserTakeaways);
 
     const belowListHtml =
@@ -1337,12 +1464,23 @@ export function renderVideoEmbedOrFacade(
   channel = 'YouTube',
   isPlaying = false,
   embeddable = true,
-  { compactFooter = false, videoStreamUrl = '', posterUrl = '', externalWatchUrl = '' } = {}
+  {
+    compactFooter = false,
+    videoStreamUrl = '',
+    posterUrl = '',
+    externalWatchUrl = '',
+    isAnimatedGif = false,
+    durationLabel = ''
+  } = {}
 ) {
   const safeStreamUrl =
     videoStreamUrl && /^https:\/\//i.test(String(videoStreamUrl)) ? String(videoStreamUrl).trim() : '';
 
   if (!videoId && safeStreamUrl) {
+    const isGif = Boolean(
+      isAnimatedGif || /\/tweet_video\//i.test(safeStreamUrl) || /\.gif(?:\?|$)/i.test(safeStreamUrl)
+    );
+    const isRawGifImage = /\.gif(?:\?|$)/i.test(safeStreamUrl);
     const rawPoster = posterUrl && /^https:\/\//i.test(String(posterUrl)) ? String(posterUrl).trim() : '';
     const optPoster = rawPoster ? optimizeImageUrlForSlot(rawPoster, 'hero') : { src: '', fallbackSrc: '' };
     const safePoster = optPoster.src || rawPoster;
@@ -1356,9 +1494,11 @@ export function renderVideoEmbedOrFacade(
         ? activeClubDomain
         : /bsky\.app|bsky\.network/i.test(`${safeOutUrl} ${safeStreamUrl}`)
           ? 'Bluesky'
-          : /espn/i.test(`${safeOutUrl} ${channel}`)
-            ? 'ESPN'
-            : channel || 'Source';
+          : /tenor\.com|giphy\.com/i.test(`${safeOutUrl} ${safeStreamUrl}`)
+            ? 'GIF'
+            : /espn/i.test(`${safeOutUrl} ${channel}`)
+              ? 'ESPN'
+              : channel || 'Source';
 
     if (embeddable === false) {
       return `
@@ -1380,31 +1520,53 @@ export function renderVideoEmbedOrFacade(
     }
 
     if (isPlaying) {
+      if (isRawGifImage) {
+        return `
+          <div class="video-embed-box" data-inline-gif-player="true">
+            <div class="video-iframe-wrap">
+              <img src="${esc(safeStreamUrl)}" alt="${esc(label)}" class="inline-gif-img" decoding="async" />
+              <span class="video-gif-badge mono">GIF</span>
+            </div>
+            <div class="video-launch-bar">
+              <span class="inline-icon-meta" style="min-width:0" data-vid-status-label="${esc(vidKey)}">${iconSvg('video', 14)}<span>Playing GIF Inline</span></span>
+              <a href="${esc(safeOutUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">Open on ${esc(providerLabel)} ${iconSvg('externalLink', 12)}</a>
+            </div>
+          </div>
+        `;
+      }
       return `
-        <div class="video-embed-box">
+        <div class="video-embed-box"${isGif ? ' data-inline-gif-player="true"' : ''}>
           <div class="video-iframe-wrap">
-            <video src="${esc(safeStreamUrl)}" ${safePoster ? `poster="${esc(safePoster)}"` : ''} data-vid-key="${esc(vidKey)}" data-watch-url="${esc(safeOutUrl)}" data-provider="${esc(providerLabel)}" controls autoplay playsinline preload="auto"></video>
+            <video src="${esc(safeStreamUrl)}" ${safePoster ? `poster="${esc(safePoster)}"` : ''} data-vid-key="${esc(vidKey)}" data-watch-url="${esc(safeOutUrl)}" data-provider="${esc(providerLabel)}"${isGif ? ' data-is-gif="1" loop muted' : ''} controls autoplay playsinline preload="auto"></video>
+            ${isGif ? '<span class="video-gif-badge mono">GIF</span>' : ''}
           </div>
           <div class="video-launch-bar">
-            <span class="inline-icon-meta" style="min-width:0" data-vid-status-label="${esc(vidKey)}">${iconSvg('video', 14)}<span>Playing Inline</span></span>
+            <span class="inline-icon-meta" style="min-width:0" data-vid-status-label="${esc(vidKey)}">${iconSvg('video', 14)}<span>${isGif ? 'Playing GIF Inline' : 'Playing Inline'}</span></span>
             <a href="${esc(safeOutUrl)}" target="_blank" rel="noopener noreferrer" class="ext-link" style="flex-shrink:0">Open on ${esc(providerLabel)} ${iconSvg('externalLink', 12)}</a>
           </div>
         </div>
       `;
     }
 
+    const cornerBadgeHtml = isGif
+      ? '<span class="video-gif-badge mono">GIF</span>'
+      : durationLabel
+        ? `<span class="video-dur-badge mono">${esc(durationLabel)}</span>`
+        : '';
+
     return `
-      <div class="video-embed-box">
+      <div class="video-embed-box"${isGif ? ' data-gif-facade="true"' : ''}>
         <div class="video-thumb-stage" style="cursor:pointer" data-action="play-inline-video" data-vid-key="${esc(vidKey)}">
           ${
             safePoster
               ? `<img src="${esc(safePoster)}" ${posterFallbackAttr} alt="${esc(label)}" class="video-thumb-img" loading="lazy" decoding="async" />`
               : `<div class="video-thumb-img" style="background:linear-gradient(135deg,var(--bg-card-alt),var(--bg-primary));min-height:165px"></div>`
           }
+          ${cornerBadgeHtml}
           <div class="video-thumb-overlay">
             <button type="button" class="video-play-pill" data-action="play-inline-video" data-vid-key="${esc(vidKey)}">
               ${iconSvg('play', 14)}
-              <span>Play</span>
+              <span>${isGif ? 'Play GIF' : 'Play'}</span>
             </button>
           </div>
         </div>

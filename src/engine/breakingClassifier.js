@@ -274,13 +274,13 @@ const SALIENT_CAP_AND_CONTRACT_SIGNAL_REGEX =
   /\b(salary cap|cap space|cap hit|cap charge|cap number|cap savings|cap relief|cap room|cap table|cap ledger|dead cap|dead money|void years?|option bonus|signing bonus|roster bonus|workout bonus|per-game roster bonus|base salary|prorat(?:ed|ion)|restructure[sd]?|pay cut|contract extension|contract details|contract breakdown|contract terms|multi-year deal|new deal|agreed to terms|franchise tag|transition tag|fifth-year option|5th-year option|bonus forfeiture|bonus repayment|cba (?:article|rollover)|cap rollover|overthecap|over the cap|spotrac)\b/i;
 
 const DEDICATED_PURE_FILM_CHANNEL_REGEX =
-  /\b(the qb school|qb school|jt o['’]?sullivan|jonnydel|football academy|alex rollins|qb confidential|kurt warner|baldy|brett kollmann|film room)\b/i;
+  /\b(the qb school|qb school|jt o['’]?sullivan|jonnydel|sulligenthub|football academy|alex rollins|qb confidential|kurt warner|baldy|baldynfl|brett kollmann|film room|grustasbrady|brady grustas|throwthedamball|judah fortgang|jrfortgang|ghatz_28|george hatzadony|collinsworthpff|nate_tice|nate tice|benjaminsolak|ben solak|fball_insights|football insights|benbbaldwin|ben baldwin|sethwalder|seth walder|sumersports|pff_jeff)\b/i;
 
 const TRUE_FILM_VIDEO_CHANNEL_REGEX =
-  /\b(jonnydel|football academy|the qb school|qb school|jt o['’]?sullivan|chase daniel|alex rollins|film room|brett kollmann|baldy|kurt warner|qb confidential|all[ _-]?22)\b/i;
+  /\b(jonnydel|sulligenthub|football academy|the qb school|qb school|jt o['’]?sullivan|chase daniel|alex rollins|film room|brett kollmann|baldy|baldynfl|kurt warner|qb confidential|all[ _-]?22|grustasbrady|brady grustas|nate_tice|nate tice|benjaminsolak|ben solak|throwthedamball|ghatz_28|collinsworthpff|fball_insights|benbbaldwin|sethwalder|pff_jeff)\b/i;
 
 const TRUE_FILM_VIDEO_TITLE_REGEX =
-  /\b(all-22|all 22|film breakdown|film review|film study|film room|tape breakdown|tape study|film analysis|49ers playbook|qb film|qb school|scheme breakdown|x['’]?s (?:and|&) o['’]?s|pass[- ]rush breakdown|coverage breakdown|coaching tape)\b/i;
+  /\b(all-22|all 22|film breakdown|film review|film study|film room|tape breakdown|tape study|film analysis|49ers playbook|qb film|qb school|scheme breakdown|x['’]?s (?:and|&) o['’]?s|pass[- ]rush(?:er|ing)? breakdown|coverage breakdown|coaching tape|coaches['’]? film|baldy['’]?s?\s*breakdowns?|play[- ]design|review video|endzone angle|coverage efficiency|separation prevented|on[- ]ball grade)\b/i;
 
 const HIGHLIGHT_AND_TEAM_INTEREST_VIDEO_REGEX =
   /\b(game highlights|full game highlights|\bhighlights\b|best plays|every touchdown|every catch|every throw|every completed pass|rushing highlights|receiving highlights|pick[- ]?6|interceptions?|top plays|condensed game|end of game|final drive|game-winning|\btd\b|end zone|outlast|thriller|49hours|forty niner way|brick by brick|mic['’]?d up|from the trenches|locker room|victory speech|postgame recap|game recap|week \d+ recap|sights and sounds|wired|sideline|behind the scenes|tim ryan|knbr)\b/i;
@@ -289,7 +289,11 @@ const POST_GAME_RECAP_OR_PRESSER_SIGNAL_REGEX =
   /\b(\d+-\d+\s+(?:win|loss|victory|thriller|shootout|comeback)|outlast(?:s|ed)?|beat(?:s)?\s+(?:the\s+)?[a-z]+|defeat(?:s|ed)?\s+(?:the\s+)?[a-z]+|postgame|post-game|locker room|victory speech|shanahan\s+(?:on|after|said|explains|addresses|recaps)|purdy\s+(?:on|after)|mccaffrey\s+(?:on|after)|final score|instant analysis|takeaways\s+from|grades\s+from|snap counts?\s+from|touchdowns?|pick[- ]?6|\btd\b|end zone)\b/i;
 
 const WRITTEN_FILM_AND_TRENCH_SIGNAL_REGEX =
-  /\b(all-22|all 22|film breakdown|film study|tape breakdown|coaching tape|snap count|snap share|pass[- ]block|run[- ]block|\bpbwr\b|\brswr\b|pressure rate|pass rush|pass-rush|qb sack|pff\s+grad|pff\s+gard|epa\/play|passing epa|rushing epa|yards per play|\bcpoe\b|\bdvoa\b|\byprr\b|\badot\b|success rate|wide-9|stunt|sim pressure|simulated pressure|blitz rate|11 personnel|12 personnel|21 personnel|22 personnel|two-high|single-high|quarters coverage|cover [12346]|man coverage|zone coverage|split-safety|motion rate|play-action|red-zone|third-down|trench(?:es)?|pass protection|o-linem[ae]n|offensive line|defensive line|run defense|run fits?|blocking scheme|route concept|stats and facts|what he brings to the offense|questions at corner|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards)\b/i;
+  /\b(all-22|all 22|film breakdown|film study|tape breakdown|coaching tape|coaches['’]? film|baldy['’]?s?\s*breakdowns?|play[- ]design|review video|snap count|snap share|pass[- ]block(?:ing)?|run[- ]block(?:ing)?|\bpbwr\b|\bprwr\b|\brswr\b|pressure rate|pass[- ]rush(?:er|ing)?|qb sack|pff\s+grad|pff\s+gard|via\s+@?pff\b|offensive\s+grade|defensive\s+grade|rushing\s+grade|coverage\s+grade|blocking\s+grade|on[- ]ball\s+grade|coverage\s+efficiency|separation(?:\s+prevented)?|passer\s+rating(?:\s+allowed)?|yards\s*(?:\/|per)\s*(?:target|att|attempt|route)|comp\s+pct|dropbacks?|epa\/play|passing epa|rushing epa|yards per play|\bcpoe\b|\bdvoa\b|\byprr\b|\badot\b|\bryoe\b|success rate|wide-9|stunt|sim pressure|simulated pressure|blitz rate|11 personnel|12 personnel|21 personnel|22 personnel|two-high|single-high|quarters coverage|cover [12346]|man coverage|zone coverage|split-safety|motion rate|play-action|red-zone|third-down|trench(?:es)?|pass protection|o-linem[ae]n|offensive line|defensive line|run defense|run fits?|blocking scheme|route concept|route running|route tree|all\s+routes|strong swat|swat against|check\s*down|swim move|rip move|bull rush|spin move|hand placement|pad level|leverage|pulling|pull block|lead block|combo block|ball placement|location of this (?:pitch|throw|pass)|precision[\s\S]{0,40}accuracy|pocket presence|eye discipline|stats and facts|what he brings to the offense|questions at corner|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards|min\.?\s+\d+\s+(?:snaps|targets|dropbacks))\b/i;
+
+const TRENCH_POSITION_SET = new Set(['OL', 'OT', 'OG', 'C', 'G', 'T', 'LT', 'LG', 'RG', 'RT', 'DL', 'DE', 'DT', 'NT', 'EDGE']);
+const TRENCH_CLIP_COMMENTARY_REGEX =
+  /\b(lt|lg|rg|rt|o-?line|d-?line|trench|pass[- ]?rush(?:er|ing)?|block(?:ed|ing|er)?|pull(?:ing|ed)?|swat|rip|bull rush|leverage|rep\b|reps\b|dump truck|in his lap|check\s*down|pocket|protection|double team|chip|seal|pancake|gap|stunt|blitz|edge|interior|guard|tackle|center|nose)\b/i;
 
 const NON_FILM_PODIUM_OR_RECAP_VIDEO_REGEX =
   /\b(press conference|media availability|locker room|podium|postgame interview|explains why|reveals (?:why|what)|discusses addition|pumped about|previews week \d+|ways to watch|highlights|reacts to|trade rumor|mailbag)\b/i;
@@ -354,22 +358,44 @@ export function isSalientCapOrContractItem(item = {}) {
 
 export function classifyNewsItemCategory(item = {}) {
   if (!item || typeof item !== 'object') return 'beat';
+  if (item.isLeagueWideFilmChart) return 'film';
   const title = String(item.title || item.headline || '').trim();
   const body = String(item.fullText || item.summary || '').trim();
   const lead = extractPrimaryClaimText(item);
   const channelOrAuthor = `${item.outletName || ''} ${item.author || ''} ${item.reporterName || ''} ${item.authorHandle || ''}`.trim();
   const combined = `${title} ${body}`.trim();
+  const isAnimatedGif =
+    Boolean(item.isAnimatedGif) ||
+    /\/tweet_video\//i.test(String(item.videoStreamUrl || '')) ||
+    /\.gif(?:\?|$)/i.test(String(item.videoStreamUrl || ''));
+  const hasTrenchPlayerMention =
+    Array.isArray(item.mentionedPlayers) &&
+    item.mentionedPlayers.some(mp => TRENCH_POSITION_SET.has(String(mp?.position || '').toUpperCase()));
 
   if (item.type === 'video' || Boolean(item.videoId) || Boolean(item.videoStreamUrl)) {
     const isTweetStreamClip = Boolean(item.videoStreamUrl) && (item.type === 'tweet' || item.type === 'social');
     const isDedicatedPureFilmChannel =
       (DEDICATED_PURE_FILM_CHANNEL_REGEX.test(channelOrAuthor) ||
-        /\b(theqbschool|jonnydels|jonnydelsfa|jonnydel|baldynfl)\b/i.test(channelOrAuthor)) &&
+        /\b(theqbschool|jonnydels|jonnydelsfa|jonnydel|sulligenthub|baldynfl|grustasbrady|throwthedamball|ghatz_28|collinsworthpff|nate_tice|benjaminsolak|fball_insights|benbbaldwin|sethwalder)\b/i.test(
+          channelOrAuthor
+        )) &&
       !/\b(mailbag|q\s*&\s*a|live\s*stream\s*q&a|podcast)\b/i.test(title);
     const isTapeChannel = TRUE_FILM_VIDEO_CHANNEL_REGEX.test(channelOrAuthor);
-    const isTapeTitle = TRUE_FILM_VIDEO_TITLE_REGEX.test(title);
+    const isTapeTitle = TRUE_FILM_VIDEO_TITLE_REGEX.test(combined);
     const isPodiumOrVlog = NON_FILM_PODIUM_OR_RECAP_VIDEO_REGEX.test(title) && !isTapeTitle;
     if (isDedicatedPureFilmChannel || ((!isTweetStreamClip && isTapeChannel || isTapeTitle) && !isPodiumOrVlog)) {
+      return 'film';
+    }
+    // Beat reporter All-22 GIFs / short trench clips (e.g. Dieter Kurtenbach OL pull GIF or Brady Grustas EDGE pass-rush clip)
+    const isPureInjuryClip = /\b(injury report|injury update|did not practice|carted|concussion|questionable|ruled out|inactives?)\b/i.test(lead);
+    if (
+      isTweetStreamClip &&
+      !isPodiumOrVlog &&
+      !isPureInjuryClip &&
+      (isAnimatedGif && (hasTrenchPlayerMention || TRENCH_CLIP_COMMENTARY_REGEX.test(combined)) ||
+        (TRENCH_CLIP_COMMENTARY_REGEX.test(combined) &&
+          (hasTrenchPlayerMention || WRITTEN_FILM_AND_TRENCH_SIGNAL_REGEX.test(combined))))
+    ) {
       return 'film';
     }
     if (!isTweetStreamClip) {
@@ -400,7 +426,7 @@ export function classifyNewsItemCategory(item = {}) {
     return 'roster';
   }
 
-  // Genuine X's & O's, All-22 tape, snap-count, EPA/CPOE, and trench breakdowns -> 'film'
+  // Genuine X's & O's, All-22 tape, snap-count, EPA/CPOE, PFF grading, and trench breakdowns -> 'film'
   const isMockOrOffseasonDraft = /\b(mock draft|draft simulator|7-round|3-round|draft profile|combine)\b/i.test(
     combined
   );
@@ -408,7 +434,7 @@ export function classifyNewsItemCategory(item = {}) {
   const headlineHasFilmCue =
     !isMockOrOffseasonDraft &&
     (TRUE_FILM_VIDEO_TITLE_REGEX.test(title) ||
-      /\b(snap count|film|all-22|tape|playbook|scheme|trench|pass rush|pass-rush|pff\s+grad|pff\s+gard|o-linem[ae]n|offensive line|run defense|epa|cpoe|dvoa|wide-9|coverage|questions at corner|what he brings to the offense|stats and facts|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards|play-action|red-zone|third-down)\b/i.test(
+      /\b(snap count|film|all-22|tape|playbook|scheme|trench|pass[- ]rush(?:er|ing)?|pff\s+grad|pff\s+gard|via\s+@?pff\b|offensive\s+grade|defensive\s+grade|rushing\s+grade|on[- ]ball\s+grade|coverage\s+efficiency|separation(?:\s+prevented)?|passer\s+rating|yards\/att|yards\/target|dropbacks?|o-linem[ae]n|offensive line|run defense|epa|cpoe|dvoa|wide-9|coverage|play[- ]design|baldy['’]?s?\s*breakdowns?|strong swat|check\s*down|all\s+routes|questions at corner|what he brings to the offense|stats and facts|five turnovers|2nd-half takeaways|\d+\s+catches,\s+\d+\s+yards|play-action|red-zone|third-down)\b/i.test(
         title
       ));
   const isPureInjuryLead =
@@ -1825,7 +1851,10 @@ export function computeWireStoryRank(item = {}, nowMs = Date.now(), ctx = null) 
       gravity = 1.32;
       break;
     case 'film_trench':
-      eventMagnitude = item.type === 'video' ? 58 : 64;
+      eventMagnitude =
+        Boolean(item.videoStreamUrl || item.videoId || item.isAnimatedGif || item.hasInlineChartImage)
+          ? 68
+          : 62;
       gravity = 1.30;
       break;
     case 'side_note':
@@ -4372,12 +4401,17 @@ export function deduplicateAndGroupWireItems(
         continue;
       }
 
-      // Never swallow an authoritative/film/highlight standalone video card into a text article/tweet cluster (while still allowing Tier-3 vlog echoes to fold under higher-tier reports)
+      // Never swallow an authoritative/film/highlight standalone video or GIF clip card into a text article/tweet cluster (while still allowing Tier-3 vlog echoes to fold under higher-tier reports)
       const isProtectedStandaloneVideo = it =>
-        (it.type === 'video' || Boolean(it.videoId)) &&
+        (it.type === 'video' || Boolean(it.videoId) || Boolean(it.videoStreamUrl)) &&
         Number(it.trustTier || 1) < 3 &&
         !/grant cohn/i.test(`${it.author || ''} ${it.outletName || ''}`);
       if (isProtectedStandaloneVideo(item) !== isProtectedStandaloneVideo(cl.lead)) {
+        continue;
+      }
+
+      // Keep league-wide Film & Trench chart posts isolated from team-specific All/Tweets clusters
+      if (Boolean(item.filmOnlyScope) !== Boolean(cl.lead.filmOnlyScope)) {
         continue;
       }
 
@@ -4586,6 +4620,38 @@ export function deduplicateAndGroupWireItems(
         if (isTwinVideoUpload && tokSim.jaccard > bestSim) {
           bestSim = tokSim.jaccard;
           matchedCluster = cl;
+          continue;
+        }
+
+        // Careful Same-Player Short Highlight Clip Grouping (e.g. multiple Mike Evans highlight clips from @StatsOnFire, @49ers, @NBCS49ers, @NFL within 18h)
+        // Strictly excludes All-22 film breakdowns, full-game mashups/recaps, podcasts, and podium press conferences!
+        const isNonFilmShortHighlightClip = (v, durSecVal) => {
+          if (!v || v.category === 'film') return false;
+          if (!v.videoStreamUrl && !v.isHighlightClip) return false;
+          const t = String(v.title || v.fullText || '').trim();
+          if (
+            /\b(game highlights|full game highlights|condensed game|podcast|press conference|media availability|locker room|forty niner way|49hours|mic['’]?d up|previews week|speaks to the media)\b/i.test(
+              t
+            )
+          ) {
+            return false;
+          }
+          return durSecVal === null || durSecVal <= 150;
+        };
+        const gapMsVid = itemMs && cl.anchorMs ? Math.abs(cl.anchorMs - itemMs) : 0;
+        const sameSingleHighlightPlayer =
+          pA.length === 1 && pB.length === 1 && pA[0] === pB[0];
+        if (
+          sameSingleHighlightPlayer &&
+          gapMsVid <= 18 * 3_600_000 &&
+          isNonFilmShortHighlightClip(item, durA) &&
+          isNonFilmShortHighlightClip(cl.lead, durB)
+        ) {
+          const playerClipSim = 0.82;
+          if (playerClipSim > bestSim) {
+            bestSim = playerClipSim;
+            matchedCluster = cl;
+          }
         }
         continue;
       }
@@ -4885,6 +4951,8 @@ export function deduplicateAndGroupWireItems(
         ...item,
         imageUrl: bestClusterImg,
         videoStreamUrl: item.videoStreamUrl || demotedPrev.videoStreamUrl || undefined,
+        isAnimatedGif: Boolean(item.isAnimatedGif || (!item.videoStreamUrl && demotedPrev.isAnimatedGif)) || undefined,
+        hasInlineChartImage: Boolean(item.hasInlineChartImage || demotedPrev.hasInlineChartImage) || undefined,
         duration: item.duration || demotedPrev.duration || undefined,
         isHighlightClip: Boolean(item.isHighlightClip || demotedPrev.isHighlightClip) || undefined,
         externalUrl: item.externalUrl || demotedPrev.externalUrl || null,
@@ -6385,9 +6453,12 @@ export function scoreHighlightAndTeamVideoSalience(item = {}, appData = null, no
   let score = 40;
 
   const isInterviewOrPodium =
-    /\b(press conference|media availability|reflects on|chats about|breaks down win|previews week|shares final updates|speak ahead|talk new additions|on first career touchdown|taking on bigger role|you['’]?ve got mail|inside the oval|writing a novel)\b/i.test(
+    /\b(press conference|media availability|speaks to the media|meets with the media|reflects on|chats about|breaks down win|previews week|shares final updates|speak ahead|talk new additions|on first career touchdown|taking on bigger role|you['’]?ve got mail|inside the oval|writing a novel|talks after|postgame press)\b/i.test(
       title
     ) && !/\b(forty niner way|49hours|mic['’]?d up|from the trenches|inside the 49ers locker room)\b/i.test(title);
+
+  const isInlineNativeStreamClip = Boolean(item.videoStreamUrl);
+  const isExternalOnlyClubLink = item.embeddable === false && !item.videoStreamUrl && !item.videoId;
 
   const isPlayerHighlightOrBigPlayClip =
     !isInterviewOrPodium &&
@@ -6399,28 +6470,43 @@ export function scoreHighlightAndTeamVideoSalience(item = {}, appData = null, no
   if (!isInterviewOrPodium && /\b(game highlights|full game highlights|condensed game|end of game|final drive|outlast|back-and-forth thriller)\b/i.test(title)) {
     score += 58;
   } else if (isPlayerHighlightOrBigPlayClip) {
-    score += 53;
+    score += 54;
   } else if (!isInterviewOrPodium && /\b(\bhighlights\b|best plays|every touchdown|top plays)\b/i.test(title)) {
     score += 55;
   } else if (/\b(forty niner way|49hours|brick by brick|mic['’]?d up|inside the 49ers locker room|locker room|victory speech|from the trenches|sights and sounds|wired|postgame recap|week \d+ recap|game recap)\b/i.test(title)) {
     score += 46;
+  } else if (isInlineNativeStreamClip && !isInterviewOrPodium && Boolean(item.isHighlightClip)) {
+    // Beat reporter & team social highlight clips (e.g. @StatsOnFire 0:44 end-zone highlight) should surface strongly alongside official reels
+    score += 48;
   } else if (HIGHLIGHT_AND_TEAM_INTEREST_VIDEO_REGEX.test(title) || SALIENT_INTERVIEW_OR_FEATURE_REGEX.test(title)) {
     score += 24;
   } else if (/\b(preview|talk new additions|speak ahead)\b/i.test(title)) {
+    score += 10;
+  }
+
+  if (isInlineNativeStreamClip && !isInterviewOrPodium) {
     score += 14;
+  }
+  if (isInterviewOrPodium) {
+    score -= 16;
+  }
+  if (isExternalOnlyClubLink) {
+    score -= 8;
   }
 
   const activeTeamVid = resolveTeamConfig(ctx?.teamConfig || getActiveTeamConfig());
   const teamFullLower = String(activeTeamVid?.fullName || 'San Francisco 49ers').toLowerCase();
   const clubDomainLower = String(activeTeamVid?.clubDomain || '49ers.com').toLowerCase();
   if (/^nfl$/i.test(channel) || channel.toLowerCase() === teamFullLower || channel.toLowerCase().includes(clubDomainLower)) {
-    score += 14;
+    score += isInterviewOrPodium ? 4 : 12;
   } else if (
     activeTeamVid?.abbr === 'SF'
-      ? /nbc sports bay area|espn|fox sports|cbs sports|knbr|forever faithful|san francisco 49ers fans/i.test(channel)
-      : /espn|fox sports|cbs sports|nfl network|official/i.test(channel)
+      ? /nbc sports bay area|espn|fox sports|cbs sports|knbr|forever faithful|san francisco 49ers fans|gold standard|x beat|statsonfire|oursf49ers|coach yac/i.test(channel)
+      : /espn|fox sports|cbs sports|nfl network|official|x beat/i.test(channel)
   ) {
-    score += 10;
+    score += 12;
+  } else if (isInlineNativeStreamClip && !isInterviewOrPodium) {
+    score += 8;
   }
 
   if (ctx?.latestCompletedOppNickname && new RegExp(`\\b${escapeRegexToken(ctx.latestCompletedOppNickname)}\\b`, 'i').test(title)) {

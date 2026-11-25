@@ -59,7 +59,18 @@ export const BEAT_REPORTER_DIRECTORY = [
   { id: 'john_chapman', name: 'John Chapman', handle: '@JL_Chapman', outletId: 'youtube_film', outletName: '49ers Rush', trustTier: 2, credibilityScore: 90, teamAbbr: 'SF' },
   { id: 'brian_peacock', name: 'Brian Peacock', handle: '@BDPeacock', outletId: 'youtube_film', outletName: 'Locked On 49ers', trustTier: 2, credibilityScore: 90, teamAbbr: 'SF' },
   { id: 'eric_crocker', name: 'Eric Crocker', handle: '@Crocky209', outletId: 'youtube_film', outletName: 'Locked On 49ers', trustTier: 2, credibilityScore: 91, handleAliases: ['@eric_crocker'], teamAbbr: 'SF' },
-  { id: 'jonnydel', name: "Jonnydel's Football Academy", handle: '@jonnydels', outletId: 'youtube_film', outletName: "Jonnydel's FA", trustTier: 2, credibilityScore: 93, aliases: ['jonnydel'], handleAliases: ['@jonnydelsfa'], teamAbbr: 'SF' },
+  { id: 'jonnydel', name: "Jonnydel's Football Academy", handle: '@jonnydels', outletId: 'youtube_film', outletName: "Jonnydel's FA", trustTier: 2, credibilityScore: 93, aliases: ['jonnydel'], handleAliases: ['@SulligentHUB', '@jonnydelsfa'], teamAbbr: 'SF' },
+  { id: 'brady_grustas', name: 'Brady Grustas', handle: '@GrustasBrady', outletId: 'youtube_film', outletName: '49ers Film Clips', trustTier: 2, credibilityScore: 87, teamAbbr: 'SF' },
+  { id: 'brian_baldinger', name: 'Brian Baldinger', handle: '@BaldyNFL', outletId: 'national_film', outletName: "Baldy's Breakdowns", trustTier: 1, credibilityScore: 95, aliases: ['baldy', "baldy's breakdowns"] },
+  { id: 'cris_collinsworth', name: 'Cris Collinsworth', handle: '@CollinsworthPFF', outletId: 'national_film', outletName: 'PFF', trustTier: 2, credibilityScore: 91, aliases: ['collinsworth'] },
+  { id: 'judah_fortgang', name: 'Judah Fortgang', handle: '@throwthedamball', outletId: 'national_film', outletName: 'PFF Analytics', trustTier: 2, credibilityScore: 91, aliases: ['jrfortgang', 'judah fortgang (pff)'] },
+  { id: 'george_hatzadony', name: 'George Hatzadony', handle: '@ghatz_28', outletId: 'national_film', outletName: 'Statyx NFL', trustTier: 2, credibilityScore: 88, aliases: ['statyx'] },
+  { id: 'nate_tice', name: 'Nate Tice', handle: '@Nate_Tice', outletId: 'national_film', outletName: 'Yahoo Sports NFL', trustTier: 1, credibilityScore: 93 },
+  { id: 'ben_baldwin', name: 'Ben Baldwin', handle: '@benbbaldwin', outletId: 'national_film', outletName: 'rbsdm / NFL Analytics', trustTier: 2, credibilityScore: 91 },
+  { id: 'seth_walder', name: 'Seth Walder', handle: '@SethWalder', outletId: 'espn', outletName: 'ESPN Analytics', trustTier: 2, credibilityScore: 91 },
+  { id: 'pff_official', name: 'PFF', handle: '@PFF', outletId: 'national_film', outletName: 'PFF', trustTier: 2, credibilityScore: 90, aliases: ['pro football focus'] },
+  { id: 'next_gen_stats', name: 'Next Gen Stats', handle: '@NextGenStats', outletId: 'nfl_network', outletName: 'NFL Next Gen Stats', trustTier: 1, credibilityScore: 93 },
+  { id: 'football_insights', name: 'Football Insights', handle: '@fball_insights', outletId: 'national_film', outletName: 'Football Insights', trustTier: 2, credibilityScore: 88 },
   { id: 'jt_osullivan', name: "JT O'Sullivan", handle: '@theqbschool', outletId: 'youtube_film', outletName: 'The QB School', trustTier: 2, credibilityScore: 92, aliases: ['the qb school', 'qb school'], handleAliases: ['@jt_osullivan'] },
   { id: 'chase_daniel', name: 'Chase Daniel', handle: '@ChaseDaniel', outletId: 'youtube_film', outletName: 'Chase Daniel Film', trustTier: 2, credibilityScore: 90, aliases: ["chase daniel and bussin' with the boys"] },
   { id: 'alex_rollins', name: 'Alex Rollins', handle: '@AlexRollinsNFL', outletId: 'youtube_film', outletName: 'Alex Rollins NFL', trustTier: 2, credibilityScore: 91, aliases: ['alex rollins nfl'] },
@@ -428,6 +439,12 @@ export const BSKY_ACTOR_TO_X_HANDLE = {
   'diannarussini.bsky.social': '@DMRussini',
   'profootballtalk.bsky.social': '@ProFootballTalk',
   'minakimes.bsky.social': '@minakimes',
+  'throwthedamball.bsky.social': '@throwthedamball',
+  'benbbaldwin.bsky.social': '@benbbaldwin',
+  'natetice.bsky.social': '@Nate_Tice',
+  'bensolak.bsky.social': '@BenjaminSolak',
+  'brettkollmann.bsky.social': '@BrettKollmann',
+  'sethwalder.bsky.social': '@SethWalder',
   'nfltraderumors.bsky.social': '@nfltrade_rumors',
   'insidenflnews.bsky.social': '@NFL',
   'nflnewsreposterbot.bsky.social': '@NFL'
@@ -874,7 +891,14 @@ export const NATIONAL_NFL_SETTINGS_REPORTER_IDS = new Set([
   'ben_solak',
   'jt_osullivan',
   'mina_kimes',
-  'brett_kollmann'
+  'brett_kollmann',
+  'brian_baldinger',
+  'cris_collinsworth',
+  'judah_fortgang',
+  'george_hatzadony',
+  'nate_tice',
+  'ben_baldwin',
+  'seth_walder'
 ]);
 
 /**

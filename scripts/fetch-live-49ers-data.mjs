@@ -42,6 +42,12 @@ import {
   build2026DraftAndUdfaClass
 } from './lib/seasonalContentBuilder.mjs';
 import {
+  NATIONAL_FILM_ANALYTICS_X_HANDLES,
+  SF_BEAT_FILM_X_HANDLES,
+  fetchXTimelinesBatch,
+  filterXTimelineItemsForTeam
+} from './lib/xBeatMediaFetcher.mjs';
+import {
   parseTankathonTeamPicksHtml,
   parseGroundedJsonSafe,
   discoverBestFreeGeminiModel,
@@ -2261,31 +2267,46 @@ async function main() {
   const otherBucket = sortedYtCandidates.filter(c => !highlightBucket.includes(c) && !filmBucket.includes(c)).slice(0, 6);
   const liveYtClips = [...highlightBucket, ...filmBucket, ...otherBucket];
 
-  // Harvest direct `https://x.com/<handle>/status/<id>` tweets embedded across beat RSS feeds AND recent beat article pages
-  const harvestedXTweets = await harvestEmbeddedXStatusTweetsFromRss(
-    [
-      pfrRumorsXml,
-      nflTradeRumorsXml,
-      heavy49ersXml,
-      heavy49ersPage2Xml,
-      pftFeedXml,
-      webzoneXml,
-      ninersNationXml,
-      nbcsbaXml,
-      official49ersXml,
-      sfStandardXml,
-      ninersWireXml,
-      knbr49ersXml,
-      JSON.stringify(espnNews || {})
-    ],
-    Date.now(),
-    {
-      crawlArticlePages: true,
-      seedArticleUrls: (rawBeatTweets || []).map(t => t?.externalUrl).filter(Boolean),
-      rosterPlayers
-    }
-  ).catch(() => []);
-  const liveBeatTweets = [...harvestedXTweets, ...rawBeatTweets];
+  // Harvest direct `https://x.com/<handle>/status/<id>` tweets embedded across beat RSS feeds AND recent beat article pages,
+  // PLUS poll curated SF beat/film/GIF & national film/analytics X syndication timelines (`@dieter`, `@BaldyNFL`, `@SulligentHUB`, `@StatsOnFire`, `@GrustasBrady`, `@CollinsworthPFF`, `@ghatz_28`, `@throwthedamball`, etc.)
+  const [harvestedXTweets, rawTimelineXItems] = await Promise.all([
+    harvestEmbeddedXStatusTweetsFromRss(
+      [
+        pfrRumorsXml,
+        nflTradeRumorsXml,
+        heavy49ersXml,
+        heavy49ersPage2Xml,
+        pftFeedXml,
+        webzoneXml,
+        ninersNationXml,
+        nbcsbaXml,
+        official49ersXml,
+        sfStandardXml,
+        ninersWireXml,
+        knbr49ersXml,
+        JSON.stringify(espnNews || {})
+      ],
+      Date.now(),
+      {
+        crawlArticlePages: true,
+        seedArticleUrls: (rawBeatTweets || []).map(t => t?.externalUrl).filter(Boolean),
+        rosterPlayers
+      }
+    ).catch(() => []),
+    fetchXTimelinesBatch([...SF_BEAT_FILM_X_HANDLES, ...NATIONAL_FILM_ANALYTICS_X_HANDLES], {
+      concurrency: 6,
+      timeoutMs: 4200,
+      maxAgeHours: 120,
+      maxItems: 14
+    }).catch(() => [])
+  ]);
+  const timelineXTweets = filterXTimelineItemsForTeam(rawTimelineXItems, {
+    team: getTeamByAbbr('SF'),
+    rosterPlayers,
+    isNationalPool: false,
+    nowMs: Date.now()
+  });
+  const liveBeatTweets = [...timelineXTweets, ...harvestedXTweets, ...rawBeatTweets];
 
   // Batch-fetch ESPN 24/7 X-Beat Player Wire across all numeric-ESPN-ID 49ers players (7-day window)
   const sevenDayWireCutoffMs = Date.now() - 7 * 86_400_000;
@@ -2545,10 +2566,14 @@ async function main() {
       imageUrl: tw.imageUrl || '',
       imageAlt: `${tw.reporterName} social post`,
       videoStreamUrl: tw.videoStreamUrl || undefined,
+      isAnimatedGif: Boolean(tw.isAnimatedGif && tw.videoStreamUrl) || undefined,
       isHighlightClip: Boolean(tw.isHighlightClip && tw.videoStreamUrl),
+      hasInlineChartImage: Boolean(tw.hasInlineChartImage) || undefined,
+      isLeagueWideFilmChart: Boolean(tw.isLeagueWideFilmChart) || undefined,
+      filmOnlyScope: Boolean(tw.filmOnlyScope) || undefined,
       duration: tw.duration || undefined,
       embeddable: typeof tw.embeddable === 'boolean' ? tw.embeddable : undefined,
-      mentionedPlayers: mentioned,
+      mentionedPlayers: mentioned.length > 0 ? mentioned : tw.mentionedPlayers || [],
       publishedAt: pubIso,
       url: safeTwUrl,
       externalUrl: safeTwExtUrl,
@@ -2565,10 +2590,22 @@ async function main() {
       isInGameInjury: brk.isInGameInjury,
       breakingBadge: brk.breakingBadge,
       breakingPriority: brk.breakingPriority,
-      category:
-        brk.isInGameInjury || /status|injury|questionable|ruled out|ir\b/i.test(fmtTw.text)
-          ? 'injury'
-          : 'beat',
+      category: tw.isLeagueWideFilmChart
+        ? 'film'
+        : classifyNewsItemCategory({
+            type: 'tweet',
+            title: fmtTw.text,
+            fullText: fmtTw.text,
+            summary: tw.summary || '',
+            author: tw.reporterName,
+            reporterName: tw.reporterName,
+            authorHandle: tw.authorHandle,
+            outletName: tw.outletName,
+            mentionedPlayers: mentioned.length > 0 ? mentioned : tw.mentionedPlayers || [],
+            videoStreamUrl: tw.videoStreamUrl,
+            isAnimatedGif: Boolean(tw.isAnimatedGif),
+            isLeagueWideFilmChart: Boolean(tw.isLeagueWideFilmChart)
+          }),
       signalScore: Math.max(78, sig.signalScore),
       fluffScore: sig.fluffScore,
       isClickbait: false
@@ -3763,6 +3800,7 @@ async function main() {
         imageUrl: item.imageUrl || '',
         videoId: item.videoId || null,
         videoStreamUrl: item.videoStreamUrl || null,
+        isAnimatedGif: Boolean(item.isAnimatedGif),
         externalVideoUrl: item.externalVideoUrl || null,
         duration: item.duration || null,
         embeddable: item.embeddable !== undefined ? Boolean(item.embeddable) : undefined,

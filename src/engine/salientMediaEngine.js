@@ -347,11 +347,11 @@ export function optimizeImageUrlForSlot(rawUrl = '', slot = 'thumb') {
     return { src: optimized, fallbackSrc: clean };
   }
 
-  // 4. Twitter/X Media Photos (229 KB -> 22.8 KB WebP 360x360 for thumbs, 71 KB small for hero)
+  // 4. Twitter/X Media Photos (229 KB -> 22.8 KB WebP 360x360 for thumbs, 71 KB small for hero, crisp medium for inline analytics charts)
   const twMatch = clean.match(TWIMG_MEDIA_RE);
   if (twMatch) {
     const mediaId = twMatch[1];
-    const twSize = slot === 'hero' ? 'small' : '360x360';
+    const twSize = slot === 'chart' ? 'medium' : slot === 'hero' ? 'small' : '360x360';
     const optimized = `https://pbs.twimg.com/media/${mediaId}?format=webp&name=${twSize}`;
     return { src: optimized, fallbackSrc: clean };
   }
@@ -674,6 +674,26 @@ function classifyTeamEmblemTag(text = '', author = '') {
     return 'FILM';
   }
   return String(activeTeam?.nickname || 'NFL').toUpperCase();
+}
+
+const INLINE_SOCIAL_PHOTO_HOST_RE = /^https:\/\/(?:pbs\.twimg\.com\/media\/|cdn\.bsky\.app\/img\/)/i;
+
+/**
+ * Returns true when a tweet carries a genuine social photo or analytics scatter chart
+ * (`pbs.twimg.com/media/...` or `cdn.bsky.app/img/...`) that should render as a crisp,
+ * readable full-width inline image card inside `Film & Trench` / `Tweets` / `All`
+ * instead of getting cropped into an 84x84 square thumbnail.
+ */
+export function isInlineFilmPhotoOrChartTweet(item = {}) {
+  if (!item || typeof item !== 'object') return false;
+  const isTw = item.type === 'tweet' || item.type === 'social';
+  if (!isTw) return false;
+  if (item.videoId || item.videoStreamUrl) return false;
+  const img = String(item.imageUrl || '').trim();
+  if (!img || !INLINE_SOCIAL_PHOTO_HOST_RE.test(img)) return false;
+  if (LOW_SALIENCE_URL_RE.test(img)) return false;
+  if (item.hasInlineChartImage || item.isLeagueWideFilmChart) return true;
+  return item.category === 'film';
 }
 
 /**

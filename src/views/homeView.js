@@ -155,7 +155,7 @@ function renderSingleDashboardCard({
       const prioritizedHomeStream = sortNewsWithBreakingPriority(
         filterFreshVideosForCurrentSlate(
           filterOutCompletedGameAvailabilityItems(
-            filteredRawItems || appData?.news?.rawStream || [],
+            (filteredRawItems || appData?.news?.rawStream || []).filter(i => !i?.filmOnlyScope),
             appData,
             nowHomeMs
           ),

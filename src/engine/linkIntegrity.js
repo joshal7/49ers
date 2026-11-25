@@ -786,6 +786,67 @@ export function stripNon49ersEntityContexts(text = '') {
     .trim();
 }
 
+export const TEAM_CANONICAL_HASHTAGS = Object.freeze({
+  SF: ['49ers', 'fttb'],
+  SEA: ['seahawks', 'gohawks'],
+  LAR: ['rams', 'ramshouse'],
+  ARI: ['azcardinals', 'birdgang'],
+  DET: ['onepride', 'detroitlions'],
+  MIN: ['skol', 'vikings'],
+  GB: ['gopackgo', 'packers'],
+  CHI: ['dabears', 'beardown'],
+  PHI: ['flyeaglesfly', 'eagles'],
+  DAL: ['dallascowboys', 'cowboysnation'],
+  NYG: ['nygiants', 'togetherblue'],
+  WAS: ['raisehail', 'httc', 'commanders'],
+  TB: ['gobucs', 'wearethekrewe'],
+  NO: ['whodat', 'saints'],
+  ATL: ['riseup', 'dirtybirds'],
+  CAR: ['keeppounding', 'panthers'],
+  BUF: ['billsmafia', 'gobills'],
+  MIA: ['finsup', 'phinsup'],
+  NE: ['nepats', 'foreverne', 'patriots'],
+  NYJ: ['takeflight', 'jetup'],
+  BAL: ['ravensflock', 'ravens'],
+  CIN: ['whodey', 'rulethejungle'],
+  CLE: ['dawgpound', 'browns'],
+  PIT: ['herewego', 'steelers'],
+  HOU: ['htownmade', 'wearetexans'],
+  IND: ['fortheshoe', 'colts'],
+  JAX: ['duuuval', 'jaguars'],
+  TEN: ['titanup', 'titans'],
+  DEN: ['broncoscountry', 'broncos'],
+  KC: ['chiefskingdom', 'chiefs'],
+  LV: ['raidernation', 'raiders'],
+  LAC: ['boltup', 'chargers']
+});
+
+export const LEAGUE_WIDE_FILM_ANALYTICS_HANDLES = new Set([
+  'throwthedamball',
+  'ghatz_28',
+  'benbbaldwin',
+  'fball_insights',
+  'sethwalder',
+  'pff',
+  'collinsworthpff',
+  'nextgenstats',
+  'sumersports',
+  'tejfbanalytics',
+  'statsbylopez',
+  'baldynfl',
+  'nate_tice',
+  'benjaminsolak',
+  'minakimes',
+  'brettkollmann',
+  'theqbschool'
+]);
+
+const LEAGUE_WIDE_ANALYTICS_CHART_METRIC_RE =
+  /\b(epa(?:\/play| per play)?|cpoe|dvoa|separation(?:\s+prevented)?|on[- ]ball\s+grade|coverage\s+efficiency|passer\s+rating(?:\s+allowed)?|yards\s*(?:\/|per)\s*(?:target|att|attempt|route|play)|yprr|adot|ryoe|pbwr|prwr|rswr|pressure\s+rate|pass[- ]rush\s+win\s+rate|pass[- ]block\s+win\s+rate|run[- ]block\s+win\s+rate|pff\s+grade|offensive\s+grade|defensive\s+grade|coverage\s+grade|rushing\s+grade|blocking\s+grade|success\s+rate|blitz\s+rate|man\s+vs\.?\s+zone|motion\s+rate|play[- ]action|explosive\s+play|dropbacks?|all\s+routes|min\.?\s+\d+\s+(?:snaps|targets|dropbacks|routes)|snap\s+share|percentile)\b/i;
+
+const ANALYTICS_CHART_IMAGE_HOST_RE =
+  /^https:\/\/(?:pbs\.twimg\.com\/media\/|cdn\.bsky\.app\/img\/)/i;
+
 const TEAM_WIRE_REGEX_CACHE = new Map();
 
 function escapeLinkRegex(s = '') {
@@ -817,7 +878,11 @@ function getTeamWireMatchers(team = null) {
     active.coachesSeed?.gm,
     active.stadium
   ].filter(Boolean).map(t => escapeLinkRegex(String(t).trim())));
-  const explicitEntityRe = new RegExp(`\\b(${[...tokens].join('|')})\\b`, 'i');
+  const hashtags = (TEAM_CANONICAL_HASHTAGS[active.abbr] || [])
+    .map(h => escapeLinkRegex(String(h).replace(/^#/, '').trim()))
+    .filter(Boolean);
+  const hashtagPart = hashtags.length > 0 ? `|(?:^|[\\s([{"',|/-])#(?:${hashtags.join('|')})\\b` : '';
+  const explicitEntityRe = new RegExp(`(?:\\b(?:${[...tokens].join('|')})\\b${hashtagPart})`, 'i');
   const shortParts = [active.fullName, ...nickList, ...(includeCity ? [active.city] : [])].filter(Boolean);
   const teamShortRe = new RegExp(
     `\\b(${shortParts.map(t => escapeLinkRegex(t)).join('|')})\\b`,
@@ -1470,8 +1535,51 @@ export function createPlayerIdentityResolver({ nflPlayers = [], otcPlayers = [],
   };
 }
 
+/**
+ * Identifies genuine league-wide NFL on-field analytics/grading charts (e.g. `@throwthedamball`
+ * "CB Separation prevented on all routes and on ball grade" scatter plot covering all 32 teams)
+ * so they can be included in `Film & Trench` across all 32 team sites without polluting `All`/`Tweets`
+ * or leaking single-other-team stories, fantasy filler, or promotional ads.
+ */
+export function isLeagueWideFilmAnalyticsTweet(item = {}, teamInput = null) {
+  if (!item || typeof item !== 'object') return false;
+  const text = stripAggregatorBoilerplate(
+    `${item.title || ''} ${item.fullText || ''} ${item.summary || ''}`.trim()
+  );
+  if (!text || text.length < 10) return false;
+  if (isPromotionalAdvertisement(item)) return false;
+  if (OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX.test(text) || NON_NFL_OTHER_SPORT_HEADLINE_REGEX.test(text)) {
+    return false;
+  }
+  if (/\b(fantasy|lineup help|sleepers|waiver wire|start\/sit|betting|parlay|prop bet|sportsbook|draftkings|fanduel)\b/i.test(text)) {
+    return false;
+  }
+
+  const handleClean = String(item.authorHandle || '').replace(/^@/, '').trim().toLowerCase();
+  const isVerifiedAnalyticsCreator =
+    LEAGUE_WIDE_FILM_ANALYTICS_HANDLES.has(handleClean) ||
+    Boolean(item.isVerifiedAnalyticsCreator);
+  if (!isVerifiedAnalyticsCreator) return false;
+
+  const imgUrl = String(item.imageUrl || '').trim();
+  const hasChartMedia = ANALYTICS_CHART_IMAGE_HOST_RE.test(imgUrl) || Boolean(item.videoStreamUrl);
+  if (!hasChartMedia) return false;
+
+  const metricHits = text.match(new RegExp(LEAGUE_WIDE_ANALYTICS_CHART_METRIC_RE.source, 'gi')) || [];
+  if (metricHits.length === 0) return false;
+
+  // Reject single-other-team-only posts (if another NFL team is named in the text without mentioning the active team,
+  // unless multiple teams are tagged like "#FTTB #GoPackGo #Skol" where the active team would already match directly).
+  const matchers = getTeamWireMatchers(teamInput);
+  if (matchers.otherTeamsRe.test(text) && !matchers.explicitEntityRe.test(text)) {
+    return false;
+  }
+
+  return true;
+}
+
 export const ALLOWED_INLINE_VIDEO_STREAM_HOST_RE =
-  /^(?:video\.twimg\.com|espnmedia-cdn\.akamaized\.net|media\.video-cdn\.espn\.com)$/i;
+  /^(?:video\.twimg\.com|espnmedia-cdn\.akamaized\.net|media\.video-cdn\.espn\.com|media\.tenor\.com|c\.tenor\.com|video\.bsky\.app)$/i;
 
 export function isAllowedInlineVideoStreamUrl(rawUrl) {
   if (!rawUrl || typeof rawUrl !== 'string') return false;
@@ -1481,6 +1589,48 @@ export function isAllowedInlineVideoStreamUrl(rawUrl) {
   } catch {
     return false;
   }
+}
+
+/**
+ * Extracts normalized video, animated GIF, poster, and high-res photo metadata from an X
+ * `tweet-result` syndication object. Preserves `isAnimatedGif: true` for X GIF clips
+ * (`mediaDetails[].type === 'animated_gif'` or `video.twimg.com/tweet_video/*.mp4`) so they
+ * play & loop inline directly in the app instead of getting dropped for having `durationMs === 0`.
+ */
+export function extractXSyndicationMedia(syn) {
+  if (!syn || typeof syn !== 'object') {
+    return { mp4Url: '', isAnimatedGif: false, durationMs: 0, posterUrl: '', imageUrl: '', isPhoto: false };
+  }
+  const mp4Url = selectBestXSyndicationMp4(syn);
+  const mediaDetails = Array.isArray(syn.mediaDetails) ? syn.mediaDetails : [];
+  const gifMedia = mediaDetails.find(m => m?.type === 'animated_gif');
+  const vidMedia = mediaDetails.find(m => m?.type === 'video' || m?.type === 'animated_gif');
+  const isAnimatedGif = Boolean(
+    mp4Url &&
+      (Boolean(gifMedia) ||
+        String(syn?.video?.contentType || '').toLowerCase() === 'gif' ||
+        /\/tweet_video\//i.test(mp4Url))
+  );
+  const durationMs = Number(
+    syn.video?.durationMs || vidMedia?.video_info?.duration_millis || mediaDetails[0]?.video_info?.duration_millis || 0
+  );
+  const posterUrl = String(
+    vidMedia?.media_url_https || syn.video?.poster || mediaDetails[0]?.media_url_https || ''
+  ).trim();
+  const photoUrl = String(
+    syn.photos?.[0]?.url ||
+      mediaDetails.find(m => m?.type === 'photo')?.media_url_https ||
+      ''
+  ).trim();
+  const imageUrl = (mp4Url ? posterUrl || photoUrl : photoUrl || posterUrl) || '';
+  return {
+    mp4Url,
+    isAnimatedGif,
+    durationMs: Number.isFinite(durationMs) ? durationMs : 0,
+    posterUrl: posterUrl.startsWith('https://') ? posterUrl : '',
+    imageUrl: imageUrl.startsWith('https://') ? imageUrl : '',
+    isPhoto: Boolean(!mp4Url && photoUrl.startsWith('https://'))
+  };
 }
 
 /**

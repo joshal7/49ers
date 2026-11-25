@@ -23467,6 +23467,410 @@ await testAsync(
   }
 );
 
+await testAsync(
+  'Beat Film Clips, Animated GIFs, Analytics Charts & Same-Player Highlight Grouping across All 32 Teams (All 8 User Feed Archetypes)',
+  async () => {
+    const {
+      classifyNewsItemCategory,
+      deduplicateAndGroupWireItems,
+      scoreHighlightAndTeamVideoSalience,
+      sortNewsWithBreakingPriority
+    } = await import('../src/engine/breakingClassifier.js');
+    const {
+      extractXSyndicationMedia,
+      isAllowedInlineVideoStreamUrl,
+      isLeagueWideFilmAnalyticsTweet,
+      hasExplicit49ersEntity
+    } = await import('../src/engine/linkIntegrity.js');
+    const { isInlineFilmPhotoOrChartTweet, optimizeImageUrlForSlot } = await import(
+      '../src/engine/salientMediaEngine.js'
+    );
+    const { resolveReporterFromNameOrHandle } = await import('../src/engine/beatAttributionEngine.js');
+    const { renderNewsViewHtml, renderVideoEmbedOrFacade, renderWireItemCardHtml } = await import(
+      '../src/views/newsView.js'
+    );
+    const { filterXTimelineItemsForTeam, parseXTimelineHtml } = await import(
+      '../scripts/lib/xBeatMediaFetcher.mjs'
+    );
+    const { setActiveTeamConfig, getTeamByAbbr } = await import('../src/config/teamRegistry.js');
+
+    const nowMs = Date.parse('2026-11-25T18:00:00Z');
+    const hAgo = h => new Date(nowMs - h * 3_600_000).toISOString();
+
+    // 0. Reporter attribution: @SulligentHUB -> JonnyDel, @BaldyNFL -> Brian Baldinger, @GrustasBrady -> Brady Grustas, @throwthedamball -> Judah Fortgang
+    assert.equal(resolveReporterFromNameOrHandle('@SulligentHUB')?.id, 'jonnydel', '@SulligentHUB must map to JonnyDel');
+    assert.equal(resolveReporterFromNameOrHandle('@BaldyNFL')?.id, 'brian_baldinger', '@BaldyNFL must map to Brian Baldinger');
+    assert.equal(resolveReporterFromNameOrHandle('@GrustasBrady')?.id, 'brady_grustas', '@GrustasBrady must map to Brady Grustas');
+    assert.equal(resolveReporterFromNameOrHandle('@CollinsworthPFF')?.id, 'cris_collinsworth', '@CollinsworthPFF must map to Cris Collinsworth');
+    assert.equal(resolveReporterFromNameOrHandle('@throwthedamball')?.id, 'judah_fortgang', '@throwthedamball must map to Judah Fortgang');
+    assert.equal(resolveReporterFromNameOrHandle('@ghatz_28')?.id, 'george_hatzadony', '@ghatz_28 must map to George Hatzadony');
+
+    // 1. X Syndication animated GIF extraction (duration_millis = 0 / type = 'animated_gif' / tweet_video)
+    const mockGifSyn = {
+      text: 'Dump truck on the move. (Lowe was steadily unremarkable if not downright good Sunday.)',
+      mediaDetails: [
+        {
+          type: 'animated_gif',
+          media_url_https: 'https://pbs.twimg.com/tweet_video_thumb/G6LoweThumb.jpg',
+          video_info: {
+            variants: [{ bitrate: 0, content_type: 'video/mp4', url: 'https://video.twimg.com/tweet_video/G6LowePull.mp4' }]
+          }
+        }
+      ]
+    };
+    const gifMedia = extractXSyndicationMedia(mockGifSyn);
+    assert.equal(gifMedia.isAnimatedGif, true, 'X animated_gif must set isAnimatedGif: true');
+    assert.equal(gifMedia.mp4Url, 'https://video.twimg.com/tweet_video/G6LowePull.mp4', 'X animated_gif MP4 URL must extract cleanly');
+    assert.equal(isAllowedInlineVideoStreamUrl(gifMedia.mp4Url), true, 'video.twimg.com/tweet_video MP4 must be allowlisted for inline playback');
+
+    // 2. X Timeline Parser + 32-Team Filter on all 8 user-supplied tweet archetypes!
+    const sfRoster = [
+      { id: '101', name: 'Vederian Lowe', shortName: 'V. Lowe', position: 'OT', jersey: 77, rosterBucket: 'active' },
+      { id: '102', name: 'Brock Purdy', shortName: 'B. Purdy', position: 'QB', jersey: 13, rosterBucket: 'active' },
+      { id: '103', name: 'George Kittle', shortName: 'G. Kittle', position: 'TE', jersey: 85, rosterBucket: 'active' },
+      { id: '104', name: 'Malik Mustapha', shortName: 'M. Mustapha', position: 'S', jersey: 6, rosterBucket: 'active' },
+      { id: '105', name: 'Mike Evans', shortName: 'M. Evans', position: 'WR', jersey: 5, rosterBucket: 'active' },
+      { id: '106', name: 'Mykel Williams', shortName: 'M. Williams', position: 'DE', jersey: 98, rosterBucket: 'active' }
+    ];
+
+    const makeMockTimelineHtml = tweets =>
+      `<script id="__NEXT_DATA__" type="application/json">${JSON.stringify({
+        props: {
+          pageProps: {
+            timeline: {
+              entries: tweets.map(t => ({ type: 'tweet', content: { tweet: t } }))
+            }
+          }
+        }
+      })}</script>`;
+
+    const rawParsed = [
+      // #1 Dieter Kurtenbach GIF (OL Vederian Lowe, no explicit "49ers" word!)
+      ...parseXTimelineHtml(
+        makeMockTimelineHtml([
+          {
+            id_str: '2199000000000000001',
+            created_at: hAgo(23),
+            full_text: 'Dump truck on the move. (Lowe was steadily unremarkable if not downright good Sunday.)',
+            user: { screen_name: 'dieter', name: 'Dieter Kurtenbach' },
+            extended_entities: {
+              media: [
+                {
+                  type: 'animated_gif',
+                  media_url_https: 'https://pbs.twimg.com/tweet_video_thumb/LoweGif.jpg',
+                  video_info: { variants: [{ bitrate: 0, content_type: 'video/mp4', url: 'https://video.twimg.com/tweet_video/LoweGif.mp4' }] }
+                }
+              ]
+            }
+          }
+        ]),
+        { handle: 'dieter', nowMs }
+      ),
+      // #2 Brian Baldinger 0:23 video
+      ...parseXTimelineHtml(
+        makeMockTimelineHtml([
+          {
+            id_str: '2199000000000000002',
+            created_at: hAgo(24),
+            full_text: '.@Vikings @49ers @brockpurdy13 to @gkittle46 this precision is a different kind of accuracy...I hope every one can appreciate the location of this pitch! #BaldysBreakdowns',
+            user: { screen_name: 'BaldyNFL', name: 'Brian Baldinger' },
+            extended_entities: {
+              media: [
+                {
+                  type: 'video',
+                  media_url_https: 'https://pbs.twimg.com/ext_tw_video_thumb/BaldyVid.jpg',
+                  video_info: {
+                    duration_millis: 23000,
+                    variants: [{ bitrate: 2176000, content_type: 'video/mp4', url: 'https://video.twimg.com/ext_tw_video/BaldyVid/vid/720x1280/clip.mp4' }]
+                  }
+                }
+              ]
+            }
+          }
+        ]),
+        { handle: 'BaldyNFL', nowMs }
+      ),
+      // #3 Cris Collinsworth PFF stats + photo
+      ...parseXTimelineHtml(
+        makeMockTimelineHtml([
+          {
+            id_str: '2199000000000000003',
+            created_at: hAgo(20),
+            full_text: 'Brock Purdy ranks among QB this season (min. 200 dropbacks), via @PFF 118.2 Passer Rating (1st) 9.0 Yards/Att (1st) 0.380 EPA/Play (1st) 71.0% Comp Pct (2nd) 23 Pass TD (3rd) 91.4 Rushing Grade (1st) 90.9 Offensive Grade (2nd)',
+            user: { screen_name: 'CollinsworthPFF', name: 'Cris Collinsworth' },
+            extended_entities: { media: [{ type: 'photo', media_url_https: 'https://pbs.twimg.com/media/PurdyPffPhoto.jpg' }] }
+          }
+        ]),
+        { handle: 'CollinsworthPFF', nowMs }
+      ),
+      // #4 George (@ghatz_28) Safety Coverage Efficiency chart with #FTTB #GoPackGO #Skol
+      ...parseXTimelineHtml(
+        makeMockTimelineHtml([
+          {
+            id_str: '2199000000000000004',
+            created_at: hAgo(21),
+            full_text: 'NFL Safety Coverage Efficiency Week 1-11 #FTTB #GoPackGO #Skol',
+            user: { screen_name: 'ghatz_28', name: 'George' },
+            extended_entities: { media: [{ type: 'photo', media_url_https: 'https://pbs.twimg.com/media/SafetyChart.png' }] }
+          }
+        ]),
+        { handle: 'ghatz_28', nowMs }
+      ),
+      // #5 JonnyDel (@SulligentHUB) 1:15 play-design review video
+      ...parseXTimelineHtml(
+        makeMockTimelineHtml([
+          {
+            id_str: '2199000000000000005',
+            created_at: hAgo(23),
+            full_text: "This was my favorite play design from Kyle Sunday night. Masterclass on play-design stressing a specific defense. A preview of tonight's review video",
+            user: { screen_name: 'SulligentHUB', name: 'JonnyDel' },
+            extended_entities: {
+              media: [
+                {
+                  type: 'video',
+                  media_url_https: 'https://pbs.twimg.com/ext_tw_video_thumb/JonnyDelVid.jpg',
+                  video_info: {
+                    duration_millis: 75000,
+                    variants: [{ bitrate: 2176000, content_type: 'video/mp4', url: 'https://video.twimg.com/ext_tw_video/JonnyDelVid/vid/1280x720/clip.mp4' }]
+                  }
+                }
+              ]
+            }
+          }
+        ]),
+        { handle: 'SulligentHUB', nowMs }
+      ),
+      // #6 Rob "Stats" Guerrera (@StatsOnFire) 0:44 fun highlight clip
+      ...parseXTimelineHtml(
+        makeMockTimelineHtml([
+          {
+            id_str: '2199000000000000006',
+            created_at: hAgo(22),
+            full_text: 'It had to be done. #49ers',
+            user: { screen_name: 'StatsOnFire', name: 'Rob "Stats" Guerrera' },
+            extended_entities: {
+              media: [
+                {
+                  type: 'video',
+                  media_url_https: 'https://pbs.twimg.com/ext_tw_video_thumb/StatsOnFireClip.jpg',
+                  video_info: {
+                    duration_millis: 44000,
+                    variants: [{ bitrate: 2176000, content_type: 'video/mp4', url: 'https://video.twimg.com/ext_tw_video/StatsOnFireClip/vid/1280x720/clip.mp4' }]
+                  }
+                }
+              ]
+            }
+          }
+        ]),
+        { handle: 'StatsOnFire', nowMs }
+      ),
+      // #7 Brady Grustas (@GrustasBrady) 0:09 Mykel Williams pass-rush video
+      ...parseXTimelineHtml(
+        makeMockTimelineHtml([
+          {
+            id_str: '2199000000000000007',
+            created_at: hAgo(20),
+            full_text: 'Mykel Williams #98 already looks better as a pass rusher this year. Look at that strong swat against the RT! Cousins had a check down open but had to rip it deep with Mykel in his lap. #49ers',
+            user: { screen_name: 'GrustasBrady', name: 'Brady Grustas' },
+            extended_entities: {
+              media: [
+                {
+                  type: 'video',
+                  media_url_https: 'https://pbs.twimg.com/ext_tw_video_thumb/MykelVid.jpg',
+                  video_info: {
+                    duration_millis: 9000,
+                    variants: [{ bitrate: 2176000, content_type: 'video/mp4', url: 'https://video.twimg.com/ext_tw_video/MykelVid/vid/1280x720/clip.mp4' }]
+                  }
+                }
+              ]
+            }
+          }
+        ]),
+        { handle: 'GrustasBrady', nowMs }
+      ),
+      // #8 Jrfortgang (@throwthedamball) league-wide CB Separation chart (no team/player name in text!)
+      ...parseXTimelineHtml(
+        makeMockTimelineHtml([
+          {
+            id_str: '2199000000000000008',
+            created_at: hAgo(5),
+            full_text: 'CB Separation prevented on all routes and on ball grade',
+            user: { screen_name: 'throwthedamball', name: 'Jrfortgang' },
+            extended_entities: { media: [{ type: 'photo', media_url_https: 'https://pbs.twimg.com/media/CbSepChart.png' }] }
+          }
+        ]),
+        { handle: 'throwthedamball', nowMs }
+      )
+    ];
+
+    const sfFiltered = filterXTimelineItemsForTeam(rawParsed, {
+      team: getTeamByAbbr('SF'),
+      rosterPlayers: sfRoster,
+      isNationalPool: false,
+      nowMs
+    });
+    assert.equal(sfFiltered.length, 8, 'All 8 user example tweets (GIFs, videos, charts, highlights) must pass SF ingestion');
+
+    const byId = new Map(sfFiltered.map(it => [it.id.split('_').pop(), it]));
+    assert.equal(byId.get('2199000000000000001').category, 'film', '#1 Dieter OL GIF must classify as film');
+    assert.equal(byId.get('2199000000000000001').isAnimatedGif, true, '#1 Dieter OL GIF must preserve isAnimatedGif');
+    assert.equal(byId.get('2199000000000000001').filmOnlyScope, undefined, '#1 must appear in All/Tweets + Film');
+
+    assert.equal(byId.get('2199000000000000002').category, 'film', '#2 Baldy Purdy-to-Kittle clip must classify as film');
+    assert.equal(byId.get('2199000000000000002').filmOnlyScope, undefined, '#2 must appear in All/Tweets + Film');
+
+    assert.equal(byId.get('2199000000000000003').category, 'film', '#3 Collinsworth Purdy PFF grades must classify as film');
+    assert.equal(byId.get('2199000000000000003').hasInlineChartImage, true, '#3 photo tweet must flag inline media');
+
+    assert.equal(byId.get('2199000000000000004').category, 'film', '#4 ghatz_28 Safety Coverage chart must classify as film');
+    assert.equal(byId.get('2199000000000000004').filmOnlyScope, undefined, '#4 with #FTTB must appear in All/Tweets + Film');
+
+    assert.equal(byId.get('2199000000000000005').category, 'film', '#5 JonnyDel @SulligentHUB play-design clip must classify as film');
+    assert.equal(byId.get('2199000000000000005').reporterId, 'jonnydel', '#5 must resolve reporterId jonnydel');
+
+    assert.equal(byId.get('2199000000000000006').category, 'beat', '#6 StatsOnFire fun highlight clip must stay non-film for Highlights & Videos');
+    assert.equal(byId.get('2199000000000000006').isHighlightClip, true, '#6 StatsOnFire 0:44 video must set isHighlightClip: true');
+
+    assert.equal(byId.get('2199000000000000007').category, 'film', '#7 Brady Grustas Mykel Williams 0:09 pass-rush video must classify as film');
+
+    assert.equal(byId.get('2199000000000000008').category, 'film', '#8 throwthedamball CB Separation chart must classify as film');
+    assert.equal(byId.get('2199000000000000008').isLeagueWideFilmChart, true, '#8 must be tagged isLeagueWideFilmChart');
+    assert.equal(byId.get('2199000000000000008').filmOnlyScope, true, '#8 with no team mention must set filmOnlyScope: true (Film & Trench only)');
+
+    // 3. View routing & inline rendering verification (All, Tweets, Highlights & Videos, Film & Trench)
+    const mockAppData = {
+      meta: { teamAbbr: 'SF', teamSlug: '49ers', currentWeek: 12 },
+      roster: { players: sfRoster },
+      scheduleMatchup: { schedule: [] },
+      news: { rawStream: sfFiltered }
+    };
+    const allHtml = renderNewsViewHtml({ appData: mockAppData, newsCategoryFilter: 'all', filteredRawItems: sfFiltered, nowMs });
+    const tweetsHtml = renderNewsViewHtml({ appData: mockAppData, newsCategoryFilter: 'tweets', filteredRawItems: sfFiltered, nowMs });
+    const highlightsHtml = renderNewsViewHtml({ appData: mockAppData, newsCategoryFilter: 'videos', filteredRawItems: sfFiltered, nowMs });
+    const filmHtml = renderNewsViewHtml({ appData: mockAppData, newsCategoryFilter: 'film', filteredRawItems: sfFiltered, nowMs });
+
+    assert.ok(allHtml.includes('Dump truck on the move') && allHtml.includes('It had to be done'), 'All view must include #1-#7');
+    assert.ok(!allHtml.includes('CB Separation prevented on all routes'), 'All view must NOT include filmOnlyScope league-wide chart #8');
+    assert.ok(!tweetsHtml.includes('CB Separation prevented on all routes'), 'Tweets view must NOT include filmOnlyScope league-wide chart #8');
+    assert.ok(filmHtml.includes('CB Separation prevented on all routes'), 'Film & Trench view MUST include league-wide chart #8');
+    assert.ok(filmHtml.includes('Dump truck on the move') && filmHtml.includes('BaldysBreakdowns') && filmHtml.includes('Mykel Williams'), 'Film & Trench view must include #1, #2, #5, #7');
+    assert.ok(highlightsHtml.includes('It had to be done'), 'Highlights & Videos view must include #6 StatsOnFire beat clip');
+    assert.ok(!highlightsHtml.includes('Dump truck on the move') && !highlightsHtml.includes('BaldysBreakdowns'), 'Highlights & Videos must keep 0% overlap with Film & Trench');
+    assert.ok(filmHtml.includes('data-gif-facade="true"') && filmHtml.includes('Play GIF'), 'GIF clip #1 must render GIF facade badge + Play GIF button');
+    assert.ok(filmHtml.includes('data-inline-chart-media="true"'), 'Analytics scatter charts (#4/#8) must render readable full-width inline chart box');
+    assert.ok(optimizeImageUrlForSlot('https://pbs.twimg.com/media/CbSepChart.png', 'chart').src.includes('name=medium'), 'Chart slot must request readable medium resolution (not 360x360 square)');
+
+    // Inline GIF playback HTML check (loop + muted + playsinline + data-is-gif="1")
+    const gifPlayingHtml = renderVideoEmbedOrFacade(
+      'raw_dieter_gif',
+      '',
+      0,
+      'Dump truck on the move.',
+      'X Beat',
+      true,
+      true,
+      { videoStreamUrl: 'https://video.twimg.com/tweet_video/LoweGif.mp4', isAnimatedGif: true }
+    );
+    assert.ok(
+      gifPlayingHtml.includes('data-is-gif="1"') && gifPlayingHtml.includes('loop muted') && gifPlayingHtml.includes('playsinline'),
+      'Playing GIF inline must mount looping muted playsinline HTML5 <video>'
+    );
+
+    // 4. Careful "Similar stories" grouping: Mike Evans highlight clips group together, while distinct Film & Trench clips stay separate!
+    const evansClip1 = {
+      id: 'evans_hl_1',
+      type: 'tweet',
+      category: 'beat',
+      author: 'Rob "Stats" Guerrera',
+      outletName: 'The Gold Standard',
+      trustTier: 2,
+      title: 'Mike Evans cooks Watson in the end zone! It had to be done. #49ers',
+      fullText: 'Mike Evans cooks Watson in the end zone! It had to be done. #49ers',
+      url: 'https://x.com/StatsOnFire/status/2199000000000000091',
+      videoStreamUrl: 'https://video.twimg.com/ext_tw_video/Evans1/vid/1280x720/a.mp4',
+      isHighlightClip: true,
+      duration: '0:44',
+      mentionedPlayers: [sfRoster[4]],
+      publishedAt: hAgo(3)
+    };
+    const evansClip2 = {
+      id: 'evans_hl_2',
+      type: 'tweet',
+      category: 'beat',
+      author: '49ers on NBCSBA',
+      outletName: 'NBC Sports Bay Area',
+      trustTier: 1,
+      title: 'MIKE EVANS BACK-SHOULDER TOUCHDOWN GRAB! #49ers',
+      fullText: 'MIKE EVANS BACK-SHOULDER TOUCHDOWN GRAB! #49ers',
+      url: 'https://x.com/NBCS49ers/status/2199000000000000092',
+      videoStreamUrl: 'https://video.twimg.com/ext_tw_video/Evans2/vid/1280x720/b.mp4',
+      isHighlightClip: true,
+      duration: '0:19',
+      mentionedPlayers: [sfRoster[4]],
+      publishedAt: hAgo(3.2)
+    };
+    const groupedEvans = deduplicateAndGroupWireItems([evansClip2, evansClip1], {
+      nowMs,
+      preserveFormat: 'videos',
+      appData: mockAppData,
+      groupSimilarStories: true
+    });
+    assert.equal(groupedEvans.length, 1, 'Two short Mike Evans highlight clips within 18h must group cleanly into 1 card with Similar stories (1)');
+    assert.equal(groupedEvans[0].confirmingReports.length, 1, 'Grouped Mike Evans highlight card must hold the companion clip in confirmingReports');
+    const groupedEvansHtml = renderWireItemCardHtml(groupedEvans[0], { prioritizedRaw: [evansClip2, evansClip1], rosterPlayers: sfRoster });
+    assert.ok(groupedEvansHtml.includes('Similar stories (1)') && groupedEvansHtml.includes('similar-story-play-btn'), 'Grouped highlight drawer must render inline Play button for related clip');
+
+    // Beat inline highlight clip must outrank routine 49ers.com podium press conference in Highlights & Videos!
+    const clubPodiumClip = {
+      id: 'club_podium_1',
+      type: 'video',
+      category: 'beat',
+      author: '49ers.com Video',
+      outletName: '49ers.com Official',
+      title: 'Kyle Shanahan Speaks to the Media Ahead of Week 12',
+      embeddable: false,
+      externalVideoUrl: 'https://www.49ers.com/video/shanahan-speaks-wk12',
+      publishedAt: hAgo(2)
+    };
+    assert.ok(
+      scoreHighlightAndTeamVideoSalience(evansClip1, mockAppData, nowMs) >
+        scoreHighlightAndTeamVideoSalience(clubPodiumClip, mockAppData, nowMs),
+      'Inline beat highlight clip must outrank routine 49ers.com podium press conference in Highlights & Videos'
+    );
+
+    // 5. All-32-Team Parity (Packers & Vikings): #GoPackGo / #Skol fan hashtags match #4 directly, and #8 enters Film & Trench only with zero cross-team SF leaks!
+    setActiveTeamConfig('packers');
+    try {
+      assert.equal(hasExplicit49ersEntity('NFL Safety Coverage Efficiency Week 1-11 #FTTB #GoPackGO #Skol'), true, 'Packers matcher must recognize #GoPackGo fan hashtag');
+      const gbFiltered = filterXTimelineItemsForTeam(rawParsed, {
+        team: getTeamByAbbr('GB'),
+        rosterPlayers: [{ id: '9001', name: 'Evan Williams', position: 'S', rosterBucket: 'active' }],
+        isNationalPool: true,
+        nowMs
+      });
+      assert.ok(gbFiltered.some(x => x.id.endsWith('2199000000000000004') && !x.filmOnlyScope), 'Packers must ingest #4 (#GoPackGO) into Film + All + Tweets');
+      assert.ok(gbFiltered.some(x => x.id.endsWith('2199000000000000008') && x.filmOnlyScope === true), 'Packers must ingest #8 league-wide CB chart into Film & Trench only');
+      assert.ok(!gbFiltered.some(x => x.id.endsWith('2199000000000000001') || x.id.endsWith('2199000000000000006') || x.id.endsWith('2199000000000000007')), 'Packers must NEVER receive SF-only beat clips (#1/#6/#7)');
+    } finally {
+      setActiveTeamConfig('49ers');
+    }
+
+    // Reject single-other-team-only chart on league-wide check
+    assert.equal(
+      isLeagueWideFilmAnalyticsTweet(
+        {
+          title: 'Cowboys pass rush win rate and EPA/play chart',
+          authorHandle: '@throwthedamball',
+          imageUrl: 'https://pbs.twimg.com/media/CowboysChart.png'
+        },
+        getTeamByAbbr('SF')
+      ),
+      false,
+      'Single-other-team chart without active team mention must NOT pass league-wide chart filter'
+    );
+  }
+);
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

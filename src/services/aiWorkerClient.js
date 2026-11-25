@@ -3708,7 +3708,7 @@ export function selectTopNewsBriefSourceCandidates(
   );
 
   const filteredAll = afterAvail.filter(it => {
-    if (!it || it.type === 'video' || Boolean(it.videoId) || it.isClickbait) return false;
+    if (!it || it.filmOnlyScope || it.type === 'video' || Boolean(it.videoId) || it.isClickbait) return false;
     const ttl = String(it.title || '');
     const sum = String(it.summary || '');
     const full = String(it.fullText || ttl);

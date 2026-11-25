@@ -2087,6 +2087,7 @@ function bindInlineVideoFallbacks(videoEl) {
   const originalSrc = videoEl.getAttribute('src') || '';
 
   videoEl.addEventListener('ended', () => {
+    if (videoEl.loop || videoEl.dataset.isGif === '1') return;
     const key = videoEl.getAttribute('data-vid-key');
     if (key) state.activeVideosSet.delete(key);
   });

@@ -45,7 +45,13 @@ const BSKY_HANDLES = {
   ian_rapoport: 'rapsheet.bsky.social',
   tom_pelissero: 'tompelissero.bsky.social',
   dianna_russini: 'diannarussini.bsky.social',
-  mina_kimes: 'minakimes.bsky.social'
+  mina_kimes: 'minakimes.bsky.social',
+  ben_solak: 'bensolak.bsky.social',
+  brett_kollmann: 'brettkollmann.bsky.social',
+  nate_tice: 'natetice.bsky.social',
+  judah_fortgang: 'throwthedamball.bsky.social',
+  ben_baldwin: 'benbbaldwin.bsky.social',
+  seth_walder: 'sethwalder.bsky.social'
 };
 
 const SEEDED_REPORTERS = [
@@ -79,6 +85,7 @@ const SEEDED_REPORTERS = [
   { id: 'brian_peacock', name: 'Brian Peacock', handle: '@BDPeacock', outletId: 'youtube_film', role: 'Co-Host • Locked On 49ers Daily Podcast', category: 'video_pod', styleTag: 'analytical-pod', baseScore: 90 },
   { id: 'eric_crocker', name: 'Eric Crocker', handle: '@Crocky209', outletId: 'youtube_film', role: 'Former DB • Locked On 49ers & Coverage Tape', category: 'film', styleTag: 'film-breakdown', baseScore: 91 },
   { id: 'jonnydel', name: "Jonnydel's Football Academy", handle: '@jonnydels', outletId: 'youtube_film', role: 'QB Progression & Shanahan Play-Design All-22', category: 'film', styleTag: 'film-breakdown', baseScore: 93 },
+  { id: 'brady_grustas', name: 'Brady Grustas', handle: '@GrustasBrady', outletId: 'youtube_film', role: '49ers All-22 Pass-Rush & Trench Film Clips', category: 'film', styleTag: 'film-breakdown', baseScore: 87 },
   { id: 'jt_osullivan', name: "JT O'Sullivan (The QB School)", handle: '@theqbschool', outletId: 'youtube_film', role: 'Former NFL QB • The QB School 49ers QB All-22', category: 'film', styleTag: 'film-breakdown', baseScore: 93 },
   { id: 'jeff_deeney', name: 'Jeff Deeney', handle: '@PFF_Jeff', outletId: 'youtube_film', role: '49ers Advanced Grading & Snap Share Analyst', category: 'analytics', styleTag: 'analytics-cap', baseScore: 89 },
   { id: 'brad_graham', name: 'Brad Graham', handle: '@Graham_SFN', outletId: 'youtube_film', role: 'TheSFNiners • Camp Clips & Film Cutups', category: 'video_pod', styleTag: 'factual-beat', baseScore: 88 },
@@ -105,6 +112,11 @@ const SEEDED_REPORTERS = [
   { id: 'mina_kimes', name: 'Mina Kimes', handle: '@minakimes', outletId: 'espn', role: 'ESPN NFL Analyst • Scheme & DVOA/EPA', category: 'analytics', styleTag: 'film-breakdown', baseScore: 93 },
   { id: 'ben_solak', name: 'Ben Solak', handle: '@BenjaminSolak', outletId: 'espn', role: 'ESPN NFL Film & Tendency Researcher', category: 'film', styleTag: 'film-breakdown', baseScore: 91 },
   { id: 'brett_kollmann', name: 'Brett Kollmann', handle: '@BrettKollmann', outletId: 'youtube_film', role: 'The Film Room • Deep Coverage & Trench Tape', category: 'film', styleTag: 'film-breakdown', baseScore: 89 },
+  { id: 'brian_baldinger', name: 'Brian Baldinger', handle: '@BaldyNFL', outletId: 'youtube_film', role: "Baldy's Breakdowns • All-22 Trench & QB Tape", category: 'film', styleTag: 'film-breakdown', baseScore: 94 },
+  { id: 'nate_tice', name: 'Nate Tice', handle: '@Nate_Tice', outletId: 'youtube_film', role: 'All-22 Scheme, Fronts & Draft Film Analyst', category: 'film', styleTag: 'film-breakdown', baseScore: 92 },
+  { id: 'cris_collinsworth', name: 'Cris Collinsworth', handle: '@CollinsworthPFF', outletId: 'youtube_film', role: 'PFF Grades, EPA Rankings & QB Efficiency', category: 'analytics', styleTag: 'film-breakdown', baseScore: 90 },
+  { id: 'judah_fortgang', name: 'Judah Fortgang', handle: '@throwthedamball', outletId: 'youtube_film', role: 'PFF Separation, Coverage & QB Analytics Charts', category: 'analytics', styleTag: 'film-breakdown', baseScore: 90 },
+  { id: 'george_hatzadony', name: 'George Hatzadony', handle: '@ghatz_28', outletId: 'youtube_film', role: 'Statyx NFL Coverage & Efficiency Scatter Charts', category: 'analytics', styleTag: 'film-breakdown', baseScore: 87 },
   { id: 'dane_brugler', name: 'Dane Brugler', handle: '@dpbrugler', outletId: 'athletic', role: 'The Beast • Lead NFL Draft Prospect Evaluator', category: 'draft', styleTag: 'film-breakdown', baseScore: 94 },
   { id: 'daniel_jeremiah', name: 'Daniel Jeremiah', handle: '@MoveTheSticks', outletId: 'nfl_network', role: 'Former NFL Scout & Top-50 Draft Analyst', category: 'draft', styleTag: 'film-breakdown', baseScore: 93 }
 ];

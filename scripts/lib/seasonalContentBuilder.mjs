@@ -26,10 +26,12 @@ import {
   buildPfrPlayerUrl,
   buildPfrTeamDraftUrl,
   decodeHtmlEntities,
+  extractXSyndicationMedia,
   getPlayerLookupKeys,
   hasExplicit49ersEntity,
   hasSafeStandaloneSurnameMatch,
   is49ersRelevantWireItem,
+  isLeagueWideFilmAnalyticsTweet,
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
   isPaywalledPublisher,
@@ -483,6 +485,61 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
       requireKeyword: true
     },
     {
+      actor: 'throwthedamball.bsky.social',
+      reporterId: 'judah_fortgang',
+      reporterName: 'Judah Fortgang',
+      authorHandle: '@throwthedamball',
+      outletId: 'national_film',
+      outletName: 'PFF Analytics',
+      tier: 2,
+      requireKeyword: true,
+      allowLeagueWideFilmCharts: true
+    },
+    {
+      actor: 'benbbaldwin.bsky.social',
+      reporterId: 'ben_baldwin',
+      reporterName: 'Ben Baldwin',
+      authorHandle: '@benbbaldwin',
+      outletId: 'national_film',
+      outletName: 'rbsdm / NFL Analytics',
+      tier: 2,
+      requireKeyword: true,
+      allowLeagueWideFilmCharts: true
+    },
+    {
+      actor: 'natetice.bsky.social',
+      reporterId: 'nate_tice',
+      reporterName: 'Nate Tice',
+      authorHandle: '@Nate_Tice',
+      outletId: 'national_film',
+      outletName: 'Yahoo Sports NFL',
+      tier: 1,
+      requireKeyword: true,
+      allowLeagueWideFilmCharts: true
+    },
+    {
+      actor: 'bensolak.bsky.social',
+      reporterId: 'ben_solak',
+      reporterName: 'Ben Solak',
+      authorHandle: '@BenjaminSolak',
+      outletId: 'espn',
+      outletName: 'ESPN NFL',
+      tier: 2,
+      requireKeyword: true,
+      allowLeagueWideFilmCharts: true
+    },
+    {
+      actor: 'brettkollmann.bsky.social',
+      reporterId: 'brett_kollmann',
+      reporterName: 'Brett Kollmann',
+      authorHandle: '@BrettKollmann',
+      outletId: 'youtube_film',
+      outletName: 'The Film Room',
+      tier: 2,
+      requireKeyword: true,
+      allowLeagueWideFilmCharts: true
+    },
+    {
       actor: 'timkawakami.bsky.social',
       reporterId: 'tim_kawakami',
       reporterName: 'Tim Kawakami',
@@ -687,7 +744,21 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
           const extDesc = stripAggregatorBoilerplate(extLink.description || '');
           const nonBioExtDesc = stripHistoricalSfBioSentences(extDesc);
           const extUri = extLink.uri || '';
-          const extThumb = extLink.thumb || post?.embed?.images?.[0]?.thumb || '';
+          const bskyPhotoUrl =
+            post?.embed?.images?.[0]?.fullsize ||
+            post?.embed?.media?.images?.[0]?.fullsize ||
+            post?.embed?.images?.[0]?.thumb ||
+            post?.embed?.media?.images?.[0]?.thumb ||
+            '';
+          const bskyVidEmbed =
+            post?.embed?.$type === 'app.bsky.embed.video#view'
+              ? post.embed
+              : post?.embed?.media?.$type === 'app.bsky.embed.video#view'
+                ? post.embed.media
+                : null;
+          const isTenorGifUri = /^https:\/\/(?:media|c)\.tenor\.com\/.+\.(?:gif|mp4)(?:\?|$)/i.test(extUri);
+          const extThumb = bskyVidEmbed?.thumbnail || bskyPhotoUrl || extLink.thumb || '';
+          if (!rawText || rawText.length < (bskyPhotoUrl || bskyVidEmbed || isTenorGifUri ? 6 : 16)) continue;
           const leadExplicitSf = hasExplicit49ersEntity(rawText);
           const bodyExplicitSf = hasExplicit49ersEntity(`${rawText} ${extTitle} ${nonBioExtDesc}`);
           const leadRosterHits =
@@ -702,6 +773,8 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
               : fallbackSfPlayerRe.test(stripNon49ersEntityContexts(`${extTitle} ${nonBioExtDesc}`))
                 ? 1
                 : 0;
+          let isLeagueWideChart = false;
+          let filmOnlyScope = false;
           if (
             isOffTopicLeagueFiller({
               url: extUri,
@@ -711,9 +784,23 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
               isDedicatedTeamBeat: !acc.requireKeyword
             })
           ) {
-            continue;
+            if (
+              acc.allowLeagueWideFilmCharts &&
+              isLeagueWideFilmAnalyticsTweet({
+                title: rawText,
+                fullText: rawText,
+                summary: `${extTitle} ${nonBioExtDesc}`,
+                authorHandle: acc.authorHandle || '',
+                imageUrl: extThumb
+              })
+            ) {
+              isLeagueWideChart = true;
+              filmOnlyScope = true;
+            } else {
+              continue;
+            }
           }
-          if (acc.requireKeyword) {
+          if (acc.requireKeyword && !isLeagueWideChart) {
             if (
               !is49ersRelevantWireItem({
                 title: rawText,
@@ -725,7 +812,21 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
                 bodyRosterMatchCount: bodyRosterHits
               })
             ) {
-              continue;
+              if (
+                acc.allowLeagueWideFilmCharts &&
+                isLeagueWideFilmAnalyticsTweet({
+                  title: rawText,
+                  fullText: rawText,
+                  summary: `${extTitle} ${nonBioExtDesc}`,
+                  authorHandle: acc.authorHandle || '',
+                  imageUrl: extThumb
+                })
+              ) {
+                isLeagueWideChart = true;
+                filmOnlyScope = true;
+              } else {
+                continue;
+              }
             }
           }
 
@@ -776,6 +877,12 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
             externalTitle: safeExternalUrl ? extTitle || null : null,
             externalDescription: safeExternalUrl && extDesc ? extDesc.slice(0, 320) : null,
             imageUrl: extThumb || '',
+            videoStreamUrl: isTenorGifUri ? extUri : undefined,
+            isAnimatedGif: isTenorGifUri || undefined,
+            hasInlineChartImage: Boolean(bskyPhotoUrl && (isLeagueWideChart || acc.allowLeagueWideFilmCharts)) || undefined,
+            isLeagueWideFilmChart: isLeagueWideChart || undefined,
+            filmOnlyScope: filmOnlyScope || undefined,
+            embeddable: isTenorGifUri ? true : undefined,
             publishedAt: pubIso,
             isBreaking: brk.isBreaking,
             isInGameInjury: brk.isInGameInjury,
@@ -872,7 +979,23 @@ const TRUSTED_MEDIA_X_HANDLES = new Set([
   'statsonfire',
   'oursf49ers',
   '49ershive',
-  'coach_yac'
+  'coach_yac',
+  'sulligenthub',
+  'grustasbrady',
+  'baldynfl',
+  'collinsworthpff',
+  'ghatz_28',
+  'throwthedamball',
+  'nate_tice',
+  'benjaminsolak',
+  'minakimes',
+  'brettkollmann',
+  'theqbschool',
+  'pff',
+  'nextgenstats',
+  'fball_insights',
+  'benbbaldwin',
+  'sethwalder'
 ]);
 
 const TRUSTED_MEDIA_DISPLAY_NAMES = {
@@ -1165,7 +1288,9 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
     'statsonfire',
     'oursf49ers',
     '49ershive',
-    'coach_yac'
+    'coach_yac',
+    'sulligenthub',
+    'grustasbrady'
   ]);
   const nflGameContextRe =
     /\b(warmups?|kickoff|stadium|crowd|boos|touchdown|\btd\b|interception|fumble|sack|drive|quarter|halftime|overtime|defense|offense|special teams|practice|locker room|injury|draft|cap|trade|coach|qb|wr|rb|te|lb|cb|ol|dl|game|playoff|win|loss|nfl|nfc|afc)\b/i;
@@ -1186,21 +1311,35 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
     externalDescription = null,
     mediaImageUrl,
     videoStreamUrl = '',
+    isAnimatedGif = false,
     videoDurationFmt = '',
     isHighlightClip = false
   }) => {
     const bodyText = decodeBasicEntitiesForOembed(rawBodyText);
-    if (!bodyText || bodyText.length < 16) return null;
+    const hasAttachedMedia = Boolean(videoStreamUrl || mediaImageUrl);
+    if (!bodyText || bodyText.length < (hasAttachedMedia ? 6 : 16)) return null;
     const handleLower = handle.toLowerCase();
     if (handleLower !== '49ers') {
       const cleanedRelevanceText = stripNon49ersEntityContexts(bodyText);
       const isLocal49ersHandle = local49ersXHandles.has(handleLower);
       if (isLocal49ersHandle) {
         const isOtherBaySport = nonNflOtherSportRe.test(bodyText) && !sfRelevantRegex.test(cleanedRelevanceText);
-        if (isOtherBaySport || (!sfRelevantRegex.test(cleanedRelevanceText) && !nflGameContextRe.test(bodyText))) {
+        if (
+          isOtherBaySport ||
+          (!hasAttachedMedia && !sfRelevantRegex.test(cleanedRelevanceText) && !nflGameContextRe.test(bodyText))
+        ) {
           return null;
         }
-      } else if (!sfExplicitOrFullNameRegex.test(cleanedRelevanceText)) {
+      } else if (
+        !sfExplicitOrFullNameRegex.test(cleanedRelevanceText) &&
+        !isLeagueWideFilmAnalyticsTweet({
+          title: bodyText,
+          fullText: bodyText,
+          authorHandle: `@${handle}`,
+          imageUrl: mediaImageUrl || '',
+          videoStreamUrl: videoStreamUrl || ''
+        })
+      ) {
         return null;
       }
     }
@@ -1273,6 +1412,7 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
           : null,
       imageUrl: mediaImageUrl && mediaImageUrl.startsWith('https://') ? mediaImageUrl : '',
       videoStreamUrl: videoStreamUrl && videoStreamUrl.startsWith('https://') ? videoStreamUrl : undefined,
+      isAnimatedGif: Boolean(isAnimatedGif && videoStreamUrl && videoStreamUrl.startsWith('https://')) || undefined,
       isHighlightClip: Boolean(isHighlightClip && videoStreamUrl && videoStreamUrl.startsWith('https://')),
       duration: videoDurationFmt || undefined,
       embeddable: videoStreamUrl && videoStreamUrl.startsWith('https://') ? true : undefined,
@@ -1330,16 +1470,12 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                 const synCardDesc = syn.card?.binding_values?.description?.string_value
                   ? decodeHtmlEntities(syn.card.binding_values.description.string_value)
                   : null;
-                const mediaThumb =
-                  syn.photos?.[0]?.url ||
-                  syn.mediaDetails?.[0]?.media_url_https ||
-                  syn.video?.poster ||
-                  pickSynCardImage(syn) ||
-                  '';
-                const bestMp4 = selectBestXSyndicationMp4(syn);
-                const vidDurMs = Number(syn.video?.durationMs || syn.mediaDetails?.[0]?.video_info?.duration_millis || 0);
+                const synMedia = extractXSyndicationMedia(syn);
+                const mediaThumb = synMedia.imageUrl || pickSynCardImage(syn) || '';
+                const bestMp4 = synMedia.mp4Url;
+                const vidDurMs = synMedia.durationMs;
                 const vidDurFmt =
-                  vidDurMs >= 5000
+                  !synMedia.isAnimatedGif && vidDurMs >= 4000
                     ? `${Math.floor(vidDurMs / 60000)}:${String(Math.round((vidDurMs % 60000) / 1000)).padStart(2, '0')}`
                     : '';
                 const screenName = syn.user?.screen_name || cand.handle;
@@ -1356,8 +1492,9 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                   externalDescription: synCardDesc,
                   mediaImageUrl: mediaThumb,
                   videoStreamUrl: bestMp4,
+                  isAnimatedGif: synMedia.isAnimatedGif,
                   videoDurationFmt: vidDurFmt,
-                  isHighlightClip: Boolean(bestMp4 && vidDurMs >= 8000)
+                  isHighlightClip: Boolean(bestMp4 && (synMedia.isAnimatedGif || vidDurMs >= 4000 || vidDurMs === 0))
                 });
 
                 // Also harvest quoted beat-reporter X status if present within 7-day window!
@@ -1372,10 +1509,11 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                     qtSnow >= sevenDaysAgoMs &&
                     (qtDir || TRUSTED_MEDIA_X_HANDLES.has(qtHandle.toLowerCase()))
                   ) {
-                    const qtMp4 = selectBestXSyndicationMp4(qt);
-                    const qtDurMs = Number(qt.video?.durationMs || qt.mediaDetails?.[0]?.video_info?.duration_millis || 0);
+                    const qtMedia = extractXSyndicationMedia(qt);
+                    const qtMp4 = qtMedia.mp4Url;
+                    const qtDurMs = qtMedia.durationMs;
                     const qtDurFmt =
-                      qtDurMs >= 5000
+                      !qtMedia.isAnimatedGif && qtDurMs >= 4000
                         ? `${Math.floor(qtDurMs / 60000)}:${String(Math.round((qtDurMs % 60000) / 1000)).padStart(2, '0')}`
                         : '';
                     const qtRawUrl = pickSynExternalUrl(qt);
@@ -1391,15 +1529,11 @@ export async function harvestEmbeddedXStatusTweetsFromRss(
                       expandedExtUrl: qtExpUrl,
                       externalTitle: qt.card?.binding_values?.title?.string_value || null,
                       externalDescription: qt.card?.binding_values?.description?.string_value || null,
-                      mediaImageUrl:
-                        qt.photos?.[0]?.url ||
-                        qt.mediaDetails?.[0]?.media_url_https ||
-                        qt.video?.poster ||
-                        pickSynCardImage(qt) ||
-                        '',
+                      mediaImageUrl: qtMedia.imageUrl || pickSynCardImage(qt) || '',
                       videoStreamUrl: qtMp4,
+                      isAnimatedGif: qtMedia.isAnimatedGif,
                       videoDurationFmt: qtDurFmt,
-                      isHighlightClip: Boolean(qtMp4 && qtDurMs >= 8000)
+                      isHighlightClip: Boolean(qtMp4 && (qtMedia.isAnimatedGif || qtDurMs >= 4000 || qtDurMs === 0))
                     });
                     if (qtBuilt) hydratedMap.set(qtId, qtBuilt);
                   }
