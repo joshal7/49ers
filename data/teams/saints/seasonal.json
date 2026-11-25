@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T19:40:57.117Z",
+  "updatedAt": "2026-11-25T20:01:09.009Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T21:00:00Z",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 3:00 PM CT",
@@ -1285,7 +1285,7 @@
     ],
     "simulatorInputs": {
       "modelVersion": "2026.3-hb-srs-var",
-      "lastSimulatedAt": "2026-11-25T19:40:57.117Z",
+      "lastSimulatedAt": "2026-11-25T20:01:09.009Z",
       "targetTeam": "NO",
       "conference": "NFC",
       "conferenceTeams": [
@@ -9757,7 +9757,7 @@
         "shortDetail": "12/7 - 8:15 PM EST"
       }
     },
-    "lastSimulatedAt": "2026-11-25T19:40:57.117Z",
+    "lastSimulatedAt": "2026-11-25T20:01:09.009Z",
     "modelVersion": "2026.3-hb-srs-var"
   },
   "draftPrep2027": {

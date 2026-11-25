@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T19:40:52.763Z",
+  "updatedAt": "2026-11-25T20:01:03.964Z",
   "sources": [
     {
       "label": "ESPN Lions Schedule",
@@ -24677,10 +24677,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T11:40Z",
+        "asOfIso": "2026-11-25T19:02Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +3.8 (#6 Off / #22 Def efficiency, 12.5 proj. wins, 5.6% SB odds) at 8-2.",
+        "blurb": "FPI +3.8 (#6 Off / #22 Def efficiency, 12.4 proj. wins, 6.0% SB odds) at 8-2.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24816,10 +24816,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T11:40Z",
+        "asOfIso": "2026-11-25T19:02Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +3.8 (#6 Off / #22 Def efficiency, 12.5 proj. wins, 5.6% SB odds) at 8-2."
+        "blurb": "FPI +3.8 (#6 Off / #22 Def efficiency, 12.4 proj. wins, 6.0% SB odds) at 8-2."
       },
       {
         "id": "espn_panel",
@@ -24852,7 +24852,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T19:45:24.873Z"
+    "fetchedAtIso": "2026-11-25T20:01:08.431Z"
   },
   "upcomingMatchup": {
     "week": 12,

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T19:40:52.763Z",
+  "updatedAt": "2026-11-25T20:01:03.964Z",
   "teamAbbr": "DET",
   "teamSlug": "lions",
   "brandName": "Lions One Pride",
@@ -54,7 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T19:40:52.763Z",
+    "lastCheckedAt": "2026-11-25T20:01:03.964Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

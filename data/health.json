@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T19:40:45.452Z",
+  "updatedAt": "2026-11-25T20:00:56.896Z",
   "week": 12,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -31,7 +31,7 @@
       "archetypeNote": "High availability prior; rarely misses starts if throwing full velocity by Thursday.",
       "factors": [
         "Questionable tag adjusted by player career prior (88%)",
-        "Early-week update (2 corroborated reports): unlikely to practice Wednesday / questionable at best"
+        "Early-week update (3 corroborated reports): unlikely to practice Wednesday / questionable at best"
       ],
       "beatComment": "Brock Purdy will not practice today due to an ankle injury he sustained in the second quarter Sunday night, 49ers coach Kyle Shanahan said."
     },
@@ -434,7 +434,7 @@
       "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
-      "beatNote": "McKivitz was carted off the field after going down with the injury during the second quarter, when Vikings linebacker Ivan Pace appeared to roll up on back of McKivitz's left leg at the end of a Christian McCaffrey run. Assuming follow-up tests confirm the injuries, McKivitz will require surgery and will almost certainly miss the remainder of the regular season and playoffs. Vederian Lowe came off the bench to replace McKivitz at right tackle, and Shanahan confirmed that Lowe will be next in line to start at the position beginning with the 49ers' Week 12 matchup with the Seahawks."
+      "beatNote": "ir"
     },
     {
       "playerId": "4239088",

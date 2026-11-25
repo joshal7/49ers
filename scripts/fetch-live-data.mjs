@@ -1040,91 +1040,163 @@ function buildConferencePlayoffPicture(team, leagueCtx, { healthData = null, ros
   return buildPlayoffPictureForTeam(team, playoffCtx);
 }
 
-async function fetchTeamBlueskyPosts(team, reportersData) {
-  const items = [];
+async function fetchRawBlueskyFeedsForReporters(reportersData) {
   const bskyReps = (reportersData.reporters || []).filter(r => r.bskyHandle);
-  const nickRe = new RegExp(`\\b(${team.keywordRules.requiredNicknames.join('|')})\\b`, 'i');
-  const handlesToPoll = bskyReps.slice(0, 28);
-
+  const rawEntries = [];
   const settled = await Promise.allSettled(
-    handlesToPoll.map(async rep => {
+    bskyReps.map(async rep => {
       const url = `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(rep.bskyHandle)}&limit=20&filter=posts_no_replies`;
       const json = await fetchJsonSafe(url, 7000);
       if (!json?.feed?.length) return [];
-      const out = [];
-      for (const entry of json.feed) {
-        const post = entry?.post;
-        const rec = post?.record;
-        if (!post || !rec?.text) continue;
-        const text = decodeHtmlEntities(String(rec.text)).replace(/\s+/g, ' ').trim();
-        const embedPhoto =
-          post.embed?.images?.[0]?.fullsize ||
-          post.embed?.media?.images?.[0]?.fullsize ||
-          post.embed?.images?.[0]?.thumb ||
-          post.embed?.media?.images?.[0]?.thumb ||
-          '';
-        const embedImg = embedPhoto || post.embed?.external?.thumb || '';
-        const extUrl = sanitizeExternalUrl(post.embed?.external?.uri || '', null);
-        const isTenorGif = Boolean(extUrl && /^https:\/\/(?:media|c)\.tenor\.com\/.+\.(?:gif|mp4)(?:\?|$)/i.test(extUrl));
-        if (text.length < (embedImg || isTenorGif ? 6 : 18)) continue;
-        const isNational = rep.category === 'national_insider' || rep.category === 'film_analyst' || rep.category === 'cap_analyst';
-        let isLeagueWideChart = false;
-        let filmOnlyScope = false;
-        if (isNational && !nickRe.test(text) && !hasExplicit49ersEntity(text)) {
-          if (
-            rep.category === 'film_analyst' &&
-            isLeagueWideFilmAnalyticsTweet(
-              { title: text, fullText: text, authorHandle: rep.handle || '', imageUrl: embedImg },
-              team
-            )
-          ) {
-            isLeagueWideChart = true;
-            filmOnlyScope = true;
-          } else {
-            continue;
-          }
-        }
-        const rkey = String(post.uri || '').split('/').pop() || '';
-        const bskyUrl = `https://bsky.app/profile/${rep.bskyHandle}/post/${rkey}`;
-        const pubIso = rec.createdAt || post.indexedAt || new Date().toISOString();
-        const ageDays = (Date.now() - Date.parse(pubIso)) / 86_400_000;
-        if (!Number.isFinite(ageDays) || ageDays > 10) continue;
-        const tweetDisplay = formatTweetBodyForDisplay(text, SHORT_TWEET_FULL_TEXT_LIMIT);
-        out.push({
-          id: `${team.abbr.toLowerCase()}_bsky_${hashShort(bskyUrl)}`,
-          type: 'tweet',
-          title: tweetDisplay.text,
-          fullText: text,
-          isFullTweet: tweetDisplay.isFullTweet,
-          summary: '',
-          imageUrl: embedImg,
-          videoStreamUrl: isTenorGif ? extUrl : undefined,
-          isAnimatedGif: isTenorGif || undefined,
-          embeddable: isTenorGif ? true : undefined,
-          hasInlineChartImage: Boolean(embedPhoto && (isLeagueWideChart || rep.category === 'film_analyst')) || undefined,
-          isLeagueWideFilmChart: isLeagueWideChart || undefined,
-          filmOnlyScope: filmOnlyScope || undefined,
-          imageAlt: `${rep.name} post`,
-          publishedAt: new Date(pubIso).toISOString(),
-          url: bskyUrl,
-          externalUrl: !isTenorGif && extUrl && !isPaywalledPublisher(extUrl) ? extUrl : null,
-          externalTitle: !isTenorGif && extUrl && !isPaywalledPublisher(extUrl) ? (post.embed?.external?.title ? decodeHtmlEntities(post.embed.external.title) : null) : null,
-          outletId: rep.outletId,
-          outletName: rep.name,
-          reporterId: rep.id,
-          reporterName: rep.name,
-          author: rep.name,
-          authorHandle: rep.handle,
-          authorProfileUrl: rep.xUrl || `https://bsky.app/profile/${rep.bskyHandle}`,
-          trustTier: rep.trustTier || 1,
-          wireSource: 'bluesky_live'
-        });
-      }
-      return out;
+      return json.feed.map(entry => ({ rep, entry }));
     })
   );
   for (const s of settled) {
-    if (s.status === 'fulfilled' && Array.isArray(s.value)) items.push(...s.value);
+    if (s.status === 'fulfilled' && Array.isArray(s.value)) rawEntries.push(...s.value);
+  }
+  return rawEntries;
+}
+
+function filterRawBlueskyPostsForTeam(rawEntries = [], team, rosterPlayers = []) {
+  const items = [];
+  const nickRe = new RegExp(`\\b(${team.keywordRules.requiredNicknames.join('|')})\\b`, 'i');
+  const includeCity = !team.keywordRules?.excludeGenericCity && team.city && team.city !== team.nickname;
+  const teamTerms = [
+    team.fullName,
+    ...(team.keywordRules.requiredNicknames || []),
+    ...(includeCity ? [team.city] : []),
+    team.coachesSeed?.hc,
+    team.coachesSeed?.gm
+  ]
+    .filter(Boolean)
+    .map(w => String(w).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const teamEntityRe = new RegExp(`\\b(?:${teamTerms.join('|')})\\b`, 'i');
+  const activeStarFullNames = (Array.isArray(rosterPlayers) ? rosterPlayers : [])
+    .filter(p => p?.name && (p.rosterBucket === 'active' || p.rosterBucket === 'ir'))
+    .map(p => String(p.name).replace(/\s+(?:Jr\.?|Sr\.?|II|III|IV|V)$/i, '').trim())
+    .filter(n => n.length >= 6);
+  const starFullRe =
+    activeStarFullNames.length > 0
+      ? new RegExp(
+          `\\b(?:${activeStarFullNames.slice(0, 75).map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})\\b`,
+          'i'
+        )
+      : null;
+
+  for (const { rep, entry } of rawEntries) {
+    if (entry?.reason) continue;
+    const post = entry?.post;
+    const rec = post?.record;
+    if (!post || !rec?.text) continue;
+    const text = decodeHtmlEntities(String(rec.text)).replace(/\s+/g, ' ').trim();
+    const vidEmbed =
+      post.embed?.$type === 'app.bsky.embed.video#view'
+        ? post.embed
+        : post.embed?.media?.$type === 'app.bsky.embed.video#view'
+          ? post.embed.media
+          : null;
+    const vidDid = String(post.author?.did || '').trim();
+    const vidCid = String(
+      vidEmbed?.cid || rec.embed?.video?.ref?.$link || rec.embed?.media?.video?.ref?.$link || ''
+    ).trim();
+    const bskyVideoMp4Url =
+      vidDid && vidCid
+        ? `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${encodeURIComponent(vidDid)}&cid=${encodeURIComponent(vidCid)}`
+        : '';
+    const embedPhoto =
+      post.embed?.images?.[0]?.fullsize ||
+      post.embed?.media?.images?.[0]?.fullsize ||
+      post.embed?.images?.[0]?.thumb ||
+      post.embed?.media?.images?.[0]?.thumb ||
+      '';
+    const embedImg = vidEmbed?.thumbnail || embedPhoto || post.embed?.external?.thumb || '';
+    const extUrl = sanitizeExternalUrl(post.embed?.external?.uri || '', null);
+    const isTenorGif = Boolean(extUrl && /^https:\/\/(?:media|c)\.tenor\.com\/.+\.(?:gif|mp4)(?:\?|$)/i.test(extUrl));
+    const resolvedVideoStreamUrl = isTenorGif ? extUrl : bskyVideoMp4Url || undefined;
+    if (text.length < (embedImg || resolvedVideoStreamUrl ? 6 : 18)) continue;
+
+    const isNational =
+      rep.scope === 'national' ||
+      rep.category === 'national_insider' ||
+      rep.category === 'film_analyst' ||
+      rep.category === 'analytics' ||
+      rep.category === 'cap_analyst';
+    const mentionsClubOrPlayer =
+      nickRe.test(text) ||
+      teamEntityRe.test(text) ||
+      (team.abbr === 'SF' && hasExplicit49ersEntity(text)) ||
+      Boolean(starFullRe && starFullRe.test(text));
+    let isLeagueWideChart = false;
+    let filmOnlyScope = false;
+    if (isNational && !mentionsClubOrPlayer) {
+      if (
+        (rep.category === 'film_analyst' || rep.category === 'analytics') &&
+        isLeagueWideFilmAnalyticsTweet(
+          { title: text, fullText: text, authorHandle: rep.handle || '', imageUrl: embedImg },
+          team
+        )
+      ) {
+        isLeagueWideChart = true;
+        filmOnlyScope = true;
+      } else {
+        continue;
+      }
+    }
+    const rkey = String(post.uri || '').split('/').pop() || '';
+    const bskyUrl = `https://bsky.app/profile/${rep.bskyHandle}/post/${rkey}`;
+    const pubIso = rec.createdAt || post.indexedAt || new Date().toISOString();
+    const ageDays = (Date.now() - Date.parse(pubIso)) / 86_400_000;
+    if (!Number.isFinite(ageDays) || ageDays > 10) continue;
+    const tweetDisplay = formatTweetBodyForDisplay(text, SHORT_TWEET_FULL_TEXT_LIMIT);
+    const isFilmAnalystRep = rep.category === 'film_analyst' || rep.category === 'film' || rep.category === 'analytics';
+    const resolvedCategory = isLeagueWideChart
+      ? 'film'
+      : classifyNewsItemCategory({
+          type: 'tweet',
+          title: tweetDisplay.text,
+          fullText: text,
+          videoStreamUrl: resolvedVideoStreamUrl,
+          isAnimatedGif: isTenorGif,
+          imageUrl: embedImg,
+          hasInlineChartImage: Boolean(embedPhoto && (isLeagueWideChart || isFilmAnalystRep)),
+          reporterId: rep.id,
+          reporterCategory: rep.category,
+          author: rep.name,
+          authorHandle: rep.handle || '',
+          outletName: rep.name,
+          isLeagueWideFilmChart: isLeagueWideChart
+        });
+    items.push({
+      id: `${team.abbr.toLowerCase()}_bsky_${hashShort(bskyUrl)}`,
+      type: 'tweet',
+      title: tweetDisplay.text,
+      fullText: text,
+      isFullTweet: tweetDisplay.isFullTweet,
+      summary: '',
+      imageUrl: embedImg,
+      videoStreamUrl: resolvedVideoStreamUrl,
+      isAnimatedGif: isTenorGif || undefined,
+      embeddable: Boolean(resolvedVideoStreamUrl) || undefined,
+      isHighlightClip: Boolean(resolvedVideoStreamUrl) && resolvedCategory !== 'film' ? true : undefined,
+      hasInlineChartImage: Boolean(embedPhoto && (isLeagueWideChart || isFilmAnalystRep || resolvedCategory === 'film')) || undefined,
+      isLeagueWideFilmChart: isLeagueWideChart || undefined,
+      filmOnlyScope: filmOnlyScope || undefined,
+      imageAlt: `${rep.name} post`,
+      publishedAt: new Date(pubIso).toISOString(),
+      url: bskyUrl,
+      externalUrl: !isTenorGif && extUrl && !isPaywalledPublisher(extUrl) ? extUrl : null,
+      externalTitle: !isTenorGif && extUrl && !isPaywalledPublisher(extUrl) ? (post.embed?.external?.title ? decodeHtmlEntities(post.embed.external.title) : null) : null,
+      outletId: rep.outletId,
+      outletName: rep.name,
+      reporterId: rep.id,
+      reporterName: rep.name,
+      author: rep.name,
+      authorHandle: rep.handle,
+      authorProfileUrl: rep.xUrl || `https://bsky.app/profile/${rep.bskyHandle}`,
+      trustTier: rep.trustTier || 1,
+      category: resolvedCategory,
+      wireSource: 'bluesky_live'
+    });
   }
   return items;
 }
@@ -1389,7 +1461,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     clubVideoRssXml,
     pfrTeamRssXml,
     cbsInjHtml,
-    bskyPosts,
+    rawBskyEntries,
     beatPodcasts,
     mddbTeamHtml
   ] = await Promise.all([
@@ -1410,7 +1482,7 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     fetchTextSafe(team.clubRssUrls[1] || `https://www.${team.clubDomain}/rss/videos`, 10000),
     fetchTextSafe(`https://www.profootballrumors.com/${team.otcSlug}/feed`, 8500),
     fetchTextSafe(buildCbsTeamInjuriesUrl(team.abbr, team.fullName), 10000),
-    fetchTeamBlueskyPosts(team, reportersData),
+    fetchRawBlueskyFeedsForReporters(reportersData),
     fetchTeamBeatPodcasts(team),
     fetchTextSafe(`https://www.nflmockdraftdatabase.com/teams/${(leagueCtx.seasonYear || 2026) + 1}/${team.otcSlug}`, 14000)
   ]);
@@ -3337,13 +3409,14 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     if (cv?.videoId && cv?.title) pushNewsItem({ ...cv, type: 'video' });
   }
 
+  const bskyPosts = filterRawBlueskyPostsForTeam(rawBskyEntries || [], team, players);
   const embeddedXItems = await harvestEmbeddedXForTeamRss(
     [clubNewsRssXml, pfrTeamRssXml, JSON.stringify(espnNewsRaw || {}), ...localBeatRssXmls],
     {
       team,
       rosterPlayers: players,
       reportersData,
-      maxHydrate: 14
+      maxHydrate: 24
     }
   ).catch(() => []);
   const localXItems = filterXTimelineItemsForTeam(localXRaw, {
@@ -3358,7 +3431,32 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     reportersData,
     isNationalPool: true
   });
-  const combinedDirectSocial = [...localXItems, ...embeddedXItems, ...nationalFilmXForTeam, ...bskyPosts];
+  // Preserve recent (<=96h) previously harvested X film/GIF/chart timeline clips when X syndication transiently 429s
+  const carriedXItems = [];
+  if (localXItems.length === 0 && nationalFilmXForTeam.length === 0) {
+    try {
+      const prevNewsPath = path.join(getTeamOutDir(team), 'news.json');
+      if (fs.existsSync(prevNewsPath)) {
+        const prevNews = JSON.parse(fs.readFileSync(prevNewsPath, 'utf8'));
+        const carryCutoffMs = Date.now() - 96 * 3_600_000;
+        for (const it of prevNews?.rawStream || []) {
+          if (it?.wireSource !== 'x_timeline_live') continue;
+          const pubMs = Date.parse(it.publishedAt || '');
+          if (!Number.isFinite(pubMs) || pubMs < carryCutoffMs) continue;
+          if (it.videoStreamUrl || it.isAnimatedGif || it.hasInlineChartImage || it.category === 'film') {
+            carriedXItems.push(it);
+          }
+        }
+      }
+    } catch {}
+  }
+  const combinedDirectSocial = [
+    ...localXItems,
+    ...embeddedXItems,
+    ...nationalFilmXForTeam,
+    ...carriedXItems,
+    ...bskyPosts
+  ];
   for (const xi of combinedDirectSocial) pushNewsItem(xi);
 
   // 9g. ESPN 24/7 Player Wire Batch across ALL 32 clubs (top active/injured numeric-ESPN-ID players, 7-day window)

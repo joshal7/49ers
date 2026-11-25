@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T19:40:52.763Z",
+  "updatedAt": "2026-11-25T20:01:03.964Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "8-2",
-    "generatedAt": "2026-11-25T19:40:52.763Z",
+    "generatedAt": "2026-11-25T20:01:03.964Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -35,8 +35,8 @@
       "https://www.prideofdetroit.com/detroit-lions-analysis/182562/lions-vs-bears-predictions-week-12-picks",
       "https://bsky.app/profile/detroitfootball.net/post/3n35pjhbvo42x",
       "https://bsky.app/profile/detroitfootball.net/post/3n35usyrhvb26",
+      "https://x.com/PFF/status/2125648069714985014",
       "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n35rzdhvkk2p",
-      "https://bsky.app/profile/qbklass.bsky.social/post/3n35qpmvvvf2h",
       "https://bsky.app/profile/detroitfootball.net/post/3n35uuvhpa22a",
       "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n357qyzdrs2s",
       "https://www.prideofdetroit.com/detroit-lions-news/182649/teams-media-fans-share-tributes-to-former-detroit-lions-owner-martha-ford",
@@ -108,19 +108,19 @@
       },
       {
         "type": "tweet",
+        "author": "PFF",
+        "outlet": "PFF",
+        "title": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
+        "url": "https://x.com/PFF/status/2125648069714985014",
+        "publishedAt": "2026-11-25T17:49:27.000Z"
+      },
+      {
+        "type": "tweet",
         "author": "Nick Baumgardner",
         "outlet": "Nick Baumgardner",
         "title": "NEW to the YouTube channel (like & subscribe!) Dan Campbell & Ben Johnson: Brothers in Football",
         "url": "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n35rzdhvkk2p",
         "publishedAt": "2026-11-25T18:28:33.510Z"
-      },
-      {
-        "type": "tweet",
-        "author": "Derrik Klassen",
-        "outlet": "Derrik Klassen",
-        "title": "Patrick Mahomes vs. Josh Allen Micah Parsons' return ⏳ Ben Johnson vs. Dan Campbell @robertmays.bsky.social, @davehelman.bsky.social and @qbklass.bsky.social discuss that and",
-        "url": "https://bsky.app/profile/qbklass.bsky.social/post/3n35qpmvvvf2h",
-        "publishedAt": "2026-11-25T18:05:12.000Z"
       },
       {
         "type": "tweet",
@@ -190,16 +190,16 @@
           "publishedAt": "2026-11-25T19:18:41.997Z"
         },
         {
+          "label": "PFF",
+          "title": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
+          "url": "https://x.com/PFF/status/2125648069714985014",
+          "publishedAt": "2026-11-25T17:49:27.000Z"
+        },
+        {
           "label": "Nick Baumgardner",
           "title": "NEW to the YouTube channel (like & subscribe!) Dan Campbell & Ben Johnson: Brothers in Football www.youtube.com/watch?v=MxkU...",
           "url": "https://bsky.app/profile/nickbaumgardner.bsky.social/post/3n35rzdhvkk2p",
           "publishedAt": "2026-11-25T18:28:33.510Z"
-        },
-        {
-          "label": "Jeremy Reisman",
-          "title": "Detroit Lions vs. Chicago Bears preview, prediction: On Paper",
-          "url": "https://www.prideofdetroit.com/detroit-lions-analysis/182546/detroit-lions-vs-chicago-bears-preview-prediction-on-paper",
-          "publishedAt": "2026-11-25T18:26:03.000Z"
         }
       ]
     },
@@ -253,10 +253,16 @@
       "id": "det_cl_film",
       "category": "film",
       "headline": "Lions All-22 Film, Trench & Efficiency Breakdowns",
-      "summary": "NOTEBOOK: Scruggs anchoring Lions' offensive line — Film study: Jahmyr Gibbs in motion creates space for teammates",
-      "updatedAt": "2026-11-24T22:22:00.000Z",
-      "itemCount": 3,
+      "summary": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE — NOTEBOOK: Scruggs anchoring Lions' offensive line",
+      "updatedAt": "2026-11-25T17:49:27.000Z",
+      "itemCount": 5,
       "sourceLinks": [
+        {
+          "label": "PFF",
+          "title": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
+          "url": "https://x.com/PFF/status/2125648069714985014",
+          "publishedAt": "2026-11-25T17:49:27.000Z"
+        },
         {
           "label": "detroitlions.com Official",
           "title": "NOTEBOOK: Scruggs anchoring Lions' offensive line",
@@ -274,6 +280,12 @@
           "title": "Everything is crunched during Thanksgiving week, but I didn't want to skip out on a film review. Reviewing Kerby Joseph's usage and performance was the easy choice for this week's focus: www.detroitfootball.net/p/detroit-li...",
           "url": "https://bsky.app/profile/detroitfootball.net/post/3n2zayo4mp32x",
           "publishedAt": "2026-11-23T23:13:17.730Z"
+        },
+        {
+          "label": "Erik Schlitt",
+          "title": "Detroit Lions Week 11 snap counts: Derrick Moore levels up; return of 3-safety sets www.prideofdetroit.com/detroit-lion...",
+          "url": "https://bsky.app/profile/erikschlitt.bsky.social/post/3n2yhyrvgmc23",
+          "publishedAt": "2026-11-23T15:45:58.973Z"
         }
       ]
     },
@@ -334,7 +346,7 @@
       "summary": "",
       "imageUrl": "https://i.ytimg.com/vi/PWphJLZ89e4/hqdefault.jpg",
       "imageAlt": "Tampa Bay Buccaneers vs Detroit Lions Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-25T19:40:52.763Z",
+      "publishedAt": "2026-11-25T20:01:03.964Z",
       "url": "https://www.youtube.com/watch?v=PWphJLZ89e4",
       "externalVideoUrl": "https://www.youtube.com/watch?v=PWphJLZ89e4",
       "outletId": "nfl_official",
@@ -360,7 +372,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0705
+      "storyRank": 54.0736
     },
     {
       "id": "det_yts_nnXZ7q24zqo",
@@ -371,7 +383,7 @@
       "summary": "",
       "imageUrl": "https://i.ytimg.com/vi/nnXZ7q24zqo/hqdefault.jpg",
       "imageAlt": "Jared Goff Every Throw & Run | Week 11",
-      "publishedAt": "2026-11-25T19:40:52.763Z",
+      "publishedAt": "2026-11-25T20:01:03.964Z",
       "url": "https://www.youtube.com/watch?v=nnXZ7q24zqo",
       "externalVideoUrl": "https://www.youtube.com/watch?v=nnXZ7q24zqo",
       "outletId": "nfl_official",
@@ -406,7 +418,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0705
+      "storyRank": 54.0736
     },
     {
       "id": "det_yts_ZVavJVtF4Z8",
@@ -417,7 +429,7 @@
       "summary": "",
       "imageUrl": "https://i.ytimg.com/vi/ZVavJVtF4Z8/hqdefault.jpg",
       "imageAlt": "Jahmyr Gibbs' best plays from 2-TD game vs. Buccaneers | Week 11",
-      "publishedAt": "2026-11-25T19:40:52.763Z",
+      "publishedAt": "2026-11-25T20:01:03.964Z",
       "url": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
       "externalVideoUrl": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
       "outletId": "nfl_official",
@@ -452,7 +464,44 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 54.0705
+      "storyRank": 54.0736
+    },
+    {
+      "id": "det_yts_u9ggzabBnEo",
+      "type": "video",
+      "videoId": "u9ggzabBnEo",
+      "embeddable": false,
+      "title": "New England Patriots vs. Detroit Lions Highlights | 2026 NFL Season Week 10",
+      "summary": "",
+      "imageUrl": "https://i.ytimg.com/vi/u9ggzabBnEo/hqdefault.jpg",
+      "imageAlt": "New England Patriots vs. Detroit Lions Highlights | 2026 NFL Season Week 10",
+      "publishedAt": "2026-11-25T20:01:03.964Z",
+      "url": "https://www.youtube.com/watch?v=u9ggzabBnEo",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=u9ggzabBnEo",
+      "outletId": "nfl_official",
+      "outletName": "NFL",
+      "reporterId": "nfl_official",
+      "reporterName": "NFL",
+      "author": "NFL",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.youtube.com/watch?v=u9ggzabBnEo",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 54.0736
     },
     {
       "id": "det_brss_pride_of_detroit_c7e7589ef5fe",
@@ -486,7 +535,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 50.9681
+      "storyRank": 35.3638
     },
     {
       "id": "det_bsky_366bc7162d15",
@@ -509,13 +558,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -524,7 +573,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 49.9076
+      "storyRank": 34.5266
     },
     {
       "id": "det_bsky_bc08f8f113a5",
@@ -547,13 +596,13 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -562,7 +611,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 35.233
+      "storyRank": 26.2261
     },
     {
       "id": "det_bsky_98b7b2453030",
@@ -585,13 +634,13 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -600,7 +649,56 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 34.632
+      "storyRank": 25.8627
+    },
+    {
+      "id": "x_tl_pff_2125648069714985014",
+      "type": "tweet",
+      "title": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
+      "fullText": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/media/HX_RbnAXoAACDFD.jpg",
+      "imageAlt": "PFF post",
+      "hasInlineChartImage": true,
+      "mentionedPlayers": [
+        {
+          "id": "4373825",
+          "name": "Penei Sewell",
+          "shortName": "P. Sewell",
+          "position": "OT",
+          "jersey": 58,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4373825.png"
+        }
+      ],
+      "publishedAt": "2026-11-25T17:49:27.000Z",
+      "url": "https://x.com/PFF/status/2125648069714985014",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "national_film",
+      "outletName": "PFF",
+      "reporterId": "pff_official",
+      "reporterName": "PFF",
+      "author": "PFF",
+      "authorHandle": "@PFF",
+      "authorProfileUrl": "https://x.com/PFF",
+      "trustTier": 2,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "FILM & TRENCH",
+      "breakingPriority": 0.766,
+      "category": "film",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 17.8216
     },
     {
       "id": "det_bsky_5489b955508d",
@@ -624,13 +722,13 @@
       "authorHandle": "@nickbaumgardner",
       "authorProfileUrl": "https://x.com/nickbaumgardner",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -639,7 +737,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.3176
+      "storyRank": 15.115
     },
     {
       "id": "det_brss_pride_of_detroit_08619fae17e4",
@@ -673,46 +771,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.4714
-    },
-    {
-      "id": "det_bsky_8b496dd8aa70",
-      "type": "tweet",
-      "title": "Patrick Mahomes vs. Josh Allen 💪 Micah Parsons' return ⏳ Ben Johnson vs. Dan Campbell 🥊 @robertmays.bsky.social, @davehelman.bsky.social and @qbklass.bsky.social discuss that and more on our Thanksgiving edition of the NFL Week 12 preview! youtu.be/BP8N9CBkhrQ",
-      "fullText": "Patrick Mahomes vs. Josh Allen 💪 Micah Parsons' return ⏳ Ben Johnson vs. Dan Campbell 🥊 @robertmays.bsky.social, @davehelman.bsky.social and @qbklass.bsky.social discuss that and more on our Thanksgiving edition of the NFL Week 12 preview! youtu.be/BP8N9CBkhrQ",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:y5l4fp5ciyxya5i624ej5tjd/bafkreifu4omipvtw2ghcxnb5t2qgbffach5jrp6kp25wwdh4lf3p2bbqfq",
-      "hasInlineChartImage": true,
-      "imageAlt": "Derrik Klassen post",
-      "publishedAt": "2026-11-25T18:05:12.000Z",
-      "url": "https://bsky.app/profile/qbklass.bsky.social/post/3n35qpmvvvf2h",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "national_film",
-      "outletName": "Derrik Klassen",
-      "reporterId": "derrik_klassen",
-      "reporterName": "Derrik Klassen",
-      "author": "Derrik Klassen",
-      "authorHandle": "@QBKlass",
-      "authorProfileUrl": "https://x.com/QBKlass",
-      "trustTier": 2,
-      "wireSource": "bluesky_live",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 14.4461
+      "storyRank": 15.2912
     },
     {
       "id": "det_bsky_7413304d7854",
@@ -735,6 +794,7 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -750,7 +810,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 72,
       "fluffScore": 0,
       "isClickbait": false,
@@ -759,7 +818,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.4362
+      "storyRank": 10.7324
     },
     {
       "id": "det_brss_pride_of_detroit_15660b5b4bc2",
@@ -793,7 +852,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 8.494
+      "storyRank": 7.5973
     },
     {
       "id": "det_brss_pride_of_detroit_c9fa3791dd23",
@@ -827,7 +886,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.7647
+      "storyRank": 5.2876
     },
     {
       "id": "det_bsky_827235304401",
@@ -851,13 +910,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 72,
       "fluffScore": 0,
       "isClickbait": false,
@@ -866,7 +925,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.9027
+      "storyRank": 3.6523
     },
     {
       "id": "det_bsky_bfb4ce989cd1",
@@ -889,13 +948,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -904,7 +963,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.7044
+      "storyRank": 3.4738
     },
     {
       "id": "det_bsky_fdf162e71e23",
@@ -927,13 +986,13 @@
       "authorHandle": "@nickbaumgardner",
       "authorProfileUrl": "https://x.com/nickbaumgardner",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -942,7 +1001,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3267
+      "storyRank": 3.1341
     },
     {
       "id": "det_brss_pride_of_detroit_feb209abe74e",
@@ -976,7 +1035,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2128
+      "storyRank": 3.0354
     },
     {
       "id": "det_bsky_db18b8a5bdc9",
@@ -999,6 +1058,7 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "roster",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -1014,7 +1074,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -1023,7 +1082,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2032
+      "storyRank": 3.1497
     },
     {
       "id": "det_pfr_c9ff7aa242f3",
@@ -1065,7 +1124,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.2106
+      "storyRank": 3.1572
     },
     {
       "id": "det_brss_pride_of_detroit_63e6c097cb47",
@@ -1108,7 +1167,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.1332
+      "storyRank": 3.0823
     },
     {
       "id": "det_bsky_a90ce57ce6e8",
@@ -1131,6 +1190,7 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "roster",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -1146,7 +1206,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -1155,7 +1214,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.092
+      "storyRank": 3.0418
     },
     {
       "id": "det_bsky_24dfeb5a4a39",
@@ -1178,6 +1237,7 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "roster",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -1193,7 +1253,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -1202,7 +1261,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.0334
+      "storyRank": 2.9849
     },
     {
       "id": "det_espn_ed610992ac64e",
@@ -1237,7 +1296,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3551
+      "storyRank": 1.3138
     },
     {
       "id": "x_tl_nfl_2125436252371759600",
@@ -1276,7 +1335,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2402
+      "storyRank": 1.2066
     },
     {
       "id": "det_brss_pride_of_detroit_988283ab3d6c",
@@ -1327,7 +1386,201 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.564
+      "storyRank": 1.5338
+    },
+    {
+      "id": "det_bsky_deab6a39e2fa",
+      "type": "tweet",
+      "title": "Lions, Bears Week 12 injury report: Sam LaPorta, Chuck Clark upgraded on Tuesday www.prideofdetroit.com/detroit-lion...",
+      "fullText": "Lions, Bears Week 12 injury report: Sam LaPorta, Chuck Clark upgraded on Tuesday www.prideofdetroit.com/detroit-lion...",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreiemgbnr7x6tcv47adw7dmogq5icwkfl47525i6ydu7i5mgfhebp7q",
+      "imageAlt": "Erik Schlitt post",
+      "publishedAt": "2026-11-24T22:21:50.189Z",
+      "url": "https://bsky.app/profile/erikschlitt.bsky.social/post/3n33olkbric2p",
+      "externalUrl": "https://www.prideofdetroit.com/detroit-lions-injuries/182466/lions-bears-week-12-injury-report-sam-laporta-chuck-clark-upgraded-on-tuesday",
+      "externalTitle": "Lions, Bears Week 12 injury report: Sam LaPorta, Chuck Clark upgraded on Tuesday",
+      "outletId": "pride_of_detroit",
+      "outletName": "Erik Schlitt",
+      "reporterId": "erik_schlitt",
+      "reporterName": "Erik Schlitt",
+      "author": "Erik Schlitt",
+      "authorHandle": "@erikschlitt",
+      "authorProfileUrl": "https://x.com/erikschlitt",
+      "trustTier": 1,
+      "category": "beat",
+      "wireSource": "bluesky_live",
+      "mentionedPlayers": [
+        {
+          "id": "4430027",
+          "name": "Sam LaPorta",
+          "shortName": "S. LaPorta",
+          "position": "TE",
+          "jersey": 87,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430027.png"
+        },
+        {
+          "id": "3045463",
+          "name": "Chuck Clark",
+          "shortName": "C. Clark",
+          "position": "S",
+          "jersey": 36,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045463.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 96,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.487
+    },
+    {
+      "id": "det_rss_698cc6e5922f",
+      "type": "article",
+      "title": "Lions vs. Bears practice report: Nov. 24",
+      "summary": "Lions vs. Bears practice report for Tuesday, November 24.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/uuvgrhftrxhibkpukkrz.jpg",
+      "imageAlt": "Lions vs. Bears practice report: Nov. 24",
+      "publishedAt": "2026-11-24T22:06:59.000Z",
+      "url": "https://www.detroitlions.com/news/lions-vs-bears-practice-report-nov-24",
+      "outletId": "lions_official",
+      "outletName": "detroitlions.com Official",
+      "reporterId": "lions_official",
+      "reporterName": "detroitlions.com Official",
+      "author": "detroitlions.com Official",
+      "authorHandle": "@Lions",
+      "authorProfileUrl": "https://www.detroitlions.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.5002
+    },
+    {
+      "id": "det_pfr_fe7efe21290b",
+      "type": "article",
+      "title": "Lions Owner Martha Firestone Ford Passes Away",
+      "summary": "The Lions announced Tuesday night Martha Firestone Ford, the team’s owner/chair emeritus, passed away at the age of 101. Ford had been a Lions owner for more than 60 years. Although Firestone Ford had transitioned to an emeritus role in 202",
+      "imageUrl": "",
+      "publishedAt": "2026-11-25T02:41:11.000Z",
+      "url": "https://www.profootballrumors.com/2026/11/lions-owner-martha-firestone-ford-passes-away",
+      "outletId": "pro_football_rumors",
+      "outletName": "Pro Football Rumors",
+      "reporterId": "pro_football_rumors",
+      "reporterName": "Pro Football Rumors",
+      "author": "Pro Football Rumors",
+      "authorHandle": "@pfrumors",
+      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
+      "trustTier": 2,
+      "wireSource": "pfr_team_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0044
+    },
+    {
+      "id": "det_brss_pride_of_detroit_6f1734a87688",
+      "type": "article",
+      "title": "Former Detroit Lions owner Martha Firestone Ford dies at age 101",
+      "summary": "The Detroit Lions announced on Tuesday night that former team owner Martha Firestone Ford has passed away at age 101. According to the team, she passed away at her home surrounded by family. Ford took over as principal owner of the franchis",
+      "imageUrl": "",
+      "imageAlt": "Former Detroit Lions owner Martha Firestone Ford dies at age 101",
+      "publishedAt": "2026-11-25T02:23:06.000Z",
+      "url": "https://www.prideofdetroit.com/detroit-lions-news/182636/former-detroit-lions-owner-martha-firestone-ford-dies-at-age-101",
+      "outletId": "pride_of_detroit",
+      "outletName": "Pride of Detroit",
+      "reporterId": "jeremy_reisman",
+      "reporterName": "Jeremy Reisman",
+      "author": "Jeremy Reisman",
+      "authorHandle": "@DetroitOnPride",
+      "authorProfileUrl": "https://x.com/DetroitOnPride",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.9984
+    },
+    {
+      "id": "det_bsky_76e56c7a0782",
+      "type": "tweet",
+      "title": "Detroit Lions matriarch Martha Ford dies at age 101 www.freep.com/story/sports...",
+      "fullText": "Detroit Lions matriarch Martha Ford dies at age 101 www.freep.com/story/sports...",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Dave Birkett post",
+      "publishedAt": "2026-11-25T02:17:40.051Z",
+      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n343ranfys2n",
+      "externalUrl": "https://www.freep.com/story/sports/nfl/lions/2026/11/24/detroit-lions-matriarch-martha-ford-dies-at-age-101/753435002/",
+      "externalTitle": "Detroit Lions matriarch Martha Ford dies at age 101",
+      "outletId": "detroit_free_press",
+      "outletName": "Dave Birkett",
+      "reporterId": "dave_birkett",
+      "reporterName": "Dave Birkett",
+      "author": "Dave Birkett",
+      "authorHandle": "@davebirkett",
+      "authorProfileUrl": "https://x.com/davebirkett",
+      "trustTier": 1,
+      "category": "beat",
+      "wireSource": "bluesky_live",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.9588
     },
     {
       "id": "det_bsky_c87f5993547e",
@@ -1350,13 +1603,13 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -1365,7 +1618,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9812
+      "storyRank": 0.9567
+    },
+    {
+      "id": "x_tl_justin_rogers_2125411413820682319",
+      "type": "tweet",
+      "title": "Not many people recognized how passionate Martha Ford was about the Lions, well before she took over the team. The late Jerry Green told me Martha used to pull him aside during Lions practices and critique his analysis from his stories and columns.",
+      "fullText": "Not many people recognized how passionate Martha Ford was about the Lions, well before she took over the team. The late Jerry Green told me Martha used to pull him aside during Lions practices and critique his analysis from his stories and columns.",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "",
+      "imageAlt": "Justin Rogers post",
+      "mentionedPlayers": [],
+      "publishedAt": "2026-11-25T02:09:03.946Z",
+      "url": "https://x.com/Justin_Rogers/status/2125411413820682319",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "detroit_football_network",
+      "outletName": "Detroit Football Network",
+      "reporterId": "justin_rogers",
+      "reporterName": "Justin Rogers",
+      "author": "Justin Rogers",
+      "authorHandle": "@Justin_Rogers",
+      "authorProfileUrl": "https://x.com/Justin_Rogers",
+      "trustTier": 1,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 97,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.0788
     },
     {
       "id": "det_rss_cb8cd7557301",
@@ -1399,7 +1691,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9973
+      "storyRank": 0.9727
     },
     {
       "id": "det_rss_727483a8843b",
@@ -1442,240 +1734,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2704
-    },
-    {
-      "id": "det_bsky_deab6a39e2fa",
-      "type": "tweet",
-      "title": "Lions, Bears Week 12 injury report: Sam LaPorta, Chuck Clark upgraded on Tuesday www.prideofdetroit.com/detroit-lion...",
-      "fullText": "Lions, Bears Week 12 injury report: Sam LaPorta, Chuck Clark upgraded on Tuesday www.prideofdetroit.com/detroit-lion...",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:5xcfdcz6w6uewlvp5rr7ngpt/bafkreiemgbnr7x6tcv47adw7dmogq5icwkfl47525i6ydu7i5mgfhebp7q",
-      "imageAlt": "Erik Schlitt post",
-      "publishedAt": "2026-11-24T22:21:50.189Z",
-      "url": "https://bsky.app/profile/erikschlitt.bsky.social/post/3n33olkbric2p",
-      "externalUrl": "https://www.prideofdetroit.com/detroit-lions-injuries/182466/lions-bears-week-12-injury-report-sam-laporta-chuck-clark-upgraded-on-tuesday",
-      "externalTitle": "Lions, Bears Week 12 injury report: Sam LaPorta, Chuck Clark upgraded on Tuesday",
-      "outletId": "pride_of_detroit",
-      "outletName": "Erik Schlitt",
-      "reporterId": "erik_schlitt",
-      "reporterName": "Erik Schlitt",
-      "author": "Erik Schlitt",
-      "authorHandle": "@erikschlitt",
-      "authorProfileUrl": "https://x.com/erikschlitt",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "mentionedPlayers": [
-        {
-          "id": "4430027",
-          "name": "Sam LaPorta",
-          "shortName": "S. LaPorta",
-          "position": "TE",
-          "jersey": 87,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4430027.png"
-        },
-        {
-          "id": "3045463",
-          "name": "Chuck Clark",
-          "shortName": "C. Clark",
-          "position": "S",
-          "jersey": 36,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045463.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 96,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.5161
-    },
-    {
-      "id": "det_rss_698cc6e5922f",
-      "type": "article",
-      "title": "Lions vs. Bears practice report: Nov. 24",
-      "summary": "Lions vs. Bears practice report for Tuesday, November 24.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/lions/uuvgrhftrxhibkpukkrz.jpg",
-      "imageAlt": "Lions vs. Bears practice report: Nov. 24",
-      "publishedAt": "2026-11-24T22:06:59.000Z",
-      "url": "https://www.detroitlions.com/news/lions-vs-bears-practice-report-nov-24",
-      "outletId": "lions_official",
-      "outletName": "detroitlions.com Official",
-      "reporterId": "lions_official",
-      "reporterName": "detroitlions.com Official",
-      "author": "detroitlions.com Official",
-      "authorHandle": "@Lions",
-      "authorProfileUrl": "https://www.detroitlions.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "injury",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.5292
-    },
-    {
-      "id": "det_pfr_fe7efe21290b",
-      "type": "article",
-      "title": "Lions Owner Martha Firestone Ford Passes Away",
-      "summary": "The Lions announced Tuesday night Martha Firestone Ford, the team’s owner/chair emeritus, passed away at the age of 101. Ford had been a Lions owner for more than 60 years. Although Firestone Ford had transitioned to an emeritus role in 202",
-      "imageUrl": "",
-      "publishedAt": "2026-11-25T02:41:11.000Z",
-      "url": "https://www.profootballrumors.com/2026/11/lions-owner-martha-firestone-ford-passes-away",
-      "outletId": "pro_football_rumors",
-      "outletName": "Pro Football Rumors",
-      "reporterId": "pro_football_rumors",
-      "reporterName": "Pro Football Rumors",
-      "author": "Pro Football Rumors",
-      "authorHandle": "@pfrumors",
-      "authorProfileUrl": "https://www.profootballrumors.com/detroit-lions",
-      "trustTier": 2,
-      "wireSource": "pfr_team_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.0307
-    },
-    {
-      "id": "det_brss_pride_of_detroit_6f1734a87688",
-      "type": "article",
-      "title": "Former Detroit Lions owner Martha Firestone Ford dies at age 101",
-      "summary": "The Detroit Lions announced on Tuesday night that former team owner Martha Firestone Ford has passed away at age 101. According to the team, she passed away at her home surrounded by family. Ford took over as principal owner of the franchis",
-      "imageUrl": "",
-      "imageAlt": "Former Detroit Lions owner Martha Firestone Ford dies at age 101",
-      "publishedAt": "2026-11-25T02:23:06.000Z",
-      "url": "https://www.prideofdetroit.com/detroit-lions-news/182636/former-detroit-lions-owner-martha-firestone-ford-dies-at-age-101",
-      "outletId": "pride_of_detroit",
-      "outletName": "Pride of Detroit",
-      "reporterId": "jeremy_reisman",
-      "reporterName": "Jeremy Reisman",
-      "author": "Jeremy Reisman",
-      "authorHandle": "@DetroitOnPride",
-      "authorProfileUrl": "https://x.com/DetroitOnPride",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.0241
-    },
-    {
-      "id": "det_bsky_76e56c7a0782",
-      "type": "tweet",
-      "title": "Detroit Lions matriarch Martha Ford dies at age 101 www.freep.com/story/sports...",
-      "fullText": "Detroit Lions matriarch Martha Ford dies at age 101 www.freep.com/story/sports...",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Dave Birkett post",
-      "publishedAt": "2026-11-25T02:17:40.051Z",
-      "url": "https://bsky.app/profile/davebirkett.bsky.social/post/3n343ranfys2n",
-      "externalUrl": "https://www.freep.com/story/sports/nfl/lions/2026/11/24/detroit-lions-matriarch-martha-ford-dies-at-age-101/753435002/",
-      "externalTitle": "Detroit Lions matriarch Martha Ford dies at age 101",
-      "outletId": "detroit_free_press",
-      "outletName": "Dave Birkett",
-      "reporterId": "dave_birkett",
-      "reporterName": "Dave Birkett",
-      "author": "Dave Birkett",
-      "authorHandle": "@davebirkett",
-      "authorProfileUrl": "https://x.com/davebirkett",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.9833
-    },
-    {
-      "id": "x_tl_justin_rogers_2125411413820682319",
-      "type": "tweet",
-      "title": "Not many people recognized how passionate Martha Ford was about the Lions, well before she took over the team. The late Jerry Green told me Martha used to pull him aside during Lions practices and critique his analysis from his stories and columns.",
-      "fullText": "Not many people recognized how passionate Martha Ford was about the Lions, well before she took over the team. The late Jerry Green told me Martha used to pull him aside during Lions practices and critique his analysis from his stories and columns.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "Justin Rogers post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T02:09:03.946Z",
-      "url": "https://x.com/Justin_Rogers/status/2125411413820682319",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "detroit_football_network",
-      "outletName": "Detroit Football Network",
-      "reporterId": "justin_rogers",
-      "reporterName": "Justin Rogers",
-      "author": "Justin Rogers",
-      "authorHandle": "@Justin_Rogers",
-      "authorProfileUrl": "https://x.com/Justin_Rogers",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 97,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.1062
+      "storyRank": 1.246
     },
     {
       "id": "det_vid_a8b98df6299e",
@@ -1720,7 +1779,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8072
+      "storyRank": 0.79
     },
     {
       "id": "det_vid_6e2e5c655a5d",
@@ -1765,7 +1824,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8041
+      "storyRank": 0.787
     },
     {
       "id": "det_vid_8a6e7909f516",
@@ -1818,7 +1877,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7413
+      "storyRank": 0.7265
     },
     {
       "id": "det_pwire_4374302_49949224",
@@ -1850,7 +1909,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6754
+      "storyRank": 0.6626
     },
     {
       "id": "det_vid_ff315d084fd5",
@@ -1895,7 +1954,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6647
+      "storyRank": 0.6524
     },
     {
       "id": "det_bsky_66c9bc0bcd4a",
@@ -1918,6 +1977,7 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "injury",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -1933,7 +1993,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -1942,7 +2001,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6287,
+      "storyRank": 0.6172,
       "isSupersededInjuryUpdate": true
     },
     {
@@ -1966,13 +2025,13 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -1981,7 +2040,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6238
+      "storyRank": 0.6125
     },
     {
       "id": "det_bsky_9d75c2abcf01",
@@ -2004,13 +2063,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2019,7 +2078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.615
+      "storyRank": 0.6039
     },
     {
       "id": "det_espn_449171876b717",
@@ -2054,7 +2113,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5764
+      "storyRank": 0.5667
     },
     {
       "id": "det_brss_pride_of_detroit_fad9226d0a06",
@@ -2088,7 +2147,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5522
+      "storyRank": 0.5432
     },
     {
       "id": "det_rss_b16b20d342cb",
@@ -2122,7 +2181,43 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.547
+      "storyRank": 0.5381
+    },
+    {
+      "id": "det_espn_406fa2ad56057",
+      "type": "video",
+      "title": "Stephen A.: Bears-Lions a big-time game",
+      "summary": "Stephen A.: Bears-Lions a big-time game",
+      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1124/ss_20261124_103851729_3759244651/ss_20261124_103851729_3759244651.jpg",
+      "imageCaption": "Stephen A.: Bears-Lions a big-time game",
+      "imageAlt": "Stephen A.: Bears-Lions a big-time game",
+      "publishedAt": "2026-11-24T15:55:30Z",
+      "url": "https://www.espn.com/video/clip/_/id/50583260/bears-lions-big-game",
+      "outletId": "espn_det",
+      "outletName": "ESPN",
+      "reporterId": "espn_det",
+      "reporterName": "ESPN NFL Nation",
+      "author": "ESPN NFL Nation",
+      "authorHandle": "@ESPNNFL",
+      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/det/detroit-lions",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.5362
     },
     {
       "id": "det_brss_pride_of_detroit_586ed38dd66b",
@@ -2165,43 +2260,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8954
-    },
-    {
-      "id": "det_espn_406fa2ad56057",
-      "type": "video",
-      "title": "Stephen A.: Bears-Lions a big-time game",
-      "summary": "Stephen A.: Bears-Lions a big-time game",
-      "imageUrl": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1124/ss_20261124_103851729_3759244651/ss_20261124_103851729_3759244651.jpg",
-      "imageCaption": "Stephen A.: Bears-Lions a big-time game",
-      "imageAlt": "Stephen A.: Bears-Lions a big-time game",
-      "publishedAt": "2026-11-24T15:55:30Z",
-      "url": "https://www.espn.com/video/clip/_/id/50583260/bears-lions-big-game",
-      "outletId": "espn_det",
-      "outletName": "ESPN",
-      "reporterId": "espn_det",
-      "reporterName": "ESPN NFL Nation",
-      "author": "ESPN NFL Nation",
-      "authorHandle": "@ESPNNFL",
-      "authorProfileUrl": "https://www.espn.com/nfl/team/_/name/det/detroit-lions",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.545
+      "storyRank": 0.8822
     },
     {
       "id": "det_rss_9f2a94fc3b62",
@@ -2235,7 +2294,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4719
+      "storyRank": 0.4645
     },
     {
       "id": "det_vid_32148a142432",
@@ -2271,7 +2330,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5276
+      "storyRank": 0.5193
     },
     {
       "id": "det_vid_4d53d4bdb819",
@@ -2307,7 +2366,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4978
+      "storyRank": 0.4903
     },
     {
       "id": "det_bsky_ef1e2d2afcbe",
@@ -2330,13 +2389,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2345,7 +2404,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.441
+      "storyRank": 0.4348
     },
     {
       "id": "det_rss_46c025b4bc09",
@@ -2379,7 +2438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4558
+      "storyRank": 0.4494
     },
     {
       "id": "det_bsky_929720614785",
@@ -2402,13 +2461,13 @@
       "authorHandle": "@nickbaumgardner",
       "authorProfileUrl": "https://x.com/nickbaumgardner",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2417,7 +2476,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2963
+      "storyRank": 0.2931
     },
     {
       "id": "det_vid_1744bcb9317c",
@@ -2462,7 +2521,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3039
+      "storyRank": 0.3006
     },
     {
       "id": "det_vid_d610abd93dfc",
@@ -2507,7 +2566,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3027
+      "storyRank": 0.2995
     },
     {
       "id": "det_vid_ebc363c2a475",
@@ -2552,7 +2611,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3026
+      "storyRank": 0.2993
     },
     {
       "id": "det_bsky_07e1ef2c5ada",
@@ -2575,13 +2634,13 @@
       "authorHandle": "@nickbaumgardner",
       "authorProfileUrl": "https://x.com/nickbaumgardner",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2590,7 +2649,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2924
+      "storyRank": 0.2893
     },
     {
       "id": "det_vid_f3f07a1a8d3e",
@@ -2635,7 +2694,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3023
+      "storyRank": 0.2991
     },
     {
       "id": "det_bsky_a01ef238f0b7",
@@ -2658,13 +2717,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "injury",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2673,7 +2732,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6309
+      "storyRank": 0.6247
     },
     {
       "id": "det_pwire_4430027_64943928",
@@ -2714,7 +2773,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3005
+      "storyRank": 0.2973
     },
     {
       "id": "det_rss_5a9bfe5047f9",
@@ -2748,7 +2807,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6389
+      "storyRank": 0.6326
     },
     {
       "id": "det_rss_efe4964fe3eb",
@@ -2782,7 +2841,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2938
+      "storyRank": 0.2908
     },
     {
       "id": "det_bsky_a419c9ea9125",
@@ -2805,13 +2864,13 @@
       "authorHandle": "@nickbaumgardner",
       "authorProfileUrl": "https://x.com/nickbaumgardner",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2820,7 +2879,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2831
+      "storyRank": 0.2801
     },
     {
       "id": "det_bsky_07e60ae28a0e",
@@ -2843,6 +2902,7 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "film",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -2858,7 +2918,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2867,7 +2926,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2779
+      "storyRank": 0.2751
     },
     {
       "id": "det_bsky_41f77842df32",
@@ -2890,6 +2949,7 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "injury",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -2905,7 +2965,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2914,7 +2973,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0366
+      "storyRank": 0.0362
     },
     {
       "id": "det_vid_63fb87adb17f",
@@ -2950,7 +3009,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2805
+      "storyRank": 0.2777
     },
     {
       "id": "det_bsky_ed45f057fafe",
@@ -2973,13 +3032,13 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2988,7 +3047,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2501
+      "storyRank": 0.2477
     },
     {
       "id": "det_rss_4e3782d1e0b5",
@@ -3031,46 +3090,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2213
-    },
-    {
-      "id": "det_bsky_808b406ae63c",
-      "type": "tweet",
-      "title": "49ers crush Vikings 💪 Lions, Giants impress 🤨 Steelers offense MIA 👎 @robertmays.bsky.social, @davehelman.bsky.social and @qbklass.bsky.social discuss that and more in the NFL Week 11 Recap! youtube.com/live/hd9t9H1...",
-      "fullText": "49ers crush Vikings 💪 Lions, Giants impress 🤨 Steelers offense MIA 👎 @robertmays.bsky.social, @davehelman.bsky.social and @qbklass.bsky.social discuss that and more in the NFL Week 11 Recap! youtube.com/live/hd9t9H1...",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:y5l4fp5ciyxya5i624ej5tjd/bafkreibslgmwfjhont3siy7eivkoydbzx3mgqn4jkj3cvnnxjh5zfhojjy",
-      "hasInlineChartImage": true,
-      "imageAlt": "Derrik Klassen post",
-      "publishedAt": "2026-11-23T18:05:43.740Z",
-      "url": "https://bsky.app/profile/qbklass.bsky.social/post/3n2ypsppxmz2h",
-      "externalUrl": null,
-      "externalTitle": null,
-      "outletId": "national_film",
-      "outletName": "Derrik Klassen",
-      "reporterId": "derrik_klassen",
-      "reporterName": "Derrik Klassen",
-      "author": "Derrik Klassen",
-      "authorHandle": "@QBKlass",
-      "authorProfileUrl": "https://x.com/QBKlass",
-      "trustTier": 2,
-      "wireSource": "bluesky_live",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 91,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2353
+      "storyRank": 0.2192
     },
     {
       "id": "det_bsky_ad75c64d1232",
@@ -3093,6 +3113,7 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "film",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -3108,7 +3129,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -3117,7 +3137,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2248
+      "storyRank": 0.2228
     },
     {
       "id": "det_bsky_149ff0524692",
@@ -3140,6 +3160,7 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -3155,7 +3176,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 72,
       "fluffScore": 0,
       "isClickbait": false,
@@ -3164,7 +3184,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2255
+      "storyRank": 0.2235
     },
     {
       "id": "det_bsky_e8dbf0d2ce5f",
@@ -3187,13 +3207,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -3202,7 +3222,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.215
+      "storyRank": 0.2131
     },
     {
       "id": "det_rss_d8892147a817",
@@ -3236,7 +3256,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2112
+      "storyRank": 0.2094
     },
     {
       "id": "det_espn_ea150ec18134c",
@@ -3271,7 +3291,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.176
+      "storyRank": 0.1745
     },
     {
       "id": "det_bsky_df06fbb87619",
@@ -3294,13 +3314,13 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -3309,7 +3329,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.166
+      "storyRank": 0.1648
     },
     {
       "id": "det_bsky_8fd7122a3b41",
@@ -3332,13 +3352,13 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -3347,7 +3367,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0413
+      "storyRank": 0.041
     },
     {
       "id": "det_bsky_6a4fc552715e",
@@ -3370,13 +3390,13 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -3385,7 +3405,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1622
+      "storyRank": 0.1611
     },
     {
       "id": "det_bsky_a8b66c348752",
@@ -3408,6 +3428,7 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -3463,7 +3484,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 100,
       "fluffScore": 0,
       "isClickbait": false,
@@ -3472,7 +3492,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1795
+      "storyRank": 0.1782
     },
     {
       "id": "det_vid_01f6b0259c93",
@@ -3508,7 +3528,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1625
+      "storyRank": 0.1614
     },
     {
       "id": "det_rss_92d6faf1e8ed",
@@ -3542,7 +3562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1616
+      "storyRank": 0.1605
     },
     {
       "id": "det_rss_e97a2a128e9b",
@@ -3576,7 +3596,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1606
+      "storyRank": 0.1595
     },
     {
       "id": "det_espn_aea129f88ee07",
@@ -3628,7 +3648,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1568
+      "storyRank": 0.1558
     },
     {
       "id": "det_vid_a8905329fcc5",
@@ -3664,7 +3684,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1545
+      "storyRank": 0.1535
     },
     {
       "id": "det_rss_3ea274280813",
@@ -3698,7 +3718,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.154
+      "storyRank": 0.153
     },
     {
       "id": "det_vid_9cc81b3422a9",
@@ -3743,7 +3763,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1539
+      "storyRank": 0.1529
     },
     {
       "id": "det_vid_23b6812e1771",
@@ -3788,7 +3808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1538
+      "storyRank": 0.1528
     },
     {
       "id": "det_bsky_76b4702b8f91",
@@ -3811,13 +3831,13 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -3826,7 +3846,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1482
+      "storyRank": 0.1473
     },
     {
       "id": "det_vid_c4c9aff587fe",
@@ -3871,7 +3891,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1526
+      "storyRank": 0.1516
     },
     {
       "id": "det_bsky_acc7c5faee45",
@@ -3894,13 +3914,13 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -3909,7 +3929,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1475
+      "storyRank": 0.1465
     },
     {
       "id": "det_vid_a79420d76426",
@@ -3945,7 +3965,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1521
+      "storyRank": 0.1511
     },
     {
       "id": "det_vid_7623bd535cab",
@@ -3990,7 +4010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1518
+      "storyRank": 0.1508
     },
     {
       "id": "det_bsky_d9554a8c4310",
@@ -4013,13 +4033,13 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4028,7 +4048,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1466
+      "storyRank": 0.1457
     },
     {
       "id": "det_bsky_95918640d49f",
@@ -4051,13 +4071,13 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4066,7 +4086,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1444
+      "storyRank": 0.1434
     },
     {
       "id": "det_vid_009110c13b8e",
@@ -4119,7 +4139,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1492
+      "storyRank": 0.1482
     },
     {
       "id": "det_bsky_49b3cc757a15",
@@ -4142,13 +4162,13 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4157,7 +4177,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1439
+      "storyRank": 0.1429
     },
     {
       "id": "det_bsky_de8d1f1660b9",
@@ -4180,6 +4200,7 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -4195,7 +4216,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4204,7 +4224,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1424
+      "storyRank": 0.1414
     },
     {
       "id": "det_vid_31f3890de597",
@@ -4249,7 +4269,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1472
+      "storyRank": 0.1463
     },
     {
       "id": "det_bsky_dae5d18dedb6",
@@ -4272,6 +4292,7 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "injury",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -4287,7 +4308,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4296,7 +4316,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1418
+      "storyRank": 0.1409
     },
     {
       "id": "det_bsky_91007c4df1f0",
@@ -4319,6 +4339,7 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -4334,7 +4355,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4343,7 +4363,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1414
+      "storyRank": 0.1405
     },
     {
       "id": "det_bsky_d63bbf7a1d83",
@@ -4366,6 +4386,7 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -4389,7 +4410,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4398,7 +4418,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1412
+      "storyRank": 0.1403
     },
     {
       "id": "det_bsky_6bb1766a86d4",
@@ -4421,6 +4441,7 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -4444,7 +4465,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4453,7 +4473,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1411
+      "storyRank": 0.1402
     },
     {
       "id": "det_bsky_789d1e0d3c3d",
@@ -4476,6 +4496,7 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "injury",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -4491,7 +4512,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4500,7 +4520,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1408
+      "storyRank": 0.1399
     },
     {
       "id": "det_bsky_5caee00df2ce",
@@ -4523,6 +4543,7 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -4546,7 +4567,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4555,7 +4575,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1407
+      "storyRank": 0.1399
     },
     {
       "id": "det_bsky_70ffea10bca4",
@@ -4578,13 +4598,13 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4593,7 +4613,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1404
+      "storyRank": 0.1396
     },
     {
       "id": "det_bsky_ccd54bb8872f",
@@ -4616,6 +4636,7 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -4631,7 +4652,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4640,7 +4660,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1397
+      "storyRank": 0.1389
     },
     {
       "id": "det_bsky_d71edc7b2097",
@@ -4663,6 +4683,7 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -4678,7 +4699,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4687,7 +4707,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1389
+      "storyRank": 0.1381
     },
     {
       "id": "det_bsky_0e00b32b5276",
@@ -4710,13 +4730,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4725,7 +4745,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0658
+      "storyRank": 0.0654
     },
     {
       "id": "det_bsky_d870fb1952b8",
@@ -4748,13 +4768,13 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4763,7 +4783,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0633
+      "storyRank": 0.0629
     },
     {
       "id": "det_rss_cd50a8afa84d",
@@ -4797,7 +4817,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0577
+      "storyRank": 0.0573
     },
     {
       "id": "det_rss_e8bb16dbb320",
@@ -4831,7 +4851,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0619
+      "storyRank": 0.0615
     },
     {
       "id": "det_bsky_f1d887559ba8",
@@ -4854,6 +4874,7 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -4869,7 +4890,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4878,7 +4898,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0479
+      "storyRank": 0.0477
     },
     {
       "id": "det_bsky_9e313f31deec",
@@ -4901,6 +4921,7 @@
       "authorHandle": "@Justin_Rogers",
       "authorProfileUrl": "https://x.com/Justin_Rogers",
       "trustTier": 1,
+      "category": "roster",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -4924,7 +4945,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4933,7 +4953,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0478
+      "storyRank": 0.0476
     },
     {
       "id": "det_bsky_0f1a6d53713f",
@@ -4956,6 +4976,7 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "roster",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -4971,7 +4992,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -4980,7 +5000,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0476
+      "storyRank": 0.0473
     },
     {
       "id": "det_pfr_6d7323d65d58",
@@ -5022,7 +5042,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0481
+      "storyRank": 0.0479
     },
     {
       "id": "det_bsky_6eee65061126",
@@ -5045,6 +5065,7 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "roster",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -5060,7 +5081,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -5069,45 +5089,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0472
-    },
-    {
-      "id": "det_bsky_d40259a8fe91",
-      "type": "tweet",
-      "title": "Attn Lions Bluesky fans: Support the @prideofdetroit.bsky.social #Movember Campaign if you can! It's annual proof of how special our Lions fan community is. Thanks to @detroitonlion.bsky.social and the rest of the PoD crew (@erikschlitt.bsky.social @ryanpod.bsky.social et al) for organizing it.",
-      "fullText": "Attn Lions Bluesky fans: Support the @prideofdetroit.bsky.social #Movember Campaign if you can! It's annual proof of how special our Lions fan community is. Thanks to @detroitonlion.bsky.social and the rest of the PoD crew (@erikschlitt.bsky.social @ryanpod.bsky.social et al) for organizing it.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:iop43ex5h5ffkzyutj4bouh7/bafkreig5khkc2toblutsqdh7vznpej7jmvi6hfgkp47qbmezeff2jv54sq",
-      "imageAlt": "Erik Schlitt post",
-      "publishedAt": "2026-11-21T18:33:35.745Z",
-      "url": "https://bsky.app/profile/erikschlitt.bsky.social/post/3n2tqgnuazc2c",
-      "externalUrl": "https://michiganmedicine.donordrive.com/participants/11833/donate",
-      "externalTitle": "Support the Pride of Detroit Movember Campaign Benefiting the Rogel Cancer! Center",
-      "outletId": "pride_of_detroit",
-      "outletName": "Erik Schlitt",
-      "reporterId": "erik_schlitt",
-      "reporterName": "Erik Schlitt",
-      "author": "Erik Schlitt",
-      "authorHandle": "@erikschlitt",
-      "authorProfileUrl": "https://x.com/erikschlitt",
-      "trustTier": 1,
-      "wireSource": "bluesky_live",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 96,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0455
+      "storyRank": 0.047
     },
     {
       "id": "det_rss_d13c9787f2ee",
@@ -5141,7 +5123,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0454
+      "storyRank": 0.0452
     },
     {
       "id": "det_rss_20dd0e7f1bf2",
@@ -5184,7 +5166,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.043
+      "storyRank": 0.0428
     },
     {
       "id": "det_tx_3b82b2c77f40",
@@ -5236,7 +5218,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0408
+      "storyRank": 0.0406
     },
     {
       "id": "det_bsky_4e0d8a91bf97",
@@ -5259,6 +5241,7 @@
       "authorHandle": "@davebirkett",
       "authorProfileUrl": "https://x.com/davebirkett",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -5274,7 +5257,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -5283,7 +5265,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0353
+      "storyRank": 0.0351
     },
     {
       "id": "det_rss_eea329af076f",
@@ -5317,7 +5299,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0838
+      "storyRank": 0.0835
     },
     {
       "id": "det_rss_976be5789ea0",
@@ -5368,7 +5350,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0347
+      "storyRank": 0.0346
     },
     {
       "id": "det_bsky_c9b6abbd9373",
@@ -5391,13 +5373,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -5406,7 +5388,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0324
+      "storyRank": 0.0323
     },
     {
       "id": "det_bsky_63c1f40089f1",
@@ -5430,13 +5412,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 72,
       "fluffScore": 0,
       "isClickbait": false,
@@ -5445,7 +5427,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0316
+      "storyRank": 0.0315
     },
     {
       "id": "det_bsky_3f1b0a4ff5b2",
@@ -5468,6 +5450,7 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -5483,7 +5466,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -5536,7 +5518,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0283
+      "storyRank": 0.0282
     },
     {
       "id": "det_bsky_dbbfbbb85625",
@@ -5559,13 +5541,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "injury",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -5574,7 +5556,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0652
+      "storyRank": 0.065
     },
     {
       "id": "det_bsky_3eaa886217a1",
@@ -5597,13 +5579,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -5612,7 +5594,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.025
+      "storyRank": 0.0249
     },
     {
       "id": "det_bsky_119561c1c557",
@@ -5635,13 +5617,13 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -5650,7 +5632,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0245
+      "storyRank": 0.0244
     },
     {
       "id": "det_pfr_70041b3c4411",
@@ -5683,7 +5665,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0227
+      "storyRank": 0.0226
     },
     {
       "id": "det_pfr_d6e9815eec79",
@@ -5716,7 +5698,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0226
+      "storyRank": 0.0225
     },
     {
       "id": "det_pfr_bb925d5e5526",
@@ -5766,7 +5748,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.022
+      "storyRank": 0.0219
     },
     {
       "id": "det_bsky_e1b3cc021fec",
@@ -5789,6 +5771,7 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "beat",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -5820,7 +5803,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": 0,
-      "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -5922,7 +5904,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0192
+      "storyRank": 0.0191
     },
     {
       "id": "det_espn_51eacdb16eec2",
@@ -5966,7 +5948,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0179
+      "storyRank": 0.0178
     },
     {
       "id": "det_espn_f82ca0a52a103",
@@ -6173,7 +6155,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0158
+      "storyRank": 0.0157
     },
     {
       "id": "det_tx_19ed81fc487c",
@@ -6267,7 +6249,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.014
+      "storyRank": 0.0139
     },
     {
       "id": "det_pfr_03b5124b42ba",
@@ -6629,6 +6611,7 @@
       "authorHandle": "@erikschlitt",
       "authorProfileUrl": "https://x.com/erikschlitt",
       "trustTier": 1,
+      "category": "injury",
       "wireSource": "bluesky_live",
       "mentionedPlayers": [
         {
@@ -6644,7 +6627,6 @@
       "isInGameInjury": false,
       "breakingBadge": null,
       "breakingPriority": -10,
-      "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T19:40:45.452Z",
+  "updatedAt": "2026-11-25T20:00:56.896Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -533,8 +533,8 @@
         "surface": "Turf"
       },
       "restAdvantageDays": -7,
-      "spreadLineSf": -3,
-      "totalLine": 45.5,
+      "spreadLineSf": -2.5,
+      "totalLine": 44.5,
       "broadcast": "NFL TV"
     },
     {
@@ -24685,10 +24685,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T11:40Z",
+        "asOfIso": "2026-11-25T19:02Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +7.5 (#1 Off / #10 Def efficiency, 14.3 proj. wins, 29.2% SB odds) at 9-1.",
+        "blurb": "FPI +7.5 (#1 Off / #10 Def efficiency, 14.3 proj. wins, 29.7% SB odds) at 9-1.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24843,10 +24843,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T11:40Z",
+        "asOfIso": "2026-11-25T19:02Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI +7.5 (#1 Off / #10 Def efficiency, 14.3 proj. wins, 29.2% SB odds) at 9-1."
+        "blurb": "FPI +7.5 (#1 Off / #10 Def efficiency, 14.3 proj. wins, 29.7% SB odds) at 9-1."
       },
       {
         "id": "espn_panel",
@@ -24879,7 +24879,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T19:45:24.873Z"
+    "fetchedAtIso": "2026-11-25T20:01:08.431Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -24929,7 +24929,7 @@
         "jersey": 13,
         "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png",
         "primarySnapPct": 97,
-        "playProbabilityPct": 99
+        "playProbabilityPct": 84
       },
       {
         "playerId": "3117251",
@@ -25834,13 +25834,13 @@
     },
     "betting": {
       "favorite": "SF",
-      "spread": "SF -3",
+      "spread": "SF -2.5",
       "openingSpread": "Opened SF -1.5 (Draft Kings)",
       "overUnder": 44.5,
-      "moneyline": "SF -158 | SEA +133",
-      "impliedScore": "SF 23.8 – SEA 20.8",
+      "moneyline": "SF -147 | SEA +124",
+      "impliedScore": "SF 23.5 – SEA 21.0",
       "restAdvantage": "-7 Days Rest Differential (SEA extra rest)",
-      "impliedWinProb": "67%"
+      "impliedWinProb": "64%"
     },
     "franchiseHistory": {
       "allTimeRecord": "49ers vs. Seahawks",

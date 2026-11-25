@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T19:40:52.763Z",
+  "updatedAt": "2026-11-25T20:01:03.964Z",
   "count": 83,
   "excludedGhostIds": [
     "3116136",
@@ -86331,7 +86331,7 @@
           "url": "https://www.youtube.com/watch?v=ZVavJVtF4Z8",
           "author": "NFL",
           "outletName": "NFL",
-          "publishedAt": "2026-11-25T19:40:52.763Z"
+          "publishedAt": "2026-11-25T20:01:03.964Z"
         },
         {
           "id": "det_brss_pride_of_detroit_586ed38dd66b",
@@ -89567,7 +89567,7 @@
           "url": "https://www.youtube.com/watch?v=nnXZ7q24zqo",
           "author": "NFL",
           "outletName": "NFL",
-          "publishedAt": "2026-11-25T19:40:52.763Z"
+          "publishedAt": "2026-11-25T20:01:03.964Z"
         },
         {
           "id": "det_espn_aea129f88ee07",
@@ -104535,6 +104535,18 @@
         ]
       },
       "recentNews": [
+        {
+          "id": "x_tl_pff_2125648069714985014",
+          "type": "tweet",
+          "headline": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
+          "title": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
+          "fullText": "Penei Sewell grade ranks among OT Run Block 1st Pass Block 3rd MORE",
+          "summary": "",
+          "url": "https://x.com/PFF/status/2125648069714985014",
+          "author": "PFF",
+          "outletName": "PFF",
+          "publishedAt": "2026-11-25T17:49:27.000Z"
+        },
         {
           "id": "det_vid_8a6e7909f516",
           "type": "video",

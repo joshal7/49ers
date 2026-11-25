@@ -24187,6 +24187,37 @@ await testAsync(
         `${abbr} Edge Worker selectEdgeLiveWireXSpecs must include local film analyst @${expectedLocalFilmHandle}`
       );
     }
+
+    // Verify ATProto Bluesky direct video/mp4 blob URLs are allowlisted strictly on /xrpc/com.atproto.sync.getBlob
+    assert.equal(
+      isAllowedInlineVideoStreamUrl(
+        'https://bsky.social/xrpc/com.atproto.sync.getBlob?did=did%3Aplc%3Au7kuhqmolhlmimlfguxqkivn&cid=bafkreihf2f3io2ayyhwlbjk3apxaehggjt3z2gcv3e26hhtfory5e5emwi'
+      ),
+      true,
+      'Official ATProto Bluesky direct video/mp4 getBlob stream must be allowlisted for inline playback'
+    );
+    assert.equal(
+      isAllowedInlineVideoStreamUrl('https://bsky.social/profile/random/post/123'),
+      false,
+      'Arbitrary non-getBlob bsky.social URLs must NOT be allowlisted as inline video streams'
+    );
+
+    // Verify registered film creator visual still/chart (e.g. Ted Nguyen All-22 passing diagram) routes to Film & Trench
+    assert.equal(
+      classifyNewsItemCategory({
+        type: 'tweet',
+        title: 'The 49ers didn’t just attack between the numbers, Purdy threw directly over the center',
+        fullText: 'The 49ers didn’t just attack between the numbers, Purdy threw directly over the center',
+        author: 'Ted Nguyen',
+        authorHandle: '@FB_FilmAnalysis',
+        reporterId: 'ted_nguyen',
+        reporterCategory: 'film_analyst',
+        hasInlineChartImage: true,
+        imageUrl: 'https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:test/chart@jpeg'
+      }),
+      'film',
+      'Film analyst All-22 passing-zone diagram still must classify into Film & Trench'
+    );
   }
 );
 

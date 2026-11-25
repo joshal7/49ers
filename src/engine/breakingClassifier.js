@@ -451,7 +451,17 @@ export function classifyNewsItemCategory(item = {}) {
       lead
     ) && !headlineHasFilmCue;
 
-  if (!isMockOrOffseasonDraft && !isPureInjuryLead && (headlineHasFilmCue || filmMatches.length >= 2)) {
+  const isFilmCreatorVisualAnalysis =
+    !isMockOrOffseasonDraft &&
+    !isPureInjuryLead &&
+    (isRegisteredFilmOrAnalyticsCreator || /\b(?:pff|next\s*gen\s*stats|sumersports)\b/i.test(channelOrAuthor)) &&
+    Boolean(item.hasInlineChartImage || item.imageUrl) &&
+    !/\b(power\s+rankings?|mock\s+draft|podcast|mailbag|jersey|cleats|photo\s+of\s+the\s+year|mourning)\b/i.test(combined) &&
+    /\b(attack(?:ed|ing)?|between\s+the\s+(?:numbers|hashes)|over\s+the\s+(?:middle|center)|rankings?|grad(?:e|ed|es|ing)|epa|cpoe|yards|route|coverage|blitz|pressure|block(?:ing)?|rush(?:ing)?|pass(?:ing|er)?|scheme|motion|shell|snap|target|separation|trench|protection|leverage)\b/i.test(
+      combined
+    );
+
+  if (!isMockOrOffseasonDraft && !isPureInjuryLead && (headlineHasFilmCue || filmMatches.length >= 2 || isFilmCreatorVisualAnalysis)) {
     return 'film';
   }
 

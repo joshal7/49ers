@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T19:40:45.452Z",
+  "updatedAt": "2026-11-25T20:00:56.896Z",
   "count": 84,
   "excludedGhostIds": [
     "3129116",
@@ -61673,17 +61673,17 @@
       "health": {
         "status": "Questionable",
         "injuryType": "Ankle",
-        "returnDate": null,
+        "returnDate": "2026-11-29",
         "isSeasonEnding": false,
         "isPracticeWindowOpen": false,
         "designatedDateIso": null,
-        "blurbDateIso": "2026-11-23T04:52Z",
+        "blurbDateIso": "2026-11-25T19:53Z",
         "placedBeforeWeek": null,
         "earliestEligibleWeek": null,
         "projectedReturnWeek": null,
         "byeWeekNote": "",
         "irBeatNote": "",
-        "fantasyStatusAbbr": "",
+        "fantasyStatusAbbr": "QUESTIONABLE",
         "isIrReturnQuestionable": false,
         "isOnPracticeReport": true,
         "wed": "-",
@@ -61696,15 +61696,24 @@
         "playBadgeLabel": "52% • GTD",
         "factors": [
           "Questionable tag adjusted by player career prior (88%)",
-          "Early-week update (2 corroborated reports): unlikely to practice Wednesday / questionable at best"
+          "Early-week update (3 corroborated reports): unlikely to practice Wednesday / questionable at best"
         ],
         "archetypeNote": "High availability prior; rarely misses starts if throwing full velocity by Thursday.",
         "weeklyHistory2026": [],
-        "sustainedInLastGame": false,
-        "exitedPriorGameWithoutReturn": false,
         "hasPreReportPracticeReturn": false
       },
       "recentNews": [
+        {
+          "id": "sf_brss_niners_nation_4733d0115425",
+          "type": "article",
+          "headline": "49ers injury report: Brock Purdy suffered an ankle injury",
+          "title": "49ers injury report: Brock Purdy suffered an ankle injury",
+          "summary": "The San Francisco 49ers have a huge division matchup with the Seattle Seahawks on Sunday, and 49ers head coach Kyle Shanahan took the podium to update the media on injuries and player statuses heading into the game. The obvious news is that",
+          "url": "https://www.ninersnation.com/san-francisco-49ers-injuries/166304/49ers-injury-report-brock-purdy-suffered-an-ankle-injury",
+          "author": "Jason Aponte",
+          "outletName": "Niners Nation",
+          "publishedAt": "2026-11-25T19:52:44.000Z"
+        },
         {
           "id": "sf_yts_b675ntOuxw0",
           "type": "video",
@@ -61714,7 +61723,19 @@
           "url": "https://www.youtube.com/watch?v=b675ntOuxw0",
           "author": "NFL",
           "outletName": "NFL",
-          "publishedAt": "2026-11-25T19:40:45.452Z"
+          "publishedAt": "2026-11-25T20:00:56.896Z"
+        },
+        {
+          "id": "sf_bsky_36c7e49cef3e",
+          "type": "tweet",
+          "headline": "#49ers' Brock Purdy suffered ankle injury, won't practice Wednesday; Other updates Read:",
+          "title": "#49ers' Brock Purdy suffered ankle injury, won't practice Wednesday; Other updates Read:",
+          "fullText": "#49ers' Brock Purdy suffered ankle injury, won't practice Wednesday; Other updates Read:",
+          "summary": "",
+          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n35x54jbrn2q",
+          "author": "Al Sacco",
+          "outletName": "Al Sacco",
+          "publishedAt": "2026-11-25T20:00:02.000Z"
         },
         {
           "type": "video",
@@ -61724,7 +61745,7 @@
           "url": "https://www.youtube.com/watch?v=0V20MYj2jRA",
           "author": "49ers Beat",
           "outletName": "49ers Beat",
-          "publishedAt": "2026-11-25T19:40:45.452Z"
+          "publishedAt": "2026-11-25T20:00:56.896Z"
         },
         {
           "id": "sf_bsky_54425cb46e5d",
@@ -61736,18 +61757,6 @@
           "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35uvlvftc2b",
           "author": "Matt Maiocco",
           "outletName": "Matt Maiocco",
-          "publishedAt": "2026-11-25T19:20:09.354Z"
-        },
-        {
-          "id": "sf_bsky_efdff45858a2",
-          "type": "tweet",
-          "headline": "Brock Purdy will not practice today due to an ankle injury he sustained in the second quarter Sunday night, 49ers coach Kyle Shanahan said.",
-          "title": "Brock Purdy will not practice today due to an ankle injury he sustained in the second quarter Sunday night, 49ers coach Kyle Shanahan said.",
-          "fullText": "Brock Purdy will not practice today due to an ankle injury he sustained in the second quarter Sunday night, 49ers coach Kyle Shanahan said.",
-          "summary": "",
-          "url": "https://bsky.app/profile/timkawakami.bsky.social/post/3n35uvlvftc2b",
-          "author": "Tim Kawakami",
-          "outletName": "Tim Kawakami",
           "publishedAt": "2026-11-25T19:20:09.354Z"
         },
         {
@@ -61767,7 +61776,7 @@
           "type": "article",
           "headline": "How Brock Purdy-George Kittle duo made 49ers franchise history in win vs Vikings",
           "title": "How Brock Purdy-George Kittle duo made 49ers franchise history in win vs Vikings",
-          "summary": "Former 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Brandon Aiyuk is",
+          "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Br",
           "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-george-kittle-history/1982607/",
           "author": "Pratham Valluri",
           "outletName": "NBC Sports Bay Area",
@@ -61778,7 +61787,7 @@
           "type": "article",
           "headline": "49ers QB Brock Purdy reveals Kyle Shanahan's advice for facing Vikings' defense",
           "title": "49ers QB Brock Purdy reveals Kyle Shanahan's advice for facing Vikings' defense",
-          "summary": "Former 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Brandon Aiyuk is",
+          "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Br",
           "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-kyle-shanahan-advice/1982599/",
           "author": "Vince Lontz",
           "outletName": "NBC Sports Bay Area",
@@ -61789,7 +61798,7 @@
           "type": "article",
           "headline": "49ers QB Brock Purdy achieves several historic NFL feats in win vs. Vikings",
           "title": "49ers QB Brock Purdy achieves several historic NFL feats in win vs. Vikings",
-          "summary": "Former 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Brandon Aiyuk is",
+          "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Br",
           "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-vikings-week-11-feats/1982493/",
           "author": "Dylan Grausz",
           "outletName": "NBC Sports Bay Area",
@@ -61829,17 +61838,6 @@
           "author": "Matt Maiocco",
           "outletName": "Matt Maiocco",
           "publishedAt": "2026-11-25T17:05:40.333Z"
-        },
-        {
-          "id": "sf_brss_49ers_webzone_4521e250bb8c",
-          "type": "article",
-          "headline": "Brock Purdy named NFC Offensive Player of the Week for Week 11",
-          "title": "Brock Purdy named NFC Offensive Player of the Week for Week 11",
-          "summary": "Niners Wire - San Francisco 49ers quarterback Brock Purdy was recognized for his performance against the Minnesota Vikings on Sunday...",
-          "url": "https://www.49erswebzone.com/news/205513-brock-purdy-earns-offensive-player/",
-          "author": "49ers Webzone",
-          "outletName": "49ers Webzone",
-          "publishedAt": "2026-11-25T17:20:08.000Z"
         }
       ],
       "statProfile2026": {
@@ -66299,20 +66297,20 @@
         "isSeasonEnding": true,
         "isPracticeWindowOpen": false,
         "designatedDateIso": null,
-        "blurbDateIso": "2026-11-24T00:48Z",
+        "blurbDateIso": "2026-11-25T19:24Z",
         "placedBeforeWeek": 12,
         "earliestEligibleWeek": null,
         "projectedReturnWeek": "Out for Season",
         "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
-        "irBeatNote": "McKivitz was carted off the field after going down with the injury during the second quarter, when Vikings linebacker Ivan Pace appeared to roll up on back of McKivitz's left leg at the end of a Christian McCaffrey run. Assuming follow-up tests confirm the injuries, McKivitz will require surgery and will almost certainly miss the remainder of the regular season and playoffs. Vederian Lowe came off the bench to replace McKivitz at right tackle, and Shanahan confirmed that Lowe will be next in line to start at the position beginning with the 49ers' Week 12 matchup with the Seahawks.",
-        "fantasyStatusAbbr": "OUT",
+        "irBeatNote": "ir",
+        "fantasyStatusAbbr": "IR",
         "isIrReturnQuestionable": false,
         "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
-        "shortComment": "San Francisco head coach Kyle Shanahan said after Sunday's 35-10 win over the Vikings that McKivitz is believed to have sustained a fractured and dislocated left ankle during the contest, Nick Wagoner of ESPN.com reports.",
-        "longComment": "McKivitz was carted off the field after going down with the injury during the second quarter, when Vikings linebacker Ivan Pace appeared to roll up on back of McKivitz's left leg at the end of a Christian McCaffrey run. Assuming follow-up tests confirm the injuries, McKivitz will require surgery and will almost certainly miss the remainder of the regular season and playoffs. Vederian Lowe came off the bench to replace McKivitz at right tackle, and Shanahan confirmed that Lowe will be next in line to start at the position beginning with the 49ers' Week 12 matchup with the Seahawks.",
+        "shortComment": "ir",
+        "longComment": "ir",
         "playProbabilityPct": 0,
         "playTier": "OUT",
         "playBadgeLabel": "0% • Out for Season",
@@ -66381,7 +66379,7 @@
           "type": "article",
           "headline": "49ers overreactions: Is Colton McKivitz's injury bigger deal than fans realize?",
           "title": "49ers overreactions: Is Colton McKivitz's injury bigger deal than fans realize?",
-          "summary": "Former 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Brandon Aiyuk is",
+          "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Br",
           "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/overreactions-colton-mckivitz-injury/1982800/",
           "author": "Matt Maiocco",
           "outletName": "NBC Sports Bay Area",
@@ -69540,6 +69538,18 @@
           "publishedAt": "2026-11-16T12:49:56.782Z"
         },
         {
+          "id": "sf_bsky_3faeb4802b5c",
+          "type": "tweet",
+          "headline": "Deebo has 3 “carries” for 78 yards and a TD CMC has 2 catches for 81 yards and a TD That’s so 49ers",
+          "title": "Deebo has 3 “carries” for 78 yards and a TD CMC has 2 catches for 81 yards and a TD That’s so 49ers",
+          "fullText": "Deebo has 3 “carries” for 78 yards and a TD CMC has 2 catches for 81 yards and a TD That’s so 49ers",
+          "summary": "",
+          "url": "https://bsky.app/profile/tednguyen.bsky.social/post/3n2f7cnzmrs2f",
+          "author": "Ted Nguyen",
+          "outletName": "Ted Nguyen",
+          "publishedAt": "2026-11-15T23:49:51.752Z"
+        },
+        {
           "id": "sf_pfr_665184dfd545",
           "type": "article",
           "headline": "49ers Designate DT CJ West For Return; Latest On Mike Evans, Deebo Samuel",
@@ -70710,7 +70720,7 @@
           "url": "https://www.youtube.com/watch?v=roWrZPbJ6v8",
           "author": "San Francisco 49ers",
           "outletName": "San Francisco 49ers",
-          "publishedAt": "2026-11-25T19:40:45.452Z"
+          "publishedAt": "2026-11-25T20:00:56.896Z"
         },
         {
           "id": "sf_rss_fcd719e03ae2",
@@ -80392,7 +80402,7 @@
           "type": "article",
           "headline": "How Brock Purdy-George Kittle duo made 49ers franchise history in win vs Vikings",
           "title": "How Brock Purdy-George Kittle duo made 49ers franchise history in win vs Vikings",
-          "summary": "Former 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Brandon Aiyuk is",
+          "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Br",
           "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-george-kittle-history/1982607/",
           "author": "Pratham Valluri",
           "outletName": "NBC Sports Bay Area",
@@ -92943,6 +92953,18 @@
           "author": "Matt Maiocco",
           "outletName": "Matt Maiocco",
           "publishedAt": "2026-11-23T16:50:36.780Z"
+        },
+        {
+          "id": "sf_bsky_8b20aadd98c3",
+          "type": "tweet",
+          "headline": "Kaelon Black juggernaut run",
+          "title": "Kaelon Black juggernaut run",
+          "fullText": "Kaelon Black juggernaut run",
+          "summary": "",
+          "url": "https://bsky.app/profile/natetice.bsky.social/post/3n2jro2ardc2z",
+          "author": "Nate Tice",
+          "outletName": "Nate Tice",
+          "publishedAt": "2026-11-17T19:28:59.977Z"
         }
       ],
       "statProfile2026": {
@@ -98210,7 +98232,7 @@
           "url": "https://www.youtube.com/watch?v=roWrZPbJ6v8",
           "author": "San Francisco 49ers",
           "outletName": "San Francisco 49ers",
-          "publishedAt": "2026-11-25T19:40:45.452Z"
+          "publishedAt": "2026-11-25T20:00:56.896Z"
         },
         {
           "id": "sf_vid_f0664a0a89eb",
@@ -102379,7 +102401,7 @@
           "type": "article",
           "headline": "49ers' Malik Mustapha wins appeal for Week 5 hit on Seahawks' Jaxon Smith-Njigba",
           "title": "49ers' Malik Mustapha wins appeal for Week 5 hit on Seahawks' Jaxon Smith-Njigba",
-          "summary": "Former 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Brandon Aiyuk is",
+          "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Br",
           "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/malik-mustapha-jaxon-smith-njigba-fine/1982994/",
           "author": "Pratham Valluri",
           "outletName": "NBC Sports Bay Area",
@@ -104988,6 +105010,18 @@
       },
       "recentNews": [
         {
+          "id": "x_tl_pff_2125652044409454974",
+          "type": "tweet",
+          "headline": "Mike Evans surges right back into the rankings following missed time",
+          "title": "Mike Evans surges right back into the rankings following missed time",
+          "fullText": "Mike Evans surges right back into the rankings following missed time",
+          "summary": "",
+          "url": "https://x.com/PFF/status/2125652044409454974",
+          "author": "PFF",
+          "outletName": "PFF",
+          "publishedAt": "2026-11-25T18:05:14.000Z"
+        },
+        {
           "id": "sf_bsky_9c8e4ee85a4f",
           "type": "tweet",
           "headline": "49ers snap count 1/2 Offense (54 plays) QB-Brock Purdy 48, Mac Jones 6 RB-Christian McCaffrey 35, Kyle Juszczyk 23, Kaelon Black 16, Jordan James 5 WR-Keenan Allen 31, Deebo Samuel 28, Jordan Watkins 28, Mike Evans 23, Jacob Cowing 6",
@@ -105090,6 +105124,17 @@
           "publishedAt": "2026-11-23T02:15:00.000Z"
         },
         {
+          "id": "sf_vid_6c2ba3853c70",
+          "type": "video",
+          "headline": "Purdy's 14-Yard Strike to Evans Gets 49ers into Vikings Territory on the First Drive",
+          "title": "Purdy's 14-Yard Strike to Evans Gets 49ers into Vikings Territory on the First Drive",
+          "summary": "San Francisco 49ers QB Brock Purdy connects with WR Mike Evans for a 14-yard gain to push the 49ers into Minnesota Vikings territory on the opening drive in Week 11 of the 2026 NFL season.",
+          "url": "https://www.49ers.com/video/purdy-s-14-yard-strike-to-evans-gets-49ers-into-vikings-territory-on-the-first-drive",
+          "author": "49ers.com Video",
+          "outletName": "49ers.com Video",
+          "publishedAt": "2026-11-23T01:42:00.000Z"
+        },
+        {
           "id": "x_tl_rapsheet_2123961971196203049",
           "type": "tweet",
           "headline": "From The Insiders on @nflnetwork: #49ers WR Mike Evans is poised to make his return.",
@@ -105100,30 +105145,6 @@
           "author": "Ian Rapoport",
           "outletName": "NFL Network",
           "publishedAt": "2026-11-21T02:09:29.895Z"
-        },
-        {
-          "id": "sf_bsky_dd1e536305ec",
-          "type": "tweet",
-          "headline": "49ers’ Mike Evans on track to play vs. Vikings after missing past month with Achilles injury www.nytimes.com/athletic/779...",
-          "title": "49ers’ Mike Evans on track to play vs. Vikings after missing past month with Achilles injury www.nytimes.com/athletic/779...",
-          "fullText": "49ers’ Mike Evans on track to play vs. Vikings after missing past month with Achilles injury www.nytimes.com/athletic/779...",
-          "summary": "",
-          "url": "https://bsky.app/profile/mattbarrows.bsky.social/post/3n2rryh2w3222",
-          "author": "Matt Barrows",
-          "outletName": "Matt Barrows",
-          "publishedAt": "2026-11-20T23:56:06.867Z"
-        },
-        {
-          "id": "sf_bsky_2b1bf3a3ad2e",
-          "type": "tweet",
-          "headline": "#49ers game status vs. MIN Questionable: RB Jordan James (calf) LB Dre Greenlaw (neck) WR Mike Evans (Achilles) DT CJ West (knee) CB Nate Hobbs (adductor) DB Upton Stout (shoulder) DL Khalid Kareem (ankle) QB Mac Jones (illness) LB Luke Gifford (chest)",
-          "title": "#49ers game status vs. MIN Questionable: RB Jordan James (calf) LB Dre Greenlaw (neck) WR Mike Evans (Achilles) DT CJ West (knee) CB Nate Hobbs (adductor) DB Upton Stout (shoulder) DL Khalid Kareem (ankle) QB Mac Jones (illness) LB Luke Gifford (chest)",
-          "fullText": "#49ers game status vs. MIN Questionable: RB Jordan James (calf) LB Dre Greenlaw (neck) WR Mike Evans (Achilles) DT CJ West (knee) CB Nate Hobbs (adductor) DB Upton Stout (shoulder) DL Khalid Kareem (ankle) QB Mac Jones (illness) LB Luke Gifford (chest)",
-          "summary": "",
-          "url": "https://bsky.app/profile/jenniferleechan.bsky.social/post/3n2rfc2yrz22j",
-          "author": "Jennifer Lee Chan",
-          "outletName": "Jennifer Lee Chan",
-          "publishedAt": "2026-11-20T20:08:51.117Z"
         }
       ],
       "statProfile2026": {
@@ -106003,7 +106024,20 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "sf_bsky_844183fae9ad",
+          "type": "tweet",
+          "headline": "strong bullrush rep by Mykel Williams to push the OT into Dak's lap on 3rd down.",
+          "title": "strong bullrush rep by Mykel Williams to push the OT into Dak's lap on 3rd down.",
+          "fullText": "strong bullrush rep by Mykel Williams to push the OT into Dak's lap on 3rd down.",
+          "summary": "",
+          "url": "https://bsky.app/profile/natetice.bsky.social/post/3n2jktcardc2z",
+          "author": "Nate Tice",
+          "outletName": "Nate Tice",
+          "publishedAt": "2026-11-17T17:26:39.946Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "EDGE",
@@ -107576,7 +107610,7 @@
           "type": "article",
           "headline": "Why Nick Bosa believes 2026 49ers are one of the best teams he has played on",
           "title": "Why Nick Bosa believes 2026 49ers are one of the best teams he has played on",
-          "summary": "Former 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Brandon Aiyuk is",
+          "summary": "Former San Francisco 49ers wide receiver Brandon Aiyuk is heading to the team he wanted to join all along. The Washington Commanders are signing Aiyuk to their practice squad, agent Drew Rosenhaus told ESPN’s Adam Schefter. Free-agent WR Br",
           "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/nick-bosa-2026-performance/1982964/",
           "author": "Dylan Grausz",
           "outletName": "NBC Sports Bay Area",

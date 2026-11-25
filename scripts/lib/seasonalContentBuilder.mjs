@@ -496,7 +496,7 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
       allowLeagueWideFilmCharts: true
     },
     {
-      actor: 'benbbaldwin.bsky.social',
+      actor: 'rbsdm.com',
       reporterId: 'ben_baldwin',
       reporterName: 'Ben Baldwin',
       authorHandle: '@benbbaldwin',
@@ -518,7 +518,7 @@ export async function fetchLiveBeatSocialPosts({ rosterPlayers = [] } = {}) {
       allowLeagueWideFilmCharts: true
     },
     {
-      actor: 'bensolak.bsky.social',
+      actor: 'benjaminsolak.bsky.social',
       reporterId: 'ben_solak',
       reporterName: 'Ben Solak',
       authorHandle: '@BenjaminSolak',

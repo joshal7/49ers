@@ -260,7 +260,7 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     allowLeagueWideFilmCharts: true
   },
   {
-    actor: 'benbbaldwin.bsky.social',
+    actor: 'rbsdm.com',
     reporterId: 'ben_baldwin',
     reporterName: 'Ben Baldwin',
     authorHandle: '@benbbaldwin',
@@ -280,7 +280,7 @@ export const LIVE_BLUESKY_BEAT_ACCOUNTS = [
     allowLeagueWideFilmCharts: true
   },
   {
-    actor: 'bensolak.bsky.social',
+    actor: 'benjaminsolak.bsky.social',
     reporterId: 'ben_solak',
     reporterName: 'Ben Solak',
     authorHandle: '@BenjaminSolak',
@@ -2968,8 +2968,14 @@ export async function hydrateLiveBlueskyBeatWire(
             /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/i
           );
           const extractedYtVideoId = ytMatch ? ytMatch[1] : undefined;
+          const bskyVideoDid = String(post?.author?.did || '').trim();
+          const bskyVideoCid = String(vidEmbed?.cid || rec?.embed?.video?.ref?.$link || rec?.embed?.media?.video?.ref?.$link || '').trim();
+          const bskyVideoMp4Url =
+            bskyVideoDid && bskyVideoCid
+              ? `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${encodeURIComponent(bskyVideoDid)}&cid=${encodeURIComponent(bskyVideoCid)}`
+              : '';
           const hasNativeSocialVideo =
-            Boolean(vidEmbed?.playlist || vidEmbed?.cid) ||
+            Boolean(bskyVideoMp4Url || vidEmbed?.playlist || vidEmbed?.cid) ||
             /^https:\/\/(?:www\.)?(?:x|twitter)\.com\/[^/]+\/status\/\d+\/video\//i.test(String(safeExtUrl || '')) ||
             clubVideoPrefixRe.test(String(safeExtUrl || ''));
           const postHandle = post?.author?.handle || acct.actor;
@@ -2995,12 +3001,13 @@ export async function hydrateLiveBlueskyBeatWire(
           }
 
           const resolvedExternalVideoUrl =
-            !extractedYtVideoId && !isTenorGif && hasNativeSocialVideo
+            !extractedYtVideoId && !isTenorGif && !bskyVideoMp4Url && hasNativeSocialVideo
               ? safeExtUrl && clubVideoPrefixRe.test(safeExtUrl)
                 ? safeExtUrl
                 : postUrl || bskyPermalink
               : undefined;
 
+          const resolvedVideoStreamUrl = isTenorGif ? rawExtUri : bskyVideoMp4Url || undefined;
           const resolvedCategory = isLeagueWideChart
             ? 'film'
             : classifyNewsItemCategory({
@@ -3009,7 +3016,7 @@ export async function hydrateLiveBlueskyBeatWire(
                 fullText: cleanFull,
                 summary: `${cleanExtTitle} ${nonBioExtDesc}`.trim(),
                 videoId: extractedYtVideoId,
-                videoStreamUrl: isTenorGif ? rawExtUri : undefined,
+                videoStreamUrl: resolvedVideoStreamUrl,
                 isAnimatedGif: isTenorGif,
                 author: parsedAttr.reporterName,
                 authorHandle: parsedAttr.authorHandle || acct.authorHandle || '',
@@ -3029,12 +3036,12 @@ export async function hydrateLiveBlueskyBeatWire(
               isFullTweet: tweetDisplay.isFullTweet,
               summary: safeExtUrl && cleanExtTitle ? cleanExtTitle : '',
               videoId: extractedYtVideoId,
-              videoStreamUrl: isTenorGif ? rawExtUri : undefined,
+              videoStreamUrl: resolvedVideoStreamUrl,
               isAnimatedGif: isTenorGif || undefined,
               externalVideoUrl: resolvedExternalVideoUrl,
-              embeddable: Boolean(extractedYtVideoId || isTenorGif),
+              embeddable: Boolean(extractedYtVideoId || isTenorGif || bskyVideoMp4Url),
               isHighlightClip:
-                Boolean(extractedYtVideoId || isTenorGif || resolvedExternalVideoUrl) && resolvedCategory !== 'film',
+                Boolean(extractedYtVideoId || isTenorGif || bskyVideoMp4Url || resolvedExternalVideoUrl) && resolvedCategory !== 'film',
               hasInlineChartImage: Boolean(bskyPhotoPre && (resolvedCategory === 'film' || isLeagueWideChart)) || undefined,
               isLeagueWideFilmChart: isLeagueWideChart || undefined,
               filmOnlyScope: filmOnlyScope || undefined,

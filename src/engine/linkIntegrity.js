@@ -1591,7 +1591,13 @@ export function isAllowedInlineVideoStreamUrl(rawUrl) {
   if (!rawUrl || typeof rawUrl !== 'string') return false;
   try {
     const parsed = new URL(rawUrl.trim());
-    return parsed.protocol === 'https:' && ALLOWED_INLINE_VIDEO_STREAM_HOST_RE.test(parsed.hostname);
+    if (parsed.protocol !== 'https:') return false;
+    if (ALLOWED_INLINE_VIDEO_STREAM_HOST_RE.test(parsed.hostname)) return true;
+    // Allow official ATProto Bluesky direct video/mp4 blobs (`com.atproto.sync.getBlob`)
+    if (/^bsky\.social$/i.test(parsed.hostname) && parsed.pathname === '/xrpc/com.atproto.sync.getBlob') {
+      return Boolean(parsed.searchParams.get('did') && parsed.searchParams.get('cid'));
+    }
+    return false;
   } catch {
     return false;
   }

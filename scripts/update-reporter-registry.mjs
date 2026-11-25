@@ -46,11 +46,11 @@ const BSKY_HANDLES = {
   tom_pelissero: 'tompelissero.bsky.social',
   dianna_russini: 'diannarussini.bsky.social',
   mina_kimes: 'minakimes.bsky.social',
-  ben_solak: 'bensolak.bsky.social',
+  ben_solak: 'benjaminsolak.bsky.social',
   brett_kollmann: 'brettkollmann.bsky.social',
   nate_tice: 'natetice.bsky.social',
   judah_fortgang: 'throwthedamball.bsky.social',
-  ben_baldwin: 'benbbaldwin.bsky.social',
+  ben_baldwin: 'rbsdm.com',
   seth_walder: 'sethwalder.bsky.social'
 };
 

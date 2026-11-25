@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T19:40:57.117Z",
+  "updatedAt": "2026-11-25T20:01:09.009Z",
   "tradeWarRoom": {
     "deadlineIso": "2026-11-10T21:00:00Z",
     "deadlineDisplay": "Tuesday, Nov 10, 2026 • 4:00 PM ET",
@@ -1305,7 +1305,7 @@
     ],
     "simulatorInputs": {
       "modelVersion": "2026.3-hb-srs-var",
-      "lastSimulatedAt": "2026-11-25T19:40:57.117Z",
+      "lastSimulatedAt": "2026-11-25T20:01:09.009Z",
       "targetTeam": "DET",
       "conference": "NFC",
       "conferenceTeams": [
@@ -9777,7 +9777,7 @@
         "shortDetail": "12/7 - 8:15 PM EST"
       }
     },
-    "lastSimulatedAt": "2026-11-25T19:40:57.117Z",
+    "lastSimulatedAt": "2026-11-25T20:01:09.009Z",
     "modelVersion": "2026.3-hb-srs-var"
   },
   "draftPrep2027": {
@@ -9989,7 +9989,7 @@
         "siteName": "Tankathon",
         "analyst": "Tankathon Live Mock",
         "url": "https://www.tankathon.com/nfl/mock_draft",
-        "publishedAt": "2026-11-25T19:40:52.763Z",
+        "publishedAt": "2026-11-25T20:01:03.964Z",
         "projectedPick": 29,
         "round": 1,
         "playerName": "Jamari Johnson",
@@ -10002,7 +10002,7 @@
         "siteName": "WalterFootball",
         "analyst": "Walter Cherepinsky",
         "url": "https://walterfootball.com/draft2027_1.php",
-        "publishedAt": "2026-11-25T19:40:52.763Z",
+        "publishedAt": "2026-11-25T20:01:03.964Z",
         "projectedPick": 29,
         "round": 1,
         "playerName": "Andrew Marshall",

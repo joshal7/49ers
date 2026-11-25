@@ -24410,10 +24410,10 @@
         "reportedRecord": "5-5",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T11:40Z",
+        "asOfIso": "2026-11-25T19:02Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -1.8 (#11 Off / #20 Def efficiency, 8.0 proj. wins, 0.4% SB odds) at 5-5.",
+        "blurb": "FPI -1.8 (#11 Off / #20 Def efficiency, 7.8 proj. wins, 0.2% SB odds) at 5-5.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24568,10 +24568,10 @@
         "reportedRecord": "5-5",
         "gamesIncluded": 10,
         "throughWeek": 12,
-        "asOfIso": "2026-11-25T11:40Z",
+        "asOfIso": "2026-11-25T19:02Z",
         "asOfLabel": "Thru Wk 12",
         "verified": true,
-        "blurb": "FPI -1.8 (#11 Off / #20 Def efficiency, 8.0 proj. wins, 0.4% SB odds) at 5-5."
+        "blurb": "FPI -1.8 (#11 Off / #20 Def efficiency, 7.8 proj. wins, 0.2% SB odds) at 5-5."
       },
       {
         "id": "espn_panel",
@@ -24604,7 +24604,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T19:45:24.873Z"
+    "fetchedAtIso": "2026-11-25T20:01:08.431Z"
   },
   "upcomingMatchup": {
     "week": 12,

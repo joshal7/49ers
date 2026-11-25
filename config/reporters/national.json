@@ -226,7 +226,7 @@
       "baseScore": 94,
       "trustTier": 1,
       "xUrl": "https://x.com/FB_FilmAnalysis",
-      "bskyHandle": "fbfilmanalysis.bsky.social",
+      "bskyHandle": "tednguyen.bsky.social",
       "defaultEnabled": true
     },
     {
@@ -241,7 +241,7 @@
       "baseScore": 91,
       "trustTier": 2,
       "xUrl": "https://x.com/QBKlass",
-      "bskyHandle": "qbklass.bsky.social",
+      "bskyHandle": "derrikklassen.bsky.social",
       "defaultEnabled": true
     },
     {
@@ -301,7 +301,7 @@
       "baseScore": 91,
       "trustTier": 2,
       "xUrl": "https://x.com/SumerSports",
-      "bskyHandle": null,
+      "bskyHandle": "sumersports.bsky.social",
       "defaultEnabled": true
     },
     {
@@ -372,7 +372,7 @@
       "baseScore": 91,
       "trustTier": 1,
       "xUrl": "https://x.com/BenjaminSolak",
-      "bskyHandle": "bensolak.bsky.social",
+      "bskyHandle": "benjaminsolak.bsky.social",
       "defaultEnabled": true
     },
     {
@@ -442,7 +442,37 @@
       "baseScore": 91,
       "trustTier": 2,
       "xUrl": "https://x.com/benbbaldwin",
-      "bskyHandle": "benbbaldwin.bsky.social",
+      "bskyHandle": "rbsdm.com",
+      "defaultEnabled": true
+    },
+    {
+      "id": "dan_pizzuta",
+      "name": "Dan Pizzuta",
+      "handle": "@DanPizzuta",
+      "outletId": "national_film",
+      "role": "33rd Team • NFL Scheme, EPA & Efficiency Charts",
+      "category": "film_analyst",
+      "scope": "national",
+      "styleTag": "analytics-scheme",
+      "baseScore": 90,
+      "trustTier": 2,
+      "xUrl": "https://x.com/DanPizzuta",
+      "bskyHandle": "danpizzuta.bsky.social",
+      "defaultEnabled": true
+    },
+    {
+      "id": "robert_mays",
+      "name": "Robert Mays",
+      "handle": "@robertmays",
+      "outletId": "national_film",
+      "role": "The Athletic Football Show • Scheme & Film Breakdown",
+      "category": "film_analyst",
+      "scope": "national",
+      "styleTag": "all22-scheme",
+      "baseScore": 91,
+      "trustTier": 2,
+      "xUrl": "https://x.com/robertmays",
+      "bskyHandle": "robertmays.bsky.social",
       "defaultEnabled": true
     },
     {
