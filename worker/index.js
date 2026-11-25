@@ -46,6 +46,7 @@ import {
 } from '../src/engine/gameDayRosterEngine.js';
 import {
   decodeHtmlEntities,
+  isPromotionalAdvertisement,
   stripHtmlAndDecodeEntities
 } from '../src/engine/linkIntegrity.js';
 import {
@@ -929,6 +930,12 @@ async function collectEdgeLiveWire(
           const syn = await sr.json();
           const txt = typeof syn?.text === 'string' ? decodeHtmlEntities(syn.text).replace(/\s+/g, ' ').trim() : '';
           if (!txt || txt.length < 16) return;
+          const synExpandedUrls = Array.isArray(syn?.entities?.urls)
+            ? syn.entities.urls.map(u => u?.expanded_url || '').filter(Boolean)
+            : [];
+          if (isPromotionalAdvertisement({ type: 'tweet', title: txt, fullText: txt, expandedUrls: synExpandedUrls })) {
+            return;
+          }
           const handle = syn.user?.screen_name || fallbackHandle;
           if (!trustedSfBeatHandleRe.test(handle) && !sfRe.test(stripNonSfContextsEdge(txt))) return;
           const bestMp4 = selectBestXSyndicationMp4(syn);

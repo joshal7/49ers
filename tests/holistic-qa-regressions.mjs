@@ -3886,6 +3886,30 @@ await testAsync(
   }
 );
 
+await test(
+  'All-32-Team News Data Integrity: zero obvious promotional ads or sponsor discount posts exist in any club rawStream',
+  async () => {
+    const { isPromotionalAdvertisement } = await import('../src/engine/linkIntegrity.js');
+    const newsFiles = [path.join(rootDir, 'data', 'news.json')];
+    const teamsRoot = path.join(rootDir, 'data', 'teams');
+    for (const slug of fs.readdirSync(teamsRoot)) {
+      const p = path.join(teamsRoot, slug, 'news.json');
+      if (fs.existsSync(p)) newsFiles.push(p);
+    }
+    assert.equal(newsFiles.length, 32, 'Must audit news.json across all 32 NFL clubs');
+    const violations = [];
+    for (const f of newsFiles) {
+      const parsed = JSON.parse(fs.readFileSync(f, 'utf8'));
+      for (const it of parsed.rawStream || []) {
+        if (isPromotionalAdvertisement(it)) {
+          violations.push(`${path.relative(rootDir, f)}: ${it.title}`);
+        }
+      }
+    }
+    assert.deepEqual(violations, [], `Found unfiltered promotional ads in static 32-team news data: ${violations.join('; ')}`);
+  }
+);
+
 console.log(`\nHolistic QA Regressions Summary: ${passed} passed, ${failed} failed.`);
 if (failed > 0) {
   process.exit(1);

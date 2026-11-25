@@ -22308,6 +22308,207 @@ test('News background refresh zero-flicker & reading-position stability helpers 
   );
 });
 
+await testAsync('Ad & Promotional Filter: blocks Mountain Mikes & all 32-team commercial ads across engine, Worker & user prefs with zero false positives', async () => {
+  const { isPromotionalAdvertisement, isOffTopicLeagueFiller } = await import('../src/engine/linkIntegrity.js');
+  const { scoreContentSignal, isItemAllowedByUserPrefs, filterNewsByUserPrefs } = await import('../src/engine/antiFluffFilter.js');
+  const { parseOfficialXSyndicationTimelineHtml } = await import('../worker/nfl-teams-worker.js');
+
+  const obviousAds = [
+    {
+      type: 'tweet',
+      title: 'A Victory tastes better with 49% off @MountainMikes 🍕 🔗',
+      fullText: 'A Victory tastes better with 49% off @MountainMikes 🍕 🔗',
+      url: 'https://x.com/49ers/status/2122999999999999999'
+    },
+    {
+      type: 'tweet',
+      title: '49ers won! Use app promo code NINERSWIN1 for 49% off 1 large pizza at Mountain Mike\'s.',
+      url: 'https://x.com/49ers/status/2122999999999999998'
+    },
+    {
+      type: 'tweet',
+      title: 'Touchdown 49ers! Score a FREE Jumbo Jack tomorrow at @JackBox with any drink purchase 🍔',
+      url: 'https://x.com/49ers/status/2122999999999999997'
+    },
+    {
+      type: 'tweet',
+      title: 'Victory Monday means a FREE medium iced coffee at @DunkinDonuts! Redeem in the Dunkin app ☕',
+      url: 'https://x.com/Patriots/status/2122999999999999996'
+    },
+    {
+      type: 'tweet',
+      title: 'Bet $5, Get $200 in Bonus Bets on Sunday\'s game! 21+ only. Gambling problem? Call 1-800-GAMBLER.',
+      url: 'https://x.com/DraftKings/status/2122999999999999995'
+    },
+    {
+      type: 'article',
+      title: 'App Giveaway coming this Friday!',
+      summary: 'Enter for exclusive Black Friday Raiders prizes.',
+      url: 'https://www.raiders.com/news/app-giveaway-coming-this-friday'
+    },
+    {
+      type: 'video',
+      title: 'Little Caesars Pizza!Pizza! Pregame Show | Week 11 vs. Steelers',
+      summary: 'Fly Eagles Fly to Little Caesars for your gameday grub! Order online today with code EAGLES15 for 15% off your order of $15+. Available at participating stores. Terms apply',
+      url: 'https://www.philadelphiaeagles.com/video/little-caesars-pregame'
+    },
+    {
+      type: 'article',
+      title: 'Tickets for Potential Postseason Games at Arrowhead Stadium Set To Go On Sale Wednesday',
+      summary: '',
+      url: 'https://www.chiefs.com/news/postseason-tickets-on-sale'
+    },
+    {
+      type: 'tweet',
+      title: 'New Sideline Hoodies available now at the Team Store! Shop now 🛒',
+      url: 'https://x.com/49ers/status/2122999999999999994',
+      expandedUrls: ['https://shop.49ers.com/sideline-hoodie']
+    },
+    {
+      type: 'tweet',
+      title: 'Gameday ready with @Pepsi! #ad',
+      url: 'https://x.com/49ers/status/2122999999999999993'
+    },
+    {
+      type: 'tweet',
+      title: 'Enter for your chance to win 2 VIP sideline passes and a signed jersey! No purchase necessary.',
+      url: 'https://x.com/49ers/status/2122999999999999992'
+    },
+    {
+      type: 'article',
+      title: 'Chicago Bears announce Dutchman Heating & Cooling as third 2026 Small Business All-Pros Winner, presented by PNC',
+      summary: 'The Chicago Bears and PNC Bank announced Dutchman Heating & Cooling as a 2026 Small Business All-Pros Winner.',
+      url: 'https://www.chicagobears.com/news/small-business-all-pros'
+    },
+    {
+      type: 'tweet',
+      title: 'Victory Monday with @MountainMikes 🍕',
+      url: 'https://x.com/49ers/status/2122999999999999991'
+    }
+  ];
+
+  for (const ad of obviousAds) {
+    assert.equal(isPromotionalAdvertisement(ad), true, `Must detect ad: ${ad.title}`);
+    assert.equal(isOffTopicLeagueFiller({ url: ad.url, title: ad.title, summary: ad.summary || '', hasRosterMatch: true, isDedicatedTeamBeat: true }), true, `isOffTopicLeagueFiller must reject ad: ${ad.title}`);
+    const sig = scoreContentSignal(ad.title, ad.summary || '', { url: ad.url });
+    assert.equal(sig.isClickbait, true, `scoreContentSignal must reject ad: ${ad.title}`);
+    assert.equal(sig.isAd, true, `scoreContentSignal must mark isAd=true: ${ad.title}`);
+    assert.equal(isItemAllowedByUserPrefs(ad, null, null), false, `isItemAllowedByUserPrefs must hide cached ad even with null prefs: ${ad.title}`);
+  }
+
+  const legitFootballStories = [
+    {
+      type: 'article',
+      title: '49ers shave $10M off the salary cap with Brock Purdy restructure',
+      summary: 'San Francisco converted base salary into a signing bonus to create $10M in 2026 cap space.',
+      url: 'https://www.49erswebzone.com/articles/purdy-cap-restructure/'
+    },
+    {
+      type: 'tweet',
+      title: '#49ers CB Renardo Green has a chance to win the starting nickel job after strong practices.',
+      url: 'https://x.com/mattbarrows/status/2122111111111111111'
+    },
+    {
+      type: 'article',
+      title: 'Cowboys owner Jerry Jones points to steep ticket prices as one reason for large 49ers fan presence',
+      summary: 'Jerry Jones spoke about 49ers fans taking over AT&T Stadium.',
+      url: 'https://www.49erswebzone.com/articles/jerry-jones-ticket-prices/'
+    },
+    {
+      type: 'article',
+      title: '49ers vs. Vikings odds, spread, over/under and Week 12 matchup preview',
+      summary: 'San Francisco opens as a 3.5-point favorite in Mexico City.',
+      url: 'https://www.espn.com/nfl/story/_/id/50500001/49ers-vikings-week-12-odds'
+    },
+    {
+      type: 'video',
+      title: 'Steve Atwater breaks down Nik Bonitto\'s strip-sack | Between the Lines',
+      summary: 'Film breakdown presented by Visa, official partner of the Denver Broncos.',
+      url: 'https://www.denverbroncos.com/video/nik-bonitto-film-breakdown'
+    },
+    {
+      type: 'article',
+      title: '5 Interesting Stats from Rams\' 34-6 Week 10 win over Cardinals',
+      summary: 'Here are five interesting stats from the Rams\' win, presented by DraftKings Daily.',
+      url: 'https://www.therams.com/news/5-interesting-stats-rams-cardinals'
+    },
+    {
+      type: 'article',
+      title: 'Jeffery Simmons brings joy to Chicago with turkey giveaway ahead of Thanksgiving',
+      summary: 'Two days before recording three sacks, Simmons hosted a community turkey giveaway.',
+      url: 'https://www.chicagobears.com/news/jeffery-simmons-turkey-giveaway'
+    },
+    {
+      type: 'tweet',
+      title: 'Nick Bosa played 50% of snaps coming off the injury report and logged 4 pressures.',
+      url: 'https://x.com/MaioccoNBCS/status/2122111111111111112'
+    }
+  ];
+
+  for (const story of legitFootballStories) {
+    assert.equal(isPromotionalAdvertisement(story), false, `Must NOT false-positive on football story: ${story.title}`);
+    assert.equal(isItemAllowedByUserPrefs(story, null, {}), true, `Must allow football story through user prefs: ${story.title}`);
+  }
+  assert.equal(filterNewsByUserPrefs([...obviousAds, ...legitFootballStories], new Map(), {}).length, legitFootballStories.length);
+
+  // Worker official X syndication timeline MUST drop Mountain Mikes & shop.49ers.com ads while keeping real game clips
+  const nowIso = new Date().toISOString();
+  const mockXPayload = {
+    props: {
+      pageProps: {
+        timeline: {
+          entries: [
+            {
+              type: 'tweet',
+              content: {
+                tweet: {
+                  id_str: '2122900000000000001',
+                  created_at: nowIso,
+                  full_text: 'A Victory tastes better with 49% off @MountainMikes 🍕 🔗 https://t.co/abc123',
+                  entities: { urls: [{ expanded_url: 'https://www.mountainmikespizza.com/49ers' }] },
+                  user: { screen_name: '49ers', name: 'San Francisco 49ers' }
+                }
+              }
+            },
+            {
+              type: 'tweet',
+              content: {
+                tweet: {
+                  id_str: '2122900000000000002',
+                  created_at: nowIso,
+                  full_text: 'Gear up for gameday! https://t.co/shop49',
+                  entities: { urls: [{ expanded_url: 'https://shop.49ers.com/mens-jersey' }] },
+                  user: { screen_name: '49ers', name: 'San Francisco 49ers' }
+                }
+              }
+            },
+            {
+              type: 'tweet',
+              content: {
+                tweet: {
+                  id_str: '2122900000000000003',
+                  created_at: nowIso,
+                  full_text: 'Brock Purdy hits George Kittle up the seam for a 32-yard touchdown! #FTTB',
+                  entities: { urls: [] },
+                  user: { screen_name: '49ers', name: 'San Francisco 49ers' }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  };
+  const fakeTimelineHtml = `<script id="__NEXT_DATA__" type="application/json">${JSON.stringify(mockXPayload)}</script>`;
+  const parsedX = parseOfficialXSyndicationTimelineHtml(fakeTimelineHtml, {
+    handle: '49ers',
+    team: { abbr: 'SF', slug: '49ers', fullName: 'San Francisco 49ers' },
+    nowMs: Date.now()
+  });
+  assert.equal(parsedX.length, 1, 'Worker official X timeline must drop Mountain Mikes & Team Store ads and retain real TD tweet');
+  assert.ok(parsedX[0].title.includes('Brock Purdy hits George Kittle'), 'Retained item must be the real football tweet');
+});
+
 console.log(`\n======================================================`);
 console.log(`UNIT & DATA QA SUMMARY: ${passed} Passed, ${failed} Failed`);
 console.log(`======================================================\n`);

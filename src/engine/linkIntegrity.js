@@ -292,6 +292,86 @@ const OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX =
 const NON_NFL_OTHER_SPORT_HEADLINE_REGEX =
   /\b(warriors|lakers|celtics|nba\b|sf giants|san francisco giants|dodgers|mlb\b|sharks|nhl\b|stanley cup|world series|premier league|champions league|pga tour|ufc\b|wwe\b)\b/i;
 
+const COMMERCIAL_FOOD_RETAIL_BRAND_MENTION_PATTERN =
+  '(?:@(?:mountainmikes|papajohns|dominos|littlecaesars|pizzahut|roundtablepizza|jackbox|mcdonalds|wendys|tacobell|dunkindonuts|dunkin|chickfila|wingstop|raisingcanes|chipotletweets|jerseymikes|subway|bojangles|whataburger|culvers|krispykreme|popeyes|sonicdrivein|starbucks|7eleven|wawa|sheetz|doordash|ubereats|instacart|budlight|coorslight|michelobultra|pepsi|cocacola|fanatics|nflshop)\\b|\\b(?:mountain\\s*mike[\'’]?s|papa\\s+john[\'’]?s|domino[\'’]?s|little\\s+caesars|pizza\\s+hut|round\\s+table\\s+pizza|jack\\s+in\\s+the\\s+box|mcdonald[\'’]?s|taco\\s+bell|dunkin[\'’]?|chick-fil-a|wingstop|raising\\s+cane[\'’]?s|jersey\\s+mike[\'’]?s|krispy\\s+kreme|whataburger|bojangles|culver[\'’]?s|doordash|uber\\s+eats|instacart|nfl\\s+shop|fanatics)\\b)';
+
+const PROMO_AD_HARD_TEXT_PATTERNS = [
+  // Percentage-off retail/food/merch offers (e.g., "49% off @MountainMikes", "25% off gear")
+  /\b\d{1,2}%\s+off\b(?!\s+(?:the\s+(?:snap|ball|line|edge|field|injury|bench|playbook|roster|field\s+goal)|his\s+(?:normal|usual|career|pace)))/i,
+  // Dollar-off / Save % / BOGO / Half-off / Free shipping (guards against "$10M off the cap")
+  /\b(?:save\s+(?:up\s+to\s+)?(?:\d{1,2}%|\$\d{1,3}(?:\.\d{2})?(?!\s*[mk]\b|\s*(?:million|thousand|cap|salary|dead\s+cap|payroll|space)))|\$\d{1,3}(?:\.\d{2})?\s+off\b(?!\s*(?:the\s+)?(?:cap|salary|payroll|books|dead\s+cap))|\b(?:buy\s+one\s+get\s+one|bogo|half[\s-]off|free\s+shipping)\b)/i,
+  // Promo/coupon/discount codes, app redemption, and commercial disclaimer boilerplate
+  /\b(?:promo\s+code|coupon\s+code|discount\s+code|offer\s+code|(?:use|enter|with)\s+(?:app\s+)?(?:promo\s+)?code\s+[A-Z0-9]{3,}|redeem\s+(?:in\s+the\s+[\w'’\s]{0,20}app|your\s+(?:free|offer|reward|discount|deal))|(?:valid|available)\s+at\s+participating\s+(?:stores|locations|restaurants)|while\s+supplies\s+last|no\s+purchase\s+necessary|official\s+rules\s+apply|terms\s+(?:&|and)\s+conditions\s+apply)\b/i,
+  // Explicit paid sponsorship / advertisement disclosures & hashtags
+  /(?:^|[\s([{"'])#(?:ad|sponsored|paidpartnership|partner|promo|sweepstakes|giveaway)\b/i,
+  /\b(?:paid\s+partnership\s+with|sponsored\s+(?:post|content|message|tweet|offer|promotion)|this\s+is\s+an?\s+(?:paid\s+)?advertisement)\b/i,
+  // Sportsbook / DFS sign-up & deposit bonus ads (preserves normal betting-line/odds journalism)
+  /\b(?:bet\s+\$\d+[\s,]+get\s+\$\d+|bonus\s+bets?|deposit\s+(?:match|bonus)|no\s+sweat\s+first\s+bet|first\s+bet\s+(?:safety\s+net|offer)|risk[\s-]free\s+bet|claim\s+your\s+(?:welcome\s+|sign[\s-]?up\s+)?bonus|gambling\s+problem\??\s+call\s+1[\s-]?800|must\s+be\s+21\+|21\+\s+(?:only|and\s+present\s+in)|new\s+(?:users|customers)\s+only)\b/i,
+  // Victory / game-day food & beverage sponsor giveaways/deals (all 32 NFL clubs)
+  /\b(?:free\s+(?:large\s+|medium\s+|small\s+|regular\s+|\d+-?(?:pc|piece|ct|count)\s+)?(?:pizza|slice|fries|french\s+fries|tacos?|burger|cheeseburger|whopper|big\s+mac|jumbo\s+jack|mcnuggets?|nuggets|chicken\s+sandwich|wings|coffee|iced\s+coffee|donut|doughnut|slurpee|drinks?|soda|sub|sandwich|burrito|queso|chips|pretzel|ice\s+cream|frosty|shake|biscuit|meal|entree|appetizer)|victory\s+(?:tastes\s+better|monday\s+(?:means|deal|offer|special|pizza|coffee|fries|tacos?))|\$\d(?:\.\d{2})?\s+(?:coffee|pizza|taco|burger|fries|wings|donut|sub|sandwich)|(?:win|victory|touchdown|sack|interception|shutout)\s*(?:=|means)\s*(?:free|\d{1,2}%\s+off|\$\d))/i,
+  // Commercial CTA directly pairing order/grab/celebrate-with + fast-food/pizza/retail partner
+  new RegExp(
+    `\\b(?:order|grab|enjoy|claim|get|score|redeem|treat\\s+yourself|fuel\\s+up(?:\\s+for\\s+gameday)?\\s+with|celebrate\\s+(?:the\\s+)?(?:win|victory|gameday|game\\s+day)\\s+with)\\b[\\s\\S]{0,65}${COMMERCIAL_FOOD_RETAIL_BRAND_MENTION_PATTERN}`,
+    'i'
+  ),
+  // Commercial sweepstakes & prize giveaways (excludes charity drives like turkey/toy/coat giveaways)
+  /\b(?:sweepstakes|enter\s+(?:now\s+)?(?:to|for\s+(?:a|your)\s+chance\s+to)\s+win|chance\s+to\s+win\s+(?:a\s+|two\s+|free\s+|vip\s+)?(?:tickets?|trip|jersey|signed|autographed|gift\s+card|suite|passes?|prizes?|merch)|app\s+giveaway|(?:jersey|ticket|merch(?:andise)?|autographed|signed|gift\s+card|cash|prize|gear)\s+giveaway|win\s+(?:two\s+|free\s+|vip\s+)?(?:tickets?\s+to|a\s+signed\s+|an?\s+autographed\s+|sideline\s+passes?|a\s+vip\s+trip))\b/i,
+  // Box-office ticket sales & Team Store / Pro Shop / merch sales CTAs
+  /\b(?:tickets?\b[\s\S]{0,60}\b(?:set\s+to\s+go\s+on\s+sale|go(?:ing)?\s+on\s+sale|on\s+sale\s+(?:now|today|monday|tuesday|wednesday|thursday|friday|saturday|sunday)|available\s+now)|single[\s-]game\s+tickets?\s+(?:on\s+sale|available)|(?:get|buy|grab|secure|claim)\s+your\s+(?:tickets?|seats?|gear|merch|jerseys?|hoodie|hat|apparel)\s+(?:now|today|here|at)|shop\s+(?:now|today|the\s+(?:new|latest|official)?\s*[\w'’\s]{0,24}(?:collection|line|gear|merch|jerseys?|apparel|drop))|available\s+now\s+at\s+(?:the\s+)?(?:team\s+store|pro\s+shop|nfl\s+shop|fanatics|shop\.)|(?:visit|check\s+out)\s+the\s+(?:team\s+store|pro\s+shop|nfl\s+shop)|new\s+merch\s+drop|limited[\s-]edition\s+(?:merch|collection|drop|jersey|hat|tee)\s+(?:available|out\s+now|shop)|season\s+ticket\s+(?:waitlist|memberships?\s+available|deposits?)|suite\s+rentals?\s+available)\b/i,
+  // Corporate advertorial spotlights & app-download promos
+  /\b(?:small\s+business\s+(?:all-pros?|spotlight|of\s+the\s+(?:week|game|month)|winner)|foodie\s+passport|credit\s+card\s+(?:offer|bonus|points|rewards)|open\s+an?\s+(?:account|card)\s+(?:today|now)|download\s+the\s+(?:official\s+)?[\w'’\s]{0,20}app\s+(?:today|now)\s+(?:to|for))\b/i
+];
+
+const PROMO_AD_LEAD_ONLY_PATTERNS = [
+  // Official sponsor tagline when it is the headline/tweet itself (not a football video summary trailer)
+  /\b(?:official\s+(?:pizza|beer|airline|wireless|bank|vehicle|truck|coffee|burger|taco|wings|sportsbook|casino|hotel|grocery|retailer|tire|insurance|partner|sponsor)\s+of\s+the\b|proud\s+(?:partner|sponsor)\s+of\s+the\b)/i,
+  // Short social shoutout pairing a food/pizza/delivery brand handle with a food/drink emoji
+  new RegExp(`${COMMERCIAL_FOOD_RETAIL_BRAND_MENTION_PATTERN}[\\s\\S]{0,40}[🍕🍔🌮🍟☕🍩🍗🍺🍻🥤]|(?:[🍕🍔🌮🍟☕🍩🍗🍺🍻🥤][\\s\\S]{0,40}${COMMERCIAL_FOOD_RETAIL_BRAND_MENTION_PATTERN})`, 'i')
+];
+
+const PROMO_AD_URL_PATTERN =
+  /(?:^https?:\/\/(?:www\.)?(?:shop\.[a-z0-9-]+\.com|nflshop\.com|fanatics\.com|ticketmaster\.com|seatgeek\.com|stubhub\.com|vividseats\.com|mountainmikespizza\.com|papajohns\.com|dominos\.com|littlecaesars\.com|draftkings\.com\/promo|fanduel\.com\/promo)(?:\/|$|\?)|\/(?:sweepstakes|app-giveaway|foodie-passport|small-business-(?:all-pros?|spotlight)|promotions\/|single-game-tickets|tickets-on-sale)(?:\/|$|\?))/i;
+
+/**
+ * Detects unmistakable commercial advertisements, partner food/drink victory promos
+ * (e.g., "49% off @MountainMikes 🍕"), promo codes, commercial giveaways/sweepstakes,
+ * ticket/merch store sales CTAs, and sportsbook deposit-bonus ads across all 32 NFL clubs,
+ * while preserving genuine football journalism, odds/spreads coverage, and sponsored video shows.
+ */
+export function isPromotionalAdvertisement(input = {}) {
+  if (!input || typeof input !== 'object') return false;
+  const title = stripAggregatorBoilerplate(String(input.title || '').trim());
+  const fullText = stripAggregatorBoilerplate(String(input.fullText || '').trim());
+  const summary = stripAggregatorBoilerplate(String(input.summary || '').trim());
+  const urls = [
+    input.url,
+    input.externalUrl,
+    ...(Array.isArray(input.expandedUrls) ? input.expandedUrls : [])
+  ]
+    .map(u => String(u || '').trim())
+    .filter(Boolean);
+
+  for (const u of urls) {
+    if (PROMO_AD_URL_PATTERN.test(u)) return true;
+  }
+
+  const lead = `${title} ${fullText}`.trim();
+  const combined = `${lead} ${summary}`.trim();
+  if (!combined) return false;
+
+  for (const rx of PROMO_AD_HARD_TEXT_PATTERNS) {
+    if (rx.test(combined)) return true;
+  }
+
+  if (lead) {
+    for (const rx of PROMO_AD_LEAD_ONLY_PATTERNS) {
+      if (rx.test(lead)) return true;
+    }
+  }
+
+  return false;
+}
+
 /**
  * Departed former 49ers coaches who now lead or have led other NFL staffs.
  * Must NEVER be treated as current 49ers relevance triggers on national wire feeds.
@@ -861,6 +941,7 @@ export function isOffTopicLeagueFiller({
   const t = stripAggregatorBoilerplate(String(title || '').trim());
   const s = matchers.isSf ? stripHistoricalSfBioSentences(String(summary || '').trim()) : String(summary || '').trim();
   if (u && OFF_TOPIC_LEAGUE_FILLER_URL_REGEX.test(u)) return true;
+  if (isPromotionalAdvertisement({ url: u, title: t, summary: s })) return true;
   if (OFF_TOPIC_LEAGUE_FILLER_HEADLINE_REGEX.test(t)) return true;
   if (/\b(fantasy|lineup help|sleepers|waiver wire|d\/st)\b/i.test(t) && !matchers.teamShortRe.test(t)) {
     return true;

@@ -7,7 +7,9 @@ import {
   isAcuteInjuryOrAvailabilityScoop,
   resolveReporterFromNameOrHandle
 } from './beatAttributionEngine.js';
-import { stripHtmlAndDecodeEntities } from './linkIntegrity.js';
+import { isPromotionalAdvertisement, stripHtmlAndDecodeEntities } from './linkIntegrity.js';
+
+export { isPromotionalAdvertisement };
 
 const CLICKBAIT_PATTERNS = [
   /\byou won'?t believe\b/i,
@@ -57,10 +59,20 @@ const SF_PRIMARY_BEAT_REPORTER_IDS = new Set([
  * Scores a headline + body text for sensationalism vs. football signal.
  * Returns { fluffScore (0..100), signalScore (0..100), isClickbait, matchedFlags }
  */
-export function scoreContentSignal(title = '', body = '') {
+export function scoreContentSignal(title = '', body = '', { url = '', externalUrl = '', type = '' } = {}) {
   const combined = `${title} ${body}`.trim();
   if (!combined) {
-    return { fluffScore: 0, signalScore: 0, isClickbait: false, matchedFlags: [] };
+    return { fluffScore: 0, signalScore: 0, isClickbait: false, isAd: false, matchedFlags: [] };
+  }
+
+  if (isPromotionalAdvertisement({ title, summary: body, url, externalUrl, type })) {
+    return {
+      fluffScore: 100,
+      signalScore: 0,
+      isClickbait: true,
+      isAd: true,
+      matchedFlags: ['PROMO_AD']
+    };
   }
 
   let fluffScore = 0;
@@ -156,6 +168,7 @@ export function scoreContentSignal(title = '', body = '') {
     fluffScore,
     signalScore,
     isClickbait: (fluffScore >= 60 && signalScore < 55) || (fluffScore >= 85 && signalScore < 65),
+    isAd: false,
     matchedFlags
   };
 }
@@ -207,7 +220,7 @@ export function isItemAllowedByUserPrefs(
   precomputedSets = null
 ) {
   if (!item || typeof item !== 'object') return false;
-  if (item.isClickbait) return false;
+  if (item.isClickbait || item.isAd || isPromotionalAdvertisement(item)) return false;
   if (!userPrefs || typeof userPrefs !== 'object') return true;
 
   const disabledReporters =
@@ -299,7 +312,7 @@ export function computeNewsSalienceScore(
       ? { signalScore: item.signalScore, fluffScore: item.fluffScore, isClickbait: Boolean(item.isClickbait) }
       : scoreContentSignal(title, body);
 
-  if (scored.isClickbait || item.isClickbait) return 0;
+  if (scored.isClickbait || item.isClickbait || item.isAd || isPromotionalAdvertisement(item)) return 0;
 
   let salience = scored.signalScore - scored.fluffScore * 0.55;
 

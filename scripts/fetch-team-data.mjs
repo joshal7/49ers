@@ -2106,7 +2106,11 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     if (!cleanUrl || isPaywalledPublisher(cleanUrl) || seenNewsUrls.has(cleanUrl)) return;
     seenNewsUrls.add(cleanUrl);
     if (isOpposingTeamOnlyInjuryOrRosterStory(item, team)) return;
-    const sig = scoreContentSignal(item.title || '', item.summary || item.fullText || '');
+    const sig = scoreContentSignal(item.title || '', item.summary || item.fullText || '', {
+      url: cleanUrl,
+      externalUrl: item.externalUrl || '',
+      type: item.type || ''
+    });
     if (sig.isClickbait) return;
     const pubIso = item.publishedAt || nowIso;
     const brk = classifyBreakingItem(item, Date.now(), { team, rosterPlayers: players });

@@ -2484,7 +2484,12 @@ async function main() {
     const rawTweetBody = cleanSensationalistText(tw.fullText || tw.title || '');
     if (!rawTweetBody) continue;
     const fmtTw = formatTweetBodyForDisplay(rawTweetBody);
-    const sig = scoreContentSignal(fmtTw.text, tw.summary || '');
+    const sig = scoreContentSignal(fmtTw.text, tw.summary || '', {
+      url: tw.url || '',
+      externalUrl: tw.externalUrl || '',
+      type: 'tweet'
+    });
+    if (sig.isClickbait) continue;
     const pubIso = tw.publishedAt || new Date().toISOString();
     const cleanExtDesc = tw.externalDescription ? cleanSensationalistText(tw.externalDescription).slice(0, 320) : '';
     const brk = classifyBreakingItem({
@@ -3020,7 +3025,8 @@ async function main() {
     const authInfo = resolveArticleAuthor(dcCreator, `${title} ${desc}`, '49ers.com Staff');
     const rawDirRep = authInfo.reporterId ? resolveReporterFromNameOrHandle(authInfo.reporterId) : null;
     const dirRep = rawDirRep && !isPodiumSubjectId(rawDirRep.id) ? rawDirRep : null;
-    const sig = scoreContentSignal(title, desc);
+    const sig = scoreContentSignal(title, desc, { url: link, type: 'article' });
+    if (sig.isClickbait) continue;
     const brk = classifyBreakingItem({ title, summary: desc, publishedAt: pubIso });
 
     seenStreamUrls.add(link);
@@ -3092,7 +3098,8 @@ async function main() {
     const authInfo = resolveArticleAuthor(dcCreator, `${title} ${desc}`, 'The SF Standard');
     const rawDirRep = authInfo.reporterId ? resolveReporterFromNameOrHandle(authInfo.reporterId) : resolveReporterFromNameOrHandle(authInfo.authorName);
     const dirRep = rawDirRep && !isPodiumSubjectId(rawDirRep.id) ? rawDirRep : null;
-    const sig = scoreContentSignal(title, desc);
+    const sig = scoreContentSignal(title, desc, { url: link, type: 'article' });
+    if (sig.isClickbait) continue;
     const brk = classifyBreakingItem({ title, summary: desc, publishedAt: pubIso });
 
     seenStreamUrls.add(link);

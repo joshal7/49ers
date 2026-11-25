@@ -100,6 +100,7 @@ import {
   isCompatiblePositionToken,
   isOffTopicLeagueFiller,
   isOpaqueShortenerUrl,
+  isPromotionalAdvertisement,
   sanitizeExternalUrl,
   sanitizePlayerDisplayName,
   stripAggregatorBoilerplate,
@@ -699,7 +700,7 @@ export function persistLiveBootSnapshot(appData, nowMs = Date.now()) {
 
   const freshWireItems = rawStream
     .filter(it => {
-      if (!it || it.isClickbait) return false;
+      if (!it || it.isClickbait || it.isAd || isPromotionalAdvertisement(it)) return false;
       const pMs = Date.parse(it.publishedAt || '');
       if (!Number.isFinite(pMs)) return false;
       return !upstreamMs || pMs >= upstreamMs - 2 * 3_600_000;
@@ -851,7 +852,7 @@ export function hydrateLiveBootSnapshotOnBoot(appData, nowMs = Date.now()) {
       return Number.isFinite(p) && p > mx ? p : mx;
     }, 0);
     const newerItems = snap.freshWireItems.filter(it => {
-      if (!it || !it.url || !it.title) return false;
+      if (!it || !it.url || !it.title || it.isClickbait || it.isAd || isPromotionalAdvertisement(it)) return false;
       const p = Date.parse(it.publishedAt || '');
       return Number.isFinite(p) && p >= existingMaxMs - 2 * 3_600_000;
     });
@@ -3740,7 +3741,7 @@ export async function hydrateLiveEspnRapidBreakingDesk(appData, { maxAgeDays = 5
       if (isOffTopicLeagueFiller({ url, title, summary, hasRosterMatch: mentioned.length > 0 || sfTeamRe.test(title) })) {
         continue;
       }
-      const sig = scoreContentSignal(title, summary);
+      const sig = scoreContentSignal(title, summary, { url, type: 'article' });
       if (sig.isClickbait) continue;
 
       const pubIso = new Date(pubMs).toISOString();
@@ -3998,7 +3999,7 @@ export async function hydrateLive49ersOfficialRss(appData, { maxAgeDays = 6 } = 
         continue;
       }
 
-      const sig = scoreContentSignal(title, summary);
+      const sig = scoreContentSignal(title, summary, { url: link, type: 'article' });
       if (sig.isClickbait) continue;
       const mentioned = matchPlayersClient(`${title} ${summary}`, rosterPlayers, 12);
       const brk = classifyBreakingItem({ type: 'article', title, summary, publishedAt: pubIso }, nowMs, { appData });
@@ -4118,7 +4119,7 @@ export async function hydrateLive49ersOfficialVideosRss(appData, { maxAgeDays = 
         continue;
       }
 
-      const sig = scoreContentSignal(title, summary);
+      const sig = scoreContentSignal(title, summary, { url: link, type: 'video' });
       if (sig.isClickbait) continue;
       const mentioned = matchPlayersClient(`${title} ${summary}`, rosterPlayers, 12);
       const category = classifyNewsItemCategory({
@@ -4640,7 +4641,11 @@ export async function hydrateLiveWorkerEdgeWire(appData, { workerBaseUrl = '', i
       ) {
         continue;
       }
-      const sig = scoreContentSignal(fullText || title, nonBioSummary);
+      const sig = scoreContentSignal(fullText || title, nonBioSummary, {
+        url: url || '',
+        externalUrl: raw.externalUrl || '',
+        type
+      });
       if (sig.isClickbait) continue;
       const brk = classifyBreakingItem(
         {
@@ -8686,7 +8691,7 @@ export async function hydrateLiveEspnOverlay(appData, { skipPostReconcile = fals
       const summary = cleanSensationalistText(art.description || '');
       const mentioned = matchPlayersClient(`${title} ${summary}`, rosterPlayers, 12);
       if (isOffTopicLeagueFiller({ url, title, summary, hasRosterMatch: mentioned.length > 0 })) continue;
-      const sig = scoreContentSignal(title, summary);
+      const sig = scoreContentSignal(title, summary, { url, type: 'article' });
       if (sig.isClickbait) continue;
       let imgUrl = art.images?.[0]?.url || '';
       if (imgUrl.startsWith('http://')) imgUrl = `https://${imgUrl.slice(7)}`;

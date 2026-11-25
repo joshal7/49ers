@@ -41,6 +41,7 @@ import {
 import {
   decodeHtmlEntities,
   isAllowedInlineVideoStreamUrl,
+  isPromotionalAdvertisement,
   stripHtmlAndDecodeEntities
 } from '../src/engine/linkIntegrity.js';
 import {
@@ -675,6 +676,23 @@ export function parseOfficialXSyndicationTimelineHtml(
     const { mp4Url, durationMs, thumbUrl } = pickBestMp4FromTweet(tw);
     const caption = rawText || quotedText;
     if (!caption || (caption.length < 10 && !mp4Url)) continue;
+    const expandedTweetUrls = [
+      ...(Array.isArray(tw?.entities?.urls) ? tw.entities.urls.map(u => u?.expanded_url || u?.unwound_url || '') : []),
+      ...(Array.isArray(tw?.quoted_status?.entities?.urls)
+        ? tw.quoted_status.entities.urls.map(u => u?.expanded_url || u?.unwound_url || '')
+        : [])
+    ].filter(Boolean);
+    if (
+      isPromotionalAdvertisement({
+        type: mp4Url ? 'video' : 'tweet',
+        title: caption,
+        fullText: caption,
+        summary: quotedText && quotedText !== caption ? quotedText : '',
+        expandedUrls: expandedTweetUrls
+      })
+    ) {
+      continue;
+    }
 
     const relevanceBlob = `${caption} ${quotedText}`;
     if (isLeagueAccount) {
@@ -1366,8 +1384,9 @@ export default {
           const title = decodeWorkerXml((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
           const link = decodeWorkerXml((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
           if (!title || !link || !/^https:\/\//i.test(link) || seenUrls.has(link)) continue;
-          seenUrls.add(link);
           const summary = decodeWorkerXml((b.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '').slice(0, 220);
+          if (isPromotionalAdvertisement({ type: 'article', title, summary, url: link })) continue;
+          seenUrls.add(link);
           const pubRaw = decodeWorkerXml((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
           const img = ((b.match(/<media:content[^>]*url="([^"]+)"/i) || b.match(/<enclosure[^>]*url="([^"]+)"/i) || [])[1] || '').replace(/&amp;/g, '&');
           const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
@@ -1393,8 +1412,9 @@ export default {
           const title = decodeWorkerXml((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
           const link = decodeWorkerXml((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
           if (!title || !link || !/^https:\/\//i.test(link) || seenUrls.has(link)) continue;
-          seenUrls.add(link);
           const summary = decodeWorkerXml((b.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '').slice(0, 220);
+          if (isPromotionalAdvertisement({ type: 'video', title, summary, url: link })) continue;
+          seenUrls.add(link);
           const pubRaw = decodeWorkerXml((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
           const img = ((b.match(/<media:content[^>]*url="([^"]+)"/i) || b.match(/<media:thumbnail[^>]*url="([^"]+)"/i) || b.match(/<enclosure[^>]*url="([^"]+\.(?:jpg|jpeg|png|webp)[^"]*)"/i) || [])[1] || '').replace(/&amp;/g, '&');
           const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
@@ -1424,8 +1444,9 @@ export default {
           const title = decodeWorkerXml((b.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '');
           const link = decodeWorkerXml((b.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
           if (!title || !link || !/^https:\/\//i.test(link) || seenUrls.has(link)) continue;
-          seenUrls.add(link);
           const summary = decodeWorkerXml((b.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '').slice(0, 220);
+          if (isPromotionalAdvertisement({ type: 'article', title, summary, url: link })) continue;
+          seenUrls.add(link);
           const pubRaw = decodeWorkerXml((b.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '');
           const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
           items.push({
@@ -1491,6 +1512,7 @@ export default {
                 [])[1] || ''
             ).replace(/&amp;/g, '&');
             if (!title || !/^https:\/\//i.test(link) || seenUrls.has(link)) continue;
+            if (isPromotionalAdvertisement({ type: 'article', title, summary, url: link })) continue;
             if (src.sfOnly && teamMentionRe && !teamMentionRe.test(`${title} ${summary}`)) continue;
             seenUrls.add(link);
             const pubMs = pubRaw ? Date.parse(pubRaw) : nowEdgeMs;
@@ -1532,6 +1554,12 @@ export default {
                 const syn = await sr.json();
                 const txt = typeof syn?.text === 'string' ? decodeHtmlEntities(syn.text).replace(/\s+/g, ' ').trim() : '';
                 if (!txt || txt.length < 16) return;
+                const synExpandedUrls = Array.isArray(syn?.entities?.urls)
+                  ? syn.entities.urls.map(u => u?.expanded_url || '').filter(Boolean)
+                  : [];
+                if (isPromotionalAdvertisement({ type: 'tweet', title: txt, fullText: txt, expandedUrls: synExpandedUrls })) {
+                  return;
+                }
                 const handle = syn.user?.screen_name || fallbackHandle;
                 const variants = [
                   ...(Array.isArray(syn.video?.variants) ? syn.video.variants : []),
