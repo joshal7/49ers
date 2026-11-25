@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:35:52.714Z",
+  "updatedAt": "2026-11-25T20:45:30.515Z",
   "sources": [
     {
       "label": "ESPN Browns Schedule",
@@ -24900,7 +24900,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-25T20:35:55.599Z"
+    "fetchedAtIso": "2026-11-25T20:45:33.055Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -25867,7 +25867,7 @@
       "spread": "CLE -4.5",
       "openingSpread": "Opened CLE -2.5 (Draft Kings)",
       "overUnder": 39.5,
-      "moneyline": "CLE -237 | LV +196",
+      "moneyline": "CLE -240 | LV +198",
       "impliedScore": "CLE 22.0 – LV 17.5",
       "restAdvantage": "+7 Days Rest Advantage (CLE off Week 11 Bye)",
       "impliedWinProb": "74%"
@@ -27622,16 +27622,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Spencer Fano, Zion Johnson & Elgton Jenkins vs. DT Folorunso Fatukasi & Raiders Simulated Pressures",
+        "unitMatchup": "Austin Barber, Spencer Fano & Elgton Jenkins vs. DT Folorunso Fatukasi & Raiders Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
+          "Austin Barber",
           "Spencer Fano",
-          "Zion Johnson",
           "Elgton Jenkins"
         ],
         "statComparison": "CLE: #16 Pass Protection (6.0%) | LV: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Spencer Fano, Zion Johnson & Elgton Jenkins protect Deshaun Watson (#16 protection at 6.0%) against DT Folorunso Fatukasi and Las Vegas Raiders's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Spencer Fano (#55) on obvious passing downs—if DT Folorunso Fatukasi cannot win clean around the arc, Raiders must dial up interior stunts that stress Zion Johnson (#77)."
+        "tacticalDetail": "Austin Barber, Spencer Fano & Elgton Jenkins protect Deshaun Watson (#16 protection at 6.0%) against DT Folorunso Fatukasi and Las Vegas Raiders's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Austin Barber (#58) on obvious passing downs—if DT Folorunso Fatukasi cannot win clean around the arc, Raiders must dial up interior stunts that stress Spencer Fano (#55)."
       }
     ]
   }

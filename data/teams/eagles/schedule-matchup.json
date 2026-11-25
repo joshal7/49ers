@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:10.019Z",
+  "updatedAt": "2026-11-25T20:47:21.130Z",
   "sources": [
     {
       "label": "ESPN Eagles Schedule",
@@ -24641,14 +24641,14 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 27,
-    "averageRank": 27.2,
-    "medianRank": 28,
+    "averageRank": 27,
+    "medianRank": 27,
     "previousRank": 28,
     "rangeMin": 25,
     "rangeMax": 28,
     "rangeShort": "#25–#28",
     "rangeDisplay": "#25–#28 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 3-7 Eagles at #27 consensus (avg #27.2) through Week 11, ranging from #25 (ESPN Panel) to #28 (RBSDM). 1 outlet still on an older week is excluded for week consistency.",
+    "synthesizedTakeaway": "5 verified models & polls place the 3-7 Eagles at #27 consensus (avg #27.0) through Week 11, ranging from #25 (ESPN Panel) to #28 (nfelo). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
       {
         "id": "espn_panel",
@@ -24688,6 +24688,24 @@
         "freshnessReason": "record_verified"
       },
       {
+        "id": "rbsdm",
+        "outlet": "RBSDM / nflverse Team Ratings",
+        "shortName": "RBSDM",
+        "url": "https://rbsdm.com/#ratings",
+        "rank": 27,
+        "previousRank": 28,
+        "delta": "+1",
+        "reportedRecord": "3-7",
+        "gamesIncluded": 10,
+        "throughWeek": 11,
+        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfLabel": "Thru Wk 11",
+        "verified": true,
+        "blurb": "Tier 5 (33.5% neutral-field win rating, 5.5 proj. wins) at 3-7 through Week 11.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
         "id": "espn_fpi",
         "outlet": "ESPN Football Power Index (FPI)",
         "shortName": "ESPN FPI",
@@ -24720,24 +24738,6 @@
         "asOfLabel": "3-7 record",
         "verified": true,
         "blurb": "nfelo 1369 (-4.7 spread value, #27 Off EPA, #28 Net EPA) at 3-7.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
-        "id": "rbsdm",
-        "outlet": "RBSDM / nflverse Team Ratings",
-        "shortName": "RBSDM",
-        "url": "https://rbsdm.com/#ratings",
-        "rank": 28,
-        "previousRank": 28,
-        "delta": "0",
-        "reportedRecord": "3-7",
-        "gamesIncluded": 10,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
-        "asOfLabel": "Thru Wk 11",
-        "verified": true,
-        "blurb": "Tier 5 (31.3% neutral-field win rating, 5.4 proj. wins) at 3-7 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24780,16 +24780,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 28,
+        "rank": 27,
         "previousRank": 28,
-        "delta": "0",
+        "delta": "+1",
         "reportedRecord": "3-7",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 5 (31.3% neutral-field win rating, 5.4 proj. wins) at 3-7 through Week 11."
+        "blurb": "Tier 5 (33.5% neutral-field win rating, 5.5 proj. wins) at 3-7 through Week 11."
       },
       {
         "id": "cbs",
@@ -24855,7 +24855,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:44:16.009Z"
+    "fetchedAtIso": "2026-11-25T20:47:24.043Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -25972,16 +25972,11 @@
           "playBadgeLabel": "95% • Cleared",
           "archetypeNote": "QB availability projection",
           "factors": [
-            "Cleared without restrictive game-day designation",
-            "Beat/podium consensus (beat report): on track to suit up"
+            "Cleared without restrictive game-day designation"
           ],
           "beatComment": "As the final score and Prescott's numbers indicate, the prolific passer was clicking on all cylinders right out of the gate against an overmatched Titans defense. Prescott had already helped stake the Cowboys to a 27-6 lead by halftime with eight- and 10-yard touchdown strikes to CeeDee Lamb and George Pickens, respectively. Prescott struck again through the air in the second half with an 11-yard touchdown pass to Javonte Williams before closing out his touchdown tally with a two-yard toss to Brevyn Spann-Ford with just under five minutes remaining. Prescott added his second rushing touchdown of the campaign on a two-yard run in the latter portion of the third quarter, giving him his second straight five-TD performance. Prescott is up to 3,049 passing yards and a 25:6 TD:INT heading into a Thanksgiving Day home clash with the Eagles in Week 12.",
           "isStarter": true,
           "role": "Starter",
-          "longComment": "Why is it so hard to sack Dak Prescott? Eagles cornerback Quinyon Mitchell was listed as a full participant on Wednesday and does not have a game status going into Week 12. That means Mitchell is fully expected to play against the Cowboys on Thanksgiving. That’s certainly good ne.",
-          "shortComment": "Why is it so hard to sack Dak Prescott? Eagles cornerback Quinyon Mitchell was listed as a full participant on Wednesday and does not have a game status going into Week 12. That means Mitchell is fully expected to play against the Cowboys on Thanksgiving. That’s certainly good ne.",
-          "playTier": "LIKELY",
-          "hasPreReportPracticeReturn": false,
           "priorDayPlayProbabilityPct": 95,
           "hasPreReportPracticeReturnDelta": false,
           "isMidWeekAdditionDelta": false
@@ -27752,16 +27747,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Landon Dickerson, Jordan Mailata & Tyler Steen vs. DT Quinnen Williams & Cowboys Simulated Pressures",
+        "unitMatchup": "Jordan Mailata, Landon Dickerson & Tyler Steen vs. DT Quinnen Williams & Cowboys Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Landon Dickerson",
           "Jordan Mailata",
+          "Landon Dickerson",
           "Tyler Steen"
         ],
         "statComparison": "PHI: #16 Pass Protection (6.0%) | DAL: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Landon Dickerson, Jordan Mailata & Tyler Steen protect Tanner McKee (#16 protection at 6.0%) against DT Quinnen Williams and Dallas Cowboys's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Landon Dickerson (#69) on obvious passing downs—if DT Quinnen Williams cannot win clean around the arc, Cowboys must dial up interior stunts that stress Jordan Mailata (#68)."
+        "tacticalDetail": "Jordan Mailata, Landon Dickerson & Tyler Steen protect Tanner McKee (#16 protection at 6.0%) against DT Quinnen Williams and Dallas Cowboys's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Jordan Mailata (#68) on obvious passing downs—if DT Quinnen Williams cannot win clean around the arc, Cowboys must dial up interior stunts that stress Landon Dickerson (#69)."
       }
     ]
   }

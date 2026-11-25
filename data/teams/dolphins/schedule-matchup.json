@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:35:47.070Z",
+  "updatedAt": "2026-11-25T20:45:12.152Z",
   "sources": [
     {
       "label": "ESPN Dolphins Schedule",
@@ -24821,7 +24821,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:35:49.834Z"
+    "fetchedAtIso": "2026-11-25T20:45:14.518Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27452,16 +27452,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Austin Jackson, Aaron Brewer & Kadyn Proctor vs. DT Darrell Jackson Jr. & Jets Simulated Pressures",
+        "unitMatchup": "Aaron Brewer, Austin Jackson & Patrick Paul vs. DT Darrell Jackson Jr. & Jets Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
-          "Austin Jackson",
           "Aaron Brewer",
-          "Kadyn Proctor"
+          "Austin Jackson",
+          "Patrick Paul"
         ],
         "statComparison": "MIA: #16 Pass Protection (6.0%) | NYJ: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Austin Jackson, Aaron Brewer & Kadyn Proctor protect Kyle McCord (#16 protection at 6.0%) against DT Darrell Jackson Jr. and New York Jets's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Austin Jackson (#73) on obvious passing downs—if DT Darrell Jackson Jr. cannot win clean around the arc, Jets must dial up interior stunts that stress Aaron Brewer (#55)."
+        "tacticalDetail": "Aaron Brewer, Austin Jackson & Patrick Paul protect Kyle McCord (#16 protection at 6.0%) against DT Darrell Jackson Jr. and New York Jets's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Aaron Brewer (#55) on obvious passing downs—if DT Darrell Jackson Jr. cannot win clean around the arc, Jets must dial up interior stunts that stress Austin Jackson (#73)."
       }
     ]
   }

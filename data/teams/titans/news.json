@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:12.901Z",
+  "updatedAt": "2026-11-25T20:45:55.265Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17CT",
     "cycleKey": "2026-11-24@17CT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "1-9",
-    "generatedAt": "2026-11-25T20:36:12.901Z",
+    "generatedAt": "2026-11-25T20:45:55.265Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -339,7 +339,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.0495
+      "storyRank": 16.4544
     },
     {
       "id": "ten_vid_a790835f9b60",
@@ -384,7 +384,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.7061
+      "storyRank": 15.3033
     },
     {
       "id": "ten_vid_6c0a02350ef3",
@@ -429,7 +429,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.2562
+      "storyRank": 13.1789
     },
     {
       "id": "ten_vid_4c5e02633ac5",
@@ -474,7 +474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.152
+      "storyRank": 13.0878
     },
     {
       "id": "ten_vid_088972d19d63",
@@ -519,7 +519,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.0916
+      "storyRank": 13.035
     },
     {
       "id": "ten_rss_3b7ef416b3fe",
@@ -562,7 +562,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.7834
+      "storyRank": 10.9998
     },
     {
       "id": "ten_pwire_4871023_50594441",
@@ -603,7 +603,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.6842
+      "storyRank": 6.3784
     },
     {
       "id": "ten_rss_e19bf836a301",
@@ -627,7 +627,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.725,
+      "breakingPriority": 0.713,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -639,7 +639,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.775
+      "storyRank": 6.5167
     },
     {
       "id": "ten_vid_ae764e7ef66e",
@@ -675,7 +675,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8678
+      "storyRank": 0.8584
     },
     {
       "id": "ten_vid_4a8a831107d3",
@@ -736,7 +736,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8678
+      "storyRank": 0.8584
     },
     {
       "id": "ten_vid_2bebbd0c14b3",
@@ -772,7 +772,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8678
+      "storyRank": 0.8584
     },
     {
       "id": "ten_rss_c3f999392691",
@@ -806,7 +806,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.861
+      "storyRank": 0.8517
     },
     {
       "id": "ten_rss_b68784b29d02",
@@ -840,7 +840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.86
+      "storyRank": 0.8507
     },
     {
       "id": "ten_rss_cbd83e511817",
@@ -874,7 +874,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8597
+      "storyRank": 0.8504
     },
     {
       "id": "ten_vid_bc1da8a69185",
@@ -919,7 +919,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7099
+      "storyRank": 0.7032
     },
     {
       "id": "ten_brss_music_city_miracles_878c703c0bd1",
@@ -953,7 +953,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6717
+      "storyRank": 0.6656
     },
     {
       "id": "ten_pwire_4688380_49949224",
@@ -985,7 +985,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6413
+      "storyRank": 0.6356
     },
     {
       "id": "ten_rss_e2f4a2c3fb41",
@@ -1019,7 +1019,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6409
+      "storyRank": 0.6353
     },
     {
       "id": "ten_brss_music_city_miracles_ac2bb555e903",
@@ -1078,7 +1078,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5112
+      "storyRank": 0.5074
     },
     {
       "id": "ten_vid_20e1404b529f",
@@ -1131,7 +1131,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5069
+      "storyRank": 0.5031
     },
     {
       "id": "ten_brss_music_city_miracles_4a42515b654f",
@@ -1165,7 +1165,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4903
+      "storyRank": 0.4867
     },
     {
       "id": "ten_tx_afdc078c7e38",
@@ -1200,7 +1200,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3747
+      "storyRank": 0.3725
     },
     {
       "id": "ten_vid_efd47e5bf688",
@@ -1245,7 +1245,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2655
+      "storyRank": 0.2643
     },
     {
       "id": "ten_vid_8dbab03b7bfd",
@@ -1290,7 +1290,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2655
+      "storyRank": 0.2642
     },
     {
       "id": "ten_brss_music_city_miracles_610bebb15bd7",
@@ -1324,7 +1324,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2583
+      "storyRank": 0.2571
     },
     {
       "id": "ten_yts_8oWgHgf_c_w",
@@ -1336,7 +1336,7 @@
       "duration": "15:07",
       "imageUrl": "https://i.ytimg.com/vi/8oWgHgf_c_w/hqdefault.jpg",
       "imageAlt": "Tennessee Titans vs Dallas Cowboys Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-23T20:36:13.817Z",
+      "publishedAt": "2026-11-23T20:45:56.275Z",
       "url": "https://www.youtube.com/watch?v=8oWgHgf_c_w",
       "externalVideoUrl": "https://www.youtube.com/watch?v=8oWgHgf_c_w",
       "channel": "NFL",
@@ -1375,7 +1375,7 @@
       "duration": "2:55",
       "imageUrl": "https://i.ytimg.com/vi/mYPhD1CFeSk/hqdefault.jpg",
       "imageAlt": "CeeDee Lamb's best plays from 132-yard game vs. Titans | Week 11",
-      "publishedAt": "2026-11-23T20:36:13.817Z",
+      "publishedAt": "2026-11-23T20:45:56.275Z",
       "url": "https://www.youtube.com/watch?v=mYPhD1CFeSk",
       "externalVideoUrl": "https://www.youtube.com/watch?v=mYPhD1CFeSk",
       "channel": "NFL",
@@ -1438,7 +1438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2516
+      "storyRank": 0.2505
     },
     {
       "id": "ten_pwire_4688380_50574035",
@@ -1479,7 +1479,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2331
+      "storyRank": 0.2321
     },
     {
       "id": "ten_vid_a8c3bf25853f",
@@ -1515,7 +1515,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2316
+      "storyRank": 0.2306
     },
     {
       "id": "ten_brss_music_city_miracles_9f8fbb3e15f9",
@@ -1549,7 +1549,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2259
+      "storyRank": 0.225
     },
     {
       "id": "ten_rss_e5d554c84c35",
@@ -1583,7 +1583,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2262
+      "storyRank": 0.2252
     },
     {
       "id": "ten_brss_music_city_miracles_6afdfd2af4e1",
@@ -1617,7 +1617,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2187
+      "storyRank": 0.2178
     },
     {
       "id": "ten_espn_706f902194bbf",
@@ -1653,7 +1653,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2167
+      "storyRank": 0.2158
     },
     {
       "id": "ten_espn_e1794280d025b",
@@ -1688,7 +1688,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2166
+      "storyRank": 0.2158
     },
     {
       "id": "ten_brss_music_city_miracles_54b622b7d23b",
@@ -1722,7 +1722,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1749
+      "storyRank": 0.1742
     },
     {
       "id": "ten_vid_b22aa2279fdf",
@@ -1767,7 +1767,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1584
+      "storyRank": 0.1579
     },
     {
       "id": "ten_rss_b210902a3c18",
@@ -1801,7 +1801,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.157
+      "storyRank": 0.1565
     },
     {
       "id": "ten_espn_f0672a0e47f1d",
@@ -1836,7 +1836,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0389
+      "storyRank": 0.0388
     },
     {
       "id": "ten_brss_music_city_miracles_58820c82fed1",
@@ -1870,7 +1870,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1474
+      "storyRank": 0.147
     },
     {
       "id": "ten_rss_25cbcc5bd613",
@@ -1904,7 +1904,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1496
+      "storyRank": 0.1491
     },
     {
       "id": "ten_rss_5ac75921962a",
@@ -1938,7 +1938,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1494
+      "storyRank": 0.1489
     },
     {
       "id": "ten_pwire_4429607_64910828",
@@ -1987,7 +1987,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1455
+      "storyRank": 0.145
     },
     {
       "id": "ten_brss_music_city_miracles_6201b9892990",
@@ -2021,7 +2021,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0659
+      "storyRank": 0.0657
     },
     {
       "id": "ten_espn_63f177509966a",
@@ -2065,7 +2065,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0654
+      "storyRank": 0.0652
     },
     {
       "id": "ten_brss_music_city_miracles_cad2c2f69d35",
@@ -2108,7 +2108,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0528
+      "storyRank": 0.0526
     },
     {
       "id": "ten_pfr_6c647a5657be",
@@ -2150,7 +2150,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0513
+      "storyRank": 0.0512
     },
     {
       "id": "ten_pwire_4240657_64897828",
@@ -2191,7 +2191,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0476
+      "storyRank": 0.0475
     },
     {
       "id": "ten_pwire_4428557_64896828",
@@ -2232,7 +2232,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0466
+      "storyRank": 0.0465
     },
     {
       "id": "ten_rss_8b7684335991",
@@ -2275,7 +2275,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0465
+      "storyRank": 0.0463
     },
     {
       "id": "ten_espn_5cda3e0ea9918",
@@ -2319,14 +2319,14 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0464
+      "storyRank": 0.0463
     },
     {
       "id": "x_tl_jwyattsports_2124194170843943252",
       "type": "tweet",
-      "title": "Statement from @Titans:\n\nYesterday, Jaylen Harrell was involved in a serious car accident that resulted in him being taken to the hospital in his hometown of Tampa, Florida. We have been in constant communication with Jaylen’s family and are still working to gather more",
-      "fullText": "Statement from @Titans:\n\nYesterday, Jaylen Harrell was involved in a serious car accident that resulted in him being taken to the hospital in his hometown of Tampa, Florida. We have been in constant communication with Jaylen’s family and are still working to gather more",
-      "isFullTweet": true,
+      "title": "Statement from @Titans:\n\nYesterday, Jaylen Harrell was involved in a serious car accident that resulted in him being taken to the hospital in his hometown of Tampa, Florida. We have been in constant communication with Jaylen’s family and are still working to gather more information. At this time, Jaylen remains in…",
+      "fullText": "Statement from @Titans:\n\nYesterday, Jaylen Harrell was involved in a serious car accident that resulted in him being taken to the hospital in his hometown of Tampa, Florida. We have been in constant communication with Jaylen’s family and are still working to gather more information. At this time, Jaylen remains in the hospital and continues to receive care. We ask that Jaylen and his family’s privacy be respected at this time. We will provide an update when appropriate.",
+      "isFullTweet": false,
       "summary": "",
       "imageUrl": "",
       "imageAlt": "Jim Wyatt post",
@@ -2367,7 +2367,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0503
+      "storyRank": 0.0502
     },
     {
       "id": "ten_rss_0e1eacfb59dc",
@@ -2410,7 +2410,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.046
+      "storyRank": 0.0459
     },
     {
       "id": "ten_rss_73814df60ef3",
@@ -2444,7 +2444,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0452
+      "storyRank": 0.0451
     },
     {
       "id": "ten_tx_1409550ea7fe",
@@ -2488,7 +2488,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0403
+      "storyRank": 0.0402
     },
     {
       "id": "ten_espn_948e2e73e7ffb",
@@ -2523,7 +2523,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0357
+      "storyRank": 0.0356
     },
     {
       "id": "ten_rss_882f9fe0a514",
@@ -2589,7 +2589,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0316
+      "storyRank": 0.0315
     },
     {
       "id": "ten_espn_8f943afa01997",
@@ -2668,7 +2668,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0305
+      "storyRank": 0.0304
     },
     {
       "id": "ten_pfr_86c2f355b6ae",
@@ -2745,7 +2745,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0275
+      "storyRank": 0.0274
     },
     {
       "id": "ten_pfr_5ff13b5ff505",
@@ -2863,7 +2863,7 @@
       "duration": "7:31",
       "imageUrl": "https://i.ytimg.com/vi/TMbKki19e4Q/hqdefault.jpg",
       "imageAlt": "Tennessee Titans vs Dallas Cowboys | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:36:13.817Z",
+      "publishedAt": "2026-11-18T20:45:56.275Z",
       "url": "https://www.youtube.com/watch?v=TMbKki19e4Q",
       "externalVideoUrl": "https://www.youtube.com/watch?v=TMbKki19e4Q",
       "channel": "NFL",
@@ -2976,7 +2976,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0211
+      "storyRank": 0.021
     },
     {
       "id": "ten_tx_24d57b83bc7b",
@@ -3229,7 +3229,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.015
+      "storyRank": 0.0149
     },
     {
       "id": "ten_tx_e990003c9373",
@@ -3356,7 +3356,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0116
+      "storyRank": 0.0115
     },
     {
       "id": "ten_pfr_7fe2f2953878",
@@ -3517,7 +3517,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0079
     },
     {
       "id": "ten_tx_298074f502b0",

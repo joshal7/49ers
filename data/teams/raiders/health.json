@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:18.672Z",
+  "updatedAt": "2026-11-25T20:47:27.158Z",
   "week": 12,
   "byeWeek": 13,
   "sourceUrl": "https://www.raiders.com/team/injury-report/",
@@ -143,19 +143,20 @@
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
+      "wed": "LP",
       "thu": "-",
       "fri": "-",
       "injuryType": "Ankle",
       "gameStatus": "Questionable",
-      "playProbabilityPct": 84,
+      "playProbabilityPct": 94,
       "priorDayPlayProbabilityPct": null,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "84% • GTD",
+      "playBadgeLabel": "94% • Cleared",
       "archetypeNote": "High-snap focal-point tight end with high active conversion on minor mid-week tags.",
       "factors": [
-        "Questionable tag adjusted by player career prior (90%)"
+        "Wednesday Limited Participation (LP); player toughness prior = 90%",
+        "High pain-tolerance / toughness prior (+4% boost)"
       ],
       "beatComment": "Before sitting out this past Sunday's 38-24 loss to the Broncos, Bowers was a limited participant for the Raiders' final two practices of Week 11. Though it's unclear if Bowers will be upgraded to full participation for the team's first practice of Week 12, McFadden notes that the tight end didn't have any wrapping or tape on his ankle, which seemingly indicates improvement with his condition. Assuming Bowers steers clear of setbacks and is able to practice in some capacity throughout the week, he should have a good shot at returning to action this Sunday at Cleveland."
     },

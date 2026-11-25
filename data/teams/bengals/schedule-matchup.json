@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:10.428Z",
+  "updatedAt": "2026-11-25T20:45:02.630Z",
   "sources": [
     {
       "label": "ESPN Bengals Schedule",
@@ -24863,7 +24863,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:36:13.055Z"
+    "fetchedAtIso": "2026-11-25T20:45:06.100Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27523,16 +27523,16 @@
       },
       {
         "phaseTag": "Pocket Protection & Edge Containment",
-        "unitMatchup": "Orlando Brown Jr., Ted Karras & Dylan Fairchild vs. DT Colby Wooden & Saints Simulated Pressures",
+        "unitMatchup": "Orlando Brown Jr., Dylan Fairchild & Ted Karras vs. DT Colby Wooden & Saints Simulated Pressures",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
           "Orlando Brown Jr.",
-          "Ted Karras",
-          "Dylan Fairchild"
+          "Dylan Fairchild",
+          "Ted Karras"
         ],
         "statComparison": "CIN: #16 Pass Protection (6.0%) | NO: #16 Def Sacks (2.4/gm)",
-        "tacticalDetail": "Orlando Brown Jr., Ted Karras & Dylan Fairchild protect Joe Burrow (#16 protection at 6.0%) against DT Colby Wooden and New Orleans Saints's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
-        "filmTell": "Watch Orlando Brown Jr. (#75) on obvious passing downs—if DT Colby Wooden cannot win clean around the arc, Saints must dial up interior stunts that stress Ted Karras (#64)."
+        "tacticalDetail": "Orlando Brown Jr., Dylan Fairchild & Ted Karras protect Joe Burrow (#16 protection at 6.0%) against DT Colby Wooden and New Orleans Saints's #16 pass rush (2.4/gm). Passing off interior twists and simulated blitzes cleanly determines late-down conversion efficiency.",
+        "filmTell": "Watch Orlando Brown Jr. (#75) on obvious passing downs—if DT Colby Wooden cannot win clean around the arc, Saints must dial up interior stunts that stress Dylan Fairchild (#63)."
       }
     ]
   }

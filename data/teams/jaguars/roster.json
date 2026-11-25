@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:08.250Z",
+  "updatedAt": "2026-11-25T20:45:48.917Z",
   "count": 83,
   "excludedGhostIds": [],
   "departedPlayers": [],
@@ -59934,7 +59934,19 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_pfr_c77858320178",
+          "type": "article",
+          "headline": "Jaguars C Robert Hainsey ‘Week-To-Week’",
+          "title": "Jaguars C Robert Hainsey ‘Week-To-Week’",
+          "summary": "The Jaguars were already down two starting offensive linemen heading into Week 11 with left tackle Anton Harrison and right guard Patrick Mekari on injured reserve. It was announced this week that they would be without a third as center Rob",
+          "url": "https://www.profootballrumors.com/2026/11/jaguars-c-robert-hainsey-week-to-week",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-23T00:07:36.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "OT",
@@ -60715,7 +60727,32 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_vid_95371c2d421c",
+          "type": "video",
+          "headline": "HIGHLIGHT | Johnson Scoops Fumble for 42 Yards",
+          "title": "HIGHLIGHT | Johnson Scoops Fumble for 42 Yards",
+          "summary": "S Antonio Johnson recovers a fumble by Giants' RB Cam Skattebo and returns it down the field for 42 yards.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/gak6v0keyxoe4g6p8g5k.png",
+          "url": "https://www.jaguars.com/video/highlight-johnson-scoops-fumble-for-42-yards",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-22T23:52:27.000Z"
+        },
+        {
+          "id": "jax_vid_631a932eeccb",
+          "type": "video",
+          "headline": "HIGHLIGHT | Johnson Gets to Ward for Third Down Sack",
+          "title": "HIGHLIGHT | Johnson Gets to Ward for Third Down Sack",
+          "summary": "S Antonio Johnson brings down Titans' QB Cam Ward on third-down safety blitz.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/e0c8thx8agzsvglcuxn3.png",
+          "url": "https://www.jaguars.com/video/highlight-johnson-gets-to-ward-for-third-down-sack",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-15T20:41:14.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "S",
@@ -63626,6 +63663,54 @@
           "author": "Michael DiRocco",
           "outletName": "ESPN",
           "publishedAt": "2026-11-20T11:00:03.000Z"
+        },
+        {
+          "id": "jax_vid_3ca18fea5057",
+          "type": "video",
+          "headline": "Bhayshul Tuten MIC'D UP in Week 10",
+          "title": "Bhayshul Tuten MIC'D UP in Week 10",
+          "summary": "Get an inside look at RB Bhayshul Tuten wired up at the Jaguars 2026 Week 10 game against the Titans on Mic'D Up, presented by Lowe's.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/pl1luzz0yxbafenwyayq.jpg",
+          "url": "https://www.jaguars.com/video/bhayshul-tuten-mic-d-up-in-week-10",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-18T17:25:19.000Z"
+        },
+        {
+          "id": "jax_rss_11fa1e130270",
+          "type": "article",
+          "headline": "Responding To Change: \"It's Not Easy To Do What He's Doing…\"",
+          "title": "Responding To Change: \"It's Not Easy To Do What He's Doing…\"",
+          "summary": "RB Bhayshul Tuten on continuing to be productive while playing through physical issues for the 7-2 Jaguars: “It's a lot of meetings, a lot of mental reps and just talking through a lot of stuff, a lot of film review, and watching a lot of t",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/ddjx9hmp5xutjj6vjspq.jpg",
+          "url": "https://www.jaguars.com/news/responding-to-change-it-s-not-easy-to-do-what-he-s-doing",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-17T18:50:04.000Z"
+        },
+        {
+          "id": "jax_vid_64bd9a30bdce",
+          "type": "video",
+          "headline": "Oluokun & Tuten on Improving Communication, Offensive Chemistry and Culture | Press Conference",
+          "title": "Oluokun & Tuten on Improving Communication, Offensive Chemistry and Culture | Press Conference",
+          "summary": "Jaguars LB Foye Oluokun and RB Bhayshul Tuten speak to the media on Monday of Week 11 of the 2026 NFL season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/bfbz7eug7i9abnytkqzp.jpg",
+          "url": "https://www.jaguars.com/video/oluokun-tuten-on-improving-communication-offensive-chemistry-and-culture-press-conference",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-16T22:10:12.000Z"
+        },
+        {
+          "id": "jax_vid_c138ff1abbc0",
+          "type": "video",
+          "headline": "HIGHLIGHT | Tuten Rushes for 6-Yard TD",
+          "title": "HIGHLIGHT | Tuten Rushes for 6-Yard TD",
+          "summary": "RB Bhayshul Tuten caps off the win with a late 6-yard rushing touchdown.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/p9fdk9liknkhfnaotgmp.png",
+          "url": "https://www.jaguars.com/video/highlight-tuten-rushes-for-6-yard-td",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-15T21:33:52.000Z"
         }
       ],
       "statProfile2026": {
@@ -66078,6 +66163,18 @@
           "author": "Action Sports Jax",
           "outletName": "X Beat",
           "publishedAt": "2026-11-23T03:20:12.397Z"
+        },
+        {
+          "id": "jax_vid_fffc93f76e0a",
+          "type": "video",
+          "headline": "HIGHLIGHT | Strange Catches 3-Yard TD",
+          "title": "HIGHLIGHT | Strange Catches 3-Yard TD",
+          "summary": "TE Brenton Strange catches for a 3-yard touchdown to make the score 23-13.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/aou52sahqifggahz3i7m.png",
+          "url": "https://www.jaguars.com/video/highlight-strange-catches-3-yard-td",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-15T20:23:43.000Z"
         }
       ],
       "statProfile2026": {
@@ -66941,6 +67038,18 @@
           "author": "Michael Peterson",
           "outletName": "Big Cat Country",
           "publishedAt": "2026-11-25T14:52:46.000Z"
+        },
+        {
+          "id": "jax_vid_b72cb21063a0",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence Finds Thomas Jr. for 18-Yard TD",
+          "title": "HIGHLIGHT | Lawrence Finds Thomas Jr. for 18-Yard TD",
+          "summary": "QB Trevor Lawrence locates WR Brian Thomas Jr. in the end zone for a touchdown to make it a one-possession game late in the 4th quarter.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/kp2q8tfikc6acd8i2z6h.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-finds-thomas-jr-for-18-yard-td",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T00:45:16.000Z"
         }
       ],
       "statProfile2026": {
@@ -69009,7 +69118,140 @@
         "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_vid_70a271bafdb9",
+          "type": "video",
+          "headline": "HIGHLIGHT | Little Cuts Into Deficit With 26-Yard FG",
+          "title": "HIGHLIGHT | Little Cuts Into Deficit With 26-Yard FG",
+          "summary": "K Cam Little makes 26-yard field goal for his fourth of the day.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/b49hareijjfzsxksbmsi.png",
+          "url": "https://www.jaguars.com/video/highlight-little-cuts-into-lead-with-26-yard-fg",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T00:57:14.000Z"
+        },
+        {
+          "id": "jax_vid_dc174de7af33",
+          "type": "video",
+          "headline": "HIGHLIGHT | Little's Third FG of the Day is Good From 31 Yards",
+          "title": "HIGHLIGHT | Little's Third FG of the Day is Good From 31 Yards",
+          "summary": "K Cam Little hits a 31-yard field goal to cut the deficit to 11 midway through the 4th quarter.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/o0iqej0ibjxd5yx2bn86.png",
+          "url": "https://www.jaguars.com/video/highlight-little-s-third-fg-of-the-day-is-good-from-31-yards",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T00:30:37.000Z"
+        },
+        {
+          "id": "jax_vid_503ba258fdb4",
+          "type": "video",
+          "headline": "HIGHLIGHT | Little Hits Second FG From 35 Yards Out",
+          "title": "HIGHLIGHT | Little Hits Second FG From 35 Yards Out",
+          "summary": "K Cam Little makes 35-yard field goal to cut the deficit to 4 points.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/riisqmik3dd8fit7nssv.png",
+          "url": "https://www.jaguars.com/video/highlight-little-hits-second-fg-from-35-yards-out",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-22T22:51:10.000Z"
+        },
+        {
+          "id": "jax_vid_7ca7e6081a9b",
+          "type": "video",
+          "headline": "HIGHLIGHT | Little Drills 42-Yard FG",
+          "title": "HIGHLIGHT | Little Drills 42-Yard FG",
+          "summary": "K Cam Little makes 42-yard field goal to open scoring vs. Giants.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/gi3wp6iwyzsgg7bsih4t.png",
+          "url": "https://www.jaguars.com/video/highlight-little-drills-61-yard-fg-x7589",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-22T21:44:10.000Z"
+        },
+        {
+          "id": "jax_rss_27c68c924df3",
+          "type": "article",
+          "headline": "Cam Little Talks Through \"Killer Mindset\", Big Kicks on The O-Zone Podcast",
+          "title": "Cam Little Talks Through \"Killer Mindset\", Big Kicks on The O-Zone Podcast",
+          "summary": "K Cam Little joined senior writer John Oehser for this 2026 Week 11 O-Zone Podcast as the AFC South-leading Jaguars prepared to play the NFC East-leading New York Giants at MetLife Stadium in East Rutherford, N.J., Sunday: “The team is just",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/ajmql6lrc7m3x8j4tsur.png",
+          "url": "https://www.jaguars.com/news/cam-little-talks-through-killer-mindset-big-kicks-on-the-o-zone-podcast",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-20T18:06:00.000Z"
+        },
+        {
+          "id": "jax_vid_49002bf02c39",
+          "type": "video",
+          "headline": "Cam Little Discusses His Mechanics, Favorite Moments & Kicking History | The O-Zone Podcast",
+          "title": "Cam Little Discusses His Mechanics, Favorite Moments & Kicking History | The O-Zone Podcast",
+          "summary": "Jaguars K Cam Little joins Senior Writer John Oehser for the O-Zone Podcast as he prepares for the New York Giants in Week 11 of the 2026 NFL Season. Little speaks on his success thus far throughout his young career, how",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/qgngbf4o8z3mjou7qcvx.jpg",
+          "url": "https://www.jaguars.com/video/cam-little-discusses-his-mechanics-favorite-moments-kicking-history-the-o-zone-podcast",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-20T17:30:00.000Z"
+        },
+        {
+          "id": "jax_rss_2b81b7ac9b6a",
+          "type": "article",
+          "headline": "K Cam Little Wins AFC Special Teams Player of the Week",
+          "title": "K Cam Little Wins AFC Special Teams Player of the Week",
+          "summary": "",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/lposq1wvjszcfxnzjfoh.png",
+          "url": "https://www.jaguars.com/news/k-cam-little-wins-afc-special-teams-player-of-the-week-x1602",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-18T17:00:18.000Z"
+        },
+        {
+          "id": "jax_vid_5badb7ce9f83",
+          "type": "video",
+          "headline": "HIGHLIGHT | Little Stays Perfect With Fourth FG of the Day",
+          "title": "HIGHLIGHT | Little Stays Perfect With Fourth FG of the Day",
+          "summary": "K Cam Little's fourth FG of game puts Jaguars ahead by two scores in fourth quarter.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/zkrlyhprj79cfo0p4apq.png",
+          "url": "https://www.jaguars.com/video/highlight-little-stays-perfect-with-4th-fg-of-the-day",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-15T21:19:08.000Z"
+        },
+        {
+          "id": "jax_vid_2927e0162c7a",
+          "type": "video",
+          "headline": "HIGHLIGHT | Little Hits Third FG of First Half From 36 Yards Out",
+          "title": "HIGHLIGHT | Little Hits Third FG of First Half From 36 Yards Out",
+          "summary": "Cam Little ends first half with his third FG to extend the Jaguars' lead to 6.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/foo6anb1zcyj9gmkeisa.png",
+          "url": "https://www.jaguars.com/video/highlight-little-hits-third-fg-of-first-half-from-36-yards-out",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-15T19:52:17.000Z"
+        },
+        {
+          "id": "jax_vid_ab2bbb4ceb11",
+          "type": "video",
+          "headline": "HIGHLIGHT | Little Nails Second FG From 48 Yards",
+          "title": "HIGHLIGHT | Little Nails Second FG From 48 Yards",
+          "summary": "Cam Little's second FG in as many drives puts Jaguars ahead 13-3.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/b4inltr72vsh2lij2jgj.png",
+          "url": "https://www.jaguars.com/video/highlight-little-nails-second-fg-from-48-yards",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-15T19:28:49.000Z"
+        },
+        {
+          "id": "jax_vid_dcd1e5375ac0",
+          "type": "video",
+          "headline": "HIGHLIGHT | Little Drills 46-Yard FG",
+          "title": "HIGHLIGHT | Little Drills 46-Yard FG",
+          "summary": "Cam Little extends the Jaguars lead with a 46-yard FG.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/uiud6htrcpg05hi3ji1y.png",
+          "url": "https://www.jaguars.com/video/highlight-little-drills-46-yard-fg",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-15T19:05:26.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "K",
@@ -69140,7 +69382,7 @@
       "jersey": 42,
       "position": "S",
       "unit": "Defense",
-      "rosterBucket": "active",
+      "rosterBucket": "practice_squad",
       "age": 24,
       "displayHeight": "5' 10\"",
       "displayWeight": "185 lbs",
@@ -69149,19 +69391,7 @@
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4877475.png",
       "capHit2026": 0,
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      },
+      "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -69378,7 +69608,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -69398,11 +69628,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
@@ -70142,7 +70372,32 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_vid_4c3e022c1af3",
+          "type": "video",
+          "headline": "HIGHLIGHT | Rodriguez Jr. Rumbles Ahead for 21-Yard Carry",
+          "title": "HIGHLIGHT | Rodriguez Jr. Rumbles Ahead for 21-Yard Carry",
+          "summary": "RB Chris Rodriguez Jr. forces his way through New York Giants defenders for 21-yard carry.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/neih8o0bqtwotb2fyuy1.png",
+          "url": "https://www.jaguars.com/video/highlight-rodriguez-jr-rumbles-ahead-for-21-yard-carry",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-22T21:45:50.000Z"
+        },
+        {
+          "id": "jax_vid_58d8fef3f0fe",
+          "type": "video",
+          "headline": "Hunter & Rodriguez Jr. on Giants Matchups, Trusting in Coaching Staff | Media Availability",
+          "title": "Hunter & Rodriguez Jr. on Giants Matchups, Trusting in Coaching Staff | Media Availability",
+          "summary": "WR/CB Travis Hunter and RB Chris Rodriguez Jr. speak with the media following practice on Thursday of Week 11 of the 2026 NFL Season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/joyq4rregf0dq8shyypi.jpg",
+          "url": "https://www.jaguars.com/video/hunter-rodriguez-jr-on-giants-matchups-trusting-in-coaching-staff-media-availability",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-19T19:19:50.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "RB",
@@ -72528,7 +72783,20 @@
         ],
         "hasPreReportPracticeReturn": false
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_rss_7e6d2c2ab303",
+          "type": "article",
+          "headline": "Jaguars Injury Report Update: Striggow Out for Week 11 vs. Giants",
+          "title": "Jaguars Injury Report Update: Striggow Out for Week 11 vs. Giants",
+          "summary": "",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/tfmwhzftaso2soyyjapt.jpg",
+          "url": "https://www.jaguars.com/news/jaguars-injury-report-update-striggow-out-for-week-11-vs-giants",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-21T19:00:11.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "EDGE",
@@ -73381,6 +73649,18 @@
         "weeklyHistory2026": []
       },
       "recentNews": [
+        {
+          "id": "jax_rss_24c4b3a00856",
+          "type": "article",
+          "headline": "Wednesday Insider: Davis, Godchaux Ready To Stop the Run",
+          "title": "Wednesday Insider: Davis, Godchaux Ready To Stop the Run",
+          "summary": "Newly-acquired DTs Jordan Davis and Davon Godchaux spoke to the media Wednesday, with each emphasizing that they look forward to fitting in with – and contributing in a big way to – the Jaguars’ top-rated run defense and to the defense over",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/hjt3bkyo0jqbhg0ccndp.jpg",
+          "url": "https://www.jaguars.com/news/wednesday-insider-davis-godchaux-ready-to-stop-the-run",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-12T00:19:29.000Z"
+        },
         {
           "id": "jax_tx_c0a1d218d9d8",
           "type": "tweet",
@@ -78558,7 +78838,20 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_vid_64bd9a30bdce",
+          "type": "video",
+          "headline": "Oluokun & Tuten on Improving Communication, Offensive Chemistry and Culture | Press Conference",
+          "title": "Oluokun & Tuten on Improving Communication, Offensive Chemistry and Culture | Press Conference",
+          "summary": "Jaguars LB Foye Oluokun and RB Bhayshul Tuten speak to the media on Monday of Week 11 of the 2026 NFL season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/bfbz7eug7i9abnytkqzp.jpg",
+          "url": "https://www.jaguars.com/video/oluokun-tuten-on-improving-communication-offensive-chemistry-and-culture-press-conference",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-16T22:10:12.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "LB",
@@ -78973,7 +79266,7 @@
       "jersey": 61,
       "position": "OT",
       "unit": "Offense",
-      "rosterBucket": "active",
+      "rosterBucket": "practice_squad",
       "age": 30,
       "displayHeight": "6' 6\"",
       "displayWeight": "315 lbs",
@@ -78982,19 +79275,7 @@
       "draftInfo": "2018 • Rd 3, Pick #74",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916414.png",
       "capHit2026": 0,
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      },
+      "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -79197,7 +79478,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -79217,11 +79498,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Trench/box position (OT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
@@ -81379,6 +81660,54 @@
           "author": "Demetrius Harvey",
           "outletName": "Florida Times-Union",
           "publishedAt": "2026-11-25T17:02:09.000Z"
+        },
+        {
+          "id": "jax_vid_b52eadfa6926",
+          "type": "video",
+          "headline": "Josh Hines-Allen & Jakobi Meyers Talk Responding to Adversity | Press Conference",
+          "title": "Josh Hines-Allen & Jakobi Meyers Talk Responding to Adversity | Press Conference",
+          "summary": "Jaguars DE Josh Hines-Allen and WR Jakobi Meyers speak to the media on Monday of Week 12 of the 2026 NFL season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/zpnbwpx10f4cmb8z0j3n.jpg",
+          "url": "https://www.jaguars.com/video/josh-hines-allen-jakobi-meyers-talk-responding-to-adversity-press-conference",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T21:45:12.000Z"
+        },
+        {
+          "id": "jax_vid_3fbb1905927d",
+          "type": "video",
+          "headline": "HIGHLIGHT | Meyers Secures Juggling 22-Yard Catch",
+          "title": "HIGHLIGHT | Meyers Secures Juggling 22-Yard Catch",
+          "summary": "QB Trevor Lawrence lofts a 22-yard pass to WR Jakobi Meyers.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/bqzpodsiaj7j04wagxzo.png",
+          "url": "https://www.jaguars.com/video/highlight-meyers-secures-22-yard-juggling-catch",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T00:54:50.000Z"
+        },
+        {
+          "id": "jax_vid_872d3f975566",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence Launches 26-Yard Pass to Meyers",
+          "title": "HIGHLIGHT | Lawrence Launches 26-Yard Pass to Meyers",
+          "summary": "QB Trevor Lawrence completes a 26-yard pass to WR Jakobi Meyers for red zone access late in the 4th quarter.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/wnqtqmussjcstwyaubep.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-launches-26-yard-pass-to-meyers",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T00:51:12.000Z"
+        },
+        {
+          "id": "jax_vid_fc6fbdda6da0",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence Finds Meyers for 23-Yard Gain",
+          "title": "HIGHLIGHT | Lawrence Finds Meyers for 23-Yard Gain",
+          "summary": "QB Trevor Lawrence finds WR Jakobi Meyers for 23-yard gain in the third quarter.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/uogac5useoiwhfezdhbm.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-finds-meyers-for-23-yard-gain",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T00:00:51.000Z"
         }
       ],
       "statProfile2026": {
@@ -85845,6 +86174,18 @@
       },
       "recentNews": [
         {
+          "id": "jax_rss_113c5eb17033",
+          "type": "article",
+          "headline": "In and Out, 2026 Week 11: Davis, Bates Active for Jaguars vs. Giants",
+          "title": "In and Out, 2026 Week 11: Davis, Bates Active for Jaguars vs. Giants",
+          "summary": "DT Jordan Davis, S Jessie Bates III active for the AFC South-leading Jaguars against the NFC East-leading New York Giants in a 2026 Week 11 game at MetLife Stadium in East Rutherford, N.J., Sunday",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/bsby28scnfwotniujqp8.png",
+          "url": "https://www.jaguars.com/news/in-and-out-2026-week-11-davis-bates-active-for-jaguars-vs-giants",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-22T19:55:46.000Z"
+        },
+        {
           "id": "jax_pwire_3919512_64903628",
           "type": "article",
           "headline": "Bates is slated to make his Jaguars debut Sunday against the Giants.",
@@ -85854,6 +86195,89 @@
           "author": "Adam Schefter",
           "outletName": "ESPN NFL Insider",
           "publishedAt": "2026-11-22T14:09:50.000Z"
+        },
+        {
+          "id": "jax_vid_f292d0db0fc8",
+          "type": "video",
+          "headline": "Liam Coen on Readiness for Giants, Bates and Davis to Make Debuts | Press Conference",
+          "title": "Liam Coen on Readiness for Giants, Bates and Davis to Make Debuts | Press Conference",
+          "summary": "Jaguars Head Coach Liam Coen speaks to the media on Friday of Week 11 of the 2026 NFL season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/ayckuty2vw6pe0om4guf.jpg",
+          "url": "https://www.jaguars.com/video/liam-coen-on-readiness-for-giants-bates-and-davis-to-make-debuts-press-conference",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-20T15:51:07.000Z"
+        },
+        {
+          "id": "jax_vid_c31e4431cb9b",
+          "type": "video",
+          "headline": "Jaguars Players Discuss Communication On & Off the Field, Being Prepared Each Week | Media Availability",
+          "title": "Jaguars Players Discuss Communication On & Off the Field, Being Prepared Each Week | Media Availability",
+          "summary": "S Jessie Bates III, C Jonah Monheim, CB Montaric Brown and DT Jordan Davis speak with the media following practice on Wednesday of Week 11 of the 2026 NFL Season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/uuyhpc8pwnrpteaj52k3.jpg",
+          "url": "https://www.jaguars.com/video/jaguars-players-discuss-communication-on-off-the-field-being-prepared-each-week-media-availability",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-18T20:42:12.000Z"
+        },
+        {
+          "id": "jax_vid_5de81accb768",
+          "type": "video",
+          "headline": "Jaguars' Opportunity vs. Giants in Week 11 | Jags A.M.",
+          "title": "Jaguars' Opportunity vs. Giants in Week 11 | Jags A.M.",
+          "summary": "Kai, John, and Brian discuss the state of the Jaguars' national media discourse as they enter Week 11 at 7-2. They predict the potential impact of Jessie Bates III and Jordan Davis, who will debut for the Jaguars in the",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/pmyygefwqnxygww7vz99.jpg",
+          "url": "https://www.jaguars.com/video/jaguars-opportunity-vs-giants-in-week-11-jags-a-m",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-17T19:56:28.000Z"
+        },
+        {
+          "id": "jax_vid_07f0f09f18fd",
+          "type": "video",
+          "headline": "Reviewing Solid Week 10 Outing, Predicting Davis & Bates' Impact | Jaguars Happy Hour",
+          "title": "Reviewing Solid Week 10 Outing, Predicting Davis & Bates' Impact | Jaguars Happy Hour",
+          "summary": "Kai, Pete and Austen react to the Jaguars' big win over the Titans as well as analyze where the team can improve and how the new trade additions who rested in Week 10 can help the team continue to win for the rest of thi",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/fofcsx3gjo5crlcwidiy.jpg",
+          "url": "https://www.jaguars.com/video/reviewing-solid-week-10-outing-predicting-davis-bates-impact-jaguars-happy-hour",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-16T23:17:19.000Z"
+        },
+        {
+          "id": "jax_pfr_7cb59f18ee05",
+          "type": "article",
+          "headline": "Bills Pursued Jordan Davis, Jessie Bates Before Trade Deadline",
+          "title": "Bills Pursued Jordan Davis, Jessie Bates Before Trade Deadline",
+          "summary": "Not only are the 7-1 Bills and 6-2 Jaguars among the teams vying for the No. 1 seed in the AFC, but they also chased a couple of the same targets ahead of Tuesday’s trade deadline. Before the Jaguars acquired defensive tackle Jordan Davis f",
+          "url": "https://www.profootballrumors.com/2026/11/bills-pursued-jordan-davis-jessie-bates-before-trade-deadline",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-14T20:40:24.000Z"
+        },
+        {
+          "id": "jax_vid_fda83f67c17e",
+          "type": "video",
+          "headline": "Liam Coen on Bates' and Davis' Week 10 Game Status, Readiness for Titans | Press Conference",
+          "title": "Liam Coen on Bates' and Davis' Week 10 Game Status, Readiness for Titans | Press Conference",
+          "summary": "Jaguars Head Coach Liam Coen speaks to the media on Friday of Week 10 of the 2026 NFL season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/tgz3egxbiyywwhlng9ia.jpg",
+          "url": "https://www.jaguars.com/video/liam-coen-on-bates-and-davis-week-10-game-status-readiness-for-titans-press-conference",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-13T15:53:29.000Z"
+        },
+        {
+          "id": "jax_rss_eeed7dc92509",
+          "type": "article",
+          "headline": "Thursday Insider: \"I Look at It as a Blessing…\"",
+          "title": "Thursday Insider: \"I Look at It as a Blessing…\"",
+          "summary": "S Jessie Bates III on joining the AFC South-leading Jaguars via trade days before the team’s game against the Tennessee Titans at Nissan Stadium in Nashville, Tenn., Sunday: “It's a challenge, but what a great challenge to have …”",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/hafyftvp9hvxkcoazf9a.jpg",
+          "url": "https://www.jaguars.com/news/thursday-insider-i-look-at-it-as-a-blessing",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-12T22:17:30.000Z"
         },
         {
           "id": "jax_tx_de16f035a8a3",
@@ -86736,7 +87160,32 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_rss_161d71c46973",
+          "type": "article",
+          "headline": "Wednesday Insider: Monheim \"Is Going To Be Ready…\"",
+          "title": "Wednesday Insider: Monheim \"Is Going To Be Ready…\"",
+          "summary": "QB Trevor Lawrence on C Jonah Monheim, who will make his first start of the 2026 season when the AFC South-leading Jaguars (7-2) play the NFC East-leading New York Giants (5-3-1) at MetLife Stadium in East Rutherford, N.J., Sunday: “I know",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/irxh3ch1c5qs6ozra30y.jpg",
+          "url": "https://www.jaguars.com/news/wednesday-insider-monheim-is-going-to-be-ready",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-19T00:13:36.000Z"
+        },
+        {
+          "id": "jax_vid_c31e4431cb9b",
+          "type": "video",
+          "headline": "Jaguars Players Discuss Communication On & Off the Field, Being Prepared Each Week | Media Availability",
+          "title": "Jaguars Players Discuss Communication On & Off the Field, Being Prepared Each Week | Media Availability",
+          "summary": "S Jessie Bates III, C Jonah Monheim, CB Montaric Brown and DT Jordan Davis speak with the media following practice on Wednesday of Week 11 of the 2026 NFL Season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/uuyhpc8pwnrpteaj52k3.jpg",
+          "url": "https://www.jaguars.com/video/jaguars-players-discuss-communication-on-off-the-field-being-prepared-each-week-media-availability",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-18T20:42:12.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "IOL",
@@ -87527,6 +87976,65 @@
       },
       "recentNews": [
         {
+          "id": "jax_rss_113c5eb17033",
+          "type": "article",
+          "headline": "In and Out, 2026 Week 11: Davis, Bates Active for Jaguars vs. Giants",
+          "title": "In and Out, 2026 Week 11: Davis, Bates Active for Jaguars vs. Giants",
+          "summary": "DT Jordan Davis, S Jessie Bates III active for the AFC South-leading Jaguars against the NFC East-leading New York Giants in a 2026 Week 11 game at MetLife Stadium in East Rutherford, N.J., Sunday",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/bsby28scnfwotniujqp8.png",
+          "url": "https://www.jaguars.com/news/in-and-out-2026-week-11-davis-bates-active-for-jaguars-vs-giants",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-22T19:55:46.000Z"
+        },
+        {
+          "id": "jax_vid_c31e4431cb9b",
+          "type": "video",
+          "headline": "Jaguars Players Discuss Communication On & Off the Field, Being Prepared Each Week | Media Availability",
+          "title": "Jaguars Players Discuss Communication On & Off the Field, Being Prepared Each Week | Media Availability",
+          "summary": "S Jessie Bates III, C Jonah Monheim, CB Montaric Brown and DT Jordan Davis speak with the media following practice on Wednesday of Week 11 of the 2026 NFL Season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/uuyhpc8pwnrpteaj52k3.jpg",
+          "url": "https://www.jaguars.com/video/jaguars-players-discuss-communication-on-off-the-field-being-prepared-each-week-media-availability",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-18T20:42:12.000Z"
+        },
+        {
+          "id": "jax_vid_5de81accb768",
+          "type": "video",
+          "headline": "Jaguars' Opportunity vs. Giants in Week 11 | Jags A.M.",
+          "title": "Jaguars' Opportunity vs. Giants in Week 11 | Jags A.M.",
+          "summary": "Kai, John, and Brian discuss the state of the Jaguars' national media discourse as they enter Week 11 at 7-2. They predict the potential impact of Jessie Bates III and Jordan Davis, who will debut for the Jaguars in the",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/pmyygefwqnxygww7vz99.jpg",
+          "url": "https://www.jaguars.com/video/jaguars-opportunity-vs-giants-in-week-11-jags-a-m",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-17T19:56:28.000Z"
+        },
+        {
+          "id": "jax_pfr_7cb59f18ee05",
+          "type": "article",
+          "headline": "Bills Pursued Jordan Davis, Jessie Bates Before Trade Deadline",
+          "title": "Bills Pursued Jordan Davis, Jessie Bates Before Trade Deadline",
+          "summary": "Not only are the 7-1 Bills and 6-2 Jaguars among the teams vying for the No. 1 seed in the AFC, but they also chased a couple of the same targets ahead of Tuesday’s trade deadline. Before the Jaguars acquired defensive tackle Jordan Davis f",
+          "url": "https://www.profootballrumors.com/2026/11/bills-pursued-jordan-davis-jessie-bates-before-trade-deadline",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-14T20:40:24.000Z"
+        },
+        {
+          "id": "jax_rss_24c4b3a00856",
+          "type": "article",
+          "headline": "Wednesday Insider: Davis, Godchaux Ready To Stop the Run",
+          "title": "Wednesday Insider: Davis, Godchaux Ready To Stop the Run",
+          "summary": "Newly-acquired DTs Jordan Davis and Davon Godchaux spoke to the media Wednesday, with each emphasizing that they look forward to fitting in with – and contributing in a big way to – the Jaguars’ top-rated run defense and to the defense over",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/hjt3bkyo0jqbhg0ccndp.jpg",
+          "url": "https://www.jaguars.com/news/wednesday-insider-davis-godchaux-ready-to-stop-the-run",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-12T00:19:29.000Z"
+        },
+        {
           "id": "jax_tx_de16f035a8a3",
           "type": "tweet",
           "headline": "Jaguars roster move: Acquired DT Jordan Davis from Philadelphia for a 2027 first-round draft pick and a 2029 second-round draft pick. Acquired DB Jessie Bates from Atlanta for a 2027 second-round draft pick and a 2028 fifth-round draft pick. Waived DB Alijah Huzzie.",
@@ -88236,7 +88744,45 @@
         "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_vid_0da1736d4a8d",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence Connects With Cameron for 25-Yard TD",
+          "title": "HIGHLIGHT | Lawrence Connects With Cameron for 25-Yard TD",
+          "summary": "QB Trevor Lawrence finds WR Josh Cameron wide open down the field for a 25-yard touchdown.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/ucvlhyrver8kobtggfbd.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-connects-with-cameron-for-25-yard-td",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-15T20:58:24.000Z"
+        },
+        {
+          "id": "jax_bsky_0572b52eaf89",
+          "type": "tweet",
+          "headline": "Josh Cameron (good player) with two big catches today. A 3rd down dunk and then a TD to make it a two score game in the 4th.",
+          "title": "Josh Cameron (good player) with two big catches today. A 3rd down dunk and then a TD to make it a two score game in the 4th.",
+          "fullText": "Josh Cameron (good player) with two big catches today. A 3rd down dunk and then a TD to make it a two score game in the 4th.",
+          "summary": "",
+          "imageUrl": "https://video.bsky.app/watch/did%3Aplc%3Akgihv26oznpn6cu3p45jzydp/bafkreib3kuqhehbm2xrbfi4m2t6kvi5sqhx6kpyn4kkfspkvdx4fw7vhsm/thumbnail.jpg",
+          "url": "https://bsky.app/profile/natetice.bsky.social/post/3n2evagqezc2s",
+          "author": "Nate Tice",
+          "outletName": "Nate Tice",
+          "publishedAt": "2026-11-15T20:49:39.585Z"
+        },
+        {
+          "id": "jax_vid_15d6c87f9b97",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence & Cameron Connect for 28-Yard Strike",
+          "title": "HIGHLIGHT | Lawrence & Cameron Connect for 28-Yard Strike",
+          "summary": "QB Trevor Lawrence's deep ball to Josh Cameron gets the Jags into Titans' territory early in the first quarter.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/imuzcnwbrfai4htvsfkf.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-cameron-connect-for-28-yard-strike",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-15T18:21:21.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "WR",
@@ -89168,7 +89714,69 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_vid_a8373a21f9c8",
+          "type": "video",
+          "headline": "Josh Hines-Allen MIC'D UP in Week 11",
+          "title": "Josh Hines-Allen MIC'D UP in Week 11",
+          "summary": "Get an inside look at DE Josh Hines-Allen wired up at the Jaguars 2026 Week 11 game against the Giants on Mic'D Up, presented by Lowe's.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/s3h3tmzgdzrb844qg5dx.jpg",
+          "url": "https://www.jaguars.com/video/josh-hines-allen-mic-d-up-in-week-11",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-25T17:38:48.000Z"
+        },
+        {
+          "id": "jax_rss_199a5ef68364",
+          "type": "article",
+          "headline": "Responding To Change: \"You Go Back to the Basics…\"",
+          "title": "Responding To Change: \"You Go Back to the Basics…\"",
+          "summary": "DE Josh Hines-Allen on how the AFC South-leading Jaguars must respond following their third loss of the season as they prepare to play the Tennessee Titans at EverBank Stadium Sunday: “Just being able to move on quickly, execute the call ne",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/nugaiaonak23lwvi11ok.jpg",
+          "url": "https://www.jaguars.com/news/responding-to-change-you-go-back-to-the-basics",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-24T19:22:56.000Z"
+        },
+        {
+          "id": "x_tl_jaguars_2125030524964258131",
+          "type": "tweet",
+          "headline": "\"When he says, 'We haven't played our best football yet.' That's a line of accountability for each player to understand, 'Did you play your best football yet? And if not, next week is the opportunity to do it.'\"\n\nJosh Hines-Allen on how he interprets Coach Coen's message.",
+          "title": "\"When he says, 'We haven't played our best football yet.' That's a line of accountability for each player to understand, 'Did you play your best football yet? And if not, next week is the opportunity to do it.'\"\n\nJosh Hines-Allen on how he interprets Coach Coen's message.",
+          "fullText": "\"When he says, 'We haven't played our best football yet.' That's a line of accountability for each player to understand, 'Did you play your best football yet? And if not, next week is the opportunity to do it.'\"\n\nJosh Hines-Allen on how he interprets Coach Coen's message.",
+          "summary": "",
+          "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125029871239761920/img/6jT1FFojFHTsxcff.jpg",
+          "url": "https://x.com/Jaguars/status/2125030524964258131",
+          "author": "James Gladstone",
+          "outletName": "Jaguars.com / Official Team",
+          "publishedAt": "2026-11-24T00:55:32.966Z"
+        },
+        {
+          "id": "jax_vid_b52eadfa6926",
+          "type": "video",
+          "headline": "Josh Hines-Allen & Jakobi Meyers Talk Responding to Adversity | Press Conference",
+          "title": "Josh Hines-Allen & Jakobi Meyers Talk Responding to Adversity | Press Conference",
+          "summary": "Jaguars DE Josh Hines-Allen and WR Jakobi Meyers speak to the media on Monday of Week 12 of the 2026 NFL season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/zpnbwpx10f4cmb8z0j3n.jpg",
+          "url": "https://www.jaguars.com/video/josh-hines-allen-jakobi-meyers-talk-responding-to-adversity-press-conference",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T21:45:12.000Z"
+        },
+        {
+          "id": "jax_vid_7cfee4011001",
+          "type": "video",
+          "headline": "HIGHLIGHT | Hines-Allen Hunts McCarthy Down For a Sack",
+          "title": "HIGHLIGHT | Hines-Allen Hunts McCarthy Down For a Sack",
+          "summary": "DE Josh Hines-Allen gets to Giants' QB J.J. McCarthy down to notch his third sack of the 2026 season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/wqctfuf5ugmonisa1kxi.png",
+          "url": "https://www.jaguars.com/video/highlight-hines-allen-hunts-mccarthy-down-for-a-sack",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-22T21:57:25.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "EDGE",
@@ -93567,7 +94175,7 @@
       "jersey": 0,
       "position": "WR",
       "unit": "Offense",
-      "rosterBucket": "active",
+      "rosterBucket": "practice_squad",
       "age": 24,
       "displayHeight": "5' 9\"",
       "displayWeight": "190 lbs",
@@ -93576,19 +94184,7 @@
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5152117.png",
       "capHit2026": 0,
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      },
+      "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -93727,7 +94323,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -93747,11 +94343,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
@@ -94442,7 +95038,20 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_vid_c31e4431cb9b",
+          "type": "video",
+          "headline": "Jaguars Players Discuss Communication On & Off the Field, Being Prepared Each Week | Media Availability",
+          "title": "Jaguars Players Discuss Communication On & Off the Field, Being Prepared Each Week | Media Availability",
+          "summary": "S Jessie Bates III, C Jonah Monheim, CB Montaric Brown and DT Jordan Davis speak with the media following practice on Wednesday of Week 11 of the 2026 NFL Season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/uuyhpc8pwnrpteaj52k3.jpg",
+          "url": "https://www.jaguars.com/video/jaguars-players-discuss-communication-on-off-the-field-being-prepared-each-week-media-availability",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-18T20:42:12.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "CB",
@@ -95131,7 +95740,32 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_rss_a8520af8309e",
+          "type": "article",
+          "headline": "Nate Boerkircher Discusses Meshing With the Jaguars' Culture as a Rookie on The O-Zone Podcast",
+          "title": "Nate Boerkircher Discusses Meshing With the Jaguars' Culture as a Rookie on The O-Zone Podcast",
+          "summary": "TE Nate Boerkircher joined senior writer John Oehser for this 2026 Week 10 O-Zone Podcast as the AFC South-leading Jaguars prepared to play the Tennessee Titans at Nissan Stadium in Nashville, Tenn., Sunday: “I love the culture that they’ve",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/qmkfgtm0h0uqgjvgs3fj.jpg",
+          "url": "https://www.jaguars.com/news/nate-boerkircher-discusses-meshing-with-the-jaguars-culture-as-a-rookie-on-the-o-zone-podcast",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-13T20:17:40.000Z"
+        },
+        {
+          "id": "jax_vid_517dfbb3851d",
+          "type": "video",
+          "headline": "Nate Boerkircher Talks 1st Year Experience, Upbringing & Receiving Prowess | The O-Zone Podcast",
+          "title": "Nate Boerkircher Talks 1st Year Experience, Upbringing & Receiving Prowess | The O-Zone Podcast",
+          "summary": "Jaguars TE Nate Boerkircher joins Senior Writer John Oehser for the O-Zone Podcast as he prepares for the Tennessee Titans in Week 10 of the 2026 NFL Season. Boerkircher speaks on the Jaguars' team culture, his journey f",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/ljbves7chovaewgzlz1c.jpg",
+          "url": "https://www.jaguars.com/video/nate-boerkircher-talks-1st-year-experience-upbringing-receiving-prowess-the-o-zone-podcast",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-13T15:19:18.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "TE",
@@ -96855,6 +97489,30 @@
       },
       "recentNews": [
         {
+          "id": "jax_bsky_66d475dcc8a1",
+          "type": "tweet",
+          "headline": "There is one person who does not believe Parker Washington scored",
+          "title": "There is one person who does not believe Parker Washington scored",
+          "fullText": "There is one person who does not believe Parker Washington scored",
+          "summary": "",
+          "url": "https://bsky.app/profile/danpizzuta.bsky.social/post/3n2zlxxwi4kll",
+          "author": "Dan Pizzuta",
+          "outletName": "Dan Pizzuta",
+          "publishedAt": "2026-11-24T02:29:46.450Z"
+        },
+        {
+          "id": "jax_bsky_6280269cfd9e",
+          "type": "tweet",
+          "headline": "Oooo Russell Yurk also refuting the Parker Washington no touchdown call. The regulators are calling out one of their own!",
+          "title": "Oooo Russell Yurk also refuting the Parker Washington no touchdown call. The regulators are calling out one of their own!",
+          "fullText": "Oooo Russell Yurk also refuting the Parker Washington no touchdown call. The regulators are calling out one of their own!",
+          "summary": "",
+          "url": "https://bsky.app/profile/minakimes.bsky.social/post/3n2zlvsokws2u",
+          "author": "Mina Kimes",
+          "outletName": "Mina Kimes",
+          "publishedAt": "2026-11-24T02:28:33.839Z"
+        },
+        {
           "id": "jax_brss_big_cat_country_cdca2bb399d7",
           "type": "article",
           "headline": "Jacksonville Jaguar News: Jags earn ‘C’ grade in loss to Giants",
@@ -96902,6 +97560,80 @@
           "author": "NFL on CBS 🏈",
           "outletName": "X Beat",
           "publishedAt": "2026-11-23T00:35:13.487Z"
+        },
+        {
+          "id": "jax_vid_a7cbcda81415",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence & Washington Connect for 21-Yard Gain",
+          "title": "HIGHLIGHT | Lawrence & Washington Connect for 21-Yard Gain",
+          "summary": "QB Trevor Lawrence and WR Parker Washington convert a long third down with a 21-yard completion.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/yduld1kpsfzikobw9jt1.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-washington-connect-for-21-yard-gain",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T00:42:08.000Z"
+        },
+        {
+          "id": "jax_vid_effbdb9874fe",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence Lofts 21-Yard Pass to Washington",
+          "title": "HIGHLIGHT | Lawrence Lofts 21-Yard Pass to Washington",
+          "summary": "QB Trevor Lawrence finds WR Parker Washington on 21-yard pass.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/l66aa8myekypt1kiwzw5.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-lofts-21-yard-pass-to-washington",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-22T22:36:51.000Z"
+        },
+        {
+          "id": "jax_vid_fbe541276b62",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence Finds Washington for 16-Yard Gain",
+          "title": "HIGHLIGHT | Lawrence Finds Washington for 16-Yard Gain",
+          "summary": "QB Trevor Lawrence and WR Parker Washington connect on 16-yard catch.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/rv9navkjfgtulgvcsw1h.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-finds-washington-for-16-yard-gain",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-22T22:33:20.000Z"
+        },
+        {
+          "id": "jax_bsky_07a9fd2f6352",
+          "type": "tweet",
+          "headline": "Parker Washington high point and pirouette",
+          "title": "Parker Washington high point and pirouette",
+          "fullText": "Parker Washington high point and pirouette",
+          "summary": "",
+          "imageUrl": "https://video.bsky.app/watch/did%3Aplc%3Akgihv26oznpn6cu3p45jzydp/bafkreigvfflsk55sk6lkxcyf3zruoq75ppl5ffwgfgocqrl6rcapxfei7m/thumbnail.jpg",
+          "url": "https://bsky.app/profile/natetice.bsky.social/post/3n2hhzutj6k27",
+          "author": "Nate Tice",
+          "outletName": "Nate Tice",
+          "publishedAt": "2026-11-16T21:31:20.059Z"
+        },
+        {
+          "id": "jax_bsky_ee502eba31e4",
+          "type": "tweet",
+          "headline": "Good lord Parker Washington put Alontae Taylor in a BLENDER",
+          "title": "Good lord Parker Washington put Alontae Taylor in a BLENDER",
+          "fullText": "Good lord Parker Washington put Alontae Taylor in a BLENDER",
+          "summary": "",
+          "imageUrl": "https://video.bsky.app/watch/did%3Aplc%3Au7kuhqmolhlmimlfguxqkivn/bafkreiaqsuf2vxxxyptcdh5me26hz4h2dfqkf7jmp4yuqhzwucby7zk67y/thumbnail.jpg",
+          "url": "https://bsky.app/profile/tednguyen.bsky.social/post/3n2he3biyn22p",
+          "author": "Ted Nguyen",
+          "outletName": "Ted Nguyen",
+          "publishedAt": "2026-11-16T20:20:31.930Z"
+        },
+        {
+          "id": "jax_vid_7eab1b1a757a",
+          "type": "video",
+          "headline": "Parker Washington & Trevor Lawrence Discuss Impressive Performance vs. Titans | Press Conference",
+          "title": "Parker Washington & Trevor Lawrence Discuss Impressive Performance vs. Titans | Press Conference",
+          "summary": "WR Parker Washington and QB Trevor Lawrence speak to the media following 40-23 win over the Tennessee Titans in Week 10 of the 2026 NFL Season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/aqbdelfhgrbzuk2kaxl3.jpg",
+          "url": "https://www.jaguars.com/video/parker-washington-trevor-lawrence-discuss-impressive-performance-vs-titans-press-conference",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-15T22:21:39.000Z"
         }
       ],
       "statProfile2026": {
@@ -97521,6 +98253,18 @@
       },
       "recentNews": [
         {
+          "id": "jax_rss_0496ce9df4f9",
+          "type": "article",
+          "headline": "Roster Moves: Jaguars Open Patrick Mekari's 21-Day Practice Window",
+          "title": "Roster Moves: Jaguars Open Patrick Mekari's 21-Day Practice Window",
+          "summary": "",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/mge4oqmdkrszlibwdwbh.jpg",
+          "url": "https://www.jaguars.com/news/roster-moves-jaguars-open-patrick-mekari-s-21-day-practice-window",
+          "author": "jaguars.com Official",
+          "outletName": "jaguars.com Official",
+          "publishedAt": "2026-11-25T15:30:20.000Z"
+        },
+        {
           "id": "jax_brss_big_cat_country_a3c3a5cbcc0c",
           "type": "article",
           "headline": "Jaguars Open Patrick Mekari’s 21-Day Practice Window",
@@ -97530,6 +98274,30 @@
           "author": "Travis Holmes",
           "outletName": "Big Cat Country",
           "publishedAt": "2026-11-25T16:30:42.000Z"
+        },
+        {
+          "id": "jax_pfr_167a09f41c53",
+          "type": "article",
+          "headline": "Jaguars Open Patrick Mekari’s IR Return Window",
+          "title": "Jaguars Open Patrick Mekari’s IR Return Window",
+          "summary": "The Jaguars opened veteran offensive lineman Patrick Mekari’s practice window to return from injured reserve on Wednesday, per a team announcement. Mekari, 29, underwent back surgery in the offseason and could not recover by the start of th",
+          "url": "https://www.profootballrumors.com/2026/11/jaguars-open-patrick-mekaris-ir-return-window",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-25T16:59:24.000Z"
+        },
+        {
+          "id": "x_tl_jaguars_2125613353725001809",
+          "type": "tweet",
+          "headline": "We have opened OL Patrick Mekari’s 21-day practice period.",
+          "title": "We have opened OL Patrick Mekari’s 21-day practice period.",
+          "fullText": "We have opened OL Patrick Mekari’s 21-day practice period.",
+          "summary": "",
+          "imageUrl": "https://pbs.twimg.com/media/HX-yEJ2XoAEUyI8.jpg?name=orig",
+          "url": "https://x.com/Jaguars/status/2125613353725001809",
+          "author": "James Gladstone",
+          "outletName": "Jaguars.com / Official Team",
+          "publishedAt": "2026-11-25T15:31:30.171Z"
         },
         {
           "id": "jax_tx_089f32fae465",
@@ -97542,6 +98310,17 @@
           "author": "Jacksonville Jaguars Official",
           "outletName": "jaguars.com Official",
           "publishedAt": "2026-11-25T08:00:00.000Z"
+        },
+        {
+          "id": "jax_pfr_c77858320178",
+          "type": "article",
+          "headline": "Jaguars C Robert Hainsey ‘Week-To-Week’",
+          "title": "Jaguars C Robert Hainsey ‘Week-To-Week’",
+          "summary": "The Jaguars were already down two starting offensive linemen heading into Week 11 with left tackle Anton Harrison and right guard Patrick Mekari on injured reserve. It was announced this week that they would be without a third as center Rob",
+          "url": "https://www.profootballrumors.com/2026/11/jaguars-c-robert-hainsey-week-to-week",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-23T00:07:36.000Z"
         }
       ],
       "statProfile2026": {
@@ -100328,7 +101107,19 @@
         ],
         "hasPreReportPracticeReturn": false
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_pfr_c77858320178",
+          "type": "article",
+          "headline": "Jaguars C Robert Hainsey ‘Week-To-Week’",
+          "title": "Jaguars C Robert Hainsey ‘Week-To-Week’",
+          "summary": "The Jaguars were already down two starting offensive linemen heading into Week 11 with left tackle Anton Harrison and right guard Patrick Mekari on injured reserve. It was announced this week that they would be without a third as center Rob",
+          "url": "https://www.profootballrumors.com/2026/11/jaguars-c-robert-hainsey-week-to-week",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-23T00:07:36.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "IOL",
@@ -101932,7 +102723,7 @@
       "jersey": 69,
       "position": "C",
       "unit": "Offense",
-      "rosterBucket": "active",
+      "rosterBucket": "ir",
       "age": 30,
       "displayHeight": "6' 3\"",
       "displayWeight": "306 lbs",
@@ -101941,19 +102732,7 @@
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3129307.png",
       "capHit2026": 0,
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      },
+      "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -102219,31 +102998,31 @@
         ]
       },
       "health": {
-        "status": "Active",
-        "injuryType": "",
-        "returnDate": null,
-        "isSeasonEnding": false,
+        "status": "Season-Ending IR",
+        "injuryType": "Undisclosed",
+        "returnDate": "2027-02-15T00:00:00.000+00:00",
+        "isSeasonEnding": true,
         "isPracticeWindowOpen": false,
         "designatedDateIso": null,
         "blurbDateIso": "2026-08-31T23:25Z",
-        "placedBeforeWeek": null,
+        "placedBeforeWeek": 1,
         "earliestEligibleWeek": null,
-        "projectedReturnWeek": null,
-        "byeWeekNote": "",
-        "irBeatNote": "",
+        "projectedReturnWeek": "Out for Season",
+        "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+        "irBeatNote": "The move to IR does not come with a designation to return, meaning Mustipher will be forced to miss the entire 2026 season. It's unclear when he sustained the injury or what the nature of it is, but he'll shift his focus toward being fully healthy for the 2027 campaign.",
         "fantasyStatusAbbr": "IR",
         "isIrReturnQuestionable": false,
         "isOnPracticeReport": false,
         "wed": "-",
         "thu": "-",
         "fri": "-",
-        "shortComment": "",
-        "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "shortComment": "The Jaguars placed Mustipher (undisclosed) on injured reserve Sunday.",
+        "longComment": "The move to IR does not come with a designation to return, meaning Mustipher will be forced to miss the entire 2026 season. It's unclear when he sustained the injury or what the nature of it is, but he'll shift his focus toward being fully healthy for the 2027 campaign.",
+        "playProbabilityPct": 0,
+        "playTier": "OUT",
+        "playBadgeLabel": "0% • Out for Season",
         "factors": [
-          "Off injury report; full active status"
+          "Season-ending Injured Reserve — ineligible to return this season"
         ],
         "archetypeNote": "Trench/box position (C) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
@@ -102271,7 +103050,7 @@
       "jersey": 94,
       "position": "DT",
       "unit": "Defense",
-      "rosterBucket": "active",
+      "rosterBucket": "practice_squad",
       "age": 24,
       "displayHeight": "6' 2\"",
       "displayWeight": "305 lbs",
@@ -102280,19 +103059,7 @@
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431162.png",
       "capHit2026": 0,
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      },
+      "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -102431,7 +103198,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -102451,11 +103218,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
@@ -104121,6 +104888,30 @@
           "author": "Michael DiRocco",
           "outletName": "ESPN",
           "publishedAt": "2026-11-23T04:56:42.000Z"
+        },
+        {
+          "id": "jax_vid_58d8fef3f0fe",
+          "type": "video",
+          "headline": "Hunter & Rodriguez Jr. on Giants Matchups, Trusting in Coaching Staff | Media Availability",
+          "title": "Hunter & Rodriguez Jr. on Giants Matchups, Trusting in Coaching Staff | Media Availability",
+          "summary": "WR/CB Travis Hunter and RB Chris Rodriguez Jr. speak with the media following practice on Thursday of Week 11 of the 2026 NFL Season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/joyq4rregf0dq8shyypi.jpg",
+          "url": "https://www.jaguars.com/video/hunter-rodriguez-jr-on-giants-matchups-trusting-in-coaching-staff-media-availability",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-19T19:19:50.000Z"
+        },
+        {
+          "id": "jax_vid_dad22f86ec4f",
+          "type": "video",
+          "headline": "HIGHLIGHT | Hunter Grabs His Third INT of the Season",
+          "title": "HIGHLIGHT | Hunter Grabs His Third INT of the Season",
+          "summary": "WR/CB Travis Hunter intercepts Titans' QB Cam Ward's pass in the first quarter.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/kofgeobvz9wpc7carvpc.png",
+          "url": "https://www.jaguars.com/video/highlight-hunter-grabs-his-third-int-of-the-season",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-15T18:48:14.000Z"
         }
       ],
       "statProfile2026": {
@@ -105234,7 +106025,7 @@
       "jersey": 86,
       "position": "WR",
       "unit": "Offense",
-      "rosterBucket": "active",
+      "rosterBucket": "practice_squad",
       "age": 24,
       "displayHeight": "5' 10\"",
       "displayWeight": "187 lbs",
@@ -105243,19 +106034,7 @@
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4575862.png",
       "capHit2026": 0,
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      },
+      "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -105394,7 +106173,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -105414,11 +106193,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
@@ -106228,16 +107007,100 @@
           "publishedAt": "2026-11-23T01:43:49.409Z"
         },
         {
-          "id": "jax_yt_9wZLTOLaWUY",
+          "id": "jax_vid_3e08d2187d15",
           "type": "video",
-          "headline": "Trevor Lawrence vs the Ravens Week 9, 2026 Analysis",
-          "title": "Trevor Lawrence vs the Ravens Week 9, 2026 Analysis",
-          "summary": "Website: https://theqbschool.com Patreon: https://www.patreon.com/theqbschool How does JT draw on his screen? Epic Pen (please use the link: https://epicpen.com/?ref=jtosullivan) The QB School studio equipment: Camera: h",
-          "imageUrl": "https://i.ytimg.com/vi/9wZLTOLaWUY/hqdefault.jpg",
-          "url": "https://www.youtube.com/watch?v=9wZLTOLaWUY",
-          "author": "The QB School",
-          "outletName": "The QB School",
-          "publishedAt": "2026-11-06T18:57:40.000Z"
+          "headline": "Trevor Lawrence Discusses Performance vs. Giants | Press Conference",
+          "title": "Trevor Lawrence Discusses Performance vs. Giants | Press Conference",
+          "summary": "QB Trevor Lawrence speaks with the media following a 23-18 loss to the Giants in Week 11 of the 2026 NFL Season.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/v0imstdbk2q84bnko29v.jpg",
+          "url": "https://www.jaguars.com/video/trevor-lawrence-discusses-performance-vs-giants-press-conference",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T02:13:46.000Z"
+        },
+        {
+          "id": "jax_vid_3fbb1905927d",
+          "type": "video",
+          "headline": "HIGHLIGHT | Meyers Secures Juggling 22-Yard Catch",
+          "title": "HIGHLIGHT | Meyers Secures Juggling 22-Yard Catch",
+          "summary": "QB Trevor Lawrence lofts a 22-yard pass to WR Jakobi Meyers.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/bqzpodsiaj7j04wagxzo.png",
+          "url": "https://www.jaguars.com/video/highlight-meyers-secures-22-yard-juggling-catch",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T00:54:50.000Z"
+        },
+        {
+          "id": "jax_vid_872d3f975566",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence Launches 26-Yard Pass to Meyers",
+          "title": "HIGHLIGHT | Lawrence Launches 26-Yard Pass to Meyers",
+          "summary": "QB Trevor Lawrence completes a 26-yard pass to WR Jakobi Meyers for red zone access late in the 4th quarter.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/wnqtqmussjcstwyaubep.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-launches-26-yard-pass-to-meyers",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T00:51:12.000Z"
+        },
+        {
+          "id": "jax_vid_b72cb21063a0",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence Finds Thomas Jr. for 18-Yard TD",
+          "title": "HIGHLIGHT | Lawrence Finds Thomas Jr. for 18-Yard TD",
+          "summary": "QB Trevor Lawrence locates WR Brian Thomas Jr. in the end zone for a touchdown to make it a one-possession game late in the 4th quarter.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/kp2q8tfikc6acd8i2z6h.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-finds-thomas-jr-for-18-yard-td",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T00:45:16.000Z"
+        },
+        {
+          "id": "jax_vid_a7cbcda81415",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence & Washington Connect for 21-Yard Gain",
+          "title": "HIGHLIGHT | Lawrence & Washington Connect for 21-Yard Gain",
+          "summary": "QB Trevor Lawrence and WR Parker Washington convert a long third down with a 21-yard completion.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/yduld1kpsfzikobw9jt1.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-washington-connect-for-21-yard-gain",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T00:42:08.000Z"
+        },
+        {
+          "id": "jax_vid_fc6fbdda6da0",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence Finds Meyers for 23-Yard Gain",
+          "title": "HIGHLIGHT | Lawrence Finds Meyers for 23-Yard Gain",
+          "summary": "QB Trevor Lawrence finds WR Jakobi Meyers for 23-yard gain in the third quarter.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/uogac5useoiwhfezdhbm.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-finds-meyers-for-23-yard-gain",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-23T00:00:51.000Z"
+        },
+        {
+          "id": "jax_vid_effbdb9874fe",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence Lofts 21-Yard Pass to Washington",
+          "title": "HIGHLIGHT | Lawrence Lofts 21-Yard Pass to Washington",
+          "summary": "QB Trevor Lawrence finds WR Parker Washington on 21-yard pass.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/l66aa8myekypt1kiwzw5.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-lofts-21-yard-pass-to-washington",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-22T22:36:51.000Z"
+        },
+        {
+          "id": "jax_vid_fbe541276b62",
+          "type": "video",
+          "headline": "HIGHLIGHT | Lawrence Finds Washington for 16-Yard Gain",
+          "title": "HIGHLIGHT | Lawrence Finds Washington for 16-Yard Gain",
+          "summary": "QB Trevor Lawrence and WR Parker Washington connect on 16-yard catch.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/rv9navkjfgtulgvcsw1h.png",
+          "url": "https://www.jaguars.com/video/highlight-lawrence-finds-washington-for-16-yard-gain",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-22T22:33:20.000Z"
         }
       ],
       "statProfile2026": {
@@ -107185,7 +108048,20 @@
         "archetypeNote": "Every-down starter workload (71% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
         "weeklyHistory2026": []
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "jax_vid_5bf2d179bae9",
+          "type": "video",
+          "headline": "Reviewing Ventrell Miller's Dominance vs. Giants in Week 11 | Film Room",
+          "title": "Reviewing Ventrell Miller's Dominance vs. Giants in Week 11 | Film Room",
+          "summary": "Jeff Lageman rolls the tape on the Jaguars' Week 11 game vs. the New York Giants. He breaks down the physicality and downhill mentality that LB Ventrell Miller plays with and why he's showing that he is one of the most v",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/jaguars/hmwnywupmmwd8ajhvdaz.jpg",
+          "url": "https://www.jaguars.com/video/reviewing-ventrell-miller-s-dominance-vs-giants-in-week-11-film-room",
+          "author": "jaguars.com Video",
+          "outletName": "jaguars.com Video",
+          "publishedAt": "2026-11-24T17:17:35.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "LB",

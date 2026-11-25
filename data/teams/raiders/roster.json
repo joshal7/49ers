@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:18.672Z",
+  "updatedAt": "2026-11-25T20:47:27.158Z",
   "count": 75,
   "excludedGhostIds": [
     "3138744"
@@ -64259,16 +64259,17 @@
         "fantasyStatusAbbr": "QUESTIONABLE",
         "isIrReturnQuestionable": false,
         "isOnPracticeReport": true,
-        "wed": "-",
+        "wed": "LP",
         "thu": "-",
         "fri": "-",
         "shortComment": "Bowers (ankle/quadriceps) was on the field for Wednesday's practice, Ryan McFadden of ESPN.com reports.",
         "longComment": "Before sitting out this past Sunday's 38-24 loss to the Broncos, Bowers was a limited participant for the Raiders' final two practices of Week 11. Though it's unclear if Bowers will be upgraded to full participation for the team's first practice of Week 12, McFadden notes that the tight end didn't have any wrapping or tape on his ankle, which seemingly indicates improvement with his condition. Assuming Bowers steers clear of setbacks and is able to practice in some capacity throughout the week, he should have a good shot at returning to action this Sunday at Cleveland.",
-        "playProbabilityPct": 84,
-        "playTier": "FIFTY_FIFTY",
-        "playBadgeLabel": "84% • GTD",
+        "playProbabilityPct": 94,
+        "playTier": "LIKELY",
+        "playBadgeLabel": "94% • Cleared",
         "factors": [
-          "Questionable tag adjusted by player career prior (90%)"
+          "Wednesday Limited Participation (LP); player toughness prior = 90%",
+          "High pain-tolerance / toughness prior (+4% boost)"
         ],
         "archetypeNote": "High-snap focal-point tight end with high active conversion on minor mid-week tags.",
         "weeklyHistory2026": [
@@ -64327,6 +64328,11 @@
             "practiceStatus": "Limited Participation in Practice"
           }
         ],
+        "_slotPubMs": {
+          "wed": 1795636290000,
+          "thu": 0,
+          "fri": 0
+        },
         "hasPreReportPracticeReturn": false
       },
       "recentNews": [
@@ -64339,7 +64345,18 @@
           "url": "https://www.silverandblackpride.com/las-vegas-raiders-news/147424/raiders-news-brock-bowers-returns-practice-wednesday",
           "author": "Bill Williamson",
           "outletName": "Silver And Black Pride",
-          "publishedAt": "2026-11-25T20:09:48.000Z"
+          "publishedAt": "2026-11-25T20:12:15.000Z"
+        },
+        {
+          "id": "lv_pwire_4432665_64973828",
+          "type": "article",
+          "headline": "Bowers (ankle/quadriceps) was on the field for Wednesday's practice.",
+          "title": "Bowers (ankle/quadriceps) was on the field for Wednesday's practice.",
+          "summary": "Before sitting out this past Sunday's 38-24 loss to the Broncos, Bowers was a limited participant for the Raiders' final two practices of Week 11. Though it's unclear if Bowers will be upgraded to full participation for",
+          "url": "https://www.espn.com/nfl/player/_/id/4432665/brock-bowers#:~:text=Bowers%20(ankle%2Fquadriceps)%20was%20on%20the%20field%20for",
+          "author": "Ryan McFadden",
+          "outletName": "ESPN Las Vegas Raiders Beat",
+          "publishedAt": "2026-11-25T19:51:30.000Z"
         },
         {
           "id": "lv_rss_6d3db11449ec",
@@ -64352,17 +64369,6 @@
           "author": "raiders.com Official",
           "outletName": "raiders.com Official",
           "publishedAt": "2026-11-24T01:30:00.000Z"
-        },
-        {
-          "id": "lv_pwire_4432665_64925228",
-          "type": "article",
-          "headline": "Raiders coach Klink Kubiak said after Sunday's 38-24 loss to the Broncos that he's optimistic Bowers (ankle/quadriceps) will be available to face the Browns on Nov. 29.",
-          "title": "Raiders coach Klink Kubiak said after Sunday's 38-24 loss to the Broncos that he's optimistic Bowers (ankle/quadriceps) will be available to face the Browns on Nov. 29.",
-          "summary": "Bowers \"was not ready to play\" against Denver, per Kubiak, but the head coach believes Vegas' star tight end could be ready to return in Week 12 against the Browns on SNF. Bowers was held to 18 yards by the Seahawks duri",
-          "url": "https://www.espn.com/nfl/player/_/id/4432665/brock-bowers#:~:text=Raiders%20coach%20Klink%20Kubiak%20said%20after%20Sunday's",
-          "author": "Ryan McFadden",
-          "outletName": "ESPN Las Vegas Raiders Beat",
-          "publishedAt": "2026-11-23T01:15:50.000Z"
         },
         {
           "id": "lv_rss_857f30421fa5",
@@ -64423,18 +64429,6 @@
           "author": "raiders.com Video",
           "outletName": "raiders.com Video",
           "publishedAt": "2026-11-08T22:07:11.000Z"
-        },
-        {
-          "id": "lv_vid_ff460e2a4e1e",
-          "type": "video",
-          "headline": "The Silver & Black Show - Week 9 vs. 49ers - Brock Bowers, Ben Solak and Q Myers",
-          "title": "The Silver & Black Show - Week 9 vs. 49ers - Brock Bowers, Ben Solak and Q Myers",
-          "summary": "The Silver and Black Show's Amber Theoharis is joined by Brock Bowers, Ben Solak and Q Myers to preview the Raiders' Week 9 matchup against the San Francisco 49ers.",
-          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/ayjojnxcooptt4zbococ.png",
-          "url": "https://www.raiders.com/video/brock-bowers-ben-solak-49ers-nfl-week-9-preview-2026-season",
-          "author": "raiders.com Video",
-          "outletName": "raiders.com Video",
-          "publishedAt": "2026-11-06T01:00:00.000Z"
         }
       ],
       "statProfile2026": {
@@ -79152,6 +79146,18 @@
       },
       "recentNews": [
         {
+          "id": "lv_vid_53a4eb6a0a08",
+          "type": "video",
+          "headline": "Raiders Live: Klint Kubiak and Fernando Mendoza Presser - 11.25.26",
+          "title": "Raiders Live: Klint Kubiak and Fernando Mendoza Presser - 11.25.26",
+          "summary": "Head Coach Klint Kubiak and QB Fernando Mendoza address the media.",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/raiders/bzcqrmnmghi7hbpnsyva.jpg",
+          "url": "https://www.raiders.com/video/raiders-live",
+          "author": "raiders.com Video",
+          "outletName": "raiders.com Video",
+          "publishedAt": "2026-11-25T20:47:27.690Z"
+        },
+        {
           "id": "lv_brss_silver_and_black_pride_46c80cb3b492",
           "type": "article",
           "headline": "Fernando Mendoza is having issues throwing to his left",
@@ -79196,18 +79202,6 @@
           "author": "Marcus Johnson",
           "outletName": "Tape Don't Lie",
           "publishedAt": "2026-11-24T02:28:34.389Z"
-        },
-        {
-          "id": "lv_yts_I7M80cWgT8s",
-          "type": "video",
-          "headline": "Fernando Mendoza Every Throw & Run | Week 11",
-          "title": "Fernando Mendoza Every Throw & Run | Week 11",
-          "summary": "",
-          "imageUrl": "https://i.ytimg.com/vi/I7M80cWgT8s/hqdefault.jpg",
-          "url": "https://www.youtube.com/watch?v=I7M80cWgT8s",
-          "author": "NFL",
-          "outletName": "NFL",
-          "publishedAt": "2026-11-23T20:36:19.319Z"
         },
         {
           "id": "lv_brss_silver_and_black_pride_b8abed93c964",

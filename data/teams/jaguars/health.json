@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:08.250Z",
+  "updatedAt": "2026-11-25T20:45:48.917Z",
   "week": 12,
   "byeWeek": 7,
   "sourceUrl": "https://www.jaguars.com/team/injury-report/",
@@ -454,6 +454,28 @@
       "playProbabilityPct": 0,
       "playBadgeLabel": "0% • Out for Season",
       "beatNote": "ir"
+    },
+    {
+      "playerId": "3129307",
+      "name": "Sam Mustipher",
+      "position": "C",
+      "jersey": 69,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3129307.png",
+      "injuryType": "Undisclosed",
+      "status": "Season-Ending IR",
+      "isSeasonEnding": true,
+      "isPracticeWindowOpen": false,
+      "isPracticeWindowExpected": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "placedBeforeWeek": 1,
+      "earliestEligibleWeek": null,
+      "projectedReturnWeek": "Out for Season",
+      "byeWeekNote": "Season-ending IR — ineligible to return in 2026",
+      "playProbabilityPct": 0,
+      "playBadgeLabel": "0% • Out for Season",
+      "beatNote": "The move to IR does not come with a designation to return, meaning Mustipher will be forced to miss the entire 2026 season. It's unclear when he sustained the injury or what the nature of it is, but he'll shift his focus toward being fully healthy for the 2027 campaign."
     }
   ]
 }

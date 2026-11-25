@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:18.672Z",
+  "updatedAt": "2026-11-25T20:47:27.158Z",
   "sources": [
     {
       "label": "ESPN Raiders Schedule",
@@ -24638,14 +24638,14 @@
     "cutoffHours": 24,
     "cohortStatus": "latest_game_verified",
     "consensusRank": 28,
-    "averageRank": 27.6,
+    "averageRank": 27.8,
     "medianRank": 28,
     "previousRank": 27,
     "rangeMin": 22,
     "rangeMax": 31,
     "rangeShort": "#22–#31",
     "rangeDisplay": "#22–#31 across 5 verified models & polls",
-    "synthesizedTakeaway": "5 verified models & polls place the 4-7 Raiders at #28 consensus (avg #27.6) through Week 11, ranging from #22 (ESPN Panel) to #31 (ESPN FPI). 1 outlet still on an older week is excluded for week consistency.",
+    "synthesizedTakeaway": "5 verified models & polls place the 4-7 Raiders at #28 consensus (avg #27.8) through Week 11, ranging from #22 (ESPN Panel) to #31 (ESPN FPI). 1 outlet still on an older week is excluded for week consistency.",
     "sources": [
       {
         "id": "espn_panel",
@@ -24667,24 +24667,6 @@
         "freshnessReason": "record_verified"
       },
       {
-        "id": "rbsdm",
-        "outlet": "RBSDM / nflverse Team Ratings",
-        "shortName": "RBSDM",
-        "url": "https://rbsdm.com/#ratings",
-        "rank": 27,
-        "previousRank": 25,
-        "delta": "-2",
-        "reportedRecord": "4-7",
-        "gamesIncluded": 11,
-        "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
-        "asOfLabel": "Thru Wk 11",
-        "verified": true,
-        "blurb": "Tier 5 (31.5% neutral-field win rating, 6.5 proj. wins) at 4-7 through Week 11.",
-        "includesLatestGame": true,
-        "freshnessReason": "record_verified"
-      },
-      {
         "id": "inpredictable",
         "outlet": "Inpredictable / Betting Market Power Rating",
         "shortName": "Inpredictable",
@@ -24699,6 +24681,24 @@
         "asOfLabel": "November 25",
         "verified": true,
         "blurb": "Betting market rating GPF -6.7 (#24 Offense / #29 Defense) at 4-7 through Week 11.",
+        "includesLatestGame": true,
+        "freshnessReason": "record_verified"
+      },
+      {
+        "id": "rbsdm",
+        "outlet": "RBSDM / nflverse Team Ratings",
+        "shortName": "RBSDM",
+        "url": "https://rbsdm.com/#ratings",
+        "rank": 28,
+        "previousRank": 25,
+        "delta": "-3",
+        "reportedRecord": "4-7",
+        "gamesIncluded": 11,
+        "throughWeek": 11,
+        "asOfIso": "2026-11-25T20:41:46Z",
+        "asOfLabel": "Thru Wk 11",
+        "verified": true,
+        "blurb": "Tier 5 (31.2% neutral-field win rating, 6.5 proj. wins) at 4-7 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24777,16 +24777,16 @@
         "outlet": "RBSDM / nflverse Team Ratings",
         "shortName": "RBSDM",
         "url": "https://rbsdm.com/#ratings",
-        "rank": 27,
+        "rank": 28,
         "previousRank": 25,
-        "delta": "-2",
+        "delta": "-3",
         "reportedRecord": "4-7",
         "gamesIncluded": 11,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 5 (31.5% neutral-field win rating, 6.5 proj. wins) at 4-7 through Week 11."
+        "blurb": "Tier 5 (31.2% neutral-field win rating, 6.5 proj. wins) at 4-7 through Week 11."
       },
       {
         "id": "cbs",
@@ -24852,7 +24852,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:36:21.169Z"
+    "fetchedAtIso": "2026-11-25T20:47:29.127Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -25738,7 +25738,7 @@
       "spread": "CLE -4.5",
       "openingSpread": "Opened LV +2.5 (Draft Kings)",
       "overUnder": 39.5,
-      "moneyline": "LV +196 | CLE -237",
+      "moneyline": "LV +198 | CLE -240",
       "impliedScore": "LV 17.5 – CLE 22.0",
       "restAdvantage": "-7 Days Rest Differential (CLE extra rest)",
       "impliedWinProb": "26%"

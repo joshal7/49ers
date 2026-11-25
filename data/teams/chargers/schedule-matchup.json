@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:15.792Z",
+  "updatedAt": "2026-11-25T20:46:11.275Z",
   "sources": [
     {
       "label": "ESPN Chargers Schedule",
@@ -24840,7 +24840,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:36:18.018Z"
+    "fetchedAtIso": "2026-11-25T20:46:13.993Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -25874,7 +25874,7 @@
       "spread": "LAC -1.5",
       "openingSpread": "Opened LAC -2.5 (Draft Kings)",
       "overUnder": 35.5,
-      "moneyline": "LAC -112 | NE -106",
+      "moneyline": "LAC -109 | NE -108",
       "impliedScore": "LAC 18.5 – NE 17.0",
       "restAdvantage": "-7 Days Rest Differential (NE extra rest)",
       "impliedWinProb": "59%"
@@ -27327,15 +27327,15 @@
       },
       {
         "phaseTag": "Perimeter Coverage & Explosive Prevention",
-        "unitMatchup": "Tarheeb Still, Daiyan Henley & Cam Hart vs. WR Mack Hollins & QB Tommy DeVito",
+        "unitMatchup": "Tarheeb Still, Cam Hart & Daiyan Henley vs. WR Mack Hollins & QB Tommy DeVito",
         "advantage": "NE Edge",
         "sfPlayers": [
           "Tarheeb Still",
-          "Daiyan Henley",
-          "Cam Hart"
+          "Cam Hart",
+          "Daiyan Henley"
         ],
         "statComparison": "LAC: #22 Pass Def (+3.48) | NE: #13 Pass Off (233.6 yds)",
-        "tacticalDetail": "Tarheeb Still, Daiyan Henley & Cam Hart anchor Los Angeles's #22 pass defense (+3.48) against WR Mack Hollins and New England Patriots's #13 passing attack (233.6 yds). Limiting explosive 20+ yard chunk plays forces Patriots into sustained red-zone drives.",
+        "tacticalDetail": "Tarheeb Still, Cam Hart & Daiyan Henley anchor Los Angeles's #22 pass defense (+3.48) against WR Mack Hollins and New England Patriots's #13 passing attack (233.6 yds). Limiting explosive 20+ yard chunk plays forces Patriots into sustained red-zone drives.",
         "filmTell": "Track Tarheeb Still (#4) at the top of routes against WR Mack Hollins: press-bail alignment with safety help over the top takes away QB Tommy DeVito's preferred isolation shots."
       },
       {

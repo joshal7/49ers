@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:12.783Z",
+  "updatedAt": "2026-11-25T20:46:27.918Z",
   "sources": [
     {
       "label": "ESPN Bears Schedule",
@@ -24690,10 +24690,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (71.1% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 11.",
+        "blurb": "Tier 1 (71.3% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24797,10 +24797,10 @@
         "reportedRecord": "8-2",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (71.1% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 11."
+        "blurb": "Tier 1 (71.3% neutral-field win rating, 12.2 proj. wins) at 8-2 through Week 11."
       },
       {
         "id": "cbs",
@@ -24866,7 +24866,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:44:16.840Z"
+    "fetchedAtIso": "2026-11-25T20:46:31.630Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -27585,16 +27585,16 @@
       },
       {
         "phaseTag": "Front-Four Pass-Rush Stress",
-        "unitMatchup": "Jeffery Simmons, Grady Jarrett & Montez Sweat vs. QB Jared Goff & OT Penei Sewell",
+        "unitMatchup": "Jeffery Simmons, Montez Sweat & Grady Jarrett vs. QB Jared Goff & OT Penei Sewell",
         "advantage": "Even Trench Battle",
         "sfPlayers": [
           "Jeffery Simmons",
-          "Grady Jarrett",
-          "Montez Sweat"
+          "Montez Sweat",
+          "Grady Jarrett"
         ],
         "statComparison": "CHI: #16 Def Sacks (2.3/gm) | DET: #16 Pass Protection (6.5%)",
-        "tacticalDetail": "Jeffery Simmons, Grady Jarrett & Montez Sweat lead Chicago's #16 NFL pass rush (2.3/gm) against Detroit Lions's #16 pass-protection unit (6.5%). Collapsing the interior pocket without sending extra blitzers lets Bears keep seven defenders in coverage.",
-        "filmTell": "On 3rd-and-6+, watch whether Jeffery Simmons (#99) draw chip help from Lions's tight ends or backs—creating 1-on-1 rush lanes inside for Grady Jarrett (#50)."
+        "tacticalDetail": "Jeffery Simmons, Montez Sweat & Grady Jarrett lead Chicago's #16 NFL pass rush (2.3/gm) against Detroit Lions's #16 pass-protection unit (6.5%). Collapsing the interior pocket without sending extra blitzers lets Bears keep seven defenders in coverage.",
+        "filmTell": "On 3rd-and-6+, watch whether Jeffery Simmons (#99) draw chip help from Lions's tight ends or backs—creating 1-on-1 rush lanes inside for Montez Sweat (#98)."
       },
       {
         "phaseTag": "Perimeter Coverage & Explosive Prevention",

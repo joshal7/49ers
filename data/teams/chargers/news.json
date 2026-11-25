@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:15.792Z",
+  "updatedAt": "2026-11-25T20:46:11.275Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17PT",
     "cycleKey": "2026-11-24@17PT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "1-9",
-    "generatedAt": "2026-11-25T20:36:15.792Z",
+    "generatedAt": "2026-11-25T20:46:11.275Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -20,15 +20,15 @@
     "summary": "",
     "bullets": [
       "Roster & Front Office: Los Angeles signed RB Ian Wheeler to the practice squad [Los Angeles Chargers Official](https://www.chargers.com/team/transactions/#tx-3349c71efe42).",
-      "Injury & Practice Status: Los Angeles opened OT Trey Pipkins III's 21-day IR practice window. QB Justin Herbert (concussion) did not practice Wednesday [Michael Peterson](https://www.boltsfromtheblue.com/los-angeles-chargers-news/67297/chargers-poll-how-many-wins-will-the-bolts-get-now).",
+      "Injury & Practice Status: Los Angeles opened OT Trey Pipkins III's 21-day IR practice window. QB Justin Herbert (concussion) did not practice Wednesday [Noah Furtado](https://www.espn.com/nfl/player/_/id/4038941/justin-herbert#:~:text=Chargers%20coach%20Jim%20Harbaugh%20said%20that%20Herbert).",
       "Week 12 Patriots Outlook: Jim Harbaugh and DC Chris O'Leary open installation for the New England Patriots (5-5, LAC -1.5, HC Mike Vrabel, OC Josh McDaniels & DC Zak Kuhr (SoFi Stadium)) as Los Angeles prepares for a pivotal AFC matchup [Michael Peterson](https://www.boltsfromtheblue.com/los-angeles-chargers-news/67306/chargers-patriots-game-preview-bolts-defense-catches-break-with-drake-maye-injury) [chargers.com Official](https://www.chargers.com/news/depth-chart-2026-season).",
       "AFC Playoff Trajectory: Entering Week 12 at 1-9 (4th in AFC West • #14 Seed in AFC), Los Angeles carries a 0% postseason projection, 0% AFC West division title mark, and 0% #1 Seed Bye equity into the conference stretch [chargers.com Official](https://www.chargers.com/news/nfl-power-rankings-2026).",
       "Statistical Profile & Matchup Edge: Through Week 11, Los Angeles ranks #30 in Points / Game (16.8), #25 in Points Allowed / Game (26.6), #26 in Turnover Differential (-5), giving Jim Harbaugh and Chris O'Leary a clear benchmark ahead of Sun, Nov 29, 1:05 PM PST • NFL TV at [object Object] against the New England Patriots [ESPN](https://www.espn.com/nfl/recap?gameId=401873074)."
     ],
     "coveredStoryKeys": [
+      "justinherbert::diagnostic_result",
       "chargersrelease::roster_departure",
-      "team::power_rankings",
-      "justinherbert::diagnostic_result"
+      "team::power_rankings"
     ],
     "coveredUrls": [
       "https://www.chargers.com/team/transactions/#tx-3349c71efe42",
@@ -36,8 +36,9 @@
       "https://www.chargers.com/news/depth-chart-2026-season",
       "https://www.chargers.com/news/nfl-power-rankings-2026",
       "https://www.espn.com/nfl/recap?gameId=401873074",
-      "https://www.boltsfromtheblue.com/los-angeles-chargers-news/67297/chargers-poll-how-many-wins-will-the-bolts-get-now",
+      "https://www.espn.com/nfl/player/_/id/4038941/justin-herbert#:~:text=Chargers%20coach%20Jim%20Harbaugh%20said%20that%20Herbert",
       "https://www.rotowire.com/football/player/justin-herbert-14446",
+      "https://www.boltsfromtheblue.com/los-angeles-chargers-news/67297/chargers-poll-how-many-wins-will-the-bolts-get-now",
       "https://www.chargers.com/news/honor-martha-ford-lions-owner",
       "https://www.chargers.com/news/2026-week-12-patriots-where-to-watch-listen-livestream",
       "https://www.espn.com/nfl/player/_/id/4685382/omarion-hampton#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
@@ -93,11 +94,11 @@
       },
       {
         "type": "article",
-        "author": "Michael Peterson",
-        "outlet": "Bolts From The Blue",
-        "title": "Chargers Poll: How many wins will the Bolts get NOW?",
-        "url": "https://www.boltsfromtheblue.com/los-angeles-chargers-news/67297/chargers-poll-how-many-wins-will-the-bolts-get-now",
-        "publishedAt": "2026-11-25T18:23:49.000Z"
+        "author": "Noah Furtado",
+        "outlet": "The Athletic",
+        "title": "Chargers coach Jim Harbaugh said that Herbert (concussion) won't practice Wednesday.",
+        "url": "https://www.espn.com/nfl/player/_/id/4038941/justin-herbert#:~:text=Chargers%20coach%20Jim%20Harbaugh%20said%20that%20Herbert",
+        "publishedAt": "2026-11-25T20:27:41.000Z"
       },
       {
         "type": "tweet",
@@ -106,6 +107,14 @@
         "title": "Justin Herbert: Not practicing Wednesday: Chargers coach Jim Harbaugh said that Herbert (concussion) won't practice Wednesday, Noah Furtado of The Athletic reports. Visit",
         "url": "https://www.rotowire.com/football/player/justin-herbert-14446",
         "publishedAt": "2026-11-25T20:28:00.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Michael Peterson",
+        "outlet": "Bolts From The Blue",
+        "title": "Chargers Poll: How many wins will the Bolts get NOW?",
+        "url": "https://www.boltsfromtheblue.com/los-angeles-chargers-news/67297/chargers-poll-how-many-wins-will-the-bolts-get-now",
+        "publishedAt": "2026-11-25T18:23:49.000Z"
       },
       {
         "type": "article",
@@ -138,14 +147,6 @@
         "title": "Los Angeles Chargers news: D.J. Uiagalelei vs. Tommy DeVito on tap in Week 12",
         "url": "https://www.boltsfromtheblue.com/los-angeles-chargers-news/67276/los-angeles-chargers-news-justin-herbert-concussion-d-j-uiagalelei-tommy-devito",
         "publishedAt": "2026-11-25T14:25:16.000Z"
-      },
-      {
-        "type": "article",
-        "author": "Eric Karabell",
-        "outlet": "ESPN / X Beat Wire",
-        "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-        "url": "https://www.espn.com/nfl/player/_/id/4612826/ladd-mcconkey#:~:text=Need%20to%20know%20how%20to%20value%20players",
-        "publishedAt": "2026-11-24T20:18:57.000Z"
       }
     ]
   },
@@ -154,7 +155,7 @@
       "id": "lac_cl_top",
       "category": "beat",
       "headline": "Los Angeles Chargers Week 12 Top Headlines (1-9)",
-      "summary": "Justin Herbert: Not practicing Wednesday: Chargers coach Jim Harbaugh said that Herbert (concussion) won't practice Wednesday, Noah Furtado of The Athletic reports. Visit RotoWire.com for more analysis on this update. — Chargers Poll: How many wins will the Bo",
+      "summary": "Justin Herbert: Not practicing Wednesday: Chargers coach Jim Harbaugh said that Herbert (concussion) won't practice Wednesday, Noah Furtado of The Athletic reports. Visit RotoWire.com for more analysis on this update. — Chargers coach Jim Harbaugh said that He",
       "updatedAt": "2026-11-25T20:28:00.000Z",
       "itemCount": 6,
       "sourceLinks": [
@@ -163,6 +164,12 @@
           "title": "Justin Herbert: Not practicing Wednesday: Chargers coach Jim Harbaugh said that Herbert (concussion) won't practice Wednesday, Noah Furtado of The Athletic reports. Visit RotoWire.com for more analysis on this update.",
           "url": "https://www.rotowire.com/football/player/justin-herbert-14446",
           "publishedAt": "2026-11-25T20:28:00.000Z"
+        },
+        {
+          "label": "Noah Furtado",
+          "title": "Chargers coach Jim Harbaugh said that Herbert (concussion) won't practice Wednesday.",
+          "url": "https://www.espn.com/nfl/player/_/id/4038941/justin-herbert#:~:text=Chargers%20coach%20Jim%20Harbaugh%20said%20that%20Herbert",
+          "publishedAt": "2026-11-25T20:27:41.000Z"
         },
         {
           "label": "Michael Peterson",
@@ -187,12 +194,6 @@
           "title": "Los Angeles Chargers vs. New England Patriots: Where to Watch, Listen & Live Stream",
           "url": "https://www.chargers.com/news/2026-week-12-patriots-where-to-watch-listen-livestream",
           "publishedAt": "2026-11-25T16:00:00.000Z"
-        },
-        {
-          "label": "Liz Loza",
-          "title": "Making a tough flex decision this week? Here are some hard facts to help you feel good about the decision.",
-          "url": "https://www.espn.com/nfl/player/_/id/4685382/omarion-hampton#:~:text=Making%20a%20tough%20flex%20decision%20this%20week",
-          "publishedAt": "2026-11-25T15:22:54.000Z"
         }
       ]
     },
@@ -200,7 +201,7 @@
       "id": "lac_cl_health",
       "category": "injury",
       "headline": "Chargers Practice Report, Injury & IR Availability",
-      "summary": "Justin Herbert: Not practicing Wednesday: Chargers coach Jim Harbaugh said that Herbert (concussion) won't practice Wednesday, Noah Furtado of The Athletic reports. Visit RotoWire.com for more analysis on this update. — Chargers-Patriots Game Preview: Bolts de",
+      "summary": "Justin Herbert: Not practicing Wednesday: Chargers coach Jim Harbaugh said that Herbert (concussion) won't practice Wednesday, Noah Furtado of The Athletic reports. Visit RotoWire.com for more analysis on this update. — Chargers coach Jim Harbaugh said that He",
       "updatedAt": "2026-11-25T20:28:00.000Z",
       "itemCount": 6,
       "sourceLinks": [
@@ -209,6 +210,12 @@
           "title": "Justin Herbert: Not practicing Wednesday: Chargers coach Jim Harbaugh said that Herbert (concussion) won't practice Wednesday, Noah Furtado of The Athletic reports. Visit RotoWire.com for more analysis on this update.",
           "url": "https://www.rotowire.com/football/player/justin-herbert-14446",
           "publishedAt": "2026-11-25T20:28:00.000Z"
+        },
+        {
+          "label": "Noah Furtado",
+          "title": "Chargers coach Jim Harbaugh said that Herbert (concussion) won't practice Wednesday.",
+          "url": "https://www.espn.com/nfl/player/_/id/4038941/justin-herbert#:~:text=Chargers%20coach%20Jim%20Harbaugh%20said%20that%20Herbert",
+          "publishedAt": "2026-11-25T20:27:41.000Z"
         },
         {
           "label": "Michael Peterson",
@@ -233,12 +240,6 @@
           "title": "5 Takeaways: Chargers HC Jim Harbaugh Provides Injury Update on Justin Herbert",
           "url": "https://www.chargers.com/news/justin-herbert-injury-update-nfl-protocol-week-12",
           "publishedAt": "2026-11-24T15:30:00.000Z"
-        },
-        {
-          "label": "Los Angeles Chargers Official",
-          "title": "Chargers roster move: Waived WR Theo Wease. Signed RB Ian Wheeler to the practice squad. Released TE Josiah Deguara from the practice squad.",
-          "url": "https://www.chargers.com/team/transactions/#tx-3349c71efe42",
-          "publishedAt": "2026-11-24T08:00:00.000Z"
         }
       ]
     },
@@ -338,7 +339,7 @@
       "isBreaking": true,
       "isInGameInjury": false,
       "breakingBadge": "INJURY SCOOP",
-      "breakingPriority": 2.123,
+      "breakingPriority": 2.09,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -350,7 +351,49 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 77.7906
+      "storyRank": 62.4844
+    },
+    {
+      "id": "lac_pwire_4038941_64974628",
+      "type": "article",
+      "title": "Chargers coach Jim Harbaugh said that Herbert (concussion) won't practice Wednesday.",
+      "summary": "Herbert entered the NFL's concussion protocol following this past Sunday's 27-24 loss to the Jets, and the QB's pending absence from Wednesday's session gives him two more chances to officially log practice reps before f",
+      "publishedAt": "2026-11-25T20:27:41.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4038941/justin-herbert#:~:text=Chargers%20coach%20Jim%20Harbaugh%20said%20that%20Herbert",
+      "outletId": "athletic",
+      "outletName": "The Athletic",
+      "reporterId": "noah_furtado",
+      "reporterName": "Noah Furtado",
+      "author": "Noah Furtado",
+      "authorHandle": "@bynoahfurtado",
+      "authorProfileUrl": "https://x.com/bynoahfurtado",
+      "trustTier": 3,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4038941",
+          "name": "Justin Herbert",
+          "shortName": "J. Herbert",
+          "position": "QB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4038941.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "INJURY UPDATE",
+      "breakingPriority": 0.9,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 78,
+      "storyTier": "practice_injury",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 42,
+      "isSupersededInjuryUpdate": true
     },
     {
       "id": "lac_brss_bolts_from_the_blue_a6af7526ad69",
@@ -384,7 +427,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.2018
+      "storyRank": 10.4573
     },
     {
       "id": "lac_brss_bolts_from_the_blue_b4383d2f3dd6",
@@ -418,7 +461,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.9977
+      "storyRank": 7.5747
     },
     {
       "id": "lac_rss_999d24f3cbf7",
@@ -452,7 +495,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.4031
+      "storyRank": 5.1872
     },
     {
       "id": "lac_rss_bbc14cd6cfea",
@@ -486,7 +529,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.2925
+      "storyRank": 5.0841
     },
     {
       "id": "lac_pwire_4685382_50588158",
@@ -518,7 +561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.5043
+      "storyRank": 4.3438
     },
     {
       "id": "lac_brss_bolts_from_the_blue_975b1d48a411",
@@ -569,7 +612,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6931
+      "storyRank": 3.5784
     },
     {
       "id": "lac_rss_a06ff68c394b",
@@ -603,7 +646,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7993
+      "storyRank": 0.7909
     },
     {
       "id": "lac_pwire_4612826_49949224",
@@ -635,7 +678,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6412
+      "storyRank": 0.6354
     },
     {
       "id": "lac_brss_bolts_from_the_blue_f70452cac356",
@@ -669,7 +712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.566
+      "storyRank": 0.5613
     },
     {
       "id": "lac_rss_8b9f00848d65",
@@ -703,7 +746,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5513
+      "storyRank": 0.5468
     },
     {
       "id": "lac_rss_c4bd257848cf",
@@ -746,7 +789,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1718
+      "storyRank": 0.1702
     },
     {
       "id": "lac_rss_08b4e9624480",
@@ -780,7 +823,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4996
+      "storyRank": 0.4958
     },
     {
       "id": "lac_brss_bolts_from_the_blue_2c47746affd8",
@@ -814,7 +857,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4848
+      "storyRank": 0.4812
     },
     {
       "id": "lac_tx_3349c71efe42",
@@ -849,7 +892,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3747
+      "storyRank": 0.3724
     },
     {
       "id": "lac_vid_f597da1977a1",
@@ -894,7 +937,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.285
+      "storyRank": 0.2835
     },
     {
       "id": "lac_yts_gvZYsXcr_6g",
@@ -906,7 +949,7 @@
       "duration": "11:58",
       "imageUrl": "https://i.ytimg.com/vi/gvZYsXcr_6g/hqdefault.jpg",
       "imageAlt": "New York Jets vs. Los Angeles Chargers Highlights | NFL 2026 Season Week 11",
-      "publishedAt": "2026-11-23T20:36:16.607Z",
+      "publishedAt": "2026-11-23T20:46:12.317Z",
       "url": "https://www.youtube.com/watch?v=gvZYsXcr_6g",
       "externalVideoUrl": "https://www.youtube.com/watch?v=gvZYsXcr_6g",
       "channel": "NFL",
@@ -984,7 +1027,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.253
+      "storyRank": 0.2518
     },
     {
       "id": "lac_rss_dc895e7ae943",
@@ -1018,7 +1061,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2474
+      "storyRank": 0.2463
     },
     {
       "id": "lac_rss_75dbbcd77d80",
@@ -1052,7 +1095,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2283
+      "storyRank": 0.2273
     },
     {
       "id": "lac_rss_06f0044d7c90",
@@ -1086,7 +1129,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2225
+      "storyRank": 0.2215
     },
     {
       "id": "lac_brss_bolts_from_the_blue_2924721f6da8",
@@ -1129,7 +1172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2146
+      "storyRank": 0.2137
     },
     {
       "id": "lac_espn_7a956123b6c0f",
@@ -1164,7 +1207,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1634
+      "storyRank": 0.1629
     },
     {
       "id": "lac_brss_bolts_from_the_blue_9e31811b87b0",
@@ -1198,7 +1241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1148
+      "storyRank": 0.1144
     },
     {
       "id": "lac_espn_829588ca8e863",
@@ -1242,7 +1285,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1617
+      "storyRank": 0.1612
     },
     {
       "id": "lac_vid_f3fbd49d03be",
@@ -1287,7 +1330,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1614
+      "storyRank": 0.1608
     },
     {
       "id": "lac_brss_bolts_from_the_blue_1cba51059f4f",
@@ -1330,7 +1373,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1585
+      "storyRank": 0.1579
     },
     {
       "id": "lac_vid_6eb08188d239",
@@ -1383,7 +1426,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1609
+      "storyRank": 0.1603
     },
     {
       "id": "lac_vid_8e7f0640db83",
@@ -1428,7 +1471,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1605
+      "storyRank": 0.16
     },
     {
       "id": "lac_vid_b4691779ce53",
@@ -1473,7 +1516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1604
+      "storyRank": 0.1598
     },
     {
       "id": "lac_vid_2bc0232d7d19",
@@ -1518,7 +1561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1602
+      "storyRank": 0.1597
     },
     {
       "id": "lac_vid_feb773895762",
@@ -1554,7 +1597,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1599
+      "storyRank": 0.1593
     },
     {
       "id": "lac_vid_02766a75299a",
@@ -1599,7 +1642,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1587
+      "storyRank": 0.1582
     },
     {
       "id": "lac_rss_7bcb5f93799f",
@@ -1633,7 +1676,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1577
+      "storyRank": 0.1571
     },
     {
       "id": "lac_vid_81bb93d097b7",
@@ -1686,7 +1729,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1576
+      "storyRank": 0.1571
     },
     {
       "id": "lac_bsky_1a22357fad93",
@@ -1724,7 +1767,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1494
+      "storyRank": 0.1489
     },
     {
       "id": "lac_vid_b631fd69169f",
@@ -1777,7 +1820,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1564
+      "storyRank": 0.1559
     },
     {
       "id": "lac_brss_bolts_from_the_blue_a9fa84f491c6",
@@ -1811,7 +1854,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1495
+      "storyRank": 0.149
     },
     {
       "id": "lac_rss_3b239747f8a2",
@@ -1845,7 +1888,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0593
+      "storyRank": 0.0591
     },
     {
       "id": "lac_rss_8f8aa51ffb40",
@@ -1879,7 +1922,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0561
+      "storyRank": 0.056
     },
     {
       "id": "lac_rss_f9fe0ab84955",
@@ -1930,7 +1973,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0421
+      "storyRank": 0.042
     },
     {
       "id": "lac_tx_dc8ca1358c18",
@@ -1982,7 +2025,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0353
+      "storyRank": 0.0352
     },
     {
       "id": "lac_espn_45b75505a0499",
@@ -2017,7 +2060,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0313
+      "storyRank": 0.0312
     },
     {
       "id": "lac_espn_948e2e73e7ffb",
@@ -2052,7 +2095,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0312
+      "storyRank": 0.0311
     },
     {
       "id": "lac_rss_3a7eb75c0e3d",
@@ -2120,7 +2163,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0289
+      "storyRank": 0.0288
     },
     {
       "id": "lac_rss_46516db4cf00",
@@ -2197,7 +2240,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0248
+      "storyRank": 0.0247
     },
     {
       "id": "lac_rss_8bbdcea337d8",
@@ -2278,7 +2321,7 @@
       "duration": "10:01",
       "imageUrl": "https://i.ytimg.com/vi/24xA94YJFno/hqdefault.jpg",
       "imageAlt": "New York Jets vs Los Angeles Chargers | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:36:16.607Z",
+      "publishedAt": "2026-11-18T20:46:12.317Z",
       "url": "https://www.youtube.com/watch?v=24xA94YJFno",
       "externalVideoUrl": "https://www.youtube.com/watch?v=24xA94YJFno",
       "channel": "NFL",
@@ -2339,7 +2382,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0188
+      "storyRank": 0.0187
     },
     {
       "id": "lac_espn_2174513a3461e",
@@ -2374,7 +2417,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0179
+      "storyRank": 0.0178
     },
     {
       "id": "lac_espn_dede4a78d0e8e",
@@ -2409,7 +2452,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0363
+      "storyRank": 0.0362
     },
     {
       "id": "lac_rss_29d09beb402c",
@@ -2455,7 +2498,7 @@
       "duration": "17:43",
       "imageUrl": "https://i.ytimg.com/vi/iXTg27Lenug/hqdefault.jpg",
       "imageAlt": "Los Angeles Chargers vs Baltimore Ravens Game Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-17T20:36:16.607Z",
+      "publishedAt": "2026-11-17T20:46:12.317Z",
       "url": "https://www.youtube.com/watch?v=iXTg27Lenug",
       "externalVideoUrl": "https://www.youtube.com/watch?v=iXTg27Lenug",
       "channel": "NFL",
@@ -2945,7 +2988,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0344
+      "storyRank": 0.0343
     },
     {
       "id": "lac_bsky_2a153873a762",
@@ -3241,7 +3284,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0086
+      "storyRank": 0.0085
     },
     {
       "id": "lac_yt_Y34bLuTqs28",

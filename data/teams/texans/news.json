@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:09.819Z",
+  "updatedAt": "2026-11-25T20:45:16.287Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17CT",
     "cycleKey": "2026-11-24@17CT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "4-6",
-    "generatedAt": "2026-11-25T20:36:09.819Z",
+    "generatedAt": "2026-11-25T20:45:16.287Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -21,9 +21,9 @@
     "bullets": [
       "Roster & Front Office: Houston signed DT Junior Tafuna and WR Daniel Sobkowicz to the practice squad and released RB Dare Ogunbowale on Wednesday. We have signed Junior Tafuna and Daniel Sobkowicz to the practice squad [NFL Trade Rumors](https://nfltraderumors.co/texans-announce-three-roster-moves/).",
       "Injury & Practice Status: Entering Week 12 preparation, head coach DeMeco Ryans and the medical staff evaluate RB Woody Marks (concussion), WR Marvin Harrison Jr. (hamstring), DE Danielle Hunter (hamstring), and TE Brevin Jordan (foot) ahead of Wednesday's initial participation report [Jonathan M. Alexander](https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Marks%20%28concussion%29%20was%20on%20the%20practice%20field).",
-      "Week 12 Ravens Outlook: DeMeco Ryans and DC Matt Burke open installation for the Baltimore Ravens (4-7, HOU -7, HC Jesse Minter, OC Declan Doyle & DC Anthony Weaver (NRG Stadium)) as Houston prepares for a pivotal AFC matchup [houstontexans.com Official](https://www.houstontexans.com/news/texans-participate-in-nfl-s-2026-my-cause-my-cleats-initiative) [fizzyjoe](https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12).",
-      "AFC Playoff Trajectory: Entering Week 12 at 4-6 (2nd in AFC South • #9 Seed in AFC), Houston carries a 22.7% postseason projection, 5.4% AFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [houstontexans.com Official](https://www.houstontexans.com/news/houston-texans-de-will-anderson-jr-named-afc-defensive-player-of-the-week).",
-      "Statistical Profile & Matchup Edge: Through Week 11, Houston ranks #9 in Points / Game (25.9), #17 in Points Allowed / Game (22.2), #10 in Turnover Differential (+4), giving DeMeco Ryans and Matt Burke a clear benchmark ahead of Sun, Nov 29, 12:00 PM CST • NFL TV at [object Object] against the Baltimore Ravens [Scott Barzilla](https://www.battleredblog.com/houston-texans-analysis/79219/value-of-things-by-the-numbers)."
+      "Week 12 Ravens Outlook: DeMeco Ryans and DC Matt Burke open installation for the Baltimore Ravens (4-7, HOU -7, HC Jesse Minter, OC Declan Doyle & DC Anthony Weaver (NRG Stadium)) as Houston prepares for a pivotal AFC matchup [houstontexans.com Official](https://www.houstontexans.com/news/texans-participate-in-nfl-s-2026-my-cause-my-cleats-initiative) [Jonathan M. Alexander](https://www.espn.com/nfl/player/_/id/4432708/marvin-harrison-jr#:~:text=Harrison%20%28hamstring%29%20was%20at%20practice%20Wednesday%2C%20Jonathan).",
+      "AFC Playoff Trajectory: Entering Week 12 at 4-6 (2nd in AFC South • #9 Seed in AFC), Houston carries a 24% postseason projection, 5.8% AFC South division title mark, and 0% #1 Seed Bye equity into the conference stretch [houstontexans.com Official](https://www.houstontexans.com/news/houston-texans-de-will-anderson-jr-named-afc-defensive-player-of-the-week).",
+      "Statistical Profile & Matchup Edge: Through Week 11, Houston ranks #9 in Points / Game (25.9), #17 in Points Allowed / Game (22.2), #10 in Turnover Differential (+4), giving DeMeco Ryans and Matt Burke a clear benchmark ahead of Sun, Nov 29, 12:00 PM CST • NFL TV at [object Object] against the Baltimore Ravens [fizzyjoe](https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12)."
     ],
     "coveredStoryKeys": [
       "woodymarks::pre_game_availability",
@@ -33,19 +33,18 @@
       "https://nfltraderumors.co/texans-announce-three-roster-moves/",
       "https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Marks%20(concussion)%20was%20on%20the%20practice%20field",
       "https://www.houstontexans.com/news/texans-participate-in-nfl-s-2026-my-cause-my-cleats-initiative",
-      "https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12",
+      "https://www.espn.com/nfl/player/_/id/4432708/marvin-harrison-jr#:~:text=Harrison%20(hamstring)%20was%20at%20practice%20Wednesday%2C%20Jonathan",
       "https://www.houstontexans.com/news/houston-texans-de-will-anderson-jr-named-afc-defensive-player-of-the-week",
       "https://www.espn.com/nfl/story/_/id/50577306/ravens-noncommittal-whether-cb-humphrey-play-sunday",
-      "https://www.battleredblog.com/houston-texans-analysis/79219/value-of-things-by-the-numbers",
+      "https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12",
       "https://www.houstontexans.com/news/houston-texans-transactions-11-25-2026",
       "https://www.battleredblog.com/houston-texans-analysis/79265/texans-fans-can-give-thanks-for",
       "https://x.com/TexansCommenter/status/2125378576962691518",
       "https://www.battleredblog.com/houston-texans-news/79261/houston-texans-news-wednesday-november-25-2026",
-      "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
       "https://www.espn.com/nfl/player/_/id/4035538/david-montgomery#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
       "https://www.profootballrumors.com/2026/11/nfl-practice-squad-updates-11-23-26",
-      "https://www.houstontexans.com/team/transactions/#tx-21c533294b27",
-      "https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Head%20coach%20DeMeco%20Ryans%20said%20Monday%20that"
+      "https://www.houstontexans.com/team/transactions/#tx-21c533294b27"
     ],
     "sources": [
       {
@@ -74,11 +73,11 @@
       },
       {
         "type": "article",
-        "author": "fizzyjoe",
-        "outlet": "Battle Red Blog",
-        "title": "Houston Texans NFL Power Rankings: Week 12",
-        "url": "https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12",
-        "publishedAt": "2026-11-25T16:01:18.000Z"
+        "author": "Jonathan M. Alexander",
+        "outlet": "Houston Chronicle",
+        "title": "Harrison (hamstring) was at practice Wednesday.",
+        "url": "https://www.espn.com/nfl/player/_/id/4432708/marvin-harrison-jr#:~:text=Harrison%20(hamstring)%20was%20at%20practice%20Wednesday%2C%20Jonathan",
+        "publishedAt": "2026-11-25T19:07:12.000Z"
       },
       {
         "type": "article",
@@ -98,11 +97,11 @@
       },
       {
         "type": "article",
-        "author": "Scott Barzilla",
+        "author": "fizzyjoe",
         "outlet": "Battle Red Blog",
-        "title": "How much better is the Texans offense than last season?",
-        "url": "https://www.battleredblog.com/houston-texans-analysis/79219/value-of-things-by-the-numbers",
-        "publishedAt": "2026-11-24T15:29:38.000Z"
+        "title": "Houston Texans NFL Power Rankings: Week 12",
+        "url": "https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12",
+        "publishedAt": "2026-11-25T16:01:18.000Z"
       },
       {
         "type": "article",
@@ -141,7 +140,7 @@
         "author": "Eric Karabell",
         "outlet": "ESPN / X Beat Wire",
         "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-        "url": "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
+        "url": "https://www.espn.com/nfl/player/_/id/4035538/david-montgomery#:~:text=Need%20to%20know%20how%20to%20value%20players",
         "publishedAt": "2026-11-24T20:18:57.000Z"
       }
     ]
@@ -151,7 +150,7 @@
       "id": "hou_cl_top",
       "category": "beat",
       "headline": "Houston Texans Week 12 Top Headlines (4-6)",
-      "summary": "Texans Participate in NFL's 2026 My Cause My Cleats Initiative — Marks (concussion) was on the practice field Wednesday.",
+      "summary": "Texans Participate in NFL's 2026 My Cause My Cleats Initiative — Harrison (hamstring) was at practice Wednesday.",
       "updatedAt": "2026-11-25T20:29:24.000Z",
       "itemCount": 6,
       "sourceLinks": [
@@ -160,6 +159,12 @@
           "title": "Texans Participate in NFL's 2026 My Cause My Cleats Initiative",
           "url": "https://www.houstontexans.com/news/texans-participate-in-nfl-s-2026-my-cause-my-cleats-initiative",
           "publishedAt": "2026-11-25T20:29:24.000Z"
+        },
+        {
+          "label": "Jonathan M. Alexander",
+          "title": "Harrison (hamstring) was at practice Wednesday.",
+          "url": "https://www.espn.com/nfl/player/_/id/4432708/marvin-harrison-jr#:~:text=Harrison%20(hamstring)%20was%20at%20practice%20Wednesday%2C%20Jonathan",
+          "publishedAt": "2026-11-25T19:07:12.000Z"
         },
         {
           "label": "Jonathan M. Alexander",
@@ -184,12 +189,6 @@
           "title": "Houston Texans DE Will Anderson Jr. Named AFC Defensive Player Of The Week",
           "url": "https://www.houstontexans.com/news/houston-texans-de-will-anderson-jr-named-afc-defensive-player-of-the-week",
           "publishedAt": "2026-11-25T17:00:00.000Z"
-        },
-        {
-          "label": "fizzyjoe",
-          "title": "Houston Texans NFL Power Rankings: Week 12",
-          "url": "https://www.battleredblog.com/houston-texans-power-rankings/79275/houston-texans-nfl-power-rankings-week-12",
-          "publishedAt": "2026-11-25T16:01:18.000Z"
         }
       ]
     },
@@ -197,10 +196,16 @@
       "id": "hou_cl_health",
       "category": "injury",
       "headline": "Texans Practice Report, Injury & IR Availability",
-      "summary": "Marks (concussion) was on the practice field Wednesday. — Texans roster move: Signed DT Junior Tafuna and WR Daniel Sobkowicz to the practice squad. Released RB Dare Ogunbowale.",
-      "updatedAt": "2026-11-25T19:00:50.000Z",
+      "summary": "Harrison (hamstring) was at practice Wednesday. — Marks (concussion) was on the practice field Wednesday.",
+      "updatedAt": "2026-11-25T19:07:12.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "Jonathan M. Alexander",
+          "title": "Harrison (hamstring) was at practice Wednesday.",
+          "url": "https://www.espn.com/nfl/player/_/id/4432708/marvin-harrison-jr#:~:text=Harrison%20(hamstring)%20was%20at%20practice%20Wednesday%2C%20Jonathan",
+          "publishedAt": "2026-11-25T19:07:12.000Z"
+        },
         {
           "label": "Jonathan M. Alexander",
           "title": "Marks (concussion) was on the practice field Wednesday.",
@@ -215,7 +220,7 @@
         },
         {
           "label": "Houston Stressans",
-          "title": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts up front.\n\nI know",
+          "title": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts up front.\n\nI know the opponent needs to be taken into…",
           "url": "https://x.com/TexansCommenter/status/2125378576962691518",
           "publishedAt": "2026-11-24T23:58:35.029Z"
         },
@@ -230,12 +235,6 @@
           "title": "Head coach DeMeco Ryans said Monday that Marks (concussion) is \"trending in the right direction,\" and the Texans \"are hopeful to have him\" for Sunday's game against the Ravens.",
           "url": "https://www.espn.com/nfl/player/_/id/4429059/woody-marks#:~:text=Head%20coach%20DeMeco%20Ryans%20said%20Monday%20that",
           "publishedAt": "2026-11-23T19:05:14.000Z"
-        },
-        {
-          "label": "Houston Texans Official",
-          "title": "Texans roster move: Placed DE Chris Braswell on the practice squad injured list.",
-          "url": "https://www.houstontexans.com/team/transactions/#tx-bf0024bf7861",
-          "publishedAt": "2026-11-23T08:00:00.000Z"
         }
       ]
     },
@@ -249,7 +248,7 @@
       "sourceLinks": [
         {
           "label": "Houston Stressans",
-          "title": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts up front.\n\nI know",
+          "title": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts up front.\n\nI know the opponent needs to be taken into…",
           "url": "https://x.com/TexansCommenter/status/2125378576962691518",
           "publishedAt": "2026-11-24T23:58:35.029Z"
         },
@@ -284,13 +283,13 @@
         {
           "label": "Eric Karabell",
           "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-          "url": "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
+          "url": "https://www.espn.com/nfl/player/_/id/4035538/david-montgomery#:~:text=Need%20to%20know%20how%20to%20value%20players",
           "publishedAt": "2026-11-24T20:18:57.000Z"
         },
         {
           "label": "Eric Karabell",
           "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-          "url": "https://www.espn.com/nfl/player/_/id/4035538/david-montgomery#:~:text=Need%20to%20know%20how%20to%20value%20players",
+          "url": "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
           "publishedAt": "2026-11-24T20:18:57.000Z"
         },
         {
@@ -341,7 +340,48 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 47.0553
+      "storyRank": 39.7912
+    },
+    {
+      "id": "hou_pwire_4432708_64972828",
+      "type": "article",
+      "title": "Harrison (hamstring) was at practice Wednesday.",
+      "summary": "Harrison has missed two straight games, but his looming practice participation, in any capacity, is a good sign regarding his availability as Sunday's game against the Ravens approaches. The Texans' upcoming injury repor",
+      "publishedAt": "2026-11-25T19:07:12.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4432708/marvin-harrison-jr#:~:text=Harrison%20(hamstring)%20was%20at%20practice%20Wednesday%2C%20Jonathan",
+      "outletId": "houston_chronicle_public_beat_wire_hou",
+      "outletName": "Houston Chronicle",
+      "reporterId": "jonathan_m_alexander",
+      "reporterName": "Jonathan M. Alexander",
+      "author": "Jonathan M. Alexander",
+      "authorHandle": "@jonmalexander",
+      "authorProfileUrl": "https://x.com/jonmalexander",
+      "trustTier": 1,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [
+        {
+          "id": "4432708",
+          "name": "Marvin Harrison Jr.",
+          "shortName": "M. Harrison Jr.",
+          "position": "WR",
+          "jersey": 18,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432708.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 14.8895
     },
     {
       "id": "hou_yt_YHHIsspyM2w",
@@ -379,7 +419,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 15.1598
+      "storyRank": 14.0342
     },
     {
       "id": "hou_pwire_4429059_64972728",
@@ -420,7 +460,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.1363
+      "storyRank": 10.1253
     },
     {
       "id": "hou_nfltr_6bd5e1da133c",
@@ -454,7 +494,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.3689
+      "storyRank": 9.766
     },
     {
       "id": "hou_rss_82289e7dcec6",
@@ -488,7 +528,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.954
+      "storyRank": 9.3975
     },
     {
       "id": "hou_rss_287d5188e276",
@@ -531,7 +571,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.9419
+      "storyRank": 6.6386
     },
     {
       "id": "hou_brss_battle_red_blog_a4cb9f892648",
@@ -565,7 +605,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.2346
+      "storyRank": 5.0441
     },
     {
       "id": "hou_tx_21c533294b27",
@@ -590,7 +630,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.769,
+      "breakingPriority": 0.758,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -600,7 +640,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.4367
+      "storyRank": 4.3744
     },
     {
       "id": "hou_brss_battle_red_blog_c175b715d16c",
@@ -634,18 +674,18 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.5773
+      "storyRank": 2.5201
     },
     {
       "id": "x_tl_texanscommenter_2125378576962691518",
       "type": "tweet",
-      "title": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts up front.\n\nI know",
-      "fullText": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts up front.\n\nI know",
-      "isFullTweet": true,
+      "title": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts up front.\n\nI know the opponent needs to be taken into…",
+      "fullText": "All 33 designed runs by the Texans vs. the Colts.\n\nBy far the Texans best run-blocking performance of the season, earning an 86.7 PFF run-blocking grade. Their previous season high was 67.6.\n\nBoth David Montgomery and Emari Demercado looked good, but it starts up front.\n\nI know the opponent needs to be taken into consideration, but outside of the Browns game, I do feel like the Texans run blocking has started to trend in the right direction as of late, also Braden Smith makes a big difference.\n\nGetting back to the 1-2 punch of Montgomery and Woody Marks, while now having what appears to be a viable third option in Demercado, could be huge for this offense down the stretch.\n\nWe'll see how much of that improvement was opponent-driven, but certainly encouraging to see.",
+      "isFullTweet": false,
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125378065152790528/img/yy_C2QR0qbJ_J3c9.jpg",
       "imageAlt": "Houston Stressans post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125378065152790528/vid/avc1/1280x720/AX-u27k37tSzUjjs.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125378065152790528/vid/avc1/1920x1080/rDw9aoPo61Vt6SNm.mp4?tag=29",
       "duration": "3:05",
       "embeddable": true,
       "mentionedPlayers": [
@@ -658,12 +698,28 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4362478.png"
         },
         {
+          "id": "4429059",
+          "name": "Woody Marks",
+          "shortName": "W. Marks",
+          "position": "RB",
+          "jersey": 4,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429059.png"
+        },
+        {
           "id": "4035538",
           "name": "David Montgomery",
           "shortName": "D. Montgomery",
           "position": "RB",
           "jersey": 32,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035538.png"
+        },
+        {
+          "id": "3121595",
+          "name": "Braden Smith",
+          "shortName": "B. Smith",
+          "position": "OT",
+          "jersey": 71,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3121595.png"
         }
       ],
       "publishedAt": "2026-11-24T23:58:35.029Z",
@@ -693,7 +749,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7804
+      "storyRank": 1.7644
     },
     {
       "id": "hou_brss_battle_red_blog_1f45d7277ee4",
@@ -736,39 +792,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.3293
-    },
-    {
-      "id": "hou_pwire_4258173_49949224",
-      "type": "article",
-      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
-      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
-      "publishedAt": "2026-11-24T20:18:57.000Z",
-      "url": "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "outletId": "espn",
-      "outletName": "ESPN / X Beat Wire",
-      "reporterId": null,
-      "reporterName": "Eric Karabell",
-      "author": "Eric Karabell",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
-      "trustTier": 2,
-      "wireSource": "espn_player_wire",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.6413
+      "storyRank": 1.3107
     },
     {
       "id": "hou_pwire_4035538_49949224",
@@ -800,7 +824,39 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6413
+      "storyRank": 0.636
+    },
+    {
+      "id": "hou_pwire_4258173_49949224",
+      "type": "article",
+      "title": "Need to know how to value players from this point forward for production or trade discussions? Eric Karabell has you covered.",
+      "summary": "Which players are on the rise and which ones are falling, and what does it mean for their prospects for the rest of the season? Dak Prescott is continuing his climb in the QB ranks. Jonah Coleman bursts into the top 10 a",
+      "publishedAt": "2026-11-24T20:18:57.000Z",
+      "url": "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "outletId": "espn",
+      "outletName": "ESPN / X Beat Wire",
+      "reporterId": null,
+      "reporterName": "Eric Karabell",
+      "author": "Eric Karabell",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.espn.com/nfl/player/_/id/4258173/nico-collins#:~:text=Need%20to%20know%20how%20to%20value%20players",
+      "trustTier": 2,
+      "wireSource": "espn_player_wire",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.636
     },
     {
       "id": "hou_brss_battle_red_blog_cb985132b2da",
@@ -834,7 +890,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5026
+      "storyRank": 0.4991
     },
     {
       "id": "hou_pfr_2fe42aa5dcec",
@@ -867,7 +923,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2882
+      "storyRank": 0.2868
     },
     {
       "id": "hou_espn_da80639075b30",
@@ -902,7 +958,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1734
+      "storyRank": 0.1726
     },
     {
       "id": "hou_brss_battle_red_blog_d7247a40a607",
@@ -936,7 +992,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2616
+      "storyRank": 0.2604
     },
     {
       "id": "hou_vid_8585d9c38684",
@@ -997,7 +1053,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2533
+      "storyRank": 0.2522
     },
     {
       "id": "hou_vid_a328299d188b",
@@ -1050,7 +1106,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2533
+      "storyRank": 0.2522
     },
     {
       "id": "hou_pwire_4429059_64936228",
@@ -1091,7 +1147,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2481
+      "storyRank": 0.247
     },
     {
       "id": "x_tl_minakimes_2124923169131597890",
@@ -1130,7 +1186,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2634
+      "storyRank": 0.2623
     },
     {
       "id": "hou_espn_46925ec83b509",
@@ -1166,7 +1222,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2398
+      "storyRank": 0.2388
     },
     {
       "id": "hou_rss_130d1bdfa080",
@@ -1200,7 +1256,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2376
+      "storyRank": 0.2366
     },
     {
       "id": "hou_tx_bf0024bf7861",
@@ -1235,7 +1291,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.188
+      "storyRank": 0.1873
     },
     {
       "id": "hou_brss_battle_red_blog_8340258c961e",
@@ -1269,7 +1325,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.162
+      "storyRank": 0.1615
     },
     {
       "id": "hou_brss_battle_red_blog_6c82ac283fad",
@@ -1303,7 +1359,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1333
+      "storyRank": 0.1329
     },
     {
       "id": "hou_brss_battle_red_blog_7bdd9f988b14",
@@ -1337,22 +1393,30 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1179
+      "storyRank": 0.1176
     },
     {
       "id": "x_tl_jacobbarzilla_2124201729831084412",
       "type": "tweet",
-      "title": "Interested to see if David Montgomery can continue his good week into the 2nd half of the year.\n\nNever looked like he lost a step physically but just was having some issues seeing the field and poor OL play.\n\nExcellent run here and blocking downfield from Dalton Schultz & Kayshon",
-      "fullText": "Interested to see if David Montgomery can continue his good week into the 2nd half of the year.\n\nNever looked like he lost a step physically but just was having some issues seeing the field and poor OL play.\n\nExcellent run here and blocking downfield from Dalton Schultz & Kayshon",
+      "title": "Interested to see if David Montgomery can continue his good week into the 2nd half of the year.\n\nNever looked like he lost a step physically but just was having some issues seeing the field and poor OL play.\n\nExcellent run here and blocking downfield from Dalton Schultz & Kayshon Boutte.",
+      "fullText": "Interested to see if David Montgomery can continue his good week into the 2nd half of the year.\n\nNever looked like he lost a step physically but just was having some issues seeing the field and poor OL play.\n\nExcellent run here and blocking downfield from Dalton Schultz & Kayshon Boutte.",
       "isFullTweet": true,
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2124199756855435265/img/PEK8r7ZYrWM6wV7l.jpg",
       "imageAlt": "Jacob Barzilla post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2124199756855435265/vid/avc1/1180x746/LDCR-Nb8LLx3KrlT.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2124199756855435265/vid/avc1/1180x746/LDCR-Nb8LLx3KrlT.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:07",
       "embeddable": true,
       "mentionedPlayers": [
+        {
+          "id": "4429022",
+          "name": "Kayshon Boutte",
+          "shortName": "K. Boutte",
+          "position": "WR",
+          "jersey": 14,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4429022.png"
+        },
         {
           "id": "4035538",
           "name": "David Montgomery",
@@ -1397,7 +1461,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.104
+      "storyRank": 0.1038
     },
     {
       "id": "hou_espn_4b15838125df3",
@@ -1432,7 +1496,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.075
+      "storyRank": 0.0749
     },
     {
       "id": "hou_yts_E4M4HIAfJl4",
@@ -1444,7 +1508,7 @@
       "duration": "13:34",
       "imageUrl": "https://i.ytimg.com/vi/E4M4HIAfJl4/hqdefault.jpg",
       "imageAlt": "Indianapolis Colts vs Houston Texans Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-20T20:36:10.663Z",
+      "publishedAt": "2026-11-20T20:45:17.301Z",
       "url": "https://www.youtube.com/watch?v=E4M4HIAfJl4",
       "externalVideoUrl": "https://www.youtube.com/watch?v=E4M4HIAfJl4",
       "channel": "NFL",
@@ -1505,7 +1569,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0724
+      "storyRank": 0.0723
     },
     {
       "id": "hou_rss_f8e7a71d27f7",
@@ -1556,7 +1620,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0714
+      "storyRank": 0.0712
     },
     {
       "id": "hou_rss_38f299a4829a",
@@ -1607,7 +1671,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0698
+      "storyRank": 0.0697
     },
     {
       "id": "hou_espn_f5b4a624b92a5",
@@ -1652,7 +1716,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0691
+      "storyRank": 0.069
     },
     {
       "id": "hou_rss_303b96b4013e",
@@ -1686,7 +1750,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0683
+      "storyRank": 0.0682
     },
     {
       "id": "hou_espn_96b0a67231c07",
@@ -1730,7 +1794,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0634
+      "storyRank": 0.0633
     },
     {
       "id": "hou_espn_8009380056ffb",
@@ -1774,7 +1838,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0621
+      "storyRank": 0.062
     },
     {
       "id": "hou_rss_5b609087ef14",
@@ -1817,7 +1881,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0621
+      "storyRank": 0.062
     },
     {
       "id": "x_tl_nflperformances_2123635833127252076",
@@ -1828,7 +1892,7 @@
       "summary": "NFL DPOY Power Rankings on Kalshi after Week 8: 1. Will Anderson Jr (29%) 2. Jeffery Simmons (14%) 3. Fred Warner (12%) 4. Aidan Hutchinson (11%) 5. TJ Watt (11%) 6. Greg Rousseau (5%) 7. Dexter Lawrence (4%) 8. Dallas T",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2123635512279707649/img/PNSa8YkCj3Acd09A.jpg",
       "imageAlt": "Football Performances post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2123635512279707649/vid/avc1/720x720/EiDFwpdYPKCGBf8n.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2123635512279707649/vid/avc1/1440x1440/xa4NtokgK11dx8NK.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "1:36",
       "embeddable": true,
@@ -1869,7 +1933,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0665
+      "storyRank": 0.0664
     },
     {
       "id": "hou_espn_fc1786a99b942",
@@ -1904,7 +1968,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0617
+      "storyRank": 0.0616
     },
     {
       "id": "x_tl_pff_2123635771701678548",
@@ -1913,7 +1977,7 @@
       "fullText": "Will Anderson Jr sacks by season\n\nGames\n2023 7.0 13\n2024 11.0 14\n2025 12.0 17\n2026 11.5 10",
       "isFullTweet": true,
       "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HXirbdrXUAA2osh.jpg",
+      "imageUrl": "https://pbs.twimg.com/media/HXirbdrXUAA2osh.jpg?name=orig",
       "imageAlt": "PFF post",
       "hasInlineChartImage": true,
       "mentionedPlayers": [
@@ -1953,7 +2017,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0665
+      "storyRank": 0.0664
     },
     {
       "id": "x_tl_pff_2123635028706144461",
@@ -1962,7 +2026,7 @@
       "fullText": "C.J. Stroud leads the pack 👀",
       "isFullTweet": true,
       "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HXiqzaTbwAAf2hR.jpg",
+      "imageUrl": "https://pbs.twimg.com/media/HXiqzaTbwAAf2hR.jpg?name=orig",
       "imageAlt": "PFF post",
       "hasInlineChartImage": true,
       "mentionedPlayers": [
@@ -2002,7 +2066,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0665
+      "storyRank": 0.0664
     },
     {
       "id": "hou_espn_7eb40fcb22b0c",
@@ -2135,7 +2199,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0614
+      "storyRank": 0.0613
     },
     {
       "id": "hou_vid_264b880400ad",
@@ -2207,7 +2271,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0614
+      "storyRank": 0.0613
     },
     {
       "id": "hou_vid_35c1483dc4b3",
@@ -2252,7 +2316,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0613
+      "storyRank": 0.0612
     },
     {
       "id": "hou_vid_d23b2eb3b8a2",
@@ -2288,7 +2352,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0613
+      "storyRank": 0.0612
     },
     {
       "id": "hou_vid_b955f742fa67",
@@ -2378,7 +2442,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0607
+      "storyRank": 0.0606
     },
     {
       "id": "hou_vid_a9aff8ab4ada",
@@ -2423,7 +2487,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0605
+      "storyRank": 0.0604
     },
     {
       "id": "hou_vid_f3313d8951c7",
@@ -2468,7 +2532,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0605
+      "storyRank": 0.0604
     },
     {
       "id": "hou_vid_1428c615e1df",
@@ -2521,7 +2585,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0603
+      "storyRank": 0.0602
     },
     {
       "id": "hou_vid_287749a1ee24",
@@ -2574,7 +2638,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0601
+      "storyRank": 0.06
     },
     {
       "id": "hou_vid_20df84e78b84",
@@ -2619,7 +2683,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.06
+      "storyRank": 0.0599
     },
     {
       "id": "hou_vid_8585f22a157d",
@@ -2672,7 +2736,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0599
+      "storyRank": 0.0598
     },
     {
       "id": "hou_vid_6d27701523a3",
@@ -2717,7 +2781,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0597
+      "storyRank": 0.0596
     },
     {
       "id": "hou_pfr_998734380091",
@@ -2870,7 +2934,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0272
+      "storyRank": 0.0271
     },
     {
       "id": "hou_espn_0144ed4dabfb9",
@@ -2905,7 +2969,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0259
+      "storyRank": 0.0258
     },
     {
       "id": "hou_tx_58c0295af297",
@@ -3007,7 +3071,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0231
+      "storyRank": 0.023
     },
     {
       "id": "hou_yts_m6xFWXq-7uM",
@@ -3019,7 +3083,7 @@
       "duration": "7:01",
       "imageUrl": "https://i.ytimg.com/vi/m6xFWXq-7uM/hqdefault.jpg",
       "imageAlt": "Indianapolis Colts vs Houston Texans | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:36:10.663Z",
+      "publishedAt": "2026-11-18T20:45:17.301Z",
       "url": "https://www.youtube.com/watch?v=m6xFWXq-7uM",
       "externalVideoUrl": "https://www.youtube.com/watch?v=m6xFWXq-7uM",
       "channel": "NFL",
@@ -3082,7 +3146,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0055
+      "storyRank": 0.0054
     },
     {
       "id": "hou_espn_fa26439649e51",
@@ -3229,7 +3293,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0185
+      "storyRank": 0.0184
     },
     {
       "id": "hou_vid_b70a1742b6a2",
@@ -3290,7 +3354,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0185
+      "storyRank": 0.0184
     },
     {
       "id": "hou_rss_4560ad88bfd3",
@@ -3453,7 +3517,7 @@
       "duration": "16:26",
       "imageUrl": "https://i.ytimg.com/vi/DJaODmVRaUo/hqdefault.jpg",
       "imageAlt": "Houston Texans vs. Cleveland Browns Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-16T20:36:10.663Z",
+      "publishedAt": "2026-11-16T20:45:17.301Z",
       "url": "https://www.youtube.com/watch?v=DJaODmVRaUo",
       "externalVideoUrl": "https://www.youtube.com/watch?v=DJaODmVRaUo",
       "channel": "NFL",
@@ -4061,7 +4125,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0133
+      "storyRank": 0.0132
     },
     {
       "id": "hou_vid_a0475d882c8f",
@@ -4343,7 +4407,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0117
+      "storyRank": 0.0116
     },
     {
       "id": "hou_rss_4b9772a70cc4",
@@ -4573,7 +4637,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0102
+      "storyRank": 0.0101
     },
     {
       "id": "hou_rss_c934540e4596",
@@ -4684,7 +4748,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0094
+      "storyRank": 0.0093
     },
     {
       "id": "hou_vid_1ef37c166cf7",
@@ -4720,7 +4784,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0094
+      "storyRank": 0.0093
     },
     {
       "id": "hou_vid_ccb8a99af807",
@@ -4799,7 +4863,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0091
+      "storyRank": 0.009
     },
     {
       "id": "hou_tx_fe0f3a589534",
@@ -5166,7 +5230,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.008
+      "storyRank": 0.0079
     },
     {
       "id": "hou_vid_4c559ee94404",
@@ -6196,14 +6260,22 @@
       "fullText": "David Montgomery as expected no injury listing for #Texans\nGood to go for #Colts game",
       "isFullTweet": true,
       "summary": "#Texans lineup updates for #Colts game: Veteran running back David Montgomery is expected back from groin injury, per sources Cornerback Kamari Lassiter (wrist) set to play, too Pro Bowl defensive end Danielle Hunter (ha",
-      "imageUrl": "https://pbs.twimg.com/media/HXb4Fd1WsAEIU0C.jpg",
+      "imageUrl": "https://pbs.twimg.com/media/HXb4Fd1WsAEIU0C.jpg?name=orig",
       "imageUrls": [
-        "https://pbs.twimg.com/media/HXb4Fd1WsAEIU0C.jpg",
-        "https://pbs.twimg.com/media/HXb4FxeW8AAaxD3.jpg"
+        "https://pbs.twimg.com/media/HXb4Fd1WsAEIU0C.jpg?name=orig",
+        "https://pbs.twimg.com/media/HXb4FxeW8AAaxD3.jpg?name=orig"
       ],
       "imageAlt": "Aaron Wilson post",
       "hasInlineChartImage": true,
       "mentionedPlayers": [
+        {
+          "id": "4432708",
+          "name": "Marvin Harrison Jr.",
+          "shortName": "M. Harrison Jr.",
+          "position": "WR",
+          "jersey": 18,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4432708.png"
+        },
         {
           "id": "4429059",
           "name": "Woody Marks",
@@ -6219,6 +6291,14 @@
           "position": "RB",
           "jersey": 32,
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035538.png"
+        },
+        {
+          "id": "16734",
+          "name": "Jadeveon Clowney",
+          "shortName": "J. Clowney",
+          "position": "DE",
+          "jersey": 90,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16734.png"
         },
         {
           "id": "2976560",

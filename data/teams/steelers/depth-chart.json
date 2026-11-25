@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:07.350Z",
+  "updatedAt": "2026-11-25T20:45:34.723Z",
   "week": 12,
   "units": [
     {
@@ -1418,7 +1418,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608004.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Reserve/PUP",
               "isAvailable": false
             }
           ],
@@ -1450,7 +1450,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608004.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Reserve/PUP",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1581,7 +1581,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608004.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Reserve/PUP",
               "isAvailable": false
             }
           ],
@@ -1613,7 +1613,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608004.png",
               "baselineRank": 3,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Reserve/PUP",
               "isAvailable": false,
               "demotedDueToInjury": true
             }
@@ -1681,7 +1681,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608004.png",
               "baselineRank": 6,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Reserve/PUP",
               "isAvailable": false
             }
           ],
@@ -1743,7 +1743,7 @@
               "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4608004.png",
               "baselineRank": 6,
               "playProbabilityPct": 0,
-              "statusBadge": "0% • IR",
+              "statusBadge": "0% • Reserve/PUP",
               "isAvailable": false,
               "demotedDueToInjury": true
             }

@@ -1,9 +1,7 @@
 {
-  "updatedAt": "2026-11-25T20:36:07.350Z",
-  "count": 77,
-  "excludedGhostIds": [
-    "4035198"
-  ],
+  "updatedAt": "2026-11-25T20:45:34.723Z",
+  "count": 78,
+  "excludedGhostIds": [],
   "departedPlayers": [],
   "positionalLeaderboards": {
     "IOL:off_snap_pct": {
@@ -54580,6 +54578,16 @@
       "sfPlayerId": "4427190",
       "pfrGames": 2
     },
+    "sf_4035198": {
+      "name": "Brandon Johnson",
+      "team": "PIT",
+      "pos": "WR",
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035198.png",
+      "pfrUrl": "https://www.pro-football-reference.com/players/J/JohnBr23.htm",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4035198/brandon-johnson",
+      "sfPlayerId": "4035198",
+      "pfrGames": 1
+    },
     "sf_4240577": {
       "name": "Brandon Smith",
       "team": "PIT",
@@ -55778,7 +55786,7 @@
       "tone": "crimson",
       "player": "Brandon Johnson",
       "pos": "WR",
-      "playerId": null,
+      "playerId": "4035198",
       "isElevation": false
     },
     {
@@ -60031,6 +60039,689 @@
       }
     },
     {
+      "id": "4035198",
+      "gsisId": "00-0037382",
+      "pfrId": "JohnBr23",
+      "otcId": "10634",
+      "otcSlug": null,
+      "otcUrl": "https://overthecap.com/player/brandon-johnson/10634/",
+      "espnUrl": "https://www.espn.com/nfl/player/_/id/4035198/brandon-johnson",
+      "pfrUrl": "https://www.pro-football-reference.com/players/J/JohnBr23.htm",
+      "name": "Brandon Johnson",
+      "shortName": "B. Johnson",
+      "jersey": 89,
+      "position": "WR",
+      "unit": "Offense",
+      "rosterBucket": "practice_squad",
+      "age": 28,
+      "displayHeight": "6' 2\"",
+      "displayWeight": "208 lbs",
+      "experienceYears": 3,
+      "college": "UCF",
+      "draftInfo": "Undrafted / CFA",
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4035198.png",
+      "capHit2026": 0,
+      "contractsByYear": {},
+      "snapSummary": {
+        "gamesLogged": 3,
+        "offenseSnaps": 21,
+        "offenseSnapPct": 11,
+        "defenseSnaps": 0,
+        "defenseSnapPct": 0,
+        "stSnaps": 0,
+        "stSnapPct": 0
+      },
+      "primarySnapPct": 11,
+      "stats2026": {
+        "season": 2026,
+        "team": "PIT",
+        "games": 1,
+        "passing": {
+          "completions": 0,
+          "attempts": 0,
+          "yards": 0,
+          "tds": 0,
+          "ints": 0,
+          "sacks": 0,
+          "epa": 0,
+          "cpoe": 0,
+          "airYards": 0,
+          "yac": 0,
+          "firstDowns": 0
+        },
+        "rushing": {
+          "carries": 0,
+          "yards": 0,
+          "tds": 0,
+          "epa": 0,
+          "firstDowns": 0,
+          "explosive10Plus": 0,
+          "fumblesLost": 0
+        },
+        "receiving": {
+          "receptions": 1,
+          "targets": 1,
+          "yards": 9,
+          "tds": 0,
+          "epa": 0.43,
+          "yac": 3,
+          "airYards": 6,
+          "targetSharePct": 0.3,
+          "airYardsSharePct": 0.2,
+          "wopr": 0.01,
+          "racr": 1.5,
+          "firstDowns": 0
+        },
+        "defense": {
+          "soloTackles": 0,
+          "assistTackles": 0,
+          "totalTackles": 0,
+          "tfl": 0,
+          "sacks": 0,
+          "qbHits": 0,
+          "ints": 0,
+          "passDefended": 0,
+          "forcedFumbles": 0
+        },
+        "kicking": {
+          "fgMade": 0,
+          "fgAtt": 0,
+          "fgPct": 0,
+          "fgLong": 0,
+          "patMade": 0,
+          "patAtt": 0,
+          "punts": 0,
+          "puntYards": 0,
+          "puntInside20": 0
+        }
+      },
+      "weeklyLog2026": [
+        {
+          "wk": 6,
+          "opp": "TB",
+          "ha": "away",
+          "res": "W",
+          "pf": 26,
+          "pa": 19,
+          "gid": "401873002",
+          "oSn": 3,
+          "oPct": 4
+        },
+        {
+          "wk": 7,
+          "opp": "NO",
+          "ha": "neutral",
+          "res": "W",
+          "pf": 16,
+          "pa": 10,
+          "gid": "401873011",
+          "oSn": 8,
+          "oPct": 12
+        },
+        {
+          "wk": 8,
+          "opp": "CLE",
+          "ha": "home",
+          "res": "W",
+          "pf": 27,
+          "pa": 6,
+          "div": 1,
+          "gid": "401873027",
+          "rec": 1,
+          "tgt": 1,
+          "recYds": 9,
+          "recEpa": 0.43,
+          "oSn": 10,
+          "oPct": 17
+        }
+      ],
+      "careerSeasons": [
+        {
+          "season": 2026,
+          "team": "PIT",
+          "games": 1,
+          "passing": {
+            "completions": 0,
+            "attempts": 0,
+            "yards": 0,
+            "tds": 0,
+            "ints": 0,
+            "sacks": 0,
+            "epa": 0,
+            "cpoe": 0,
+            "airYards": 0,
+            "yac": 0,
+            "firstDowns": 0
+          },
+          "rushing": {
+            "carries": 0,
+            "yards": 0,
+            "tds": 0,
+            "epa": 0,
+            "firstDowns": 0,
+            "explosive10Plus": 0,
+            "fumblesLost": 0
+          },
+          "receiving": {
+            "receptions": 1,
+            "targets": 1,
+            "yards": 9,
+            "tds": 0,
+            "epa": 0.43,
+            "yac": 3,
+            "airYards": 6,
+            "targetSharePct": 0.3,
+            "airYardsSharePct": 0.2,
+            "wopr": 0.01,
+            "racr": 1.5,
+            "firstDowns": 0
+          },
+          "defense": {
+            "soloTackles": 0,
+            "assistTackles": 0,
+            "totalTackles": 0,
+            "tfl": 0,
+            "sacks": 0,
+            "qbHits": 0,
+            "ints": 0,
+            "passDefended": 0,
+            "forcedFumbles": 0
+          },
+          "kicking": {
+            "fgMade": 0,
+            "fgAtt": 0,
+            "fgPct": 0,
+            "fgLong": 0,
+            "patMade": 0,
+            "patAtt": 0,
+            "punts": 0,
+            "puntYards": 0,
+            "puntInside20": 0
+          }
+        },
+        {
+          "season": 2024,
+          "team": "PIT",
+          "games": 1,
+          "passing": {
+            "completions": 0,
+            "attempts": 0,
+            "yards": 0,
+            "tds": 0,
+            "ints": 0,
+            "sacks": 0,
+            "epa": 0,
+            "cpoe": 0,
+            "airYards": 0,
+            "yac": 0,
+            "firstDowns": 0
+          },
+          "rushing": {
+            "carries": 0,
+            "yards": 0,
+            "tds": 0,
+            "epa": 0,
+            "firstDowns": 0,
+            "explosive10Plus": 0,
+            "fumblesLost": 0
+          },
+          "receiving": {
+            "receptions": 1,
+            "targets": 1,
+            "yards": 9,
+            "tds": 0,
+            "epa": 0.49,
+            "yac": 4,
+            "airYards": 5,
+            "targetSharePct": 0.2,
+            "airYardsSharePct": 0.1,
+            "wopr": 0,
+            "racr": 1.8,
+            "firstDowns": 0
+          },
+          "defense": {
+            "soloTackles": 0,
+            "assistTackles": 0,
+            "totalTackles": 0,
+            "tfl": 0,
+            "sacks": 0,
+            "qbHits": 0,
+            "ints": 0,
+            "passDefended": 0,
+            "forcedFumbles": 0
+          },
+          "kicking": {
+            "fgMade": 0,
+            "fgAtt": 0,
+            "fgPct": 0,
+            "fgLong": 0,
+            "patMade": 0,
+            "patAtt": 0,
+            "punts": 0,
+            "puntYards": 0,
+            "puntInside20": 0
+          }
+        },
+        {
+          "season": 2023,
+          "team": "DEN",
+          "games": 10,
+          "passing": {
+            "completions": 0,
+            "attempts": 0,
+            "yards": 0,
+            "tds": 0,
+            "ints": 0,
+            "sacks": 0,
+            "epa": 0,
+            "cpoe": 0,
+            "airYards": 0,
+            "yac": 0,
+            "firstDowns": 0
+          },
+          "rushing": {
+            "carries": 0,
+            "yards": 0,
+            "tds": 0,
+            "epa": 0,
+            "firstDowns": 0,
+            "explosive10Plus": 0,
+            "fumblesLost": 0
+          },
+          "receiving": {
+            "receptions": 19,
+            "targets": 30,
+            "yards": 284,
+            "tds": 4,
+            "epa": 18.29,
+            "yac": 89,
+            "airYards": 328,
+            "targetSharePct": 6.3,
+            "airYardsSharePct": 8.7,
+            "wopr": 0.16,
+            "racr": 0.87,
+            "firstDowns": 12
+          },
+          "defense": {
+            "soloTackles": 0,
+            "assistTackles": 0,
+            "totalTackles": 0,
+            "tfl": 0,
+            "sacks": 0,
+            "qbHits": 0,
+            "ints": 0,
+            "passDefended": 0,
+            "forcedFumbles": 0
+          },
+          "kicking": {
+            "fgMade": 0,
+            "fgAtt": 0,
+            "fgPct": 0,
+            "fgLong": 0,
+            "patMade": 0,
+            "patAtt": 0,
+            "punts": 0,
+            "puntYards": 0,
+            "puntInside20": 0
+          }
+        }
+      ],
+      "nextGenStats": null,
+      "pfrAdvStats": null,
+      "publicEfficiencyNote": null,
+      "spiderProfile": {
+        "posGroup": "WR",
+        "sourceType": "Pro Day / Calibrated Athletic Profile",
+        "verifiedDrillCount": 0,
+        "compositeRas": 8.51,
+        "axes": [
+          {
+            "key": "heightIn",
+            "label": "Height",
+            "value": 74,
+            "displayValue": "6'2\"",
+            "unit": "in",
+            "percentile": 70,
+            "isCombineVerified": false
+          },
+          {
+            "key": "weightLb",
+            "label": "Weight",
+            "value": 208,
+            "displayValue": "208 lbs",
+            "unit": "lbs",
+            "percentile": 66,
+            "isCombineVerified": false
+          },
+          {
+            "key": "armIn",
+            "label": "Arm Length",
+            "value": 32.31,
+            "displayValue": "32.3\"",
+            "unit": "in",
+            "percentile": 77,
+            "isCombineVerified": false
+          },
+          {
+            "key": "forty",
+            "label": "40-Yd Dash",
+            "value": 4.43,
+            "displayValue": "4.43s",
+            "unit": "s",
+            "percentile": 76,
+            "isCombineVerified": false
+          },
+          {
+            "key": "tenSplit",
+            "label": "10-Yd Split",
+            "value": 1.54,
+            "displayValue": "1.54s",
+            "unit": "s",
+            "percentile": 77,
+            "isCombineVerified": false
+          },
+          {
+            "key": "vertical",
+            "label": "Vertical",
+            "value": 36.2,
+            "displayValue": "36.2\"",
+            "unit": "in",
+            "percentile": 60,
+            "isCombineVerified": false
+          },
+          {
+            "key": "broad",
+            "label": "Broad Jump",
+            "value": 124,
+            "displayValue": "10'4\"",
+            "unit": "in",
+            "percentile": 68,
+            "isCombineVerified": false
+          },
+          {
+            "key": "threeCone",
+            "label": "3-Cone",
+            "value": 6.82,
+            "displayValue": "6.82s",
+            "unit": "s",
+            "percentile": 76,
+            "isCombineVerified": false
+          },
+          {
+            "key": "shuttle",
+            "label": "20-Yd Shuttle",
+            "value": 4.13,
+            "displayValue": "4.13s",
+            "unit": "s",
+            "percentile": 75,
+            "isCombineVerified": false
+          },
+          {
+            "key": "bench",
+            "label": "Bench Press",
+            "value": 16,
+            "displayValue": "16 reps",
+            "unit": "reps",
+            "percentile": 64,
+            "isCombineVerified": false
+          }
+        ],
+        "historicalComps": [
+          {
+            "name": "David Terrell",
+            "draftYear": 2001,
+            "school": "Michigan",
+            "similarityPct": 94,
+            "pfrUrl": "https://www.pro-football-reference.com/players/T/TerrDa00.htm"
+          },
+          {
+            "name": "Derek Hagan",
+            "draftYear": 2006,
+            "school": "Arizona State",
+            "similarityPct": 94,
+            "pfrUrl": "https://www.pro-football-reference.com/players/H/HagaDe00.htm"
+          },
+          {
+            "name": "DeVante Parker",
+            "draftYear": 2015,
+            "school": "Louisville",
+            "similarityPct": 94,
+            "pfrUrl": "https://www.pro-football-reference.com/players/P/ParkDe01.htm"
+          }
+        ]
+      },
+      "health": {
+        "status": "Practice Squad",
+        "injuryType": "",
+        "returnDate": null,
+        "isSeasonEnding": false,
+        "isPracticeWindowOpen": false,
+        "designatedDateIso": null,
+        "blurbDateIso": null,
+        "placedBeforeWeek": null,
+        "earliestEligibleWeek": null,
+        "projectedReturnWeek": null,
+        "byeWeekNote": "",
+        "irBeatNote": "",
+        "fantasyStatusAbbr": "",
+        "isIrReturnQuestionable": false,
+        "isOnPracticeReport": false,
+        "wed": "-",
+        "thu": "-",
+        "fri": "-",
+        "shortComment": "",
+        "longComment": "",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
+        "factors": [
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
+        ],
+        "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+        "weeklyHistory2026": []
+      },
+      "recentNews": [],
+      "statProfile2026": {
+        "seasonYear": 2026,
+        "peerGroup": "WR",
+        "peerGroupLabel": "Wide Receivers",
+        "hasActiveStats": true,
+        "sections": [
+          {
+            "id": "primary",
+            "title": "2026 Receiving & Route Efficiency",
+            "peerGroupLabel": "Wide Receivers",
+            "coreRows": [
+              {
+                "key": "rec_yds_game",
+                "label": "Receiving Yards / Game",
+                "group": null,
+                "value": 3,
+                "displayValue": "3.0 yds",
+                "rank": 78,
+                "totalPeers": 78,
+                "qualified": false,
+                "higherIsBetter": true,
+                "posAvgDisplay": "51.5 yds",
+                "scope": "player",
+                "leaderboardKey": "WR:rec_yds_game"
+              },
+              {
+                "key": "rec_yds_total",
+                "label": "Total Receiving Yards",
+                "group": null,
+                "value": 9,
+                "displayValue": "9",
+                "rank": 114,
+                "totalPeers": 114,
+                "qualified": false,
+                "higherIsBetter": true,
+                "posAvgDisplay": "383",
+                "scope": "player",
+                "leaderboardKey": "WR:rec_yds_total"
+              },
+              {
+                "key": "rec_total",
+                "label": "Receptions",
+                "group": null,
+                "value": 1,
+                "displayValue": "1",
+                "rank": 114,
+                "totalPeers": 114,
+                "qualified": false,
+                "higherIsBetter": true,
+                "posAvgDisplay": "29",
+                "scope": "player",
+                "leaderboardKey": "WR:rec_total"
+              },
+              {
+                "key": "rec_tds",
+                "label": "Receiving Touchdowns",
+                "group": null,
+                "value": 0,
+                "displayValue": "0",
+                "rank": 100,
+                "totalPeers": 114,
+                "qualified": false,
+                "higherIsBetter": true,
+                "posAvgDisplay": "2",
+                "scope": "player",
+                "leaderboardKey": "WR:rec_tds"
+              },
+              {
+                "key": "tgt_share",
+                "label": "Target Share %",
+                "group": null,
+                "value": 0.3,
+                "displayValue": "0.3%",
+                "rank": 78,
+                "totalPeers": 78,
+                "qualified": false,
+                "higherIsBetter": true,
+                "posAvgDisplay": "18.0%",
+                "scope": "player",
+                "leaderboardKey": "WR:tgt_share"
+              },
+              {
+                "key": "yds_per_tgt",
+                "label": "Yards / Target",
+                "group": null,
+                "value": 9,
+                "displayValue": "9.00 yds",
+                "rank": 22,
+                "totalPeers": 78,
+                "qualified": false,
+                "higherIsBetter": true,
+                "posAvgDisplay": "8.12 yds",
+                "scope": "player",
+                "leaderboardKey": "WR:yds_per_tgt"
+              },
+              {
+                "key": "rec_epa",
+                "label": "Receiving EPA",
+                "group": null,
+                "value": 0.4306,
+                "displayValue": "+0.4",
+                "rank": 93,
+                "totalPeers": 114,
+                "qualified": false,
+                "higherIsBetter": true,
+                "posAvgDisplay": "+9.6",
+                "scope": "player",
+                "leaderboardKey": "WR:rec_epa"
+              }
+            ],
+            "expandedRows": [
+              {
+                "key": "catch_pct",
+                "label": "Catch %",
+                "group": "Hands, Chains & Catch Reliability",
+                "value": 100,
+                "displayValue": "100.0%",
+                "rank": 1,
+                "totalPeers": 78,
+                "qualified": false,
+                "higherIsBetter": true,
+                "posAvgDisplay": "62.1%",
+                "scope": "player",
+                "leaderboardKey": "WR:catch_pct"
+              },
+              {
+                "key": "pfr_drop_pct",
+                "label": "Drop % (PFR)",
+                "group": "Hands, Chains & Catch Reliability",
+                "value": 0,
+                "displayValue": "0.0%",
+                "rank": 1,
+                "totalPeers": 101,
+                "qualified": false,
+                "higherIsBetter": false,
+                "posAvgDisplay": "4.9%",
+                "scope": "player",
+                "leaderboardKey": "WR:pfr_drop_pct"
+              },
+              {
+                "key": "rec_1d",
+                "label": "Receiving 1st Downs",
+                "group": "Hands, Chains & Catch Reliability",
+                "value": 0,
+                "displayValue": "0",
+                "rank": 114,
+                "totalPeers": 114,
+                "qualified": false,
+                "higherIsBetter": true,
+                "posAvgDisplay": "18",
+                "scope": "player",
+                "leaderboardKey": "WR:rec_1d"
+              },
+              {
+                "key": "adot",
+                "label": "Avg Depth of Target (aDOT)",
+                "group": "Route Depth, Opportunity & Separation",
+                "value": 6,
+                "displayValue": "6.0 yds",
+                "rank": 75,
+                "totalPeers": 78,
+                "qualified": false,
+                "higherIsBetter": true,
+                "posAvgDisplay": "11.1 yds",
+                "scope": "player",
+                "leaderboardKey": "WR:adot"
+              },
+              {
+                "key": "wopr",
+                "label": "WOPR (Weighted Opportunity)",
+                "group": "Route Depth, Opportunity & Separation",
+                "value": 0.006,
+                "displayValue": "0.01",
+                "rank": 78,
+                "totalPeers": 78,
+                "qualified": false,
+                "higherIsBetter": true,
+                "posAvgDisplay": "0.44",
+                "scope": "player",
+                "leaderboardKey": "WR:wopr"
+              },
+              {
+                "key": "yac_per_rec",
+                "label": "Yards After Catch / Rec",
+                "group": "After-the-Catch Creation",
+                "value": 3,
+                "displayValue": "3.00 yds",
+                "rank": 63,
+                "totalPeers": 78,
+                "qualified": false,
+                "higherIsBetter": true,
+                "posAvgDisplay": "4.28 yds",
+                "scope": "player",
+                "leaderboardKey": "WR:yac_per_rec"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "id": "4240577",
       "gsisId": "00-0036775",
       "pfrId": "SmitBr07",
@@ -62102,7 +62793,20 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "pit_vid_445752a0fc56",
+          "type": "video",
+          "headline": "WATCH: Cameron Heyward Media Availability (Nov. 24)",
+          "title": "WATCH: Cameron Heyward Media Availability (Nov. 24)",
+          "summary": "Cameron Heyward spoke to the media on Tuesday, November 24th ahead of the Steelers week 12 game against the Broncos",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/steelers/o7lwr7utpj6ekue0uxin.jpg",
+          "url": "https://www.steelers.com/video/watch-cameron-heyward-media-availability-nov-24",
+          "author": "steelers.com Video",
+          "outletName": "steelers.com Video",
+          "publishedAt": "2026-11-24T22:10:16.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "IDL",
@@ -69011,6 +69715,17 @@
       },
       "recentNews": [
         {
+          "id": "pit_pfr_17e99025f07b",
+          "type": "article",
+          "headline": "Steelers Activate Derrick Harmon From IR",
+          "title": "Steelers Activate Derrick Harmon From IR",
+          "summary": "NOVEMBER 14: The Steelers have activated Harmon, DeFabo reports. He will play in the team’s crucial road meeting with the AFC North rival Bengals on Sunday, per DeFabo. To make room for Harmon, the Steelers waived cornerback Terell Smith, a",
+          "url": "https://www.profootballrumors.com/2026/11/steelers-designate-dt-derrick-harmon-to-return-from-ir",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-14T20:04:00.000Z"
+        },
+        {
           "id": "pit_tx_f518bbd99016",
           "type": "tweet",
           "headline": "Steelers roster move: Waived CB Terell Smith. Activated DT Derrick Harmon from injured reserve.",
@@ -69827,7 +70542,19 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "pit_pfr_960c57cf75d7",
+          "type": "article",
+          "headline": "Steelers S DeShon Elliott Missing Game With Knee Injury",
+          "title": "Steelers S DeShon Elliott Missing Game With Knee Injury",
+          "summary": "In tonight’s game against the Bengals, the passing yards given up in one half by the Steelers exceeded the full-game totals allowed by all but five teams who have played this week. One factor of that could be the absence of safety DeShon El",
+          "url": "https://www.profootballrumors.com/2026/11/steelers-s-deshon-elliott-missing-game-with-knee-injury",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-16T04:28:21.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "S",
@@ -71689,7 +72416,7 @@
         ]
       },
       "health": {
-        "status": "Injured Reserve",
+        "status": "Reserve / PUP",
         "injuryType": "Undisclosed",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -71698,9 +72425,9 @@
         "blurbDateIso": "2026-09-01T00:02Z",
         "placedBeforeWeek": 1,
         "earliestEligibleWeek": 5,
-        "projectedReturnWeek": "TBD (21d Window Not Open)",
+        "projectedReturnWeek": "Est. Week 13 (Dec 6)",
         "byeWeekNote": "4-game NFL minimum requirement",
-        "irBeatNote": "4-game minimum satisfied on Injured Reserve (Undisclosed); awaiting 21-day practice window designation.",
+        "irBeatNote": "4-game minimum satisfied on Reserve / PUP (Undisclosed); awaiting 21-day practice window designation.",
         "fantasyStatusAbbr": "",
         "isIrReturnQuestionable": false,
         "isOnPracticeReport": false,
@@ -71711,9 +72438,9 @@
         "longComment": "",
         "playProbabilityPct": 0,
         "playTier": "OUT",
-        "playBadgeLabel": "0% • IR",
+        "playBadgeLabel": "0% • Reserve/PUP",
         "factors": [
-          "On Injured Reserve — 21-day practice window not yet opened"
+          "Reserve / Physically Unable to Perform — 21-day window required before activation"
         ],
         "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
         "weeklyHistory2026": []
@@ -73720,7 +74447,7 @@
       "jersey": 93,
       "position": "DT",
       "unit": "Defense",
-      "rosterBucket": "active",
+      "rosterBucket": "practice_squad",
       "age": 27,
       "displayHeight": "6' 5\"",
       "displayWeight": "282 lbs",
@@ -73729,19 +74456,7 @@
       "draftInfo": "2022 • Rd 5, Pick #165",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240759.png",
       "capHit2026": 0,
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      },
+      "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -74021,7 +74736,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -74041,11 +74756,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
@@ -74803,6 +75518,17 @@
         ]
       },
       "recentNews": [
+        {
+          "id": "pit_pfr_5724b6fd4901",
+          "type": "article",
+          "headline": "Steelers Designate WRs Michael Pittman, Roman Wilson To Return From IR",
+          "title": "Steelers Designate WRs Michael Pittman, Roman Wilson To Return From IR",
+          "summary": "The Steelers designated four players to return from injured reserve on Tuesday, per ESPN’s Brooke Pryor, including wide receivers Michael Pittman and Roman Wilson. Rookie offensive lineman Gennings Dunker and practice squad wide receiver/ru",
+          "url": "https://www.profootballrumors.com/2026/11/steelers-designate-wrs-michael-pittman-roman-wilson-to-return-from-ir",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-18T20:38:04.000Z"
+        },
         {
           "id": "pit_tx_0f66c0efb2a4",
           "type": "tweet",
@@ -76305,7 +77031,20 @@
         "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
         "weeklyHistory2026": []
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "pit_vid_40f109a6821e",
+          "type": "video",
+          "headline": "WATCH: Jack Sawyer Media Availability (Nov. 23)",
+          "title": "WATCH: Jack Sawyer Media Availability (Nov. 23)",
+          "summary": "Jack Sawyer spoke to the media on Monday, November 23rd following the Steelers week 11 game against the Eagles",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/steelers/i8tepty5tsbkfzckc5ef.jpg",
+          "url": "https://www.steelers.com/video/watch-jack-sawyer-media-availability-nov-23",
+          "author": "steelers.com Video",
+          "outletName": "steelers.com Video",
+          "publishedAt": "2026-11-23T16:56:21.000Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "LB",
@@ -83529,7 +84268,7 @@
       "jersey": 81,
       "position": "TE",
       "unit": "Offense",
-      "rosterBucket": "active",
+      "rosterBucket": "practice_squad",
       "age": 24,
       "displayHeight": "6' 4\"",
       "displayWeight": "243 lbs",
@@ -83538,19 +84277,7 @@
       "draftInfo": "Undrafted / CFA",
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566198.png",
       "capHit2026": 0,
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      },
+      "contractsByYear": {},
       "snapSummary": {
         "gamesLogged": 0,
         "offenseSnaps": 0,
@@ -83689,7 +84416,7 @@
         ]
       },
       "health": {
-        "status": "Active",
+        "status": "Practice Squad",
         "injuryType": "",
         "returnDate": null,
         "isSeasonEnding": false,
@@ -83709,11 +84436,11 @@
         "fri": "-",
         "shortComment": "",
         "longComment": "",
-        "playProbabilityPct": 99,
-        "playTier": "ACTIVE",
-        "playBadgeLabel": "99% • Full Go",
+        "playProbabilityPct": 0,
+        "playTier": "PRACTICE_SQUAD",
+        "playBadgeLabel": "0% • Prac. Squad",
         "factors": [
-          "Off injury report; full active status"
+          "On Practice Squad — ineligible for game day unless elevated to the 53-man active roster"
         ],
         "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
         "weeklyHistory2026": []
@@ -86411,6 +87138,17 @@
       },
       "recentNews": [
         {
+          "id": "pit_pfr_c53c596b985d",
+          "type": "article",
+          "headline": "Steelers LG Mason McCormick Suffers Dislocated Ankle; Playoff Return Possible",
+          "title": "Steelers LG Mason McCormick Suffers Dislocated Ankle; Playoff Return Possible",
+          "summary": "1:41pm: The Steelers have placed McCormick on IR, per Adam Schefter of ESPN. 10:01am: It looked as if Steelers left guard Mason McCormick would miss the rest of the 2026 campaign when he was carted off the field with a leg injury in Week 10",
+          "url": "https://www.profootballrumors.com/2026/11/steelers-lg-mason-mccormick-suffers-dislocated-ankle-playoff-return-possible",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-18T19:41:13.000Z"
+        },
+        {
           "id": "pit_tx_0f66c0efb2a4",
           "type": "tweet",
           "headline": "Steelers roster move: Reinstated WR Max Hurleman from the practice squad injured list. Designated G Gennings Dunker and WRs Michael Pittman and Roman Wilson to return from injured reserve. Placed G Mason McCormick on injured reserve. Released WR Isaiah Hodgins from the practice squad.",
@@ -87114,6 +87852,20 @@
           "publishedAt": "2026-11-25T20:14:17.000Z"
         },
         {
+          "id": "pit_bsky_78003a41b442",
+          "type": "tweet",
+          "headline": "Mason Rudolph in the Steelers facility somewhere",
+          "title": "Mason Rudolph in the Steelers facility somewhere",
+          "fullText": "Mason Rudolph in the Steelers facility somewhere",
+          "summary": "",
+          "imageUrl": "https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:2buz4gf5sew3rdwzbxsvcd4s/bafkreihhfcfy546h2sl47s2ew4sq6tt3fj7t3sfv7xmrig22c5h2psatly",
+          "hasInlineChartImage": true,
+          "url": "https://bsky.app/profile/minakimes.bsky.social/post/3n35ttz42w22f",
+          "author": "Mina Kimes",
+          "outletName": "Mina Kimes",
+          "publishedAt": "2026-11-25T19:01:22.350Z"
+        },
+        {
           "id": "pit_brss_behind_the_steel_curtain_f141f75e7d5e",
           "type": "article",
           "headline": "Aaron Rodgers, several Steelers ‘frustrated’ with Mike McCarthy",
@@ -87123,6 +87875,17 @@
           "author": "Jarrett Bailey",
           "outletName": "Behind The Steel Curtain",
           "publishedAt": "2026-11-25T18:45:22.000Z"
+        },
+        {
+          "id": "pit_pfr_bc341ed1baaf",
+          "type": "article",
+          "headline": "Latest On Aaron Rodgers’ Benching",
+          "title": "Latest On Aaron Rodgers’ Benching",
+          "summary": "In a stunning late-night development on Tuesday, the playoff-contending Steelers made a quarterback change for Week 12. Career backup Mason Rudolph will start in place of future Hall of Famer Aaron Rodgers, who will be inactive against the",
+          "url": "https://www.profootballrumors.com/2026/11/latest-on-aaron-rodgers-benching",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-25T16:34:08.000Z"
         },
         {
           "id": "pit_brss_behind_the_steel_curtain_b11c4e412e00",
@@ -87136,17 +87899,16 @@
           "publishedAt": "2026-11-25T16:12:58.000Z"
         },
         {
-          "id": "x_tl_schultz_report_2125591675552841813",
+          "id": "x_tl_rapsheet_2125608047582265767",
           "type": "tweet",
-          "headline": "Sources: Aaron Rodgers was not at the #Steelers facility this morning as preparation for Friday’s game vs Denver continues.\n\nIt’s unclear if he’ll show up at all today. I’ve heard there are players who are not happy with the sudden decision.",
-          "title": "Sources: Aaron Rodgers was not at the #Steelers facility this morning as preparation for Friday’s game vs Denver continues.\n\nIt’s unclear if he’ll show up at all today. I’ve heard there are players who are not happy with the sudden decision.",
-          "fullText": "Sources: Aaron Rodgers was not at the #Steelers facility this morning as preparation for Friday’s game vs Denver continues.\n\nIt’s unclear if he’ll show up at all today. I’ve heard there are players who are not happy with the sudden decision.",
-          "summary": "The #Steelers are benching QB Aaron Rodgers in favor of veteran Mason Rudolph, per sources. https://t.co/V8HggPMtLR",
-          "imageUrl": "https://pbs.twimg.com/media/HX-eXQMWAAAj-QG.jpg",
-          "url": "https://x.com/Schultz_Report/status/2125591675552841813",
-          "author": "Jordan Schultz",
-          "outletName": "NFL Insider",
-          "publishedAt": "2026-11-25T14:05:21.692Z"
+          "headline": "Steelers players have been surprised by the benching of Aaron Rodgers. But important to remember: Had Rodgers not signed, PIT was rolling with Mason Rudolph.\n\nHe’s got a lot of fans in that locker room.",
+          "title": "Steelers players have been surprised by the benching of Aaron Rodgers. But important to remember: Had Rodgers not signed, PIT was rolling with Mason Rudolph.\n\nHe’s got a lot of fans in that locker room.",
+          "fullText": "Steelers players have been surprised by the benching of Aaron Rodgers. But important to remember: Had Rodgers not signed, PIT was rolling with Mason Rudolph.\n\nHe’s got a lot of fans in that locker room.",
+          "summary": "Here is full story on the dramatic benching of #Steelers QB Aaron Rodgers, via @bepryor: https://www.espn.com/nfl/story/_/id/50589757/steelers-bench-struggling-qb-aaron-rodgers-start-mason-rudolph https://www.espn.com/nf",
+          "url": "https://x.com/RapSheet/status/2125608047582265767",
+          "author": "Ian Rapoport",
+          "outletName": "NFL Network",
+          "publishedAt": "2026-11-25T15:10:25.088Z"
         },
         {
           "id": "pit_brss_behind_the_steel_curtain_24548d9f3078",
@@ -87160,17 +87922,42 @@
           "publishedAt": "2026-11-25T14:31:09.000Z"
         },
         {
+          "id": "x_tl_schultz_report_2125591675552841813",
+          "type": "tweet",
+          "headline": "Sources: Aaron Rodgers was not at the #Steelers facility this morning as preparation for Friday’s game vs Denver continues.\n\nIt’s unclear if he’ll show up at all today. I’ve heard there are players who are not happy with the sudden decision.",
+          "title": "Sources: Aaron Rodgers was not at the #Steelers facility this morning as preparation for Friday’s game vs Denver continues.\n\nIt’s unclear if he’ll show up at all today. I’ve heard there are players who are not happy with the sudden decision.",
+          "fullText": "Sources: Aaron Rodgers was not at the #Steelers facility this morning as preparation for Friday’s game vs Denver continues.\n\nIt’s unclear if he’ll show up at all today. I’ve heard there are players who are not happy with the sudden decision.",
+          "summary": "The #Steelers are benching QB Aaron Rodgers in favor of veteran Mason Rudolph, per sources.",
+          "imageUrl": "https://pbs.twimg.com/media/HX-eXQMWAAAj-QG.jpg?name=orig",
+          "url": "https://x.com/Schultz_Report/status/2125591675552841813",
+          "author": "Jordan Schultz",
+          "outletName": "NFL Insider",
+          "publishedAt": "2026-11-25T14:05:21.692Z"
+        },
+        {
           "id": "x_tl_schultz_report_2125452481991725459",
           "type": "tweet",
           "headline": "Sources: The #Steelers’ decision to bench Aaron Rodgers is one the team intends to revisit in the near future.\n\nBut after a very difficult last two weeks, Pittsburgh feels the offense needs a spark and wants to give Mason Rudolph a try.",
           "title": "Sources: The #Steelers’ decision to bench Aaron Rodgers is one the team intends to revisit in the near future.\n\nBut after a very difficult last two weeks, Pittsburgh feels the offense needs a spark and wants to give Mason Rudolph a try.",
           "fullText": "Sources: The #Steelers’ decision to bench Aaron Rodgers is one the team intends to revisit in the near future.\n\nBut after a very difficult last two weeks, Pittsburgh feels the offense needs a spark and wants to give Mason Rudolph a try.",
-          "summary": "The #Steelers are benching QB Aaron Rodgers in favor of veteran Mason Rudolph, per sources. https://t.co/V8HggPMtLR",
-          "imageUrl": "https://pbs.twimg.com/media/HX8fxMKWcAA0sP9.jpg",
+          "summary": "The #Steelers are benching QB Aaron Rodgers in favor of veteran Mason Rudolph, per sources.",
+          "imageUrl": "https://pbs.twimg.com/media/HX8fxMKWcAA0sP9.jpg?name=orig",
           "url": "https://x.com/Schultz_Report/status/2125452481991725459",
           "author": "Jordan Schultz",
           "outletName": "NFL Insider",
           "publishedAt": "2026-11-25T04:52:15.361Z"
+        },
+        {
+          "id": "x_tl_bepryor_2125451141404307509",
+          "type": "tweet",
+          "headline": "Benching Aaron Rodgers for Mason Rudolph was a coaches' decision, and one that was made throughout the course of today.\n\nAs much as this was about Rodgers' and the offensive struggles over the last two games, the move to Rudolph also bc of his past ability to spark the Steelers",
+          "title": "Benching Aaron Rodgers for Mason Rudolph was a coaches' decision, and one that was made throughout the course of today.\n\nAs much as this was about Rodgers' and the offensive struggles over the last two games, the move to Rudolph also bc of his past ability to spark the Steelers",
+          "fullText": "Benching Aaron Rodgers for Mason Rudolph was a coaches' decision, and one that was made throughout the course of today.\n\nAs much as this was about Rodgers' and the offensive struggles over the last two games, the move to Rudolph also bc of his past ability to spark the Steelers",
+          "summary": "",
+          "url": "https://x.com/bepryor/status/2125451141404307509",
+          "author": "Brooke Pryor",
+          "outletName": "ESPN Pittsburgh Steelers Beat",
+          "publishedAt": "2026-11-25T04:46:55.740Z"
         },
         {
           "id": "pit_pwire_3116407_64970128",
@@ -87182,6 +87969,17 @@
           "author": "Tom Pelissero",
           "outletName": "NFL Network",
           "publishedAt": "2026-11-25T04:25:26.000Z"
+        },
+        {
+          "id": "pit_pfr_bd5e26ae3cd4",
+          "type": "article",
+          "headline": "Steelers Bench QB Aaron Rodgers",
+          "title": "Steelers Bench QB Aaron Rodgers",
+          "summary": "Aaron Rodgers will not take the field for the Steelers in their Black Friday game. Instead, the Broncos will face Mason Rudolph. Mike McCarthy is benching the future Hall of Fame QB. The team announced Rudolph’s move into the starting lineu",
+          "url": "https://www.profootballrumors.com/2026/11/steelers-to-bench-qb-aaron-rodgers",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-25T04:19:34.000Z"
         }
       ],
       "statProfile2026": {
@@ -89091,6 +89889,30 @@
           "publishedAt": "2026-11-24T21:51:07.000Z"
         },
         {
+          "id": "pit_rss_3d8251c45866",
+          "type": "article",
+          "headline": "Asked and Answered: Nov. 24",
+          "title": "Asked and Answered: Nov. 24",
+          "summary": "Questions about DK's status; Pittman Jr.'s availability",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/steelers/tdb85ryzjjd3lsjktqq5.jpg",
+          "url": "https://www.steelers.com/news/asked-and-answered-nov-24-x2520",
+          "author": "steelers.com Official",
+          "outletName": "steelers.com Official",
+          "publishedAt": "2026-11-24T11:05:00.000Z"
+        },
+        {
+          "id": "pit_rss_641e02b68eb0",
+          "type": "article",
+          "headline": "Hurleman debut, plan for Pittman, pressure",
+          "title": "Hurleman debut, plan for Pittman, pressure",
+          "summary": "Coordinators turn the page from Philadelphia to Denver",
+          "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/steelers/op9vpwjgwrcaec5ks8df.jpg",
+          "url": "https://www.steelers.com/news/hurleman-debut-plan-for-pittman-pressure",
+          "author": "steelers.com Official",
+          "outletName": "steelers.com Official",
+          "publishedAt": "2026-11-23T21:30:00.000Z"
+        },
+        {
           "id": "pit_pwire_4035687_64937828",
           "type": "article",
           "headline": "Steelers coach Mike McCarthy said Monday that he's \"very confident\" Pittman (foot) will be on the field this week when the Steelers face the Broncos on Friday.",
@@ -89102,6 +89924,17 @@
           "publishedAt": "2026-11-23T20:37:36.000Z"
         },
         {
+          "id": "pit_pfr_72b100a5d25d",
+          "type": "article",
+          "headline": "Steelers Activate WR Roman Wilson From IR",
+          "title": "Steelers Activate WR Roman Wilson From IR",
+          "summary": "The Steelers are starting to get healthy in areas that have been hurting this season. Pittsburgh has activated wide receiver Roman Wilson off injured reserve. Fellow injured wideout Michael Pittman Jr. will not be activated to join him. In",
+          "url": "https://www.profootballrumors.com/2026/11/steelers-activate-wr-roman-wilson-from-ir",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-21T19:36:39.000Z"
+        },
+        {
           "id": "pit_pwire_4240577_64873328",
           "type": "article",
           "headline": "Pittsburgh waived Smith on Thursday.",
@@ -89111,6 +89944,17 @@
           "author": "Teresa Varley",
           "outletName": "Steelers' official site",
           "publishedAt": "2026-11-20T01:35:21.000Z"
+        },
+        {
+          "id": "pit_pfr_5724b6fd4901",
+          "type": "article",
+          "headline": "Steelers Designate WRs Michael Pittman, Roman Wilson To Return From IR",
+          "title": "Steelers Designate WRs Michael Pittman, Roman Wilson To Return From IR",
+          "summary": "The Steelers designated four players to return from injured reserve on Tuesday, per ESPN’s Brooke Pryor, including wide receivers Michael Pittman and Roman Wilson. Rookie offensive lineman Gennings Dunker and practice squad wide receiver/ru",
+          "url": "https://www.profootballrumors.com/2026/11/steelers-designate-wrs-michael-pittman-roman-wilson-to-return-from-ir",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-18T20:38:04.000Z"
         },
         {
           "id": "pit_tx_0f66c0efb2a4",
@@ -91868,7 +92712,20 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "x_tl_mikedefabo_2123869154185007599",
+          "type": "tweet",
+          "headline": "Patrick Queen broke his hand as @ChrisHalicke reported. The ILB was wearing a cast at practice. Seems he’s prepared to play through it.",
+          "title": "Patrick Queen broke his hand as @ChrisHalicke reported. The ILB was wearing a cast at practice. Seems he’s prepared to play through it.",
+          "fullText": "Patrick Queen broke his hand as @ChrisHalicke reported. The ILB was wearing a cast at practice. Seems he’s prepared to play through it.",
+          "summary": "",
+          "url": "https://x.com/MikeDeFabo/status/2123869154185007599",
+          "author": "Mike DeFabo",
+          "outletName": "The Athletic Pittsburgh",
+          "publishedAt": "2026-11-20T20:00:40.595Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "LB",
@@ -96441,6 +97298,17 @@
       },
       "recentNews": [
         {
+          "id": "pit_pfr_72b100a5d25d",
+          "type": "article",
+          "headline": "Steelers Activate WR Roman Wilson From IR",
+          "title": "Steelers Activate WR Roman Wilson From IR",
+          "summary": "The Steelers are starting to get healthy in areas that have been hurting this season. Pittsburgh has activated wide receiver Roman Wilson off injured reserve. Fellow injured wideout Michael Pittman Jr. will not be activated to join him. In",
+          "url": "https://www.profootballrumors.com/2026/11/steelers-activate-wr-roman-wilson-from-ir",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-21T19:36:39.000Z"
+        },
+        {
           "id": "pit_tx_1cb5cf710fb6",
           "type": "tweet",
           "headline": "Steelers roster move: Activated WR Roman Wilson from injured reserve. Signed LB K.J. Henry to the active roster. Elevated WR Max Hurleman and OL Doug Nester from the practice squad.",
@@ -96462,6 +97330,17 @@
           "author": "Teresa Varley",
           "outletName": "Steelers' official site",
           "publishedAt": "2026-11-20T01:35:21.000Z"
+        },
+        {
+          "id": "pit_pfr_5724b6fd4901",
+          "type": "article",
+          "headline": "Steelers Designate WRs Michael Pittman, Roman Wilson To Return From IR",
+          "title": "Steelers Designate WRs Michael Pittman, Roman Wilson To Return From IR",
+          "summary": "The Steelers designated four players to return from injured reserve on Tuesday, per ESPN’s Brooke Pryor, including wide receivers Michael Pittman and Roman Wilson. Rookie offensive lineman Gennings Dunker and practice squad wide receiver/ru",
+          "url": "https://www.profootballrumors.com/2026/11/steelers-designate-wrs-michael-pittman-roman-wilson-to-return-from-ir",
+          "author": "Pro Football Rumors",
+          "outletName": "Pro Football Rumors",
+          "publishedAt": "2026-11-18T20:38:04.000Z"
         },
         {
           "id": "pit_tx_0f66c0efb2a4",
@@ -100371,7 +101250,20 @@
           }
         ]
       },
-      "recentNews": [],
+      "recentNews": [
+        {
+          "id": "pit_bsky_b96d86753021",
+          "type": "tweet",
+          "headline": "Added defensive player props last night to Week 11 best bets! Here's a bonus that wasn't up last night:\n\nT.J. Watt under 0.75 sacks +110 on DraftKings.\n\nwww.espn.com/espn/betting...",
+          "title": "Added defensive player props last night to Week 11 best bets! Here's a bonus that wasn't up last night:\n\nT.J. Watt under 0.75 sacks +110 on DraftKings.\n\nwww.espn.com/espn/betting...",
+          "fullText": "Added defensive player props last night to Week 11 best bets! Here's a bonus that wasn't up last night:\n\nT.J. Watt under 0.75 sacks +110 on DraftKings.\n\nwww.espn.com/espn/betting...",
+          "summary": "",
+          "url": "https://bsky.app/profile/sethwalder.bsky.social/post/3n2w64rc6nc2i",
+          "author": "Seth Walder",
+          "outletName": "Seth Walder",
+          "publishedAt": "2026-11-22T17:43:55.663Z"
+        }
+      ],
       "statProfile2026": {
         "seasonYear": 2026,
         "peerGroup": "LB",

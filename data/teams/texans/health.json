@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:09.819Z",
+  "updatedAt": "2026-11-25T20:45:16.287Z",
   "week": 12,
   "byeWeek": 8,
   "sourceUrl": "https://www.houstontexans.com/team/injury-report/",
@@ -138,31 +138,6 @@
       "beatComment": "The wideout had one of his more productive games of the season before being injured, as he caught both of his targets for 40 yards and a touchdown. His 40 yards were the second-most he's produced in a game this season. Boutte is up to 21 grabs for 359 yards and three touchdowns on 31 targets across 10 games in 2026."
     },
     {
-      "playerId": "3045474",
-      "name": "Wyatt Teller",
-      "position": "G",
-      "jersey": 75,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045474.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Back",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 81,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "81% • GTD",
-      "archetypeNote": "Trench/box position (G) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Questionable tag adjusted by player career prior (81%)"
-      ],
-      "beatComment": "questionable"
-    },
-    {
       "playerId": "2970204",
       "name": "Sheldon Rankins",
       "position": "DT",
@@ -186,6 +161,31 @@
         "Questionable tag adjusted by player career prior (81%)"
       ],
       "beatComment": "Rankins sustained an apparent ankle injury during the second quarter of Thursday's contest, and he was able to walk gingerly to the sideline under his own power. In his absence, rookie second-rounder Kayden McDonald figures to see an increase in snaps on the defensive line."
+    },
+    {
+      "playerId": "3045474",
+      "name": "Wyatt Teller",
+      "position": "G",
+      "jersey": 75,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3045474.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Back",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 81,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "81% • GTD",
+      "archetypeNote": "Trench/box position (G) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Questionable tag adjusted by player career prior (81%)"
+      ],
+      "beatComment": "questionable"
     },
     {
       "playerId": "4839498",
@@ -214,31 +214,6 @@
       "beatComment": "The Texans announced Rutledge's injury in the waning moments of the contest, but he had been in the medical tent well before that time. Febechi Nwaiwu took over at left guard following Rutledge's departure. With Houston not set to play again until Sunday, Nov. 29, against Baltimore, Rutledge will look to recover from the stinger in time to suit up."
     },
     {
-      "playerId": "3043109",
-      "name": "Trent Brown",
-      "position": "OT",
-      "jersey": 77,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043109.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Back",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Veteran starter profile (12th NFL season, 91% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Brown left Thursday's contest after suffering a back injury, but he was able to check back in with the Texans' field goal team in the second quarter. With that said, veteran Braden Smith was still working as Houston's right tackle when the first half of Thursday's game ended."
-    },
-    {
       "playerId": "4241250",
       "name": "Jake Hummel",
       "position": "LB",
@@ -262,6 +237,31 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "The linebacker suffered the injury in Week 1, returned for Week 10 and then carried a questionable tag into this contest, but he appears ready to play through the injury for the second consecutive game. Hummel logged two tackles (one solo) across 21 special-teams snaps against the Browns last week."
+    },
+    {
+      "playerId": "3043109",
+      "name": "Trent Brown",
+      "position": "OT",
+      "jersey": 77,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3043109.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Back",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Veteran starter profile (12th NFL season, 91% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Brown left Thursday's contest after suffering a back injury, but he was able to check back in with the Texans' field goal team in the second quarter. With that said, veteran Braden Smith was still working as Houston's right tackle when the first half of Thursday's game ended."
     }
   ],
   "irAndReserveTracker": [

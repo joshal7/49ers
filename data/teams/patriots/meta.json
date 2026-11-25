@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:41.752Z",
+  "updatedAt": "2026-11-25T20:46:08.800Z",
   "teamAbbr": "NE",
   "teamSlug": "patriots",
   "brandName": "Pats Nation",
@@ -54,7 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:44:41.752Z",
+    "lastCheckedAt": "2026-11-25T20:46:08.800Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

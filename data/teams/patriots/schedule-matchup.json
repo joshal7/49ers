@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:41.752Z",
+  "updatedAt": "2026-11-25T20:46:08.800Z",
   "sources": [
     {
       "label": "ESPN Patriots Schedule",
@@ -24762,10 +24762,10 @@
         "reportedRecord": "5-5",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 5 (33.4% neutral-field win rating, 7.6 proj. wins) at 5-5 through Week 11.",
+        "blurb": "Tier 5 (34.0% neutral-field win rating, 7.6 proj. wins) at 5-5 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       }
@@ -24814,10 +24814,10 @@
         "reportedRecord": "5-5",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 5 (33.4% neutral-field win rating, 7.6 proj. wins) at 5-5 through Week 11."
+        "blurb": "Tier 5 (34.0% neutral-field win rating, 7.6 proj. wins) at 5-5 through Week 11."
       },
       {
         "id": "cbs",
@@ -24872,7 +24872,7 @@
     ],
     "excludedStaleSources": [],
     "disregardedStaleCount": 0,
-    "fetchedAtIso": "2026-11-25T20:44:49.733Z"
+    "fetchedAtIso": "2026-11-25T20:46:14.182Z"
   },
   "upcomingMatchup": {
     "week": 12,
@@ -25671,7 +25671,7 @@
           "factors": [
             "Remains in early stages of NFL 5-Step Concussion Protocol"
           ],
-          "beatComment": "Herbert completed 15 of 21 passes for 131 yards, two touchdowns and no interceptions in Week 11, but he also endured six sacks, fumbled once and added 32 yards and one TD on his eight carries. It's unclear exactly when he picked up the head injury, but he'll be subject to the concussion protocol ahead of further game action. The Chargers take the field next Sunday against the Patriots.",
+          "beatComment": "Herbert entered the NFL's concussion protocol following this past Sunday's 27-24 loss to the Jets, and the QB's pending absence from Wednesday's session gives him two more chances to officially log practice reps before for this weekend's game against New England. In his current absence, DJ Uiagalelei is next up for Los Angeles' signal-caller reps, with practice squad member Jake Browning available for a Week 12 elevation, if needed.",
           "isStarter": true,
           "role": "Starter",
           "priorDayPlayProbabilityPct": null,

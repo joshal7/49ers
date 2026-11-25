@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:21.755Z",
+  "updatedAt": "2026-11-25T20:45:34.827Z",
   "teamAbbr": "DEN",
   "teamSlug": "broncos",
   "brandName": "Broncos Country",
@@ -54,7 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:36:21.755Z",
+    "lastCheckedAt": "2026-11-25T20:45:34.827Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

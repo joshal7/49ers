@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:28.359Z",
+  "updatedAt": "2026-11-25T20:45:25.987Z",
   "sources": [
     {
       "label": "ESPN 49ers Schedule",
@@ -24740,10 +24740,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (75.9% neutral-field win rating, 13.9 proj. wins) at 9-1 through Week 11.",
+        "blurb": "Tier 1 (76.2% neutral-field win rating, 13.9 proj. wins) at 9-1 through Week 11.",
         "includesLatestGame": true,
         "freshnessReason": "record_verified"
       },
@@ -24810,10 +24810,10 @@
         "reportedRecord": "9-1",
         "gamesIncluded": 10,
         "throughWeek": 11,
-        "asOfIso": "2026-11-25T13:18:19Z",
+        "asOfIso": "2026-11-25T20:41:46Z",
         "asOfLabel": "Thru Wk 11",
         "verified": true,
-        "blurb": "Tier 1 (75.9% neutral-field win rating, 13.9 proj. wins) at 9-1 through Week 11."
+        "blurb": "Tier 1 (76.2% neutral-field win rating, 13.9 proj. wins) at 9-1 through Week 11."
       },
       {
         "id": "cbs",
@@ -24879,7 +24879,7 @@
       }
     ],
     "disregardedStaleCount": 1,
-    "fetchedAtIso": "2026-11-25T20:43:40.308Z"
+    "fetchedAtIso": "2026-11-25T20:45:31.176Z"
   },
   "upcomingMatchup": {
     "week": 12,

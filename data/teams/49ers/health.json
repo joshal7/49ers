@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:28.359Z",
+  "updatedAt": "2026-11-25T20:45:25.987Z",
   "week": 12,
   "byeWeek": 8,
   "sourceUrl": "https://www.49ers.com/team/injury-report/",
@@ -214,6 +214,31 @@
       "beatComment": "49ers practice report: No practice QB Brock Purdy (ankle) WR Mike Evans (Achilles) WR Jordan Watkins (groin) LB Dre Greenlaw (neck) S Siran Neal (knee, foot) Limited CB Deommodore Lenoir (foot) CB Upton Stout (shoulder, neck) OL Carver Willis (illness) OL Austen Pleasants (knee)"
     },
     {
+      "playerId": "15818",
+      "name": "Keenan Allen",
+      "position": "WR",
+      "jersey": 3,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "On four targets",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Sunday marked Allen's first time working with Mike Evans, the 49ers' top wide receiver, and the latter dominated the attention of QB Brock Purdy, posting a 6-109-1 line on seven targets in his first game action since Week 6. If Evans' Achilles issue flares up at any point, Allen may be thrust into WR1 duties, which could yield more consistent results as he becomes more acclimated to head coach Kyle Shanahan's offense. For now, though, Allen will play a distant second to Evans for as long as the latter is healthy and available."
+    },
+    {
       "playerId": "4241464",
       "name": "Mac Jones",
       "position": "QB",
@@ -238,31 +263,6 @@
         "Beat/podium consensus: on track to suit up"
       ],
       "beatComment": "Jones is good to go for Sunday Night Football after dealing with an illness at practice throughout the week. The quarterback will operate in his primary reserve role behind starter Brock Purdy versus the Vikings in Mexico City."
-    },
-    {
-      "playerId": "15818",
-      "name": "Keenan Allen",
-      "position": "WR",
-      "jersey": 3,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/15818.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "On four targets",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Sunday marked Allen's first time working with Mike Evans, the 49ers' top wide receiver, and the latter dominated the attention of QB Brock Purdy, posting a 6-109-1 line on seven targets in his first game action since Week 6. If Evans' Achilles issue flares up at any point, Allen may be thrust into WR1 duties, which could yield more consistent results as he becomes more acclimated to head coach Kyle Shanahan's offense. For now, though, Allen will play a distant second to Evans for as long as the latter is healthy and available."
     },
     {
       "playerId": "4242488",

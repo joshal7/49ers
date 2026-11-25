@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:10.019Z",
+  "updatedAt": "2026-11-25T20:47:21.130Z",
   "week": 12,
   "byeWeek": 10,
   "sourceUrl": "https://www.philadelphiaeagles.com/team/injury-report/",
@@ -60,29 +60,29 @@
       "beatComment": "out"
     },
     {
-      "playerId": "3926231",
-      "name": "Britain Covey",
+      "playerId": "4241478",
+      "name": "DeVonta Smith",
       "position": "WR",
-      "jersey": 85,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3926231.png",
+      "jersey": 6,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241478.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "FP",
       "thu": "FP",
       "fri": "FP",
-      "injuryType": "Knee",
+      "injuryType": "Hamstring",
       "gameStatus": "No Designation (Cleared)",
       "playProbabilityPct": 95,
       "priorDayPlayProbabilityPct": 95,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "archetypeNote": "Every-down starter workload (86% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
-      "beatComment": ""
+      "beatComment": "Smith was targeted on 12 of Joe Milton's 21 passes in the wide receiver's first game since Week 6. Milton has thrown for just 310 yards without a touchdown pass through two starts for the Eagles, so expectations should be tempered for the team's passing game as a whole, but Smith has reclaimed his role as the team's top pass catcher. Smith could make the most of his hefty target share Thursday against the generous Dallas secondary."
     },
     {
       "playerId": "3121023",
@@ -111,29 +111,29 @@
       "beatComment": "Philadelphia deemed Goedert a limited participant on Monday's estimated injury report, but had the team held a traditional practice Tuesday, the veteran tight end would have been able to increase his activity. Goedert thus looks on track to play Thursday, when he'll face off against a Cowboys defense that he burned for five receptions for 48 yards on seven targets back in Week 7."
     },
     {
-      "playerId": "4241478",
-      "name": "DeVonta Smith",
-      "position": "WR",
-      "jersey": 6,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241478.png",
+      "playerId": "3929630",
+      "name": "Saquon Barkley",
+      "position": "RB",
+      "jersey": 26,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929630.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "FP",
+      "wed": "LP",
       "thu": "FP",
       "fri": "FP",
-      "injuryType": "Hamstring",
+      "injuryType": "Neck / Illness",
       "gameStatus": "No Designation (Cleared)",
       "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 96,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (86% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
-      "beatComment": "Smith was targeted on 12 of Joe Milton's 21 passes in the wide receiver's first game since Week 6. Milton has thrown for just 310 yards without a touchdown pass through two starts for the Eagles, so expectations should be tempered for the team's passing game as a whole, but Smith has reclaimed his role as the team's top pass catcher. Smith could make the most of his hefty target share Thursday against the generous Dallas secondary."
+      "beatComment": "Though Tuesday's injury report was merely an estimate, Barkley would have been able to take every rep had the Eagles held a traditional practice session. Barkley emerged from this past Sunday's 19-16 win over the Steelers with a neck injury and an illness, but neither health concern looks like it will prevent him from playing Thursday in Dallas."
     },
     {
       "playerId": "4685759",
@@ -186,29 +186,30 @@
       "beatComment": ""
     },
     {
-      "playerId": "4428992",
-      "name": "Kelee Ringo",
+      "playerId": "4686273",
+      "name": "Quinyon Mitchell",
       "position": "CB",
-      "jersey": 7,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428992.png",
+      "jersey": 27,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686273.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "FP",
+      "wed": "DNP",
+      "thu": "LP",
       "fri": "FP",
-      "injuryType": "Neck",
+      "injuryType": "Hamstring",
       "gameStatus": "No Designation (Cleared)",
       "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 75,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "archetypeNote": "Every-down starter workload (92% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
       "factors": [
-        "Cleared without restrictive game-day designation"
+        "Cleared without restrictive game-day designation",
+        "Beat/podium consensus (8 corroborated reports): on track to suit up"
       ],
-      "beatComment": ""
+      "beatComment": "Mitchell injured his left hamstring during the Eagles' 19-16 win over the Steelers on Sunday. He was held out of Monday's walkthrough practice but was back on the field in a limited capacity Tuesday, and defensive coordinator Vic Fangio told reporters that Mitchell should \"be fine\" to face the Cowboys on Thanksgiving Day. Riq Woolen would be in line for more defensive snaps in the event that Mitchell cannot play Thursday."
     },
     {
       "playerId": "4240456",
@@ -236,47 +237,46 @@
       "beatComment": "An abdominal injury prevented Carter from playing in Week 9 against the Giants. He had extra rest thanks to the Week 10 bye, and his full practice Friday was enough for him to avoid an injury tag for Sunday's contest. Carter's return gives the Eagles a boost in the secondary and another contributor on special teams."
     },
     {
-      "playerId": "4686273",
-      "name": "Quinyon Mitchell",
+      "playerId": "4428992",
+      "name": "Kelee Ringo",
       "position": "CB",
-      "jersey": 27,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4686273.png",
+      "jersey": 7,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4428992.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "DNP",
-      "thu": "LP",
+      "wed": "-",
+      "thu": "FP",
       "fri": "FP",
-      "injuryType": "Hamstring",
+      "injuryType": "Neck",
       "gameStatus": "No Designation (Cleared)",
       "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": 75,
+      "priorDayPlayProbabilityPct": 95,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (92% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "archetypeNote": "Perimeter speed/cut position (CB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
       "factors": [
-        "Cleared without restrictive game-day designation",
-        "Beat/podium consensus (14 corroborated reports): on track to suit up"
+        "Cleared without restrictive game-day designation"
       ],
-      "beatComment": "Mitchell injured his left hamstring during the Eagles' 19-16 win over the Steelers on Sunday. He was held out of Monday's walkthrough practice but was back on the field in a limited capacity Tuesday, and defensive coordinator Vic Fangio told reporters that Mitchell should \"be fine\" to face the Cowboys on Thanksgiving Day. Riq Woolen would be in line for more defensive snaps in the event that Mitchell cannot play Thursday."
+      "beatComment": ""
     },
     {
-      "playerId": "3929630",
-      "name": "Saquon Barkley",
+      "playerId": "4431545",
+      "name": "Will Shipley",
       "position": "RB",
-      "jersey": 26,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3929630.png",
+      "jersey": 28,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431545.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
       "wed": "LP",
-      "thu": "FP",
-      "fri": "FP",
-      "injuryType": "Neck / Illness",
+      "thu": "LP",
+      "fri": "LP",
+      "injuryType": "Foot / Illness",
       "gameStatus": "No Designation (Cleared)",
       "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": 96,
+      "priorDayPlayProbabilityPct": 80,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
@@ -284,32 +284,7 @@
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
-      "beatComment": "Though Tuesday's injury report was merely an estimate, Barkley would have been able to take every rep had the Eagles held a traditional practice session. Barkley emerged from this past Sunday's 19-16 win over the Steelers with a neck injury and an illness, but neither health concern looks like it will prevent him from playing Thursday in Dallas."
-    },
-    {
-      "playerId": "4431573",
-      "name": "Smael Mondon Jr.",
-      "position": "LB",
-      "jersey": 42,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431573.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "DNP",
-      "thu": "LP",
-      "fri": "LP",
-      "injuryType": "Ankle",
-      "gameStatus": "No Designation (Cleared)",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": 63,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": ""
+      "beatComment": "Despite being listed as a limited participant throughout the week, Shipley made enough improvement in his recovery from an illness and his lingering plantar fascia injury to get the green light to play Thanksgiving Day. Shipley is expected to contribute as a kickoff returner along with serving as the top backup out of the backfield to Saquon Barkley. In his return from a four-game stint on injured reserve during last week's win over the Steelers, Shipley carried four times for nine yards while playing 19 of 53 snaps on offense."
     },
     {
       "playerId": "4685201",
@@ -337,29 +312,54 @@
       "beatComment": "McKee was estimated to be a limited participant on Monday's injury report due to an injury to his ribs. He now looks to be all set to serve as the team's primary reserve option at quarterback behind starter Joe Milton on Thursday against the Cowboys."
     },
     {
-      "playerId": "4431545",
-      "name": "Will Shipley",
-      "position": "RB",
-      "jersey": 28,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431545.png",
+      "playerId": "4431573",
+      "name": "Smael Mondon Jr.",
+      "position": "LB",
+      "jersey": 42,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431573.png",
       "rosterBucket": "active",
       "isIrReturnWindow": false,
       "sustainedInLastGame": false,
-      "wed": "LP",
+      "wed": "DNP",
       "thu": "LP",
       "fri": "LP",
-      "injuryType": "Foot / Illness",
+      "injuryType": "Ankle",
       "gameStatus": "No Designation (Cleared)",
       "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": 80,
+      "priorDayPlayProbabilityPct": 63,
       "hasPreReportPracticeReturnDelta": false,
       "isMidWeekAdditionDelta": false,
       "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Perimeter speed/cut position (RB) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "archetypeNote": "Trench/box position (LB) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
       "factors": [
         "Cleared without restrictive game-day designation"
       ],
-      "beatComment": "Despite being listed as a limited participant throughout the week, Shipley made enough improvement in his recovery from an illness and his lingering plantar fascia injury to get the green light to play Thanksgiving Day. Shipley is expected to contribute as a kickoff returner along with serving as the top backup out of the backfield to Saquon Barkley. In his return from a four-game stint on injured reserve during last week's win over the Steelers, Shipley carried four times for nine yards while playing 19 of 53 snaps on offense."
+      "beatComment": ""
+    },
+    {
+      "playerId": "3926231",
+      "name": "Britain Covey",
+      "position": "WR",
+      "jersey": 85,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3926231.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "Knee",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 95,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": ""
     }
   ],
   "irAndReserveTracker": [

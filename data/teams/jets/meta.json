@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:35:52.212Z",
+  "updatedAt": "2026-11-25T20:45:15.980Z",
   "teamAbbr": "NYJ",
   "teamSlug": "jets",
   "brandName": "Jets Gang Green",
@@ -54,7 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:35:52.212Z",
+    "lastCheckedAt": "2026-11-25T20:45:15.980Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

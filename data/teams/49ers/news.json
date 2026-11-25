@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:43:28.359Z",
+  "updatedAt": "2026-11-25T20:45:25.987Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17PT",
     "cycleKey": "2026-11-24@17PT",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "9-1",
-    "generatedAt": "2026-11-25T20:43:28.359Z",
+    "generatedAt": "2026-11-25T20:45:25.987Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -19,56 +19,70 @@
     "headline": "49ers (9-1) Week 12 Briefing: Wednesday Injury Report Ahead of Seahawks",
     "summary": "",
     "bullets": [
-      "Roster & Front Office: San Francisco signed WR Brandin Cooks to the practice squad [49ers Webzone](https://www.49erswebzone.com/articles/205528-shanahan-reacts-brandon-signing-commanders/).",
-      "Injury & Practice Status: CB Upton Stout (shoulder, neck), OT Carver Willis (illness), and CB Deommodore Lenoir (foot) logged limited practice reps Wednesday [Matt Maiocco](https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35xyxjr3s2b). WR Jordan Watkins (groin), S Siran Neal (knee, foot), QB Brock Purdy (ankle), and WR Mike Evans (Achilles) did not practice Wednesday [Matt Maiocco](https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35xyxjr3s2b).",
-      "Week 12 Seahawks Outlook: Kyle Shanahan and DC Raheem Morris open installation for the Seattle Seahawks (6-4, SF -2.5, HC Mike Macdonald, OC Brian Fleury & DC Aden Durde (Levi's Stadium)) at high altitude in Mexico City—a unit ranked #1 in Yards Allowed / Game (236.1 yds) as San Francisco prepares for a pivotal NFC matchup [49ers.com Official](https://www.49ers.com/news/brock-purdy-named-nfc-offensive-player-of-the-week-following-mexico-city-win) [Vic Tafur](https://bsky.app/profile/victafur.bsky.social/post/3n35z3unwis23).",
-      "NFC Playoff Trajectory: Entering Week 12 at 9-1 (1st in NFC West • #1 Seed in NFC), San Francisco carries a 99.5% postseason projection, 91.4% NFC West division title mark, and 63.8% #1 Seed Bye equity into the conference stretch [49ers.com Official](https://www.49ers.com/news/brock-purdy-named-nfc-offensive-player-of-the-week-following-mexico-city-win).",
-      "Statistical Profile & Matchup Edge: Through Week 11, San Francisco ranks #1 in Points / Game (31.6), #8 in Points Allowed / Game (20.6), #9 in Turnover Differential (+5), giving Kyle Shanahan and Raheem Morris a clear benchmark ahead of Sun, Nov 29, 1:25 PM PST • NFL TV at [object Object] against the Seattle Seahawks [San Francisco 49ers Official](https://x.com/49ers/status/2125679605667545334)."
+      "Roster & Front Office: San Francisco signed WR Brandin Cooks to the practice squad [Ali Thanawalla](https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-contract-commanders-practice-squad/1983079/).",
+      "Injury & Practice Status: CB Upton Stout (shoulder, neck), OT Carver Willis (illness), and CB Deommodore Lenoir (foot) logged limited practice reps Wednesday [49ers Webzone](https://www.49erswebzone.com/news/205526-brock-practice-sprain-possibility-seahawks/). WR Jordan Watkins (groin), S Siran Neal (knee, foot), QB Brock Purdy (ankle), and WR Mike Evans (Achilles) did not practice Wednesday [Matt Maiocco](https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35xyxjr3s2b).",
+      "Week 12 Seahawks Outlook: Kyle Shanahan and DC Raheem Morris open installation for the Seattle Seahawks (6-4, SF -2.5, HC Mike Macdonald, OC Brian Fleury & DC Aden Durde (Levi's Stadium)) at high altitude in Mexico City—a unit ranked #1 in Yards Allowed / Game (236.1 yds) as San Francisco prepares for a pivotal NFC matchup [Vic Tafur](https://bsky.app/profile/victafur.bsky.social/post/3n35z3unwis23) [49ers.com Official](https://www.49ers.com/news/brock-purdy-named-nfc-offensive-player-of-the-week-following-mexico-city-win).",
+      "NFC Playoff Trajectory: Entering Week 12 at 9-1 (1st in NFC West • #1 Seed in NFC), San Francisco carries a 99.5% postseason projection, 91.4% NFC West division title mark, and 63.3% #1 Seed Bye equity into the conference stretch [49ers.com Official](https://www.49ers.com/news/brock-purdy-named-nfc-offensive-player-of-the-week-following-mexico-city-win).",
+      "Statistical Profile & Matchup Edge: Through Week 11, San Francisco ranks #1 in Points / Game (31.6), #8 in Points Allowed / Game (20.6), #9 in Turnover Differential (+5), giving Kyle Shanahan and Raheem Morris a clear benchmark ahead of Sun, Nov 29, 1:25 PM PST • NFL TV at [object Object] against the Seattle Seahawks [Jason Aponte](https://www.ninersnation.com/san-francisco-49ers-analysis/166285/why-the-first-matchup-between-the-49ers-and-seahawks-was-so-strange)."
     ],
-    "coveredStoryKeys": [],
+    "coveredStoryKeys": [
+      "brandonaiyuk::fa_speculative_outlook",
+      "brockpurdy::pre_game_availability",
+      "brandonaiyuk::fa_waiver_market",
+      "team::pff_grades",
+      "brandonaiyuk::roster_departure"
+    ],
     "coveredUrls": [
-      "https://www.49erswebzone.com/articles/205528-shanahan-reacts-brandon-signing-commanders/",
-      "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35xyxjr3s2b",
-      "https://www.49ers.com/news/brock-purdy-named-nfc-offensive-player-of-the-week-following-mexico-city-win",
-      "https://bsky.app/profile/victafur.bsky.social/post/3n35z3unwis23",
-      "https://www.ninersnation.com/san-francisco-49ers-injuries/166301/49ers-activate-veteran-cornerback-from-the-ir-brandin-cook-joins-the-practice-squad",
-      "https://x.com/49ers/status/2125679605667545334",
-      "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35uqqbmcs2b",
-      "https://www.espn.com/nfl/player/_/id/16737/mike-evans#:~:text=Evans%20(Achilles)%20won't%20practice%20Wednesday%2C%20Harrison%20Rich",
-      "https://x.com/49ers/status/2125666286592245811",
-      "https://www.49erswebzone.com/news/205525-brock-skeptics-finally-starting-believe/",
-      "https://x.com/49ers/status/2125674881748754737",
-      "https://www.49ers.com/news/49ers-activate-cb-nate-hobbs-place-ol-colton-mckivitz-on-the-injured-reserve-list",
-      "https://www.49erswebzone.com/articles/205518-former-49ers-brandon-aiyuk-commanders/",
-      "https://www.49erswebzone.com/news/205517-former-49ers-brandon-signing-commanders/",
-      "https://www.49erswebzone.com/news/205515-commanders-strong-interest-former-brandon/",
-      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n35swytxss2w",
-      "https://www.49erswebzone.com/news/205527-brock-offensive-player-following-mexico/",
-      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n35o6z4juh2s",
-      "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n33fab6iec2z",
-      "https://bsky.app/profile/mattbarrows.bsky.social/post/3n32xpalou22b",
-      "https://www.49erswebzone.com/news/205521-activate-colton-mckivitz-injured-reserve/",
-      "https://www.49erswebzone.com/articles/205520-49ers-activate-colton-mckivitz-receiver/",
-      "https://nfltraderumors.co/49ers-place-ot-colton-mckivitz-on-ir-among-three-moves/",
+      "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-contract-commanders-practice-squad/1983079/",
       "https://www.49erswebzone.com/news/205526-brock-practice-sprain-possibility-seahawks/",
+      "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35xyxjr3s2b",
+      "https://bsky.app/profile/victafur.bsky.social/post/3n35z3unwis23",
+      "https://www.49ers.com/news/brock-purdy-named-nfc-offensive-player-of-the-week-following-mexico-city-win",
+      "https://www.ninersnation.com/san-francisco-49ers-injuries/166301/49ers-activate-veteran-cornerback-from-the-ir-brandin-cook-joins-the-practice-squad",
+      "https://www.ninersnation.com/san-francisco-49ers-analysis/166285/why-the-first-matchup-between-the-49ers-and-seahawks-was-so-strange",
+      "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/source-john-lynch-contract-extension/1982608/",
+      "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/potential-brandon-aiyuk-landing-spots/1982688/",
+      "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-drawing-interest/1982725/",
+      "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/mexico-city-takeover-global-team/1982718/",
+      "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-pff-grades-win-minnesota-vikings/1982783/",
       "https://www.ninersnation.com/san-francisco-49ers-injuries/166304/49ers-injury-report-brock-purdy-suffered-an-ankle-injury",
       "https://www.49erswebzone.com/articles/205524-suffered-injury-practice-wednesday-updates/",
       "https://www.espn.com/nfl/player/_/id/4361741/brock-purdy#:~:text=Purdy%20didn't%20practice%20Wednesday%20due%20to%20an",
       "https://bsky.app/profile/49erswebzone.bsky.social/post/3n35x54jbrn2q",
       "https://www.49erswebzone.com/news/205523-brock-purdy-practice-wednesday-injury/",
       "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35uvlvftc2b",
-      "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n3345ooicc2p",
-      "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35vavnifk2b",
-      "https://x.com/PFF/status/2125652044409454974"
+      "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-washington-commanders-meeting/1982991/",
+      "https://www.49erswebzone.com/news/205516-commanders-ex-49ers-brandon-aiyuk-practice/",
+      "https://www.49erswebzone.com/articles/205528-shanahan-reacts-brandon-signing-commanders/",
+      "https://www.49erswebzone.com/articles/205518-former-49ers-brandon-aiyuk-commanders/",
+      "https://www.49erswebzone.com/news/205517-former-49ers-brandon-signing-commanders/",
+      "https://www.49erswebzone.com/news/205515-commanders-strong-interest-former-brandon/",
+      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n35swytxss2w",
+      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n33nwn666i2n",
+      "https://www.49erswebzone.com/news/205527-brock-offensive-player-following-mexico/",
+      "https://bsky.app/profile/49erswebzone.bsky.social/post/3n35o6z4juh2s",
+      "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-kyle-shanahan-advice/1982599/",
+      "https://bsky.app/profile/jenniferleechan.bsky.social/post/3n35nhjottk22",
+      "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/source-brandon-aiyuk-waived/1978860/",
+      "https://www.espn.com/nfl/player/_/id/16737/mike-evans#:~:text=Evans%20(Achilles)%20won't%20practice%20Wednesday%2C%20Harrison%20Rich",
+      "https://www.49erswebzone.com/news/205525-brock-skeptics-finally-starting-believe/"
     ],
     "sources": [
       {
         "type": "article",
+        "author": "Ali Thanawalla",
+        "outlet": "NBC Sports Bay Area",
+        "title": "Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
+        "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-contract-commanders-practice-squad/1983079/",
+        "publishedAt": "2026-11-25T20:16:15.000Z"
+      },
+      {
+        "type": "article",
         "author": "49ers Webzone",
         "outlet": "49ers Webzone",
-        "title": "49ers' Kyle Shanahan reacts to Brandon Aiyuk signing with Commanders",
-        "url": "https://www.49erswebzone.com/articles/205528-shanahan-reacts-brandon-signing-commanders/",
-        "publishedAt": "2026-11-25T20:25:14.000Z"
+        "title": "Brock Purdy sits out practice with ankle sprain; 'possibility' 49ers QB won't play vs. Seahawks",
+        "url": "https://www.49erswebzone.com/news/205526-brock-practice-sprain-possibility-seahawks/",
+        "publishedAt": "2026-11-25T20:00:05.000Z"
       },
       {
         "type": "tweet",
@@ -77,14 +91,6 @@
         "title": "49ers practice report: No practice QB Brock Purdy (ankle) WR Mike Evans (Achilles) WR Jordan Watkins (groin) LB Dre Greenlaw (neck) S Siran Neal (knee, foot) Limited CB",
         "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35xyxjr3s2b",
         "publishedAt": "2026-11-25T20:15:43.444Z"
-      },
-      {
-        "type": "article",
-        "author": "49ers.com Official",
-        "outlet": "49ers.com Official",
-        "title": "Brock Purdy Named NFC Offensive Player of the Week Following Mexico City Win",
-        "url": "https://www.49ers.com/news/brock-purdy-named-nfc-offensive-player-of-the-week-following-mexico-city-win",
-        "publishedAt": "2026-11-25T20:13:10.000Z"
       },
       {
         "type": "tweet",
@@ -96,6 +102,14 @@
       },
       {
         "type": "article",
+        "author": "49ers.com Official",
+        "outlet": "49ers.com Official",
+        "title": "Brock Purdy Named NFC Offensive Player of the Week Following Mexico City Win",
+        "url": "https://www.49ers.com/news/brock-purdy-named-nfc-offensive-player-of-the-week-following-mexico-city-win",
+        "publishedAt": "2026-11-25T20:13:10.000Z"
+      },
+      {
+        "type": "article",
         "author": "Kyle Posey",
         "outlet": "Niners Nation",
         "title": "49ers activate veteran cornerback from the IR; Brandin Cook joins the practice squad",
@@ -103,60 +117,52 @@
         "publishedAt": "2026-11-25T19:12:30.000Z"
       },
       {
-        "type": "tweet",
-        "author": "San Francisco 49ers Official",
-        "outlet": "49ers.com Official",
-        "title": "This Sunday, each pair of cleats tells a story. All week long we’ll be spotlighting causes closest to our hearts For more: @ShoePalace |",
-        "url": "https://x.com/49ers/status/2125679605667545334",
-        "publishedAt": "2026-11-25T19:54:45.000Z"
-      },
-      {
-        "type": "tweet",
-        "author": "Matt Maiocco",
-        "outlet": "Matt Maiocco",
-        "title": "The 49ers activated CB Nate Hobbs from injured reserve and placed RT Colton McKivitz on injured reserve. Also, the team re-signed WR Brandin Cooks to the practice squad.",
-        "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35uqqbmcs2b",
-        "publishedAt": "2026-11-25T19:17:26.175Z"
+        "type": "article",
+        "author": "Jason Aponte",
+        "outlet": "Niners Nation",
+        "title": "Why the first matchup between the 49ers and Seahawks was so strange",
+        "url": "https://www.ninersnation.com/san-francisco-49ers-analysis/166285/why-the-first-matchup-between-the-49ers-and-seahawks-was-so-strange",
+        "publishedAt": "2026-11-25T18:59:37.000Z"
       },
       {
         "type": "article",
-        "author": "Harrison Rich",
-        "outlet": "San Francisco Chronicle",
-        "title": "Evans (Achilles) won't practice Wednesday.",
-        "url": "https://www.espn.com/nfl/player/_/id/16737/mike-evans#:~:text=Evans%20(Achilles)%20won't%20practice%20Wednesday%2C%20Harrison%20Rich",
-        "publishedAt": "2026-11-25T20:07:30.000Z"
-      },
-      {
-        "type": "tweet",
-        "author": "San Francisco 49ers Official",
-        "outlet": "49ers.com Official",
-        "title": "The have placed Colton McKivitz on IR. : Full roster moves:",
-        "url": "https://x.com/49ers/status/2125666286592245811",
-        "publishedAt": "2026-11-25T19:01:50.000Z"
+        "author": "Taylor Wirth",
+        "outlet": "NBC Sports Bay Area",
+        "title": "Source: John Lynch agreed to 49ers contract extension before game vs. Vikings",
+        "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/source-john-lynch-contract-extension/1982608/",
+        "publishedAt": "2026-11-25T20:16:15.000Z"
       },
       {
         "type": "article",
-        "author": "49ers Webzone",
-        "outlet": "49ers Webzone",
-        "title": "The Brock Purdy skeptics are finally starting to believe in the 49ers QB",
-        "url": "https://www.49erswebzone.com/news/205525-brock-skeptics-finally-starting-believe/",
-        "publishedAt": "2026-11-25T20:00:03.000Z"
-      },
-      {
-        "type": "tweet",
-        "author": "San Francisco 49ers Official",
-        "outlet": "49ers.com Official",
-        "title": "Raheem Morris addresses the media.",
-        "url": "https://x.com/49ers/status/2125674881748754737",
-        "publishedAt": "2026-11-25T19:35:59.000Z"
+        "author": "Sanjesh Singh",
+        "outlet": "NBC Sports Bay Area",
+        "title": "Five potential Brandon Aiyuk landing spots after WR was waived by 49ers",
+        "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/potential-brandon-aiyuk-landing-spots/1982688/",
+        "publishedAt": "2026-11-25T20:16:15.000Z"
       },
       {
         "type": "article",
-        "author": "49ers.com Official",
-        "outlet": "49ers.com Official",
-        "title": "49ers Activate CB Nate Hobbs, Place OL Colton McKivitz on the Injured Reserve List",
-        "url": "https://www.49ers.com/news/49ers-activate-cb-nate-hobbs-place-ol-colton-mckivitz-on-the-injured-reserve-list",
-        "publishedAt": "2026-11-25T19:00:00.000Z"
+        "author": "Vince Lontz",
+        "outlet": "NBC Sports Bay Area",
+        "title": "Brandon Aiyuk reportedly drawing interest from NFL teams after being waived",
+        "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-drawing-interest/1982725/",
+        "publishedAt": "2026-11-25T20:16:15.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Jennifer Lee Chan",
+        "outlet": "NBC Sports Bay Area",
+        "title": "49ers' Mexico City takeover solidifies case as NFL's global powerhouse franchise",
+        "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/mexico-city-takeover-global-team/1982718/",
+        "publishedAt": "2026-11-25T20:16:15.000Z"
+      },
+      {
+        "type": "article",
+        "author": "Jennifer Lee Chan",
+        "outlet": "NBC Sports Bay Area",
+        "title": "What PFF grades say about 49ers' plan in blowout win over Vikings in Mexico City",
+        "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-pff-grades-win-minnesota-vikings/1982783/",
+        "publishedAt": "2026-11-25T20:16:15.000Z"
       }
     ]
   },
@@ -165,10 +171,28 @@
       "id": "sf_cl_top",
       "category": "beat",
       "headline": "San Francisco 49ers Week 12 Top Headlines (9-1)",
-      "summary": "49ers practice report:\nNo practice\nQB Brock Purdy (ankle)\nWR Mike Evans (Achilles)\nWR Jordan Watkins (groin)\nLB Dre Greenlaw (neck)\nS Siran Neal (knee, foot)\nLimited\nCB Deommodore Lenoir (foot)\nCB Upton Stout (shoulder, neck)\nOL Carver Willis (illness)\nOL Aust",
-      "updatedAt": "2026-11-25T20:15:43.444Z",
+      "summary": "Source: John Lynch agreed to 49ers contract extension before game vs. Vikings — Brandon Aiyuk reportedly drawing interest from NFL teams after being waived",
+      "updatedAt": "2026-11-25T20:16:15.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "Taylor Wirth",
+          "title": "Source: John Lynch agreed to 49ers contract extension before game vs. Vikings",
+          "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/source-john-lynch-contract-extension/1982608/",
+          "publishedAt": "2026-11-25T20:16:15.000Z"
+        },
+        {
+          "label": "Vince Lontz",
+          "title": "Brandon Aiyuk reportedly drawing interest from NFL teams after being waived",
+          "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-drawing-interest/1982725/",
+          "publishedAt": "2026-11-25T20:16:15.000Z"
+        },
+        {
+          "label": "Sanjesh Singh",
+          "title": "Five potential Brandon Aiyuk landing spots after WR was waived by 49ers",
+          "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/potential-brandon-aiyuk-landing-spots/1982688/",
+          "publishedAt": "2026-11-25T20:16:15.000Z"
+        },
         {
           "label": "Matt Maiocco",
           "title": "49ers practice report:\nNo practice\nQB Brock Purdy (ankle)\nWR Mike Evans (Achilles)\nWR Jordan Watkins (groin)\nLB Dre Greenlaw (neck)\nS Siran Neal (knee, foot)\nLimited\nCB Deommodore Lenoir (foot)\nCB Upton Stout (shoulder, neck)\nOL Carver Willis (illness)\nOL Austen Pleasants (knee)",
@@ -176,34 +200,16 @@
           "publishedAt": "2026-11-25T20:15:43.444Z"
         },
         {
+          "label": "Ali Thanawalla",
+          "title": "Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
+          "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-contract-commanders-practice-squad/1983079/",
+          "publishedAt": "2026-11-25T20:16:15.000Z"
+        },
+        {
           "label": "Matt Maiocco",
           "title": "The 49ers activated CB Nate Hobbs from injured reserve and placed RT Colton McKivitz on injured reserve.\n\nAlso, the team re-signed WR Brandin Cooks to the practice squad.",
           "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35uqqbmcs2b",
           "publishedAt": "2026-11-25T19:17:26.175Z"
-        },
-        {
-          "label": "San Francisco 49ers Official",
-          "title": "The #49ers have placed Colton McKivitz on IR.\n\n📰: Full roster moves:",
-          "url": "https://x.com/49ers/status/2125666286592245811",
-          "publishedAt": "2026-11-25T19:01:50.000Z"
-        },
-        {
-          "label": "Vic Tafur",
-          "title": "49ers QB Brock Purdy injured ankle vs. Vikings, uncertain to face Seahawks ⤵️ www.nytimes.com/athletic/781...",
-          "url": "https://bsky.app/profile/victafur.bsky.social/post/3n35z3unwis23",
-          "publishedAt": "2026-11-25T20:35:14.820Z"
-        },
-        {
-          "label": "Jason Aponte",
-          "title": "49ers injury report: Brock Purdy suffered an ankle injury",
-          "url": "https://www.ninersnation.com/san-francisco-49ers-injuries/166304/49ers-injury-report-brock-purdy-suffered-an-ankle-injury",
-          "publishedAt": "2026-11-25T20:04:41.000Z"
-        },
-        {
-          "label": "Al Sacco",
-          "title": "#49ers' Kyle Shanahan reacts to Brandon Aiyuk signing with Commanders\n\nRead:",
-          "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n35ysrgkvy2s",
-          "publishedAt": "2026-11-25T20:30:03.000Z"
         }
       ]
     },
@@ -222,16 +228,16 @@
           "publishedAt": "2026-11-25T20:15:43.444Z"
         },
         {
+          "label": "Ali Thanawalla",
+          "title": "Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
+          "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-contract-commanders-practice-squad/1983079/",
+          "publishedAt": "2026-11-25T20:16:15.000Z"
+        },
+        {
           "label": "Matt Maiocco",
           "title": "The 49ers activated CB Nate Hobbs from injured reserve and placed RT Colton McKivitz on injured reserve.\n\nAlso, the team re-signed WR Brandin Cooks to the practice squad.",
           "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35uqqbmcs2b",
           "publishedAt": "2026-11-25T19:17:26.175Z"
-        },
-        {
-          "label": "San Francisco 49ers Official",
-          "title": "The #49ers have placed Colton McKivitz on IR.\n\n📰: Full roster moves:",
-          "url": "https://x.com/49ers/status/2125666286592245811",
-          "publishedAt": "2026-11-25T19:01:50.000Z"
         },
         {
           "label": "Vic Tafur",
@@ -257,27 +263,15 @@
       "id": "sf_cl_film",
       "category": "film",
       "headline": "49ers All-22 Film, Trench & Efficiency Breakdowns",
-      "summary": "Mike Evans surges right back into the rankings following missed time — 49ers QB Brock Purdy was named NFC Offensive Player of the Week after going 21 of 26 for 255 yards with three TDs and a passer rating of 146.0 vs. the Vikings.\n\nIt's the fourth time Purdy h",
-      "updatedAt": "2026-11-25T18:05:14.000Z",
+      "summary": "49ers QB Brock Purdy was named NFC Offensive Player of the Week after going 21 of 26 for 255 yards with three TDs and a passer rating of 146.0 vs. the Vikings.\n\nIt's the fourth time Purdy has won the award. — 49ers Playbook: SF DISMANTLED the Vikings Defense",
+      "updatedAt": "2026-11-25T17:05:40.333Z",
       "itemCount": 6,
       "sourceLinks": [
-        {
-          "label": "PFF",
-          "title": "Mike Evans surges right back into the rankings following missed time",
-          "url": "https://x.com/PFF/status/2125652044409454974",
-          "publishedAt": "2026-11-25T18:05:14.000Z"
-        },
         {
           "label": "Matt Maiocco",
           "title": "49ers QB Brock Purdy was named NFC Offensive Player of the Week after going 21 of 26 for 255 yards with three TDs and a passer rating of 146.0 vs. the Vikings.\n\nIt's the fourth time Purdy has won the award.",
           "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n35nf4ohic2l",
           "publishedAt": "2026-11-25T17:05:40.333Z"
-        },
-        {
-          "label": "San Francisco 49ers Official",
-          "title": "Energy was high in the trenches 🔥\n\nFrom the Trenches 🎥:\n\n@Visa | #FTTB",
-          "url": "https://x.com/49ers/status/2125431784485876029",
-          "publishedAt": "2026-11-25T03:30:00.000Z"
         },
         {
           "label": "Jonnydel's Football Academy",
@@ -296,6 +290,18 @@
           "title": "The 49ers didn’t just attack between the numbers, Purdy threw directly over the center 7 times for 7 completions 114 yards and 2 TDs\n\nWrote about how the 49ers solved the Vikings defense",
           "url": "https://bsky.app/profile/tednguyen.bsky.social/post/3n32v6o33js2f",
           "publishedAt": "2026-11-24T14:47:14.408Z"
+        },
+        {
+          "label": "Chase Daniel",
+          "title": "Brock Purdy Changed EVERYTHING + Nobody Understands What Caleb Williams Doing WRONG | Chase Daniel",
+          "url": "https://www.youtube.com/watch?v=0V20MYj2jRA",
+          "publishedAt": "2026-11-24T14:00:34.000Z"
+        },
+        {
+          "label": "Ted Nguyen",
+          "title": "This MIGHT have been one of the 49ers best answers against the Vikings defense",
+          "url": "https://bsky.app/profile/tednguyen.bsky.social/post/3n2zhyjcx2c27",
+          "publishedAt": "2026-11-24T01:18:29.715Z"
         }
       ]
     },
@@ -303,10 +309,34 @@
       "id": "sf_cl_roster",
       "category": "roster",
       "headline": "49ers Roster Moves, Trades & Salary Cap Desk",
-      "summary": "The 49ers activated CB Nate Hobbs from injured reserve and placed RT Colton McKivitz on injured reserve.\n\nAlso, the team re-signed WR Brandin Cooks to the practice squad. — The #49ers have placed Colton McKivitz on IR.\n\n📰: Full roster moves:",
-      "updatedAt": "2026-11-25T19:17:26.175Z",
+      "summary": "Source: John Lynch agreed to 49ers contract extension before game vs. Vikings — Brandon Aiyuk reportedly drawing interest from NFL teams after being waived",
+      "updatedAt": "2026-11-25T20:16:15.000Z",
       "itemCount": 6,
       "sourceLinks": [
+        {
+          "label": "Taylor Wirth",
+          "title": "Source: John Lynch agreed to 49ers contract extension before game vs. Vikings",
+          "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/source-john-lynch-contract-extension/1982608/",
+          "publishedAt": "2026-11-25T20:16:15.000Z"
+        },
+        {
+          "label": "Vince Lontz",
+          "title": "Brandon Aiyuk reportedly drawing interest from NFL teams after being waived",
+          "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-drawing-interest/1982725/",
+          "publishedAt": "2026-11-25T20:16:15.000Z"
+        },
+        {
+          "label": "Sanjesh Singh",
+          "title": "Five potential Brandon Aiyuk landing spots after WR was waived by 49ers",
+          "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/potential-brandon-aiyuk-landing-spots/1982688/",
+          "publishedAt": "2026-11-25T20:16:15.000Z"
+        },
+        {
+          "label": "Ali Thanawalla",
+          "title": "Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
+          "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-contract-commanders-practice-squad/1983079/",
+          "publishedAt": "2026-11-25T20:16:15.000Z"
+        },
         {
           "label": "Matt Maiocco",
           "title": "The 49ers activated CB Nate Hobbs from injured reserve and placed RT Colton McKivitz on injured reserve.\n\nAlso, the team re-signed WR Brandin Cooks to the practice squad.",
@@ -314,39 +344,129 @@
           "publishedAt": "2026-11-25T19:17:26.175Z"
         },
         {
-          "label": "San Francisco 49ers Official",
-          "title": "The #49ers have placed Colton McKivitz on IR.\n\n📰: Full roster moves:",
-          "url": "https://x.com/49ers/status/2125666286592245811",
-          "publishedAt": "2026-11-25T19:01:50.000Z"
-        },
-        {
           "label": "Kyle Posey",
           "title": "49ers activate veteran cornerback from the IR; Brandin Cook joins the practice squad",
           "url": "https://www.ninersnation.com/san-francisco-49ers-injuries/166301/49ers-activate-veteran-cornerback-from-the-ir-brandin-cook-joins-the-practice-squad",
           "publishedAt": "2026-11-25T19:12:30.000Z"
-        },
-        {
-          "label": "49ers Webzone",
-          "title": "Commanders to sign ex-49ers WR Brandon Aiyuk to practice squad",
-          "url": "https://www.49erswebzone.com/news/205516-commanders-ex-49ers-brandon-aiyuk-practice/",
-          "publishedAt": "2026-11-25T18:40:10.000Z"
-        },
-        {
-          "label": "San Francisco 49ers Official",
-          "title": "49ers roster move: Reinstated CB Nate Hobbs from injured reserve. Signed WR Brandin Cooks to the practice squad. Placed RT Colton McKivitz on injured reserve.",
-          "url": "https://www.49ers.com/team/transactions/#tx-21429ea73638",
-          "publishedAt": "2026-11-25T08:00:00.000Z"
-        },
-        {
-          "label": "Matt Maiocco",
-          "title": "The 49ers released DL Robert Beal Jr. from their practice squad.",
-          "url": "https://bsky.app/profile/mattmaiocco.bsky.social/post/3n33obbmmns2b",
-          "publishedAt": "2026-11-24T22:16:05.560Z"
         }
       ]
     }
   ],
   "rawStream": [
+    {
+      "id": "sf_brss_nbcsba_e8ad68b6f430",
+      "type": "article",
+      "title": "Source: John Lynch agreed to 49ers contract extension before game vs. Vikings",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/John-Lynch-Reuters.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "Source: John Lynch agreed to 49ers contract extension before game vs. Vikings",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/source-john-lynch-contract-extension/1982608/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "nbcsba",
+      "reporterName": "Taylor Wirth",
+      "author": "Taylor Wirth",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/source-john-lynch-contract-extension/1982608/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": true,
+      "isInGameInjury": false,
+      "breakingBadge": "BREAKING",
+      "breakingPriority": 3.136,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "tier1_major",
+      "isUrgentBreaking": true,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 105.1922
+    },
+    {
+      "id": "sf_brss_nbcsba_927324dc030a",
+      "type": "article",
+      "title": "Brandon Aiyuk reportedly drawing interest from NFL teams after being waived",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/Brandon-Aiyuk-49ers-NBC.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "Brandon Aiyuk reportedly drawing interest from NFL teams after being waived",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-drawing-interest/1982725/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "nbcsba",
+      "reporterName": "Vince Lontz",
+      "author": "Vince Lontz",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-drawing-interest/1982725/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": true,
+      "isInGameInjury": false,
+      "breakingBadge": "BREAKING",
+      "breakingPriority": 2.554,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "corroborationCount": 3,
+      "corroboratedBy": [
+        "49ers Webzone",
+        "Al Sacco"
+      ],
+      "firstReportedBy": "49ers Webzone",
+      "storyTier": "tier2_roster",
+      "isUrgentBreaking": true,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 94.6938
+    },
+    {
+      "id": "sf_brss_nbcsba_1a5f6ed1b9fd",
+      "type": "article",
+      "title": "Five potential Brandon Aiyuk landing spots after WR was waived by 49ers",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/GettyImages-2006998473-e1795469023957.jpg?quality=85&strip=all&fit=3744,2310",
+      "imageAlt": "Five potential Brandon Aiyuk landing spots after WR was waived by 49ers",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/potential-brandon-aiyuk-landing-spots/1982688/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "nbcsba",
+      "reporterName": "Sanjesh Singh",
+      "author": "Sanjesh Singh",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/potential-brandon-aiyuk-landing-spots/1982688/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": true,
+      "isInGameInjury": false,
+      "breakingBadge": "BREAKING",
+      "breakingPriority": 2.554,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "corroborationCount": 3,
+      "corroboratedBy": [
+        "49ers Webzone",
+        "Al Sacco"
+      ],
+      "firstReportedBy": "49ers Webzone",
+      "storyTier": "tier2_roster",
+      "isUrgentBreaking": true,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 94.6938
+    },
     {
       "id": "sf_bsky_8fab4ae287aa",
       "type": "tweet",
@@ -434,7 +554,47 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 53.5134
+      "storyRank": 52.1583
+    },
+    {
+      "id": "sf_brss_nbcsba_89b5e74c3534",
+      "type": "article",
+      "title": "Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/Brandon-Aiyuk-49ers-Vikings-GETTY.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "Former 49ers WR Brandon Aiyuk reportedly signing with Commanders' practice squad",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-contract-commanders-practice-squad/1983079/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "nbcsba",
+      "reporterName": "Ali Thanawalla",
+      "author": "Ali Thanawalla",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-contract-commanders-practice-squad/1983079/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": "ROSTER MOVE",
+      "breakingPriority": 1.096,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "corroborationCount": 3,
+      "corroboratedBy": [
+        "49ers Webzone",
+        "Al Sacco"
+      ],
+      "firstReportedBy": "49ers Webzone",
+      "storyTier": "minor_roster",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 51.1086
     },
     {
       "id": "sf_bsky_c1fd52aa4a9a",
@@ -477,67 +637,19 @@
           "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240542.png"
         }
       ],
-      "isBreaking": true,
+      "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": "BREAKING",
-      "breakingPriority": 2.324,
+      "breakingBadge": "ROSTER MOVE",
+      "breakingPriority": 2.317,
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
       "credibilityScore": 98,
       "storyTier": "tier2_roster",
-      "isUrgentBreaking": true,
+      "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 48.3982
-    },
-    {
-      "id": "x_tl_49ers_2125666286592245811",
-      "type": "tweet",
-      "title": "The #49ers have placed Colton McKivitz on IR.\n\n📰: Full roster moves:",
-      "fullText": "The #49ers have placed Colton McKivitz on IR.\n\n📰: Full roster moves:",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX_gxacaQAA2uS1.jpg",
-      "imageAlt": "San Francisco 49ers Official post",
-      "mentionedPlayers": [
-        {
-          "id": "3916075",
-          "name": "Colton McKivitz",
-          "shortName": "C. McKivitz",
-          "position": "OT",
-          "jersey": 68,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916075.png"
-        }
-      ],
-      "publishedAt": "2026-11-25T19:01:50.000Z",
-      "url": "https://x.com/49ers/status/2125666286592245811",
-      "externalUrl": "https://49rs.co/4kBnlbm",
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": true,
-      "isInGameInjury": false,
-      "breakingBadge": "BREAKING",
-      "breakingPriority": 2.265,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "tier2_roster",
-      "isUrgentBreaking": true,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 45.2635
+      "storyRank": 47.7122
     },
     {
       "id": "sf_bsky_602747c222cc",
@@ -584,7 +696,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 43.3349
+      "storyRank": 41.8489
     },
     {
       "id": "sf_brss_niners_nation_4733d0115425",
@@ -627,7 +739,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 42.8037
+      "storyRank": 41.8328
     },
     {
       "id": "sf_bsky_5238eedaa640",
@@ -665,7 +777,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 39.3696
+      "storyRank": 38.1066
     },
     {
       "id": "sf_brss_49ers_webzone_4e500a74a7fc",
@@ -699,7 +811,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 37.4827
+      "storyRank": 36.3479
     },
     {
       "id": "sf_brss_49ers_webzone_47b4d5ebf05d",
@@ -732,7 +844,7 @@
       "isBreaking": true,
       "isInGameInjury": false,
       "breakingBadge": "INJURY UPDATE",
-      "breakingPriority": 1.664,
+      "breakingPriority": 1.66,
       "category": "injury",
       "signalScore": 70,
       "fluffScore": 0,
@@ -742,7 +854,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 36.6173
+      "storyRank": 35.5678
     },
     {
       "id": "sf_brss_49ers_webzone_b926e1d4de80",
@@ -785,7 +897,418 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 34.4439
+      "storyRank": 33.4607
+    },
+    {
+      "id": "sf_brss_nbcsba_9466719ded33",
+      "type": "article",
+      "title": "49ers quarterback Brock Purdy earns fourth career NFC Player of the Week honor",
+      "summary": "49ers quarterback Brock Purdy is taking over the NFL this season, and San Francisco’s Week 11 win over the Minnesota Vikings might have been his brightest moment so far. Purdy earned his fourth career NFC Player of the Week award after a do",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/BrockPurdyNFCPlayerofWeek.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "49ers quarterback Brock Purdy earns fourth career NFC Player of the Week honor",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-nfc-player-of-the-week/1983076/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "nbcsba",
+      "reporterName": "Dylan Grausz",
+      "author": "Dylan Grausz",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-nfc-player-of-the-week/1983076/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 32.1169
+    },
+    {
+      "id": "sf_brss_nbcsba_a522f12aacc8",
+      "type": "article",
+      "title": "49ers' Malik Mustapha wins appeal for Week 5 hit on Seahawks' Jaxon Smith-Njigba",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/MalikMustaphaFine-1.gif?fit=1200,675&quality=85&strip=all",
+      "imageAlt": "49ers' Malik Mustapha wins appeal for Week 5 hit on Seahawks' Jaxon Smith-Njigba",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/malik-mustapha-jaxon-smith-njigba-fine/1982994/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "nbcsba",
+      "reporterName": "Pratham Valluri",
+      "author": "Pratham Valluri",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/malik-mustapha-jaxon-smith-njigba-fine/1982994/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4696211",
+          "name": "Malik Mustapha",
+          "shortName": "M. Mustapha",
+          "position": "S",
+          "jersey": 6,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4696211.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 32.1169
+    },
+    {
+      "id": "sf_brss_nbcsba_29315f6016c0",
+      "type": "article",
+      "title": "Ex-49ers receiver Brandon Aiyuk to meet with Commanders on Wednesday, per agent",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/2023-12-31T212144Z_1378555145_MT1USATODAY22201455_RTRMADP_3_NFL-SAN-FRANCISCO-49ERS-AT-WASHINGTON-COMMANDERS-e1795561110182.jpg?quality=85&strip=all&fit=1200,676",
+      "imageAlt": "Ex-49ers receiver Brandon Aiyuk to meet with Commanders on Wednesday, per agent",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-washington-commanders-meeting/1982991/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "nbcsba",
+      "reporterName": "Angelina Martin",
+      "author": "Angelina Martin",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brandon-aiyuk-washington-commanders-meeting/1982991/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 32.1169
+    },
+    {
+      "id": "sf_brss_nbcsba_74ceac272ed6",
+      "type": "article",
+      "title": "Why Nick Bosa believes 2026 49ers are one of the best teams he has played on",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/NickBosa202649ers.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "Why Nick Bosa believes 2026 49ers are one of the best teams he has played on",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/nick-bosa-2026-performance/1982964/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "nbcsba",
+      "reporterName": "Dylan Grausz",
+      "author": "Dylan Grausz",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/nick-bosa-2026-performance/1982964/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4040605",
+          "name": "Nick Bosa",
+          "shortName": "N. Bosa",
+          "position": "DE",
+          "jersey": 97,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040605.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 32.1169
+    },
+    {
+      "id": "sf_brss_nbcsba_f0742418ea5e",
+      "type": "article",
+      "title": "49ers overreactions: Is Colton McKivitz's injury bigger deal than fans realize?",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/Colton-McKivitz-Injury-49ers-Vikings-GETTY.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "49ers overreactions: Is Colton McKivitz's injury bigger deal than fans realize?",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/overreactions-colton-mckivitz-injury/1982800/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "matt_maiocco",
+      "reporterName": "Matt Maiocco",
+      "author": "Matt Maiocco",
+      "authorHandle": "@MaioccoNBCS",
+      "authorProfileUrl": "https://x.com/MaioccoNBCS",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3916075",
+          "name": "Colton McKivitz",
+          "shortName": "C. McKivitz",
+          "position": "OT",
+          "jersey": 68,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916075.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 32.1169
+    },
+    {
+      "id": "sf_brss_nbcsba_1e2af9af8fbc",
+      "type": "article",
+      "title": "What PFF grades say about 49ers' plan in blowout win over Vikings in Mexico City",
+      "summary": "49ers quarterback Brock Purdy is taking over the NFL this season, and San Francisco’s Week 11 win over the Minnesota Vikings might have been his brightest moment so far. Purdy earned his fourth career NFC Player of the Week award after a do",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/Brock-Purdy-Running-Throw-49ers-Vikings-GETTY.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "What PFF grades say about 49ers' plan in blowout win over Vikings in Mexico City",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-pff-grades-win-minnesota-vikings/1982783/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "jennifer_lee_chan",
+      "reporterName": "Jennifer Lee Chan",
+      "author": "Jennifer Lee Chan",
+      "authorHandle": "@jenniferleechan",
+      "authorProfileUrl": "https://x.com/jenniferleechan",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 32.1169
+    },
+    {
+      "id": "sf_brss_nbcsba_fd4d4fcf6b65",
+      "type": "article",
+      "title": "49ers' Mexico City takeover solidifies case as NFL's global powerhouse franchise",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/George-Kittle-Mexican-Flag-49ers-Vikings-GETTY.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "49ers' Mexico City takeover solidifies case as NFL's global powerhouse franchise",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/mexico-city-takeover-global-team/1982718/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "jennifer_lee_chan",
+      "reporterName": "Jennifer Lee Chan",
+      "author": "Jennifer Lee Chan",
+      "authorHandle": "@jenniferleechan",
+      "authorProfileUrl": "https://x.com/jenniferleechan",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 32.1169
+    },
+    {
+      "id": "sf_brss_nbcsba_2aa08a0f93e3",
+      "type": "article",
+      "title": "How Brock Purdy-George Kittle duo made 49ers franchise history in win vs Vikings",
+      "summary": "49ers quarterback Brock Purdy is taking over the NFL this season, and San Francisco’s Week 11 win over the Minnesota Vikings might have been his brightest moment so far. Purdy earned his fourth career NFC Player of the Week award after a do",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/PurdyKittleDuo.gif?fit=1200,675&quality=85&strip=all",
+      "imageAlt": "How Brock Purdy-George Kittle duo made 49ers franchise history in win vs Vikings",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-george-kittle-history/1982607/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "nbcsba",
+      "reporterName": "Pratham Valluri",
+      "author": "Pratham Valluri",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-george-kittle-history/1982607/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "3040151",
+          "name": "George Kittle",
+          "shortName": "G. Kittle",
+          "position": "TE",
+          "jersey": 85,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3040151.png"
+        },
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 32.1169
+    },
+    {
+      "id": "sf_brss_nbcsba_a72df77f2392",
+      "type": "article",
+      "title": "49ers QB Brock Purdy reveals Kyle Shanahan's advice for facing Vikings' defense",
+      "summary": "49ers quarterback Brock Purdy is taking over the NFL this season, and San Francisco’s Week 11 win over the Minnesota Vikings might have been his brightest moment so far. Purdy earned his fourth career NFC Player of the Week award after a do",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/ShanahanRaidersStory.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "49ers QB Brock Purdy reveals Kyle Shanahan's advice for facing Vikings' defense",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-kyle-shanahan-advice/1982599/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "nbcsba",
+      "reporterName": "Vince Lontz",
+      "author": "Vince Lontz",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/brock-purdy-kyle-shanahan-advice/1982599/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 32.1169
+    },
+    {
+      "id": "sf_brss_nbcsba_03bd709f5277",
+      "type": "article",
+      "title": "Source: 49ers waiving WR Brandon Aiyuk two weeks after NFL reinstatement",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsbayarea.com/2026/11/Brandon-Aiyuk-Getty.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "Source: 49ers waiving WR Brandon Aiyuk two weeks after NFL reinstatement",
+      "publishedAt": "2026-11-25T20:16:15.000Z",
+      "url": "https://www.nbcsportsbayarea.com/nfl/san-francisco-49ers/source-brandon-aiyuk-waived/1978860/",
+      "outletId": "nbcsba",
+      "outletName": "NBC Sports Bay Area",
+      "reporterId": "matt_maiocco",
+      "reporterName": "Matt Maiocco",
+      "author": "Matt Maiocco",
+      "authorHandle": "@MaioccoNBCS",
+      "authorProfileUrl": "https://x.com/MaioccoNBCS",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 32.1169
     },
     {
       "id": "sf_rss_8e450e4b8f71",
@@ -828,7 +1351,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 31.536
+      "storyRank": 30.6994
     },
     {
       "id": "sf_pwire_16737_64974128",
@@ -860,46 +1383,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 28.6046
-    },
-    {
-      "id": "x_tl_49ers_2125679605667545334",
-      "type": "tweet",
-      "title": "This Sunday, each pair of cleats tells a story. All week long we’ll be spotlighting causes closest to our hearts 🫶\n\nFor more:\n\n@ShoePalace | #MyCauseMyCleats",
-      "fullText": "This Sunday, each pair of cleats tells a story. All week long we’ll be spotlighting causes closest to our hearts 🫶\n\nFor more:\n\n@ShoePalace | #MyCauseMyCleats",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX_pyJ_a0AAswLP.jpg",
-      "imageAlt": "San Francisco 49ers Official post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T19:54:45.000Z",
-      "url": "https://x.com/49ers/status/2125679605667545334",
-      "externalUrl": "https://49rs.co/4tn5tDm",
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 27.0776
+      "storyRank": 27.8874
     },
     {
       "id": "sf_brss_49ers_webzone_cff3a34d1a47",
@@ -942,7 +1426,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 25.8919
+      "storyRank": 25.2864
     },
     {
       "id": "sf_brss_49ers_webzone_aefeafdc8616",
@@ -985,7 +1469,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 25.5449
+      "storyRank": 24.9532
     },
     {
       "id": "sf_bsky_36c7e49cef3e",
@@ -1032,46 +1516,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 25.0132
-    },
-    {
-      "id": "x_tl_49ers_2125674881748754737",
-      "type": "tweet",
-      "title": "Raheem Morris addresses the media.",
-      "fullText": "Raheem Morris addresses the media.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "San Francisco 49ers Official post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T19:35:59.000Z",
-      "url": "https://x.com/49ers/status/2125674881748754737",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 21.8656
+      "storyRank": 24.4284
     },
     {
       "id": "sf_brss_niners_nation_edf5cd2a4b5b",
@@ -1104,7 +1549,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.989,
+      "breakingPriority": 0.986,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -1116,7 +1561,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 22.3872
+      "storyRank": 22.021
     },
     {
       "id": "sf_tyt_pOBLkMin0LU",
@@ -1154,7 +1599,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 22.007
+      "storyRank": 21.5531
     },
     {
       "id": "sf_pwire_4361741_64974028",
@@ -1195,7 +1640,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 20.6699
+      "storyRank": 20.0896
     },
     {
       "id": "sf_brss_49ers_webzone_f361bab78c33",
@@ -1238,46 +1683,47 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 20.4256
+      "storyRank": 20.0211
     },
     {
-      "id": "x_tl_49ers_2125670857494409479",
-      "type": "tweet",
-      "title": "Kyle Shanahan addresses the media.",
-      "fullText": "Kyle Shanahan addresses the media.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "San Francisco 49ers Official post",
+      "id": "sf_brss_49ers_webzone_9585e80551a2",
+      "type": "article",
+      "title": "Commanders to sign ex-49ers WR Brandon Aiyuk to practice squad",
+      "summary": "NFL.com - Brandon Aiyuk, released Monday after a monthslong saga with the 49ers, is signing with the Commanders' practice squad and reuniting with former college quarterback Jayden...",
+      "imageUrl": "https://www.49erswebzone.com/images/fb-og-image.jpg?v=001",
+      "imageAlt": "Commanders to sign ex-49ers WR Brandon Aiyuk to practice squad",
+      "publishedAt": "2026-11-25T18:40:10.000Z",
+      "url": "https://www.49erswebzone.com/news/205516-commanders-ex-49ers-brandon-aiyuk-practice/",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": "49ers_webzone",
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49erswebzone.com/news/205516-commanders-ex-49ers-brandon-aiyuk-practice/",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
       "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T19:20:00.000Z",
-      "url": "https://x.com/49ers/status/2125670857494409479",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
       "isBreaking": false,
       "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
+      "breakingBadge": "ROSTER MOVE",
+      "breakingPriority": 0.935,
+      "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
+      "credibilityScore": 86,
+      "isFirstMoverInjuryScoop": true,
+      "corroborationCount": 3,
+      "corroboratedBy": [
+        "Ali Thanawalla",
+        "Al Sacco"
+      ],
+      "storyTier": "minor_roster",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.6432
+      "storyRank": 18.4017
     },
     {
       "id": "sf_bsky_e0076dfea387",
@@ -1324,56 +1770,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 17.45
-    },
-    {
-      "id": "x_tl_pff_2125652044409454974",
-      "type": "tweet",
-      "title": "Mike Evans surges right back into the rankings following missed time",
-      "fullText": "Mike Evans surges right back into the rankings following missed time",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX_VRBDa0AAZ8zc.jpg",
-      "imageAlt": "PFF post",
-      "hasInlineChartImage": true,
-      "mentionedPlayers": [
-        {
-          "id": "16737",
-          "name": "Mike Evans",
-          "shortName": "M. Evans",
-          "position": "WR",
-          "jersey": 5,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/16737.png"
-        }
-      ],
-      "publishedAt": "2026-11-25T18:05:14.000Z",
-      "url": "https://x.com/PFF/status/2125652044409454974",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "national_film",
-      "outletName": "PFF",
-      "reporterId": "pff_official",
-      "reporterName": "PFF",
-      "author": "PFF",
-      "authorHandle": "@PFF",
-      "authorProfileUrl": "https://x.com/PFF",
-      "trustTier": 2,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.745,
-      "category": "film",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 17.6298
+      "storyRank": 17.1369
     },
     {
       "id": "sf_brss_49ers_webzone_a18572602f68",
@@ -1416,7 +1813,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.6959
+      "storyRank": 16.4089
     },
     {
       "id": "sf_brss_49ers_webzone_a8973deffcc9",
@@ -1467,46 +1864,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 16.6827
-    },
-    {
-      "id": "sf_brss_49ers_webzone_9585e80551a2",
-      "type": "article",
-      "title": "Commanders to sign ex-49ers WR Brandon Aiyuk to practice squad",
-      "summary": "NFL.com - Brandon Aiyuk, released Monday after a monthslong saga with the 49ers, is signing with the Commanders' practice squad and reuniting with former college quarterback Jayden...",
-      "imageUrl": "https://www.49erswebzone.com/images/fb-og-image.jpg?v=001",
-      "imageAlt": "Commanders to sign ex-49ers WR Brandon Aiyuk to practice squad",
-      "publishedAt": "2026-11-25T18:40:10.000Z",
-      "url": "https://www.49erswebzone.com/news/205516-commanders-ex-49ers-brandon-aiyuk-practice/",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": "49ers_webzone",
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49erswebzone.com/news/205516-commanders-ex-49ers-brandon-aiyuk-practice/",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.938,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "isFirstMoverInjuryScoop": true,
-      "corroborationCount": 2,
-      "corroboratedBy": [
-        "Al Sacco"
-      ],
-      "storyTier": "minor_roster",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 17.0017
+      "storyRank": 16.3962
     },
     {
       "id": "sf_nfltr_19d7285b5e72",
@@ -1557,7 +1915,91 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 15.0127
+      "storyRank": 14.7732
+    },
+    {
+      "id": "sf_bsky_ad327648afa8",
+      "type": "tweet",
+      "title": "Former #49ers WR Brandon Aiyuk signs with Commanders\n\nRead:",
+      "fullText": "Former #49ers WR Brandon Aiyuk signs with Commanders\n\nRead:",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreiemsthuhviou2r65tyyyoenivfjgqge7xewomsd72lrrdzfsg6ohm",
+      "imageAlt": "Al Sacco post",
+      "publishedAt": "2026-11-25T18:45:02.000Z",
+      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n35swytxss2w",
+      "externalUrl": "https://www.49erswebzone.com/articles/205518-former-49ers-brandon-aiyuk-commanders/",
+      "externalTitle": "Former 49ers WR Brandon Aiyuk signs with Commanders",
+      "outletId": "49ers_webzone",
+      "outletName": "Al Sacco",
+      "reporterId": "al_sacco",
+      "reporterName": "Al Sacco",
+      "author": "Al Sacco",
+      "authorHandle": "@AlSacco49",
+      "authorProfileUrl": "https://x.com/AlSacco49",
+      "trustTier": 2,
+      "category": "beat",
+      "wireSource": "bluesky_live",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 85,
+      "corroborationCount": 3,
+      "corroboratedBy": [
+        "Ali Thanawalla",
+        "49ers Webzone"
+      ],
+      "firstReportedBy": "49ers Webzone",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 14.9809
+    },
+    {
+      "id": "sf_brss_49ers_webzone_9fea3fd71927",
+      "type": "article",
+      "title": "Former 49ers WR Brandon Aiyuk signs with Commanders",
+      "summary": "49ers Webzone - Former San Francisco 49ers wide receiver Brandon Aiyuk was waived on Monday and cleared waivers on Tuesday, making him eligible to sign with any team. ESPN's Adam Schefter reports that the Washington Commanders have signed A",
+      "imageUrl": "https://cdn.49erswebzone.com/v/0p9yRg/content/media/cache/leadstory-560x0-33196-1795632364.jpg",
+      "imageAlt": "Former 49ers WR Brandon Aiyuk signs with Commanders",
+      "publishedAt": "2026-11-25T18:42:00.000Z",
+      "url": "https://www.49erswebzone.com/articles/205518-former-49ers-brandon-aiyuk-commanders/",
+      "outletId": "49ers_webzone",
+      "outletName": "49ers Webzone",
+      "reporterId": "49ers_webzone",
+      "reporterName": "49ers Webzone",
+      "author": "49ers Webzone",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.49erswebzone.com/articles/205518-former-49ers-brandon-aiyuk-commanders/",
+      "trustTier": 2,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "corroborationCount": 3,
+      "corroboratedBy": [
+        "Ali Thanawalla",
+        "Al Sacco"
+      ],
+      "firstReportedBy": "49ers Webzone",
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 15.033
     },
     {
       "id": "sf_bsky_80f095699780",
@@ -1612,7 +2054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.0857
+      "storyRank": 13.8657
     },
     {
       "id": "sf_brss_49ers_webzone_752090434c73",
@@ -1663,7 +2105,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.3272
+      "storyRank": 14.1061
     },
     {
       "id": "sf_yt_e_RGO_fgLwc",
@@ -1701,7 +2143,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.2444
+      "storyRank": 14.0281
     },
     {
       "id": "sf_rss_ea8cfca42bce",
@@ -1752,7 +2194,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.207
+      "storyRank": 13.9916
     },
     {
       "id": "sf_brss_niners_nation_84e8fa294eb8",
@@ -1786,7 +2228,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.927
+      "storyRank": 13.7163
     },
     {
       "id": "sf_brss_49ers_webzone_4607f3898e62",
@@ -1820,89 +2262,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 13.4019
-    },
-    {
-      "id": "sf_bsky_ad327648afa8",
-      "type": "tweet",
-      "title": "Former #49ers WR Brandon Aiyuk signs with Commanders\n\nRead:",
-      "fullText": "Former #49ers WR Brandon Aiyuk signs with Commanders\n\nRead:",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:tj55jmevn6ml3yx6kgy64axa/bafkreiemsthuhviou2r65tyyyoenivfjgqge7xewomsd72lrrdzfsg6ohm",
-      "imageAlt": "Al Sacco post",
-      "publishedAt": "2026-11-25T18:45:02.000Z",
-      "url": "https://bsky.app/profile/49erswebzone.bsky.social/post/3n35swytxss2w",
-      "externalUrl": "https://www.49erswebzone.com/articles/205518-former-49ers-brandon-aiyuk-commanders/",
-      "externalTitle": "Former 49ers WR Brandon Aiyuk signs with Commanders",
-      "outletId": "49ers_webzone",
-      "outletName": "Al Sacco",
-      "reporterId": "al_sacco",
-      "reporterName": "Al Sacco",
-      "author": "Al Sacco",
-      "authorHandle": "@AlSacco49",
-      "authorProfileUrl": "https://x.com/AlSacco49",
-      "trustTier": 2,
-      "category": "beat",
-      "wireSource": "bluesky_live",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 85,
-      "corroborationCount": 2,
-      "corroboratedBy": [
-        "49ers Webzone"
-      ],
-      "firstReportedBy": "49ers Webzone",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.4646
-    },
-    {
-      "id": "sf_brss_49ers_webzone_9fea3fd71927",
-      "type": "article",
-      "title": "Former 49ers WR Brandon Aiyuk signs with Commanders",
-      "summary": "49ers Webzone - Former San Francisco 49ers wide receiver Brandon Aiyuk was waived on Monday and cleared waivers on Tuesday, making him eligible to sign with any team. ESPN's Adam Schefter reports that the Washington Commanders have signed A",
-      "imageUrl": "https://cdn.49erswebzone.com/v/0p9yRg/content/media/cache/leadstory-560x0-33196-1795632364.jpg",
-      "imageAlt": "Former 49ers WR Brandon Aiyuk signs with Commanders",
-      "publishedAt": "2026-11-25T18:42:00.000Z",
-      "url": "https://www.49erswebzone.com/articles/205518-former-49ers-brandon-aiyuk-commanders/",
-      "outletId": "49ers_webzone",
-      "outletName": "49ers Webzone",
-      "reporterId": "49ers_webzone",
-      "reporterName": "49ers Webzone",
-      "author": "49ers Webzone",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.49erswebzone.com/articles/205518-former-49ers-brandon-aiyuk-commanders/",
-      "trustTier": 2,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "corroborationCount": 2,
-      "corroboratedBy": [
-        "Al Sacco"
-      ],
-      "firstReportedBy": "49ers Webzone",
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 13.5611
+      "storyRank": 13.2046
     },
     {
       "id": "sf_bsky_6b4ed7b7662e",
@@ -1940,7 +2300,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.9621
+      "storyRank": 12.7712
     },
     {
       "id": "sf_bsky_54425cb46e5d",
@@ -1987,7 +2347,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.2891
+      "storyRank": 12.0301
     },
     {
       "id": "sf_bsky_49c034c87299",
@@ -2042,7 +2402,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 12.5236
+      "storyRank": 12.3435
     },
     {
       "id": "sf_brss_49ers_webzone_ee5f5ee35388",
@@ -2076,7 +2436,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.9632
+      "storyRank": 11.8007
     },
     {
       "id": "sf_bsky_36a37bb7b1c1",
@@ -2114,7 +2474,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.7,
+      "breakingPriority": 0.699,
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
@@ -2123,7 +2483,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 11.2319
+      "storyRank": 11.1371
     },
     {
       "id": "sf_brss_49ers_webzone_721c9dd983f1",
@@ -2157,7 +2517,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.3769
+      "storyRank": 10.2494
     },
     {
       "id": "sf_bsky_6862317624aa",
@@ -2204,31 +2564,46 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.0224
+      "storyRank": 9.8993
     },
     {
-      "id": "x_tl_49ers_2125645539018776606",
+      "id": "x_tl_nfl_2125635636816150932",
       "type": "tweet",
-      "title": "He’s Purdy nice with it 😮‍💨",
-      "fullText": "He’s Purdy nice with it 😮‍💨",
+      "title": "NFC Players of the Week! (Week 11)\n\n@brockpurdy13 | @1NCRDB1 | @DrewTS7",
+      "fullText": "NFC Players of the Week! (Week 11)\n\n@brockpurdy13 | @1NCRDB1 | @DrewTS7",
       "isFullTweet": true,
       "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX_PWddbcAA9x9W.jpg",
-      "imageAlt": "San Francisco 49ers Official post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T17:39:23.000Z",
-      "url": "https://x.com/49ers/status/2125645539018776606",
+      "imageUrl": "https://pbs.twimg.com/media/HX_B3p9bIAASHp4.jpg?name=orig",
+      "imageUrls": [
+        "https://pbs.twimg.com/media/HX_B3p9bIAASHp4.jpg?name=orig",
+        "https://pbs.twimg.com/media/HX_B3n_aEAAH0aj.jpg?name=orig",
+        "https://pbs.twimg.com/media/HX_B4YnaQAIZjMZ.jpg?name=orig"
+      ],
+      "imageAlt": "NFL post",
+      "hasInlineChartImage": true,
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        }
+      ],
+      "publishedAt": "2026-11-25T17:00:02.874Z",
+      "url": "https://x.com/NFL/status/2125635636816150932",
       "externalUrl": null,
       "externalTitle": null,
       "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "trustTier": 1,
+      "outletId": "x_beat",
+      "outletName": "X Beat",
+      "reporterId": null,
+      "reporterName": "NFL",
+      "author": "NFL",
+      "authorHandle": "@NFL",
+      "authorProfileUrl": "https://x.com/NFL",
+      "trustTier": 2,
       "wireSource": "x_timeline_live",
       "isBreaking": false,
       "isInGameInjury": false,
@@ -2238,60 +2613,12 @@
       "signalScore": 70,
       "fluffScore": 0,
       "isClickbait": false,
-      "credibilityScore": 98,
+      "credibilityScore": 86,
       "storyTier": "standard",
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 9.0359
-    },
-    {
-      "id": "x_tl_pff_2125647406171664426",
-      "type": "tweet",
-      "title": "Aaron Rodgers accuracy numbers are LOW\nLukas Van Ness is STOPPING offense\nNick Bosa is HEATING up\n\n29 more observations",
-      "fullText": "Aaron Rodgers accuracy numbers are LOW\nLukas Van Ness is STOPPING offense\nNick Bosa is HEATING up\n\n29 more observations",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "PFF post",
-      "mentionedPlayers": [
-        {
-          "id": "4040605",
-          "name": "Nick Bosa",
-          "shortName": "N. Bosa",
-          "position": "DE",
-          "jersey": 97,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4040605.png"
-        }
-      ],
-      "publishedAt": "2026-11-25T17:46:48.000Z",
-      "url": "https://x.com/PFF/status/2125647406171664426",
-      "externalUrl": "https://www.pff.com/news/nfl-week-11-32-teams-32-observations",
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "national_film",
-      "outletName": "PFF",
-      "reporterId": "pff_official",
-      "reporterName": "PFF",
-      "author": "PFF",
-      "authorHandle": "@PFF",
-      "authorProfileUrl": "https://x.com/PFF",
-      "trustTier": 2,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 20,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 8.289
+      "storyRank": 7.1836
     },
     {
       "id": "sf_bsky_8ed1f9688b40",
@@ -2338,7 +2665,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 7.0328
+      "storyRank": 6.9655
     },
     {
       "id": "sf_bsky_3233f16777d2",
@@ -2385,7 +2712,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.811
+      "storyRank": 6.7481
     },
     {
       "id": "sf_brss_niners_nation_f301d36845cc",
@@ -2428,7 +2755,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.8563
+      "storyRank": 6.7935
     },
     {
       "id": "sf_bsky_83c0fa148759",
@@ -2475,7 +2802,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 6.6966
+      "storyRank": 6.6355
     },
     {
       "id": "sf_bsky_4524aae7c876",
@@ -2522,7 +2849,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.5768
+      "storyRank": 5.5316
     },
     {
       "id": "sf_bsky_9e3e1b547f4f",
@@ -2569,7 +2896,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.635
+      "storyRank": 4.602
     },
     {
       "id": "sf_bsky_883625fd45c4",
@@ -2607,7 +2934,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.0592
+      "storyRank": 3.9891
     },
     {
       "id": "sf_rss_f3ea73ea8eda",
@@ -2641,7 +2968,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.2305
+      "storyRank": 4.2033
     },
     {
       "id": "sf_brss_niners_nation_62d1e6b30cf2",
@@ -2675,7 +3002,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.0786
+      "storyRank": 4.0527
     },
     {
       "id": "sf_tx_21429ea73638",
@@ -2717,7 +3044,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "ROSTER MOVE",
-      "breakingPriority": 0.76,
+      "breakingPriority": 0.758,
       "category": "roster",
       "signalScore": 70,
       "fluffScore": 0,
@@ -2727,7 +3054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 4.3856
+      "storyRank": 4.3731
     },
     {
       "id": "sf_brss_sf_standard_babc958d8f39",
@@ -2770,7 +3097,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.3379
+      "storyRank": 3.3196
     },
     {
       "id": "sf_bsky_2ff738d1462b",
@@ -2817,49 +3144,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4121
-    },
-    {
-      "id": "x_tl_49ers_2125431784485876029",
-      "type": "tweet",
-      "title": "Energy was high in the trenches 🔥\n\nFrom the Trenches 🎥:\n\n@Visa | #FTTB",
-      "fullText": "Energy was high in the trenches 🔥\n\nFrom the Trenches 🎥:\n\n@Visa | #FTTB",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125423735411003392/img/kovDyrsRdyl3CfUS.jpg",
-      "imageAlt": "San Francisco 49ers Official post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125423735411003392/vid/avc1/720x900/gJkkCIEQCX71nVm6.mp4",
-      "duration": "0:29",
-      "embeddable": true,
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T03:30:00.000Z",
-      "url": "https://x.com/49ers/status/2125431784485876029",
-      "externalUrl": "https://49rs.co/4eVESY4",
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.297,
-      "category": "film",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 2.2445
+      "storyRank": 2.392
     },
     {
       "id": "sf_bsky_611934a40905",
@@ -2897,7 +3182,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1805
+      "storyRank": 2.1769
     },
     {
       "id": "sf_tyt_iMrlZeYU4n4",
@@ -2944,7 +3229,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7118
+      "storyRank": 1.7086
     },
     {
       "id": "sf_bsky_03a4f8a4ccb0",
@@ -2982,7 +3267,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1689
+      "storyRank": 1.1605
     },
     {
       "id": "sf_pfr_2d2c3fc9d249",
@@ -3015,89 +3300,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.1909
-    },
-    {
-      "id": "x_tl_49ers_2125477080871870817",
-      "type": "tweet",
-      "title": "We’re still dancing with DeFo 🕺",
-      "fullText": "We’re still dancing with DeFo 🕺",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125087321930510336/img/gBdFTP3TORjs-Zz9.jpg",
-      "imageAlt": "San Francisco 49ers Official post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125087321930510336/vid/avc1/720x1280/nwmxoXLO6rDOJNkI.mp4",
-      "isHighlightClip": true,
-      "duration": "0:14",
-      "embeddable": true,
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T06:30:00.000Z",
-      "url": "https://x.com/49ers/status/2125477080871870817",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.4542
-    },
-    {
-      "id": "x_tl_49ers_2125477081157087638",
-      "type": "tweet",
-      "title": "Up Next: 11/29 vs Seahawks on FOX",
-      "fullText": "Up Next: 11/29 vs Seahawks on FOX",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "San Francisco 49ers Official post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T06:30:00.000Z",
-      "url": "https://x.com/49ers/status/2125477081157087638",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.047
+      "storyRank": 1.1825
     },
     {
       "id": "sf_brss_niners_nation_5c8fd8f9f1c5",
@@ -3140,85 +3343,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2877
-    },
-    {
-      "id": "x_tl_49ers_2125456442002223285",
-      "type": "tweet",
-      "title": "The 49ers join the NFL family in mourning the passing of Detroit Lions Owner/Chair Emeritus Martha Firestone Ford.\n\nWe send our condolences to the Ford family and the entire Lions’ organization.",
-      "fullText": "The 49ers join the NFL family in mourning the passing of Detroit Lions Owner/Chair Emeritus Martha Firestone Ford.\n\nWe send our condolences to the Ford family and the entire Lions’ organization.",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX765QbX0AA3EZ4.jpg",
-      "imageAlt": "San Francisco 49ers Official post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T05:07:59.000Z",
-      "url": "https://x.com/49ers/status/2125456442002223285",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.2901
-    },
-    {
-      "id": "x_tl_49ers_2125447317830635829",
-      "type": "tweet",
-      "title": "Power rankings are in 🤝\n\n📰:\n\n@SAP | #FTTB",
-      "fullText": "Power rankings are in 🤝\n\n📰:\n\n@SAP | #FTTB",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX8aK8WbIAAxsXx.jpg",
-      "imageAlt": "San Francisco 49ers Official post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T04:31:44.000Z",
-      "url": "https://x.com/49ers/status/2125447317830635829",
-      "externalUrl": "https://49rs.co/3VGwyVH",
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.2274
+      "storyRank": 1.2841
     },
     {
       "id": "sf_tyt_QyTCm53e4G4",
@@ -3256,7 +3381,43 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0299
+      "storyRank": 1.0274
+    },
+    {
+      "id": "sf_vid_81ddebabb2ff",
+      "type": "video",
+      "title": "From the Trenches: 49ers Sink the Vikings at Estadio Banorte in Week 11",
+      "summary": "Go on the field with the San Francisco 49ers players during the team's 35-10 victory over the Minnesota Vikings.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/kbllblncetygsskowsdl.jpg",
+      "imageAlt": "From the Trenches: 49ers Sink the Vikings at Estadio Banorte in Week 11",
+      "publishedAt": "2026-11-25T03:30:00.000Z",
+      "url": "https://www.49ers.com/video/from-the-trenches-49ers-sink-the-vikings-at-estadio-banorte-in-week-11",
+      "externalVideoUrl": "https://www.49ers.com/video/from-the-trenches-49ers-sink-the-vikings-at-estadio-banorte-in-week-11",
+      "outletId": "49ers_official",
+      "outletName": "49ers.com Video",
+      "reporterId": "49ers_official",
+      "reporterName": "49ers.com Video",
+      "author": "49ers.com Video",
+      "authorHandle": "@49ers",
+      "authorProfileUrl": "https://www.49ers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_video_rss",
+      "mentionedPlayers": [],
+      "embeddable": false,
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 1.027
     },
     {
       "id": "sf_bsky_410cfead4bf1",
@@ -3303,128 +3464,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.2341
-    },
-    {
-      "id": "x_tl_49ers_2125424246784409648",
-      "type": "tweet",
-      "title": "Up next: 11/29 vs. Seahawks on FOX",
-      "fullText": "Up next: 11/29 vs. Seahawks on FOX",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "",
-      "imageAlt": "San Francisco 49ers Official post",
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T03:00:03.000Z",
-      "url": "https://x.com/49ers/status/2125424246784409648",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.7848
-    },
-    {
-      "id": "x_tl_49ers_2125424246067188154",
-      "type": "tweet",
-      "title": "Came to make plays 👏",
-      "fullText": "Came to make plays 👏",
-      "isFullTweet": true,
-      "summary": "",
-      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125416775064182784/img/_Lpsxj6PUS1mf9G3.jpg",
-      "imageUrls": [
-        "https://pbs.twimg.com/media/HX7_RGoaUAA4Rmf.jpg"
-      ],
-      "imageAlt": "San Francisco 49ers Official post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125416775064182784/vid/avc1/720x900/eu7Y0c3-gckGc2Io.mp4",
-      "isHighlightClip": true,
-      "duration": "0:20",
-      "embeddable": true,
-      "mentionedPlayers": [],
-      "publishedAt": "2026-11-25T03:00:03.000Z",
-      "url": "https://x.com/49ers/status/2125424246067188154",
-      "externalUrl": null,
-      "externalTitle": null,
-      "externalDescription": null,
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_news",
-      "reporterName": "San Francisco 49ers Official",
-      "author": "San Francisco 49ers Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://x.com/49ers",
-      "trustTier": 1,
-      "wireSource": "x_timeline_live",
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.0901
-    },
-    {
-      "id": "sf_vid_81ddebabb2ff",
-      "type": "video",
-      "title": "From the Trenches: 49ers Sink the Vikings at Estadio Banorte in Week 11",
-      "summary": "Go on the field with the San Francisco 49ers players during the team's 35-10 victory over the Minnesota Vikings.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/kbllblncetygsskowsdl.jpg",
-      "imageAlt": "From the Trenches: 49ers Sink the Vikings at Estadio Banorte in Week 11",
-      "publishedAt": "2026-11-25T03:30:00.000Z",
-      "url": "https://www.49ers.com/video/from-the-trenches-49ers-sink-the-vikings-at-estadio-banorte-in-week-11",
-      "externalVideoUrl": "https://www.49ers.com/video/from-the-trenches-49ers-sink-the-vikings-at-estadio-banorte-in-week-11",
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Video",
-      "reporterId": "49ers_official",
-      "reporterName": "49ers.com Video",
-      "author": "49ers.com Video",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_video_rss",
-      "mentionedPlayers": [],
-      "embeddable": false,
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 1.0295
+      "storyRank": 1.2322
     },
     {
       "id": "sf_rss_77b4ab952457",
@@ -3458,7 +3498,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8747
+      "storyRank": 0.8729
     },
     {
       "id": "sf_vid_9a673010a216",
@@ -3494,7 +3534,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.8067
+      "storyRank": 0.8051
     },
     {
       "id": "sf_rss_d9c3576f5394",
@@ -3528,7 +3568,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5649
+      "storyRank": 0.5638
     },
     {
       "id": "x_tl_adamschefter_2125347926977413196",
@@ -3539,7 +3579,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125347909184983041/img/hAZdY5_EvYyJW4LY.jpg",
       "imageAlt": "Adam Schefter post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125347909184983041/vid/avc1/1024x576/htsVA7WCq-9l1ZBM.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125347909184983041/vid/avc1/1024x576/htsVA7WCq-9l1ZBM.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:15",
       "embeddable": true,
@@ -3580,7 +3620,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7811
+      "storyRank": 0.7797
     },
     {
       "id": "sf_brss_niners_nation_5e007e931617",
@@ -3614,7 +3654,42 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.7086
+      "storyRank": 0.7074
+    },
+    {
+      "id": "sf_espn_48ffae0559d0b",
+      "type": "article",
+      "title": "49ers release WR Brandon Aiyuk with roster exemption ending",
+      "summary": "The 49ers released wide receiver Brandon Aiyuk on Monday.",
+      "imageUrl": "https://a.espncdn.com/photo/2026/1105/r1741725_1296x729_16-9.jpg",
+      "imageCaption": "Brandon Aiyuk is being released by the 49ers, ending a soured relationship between the sides just two years after he signed a four-year, $120 million extension.",
+      "imageAlt": "49ers release WR Brandon Aiyuk with roster exemption ending",
+      "publishedAt": "2026-11-24T21:54:34.000Z",
+      "url": "https://www.espn.com/nfl/story/_/id/50575346/sources-49ers-releasing-wr-brandon-aiyuk",
+      "outletId": "espn",
+      "outletName": "ESPN",
+      "reporterId": "nick_wagoner",
+      "reporterName": "Nick Wagoner",
+      "author": "Nick Wagoner",
+      "authorHandle": "@nwagoner",
+      "authorProfileUrl": "https://x.com/nwagoner",
+      "trustTier": 1,
+      "wireSource": "espn_team_news",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "roster",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 98,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.7076
     },
     {
       "id": "sf_bsky_10db12e83645",
@@ -3662,7 +3737,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0388
+      "storyRank": 1.0375
     },
     {
       "id": "sf_bsky_5d93e52aa0d3",
@@ -3700,42 +3775,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.684
-    },
-    {
-      "id": "sf_espn_48ffae0559d0b",
-      "type": "article",
-      "title": "49ers release WR Brandon Aiyuk with roster exemption ending",
-      "summary": "The 49ers released wide receiver Brandon Aiyuk on Monday.",
-      "imageUrl": "https://a.espncdn.com/photo/2026/1105/r1741725_1296x729_16-9.jpg",
-      "imageCaption": "Brandon Aiyuk is being released by the 49ers, ending a soured relationship between the sides just two years after he signed a four-year, $120 million extension.",
-      "imageAlt": "49ers release WR Brandon Aiyuk with roster exemption ending",
-      "publishedAt": "2026-11-24T21:54:34.000Z",
-      "url": "https://www.espn.com/nfl/story/_/id/50575346/sources-49ers-releasing-wr-brandon-aiyuk",
-      "outletId": "espn",
-      "outletName": "ESPN",
-      "reporterId": "nick_wagoner",
-      "reporterName": "Nick Wagoner",
-      "author": "Nick Wagoner",
-      "authorHandle": "@nwagoner",
-      "authorProfileUrl": "https://x.com/nwagoner",
-      "trustTier": 1,
-      "wireSource": "espn_team_news",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "roster",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 98,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.7089
+      "storyRank": 0.6827
     },
     {
       "id": "sf_bsky_1856719524d8",
@@ -3773,7 +3813,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6832
+      "storyRank": 0.6819
     },
     {
       "id": "sf_bsky_cae3e776e131",
@@ -3811,7 +3851,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6825
+      "storyRank": 0.6813
     },
     {
       "id": "sf_tyt_DyVbR6PJIho",
@@ -3849,7 +3889,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.66
+      "storyRank": 0.6588
     },
     {
       "id": "sf_vid_8dc49db99f8f",
@@ -3885,7 +3925,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6591
+      "storyRank": 0.658
     },
     {
       "id": "sf_pwire_4361741_49949224",
@@ -3917,7 +3957,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6369
+      "storyRank": 0.6358
     },
     {
       "id": "sf_pwire_16737_49949224",
@@ -3949,7 +3989,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6369
+      "storyRank": 0.6358
     },
     {
       "id": "sf_brss_sf_standard_18901f42aa73",
@@ -3983,152 +4023,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6354
-    },
-    {
-      "id": "sf_rss_fcd719e03ae2",
-      "type": "article",
-      "title": "DeForest Buckner, Mac Jones, Others Enjoy Off Day in Colorado Springs | Off the Field",
-      "summary": "49ers players made the most of their off day in Colorado, going fly-fishing, visiting the zoo, and stopping for a meal at a local spot.",
-      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/ubvliuir7kenryckhqjp.png",
-      "imageAlt": "DeForest Buckner, Mac Jones, Others Enjoy Off Day in Colorado Springs | Off the Field",
-      "publishedAt": "2026-11-24T19:00:07.000Z",
-      "url": "https://www.49ers.com/news/deforest-buckner-mac-jones-others-enjoy-off-day-in-colorado-springs-off-the-field",
-      "outletId": "49ers_official",
-      "outletName": "49ers.com Official",
-      "reporterId": "49ers_official",
-      "reporterName": "49ers.com Official",
-      "author": "49ers.com Official",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://www.49ers.com/news/",
-      "trustTier": 1,
-      "wireSource": "club_official_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4241464",
-          "name": "Mac Jones",
-          "shortName": "M. Jones",
-          "position": "QB",
-          "jersey": 10,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241464.png"
-        },
-        {
-          "id": "2971282",
-          "name": "DeForest Buckner",
-          "shortName": "D. Buckner",
-          "position": "DT",
-          "jersey": 99,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.6036
-    },
-    {
-      "id": "sf_yt_0V20MYj2jRA",
-      "type": "video",
-      "category": "film",
-      "videoId": "0V20MYj2jRA",
-      "embeddable": true,
-      "title": "Brock Purdy Changed EVERYTHING + Nobody Understands What Caleb Williams Doing WRONG | Chase Daniel",
-      "summary": "NFL Week 11 is in the books, and Brock Purdy is playing at an MVP level, Patrick Mahomes continues to remind everyone how dangerous he is, and Caleb Williams is giving us plenty to talk about! In this week's episode of *",
-      "imageUrl": "https://i.ytimg.com/vi/0V20MYj2jRA/hqdefault.jpg",
-      "imageAlt": "Brock Purdy Changed EVERYTHING + Nobody Understands What Caleb Williams Doing WRONG | Chase Daniel",
-      "publishedAt": "2026-11-24T14:00:34.000Z",
-      "url": "https://www.youtube.com/watch?v=0V20MYj2jRA",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=0V20MYj2jRA",
-      "channel": "Chase Daniel",
-      "outletId": "chase_daniel",
-      "outletName": "Chase Daniel",
-      "reporterId": "chase_daniel",
-      "reporterName": "Chase Daniel",
-      "author": "Chase Daniel",
-      "authorHandle": "@ChaseDaniel",
-      "authorProfileUrl": "https://x.com/ChaseDaniel",
-      "trustTier": 1,
-      "wireSource": "youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "4361741",
-          "name": "Brock Purdy",
-          "shortName": "B. Purdy",
-          "position": "QB",
-          "jersey": 13,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 20,
-      "isClickbait": false,
-      "credibilityScore": 90,
-      "storyTier": "film_trench",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.9502
-    },
-    {
-      "id": "sf_tyt_RC0ppO6EHGc",
-      "type": "video",
-      "category": "beat",
-      "videoId": "RC0ppO6EHGc",
-      "embeddable": false,
-      "title": "Kyle Shanahan, Brock Purdy Share Final Updates Ahead of Week 12 Game vs. Seahawks | 49ers",
-      "summary": "#49ers ##NFL Listen to final updates from head coach Kyle Shanahan and QB Brock Purdy as the team prepares for its Week 12 matchup against the Seattle Seahawks. Subscribe to the San Francisco 49ers YT Channel: https://bi",
-      "imageUrl": "https://i.ytimg.com/vi/RC0ppO6EHGc/hqdefault.jpg",
-      "imageAlt": "Kyle Shanahan, Brock Purdy Share Final Updates Ahead of Week 12 Game vs. Seahawks | 49ers",
-      "publishedAt": "2026-11-24T22:43:26.000Z",
-      "url": "https://www.youtube.com/watch?v=RC0ppO6EHGc",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=RC0ppO6EHGc",
-      "channel": "San Francisco 49ers",
-      "outletId": "UCeIOarQkwmGhimim9cDUTng",
-      "outletName": "San Francisco 49ers",
-      "reporterId": "UCeIOarQkwmGhimim9cDUTng",
-      "reporterName": "San Francisco 49ers",
-      "author": "San Francisco 49ers",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://www.youtube.com/@49ers",
-      "trustTier": 1,
-      "wireSource": "team_youtube_atom",
-      "mentionedPlayers": [
-        {
-          "id": "4361741",
-          "name": "Brock Purdy",
-          "shortName": "B. Purdy",
-          "position": "QB",
-          "jersey": 13,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.2725
+      "storyRank": 0.6343
     },
     {
       "id": "sf_bsky_e71386607f35",
@@ -4175,7 +4070,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6022
+      "storyRank": 0.6012
     },
     {
       "id": "sf_bsky_e961785b1856",
@@ -4238,7 +4133,152 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6015
+      "storyRank": 0.6005
+    },
+    {
+      "id": "sf_rss_fcd719e03ae2",
+      "type": "article",
+      "title": "DeForest Buckner, Mac Jones, Others Enjoy Off Day in Colorado Springs | Off the Field",
+      "summary": "49ers players made the most of their off day in Colorado, going fly-fishing, visiting the zoo, and stopping for a meal at a local spot.",
+      "imageUrl": "https://static.clubs.nfl.com/image/upload/t_editorial_landscape_12_desktop/49ers/ubvliuir7kenryckhqjp.png",
+      "imageAlt": "DeForest Buckner, Mac Jones, Others Enjoy Off Day in Colorado Springs | Off the Field",
+      "publishedAt": "2026-11-24T19:00:07.000Z",
+      "url": "https://www.49ers.com/news/deforest-buckner-mac-jones-others-enjoy-off-day-in-colorado-springs-off-the-field",
+      "outletId": "49ers_official",
+      "outletName": "49ers.com Official",
+      "reporterId": "49ers_official",
+      "reporterName": "49ers.com Official",
+      "author": "49ers.com Official",
+      "authorHandle": "@49ers",
+      "authorProfileUrl": "https://www.49ers.com/news/",
+      "trustTier": 1,
+      "wireSource": "club_official_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4241464",
+          "name": "Mac Jones",
+          "shortName": "M. Jones",
+          "position": "QB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4241464.png"
+        },
+        {
+          "id": "2971282",
+          "name": "DeForest Buckner",
+          "shortName": "D. Buckner",
+          "position": "DT",
+          "jersey": 99,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2971282.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.6027
+    },
+    {
+      "id": "sf_yt_0V20MYj2jRA",
+      "type": "video",
+      "category": "film",
+      "videoId": "0V20MYj2jRA",
+      "embeddable": true,
+      "title": "Brock Purdy Changed EVERYTHING + Nobody Understands What Caleb Williams Doing WRONG | Chase Daniel",
+      "summary": "NFL Week 11 is in the books, and Brock Purdy is playing at an MVP level, Patrick Mahomes continues to remind everyone how dangerous he is, and Caleb Williams is giving us plenty to talk about! In this week's episode of *",
+      "imageUrl": "https://i.ytimg.com/vi/0V20MYj2jRA/hqdefault.jpg",
+      "imageAlt": "Brock Purdy Changed EVERYTHING + Nobody Understands What Caleb Williams Doing WRONG | Chase Daniel",
+      "publishedAt": "2026-11-24T14:00:34.000Z",
+      "url": "https://www.youtube.com/watch?v=0V20MYj2jRA",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=0V20MYj2jRA",
+      "channel": "Chase Daniel",
+      "outletId": "chase_daniel",
+      "outletName": "Chase Daniel",
+      "reporterId": "chase_daniel",
+      "reporterName": "Chase Daniel",
+      "author": "Chase Daniel",
+      "authorHandle": "@ChaseDaniel",
+      "authorProfileUrl": "https://x.com/ChaseDaniel",
+      "trustTier": 1,
+      "wireSource": "youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 20,
+      "isClickbait": false,
+      "credibilityScore": 90,
+      "storyTier": "film_trench",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.949
+    },
+    {
+      "id": "sf_tyt_RC0ppO6EHGc",
+      "type": "video",
+      "category": "beat",
+      "videoId": "RC0ppO6EHGc",
+      "embeddable": false,
+      "title": "Kyle Shanahan, Brock Purdy Share Final Updates Ahead of Week 12 Game vs. Seahawks | 49ers",
+      "summary": "#49ers ##NFL Listen to final updates from head coach Kyle Shanahan and QB Brock Purdy as the team prepares for its Week 12 matchup against the Seattle Seahawks. Subscribe to the San Francisco 49ers YT Channel: https://bi",
+      "imageUrl": "https://i.ytimg.com/vi/RC0ppO6EHGc/hqdefault.jpg",
+      "imageAlt": "Kyle Shanahan, Brock Purdy Share Final Updates Ahead of Week 12 Game vs. Seahawks | 49ers",
+      "publishedAt": "2026-11-24T22:43:26.000Z",
+      "url": "https://www.youtube.com/watch?v=RC0ppO6EHGc",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=RC0ppO6EHGc",
+      "channel": "San Francisco 49ers",
+      "outletId": "UCeIOarQkwmGhimim9cDUTng",
+      "outletName": "San Francisco 49ers",
+      "reporterId": "UCeIOarQkwmGhimim9cDUTng",
+      "reporterName": "San Francisco 49ers",
+      "author": "San Francisco 49ers",
+      "authorHandle": "@49ers",
+      "authorProfileUrl": "https://www.youtube.com/@49ers",
+      "trustTier": 1,
+      "wireSource": "team_youtube_atom",
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.2719
     },
     {
       "id": "sf_brss_niners_nation_b55fb66e29a7",
@@ -4272,7 +4312,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5898
+      "storyRank": 0.5888
     },
     {
       "id": "sf_bsky_ff3f107c0ef2",
@@ -4310,7 +4350,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5662
+      "storyRank": 0.5653
     },
     {
       "id": "sf_bsky_b1a8ccb1bce7",
@@ -4373,7 +4413,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5472
+      "storyRank": 0.5464
     },
     {
       "id": "sf_brss_niners_nation_2e4a751ba5b4",
@@ -4407,7 +4447,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1941
+      "storyRank": 0.1938
     },
     {
       "id": "sf_bsky_ee33d090e3e3",
@@ -4445,7 +4485,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5337
+      "storyRank": 0.5329
     },
     {
       "id": "sf_bsky_9efca0e81fea",
@@ -4483,7 +4523,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5344
+      "storyRank": 0.5336
     },
     {
       "id": "sf_bsky_eefb4e50064f",
@@ -4530,7 +4570,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5242
+      "storyRank": 0.5235
     },
     {
       "id": "sf_bsky_acc092c7d533",
@@ -4601,7 +4641,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5171
+      "storyRank": 0.5163
     },
     {
       "id": "sf_bsky_04ae86069fea",
@@ -4639,7 +4679,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.489
+      "storyRank": 0.4883
     },
     {
       "id": "sf_bsky_9dfb177f3a36",
@@ -4686,7 +4726,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4923
+      "storyRank": 0.4916
     },
     {
       "id": "sf_bsky_cba007279da4",
@@ -4724,7 +4764,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.486
+      "storyRank": 0.4853
     },
     {
       "id": "sf_bsky_432785a3fd0b",
@@ -4762,7 +4802,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4156
+      "storyRank": 0.415
     },
     {
       "id": "sf_rss_c1c160a612ca",
@@ -4805,7 +4845,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5021
+      "storyRank": 0.5014
     },
     {
       "id": "sf_bsky_250d94bf8ef3",
@@ -4843,7 +4883,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4757
+      "storyRank": 0.475
     },
     {
       "id": "sf_rss_af879e594188",
@@ -4877,7 +4917,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4751
+      "storyRank": 0.4745
     },
     {
       "id": "sf_tx_62cbd7207ceb",
@@ -4912,7 +4952,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.373
+      "storyRank": 0.3726
     },
     {
       "id": "sf_pfr_13d4ff5affd0",
@@ -4945,7 +4985,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3197
+      "storyRank": 0.3194
     },
     {
       "id": "sf_tyt_rYhqTrzpPk8",
@@ -4992,7 +5032,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3248
+      "storyRank": 0.3245
     },
     {
       "id": "sf_pfr_c2234db68a36",
@@ -5025,7 +5065,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3188
+      "storyRank": 0.3185
     },
     {
       "id": "sf_vid_95284f4a757f",
@@ -5070,7 +5110,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3223
+      "storyRank": 0.322
     },
     {
       "id": "sf_bsky_38d918a306ab",
@@ -5117,7 +5157,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2979
+      "storyRank": 0.2976
     },
     {
       "id": "sf_bsky_ab4b92bf4280",
@@ -5155,7 +5195,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3002
+      "storyRank": 0.2999
     },
     {
       "id": "sf_rss_88aca46dd087",
@@ -5214,7 +5254,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3094
+      "storyRank": 0.3091
     },
     {
       "id": "sf_espn_2e03802a310dc",
@@ -5249,7 +5289,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1881
+      "storyRank": 0.1879
     },
     {
       "id": "sf_bsky_d30ffc6d3144",
@@ -5289,7 +5329,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2871
+      "storyRank": 0.2868
     },
     {
       "id": "sf_pwire_3916075_64944828",
@@ -5338,7 +5378,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2923
+      "storyRank": 0.2921
     },
     {
       "id": "sf_rss_cf8685e0895e",
@@ -5381,7 +5421,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.291
+      "storyRank": 0.2908
     },
     {
       "id": "sf_bsky_64aeaf7ea041",
@@ -5419,7 +5459,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2771
+      "storyRank": 0.2769
     },
     {
       "id": "sf_bsky_c6d5ba07086e",
@@ -5457,7 +5497,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2682
+      "storyRank": 0.2679
     },
     {
       "id": "sf_bsky_9c5773a8db81",
@@ -5495,7 +5535,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2627
+      "storyRank": 0.2625
     },
     {
       "id": "sf_rss_f0a68ffdd18b",
@@ -5529,7 +5569,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2713
+      "storyRank": 0.2711
     },
     {
       "id": "sf_bsky_cc7f8aca6944",
@@ -5567,7 +5607,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2558
+      "storyRank": 0.2556
     },
     {
       "id": "sf_vid_cbcaf0f2b538",
@@ -5603,7 +5643,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0673
+      "storyRank": 0.0672
     },
     {
       "id": "sf_bsky_d6b58a8d0b6b",
@@ -5641,7 +5681,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2521
+      "storyRank": 0.2519
     },
     {
       "id": "sf_bsky_2ca0a5e39989",
@@ -5696,21 +5736,21 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2512
+      "storyRank": 0.251
     },
     {
-      "id": "sf_yts_b675ntOuxw0",
+      "id": "sf_yts_ceMTl2eqYDA",
       "type": "video",
-      "videoId": "b675ntOuxw0",
+      "videoId": "ceMTl2eqYDA",
       "embeddable": false,
-      "title": "Brock Purdy Every Throw & Run | Week 11",
+      "title": "Minnesota Vikings vs San Francisco 49ers Game Highlights | 2026 NFL Season Week 11 Mexico City Game",
       "summary": "",
-      "duration": "5:56",
-      "imageUrl": "https://i.ytimg.com/vi/b675ntOuxw0/hqdefault.jpg",
-      "imageAlt": "Brock Purdy Every Throw & Run | Week 11",
-      "publishedAt": "2026-11-23T20:43:35.925Z",
-      "url": "https://www.youtube.com/watch?v=b675ntOuxw0",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=b675ntOuxw0",
+      "duration": "14:33",
+      "imageUrl": "https://i.ytimg.com/vi/ceMTl2eqYDA/hqdefault.jpg",
+      "imageAlt": "Minnesota Vikings vs San Francisco 49ers Game Highlights | 2026 NFL Season Week 11 Mexico City Game",
+      "publishedAt": "2026-11-23T20:45:27.932Z",
+      "url": "https://www.youtube.com/watch?v=ceMTl2eqYDA",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=ceMTl2eqYDA",
       "channel": "NFL",
       "outletId": "nfl_official",
       "outletName": "NFL",
@@ -5721,16 +5761,7 @@
       "authorProfileUrl": "https://www.youtube.com/@NFL",
       "trustTier": 1,
       "wireSource": "youtube_search",
-      "mentionedPlayers": [
-        {
-          "id": "4361741",
-          "name": "Brock Purdy",
-          "shortName": "B. Purdy",
-          "position": "QB",
-          "jersey": 13,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
-        }
-      ],
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -5756,7 +5787,7 @@
       "duration": "13:52",
       "imageUrl": "https://i.ytimg.com/vi/2aOOhQKvR3c/hqdefault.jpg",
       "imageAlt": "Vikings vs. 49ers Week 11 SNF Recap | NFL Daily",
-      "publishedAt": "2026-11-23T20:43:35.925Z",
+      "publishedAt": "2026-11-23T20:45:27.932Z",
       "url": "https://www.youtube.com/watch?v=2aOOhQKvR3c",
       "externalVideoUrl": "https://www.youtube.com/watch?v=2aOOhQKvR3c",
       "channel": "NFL",
@@ -5786,18 +5817,18 @@
       "storyRank": 0.0647
     },
     {
-      "id": "sf_yts_ceMTl2eqYDA",
+      "id": "sf_yts_b675ntOuxw0",
       "type": "video",
-      "videoId": "ceMTl2eqYDA",
+      "videoId": "b675ntOuxw0",
       "embeddable": false,
-      "title": "Minnesota Vikings vs San Francisco 49ers Game Highlights | 2026 NFL Season Week 11 Mexico City Game",
+      "title": "Brock Purdy Every Throw & Run | Week 11",
       "summary": "",
-      "duration": "14:33",
-      "imageUrl": "https://i.ytimg.com/vi/ceMTl2eqYDA/hqdefault.jpg",
-      "imageAlt": "Minnesota Vikings vs San Francisco 49ers Game Highlights | 2026 NFL Season Week 11 Mexico City Game",
-      "publishedAt": "2026-11-23T20:43:35.925Z",
-      "url": "https://www.youtube.com/watch?v=ceMTl2eqYDA",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=ceMTl2eqYDA",
+      "duration": "5:56",
+      "imageUrl": "https://i.ytimg.com/vi/b675ntOuxw0/hqdefault.jpg",
+      "imageAlt": "Brock Purdy Every Throw & Run | Week 11",
+      "publishedAt": "2026-11-23T20:45:27.932Z",
+      "url": "https://www.youtube.com/watch?v=b675ntOuxw0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=b675ntOuxw0",
       "channel": "NFL",
       "outletId": "nfl_official",
       "outletName": "NFL",
@@ -5808,7 +5839,16 @@
       "authorProfileUrl": "https://www.youtube.com/@NFL",
       "trustTier": 1,
       "wireSource": "youtube_search",
-      "mentionedPlayers": [],
+      "mentionedPlayers": [
+        {
+          "id": "4361741",
+          "name": "Brock Purdy",
+          "shortName": "B. Purdy",
+          "position": "QB",
+          "jersey": 13,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4361741.png"
+        }
+      ],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -5856,7 +5896,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.248
+      "storyRank": 0.2478
     },
     {
       "id": "sf_bsky_c8daf62af351",
@@ -5894,7 +5934,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2387
+      "storyRank": 0.2385
     },
     {
       "id": "sf_bsky_da382c4e8fd4",
@@ -5932,7 +5972,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2425
+      "storyRank": 0.2423
     },
     {
       "id": "x_tl_adamschefter_2124942740442206596",
@@ -5941,7 +5981,7 @@
       "fullText": "ESPN sources: the 49ers are releasing WR Brandon Aiyuk today.\n\nA first-round pick of San Francisco in 2020, Aiyuk now will move on and wants to resume his career elsewhere after not playing in an NFL game since October 2024.",
       "isFullTweet": true,
       "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HX1QKMmWgAAGY22.jpg",
+      "imageUrl": "https://pbs.twimg.com/media/HX1QKMmWgAAGY22.jpg?name=orig",
       "imageAlt": "Adam Schefter post",
       "mentionedPlayers": [],
       "publishedAt": "2026-11-23T19:06:43.505Z",
@@ -5971,7 +6011,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.272
+      "storyRank": 0.2718
     },
     {
       "id": "sf_pwire_4242488_64936628",
@@ -6012,7 +6052,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.25
+      "storyRank": 0.2498
     },
     {
       "id": "sf_espn_a87e75a78764d",
@@ -6048,7 +6088,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.25
+      "storyRank": 0.2498
     },
     {
       "id": "sf_bsky_94e06f488eb4",
@@ -6086,7 +6126,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2412
+      "storyRank": 0.241
     },
     {
       "id": "sf_bsky_811f4afe479b",
@@ -6124,7 +6164,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.236
+      "storyRank": 0.2358
     },
     {
       "id": "sf_bsky_459fe823f5d8",
@@ -6162,7 +6202,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2399
+      "storyRank": 0.2397
     },
     {
       "id": "sf_espn_0cf1d4475d779",
@@ -6197,7 +6237,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2472
+      "storyRank": 0.247
     },
     {
       "id": "sf_bsky_c8e114af8a85",
@@ -6235,7 +6275,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2338
+      "storyRank": 0.2336
     },
     {
       "id": "sf_bsky_0023c797cbe4",
@@ -6273,14 +6313,14 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.233
+      "storyRank": 0.2328
     },
     {
       "id": "x_tl_jayglazer_2124930135413723165",
       "type": "tweet",
-      "title": "More big news out of the Bay, In addition to a huge win last night for the 49ers, they got another big move right before the game as Jed York and John Lynch agreed to a contract extension that keeps with the Niners as President of Football Operations and GM for the foreseeable",
-      "fullText": "More big news out of the Bay, In addition to a huge win last night for the 49ers, they got another big move right before the game as Jed York and John Lynch agreed to a contract extension that keeps with the Niners as President of Football Operations and GM for the foreseeable",
-      "isFullTweet": true,
+      "title": "More big news out of the Bay, In addition to a huge win last night for the 49ers, they got another big move right before the game as Jed York and John Lynch agreed to a contract extension that keeps with the Niners as President of Football Operations and GM for the foreseeable future to keep the Lynch-Shanahan team…",
+      "fullText": "More big news out of the Bay, In addition to a huge win last night for the 49ers, they got another big move right before the game as Jed York and John Lynch agreed to a contract extension that keeps with the Niners as President of Football Operations and GM for the foreseeable future to keep the Lynch-Shanahan team going @NFLonFOX has learned",
+      "isFullTweet": false,
       "summary": "",
       "imageUrl": "",
       "imageAlt": "Jay Glazer post",
@@ -6312,7 +6352,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2618
+      "storyRank": 0.2616
     },
     {
       "id": "sf_bsky_7b65a7aea8be",
@@ -6350,7 +6390,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2351
+      "storyRank": 0.2349
     },
     {
       "id": "sf_bsky_b793679f1c7e",
@@ -6388,7 +6428,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2305
+      "storyRank": 0.2303
     },
     {
       "id": "sf_bsky_9251391fcb3a",
@@ -6435,7 +6475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2365
+      "storyRank": 0.2363
     },
     {
       "id": "sf_brss_sf_standard_48328812859f",
@@ -6469,7 +6509,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.236
+      "storyRank": 0.2358
     },
     {
       "id": "sf_bsky_e046411deac7",
@@ -6516,7 +6556,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2254
+      "storyRank": 0.2252
     },
     {
       "id": "sf_bsky_37535566477d",
@@ -6603,7 +6643,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2262
+      "storyRank": 0.226
     },
     {
       "id": "sf_bsky_036bbf7037e7",
@@ -6690,7 +6730,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2255
+      "storyRank": 0.2254
     },
     {
       "id": "sf_bsky_9c8e4ee85a4f",
@@ -6777,7 +6817,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.225
+      "storyRank": 0.2248
     },
     {
       "id": "sf_espn_b0848c1a48d2d",
@@ -6821,7 +6861,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2326
+      "storyRank": 0.2324
     },
     {
       "id": "sf_tyt_2PQWnBiUreY",
@@ -6859,7 +6899,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2279
+      "storyRank": 0.2277
     },
     {
       "id": "sf_bsky_01c7a7653ff6",
@@ -6897,7 +6937,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2234
+      "storyRank": 0.2232
     },
     {
       "id": "sf_espn_ba3222e53f679",
@@ -6933,7 +6973,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2259
+      "storyRank": 0.2257
     },
     {
       "id": "sf_bsky_79e89135675a",
@@ -6971,7 +7011,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2134
+      "storyRank": 0.2133
     },
     {
       "id": "sf_bsky_11f144ba1a7d",
@@ -7018,7 +7058,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2134
+      "storyRank": 0.2132
     },
     {
       "id": "sf_rss_c165dcb3624e",
@@ -7052,7 +7092,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2235
+      "storyRank": 0.2233
     },
     {
       "id": "sf_bsky_5830f1559910",
@@ -7090,7 +7130,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2119
+      "storyRank": 0.2117
     },
     {
       "id": "sf_bsky_0af69862a5ed",
@@ -7137,7 +7177,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2152
+      "storyRank": 0.2151
     },
     {
       "id": "sf_pfr_ea1fb1c7105a",
@@ -7179,7 +7219,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2181
+      "storyRank": 0.2179
     },
     {
       "id": "sf_bsky_4560480e0243",
@@ -7226,14 +7266,14 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2084
+      "storyRank": 0.2082
     },
     {
       "id": "x_tl_nwagoner_2124865166554648969",
       "type": "tweet",
-      "title": "#49ers have what Kyle Shanahan would call some \"administrative stuff\" to take care of today. The roster exemption for WR Brandon Aiyuk is set to expire.\n\nAll signs continue to point toward his long-awaited release. If that happens, he would be subject to waivers before becoming",
-      "fullText": "#49ers have what Kyle Shanahan would call some \"administrative stuff\" to take care of today. The roster exemption for WR Brandon Aiyuk is set to expire.\n\nAll signs continue to point toward his long-awaited release. If that happens, he would be subject to waivers before becoming",
-      "isFullTweet": true,
+      "title": "#49ers have what Kyle Shanahan would call some \"administrative stuff\" to take care of today. The roster exemption for WR Brandon Aiyuk is set to expire.\n\nAll signs continue to point toward his long-awaited release. If that happens, he would be subject to waivers before becoming a free agent since the trade deadline…",
+      "fullText": "#49ers have what Kyle Shanahan would call some \"administrative stuff\" to take care of today. The roster exemption for WR Brandon Aiyuk is set to expire.\n\nAll signs continue to point toward his long-awaited release. If that happens, he would be subject to waivers before becoming a free agent since the trade deadline has passed.",
+      "isFullTweet": false,
       "summary": "",
       "imageUrl": "",
       "imageAlt": "Nick Wagoner post",
@@ -7265,7 +7305,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2376
+      "storyRank": 0.2374
     },
     {
       "id": "sf_brss_sf_standard_b6ac0d76ba0c",
@@ -7308,7 +7348,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2162
+      "storyRank": 0.2161
     },
     {
       "id": "sf_brss_sf_standard_fdedd1de6d88",
@@ -7342,7 +7382,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2127
+      "storyRank": 0.2125
     },
     {
       "id": "sf_espn_0e7d0f4f4483a",
@@ -7387,7 +7427,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2146
+      "storyRank": 0.2145
     },
     {
       "id": "sf_yt_Gv4uukgHviE",
@@ -7434,7 +7474,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.211
+      "storyRank": 0.2108
     },
     {
       "id": "sf_tx_adbb0fed5e2c",
@@ -7469,7 +7509,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1874
+      "storyRank": 0.1873
     },
     {
       "id": "sf_espn_3df790d3672e7",
@@ -7513,7 +7553,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1873
+      "storyRank": 0.1872
     },
     {
       "id": "sf_espn_bf966625783b9",
@@ -7557,7 +7597,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1851
+      "storyRank": 0.185
     },
     {
       "id": "sf_espn_ceb3fce4508b6",
@@ -7601,7 +7641,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1851
+      "storyRank": 0.1849
     },
     {
       "id": "sf_rss_53ee4628751f",
@@ -7635,7 +7675,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1815
+      "storyRank": 0.1814
     },
     {
       "id": "sf_tyt_uCSPdndY4so",
@@ -7714,7 +7754,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.18
+      "storyRank": 0.1799
     },
     {
       "id": "sf_vid_e966fd82188d",
@@ -7799,7 +7839,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1787
+      "storyRank": 0.1786
     },
     {
       "id": "sf_tyt_QYhSfNeQ5QE",
@@ -7846,7 +7886,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.178
+      "storyRank": 0.1779
     },
     {
       "id": "sf_vid_46609201adb1",
@@ -7891,7 +7931,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.178
+      "storyRank": 0.1779
     },
     {
       "id": "sf_tyt_jsOA0SpFHM4",
@@ -7929,7 +7969,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1776
+      "storyRank": 0.1775
     },
     {
       "id": "sf_vid_92d0f4cd812b",
@@ -7965,7 +8005,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1774
+      "storyRank": 0.1772
     },
     {
       "id": "sf_vid_89ea41eeb5fd",
@@ -8001,7 +8041,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.177
+      "storyRank": 0.1769
     },
     {
       "id": "x_tl_nwagoner_2124727279733624983",
@@ -8057,7 +8097,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1922
+      "storyRank": 0.1921
     },
     {
       "id": "sf_tyt_CRoI4-junKM",
@@ -8095,7 +8135,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1767
+      "storyRank": 0.1765
     },
     {
       "id": "sf_espn_1017b2857c4fd",
@@ -8130,7 +8170,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1766
+      "storyRank": 0.1764
     },
     {
       "id": "sf_tyt_MsBhTEttBu0",
@@ -8177,7 +8217,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1763
+      "storyRank": 0.1762
     },
     {
       "id": "sf_vid_03d2519cdb78",
@@ -8222,7 +8262,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1763
+      "storyRank": 0.1761
     },
     {
       "id": "sf_tyt_hDpj1imu040",
@@ -8269,7 +8309,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.176
+      "storyRank": 0.1759
     },
     {
       "id": "sf_vid_8bd978874050",
@@ -8314,7 +8354,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1754
+      "storyRank": 0.1753
     },
     {
       "id": "sf_yt_ZKtreDbZQBY",
@@ -8361,7 +8401,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1494
+      "storyRank": 0.1493
     },
     {
       "id": "sf_bsky_d9f3553ff920",
@@ -8399,7 +8439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1648
+      "storyRank": 0.1647
     },
     {
       "id": "sf_pfr_39ca4bd774f8",
@@ -8432,7 +8472,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1704
+      "storyRank": 0.1703
     },
     {
       "id": "sf_bsky_c990dd842c13",
@@ -8470,7 +8510,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1639
+      "storyRank": 0.1638
     },
     {
       "id": "sf_vid_3d3d94f53d8b",
@@ -8515,7 +8555,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1722
+      "storyRank": 0.1721
     },
     {
       "id": "sf_bsky_b9833193dfc3",
@@ -8553,7 +8593,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1628
+      "storyRank": 0.1627
     },
     {
       "id": "sf_bsky_e8f43314757d",
@@ -8591,7 +8631,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1656
+      "storyRank": 0.1655
     },
     {
       "id": "sf_vid_f0664a0a89eb",
@@ -8644,7 +8684,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.171
+      "storyRank": 0.1709
     },
     {
       "id": "sf_bsky_90863947fbbd",
@@ -8691,7 +8731,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1649
+      "storyRank": 0.1648
     },
     {
       "id": "sf_bsky_a0304c497d54",
@@ -8738,7 +8778,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1645
+      "storyRank": 0.1643
     },
     {
       "id": "sf_bsky_6e7e8bcfe3ba",
@@ -8776,7 +8816,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1644
+      "storyRank": 0.1643
     },
     {
       "id": "sf_vid_d83dd5fe1566",
@@ -8821,7 +8861,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1698
+      "storyRank": 0.1697
     },
     {
       "id": "sf_bsky_e934d368996d",
@@ -8868,7 +8908,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1637
+      "storyRank": 0.1636
     },
     {
       "id": "sf_bsky_b314df01d88b",
@@ -8915,7 +8955,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1637
+      "storyRank": 0.1636
     },
     {
       "id": "sf_bsky_e871c12bd6ab",
@@ -8970,7 +9010,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.163
+      "storyRank": 0.1628
     },
     {
       "id": "sf_bsky_dc00458404c8",
@@ -9008,7 +9048,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1625
+      "storyRank": 0.1624
     },
     {
       "id": "x_tl_caminman_2124690485390557369",
@@ -9064,7 +9104,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1825
+      "storyRank": 0.1824
     },
     {
       "id": "sf_vid_8a358b9c662e",
@@ -9109,7 +9149,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1675
+      "storyRank": 0.1674
     },
     {
       "id": "sf_bsky_ec134a03db9b",
@@ -9156,7 +9196,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1591
+      "storyRank": 0.159
     },
     {
       "id": "sf_vid_1a96e7cd0204",
@@ -9209,7 +9249,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1673
+      "storyRank": 0.1672
     },
     {
       "id": "sf_bsky_54b3795aed75",
@@ -9264,7 +9304,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1616
+      "storyRank": 0.1615
     },
     {
       "id": "sf_bsky_c8358a1b85f7",
@@ -9311,7 +9351,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1644
+      "storyRank": 0.1642
     },
     {
       "id": "sf_bsky_f44094fb96b4",
@@ -9366,7 +9406,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1612
+      "storyRank": 0.1611
     },
     {
       "id": "sf_bsky_6ff758748f10",
@@ -9413,7 +9453,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1611
+      "storyRank": 0.161
     },
     {
       "id": "sf_vid_e3d299f64b92",
@@ -9458,7 +9498,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.166
+      "storyRank": 0.1659
     },
     {
       "id": "sf_vid_8df9253483a5",
@@ -9511,7 +9551,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1655
+      "storyRank": 0.1654
     },
     {
       "id": "sf_vid_44d7734f4eda",
@@ -9556,7 +9596,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1641
+      "storyRank": 0.164
     },
     {
       "id": "sf_vid_6c2ba3853c70",
@@ -9609,7 +9649,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1636
+      "storyRank": 0.1635
     },
     {
       "id": "sf_bsky_f987726328a7",
@@ -9647,7 +9687,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0621
+      "storyRank": 0.062
     },
     {
       "id": "sf_yts_lmZTrouCnUg",
@@ -9659,7 +9699,7 @@
       "duration": "1:30",
       "imageUrl": "https://i.ytimg.com/vi/lmZTrouCnUg/hqdefault.jpg",
       "imageAlt": "49ers Vault: Divisional Round Against the Vikings",
-      "publishedAt": "2026-11-22T20:43:35.925Z",
+      "publishedAt": "2026-11-22T20:45:27.933Z",
       "url": "https://www.youtube.com/watch?v=lmZTrouCnUg",
       "externalVideoUrl": "https://www.youtube.com/watch?v=lmZTrouCnUg",
       "channel": "San Francisco 49ers",
@@ -9720,7 +9760,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0448
+      "storyRank": 0.0447
     },
     {
       "id": "sf_bsky_d40cc24b8125",
@@ -9880,7 +9920,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0422
+      "storyRank": 0.0421
     },
     {
       "id": "sf_bsky_1ed9d1327cea",
@@ -9955,7 +9995,7 @@
       "duration": "11:59",
       "imageUrl": "https://i.ytimg.com/vi/roWrZPbJ6v8/hqdefault.jpg",
       "imageAlt": "Buckner, Juszczyk Discuss Team Bonding, Recovery Process, and Prep for Vikings Defense | 49ers",
-      "publishedAt": "2026-11-21T20:43:35.925Z",
+      "publishedAt": "2026-11-21T20:45:27.933Z",
       "url": "https://www.youtube.com/watch?v=roWrZPbJ6v8",
       "externalVideoUrl": "https://www.youtube.com/watch?v=roWrZPbJ6v8",
       "channel": "San Francisco 49ers",
@@ -10110,7 +10150,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0333
+      "storyRank": 0.0332
     },
     {
       "id": "x_tl_rapsheet_2123961971196203049",
@@ -10121,7 +10161,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2123961870251937792/img/UkOCPSEI9CbbpXXI.jpg",
       "imageAlt": "Ian Rapoport post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2123961870251937792/vid/avc1/1280x720/nYWWd7YxHpxEGsfP.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2123961870251937792/vid/avc1/2560x1440/Z4NBsKQnibUhFVdy.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:51",
       "embeddable": true,
@@ -10306,7 +10346,7 @@
       "duration": "59:32",
       "imageUrl": "https://i.ytimg.com/vi/b0zHiXoiVs0/hqdefault.jpg",
       "imageAlt": "Mexico City Week: Cowboys Shootout, Altitude Prep in Colorado, & Vikings Preview  | The Saloon",
-      "publishedAt": "2026-11-20T20:43:35.925Z",
+      "publishedAt": "2026-11-20T20:45:27.933Z",
       "url": "https://www.youtube.com/watch?v=b0zHiXoiVs0",
       "externalVideoUrl": "https://www.youtube.com/watch?v=b0zHiXoiVs0",
       "channel": "San Francisco 49ers",
@@ -10334,45 +10374,6 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0077
-    },
-    {
-      "id": "sf_yts_9dfGVMJFaj0",
-      "type": "video",
-      "videoId": "9dfGVMJFaj0",
-      "embeddable": false,
-      "title": "Morris, Kubiak Talk Lessons Learned, Preview Vikings Matchup | 49ers",
-      "summary": "",
-      "duration": "24:02",
-      "imageUrl": "https://i.ytimg.com/vi/9dfGVMJFaj0/hqdefault.jpg",
-      "imageAlt": "Morris, Kubiak Talk Lessons Learned, Preview Vikings Matchup | 49ers",
-      "publishedAt": "2026-11-20T20:43:35.925Z",
-      "url": "https://www.youtube.com/watch?v=9dfGVMJFaj0",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=9dfGVMJFaj0",
-      "channel": "San Francisco 49ers",
-      "outletId": "49ers_official",
-      "outletName": "San Francisco 49ers",
-      "reporterId": "49ers_official",
-      "reporterName": "San Francisco 49ers",
-      "author": "San Francisco 49ers",
-      "authorHandle": "@49ers",
-      "authorProfileUrl": "https://www.youtube.com/@49ers",
-      "trustTier": 1,
-      "wireSource": "youtube_search",
-      "mentionedPlayers": [],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 0.0307
     },
     {
       "id": "sf_bsky_2b1bf3a3ad2e",
@@ -10493,7 +10494,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0297
+      "storyRank": 0.0296
     },
     {
       "id": "sf_rss_4991823ee67d",
@@ -10664,6 +10665,45 @@
       "storyRank": 0.0233
     },
     {
+      "id": "sf_yts_9dfGVMJFaj0",
+      "type": "video",
+      "videoId": "9dfGVMJFaj0",
+      "embeddable": false,
+      "title": "Morris, Kubiak Talk Lessons Learned, Preview Vikings Matchup | 49ers",
+      "summary": "",
+      "duration": "24:02",
+      "imageUrl": "https://i.ytimg.com/vi/9dfGVMJFaj0/hqdefault.jpg",
+      "imageAlt": "Morris, Kubiak Talk Lessons Learned, Preview Vikings Matchup | 49ers",
+      "publishedAt": "2026-11-19T20:45:27.933Z",
+      "url": "https://www.youtube.com/watch?v=9dfGVMJFaj0",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=9dfGVMJFaj0",
+      "channel": "San Francisco 49ers",
+      "outletId": "49ers_official",
+      "outletName": "San Francisco 49ers",
+      "reporterId": "49ers_official",
+      "reporterName": "San Francisco 49ers",
+      "author": "San Francisco 49ers",
+      "authorHandle": "@49ers",
+      "authorProfileUrl": "https://www.youtube.com/@49ers",
+      "trustTier": 1,
+      "wireSource": "youtube_search",
+      "mentionedPlayers": [],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0238
+    },
+    {
       "id": "sf_bsky_0b5b22859749",
       "type": "tweet",
       "title": "NFL Week 11 ATS picks: Which bad teams will ‘win’ on this week’s cruel spin of the wheel? ⤵️ www.nytimes.com/athletic/779...",
@@ -10793,7 +10833,7 @@
       "fullText": "#49ers WR Christian Kirk, who was placed on Injured Reserve two weeks ago for the second time this season, recently underwent meniscus surgery.",
       "isFullTweet": true,
       "summary": "",
-      "imageUrl": "https://pbs.twimg.com/media/HXfgNweWEAEG6nF.jpg",
+      "imageUrl": "https://pbs.twimg.com/media/HXfgNweWEAEG6nF.jpg?name=orig",
       "imageAlt": "Ian Rapoport post",
       "mentionedPlayers": [
         {
@@ -10908,7 +10948,7 @@
       "duration": "12:01",
       "imageUrl": "https://i.ytimg.com/vi/4CxuLa5_kzE/hqdefault.jpg",
       "imageAlt": "Minnesota Vikings vs San Francisco 49ers | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:43:35.925Z",
+      "publishedAt": "2026-11-18T20:45:27.932Z",
       "url": "https://www.youtube.com/watch?v=4CxuLa5_kzE",
       "externalVideoUrl": "https://www.youtube.com/watch?v=4CxuLa5_kzE",
       "channel": "NFL",
@@ -11278,7 +11318,7 @@
       "duration": "18:01",
       "imageUrl": "https://i.ytimg.com/vi/bqEz0JMZhOA/hqdefault.jpg",
       "imageAlt": "San Francisco 49ers vs. Dallas Cowboys Highlights | NFL 2026 Season Week 10",
-      "publishedAt": "2026-11-16T20:43:35.925Z",
+      "publishedAt": "2026-11-16T20:45:27.932Z",
       "url": "https://www.youtube.com/watch?v=bqEz0JMZhOA",
       "externalVideoUrl": "https://www.youtube.com/watch?v=bqEz0JMZhOA",
       "channel": "NFL",
@@ -11832,7 +11872,7 @@
       "duration": "0:07",
       "imageUrl": "https://i.ytimg.com/vi/PyLWnSg-J1M/hqdefault.jpg",
       "imageAlt": "Keenan in the red & gold 👏",
-      "publishedAt": "2026-11-15T20:43:35.925Z",
+      "publishedAt": "2026-11-15T20:45:27.933Z",
       "url": "https://www.youtube.com/watch?v=PyLWnSg-J1M",
       "externalVideoUrl": "https://www.youtube.com/watch?v=PyLWnSg-J1M",
       "channel": "San Francisco 49ers",

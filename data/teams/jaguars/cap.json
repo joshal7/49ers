@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:08.250Z",
+  "updatedAt": "2026-11-25T20:45:48.917Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/jacksonville-jaguars",
   "spotracUrl": "https://www.spotrac.com/nfl/jacksonville-jaguars/cap/",
@@ -1239,33 +1239,6 @@
       }
     },
     {
-      "id": "4877475",
-      "otcId": "12974",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/player/camron-silmon-craig/12974/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4877475/camron-silmon-craig",
-      "pfrUrl": "https://www.pro-football-reference.com/players/S/SilmCa00.htm",
-      "name": "Cam'Ron Silmon-Craig",
-      "position": "S",
-      "jersey": 42,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4877475.png",
-      "unit": "Defense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      }
-    },
-    {
       "id": "4573319",
       "otcId": "12863",
       "otcSlug": null,
@@ -1482,87 +1455,6 @@
       }
     },
     {
-      "id": "3129307",
-      "otcId": "8125",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/player/sam-mustipher/8125/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3129307/sam-mustipher",
-      "pfrUrl": "https://www.pro-football-reference.com/players/M/MustSa01.htm",
-      "name": "Sam Mustipher",
-      "position": "C",
-      "jersey": 69,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3129307.png",
-      "unit": "Offense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      }
-    },
-    {
-      "id": "4431162",
-      "otcId": "13539",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/player/tj-bollers/13539/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4431162/tj-bollers",
-      "pfrUrl": "https://www.pro-football-reference.com/players/B/BollTJ00.htm",
-      "name": "T.J. Bollers",
-      "position": "DT",
-      "jersey": 94,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431162.png",
-      "unit": "Defense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      }
-    },
-    {
-      "id": "3916414",
-      "otcId": "6959",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/player/geron-christian/6959/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/3916414/geron-christian",
-      "pfrUrl": "https://www.pro-football-reference.com/players/C/ChriGe01.htm",
-      "name": "Geron Christian",
-      "position": "OT",
-      "jersey": 61,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3916414.png",
-      "unit": "Offense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      }
-    },
-    {
       "id": "4684970",
       "otcId": null,
       "otcSlug": null,
@@ -1573,60 +1465,6 @@
       "position": "OT",
       "jersey": 62,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4684970.png",
-      "unit": "Offense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      }
-    },
-    {
-      "id": "4575862",
-      "otcId": "13533",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/player/trebor-pena/13533/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4575862/trebor-pena",
-      "pfrUrl": "https://www.pro-football-reference.com/players/P/PenaTr00.htm",
-      "name": "Trebor Pena",
-      "position": "WR",
-      "jersey": 86,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4575862.png",
-      "unit": "Offense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      }
-    },
-    {
-      "id": "5152117",
-      "otcId": "13536",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/player/michael-wortham/13536/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/5152117/michael-wortham",
-      "pfrUrl": "https://www.pro-football-reference.com/players/W/WortMi00.htm",
-      "name": "Michael Wortham",
-      "position": "WR",
-      "jersey": 0,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/5152117.png",
       "unit": "Offense",
       "rosterBucket": "active",
       "contractsByYear": {

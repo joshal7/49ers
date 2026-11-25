@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:35:52.212Z",
+  "updatedAt": "2026-11-25T20:45:15.980Z",
   "week": 12,
   "byeWeek": 13,
   "sourceUrl": "https://www.newyorkjets.com/team/injury-report/",
@@ -9,31 +9,6 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
-    {
-      "playerId": "4723820",
-      "name": "Omar Cooper Jr.",
-      "position": "WR",
-      "jersey": 11,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4723820.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Questionable",
-      "playProbabilityPct": 43,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "43% • Long Shot",
-      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
-      "factors": [
-        "Missed prior game without practice participation — awaiting Wednesday report"
-      ],
-      "beatComment": "The rookie wide receiver will be sidelined for a fourth consecutive practice while he continues to manage a pair of injuries, but the Jets aren't closing the door on Cooper putting an end to a one-game absence and playing this Sunday in Miami. In order to put himself in a position to suit up this weekend, however, Cooper will likely need to put in a full practice either Thursday or Friday. If Cooper ends up missing another game, the likes of Adonai Mitchell, Isaiah Williams (ribs), Tim Patrick and practice-squad member Sterling Shepard could be in line for added snaps and targets."
-    },
     {
       "playerId": "4569371",
       "name": "Isaiah Williams",
@@ -58,6 +33,31 @@
         "Missed prior game without practice participation — awaiting Wednesday report"
       ],
       "beatComment": "questionable"
+    },
+    {
+      "playerId": "4723820",
+      "name": "Omar Cooper Jr.",
+      "position": "WR",
+      "jersey": 11,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4723820.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Ankle",
+      "gameStatus": "Questionable",
+      "playProbabilityPct": 43,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "43% • Long Shot",
+      "archetypeNote": "Perimeter speed/cut position (WR) — requires full deceleration/burst clearance on lower-body tags (76% Questionable baseline).",
+      "factors": [
+        "Missed prior game without practice participation — awaiting Wednesday report"
+      ],
+      "beatComment": "The rookie wide receiver will be sidelined for a fourth consecutive practice while he continues to manage a pair of injuries, but the Jets aren't closing the door on Cooper putting an end to a one-game absence and playing this Sunday in Miami. In order to put himself in a position to suit up this weekend, however, Cooper will likely need to put in a full practice either Thursday or Friday. If Cooper ends up missing another game, the likes of Adonai Mitchell, Isaiah Williams (ribs), Tim Patrick and practice-squad member Sterling Shepard could be in line for added snaps and targets."
     },
     {
       "playerId": "4002046",
@@ -112,31 +112,6 @@
       "beatComment": "questionable"
     },
     {
-      "playerId": "3117255",
-      "name": "Harrison Phillips",
-      "position": "DT",
-      "jersey": 97,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117255.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Phillips played through an ankle issue against the Bills in Week 10, and the veteran defensive tackle has been cleared to suit up for Sunday's contest. He has accumulated 36 tackles (11 solo) and one fumble recovery through 10 regular-season games."
-    },
-    {
       "playerId": "4243375",
       "name": "Dylan Parham",
       "position": "G",
@@ -160,6 +135,31 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Parham, who is working through a knee issue, has been given the green light to play Sunday after going through pregame warmups. He'll start at left guard while Jordan Meredith provides depth at the position."
+    },
+    {
+      "playerId": "3117255",
+      "name": "Harrison Phillips",
+      "position": "DT",
+      "jersey": 97,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3117255.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Ankle",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Phillips played through an ankle issue against the Bills in Week 10, and the veteran defensive tackle has been cleared to suit up for Sunday's contest. He has accumulated 36 tackles (11 solo) and one fumble recovery through 10 regular-season games."
     }
   ],
   "irAndReserveTracker": [

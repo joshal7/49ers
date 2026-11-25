@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:12.783Z",
+  "updatedAt": "2026-11-25T20:46:27.918Z",
   "week": 12,
   "byeWeek": 10,
   "sourceUrl": "https://www.chicagobears.com/team/injury-report/",
@@ -9,31 +9,6 @@
   "maxRegularSeasonIrDesignations": 8,
   "gameDayRoster": null,
   "practiceReport": [
-    {
-      "playerId": "4242402",
-      "name": "Elijah Hicks",
-      "position": "S",
-      "jersey": 22,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242402.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "DNP",
-      "fri": "DNP",
-      "injuryType": "Concussion",
-      "gameStatus": "Out",
-      "playProbabilityPct": 0,
-      "priorDayPlayProbabilityPct": 18,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "0% • Out",
-      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
-      "factors": [
-        "Officially ruled Out on weekly game status report"
-      ],
-      "beatComment": "Hicks was not listed on Monday's injury report, but he was unable to practice Tuesday due to a concussion. He's mostly played on special teams this season, but his absence thins the Bears' depth at safety behind starters Cam Lewis and rookie first-rounder Dillon Thieneman. Hicks' next opportunity to play is Week 12 against the Jaguars on Sunday, Dec. 6."
-    },
     {
       "playerId": "4361093",
       "name": "Kyler Gordon",
@@ -58,6 +33,31 @@
         "Officially ruled Out on weekly game status report"
       ],
       "beatComment": "Bears estimated injury report… DNP: Kyler Gordon, Roschon Johnson, Elijah Hicks Full: Theo Benedet, D’Marco Jackson"
+    },
+    {
+      "playerId": "4242402",
+      "name": "Elijah Hicks",
+      "position": "S",
+      "jersey": 22,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242402.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "DNP",
+      "fri": "DNP",
+      "injuryType": "Concussion",
+      "gameStatus": "Out",
+      "playProbabilityPct": 0,
+      "priorDayPlayProbabilityPct": 18,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "0% • Out",
+      "archetypeNote": "Standard NFL positional availability baseline (78% Questionable conversion).",
+      "factors": [
+        "Officially ruled Out on weekly game status report"
+      ],
+      "beatComment": "Hicks was not listed on Monday's injury report, but he was unable to practice Tuesday due to a concussion. He's mostly played on special teams this season, but his absence thins the Bears' depth at safety behind starters Cam Lewis and rookie first-rounder Dillon Thieneman. Hicks' next opportunity to play is Week 12 against the Jaguars on Sunday, Dec. 6."
     },
     {
       "playerId": "4426386",

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:41.752Z",
+  "updatedAt": "2026-11-25T20:46:08.800Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "5-5",
-    "generatedAt": "2026-11-25T20:44:41.752Z",
+    "generatedAt": "2026-11-25T20:46:08.800Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -15,20 +15,19 @@
       "hasThu": false,
       "hasFri": false
     },
-    "wordCount": 182,
+    "wordCount": 176,
     "headline": "Patriots (5-5) Week 12 Briefing: Injury Updates Ahead of Chargers",
     "summary": "",
     "bullets": [
       "Injury & Practice Status: Entering Week 12 preparation, head coach Mike Vrabel and the medical staff evaluate QB Drake Maye (lower leg), WR A.J. Brown (hamstring), QB Tommy DeVito (lower leg), and OL Walter Rouse (concussion) ahead of Wednesday's initial participation report [Nick Goss](https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-patriots-lions-surgery-return/815003/) [Evan Lazar](https://www.espn.com/nfl/player/_/id/4047646/aj-brown#:~:text=Brown%20%28hamstring%29%20didn't%20take%20part%20in%20practice). G Alijah Vera-Tucker (hamstring) and WR Romeo Doubs (shoulder) continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation [Bernd Buchmasser](https://www.patspulpit.com/new-england-patriots-news/145218/romeo-doubs-return-patriots-practice-chargers-injured-reserve).",
       "Week 12 Chargers Outlook: Mike Vrabel and DC Zak Kuhr open installation for the Los Angeles Chargers (1-9, LAC -1.5, HC Jim Harbaugh, OC Mike McDaniel & DC Chris O'Leary (Road Test)) as New England prepares for a pivotal AFC matchup [Marima](https://www.patspulpit.com/new-england-patriots-news/145136/patriots-news-pats-need-defense-in-top-form-to-tackle-chargers) [patriots.com Official](https://www.patriots.com/news/patriots-gameplan-how-will-the-offense-adjust-for-qb-tommy-devito-in-sunday-s-week-12-matchup-vs-the-chargers).",
       "AFC Playoff Trajectory: Entering Week 12 at 5-5 (2nd in AFC East • #8 Seed in AFC), New England carries a 42.5% postseason projection, 1.2% AFC East division title mark, and 0.1% #1 Seed Bye equity into the conference stretch [Bernd Buchmasser](https://www.patspulpit.com/new-england-patriots-nfl-playoffs/145149/afc-playoffs-steelers-benche-starting-qb-aaron-rodgers).",
-      "Around the Beat: The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito [Logan Reardon](https://www.nbcsportsboston.com/nfl/new-england-patriots/how-to-watch-patriots-vs-chargers-week-11-time-channel-stream/815339/)."
+      "Around the Beat: Stock Watch: Pats' stock crashing across the board after embarrassment in Munich [Phil Perry](https://www.nbcsportsboston.com/nfl/new-england-patriots/stock-watch-lions-week-10-loss-munich-germany/813956/)."
     ],
     "coveredStoryKeys": [
       "drakemaye::diagnostic_result",
       "shouldpatriots::roster_departure",
-      "team::watch_guide",
-      "alijahveratucker::ir_roster_move"
+      "team::watch_guide"
     ],
     "coveredUrls": [
       "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-patriots-lions-surgery-return/815003/",
@@ -37,27 +36,21 @@
       "https://www.patspulpit.com/new-england-patriots-news/145136/patriots-news-pats-need-defense-in-top-form-to-tackle-chargers",
       "https://www.patriots.com/news/patriots-gameplan-how-will-the-offense-adjust-for-qb-tommy-devito-in-sunday-s-week-12-matchup-vs-the-chargers",
       "https://www.patspulpit.com/new-england-patriots-nfl-playoffs/145149/afc-playoffs-steelers-benche-starting-qb-aaron-rodgers",
-      "https://www.nbcsportsboston.com/nfl/new-england-patriots/how-to-watch-patriots-vs-chargers-week-11-time-channel-stream/815339/",
+      "https://www.nbcsportsboston.com/nfl/new-england-patriots/stock-watch-lions-week-10-loss-munich-germany/813956/",
       "https://www.nbcsportsboston.com/nfl/new-england-patriots/should-patriots-sign-daniel-jones-as-free-agent-after-colts-release/814987/",
+      "https://www.nbcsportsboston.com/nfl/new-england-patriots/how-to-watch-patriots-vs-chargers-week-11-time-channel-stream/815339/",
       "https://www.nbcsportsboston.com/nfl/new-england-patriots/patriots-mailbag-aj-browns-drake-maye-injury/814612/",
       "https://www.nbcsportsboston.com/nfl/new-england-patriots/mailbag-tommy-devito-behren-morton-draft-needs/815633/",
-      "https://www.patriots.com/news/billerica-memorial-high-school-s-shawn-theriault-named-the-new-england-patriots-coach-of-the-week",
-      "https://www.patriots.com/news/rob-gronkowski-headlines-patriots-player-group-advancing-in-pro-football-hall-of-fame-voting",
+      "https://www.nbcsportsboston.com/nfl/new-england-patriots/anything-remains-possible-final-seven-games/814882/",
       "https://www.nbcsportsboston.com/nfl/new-england-patriots/mike-vrabel-message-lions-loss-week-10/813869/",
       "https://www.nbcsportsboston.com/nfl/new-england-patriots/lions-live-updates-germany-drake-maye-jared-goff/813705/",
-      "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-importance-crystal-clear-injury-absence/813840/",
       "https://www.nbcsportsboston.com/nfl/new-england-patriots/garoppolo-levis-5-qb-options-for-patriots-to-consider-amid-drake-mayes-injury/814143/",
-      "https://www.nbcsportsboston.com/nfl/new-england-patriots/stock-watch-lions-week-10-loss-munich-germany/813956/",
       "https://www.nbcsportsboston.com/nfl/new-england-patriots/patriots-s2027-nfl-draft-order-drake-maye-injury/814182/",
       "https://www.nbcsportsboston.com/nfl/new-england-patriots/nfl-playoff-picture-standings-afc-wild-card-race/815468/",
-      "https://www.nbcsportsboston.com/nfl/new-england-patriots/anything-remains-possible-final-seven-games/814882/",
       "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-tommy-devito-patriots-playoffs/815622/",
-      "https://www.patspulpit.com/new-england-patriots-news/145133/patriots-drake-maye-tommy-devito-backup-quarterback",
       "https://www.espn.com/nfl/player/_/id/4361432/romeo-doubs#:~:text=The%20Patriots%20designated%20Doubs%20(shoulder)%20for%20return",
-      "https://www.patspulpit.com/new-england-patriots-analysis/145172/patriots-vs-chargers-preview-players-to-watch-stats-nfl-week-12",
-      "https://www.profootballrumors.com/2026/11/patriots-designate-g-alijah-vera-tucker-for-return",
-      "https://x.com/AaronWilson_NFL/status/2124991375175270481",
-      "https://www.patriots.com/team/transactions/#tx-32ffb1a8ad4c"
+      "https://www.patriots.com/news/billerica-memorial-high-school-s-shawn-theriault-named-the-new-england-patriots-coach-of-the-week",
+      "https://www.patriots.com/news/rob-gronkowski-headlines-patriots-player-group-advancing-in-pro-football-hall-of-fame-voting"
     ],
     "sources": [
       {
@@ -66,7 +59,7 @@
         "outlet": "NBC Sports Boston",
         "title": "Drake Maye injury: Patriots QB fractured fibula vs. Lions, won't need surgery",
         "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-patriots-lions-surgery-return/815003/",
-        "publishedAt": "2026-11-25T20:44:42.868Z"
+        "publishedAt": "2026-11-25T20:46:10.224Z"
       },
       {
         "type": "article",
@@ -110,11 +103,11 @@
       },
       {
         "type": "article",
-        "author": "Logan Reardon",
+        "author": "Phil Perry",
         "outlet": "NBC Sports Boston",
-        "title": "How to watch Patriots vs. Chargers in Week 12: Time, channel and stream",
-        "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/how-to-watch-patriots-vs-chargers-week-11-time-channel-stream/815339/",
-        "publishedAt": "2026-11-25T20:44:42.868Z"
+        "title": "Stock Watch: Pats' stock crashing across the board after embarrassment in Munich",
+        "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/stock-watch-lions-week-10-loss-munich-germany/813956/",
+        "publishedAt": "2026-11-25T20:46:10.226Z"
       },
       {
         "type": "article",
@@ -122,7 +115,15 @@
         "outlet": "NBC Sports Boston",
         "title": "Should Patriots sign Daniel Jones as free agent after Colts release?",
         "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/should-patriots-sign-daniel-jones-as-free-agent-after-colts-release/814987/",
-        "publishedAt": "2026-11-25T20:44:42.868Z"
+        "publishedAt": "2026-11-25T20:46:10.225Z"
+      },
+      {
+        "type": "article",
+        "author": "Logan Reardon",
+        "outlet": "NBC Sports Boston",
+        "title": "How to watch Patriots vs. Chargers in Week 12: Time, channel and stream",
+        "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/how-to-watch-patriots-vs-chargers-week-11-time-channel-stream/815339/",
+        "publishedAt": "2026-11-25T20:46:10.225Z"
       },
       {
         "type": "article",
@@ -130,7 +131,7 @@
         "outlet": "NBC Sports Boston",
         "title": "Patriots mailbag: Should Pats sign a QB? A.J. Brown's future and more",
         "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/patriots-mailbag-aj-browns-drake-maye-injury/814612/",
-        "publishedAt": "2026-11-25T20:44:42.869Z"
+        "publishedAt": "2026-11-25T20:46:10.225Z"
       },
       {
         "type": "article",
@@ -138,23 +139,15 @@
         "outlet": "NBC Sports Boston",
         "title": "Patriots mailbag: Morton over DeVito? Biggest draft needs, and more",
         "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/mailbag-tommy-devito-behren-morton-draft-needs/815633/",
-        "publishedAt": "2026-11-25T20:44:42.867Z"
+        "publishedAt": "2026-11-25T20:46:10.224Z"
       },
       {
         "type": "article",
-        "author": "patriots.com Official",
-        "outlet": "patriots.com Official",
-        "title": "Billerica Memorial High School's Shawn Theriault Named the New England Patriots Coach of the Week",
-        "url": "https://www.patriots.com/news/billerica-memorial-high-school-s-shawn-theriault-named-the-new-england-patriots-coach-of-the-week",
-        "publishedAt": "2026-11-24T20:38:55.000Z"
-      },
-      {
-        "type": "article",
-        "author": "patriots.com Official",
-        "outlet": "patriots.com Official",
-        "title": "Rob Gronkowski Headlines Patriots Player Group Advancing in Pro Football Hall of Fame Voting",
-        "url": "https://www.patriots.com/news/rob-gronkowski-headlines-patriots-player-group-advancing-in-pro-football-hall-of-fame-voting",
-        "publishedAt": "2026-11-24T19:15:04.000Z"
+        "author": "Michael Hurley",
+        "outlet": "NBC Sports Boston",
+        "title": "Anything remains possible for Patriots in final seven games",
+        "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/anything-remains-possible-final-seven-games/814882/",
+        "publishedAt": "2026-11-25T20:46:10.225Z"
       }
     ]
   },
@@ -164,44 +157,44 @@
       "category": "beat",
       "headline": "New England Patriots Week 12 Top Headlines (5-5)",
       "summary": "Drake Maye injury: Patriots QB fractured fibula vs. Lions, won't need surgery — Should Patriots sign Daniel Jones as free agent after Colts release?",
-      "updatedAt": "2026-11-25T20:44:42.868Z",
+      "updatedAt": "2026-11-25T20:46:10.224Z",
       "itemCount": 6,
       "sourceLinks": [
         {
           "label": "Nick Goss",
           "title": "Drake Maye injury: Patriots QB fractured fibula vs. Lions, won't need surgery",
           "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-patriots-lions-surgery-return/815003/",
-          "publishedAt": "2026-11-25T20:44:42.868Z"
+          "publishedAt": "2026-11-25T20:46:10.224Z"
         },
         {
           "label": "Nick Goss",
           "title": "Should Patriots sign Daniel Jones as free agent after Colts release?",
           "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/should-patriots-sign-daniel-jones-as-free-agent-after-colts-release/814987/",
-          "publishedAt": "2026-11-25T20:44:42.868Z"
+          "publishedAt": "2026-11-25T20:46:10.225Z"
         },
         {
           "label": "Justin Leger",
           "title": "Is Vrabel's message not resonating with Patriots? Reacting to Lions loss",
           "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/mike-vrabel-message-lions-loss-week-10/813869/",
-          "publishedAt": "2026-11-25T20:44:42.870Z"
+          "publishedAt": "2026-11-25T20:46:10.227Z"
         },
         {
           "label": "Phil Perry",
           "title": "Patriots-Lions recap: Drake Maye, A.J. Brown injured in another blowout loss",
           "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/lions-live-updates-germany-drake-maye-jared-goff/813705/",
-          "publishedAt": "2026-11-25T20:44:42.870Z"
+          "publishedAt": "2026-11-25T20:46:10.227Z"
+        },
+        {
+          "label": "Nick Goss",
+          "title": "Garoppolo? Levis? 5 QB options for Patriots to consider amid Drake Maye's injury",
+          "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/garoppolo-levis-5-qb-options-for-patriots-to-consider-amid-drake-mayes-injury/814143/",
+          "publishedAt": "2026-11-25T20:46:10.226Z"
         },
         {
           "label": "Phil Perry",
-          "title": "Patriots mailbag: Should Pats sign a QB? A.J. Brown's future and more",
-          "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/patriots-mailbag-aj-browns-drake-maye-injury/814612/",
-          "publishedAt": "2026-11-25T20:44:42.869Z"
-        },
-        {
-          "label": "Michael Hurley",
-          "title": "Drake Maye's value will be crystal clear during absence from Patriots",
-          "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-importance-crystal-clear-injury-absence/813840/",
-          "publishedAt": "2026-11-25T20:44:42.869Z"
+          "title": "Stock Watch: Pats' stock crashing across the board after embarrassment in Munich",
+          "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/stock-watch-lions-week-10-loss-munich-germany/813956/",
+          "publishedAt": "2026-11-25T20:46:10.226Z"
         }
       ]
     },
@@ -210,32 +203,32 @@
       "category": "injury",
       "headline": "Patriots Practice Report, Injury & IR Availability",
       "summary": "Drake Maye injury: Patriots QB fractured fibula vs. Lions, won't need surgery — Patriots-Lions recap: Drake Maye, A.J. Brown injured in another blowout loss",
-      "updatedAt": "2026-11-25T20:44:42.868Z",
+      "updatedAt": "2026-11-25T20:46:10.224Z",
       "itemCount": 6,
       "sourceLinks": [
         {
           "label": "Nick Goss",
           "title": "Drake Maye injury: Patriots QB fractured fibula vs. Lions, won't need surgery",
           "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-patriots-lions-surgery-return/815003/",
-          "publishedAt": "2026-11-25T20:44:42.868Z"
+          "publishedAt": "2026-11-25T20:46:10.224Z"
         },
         {
           "label": "Phil Perry",
           "title": "Patriots-Lions recap: Drake Maye, A.J. Brown injured in another blowout loss",
           "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/lions-live-updates-germany-drake-maye-jared-goff/813705/",
-          "publishedAt": "2026-11-25T20:44:42.870Z"
+          "publishedAt": "2026-11-25T20:46:10.227Z"
         },
         {
           "label": "Nick Goss",
           "title": "Garoppolo? Levis? 5 QB options for Patriots to consider amid Drake Maye's injury",
           "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/garoppolo-levis-5-qb-options-for-patriots-to-consider-amid-drake-mayes-injury/814143/",
-          "publishedAt": "2026-11-25T20:44:42.869Z"
+          "publishedAt": "2026-11-25T20:46:10.226Z"
         },
         {
           "label": "Nick Goss",
           "title": "Why Patriots should focus on 2027 NFL Draft positioning after Maye injury",
           "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/patriots-s2027-nfl-draft-order-drake-maye-injury/814182/",
-          "publishedAt": "2026-11-25T20:44:42.869Z"
+          "publishedAt": "2026-11-25T20:46:10.226Z"
         },
         {
           "label": "Evan Lazar",
@@ -328,7 +321,7 @@
       "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
       "imageUrl": "https://media.nbcsportsboston.com/2026/11/Drake-Maye-Packers.jpg?quality=85&strip=all&fit=1200,675",
       "imageAlt": "Drake Maye injury: Patriots QB fractured fibula vs. Lions, won't need surgery",
-      "publishedAt": "2026-11-25T20:44:42.868Z",
+      "publishedAt": "2026-11-25T20:46:10.224Z",
       "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-patriots-lions-surgery-return/815003/",
       "outletId": "nbcs_bos",
       "outletName": "NBC Sports Boston",
@@ -360,7 +353,7 @@
       "isBreaking": true,
       "isInGameInjury": false,
       "breakingBadge": "BREAKING",
-      "breakingPriority": 2.919,
+      "breakingPriority": 2.92,
       "category": "beat",
       "signalScore": 70,
       "fluffScore": 0,
@@ -370,16 +363,16 @@
       "isUrgentBreaking": true,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 139.5578
+      "storyRank": 139.6804
     },
     {
       "id": "ne_brss_nbcs_bos_d095192a1746",
       "type": "article",
       "title": "Should Patriots sign Daniel Jones as free agent after Colts release?",
-      "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
+      "summary": "",
       "imageUrl": "https://media.nbcsportsboston.com/2026/11/Daniel-Jones.jpg?quality=85&strip=all&fit=1200,675",
       "imageAlt": "Should Patriots sign Daniel Jones as free agent after Colts release?",
-      "publishedAt": "2026-11-25T20:44:42.868Z",
+      "publishedAt": "2026-11-25T20:46:10.225Z",
       "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/should-patriots-sign-daniel-jones-as-free-agent-after-colts-release/814987/",
       "outletId": "nbcs_bos",
       "outletName": "NBC Sports Boston",
@@ -390,24 +383,7 @@
       "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/should-patriots-sign-daniel-jones-as-free-agent-after-colts-release/814987/",
       "trustTier": 1,
       "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4240391",
-          "name": "Tommy DeVito",
-          "shortName": "T. DeVito",
-          "position": "QB",
-          "jersey": 16,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
-        },
-        {
-          "id": "4431452",
-          "name": "Drake Maye",
-          "shortName": "D. Maye",
-          "position": "QB",
-          "jersey": 10,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
-        }
-      ],
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -423,7 +399,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 61.142
+      "storyRank": 61.2083
     },
     {
       "id": "ne_brss_nbcs_bos_7b49ed1a4e4d",
@@ -432,7 +408,7 @@
       "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
       "imageUrl": "https://media.nbcsportsboston.com/2026/11/Vrabel_2026-11-13T113359Z_1574373747_UP1EMBD0W4LEK_RTRMADP_3_FOOTBALL-NFL-DET-NEP-PREVIEW-e1794769420906.jpg?quality=85&strip=all&fit=1280,720",
       "imageAlt": "Is Vrabel's message not resonating with Patriots? Reacting to Lions loss",
-      "publishedAt": "2026-11-25T20:44:42.870Z",
+      "publishedAt": "2026-11-25T20:46:10.227Z",
       "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/mike-vrabel-message-lions-loss-week-10/813869/",
       "outletId": "nbcs_bos",
       "outletName": "NBC Sports Boston",
@@ -474,7 +450,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 53.9805
+      "storyRank": 54.0389
     },
     {
       "id": "ne_brss_nbcs_bos_0fc213349fec",
@@ -483,7 +459,7 @@
       "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
       "imageUrl": "https://media.nbcsportsboston.com/2026/11/gibbs.jpg?quality=85&strip=all&fit=3679,2069",
       "imageAlt": "Patriots-Lions recap: Drake Maye, A.J. Brown injured in another blowout loss",
-      "publishedAt": "2026-11-25T20:44:42.870Z",
+      "publishedAt": "2026-11-25T20:46:10.227Z",
       "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/lions-live-updates-germany-drake-maye-jared-goff/813705/",
       "outletId": "nbcs_bos",
       "outletName": "NBC Sports Boston",
@@ -533,117 +509,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 53.9805
-    },
-    {
-      "id": "ne_brss_nbcs_bos_97259822f80d",
-      "type": "article",
-      "title": "Patriots mailbag: Should Pats sign a QB? A.J. Brown's future and more",
-      "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
-      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Brown-A.J.-leaves-field-injured-RP-111626-01.jpg?quality=85&strip=all&fit=1200,675",
-      "imageAlt": "Patriots mailbag: Should Pats sign a QB? A.J. Brown's future and more",
-      "publishedAt": "2026-11-25T20:44:42.869Z",
-      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/patriots-mailbag-aj-browns-drake-maye-injury/814612/",
-      "outletId": "nbcs_bos",
-      "outletName": "NBC Sports Boston",
-      "reporterId": "phil_perry",
-      "reporterName": "Phil Perry",
-      "author": "Phil Perry",
-      "authorHandle": "@PhilAPerry",
-      "authorProfileUrl": "https://x.com/PhilAPerry",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4047646",
-          "name": "A.J. Brown",
-          "shortName": "A.J. Brown",
-          "position": "WR",
-          "jersey": 1,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4047646.png"
-        },
-        {
-          "id": "4240391",
-          "name": "Tommy DeVito",
-          "shortName": "T. DeVito",
-          "position": "QB",
-          "jersey": 16,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
-        },
-        {
-          "id": "4431452",
-          "name": "Drake Maye",
-          "shortName": "D. Maye",
-          "position": "QB",
-          "jersey": 10,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 95,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 53.9805
-    },
-    {
-      "id": "ne_brss_nbcs_bos_f4bbab0c5ec5",
-      "type": "article",
-      "title": "Drake Maye's value will be crystal clear during absence from Patriots",
-      "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
-      "imageUrl": "https://media.nbcsportsboston.com/2026/11/drake-maye_01f687.jpg?quality=85&strip=all&fit=2322,1306",
-      "imageAlt": "Drake Maye's value will be crystal clear during absence from Patriots",
-      "publishedAt": "2026-11-25T20:44:42.869Z",
-      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-importance-crystal-clear-injury-absence/813840/",
-      "outletId": "nbcs_bos",
-      "outletName": "NBC Sports Boston",
-      "reporterId": "nbcs_bos",
-      "reporterName": "Michael Hurley",
-      "author": "Michael Hurley",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-importance-crystal-clear-injury-absence/813840/",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4240391",
-          "name": "Tommy DeVito",
-          "shortName": "T. DeVito",
-          "position": "QB",
-          "jersey": 16,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
-        },
-        {
-          "id": "4431452",
-          "name": "Drake Maye",
-          "shortName": "D. Maye",
-          "position": "QB",
-          "jersey": 10,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 53.9805
+      "storyRank": 54.0389
     },
     {
       "id": "ne_brss_nbcs_bos_d84fe4e81e06",
@@ -652,7 +518,7 @@
       "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
       "imageUrl": "https://media.nbcsportsboston.com/2026/11/Jimmy-Garoppolo.jpg?quality=85&strip=all&fit=1200,675",
       "imageAlt": "Garoppolo? Levis? 5 QB options for Patriots to consider amid Drake Maye's injury",
-      "publishedAt": "2026-11-25T20:44:42.869Z",
+      "publishedAt": "2026-11-25T20:46:10.226Z",
       "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/garoppolo-levis-5-qb-options-for-patriots-to-consider-amid-drake-mayes-injury/814143/",
       "outletId": "nbcs_bos",
       "outletName": "NBC Sports Boston",
@@ -694,16 +560,16 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 53.9805
+      "storyRank": 54.0389
     },
     {
       "id": "ne_brss_nbcs_bos_82b95ce0e7b4",
       "type": "article",
       "title": "Stock Watch: Pats' stock crashing across the board after embarrassment in Munich",
-      "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
+      "summary": "",
       "imageUrl": "https://media.nbcsportsboston.com/2026/11/Gibbs_2026-11-15T155916Z_1984053593_MT1USATODAY30357734_RTRMADP_3_NFL-NEW-ENGLAND-PATRIOTS-AT-DETROIT-LIONS-e1794782197929.jpg?quality=85&strip=all&fit=1280,720",
       "imageAlt": "Stock Watch: Pats' stock crashing across the board after embarrassment in Munich",
-      "publishedAt": "2026-11-25T20:44:42.869Z",
+      "publishedAt": "2026-11-25T20:46:10.226Z",
       "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/stock-watch-lions-week-10-loss-munich-germany/813956/",
       "outletId": "nbcs_bos",
       "outletName": "NBC Sports Boston",
@@ -714,24 +580,7 @@
       "authorProfileUrl": "https://x.com/PhilAPerry",
       "trustTier": 1,
       "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4240391",
-          "name": "Tommy DeVito",
-          "shortName": "T. DeVito",
-          "position": "QB",
-          "jersey": 16,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
-        },
-        {
-          "id": "4431452",
-          "name": "Drake Maye",
-          "shortName": "D. Maye",
-          "position": "QB",
-          "jersey": 10,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
-        }
-      ],
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -745,7 +594,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 53.9805
+      "storyRank": 54.0389
     },
     {
       "id": "ne_brss_nbcs_bos_df88067e6b18",
@@ -754,7 +603,7 @@
       "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
       "imageUrl": "https://media.nbcsportsboston.com/2026/11/Drake-Maye-Packers-1.jpg?quality=85&strip=all&fit=1200,675",
       "imageAlt": "Why Patriots should focus on 2027 NFL Draft positioning after Maye injury",
-      "publishedAt": "2026-11-25T20:44:42.869Z",
+      "publishedAt": "2026-11-25T20:46:10.226Z",
       "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/patriots-s2027-nfl-draft-order-drake-maye-injury/814182/",
       "outletId": "nbcs_bos",
       "outletName": "NBC Sports Boston",
@@ -796,67 +645,16 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 53.9805
-    },
-    {
-      "id": "ne_brss_nbcs_bos_13f66cebb0f3",
-      "type": "article",
-      "title": "NFL playoff picture: Patriots still alive in AFC wild card race entering Week 12",
-      "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
-      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Tommy-Devito-Lions.jpg?quality=85&strip=all&fit=1200,675",
-      "imageAlt": "NFL playoff picture: Patriots still alive in AFC wild card race entering Week 12",
-      "publishedAt": "2026-11-25T20:44:42.868Z",
-      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/nfl-playoff-picture-standings-afc-wild-card-race/815468/",
-      "outletId": "nbcs_bos",
-      "outletName": "NBC Sports Boston",
-      "reporterId": "nbcs_bos",
-      "reporterName": "Nick Goss",
-      "author": "Nick Goss",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/nfl-playoff-picture-standings-afc-wild-card-race/815468/",
-      "trustTier": 1,
-      "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4240391",
-          "name": "Tommy DeVito",
-          "shortName": "T. DeVito",
-          "position": "QB",
-          "jersey": 16,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
-        },
-        {
-          "id": "4431452",
-          "name": "Drake Maye",
-          "shortName": "D. Maye",
-          "position": "QB",
-          "jersey": 10,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
-        }
-      ],
-      "isBreaking": false,
-      "isInGameInjury": false,
-      "breakingBadge": null,
-      "breakingPriority": 0,
-      "category": "beat",
-      "signalScore": 70,
-      "fluffScore": 0,
-      "isClickbait": false,
-      "credibilityScore": 86,
-      "storyTier": "standard",
-      "isUrgentBreaking": false,
-      "isPostGameInjuryUpdate": false,
-      "isStalePreGameAvailability": false,
-      "storyRank": 53.9804
+      "storyRank": 54.0389
     },
     {
       "id": "ne_brss_nbcs_bos_d7b83e39b54a",
       "type": "article",
       "title": "How to watch Patriots vs. Chargers in Week 12: Time, channel and stream",
-      "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
+      "summary": "",
       "imageUrl": "https://media.nbcsportsboston.com/2026/11/261123-vrabel-harbaugh-getty.jpg?quality=85&strip=all&fit=5981,3365",
       "imageAlt": "How to watch Patriots vs. Chargers in Week 12: Time, channel and stream",
-      "publishedAt": "2026-11-25T20:44:42.868Z",
+      "publishedAt": "2026-11-25T20:46:10.225Z",
       "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/how-to-watch-patriots-vs-chargers-week-11-time-channel-stream/815339/",
       "outletId": "nbcs_bos",
       "outletName": "NBC Sports Boston",
@@ -867,24 +665,7 @@
       "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/how-to-watch-patriots-vs-chargers-week-11-time-channel-stream/815339/",
       "trustTier": 1,
       "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4240391",
-          "name": "Tommy DeVito",
-          "shortName": "T. DeVito",
-          "position": "QB",
-          "jersey": 16,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
-        },
-        {
-          "id": "4431452",
-          "name": "Drake Maye",
-          "shortName": "D. Maye",
-          "position": "QB",
-          "jersey": 10,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
-        }
-      ],
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -898,16 +679,16 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 53.9804
+      "storyRank": 54.0389
     },
     {
       "id": "ne_brss_nbcs_bos_c19de89b2981",
       "type": "article",
       "title": "Anything remains possible for Patriots in final seven games",
-      "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
+      "summary": "",
       "imageUrl": "https://media.nbcsportsboston.com/2026/11/mac-jones.jpg?quality=85&strip=all&fit=7075,3980",
       "imageAlt": "Anything remains possible for Patriots in final seven games",
-      "publishedAt": "2026-11-25T20:44:42.868Z",
+      "publishedAt": "2026-11-25T20:46:10.225Z",
       "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/anything-remains-possible-final-seven-games/814882/",
       "outletId": "nbcs_bos",
       "outletName": "NBC Sports Boston",
@@ -918,24 +699,7 @@
       "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/anything-remains-possible-final-seven-games/814882/",
       "trustTier": 1,
       "wireSource": "local_beat_rss",
-      "mentionedPlayers": [
-        {
-          "id": "4240391",
-          "name": "Tommy DeVito",
-          "shortName": "T. DeVito",
-          "position": "QB",
-          "jersey": 16,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
-        },
-        {
-          "id": "4431452",
-          "name": "Drake Maye",
-          "shortName": "D. Maye",
-          "position": "QB",
-          "jersey": 10,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
-        }
-      ],
+      "mentionedPlayers": [],
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": null,
@@ -949,35 +713,70 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 53.9804
+      "storyRank": 54.0389
     },
     {
-      "id": "ne_brss_nbcs_bos_40399312191a",
+      "id": "ne_brss_nbcs_bos_97259822f80d",
       "type": "article",
-      "title": "Simulation: Can Tommy DeVito lead Patriots into playoffs?",
-      "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
-      "imageUrl": "https://media.nbcsportsboston.com/2026/11/DeVito_Tommy_2026-11-15T164046Z_1773880997_MT1USATODAY30357853_RTRMADP_3_NFL-NEW-ENGLAND-PATRIOTS-AT-DETROIT-LIONS-e1795555765633.jpg?quality=85&strip=all&fit=1280,720",
-      "imageAlt": "Simulation: Can Tommy DeVito lead Patriots into playoffs?",
-      "publishedAt": "2026-11-25T20:44:42.867Z",
-      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-tommy-devito-patriots-playoffs/815622/",
+      "title": "Patriots mailbag: Should Pats sign a QB? A.J. Brown's future and more",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Brown-A.J.-leaves-field-injured-RP-111626-01.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "Patriots mailbag: Should Pats sign a QB? A.J. Brown's future and more",
+      "publishedAt": "2026-11-25T20:46:10.225Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/patriots-mailbag-aj-browns-drake-maye-injury/814612/",
       "outletId": "nbcs_bos",
       "outletName": "NBC Sports Boston",
-      "reporterId": "nbcs_bos",
-      "reporterName": "Justin Leger and Nick Goss",
-      "author": "Justin Leger and Nick Goss",
-      "authorHandle": "",
-      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-tommy-devito-patriots-playoffs/815622/",
+      "reporterId": "phil_perry",
+      "reporterName": "Phil Perry",
+      "author": "Phil Perry",
+      "authorHandle": "@PhilAPerry",
+      "authorProfileUrl": "https://x.com/PhilAPerry",
       "trustTier": 1,
       "wireSource": "local_beat_rss",
       "mentionedPlayers": [
         {
-          "id": "4240391",
-          "name": "Tommy DeVito",
-          "shortName": "T. DeVito",
-          "position": "QB",
-          "jersey": 16,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
-        },
+          "id": "4047646",
+          "name": "A.J. Brown",
+          "shortName": "A.J. Brown",
+          "position": "WR",
+          "jersey": 1,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4047646.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 95,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 54.0389
+    },
+    {
+      "id": "ne_brss_nbcs_bos_f4bbab0c5ec5",
+      "type": "article",
+      "title": "Drake Maye's value will be crystal clear during absence from Patriots",
+      "summary": "",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/drake-maye_01f687.jpg?quality=85&strip=all&fit=2322,1306",
+      "imageAlt": "Drake Maye's value will be crystal clear during absence from Patriots",
+      "publishedAt": "2026-11-25T20:46:10.225Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-importance-crystal-clear-injury-absence/813840/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Michael Hurley",
+      "author": "Michael Hurley",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-importance-crystal-clear-injury-absence/813840/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
         {
           "id": "4431452",
           "name": "Drake Maye",
@@ -1000,7 +799,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 53.9804
+      "storyRank": 54.0389
     },
     {
       "id": "ne_brss_nbcs_bos_efc4749792b1",
@@ -1009,7 +808,7 @@
       "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
       "imageUrl": "https://media.nbcsportsboston.com/2026/11/Morton_Behren_2026-10-22T223031Z_79859314_MT1USATODAY30156018_RTRMADP_3_NFL-NEW-ENGLAND-PATRIOTS-AT-CHICAGO-BEARS-e1795558258372.jpg?quality=85&strip=all&fit=1280,720",
       "imageAlt": "Patriots mailbag: Morton over DeVito? Biggest draft needs, and more",
-      "publishedAt": "2026-11-25T20:44:42.867Z",
+      "publishedAt": "2026-11-25T20:46:10.224Z",
       "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/mailbag-tommy-devito-behren-morton-draft-needs/815633/",
       "outletId": "nbcs_bos",
       "outletName": "NBC Sports Boston",
@@ -1059,7 +858,109 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 53.9804
+      "storyRank": 54.0389
+    },
+    {
+      "id": "ne_brss_nbcs_bos_13f66cebb0f3",
+      "type": "article",
+      "title": "NFL playoff picture: Patriots still alive in AFC wild card race entering Week 12",
+      "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/Tommy-Devito-Lions.jpg?quality=85&strip=all&fit=1200,675",
+      "imageAlt": "NFL playoff picture: Patriots still alive in AFC wild card race entering Week 12",
+      "publishedAt": "2026-11-25T20:46:10.224Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/nfl-playoff-picture-standings-afc-wild-card-race/815468/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Nick Goss",
+      "author": "Nick Goss",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/nfl-playoff-picture-standings-afc-wild-card-race/815468/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4240391",
+          "name": "Tommy DeVito",
+          "shortName": "T. DeVito",
+          "position": "QB",
+          "jersey": 16,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
+        },
+        {
+          "id": "4431452",
+          "name": "Drake Maye",
+          "shortName": "D. Maye",
+          "position": "QB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 54.0389
+    },
+    {
+      "id": "ne_brss_nbcs_bos_40399312191a",
+      "type": "article",
+      "title": "Simulation: Can Tommy DeVito lead Patriots into playoffs?",
+      "summary": "The fate of the 2026 New England Patriots might rest in the hands of backup quarterback Tommy DeVito. DeVito is set to take over for Drake Maye, who suffered a fractured fibula in the Patriots’ Week 10 loss to the Detroit Lions. Maye won’t",
+      "imageUrl": "https://media.nbcsportsboston.com/2026/11/DeVito_Tommy_2026-11-15T164046Z_1773880997_MT1USATODAY30357853_RTRMADP_3_NFL-NEW-ENGLAND-PATRIOTS-AT-DETROIT-LIONS-e1795555765633.jpg?quality=85&strip=all&fit=1280,720",
+      "imageAlt": "Simulation: Can Tommy DeVito lead Patriots into playoffs?",
+      "publishedAt": "2026-11-25T20:46:10.223Z",
+      "url": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-tommy-devito-patriots-playoffs/815622/",
+      "outletId": "nbcs_bos",
+      "outletName": "NBC Sports Boston",
+      "reporterId": "nbcs_bos",
+      "reporterName": "Justin Leger and Nick Goss",
+      "author": "Justin Leger and Nick Goss",
+      "authorHandle": "",
+      "authorProfileUrl": "https://www.nbcsportsboston.com/nfl/new-england-patriots/drake-maye-injury-tommy-devito-patriots-playoffs/815622/",
+      "trustTier": 1,
+      "wireSource": "local_beat_rss",
+      "mentionedPlayers": [
+        {
+          "id": "4240391",
+          "name": "Tommy DeVito",
+          "shortName": "T. DeVito",
+          "position": "QB",
+          "jersey": 16,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240391.png"
+        },
+        {
+          "id": "4431452",
+          "name": "Drake Maye",
+          "shortName": "D. Maye",
+          "position": "QB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
+        }
+      ],
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "beat",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 54.0389
     },
     {
       "id": "ne_brss_pats_pulpit_92b149691e9b",
@@ -1093,7 +994,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 36.7869
+      "storyRank": 35.9458
     },
     {
       "id": "ne_vid_bdc7b0d27d2d",
@@ -1129,7 +1030,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 36.3969
+      "storyRank": 35.5805
     },
     {
       "id": "ne_pwire_4361432_64973528",
@@ -1172,7 +1073,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 23.5628
+      "storyRank": 23.2061
     },
     {
       "id": "ne_brss_pats_pulpit_396c65d3e488",
@@ -1223,7 +1124,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 23.0369
+      "storyRank": 22.6577
     },
     {
       "id": "ne_pwire_4047646_64973628",
@@ -1255,7 +1156,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 22.2327
+      "storyRank": 21.88
     },
     {
       "id": "ne_vid_78a96f4abcd5",
@@ -1291,7 +1192,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 18.7251
+      "storyRank": 18.4619
     },
     {
       "id": "ne_vid_bbdebdf41431",
@@ -1327,7 +1228,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 14.0524
+      "storyRank": 13.8911
     },
     {
       "id": "ne_vid_76a9dd1cc93d",
@@ -1363,7 +1264,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 10.3883
+      "storyRank": 10.2921
     },
     {
       "id": "ne_vid_1fdcfe54050a",
@@ -1408,7 +1309,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.9331
+      "storyRank": 5.8962
     },
     {
       "id": "ne_brss_pats_pulpit_48e910869f21",
@@ -1442,7 +1343,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 5.6022
+      "storyRank": 5.5683
     },
     {
       "id": "ne_brss_pats_pulpit_2c9c5ca78c06",
@@ -1493,7 +1394,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.6834
+      "storyRank": 3.6669
     },
     {
       "id": "ne_brss_pats_pulpit_28cefe1f49f0",
@@ -1527,7 +1428,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 3.341
+      "storyRank": 3.327
     },
     {
       "id": "ne_brss_pats_pulpit_2b5e0f151d4f",
@@ -1561,7 +1462,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.4127
+      "storyRank": 2.4047
     },
     {
       "id": "ne_brss_pats_pulpit_cea3fbf66a08",
@@ -1595,7 +1496,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.181
+      "storyRank": 2.1743
     },
     {
       "id": "ne_rss_4b9f854c98bc",
@@ -1646,7 +1547,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 2.1477
+      "storyRank": 2.1412
     },
     {
       "id": "ne_brss_pats_pulpit_d2545210653d",
@@ -1680,7 +1581,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.7675
+      "storyRank": 1.7628
     },
     {
       "id": "ne_vid_458e16700950",
@@ -1725,7 +1626,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6907
+      "storyRank": 0.6898
     },
     {
       "id": "ne_vid_95a19d3e34fc",
@@ -1786,7 +1687,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6795
+      "storyRank": 0.6786
     },
     {
       "id": "ne_rss_34951ba6a6bc",
@@ -1820,7 +1721,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.659
+      "storyRank": 0.6581
     },
     {
       "id": "ne_pwire_4047646_64959528",
@@ -1852,7 +1753,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6284
+      "storyRank": 0.6276
     },
     {
       "id": "ne_rss_a6f80e885cb5",
@@ -1886,7 +1787,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.611
+      "storyRank": 0.6102
     },
     {
       "id": "ne_vid_450f286a5d32",
@@ -1922,7 +1823,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.605
+      "storyRank": 0.6043
     },
     {
       "id": "ne_brss_pats_pulpit_6d76230c9870",
@@ -1956,7 +1857,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5866
+      "storyRank": 0.5859
     },
     {
       "id": "ne_brss_pats_pulpit_33c82509aae0",
@@ -1990,7 +1891,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5776
+      "storyRank": 0.5769
     },
     {
       "id": "ne_vid_7832c3a53ee1",
@@ -2026,7 +1927,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5859
+      "storyRank": 0.5852
     },
     {
       "id": "ne_rss_35d48d49d6f3",
@@ -2060,7 +1961,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5492
+      "storyRank": 0.5486
     },
     {
       "id": "ne_vid_a12838f94b3c",
@@ -2096,7 +1997,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5327
+      "storyRank": 0.5321
     },
     {
       "id": "ne_rss_23b4e7974ac9",
@@ -2130,7 +2031,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5083
+      "storyRank": 0.5077
     },
     {
       "id": "ne_vid_33c91a69f08c",
@@ -2166,7 +2067,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.348
+      "storyRank": 0.3477
     },
     {
       "id": "ne_pfr_a33b4f7986e0",
@@ -2208,7 +2109,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2966
+      "storyRank": 0.2964
     },
     {
       "id": "ne_pwire_4240391_64946928",
@@ -2257,7 +2158,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2984
+      "storyRank": 0.2982
     },
     {
       "id": "x_tl_aaronwilson_nfl_2124991375175270481",
@@ -2305,7 +2206,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2935
+      "storyRank": 0.2933
     },
     {
       "id": "ne_vid_a4278cbd1559",
@@ -2366,7 +2267,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2652
+      "storyRank": 0.265
     },
     {
       "id": "ne_pwire_4047646_64938428",
@@ -2398,7 +2299,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2651
+      "storyRank": 0.2649
     },
     {
       "id": "ne_pwire_4431452_64937628",
@@ -2430,7 +2331,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2584
+      "storyRank": 0.2583
     },
     {
       "id": "ne_espn_5c7896f7f1356",
@@ -2482,7 +2383,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2512
+      "storyRank": 0.251
     },
     {
       "id": "ne_vid_cf2e14a383dd",
@@ -2518,7 +2419,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2374
+      "storyRank": 0.2372
     },
     {
       "id": "ne_pwire_4361432_64934728",
@@ -2559,7 +2460,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5042
+      "storyRank": 0.5039
     },
     {
       "id": "ne_pfr_e444f6589469",
@@ -2601,7 +2502,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2233
+      "storyRank": 0.2232
     },
     {
       "id": "x_tl_dougkyed_2124866043910701274",
@@ -2640,7 +2541,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2378
+      "storyRank": 0.2377
     },
     {
       "id": "x_tl_thegreghillshow_2124846246791667993",
@@ -2692,7 +2593,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2268
+      "storyRank": 0.2266
     },
     {
       "id": "ne_vid_2cf35e099b42",
@@ -2728,7 +2629,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2072
+      "storyRank": 0.2071
     },
     {
       "id": "ne_tx_32ffb1a8ad4c",
@@ -2772,7 +2673,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1874
+      "storyRank": 0.1873
     },
     {
       "id": "ne_pfr_d3775005498d",
@@ -2805,7 +2706,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.137
+      "storyRank": 0.1369
     },
     {
       "id": "ne_espn_99b1e4513f880",
@@ -3004,7 +2905,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0769
+      "storyRank": 0.0768
     },
     {
       "id": "ne_espn_281429b2d7a67",
@@ -3108,7 +3009,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0722
+      "storyRank": 0.0721
     },
     {
       "id": "ne_espn_d05c955fa4747",
@@ -3153,7 +3054,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0722
+      "storyRank": 0.0721
     },
     {
       "id": "ne_pwire_4431452_64880628",
@@ -3372,7 +3273,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0574
+      "storyRank": 0.0573
     },
     {
       "id": "ne_vid_0ec7a6491d4d",
@@ -3526,6 +3427,58 @@
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
       "storyRank": 0.0545
+    },
+    {
+      "id": "x_tl_weei_2123164255486668897",
+      "type": "tweet",
+      "title": "ESPN NFL Insider Adam Schefter joined the show today and shared what he knows about Drake Maye’s leg injury.\n\n@KenLairdWEEI @teddyjradio @heyrichhey @stizgrimey",
+      "fullText": "ESPN NFL Insider Adam Schefter joined the show today and shared what he knows about Drake Maye’s leg injury.\n\n@KenLairdWEEI @teddyjradio @heyrichhey @stizgrimey",
+      "isFullTweet": true,
+      "summary": "",
+      "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2123164225916788737/img/AWXPztD8Z4mB24Cd.jpg",
+      "imageAlt": "WEEI post",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2123164225916788737/vid/avc1/1080x1920/t_GxEEUcZNFWa6U7.mp4?tag=16",
+      "isHighlightClip": true,
+      "duration": "1:33",
+      "embeddable": true,
+      "mentionedPlayers": [
+        {
+          "id": "4431452",
+          "name": "Drake Maye",
+          "shortName": "D. Maye",
+          "position": "QB",
+          "jersey": 10,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4431452.png"
+        }
+      ],
+      "publishedAt": "2026-11-18T21:19:39.649Z",
+      "url": "https://x.com/WEEI/status/2123164255486668897",
+      "externalUrl": null,
+      "externalTitle": null,
+      "externalDescription": null,
+      "outletId": "x_beat",
+      "outletName": "X Beat",
+      "reporterId": null,
+      "reporterName": "WEEI",
+      "author": "WEEI",
+      "authorHandle": "@WEEI",
+      "authorProfileUrl": "https://x.com/WEEI",
+      "trustTier": 2,
+      "wireSource": "x_timeline_live",
+      "isBreaking": false,
+      "isInGameInjury": false,
+      "breakingBadge": null,
+      "breakingPriority": 0,
+      "category": "injury",
+      "signalScore": 70,
+      "fluffScore": 0,
+      "isClickbait": false,
+      "credibilityScore": 86,
+      "storyTier": "standard",
+      "isUrgentBreaking": false,
+      "isPostGameInjuryUpdate": false,
+      "isStalePreGameAvailability": false,
+      "storyRank": 0.0498
     },
     {
       "id": "ne_vid_be20fae64efc",
@@ -3962,7 +3915,7 @@
       "duration": "9:06",
       "imageUrl": "https://i.ytimg.com/vi/oEWzIE47H7Q/hqdefault.jpg",
       "imageAlt": "Patriots vs. Lions Week 10 Recap | NFL Daily",
-      "publishedAt": "2026-11-16T20:44:42.870Z",
+      "publishedAt": "2026-11-16T20:46:10.227Z",
       "url": "https://www.youtube.com/watch?v=oEWzIE47H7Q",
       "externalVideoUrl": "https://www.youtube.com/watch?v=oEWzIE47H7Q",
       "channel": "NFL",
@@ -4169,7 +4122,7 @@
       "duration": "13:45",
       "imageUrl": "https://i.ytimg.com/vi/u9ggzabBnEo/hqdefault.jpg",
       "imageAlt": "New England Patriots vs. Detroit Lions Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-15T20:44:42.870Z",
+      "publishedAt": "2026-11-15T20:46:10.227Z",
       "url": "https://www.youtube.com/watch?v=u9ggzabBnEo",
       "externalVideoUrl": "https://www.youtube.com/watch?v=u9ggzabBnEo",
       "channel": "NFL",
@@ -4208,7 +4161,7 @@
       "duration": "3:28",
       "imageUrl": "https://i.ytimg.com/vi/pbabdlypBO4/hqdefault.jpg",
       "imageAlt": "Jahmyr Gibbs' best plays from 252-yard, 2-TD game vs. Patriots in Munich | Week 10",
-      "publishedAt": "2026-11-15T20:44:42.870Z",
+      "publishedAt": "2026-11-15T20:46:10.227Z",
       "url": "https://www.youtube.com/watch?v=pbabdlypBO4",
       "externalVideoUrl": "https://www.youtube.com/watch?v=pbabdlypBO4",
       "channel": "NFL",

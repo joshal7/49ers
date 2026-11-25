@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:10.428Z",
+  "updatedAt": "2026-11-25T20:45:02.630Z",
   "dailyTopNewsBrief": {
     "id": "daily_brief_2026-11-24_17ET",
     "cycleKey": "2026-11-24@17ET",
@@ -7,7 +7,7 @@
     "isPostGame": false,
     "gameWeek": 12,
     "teamRecord": "7-3",
-    "generatedAt": "2026-11-25T20:36:10.428Z",
+    "generatedAt": "2026-11-25T20:45:02.630Z",
     "modelUsed": "deterministic-grounded",
     "thinkingLevel": "NONE",
     "source": "pipeline-grounded",
@@ -20,9 +20,9 @@
     "summary": "",
     "bullets": [
       "Commanders Offensive Surge: Fresh off moving to 7-3 (1st in AFC North) with a 20–22 result against Washington, Cincinnati piled up 312 total yards [Dale Altman](https://www.cincyjungle.com/cincinnati-bengals-analysis/206527/bengals-film-room-joe-burrow-has-an-uneven-performance-on-mnf) [ESPN](https://www.espn.com/nfl/recap?gameId=401873078). Samaje Perine totaled 97 scrimmage yards and 0 touchdowns while Joe Burrow threw for 300 yards and 2 TDs in Zac Taylor's attack [Bengals & Brews](https://x.com/BengalsBrews/status/2125290813576114240).",
-      "Injury & Practice Status: Entering Week 12 preparation, head coach Zac Taylor and the medical staff evaluate G Dalton Risner (knee), S Kyle Dugger (quadriceps), CB Dax Hill (illness), and S Bryan Cook (ankle) ahead of Wednesday's initial participation report. WR Andrei Iosivas (thumb (surgery)) and CB Jalen Davis (hamstring) continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation [Anthony Cosenza](https://www.cincyjungle.com/cincinnati-bengals-history/206552/pro-football-hall-of-fame-race-class-of-2027).",
+      "Injury & Practice Status: Entering Week 12 preparation, head coach Zac Taylor and the medical staff evaluate G Dalton Risner (knee), S Kyle Dugger (quadriceps), S Bryan Cook (ankle), and CB Dax Hill (illness) ahead of Wednesday's initial participation report. WR Andrei Iosivas (thumb (surgery)) and CB Jalen Davis (hamstring) continue ramping inside active 21-day Injured Reserve practice windows toward potential 53-man roster activation [Anthony Cosenza](https://www.cincyjungle.com/cincinnati-bengals-history/206552/pro-football-hall-of-fame-race-class-of-2027).",
       "Week 12 Saints Outlook: Zac Taylor and DC Al Golden open installation for the New Orleans Saints (3-7, CIN -10, HC Kellen Moore, OC Doug Nussmeier & DC Brandon Staley (Paycor Stadium)) as Cincinnati prepares for a pivotal AFC matchup [bengals.com Official](https://www.bengals.com/news/quick-hits-boye-mafe-challenges-nfl-leaders-joe-burrow-tee-higgins-jamarr-chase).",
-      "AFC Playoff Trajectory: Entering Week 12 at 7-3 (1st in AFC North • #4 Seed in AFC), Cincinnati carries a 95.8% postseason projection, 73.1% AFC North division title mark, and 6.1% #1 Seed Bye equity into the conference stretch [Jason Garrison](https://www.cincyjungle.com/cincinnati-bengals-news/206562/playoff-projections)."
+      "AFC Playoff Trajectory: Entering Week 12 at 7-3 (1st in AFC North • #4 Seed in AFC), Cincinnati carries a 95.8% postseason projection, 72.7% AFC North division title mark, and 5.9% #1 Seed Bye equity into the conference stretch [Jason Garrison](https://www.cincyjungle.com/cincinnati-bengals-news/206562/playoff-projections)."
     ],
     "coveredStoryKeys": [
       "team::watch_guide"
@@ -361,7 +361,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 15.1615
+      "storyRank": 14.0619
     },
     {
       "id": "cin_brss_cincy_jungle_2c1be1c618db",
@@ -394,7 +394,7 @@
       "isBreaking": false,
       "isInGameInjury": false,
       "breakingBadge": "FILM & TRENCH",
-      "breakingPriority": 0.298,
+      "breakingPriority": 0.296,
       "category": "film",
       "signalScore": 70,
       "fluffScore": 0,
@@ -404,7 +404,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.9561
+      "storyRank": 1.9357
     },
     {
       "id": "cin_brss_cincy_jungle_fbedb2ca9b42",
@@ -438,7 +438,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0133
+      "storyRank": 1.002
     },
     {
       "id": "cin_brss_cincy_jungle_b8d5626f469d",
@@ -472,7 +472,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 1.0102
+      "storyRank": 0.9988
     },
     {
       "id": "cin_rss_99da961491e6",
@@ -506,7 +506,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.9021
+      "storyRank": 0.8929
     },
     {
       "id": "cin_yts_2fYtN8uY6tw",
@@ -518,7 +518,7 @@
       "duration": "1:51:07",
       "imageUrl": "https://i.ytimg.com/vi/2fYtN8uY6tw/hqdefault.jpg",
       "imageAlt": "GAME OF THE WEEK! Cincinnati Bengals vs. Washington Commanders FULL GAME | NFL 2026 Season Week 11",
-      "publishedAt": "2026-11-24T23:36:11.082Z",
+      "publishedAt": "2026-11-24T23:45:03.455Z",
       "url": "https://www.youtube.com/watch?v=2fYtN8uY6tw",
       "externalVideoUrl": "https://www.youtube.com/watch?v=2fYtN8uY6tw",
       "channel": "NFL",
@@ -579,7 +579,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4878
+      "storyRank": 0.4838
     },
     {
       "id": "cin_yts_C3ZJX7on7OE",
@@ -591,7 +591,7 @@
       "duration": "15:07",
       "imageUrl": "https://i.ytimg.com/vi/C3ZJX7on7OE/hqdefault.jpg",
       "imageAlt": "Cincinnati Bengals vs Washington Commanders Game Highlights | 2026 NFL Season Week 11",
-      "publishedAt": "2026-11-24T20:36:11.082Z",
+      "publishedAt": "2026-11-24T20:45:03.455Z",
       "url": "https://www.youtube.com/watch?v=C3ZJX7on7OE",
       "externalVideoUrl": "https://www.youtube.com/watch?v=C3ZJX7on7OE",
       "channel": "NFL",
@@ -630,7 +630,7 @@
       "duration": "17:31",
       "imageUrl": "https://i.ytimg.com/vi/6UwgrVlo2lY/hqdefault.jpg",
       "imageAlt": "JAYDEN DANIELS.. GREATNESS IS REQUIRED! Bengals vs Commanders Week 11 CRAZY Ending",
-      "publishedAt": "2026-11-24T20:36:11.082Z",
+      "publishedAt": "2026-11-24T20:45:03.455Z",
       "url": "https://www.youtube.com/watch?v=6UwgrVlo2lY",
       "externalVideoUrl": "https://www.youtube.com/watch?v=6UwgrVlo2lY",
       "channel": "NFL",
@@ -660,18 +660,18 @@
       "storyRank": 0.5664
     },
     {
-      "id": "cin_yts_D690KJtUc-I",
+      "id": "cin_yts_WdpXvnVps4E",
       "type": "video",
-      "videoId": "D690KJtUc-I",
+      "videoId": "WdpXvnVps4E",
       "embeddable": false,
-      "title": "Tee Higgins reels it in for a 31 yard rec TD",
+      "title": "Joe Burrow Every Throw & Run | Week 11",
       "summary": "",
-      "duration": "0:29",
-      "imageUrl": "https://i.ytimg.com/vi/D690KJtUc-I/hqdefault.jpg",
-      "imageAlt": "Tee Higgins reels it in for a 31 yard rec TD",
-      "publishedAt": "2026-11-24T20:36:11.082Z",
-      "url": "https://www.youtube.com/watch?v=D690KJtUc-I",
-      "externalVideoUrl": "https://www.youtube.com/watch?v=D690KJtUc-I",
+      "duration": "9:07",
+      "imageUrl": "https://i.ytimg.com/vi/WdpXvnVps4E/hqdefault.jpg",
+      "imageAlt": "Joe Burrow Every Throw & Run | Week 11",
+      "publishedAt": "2026-11-24T20:45:03.455Z",
+      "url": "https://www.youtube.com/watch?v=WdpXvnVps4E",
+      "externalVideoUrl": "https://www.youtube.com/watch?v=WdpXvnVps4E",
       "channel": "NFL",
       "outletId": "nfl_official",
       "outletName": "NFL",
@@ -684,12 +684,12 @@
       "wireSource": "youtube_search",
       "mentionedPlayers": [
         {
-          "id": "4239993",
-          "name": "Tee Higgins",
-          "shortName": "T. Higgins",
-          "position": "WR",
-          "jersey": 5,
-          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4239993.png"
+          "id": "3915511",
+          "name": "Joe Burrow",
+          "shortName": "J. Burrow",
+          "position": "QB",
+          "jersey": 9,
+          "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3915511.png"
         }
       ],
       "isBreaking": false,
@@ -737,7 +737,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6413
+      "storyRank": 0.6361
     },
     {
       "id": "x_tl_bengalsbrews_2125290813576114240",
@@ -748,7 +748,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125290797520052224/img/WKjXVuSYTpXWRt1M.jpg",
       "imageAlt": "Bengals & Brews post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125290797520052224/vid/avc1/980x540/TopsmZxDpQC2db0e.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125290797520052224/vid/avc1/980x540/TopsmZxDpQC2db0e.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:05",
       "embeddable": true,
@@ -789,7 +789,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6301
+      "storyRank": 0.6254
     },
     {
       "id": "x_tl_bengalsbrews_2125289218155102630",
@@ -800,7 +800,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125289196122238976/img/MBTEm3GMN-DLVoC9.jpg",
       "imageAlt": "Bengals & Brews post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125289196122238976/vid/avc1/934x512/ldzBalY1GUymBXYC.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125289196122238976/vid/avc1/934x512/ldzBalY1GUymBXYC.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:07",
       "embeddable": true,
@@ -849,7 +849,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6267
+      "storyRank": 0.6221
     },
     {
       "id": "cin_pwire_4362628_50583834",
@@ -881,7 +881,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.576
+      "storyRank": 0.5716
     },
     {
       "id": "x_tl_bengalsbrews_2125284326258475391",
@@ -892,7 +892,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125284306209705984/img/m05v64TmgGWD59op.jpg",
       "imageAlt": "Bengals & Brews post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125284306209705984/vid/avc1/786x430/PVIiAxwFLTaA9rqa.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125284306209705984/vid/avc1/786x430/PVIiAxwFLTaA9rqa.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:05",
       "embeddable": true,
@@ -941,7 +941,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6166
+      "storyRank": 0.612
     },
     {
       "id": "cin_rss_ba20a2fab25c",
@@ -975,7 +975,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5775
+      "storyRank": 0.5732
     },
     {
       "id": "x_tl_bengalsbrews_2125276633644794050",
@@ -986,7 +986,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125276606927077376/img/0xSM3oXA1rtcpvCR.jpg",
       "imageAlt": "Bengals & Brews post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125276606927077376/vid/avc1/1136x622/wkv27t2fldUqT-vp.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125276606927077376/vid/avc1/1136x622/wkv27t2fldUqT-vp.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:08",
       "embeddable": true,
@@ -1027,7 +1027,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.6012
+      "storyRank": 0.5968
     },
     {
       "id": "x_tl_bengalsbrews_2125275343577588161",
@@ -1038,7 +1038,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125275323172282368/img/zwST97lFvpwv-QQI.jpg",
       "imageAlt": "Bengals & Brews post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125275323172282368/vid/avc1/930x514/N8-3g01zzRSX4QOK.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125275323172282368/vid/avc1/930x514/N8-3g01zzRSX4QOK.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:05",
       "embeddable": true,
@@ -1087,7 +1087,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5987
+      "storyRank": 0.5943
     },
     {
       "id": "x_tl_bengalsbrews_2125264822350553498",
@@ -1098,7 +1098,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125264797902012416/img/5xvuFhtYoDAg_vRs.jpg",
       "imageAlt": "Bengals & Brews post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125264797902012416/vid/avc1/990x534/oZNKf4wGauw3mlS2.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125264797902012416/vid/avc1/990x534/oZNKf4wGauw3mlS2.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:09",
       "embeddable": true,
@@ -1147,7 +1147,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5788
+      "storyRank": 0.5747
     },
     {
       "id": "x_tl_bengalsbrews_2125262939397701673",
@@ -1158,7 +1158,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125262915590639616/img/Nx5rDlQbYUbSNRq3.jpg",
       "imageAlt": "Bengals & Brews post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125262915590639616/vid/avc1/1022x564/x9S84ChxXzShqutK.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125262915590639616/vid/avc1/1022x564/x9S84ChxXzShqutK.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:07",
       "embeddable": true,
@@ -1207,7 +1207,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5754
+      "storyRank": 0.5713
     },
     {
       "id": "cin_rss_c99338292874",
@@ -1241,7 +1241,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5324
+      "storyRank": 0.5287
     },
     {
       "id": "cin_espn_5b54cc7867be9",
@@ -1277,7 +1277,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5263
+      "storyRank": 0.5226
     },
     {
       "id": "cin_brss_cincy_jungle_9d0699f57c8e",
@@ -1311,7 +1311,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.516
+      "storyRank": 0.5124
     },
     {
       "id": "cin_rss_28c33ce33708",
@@ -1345,7 +1345,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5235
+      "storyRank": 0.5199
     },
     {
       "id": "cin_brss_cincy_jungle_ee32ecaa5e3a",
@@ -1379,7 +1379,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5136
+      "storyRank": 0.51
     },
     {
       "id": "x_tl_bengalsbrews_2125241006081622517",
@@ -1390,7 +1390,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125240973789728768/img/-RNc7otnPLG7FbTT.jpg",
       "imageAlt": "Bengals & Brews post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125240973789728768/vid/avc1/1022x566/FC1ROtrCSjCCljju.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125240973789728768/vid/avc1/1022x566/FC1ROtrCSjCCljju.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:12",
       "embeddable": true,
@@ -1439,7 +1439,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5377
+      "storyRank": 0.5341
     },
     {
       "id": "cin_espn_fc186123a7853",
@@ -1475,7 +1475,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4909
+      "storyRank": 0.4877
     },
     {
       "id": "x_tl_bengalsbrews_2125226457009901577",
@@ -1486,7 +1486,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125226433886785536/img/IIvjRFIXPkdkmK_c.jpg",
       "imageAlt": "Bengals & Brews post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125226433886785536/vid/avc1/990x540/IB9OV1CYXAdasEoe.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125226433886785536/vid/avc1/990x540/IB9OV1CYXAdasEoe.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:08",
       "embeddable": true,
@@ -1535,7 +1535,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.5151
+      "storyRank": 0.5117
     },
     {
       "id": "x_tl_bengalsbrews_2125215649060270270",
@@ -1546,7 +1546,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125215634594111488/img/IOen-_69hAbz41iB.jpg",
       "imageAlt": "Bengals & Brews post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125215634594111488/vid/avc1/640x356/d_a4OmV8sdPIVur6.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125215634594111488/vid/avc1/640x356/d_a4OmV8sdPIVur6.mp4?tag=29",
       "isHighlightClip": true,
       "duration": "0:06",
       "embeddable": true,
@@ -1587,7 +1587,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4993
+      "storyRank": 0.4961
     },
     {
       "id": "x_tl_bengalsbrews_2125211560276578439",
@@ -1598,7 +1598,7 @@
       "summary": "",
       "imageUrl": "https://pbs.twimg.com/amplify_video_thumb/2125211545969836032/img/ToohS7hrMvccJy9E.jpg",
       "imageAlt": "Bengals & Brews post",
-      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125211545969836032/vid/avc1/836x462/KvHDug8Wr89ua2TN.mp4",
+      "videoStreamUrl": "https://video.twimg.com/amplify_video/2125211545969836032/vid/avc1/836x462/KvHDug8Wr89ua2TN.mp4?tag=29",
       "embeddable": true,
       "mentionedPlayers": [
         {
@@ -1637,7 +1637,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.4935
+      "storyRank": 0.4904
     },
     {
       "id": "cin_brss_cincy_jungle_d29d0b85543d",
@@ -1671,7 +1671,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3742
+      "storyRank": 0.3721
     },
     {
       "id": "cin_brss_cincy_jungle_bfb698cc1a73",
@@ -1705,7 +1705,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3738
+      "storyRank": 0.3718
     },
     {
       "id": "cin_rss_d5a9be38b2bb",
@@ -1739,7 +1739,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0903
+      "storyRank": 0.0898
     },
     {
       "id": "cin_rss_1660327f7edd",
@@ -1773,7 +1773,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3579
+      "storyRank": 0.356
     },
     {
       "id": "cin_espn_69d5f42f14c4a",
@@ -1808,7 +1808,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0875
+      "storyRank": 0.087
     },
     {
       "id": "cin_espn_70ee274fda6b3",
@@ -1843,7 +1843,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3365
+      "storyRank": 0.3348
     },
     {
       "id": "cin_espn_cf24ec005070a",
@@ -1878,7 +1878,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2861
+      "storyRank": 0.2846
     },
     {
       "id": "cin_espn_f1c9d9d2006c5",
@@ -1914,7 +1914,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3342
+      "storyRank": 0.3325
     },
     {
       "id": "cin_rss_72f65709c84e",
@@ -1948,7 +1948,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.2813
+      "storyRank": 0.2799
     },
     {
       "id": "cin_brss_cincy_jungle_be5e7dad9900",
@@ -1982,7 +1982,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.318
+      "storyRank": 0.3164
     },
     {
       "id": "cin_bsky_331a61885c61",
@@ -2020,7 +2020,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3038
+      "storyRank": 0.3024
     },
     {
       "id": "cin_bsky_2ba2ee6f98d7",
@@ -2058,7 +2058,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.3042
+      "storyRank": 0.3027
     },
     {
       "id": "cin_pfr_2fe42aa5dcec",
@@ -2091,7 +2091,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.121
+      "storyRank": 0.1205
     },
     {
       "id": "cin_espn_54dee269bfb9d",
@@ -2127,7 +2127,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.123
+      "storyRank": 0.1224
     },
     {
       "id": "cin_pfr_3f25ec249d90",
@@ -2177,7 +2177,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1196
+      "storyRank": 0.119
     },
     {
       "id": "cin_espn_60efae509e729",
@@ -2221,7 +2221,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.121
+      "storyRank": 0.1204
     },
     {
       "id": "cin_rss_4bdff88c00de",
@@ -2255,7 +2255,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1201
+      "storyRank": 0.1195
     },
     {
       "id": "cin_espn_b9e18b28938bb",
@@ -2299,7 +2299,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.1148
+      "storyRank": 0.1143
     },
     {
       "id": "cin_rss_209d76e116bb",
@@ -2350,7 +2350,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0972
+      "storyRank": 0.0967
     },
     {
       "id": "cin_brss_cincy_jungle_811c97b4f67d",
@@ -2384,7 +2384,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0964
+      "storyRank": 0.096
     },
     {
       "id": "cin_tx_ce158b6f09e2",
@@ -2436,7 +2436,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0789
+      "storyRank": 0.0787
     },
     {
       "id": "cin_brss_cincy_jungle_911684abb304",
@@ -2479,7 +2479,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0707
+      "storyRank": 0.0704
     },
     {
       "id": "cin_rss_a2032f75f0e5",
@@ -2513,7 +2513,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0436
+      "storyRank": 0.0435
     },
     {
       "id": "cin_pfr_e4b84b9ab405",
@@ -2546,7 +2546,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0429
+      "storyRank": 0.0428
     },
     {
       "id": "cin_rss_275db86ef0d5",
@@ -2580,7 +2580,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0977
+      "storyRank": 0.0975
     },
     {
       "id": "cin_rss_2cd02fcbaee7",
@@ -2623,7 +2623,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0357
+      "storyRank": 0.0356
     },
     {
       "id": "cin_rss_6b922444df43",
@@ -2657,7 +2657,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0384
+      "storyRank": 0.0383
     },
     {
       "id": "cin_espn_9d6002f560b98",
@@ -2701,7 +2701,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0376
+      "storyRank": 0.0375
     },
     {
       "id": "cin_espn_dbd410faaebfd",
@@ -2753,7 +2753,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0367
+      "storyRank": 0.0366
     },
     {
       "id": "cin_tx_b46be06177f4",
@@ -2797,7 +2797,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0353
+      "storyRank": 0.0352
     },
     {
       "id": "cin_rss_966698422764",
@@ -2840,7 +2840,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0319
+      "storyRank": 0.0318
     },
     {
       "id": "cin_espn_89019748dbff1",
@@ -3087,7 +3087,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0241
+      "storyRank": 0.024
     },
     {
       "id": "cin_pfr_94720f0c1304",
@@ -3172,7 +3172,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0508
+      "storyRank": 0.0507
     },
     {
       "id": "cin_rss_a0cbea489c8b",
@@ -3347,7 +3347,7 @@
       "duration": "7:46",
       "imageUrl": "https://i.ytimg.com/vi/jRdOBn5-lTw/hqdefault.jpg",
       "imageAlt": "Cincinnati Bengals vs Washington Commanders | 2026 Week 11 Game Preview",
-      "publishedAt": "2026-11-18T20:36:11.082Z",
+      "publishedAt": "2026-11-18T20:45:03.455Z",
       "url": "https://www.youtube.com/watch?v=jRdOBn5-lTw",
       "externalVideoUrl": "https://www.youtube.com/watch?v=jRdOBn5-lTw",
       "channel": "NFL",
@@ -3583,7 +3583,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0182
+      "storyRank": 0.0181
     },
     {
       "id": "cin_rss_46370a4abb81",
@@ -3753,7 +3753,7 @@
       "duration": "15:03",
       "imageUrl": "https://i.ytimg.com/vi/9hbvNzp5qSI/hqdefault.jpg",
       "imageAlt": "Pittsburgh Steelers vs Cincinnati Bengals Game Highlights | 2026 NFL Season Week 10",
-      "publishedAt": "2026-11-16T20:36:11.082Z",
+      "publishedAt": "2026-11-16T20:45:03.455Z",
       "url": "https://www.youtube.com/watch?v=9hbvNzp5qSI",
       "externalVideoUrl": "https://www.youtube.com/watch?v=9hbvNzp5qSI",
       "channel": "NFL",
@@ -4066,7 +4066,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0119
+      "storyRank": 0.0118
     },
     {
       "id": "cin_rss_24b23c5e83a6",
@@ -4134,7 +4134,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0059
+      "storyRank": 0.0058
     },
     {
       "id": "cin_rss_da8d4467e2e7",
@@ -4168,7 +4168,7 @@
       "isUrgentBreaking": false,
       "isPostGameInjuryUpdate": false,
       "isStalePreGameAvailability": false,
-      "storyRank": 0.0091
+      "storyRank": 0.009
     },
     {
       "id": "cin_rss_6414de2565c8",

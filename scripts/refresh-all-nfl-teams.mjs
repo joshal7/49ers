@@ -137,9 +137,11 @@ async function main() {
   const forceBrief = args.includes('--force-brief');
   const missingOnly = args.includes('--missing-only');
   const concArg = args.find(a => a.startsWith('--concurrency='));
+  // Default to concurrency=1 (single unified Stage-1 + paced Stage-2 process) so OverTheCap & X
+  // never receive 4x simultaneous bursts from the same IP; callers can still pass --concurrency=N.
   const concurrency = Math.max(
     1,
-    Math.min(6, Number(concArg ? concArg.split('=')[1] : process.env.TEAM_FETCH_CONCURRENCY || 4) || 4)
+    Math.min(6, Number(concArg ? concArg.split('=')[1] : process.env.TEAM_FETCH_CONCURRENCY || 1) || 1)
   );
 
   const teamsArg = args.find(a => a.startsWith('--teams=')) || args.find(a => a.startsWith('--team='));

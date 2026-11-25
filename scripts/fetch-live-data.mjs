@@ -211,13 +211,24 @@ function hashShort(str = '') {
 }
 
 async function fetchTextSafe(url, timeoutMs = 12000) {
-  try {
-    const res = await fetch(url, { headers: UA_HEADERS, signal: AbortSignal.timeout(timeoutMs) });
-    if (!res.ok) return '';
-    return await res.text();
-  } catch {
-    return '';
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const res = await fetch(url, { headers: UA_HEADERS, signal: AbortSignal.timeout(timeoutMs) });
+      if ((res.status === 429 || res.status === 503) && attempt === 0 && /overthecap\.com/i.test(url)) {
+        await sleep(1800);
+        continue;
+      }
+      if (!res.ok) return '';
+      return await res.text();
+    } catch {
+      if (attempt === 0 && /overthecap\.com/i.test(url)) {
+        await sleep(1200);
+        continue;
+      }
+      return '';
+    }
   }
+  return '';
 }
 
 async function fetchJsonSafe(url, timeoutMs = 12000) {
@@ -1737,9 +1748,45 @@ async function buildTeamBundle(team, leagueCtx, { geminiApiKey = '' } = {}) {
     : null;
 
   // 2. Parse OverTheCap 5-year salary cap ledger & Player Identity Resolver (homonym-safe)
-  const otcParsed = otcHtml
+  // If OverTheCap transiently rate-limits (429/empty HTML), preserve the prior verified cap.json / roster.json
+  // OTC ledger on disk rather than clobbering 5-year cap space, void-year dead cap, and OTC player IDs.
+  let otcParsed = otcHtml
     ? parseOverTheCapHtml(otcHtml, seasonYear, leagueCtx.otcSpaceHtml, team.otcSlug)
     : { years: {}, otcPlayers: [], otcNonActivePlayers: [], otcDirectory: [] };
+  if (Object.keys(otcParsed.years || {}).length === 0) {
+    try {
+      const prevCapPath = path.join(getTeamOutDir(team), 'cap.json');
+      const prevRosterPath = path.join(getTeamOutDir(team), 'roster.json');
+      const prevCap = fs.existsSync(prevCapPath) ? JSON.parse(fs.readFileSync(prevCapPath, 'utf8')) : null;
+      const prevRoster = fs.existsSync(prevRosterPath) ? JSON.parse(fs.readFileSync(prevRosterPath, 'utf8')) : null;
+      if (prevCap && Object.keys(prevCap.years || {}).length >= 3) {
+        const prevPlayers = Array.isArray(prevCap.players) ? prevCap.players : [];
+        const prevDeparted = Array.isArray(prevRoster?.departedPlayers) ? prevRoster.departedPlayers : [];
+        const prevRosterList = Array.isArray(prevRoster?.players) ? prevRoster.players : [];
+        const dirSeed = [...prevPlayers, ...prevRosterList, ...prevDeparted]
+          .filter(p => p?.name && p?.otcId)
+          .map(p => ({ name: p.name, otcId: String(p.otcId), otcSlug: p.otcSlug || '' }));
+        otcParsed = {
+          years: prevCap.years,
+          otcPlayers: prevPlayers.map(p => ({
+            name: p.name,
+            otcId: p.otcId || null,
+            otcSlug: p.otcSlug || '',
+            contractsByYear: p.contractsByYear || {}
+          })),
+          otcNonActivePlayers: prevDeparted.map(p => ({
+            name: p.name,
+            otcId: p.otcId || null,
+            otcSlug: p.otcSlug || '',
+            contractsByYear: p.contractsByYear || {},
+            deadMoney2026: p.deadMoney2026 || 0
+          })),
+          otcDirectory: dirSeed
+        };
+        console.warn(`[stage-2] OverTheCap unavailable for ${team.abbr}; preserved prior verified ${Object.keys(prevCap.years).length}-year cap ledger from disk.`);
+      }
+    } catch {}
+  }
   const otcYears = otcParsed.years || {};
   const otcById = new Map();
   const otcPlayersByKey = new Map();

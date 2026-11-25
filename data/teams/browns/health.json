@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:35:52.714Z",
+  "updatedAt": "2026-11-25T20:45:30.515Z",
   "week": 12,
   "byeWeek": 11,
   "sourceUrl": "https://www.clevelandbrowns.com/team/injury-report/",
@@ -85,31 +85,6 @@
       "beatComment": "Ward was managing a quad injury during all of Week 10 prep, but he avoided an injury tag for Sunday's game despite not logging a full practice. The veteran defensive back has 34 tackles (19 solo), nine pass defenses (including three interceptions) and two forced fumbles through nine regular-season games."
     },
     {
-      "playerId": "3110565",
-      "name": "Quincy Williams",
-      "position": "LB",
-      "jersey": 5,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3110565.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Hamstring",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Veteran starter profile (8th NFL season, 96% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Williams has had his practice reps over the last couple of weeks limited while tending to a hamstring injury, but he has yet to miss a regular-season game, and that trend will continue for Sunday's home tilt. The veteran linebacker has accumulated 62 tackles (37 solo), including 1.0 sacks, three pass defenses and four forced fumbles through nine regular-season games."
-    },
-    {
       "playerId": "3115336",
       "name": "Derek Barnett",
       "position": "DE",
@@ -133,6 +108,31 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Barnett left in the first quarter due to a hamstring injury, but the veteran defensive lineman was cleared by medical staff to return to Sunday's contest."
+    },
+    {
+      "playerId": "3110565",
+      "name": "Quincy Williams",
+      "position": "LB",
+      "jersey": 5,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3110565.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Hamstring",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Veteran starter profile (8th NFL season, 96% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Williams has had his practice reps over the last couple of weeks limited while tending to a hamstring injury, but he has yet to miss a regular-season game, and that trend will continue for Sunday's home tilt. The veteran linebacker has accumulated 62 tackles (37 solo), including 1.0 sacks, three pass defenses and four forced fumbles through nine regular-season games."
     }
   ],
   "irAndReserveTracker": [

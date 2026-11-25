@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:15.267Z",
+  "updatedAt": "2026-11-25T20:45:32.027Z",
   "week": 12,
   "byeWeek": 5,
   "sourceUrl": "https://www.chiefs.com/team/injury-report/",
@@ -110,56 +110,6 @@
       "beatComment": "questionable"
     },
     {
-      "playerId": "3139477",
-      "name": "Patrick Mahomes",
-      "position": "QB",
-      "jersey": 15,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "FP",
-      "thu": "FP",
-      "fri": "FP",
-      "injuryType": "Knee / Right Elbow",
-      "gameStatus": "No Designation (Cleared)",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": 95,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Veteran starter profile (10th NFL season, 97% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Mahomes was clicking early against the Cardinals' defense, capping off the opening possession of the game with an eight-yard touchdown toss to Travis Kelce. The prolific signal-caller went on to add a 22-yard scoring pass to Kelce shortly before the end of the first half, and he capped off his day with an 18-yarder to Xavier Worthy on which the speedy receiver raced up the right sideline and into the end zone. Mahomes now has consecutive 300-yard efforts and has accomplished the feat in three of the past four games overall, affording him plenty of momentum heading into a Week 12 showdown with Josh Allen and the Bills on Thanksgiving night."
-    },
-    {
-      "playerId": "4242459",
-      "name": "Trey Smith",
-      "position": "G",
-      "jersey": 65,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242459.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "FP",
-      "thu": "FP",
-      "fri": "FP",
-      "injuryType": "Concussion",
-      "gameStatus": "No Designation (Cleared)",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": 95,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (91% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Smith has logged two consecutive full practices, and while Smith is in the league's concussion protocol, head coach Andy Reid said Tuesday that he anticipates that Smith will be available for Thursday's game against the Bills, per Sam McDowell of The Kansas City Star. If he's cleared to play Thanksgiving Day, Smith would likely reclaim his starting job at right guard while Mike Caliendo reverts to a depth role."
-    },
-    {
       "playerId": "4880124",
       "name": "Mansoor Delane",
       "position": "CB",
@@ -185,6 +135,31 @@
       "beatComment": ""
     },
     {
+      "playerId": "3139477",
+      "name": "Patrick Mahomes",
+      "position": "QB",
+      "jersey": 15,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "Knee / Right Elbow",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 95,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Veteran starter profile (10th NFL season, 97% snap share) — elevated Questionable active conversion (84%) & Wednesday maintenance tolerance.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Mahomes was clicking early against the Cardinals' defense, capping off the opening possession of the game with an eight-yard touchdown toss to Travis Kelce. The prolific signal-caller went on to add a 22-yard scoring pass to Kelce shortly before the end of the first half, and he capped off his day with an 18-yarder to Xavier Worthy on which the speedy receiver raced up the right sideline and into the end zone. Mahomes now has consecutive 300-yard efforts and has accomplished the feat in three of the past four games overall, affording him plenty of momentum heading into a Week 12 showdown with Josh Allen and the Bills on Thanksgiving night."
+    },
+    {
       "playerId": "4428331",
       "name": "Rashee Rice",
       "position": "WR",
@@ -208,6 +183,31 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Rice tied for the team lead in receptions and finished as the runner-up in targets to Travis Kelce. The veteran receiver averaged a modest 8.8 yards per catch, his third game in the last four with under 10.0 yards per reception. Rice has at least five catches in four consecutive contests heading into Thursday's Week 12 Thanksgiving showdown against the Bills in Buffalo."
+    },
+    {
+      "playerId": "4242459",
+      "name": "Trey Smith",
+      "position": "G",
+      "jersey": 65,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4242459.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "FP",
+      "thu": "FP",
+      "fri": "FP",
+      "injuryType": "Concussion",
+      "gameStatus": "No Designation (Cleared)",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": 95,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Every-down starter workload (91% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Smith has logged two consecutive full practices, and while Smith is in the league's concussion protocol, head coach Andy Reid said Tuesday that he anticipates that Smith will be available for Thursday's game against the Bills, per Sam McDowell of The Kansas City Star. If he's cleared to play Thanksgiving Day, Smith would likely reclaim his starting job at right guard while Mike Caliendo reverts to a depth role."
     },
     {
       "playerId": "4240472",

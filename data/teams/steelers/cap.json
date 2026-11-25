@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:07.350Z",
+  "updatedAt": "2026-11-25T20:45:34.723Z",
   "source": "OverTheCap Live",
   "sourceUrl": "https://overthecap.com/salary-cap/pittsburgh-steelers",
   "spotracUrl": "https://www.spotrac.com/nfl/pittsburgh-steelers/cap/",
@@ -1412,60 +1412,6 @@
       "jersey": 46,
       "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/2978524.png",
       "unit": "Special Teams",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      }
-    },
-    {
-      "id": "4566198",
-      "otcId": "13498",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/player/lake-mcree/13498/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4566198/lake-mcree",
-      "pfrUrl": "https://www.pro-football-reference.com/players/M/McReLa00.htm",
-      "name": "Lake McRee",
-      "position": "TE",
-      "jersey": 81,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4566198.png",
-      "unit": "Offense",
-      "rosterBucket": "active",
-      "contractsByYear": {
-        "2026": {
-          "baseSalary": 840000,
-          "proratedBonus": 0,
-          "rosterBonus": 0,
-          "capNumber": 840000,
-          "deadMoneyPreJune1": 0,
-          "capSavingsPreJune1": 840000,
-          "deadMoneyPostJune1": 0,
-          "capSavingsPostJune1": 840000,
-          "guaranteedSalary": 0
-        }
-      }
-    },
-    {
-      "id": "4240759",
-      "otcId": "10210",
-      "otcSlug": null,
-      "otcUrl": "https://overthecap.com/player/esezi-otomewo/10210/",
-      "espnUrl": "https://www.espn.com/nfl/player/_/id/4240759/esezi-otomewo",
-      "pfrUrl": "https://www.pro-football-reference.com/players/O/OtomEs00.htm",
-      "name": "Esezi Otomewo",
-      "position": "DT",
-      "jersey": 93,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4240759.png",
-      "unit": "Defense",
       "rosterBucket": "active",
       "contractsByYear": {
         "2026": {

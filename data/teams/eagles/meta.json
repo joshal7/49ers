@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:44:10.019Z",
+  "updatedAt": "2026-11-25T20:47:21.130Z",
   "teamAbbr": "PHI",
   "teamSlug": "eagles",
   "brandName": "Fly Eagles Fly",
@@ -54,7 +54,7 @@
       "gemini-2.5-pro"
     ],
     "source": "default-free-tier-cascade (gemini-4-hydrogen XHIGH)",
-    "lastCheckedAt": "2026-11-25T20:44:10.019Z",
+    "lastCheckedAt": "2026-11-25T20:47:21.130Z",
     "quotaOwner": "joshalbox@gmail.com"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:10.428Z",
+  "updatedAt": "2026-11-25T20:45:02.630Z",
   "week": 12,
   "byeWeek": 6,
   "sourceUrl": "https://www.bengals.com/team/injury-report/",
@@ -116,6 +116,31 @@
       "beatComment": "Iosivas will remain on injured reserve for at least one more week, after the Bengals had listed him as doubtful heading into Monday's contest following a trio of full practices from Thursday through Saturday. If the fourth-year wideout can turn in another full slate of practices in Week 12, he should have a better chance of being restored to the 53-man roster ahead of the Bengals' Nov. 29 matchup with the Saints."
     },
     {
+      "playerId": "4247726",
+      "name": "Bryan Cook",
+      "position": "S",
+      "jersey": 6,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4247726.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Ankle",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Every-down starter workload (91% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "The safety suffered a right ankle injury late in the first half and was questionable to return. Now that he's back, he should be able to resume his role in the lineup at free safety."
+    },
+    {
       "playerId": "4426422",
       "name": "Dax Hill",
       "position": "CB",
@@ -140,31 +165,6 @@
         "Beat/podium consensus: on track to suit up"
       ],
       "beatComment": "Hill was absent from practice for the entire week due to an illness, but he is now good to go for Monday Night Football. The 26-year-old will operate in his starting role at slot cornerback versus Washington."
-    },
-    {
-      "playerId": "4247726",
-      "name": "Bryan Cook",
-      "position": "S",
-      "jersey": 6,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4247726.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Every-down starter workload (91% snaps) — 82% active conversion baseline when logging Limited Friday reps.",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "The safety suffered a right ankle injury late in the first half and was questionable to return. Now that he's back, he should be able to resume his role in the lineup at free safety."
     }
   ],
   "irAndReserveTracker": [

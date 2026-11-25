@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T20:36:15.792Z",
+  "updatedAt": "2026-11-25T20:46:11.275Z",
   "week": 12,
   "byeWeek": 7,
   "sourceUrl": "https://www.chargers.com/team/injury-report/",
@@ -32,7 +32,7 @@
       "factors": [
         "Remains in early stages of NFL 5-Step Concussion Protocol"
       ],
-      "beatComment": "Herbert completed 15 of 21 passes for 131 yards, two touchdowns and no interceptions in Week 11, but he also endured six sacks, fumbled once and added 32 yards and one TD on his eight carries. It's unclear exactly when he picked up the head injury, but he'll be subject to the concussion protocol ahead of further game action. The Chargers take the field next Sunday against the Patriots."
+      "beatComment": "Herbert entered the NFL's concussion protocol following this past Sunday's 27-24 loss to the Jets, and the QB's pending absence from Wednesday's session gives him two more chances to officially log practice reps before for this weekend's game against New England. In his current absence, DJ Uiagalelei is next up for Los Angeles' signal-caller reps, with practice squad member Jake Browning available for a Week 12 elevation, if needed."
     },
     {
       "playerId": "4685553",
@@ -213,31 +213,6 @@
       "beatComment": "questionable"
     },
     {
-      "playerId": "4567138",
-      "name": "Justin Eboigbe",
-      "position": "DT",
-      "jersey": 92,
-      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567138.png",
-      "rosterBucket": "active",
-      "isIrReturnWindow": false,
-      "sustainedInLastGame": false,
-      "wed": "-",
-      "thu": "-",
-      "fri": "-",
-      "injuryType": "Ankle",
-      "gameStatus": "Active",
-      "playProbabilityPct": 95,
-      "priorDayPlayProbabilityPct": null,
-      "hasPreReportPracticeReturnDelta": false,
-      "isMidWeekAdditionDelta": false,
-      "playBadgeLabel": "95% • Cleared",
-      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
-      "factors": [
-        "Cleared without restrictive game-day designation"
-      ],
-      "beatComment": "Eboigbe was unable to play against the Ravens this past Monday due to an ankle injury. He ended Week 11 prep with a full practice Friday, which was enough for him to avoid an injury tag ahead of Sunday's contest. His return means there will be less rotational snaps at defensive end for rookie fifth-rounder Nick Barrett."
-    },
-    {
       "playerId": "4574105",
       "name": "Isas Waxter",
       "position": "CB",
@@ -261,6 +236,31 @@
         "Cleared without restrictive game-day designation"
       ],
       "beatComment": "Waxter was cleared to return from a one-game absence due to an ankle injury. His availability gives the Chargers another contributor on special teams and depth in the secondary."
+    },
+    {
+      "playerId": "4567138",
+      "name": "Justin Eboigbe",
+      "position": "DT",
+      "jersey": 92,
+      "headshotUrl": "https://a.espncdn.com/i/headshots/nfl/players/full/4567138.png",
+      "rosterBucket": "active",
+      "isIrReturnWindow": false,
+      "sustainedInLastGame": false,
+      "wed": "-",
+      "thu": "-",
+      "fri": "-",
+      "injuryType": "Ankle",
+      "gameStatus": "Active",
+      "playProbabilityPct": 95,
+      "priorDayPlayProbabilityPct": null,
+      "hasPreReportPracticeReturnDelta": false,
+      "isMidWeekAdditionDelta": false,
+      "playBadgeLabel": "95% • Cleared",
+      "archetypeNote": "Trench/box position (DT) — historically higher active rate through braced upper-body & ankle soreness (81% baseline).",
+      "factors": [
+        "Cleared without restrictive game-day designation"
+      ],
+      "beatComment": "Eboigbe was unable to play against the Ravens this past Monday due to an ankle injury. He ended Week 11 prep with a full practice Friday, which was enough for him to avoid an injury tag ahead of Sunday's contest. His return means there will be less rotational snaps at defensive end for rookie fifth-rounder Nick Barrett."
     }
   ],
   "irAndReserveTracker": [
